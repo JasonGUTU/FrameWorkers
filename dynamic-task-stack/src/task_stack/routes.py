@@ -53,10 +53,10 @@ def create_blueprint():
         # Convert sender_type string to enum
         try:
             sender_type = MessageSenderType(sender_type_str.lower())
-        except ValueError:
-            return jsonify({
-                'error': f'Invalid sender_type: {sender_type_str}. Must be one of: worker, director, subagent, user'
-            }), 400
+            except ValueError:
+                return jsonify({
+                    'error': f'Invalid sender_type: {sender_type_str}. Must be one of: director, subagent, user'
+                }), 400
         
         message = storage.create_user_message(content, user_id, sender_type)
         return jsonify(serialize_enum(message)), 201

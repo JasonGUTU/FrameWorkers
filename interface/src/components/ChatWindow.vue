@@ -545,7 +545,7 @@ export default {
   border-bottom-left-radius: 4px;
 }
 
-/* Worker messages: left side, default style (for backward compatibility) */
+/* Note: Worker type is deprecated, kept for backward compatibility only */
 .message-item.worker {
   justify-content: flex-start;
 }

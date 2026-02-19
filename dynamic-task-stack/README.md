@@ -113,10 +113,10 @@ dynamic-task-stack/
 `TaskStackStorage` 类提供线程安全的内存存储：
 
 **用户消息操作**：
-- `create_user_message()`: 创建用户消息（支持 sender_type 参数：worker, director, subagent, user）
+- `create_user_message()`: 创建用户消息（支持 sender_type 参数：director, subagent, user）
 - `get_user_message()`: 获取消息
 - `get_all_user_messages()`: 获取所有消息
-- `update_message_read_status()`: 更新消息读取状态（使用 director_read_status 替代 worker_read_status）
+- `update_message_read_status()`: 更新消息读取状态（使用 director_read_status）
 
 **任务操作**：
 - `create_task()`: 创建任务
@@ -332,7 +332,6 @@ READ = "READ"                  # 已读
 
 #### MessageSenderType（枚举）
 ```python
-WORKER = "worker"              # Worker（向后兼容）
 DIRECTOR = "director"          # Director
 SUBAGENT = "subagent"          # Subagent
 USER = "user"                  # User
@@ -346,7 +345,7 @@ class UserMessage:
     content: str                # 消息内容
     timestamp: datetime         # 时间戳
     user_id: str               # 用户 ID
-    sender_type: MessageSenderType  # 发送者类型：worker, director, subagent, user
+    sender_type: MessageSenderType  # 发送者类型：director, subagent, user
     director_read_status: ReadingStatus  # Director 读取状态（原 worker_read_status）
     user_read_status: ReadingStatus   # 用户读取状态
     task_id: Optional[str]     # 关联的任务 ID
@@ -479,10 +478,10 @@ class AgentExecution:
 ### Task Stack API
 
 #### 用户消息
-- `POST /api/messages/create` - 创建用户消息（支持 sender_type 参数：worker, director, subagent, user）
+- `POST /api/messages/create` - 创建用户消息（支持 sender_type 参数：director, subagent, user）
 - `GET /api/messages/<msg_id>` - 获取消息
 - `GET /api/messages/list` - 获取所有消息（可选 user_id 过滤）
-- `PUT /api/messages/<msg_id>/read-status` - 更新消息读取状态（使用 director_read_status 替代 worker_read_status）
+- `PUT /api/messages/<msg_id>/read-status` - 更新消息读取状态（使用 director_read_status）
 - `GET /api/messages/<msg_id>/check` - 检查消息（数据结构、读取状态、是否新任务）
 
 #### 任务管理

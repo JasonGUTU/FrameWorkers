@@ -24,7 +24,6 @@ class ReadingStatus(Enum):
 
 class MessageSenderType(Enum):
     """Message sender type"""
-    WORKER = "worker"
     DIRECTOR = "director"
     SUBAGENT = "subagent"
     USER = "user"
@@ -37,7 +36,7 @@ class UserMessage:
     content: str
     timestamp: datetime
     user_id: str
-    sender_type: MessageSenderType  # Type of sender: worker, director, subagent, user
+    sender_type: MessageSenderType  # Type of sender: director, subagent, user
     director_read_status: ReadingStatus  # Director read status (formerly worker_read_status)
     user_read_status: ReadingStatus
     task_id: Optional[str] = None  # Associated task ID if any
