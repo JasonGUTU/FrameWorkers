@@ -116,8 +116,6 @@ class TaskStackStorage:
     ) -> List[UserMessage]:
         """
         Get unread user messages (convenience method)
-        
-        This is a convenience wrapper around get_unread_messages() for backward compatibility.
         """
         return self.get_unread_messages(
             sender_type=sender_type,

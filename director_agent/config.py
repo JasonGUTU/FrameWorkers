@@ -15,8 +15,5 @@ DIRECTOR_AGENT_DESCRIPTION = os.getenv(
     'Director Agent responsible for reasoning, planning, and task orchestration'
 )
 
-# Assistant ID (should match the assistant created in backend)
-ASSISTANT_ID = os.getenv('ASSISTANT_ID', 'assistant_1')
-
 # Logging
 LOG_LEVEL = os.getenv('LOG_LEVEL', 'INFO')

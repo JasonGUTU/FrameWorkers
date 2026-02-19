@@ -42,7 +42,6 @@ Set environment variables:
 
 - `BACKEND_BASE_URL`: Backend API base URL (default: `http://localhost:5002`)
 - `POLLING_INTERVAL`: Polling interval in seconds (default: `2.0`)
-- `ASSISTANT_ID`: Assistant ID to use (default: `assistant_1`)
 - `LOG_LEVEL`: Logging level (default: `INFO`)
 
 ## Usage
@@ -64,7 +63,6 @@ python director_agent/main.py
 ```bash
 BACKEND_BASE_URL=http://localhost:5002 \
 POLLING_INTERVAL=1.0 \
-ASSISTANT_ID=assistant_1 \
 python -m director_agent.main
 ```
 

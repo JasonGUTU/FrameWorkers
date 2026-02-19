@@ -67,6 +67,5 @@ class AgentExecution:
     created_at: datetime = field(default_factory=datetime.now)
 
 
-# Workspace model is now in workspace/workspace.py
-# Import it here for backward compatibility
+# Workspace model
 from .workspace import Workspace

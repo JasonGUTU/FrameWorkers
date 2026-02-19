@@ -7,7 +7,7 @@ from datetime import datetime
 from .service import AssistantService
 from .storage import assistant_storage
 from .models import (
-    Assistant, Agent, AgentExecution,
+    Assistant, AgentExecution,
     ExecutionStatus
 )
 from .workspace import Workspace
@@ -28,7 +28,7 @@ def create_assistant_blueprint():
             return obj.value
         if isinstance(obj, datetime):
             return obj.isoformat()
-        if isinstance(obj, (Assistant, Agent, AgentExecution)):
+        if isinstance(obj, (Assistant, AgentExecution)):
             result = {}
             for k, v in obj.__dict__.items():
                 if isinstance(v, (ExecutionStatus,)):
@@ -84,6 +84,12 @@ def create_assistant_blueprint():
         if not agent_id:
             return jsonify({'error': 'Missing required field: agent_id'}), 400
         
+        # Verify agent exists in registry
+        registry = get_agent_registry()
+        agent_instance = registry.get_agent(agent_id)
+        if agent_instance is None:
+            return jsonify({'error': f'Agent {agent_id} not found in registry'}), 404
+        
         success = assistant_storage.add_agent_to_global_assistant(agent_id)
         if not success:
             return jsonify({'error': 'Failed to add agent'}), 400
@@ -91,31 +97,7 @@ def create_assistant_blueprint():
         assistant = assistant_storage.get_global_assistant()
         return jsonify(serialize_assistant_enum(assistant))
     
-    # Agent routes
-    @bp.route('/api/assistant/agents/create', methods=['POST'])
-    def create_agent():
-        """Create a new agent"""
-        data = request.get_json()
-        if not data:
-            return jsonify({'error': 'Invalid JSON body'}), 400
-        
-        name = data.get('name')
-        description = data.get('description', '')
-        input_schema = data.get('input_schema', {})
-        capabilities = data.get('capabilities', [])
-        
-        if not name:
-            return jsonify({'error': 'Missing required field: name'}), 400
-        
-        agent = assistant_storage.create_agent(name, description, input_schema, capabilities)
-        return jsonify(serialize_assistant_enum(agent)), 201
-    
-    @bp.route('/api/assistant/agents/list', methods=['GET'])
-    def get_all_agents():
-        """Get all agents (from storage)"""
-        agents = assistant_storage.get_all_agents()
-        return jsonify([serialize_assistant_enum(a) for a in agents])
-    
+    # Sub-Agent routes (from registry)
     @bp.route('/api/assistant/sub-agents', methods=['GET'])
     def get_all_sub_agents():
         """
@@ -135,14 +117,6 @@ def create_assistant_blueprint():
         if agent is None:
             return jsonify({'error': 'Sub-agent not found'}), 404
         return jsonify(agent.get_info())
-    
-    @bp.route('/api/assistant/agents/<agent_id>', methods=['GET'])
-    def get_agent(agent_id: str):
-        """Get an agent by ID"""
-        agent = assistant_storage.get_agent(agent_id)
-        if agent is None:
-            return jsonify({'error': 'Agent not found'}), 404
-        return jsonify(serialize_assistant_enum(agent))
     
     @bp.route('/api/assistant/agents/<agent_id>/inputs', methods=['GET'])
     def get_agent_inputs(agent_id: str):

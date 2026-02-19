@@ -415,7 +415,7 @@ def create_blueprint():
         pointer = storage.get_execution_pointer()
         return jsonify(serialize_enum(pointer))
     
-    # Task Stack routes (for backward compatibility and convenience)
+    # Task Stack routes
     @bp.route('/api/task-stack/next', methods=['GET'])
     def get_next_task():
         """Get the next task to execute based on execution pointer"""

@@ -41,11 +41,9 @@ class AssistantStorage:
         # Global assistant instance (singleton)
         self.global_assistant: Optional[Assistant] = None
         
-        # Legacy: Keep agents and executions for backward compatibility
-        self.agents: Dict[str, Agent] = {}
+        # Execution records
         self.executions: Dict[str, AgentExecution] = {}
         self.global_workspace: Optional[Workspace] = None  # Single global workspace
-        self.agent_counter = 0
         self.execution_counter = 0
         self.lock = Lock()
     
@@ -120,121 +118,6 @@ class AssistantStorage:
                 self.global_assistant = assistant
             
             return True
-    
-    # Legacy methods for backward compatibility (deprecated)
-    def create_assistant(
-        self,
-        name: str,
-        description: str,
-        agent_ids: Optional[List[str]] = None
-    ) -> Assistant:
-        """
-        Legacy method - returns global assistant
-        
-        Deprecated: Use get_global_assistant() instead
-        """
-        return self.get_global_assistant()
-    
-    def get_assistant(self, assistant_id: Optional[str] = None) -> Optional[Assistant]:
-        """
-        Legacy method - returns global assistant
-        
-        Deprecated: Use get_global_assistant() instead
-        """
-        return self.get_global_assistant()
-    
-    def get_all_assistants(self) -> List[Assistant]:
-        """
-        Legacy method - returns list with global assistant
-        
-        Deprecated: Use get_global_assistant() instead
-        """
-        return [self.get_global_assistant()]
-    
-    def update_assistant(
-        self,
-        assistant_id: Optional[str] = None,
-        name: Optional[str] = None,
-        description: Optional[str] = None,
-        agent_ids: Optional[List[str]] = None
-    ) -> Optional[Assistant]:
-        """
-        Legacy method - updates global assistant
-        
-        Deprecated: Use update_global_assistant() instead
-        """
-        return self.update_global_assistant(name, description, agent_ids)
-    
-    def add_agent_to_assistant(self, assistant_id: Optional[str] = None, agent_id: str = None) -> bool:
-        """
-        Legacy method - adds agent to global assistant
-        
-        Deprecated: Use add_agent_to_global_assistant() instead
-        """
-        if agent_id is None:
-            return False
-        return self.add_agent_to_global_assistant(agent_id)
-    
-    # Agent operations
-    def create_agent(
-        self,
-        name: str,
-        description: str,
-        input_schema: Dict[str, Any],
-        capabilities: List[str]
-    ) -> Agent:
-        """Create a new agent"""
-        with self.lock:
-            self.agent_counter += 1
-            agent_id = f"agent_{self.agent_counter}_{uuid.uuid4().hex[:8]}"
-            
-            agent = Agent(
-                id=agent_id,
-                name=name,
-                description=description,
-                input_schema=input_schema,
-                capabilities=capabilities,
-                created_at=datetime.now(),
-                updated_at=datetime.now()
-            )
-            self.agents[agent_id] = agent
-            return agent
-    
-    def get_agent(self, agent_id: str) -> Optional[Agent]:
-        """Get an agent by ID"""
-        with self.lock:
-            return self.agents.get(agent_id)
-    
-    def get_all_agents(self) -> List[Agent]:
-        """Get all agents"""
-        with self.lock:
-            return list(self.agents.values())
-    
-    def update_agent(
-        self,
-        agent_id: str,
-        name: Optional[str] = None,
-        description: Optional[str] = None,
-        input_schema: Optional[Dict[str, Any]] = None,
-        capabilities: Optional[List[str]] = None
-    ) -> Optional[Agent]:
-        """Update an agent"""
-        with self.lock:
-            agent = self.agents.get(agent_id)
-            if agent is None:
-                return None
-            
-            updated_agent = Agent(
-                id=agent.id,
-                name=name if name is not None else agent.name,
-                description=description if description is not None else agent.description,
-                input_schema=input_schema if input_schema is not None else agent.input_schema,
-                capabilities=capabilities if capabilities is not None else agent.capabilities,
-                created_at=agent.created_at,
-                updated_at=datetime.now()
-            )
-            self.agents[agent_id] = updated_agent
-            return updated_agent
     
     # Execution operations
     def create_execution(
@@ -346,23 +229,6 @@ class AssistantStorage:
             # Workspace updates itself internally, we just update the reference
             self.global_workspace = workspace
             return True
-    
-    # Legacy methods for backward compatibility (deprecated)
-    def create_workspace(self, assistant_id: str) -> Workspace:
-        """
-        Legacy method - creates/returns global workspace
-        
-        Deprecated: Use create_global_workspace() instead
-        """
-        return self.create_global_workspace()
-    
-    def get_workspace_by_assistant(self, assistant_id: str) -> Optional[Workspace]:
-        """
-        Legacy method - returns global workspace
-        
-        Deprecated: Use get_global_workspace() instead
-        """
-        return self.get_global_workspace()
 
 
 # Global storage instance

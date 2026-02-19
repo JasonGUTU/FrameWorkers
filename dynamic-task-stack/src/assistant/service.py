@@ -61,28 +61,18 @@ class AssistantService:
         Raises:
             ValueError: If agent not found
         """
-        # Try to get from registry first (preferred)
+        # Get agent from registry
         agent_instance = self.agent_registry.get_agent(agent_id)
-        if agent_instance:
-            return {
-                "agent_id": agent_id,
-                "agent_name": agent_instance.metadata.name,
-                "input_schema": agent_instance.get_input_schema(),
-                "output_schema": agent_instance.get_output_schema(),
-                "capabilities": agent_instance.get_capabilities(),
-                "description": agent_instance.metadata.description
-            }
-        
-        # Fallback to storage (for backward compatibility)
-        agent = self.storage.get_agent(agent_id)
-        if agent is None:
-            raise ValueError(f"Agent {agent_id} not found")
+        if agent_instance is None:
+            raise ValueError(f"Agent {agent_id} not found in registry")
         
         return {
             "agent_id": agent_id,
-            "agent_name": agent.name,
-            "input_schema": agent.input_schema,
-            "capabilities": agent.capabilities
+            "agent_name": agent_instance.metadata.name,
+            "input_schema": agent_instance.get_input_schema(),
+            "output_schema": agent_instance.get_output_schema(),
+            "capabilities": agent_instance.get_capabilities(),
+            "description": agent_instance.metadata.description
         }
     
     def prepare_environment(self, task_id: str) -> Workspace:
@@ -126,10 +116,7 @@ class AssistantService:
         # Get agent instance to understand its requirements
         agent_instance = self.agent_registry.get_agent(agent_id)
         if agent_instance is None:
-            # Fallback to storage
-            agent = self.storage.get_agent(agent_id)
-            if agent is None:
-                raise ValueError(f"Agent {agent_id} not found")
+            raise ValueError(f"Agent {agent_id} not found in registry")
         
         # Get task from task storage (read-only)
         task = task_storage.get_task(task_id)
@@ -216,8 +203,6 @@ class AssistantService:
             agent_instance = self.agent_registry.get_agent(agent_id)
             
             if agent_instance is None:
-                # Fallback: try to get from storage (for backward compatibility)
-                # But prefer registry-based agents
                 raise ValueError(f"Agent {agent_id} not found in registry")
             
             # Update execution status

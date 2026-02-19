@@ -81,8 +81,7 @@ dynamic-task-stack/
 2. **统一管理**：Assistant 统一管理所有 sub-agents
 3. **自动发现**：Agents 自动注册，无需手动配置
 4. **易于扩展**：添加新 Agent 只需创建文件夹和实现类
-5. **向后兼容**：支持旧的 agents 目录结构
-6. **线程安全**：所有存储操作都是线程安全的
+5. **线程安全**：所有存储操作都是线程安全的
 
 ---
 
@@ -119,7 +118,7 @@ dynamic-task-stack/
 - `get_user_message()`: 根据 ID 获取单个消息
 - `get_all_user_messages()`: 获取所有消息
 - `get_unread_messages()`: 获取未读消息（支持 sender_type 过滤，可指定检查 director_read 或 user_read）
-- `get_unread_user_messages()`: 获取未读消息（便捷方法，向后兼容）
+- `get_unread_user_messages()`: 获取未读消息（便捷方法）
 - `update_message_read_status()`: 更新消息读取状态（使用 director_read_status）
 
 **任务操作**：
@@ -225,11 +224,6 @@ dynamic-task-stack/
 - `update_global_assistant()`: 更新全局 assistant
 - `add_agent_to_global_assistant()`: 添加 agent 到全局 assistant
 
-**Agent 操作**：
-- `create_agent()`: 创建 agent
-- `get_agent()`: 获取 agent
-- `get_all_agents()`: 获取所有 agents
-
 **执行操作**：
 - `create_execution()`: 创建执行记录
 - `get_execution()`: 获取执行记录
@@ -261,13 +255,7 @@ dynamic-task-stack/
 - `PUT /api/assistant` - 更新全局 assistant
 - `POST /api/assistant/agents` - 添加 agent 到 assistant
 
-**Agent 管理**：
-- `POST /api/assistant/agents/create` - 创建 agent
-- `GET /api/assistant/agents/list` - 列出所有 agents
-- `GET /api/assistant/agents/<agent_id>` - 获取 agent
-- `GET /api/assistant/agents/<agent_id>/inputs` - 获取 agent 输入要求
-
-**Sub-Agent 查询**（自动发现的 agents）：
+**Sub-Agent 查询**（从注册表自动发现的 agents）：
 - `GET /api/assistant/sub-agents` - 获取所有已安装的 sub-agents
 - `GET /api/assistant/sub-agents/<agent_id>` - 获取特定 sub-agent 信息
 
@@ -530,13 +518,7 @@ class AgentExecution:
 - `PUT /api/assistant` - 更新全局 assistant
 - `POST /api/assistant/agents` - 添加 agent 到 assistant
 
-#### Agent 管理
-- `POST /api/assistant/agents/create` - 创建 agent（存储）
-- `GET /api/assistant/agents/list` - 列出所有 agents（存储）
-- `GET /api/assistant/agents/<agent_id>` - 获取 agent（存储）
-- `GET /api/assistant/agents/<agent_id>/inputs` - 获取 agent 输入要求
-
-#### Sub-Agent 查询（自动发现的 agents）
+#### Sub-Agent 查询（从注册表自动发现的 agents）
 - `GET /api/assistant/sub-agents` - 获取所有已安装的 sub-agents（聚合信息）
 - `GET /api/assistant/sub-agents/<agent_id>` - 获取特定 sub-agent 信息
 

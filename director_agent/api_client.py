@@ -181,8 +181,7 @@ class BackendAPIClient:
         self,
         agent_id: str,
         task_id: str,
-        additional_inputs: Optional[Dict[str, Any]] = None,
-        assistant_id: Optional[str] = None  # Deprecated: kept for backward compatibility
+        additional_inputs: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """
         Execute an agent for a task
@@ -191,7 +190,6 @@ class BackendAPIClient:
             agent_id: ID of the agent to execute
             task_id: ID of the task
             additional_inputs: Optional additional inputs
-            assistant_id: Deprecated - no longer needed (global assistant is used)
         """
         data = {
             'agent_id': agent_id,
@@ -209,12 +207,9 @@ class BackendAPIClient:
         """Get all executions for a task"""
         return self._request('GET', f'/api/assistant/executions/task/{task_id}')
     
-    def get_assistant(self, assistant_id: Optional[str] = None) -> Dict[str, Any]:
+    def get_assistant(self) -> Dict[str, Any]:
         """
         Get the global assistant instance
-        
-        Args:
-            assistant_id: Deprecated - no longer needed (global assistant is used)
         """
         return self._request('GET', '/api/assistant')
     

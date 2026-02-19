@@ -544,14 +544,6 @@ export default {
   border: 1px solid #E0E0E0;
   border-bottom-left-radius: 4px;
 }
-
-/* Note: Worker type is deprecated, kept for backward compatibility only */
-.message-item.worker {
-  justify-content: flex-start;
-}
-
-.message-item.worker .message-content {
-  background-color: #ffffff;
   color: #333;
   border: 1px solid #e0e0e0;
   border-bottom-left-radius: 4px;
