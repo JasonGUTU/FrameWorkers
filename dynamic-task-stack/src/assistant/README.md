@@ -1,0 +1,452 @@
+# Assistant API 文档
+
+Assistant 模块提供了统一的 Agent 管理和编排系统，支持全局单例 Assistant、Sub-agent 自动发现、Agent 执行和工作空间管理。
+
+## 目录
+
+- [数据结构](#数据结构)
+- [Assistant 管理 API](#assistant-管理-api)
+- [Sub-Agent 查询 API](#sub-agent-查询-api)
+- [Agent 执行 API](#agent-执行-api)
+- [执行记录 API](#执行记录-api)
+- [Workspace API](#workspace-api)
+
+---
+
+## 数据结构
+
+### ExecutionStatus
+
+执行状态枚举：
+
+- `PENDING` - 待执行
+- `IN_PROGRESS` - 执行中
+- `COMPLETED` - 已完成
+- `FAILED` - 失败
+
+### Assistant
+
+全局 Assistant 数据结构：
+
+```python
+{
+    "id": str,              # Assistant ID（固定为 "assistant_global"）
+    "name": str,            # Assistant 名称
+    "description": str,      # Assistant 描述
+    "agent_ids": List[str], # 管理的 Agent ID 列表
+    "created_at": datetime, # 创建时间
+    "updated_at": datetime  # 更新时间
+}
+```
+
+### AgentExecution
+
+Agent 执行记录数据结构：
+
+```python
+{
+    "id": str,                      # 执行 ID
+    "assistant_id": str,            # Assistant ID
+    "agent_id": str,                # Agent ID
+    "task_id": str,                 # 任务 ID
+    "status": ExecutionStatus,      # 执行状态
+    "inputs": Dict[str, Any],       # 输入数据
+    "results": Optional[Dict[str, Any]],  # 执行结果
+    "error": Optional[str],         # 错误信息
+    "started_at": Optional[datetime],  # 开始时间
+    "completed_at": Optional[datetime], # 完成时间
+    "created_at": datetime          # 创建时间
+}
+```
+
+---
+
+## Assistant 管理 API
+
+### 获取全局 Assistant
+
+**GET** `/api/assistant`
+
+获取全局 Assistant 实例（单例）。
+
+**响应：**
+
+```json
+{
+    "id": "assistant_global",
+    "name": "Global Assistant",
+    "description": "Global assistant instance that manages all sub-agents and workspace interactions",
+    "agent_ids": ["agent_1", "agent_2"],
+    "created_at": "2024-01-01T10:00:00",
+    "updated_at": "2024-01-01T10:00:00"
+}
+```
+
+**状态码：**
+- `200` - 成功
+
+---
+
+### 更新全局 Assistant
+
+**PUT** `/api/assistant`
+
+更新全局 Assistant 实例。
+
+**请求体：**
+
+```json
+{
+    "name": "Updated Assistant Name",      // 可选
+    "description": "Updated description",  // 可选
+    "agent_ids": ["agent_1", "agent_2"]   // 可选
+}
+```
+
+**响应：**
+
+```json
+{
+    "id": "assistant_global",
+    "name": "Updated Assistant Name",
+    "description": "Updated description",
+    "agent_ids": ["agent_1", "agent_2"],
+    "updated_at": "2024-01-01T10:05:00"
+}
+```
+
+**状态码：**
+- `200` - 更新成功
+- `400` - 请求体无效
+
+---
+
+### 添加 Agent 到 Assistant
+
+**POST** `/api/assistant/agents`
+
+将 Agent 添加到全局 Assistant。
+
+**请求体：**
+
+```json
+{
+    "agent_id": "my_agent"
+}
+```
+
+**响应：**
+
+```json
+{
+    "id": "assistant_global",
+    "agent_ids": ["agent_1", "agent_2", "my_agent"],
+    ...
+}
+```
+
+**状态码：**
+- `200` - 添加成功
+- `400` - 请求体无效或缺少必需字段
+- `404` - Agent 在注册表中不存在
+
+---
+
+## Sub-Agent 查询 API
+
+### 获取所有 Sub-Agents
+
+**GET** `/api/assistant/sub-agents`
+
+获取所有已安装的 Sub-agents（从注册表自动发现）。
+
+**响应：**
+
+```json
+[
+    {
+        "agent_id": "example_agent",
+        "name": "Example Agent",
+        "description": "An example agent",
+        "capabilities": ["example_capability"],
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "input": {
+                    "type": "string",
+                    "description": "Input string"
+                }
+            },
+            "required": ["input"]
+        },
+        "output_schema": {
+            "type": "object",
+            "properties": {
+                "result": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    ...
+]
+```
+
+**状态码：**
+- `200` - 成功
+
+---
+
+### 获取单个 Sub-Agent 信息
+
+**GET** `/api/assistant/sub-agents/<agent_id>`
+
+获取特定 Sub-agent 的详细信息。
+
+**响应：**
+
+```json
+{
+    "agent_id": "example_agent",
+    "name": "Example Agent",
+    "description": "An example agent",
+    "capabilities": ["example_capability"],
+    "input_schema": {...},
+    "output_schema": {...},
+    "metadata": {
+        "author": "Frameworkers",
+        "version": "1.0.0"
+    }
+}
+```
+
+**状态码：**
+- `200` - 成功
+- `404` - Sub-agent 不存在
+
+---
+
+### 获取 Agent 输入要求
+
+**GET** `/api/assistant/agents/<agent_id>/inputs`
+
+查询 Agent 的输入要求和模式。
+
+**响应：**
+
+```json
+{
+    "agent_id": "example_agent",
+    "agent_name": "Example Agent",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "input": {
+                "type": "string",
+                "description": "Input string"
+            }
+        },
+        "required": ["input"]
+    },
+    "output_schema": {
+        "type": "object",
+        "properties": {
+            "result": {
+                "type": "string"
+            }
+        }
+    },
+    "capabilities": ["example_capability"],
+    "description": "An example agent"
+}
+```
+
+**状态码：**
+- `200` - 成功
+- `404` - Agent 不存在
+
+---
+
+## Agent 执行 API
+
+### 执行 Agent
+
+**POST** `/api/assistant/execute`
+
+执行 Agent 的完整流程，包括：
+1. 查询 Agent 输入要求
+2. 准备执行环境
+3. 检索相关信息
+4. 打包数据
+5. 执行 Agent
+6. 处理结果
+
+**请求体：**
+
+```json
+{
+    "agent_id": "example_agent",
+    "task_id": "task_1_abc123",
+    "additional_inputs": {  // 可选：额外的输入数据
+        "custom_param": "value"
+    }
+}
+```
+
+**响应：**
+
+```json
+{
+    "execution_id": "exec_1_abc123",
+    "agent_id": "example_agent",
+    "task_id": "task_1_abc123",
+    "status": "COMPLETED",
+    "inputs": {
+        "input": "processed input data",
+        "custom_param": "value"
+    },
+    "results": {
+        "result": "execution result"
+    },
+    "started_at": "2024-01-01T10:00:00",
+    "completed_at": "2024-01-01T10:05:00"
+}
+```
+
+**状态码：**
+- `200` - 执行成功
+- `400` - 请求体无效或缺少必需字段
+- `404` - Agent 或任务不存在
+- `500` - 执行失败
+
+---
+
+## 执行记录 API
+
+### 获取执行记录
+
+**GET** `/api/assistant/executions/<execution_id>`
+
+根据执行 ID 获取执行记录。
+
+**响应：**
+
+```json
+{
+    "id": "exec_1_abc123",
+    "assistant_id": "assistant_global",
+    "agent_id": "example_agent",
+    "task_id": "task_1_abc123",
+    "status": "COMPLETED",
+    "inputs": {...},
+    "results": {...},
+    "error": null,
+    "started_at": "2024-01-01T10:00:00",
+    "completed_at": "2024-01-01T10:05:00",
+    "created_at": "2024-01-01T10:00:00"
+}
+```
+
+**状态码：**
+- `200` - 成功
+- `404` - 执行记录不存在
+
+---
+
+### 获取任务的所有执行记录
+
+**GET** `/api/assistant/executions/task/<task_id>`
+
+获取指定任务的所有执行记录。
+
+**响应：**
+
+```json
+[
+    {
+        "id": "exec_1_abc123",
+        "agent_id": "example_agent",
+        "status": "COMPLETED",
+        ...
+    },
+    {
+        "id": "exec_2_def456",
+        "agent_id": "another_agent",
+        "status": "FAILED",
+        "error": "Execution error message",
+        ...
+    },
+    ...
+]
+```
+
+**状态码：**
+- `200` - 成功
+
+---
+
+## Workspace API
+
+Workspace API 提供了文件管理、Global Memory 和日志管理功能。详细文档请参考 [Workspace README](./workspace/README.md)。
+
+### Workspace 信息
+
+- `GET /api/assistant/workspace` - 获取工作空间摘要
+- `GET /api/assistant/workspace/summary` - 获取详细摘要
+
+### 文件管理
+
+- `GET /api/assistant/workspace/files` - 列出文件
+- `GET /api/assistant/workspace/files/<file_id>` - 获取文件元数据
+- `GET /api/assistant/workspace/files/search` - 搜索文件
+
+### Global Memory
+
+- `GET /api/assistant/workspace/memory` - 读取记忆
+- `POST /api/assistant/workspace/memory` - 写入记忆
+
+### 日志
+
+- `GET /api/assistant/workspace/logs` - 获取日志
+
+### 综合搜索
+
+- `GET /api/assistant/workspace/search` - 综合搜索（文件、记忆、日志）
+
+---
+
+## 错误处理
+
+所有 API 在出错时返回标准错误响应：
+
+```json
+{
+    "error": "错误描述信息"
+}
+```
+
+常见错误状态码：
+
+- `400` - 请求错误（无效的请求体、缺少必需字段等）
+- `404` - 资源不存在（Agent、任务、执行记录等）
+- `500` - 服务器内部错误（执行失败等）
+
+---
+
+## 注意事项
+
+1. **全局单例**：系统只有一个全局 Assistant 实例，ID 固定为 `"assistant_global"`。
+
+2. **Agent 注册表**：所有 Sub-agents 通过 Agent Registry 自动发现和注册，不需要手动创建。
+
+3. **执行流程**：`execute_agent` API 执行完整的 6 步流程：
+   - 查询 Agent 输入要求
+   - 准备执行环境
+   - 检索相关信息（从 Workspace）
+   - 打包数据
+   - 执行 Agent
+   - 处理结果
+
+4. **工作空间共享**：所有 Agents 共享一个全局工作空间，可以访问相同的文件、记忆和日志。
+
+5. **执行记录**：每次 Agent 执行都会创建执行记录，用于跟踪执行历史和状态。
