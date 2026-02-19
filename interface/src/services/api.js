@@ -17,6 +17,18 @@ export const messagesAPI = {
     return api.get('/messages/list', { params })
   },
   get: (msg_id) => api.get(`/messages/${msg_id}`),
+  unread: (options = {}) => {
+    // options: { sender_type, user_id, target_user_id, check_director_read, check_user_read }
+    // user_id: sender user_id (who sent the message)
+    // target_user_id: target user_id (for user_read_status check)
+    const params = {}
+    if (options.sender_type) params.sender_type = options.sender_type
+    if (options.user_id) params.user_id = options.user_id
+    if (options.target_user_id) params.target_user_id = options.target_user_id
+    if (options.check_director_read !== undefined) params.check_director_read = options.check_director_read
+    if (options.check_user_read !== undefined) params.check_user_read = options.check_user_read
+    return api.get('/messages/unread', { params })
+  },
   updateReadStatus: (msg_id, director_read_status = null, user_read_status = null) => {
     const data = {}
     if (director_read_status) data.director_read_status = director_read_status

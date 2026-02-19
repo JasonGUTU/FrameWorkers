@@ -76,6 +76,58 @@ def create_blueprint():
         messages = storage.get_all_user_messages(user_id)
         return jsonify([serialize_enum(msg) for msg in messages])
     
+    @bp.route('/api/messages/unread', methods=['GET'])
+    def get_unread_messages():
+        """
+        Get unread messages with optional filters
+        
+        Query parameters:
+        - sender_type: Optional (director, subagent, user) - filter by message sender type
+        - user_id: Optional - filter by sender user_id (who sent the message)
+        - target_user_id: Optional - filter by target user_id (for user_read_status check)
+        - check_director_read: Optional (true/false, default: false) - check director_read_status
+        - check_user_read: Optional (true/false, default: false) - check user_read_status
+        
+        Note: If neither check_director_read nor check_user_read is specified, 
+              defaults to check_director_read=true
+        """
+        sender_type_str = request.args.get('sender_type')
+        user_id = request.args.get('user_id')  # Sender user_id
+        target_user_id = request.args.get('target_user_id')  # Target user_id for user_read check
+        check_director_read_str = request.args.get('check_director_read')
+        check_user_read_str = request.args.get('check_user_read')
+        
+        # Parse check flags
+        check_director_read = False
+        check_user_read = False
+        
+        if check_director_read_str is not None:
+            check_director_read = check_director_read_str.lower() == 'true'
+        if check_user_read_str is not None:
+            check_user_read = check_user_read_str.lower() == 'true'
+        
+        # Default to check_director_read if neither is specified
+        if check_director_read_str is None and check_user_read_str is None:
+            check_director_read = True
+        
+        sender_type = None
+        if sender_type_str:
+            try:
+                sender_type = MessageSenderType(sender_type_str.lower())
+            except ValueError:
+                return jsonify({
+                    'error': f'Invalid sender_type: {sender_type_str}. Must be one of: director, subagent, user'
+                }), 400
+        
+        messages = storage.get_unread_messages(
+            sender_type=sender_type,
+            user_id=user_id,
+            check_director_read=check_director_read,
+            check_user_read=check_user_read,
+            target_user_id=target_user_id
+        )
+        return jsonify([serialize_enum(msg) for msg in messages])
+    
     @bp.route('/api/messages/<msg_id>/read-status', methods=['PUT'])
     def update_message_read_status(msg_id: str):
         """Update read status of a message"""

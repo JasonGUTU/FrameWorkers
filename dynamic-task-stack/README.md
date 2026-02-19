@@ -114,8 +114,10 @@ dynamic-task-stack/
 
 **用户消息操作**：
 - `create_user_message()`: 创建用户消息（支持 sender_type 参数：director, subagent, user）
-- `get_user_message()`: 获取消息
-- `get_all_user_messages()`: 获取所有消息
+- `get_user_message()`: 根据 ID 获取单个消息
+- `get_all_user_messages()`: 获取所有消息（可选 user_id 过滤）
+- `get_unread_messages()`: 获取未读消息（通用方法，支持 sender_type、user_id、target_user_id 过滤，可指定检查 director_read 或 user_read）
+- `get_unread_user_messages()`: 获取未读消息（便捷方法，向后兼容）
 - `update_message_read_status()`: 更新消息读取状态（使用 director_read_status）
 
 **任务操作**：
@@ -479,8 +481,9 @@ class AgentExecution:
 
 #### 用户消息
 - `POST /api/messages/create` - 创建用户消息（支持 sender_type 参数：director, subagent, user）
-- `GET /api/messages/<msg_id>` - 获取消息
-- `GET /api/messages/list` - 获取所有消息（可选 user_id 过滤）
+- `GET /api/messages/<msg_id>` - 根据 ID 获取单个消息
+- `GET /api/messages/list` - 获取所有消息（可选 user_id 查询参数）
+- `GET /api/messages/unread` - 获取未读消息（支持查询参数：sender_type, user_id, target_user_id, check_director_read, check_user_read）
 - `PUT /api/messages/<msg_id>/read-status` - 更新消息读取状态（使用 director_read_status）
 - `GET /api/messages/<msg_id>/check` - 检查消息（数据结构、读取状态、是否新任务）
 
@@ -589,6 +592,34 @@ curl http://localhost:5000/health
 ## 使用示例
 
 ### Task Stack 基本使用
+
+#### 获取未读消息
+
+```bash
+# 获取所有未读消息（Director 未读，默认）
+GET /api/messages/unread
+
+# 获取所有未读消息（Director 未读，显式指定）
+GET /api/messages/unread?check_director_read=true
+
+# 获取未读的 User 类型消息（Director 未读）
+GET /api/messages/unread?sender_type=user&check_director_read=true
+
+# 获取特定发送者的未读消息（user_id 是发送者）
+GET /api/messages/unread?user_id=user_123&check_director_read=true
+
+# 获取特定目标用户的未读消息（检查 user_read_status）
+GET /api/messages/unread?target_user_id=user_123&check_user_read=true
+
+# 组合查询：获取特定发送者的 Director 未读消息
+GET /api/messages/unread?sender_type=director&user_id=director_1&check_director_read=true
+
+# 组合查询：获取特定目标用户的未读消息（检查 user_read_status）
+GET /api/messages/unread?target_user_id=user_123&check_user_read=true
+
+# 同时检查 Director 和 User 未读状态
+GET /api/messages/unread?check_director_read=true&check_user_read=true&target_user_id=user_123
+```
 
 #### 创建任务栈
 

@@ -67,6 +67,85 @@ class TaskStackStorage:
                 if msg.user_id == user_id
             ]
     
+    def get_unread_messages(
+        self,
+        sender_type: Optional[MessageSenderType] = None,
+        user_id: Optional[str] = None,
+        check_director_read: bool = False,
+        check_user_read: bool = False,
+        target_user_id: Optional[str] = None
+    ) -> List[UserMessage]:
+        """
+        Get unread messages with optional filters
+        
+        Args:
+            sender_type: Optional sender type filter (director, subagent, user)
+            user_id: Optional sender user_id filter (who sent the message)
+            check_director_read: If True, filter by director_read_status == UNREAD
+            check_user_read: If True, filter by user_read_status == UNREAD
+            target_user_id: Optional target user_id for user_read_status check 
+                          (if provided, only checks messages where user_id == target_user_id)
+            
+        Returns:
+            List of unread UserMessage objects
+            
+        Note:
+            At least one of check_director_read or check_user_read must be True
+        """
+        with self.lock:
+            if not check_director_read and not check_user_read:
+                # If neither is specified, default to check_director_read
+                check_director_read = True
+            
+            messages = list(self.user_messages.values())
+            
+            # Filter by sender user_id if provided
+            if user_id is not None:
+                messages = [msg for msg in messages if msg.user_id == user_id]
+            
+            # Filter by sender_type if provided
+            if sender_type is not None:
+                messages = [msg for msg in messages if msg.sender_type == sender_type]
+            
+            # Filter by read status
+            result = []
+            for msg in messages:
+                is_unread = False
+                
+                # Check director read status
+                if check_director_read and msg.director_read_status == ReadingStatus.UNREAD:
+                    is_unread = True
+                
+                # Check user read status (optionally filtered by target_user_id)
+                if check_user_read:
+                    if target_user_id is None or msg.user_id == target_user_id:
+                        if msg.user_read_status == ReadingStatus.UNREAD:
+                            is_unread = True
+                
+                if is_unread:
+                    result.append(msg)
+            
+            return result
+    
+    def get_unread_user_messages(
+        self,
+        sender_type: Optional[MessageSenderType] = None,
+        user_id: Optional[str] = None,
+        check_director_read: bool = True,
+        check_user_read: bool = False
+    ) -> List[UserMessage]:
+        """
+        Get unread user messages (convenience method)
+        
+        This is a convenience wrapper around get_unread_messages() for backward compatibility.
+        """
+        return self.get_unread_messages(
+            sender_type=sender_type,
+            user_id=user_id,
+            check_director_read=check_director_read,
+            check_user_read=check_user_read
+        )
+    
     def update_message_read_status(
         self,
         msg_id: str,
