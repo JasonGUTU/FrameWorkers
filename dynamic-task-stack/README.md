@@ -1,6 +1,6 @@
-# Frameworks Backend
+# Frameworkers Backend
 
-Frameworks Backend 是一个强大的任务管理和 Agent 编排系统，提供分层级的任务执行框架和统一的 Agent 管理平台。
+Frameworkers 是一个任务管理和 Agent 编排系统，提供分层级的任务执行框架和统一的 Agent 管理平台。
 
 ## 目录
 
