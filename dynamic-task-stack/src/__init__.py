@@ -1,4 +1,4 @@
-# Dynamic Task Stack package
+# Frameworks Backend package
 
 from .app import create_app
 

@@ -1,4 +1,4 @@
-# API routes for Dynamic Task Stack
+# API routes for Frameworks Backend
 
 from flask import Blueprint, request, jsonify
 from typing import Optional
@@ -437,7 +437,7 @@ def create_blueprint():
         """Health check endpoint"""
         return jsonify({
             'status': 'ok',
-            'service': 'Dynamic Task Stack'
+            'service': 'Frameworks Backend'
         })
     
     return bp

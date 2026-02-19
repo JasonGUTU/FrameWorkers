@@ -1,8 +1,9 @@
-# Main Flask application for Dynamic Task Stack
+# Main Flask application for Frameworks Backend
 
 from flask import Flask
 from flask_cors import CORS
-from .routes import create_blueprint
+from .task_stack import create_blueprint
+from .assistant import create_assistant_blueprint
 
 
 def create_app(config=None):
@@ -16,9 +17,14 @@ def create_app(config=None):
     if config:
         app.config.update(config)
     
-    # Register blueprint
-    bp = create_blueprint()
-    app.register_blueprint(bp)
+    # Register blueprints
+    # Task Stack routes (existing)
+    task_bp = create_blueprint()
+    app.register_blueprint(task_bp)
+    
+    # Assistant routes (new - isolated)
+    assistant_bp = create_assistant_blueprint()
+    app.register_blueprint(assistant_bp)
     
     return app
 

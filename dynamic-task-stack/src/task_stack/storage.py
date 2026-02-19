@@ -1,4 +1,4 @@
-# In-memory storage for Dynamic Task Stack
+# In-memory storage for Frameworks Backend
 # In production, this should be replaced with a proper database
 
 from threading import Lock

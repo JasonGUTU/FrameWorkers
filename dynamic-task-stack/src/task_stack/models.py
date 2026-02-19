@@ -1,4 +1,4 @@
-# Data models for Dynamic Task Stack
+# Data models for Frameworks Backend
 
 from enum import Enum
 from dataclasses import dataclass, field
