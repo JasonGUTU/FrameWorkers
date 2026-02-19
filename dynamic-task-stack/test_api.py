@@ -9,7 +9,7 @@ import json
 import time
 from typing import Dict, Any, Optional
 
-BASE_URL = "http://localhost:5000"
+BASE_URL = "http://localhost:5002"
 HEADERS = {"Content-Type": "application/json"}
 
 
@@ -566,16 +566,243 @@ def test_error_handling():
     return success_count == total_count
 
 
+def demo_workflow():
+    """Create a demo workflow that can be observed in the frontend"""
+    print_test("Demo Workflow - Creating visible frontend changes")
+    
+    try:
+        user_id = "demo_user_" + str(int(time.time()))
+        
+        # 1. Create user messages
+        print_info("Creating user messages...")
+        msg1 = requests.post(
+            f"{BASE_URL}/api/messages/create",
+            json={"content": "Hello! I need help with a task.", "user_id": user_id},
+            headers=HEADERS
+        ).json()
+        print_success(f"Created message: {msg1['id']}")
+        
+        time.sleep(1)
+        
+        msg2 = requests.post(
+            f"{BASE_URL}/api/messages/create",
+            json={"content": "Please process this data and generate a report.", "user_id": user_id},
+            headers=HEADERS
+        ).json()
+        print_success(f"Created message: {msg2['id']}")
+        
+        # 2. Create tasks
+        print_info("Creating tasks...")
+        task1 = requests.post(
+            f"{BASE_URL}/api/tasks/create",
+            json={
+                "description": {
+                    "overall_description": "Process user data",
+                    "input": {"data": "sample data"},
+                    "requirements": ["validate", "transform"],
+                    "additional_notes": "High priority"
+                }
+            },
+            headers=HEADERS
+        ).json()
+        print_success(f"Created task: {task1['id']}")
+        
+        task2 = requests.post(
+            f"{BASE_URL}/api/tasks/create",
+            json={
+                "description": {
+                    "overall_description": "Generate report",
+                    "input": {},
+                    "requirements": ["analyze", "format"],
+                    "additional_notes": ""
+                }
+            },
+            headers=HEADERS
+        ).json()
+        print_success(f"Created task: {task2['id']}")
+        
+        task3 = requests.post(
+            f"{BASE_URL}/api/tasks/create",
+            json={
+                "description": {
+                    "overall_description": "Send notification",
+                    "input": {},
+                    "requirements": ["format", "send"],
+                    "additional_notes": ""
+                }
+            },
+            headers=HEADERS
+        ).json()
+        print_success(f"Created task: {task3['id']}")
+        
+        # 3. Create layers
+        print_info("Creating task layers...")
+        layer0 = requests.post(
+            f"{BASE_URL}/api/layers/create",
+            json={
+                "pre_hook": {"type": "middleware", "action": "prepare_environment"},
+                "post_hook": {"type": "hook", "action": "cleanup"}
+            },
+            headers=HEADERS
+        ).json()
+        print_success(f"Created Layer {layer0['layer_index']}")
+        
+        layer1 = requests.post(
+            f"{BASE_URL}/api/layers/create",
+            json={
+                "pre_hook": {"type": "middleware", "action": "prepare"},
+                "post_hook": {"type": "hook", "action": "finalize"}
+            },
+            headers=HEADERS
+        ).json()
+        print_success(f"Created Layer {layer1['layer_index']}")
+        
+        # 4. Add tasks to layers
+        print_info("Adding tasks to layers...")
+        requests.post(
+            f"{BASE_URL}/api/layers/0/tasks",
+            json={"task_id": task1['id']},
+            headers=HEADERS
+        )
+        print_success(f"Added task {task1['id']} to Layer 0")
+        
+        requests.post(
+            f"{BASE_URL}/api/layers/1/tasks",
+            json={"task_id": task2['id']},
+            headers=HEADERS
+        )
+        print_success(f"Added task {task2['id']} to Layer 1")
+        
+        requests.post(
+            f"{BASE_URL}/api/layers/1/tasks",
+            json={"task_id": task3['id']},
+            headers=HEADERS
+        )
+        print_success(f"Added task {task3['id']} to Layer 1")
+        
+        # 5. Set execution pointer
+        print_info("Setting execution pointer...")
+        requests.put(
+            f"{BASE_URL}/api/execution-pointer/set",
+            json={"layer_index": 0, "task_index": 0},
+            headers=HEADERS
+        )
+        print_success("Execution pointer set to Layer 0, Task 0")
+        
+        # 6. Simulate task execution
+        print_info("Simulating task execution...")
+        time.sleep(1)
+        
+        # Update task 1 to IN_PROGRESS
+        requests.put(
+            f"{BASE_URL}/api/tasks/{task1['id']}/status",
+            json={"status": "IN_PROGRESS"},
+            headers=HEADERS
+        )
+        print_success(f"Task {task1['id']} status: IN_PROGRESS")
+        time.sleep(2)
+        
+        # Update task 1 progress
+        requests.put(
+            f"{BASE_URL}/api/tasks/{task1['id']}",
+            json={
+                "progress": {"step1": "done", "step2": "in_progress", "step3": "pending"}
+            },
+            headers=HEADERS
+        )
+        print_success("Updated task progress")
+        time.sleep(2)
+        
+        # Complete task 1
+        requests.put(
+            f"{BASE_URL}/api/tasks/{task1['id']}/status",
+            json={"status": "COMPLETED"},
+            headers=HEADERS
+        )
+        requests.put(
+            f"{BASE_URL}/api/tasks/{task1['id']}",
+            json={
+                "results": {"output": "Processed data", "status": "success"}
+            },
+            headers=HEADERS
+        )
+        print_success(f"Task {task1['id']} completed")
+        time.sleep(1)
+        
+        # Advance pointer
+        requests.post(f"{BASE_URL}/api/execution-pointer/advance")
+        print_success("Advanced execution pointer")
+        time.sleep(1)
+        
+        # Update task 2 to IN_PROGRESS
+        requests.put(
+            f"{BASE_URL}/api/execution-pointer/set",
+            json={"layer_index": 1, "task_index": 0},
+            headers=HEADERS
+        )
+        requests.put(
+            f"{BASE_URL}/api/tasks/{task2['id']}/status",
+            json={"status": "IN_PROGRESS"},
+            headers=HEADERS
+        )
+        print_success(f"Task {task2['id']} status: IN_PROGRESS")
+        time.sleep(2)
+        
+        # Complete task 2
+        requests.put(
+            f"{BASE_URL}/api/tasks/{task2['id']}/status",
+            json={"status": "COMPLETED"},
+            headers=HEADERS
+        )
+        print_success(f"Task {task2['id']} completed")
+        time.sleep(1)
+        
+        # Create server response message
+        server_msg = requests.post(
+            f"{BASE_URL}/api/messages/create",
+            json={
+                "content": "Task completed successfully! Report generated.",
+                "user_id": "server"
+            },
+            headers=HEADERS
+        ).json()
+        print_success(f"Created server message: {server_msg['id']}")
+        
+        print_info("\n" + "="*60)
+        print_info("Demo workflow completed!")
+        print_info("Check the frontend to see:")
+        print_info("  - User messages in the chat window")
+        print_info("  - Task stack with 2 layers")
+        print_info("  - Task execution status changes")
+        print_info("  - System status updates")
+        print_info("="*60 + "\n")
+        
+        return True
+        
+    except Exception as e:
+        print_error(f"Demo workflow failed: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
+
+
 def main():
     """Run all tests"""
     print(f"\n{Colors.BLUE}{'='*60}")
-    print("Dynamic Task Stack API Test Suite")
+    print("FrameWorkers Dynamic Task Stack API Test Suite")
     print(f"{'='*60}{Colors.RESET}\n")
     
     # Check if server is running
     if not test_health_check():
         print_error("Server is not running. Please start the server first.")
         print_info("Run: python run.py")
+        return
+    
+    import sys
+    
+    # Check if demo mode is requested
+    if len(sys.argv) > 1 and sys.argv[1] == '--demo':
+        demo_workflow()
         return
     
     results = []
@@ -618,6 +845,9 @@ def main():
         print(f"{Colors.GREEN}All tests passed!{Colors.RESET}")
     else:
         print(f"{Colors.RED}Some tests failed.{Colors.RESET}")
+    
+    print(f"\n{Colors.YELLOW}Tip: Run with --demo flag to create a demo workflow:")
+    print(f"  python test_api.py --demo{Colors.RESET}\n")
 
 
 if __name__ == "__main__":
