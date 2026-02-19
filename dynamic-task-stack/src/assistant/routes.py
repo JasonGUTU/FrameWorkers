@@ -48,52 +48,15 @@ def create_assistant_blueprint():
             return {k: serialize_assistant_enum(v) for k, v in obj.items()}
         return obj
     
-    # Global Assistant routes (singleton)
+    # Global Assistant routes (singleton, pre-defined)
     @bp.route('/api/assistant', methods=['GET'])
     def get_assistant():
-        """Get the global assistant instance"""
-        assistant = assistant_storage.get_global_assistant()
-        return jsonify(serialize_assistant_enum(assistant))
-    
-    @bp.route('/api/assistant', methods=['PUT'])
-    def update_assistant():
-        """Update the global assistant instance"""
-        data = request.get_json()
-        if not data:
-            return jsonify({'error': 'Invalid JSON body'}), 400
+        """
+        Get the global assistant instance (singleton, pre-defined)
         
-        name = data.get('name')
-        description = data.get('description')
-        agent_ids = data.get('agent_ids')
-        
-        assistant = assistant_storage.update_global_assistant(
-            name=name,
-            description=description,
-            agent_ids=agent_ids
-        )
-        return jsonify(serialize_assistant_enum(assistant))
-    
-    @bp.route('/api/assistant/agents', methods=['POST'])
-    def add_agent_to_assistant():
-        """Add an agent to the global assistant"""
-        data = request.get_json()
-        if not data:
-            return jsonify({'error': 'Invalid JSON body'}), 400
-        
-        agent_id = data.get('agent_id')
-        if not agent_id:
-            return jsonify({'error': 'Missing required field: agent_id'}), 400
-        
-        # Verify agent exists in registry
-        registry = get_agent_registry()
-        agent_instance = registry.get_agent(agent_id)
-        if agent_instance is None:
-            return jsonify({'error': f'Agent {agent_id} not found in registry'}), 404
-        
-        success = assistant_storage.add_agent_to_global_assistant(agent_id)
-        if not success:
-            return jsonify({'error': 'Failed to add agent'}), 400
-        
+        The assistant is a pre-defined singleton that manages all sub-agents.
+        All sub-agents are automatically discovered from the registry.
+        """
         assistant = assistant_storage.get_global_assistant()
         return jsonify(serialize_assistant_enum(assistant))
     

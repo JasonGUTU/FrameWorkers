@@ -62,62 +62,11 @@ class AssistantStorage:
                     id="assistant_global",
                     name="Global Assistant",
                     description="Global assistant instance that manages all sub-agents and workspace interactions",
-                    agent_ids=[],  # Will be populated from registry
+                    agent_ids=[],  # All sub-agents are pre-defined in registry, agent_ids is informational only
                     created_at=datetime.now(),
                     updated_at=datetime.now()
                 )
             return self.global_assistant
-    
-    def update_global_assistant(
-        self,
-        name: Optional[str] = None,
-        description: Optional[str] = None,
-        agent_ids: Optional[List[str]] = None
-    ) -> Assistant:
-        """
-        Update the global assistant instance
-        
-        Args:
-            name: Optional new name
-            description: Optional new description
-            agent_ids: Optional new list of agent IDs
-            
-        Returns:
-            Updated global assistant instance
-        """
-        with self.lock:
-            assistant = self.get_global_assistant()
-            
-            updated_assistant = Assistant(
-                id=assistant.id,
-                name=name if name is not None else assistant.name,
-                description=description if description is not None else assistant.description,
-                agent_ids=agent_ids if agent_ids is not None else assistant.agent_ids,
-                created_at=assistant.created_at,
-                updated_at=datetime.now()
-            )
-            self.global_assistant = updated_assistant
-            return updated_assistant
-    
-    def add_agent_to_global_assistant(self, agent_id: str) -> bool:
-        """
-        Add an agent to the global assistant
-        
-        Args:
-            agent_id: ID of the agent to add
-            
-        Returns:
-            True if added successfully
-        """
-        with self.lock:
-            assistant = self.get_global_assistant()
-            
-            if agent_id not in assistant.agent_ids:
-                assistant.agent_ids.append(agent_id)
-                assistant.updated_at = datetime.now()
-                self.global_assistant = assistant
-            
-            return True
     
     # Execution operations
     def create_execution(

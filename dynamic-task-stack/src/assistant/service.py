@@ -187,10 +187,6 @@ class AssistantService:
         if agent_instance is None:
             raise ValueError(f"Agent {agent_id} not found in registry")
         
-        # Add agent to global assistant if not already added
-        if agent_id not in assistant.agent_ids:
-            self.storage.add_agent_to_global_assistant(agent_id)
-        
         # Create execution record
         execution = self.storage.create_execution(
             agent_id=agent_id,

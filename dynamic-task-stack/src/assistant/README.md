@@ -67,7 +67,12 @@ Agent 执行记录数据结构：
 
 **GET** `/api/assistant`
 
-获取全局 Assistant 实例（单例）。
+获取全局 Assistant 实例（单例，预先定义）。
+
+**说明：**
+- Assistant 是全局单例，ID 固定为 `"assistant_global"`
+- Assistant 是预先定义好的，不需要更新
+- 所有 Sub-agents 都是预先定义好的，通过 Agent Registry 自动发现，不需要手动添加
 
 **响应：**
 
@@ -76,7 +81,7 @@ Agent 执行记录数据结构：
     "id": "assistant_global",
     "name": "Global Assistant",
     "description": "Global assistant instance that manages all sub-agents and workspace interactions",
-    "agent_ids": ["agent_1", "agent_2"],
+    "agent_ids": [],  // 信息性字段，所有 sub-agents 通过 registry 自动发现
     "created_at": "2024-01-01T10:00:00",
     "updated_at": "2024-01-01T10:00:00"
 }
@@ -84,71 +89,6 @@ Agent 执行记录数据结构：
 
 **状态码：**
 - `200` - 成功
-
----
-
-### 更新全局 Assistant
-
-**PUT** `/api/assistant`
-
-更新全局 Assistant 实例。
-
-**请求体：**
-
-```json
-{
-    "name": "Updated Assistant Name",      // 可选
-    "description": "Updated description",  // 可选
-    "agent_ids": ["agent_1", "agent_2"]   // 可选
-}
-```
-
-**响应：**
-
-```json
-{
-    "id": "assistant_global",
-    "name": "Updated Assistant Name",
-    "description": "Updated description",
-    "agent_ids": ["agent_1", "agent_2"],
-    "updated_at": "2024-01-01T10:05:00"
-}
-```
-
-**状态码：**
-- `200` - 更新成功
-- `400` - 请求体无效
-
----
-
-### 添加 Agent 到 Assistant
-
-**POST** `/api/assistant/agents`
-
-将 Agent 添加到全局 Assistant。
-
-**请求体：**
-
-```json
-{
-    "agent_id": "my_agent"
-}
-```
-
-**响应：**
-
-```json
-{
-    "id": "assistant_global",
-    "agent_ids": ["agent_1", "agent_2", "my_agent"],
-    ...
-}
-```
-
-**状态码：**
-- `200` - 添加成功
-- `400` - 请求体无效或缺少必需字段
-- `404` - Agent 在注册表中不存在
 
 ---
 
@@ -435,9 +375,9 @@ Workspace API 提供了文件管理、Global Memory 和日志管理功能。详�
 
 ## 注意事项
 
-1. **全局单例**：系统只有一个全局 Assistant 实例，ID 固定为 `"assistant_global"`。
+1. **全局单例**：系统只有一个全局 Assistant 实例，ID 固定为 `"assistant_global"`。Assistant 是预先定义好的，不需要更新。
 
-2. **Agent 注册表**：所有 Sub-agents 通过 Agent Registry 自动发现和注册，不需要手动创建。
+2. **Agent 注册表**：所有 Sub-agents 通过 Agent Registry 自动发现和注册，都是预先定义好的，不需要手动添加或创建。
 
 3. **执行流程**：`execute_agent` API 执行完整的 6 步流程：
    - 查询 Agent 输入要求

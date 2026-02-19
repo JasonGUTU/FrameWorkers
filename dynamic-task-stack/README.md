@@ -218,9 +218,7 @@ dynamic-task-stack/
 `AssistantStorage` 类提供线程安全的内存存储：
 
 **全局 Assistant 操作**：
-- `get_global_assistant()`: 获取或创建全局 assistant
-- `update_global_assistant()`: 更新全局 assistant
-- `add_agent_to_global_assistant()`: 添加 agent 到全局 assistant
+- `get_global_assistant()`: 获取或创建全局 assistant（单例，预先定义）
 
 **执行操作**：
 - `create_execution()`: 创建执行记录
@@ -249,9 +247,7 @@ dynamic-task-stack/
 提供完整的 RESTful API：
 
 **Assistant 管理**：
-- `GET /api/assistant` - 获取全局 assistant
-- `PUT /api/assistant` - 更新全局 assistant
-- `POST /api/assistant/agents` - 添加 agent 到 assistant
+- `GET /api/assistant` - 获取全局 assistant（单例，预先定义）
 
 **Sub-Agent 查询**（从注册表自动发现的 agents）：
 - `GET /api/assistant/sub-agents` - 获取所有已安装的 sub-agents
@@ -510,9 +506,7 @@ class AgentExecution:
 ### Assistant API
 
 #### Assistant 管理
-- `GET /api/assistant` - 获取全局 assistant
-- `PUT /api/assistant` - 更新全局 assistant
-- `POST /api/assistant/agents` - 添加 agent 到 assistant
+- `GET /api/assistant` - 获取全局 assistant（单例，预先定义）
 
 #### Sub-Agent 查询（从注册表自动发现的 agents）
 - `GET /api/assistant/sub-agents` - 获取所有已安装的 sub-agents（聚合信息）
