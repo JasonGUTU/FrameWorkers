@@ -19,6 +19,8 @@ Dynamic Task Stack 是一个强大的任务管理和 Agent 编排系统，提供
 
 Dynamic Task Stack 由两个核心系统组成：
 
+**注意：本系统为单用户系统，所有消息的 user_id 固定为 "user"，不需要考虑多用户场景。**
+
 ### 1. Task Stack（任务栈系统）
 - **分层级任务管理**：支持多层级任务组织，每层可包含多个任务
 - **Hook 机制**：每层支持执行前后的 Pre-hook 和 Post-hook
@@ -113,10 +115,10 @@ dynamic-task-stack/
 `TaskStackStorage` 类提供线程安全的内存存储：
 
 **用户消息操作**：
-- `create_user_message()`: 创建用户消息（支持 sender_type 参数：director, subagent, user）
+- `create_user_message()`: 创建用户消息（支持 sender_type 参数：director, subagent, user，user_id 固定为 "user"）
 - `get_user_message()`: 根据 ID 获取单个消息
-- `get_all_user_messages()`: 获取所有消息（可选 user_id 过滤）
-- `get_unread_messages()`: 获取未读消息（通用方法，支持 sender_type、user_id、target_user_id 过滤，可指定检查 director_read 或 user_read）
+- `get_all_user_messages()`: 获取所有消息
+- `get_unread_messages()`: 获取未读消息（支持 sender_type 过滤，可指定检查 director_read 或 user_read）
 - `get_unread_user_messages()`: 获取未读消息（便捷方法，向后兼容）
 - `update_message_read_status()`: 更新消息读取状态（使用 director_read_status）
 
@@ -346,7 +348,7 @@ class UserMessage:
     id: str                     # 消息 ID
     content: str                # 消息内容
     timestamp: datetime         # 时间戳
-    user_id: str               # 用户 ID
+    user_id: str               # 用户 ID（单用户系统，固定为 "user"）
     sender_type: MessageSenderType  # 发送者类型：director, subagent, user
     director_read_status: ReadingStatus  # Director 读取状态（原 worker_read_status）
     user_read_status: ReadingStatus   # 用户读取状态
@@ -480,10 +482,10 @@ class AgentExecution:
 ### Task Stack API
 
 #### 用户消息
-- `POST /api/messages/create` - 创建用户消息（支持 sender_type 参数：director, subagent, user）
+- `POST /api/messages/create` - 创建用户消息（支持 sender_type 参数：director, subagent, user，不需要 user_id）
 - `GET /api/messages/<msg_id>` - 根据 ID 获取单个消息
-- `GET /api/messages/list` - 获取所有消息（可选 user_id 查询参数）
-- `GET /api/messages/unread` - 获取未读消息（支持查询参数：sender_type, user_id, target_user_id, check_director_read, check_user_read）
+- `GET /api/messages/list` - 获取所有消息
+- `GET /api/messages/unread` - 获取未读消息（支持查询参数：sender_type, check_director_read, check_user_read）
 - `PUT /api/messages/<msg_id>/read-status` - 更新消息读取状态（使用 director_read_status）
 - `GET /api/messages/<msg_id>/check` - 检查消息（数据结构、读取状态、是否新任务）
 
@@ -605,20 +607,14 @@ GET /api/messages/unread?check_director_read=true
 # 获取未读的 User 类型消息（Director 未读）
 GET /api/messages/unread?sender_type=user&check_director_read=true
 
-# 获取特定发送者的未读消息（user_id 是发送者）
-GET /api/messages/unread?user_id=user_123&check_director_read=true
+# 获取未读的 Director 类型消息
+GET /api/messages/unread?sender_type=director&check_director_read=true
 
-# 获取特定目标用户的未读消息（检查 user_read_status）
-GET /api/messages/unread?target_user_id=user_123&check_user_read=true
-
-# 组合查询：获取特定发送者的 Director 未读消息
-GET /api/messages/unread?sender_type=director&user_id=director_1&check_director_read=true
-
-# 组合查询：获取特定目标用户的未读消息（检查 user_read_status）
-GET /api/messages/unread?target_user_id=user_123&check_user_read=true
+# 获取用户未读的消息（检查 user_read_status）
+GET /api/messages/unread?check_user_read=true
 
 # 同时检查 Director 和 User 未读状态
-GET /api/messages/unread?check_director_read=true&check_user_read=true&target_user_id=user_123
+GET /api/messages/unread?check_director_read=true&check_user_read=true
 ```
 
 #### 创建任务栈

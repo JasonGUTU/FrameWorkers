@@ -11,20 +11,13 @@ const api = axios.create({
 
 // User Messages API
 export const messagesAPI = {
-  create: (content, user_id, sender_type = 'user') => api.post('/messages/create', { content, user_id, sender_type }),
-  list: (user_id = null) => {
-    const params = user_id ? { user_id } : {}
-    return api.get('/messages/list', { params })
-  },
+  create: (content, sender_type = 'user') => api.post('/messages/create', { content, sender_type }),
+  list: () => api.get('/messages/list'),
   get: (msg_id) => api.get(`/messages/${msg_id}`),
   unread: (options = {}) => {
-    // options: { sender_type, user_id, target_user_id, check_director_read, check_user_read }
-    // user_id: sender user_id (who sent the message)
-    // target_user_id: target user_id (for user_read_status check)
+    // options: { sender_type, check_director_read, check_user_read }
     const params = {}
     if (options.sender_type) params.sender_type = options.sender_type
-    if (options.user_id) params.user_id = options.user_id
-    if (options.target_user_id) params.target_user_id = options.target_user_id
     if (options.check_director_read !== undefined) params.check_director_read = options.check_director_read
     if (options.check_user_read !== undefined) params.check_user_read = options.check_user_read
     return api.get('/messages/unread', { params })

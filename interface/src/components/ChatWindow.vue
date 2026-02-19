@@ -180,7 +180,6 @@ export default {
       pendingFiles: [],
       pendingVideos: [],
       selectedImage: null,
-      userId: 'user_' + Date.now(), // Temporary user ID
       subagentMessagesCollapsed: false // Whether subagent messages are collapsed
     }
   },
@@ -296,7 +295,8 @@ export default {
       }
       
       // Determine sender type and display class
-      const senderType = msg.sender_type || (msg.user_id === this.userId ? 'user' : 'director')
+      // Single user system: use sender_type from message, default to 'user' if not present
+      const senderType = msg.sender_type || 'user'
       
       return {
         ...msg,
@@ -361,7 +361,7 @@ export default {
       if (!content) return
       
       try {
-        await messagesAPI.create(content, this.userId)
+        await messagesAPI.create(content, 'user')  // Single user system, sender_type is 'user'
         this.inputText = ''
         this.pendingImages = []
         this.pendingFiles = []

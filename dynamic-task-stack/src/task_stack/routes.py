@@ -42,23 +42,22 @@ def create_blueprint():
             return jsonify({'error': 'Invalid JSON body'}), 400
         
         content = data.get('content')
-        user_id = data.get('user_id')
         sender_type_str = data.get('sender_type', 'user')
         
-        if not content or not user_id:
+        if not content:
             return jsonify({
-                'error': 'Missing required fields: content, user_id'
+                'error': 'Missing required field: content'
             }), 400
         
         # Convert sender_type string to enum
         try:
             sender_type = MessageSenderType(sender_type_str.lower())
-            except ValueError:
-                return jsonify({
-                    'error': f'Invalid sender_type: {sender_type_str}. Must be one of: director, subagent, user'
-                }), 400
+        except ValueError:
+            return jsonify({
+                'error': f'Invalid sender_type: {sender_type_str}. Must be one of: director, subagent, user'
+            }), 400
         
-        message = storage.create_user_message(content, user_id, sender_type)
+        message = storage.create_user_message(content, sender_type)
         return jsonify(serialize_enum(message)), 201
     
     @bp.route('/api/messages/<msg_id>', methods=['GET'])
@@ -71,9 +70,8 @@ def create_blueprint():
     
     @bp.route('/api/messages/list', methods=['GET'])
     def get_all_user_messages():
-        """Get all user messages, optionally filtered by user_id"""
-        user_id = request.args.get('user_id')
-        messages = storage.get_all_user_messages(user_id)
+        """Get all user messages"""
+        messages = storage.get_all_user_messages()
         return jsonify([serialize_enum(msg) for msg in messages])
     
     @bp.route('/api/messages/unread', methods=['GET'])
@@ -83,8 +81,6 @@ def create_blueprint():
         
         Query parameters:
         - sender_type: Optional (director, subagent, user) - filter by message sender type
-        - user_id: Optional - filter by sender user_id (who sent the message)
-        - target_user_id: Optional - filter by target user_id (for user_read_status check)
         - check_director_read: Optional (true/false, default: false) - check director_read_status
         - check_user_read: Optional (true/false, default: false) - check user_read_status
         
@@ -92,8 +88,6 @@ def create_blueprint():
               defaults to check_director_read=true
         """
         sender_type_str = request.args.get('sender_type')
-        user_id = request.args.get('user_id')  # Sender user_id
-        target_user_id = request.args.get('target_user_id')  # Target user_id for user_read check
         check_director_read_str = request.args.get('check_director_read')
         check_user_read_str = request.args.get('check_user_read')
         
@@ -121,10 +115,8 @@ def create_blueprint():
         
         messages = storage.get_unread_messages(
             sender_type=sender_type,
-            user_id=user_id,
             check_director_read=check_director_read,
-            check_user_read=check_user_read,
-            target_user_id=target_user_id
+            check_user_read=check_user_read
         )
         return jsonify([serialize_enum(msg) for msg in messages])
     
@@ -545,11 +537,11 @@ def create_blueprint():
             return jsonify({'error': 'Invalid JSON body'}), 400
         
         content = data.get('content')
-        user_id = data.get('user_id')
+        sender_type_str = data.get('sender_type', 'user')
         
-        if not content or not user_id:
+        if not content:
             return jsonify({
-                'error': 'Missing required fields: content, user_id'
+                'error': 'Missing required field: content'
             }), 400
         
         # Verify task exists
@@ -557,7 +549,15 @@ def create_blueprint():
         if task is None:
             return jsonify({'error': 'Task not found'}), 404
         
-        message = storage.create_user_message(content, user_id, task_id)
+        # Convert sender_type string to enum
+        try:
+            sender_type = MessageSenderType(sender_type_str.lower())
+        except ValueError:
+            return jsonify({
+                'error': f'Invalid sender_type: {sender_type_str}. Must be one of: director, subagent, user'
+            }), 400
+        
+        message = storage.create_user_message(content, sender_type, task_id)
         return jsonify(serialize_enum(message)), 201
     
     # Batch operations route

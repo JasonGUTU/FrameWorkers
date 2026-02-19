@@ -65,10 +65,9 @@ class BackendAPIClient:
     
     # Task Stack API methods
     
-    def get_user_messages(self, user_id: Optional[str] = None) -> List[Dict[str, Any]]:
+    def get_user_messages(self) -> List[Dict[str, Any]]:
         """Get all user messages"""
-        params = {'user_id': user_id} if user_id else None
-        return self._request('GET', '/api/messages/list', params=params)
+        return self._request('GET', '/api/messages/list')
     
     def get_user_message(self, msg_id: str) -> Dict[str, Any]:
         """Get a specific user message"""

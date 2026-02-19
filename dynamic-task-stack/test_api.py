@@ -68,7 +68,7 @@ def test_user_messages():
     try:
         response = requests.post(
             f"{BASE_URL}/api/messages/create",
-            json={"content": "Test message", "user_id": "test_user_1"},
+            json={"content": "Test message"},
             headers=HEADERS
         )
         assert response.status_code == 201
@@ -105,16 +105,14 @@ def test_user_messages():
     except Exception as e:
         print_error(f"Get all messages failed: {e}")
     
-    # Get messages filtered by user_id
+    # Get all messages (single user system)
     total_count += 1
     try:
-        response = requests.get(
-            f"{BASE_URL}/api/messages/list?user_id=test_user_1"
-        )
+        response = requests.get(f"{BASE_URL}/api/messages/list")
         assert response.status_code == 200
         data = response.json()
         assert isinstance(data, list)
-        print_success(f"Retrieved {len(data)} messages for user")
+        print_success(f"Retrieved {len(data)} messages")
         success_count += 1
     except Exception as e:
         print_error(f"Get filtered messages failed: {e}")
@@ -250,7 +248,7 @@ def test_tasks():
     try:
         response = requests.post(
             f"{BASE_URL}/api/tasks/{task_id}/messages",
-            json={"content": "Task message", "user_id": "test_user_1"},
+            json={"content": "Task message"},
             headers=HEADERS
         )
         assert response.status_code == 201
@@ -571,13 +569,11 @@ def demo_workflow():
     print_test("Demo Workflow - Creating visible frontend changes")
     
     try:
-        user_id = "demo_user_" + str(int(time.time()))
-        
-        # 1. Create user messages
+        # 1. Create user messages (single user system)
         print_info("Creating user messages...")
         msg1 = requests.post(
             f"{BASE_URL}/api/messages/create",
-            json={"content": "Hello! I need help with a task.", "user_id": user_id},
+            json={"content": "Hello! I need help with a task."},
             headers=HEADERS
         ).json()
         print_success(f"Created message: {msg1['id']}")
@@ -586,7 +582,7 @@ def demo_workflow():
         
         msg2 = requests.post(
             f"{BASE_URL}/api/messages/create",
-            json={"content": "Please process this data and generate a report.", "user_id": user_id},
+            json={"content": "Please process this data and generate a report."},
             headers=HEADERS
         ).json()
         print_success(f"Created message: {msg2['id']}")
@@ -762,7 +758,7 @@ def demo_workflow():
             f"{BASE_URL}/api/messages/create",
             json={
                 "content": "Task completed successfully! Report generated.",
-                "user_id": "server"
+                "sender_type": "director"
             },
             headers=HEADERS
         ).json()
