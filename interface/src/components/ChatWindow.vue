@@ -2,6 +2,13 @@
   <div class="chat-window">
     <div class="chat-header">
       <h2 class="chat-title">对话窗口</h2>
+      <button 
+        class="toggle-subagent-btn" 
+        @click="toggleSubagentMessages"
+        :title="subagentMessagesCollapsed ? '展开 Subagent 消息' : '折叠 Subagent 消息'"
+      >
+        {{ subagentMessagesCollapsed ? '展开 Subagent' : '折叠 Subagent' }}
+      </button>
     </div>
     
     <div class="messages-container" ref="messagesContainer">
@@ -9,7 +16,11 @@
         v-for="message in messages"
         :key="message.id"
         class="message-item"
-        :class="message.sender"
+        :class="[
+          message.senderType,
+          { 'subagent-collapsed': subagentMessagesCollapsed && message.senderType === 'subagent' }
+        ]"
+        v-show="!(subagentMessagesCollapsed && message.senderType === 'subagent')"
       >
         <div class="message-content">
           <!-- Text content -->
@@ -56,7 +67,7 @@
           
           <div class="message-meta">
             <span class="message-time">{{ formatTime(message.timestamp) }}</span>
-            <span v-if="message.sender === 'user'" class="message-status">
+            <span v-if="message.senderType === 'user'" class="message-status">
               {{ message.user_read_status === 'READ' ? '✓✓' : '✓' }}
             </span>
           </div>
@@ -169,7 +180,8 @@ export default {
       pendingFiles: [],
       pendingVideos: [],
       selectedImage: null,
-      userId: 'user_' + Date.now() // Temporary user ID
+      userId: 'user_' + Date.now(), // Temporary user ID
+      subagentMessagesCollapsed: false // Whether subagent messages are collapsed
     }
   },
   computed: {
@@ -283,10 +295,13 @@ export default {
           .trim()
       }
       
+      // Determine sender type and display class
+      const senderType = msg.sender_type || (msg.user_id === this.userId ? 'user' : 'director')
+      
       return {
         ...msg,
         content: textContent,
-        sender: msg.user_id === this.userId ? 'user' : 'server',
+        senderType: senderType,
         images,
         files,
         videos
@@ -430,6 +445,13 @@ export default {
       if (container) {
         container.scrollTop = container.scrollHeight
       }
+    },
+    
+    toggleSubagentMessages() {
+      this.subagentMessagesCollapsed = !this.subagentMessagesCollapsed
+      this.$nextTick(() => {
+        this.scrollToBottom()
+      })
     }
   }
 }
@@ -447,6 +469,9 @@ export default {
   padding: 16px 24px;
   border-bottom: 1px solid #e0e0e0;
   background-color: #fafafa;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .chat-title {
@@ -454,6 +479,22 @@ export default {
   font-weight: 600;
   color: #333;
   margin: 0;
+}
+
+.toggle-subagent-btn {
+  padding: 6px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background-color: #ffffff;
+  color: #666;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.toggle-subagent-btn:hover {
+  background-color: #f5f5f5;
+  border-color: #c0c0c0;
 }
 
 .messages-container {
@@ -469,12 +510,51 @@ export default {
   animation: fadeIn 0.3s;
 }
 
+/* User messages: right side, green bubble */
 .message-item.user {
   justify-content: flex-end;
 }
 
-.message-item.server {
+.message-item.user .message-content {
+  background-color: #4CAF50;
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+/* Director messages: left side, light blue background */
+.message-item.director {
   justify-content: flex-start;
+}
+
+.message-item.director .message-content {
+  background-color: #E3F2FD;
+  color: #333;
+  border: 1px solid #BBDEFB;
+  border-bottom-left-radius: 4px;
+}
+
+/* Subagent messages: left side, gray background */
+.message-item.subagent {
+  justify-content: flex-start;
+}
+
+.message-item.subagent .message-content {
+  background-color: #F5F5F5;
+  color: #333;
+  border: 1px solid #E0E0E0;
+  border-bottom-left-radius: 4px;
+}
+
+/* Worker messages: left side, default style (for backward compatibility) */
+.message-item.worker {
+  justify-content: flex-start;
+}
+
+.message-item.worker .message-content {
+  background-color: #ffffff;
+  color: #333;
+  border: 1px solid #e0e0e0;
+  border-bottom-left-radius: 4px;
 }
 
 .message-content {
@@ -482,19 +562,6 @@ export default {
   padding: 12px 16px;
   border-radius: 12px;
   word-wrap: break-word;
-}
-
-.message-item.user .message-content {
-  background-color: #4A90E2;
-  color: white;
-  border-bottom-right-radius: 4px;
-}
-
-.message-item.server .message-content {
-  background-color: #ffffff;
-  color: #333;
-  border: 1px solid #e0e0e0;
-  border-bottom-left-radius: 4px;
 }
 
 .message-text {

@@ -11,15 +11,15 @@ const api = axios.create({
 
 // User Messages API
 export const messagesAPI = {
-  create: (content, user_id) => api.post('/messages/create', { content, user_id }),
+  create: (content, user_id, sender_type = 'user') => api.post('/messages/create', { content, user_id, sender_type }),
   list: (user_id = null) => {
     const params = user_id ? { user_id } : {}
     return api.get('/messages/list', { params })
   },
   get: (msg_id) => api.get(`/messages/${msg_id}`),
-  updateReadStatus: (msg_id, worker_read_status = null, user_read_status = null) => {
+  updateReadStatus: (msg_id, director_read_status = null, user_read_status = null) => {
     const data = {}
-    if (worker_read_status) data.worker_read_status = worker_read_status
+    if (director_read_status) data.director_read_status = director_read_status
     if (user_read_status) data.user_read_status = user_read_status
     return api.put(`/messages/${msg_id}/read-status`, data)
   },

@@ -147,7 +147,7 @@ class DirectorAgent:
             messages = self.api_client.get_user_messages()
             new_messages = [
                 msg for msg in messages
-                if msg.get('worker_read_status') == 'UNREAD'
+                if msg.get('director_read_status') == 'UNREAD'
             ]
             
             if new_messages:
@@ -157,7 +157,7 @@ class DirectorAgent:
                     try:
                         self.api_client.update_message_read_status(
                             msg['id'],
-                            worker_read_status='READ'
+                            director_read_status='READ'
                         )
                     except Exception as e:
                         logger.error(f"Failed to mark message {msg['id']} as read: {e}")

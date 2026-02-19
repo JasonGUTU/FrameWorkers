@@ -124,12 +124,12 @@ def test_user_messages():
     try:
         response = requests.put(
             f"{BASE_URL}/api/messages/{msg_id}/read-status",
-            json={"worker_read_status": "READ", "user_read_status": "READ"},
+            json={"director_read_status": "READ", "user_read_status": "READ"},
             headers=HEADERS
         )
         assert response.status_code == 200
         data = response.json()
-        assert data["worker_read_status"] == "READ"
+        assert data["director_read_status"] == "READ"
         print_success("Updated read status")
         success_count += 1
     except Exception as e:

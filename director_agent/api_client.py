@@ -81,13 +81,13 @@ class BackendAPIClient:
     def update_message_read_status(
         self,
         msg_id: str,
-        worker_read_status: Optional[str] = None,
+        director_read_status: Optional[str] = None,
         user_read_status: Optional[str] = None
     ) -> Dict[str, Any]:
         """Update message read status"""
         data = {}
-        if worker_read_status:
-            data['worker_read_status'] = worker_read_status
+        if director_read_status:
+            data['director_read_status'] = director_read_status
         if user_read_status:
             data['user_read_status'] = user_read_status
         return self._request('PUT', f'/api/messages/{msg_id}/read-status', data=data)

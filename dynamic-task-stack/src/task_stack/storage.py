@@ -8,7 +8,7 @@ import uuid
 
 from .models import (
     UserMessage, Task, TaskStackEntry, TaskLayer, ExecutionPointer,
-    TaskStatus, ReadingStatus, BatchOperation, BatchOperationType
+    TaskStatus, ReadingStatus, MessageSenderType, BatchOperation, BatchOperationType
 )
 
 
@@ -29,6 +29,7 @@ class TaskStackStorage:
         self,
         content: str,
         user_id: str,
+        sender_type: MessageSenderType = MessageSenderType.USER,
         task_id: Optional[str] = None
     ) -> UserMessage:
         """Create a new user message"""
@@ -40,7 +41,8 @@ class TaskStackStorage:
                 content=content,
                 timestamp=datetime.now(),
                 user_id=user_id,
-                worker_read_status=ReadingStatus.UNREAD,
+                sender_type=sender_type,
+                director_read_status=ReadingStatus.UNREAD,
                 user_read_status=ReadingStatus.UNREAD,
                 task_id=task_id
             )
@@ -68,7 +70,7 @@ class TaskStackStorage:
     def update_message_read_status(
         self,
         msg_id: str,
-        worker_read_status: Optional[ReadingStatus] = None,
+        director_read_status: Optional[ReadingStatus] = None,
         user_read_status: Optional[ReadingStatus] = None
     ) -> Optional[UserMessage]:
         """Update read status of a message"""
@@ -77,9 +79,9 @@ class TaskStackStorage:
             if msg is None:
                 return None
             
-            new_worker_status = (
-                worker_read_status if worker_read_status is not None
-                else msg.worker_read_status
+            new_director_status = (
+                director_read_status if director_read_status is not None
+                else msg.director_read_status
             )
             new_user_status = (
                 user_read_status if user_read_status is not None
@@ -91,7 +93,8 @@ class TaskStackStorage:
                 content=msg.content,
                 timestamp=msg.timestamp,
                 user_id=msg.user_id,
-                worker_read_status=new_worker_status,
+                sender_type=msg.sender_type,
+                director_read_status=new_director_status,
                 user_read_status=new_user_status,
                 task_id=msg.task_id
             )

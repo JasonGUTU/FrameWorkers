@@ -6,7 +6,7 @@ from datetime import datetime
 
 from .storage import storage
 from .models import (
-    TaskStatus, ReadingStatus,
+    TaskStatus, ReadingStatus, MessageSenderType,
     UserMessage, Task, TaskStackEntry, TaskLayer, ExecutionPointer,
     BatchOperation, BatchOperationType, BatchOperationsRequest
 )
@@ -19,7 +19,7 @@ def create_blueprint():
     # Helper function to serialize enums
     def serialize_enum(obj):
         """Convert enum to its value"""
-        if isinstance(obj, (TaskStatus, ReadingStatus)):
+        if isinstance(obj, (TaskStatus, ReadingStatus, MessageSenderType)):
             return obj.value
         if isinstance(obj, datetime):
             return obj.isoformat()
@@ -43,13 +43,22 @@ def create_blueprint():
         
         content = data.get('content')
         user_id = data.get('user_id')
+        sender_type_str = data.get('sender_type', 'user')
         
         if not content or not user_id:
             return jsonify({
                 'error': 'Missing required fields: content, user_id'
             }), 400
         
-        message = storage.create_user_message(content, user_id)
+        # Convert sender_type string to enum
+        try:
+            sender_type = MessageSenderType(sender_type_str.lower())
+        except ValueError:
+            return jsonify({
+                'error': f'Invalid sender_type: {sender_type_str}. Must be one of: worker, director, subagent, user'
+            }), 400
+        
+        message = storage.create_user_message(content, user_id, sender_type)
         return jsonify(serialize_enum(message)), 201
     
     @bp.route('/api/messages/<msg_id>', methods=['GET'])
@@ -74,17 +83,17 @@ def create_blueprint():
         if not data:
             return jsonify({'error': 'Invalid JSON body'}), 400
         
-        worker_status_str = data.get('worker_read_status')
+        director_status_str = data.get('director_read_status')
         user_status_str = data.get('user_read_status')
         
         # Convert string to enum
-        worker_status = None
-        if worker_status_str:
+        director_status = None
+        if director_status_str:
             try:
-                worker_status = ReadingStatus(worker_status_str.upper())
+                director_status = ReadingStatus(director_status_str.upper())
             except ValueError:
                 return jsonify({
-                    'error': f'Invalid worker_read_status: {worker_status_str}'
+                    'error': f'Invalid director_read_status: {director_status_str}'
                 }), 400
         
         user_status = None
@@ -97,7 +106,7 @@ def create_blueprint():
                 }), 400
         
         updated_msg = storage.update_message_read_status(
-            msg_id, worker_status, user_status
+            msg_id, director_status, user_status
         )
         if updated_msg is None:
             return jsonify({'error': 'Message not found'}), 404
@@ -120,7 +129,8 @@ def create_blueprint():
                 'content': message.content,
                 'timestamp': message.timestamp.isoformat(),
                 'user_id': message.user_id,
-                'worker_read_status': message.worker_read_status.value,
+                'sender_type': message.sender_type.value,
+                'director_read_status': message.director_read_status.value,
                 'user_read_status': message.user_read_status.value,
                 'task_id': message.task_id
             }

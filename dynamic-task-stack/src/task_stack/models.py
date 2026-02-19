@@ -22,6 +22,14 @@ class ReadingStatus(Enum):
     READ = "READ"
 
 
+class MessageSenderType(Enum):
+    """Message sender type"""
+    WORKER = "worker"
+    DIRECTOR = "director"
+    SUBAGENT = "subagent"
+    USER = "user"
+
+
 @dataclass
 class UserMessage:
     """User Message structure"""
@@ -29,7 +37,8 @@ class UserMessage:
     content: str
     timestamp: datetime
     user_id: str
-    worker_read_status: ReadingStatus
+    sender_type: MessageSenderType  # Type of sender: worker, director, subagent, user
+    director_read_status: ReadingStatus  # Director read status (formerly worker_read_status)
     user_read_status: ReadingStatus
     task_id: Optional[str] = None  # Associated task ID if any
 
@@ -94,7 +103,7 @@ class UpdateTaskRequest:
 
 @dataclass
 class UpdateMessageReadStatusRequest:
-    worker_read_status: Optional[ReadingStatus] = None
+    director_read_status: Optional[ReadingStatus] = None
     user_read_status: Optional[ReadingStatus] = None
 
 
