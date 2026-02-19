@@ -444,24 +444,24 @@ class TaskStackStorage:
             
             return True
     
-    def modify_task_stack(
+    def insert_layer_with_tasks(
         self,
         insert_layer_index: int,
-        task_ids: List[str],
+        task_ids: Optional[List[str]] = None,
         pre_hook: Optional[Dict[str, Any]] = None,
         post_hook: Optional[Dict[str, Any]] = None
     ) -> Optional[TaskLayer]:
         """
-        Atomically insert a new layer at specified index and add tasks to it
+        Atomically insert a new layer at specified index and optionally add tasks to it
         
         This is an atomic operation that:
         1. Inserts a new layer at the specified index
-        2. Adds all specified tasks to the new layer
+        2. Optionally adds all specified tasks to the new layer (if task_ids provided)
         3. Re-indexes all layers after insertion
         
         Args:
             insert_layer_index: Index where to insert the new layer
-            task_ids: List of task IDs to add to the new layer
+            task_ids: Optional list of task IDs to add to the new layer (can be empty or None to insert empty layer)
             pre_hook: Optional pre-hook for the new layer
             post_hook: Optional post-hook for the new layer
             
@@ -470,8 +470,8 @@ class TaskStackStorage:
             
         Note:
             - Cannot insert before executed layers
-            - All task_ids must exist
-            - All tasks must not already be in any layer (or this check can be relaxed)
+            - If task_ids is provided, all task_ids must exist
+            - If task_ids is None or empty, an empty layer will be inserted
         """
         with self.lock:
             # Validate insert index
@@ -484,10 +484,11 @@ class TaskStackStorage:
                 if insert_layer_index < exec_layer:
                     return None  # Cannot insert before executed layer
             
-            # Validate all task IDs exist
-            for task_id in task_ids:
-                if task_id not in self.tasks:
-                    return None
+            # Validate all task IDs exist (only if task_ids is provided and not empty)
+            if task_ids:
+                for task_id in task_ids:
+                    if task_id not in self.tasks:
+                        return None
             
             # Create new layer
             layer = TaskLayer(
@@ -509,14 +510,15 @@ class TaskStackStorage:
                 layer.layer_index = len(self.task_layers)
                 self.task_layers.append(layer)
             
-            # Add all tasks to the new layer
-            for task_id in task_ids:
-                # Check if task already exists in this layer (shouldn't happen, but safety check)
-                if any(entry.task_id == task_id for entry in layer.tasks):
-                    continue
-                
-                entry = TaskStackEntry(task_id=task_id, created_at=datetime.now())
-                layer.tasks.append(entry)
+            # Add all tasks to the new layer (if task_ids provided)
+            if task_ids:
+                for task_id in task_ids:
+                    # Check if task already exists in this layer (shouldn't happen, but safety check)
+                    if any(entry.task_id == task_id for entry in layer.tasks):
+                        continue
+                    
+                    entry = TaskStackEntry(task_id=task_id, created_at=datetime.now())
+                    layer.tasks.append(entry)
             
             return layer
     
@@ -847,10 +849,11 @@ class TaskStackStorage:
         
         return True
     
-    def batch_operations(self, operations: List[BatchOperation]) -> Dict[str, Any]:
+    def modify_task_stack(self, operations: List[BatchOperation]) -> Dict[str, Any]:
         """
-        Execute multiple operations atomically in a single transaction
+        Execute multiple operations atomically in a single transaction (Batch Operation)
         
+        This is the unified batch operation interface for TaskStack modifications.
         All operations are executed within a single lock, ensuring atomicity.
         If any operation fails, the entire batch fails and returns error information.
         
@@ -939,9 +942,6 @@ class TaskStackStorage:
                ]
            }
            Returns: List of success booleans
-        
-        Note: For inserting a layer in the middle with tasks, use the separate
-        modify_task_stack() method instead of batch operations.
         """
         results = []
         errors = []

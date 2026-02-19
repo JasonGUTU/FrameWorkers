@@ -136,7 +136,7 @@ dynamic-task-stack/
 - `remove_task_from_layer()`: 从层中移除任务
 - `replace_task_in_layer()`: 原子替换任务
 - `update_layer_hooks()`: 更新层的 hooks
-- `modify_task_stack()`: 修改任务栈（插入层并添加任务）
+- `insert_layer_with_tasks()`: 插入层并添加任务（原子操作）
 
 **执行指针操作**：
 - `get_execution_pointer()`: 获取执行指针
@@ -145,7 +145,7 @@ dynamic-task-stack/
 - `get_next_task()`: 获取下一个要执行的任务
 
 **批量操作**：
-- `batch_operations()`: 执行批量操作（原子性）
+- `modify_task_stack()`: 修改任务栈（批量操作，原子性）
 
 **内部辅助方法**（用于批量操作，避免死锁）：
 - `_create_task_internal()`
@@ -192,10 +192,8 @@ dynamic-task-stack/
 **任务栈路由**：
 - `GET /api/task-stack/next` - 获取下一个要执行的任务
 - `GET /api/task-stack` - 获取所有层
-- `POST /api/task-stack/modify` - 修改任务栈（插入层并添加任务）
-
-**批量操作路由**：
-- `POST /api/batch-operations` - 执行批量操作
+- `POST /api/task-stack/insert-layer` - 插入层并添加任务（原子操作）
+- `POST /api/task-stack/modify` - 修改任务栈（批量操作）
 
 **健康检查**：
 - `GET /health` - 健康检查
@@ -503,10 +501,8 @@ class AgentExecution:
 #### 任务栈
 - `GET /api/task-stack/next` - 获取下一个要执行的任务
 - `GET /api/task-stack` - 获取所有层
-- `POST /api/task-stack/modify` - 修改任务栈（在指定位置插入层并添加任务）
-
-#### 批量操作
-- `POST /api/batch-operations` - 执行批量操作
+- `POST /api/task-stack/insert-layer` - 插入层并添加任务（原子操作）
+- `POST /api/task-stack/modify` - 修改任务栈（批量操作）
 
 #### 健康检查
 - `GET /health` - 健康检查
@@ -643,10 +639,19 @@ GET /api/task-stack/next
 POST /api/execution-pointer/advance
 ```
 
-#### 修改任务栈（插入层）
+#### 插入层并添加任务（原子操作）
 
 ```bash
-POST /api/task-stack/modify
+# 插入空层（不添加任务）
+POST /api/task-stack/insert-layer
+{
+  "insert_layer_index": 3,
+  "pre_hook": {"type": "middleware", "action": "prepare"},
+  "post_hook": {"type": "hook", "action": "cleanup"}
+}
+
+# 插入层并添加任务
+POST /api/task-stack/insert-layer
 {
   "insert_layer_index": 3,
   "task_ids": ["task_1_xxx", "task_2_xxx"],
@@ -655,10 +660,10 @@ POST /api/task-stack/modify
 }
 ```
 
-#### 批量操作
+#### 批量操作（修改任务栈）
 
 ```bash
-POST /api/batch-operations
+POST /api/task-stack/modify
 {
   "operations": [
     {
@@ -780,7 +785,8 @@ python test_api.py
 1. **任务修改限制**：只能修改未执行的任务，已执行的任务不能被修改
 2. **执行顺序**：严格按照层级顺序执行（Layer 0 → Layer 1 → Layer 2 → ...）
 3. **任务状态**：任务状态只能向前推进
-4. **原子操作**：`replace_task_in_layer` 和 `modify_task_stack` 是原子操作，确保数据一致性
+4. **原子操作**：`replace_task_in_layer` 和 `insert_layer_with_tasks` 是原子操作，确保数据一致性
+5. **批量操作**：`modify_task_stack` 是统一的批量操作接口，支持一次性执行多个操作
 5. **批量操作**：所有批量操作在单个锁内执行，保证原子性
 6. **线程安全**：所有操作都是线程安全的，支持并发访问
 7. **Agent ID 唯一性**：Agent ID 必须唯一

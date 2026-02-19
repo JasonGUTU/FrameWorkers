@@ -440,25 +440,34 @@ def create_blueprint():
         layers = storage.get_all_layers()
         return jsonify([serialize_enum(layer) for layer in layers])
     
-    @bp.route('/api/task-stack/modify', methods=['POST'])
-    def modify_task_stack():
+    @bp.route('/api/task-stack/insert-layer', methods=['POST'])
+    def insert_layer_with_tasks():
         """
         Atomically insert a new layer at specified index and add tasks to it
         
         Request body:
         {
-            "insert_layer_index": int,  # Index where to insert the new layer
-            "task_ids": List[str],       # List of task IDs to add to the new layer
-            "pre_hook": Optional[Dict],  # Optional pre-hook for the new layer
-            "post_hook": Optional[Dict]  # Optional post-hook for the new layer
+            "insert_layer_index": int,           # Index where to insert the new layer
+            "task_ids": Optional[List[str]],     # Optional list of task IDs to add to the new layer (can be empty or omitted to insert empty layer)
+            "pre_hook": Optional[Dict],          # Optional pre-hook for the new layer
+            "post_hook": Optional[Dict]          # Optional post-hook for the new layer
         }
         
         This is an atomic operation that:
         - Inserts a new layer at the specified index
-        - Adds all specified tasks to the new layer
+        - Optionally adds all specified tasks to the new layer (if task_ids provided)
         - Re-indexes all layers after insertion
         
-        Example:
+        Examples:
+        
+        # Insert empty layer
+        {
+            "insert_layer_index": 3,
+            "pre_hook": {"type": "middleware", "action": "prepare"},
+            "post_hook": {"type": "hook", "action": "cleanup"}
+        }
+        
+        # Insert layer with tasks
         {
             "insert_layer_index": 3,
             "task_ids": ["task_1_xxx", "task_2_xxx", "task_3_xxx"],
@@ -471,7 +480,7 @@ def create_blueprint():
             return jsonify({'error': 'Invalid JSON body'}), 400
         
         insert_layer_index = data.get('insert_layer_index')
-        task_ids = data.get('task_ids', [])
+        task_ids = data.get('task_ids')  # Optional, can be None or empty list
         pre_hook = data.get('pre_hook')
         post_hook = data.get('post_hook')
         
@@ -480,9 +489,10 @@ def create_blueprint():
                 'error': 'Missing required field: insert_layer_index'
             }), 400
         
-        if not isinstance(task_ids, list):
+        # Validate task_ids if provided
+        if task_ids is not None and not isinstance(task_ids, list):
             return jsonify({
-                'error': 'task_ids must be a list'
+                'error': 'task_ids must be a list or omitted'
             }), 400
         
         try:
@@ -492,7 +502,7 @@ def create_blueprint():
                 'error': 'insert_layer_index must be an integer'
             }), 400
         
-        layer = storage.modify_task_stack(
+        layer = storage.insert_layer_with_tasks(
             insert_layer_index=insert_layer_index,
             task_ids=task_ids,
             pre_hook=pre_hook,
@@ -501,7 +511,7 @@ def create_blueprint():
         
         if layer is None:
             return jsonify({
-                'error': 'Failed to modify task stack: invalid index, task not found, or cannot insert before executed layer'
+                'error': 'Failed to insert layer. Possible reasons: invalid index, task not found, or cannot insert before executed layers'
             }), 400
         
         return jsonify(serialize_enum(layer)), 201
@@ -561,10 +571,13 @@ def create_blueprint():
         return jsonify(serialize_enum(message)), 201
     
     # Batch operations route
-    @bp.route('/api/batch-operations', methods=['POST'])
-    def batch_operations():
+    @bp.route('/api/task-stack/modify', methods=['POST'])
+    def modify_task_stack():
         """
-        Execute multiple operations atomically in a single transaction
+        Execute multiple operations atomically in a single transaction (Batch Operation)
+        
+        This is the unified batch operation interface for TaskStack modifications.
+        All operations are executed within a single lock, ensuring atomicity.
         
         Request body:
         {
@@ -645,11 +658,6 @@ def create_blueprint():
             ]
         }
         
-        Note: For inserting a layer in the middle with tasks, use the separate
-        POST /api/task-stack/modify endpoint instead of batch operations.
-            ]
-        }
-        
         Response:
         {
             "success": bool,
@@ -666,6 +674,9 @@ def create_blueprint():
         operations_data = data.get('operations', [])
         if not isinstance(operations_data, list):
             return jsonify({'error': 'operations must be a list'}), 400
+        
+        if not operations_data:
+            return jsonify({'error': 'operations list cannot be empty'}), 400
         
         # Parse operations
         operations = []
@@ -685,7 +696,7 @@ def create_blueprint():
                 op_type = BatchOperationType(op_type_str)
             except ValueError:
                 return jsonify({
-                    'error': f'Unknown operation type: {op_type_str}'
+                    'error': f'Invalid operation type: {op_type_str}. Must be one of: {[e.value for e in BatchOperationType]}'
                 }), 400
             
             params = op_data.get('params', {})
@@ -697,7 +708,7 @@ def create_blueprint():
             operations.append(BatchOperation(type=op_type, params=params))
         
         # Execute batch operations
-        result = storage.batch_operations(operations)
+        result = storage.modify_task_stack(operations)
         
         # Serialize result
         return jsonify(serialize_enum(result))

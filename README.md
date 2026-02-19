@@ -93,8 +93,8 @@ FrameWorkers/
 - **分层级任务管理**：多层级任务组织，每层可包含多个任务
 - **Hook 机制**：每层支持执行前后的 Pre-hook 和 Post-hook
 - **执行指针**：跟踪当前执行位置，支持动态修改未执行的任务
-- **原子操作**：任务替换、批量操作等操作的原子性保证
-- **批量操作**：支持一次性执行多个操作，提高效率
+- **原子操作**：任务替换、插入层并添加任务等操作的原子性保证
+- **批量操作**：统一的批量操作接口，支持一次性执行多个操作（创建任务、创建层、添加任务到层等）
 
 详细文档：[dynamic-task-stack/README.md](./dynamic-task-stack/README.md)
 
@@ -277,6 +277,38 @@ POST /api/layers/create
 POST /api/layers/0/tasks
 {
   "task_id": "task_1_xxx"
+}
+
+# 插入层并添加任务（原子操作）
+POST /api/task-stack/insert-layer
+{
+  "insert_layer_index": 3,
+  "task_ids": ["task_1_xxx", "task_2_xxx"],
+  "pre_hook": {"type": "middleware"},
+  "post_hook": {"type": "hook"}
+}
+
+# 批量操作（修改任务栈）
+POST /api/task-stack/modify
+{
+  "operations": [
+    {
+      "type": "create_tasks",
+      "params": {
+        "tasks": [
+          {"description": {"overall_description": "任务1"}}
+        ]
+      }
+    },
+    {
+      "type": "create_layers",
+      "params": {
+        "layers": [
+          {"layer_index": 0, "pre_hook": {}, "post_hook": {}}
+        ]
+      }
+    }
+  ]
 }
 ```
 
