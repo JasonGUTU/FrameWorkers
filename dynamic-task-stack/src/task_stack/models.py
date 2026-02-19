@@ -96,3 +96,38 @@ class UpdateTaskRequest:
 class UpdateMessageReadStatusRequest:
     worker_read_status: Optional[ReadingStatus] = None
     user_read_status: Optional[ReadingStatus] = None
+
+
+# Batch operation models
+class BatchOperationType(Enum):
+    """Batch operation types"""
+    CREATE_TASKS = "create_tasks"
+    CREATE_LAYERS = "create_layers"
+    ADD_TASKS_TO_LAYERS = "add_tasks_to_layers"
+    REMOVE_TASKS_FROM_LAYERS = "remove_tasks_from_layers"
+    REPLACE_TASKS_IN_LAYERS = "replace_tasks_in_layers"
+    UPDATE_LAYER_HOOKS = "update_layer_hooks"
+
+
+@dataclass
+class BatchOperation:
+    """
+    Single operation in a batch transaction
+    
+    Each operation has:
+    - type: Operation type (BatchOperationType)
+    - params: Operation-specific parameters (Dict[str, Any])
+    """
+    type: BatchOperationType
+    params: Dict[str, Any]
+
+
+@dataclass
+class BatchOperationsRequest:
+    """
+    Request for batch operations
+    
+    Contains a list of operations to execute atomically.
+    All operations are executed within a single lock, ensuring atomicity.
+    """
+    operations: List[BatchOperation]

@@ -1,16 +1,15 @@
-# Frameworks Backend
+# Dynamic Task Stack Backend
 
-Frameworks Backend 是一个强大的任务管理和 Agent 编排系统，提供分层级的任务执行框架和统一的 Agent 管理平台。
+Dynamic Task Stack 是一个强大的任务管理和 Agent 编排系统，提供分层级的任务执行框架和统一的 Agent 管理平台。
 
 ## 目录
 
 - [系统概述](#系统概述)
 - [架构设计](#架构设计)
-- [核心功能](#核心功能)
+- [子模块设计](#子模块设计)
+- [数据结构](#数据结构)
+- [API 路由](#api-路由)
 - [快速开始](#快速开始)
-- [Task Stack 系统](#task-stack-系统)
-- [Assistant 系统](#assistant-系统)
-- [API 文档](#api-文档)
 - [使用示例](#使用示例)
 - [开发指南](#开发指南)
 
@@ -18,13 +17,14 @@ Frameworks Backend 是一个强大的任务管理和 Agent 编排系统，提供
 
 ## 系统概述
 
-Frameworks Backend 由两个核心系统组成：
+Dynamic Task Stack 由两个核心系统组成：
 
 ### 1. Task Stack（任务栈系统）
 - **分层级任务管理**：支持多层级任务组织，每层可包含多个任务
 - **Hook 机制**：每层支持执行前后的 Pre-hook 和 Post-hook
 - **执行指针**：跟踪当前执行位置，支持动态修改未执行的任务
-- **原子操作**：确保任务替换等操作的原子性
+- **原子操作**：确保任务替换、批量操作等操作的原子性
+- **批量操作**：支持一次性执行多个操作，提高效率
 
 ### 2. Assistant（助手系统）
 - **统一管理**：只有一个全局 assistant 来管理所有的 sub-agent
@@ -40,37 +40,37 @@ Frameworks Backend 由两个核心系统组成：
 ### 目录结构
 
 ```
-FrameWorkers/
-├── agents/                          # Agents 目录（项目根目录）
-│   ├── __init__.py
-│   ├── base_agent.py                # BaseAgent 导入辅助模块
-│   ├── README.md                    # Agents 详细文档
-│   └── example_agent/              # 示例 Agent
+dynamic-task-stack/
+├── src/
+│   ├── app.py                   # Flask 应用入口
+│   ├── task_stack/              # Task Stack 模块
+│   │   ├── __init__.py
+│   │   ├── models.py            # 数据模型
+│   │   ├── routes.py            # API 路由
+│   │   └── storage.py           # 数据存储
+│   └── assistant/               # Assistant 模块
 │       ├── __init__.py
-│       └── agent.py
-├── dynamic-task-stack/              # Backend 主目录
-│   ├── src/
-│   │   ├── app.py                   # Flask 应用入口
-│   │   ├── task_stack/              # Task Stack 模块
-│   │   │   ├── __init__.py
-│   │   │   ├── models.py            # 数据模型
-│   │   │   ├── routes.py            # API 路由
-│   │   │   └── storage.py           # 数据存储
-│   │   └── assistant/              # Assistant 模块
-│   │       ├── __init__.py
-│   │       ├── models.py            # Assistant 数据模型
-│   │       ├── routes.py             # Assistant API 路由
-│   │       ├── service.py            # Assistant 核心业务逻辑
-│   │       ├── storage.py            # Assistant 数据存储
-│   │       ├── retrieval.py          # 检索模块（PLACEHOLDER）
-│   │       └── agent_core/           # Agent 核心框架（基础设施）
-│   │           ├── __init__.py
-│   │           ├── base_agent.py     # BaseAgent 抽象基类
-│   │           └── agent_registry.py # Agent 发现和注册机制
-│   ├── requirements.txt
-│   ├── run.py
-│   └── README.md                    # 本文档
-└── interface/                       # 前端界面
+│       ├── models.py            # Assistant 数据模型
+│       ├── routes.py            # Assistant API 路由
+│       ├── service.py           # Assistant 核心业务逻辑
+│       ├── storage.py           # Assistant 数据存储
+│       ├── retrieval.py         # 检索模块（PLACEHOLDER）
+│       ├── agent_core/           # Agent 核心框架（基础设施）
+│       │   ├── __init__.py
+│       │   ├── base_agent.py     # BaseAgent 抽象基类
+│       │   └── agent_registry.py # Agent 发现和注册机制
+│       └── workspace/           # 工作空间模块
+│           ├── __init__.py
+│           ├── workspace.py     # 工作空间核心
+│           ├── file_manager.py  # 文件管理
+│           ├── log_manager.py   # 日志管理
+│           ├── memory_manager.py # 内存管理
+│           └── models.py        # 工作空间数据模型
+├── requirements.txt
+├── run.py
+├── test_api.py
+├── README.md                    # 本文档
+└── USAGE_EXAMPLES.md            # 使用示例
 ```
 
 ### 设计原则
@@ -80,28 +80,468 @@ FrameWorkers/
 3. **自动发现**：Agents 自动注册，无需手动配置
 4. **易于扩展**：添加新 Agent 只需创建文件夹和实现类
 5. **向后兼容**：支持旧的 agents 目录结构
+6. **线程安全**：所有存储操作都是线程安全的
 
 ---
 
-## 核心功能
+## 子模块设计
 
-### Task Stack 功能
+### Task Stack 模块
 
-- ✅ 分层级任务管理（Layer-based task management）
-- ✅ Pre-hook 和 Post-hook 支持
-- ✅ 执行指针跟踪
-- ✅ 动态修改未执行任务（原子操作）
-- ✅ 任务状态管理（PENDING → IN_PROGRESS → COMPLETED/FAILED）
-- ✅ 线程安全的数据存储
+#### 1. models.py - 数据模型
 
-### Assistant 功能
+定义了所有 Task Stack 相关的数据模型：
 
-- ✅ Agent 自动发现和注册
-- ✅ Agent 信息聚合和查询
-- ✅ 完整的执行流程编排
-- ✅ 工作空间管理（概念模型）
-- ✅ 执行历史记录
-- ✅ 输入输出模式验证
+- **枚举类型**：
+  - `TaskStatus`: 任务状态（PENDING, IN_PROGRESS, COMPLETED, FAILED, CANCELLED）
+  - `ReadingStatus`: 消息读取状态（UNREAD, READ）
+  - `BatchOperationType`: 批量操作类型
+
+- **核心数据类**：
+  - `UserMessage`: 用户消息
+  - `Task`: 任务
+  - `TaskStackEntry`: 任务栈条目
+  - `TaskLayer`: 任务层
+  - `ExecutionPointer`: 执行指针
+
+- **批量操作模型**：
+  - `BatchOperation`: 单个批量操作
+  - `BatchOperationsRequest`: 批量操作请求
+
+#### 2. storage.py - 数据存储
+
+`TaskStackStorage` 类提供线程安全的内存存储：
+
+**用户消息操作**：
+- `create_user_message()`: 创建用户消息
+- `get_user_message()`: 获取消息
+- `get_all_user_messages()`: 获取所有消息
+- `update_message_read_status()`: 更新消息读取状态
+
+**任务操作**：
+- `create_task()`: 创建任务
+- `get_task()`: 获取任务
+- `get_all_tasks()`: 获取所有任务
+- `update_task()`: 更新任务
+- `delete_task()`: 删除任务
+
+**层操作**：
+- `create_layer()`: 创建层
+- `get_layer()`: 获取层
+- `get_all_layers()`: 获取所有层
+- `add_task_to_layer()`: 添加任务到层
+- `remove_task_from_layer()`: 从层中移除任务
+- `replace_task_in_layer()`: 原子替换任务
+- `update_layer_hooks()`: 更新层的 hooks
+- `modify_task_stack()`: 修改任务栈（插入层并添加任务）
+
+**执行指针操作**：
+- `get_execution_pointer()`: 获取执行指针
+- `set_execution_pointer()`: 设置执行指针
+- `advance_execution_pointer()`: 推进执行指针
+- `get_next_task()`: 获取下一个要执行的任务
+
+**批量操作**：
+- `batch_operations()`: 执行批量操作（原子性）
+
+**内部辅助方法**（用于批量操作，避免死锁）：
+- `_create_task_internal()`
+- `_create_layer_internal()`
+- `_add_task_to_layer_internal()`
+- `_remove_task_from_layer_internal()`
+- `_replace_task_in_layer_internal()`
+- `_update_layer_hooks_internal()`
+
+#### 3. routes.py - API 路由
+
+提供完整的 RESTful API：
+
+**用户消息路由**：
+- `POST /api/messages/create` - 创建用户消息
+- `GET /api/messages/<msg_id>` - 获取消息
+- `GET /api/messages/list` - 获取所有消息
+- `PUT /api/messages/<msg_id>/read-status` - 更新消息读取状态
+- `GET /api/messages/<msg_id>/check` - 检查消息
+
+**任务路由**：
+- `POST /api/tasks/create` - 创建任务
+- `GET /api/tasks/<task_id>` - 获取任务
+- `GET /api/tasks/list` - 获取所有任务
+- `PUT /api/tasks/<task_id>` - 更新任务
+- `DELETE /api/tasks/<task_id>` - 删除任务
+- `PUT /api/tasks/<task_id>/status` - 更新任务状态
+- `POST /api/tasks/<task_id>/messages` - 推送消息到任务
+
+**层路由**：
+- `POST /api/layers/create` - 创建层
+- `GET /api/layers/list` - 获取所有层
+- `GET /api/layers/<layer_index>` - 获取特定层
+- `PUT /api/layers/<layer_index>/hooks` - 更新层的 hooks
+- `POST /api/layers/<layer_index>/tasks` - 添加任务到层
+- `DELETE /api/layers/<layer_index>/tasks/<task_id>` - 从层中删除任务
+- `POST /api/layers/<layer_index>/tasks/replace` - 原子替换任务
+
+**执行指针路由**：
+- `GET /api/execution-pointer/get` - 获取执行指针
+- `PUT /api/execution-pointer/set` - 设置执行指针
+- `POST /api/execution-pointer/advance` - 推进执行指针
+
+**任务栈路由**：
+- `GET /api/task-stack/next` - 获取下一个要执行的任务
+- `GET /api/task-stack` - 获取所有层
+- `POST /api/task-stack/modify` - 修改任务栈（插入层并添加任务）
+
+**批量操作路由**：
+- `POST /api/batch-operations` - 执行批量操作
+
+**健康检查**：
+- `GET /health` - 健康检查
+
+### Assistant 模块
+
+#### 1. models.py - 数据模型
+
+定义了所有 Assistant 相关的数据模型：
+
+- **枚举类型**：
+  - `AgentStatus`: Agent 状态（IDLE, EXECUTING, COMPLETED, FAILED）
+  - `ExecutionStatus`: 执行状态（PENDING, IN_PROGRESS, COMPLETED, FAILED）
+
+- **核心数据类**：
+  - `Agent`: Agent 信息
+  - `Assistant`: Assistant 实例（全局单例）
+  - `AgentExecution`: Agent 执行记录
+
+#### 2. storage.py - 数据存储
+
+`AssistantStorage` 类提供线程安全的内存存储：
+
+**全局 Assistant 操作**：
+- `get_global_assistant()`: 获取或创建全局 assistant
+- `update_global_assistant()`: 更新全局 assistant
+- `add_agent_to_global_assistant()`: 添加 agent 到全局 assistant
+
+**Agent 操作**：
+- `create_agent()`: 创建 agent
+- `get_agent()`: 获取 agent
+- `get_all_agents()`: 获取所有 agents
+
+**执行操作**：
+- `create_execution()`: 创建执行记录
+- `get_execution()`: 获取执行记录
+- `get_executions_by_task()`: 获取任务的所有执行记录
+- `update_execution()`: 更新执行记录
+
+**工作空间操作**：
+- `create_global_workspace()`: 创建全局工作空间
+- `get_global_workspace()`: 获取全局工作空间
+- `update_workspace()`: 更新工作空间
+
+#### 3. service.py - 核心业务逻辑
+
+`AssistantService` 类提供完整的执行流程：
+
+- `query_agent_inputs()`: 查询 agent 所需输入
+- `prepare_environment()`: 准备执行环境
+- `package_data()`: 打包数据
+- `execute_agent()`: 执行 agent
+- `process_results()`: 处理结果
+- `execute_agent_for_task()`: 完整的执行流程
+
+#### 4. routes.py - API 路由
+
+提供完整的 RESTful API：
+
+**Assistant 管理**：
+- `GET /api/assistant` - 获取全局 assistant
+- `PUT /api/assistant` - 更新全局 assistant
+- `POST /api/assistant/agents` - 添加 agent 到 assistant
+
+**Agent 管理**：
+- `POST /api/assistant/agents/create` - 创建 agent
+- `GET /api/assistant/agents/list` - 列出所有 agents
+- `GET /api/assistant/agents/<agent_id>` - 获取 agent
+- `GET /api/assistant/agents/<agent_id>/inputs` - 获取 agent 输入要求
+
+**Sub-Agent 查询**（自动发现的 agents）：
+- `GET /api/assistant/sub-agents` - 获取所有已安装的 sub-agents
+- `GET /api/assistant/sub-agents/<agent_id>` - 获取特定 sub-agent 信息
+
+**Agent 执行**：
+- `POST /api/assistant/execute` - 执行 agent
+- `GET /api/assistant/executions/<execution_id>` - 获取执行记录
+- `GET /api/assistant/executions/task/<task_id>` - 获取任务的所有执行记录
+
+**工作空间**：
+- `GET /api/assistant/workspace` - 获取全局工作空间
+- `GET /api/assistant/workspace/summary` - 获取工作空间摘要
+- `GET /api/assistant/workspace/files` - 列出工作空间文件
+- `GET /api/assistant/workspace/files/<file_id>` - 获取文件元数据
+- `GET /api/assistant/workspace/files/search` - 搜索文件
+- `GET /api/assistant/workspace/memory` - 获取全局内存
+- `POST /api/assistant/workspace/memory` - 写入全局内存
+- `GET /api/assistant/workspace/logs` - 获取日志
+- `GET /api/assistant/workspace/search` - 综合搜索
+
+#### 5. agent_core/ - Agent 核心框架
+
+**base_agent.py**：
+- `BaseAgent`: Agent 抽象基类
+- `AgentMetadata`: Agent 元数据
+
+**agent_registry.py**：
+- `AgentRegistry`: Agent 注册表
+- `get_agent_registry()`: 获取全局注册表实例
+- 自动发现和注册 agents
+
+#### 6. workspace/ - 工作空间模块
+
+**workspace.py**：
+- `Workspace`: 工作空间核心类
+- 文件、内存、日志的统一管理
+
+**file_manager.py**：
+- 文件管理功能
+
+**log_manager.py**：
+- 日志管理功能
+
+**memory_manager.py**：
+- 内存管理功能
+
+---
+
+## 数据结构
+
+### Task Stack 数据结构
+
+#### TaskStatus（枚举）
+```python
+PENDING = "PENDING"           # 等待处理
+IN_PROGRESS = "IN_PROGRESS"   # 正在处理
+COMPLETED = "COMPLETED"        # 已完成
+FAILED = "FAILED"              # 失败
+CANCELLED = "CANCELLED"        # 已取消
+```
+
+#### ReadingStatus（枚举）
+```python
+UNREAD = "UNREAD"              # 未读
+READ = "READ"                  # 已读
+```
+
+#### UserMessage
+```python
+@dataclass
+class UserMessage:
+    id: str                     # 消息 ID
+    content: str                # 消息内容
+    timestamp: datetime         # 时间戳
+    user_id: str               # 用户 ID
+    worker_read_status: ReadingStatus  # Worker 读取状态
+    user_read_status: ReadingStatus   # 用户读取状态
+    task_id: Optional[str]     # 关联的任务 ID
+```
+
+#### Task
+```python
+@dataclass
+class Task:
+    id: str                     # 任务 ID
+    description: Dict[str, Any] # 任务描述（包含 overall_description, input, requirements, additional_notes）
+    status: TaskStatus          # 任务状态
+    progress: Dict[str, Any]    # 进度信息（消息集合）
+    results: Optional[Dict[str, Any]]  # 任务结果
+    created_at: datetime        # 创建时间
+    updated_at: datetime        # 更新时间
+```
+
+#### TaskStackEntry
+```python
+@dataclass
+class TaskStackEntry:
+    task_id: str                # 任务 ID
+    created_at: datetime        # 创建时间
+```
+
+#### TaskLayer
+```python
+@dataclass
+class TaskLayer:
+    layer_index: int            # 层索引（0-based）
+    tasks: List[TaskStackEntry] # 该层的任务列表
+    pre_hook: Optional[Dict[str, Any]]  # 执行前的 hook
+    post_hook: Optional[Dict[str, Any]]  # 执行后的 hook
+    created_at: datetime        # 创建时间
+```
+
+#### ExecutionPointer
+```python
+@dataclass
+class ExecutionPointer:
+    current_layer_index: int    # 当前执行的层索引
+    current_task_index: int    # 当前执行的任务索引
+    is_executing_pre_hook: bool # 是否正在执行 pre-hook
+    is_executing_post_hook: bool # 是否正在执行 post-hook
+```
+
+#### BatchOperationType（枚举）
+```python
+CREATE_TASKS = "create_tasks"                           # 批量创建任务
+CREATE_LAYERS = "create_layers"                       # 批量创建层
+ADD_TASKS_TO_LAYERS = "add_tasks_to_layers"           # 批量添加任务到层
+REMOVE_TASKS_FROM_LAYERS = "remove_tasks_from_layers" # 批量从层中移除任务
+REPLACE_TASKS_IN_LAYERS = "replace_tasks_in_layers"   # 批量替换任务
+UPDATE_LAYER_HOOKS = "update_layer_hooks"             # 批量更新层 hooks
+```
+
+#### BatchOperation
+```python
+@dataclass
+class BatchOperation:
+    type: BatchOperationType    # 操作类型
+    params: Dict[str, Any]      # 操作参数
+```
+
+### Assistant 数据结构
+
+#### AgentStatus（枚举）
+```python
+IDLE = "IDLE"                  # 空闲
+EXECUTING = "EXECUTING"         # 执行中
+COMPLETED = "COMPLETED"        # 已完成
+FAILED = "FAILED"              # 失败
+```
+
+#### ExecutionStatus（枚举）
+```python
+PENDING = "PENDING"            # 等待中
+IN_PROGRESS = "IN_PROGRESS"    # 进行中
+COMPLETED = "COMPLETED"        # 已完成
+FAILED = "FAILED"              # 失败
+```
+
+#### Agent
+```python
+@dataclass
+class Agent:
+    id: str                     # Agent ID
+    name: str                   # Agent 名称
+    description: str            # Agent 描述
+    input_schema: Dict[str, Any] # 输入模式
+    capabilities: List[str]     # 能力列表
+    created_at: datetime        # 创建时间
+    updated_at: datetime        # 更新时间
+```
+
+#### Assistant
+```python
+@dataclass
+class Assistant:
+    id: str                     # Assistant ID（全局单例，固定为 "assistant_global"）
+    name: str                   # Assistant 名称
+    description: str            # Assistant 描述
+    agent_ids: List[str]       # 管理的 Agent ID 列表
+    created_at: datetime        # 创建时间
+    updated_at: datetime        # 更新时间
+```
+
+#### AgentExecution
+```python
+@dataclass
+class AgentExecution:
+    id: str                     # 执行 ID
+    assistant_id: str          # Assistant ID
+    agent_id: str              # Agent ID
+    task_id: str               # 任务 ID
+    status: ExecutionStatus    # 执行状态
+    inputs: Dict[str, Any]    # 输入数据
+    results: Optional[Dict[str, Any]]  # 执行结果
+    error: Optional[str]       # 错误信息
+    started_at: Optional[datetime]     # 开始时间
+    completed_at: Optional[datetime]   # 完成时间
+    created_at: datetime        # 创建时间
+```
+
+---
+
+## API 路由
+
+### Task Stack API
+
+#### 用户消息
+- `POST /api/messages/create` - 创建用户消息
+- `GET /api/messages/<msg_id>` - 获取消息
+- `GET /api/messages/list` - 获取所有消息（可选 user_id 过滤）
+- `PUT /api/messages/<msg_id>/read-status` - 更新消息读取状态
+- `GET /api/messages/<msg_id>/check` - 检查消息（数据结构、读取状态、是否新任务）
+
+#### 任务管理
+- `POST /api/tasks/create` - 创建任务
+- `GET /api/tasks/<task_id>` - 获取任务
+- `GET /api/tasks/list` - 获取所有任务
+- `PUT /api/tasks/<task_id>` - 更新任务
+- `DELETE /api/tasks/<task_id>` - 删除任务
+- `PUT /api/tasks/<task_id>/status` - 更新任务状态
+- `POST /api/tasks/<task_id>/messages` - 推送消息到任务
+
+#### 层管理
+- `POST /api/layers/create` - 创建层（可选 layer_index, pre_hook, post_hook）
+- `GET /api/layers/list` - 获取所有层
+- `GET /api/layers/<layer_index>` - 获取特定层
+- `PUT /api/layers/<layer_index>/hooks` - 更新层的 hooks
+- `POST /api/layers/<layer_index>/tasks` - 添加任务到层（可选 insert_index）
+- `DELETE /api/layers/<layer_index>/tasks/<task_id>` - 从层中删除任务
+- `POST /api/layers/<layer_index>/tasks/replace` - 原子替换任务
+
+#### 执行指针
+- `GET /api/execution-pointer/get` - 获取执行指针
+- `PUT /api/execution-pointer/set` - 设置执行指针
+- `POST /api/execution-pointer/advance` - 推进执行指针
+
+#### 任务栈
+- `GET /api/task-stack/next` - 获取下一个要执行的任务
+- `GET /api/task-stack` - 获取所有层
+- `POST /api/task-stack/modify` - 修改任务栈（在指定位置插入层并添加任务）
+
+#### 批量操作
+- `POST /api/batch-operations` - 执行批量操作
+
+#### 健康检查
+- `GET /health` - 健康检查
+
+### Assistant API
+
+#### Assistant 管理
+- `GET /api/assistant` - 获取全局 assistant
+- `PUT /api/assistant` - 更新全局 assistant
+- `POST /api/assistant/agents` - 添加 agent 到 assistant
+
+#### Agent 管理
+- `POST /api/assistant/agents/create` - 创建 agent（存储）
+- `GET /api/assistant/agents/list` - 列出所有 agents（存储）
+- `GET /api/assistant/agents/<agent_id>` - 获取 agent（存储）
+- `GET /api/assistant/agents/<agent_id>/inputs` - 获取 agent 输入要求
+
+#### Sub-Agent 查询（自动发现的 agents）
+- `GET /api/assistant/sub-agents` - 获取所有已安装的 sub-agents（聚合信息）
+- `GET /api/assistant/sub-agents/<agent_id>` - 获取特定 sub-agent 信息
+
+#### Agent 执行
+- `POST /api/assistant/execute` - 执行 agent
+- `GET /api/assistant/executions/<execution_id>` - 获取执行记录
+- `GET /api/assistant/executions/task/<task_id>` - 获取任务的所有执行记录
+
+#### 工作空间
+- `GET /api/assistant/workspace` - 获取全局工作空间
+- `GET /api/assistant/workspace/summary` - 获取工作空间摘要
+- `GET /api/assistant/workspace/files` - 列出工作空间文件（可选过滤）
+- `GET /api/assistant/workspace/files/<file_id>` - 获取文件元数据
+- `GET /api/assistant/workspace/files/search` - 搜索文件
+- `GET /api/assistant/workspace/memory` - 获取全局内存
+- `POST /api/assistant/workspace/memory` - 写入全局内存
+- `GET /api/assistant/workspace/logs` - 获取日志（可选过滤）
+- `GET /api/assistant/workspace/search` - 综合搜索
 
 ---
 
@@ -138,229 +578,119 @@ curl http://localhost:5000/health
 
 ---
 
-## Task Stack 系统
+## 使用示例
 
-### 核心概念
+### Task Stack 基本使用
 
-#### Layer（层）
-- 任务栈的基本组织单位
-- 每层包含多个任务
-- 支持 Pre-hook 和 Post-hook
-- 按顺序执行（Layer 0 → Layer 1 → Layer 2 → ...）
-
-#### Task（任务）
-- 具体的执行单元
-- 包含描述、状态、进度、结果等信息
-- 状态流转：PENDING → IN_PROGRESS → COMPLETED/FAILED
-
-#### Execution Pointer（执行指针）
-- 跟踪当前执行位置
-- 包含：layer_index, task_index, is_executing_pre_hook, is_executing_post_hook
-- 用于确定下一个要执行的任务
-
-### 基本使用流程
-
-#### 步骤 1: 创建任务栈结构
+#### 创建任务栈
 
 ```bash
-# 创建第一层
+# 1. 创建层
 POST /api/layers/create
 {
-  "pre_hook": {
-    "type": "middleware",
-    "action": "prepare_environment",
-    "config": {}
-  },
-  "post_hook": {
-    "type": "hook",
-    "action": "cleanup",
-    "config": {}
-  }
+  "pre_hook": {"type": "middleware", "action": "prepare"},
+  "post_hook": {"type": "hook", "action": "cleanup"}
 }
 
-# 创建任务
+# 2. 创建任务
 POST /api/tasks/create
 {
   "description": {
-    "overall_description": "处理用户输入数据",
+    "overall_description": "处理用户输入",
     "input": {"data": "example"},
-    "requirements": ["validate", "transform"],
-    "additional_notes": "需要特殊处理"
+    "requirements": ["validate", "transform"]
   }
 }
 
-# 将任务添加到层
+# 3. 添加任务到层
 POST /api/layers/0/tasks
 {
   "task_id": "task_1_abc123"
 }
 ```
 
-#### 步骤 2: 执行任务栈
+#### 执行任务栈
 
 ```bash
 # 设置执行指针
 PUT /api/execution-pointer/set
 {
   "layer_index": 0,
-  "task_index": 0,
-  "is_executing_pre_hook": false,
-  "is_executing_post_hook": false
+  "task_index": 0
 }
 
 # 获取下一个任务
 GET /api/task-stack/next
 
-# 执行任务后，推进指针
+# 推进指针
 POST /api/execution-pointer/advance
 ```
 
-#### 步骤 3: 动态修改任务栈
-
-**重要：只能修改未执行的任务！**
+#### 修改任务栈（插入层）
 
 ```bash
-# 原子替换任务
-POST /api/layers/1/tasks/replace
+POST /api/task-stack/modify
 {
-  "old_task_id": "task_2_def456",
-  "new_task_id": "task_4_jkl012"
+  "insert_layer_index": 3,
+  "task_ids": ["task_1_xxx", "task_2_xxx"],
+  "pre_hook": {"type": "middleware", "action": "prepare"},
+  "post_hook": {"type": "hook", "action": "cleanup"}
 }
-
-# 删除未执行的任务
-DELETE /api/layers/1/tasks/task_3_ghi789
 ```
 
-### 完整示例
-
-参考 [USAGE_EXAMPLES.md](./USAGE_EXAMPLES.md) 获取详细的使用示例。
-
----
-
-## Assistant 系统
-
-### 核心概念
-
-#### Assistant（助手）
-- **全局单例**：只有一个全局 assistant 来管理所有的 sub-agent
-- **统一管理**：负责编排所有 agent 的执行流程
-- **信息分发**：从共享工作空间中检索信息，然后分发给各个 agent
-
-#### Agent（代理）
-- 具体的功能实现单元
-- 必须继承 `BaseAgent` 并实现 `get_metadata()` 和 `execute()` 方法
-- 放置在项目根目录的 `agents/` 文件夹中
-- 所有 agents 共享同一个工作空间
-
-#### 目录命名区分
-- **`agents/`**（根目录）：实际 Agent 实现的位置，每个 Agent 放在独立的子目录中
-- **`assistant/agent_core/`**（backend 内部）：Agent 核心框架，包含 BaseAgent 基类定义和注册机制
-
-#### Workspace（工作空间）
-- **全局共享**：所有 agents 共享一个全局工作空间（文件系统）
-- 包含：共享文件、共享内存、日志、资产等
-- Assistant 从工作空间中检索信息，然后分发给各个 agent
-- 目前是概念模型，具体实现可后续完善
-
-#### Retrieval（检索模块）
-- **PLACEHOLDER**：检索模块的占位实现
-- 负责从工作空间中检索和搜索信息
-- 提供文件检索、内存检索、资产检索等功能
-- 具体检索逻辑待实现
-
-### Agent 执行流程
-
-```
-1. 调用申请
-   └─> POST /api/assistant/execute
-       {
-         "assistant_id": "...",
-         "agent_id": "...",
-         "task_id": "...",
-         "additional_inputs": {...}
-       }
-
-2. 输入查询
-   └─> query_agent_inputs() - 查询 agent 所需输入参数
-
-3. 环境准备
-   └─> prepare_environment() - 获取全局工作空间
-
-4. 信息检索（PLACEHOLDER）
-   └─> WorkspaceRetriever.get_context_for_agent() - 从工作空间中检索相关信息
-   └─> Assistant 检索信息后分发给 agent
-
-5. 数据打包
-   └─> package_data() - 将检索到的信息打包供 agent 使用
-
-6. 结果获取
-   └─> execute_agent() - 执行 agent 并获取结果
-
-7. 结果处理
-   └─> process_results() - 处理结果并存入全局工作空间
-```
-
-### 创建 Agent
-
-详细步骤请参考 [agents/README.md](../agents/README.md)。
-
-快速示例：
+#### 批量操作
 
 ```bash
-# 1. 创建 agent 目录
-mkdir agents/my_agent
-
-# 2. 创建 agent.py
-cat > agents/my_agent/agent.py << 'EOF'
-from typing import Dict, Any
-from datetime import datetime
-from ..base_agent import BaseAgent, AgentMetadata
-
-class MyAgent(BaseAgent):
-    def get_metadata(self) -> AgentMetadata:
-        return AgentMetadata(
-            id="my_agent",
-            name="My Agent",
-            description="My custom agent",
-            capabilities=["custom_processing"],
-            input_schema={
-                "input": {"type": "string", "required": True}
-            },
-            output_schema={
-                "result": {"type": "string"}
-            }
-        )
-    
-    def execute(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
-        self.validate_inputs(inputs)
-        return {"result": f"Processed: {inputs['input']}"}
-EOF
-
-# 3. 创建 __init__.py
-cat > agents/my_agent/__init__.py << 'EOF'
-from .agent import MyAgent
-__all__ = ['MyAgent']
-EOF
-
-# 4. Agent 会自动被发现和注册！
+POST /api/batch-operations
+{
+  "operations": [
+    {
+      "type": "create_tasks",
+      "params": {
+        "tasks": [
+          {"description": {"overall_description": "任务1"}},
+          {"description": {"overall_description": "任务2"}}
+        ]
+      }
+    },
+    {
+      "type": "create_layers",
+      "params": {
+        "layers": [
+          {"pre_hook": {"type": "middleware"}, "post_hook": {"type": "hook"}}
+        ]
+      }
+    },
+    {
+      "type": "add_tasks_to_layers",
+      "params": {
+        "additions": [
+          {"layer_index": 0, "task_id": "task_1_xxx"},
+          {"layer_index": 0, "task_id": "task_2_xxx"}
+        ]
+      }
+    }
+  ]
+}
 ```
 
-### 查询 Agents
+### Assistant 基本使用
+
+#### 查询 Sub-Agents
 
 ```bash
-# 获取所有已安装的 agents（聚合信息）
+# 获取所有已安装的 sub-agents
 GET /api/assistant/sub-agents
 
-# 获取特定 agent 信息
-GET /api/assistant/sub-agents/{agent_id}
+# 获取特定 sub-agent 信息
+GET /api/assistant/sub-agents/<agent_id>
 ```
 
-### 执行 Agent
+#### 执行 Agent
 
 ```bash
 POST /api/assistant/execute
 {
-  "assistant_id": "assistant_1",
   "agent_id": "my_agent",
   "task_id": "task_1",
   "additional_inputs": {
@@ -369,132 +699,30 @@ POST /api/assistant/execute
 }
 ```
 
----
+#### 工作空间操作
 
-## API 文档
+```bash
+# 获取工作空间
+GET /api/assistant/workspace
 
-### Task Stack API
+# 列出文件
+GET /api/assistant/workspace/files
 
-#### 健康检查
-- `GET /health` - 健康检查
+# 搜索文件
+GET /api/assistant/workspace/files/search?query=test
 
-#### 用户消息
-- `POST /api/messages/create` - 创建用户消息
-- `GET /api/messages/list` - 获取所有消息
-- `GET /api/messages/<msg_id>` - 获取特定消息
-- `PUT /api/messages/<msg_id>/read-status` - 更新消息读取状态
+# 读取内存
+GET /api/assistant/workspace/memory
 
-#### 任务管理
-- `POST /api/tasks/create` - 创建任务
-- `GET /api/tasks/list` - 获取所有任务
-- `GET /api/tasks/<task_id>` - 获取特定任务
-- `PUT /api/tasks/<task_id>` - 更新任务
-- `DELETE /api/tasks/<task_id>` - 删除任务
-- `PUT /api/tasks/<task_id>/status` - 更新任务状态
-
-#### 层管理
-- `POST /api/layers/create` - 创建层
-- `GET /api/layers/list` - 获取所有层
-- `GET /api/layers/<layer_index>` - 获取特定层
-- `PUT /api/layers/<layer_index>/hooks` - 更新层的 Hook
-- `POST /api/layers/<layer_index>/tasks` - 添加任务到层
-- `DELETE /api/layers/<layer_index>/tasks/<task_id>` - 从层中删除任务
-- `POST /api/layers/<layer_index>/tasks/replace` - 原子替换任务
-
-#### 执行指针
-- `GET /api/execution-pointer/get` - 获取执行指针
-- `PUT /api/execution-pointer/set` - 设置执行指针
-- `POST /api/execution-pointer/advance` - 推进执行指针
-
-#### 任务栈
-- `GET /api/task-stack/next` - 获取下一个要执行的任务
-- `GET /api/task-stack` - 获取所有层
-
-### Assistant API
-
-#### Assistant 管理
-- `POST /api/assistant/create` - 创建 assistant
-- `GET /api/assistant/<assistant_id>` - 获取 assistant
-- `GET /api/assistant/list` - 列出所有 assistant
-- `POST /api/assistant/<assistant_id>/agents` - 添加 agent 到 assistant
-
-#### Agent 管理
-- `POST /api/assistant/agents/create` - 创建 agent（存储）
-- `GET /api/assistant/agents/list` - 列出所有 agent（存储）
-- `GET /api/assistant/agents/<agent_id>` - 获取 agent（存储）
-- `GET /api/assistant/agents/<agent_id>/inputs` - 获取 agent 输入要求
-
-#### Sub-Agent 查询（自动发现的 agents）
-- `GET /api/assistant/sub-agents` - 获取所有已安装的 sub-agent（聚合信息）
-- `GET /api/assistant/sub-agents/<agent_id>` - 获取特定 sub-agent 信息
-
-#### Agent 执行
-- `POST /api/assistant/execute` - 执行 agent
-- `GET /api/assistant/executions/<execution_id>` - 获取执行记录
-- `GET /api/assistant/executions/task/<task_id>` - 获取任务的所有执行记录
-
-#### 工作空间
-- `GET /api/assistant/workspace` - 获取全局工作空间（所有 agents 共享）
-- `GET /api/assistant/<assistant_id>/workspace` - 遗留端点，返回全局工作空间
-
-详细的 API 文档请参考代码中的注释和 [USAGE_EXAMPLES.md](./USAGE_EXAMPLES.md)。
-
----
-
-## 使用示例
-
-### Task Stack 完整工作流
-
-```python
-# 1. 创建任务栈
-layer0 = create_layer(pre_hook={...}, post_hook={...})
-task1 = create_task(description={...})
-add_task_to_layer(0, task1.id)
-
-layer1 = create_layer(pre_hook={...}, post_hook={...})
-task2 = create_task(description={...})
-task3 = create_task(description={...})
-add_task_to_layer(1, task2.id)
-add_task_to_layer(1, task3.id)
-
-# 2. 开始执行
-set_execution_pointer(0, 0)
-
-# 3. 执行循环
-while True:
-    next_task_info = get_next_task()
-    if not next_task_info:
-        break
-    
-    # 执行任务
-    task = get_task(next_task_info['task_id'])
-    result = execute_task(task)
-    update_task(task.id, status="COMPLETED", results=result)
-    
-    # 推进指针
-    advance_execution_pointer()
+# 写入内存
+POST /api/assistant/workspace/memory
+{
+  "content": "memory content",
+  "append": false
+}
 ```
 
-### Assistant 执行 Agent
-
-```python
-# 1. 创建 assistant
-assistant = create_assistant(
-    name="Video Production Assistant",
-    description="Manages video production sub-agents",
-    agent_ids=["storyboard_agent", "transcript_agent"]
-)
-
-# 2. 执行 agent
-result = execute_agent_for_task(
-    assistant_id=assistant.id,
-    agent_id="storyboard_agent",
-    task_id="task_1",
-    additional_inputs={"script": "..."}
-)
-```
-
-更多示例请参考 [USAGE_EXAMPLES.md](./USAGE_EXAMPLES.md)。
+更多详细示例请参考 [USAGE_EXAMPLES.md](./USAGE_EXAMPLES.md)。
 
 ---
 
@@ -530,36 +758,16 @@ python test_api.py
 
 ---
 
-## 状态枚举
-
-### TaskStatus
-- `PENDING`: 任务等待处理
-- `IN_PROGRESS`: 任务正在处理
-- `COMPLETED`: 任务已完成
-- `FAILED`: 任务失败
-- `CANCELLED`: 任务已取消
-
-### ReadingStatus
-- `UNREAD`: 消息未读
-- `READ`: 消息已读
-
-### ExecutionStatus
-- `PENDING`: 执行等待中
-- `IN_PROGRESS`: 执行进行中
-- `COMPLETED`: 执行完成
-- `FAILED`: 执行失败
-
----
-
 ## 注意事项
 
 1. **任务修改限制**：只能修改未执行的任务，已执行的任务不能被修改
 2. **执行顺序**：严格按照层级顺序执行（Layer 0 → Layer 1 → Layer 2 → ...）
 3. **任务状态**：任务状态只能向前推进
-4. **原子操作**：`replace_task_in_layer` 是原子操作，确保数据一致性
-5. **线程安全**：所有操作都是线程安全的，支持并发访问
-6. **Agent ID 唯一性**：Agent ID 必须唯一
-7. **自动发现**：Agent 会在应用启动时自动被发现和注册
+4. **原子操作**：`replace_task_in_layer` 和 `modify_task_stack` 是原子操作，确保数据一致性
+5. **批量操作**：所有批量操作在单个锁内执行，保证原子性
+6. **线程安全**：所有操作都是线程安全的，支持并发访问
+7. **Agent ID 唯一性**：Agent ID 必须唯一
+8. **自动发现**：Agent 会在应用启动时自动被发现和注册
 
 ---
 

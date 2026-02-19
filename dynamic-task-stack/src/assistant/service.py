@@ -85,26 +85,18 @@ class AssistantService:
             "capabilities": agent.capabilities
         }
     
-    def prepare_environment(self, assistant_id: str, task_id: str) -> Workspace:
+    def prepare_environment(self, task_id: str) -> Workspace:
         """
         Prepare workspace environment for agent execution
         
         Uses the global workspace shared by all agents.
         
         Args:
-            assistant_id: ID of the assistant
             task_id: ID of the task being executed
             
         Returns:
             Global workspace instance
-            
-        Raises:
-            ValueError: If assistant not found
         """
-        assistant = self.storage.get_assistant(assistant_id)
-        if assistant is None:
-            raise ValueError(f"Assistant {assistant_id} not found")
-        
         # Use the global workspace (already initialized in __init__)
         return self.workspace
     
@@ -182,7 +174,6 @@ class AssistantService:
     
     def execute_agent(
         self,
-        assistant_id: str,
         agent_id: str,
         task_id: str,
         inputs: Dict[str, Any]
@@ -191,7 +182,6 @@ class AssistantService:
         Execute an agent and retrieve results
         
         Args:
-            assistant_id: ID of the assistant
             agent_id: ID of the agent to execute
             task_id: ID of the task
             inputs: Input data for the agent
@@ -200,23 +190,22 @@ class AssistantService:
             AgentExecution instance with results
             
         Raises:
-            ValueError: If agent, assistant, or task not found
+            ValueError: If agent or task not found
         """
-        # Validate agent exists and belongs to assistant
-        assistant = self.storage.get_assistant(assistant_id)
-        if assistant is None:
-            raise ValueError(f"Assistant {assistant_id} not found")
+        # Get global assistant
+        assistant = self.storage.get_global_assistant()
         
+        # Validate agent exists in registry
+        agent_instance = self.agent_registry.get_agent(agent_id)
+        if agent_instance is None:
+            raise ValueError(f"Agent {agent_id} not found in registry")
+        
+        # Add agent to global assistant if not already added
         if agent_id not in assistant.agent_ids:
-            raise ValueError(f"Agent {agent_id} is not managed by assistant {assistant_id}")
-        
-        agent = self.storage.get_agent(agent_id)
-        if agent is None:
-            raise ValueError(f"Agent {agent_id} not found")
+            self.storage.add_agent_to_global_assistant(agent_id)
         
         # Create execution record
         execution = self.storage.create_execution(
-            assistant_id=assistant_id,
             agent_id=agent_id,
             task_id=task_id,
             inputs=inputs
@@ -311,7 +300,6 @@ class AssistantService:
     
     def execute_agent_for_task(
         self,
-        assistant_id: str,
         agent_id: str,
         task_id: str,
         additional_inputs: Optional[Dict[str, Any]] = None
@@ -327,7 +315,6 @@ class AssistantService:
         5. Process results
         
         Args:
-            assistant_id: ID of the assistant
             agent_id: ID of the agent to execute
             task_id: ID of the task
             additional_inputs: Optional additional inputs to merge
@@ -339,7 +326,7 @@ class AssistantService:
         input_info = self.query_agent_inputs(agent_id)
         
         # Step 2: Prepare environment
-        workspace = self.prepare_environment(assistant_id, task_id)
+        workspace = self.prepare_environment(task_id)
         
         # Step 3: Package data
         packaged_data = self.package_data(agent_id, task_id, workspace)
@@ -351,7 +338,6 @@ class AssistantService:
         
         # Step 4: Execute agent
         execution = self.execute_agent(
-            assistant_id=assistant_id,
             agent_id=agent_id,
             task_id=task_id,
             inputs=inputs

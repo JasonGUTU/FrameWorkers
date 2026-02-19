@@ -17,64 +17,78 @@ class AssistantStorage:
     """
     Thread-safe in-memory storage for assistant system
     
-    There is only one global workspace shared by all agents.
+    There is only one global assistant instance and one global workspace shared by all agents.
     """
     
-    def __init__(self):
-        self.assistants: Dict[str, Assistant] = {}
+    def __init__(self, runtime_base_path: Optional[Path] = None):
+        """
+        Initialize assistant storage
+        
+        Args:
+            runtime_base_path: Base path to Runtime directory (project root)
+                              If None, tries to find project root automatically
+        """
+        # Determine runtime base path
+        if runtime_base_path is None:
+            # Try to find project root: dynamic-task-stack/src/assistant -> FrameWorkers/
+            current_file = Path(__file__)
+            project_root = current_file.parent.parent.parent.parent.parent
+            runtime_base_path = project_root / "Runtime"
+        
+        self.runtime_base_path = Path(runtime_base_path)
+        self.runtime_base_path.mkdir(parents=True, exist_ok=True)
+        
+        # Global assistant instance (singleton)
+        self.global_assistant: Optional[Assistant] = None
+        
+        # Legacy: Keep agents and executions for backward compatibility
         self.agents: Dict[str, Agent] = {}
         self.executions: Dict[str, AgentExecution] = {}
         self.global_workspace: Optional[Workspace] = None  # Single global workspace
-        self.assistant_counter = 0
         self.agent_counter = 0
         self.execution_counter = 0
         self.lock = Lock()
     
-    # Assistant operations
-    def create_assistant(
+    # Global Assistant operations (singleton)
+    def get_global_assistant(self) -> Assistant:
+        """
+        Get or create the global assistant instance (singleton)
+        
+        Returns:
+            The global assistant instance
+        """
+        with self.lock:
+            if self.global_assistant is None:
+                # Create global assistant if it doesn't exist
+                self.global_assistant = Assistant(
+                    id="assistant_global",
+                    name="Global Assistant",
+                    description="Global assistant instance that manages all sub-agents and workspace interactions",
+                    agent_ids=[],  # Will be populated from registry
+                    created_at=datetime.now(),
+                    updated_at=datetime.now()
+                )
+            return self.global_assistant
+    
+    def update_global_assistant(
         self,
-        name: str,
-        description: str,
-        agent_ids: Optional[List[str]] = None
-    ) -> Assistant:
-        """Create a new assistant"""
-        with self.lock:
-            self.assistant_counter += 1
-            assistant_id = f"assistant_{self.assistant_counter}_{uuid.uuid4().hex[:8]}"
-            
-            assistant = Assistant(
-                id=assistant_id,
-                name=name,
-                description=description,
-                agent_ids=agent_ids or [],
-                created_at=datetime.now(),
-                updated_at=datetime.now()
-            )
-            self.assistants[assistant_id] = assistant
-            return assistant
-    
-    def get_assistant(self, assistant_id: str) -> Optional[Assistant]:
-        """Get an assistant by ID"""
-        with self.lock:
-            return self.assistants.get(assistant_id)
-    
-    def get_all_assistants(self) -> List[Assistant]:
-        """Get all assistants"""
-        with self.lock:
-            return list(self.assistants.values())
-    
-    def update_assistant(
-        self,
-        assistant_id: str,
         name: Optional[str] = None,
         description: Optional[str] = None,
         agent_ids: Optional[List[str]] = None
-    ) -> Optional[Assistant]:
-        """Update an assistant"""
+    ) -> Assistant:
+        """
+        Update the global assistant instance
+        
+        Args:
+            name: Optional new name
+            description: Optional new description
+            agent_ids: Optional new list of agent IDs
+            
+        Returns:
+            Updated global assistant instance
+        """
         with self.lock:
-            assistant = self.assistants.get(assistant_id)
-            if assistant is None:
-                return None
+            assistant = self.get_global_assistant()
             
             updated_assistant = Assistant(
                 id=assistant.id,
@@ -84,22 +98,82 @@ class AssistantStorage:
                 created_at=assistant.created_at,
                 updated_at=datetime.now()
             )
-            self.assistants[assistant_id] = updated_assistant
+            self.global_assistant = updated_assistant
             return updated_assistant
     
-    def add_agent_to_assistant(self, assistant_id: str, agent_id: str) -> bool:
-        """Add an agent to an assistant"""
+    def add_agent_to_global_assistant(self, agent_id: str) -> bool:
+        """
+        Add an agent to the global assistant
+        
+        Args:
+            agent_id: ID of the agent to add
+            
+        Returns:
+            True if added successfully
+        """
         with self.lock:
-            assistant = self.assistants.get(assistant_id)
-            if assistant is None:
-                return False
+            assistant = self.get_global_assistant()
             
             if agent_id not in assistant.agent_ids:
                 assistant.agent_ids.append(agent_id)
                 assistant.updated_at = datetime.now()
-                self.assistants[assistant_id] = assistant
+                self.global_assistant = assistant
             
             return True
+    
+    # Legacy methods for backward compatibility (deprecated)
+    def create_assistant(
+        self,
+        name: str,
+        description: str,
+        agent_ids: Optional[List[str]] = None
+    ) -> Assistant:
+        """
+        Legacy method - returns global assistant
+        
+        Deprecated: Use get_global_assistant() instead
+        """
+        return self.get_global_assistant()
+    
+    def get_assistant(self, assistant_id: Optional[str] = None) -> Optional[Assistant]:
+        """
+        Legacy method - returns global assistant
+        
+        Deprecated: Use get_global_assistant() instead
+        """
+        return self.get_global_assistant()
+    
+    def get_all_assistants(self) -> List[Assistant]:
+        """
+        Legacy method - returns list with global assistant
+        
+        Deprecated: Use get_global_assistant() instead
+        """
+        return [self.get_global_assistant()]
+    
+    def update_assistant(
+        self,
+        assistant_id: Optional[str] = None,
+        name: Optional[str] = None,
+        description: Optional[str] = None,
+        agent_ids: Optional[List[str]] = None
+    ) -> Optional[Assistant]:
+        """
+        Legacy method - updates global assistant
+        
+        Deprecated: Use update_global_assistant() instead
+        """
+        return self.update_global_assistant(name, description, agent_ids)
+    
+    def add_agent_to_assistant(self, assistant_id: Optional[str] = None, agent_id: str = None) -> bool:
+        """
+        Legacy method - adds agent to global assistant
+        
+        Deprecated: Use add_agent_to_global_assistant() instead
+        """
+        if agent_id is None:
+            return False
+        return self.add_agent_to_global_assistant(agent_id)
     
     # Agent operations
     def create_agent(
@@ -165,13 +239,29 @@ class AssistantStorage:
     # Execution operations
     def create_execution(
         self,
-        assistant_id: str,
         agent_id: str,
         task_id: str,
-        inputs: Dict[str, Any]
+        inputs: Dict[str, Any],
+        assistant_id: Optional[str] = None
     ) -> AgentExecution:
-        """Create a new execution record"""
+        """
+        Create a new execution record
+        
+        Args:
+            agent_id: ID of the agent to execute
+            task_id: ID of the task
+            inputs: Input data for the agent
+            assistant_id: Optional assistant ID (uses global assistant if None)
+            
+        Returns:
+            AgentExecution instance
+        """
         with self.lock:
+            # Use global assistant if assistant_id not provided
+            if assistant_id is None:
+                assistant = self.get_global_assistant()
+                assistant_id = assistant.id
+            
             self.execution_counter += 1
             execution_id = f"exec_{self.execution_counter}_{uuid.uuid4().hex[:8]}"
             

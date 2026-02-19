@@ -48,41 +48,34 @@ def create_assistant_blueprint():
             return {k: serialize_assistant_enum(v) for k, v in obj.items()}
         return obj
     
-    # Assistant routes
-    @bp.route('/api/assistant/create', methods=['POST'])
-    def create_assistant():
-        """Create a new assistant"""
+    # Global Assistant routes (singleton)
+    @bp.route('/api/assistant', methods=['GET'])
+    def get_assistant():
+        """Get the global assistant instance"""
+        assistant = assistant_storage.get_global_assistant()
+        return jsonify(serialize_assistant_enum(assistant))
+    
+    @bp.route('/api/assistant', methods=['PUT'])
+    def update_assistant():
+        """Update the global assistant instance"""
         data = request.get_json()
         if not data:
             return jsonify({'error': 'Invalid JSON body'}), 400
         
         name = data.get('name')
-        description = data.get('description', '')
-        agent_ids = data.get('agent_ids', [])
+        description = data.get('description')
+        agent_ids = data.get('agent_ids')
         
-        if not name:
-            return jsonify({'error': 'Missing required field: name'}), 400
-        
-        assistant = assistant_storage.create_assistant(name, description, agent_ids)
-        return jsonify(serialize_assistant_enum(assistant)), 201
-    
-    @bp.route('/api/assistant/<assistant_id>', methods=['GET'])
-    def get_assistant(assistant_id: str):
-        """Get an assistant by ID"""
-        assistant = assistant_storage.get_assistant(assistant_id)
-        if assistant is None:
-            return jsonify({'error': 'Assistant not found'}), 404
+        assistant = assistant_storage.update_global_assistant(
+            name=name,
+            description=description,
+            agent_ids=agent_ids
+        )
         return jsonify(serialize_assistant_enum(assistant))
     
-    @bp.route('/api/assistant/list', methods=['GET'])
-    def get_all_assistants():
-        """Get all assistants"""
-        assistants = assistant_storage.get_all_assistants()
-        return jsonify([serialize_assistant_enum(a) for a in assistants])
-    
-    @bp.route('/api/assistant/<assistant_id>/agents', methods=['POST'])
-    def add_agent_to_assistant(assistant_id: str):
-        """Add an agent to an assistant"""
+    @bp.route('/api/assistant/agents', methods=['POST'])
+    def add_agent_to_assistant():
+        """Add an agent to the global assistant"""
         data = request.get_json()
         if not data:
             return jsonify({'error': 'Invalid JSON body'}), 400
@@ -91,11 +84,11 @@ def create_assistant_blueprint():
         if not agent_id:
             return jsonify({'error': 'Missing required field: agent_id'}), 400
         
-        success = assistant_storage.add_agent_to_assistant(assistant_id, agent_id)
+        success = assistant_storage.add_agent_to_global_assistant(agent_id)
         if not success:
-            return jsonify({'error': 'Assistant not found'}), 404
+            return jsonify({'error': 'Failed to add agent'}), 400
         
-        assistant = assistant_storage.get_assistant(assistant_id)
+        assistant = assistant_storage.get_global_assistant()
         return jsonify(serialize_assistant_enum(assistant))
     
     # Agent routes
@@ -178,19 +171,17 @@ def create_assistant_blueprint():
         if not data:
             return jsonify({'error': 'Invalid JSON body'}), 400
         
-        assistant_id = data.get('assistant_id')
         agent_id = data.get('agent_id')
         task_id = data.get('task_id')
         additional_inputs = data.get('additional_inputs')
         
-        if not assistant_id or not agent_id or not task_id:
+        if not agent_id or not task_id:
             return jsonify({
-                'error': 'Missing required fields: assistant_id, agent_id, task_id'
+                'error': 'Missing required fields: agent_id, task_id'
             }), 400
         
         try:
             results = service.execute_agent_for_task(
-                assistant_id=assistant_id,
                 agent_id=agent_id,
                 task_id=task_id,
                 additional_inputs=additional_inputs
@@ -415,16 +406,5 @@ def create_assistant_blueprint():
         
         return jsonify(results)
     
-    @bp.route('/api/assistant/<assistant_id>/workspace', methods=['GET'])
-    def get_workspace_by_assistant(assistant_id: str):
-        """
-        Legacy endpoint - returns global workspace summary
-        
-        Deprecated: Use /api/assistant/workspace instead
-        """
-        workspace = assistant_storage.get_global_workspace()
-        if workspace is None:
-            return jsonify({'error': 'Workspace not found'}), 404
-        return jsonify(workspace.get_summary())
     
     return bp

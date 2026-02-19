@@ -9,7 +9,6 @@ from .api_client import BackendAPIClient
 from .reasoning import ReasoningEngine
 from .config import (
     POLLING_INTERVAL,
-    ASSISTANT_ID,
     DIRECTOR_AGENT_NAME
 )
 
@@ -267,9 +266,8 @@ class DirectorAgent:
             
             logger.info(f"Delegating task {task_id} to agent {agent_id}")
             
-            # Execute agent
+            # Execute agent (using global assistant)
             execution_result = self.api_client.execute_agent(
-                assistant_id=ASSISTANT_ID,
                 agent_id=agent_id,
                 task_id=task_id
             )

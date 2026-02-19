@@ -7,7 +7,8 @@ from datetime import datetime
 from .storage import storage
 from .models import (
     TaskStatus, ReadingStatus,
-    UserMessage, Task, TaskStackEntry, TaskLayer, ExecutionPointer
+    UserMessage, Task, TaskStackEntry, TaskLayer, ExecutionPointer,
+    BatchOperation, BatchOperationType, BatchOperationsRequest
 )
 
 
@@ -385,6 +386,72 @@ def create_blueprint():
         layers = storage.get_all_layers()
         return jsonify([serialize_enum(layer) for layer in layers])
     
+    @bp.route('/api/task-stack/modify', methods=['POST'])
+    def modify_task_stack():
+        """
+        Atomically insert a new layer at specified index and add tasks to it
+        
+        Request body:
+        {
+            "insert_layer_index": int,  # Index where to insert the new layer
+            "task_ids": List[str],       # List of task IDs to add to the new layer
+            "pre_hook": Optional[Dict],  # Optional pre-hook for the new layer
+            "post_hook": Optional[Dict]  # Optional post-hook for the new layer
+        }
+        
+        This is an atomic operation that:
+        - Inserts a new layer at the specified index
+        - Adds all specified tasks to the new layer
+        - Re-indexes all layers after insertion
+        
+        Example:
+        {
+            "insert_layer_index": 3,
+            "task_ids": ["task_1_xxx", "task_2_xxx", "task_3_xxx"],
+            "pre_hook": {"type": "middleware", "action": "prepare"},
+            "post_hook": {"type": "hook", "action": "cleanup"}
+        }
+        """
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'Invalid JSON body'}), 400
+        
+        insert_layer_index = data.get('insert_layer_index')
+        task_ids = data.get('task_ids', [])
+        pre_hook = data.get('pre_hook')
+        post_hook = data.get('post_hook')
+        
+        if insert_layer_index is None:
+            return jsonify({
+                'error': 'Missing required field: insert_layer_index'
+            }), 400
+        
+        if not isinstance(task_ids, list):
+            return jsonify({
+                'error': 'task_ids must be a list'
+            }), 400
+        
+        try:
+            insert_layer_index = int(insert_layer_index)
+        except (ValueError, TypeError):
+            return jsonify({
+                'error': 'insert_layer_index must be an integer'
+            }), 400
+        
+        layer = storage.modify_task_stack(
+            insert_layer_index=insert_layer_index,
+            task_ids=task_ids,
+            pre_hook=pre_hook,
+            post_hook=post_hook
+        )
+        
+        if layer is None:
+            return jsonify({
+                'error': 'Failed to modify task stack: invalid index, task not found, or cannot insert before executed layer'
+            }), 400
+        
+        return jsonify(serialize_enum(layer)), 201
+    
     @bp.route('/api/tasks/<task_id>/status', methods=['PUT'])
     def update_task_status(task_id: str):
         """Update task status"""
@@ -430,6 +497,148 @@ def create_blueprint():
         
         message = storage.create_user_message(content, user_id, task_id)
         return jsonify(serialize_enum(message)), 201
+    
+    # Batch operations route
+    @bp.route('/api/batch-operations', methods=['POST'])
+    def batch_operations():
+        """
+        Execute multiple operations atomically in a single transaction
+        
+        Request body:
+        {
+            "operations": [
+                {
+                    "type": "create_tasks",
+                    "params": {
+                        "tasks": [
+                            {"description": {...}},
+                            ...
+                        ]
+                    }
+                },
+                {
+                    "type": "create_layers",
+                    "params": {
+                        "layers": [
+                            {
+                                "layer_index": Optional[int],
+                                "pre_hook": Optional[Dict],
+                                "post_hook": Optional[Dict]
+                            },
+                            ...
+                        ]
+                    }
+                },
+                {
+                    "type": "add_tasks_to_layers",
+                    "params": {
+                        "additions": [
+                            {
+                                "layer_index": int,
+                                "task_id": str,
+                                "insert_index": Optional[int]
+                            },
+                            ...
+                        ]
+                    }
+                },
+                {
+                    "type": "remove_tasks_from_layers",
+                    "params": {
+                        "removals": [
+                            {
+                                "layer_index": int,
+                                "task_id": str
+                            },
+                            ...
+                        ]
+                    }
+                },
+                {
+                    "type": "replace_tasks_in_layers",
+                    "params": {
+                        "replacements": [
+                            {
+                                "layer_index": int,
+                                "old_task_id": str,
+                                "new_task_id": str
+                            },
+                            ...
+                        ]
+                    }
+                },
+                {
+                    "type": "update_layer_hooks",
+                    "params": {
+                        "updates": [
+                            {
+                                "layer_index": int,
+                                "pre_hook": Optional[Dict],
+                                "post_hook": Optional[Dict]
+                            },
+                            ...
+                        ]
+                    }
+                }
+            ]
+        }
+        
+        Note: For inserting a layer in the middle with tasks, use the separate
+        POST /api/task-stack/modify endpoint instead of batch operations.
+            ]
+        }
+        
+        Response:
+        {
+            "success": bool,
+            "results": [...],
+            "errors": [...],
+            "created_task_ids": [...],
+            "created_layer_indices": [...]
+        }
+        """
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'Invalid JSON body'}), 400
+        
+        operations_data = data.get('operations', [])
+        if not isinstance(operations_data, list):
+            return jsonify({'error': 'operations must be a list'}), 400
+        
+        # Parse operations
+        operations = []
+        for op_data in operations_data:
+            if not isinstance(op_data, dict):
+                return jsonify({
+                    'error': 'Each operation must be a dictionary'
+                }), 400
+            
+            op_type_str = op_data.get('type')
+            if not op_type_str:
+                return jsonify({
+                    'error': 'Each operation must have a "type" field'
+                }), 400
+            
+            try:
+                op_type = BatchOperationType(op_type_str)
+            except ValueError:
+                return jsonify({
+                    'error': f'Unknown operation type: {op_type_str}'
+                }), 400
+            
+            params = op_data.get('params', {})
+            if not isinstance(params, dict):
+                return jsonify({
+                    'error': 'Each operation must have "params" as a dictionary'
+                }), 400
+            
+            operations.append(BatchOperation(type=op_type, params=params))
+        
+        # Execute batch operations
+        result = storage.batch_operations(operations)
+        
+        # Serialize result
+        return jsonify(serialize_enum(result))
     
     # Health check route
     @bp.route('/health', methods=['GET'])
