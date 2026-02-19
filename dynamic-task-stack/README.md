@@ -27,10 +27,11 @@ Frameworks Backend 由两个核心系统组成：
 - **原子操作**：确保任务替换等操作的原子性
 
 ### 2. Assistant（助手系统）
-- **Agent 编排**：统一管理和执行多个 sub-agent
+- **统一管理**：只有一个全局 assistant 来管理所有的 sub-agent
 - **自动发现**：自动扫描和注册根目录下的所有 agents
-- **工作空间**：为每个 assistant 提供独立的工作空间（文件、内存、日志、资产）
-- **执行流程**：完整的 6 步执行流程（查询输入 → 准备环境 → 打包数据 → 执行 → 处理结果）
+- **共享工作空间**：所有 agents 共享一个全局工作空间（文件系统）
+- **信息检索**：Assistant 从工作空间中检索信息，然后分发给各个 agent
+- **执行流程**：完整的 6 步执行流程（查询输入 → 准备环境 → 检索信息 → 打包数据 → 执行 → 处理结果）
 
 ---
 
@@ -61,9 +62,11 @@ FrameWorkers/
 │   │       ├── routes.py             # Assistant API 路由
 │   │       ├── service.py            # Assistant 核心业务逻辑
 │   │       ├── storage.py            # Assistant 数据存储
-│   │       └── agents/               # Agent 基础设施（向后兼容）
-│   │           ├── base_agent.py    # BaseAgent 抽象基类
-│   │           └── agent_registry.py # Agent 发现和注册
+│   │       ├── retrieval.py          # 检索模块（PLACEHOLDER）
+│   │       └── agent_core/           # Agent 核心框架（基础设施）
+│   │           ├── __init__.py
+│   │           ├── base_agent.py     # BaseAgent 抽象基类
+│   │           └── agent_registry.py # Agent 发现和注册机制
 │   ├── requirements.txt
 │   ├── run.py
 │   └── README.md                    # 本文档
@@ -239,19 +242,31 @@ DELETE /api/layers/1/tasks/task_3_ghi789
 ### 核心概念
 
 #### Assistant（助手）
-- 管理多个 sub-agent 的容器
-- 每个 assistant 拥有独立的工作空间
-- 负责编排 agent 的执行流程
+- **全局单例**：只有一个全局 assistant 来管理所有的 sub-agent
+- **统一管理**：负责编排所有 agent 的执行流程
+- **信息分发**：从共享工作空间中检索信息，然后分发给各个 agent
 
 #### Agent（代理）
 - 具体的功能实现单元
 - 必须继承 `BaseAgent` 并实现 `get_metadata()` 和 `execute()` 方法
 - 放置在项目根目录的 `agents/` 文件夹中
+- 所有 agents 共享同一个工作空间
+
+#### 目录命名区分
+- **`agents/`**（根目录）：实际 Agent 实现的位置，每个 Agent 放在独立的子目录中
+- **`assistant/agent_core/`**（backend 内部）：Agent 核心框架，包含 BaseAgent 基类定义和注册机制
 
 #### Workspace（工作空间）
-- 每个 assistant 的独立工作环境
+- **全局共享**：所有 agents 共享一个全局工作空间（文件系统）
 - 包含：共享文件、共享内存、日志、资产等
+- Assistant 从工作空间中检索信息，然后分发给各个 agent
 - 目前是概念模型，具体实现可后续完善
+
+#### Retrieval（检索模块）
+- **PLACEHOLDER**：检索模块的占位实现
+- 负责从工作空间中检索和搜索信息
+- 提供文件检索、内存检索、资产检索等功能
+- 具体检索逻辑待实现
 
 ### Agent 执行流程
 
@@ -269,16 +284,20 @@ DELETE /api/layers/1/tasks/task_3_ghi789
    └─> query_agent_inputs() - 查询 agent 所需输入参数
 
 3. 环境准备
-   └─> prepare_environment() - 准备工作空间环境
+   └─> prepare_environment() - 获取全局工作空间
 
-4. 数据打包
-   └─> package_data() - 打包相关资源供 agent 使用
+4. 信息检索（PLACEHOLDER）
+   └─> WorkspaceRetriever.get_context_for_agent() - 从工作空间中检索相关信息
+   └─> Assistant 检索信息后分发给 agent
 
-5. 结果获取
+5. 数据打包
+   └─> package_data() - 将检索到的信息打包供 agent 使用
+
+6. 结果获取
    └─> execute_agent() - 执行 agent 并获取结果
 
-6. 结果处理
-   └─> process_results() - 处理结果并存入工作空间
+7. 结果处理
+   └─> process_results() - 处理结果并存入全局工作空间
 ```
 
 ### 创建 Agent
@@ -415,7 +434,8 @@ POST /api/assistant/execute
 - `GET /api/assistant/executions/task/<task_id>` - 获取任务的所有执行记录
 
 #### 工作空间
-- `GET /api/assistant/<assistant_id>/workspace` - 获取 assistant 的工作空间
+- `GET /api/assistant/workspace` - 获取全局工作空间（所有 agents 共享）
+- `GET /api/assistant/<assistant_id>/workspace` - 遗留端点，返回全局工作空间
 
 详细的 API 文档请参考代码中的注释和 [USAGE_EXAMPLES.md](./USAGE_EXAMPLES.md)。
 

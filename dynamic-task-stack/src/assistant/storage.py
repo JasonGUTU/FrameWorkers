@@ -6,23 +6,28 @@ from datetime import datetime
 import uuid
 
 from .models import (
-    Assistant, Agent, AgentExecution, Workspace,
+    Assistant, Agent, AgentExecution,
     ExecutionStatus
 )
+from .workspace import Workspace
+from pathlib import Path
 
 
 class AssistantStorage:
-    """Thread-safe in-memory storage for assistant system"""
+    """
+    Thread-safe in-memory storage for assistant system
+    
+    There is only one global workspace shared by all agents.
+    """
     
     def __init__(self):
         self.assistants: Dict[str, Assistant] = {}
         self.agents: Dict[str, Agent] = {}
         self.executions: Dict[str, AgentExecution] = {}
-        self.workspaces: Dict[str, Workspace] = {}
+        self.global_workspace: Optional[Workspace] = None  # Single global workspace
         self.assistant_counter = 0
         self.agent_counter = 0
         self.execution_counter = 0
-        self.workspace_counter = 0
         self.lock = Lock()
     
     # Assistant operations
@@ -76,7 +81,6 @@ class AssistantStorage:
                 name=name if name is not None else assistant.name,
                 description=description if description is not None else assistant.description,
                 agent_ids=agent_ids if agent_ids is not None else assistant.agent_ids,
-                workspace_id=assistant.workspace_id,
                 created_at=assistant.created_at,
                 updated_at=datetime.now()
             )
@@ -204,51 +208,71 @@ class AssistantStorage:
             self.executions[execution.id] = execution
             return True
     
-    # Workspace operations
-    def create_workspace(self, assistant_id: str) -> Workspace:
-        """Create a workspace for an assistant"""
+    # Global Workspace operations
+    def create_global_workspace(self) -> Workspace:
+        """
+        Create the global workspace shared by all agents
+        
+        Returns:
+            The global workspace instance
+        """
         with self.lock:
-            self.workspace_counter += 1
-            workspace_id = f"workspace_{self.workspace_counter}_{uuid.uuid4().hex[:8]}"
+            if self.global_workspace is not None:
+                return self.global_workspace
             
+            workspace_id = f"workspace_global_{uuid.uuid4().hex[:8]}"
+            
+            # Create Workspace instance with file system support
             workspace = Workspace(
-                id=workspace_id,
-                assistant_id=assistant_id,
-                created_at=datetime.now(),
-                updated_at=datetime.now()
+                workspace_id=workspace_id,
+                runtime_base_path=self.runtime_base_path
             )
-            self.workspaces[workspace_id] = workspace
-            
-            # Link workspace to assistant
-            assistant = self.assistants.get(assistant_id)
-            if assistant:
-                assistant.workspace_id = workspace_id
-                assistant.updated_at = datetime.now()
-                self.assistants[assistant_id] = assistant
-            
+            self.global_workspace = workspace
             return workspace
     
-    def get_workspace(self, workspace_id: str) -> Optional[Workspace]:
-        """Get a workspace by ID"""
+    def get_global_workspace(self) -> Optional[Workspace]:
+        """
+        Get the global workspace shared by all agents
+        
+        Returns:
+            The global workspace instance or None if not created
+        """
         with self.lock:
-            return self.workspaces.get(workspace_id)
-    
-    def get_workspace_by_assistant(self, assistant_id: str) -> Optional[Workspace]:
-        """Get workspace for an assistant"""
-        with self.lock:
-            assistant = self.assistants.get(assistant_id)
-            if assistant is None or assistant.workspace_id is None:
-                return None
-            return self.workspaces.get(assistant.workspace_id)
+            return self.global_workspace
     
     def update_workspace(self, workspace: Workspace) -> bool:
-        """Update a workspace"""
+        """
+        Update the global workspace reference
+        
+        Args:
+            workspace: Workspace instance to update
+        
+        Returns:
+            True if updated successfully, False otherwise
+        """
         with self.lock:
-            if workspace.id not in self.workspaces:
+            if self.global_workspace is None or workspace.id != self.global_workspace.id:
                 return False
-            workspace.updated_at = datetime.now()
-            self.workspaces[workspace.id] = workspace
+            # Workspace updates itself internally, we just update the reference
+            self.global_workspace = workspace
             return True
+    
+    # Legacy methods for backward compatibility (deprecated)
+    def create_workspace(self, assistant_id: str) -> Workspace:
+        """
+        Legacy method - creates/returns global workspace
+        
+        Deprecated: Use create_global_workspace() instead
+        """
+        return self.create_global_workspace()
+    
+    def get_workspace_by_assistant(self, assistant_id: str) -> Optional[Workspace]:
+        """
+        Legacy method - returns global workspace
+        
+        Deprecated: Use get_global_workspace() instead
+        """
+        return self.get_global_workspace()
 
 
 # Global storage instance

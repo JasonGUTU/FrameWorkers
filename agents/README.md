@@ -2,6 +2,10 @@
 
 本文档详细说明如何创建、开发和部署 Agent 到 Frameworks Backend。
 
+**重要说明：**
+- `agents/`（根目录）：实际 Agent 实现的位置，每个 Agent 放在独立的子目录中
+- `assistant/agent_core/`（backend 内部）：Agent 核心框架，包含 BaseAgent 基类和注册机制
+
 ## 目录
 
 - [概述](#概述)

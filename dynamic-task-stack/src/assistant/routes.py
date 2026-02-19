@@ -7,10 +7,11 @@ from datetime import datetime
 from .service import AssistantService
 from .storage import assistant_storage
 from .models import (
-    Assistant, Agent, AgentExecution, Workspace,
+    Assistant, Agent, AgentExecution,
     ExecutionStatus
 )
-from .agents import get_agent_registry
+from .workspace import Workspace
+from .agent_core import get_agent_registry
 
 
 def create_assistant_blueprint():
@@ -27,7 +28,7 @@ def create_assistant_blueprint():
             return obj.value
         if isinstance(obj, datetime):
             return obj.isoformat()
-        if isinstance(obj, (Assistant, Agent, AgentExecution, Workspace)):
+        if isinstance(obj, (Assistant, Agent, AgentExecution)):
             result = {}
             for k, v in obj.__dict__.items():
                 if isinstance(v, (ExecutionStatus,)):
@@ -214,13 +215,216 @@ def create_assistant_blueprint():
         executions = assistant_storage.get_executions_by_task(task_id)
         return jsonify([serialize_assistant_enum(e) for e in executions])
     
-    # Workspace routes (conceptual for now)
-    @bp.route('/api/assistant/<assistant_id>/workspace', methods=['GET'])
-    def get_workspace(assistant_id: str):
-        """Get workspace for an assistant"""
-        workspace = assistant_storage.get_workspace_by_assistant(assistant_id)
+    # Workspace routes
+    @bp.route('/api/assistant/workspace', methods=['GET'])
+    def get_workspace():
+        """Get the global workspace shared by all agents"""
+        workspace = assistant_storage.get_global_workspace()
         if workspace is None:
             return jsonify({'error': 'Workspace not found'}), 404
-        return jsonify(serialize_assistant_enum(workspace))
+        summary = workspace.get_summary()
+        return jsonify(summary)
+    
+    @bp.route('/api/assistant/workspace/summary', methods=['GET'])
+    def get_workspace_summary():
+        """Get workspace summary with statistics"""
+        workspace = assistant_storage.get_global_workspace()
+        if workspace is None:
+            return jsonify({'error': 'Workspace not found'}), 404
+        return jsonify(workspace.get_summary())
+    
+    @bp.route('/api/assistant/workspace/files', methods=['GET'])
+    def list_workspace_files():
+        """List files in workspace"""
+        workspace = assistant_storage.get_global_workspace()
+        if workspace is None:
+            return jsonify({'error': 'Workspace not found'}), 404
+        
+        file_type = request.args.get('file_type')
+        tags = request.args.getlist('tags')
+        created_by = request.args.get('created_by')
+        limit = request.args.get('limit', type=int)
+        
+        files = workspace.list_files(
+            file_type=file_type,
+            tags=tags if tags else None,
+            created_by=created_by,
+            limit=limit
+        )
+        
+        return jsonify([
+            {
+                "id": f.id,
+                "filename": f.filename,
+                "description": f.description,
+                "file_type": f.file_type,
+                "file_extension": f.file_extension,
+                "file_path": f.file_path,
+                "size_bytes": f.size_bytes,
+                "created_at": f.created_at.isoformat(),
+                "created_by": f.created_by,
+                "tags": f.tags,
+                "metadata": f.metadata
+            }
+            for f in files
+        ])
+    
+    @bp.route('/api/assistant/workspace/files/<file_id>', methods=['GET'])
+    def get_workspace_file(file_id: str):
+        """Get file metadata by ID"""
+        workspace = assistant_storage.get_global_workspace()
+        if workspace is None:
+            return jsonify({'error': 'Workspace not found'}), 404
+        
+        file_meta = workspace.get_file(file_id)
+        if file_meta is None:
+            return jsonify({'error': 'File not found'}), 404
+        
+        return jsonify({
+            "id": file_meta.id,
+            "filename": file_meta.filename,
+            "description": file_meta.description,
+            "file_type": file_meta.file_type,
+            "file_extension": file_meta.file_extension,
+            "file_path": file_meta.file_path,
+            "size_bytes": file_meta.size_bytes,
+            "created_at": file_meta.created_at.isoformat(),
+            "created_by": file_meta.created_by,
+            "tags": file_meta.tags,
+            "metadata": file_meta.metadata
+        })
+    
+    @bp.route('/api/assistant/workspace/files/search', methods=['GET'])
+    def search_workspace_files():
+        """Search files in workspace"""
+        workspace = assistant_storage.get_global_workspace()
+        if workspace is None:
+            return jsonify({'error': 'Workspace not found'}), 404
+        
+        query = request.args.get('query', '')
+        file_type = request.args.get('file_type')
+        limit = request.args.get('limit', type=int, default=10)
+        
+        if not query:
+            return jsonify({'error': 'Query parameter required'}), 400
+        
+        files = workspace.search_files(query, file_type=file_type, limit=limit)
+        
+        return jsonify([
+            {
+                "id": f.id,
+                "filename": f.filename,
+                "description": f.description,
+                "file_type": f.file_type,
+                "file_path": f.file_path,
+                "created_at": f.created_at.isoformat()
+            }
+            for f in files
+        ])
+    
+    @bp.route('/api/assistant/workspace/memory', methods=['GET'])
+    def get_workspace_memory():
+        """Get Global Memory"""
+        workspace = assistant_storage.get_global_workspace()
+        if workspace is None:
+            return jsonify({'error': 'Workspace not found'}), 404
+        
+        memory = workspace.read_memory()
+        info = workspace.get_memory_info()
+        
+        return jsonify({
+            "content": memory,
+            "info": info
+        })
+    
+    @bp.route('/api/assistant/workspace/memory', methods=['POST'])
+    def write_workspace_memory():
+        """Write to Global Memory"""
+        workspace = assistant_storage.get_global_workspace()
+        if workspace is None:
+            return jsonify({'error': 'Workspace not found'}), 404
+        
+        data = request.get_json()
+        if not data:
+            return jsonify({'error': 'Invalid JSON body'}), 400
+        
+        content = data.get('content')
+        append = data.get('append', False)
+        
+        if content is None:
+            return jsonify({'error': 'Missing required field: content'}), 400
+        
+        result = workspace.write_memory(content, append=append)
+        return jsonify(result)
+    
+    @bp.route('/api/assistant/workspace/logs', methods=['GET'])
+    def get_workspace_logs():
+        """Get logs from workspace"""
+        workspace = assistant_storage.get_global_workspace()
+        if workspace is None:
+            return jsonify({'error': 'Workspace not found'}), 404
+        
+        operation_type = request.args.get('operation_type')
+        resource_type = request.args.get('resource_type')
+        agent_id = request.args.get('agent_id')
+        task_id = request.args.get('task_id')
+        limit = request.args.get('limit', type=int)
+        
+        logs = workspace.get_logs(
+            operation_type=operation_type,
+            resource_type=resource_type,
+            agent_id=agent_id,
+            task_id=task_id,
+            limit=limit
+        )
+        
+        return jsonify([
+            {
+                "id": log.id,
+                "timestamp": log.timestamp.isoformat(),
+                "operation_type": log.operation_type,
+                "resource_type": log.resource_type,
+                "resource_id": log.resource_id,
+                "details": log.details,
+                "agent_id": log.agent_id,
+                "task_id": log.task_id
+            }
+            for log in logs
+        ])
+    
+    @bp.route('/api/assistant/workspace/search', methods=['GET'])
+    def search_workspace():
+        """Comprehensive search across workspace"""
+        workspace = assistant_storage.get_global_workspace()
+        if workspace is None:
+            return jsonify({'error': 'Workspace not found'}), 404
+        
+        query = request.args.get('query', '')
+        search_types = request.args.getlist('types') or ['files', 'memory', 'logs']
+        
+        if not query:
+            return jsonify({'error': 'Query parameter required'}), 400
+        
+        results = workspace.search_all(
+            query=query,
+            search_files='files' in search_types,
+            search_memory='memory' in search_types,
+            search_logs='logs' in search_types,
+            limit=10
+        )
+        
+        return jsonify(results)
+    
+    @bp.route('/api/assistant/<assistant_id>/workspace', methods=['GET'])
+    def get_workspace_by_assistant(assistant_id: str):
+        """
+        Legacy endpoint - returns global workspace summary
+        
+        Deprecated: Use /api/assistant/workspace instead
+        """
+        workspace = assistant_storage.get_global_workspace()
+        if workspace is None:
+            return jsonify({'error': 'Workspace not found'}), 404
+        return jsonify(workspace.get_summary())
     
     return bp

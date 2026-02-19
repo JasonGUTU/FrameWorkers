@@ -13,7 +13,7 @@ class AgentRegistry:
     """
     Registry for discovering and managing all installed agents
     
-    Automatically scans the agents directory and registers all agents
+    Automatically scans the root-level agents/ directory and registers all agents
     that inherit from BaseAgent.
     """
     
@@ -23,21 +23,19 @@ class AgentRegistry:
         
         Args:
             agents_dir: Directory containing agent subdirectories.
-                       If None, tries to find agents directory at project root,
-                       then falls back to src/assistant/agents/ relative to this file
+                       If None, tries to find agents directory at project root
         """
         if agents_dir is None:
             # Try to find agents directory at project root
             current_file = Path(__file__)
-            # Go up to project root: dynamic-task-stack/src/assistant/agents -> FrameWorkers/
+            # Go up to project root: dynamic-task-stack/src/assistant/agent_core -> FrameWorkers/
             project_root = current_file.parent.parent.parent.parent.parent
             root_agents_dir = project_root / "agents"
             
             if root_agents_dir.exists() and root_agents_dir.is_dir():
                 agents_dir = str(root_agents_dir)
             else:
-                # Fallback to local agents directory
-                agents_dir = str(current_file.parent)
+                raise ValueError("agents/ directory not found at project root")
         
         self.agents_dir = Path(agents_dir)
         self._agents: Dict[str, BaseAgent] = {}
@@ -75,9 +73,6 @@ class AgentRegistry:
         """
         agent_name = agent_dir.name
         
-        # Determine if this is root-level agents directory or local
-        is_root_agents = "agents" in str(self.agents_dir) and self.agents_dir.name == "agents"
-        
         # Try to import the agent module
         # Expected structure: agent_dir/agent.py or agent_dir/__init__.py
         module_paths = [
@@ -96,32 +91,19 @@ class AgentRegistry:
                 if agent_parent not in sys.path:
                     sys.path.insert(0, agent_parent)
                 
-                # Try different import strategies
-                import_strategies = []
-                
-                if is_root_agents:
-                    # Root-level agents: import as agents.{agent_name}.{module_file}
-                    import_strategies = [
-                        f"agents.{agent_name}.{module_file}",
-                        f"agents.{agent_name}",
-                    ]
-                else:
-                    # Local agents: import as src.assistant.agents.{agent_name}.{module_file}
-                    import_strategies = [
-                        f"src.assistant.agents.{agent_name}.{module_file}",
-                        f"src.assistant.agents.{agent_name}",
-                        f"assistant.agents.{agent_name}.{module_file}",
-                        f"assistant.agents.{agent_name}",
-                    ]
+                # Import strategies for root-level agents directory
+                import_strategies = [
+                    f"agents.{agent_name}.{module_file}",
+                    f"agents.{agent_name}",
+                ]
                 
                 for module_name in import_strategies:
                     try:
-                        # For root-level agents, we need to add the project root to path
-                        if is_root_agents:
-                            import sys
-                            project_root = str(self.agents_dir.parent)
-                            if project_root not in sys.path:
-                                sys.path.insert(0, project_root)
+                        # Add project root to path for root-level agents
+                        import sys
+                        project_root = str(self.agents_dir.parent)
+                        if project_root not in sys.path:
+                            sys.path.insert(0, project_root)
                         
                         module = importlib.import_module(module_name)
                         
@@ -141,8 +123,7 @@ class AgentRegistry:
                                 return  # Successfully loaded, exit
                     except ImportError as e:
                         # Debug: print import error for troubleshooting
-                        if is_root_agents:
-                            print(f"Debug: Failed to import {module_name}: {e}")
+                        print(f"Debug: Failed to import {module_name}: {e}")
                         continue
                 
             except Exception as e:

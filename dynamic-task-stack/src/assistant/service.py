@@ -4,15 +4,22 @@ from typing import Dict, Any, Optional, List
 from datetime import datetime
 
 from .models import (
-    Assistant, Agent, AgentExecution, Workspace,
+    Assistant, Agent, AgentExecution,
     ExecutionStatus
 )
+from .workspace import Workspace
 from ..task_stack.storage import storage as task_storage  # Read-only access to task storage
-from .agents import get_agent_registry
+from .agent_core import get_agent_registry
+from .retrieval import WorkspaceRetriever
 
 
 class AssistantService:
-    """Service class for managing assistant operations"""
+    """
+    Service class for managing assistant operations
+    
+    There should be only one assistant instance that manages all sub-agents.
+    All agents share a single workspace (file system).
+    """
     
     def __init__(self, assistant_storage):
         """
@@ -23,6 +30,23 @@ class AssistantService:
         """
         self.storage = assistant_storage
         self.agent_registry = get_agent_registry()
+        # Get or create the global workspace
+        self.workspace = self._get_global_workspace()
+        self.retriever = WorkspaceRetriever(self.workspace)
+    
+    def _get_global_workspace(self) -> Workspace:
+        """
+        Get or create the global workspace
+        
+        Returns:
+            The global workspace instance
+        """
+        # Try to get existing workspace
+        workspace = self.storage.get_global_workspace()
+        if workspace is None:
+            # Create global workspace if it doesn't exist
+            workspace = self.storage.create_global_workspace()
+        return workspace
     
     def query_agent_inputs(self, agent_id: str) -> Dict[str, Any]:
         """
@@ -65,12 +89,14 @@ class AssistantService:
         """
         Prepare workspace environment for agent execution
         
+        Uses the global workspace shared by all agents.
+        
         Args:
             assistant_id: ID of the assistant
             task_id: ID of the task being executed
             
         Returns:
-            Workspace instance (conceptual for now)
+            Global workspace instance
             
         Raises:
             ValueError: If assistant not found
@@ -79,19 +105,8 @@ class AssistantService:
         if assistant is None:
             raise ValueError(f"Assistant {assistant_id} not found")
         
-        # Get or create workspace for this assistant
-        workspace = self.storage.get_workspace_by_assistant(assistant_id)
-        if workspace is None:
-            workspace = self.storage.create_workspace(assistant_id)
-        
-        # For now, workspace is conceptual - actual implementation deferred
-        # In future, this would:
-        # - Load shared files
-        # - Initialize shared memory
-        # - Set up logging context
-        # - Prepare asset directories
-        
-        return workspace
+        # Use the global workspace (already initialized in __init__)
+        return self.workspace
     
     def package_data(
         self,
@@ -102,10 +117,13 @@ class AssistantService:
         """
         Package relevant resources for agent execution
         
+        The assistant retrieves information from the workspace file system
+        and packages it for distribution to the agent.
+        
         Args:
             agent_id: ID of the agent to execute
             task_id: ID of the task
-            workspace: Workspace instance
+            workspace: Global workspace instance
             
         Returns:
             Dictionary containing packaged data for agent
@@ -113,22 +131,50 @@ class AssistantService:
         Raises:
             ValueError: If agent or task not found
         """
-        agent = self.storage.get_agent(agent_id)
-        if agent is None:
-            raise ValueError(f"Agent {agent_id} not found")
+        # Get agent instance to understand its requirements
+        agent_instance = self.agent_registry.get_agent(agent_id)
+        if agent_instance is None:
+            # Fallback to storage
+            agent = self.storage.get_agent(agent_id)
+            if agent is None:
+                raise ValueError(f"Agent {agent_id} not found")
         
         # Get task from task storage (read-only)
         task = task_storage.get_task(task_id)
         if task is None:
             raise ValueError(f"Task {task_id} not found")
         
-        # Package data based on agent's input schema
+        # Retrieve relevant context from workspace using the retriever
+        # The assistant searches the workspace and distributes information to agents
+        context = self.retriever.get_context_for_agent(
+            agent_id=agent_id,
+            task_id=task_id,
+            context_keys=None  # Could be customized based on agent requirements
+        )
+        
+        # Get recent files and memory for context
+        recent_files = workspace.list_files(limit=10)
+        memory_content = workspace.read_memory()
+        
+        # Package data: combine task data with retrieved workspace context
         packaged_data = {
             "task_id": task_id,
             "task_description": task.description,
             "task_progress": task.progress,
-            "workspace_files": workspace.shared_files,
-            "workspace_memory": workspace.shared_memory,
+            # Retrieved context from workspace (distributed by assistant)
+            "workspace_context": context,
+            # Direct workspace access
+            "workspace_files": [
+                {
+                    "id": f.id,
+                    "filename": f.filename,
+                    "description": f.description,
+                    "file_type": f.file_type,
+                    "file_path": f.file_path
+                }
+                for f in recent_files
+            ],
+            "workspace_memory": memory_content[:1000] if memory_content else "",  # First 1000 chars
             # Additional data can be added based on agent requirements
         }
         
@@ -223,23 +269,36 @@ class AssistantService:
         Returns:
             Dictionary containing processed results
         """
-        # Store results in workspace
-        if execution.results:
-            workspace.assets[f"execution_{execution.id}"] = execution.results
-            workspace.updated_at = datetime.now()
-            self.storage.update_workspace(workspace)
+        # Log execution using workspace log manager
+        workspace.log_manager.add_log(
+            operation_type='write',
+            resource_type='execution',
+            resource_id=execution.id,
+            agent_id=execution.agent_id,
+            task_id=execution.task_id,
+            details={
+                "status": execution.status.value,
+                "error": execution.error,
+                "has_results": execution.results is not None
+            }
+        )
         
-        # Log execution
-        log_entry = {
-            "execution_id": execution.id,
-            "agent_id": execution.agent_id,
-            "task_id": execution.task_id,
-            "status": execution.status.value,
-            "timestamp": datetime.now().isoformat(),
-            "error": execution.error
-        }
-        workspace.logs.append(log_entry)
-        self.storage.update_workspace(workspace)
+        # If results contain files, store them in workspace
+        if execution.results:
+            # Check if results contain file data to store
+            if isinstance(execution.results, dict):
+                # Look for file-like data in results
+                for key, value in execution.results.items():
+                    if isinstance(value, dict) and 'file_content' in value:
+                        # Store file
+                        workspace.store_file(
+                            file_content=value['file_content'],
+                            filename=value.get('filename', f'{key}.bin'),
+                            description=value.get('description', f'File from execution {execution.id}'),
+                            created_by=execution.agent_id,
+                            tags=[execution.agent_id, execution.task_id],
+                            metadata={'execution_id': execution.id}
+                        )
         
         # Return processed results
         return {

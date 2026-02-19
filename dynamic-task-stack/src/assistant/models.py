@@ -37,12 +37,16 @@ class Agent:
 
 @dataclass
 class Assistant:
-    """Assistant instance that manages sub-agents"""
+    """
+    Global Assistant instance that manages all sub-agents
+    
+    There should be only one assistant instance that manages all sub-agents.
+    All agents share a single workspace (file system).
+    """
     id: str
     name: str
     description: str
     agent_ids: List[str]  # List of agent IDs managed by this assistant
-    workspace_id: Optional[str] = None  # Associated workspace ID
     created_at: datetime = field(default_factory=datetime.now)
     updated_at: datetime = field(default_factory=datetime.now)
 
@@ -63,15 +67,6 @@ class AgentExecution:
     created_at: datetime = field(default_factory=datetime.now)
 
 
-@dataclass
-class Workspace:
-    """Conceptual workspace containing shared resources"""
-    id: str
-    assistant_id: str
-    # For now, these are conceptual - actual implementation deferred
-    shared_files: Dict[str, Any] = field(default_factory=dict)
-    shared_memory: Dict[str, Any] = field(default_factory=dict)
-    logs: List[Dict[str, Any]] = field(default_factory=list)
-    assets: Dict[str, Any] = field(default_factory=dict)
-    created_at: datetime = field(default_factory=datetime.now)
-    updated_at: datetime = field(default_factory=datetime.now)
+# Workspace model is now in workspace/workspace.py
+# Import it here for backward compatibility
+from .workspace import Workspace

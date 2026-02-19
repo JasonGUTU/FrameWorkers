@@ -26,17 +26,13 @@ class BaseAgent(ABC):
     Abstract base class for all agents
     
     Every agent must inherit from this class and implement the required methods.
-    Each agent should be placed in its own folder under src/assistant/agents/
+    Actual agent implementations should be placed in the root-level agents/ directory.
     
     Example structure:
-    src/assistant/agents/
-    ├── storyboard_agent/
-    │   ├── __init__.py
-    │   └── agent.py  # StoryboardAgent(BaseAgent)
-    ├── transcript_agent/
-    │   ├── __init__.py
-    │   └── agent.py  # TranscriptAgent(BaseAgent)
-    └── ...
+    agents/                          # Root-level agents directory
+    └── storyboard_agent/
+        ├── __init__.py
+        └── agent.py  # StoryboardAgent(BaseAgent)
     """
     
     def __init__(self):
