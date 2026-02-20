@@ -4,7 +4,7 @@ Basic Usage Examples for Inference Module
 This file demonstrates basic usage of the Inference module.
 """
 
-from Inference import LLMClient, MessageHistory, ImageUtils, TemplateManager
+from inference import LLMClient, MessageHistory, ImageUtils, TemplateManager
 
 
 def example_basic_call():
@@ -103,7 +103,7 @@ def example_model_info():
     """Example of querying model information"""
     print("=== Example 5: Model Information ===")
     
-    from Inference import ModelRegistry
+    from inference import ModelRegistry
     
     registry = ModelRegistry()
     

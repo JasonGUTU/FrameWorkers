@@ -7,7 +7,7 @@ This example shows how to:
 3. Handle different input types
 """
 
-from Inference import (
+from inference import (
     ImageGeneratorRegistry,
     VideoGeneratorRegistry,
     get_image_generator_registry,

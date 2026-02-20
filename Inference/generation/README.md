@@ -57,7 +57,7 @@ input_schema={
 ### 1. 列出可用的生成器
 
 ```python
-from Inference import get_image_generator_registry, get_video_generator_registry
+from inference import get_image_generator_registry, get_video_generator_registry
 
 # 图像生成器
 image_registry = get_image_generator_registry()
@@ -73,7 +73,7 @@ print(generators)  # ['example_video_generator', ...]
 ### 2. 生成图像
 
 ```python
-from Inference import get_image_generator_registry
+from inference import get_image_generator_registry
 
 registry = get_image_generator_registry()
 
@@ -103,7 +103,7 @@ result = registry.generate(
 ### 4. 生成视频
 
 ```python
-from Inference import get_video_generator_registry
+from inference import get_video_generator_registry
 
 registry = get_video_generator_registry()
 

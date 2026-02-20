@@ -82,7 +82,7 @@ export GOOGLE_API_KEY="your-google-api-key"
 ### 1. 基本模型调用
 
 ```python
-from Inference import LLMClient, Message
+from inference import LLMClient, Message
 
 # 初始化客户端（使用默认模型）
 client = LLMClient(default_model="gpt-3.5-turbo")
@@ -104,7 +104,7 @@ print(response["choices"][0]["message"]["content"])
 ### 2. 指定模型和参数
 
 ```python
-from Inference import LLMClient, ModelConfig
+from inference import LLMClient, ModelConfig
 
 client = LLMClient()
 
@@ -166,7 +166,7 @@ asyncio.run(stream_async())
 `LLMClient` 提供了统一的接口，可以通过 OpenAI 兼容的方式调用所有支持的模型：
 
 ```python
-from Inference import LLMClient
+from inference import LLMClient
 
 client = LLMClient()
 
@@ -194,7 +194,7 @@ response = client.call(
 支持通过 LiteLLM 或直接 API 调用 Ollama 模型：
 
 ```python
-from Inference import CustomModelClient
+from inference import CustomModelClient
 
 # 初始化 Ollama 客户端
 client = CustomModelClient(
@@ -242,7 +242,7 @@ client.register_custom_model(
 #### 图像编码解码
 
 ```python
-from Inference import ImageUtils
+from inference import ImageUtils
 
 # 将图像编码为 Base64
 image_base64 = ImageUtils.encode_image_to_base64("path/to/image.png")
@@ -265,7 +265,7 @@ print(info)  # {'width': 1920, 'height': 1080, 'format': 'PNG', ...}
 #### 创建多模态消息
 
 ```python
-from Inference import ImageUtils, LLMClient
+from inference import ImageUtils, LLMClient
 
 client = LLMClient()
 
@@ -284,7 +284,7 @@ response = client.call(
 #### 多模态工具
 
 ```python
-from Inference import MultimodalUtils
+from inference import MultimodalUtils
 
 # 准备多模态内容
 content = MultimodalUtils.prepare_multimodal_content(
@@ -317,7 +317,7 @@ tokens = MultimodalUtils.count_tokens_multimodal(message)
 #### Message 压缩
 
 ```python
-from Inference import MessageUtils
+from inference import MessageUtils
 
 messages = [
     {"role": "system", "content": "You are a helpful assistant."},
@@ -344,7 +344,7 @@ tokens = MessageUtils.estimate_tokens(messages)
 #### 历史 Message 持久化
 
 ```python
-from Inference import MessageHistory
+from inference import MessageHistory
 
 # 初始化历史记录（自动保存到文件）
 history = MessageHistory(
@@ -385,7 +385,7 @@ history.clear()
 #### 创建和使用模板
 
 ```python
-from Inference import PromptTemplate, TemplateManager
+from inference import PromptTemplate, TemplateManager
 
 # 创建模板管理器
 manager = TemplateManager(storage_path="./data/templates")
@@ -506,7 +506,7 @@ export OLLAMA_BASE_URL="http://localhost:11434"
 ### 代码方式
 
 ```python
-from Inference import LLMClient, ModelConfig
+from inference import LLMClient, ModelConfig
 
 client = LLMClient(default_model="gpt-4o")
 
@@ -527,7 +527,7 @@ response = client.call(messages=[...], config=config)
 ### 查询可用模型
 
 ```python
-from Inference import ModelRegistry, get_model_config
+from inference import ModelRegistry, get_model_config
 
 registry = ModelRegistry()
 
@@ -549,7 +549,7 @@ print(model_info.max_tokens)
 ### 示例 1: 带历史记录的对话
 
 ```python
-from Inference import LLMClient, MessageHistory
+from inference import LLMClient, MessageHistory
 
 client = LLMClient(default_model="gpt-3.5-turbo")
 history = MessageHistory(storage_path="./conversation.json")
@@ -573,7 +573,7 @@ print(assistant_reply)
 ### 示例 2: 多模态图像分析
 
 ```python
-from Inference import LLMClient, ImageUtils
+from inference import LLMClient, ImageUtils
 
 client = LLMClient(default_model="gpt-4o")
 
@@ -591,7 +591,7 @@ print(response["choices"][0]["message"]["content"])
 ### 示例 3: 使用模板的批量处理
 
 ```python
-from Inference import LLMClient, TemplateManager
+from inference import LLMClient, TemplateManager
 
 client = LLMClient()
 manager = TemplateManager()
@@ -613,7 +613,7 @@ for text in texts:
 ### 示例 4: 流式响应处理
 
 ```python
-from Inference import LLMClient
+from inference import LLMClient
 
 client = LLMClient()
 
@@ -640,7 +640,7 @@ print(f"\n\nFull response length: {len(full_response)}")
 ### 示例 5: 图像生成
 
 ```python
-from Inference import get_image_generator_registry
+from inference import get_image_generator_registry
 
 registry = get_image_generator_registry()
 
@@ -664,7 +664,7 @@ print(f"Saved to: {result['image_paths']}")
 ### 示例 6: 视频生成
 
 ```python
-from Inference import get_video_generator_registry
+from inference import get_video_generator_registry
 
 registry = get_video_generator_registry()
 

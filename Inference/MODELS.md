@@ -46,7 +46,7 @@ This document lists all supported models in the Inference module.
 ### Via Model ID
 
 ```python
-from Inference import LLMClient
+from inference import LLMClient
 
 client = LLMClient(default_model="gpt-4o")
 
@@ -59,7 +59,7 @@ response = client.call(
 ### Via Configuration File
 
 ```python
-from Inference import LLMClient
+from inference import LLMClient
 
 client = LLMClient(config_path="config/inference_config.yaml")
 
@@ -72,7 +72,7 @@ response = client.call(
 ### Listing Available Models
 
 ```python
-from Inference import ModelRegistry
+from inference import ModelRegistry
 
 registry = ModelRegistry()
 
@@ -94,7 +94,7 @@ print(model_info.supports_multimodal)
 You can register custom models:
 
 ```python
-from Inference import CustomModelClient, ModelInfo
+from inference import CustomModelClient, ModelInfo
 
 client = CustomModelClient()
 
@@ -120,7 +120,7 @@ Models can be configured via:
 Example:
 
 ```python
-from Inference import LLMClient, ModelConfig
+from inference import LLMClient, ModelConfig
 
 client = LLMClient()
 
