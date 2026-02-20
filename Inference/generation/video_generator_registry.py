@@ -26,10 +26,10 @@ class VideoGeneratorRegistry:
         
         Args:
             generators_dir: Directory containing generator subdirectories.
-                          If None, uses default location: Inference/generation/video_generators/
+                          If None, uses default location: inference/generation/video_generators/
         """
         if generators_dir is None:
-            # Default to Inference/generation/video_generators/
+            # Default to inference/generation/video_generators/
             current_file = Path(__file__)
             generators_dir = current_file.parent / "video_generators"
         

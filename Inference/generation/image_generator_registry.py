@@ -27,10 +27,10 @@ class ImageGeneratorRegistry:
         
         Args:
             generators_dir: Directory containing generator subdirectories.
-                          If None, uses default location: Inference/generation/image_generators/
+                          If None, uses default location: inference/generation/image_generators/
         """
         if generators_dir is None:
-            # Default to Inference/generation/image_generators/
+            # Default to inference/generation/image_generators/
             current_file = Path(__file__)
             generators_dir = current_file.parent / "image_generators"
         

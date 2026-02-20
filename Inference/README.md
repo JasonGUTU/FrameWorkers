@@ -15,7 +15,7 @@ Inference 模块提供了完整的语言模型推理、Prompt 处理和多模态
 ## 目录结构
 
 ```
-Inference/
+inference/
 ├── __init__.py                 # 模块入口
 ├── README.md                   # 本文档
 ├── MODELS.md                   # 支持的模型清单
@@ -57,7 +57,7 @@ Inference/
 ### 1. 安装依赖
 
 ```bash
-cd Inference
+cd inference
 pip install -r requirements.txt
 ```
 
