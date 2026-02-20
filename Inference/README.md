@@ -9,6 +9,8 @@ Inference 模块提供了完整的语言模型推理、Prompt 处理和多模态
 - **多模态支持**: 提供图像 Base64 编码/解码及相关工具
 - **Prompt 处理工具**: Message 压缩、历史持久化等功能
 - **Prompt 模板系统**: Prompt 组合与模板管理
+- **图像生成模块**: 可扩展的图像生成器注册系统，支持文本到图像、图像到图像
+- **视频生成模块**: 可扩展的视频生成器注册系统，支持文本/图像/视频到视频
 
 ## 目录结构
 
@@ -35,6 +37,16 @@ Inference/
 │   ├── message_utils.py        # Message 压缩等工具
 │   ├── history.py              # 历史 Message 持久化
 │   └── templates.py             # Prompt 模板和组合
+├── generation/                 # 生成模块
+│   ├── __init__.py
+│   ├── base_generator.py        # 生成器基类
+│   ├── image_generator_registry.py  # 图像生成器注册表
+│   ├── video_generator_registry.py  # 视频生成器注册表
+│   ├── image_generators/        # 图像生成器目录
+│   │   └── example_generator/   # 示例图像生成器
+│   ├── video_generators/        # 视频生成器目录
+│   │   └── example_generator/   # 示例视频生成器
+│   └── README.md                # 生成模块文档
 └── utils/                      # 工具模块
     ├── __init__.py
     └── config_loader.py        # 配置加载工具
@@ -625,6 +637,56 @@ for chunk in client.stream_call(
 print(f"\n\nFull response length: {len(full_response)}")
 ```
 
+### 示例 5: 图像生成
+
+```python
+from Inference import get_image_generator_registry
+
+registry = get_image_generator_registry()
+
+# 列出可用的生成器
+generators = registry.list_generators()
+print(f"Available generators: {generators}")
+
+# 生成图像
+result = registry.generate(
+    generator_id="example_image_generator",
+    prompt="A beautiful sunset over the ocean",
+    width=1024,
+    height=1024,
+    style="realistic"
+)
+
+print(f"Generated {len(result['images'])} image(s)")
+print(f"Saved to: {result['image_paths']}")
+```
+
+### 示例 6: 视频生成
+
+```python
+from Inference import get_video_generator_registry
+
+registry = get_video_generator_registry()
+
+# 文本到视频
+result = registry.generate(
+    generator_id="example_video_generator",
+    prompt="A cat walking on the beach",
+    duration=5,
+    fps=24
+)
+
+print(f"Generated video: {result['video_path']}")
+
+# 图像到视频
+result = registry.generate(
+    generator_id="example_video_generator",
+    prompt="Animate this image",
+    images=["path/to/image.jpg"],
+    duration=3
+)
+```
+
 ## API 参考
 
 ### LLMClient
@@ -704,6 +766,42 @@ print(f"\n\nFull response length: {len(full_response)}")
 - `remove_template()`: 删除模板
 - `save()`: 保存模板
 - `load()`: 加载模板
+
+### ImageGeneratorRegistry
+
+图像生成器注册表。
+
+**方法**:
+- `list_generators()`: 列出所有注册的生成器 ID
+- `get_generator()`: 获取生成器实例
+- `generate()`: 使用指定生成器生成图像
+- `get_all_generators_info()`: 获取所有生成器信息
+- `register_generator()`: 手动注册生成器
+- `reload()`: 重新加载所有生成器
+
+### VideoGeneratorRegistry
+
+视频生成器注册表。
+
+**方法**:
+- `list_generators()`: 列出所有注册的生成器 ID
+- `get_generator()`: 获取生成器实例
+- `generate()`: 使用指定生成器生成视频（支持文本/图像/视频输入）
+- `get_all_generators_info()`: 获取所有生成器信息
+- `register_generator()`: 手动注册生成器
+- `reload()`: 重新加载所有生成器
+
+### BaseImageGenerator / BaseVideoGenerator
+
+生成器基类，所有自定义生成器必须继承这些类。
+
+**方法**:
+- `get_metadata()`: 返回生成器元数据（包括 input_schema 和 output_schema）
+- `generate()`: 执行生成逻辑
+- `validate_inputs()`: 验证输入参数
+- `get_input_schema()`: 获取输入模式
+- `get_output_schema()`: 获取输出模式
+- `get_info()`: 获取生成器完整信息
 
 ## 注意事项
 
