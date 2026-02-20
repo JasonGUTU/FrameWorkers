@@ -1,0 +1,42 @@
+# Inference Module Configuration Example
+# Copy this file to inference_config.yaml and fill in your API keys
+
+# Default model to use if not specified in calls
+default_model: "gpt-3.5-turbo"
+
+# API Keys for different providers
+# You can use environment variables with ${VAR_NAME} syntax
+api_keys:
+  openai: "${OPENAI_API_KEY}"
+  anthropic: "${ANTHROPIC_API_KEY}"
+  google: "${GOOGLE_API_KEY}"
+  # ollama: ""  # Ollama typically doesn't require API key
+
+# Custom model endpoints
+custom_endpoints:
+  ollama:
+    base_url: "http://localhost:11434"
+    # api_key: ""  # Optional
+
+# Model-specific configurations
+model_configs:
+  gpt-4:
+    temperature: 0.7
+    max_tokens: 4096
+  gpt-3.5-turbo:
+    temperature: 0.7
+    max_tokens: 4096
+  claude-3-5-sonnet-20241022:
+    temperature: 0.7
+    max_tokens: 8192
+
+# Storage paths
+storage:
+  history_path: "./data/history"
+  templates_path: "./data/templates"
+
+# Default settings
+defaults:
+  temperature: 0.7
+  max_tokens: null  # null means use model default
+  timeout: 60.0
