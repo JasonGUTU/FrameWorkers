@@ -90,6 +90,53 @@ class AssistantService:
         # Use the global workspace (already initialized in __init__)
         return self.workspace
     
+    def _build_pipeline_assets(
+        self,
+        task_id: str,
+        task_description: str,
+    ) -> Dict[str, Any]:
+        """Build the shared ``assets`` dict from historical execution results.
+
+        Scans all completed executions under *task_id*, maps each
+        ``agent_id`` to its ``asset_key`` via the registry descriptor,
+        and stores the execution results under that key.  When the same
+        agent was executed multiple times, only the latest successful
+        result is kept.
+
+        Also seeds ``draft_idea`` / ``source_text`` from the task
+        description so that first-in-pipeline agents (StoryAgent,
+        ExampleAgent) have their input ready.
+        """
+        assets: Dict[str, Any] = {}
+
+        if task_description:
+            assets["draft_idea"] = task_description
+            assets["source_text"] = task_description
+
+        past_executions = self.storage.get_executions_by_task(task_id)
+
+        latest: Dict[str, AgentExecution] = {}
+        for execution in past_executions:
+            if execution.status != ExecutionStatus.COMPLETED:
+                continue
+            if not execution.results:
+                continue
+            prev = latest.get(execution.agent_id)
+            if prev is None or (execution.completed_at or execution.created_at) > (prev.completed_at or prev.created_at):
+                latest[execution.agent_id] = execution
+
+        for agent_id, execution in latest.items():
+            descriptor = self.agent_registry.get_descriptor(agent_id)
+            if descriptor is None:
+                continue
+            results = {
+                k: v for k, v in execution.results.items()
+                if not k.startswith("_")
+            }
+            assets[descriptor.asset_key] = results
+
+        return assets
+
     def package_data(
         self,
         agent_id: str,
@@ -135,6 +182,9 @@ class AssistantService:
         recent_files = workspace.list_files(limit=10)
         memory_content = workspace.read_memory()
         
+        # Build pipeline assets from historical execution results
+        assets = self._build_pipeline_assets(task_id, task.description)
+        
         # Package data: combine task data with retrieved workspace context
         packaged_data = {
             "task_id": task_id,
@@ -154,7 +204,8 @@ class AssistantService:
                 for f in recent_files
             ],
             "workspace_memory": memory_content[:1000] if memory_content else "",  # First 1000 chars
-            # Additional data can be added based on agent requirements
+            # Pipeline assets from previous agent executions
+            "assets": assets,
         }
         
         return packaged_data
@@ -261,6 +312,19 @@ class AssistantService:
                 for key, value in execution.results.items():
                     if isinstance(value, dict) and 'file_content' in value:
                         # Store file
+                        workspace.store_file(
+                            file_content=value['file_content'],
+                            filename=value.get('filename', f'{key}.bin'),
+                            description=value.get('description', f'File from execution {execution.id}'),
+                            created_by=execution.agent_id,
+                            tags=[execution.agent_id, execution.task_id],
+                            metadata={'execution_id': execution.id}
+                        )
+
+                # Batch from PipelineAgentAdapter._collect_media_files()
+                media_files = execution.results.get("_media_files")
+                if isinstance(media_files, dict):
+                    for key, value in media_files.items():
                         workspace.store_file(
                             file_content=value['file_content'],
                             filename=value.get('filename', f'{key}.bin'),

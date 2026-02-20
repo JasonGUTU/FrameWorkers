@@ -1,19 +1,25 @@
 # Base Agent Import Helper
 # This file allows agents in the root-level agents/ directory
-# to easily import BaseAgent and AgentMetadata
+# to easily import BaseAgent, AgentMetadata, BaseEvaluator, and ExecutionResult
 
 import sys
 from pathlib import Path
 
-# Add dynamic-task-stack/src to path
+# Add dynamic-task-stack/src/assistant to path so sub_agent is importable
+# as a standalone package (avoids triggering assistant/__init__ which pulls
+# in Flask routes and cross-package relative imports).
 agents_dir = Path(__file__).parent
 project_root = agents_dir.parent
-backend_src = project_root / "dynamic-task-stack" / "src"
+_assistant_dir = project_root / "dynamic-task-stack" / "src" / "assistant"
 
-if str(backend_src) not in sys.path:
-    sys.path.insert(0, str(backend_src))
+if str(_assistant_dir) not in sys.path:
+    sys.path.insert(0, str(_assistant_dir))
 
-# Import and re-export BaseAgent from agent_core framework
-from assistant.agent_core.base_agent import BaseAgent, AgentMetadata
+from agent_core.sync_adapter import (
+    BaseAgent,
+    AgentMetadata,
+    BaseEvaluator,
+    ExecutionResult,
+)
 
-__all__ = ['BaseAgent', 'AgentMetadata']
+__all__ = ['BaseAgent', 'AgentMetadata', 'BaseEvaluator', 'ExecutionResult']
