@@ -156,6 +156,25 @@ Web 前端界面：
 
 ### 1. 安装依赖
 
+#### 方式一：统一安装（推荐）
+
+项目提供了自动安装脚本，可以一次性安装所有子模块的依赖：
+
+```bash
+# 使用 Python 脚本（推荐，会自动合并依赖并去重）
+python install_requirements.py
+
+# 或使用 Shell 脚本
+./install_requirements.sh
+
+# 或直接安装根目录的统一 requirements.txt
+pip install -r requirements.txt
+```
+
+#### 方式二：分别安装
+
+如果需要分别安装各模块的依赖：
+
 ```bash
 # Backend
 cd dynamic-task-stack
@@ -163,6 +182,10 @@ pip install -r requirements.txt
 
 # Director Agent
 cd ../director_agent
+pip install -r requirements.txt
+
+# Inference Module
+cd ../inference
 pip install -r requirements.txt
 
 # Frontend
