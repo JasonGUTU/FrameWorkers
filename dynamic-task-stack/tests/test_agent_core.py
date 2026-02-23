@@ -1,26 +1,22 @@
-# Unit tests for the agent_core adapter package
+# Unit tests for the agents package (migrated from agent_core)
 
 import sys
 from pathlib import Path
 
 import pytest
 
-# Add dynamic-task-stack/src/assistant to sys.path so ``agent_core`` is
-# importable as a standalone package (avoids triggering assistant/__init__
-# which pulls in Flask routes and cross-package relative imports).
-_assistant_dir = str(
-    Path(__file__).resolve().parent.parent / "src" / "assistant"
-)
-if _assistant_dir not in sys.path:
-    sys.path.insert(0, _assistant_dir)
+# Add project root to sys.path so ``agents`` is importable as a package.
+_project_root = str(Path(__file__).resolve().parent.parent.parent)
+if _project_root not in sys.path:
+    sys.path.insert(0, _project_root)
 
-from agent_core.sync_adapter import (
+from agents.sync_adapter import (
     BaseAgent,
     AgentMetadata,
     PipelineAgentAdapter,
     _AttrDict,
 )
-from agent_core.agent_registry import AgentRegistry
+from agents.agent_registry import AgentRegistry
 
 
 # -----------------------------------------------------------------------
@@ -152,18 +148,18 @@ class TestAgentMetadataConvenience:
 
 class TestLLMClientImport:
     def test_llm_client_importable(self):
-        from agent_core.llm_client import LLMClient
+        from agents.llm_client import LLMClient
         client = LLMClient(model="test-model", api_key="fake")
         assert client.model == "test-model"
         assert client.max_tokens == 65536
 
     def test_chat_json_method_exists(self):
-        from agent_core.llm_client import LLMClient
+        from agents.llm_client import LLMClient
         import inspect
         assert inspect.iscoroutinefunction(LLMClient.chat_json)
 
     def test_chat_text_method_exists(self):
-        from agent_core.llm_client import LLMClient
+        from agents.llm_client import LLMClient
         import inspect
         assert inspect.iscoroutinefunction(LLMClient.chat_text)
 
@@ -174,26 +170,26 @@ class TestLLMClientImport:
 
 class TestCommonSchema:
     def test_meta_defaults(self):
-        from agent_core.common_schema import Meta
+        from agents.common_schema import Meta
         m = Meta()
         assert m.schema_version == "0.3"
         assert m.language == "en"
         assert m.created_at  # should have a default timestamp
 
     def test_image_asset_defaults(self):
-        from agent_core.common_schema import ImageAsset
+        from agents.common_schema import ImageAsset
         img = ImageAsset(asset_id="test_001", uri="/path/to/img.png")
         assert img.width == 1024
         assert img.height == 576
         assert img.format == "png"
 
     def test_duration_estimate(self):
-        from agent_core.common_schema import DurationEstimate
+        from agents.common_schema import DurationEstimate
         de = DurationEstimate(seconds=5.0, confidence=0.9)
         assert de.seconds == 5.0
 
     def test_quality_score_bounds(self):
-        from agent_core.common_schema import QualityScore
+        from agents.common_schema import QualityScore
         qs = QualityScore(score=0.85, notes=["good"])
         assert 0.0 <= qs.score <= 1.0
 
@@ -204,7 +200,7 @@ class TestCommonSchema:
 
 class TestSubAgentDescriptor:
     def test_descriptor_basic(self):
-        from agent_core.descriptor import SubAgentDescriptor
+        from agents.descriptor import SubAgentDescriptor
         desc = SubAgentDescriptor(
             agent_name="TestAgent",
             asset_key="test",
@@ -215,7 +211,7 @@ class TestSubAgentDescriptor:
         assert desc.materializer_factory is None
 
     def test_descriptor_auto_build_upstream(self):
-        from agent_core.descriptor import SubAgentDescriptor
+        from agents.descriptor import SubAgentDescriptor
         desc = SubAgentDescriptor(
             agent_name="TestAgent",
             asset_key="test",
@@ -227,7 +223,7 @@ class TestSubAgentDescriptor:
         assert upstream == {"story": {"title": "A"}, "screenplay": {"scenes": []}}
 
     def test_media_asset_dataclass(self):
-        from agent_core.descriptor import MediaAsset
+        from agents.descriptor import MediaAsset
         holder = {"uri": ""}
         ma = MediaAsset(sys_id="img_001", data=b"\x89PNG", extension="png", uri_holder=holder)
         assert ma.sys_id == "img_001"
@@ -240,42 +236,42 @@ class TestSubAgentDescriptor:
 
 class TestPipelineAgentImports:
     def test_story_descriptor(self):
-        from agent_core.story.descriptor import DESCRIPTOR
+        from agents.story.descriptor import DESCRIPTOR
         assert DESCRIPTOR.agent_name == "StoryAgent"
         assert DESCRIPTOR.asset_key == "story_blueprint"
 
     def test_screenplay_descriptor(self):
-        from agent_core.screenplay.descriptor import DESCRIPTOR
+        from agents.screenplay.descriptor import DESCRIPTOR
         assert DESCRIPTOR.agent_name == "ScreenplayAgent"
 
     def test_storyboard_descriptor(self):
-        from agent_core.storyboard.descriptor import DESCRIPTOR
+        from agents.storyboard.descriptor import DESCRIPTOR
         assert DESCRIPTOR.agent_name == "StoryboardAgent"
 
     def test_keyframe_descriptor(self):
-        from agent_core.keyframe.descriptor import DESCRIPTOR
+        from agents.keyframe.descriptor import DESCRIPTOR
         assert DESCRIPTOR.agent_name == "KeyFrameAgent"
         assert DESCRIPTOR.materializer_factory is not None
 
     def test_video_descriptor(self):
-        from agent_core.video.descriptor import DESCRIPTOR
+        from agents.video.descriptor import DESCRIPTOR
         assert DESCRIPTOR.agent_name == "VideoAgent"
         assert DESCRIPTOR.materializer_factory is not None
 
     def test_audio_descriptor(self):
-        from agent_core.audio.descriptor import DESCRIPTOR
+        from agents.audio.descriptor import DESCRIPTOR
         assert DESCRIPTOR.agent_name == "AudioAgent"
         assert DESCRIPTOR.materializer_factory is not None
 
     def test_agent_registry_dict(self):
-        from agent_core import AGENT_REGISTRY
+        from agents import AGENT_REGISTRY
         assert len(AGENT_REGISTRY) == 7
         assert "StoryAgent" in AGENT_REGISTRY
         assert "KeyFrameAgent" in AGENT_REGISTRY
         assert "ExamplePipelineAgent" in AGENT_REGISTRY
 
     def test_agent_name_to_asset_key(self):
-        from agent_core import AGENT_NAME_TO_ASSET_KEY
+        from agents import AGENT_NAME_TO_ASSET_KEY
         assert AGENT_NAME_TO_ASSET_KEY["StoryAgent"] == "story_blueprint"
 
 
@@ -285,7 +281,7 @@ class TestPipelineAgentImports:
 
 class TestLLMEvaluatorHelpers:
     def test_check_uri(self):
-        from agent_core.base_evaluator import check_uri
+        from agents.base_evaluator import check_uri
         assert check_uri("") == "missing"
         assert check_uri("placeholder") == "missing"
         assert check_uri("error: timeout") == "error"
@@ -298,8 +294,8 @@ class TestLLMEvaluatorHelpers:
 
 class TestPipelineAgentAdapter:
     def test_adapter_metadata_from_descriptor(self):
-        from agent_core.sync_adapter import PipelineAgentAdapter
-        from agent_core.descriptor import SubAgentDescriptor
+        from agents.sync_adapter import PipelineAgentAdapter
+        from agents.descriptor import SubAgentDescriptor
 
         desc = SubAgentDescriptor(
             agent_name="TestPipelineAgent",
@@ -314,8 +310,8 @@ class TestPipelineAgentAdapter:
         assert "test_output" in adapter.metadata.capabilities
 
     def test_adapter_get_info(self):
-        from agent_core.sync_adapter import PipelineAgentAdapter
-        from agent_core.descriptor import SubAgentDescriptor
+        from agents.sync_adapter import PipelineAgentAdapter
+        from agents.descriptor import SubAgentDescriptor
 
         desc = SubAgentDescriptor(
             agent_name="InfoAgent",
@@ -328,8 +324,8 @@ class TestPipelineAgentAdapter:
         assert "created_at" in info
 
     def test_adapter_execute_raises_without_llm_client(self):
-        from agent_core.sync_adapter import PipelineAgentAdapter
-        from agent_core.descriptor import SubAgentDescriptor
+        from agents.sync_adapter import PipelineAgentAdapter
+        from agents.descriptor import SubAgentDescriptor
 
         desc = SubAgentDescriptor(
             agent_name="NoClientAgent",
@@ -348,8 +344,8 @@ class TestPipelineAgentAdapter:
 
 class TestUnifiedRegistry:
     def test_register_pipeline_agents(self):
-        from agent_core.agent_registry import AgentRegistry
-        from agent_core.descriptor import SubAgentDescriptor
+        from agents.agent_registry import AgentRegistry
+        from agents.descriptor import SubAgentDescriptor
 
         registry = AgentRegistry.__new__(AgentRegistry)
         registry._agents = {}
@@ -370,8 +366,8 @@ class TestUnifiedRegistry:
 
     def test_mixed_registry(self):
         """Both sync and pipeline agents coexist in the same registry."""
-        from agent_core.agent_registry import AgentRegistry
-        from agent_core.descriptor import SubAgentDescriptor
+        from agents.agent_registry import AgentRegistry
+        from agents.descriptor import SubAgentDescriptor
 
         registry = AgentRegistry.__new__(AgentRegistry)
         registry._agents = {}
@@ -394,8 +390,8 @@ class TestUnifiedRegistry:
         assert registry.is_pipeline_agent("PipelineMixed")
 
     def test_gather_includes_pipeline_agents(self):
-        from agent_core.agent_registry import AgentRegistry
-        from agent_core.descriptor import SubAgentDescriptor
+        from agents.agent_registry import AgentRegistry
+        from agents.descriptor import SubAgentDescriptor
 
         registry = AgentRegistry.__new__(AgentRegistry)
         registry._agents = {}
@@ -418,8 +414,8 @@ class TestUnifiedRegistry:
 
     def test_pipeline_agents_from_real_registry(self):
         """AGENT_REGISTRY descriptors register successfully."""
-        from agent_core import AGENT_REGISTRY
-        from agent_core.agent_registry import AgentRegistry
+        from agents import AGENT_REGISTRY
+        from agents.agent_registry import AgentRegistry
 
         registry = AgentRegistry.__new__(AgentRegistry)
         registry._agents = {}
@@ -444,28 +440,28 @@ class TestUnifiedRegistry:
 
 class TestExamplePipelineAgent:
     def test_descriptor(self):
-        from agent_core.example_agent.descriptor import DESCRIPTOR
+        from agents.example_agent.descriptor import DESCRIPTOR
         assert DESCRIPTOR.agent_name == "ExamplePipelineAgent"
         assert DESCRIPTOR.asset_key == "example_summary"
         assert DESCRIPTOR.materializer_factory is None
 
     def test_schema_input(self):
-        from agent_core.example_agent.schema import ExamplePipelineInput
+        from agents.example_agent.schema import ExamplePipelineInput
         inp = ExamplePipelineInput(
             project_id="proj_1", draft_id="d_1", source_text="hello world"
         )
         assert inp.source_text == "hello world"
 
     def test_schema_output_defaults(self):
-        from agent_core.example_agent.schema import ExamplePipelineOutput
+        from agents.example_agent.schema import ExamplePipelineOutput
         out = ExamplePipelineOutput()
         assert out.content.title == ""
         assert out.content.word_count == 0
         assert out.meta.schema_version == "0.3"
 
     def test_evaluator_passes_valid_output(self):
-        from agent_core.example_agent.evaluator import ExamplePipelineEvaluator
-        from agent_core.example_agent.schema import ExamplePipelineOutput, SummaryContent
+        from agents.example_agent.evaluator import ExamplePipelineEvaluator
+        from agents.example_agent.schema import ExamplePipelineOutput, SummaryContent
         evaluator = ExamplePipelineEvaluator()
         output = ExamplePipelineOutput(
             content=SummaryContent(
@@ -479,8 +475,8 @@ class TestExamplePipelineAgent:
         assert errors == []
 
     def test_evaluator_catches_empty_title(self):
-        from agent_core.example_agent.evaluator import ExamplePipelineEvaluator
-        from agent_core.example_agent.schema import ExamplePipelineOutput, SummaryContent
+        from agents.example_agent.evaluator import ExamplePipelineEvaluator
+        from agents.example_agent.schema import ExamplePipelineOutput, SummaryContent
         evaluator = ExamplePipelineEvaluator()
         output = ExamplePipelineOutput(
             content=SummaryContent(
@@ -494,8 +490,8 @@ class TestExamplePipelineAgent:
         assert "title is empty" in errors
 
     def test_evaluator_catches_empty_key_points(self):
-        from agent_core.example_agent.evaluator import ExamplePipelineEvaluator
-        from agent_core.example_agent.schema import ExamplePipelineOutput, SummaryContent
+        from agents.example_agent.evaluator import ExamplePipelineEvaluator
+        from agents.example_agent.schema import ExamplePipelineOutput, SummaryContent
         evaluator = ExamplePipelineEvaluator()
         output = ExamplePipelineOutput(
             content=SummaryContent(
@@ -509,13 +505,13 @@ class TestExamplePipelineAgent:
         assert "key_points must have at least 1 item" in errors
 
     def test_build_input(self):
-        from agent_core.example_agent.descriptor import build_input
+        from agents.example_agent.descriptor import build_input
         inp = build_input("proj_1", "d_1", {"source_text": "hello"}, {})
         assert inp.source_text == "hello"
         assert inp.project_id == "proj_1"
 
     def test_in_agent_registry(self):
-        from agent_core import AGENT_REGISTRY, AGENT_NAME_TO_ASSET_KEY
+        from agents import AGENT_REGISTRY, AGENT_NAME_TO_ASSET_KEY
         assert "ExamplePipelineAgent" in AGENT_REGISTRY
         assert AGENT_NAME_TO_ASSET_KEY["ExamplePipelineAgent"] == "example_summary"
 
@@ -555,7 +551,7 @@ class TestMapInputs:
     """Verify key mapping from service.py format to pipeline format."""
 
     def _make_adapter(self):
-        from agent_core.descriptor import SubAgentDescriptor
+        from agents.descriptor import SubAgentDescriptor
         desc = SubAgentDescriptor(
             agent_name="MapTest",
             asset_key="mt",
@@ -626,7 +622,7 @@ class TestAdapterExecuteFlow:
         import asyncio
         from dataclasses import dataclass, field
         from pydantic import BaseModel
-        from agent_core.descriptor import SubAgentDescriptor
+        from agents.descriptor import SubAgentDescriptor
 
         class _MockOutput(BaseModel):
             title: str = ""
@@ -642,7 +638,7 @@ class TestAdapterExecuteFlow:
             evaluator = None
 
             async def run(self, input_data, **kwargs):
-                from agent_core.base_agent import ExecutionResult as LLMResult
+                from agents.base_agent import ExecutionResult as LLMResult
                 output = _MockOutput(
                     title="Generated",
                     summary=f"Based on: {input_data.draft_idea}",
@@ -669,7 +665,7 @@ class TestAdapterExecuteFlow:
     def _make_media_descriptor(self):
         """Descriptor for a media agent (with materializer)."""
         from pydantic import BaseModel
-        from agent_core.descriptor import SubAgentDescriptor, BaseMaterializer, MediaAsset
+        from agents.descriptor import SubAgentDescriptor, BaseMaterializer, MediaAsset
 
         class _MockMediaOutput(BaseModel):
             image: dict = {"asset_id": "", "uri": ""}
@@ -698,7 +694,7 @@ class TestAdapterExecuteFlow:
             async def run(self, input_data, *, upstream=None,
                           rework_notes="", max_retries=3,
                           materialize_ctx=None):
-                from agent_core.base_agent import ExecutionResult as LLMResult
+                from agents.base_agent import ExecutionResult as LLMResult
                 output = _MockMediaOutput(image={"asset_id": "", "uri": ""})
 
                 asset_dict = output.model_dump()
@@ -738,7 +734,7 @@ class TestAdapterExecuteFlow:
     # -- Text agent tests --
 
     def test_text_agent_service_format(self):
-        from agent_core.llm_client import LLMClient
+        from agents.llm_client import LLMClient
         desc, _ = self._make_text_descriptor()
         adapter = PipelineAgentAdapter(desc, llm_client=LLMClient(api_key="fake"))
 
@@ -752,7 +748,7 @@ class TestAdapterExecuteFlow:
         assert "_media_files" not in result
 
     def test_text_agent_pipeline_format(self):
-        from agent_core.llm_client import LLMClient
+        from agents.llm_client import LLMClient
         desc, _ = self._make_text_descriptor()
         adapter = PipelineAgentAdapter(desc, llm_client=LLMClient(api_key="fake"))
 
@@ -770,7 +766,7 @@ class TestAdapterExecuteFlow:
 
     def test_media_agent_produces_files(self):
         import os
-        from agent_core.llm_client import LLMClient
+        from agents.llm_client import LLMClient
         desc = self._make_media_descriptor()
         adapter = PipelineAgentAdapter(desc, llm_client=LLMClient(api_key="fake"))
 
@@ -792,7 +788,7 @@ class TestAdapterExecuteFlow:
 
     def test_media_agent_cleans_temp(self):
         import os
-        from agent_core.llm_client import LLMClient
+        from agents.llm_client import LLMClient
         desc = self._make_media_descriptor()
         adapter = PipelineAgentAdapter(desc, llm_client=LLMClient(api_key="fake"))
 
@@ -804,7 +800,7 @@ class TestAdapterExecuteFlow:
 
     def test_media_files_format_for_process_results(self):
         """Verify _media_files matches what service.py process_results() expects."""
-        from agent_core.llm_client import LLMClient
+        from agents.llm_client import LLMClient
         desc = self._make_media_descriptor()
         adapter = PipelineAgentAdapter(desc, llm_client=LLMClient(api_key="fake"))
 

@@ -1,0 +1,318 @@
+# FrameWorkers — Multi-Agent Task Orchestration & Film Production Pipeline
+
+## Project Purpose
+FrameWorkers is a modular multi-agent task orchestration system that manages layered task
+execution, agent discovery/dispatch, and a shared workspace. The default creative pipeline
+generates video from a draft idea, but the architecture is domain-agnostic — any set of
+agents can be registered and orchestrated through the same Task Stack + Assistant + Director loop.
+
+## Architecture Overview
+
+### Five independent packages (each runnable or importable separately)
+
+| Package | Type | Purpose |
+|---------|------|---------|
+| `dynamic-task-stack/` | Backend (Flask) | Task Stack + Assistant + Agent Core + Workspace — the execution engine |
+| `director_agent/` | Standalone process | Polls backend, reasons about user intent, plans/updates task stack, delegates to Assistant |
+| `agents/` | Library | Root-level agent implementations; auto-discovered by AgentRegistry at runtime |
+| `inference/` | Library | LLM calls (LiteLLM), multimodal utils, prompt tools, pluggable image/video generators |
+| `interface/` | Frontend (Vue 3 + Vite) | Chat UI, system status, task stack monitor; communicates with backend via REST + polling |
+
+### System Flow
+```
+User Message (via Interface)
+  → Director Agent (reasoning & planning over HTTP)
+  → Task Stack (layered task management)
+  → Assistant System (agent execution)
+  → Workspace (result storage)
+  → Director Agent (reflection & re-planning)
+```
+
+### Communication Pattern
+- **Director ↔ Backend**: HTTP REST (`http://localhost:5002/api/`)
+- **Frontend ↔ Backend**: HTTP REST + polling (2–3s interval)
+- **No WebSocket** in current implementation; real-time via polling service
+- **No shared imports** across packages — Director and Frontend only know the backend API
+
+---
+
+## Package Details
+
+### 1. `dynamic-task-stack/` — Backend (Flask)
+
+Entry: `run.py` → `src/app.py` (`create_app()`) → Flask on `0.0.0.0:5002`
+
+Two blueprints:
+
+**Task Stack** (`src/task_stack/`) — `/api/`
+- Layered task management: Layers → Tasks → Execution Pointer
+- Hook mechanism: pre-hook / post-hook per layer
+- Batch modify API for atomic multi-operation updates
+- In-memory thread-safe storage (`storage.py`)
+
+**Assistant** (`src/assistant/`) — `/api/assistant/`
+- Global singleton Assistant manages all sub-agents
+- 6-step execution flow: query inputs → prepare environment → retrieve context → package data → execute agent → process results
+- `service.py`: `AssistantService` orchestrates the full flow
+- `storage.py`: in-memory store for assistant, executions, global workspace
+- `retrieval.py`: `WorkspaceRetriever` feeds agent context from workspace
+
+**Agent Core** (`src/assistant/agent_core/`)
+- Dual agent model:
+  - **Sync**: `sync_adapter.BaseAgent` + `PipelineAgentAdapter` — used by routes/service
+  - **Async pipeline**: `base_agent.BaseAgent` (aliased `LLMBaseAgent`) — the real execution engine
+- `AgentRegistry`: discovers sync agents from root `agents/`, registers pipeline agents from `AGENT_REGISTRY`
+- `descriptor.py`: `SubAgentDescriptor` manifest — factories, input builders, catalog
+- `base_evaluator.py`: 3-layer evaluation (structural → creative → asset)
+- `llm_client.py`: async OpenAI-compatible LLM client
+- Pipeline sub-agents: `story/`, `screenplay/`, `storyboard/`, `keyframe/`, `video/`, `audio/`, `example_agent/`
+
+**Workspace** (`src/assistant/workspace/`)
+- `workspace.py`: core workspace object
+- `file_manager.py`: file CRUD + tagging + search
+- `memory_manager.py`: global key-value memory
+- `log_manager.py`: operation logging
+- Runtime files stored in project root `Runtime/`
+
+### 2. `director_agent/` — Orchestrator Process
+
+Entry: `python -m director_agent.main` or `python director_agent/run.py`
+
+- `director.py` (`DirectorAgent`): main polling loop — check messages → reason/plan → update task stack → delegate to assistant → reflect
+- `api_client.py` (`BackendAPIClient`): HTTP client for all Task Stack + Assistant APIs
+- `reasoning.py` (`ReasoningEngine`): decision logic (create_task / execute_task / update_plan / wait)
+- `config.py`: `BACKEND_BASE_URL`, `POLLING_INTERVAL`, etc. from env
+
+### 3. `agents/` — Agent Implementations
+
+- Same sub-agent structure as `agent_core/`: `story/`, `screenplay/`, `storyboard/`, `keyframe/`, `video/`, `audio/`, `example_agent/`
+- Each has: `agent.py`, `schema.py`, `evaluator.py`, `descriptor.py`; media agents add `materializer.py`, `service.py`
+- Shared: `base_agent.py`, `base_evaluator.py`, `descriptor.py`, `common_schema.py`, `llm_client.py`, `sync_adapter.py`, `agent_registry.py`
+- Auto-discovered by `AgentRegistry` at startup via filesystem scan
+
+### 4. `inference/` — LLM & Multimodal Library
+
+- `core/`: `LLMClient` (LiteLLM wrapper), `ModelConfig`, `CustomModelClient` (Ollama)
+- `config/`: `ModelRegistry`, `get_model_config`; supports OpenAI, Anthropic, Google, Ollama
+- `multimodal/`: `ImageUtils`, `MultimodalUtils` (base64, resize, message helpers)
+- `prompt/`: `MessageUtils` (compress/truncate), `MessageHistory`, `PromptTemplate`
+- `generation/`: pluggable `ImageGeneratorRegistry`, `VideoGeneratorRegistry`
+- Standalone library — no imports from other packages
+
+### 5. `interface/` — Vue 3 Frontend
+
+Entry: `npm run dev` → Vite on port 3000, proxy `/api` → `http://localhost:5002`
+
+- `App.vue`: sidebar (SystemStatus + TaskStackMonitor) + main area (ChatWindow)
+- `ChatWindow.vue`: chat UI with text + images/files/videos, subagent message collapse
+- `SystemStatus.vue`: system running status, execution pointer info
+- `TaskStackMonitor.vue`: layered task display with expand/collapse, status badges
+- `services/api.js`: Axios client, all API methods (messages, tasks, layers, execution pointer, task stack, health)
+- `services/polling.js`: shared polling singleton for live updates
+- No router, no store (Vuex/Pinia), no TypeScript — Vue 3 Options API + plain JS
+
+---
+
+## Agent Pipeline (linear default, loops on failure)
+```
+DraftIdea
+  → StoryAgent        → Story Blueprint
+  → ScreenplayAgent   → Screenplay (scenes → blocks)
+  → StoryboardAgent   → Storyboard (blocks → shots)
+  → KeyFrameAgent     → Keyframes Package (stability anchors + shot keyframes)
+  → VideoAgent        → Video Package (shot → clip)
+  → AudioAgent        → Audio Package (block × shot × scene aligned)
+```
+Director Agent wraps the whole pipeline: routing, quality gating, blame attribution, scoped rework.
+
+## Three-Layer Quality Control (per-agent, owned by evaluator)
+
+- **Layer 1 — `check_structure()`**: Rule-based structural checks (ID refs, metrics, order). Free, deterministic, instant.
+- **Layer 2 — `evaluate_creative()`**: LLM-based creative assessment with agent-specific dimensions. Only runs if Layer 1 passes.
+- **Layer 3 — `evaluate_asset()`**: Post-materialization binary asset checks (success rates, format). Only runs after media services generate files.
+
+All three layers share a unified retry budget. Any layer failure → retry entire step from scratch.
+
+## Core Domain Concepts
+
+| Concept | Scope | Owner |
+|---------|-------|-------|
+| **Layer** | Task stack organizational unit — ordered, sequential execution | Task Stack |
+| **Task** | Execution unit — description, status, progress, results | Task Stack |
+| **Execution Pointer** | Tracks current (layer_index, task_index) | Task Stack |
+| **Hook** | Pre/post-hook per layer | Task Stack |
+| **Assistant** | Global singleton — manages all sub-agents | Assistant System |
+| **Workspace** | Shared file/memory/log storage | Workspace |
+| **block** | Narrative atom (dialogue / action / beat) | ScreenplayAgent |
+| **shot** | Visual atom — one continuous camera take | StoryboardAgent |
+| **scene** | Consistency & delivery boundary | All agents |
+
+## Content ID Conventions (LLM-generated, in creative content)
+- `sc_001`, `sc_002` … — scenes
+- `b_001`, `b_002` … — blocks
+- `sh_001`, `sh_002` … — shots
+- `kf_001`, `kf_002` … — keyframes
+- `char_001` … — characters
+- `loc_001` … — locations
+- `arc_001` … — story arc steps
+- `prop_001` … — props
+
+## Asset ID Conventions (System-generated, never LLM-generated)
+- `project_id`: `proj_YYYYMMDD_HHMMSS_XX`
+- `draft_id`: `draft_YYYYMMDD_HHMMSS_XX`
+- `asset_id`: `{asset_type}_iter{NN}_v{NN}` (e.g. `story_blueprint_iter01_v01`)
+  - `iter{NN}` = global pipeline iteration
+  - `v{NN}` = per-agent version within an iteration
+
+## JSON Output Hard Rule (all LLM Agents)
+- Return JSON only, no markdown, no code fences.
+- Do not include trailing comments.
+- Use stable IDs and keep references consistent.
+- If something is unknown, use empty string or empty list, **not null**.
+
+---
+
+## Project Structure
+```
+FrameWorkers/
+├── .cursorrules                     # THIS FILE
+├── README.md
+├── requirements.txt                 # Unified deps (auto-generated from subdirs)
+├── install_requirements.py          # Merge & install all subdir requirements
+│
+├── agents/                          # ★ Root-level agent implementations (auto-discovered)
+│   ├── __init__.py
+│   ├── base_agent.py                #   BaseAgent import helper
+│   ├── base_evaluator.py
+│   ├── descriptor.py                #   SubAgentDescriptor
+│   ├── common_schema.py
+│   ├── llm_client.py
+│   ├── sync_adapter.py
+│   ├── agent_registry.py
+│   ├── story/                       #   agent.py  schema.py  evaluator.py  descriptor.py
+│   ├── screenplay/                  #   agent.py  schema.py  evaluator.py  descriptor.py
+│   ├── storyboard/                  #   agent.py  schema.py  evaluator.py  descriptor.py
+│   ├── keyframe/                    #   + materializer.py  service.py
+│   ├── video/                       #   + materializer.py  service.py
+│   ├── audio/                       #   + materializer.py  service.py
+│   └── example_agent/
+│
+├── director_agent/                  # ★ Orchestrator (standalone process)
+│   ├── director.py                  #   DirectorAgent main loop
+│   ├── api_client.py                #   BackendAPIClient (HTTP)
+│   ├── reasoning.py                 #   ReasoningEngine
+│   ├── config.py                    #   Env-based config
+│   ├── main.py                      #   Entry point
+│   ├── run.py
+│   ├── requirements.txt
+│   └── README.md, FLOW_SUMMARY.md
+│
+├── dynamic-task-stack/              # ★ Backend (Flask, port 5002)
+│   ├── run.py                       #   Entry: python run.py
+│   ├── requirements.txt
+│   ├── src/
+│   │   ├── app.py                   #   create_app() → Flask + 2 blueprints
+│   │   ├── task_stack/              #   /api/ — layered task management
+│   │   │   ├── models.py
+│   │   │   ├── routes.py
+│   │   │   └── storage.py
+│   │   └── assistant/               #   /api/assistant/ — agent execution
+│   │       ├── models.py
+│   │       ├── routes.py
+│   │       ├── service.py           #   AssistantService (6-step flow)
+│   │       ├── storage.py           #   In-memory: assistant + executions + workspace
+│   │       ├── retrieval.py         #   WorkspaceRetriever
+│   │       ├── agent_core/          #   Agent framework
+│   │       │   ├── base_agent.py    #     Async pipeline base (LLMBaseAgent)
+│   │       │   ├── base_evaluator.py #    3-layer evaluator
+│   │       │   ├── sync_adapter.py  #     PipelineAgentAdapter (sync facade)
+│   │       │   ├── agent_registry.py #    Discovery + registration
+│   │       │   ├── descriptor.py    #     SubAgentDescriptor + BaseMaterializer
+│   │       │   ├── common_schema.py
+│   │       │   ├── llm_client.py
+│   │       │   ├── story/  screenplay/  storyboard/
+│   │       │   ├── keyframe/  video/  audio/
+│   │       │   └── example_agent/
+│   │       └── workspace/           #   Global shared workspace
+│   │           ├── workspace.py
+│   │           ├── file_manager.py
+│   │           ├── log_manager.py
+│   │           ├── memory_manager.py
+│   │           └── models.py
+│   └── tests/
+│       └── test_agent_core.py
+│
+├── inference/                       # ★ LLM & multimodal library (standalone)
+│   ├── core/                        #   LLMClient, ModelConfig, CustomModelClient
+│   ├── config/                      #   ModelRegistry, inference_config.yaml.example
+│   ├── multimodal/                  #   ImageUtils, MultimodalUtils
+│   ├── prompt/                      #   MessageUtils, MessageHistory, PromptTemplate
+│   ├── generation/                  #   Image/Video generator registries
+│   ├── requirements.txt
+│   └── README.md, MODELS.md
+│
+├── interface/                       # ★ Frontend (Vue 3 + Vite, port 3000)
+│   ├── src/
+│   │   ├── main.js
+│   │   ├── App.vue                  #   Layout: sidebar + chat
+│   │   ├── components/
+│   │   │   ├── ChatWindow.vue       #   Chat UI (messages, media, subagent collapse)
+│   │   │   ├── SystemStatus.vue     #   System status + execution info
+│   │   │   └── TaskStackMonitor.vue #   Layered task display
+│   │   └── services/
+│   │       ├── api.js               #   Axios client (all API methods)
+│   │       └── polling.js           #   Shared polling singleton
+│   ├── package.json
+│   ├── vite.config.js               #   Port 3000, /api proxy → 5002
+│   └── README.md
+│
+└── Runtime/                         # Workspace runtime files (auto-created)
+```
+
+---
+
+## Maintenance Rules (MUST follow)
+
+1. **Doc-First**: Any code change must be accompanied by updates to the corresponding `README.md`
+   in the same package. If the change affects cross-package interfaces, update all relevant READMEs.
+2. **Read-Before-Write**: Before modifying any module, read:
+   - The package's `README.md` (design intent & contracts)
+   - The source files being modified and their direct dependencies
+   - Reuse existing utilities; do not duplicate.
+3. **Full-Stack Awareness**: When modifying backend API endpoints or response formats:
+   - Check `interface/src/services/api.js` for affected API calls
+   - Check Vue components that consume the changed data
+   - Check `director_agent/api_client.py` for affected HTTP calls
+   - Ensure frontend, backend, and director stay in sync
+4. **Cross-Package Consistency**: When modifying shared concepts (agent descriptors, schemas,
+   registry API, task models), search all five packages for references and update together.
+
+## Development Workflow Rules (MUST follow)
+
+### Rule 1: Doc-First — 每次修改代码必须留下文档痕迹
+- **任何**代码修改都必须同步更新对应包的 `README.md`，记录改动内容与原因。
+- 如果修改涉及**跨包接口**（API endpoint、WebSocket 消息、Pydantic schema、agent descriptor 等），
+  **必须同时更新所有相关包的文档**。
+
+### Rule 2: Read-Before-Write — 修改代码前必须先阅读文档与相关代码
+- 在修改任何模块之前，**必须先阅读**：
+  1. 该包的 `README.md`（了解设计意图与现有契约）。
+  2. 即将修改的源文件及其直接依赖的源文件（了解现有实现）。
+- 目的：**避免写重复代码、避免破坏已有契约、避免与现有实现冲突**。
+- 如果发现已有工具函数或模块能满足需求，**复用而非重写**。
+
+### Rule 3: Full-Stack Awareness — 后端开发必须考虑前端和 Director 适配
+- 修改后端接口时，**必须同时检查**：
+  - `interface/src/services/api.js` + Vue 组件是否需要适配
+  - `director_agent/api_client.py` 是否需要适配
+- 新增后端功能时，评估前端和 Director 是否需要配合改动。
+- 典型检查清单：
+  - API 返回字段名 / 类型变了？→ 检查 `api.js` + Vue 组件 + `api_client.py`
+  - 路由 / URL 变了？→ 检查前端 fetch 路径 + Director HTTP 调用
+  - Task 或 Agent 模型变了？→ 全局搜索所有引用方
+
+### Rule 4: Agent Code Symmetry
+- `agents/` (root) 和 `dynamic-task-stack/src/assistant/agent_core/` 中存在重复的 agent 实现。
+  修改 agent 逻辑时，**必须确认是否需要在两处同步更新**。
+  - `agent_core/` 是后端运行时使用的版本
+  - `agents/` 是 AgentRegistry 自动发现使用的版本

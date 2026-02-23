@@ -31,14 +31,7 @@ class AgentRegistry:
 
     def __init__(self, agents_dir: Optional[str] = None):
         if agents_dir is None:
-            current_file = Path(__file__)
-            project_root = current_file.parent.parent.parent.parent.parent
-            root_agents_dir = project_root / "agents"
-
-            if root_agents_dir.exists() and root_agents_dir.is_dir():
-                agents_dir = str(root_agents_dir)
-            else:
-                raise ValueError("agents/ directory not found at project root")
+            agents_dir = str(Path(__file__).resolve().parent)
 
         self.agents_dir = Path(agents_dir)
         self._agents: Dict[str, BaseAgent] = {}

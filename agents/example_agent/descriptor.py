@@ -15,7 +15,7 @@ from typing import Any
 
 from pydantic import BaseModel
 
-from agent_core.descriptor import SubAgentDescriptor
+from ..descriptor import SubAgentDescriptor
 from .agent import ExamplePipelineAgent
 from .schema import ExamplePipelineInput
 from .evaluator import ExamplePipelineEvaluator

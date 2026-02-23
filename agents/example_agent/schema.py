@@ -14,7 +14,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
-from agent_core.common_schema import Meta
+from ..common_schema import Meta
 
 
 # ---------------------------------------------------------------------------

@@ -12,7 +12,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from agent_core.base_evaluator import BaseEvaluator
+from ..base_evaluator import BaseEvaluator
 from .schema import ExamplePipelineOutput
 
 

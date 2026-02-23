@@ -11,7 +11,7 @@ Copy this package and modify it to create a new pipeline agent.
 
 from __future__ import annotations
 
-from agent_core.base_agent import BaseAgent
+from ..base_agent import BaseAgent
 from .schema import ExamplePipelineInput, ExamplePipelineOutput
 
 
