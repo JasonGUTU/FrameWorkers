@@ -37,15 +37,21 @@ Agent 是 Frameworks Backend 中的核心功能单元，每个 Agent 负责实�
 
 ```
 agents/
-├── __init__.py                  # Agents 模块初始化
+├── __init__.py                  # Agents 模块初始化（含 sys.path 设置）
 ├── base_agent.py                # BaseAgent 导入辅助模块（不要修改）
 ├── README.md                    # 本文档
-├── example_agent/                # 示例 Agent（参考实现）
-│   ├── __init__.py              # 导出 Agent 类
-│   └── agent.py                 # Agent 实现
+├── example_agent/                # 示例 Pipeline Agent（参考实现）
+│   ├── __init__.py              # 导出 Agent / Evaluator / Descriptor
+│   ├── agent.py                 # Agent 实现（继承 BaseAgent[InputT, OutputT]）
+│   ├── schema.py                # Pydantic 输入/输出模型定义
+│   ├── evaluator.py             # 质量评估器（L1 结构化 + L2 创意评估）
+│   └── descriptor.py            # SubAgentDescriptor 注册清单
 └── your_agent/                   # 你的 Agent
     ├── __init__.py
-    └── agent.py
+    ├── agent.py
+    ├── schema.py
+    ├── evaluator.py
+    └── descriptor.py
 ```
 
 ---
@@ -641,12 +647,15 @@ def execute(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
 
 ## 参考示例
 
-参考 `example_agent/` 目录中的示例实现：
+参考 `example_agent/` 目录中的 Pipeline Agent 示例实现：
 
 ```bash
-# 查看示例 Agent
-cat agents/example_agent/agent.py
-cat agents/example_agent/__init__.py
+# 查看示例 Pipeline Agent
+cat agents/example_agent/agent.py       # Agent 主体
+cat agents/example_agent/schema.py      # Pydantic 输入/输出模型
+cat agents/example_agent/evaluator.py   # 质量评估器
+cat agents/example_agent/descriptor.py  # SubAgentDescriptor 注册清单
+cat agents/example_agent/__init__.py    # 导出
 ```
 
 ---

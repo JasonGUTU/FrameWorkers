@@ -1,85 +1,60 @@
-# Example Agent - Template implementation
+"""ExamplePipelineAgent -- minimal pipeline agent template.
 
-from typing import Dict, Any, List
-from datetime import datetime
+This agent demonstrates the full async pipeline agent pattern:
+  - Inherits from BaseAgent[InputT, OutputT]
+  - Implements system_prompt(), build_user_prompt(), and
+    optionally recompute_metrics()
+  - LLM generates JSON -> Pydantic validates -> evaluator checks quality
 
-from ..base_agent import BaseAgent, AgentMetadata, BaseEvaluator
+Copy this package and modify it to create a new pipeline agent.
+"""
+
+from __future__ import annotations
+
+from agent_core.base_agent import BaseAgent
+from .schema import ExamplePipelineInput, ExamplePipelineOutput
 
 
-class ExampleEvaluator(BaseEvaluator):
-    """Quality evaluator for ExampleAgent.
+class ExamplePipelineAgent(BaseAgent[ExamplePipelineInput, ExamplePipelineOutput]):
+    """Summarizes input text into a structured summary with key points.
 
-    Demonstrates how to implement structural checks for an agent's output.
+    This is intentionally simple -- a real agent would have more detailed
+    prompts, domain-specific output templates, and richer schemas.
     """
 
-    def check_structure(
-        self,
-        output: Dict[str, Any],
-        upstream: Dict[str, Any] | None = None,
-    ) -> List[str]:
-        errors: List[str] = []
-        if "result" not in output:
-            errors.append("missing 'result' field")
-        if "timestamp" not in output:
-            errors.append("missing 'timestamp' field")
-        return errors
-
-
-class ExampleAgent(BaseAgent):
-    """Example Agent - Template for creating new agents.
-
-    This is a template showing how to implement a new agent.
-    Copy this file to create your own agent.
-    """
-
-    def __init__(self):
-        super().__init__()
-        self.evaluator = ExampleEvaluator()
-
-    def get_metadata(self) -> AgentMetadata:
-        return AgentMetadata(
-            id="example_agent",
-            name="Example Agent",
-            description="An example agent template for demonstration",
-            version="1.0.0",
-            author="Frameworkers",
-            capabilities=["example_processing", "template"],
-            input_schema={
-                "input_text": {
-                    "type": "string",
-                    "required": True,
-                    "description": "Input text to process",
-                },
-                "options": {
-                    "type": "object",
-                    "required": False,
-                    "description": "Optional processing options",
-                },
-            },
-            output_schema={
-                "result": {
-                    "type": "string",
-                    "description": "Processed result",
-                },
-                "timestamp": {
-                    "type": "string",
-                    "description": "Processing timestamp",
-                },
-            },
+    def system_prompt(self) -> str:
+        return (
+            "You are a summarization agent.\n"
+            "Task: Read the provided text and produce a structured summary.\n\n"
+            "You MUST:\n"
+            "- Write a short title (max 10 words)\n"
+            "- Write a concise summary (2-4 sentences)\n"
+            "- Extract 3-5 key points as a list\n"
+            "- Count the words in your summary and set word_count\n\n"
+            "Output Rules:\n"
+            "- Return JSON only, no markdown, no code fences.\n"
+            "- The output MUST have a single top-level key: content.\n"
+            "- Do NOT include a 'meta' block -- it is injected by the system.\n"
         )
 
-    def execute(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
-        self.validate_inputs(inputs)
+    def build_user_prompt(self, input_data: ExamplePipelineInput) -> str:
+        return (
+            f"Please summarize the following text:\n\n"
+            f"{input_data.source_text}\n\n"
+            f"project_id: {input_data.project_id}\n"
+            f"draft_id: {input_data.draft_id}\n\n"
+            "Return JSON matching this structure:\n"
+            "{\n"
+            '  "content": {\n'
+            '    "title": "<short title>",\n'
+            '    "summary": "<2-4 sentence summary>",\n'
+            '    "key_points": ["<point 1>", "<point 2>", ...],\n'
+            '    "word_count": <integer>\n'
+            "  }\n"
+            "}\n"
+        )
 
-        input_text = inputs.get("input_text", "")
-        options = inputs.get("options", {})
-
-        result = f"Processed: {input_text}"
-        if options:
-            result += f" with options: {options}"
-
-        return {
-            "result": result,
-            "timestamp": datetime.now().isoformat(),
-            "status": "completed",
-        }
+    def recompute_metrics(self, output: ExamplePipelineOutput) -> None:
+        """Fix word_count if the LLM got it wrong."""
+        if output.content.summary:
+            output.content.word_count = len(output.content.summary.split())

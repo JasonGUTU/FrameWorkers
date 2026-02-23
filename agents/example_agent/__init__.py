@@ -1,5 +1,12 @@
-# Example Agent - Template for creating new agents
+from .agent import ExamplePipelineAgent
+from .schema import ExamplePipelineInput, ExamplePipelineOutput
+from .evaluator import ExamplePipelineEvaluator
+from .descriptor import DESCRIPTOR
 
-from .agent import ExampleAgent
-
-__all__ = ['ExampleAgent']
+__all__ = [
+    "ExamplePipelineAgent",
+    "ExamplePipelineInput",
+    "ExamplePipelineOutput",
+    "ExamplePipelineEvaluator",
+    "DESCRIPTOR",
+]
