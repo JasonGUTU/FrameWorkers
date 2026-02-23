@@ -49,10 +49,6 @@ FrameWorkers/
 │   │       ├── service.py           # Assistant 核心业务逻辑
 │   │       ├── storage.py           # Assistant 数据存储
 │   │       ├── retrieval.py         # 检索模块
-│   │       ├── agent_core/          # Agent 核心框架
-│   │       │   ├── __init__.py
-│   │       │   ├── base_agent.py    # BaseAgent 抽象基类
-│   │       │   └── agent_registry.py # Agent 发现和注册机制
 │   │       └── workspace/           # 工作空间模块
 │   │           ├── __init__.py
 │   │           ├── workspace.py    # 工作空间核心

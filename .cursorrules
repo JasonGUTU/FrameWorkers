@@ -57,16 +57,6 @@ Two blueprints:
 - `storage.py`: in-memory store for assistant, executions, global workspace
 - `retrieval.py`: `WorkspaceRetriever` feeds agent context from workspace
 
-**Agent Core** (`src/assistant/agent_core/`)
-- Dual agent model:
-  - **Sync**: `sync_adapter.BaseAgent` + `PipelineAgentAdapter` — used by routes/service
-  - **Async pipeline**: `base_agent.BaseAgent` (aliased `LLMBaseAgent`) — the real execution engine
-- `AgentRegistry`: discovers sync agents from root `agents/`, registers pipeline agents from `AGENT_REGISTRY`
-- `descriptor.py`: `SubAgentDescriptor` manifest — factories, input builders, catalog
-- `base_evaluator.py`: 3-layer evaluation (structural → creative → asset)
-- `llm_client.py`: async OpenAI-compatible LLM client
-- Pipeline sub-agents: `story/`, `screenplay/`, `storyboard/`, `keyframe/`, `video/`, `audio/`, `example_agent/`
-
 **Workspace** (`src/assistant/workspace/`)
 - `workspace.py`: core workspace object
 - `file_manager.py`: file CRUD + tagging + search
@@ -83,11 +73,18 @@ Entry: `python -m director_agent.main` or `python director_agent/run.py`
 - `reasoning.py` (`ReasoningEngine`): decision logic (create_task / execute_task / update_plan / wait)
 - `config.py`: `BACKEND_BASE_URL`, `POLLING_INTERVAL`, etc. from env
 
-### 3. `agents/` — Agent Implementations
+### 3. `agents/` — Agent Framework & Implementations
 
-- Same sub-agent structure as `agent_core/`: `story/`, `screenplay/`, `storyboard/`, `keyframe/`, `video/`, `audio/`, `example_agent/`
+- Core framework: `sync_adapter.py`, `base_agent.py`, `base_evaluator.py`, `descriptor.py`, `common_schema.py`, `llm_client.py`, `agent_registry.py`
+- Dual agent model:
+  - **Sync**: `sync_adapter.BaseAgent` + `PipelineAgentAdapter` — used by routes/service
+  - **Async pipeline**: `base_agent.BaseAgent` (aliased `LLMBaseAgent`) — the real execution engine
+- `AgentRegistry`: discovers sync agents from `agents/` subdirs, registers pipeline agents from `AGENT_REGISTRY`
+- `descriptor.py`: `SubAgentDescriptor` manifest — factories, input builders, catalog
+- `base_evaluator.py`: 3-layer evaluation (structural → creative → asset)
+- `llm_client.py`: async OpenAI-compatible LLM client
+- Pipeline sub-agents: `story/`, `screenplay/`, `storyboard/`, `keyframe/`, `video/`, `audio/`, `example_agent/`
 - Each has: `agent.py`, `schema.py`, `evaluator.py`, `descriptor.py`; media agents add `materializer.py`, `service.py`
-- Shared: `base_agent.py`, `base_evaluator.py`, `descriptor.py`, `common_schema.py`, `llm_client.py`, `sync_adapter.py`, `agent_registry.py`
 - Auto-discovered by `AgentRegistry` at startup via filesystem scan
 
 ### 4. `inference/` — LLM & Multimodal Library
@@ -222,17 +219,6 @@ FrameWorkers/
 │   │       ├── service.py           #   AssistantService (6-step flow)
 │   │       ├── storage.py           #   In-memory: assistant + executions + workspace
 │   │       ├── retrieval.py         #   WorkspaceRetriever
-│   │       ├── agent_core/          #   Agent framework
-│   │       │   ├── base_agent.py    #     Async pipeline base (LLMBaseAgent)
-│   │       │   ├── base_evaluator.py #    3-layer evaluator
-│   │       │   ├── sync_adapter.py  #     PipelineAgentAdapter (sync facade)
-│   │       │   ├── agent_registry.py #    Discovery + registration
-│   │       │   ├── descriptor.py    #     SubAgentDescriptor + BaseMaterializer
-│   │       │   ├── common_schema.py
-│   │       │   ├── llm_client.py
-│   │       │   ├── story/  screenplay/  storyboard/
-│   │       │   ├── keyframe/  video/  audio/
-│   │       │   └── example_agent/
 │   │       └── workspace/           #   Global shared workspace
 │   │           ├── workspace.py
 │   │           ├── file_manager.py
@@ -311,8 +297,6 @@ FrameWorkers/
   - 路由 / URL 变了？→ 检查前端 fetch 路径 + Director HTTP 调用
   - Task 或 Agent 模型变了？→ 全局搜索所有引用方
 
-### Rule 4: Agent Code Symmetry
-- `agents/` (root) 和 `dynamic-task-stack/src/assistant/agent_core/` 中存在重复的 agent 实现。
-  修改 agent 逻辑时，**必须确认是否需要在两处同步更新**。
-  - `agent_core/` 是后端运行时使用的版本
-  - `agents/` 是 AgentRegistry 自动发现使用的版本
+### Rule 4: Agent Code Location
+- 所有 agent 框架代码和 agent 实现统一位于根目录 `agents/`。
+  `dynamic-task-stack/src/assistant/service.py` 和 `routes.py` 通过 `from agents import ...` 直接引用。

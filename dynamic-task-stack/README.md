@@ -59,22 +59,6 @@ dynamic-task-stack/
 │       ├── service.py               # Assistant 核心业务逻辑
 │       ├── storage.py               # Assistant 数据存储
 │       ├── retrieval.py             # 检索模块（PLACEHOLDER）
-│       ├── agent_core/              # Agent 核心框架
-│       │   ├── __init__.py          # 统一导出 + AGENT_REGISTRY
-│       │   ├── sync_adapter.py      # 同步 BaseAgent / AgentMetadata / PipelineAgentAdapter
-│       │   ├── base_agent.py        # 异步 BaseAgent（pipeline agents 基类，含质量门）
-│       │   ├── base_evaluator.py    # 异步 BaseEvaluator（L1/L2/L3 三层评估）
-│       │   ├── llm_client.py        # LLMClient（OpenAI 异步封装）
-│       │   ├── descriptor.py        # SubAgentDescriptor / BaseMaterializer / MediaAsset
-│       │   ├── common_schema.py     # 共享 Pydantic 模型（Meta, ImageAsset 等）
-│       │   ├── agent_registry.py    # 统一 Agent 注册表（sync + pipeline）
-│       │   ├── story/               # StoryAgent（文本 pipeline agent）
-│       │   ├── screenplay/          # ScreenplayAgent（文本 pipeline agent）
-│       │   ├── storyboard/          # StoryboardAgent（文本 pipeline agent）
-│       │   ├── keyframe/            # KeyFrameAgent（媒体 pipeline agent）
-│       │   ├── video/               # VideoAgent（媒体 pipeline agent）
-│       │   ├── audio/               # AudioAgent（媒体 pipeline agent）
-│       │   └── example_agent/       # ExamplePipelineAgent（模板 / 教学用）
 │       └── workspace/               # 工作空间模块
 │           ├── __init__.py
 │           ├── workspace.py         # 工作空间核心
@@ -287,58 +271,11 @@ dynamic-task-stack/
 - `GET /api/assistant/workspace/logs` - 获取日志
 - `GET /api/assistant/workspace/search` - 综合搜索
 
-#### 5. agent_core/ - Agent 核心框架
+#### 5. agents/ - Agent 核心框架（根目录）
 
-`agent_core` 包含两层 Agent 类体系，通过统一注册表向 `service.py` 暴露同一接口。
+Agent 核心框架已迁移至项目根目录 `agents/`。`service.py` 和 `routes.py` 通过 `from agents import ...` 直接导入。
 
-**同步适配层（`sync_adapter.py`）**——供 `service.py` 直接调用：
-- `BaseAgent`: 同步抽象基类，实现 `execute(Dict) -> Dict`
-- `AgentMetadata`: Agent 元数据
-- `PipelineAgentAdapter`: 将异步 pipeline agent 包装为同步 `BaseAgent` 接口
-  - `_map_inputs()`: 将 `service.py` 的 `package_data()` 输出键映射为 pipeline agent 键（`project_id`, `draft_id`, `assets`, `config`）
-  - `_AttrDict`: dict 包装器，提供属性访问和 pipeline config 默认值
-  - 媒体 agent 自动构建 `MaterializeContext`，生成二进制资产到临时目录，通过 `_collect_media_files()` 打包为 `_media_files` 返回给 `service.py`
-
-**异步 Pipeline 层（`base_agent.py` / `base_evaluator.py`）**——FrameWorkers 影视生产 agents：
-- `BaseAgent`（别名 `LLMBaseAgent`）: 异步基类，`async run(InputT) -> ExecutionResult`，内置三层质量门和自动重试
-- `BaseEvaluator`（别名 `LLMBaseEvaluator`）: 三层评估器（L1 结构 → L2 LLM 创意 → L3 资产）
-- `LLMClient`: OpenAI 兼容的异步 LLM 客户端（懒加载，从 `OPENAI_API_KEY` 环境变量读取）
-- `SubAgentDescriptor`: 自描述清单（agent_factory, evaluator_factory, build_input 等）
-- `BaseMaterializer` / `MediaAsset`: 媒体资产生成基类
-
-**统一注册表（`agent_registry.py`）**：
-- `AgentRegistry`: 统一管理 sync agents（文件系统发现）和 pipeline agents（descriptor 注册）
-- `get_agent_registry()`: 全局单例，首次调用时自动注册全部 agents 并注入 `LLMClient`
-- `is_pipeline_agent()` / `get_descriptor()`: 区分 agent 类型
-
-**7 个 Pipeline Agent 子包**（`story/`, `screenplay/`, `storyboard/`, `keyframe/`, `video/`, `audio/`, `example_agent/`）：
-- 每个包含 `agent.py`, `schema.py`, `evaluator.py`, `descriptor.py`
-- 媒体 agents（keyframe, video, audio）额外包含 `materializer.py` 和 `service.py`
-- `example_agent/` 是创建新 pipeline agent 的模板
-- 通过 `AGENT_REGISTRY`（`__init__.py` 中的 dict）统一暴露
-
-**Agent 注册流程**：
-```
-get_agent_registry() 首次调用
-  ├─ AgentRegistry() 构造
-  │   └─ _discover_agents(): 扫描 agents/ 目录 → 注册 sync agents (如 ExampleAgent)
-  └─ register_pipeline_agents(AGENT_REGISTRY, llm_client=LLMClient())
-      └─ 遍历 7 个 SubAgentDescriptor → 创建 PipelineAgentAdapter 包装 → 注册
-
-service.py 调用 agent:
-  agent = registry.get_agent(agent_id)             # 同一个 dict，不区分类型
-  result = agent.execute(inputs)                    # 统一接口
-  # sync agent: 直接执行 execute()
-  # pipeline adapter: _map_inputs() → build_input() → asyncio loop → agent.run(typed_input)
-
-service.py pipeline 链式传递:
-  _build_pipeline_assets(task_id)                   # 扫描同 task 下已完成的 execution
-    → get_descriptor(agent_id).asset_key            # 查 agent_id → asset_key 映射
-    → assets["story_blueprint"] = StoryAgent 结果   # 填入 assets dict
-  package_data() 将 assets 打包进 inputs
-    → PipelineAgentAdapter._map_inputs() 提取 assets
-    → descriptor.build_input(project_id, draft_id, assets, config)
-```
+详细文档参见 `agents/README.md`。
 
 #### 6. workspace/ - 工作空间模块
 
@@ -812,7 +749,7 @@ POST /api/assistant/workspace/memory
 
 ```python
 # agents/my_agent/agent.py
-from agent_core.sync_adapter import BaseAgent, AgentMetadata
+from agents.sync_adapter import BaseAgent, AgentMetadata
 
 class MyAgent(BaseAgent):
     def get_metadata(self):
@@ -826,10 +763,10 @@ class MyAgent(BaseAgent):
 
 #### 方式二：Pipeline Agent（LLM 驱动）
 
-以 `agent_core/example_agent/` 为模板。完整的 pipeline agent 包含 5 个文件：
+以 `agents/example_agent/` 为模板。完整的 pipeline agent 包含 5 个文件：
 
 ```
-agent_core/
+agents/
 └── my_agent/
     ├── __init__.py          # 导出
     ├── schema.py            # Pydantic I/O 模型
@@ -881,7 +818,7 @@ agent_core/
    )
    ```
 
-6. **注册** — 在 `agent_core/__init__.py` 中：
+6. **注册** — 在 `agents/__init__.py` 中：
    - 导入 descriptor: `from .my_agent.descriptor import DESCRIPTOR as _my_desc`
    - 添加到 `AGENT_REGISTRY` 列表
    - 导出 agent 和 evaluator 类
@@ -914,7 +851,7 @@ agent_core/
 ### 测试
 
 ```bash
-# 运行 agent_core 单元测试（58 tests）
+# 运行 agents 单元测试（58 tests）
 cd dynamic-task-stack
 python -m pytest tests/test_agent_core.py -v
 

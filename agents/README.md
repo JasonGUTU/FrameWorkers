@@ -7,7 +7,6 @@
   - 核心框架文件：`base_agent.py`, `base_evaluator.py`, `sync_adapter.py`, `descriptor.py`, `llm_client.py`, `common_schema.py`, `agent_registry.py`
   - Pipeline Agent 子包：`story/`, `screenplay/`, `storyboard/`, `keyframe/`, `video/`, `audio/`
   - 示例 Agent：`example_agent/`
-- `dynamic-task-stack/src/assistant/agent_core/`：兼容性 shim，自动转发到 `agents/`
 
 ## 目录
 

@@ -11,7 +11,7 @@ from .models import (
     ExecutionStatus
 )
 from .workspace import Workspace
-from .agent_core import get_agent_registry
+from agents import get_agent_registry
 
 
 def create_assistant_blueprint():

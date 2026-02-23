@@ -9,7 +9,7 @@ from .models import (
 )
 from .workspace import Workspace
 from ..task_stack.storage import storage as task_storage  # Read-only access to task storage
-from .agent_core import get_agent_registry
+from agents import get_agent_registry
 from .retrieval import WorkspaceRetriever
 
 
