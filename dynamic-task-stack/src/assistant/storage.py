@@ -1,14 +1,11 @@
 # Storage for Assistant System
 
-from threading import Lock
+from threading import RLock
 from typing import Dict, List, Optional, Any
 from datetime import datetime
 import uuid
 
-from .models import (
-    Assistant, Agent, AgentExecution,
-    ExecutionStatus
-)
+from .models import Assistant, AgentExecution, ExecutionStatus
 from .workspace import Workspace
 from pathlib import Path
 
@@ -45,7 +42,7 @@ class AssistantStorage:
         self.executions: Dict[str, AgentExecution] = {}
         self.global_workspace: Optional[Workspace] = None  # Single global workspace
         self.execution_counter = 0
-        self.lock = Lock()
+        self.lock = RLock()
     
     # Global Assistant operations (singleton)
     def get_global_assistant(self) -> Assistant:
@@ -118,8 +115,8 @@ class AssistantStorage:
         """Get all executions for a task"""
         with self.lock:
             return [
-                exec for exec in self.executions.values()
-                if exec.task_id == task_id
+                execution for execution in self.executions.values()
+                if execution.task_id == task_id
             ]
     
     def update_execution(self, execution: AgentExecution) -> bool:

@@ -189,10 +189,10 @@ curl http://localhost:5002/api/assistant/sub-agents
 ### 工作原理
 
 1. **启动时扫描**：Backend 启动时，`AgentRegistry` 会自动扫描 `agents/` 目录
-2. **加载 Agent**：对于每个子目录，尝试导入并实例化 Agent 类
-3. **注册 Agent**：将成功加载的 Agent 注册到全局 registry
-4. **Pipeline 注册**：Pipeline agents 通过 `AGENT_REGISTRY` 字典单独注册
-5. **错误处理**：如果某个 Agent 加载失败，会记录警告但不会影响其他 Agent
+2. **Sync Agent 加载**：对于 sync agent 子目录，导入并注册 class 工厂（不立即实例化）
+3. **Pipeline 注册**：Pipeline agents 通过 `AGENT_REGISTRY` 仅注册 descriptor（不立即实例化 adapter）
+4. **按需实例化**：首次 `get_agent(agent_id)` / 执行时才创建对应实例（包含 sync 和 pipeline）
+5. **错误处理**：某个 Agent 加载失败会记录警告，但不会影响其他 Agent
 
 ---
 
@@ -240,3 +240,12 @@ agents/example_agent/evaluator.py   # 质量评估器
 agents/example_agent/descriptor.py  # SubAgentDescriptor 注册清单
 agents/example_agent/__init__.py    # 导出
 ```
+
+## 测试
+
+```bash
+# 从项目根目录运行 agents 核心测试
+python -m pytest tests/agents/test_agent_core.py -v
+```
+
+如果仓库目录结构有调整，可通过 `FRAMEWORKERS_ROOT` 指定项目根目录后再运行。

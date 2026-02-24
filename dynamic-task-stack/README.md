@@ -56,6 +56,7 @@ dynamic-task-stack/
 │       ├── __init__.py
 │       ├── models.py                # Assistant 数据模型
 │       ├── routes.py                # Assistant API 路由
+│       ├── serializers.py           # Assistant 响应序列化工具
 │       ├── service.py               # Assistant 核心业务逻辑
 │       ├── storage.py               # Assistant 数据存储
 │       ├── retrieval.py             # 检索模块（PLACEHOLDER）
@@ -66,8 +67,6 @@ dynamic-task-stack/
 │           ├── log_manager.py       # 日志管理
 │           ├── memory_manager.py    # 内存管理
 │           └── models.py            # 工作空间数据模型
-├── tests/
-│   └── test_agent_core.py           # Agent 核心框架测试（58 tests）
 ├── requirements.txt
 ├── run.py
 ├── test_api.py
@@ -239,14 +238,19 @@ dynamic-task-stack/
 - `query_agent_inputs()`: 查询 agent 所需输入
 - `prepare_environment()`: 准备执行环境
 - `_build_pipeline_assets()`: 从历史执行记录构建 `assets` 字典（`agent_id → asset_key` 映射），实现 pipeline 链式传递
-- `package_data()`: 打包数据（包含 workspace context + pipeline assets）
-- `execute_agent()`: 执行 agent
-- `process_results()`: 处理结果（支持 `_media_files` 批量媒体资产写入）
+- `package_data()`: 打包数据（包含 workspace context + pipeline assets，复用检索结果避免重复读取）
+- `execute_agent()`: 执行 agent（复用同一次解析到的 agent 实例）
+- `process_results()`: 处理结果（拆分为日志记录 + 文件入库，支持 `_media_files` 批量媒体资产写入）
+- `build_execution_inputs()` / `run_agent()` / `persist_execution_results()`: 执行边界三段式（组输入 → 执行 → 持久化）
 - `execute_agent_for_task()`: 完整的执行流程
+
+`retrieval.py` 仅负责从 workspace 取数与整形，不承担执行或持久化职责。
 
 #### 4. routes.py - API 路由
 
 提供完整的 RESTful API：
+
+路由层已薄化：序列化细节抽离到 `serializers.py`，`routes.py` 主要负责参数校验和调用 service。
 
 **Assistant 管理**：
 - `GET /api/assistant` - 获取全局 assistant（单例，预先定义）
@@ -281,16 +285,17 @@ Agent 核心框架已迁移至项目根目录 `agents/`。`service.py` 和 `rout
 
 **workspace.py**：
 - `Workspace`: 工作空间核心类
-- 文件、内存、日志的统一管理
+- 文件、内存、日志的统一管理（facade）
+- 边界清晰化：公共日志写入与搜索项序列化使用私有 helper，manager 仅负责各自领域存取
 
 **file_manager.py**：
-- 文件管理功能
+- 文件管理功能（路径/元数据/过滤边界通过私有 helper 显式化）
 
 **log_manager.py**：
-- 日志管理功能
+- 日志管理功能（日志序列化、过滤匹配、排序边界显式化）
 
 **memory_manager.py**：
-- 内存管理功能
+- 内存管理功能（内容拼接、长度校验、使用率计算边界显式化）
 
 ---
 
@@ -852,12 +857,19 @@ agents/
 
 ```bash
 # 运行 agents 单元测试（58 tests）
-cd dynamic-task-stack
-python -m pytest tests/test_agent_core.py -v
+cd ..
+python -m pytest tests/agents/test_agent_core.py -v
+
+# 运行 assistant 单元测试
+python -m pytest tests/assistant/test_assistant_*.py -v
 
 # 运行 API 测试
+cd dynamic-task-stack
 python test_api.py
 ```
+
+`tests/agents/test_agent_core.py` 会自动向上搜索包含 `agents/__init__.py` 的项目根目录。
+如果仓库布局调整导致自动发现失败，可显式设置 `FRAMEWORKERS_ROOT` 后再运行测试。
 
 ---
 

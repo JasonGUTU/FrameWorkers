@@ -1,5 +1,10 @@
-# Workspace Module
-# Manages file system, global memory, and logs for the assistant
+"""Workspace module boundary.
+
+`Workspace` is the facade; managers encapsulate their own storage concerns:
+- `FileManager`: file bytes + metadata persistence
+- `MemoryManager`: global memory read/write/truncation
+- `LogManager`: append-only operation logs
+"""
 
 from .workspace import Workspace
 from .file_manager import FileManager

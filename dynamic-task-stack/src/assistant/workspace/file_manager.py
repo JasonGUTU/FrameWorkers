@@ -1,9 +1,8 @@
 # File Manager - Manages all file resources in the workspace
 
 import os
-import shutil
 from pathlib import Path
-from typing import Dict, Any, List, Optional, BinaryIO
+from typing import Dict, Any, List, Optional
 from datetime import datetime
 import uuid
 import json
@@ -60,6 +59,84 @@ class FileManager:
                         self._file_metadata[file_id] = FileMetadata(**meta_dict)
             except Exception as e:
                 print(f"Warning: Failed to load file metadata: {e}")
+
+    # ------------------------------------------------------------------
+    # Internal boundary helpers
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _metadata_to_json_dict(metadata: FileMetadata) -> Dict[str, Any]:
+        return {
+            'id': metadata.id,
+            'filename': metadata.filename,
+            'description': metadata.description,
+            'file_type': metadata.file_type,
+            'file_extension': metadata.file_extension,
+            'file_path': metadata.file_path,
+            'size_bytes': metadata.size_bytes,
+            'created_at': metadata.created_at.isoformat(),
+            'created_by': metadata.created_by,
+            'tags': metadata.tags,
+            'metadata': metadata.metadata
+        }
+
+    @staticmethod
+    def _metadata_matches(
+        metadata: FileMetadata,
+        *,
+        file_type: Optional[str] = None,
+        tags: Optional[List[str]] = None,
+        created_by: Optional[str] = None,
+    ) -> bool:
+        if file_type and metadata.file_type != file_type:
+            return False
+        if tags and not all(tag in metadata.tags for tag in tags):
+            return False
+        if created_by and metadata.created_by != created_by:
+            return False
+        return True
+
+    @staticmethod
+    def _sort_newest_first(files: List[FileMetadata]) -> List[FileMetadata]:
+        return sorted(files, key=lambda x: x.created_at, reverse=True)
+
+    def _next_file_identity(self, filename: str) -> Dict[str, str]:
+        self._file_counter += 1
+        extension = self._get_file_extension(filename)
+        file_id = f"file_{self._file_counter:06d}_{uuid.uuid4().hex[:8]}"
+        numbered_filename = f"file_{self._file_counter:06d}{extension}"
+        return {
+            "file_id": file_id,
+            "extension": extension,
+            "numbered_filename": numbered_filename,
+        }
+
+    def _build_file_metadata(
+        self,
+        *,
+        file_id: str,
+        filename: str,
+        description: str,
+        extension: str,
+        file_path: Path,
+        size_bytes: int,
+        created_by: Optional[str],
+        tags: Optional[List[str]],
+        metadata: Optional[Dict[str, Any]],
+    ) -> FileMetadata:
+        return FileMetadata(
+            id=file_id,
+            filename=filename,
+            description=description,
+            file_type=self._determine_file_type(extension),
+            file_extension=extension,
+            file_path=str(file_path),
+            size_bytes=size_bytes,
+            created_at=datetime.now(),
+            created_by=created_by,
+            tags=tags or [],
+            metadata=metadata or {},
+        )
     
     def _save_metadata(self):
         """Save file metadata to disk"""
@@ -70,21 +147,7 @@ class FileManager:
                 'files': {}
             }
             for file_id, metadata in self._file_metadata.items():
-                # Convert datetime to ISO string for JSON
-                meta_dict = {
-                    'id': metadata.id,
-                    'filename': metadata.filename,
-                    'description': metadata.description,
-                    'file_type': metadata.file_type,
-                    'file_extension': metadata.file_extension,
-                    'file_path': metadata.file_path,
-                    'size_bytes': metadata.size_bytes,
-                    'created_at': metadata.created_at.isoformat(),
-                    'created_by': metadata.created_by,
-                    'tags': metadata.tags,
-                    'metadata': metadata.metadata
-                }
-                data['files'][file_id] = meta_dict
+                data['files'][file_id] = self._metadata_to_json_dict(metadata)
             
             with open(metadata_file, 'w', encoding='utf-8') as f:
                 json.dump(data, f, indent=2, ensure_ascii=False)
@@ -133,17 +196,10 @@ class FileManager:
         Returns:
             FileMetadata instance
         """
-        # Generate unique file ID and number
-        self._file_counter += 1
-        file_id = f"file_{self._file_counter:06d}_{uuid.uuid4().hex[:8]}"
-        
-        # Determine file type and extension
-        extension = self._get_file_extension(filename)
-        file_type = self._determine_file_type(extension)
-        
-        # Generate numbered filename: file_000001.png
-        numbered_filename = f"file_{self._file_counter:06d}{extension}"
-        file_path = self.workspace_runtime_path / numbered_filename
+        identity = self._next_file_identity(filename)
+        file_id = identity["file_id"]
+        extension = identity["extension"]
+        file_path = self.workspace_runtime_path / identity["numbered_filename"]
         
         # Write file to disk
         with open(file_path, 'wb') as f:
@@ -153,18 +209,16 @@ class FileManager:
         size_bytes = len(file_content)
         
         # Create metadata
-        file_metadata = FileMetadata(
-            id=file_id,
+        file_metadata = self._build_file_metadata(
+            file_id=file_id,
             filename=filename,
             description=description,
-            file_type=file_type,
-            file_extension=extension,
-            file_path=str(file_path),
+            extension=extension,
+            file_path=file_path,
             size_bytes=size_bytes,
-            created_at=datetime.now(),
             created_by=created_by,
-            tags=tags or [],
-            metadata=metadata or {}
+            tags=tags,
+            metadata=metadata,
         )
         
         # Store metadata
@@ -264,24 +318,19 @@ class FileManager:
         Returns:
             List of FileMetadata instances
         """
-        results = []
-        
-        for metadata in self._file_metadata.values():
-            # Apply filters
-            if file_type and metadata.file_type != file_type:
-                continue
-            
-            if tags:
-                if not all(tag in metadata.tags for tag in tags):
-                    continue
-            
-            if created_by and metadata.created_by != created_by:
-                continue
-            
-            results.append(metadata)
-        
+        results = [
+            metadata
+            for metadata in self._file_metadata.values()
+            if self._metadata_matches(
+                metadata,
+                file_type=file_type,
+                tags=tags,
+                created_by=created_by,
+            )
+        ]
+
         # Sort by creation time (newest first)
-        results.sort(key=lambda x: x.created_at, reverse=True)
+        results = self._sort_newest_first(results)
         
         # Apply limit
         if limit:
@@ -320,7 +369,7 @@ class FileManager:
                 results.append(metadata)
         
         # Sort by creation time (newest first)
-        results.sort(key=lambda x: x.created_at, reverse=True)
+        results = self._sort_newest_first(results)
         
         return results[:limit]
     

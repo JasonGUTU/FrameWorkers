@@ -1,10 +1,7 @@
 # Memory Manager - Manages Global Memory (Markdown format)
 
-import os
 from pathlib import Path
-from typing import Optional, Dict, Any
-from datetime import datetime
-import json
+from typing import Dict, Any
 
 
 class MemoryManager:
@@ -40,6 +37,22 @@ class MemoryManager:
         # Initialize memory if it doesn't exist
         if not self.memory_file_path.exists():
             self._write_memory("")
+
+    # ------------------------------------------------------------------
+    # Internal boundary helpers
+    # ------------------------------------------------------------------
+
+    def _compose_new_content(self, content: str, append: bool) -> str:
+        if not append:
+            return content
+        existing = self._read_memory()
+        if not existing:
+            return content
+        return existing + "\n\n" + content
+
+    @staticmethod
+    def _usage_percent(length: int, max_length: int) -> float:
+        return (length / max_length) * 100 if max_length > 0 else 0.0
     
     def _read_memory(self) -> str:
         """Read memory from disk"""
@@ -117,13 +130,8 @@ class MemoryManager:
             - final_length: int
             - message: str
         """
-        if append:
-            existing = self._read_memory()
-            if existing:
-                content = existing + "\n\n" + content
-            new_content, was_truncated = self._validate_length(content)
-        else:
-            new_content, was_truncated = self._validate_length(content)
+        content = self._compose_new_content(content, append=append)
+        new_content, was_truncated = self._validate_length(content)
         
         original_length = len(content)
         final_length = len(new_content)
@@ -187,7 +195,7 @@ class MemoryManager:
         return {
             "length": len(content),
             "max_length": self.MAX_MEMORY_LENGTH,
-            "usage_percent": (len(content) / self.MAX_MEMORY_LENGTH) * 100,
+            "usage_percent": self._usage_percent(len(content), self.MAX_MEMORY_LENGTH),
             "is_full": self.is_memory_full(),
             "file_path": str(self.memory_file_path)
         }

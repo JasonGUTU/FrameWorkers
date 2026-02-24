@@ -1,4 +1,8 @@
-# Assistant module
+"""Assistant module boundary.
+
+Exports only HTTP blueprint factory and global storage singleton.
+Business logic stays in service.py.
+"""
 
 import sys
 from pathlib import Path

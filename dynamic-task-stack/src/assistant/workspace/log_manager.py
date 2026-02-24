@@ -40,6 +40,55 @@ class LogManager:
         
         # Load existing logs
         self._load_logs()
+
+    # ------------------------------------------------------------------
+    # Internal boundary helpers
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _log_to_json_dict(log_entry: LogEntry) -> Dict[str, Any]:
+        return {
+            'id': log_entry.id,
+            'timestamp': log_entry.timestamp.isoformat(),
+            'operation_type': log_entry.operation_type,
+            'resource_type': log_entry.resource_type,
+            'resource_id': log_entry.resource_id,
+            'details': log_entry.details,
+            'agent_id': log_entry.agent_id,
+            'task_id': log_entry.task_id
+        }
+
+    @staticmethod
+    def _parse_log_line(line: str) -> Optional[LogEntry]:
+        line = line.strip()
+        if not line:
+            return None
+        data = json.loads(line)
+        data['timestamp'] = datetime.fromisoformat(data['timestamp'])
+        return LogEntry(**data)
+
+    @staticmethod
+    def _matches_filters(
+        log_entry: LogEntry,
+        *,
+        operation_type: Optional[str] = None,
+        resource_type: Optional[str] = None,
+        agent_id: Optional[str] = None,
+        task_id: Optional[str] = None,
+    ) -> bool:
+        if operation_type and log_entry.operation_type != operation_type:
+            return False
+        if resource_type and log_entry.resource_type != resource_type:
+            return False
+        if agent_id and log_entry.agent_id != agent_id:
+            return False
+        if task_id and log_entry.task_id != task_id:
+            return False
+        return True
+
+    @staticmethod
+    def _sort_newest_first(logs: List[LogEntry]) -> List[LogEntry]:
+        return sorted(logs, key=lambda x: x.timestamp, reverse=True)
     
     def _load_logs(self):
         """Load logs from disk"""
@@ -49,15 +98,10 @@ class LogManager:
         try:
             with open(self.log_file_path, 'r', encoding='utf-8') as f:
                 for line in f:
-                    line = line.strip()
-                    if not line:
-                        continue
                     try:
-                        data = json.loads(line)
-                        # Convert timestamp string to datetime
-                        data['timestamp'] = datetime.fromisoformat(data['timestamp'])
-                        log_entry = LogEntry(**data)
-                        self._logs.append(log_entry)
+                        log_entry = self._parse_log_line(line)
+                        if log_entry:
+                            self._logs.append(log_entry)
                     except Exception as e:
                         print(f"Warning: Failed to parse log entry: {e}")
         except Exception as e:
@@ -67,18 +111,7 @@ class LogManager:
         """Append a log entry to the log file"""
         try:
             with open(self.log_file_path, 'a', encoding='utf-8') as f:
-                # Convert datetime to ISO string for JSON
-                log_dict = {
-                    'id': log_entry.id,
-                    'timestamp': log_entry.timestamp.isoformat(),
-                    'operation_type': log_entry.operation_type,
-                    'resource_type': log_entry.resource_type,
-                    'resource_id': log_entry.resource_id,
-                    'details': log_entry.details,
-                    'agent_id': log_entry.agent_id,
-                    'task_id': log_entry.task_id
-                }
-                f.write(json.dumps(log_dict, ensure_ascii=False) + '\n')
+                f.write(json.dumps(self._log_to_json_dict(log_entry), ensure_ascii=False) + '\n')
         except Exception as e:
             print(f"Warning: Failed to write log entry: {e}")
     
@@ -145,26 +178,20 @@ class LogManager:
         Returns:
             List of LogEntry instances
         """
-        results = []
-        
-        for log_entry in self._logs:
-            # Apply filters
-            if operation_type and log_entry.operation_type != operation_type:
-                continue
-            
-            if resource_type and log_entry.resource_type != resource_type:
-                continue
-            
-            if agent_id and log_entry.agent_id != agent_id:
-                continue
-            
-            if task_id and log_entry.task_id != task_id:
-                continue
-            
-            results.append(log_entry)
-        
+        results = [
+            log_entry
+            for log_entry in self._logs
+            if self._matches_filters(
+                log_entry,
+                operation_type=operation_type,
+                resource_type=resource_type,
+                agent_id=agent_id,
+                task_id=task_id,
+            )
+        ]
+
         # Sort by timestamp (newest first)
-        results.sort(key=lambda x: x.timestamp, reverse=True)
+        results = self._sort_newest_first(results)
         
         # Apply limit
         if limit:
@@ -197,7 +224,7 @@ class LogManager:
                 results.append(log_entry)
         
         # Sort by timestamp (newest first)
-        results.sort(key=lambda x: x.timestamp, reverse=True)
+        results = self._sort_newest_first(results)
         
         return results[:limit]
     

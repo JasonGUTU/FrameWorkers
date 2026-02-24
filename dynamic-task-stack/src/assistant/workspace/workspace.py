@@ -3,7 +3,6 @@
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 from datetime import datetime
-import uuid
 
 from .file_manager import FileManager
 from .memory_manager import MemoryManager
@@ -48,6 +47,54 @@ class Workspace:
             resource_id=workspace_id,
             details={'workspace_id': workspace_id}
         )
+
+    # ------------------------------------------------------------------
+    # Internal boundary helpers
+    # ------------------------------------------------------------------
+
+    def _touch(self) -> None:
+        self.updated_at = datetime.now()
+
+    def _add_log(
+        self,
+        *,
+        operation_type: str,
+        resource_type: str,
+        resource_id: Optional[str] = None,
+        agent_id: Optional[str] = None,
+        task_id: Optional[str] = None,
+        details: Optional[Dict[str, Any]] = None,
+    ) -> None:
+        self.log_manager.add_log(
+            operation_type=operation_type,
+            resource_type=resource_type,
+            resource_id=resource_id,
+            agent_id=agent_id,
+            task_id=task_id,
+            details=details or {},
+        )
+
+    @staticmethod
+    def _file_search_item(file_meta: FileMetadata) -> Dict[str, Any]:
+        return {
+            'id': file_meta.id,
+            'filename': file_meta.filename,
+            'description': file_meta.description,
+            'file_type': file_meta.file_type,
+            'created_at': file_meta.created_at.isoformat(),
+            'file_path': file_meta.file_path,
+        }
+
+    @staticmethod
+    def _log_search_item(log: LogEntry) -> Dict[str, Any]:
+        return {
+            'id': log.id,
+            'timestamp': log.timestamp.isoformat(),
+            'operation_type': log.operation_type,
+            'resource_type': log.resource_type,
+            'resource_id': log.resource_id,
+            'details': log.details,
+        }
     
     # File Management Methods
     
@@ -84,7 +131,7 @@ class Workspace:
         )
         
         # Log file creation
-        self.log_manager.add_log(
+        self._add_log(
             operation_type='create',
             resource_type='file',
             resource_id=file_metadata.id,
@@ -97,7 +144,7 @@ class Workspace:
             }
         )
         
-        self.updated_at = datetime.now()
+        self._touch()
         return file_metadata
     
     def get_file(self, file_id: str) -> Optional[FileMetadata]:
@@ -108,7 +155,7 @@ class Workspace:
         """Get file content by ID"""
         content = self.file_manager.get_file_content(file_id)
         if content:
-            self.log_manager.add_log(
+            self._add_log(
                 operation_type='read',
                 resource_type='file',
                 resource_id=file_id
@@ -145,13 +192,13 @@ class Workspace:
         if file_meta:
             success = self.file_manager.delete_file(file_id)
             if success:
-                self.log_manager.add_log(
+                self._add_log(
                     operation_type='delete',
                     resource_type='file',
                     resource_id=file_id,
                     details={'filename': file_meta.filename}
                 )
-                self.updated_at = datetime.now()
+                self._touch()
             return success
         return False
     
@@ -160,7 +207,7 @@ class Workspace:
     def read_memory(self) -> str:
         """Read Global Memory"""
         memory = self.memory_manager.read_memory()
-        self.log_manager.add_log(
+        self._add_log(
             operation_type='read',
             resource_type='memory'
         )
@@ -179,7 +226,7 @@ class Workspace:
         """
         result = self.memory_manager.write_memory(content, append=append)
         
-        self.log_manager.add_log(
+        self._add_log(
             operation_type='write',
             resource_type='memory',
             details={
@@ -189,7 +236,7 @@ class Workspace:
             }
         )
         
-        self.updated_at = datetime.now()
+        self._touch()
         return result
     
     def append_memory(self, content: str) -> Dict[str, Any]:
@@ -249,17 +296,7 @@ class Workspace:
         results = {}
         
         if search_files:
-            results['files'] = [
-                {
-                    'id': f.id,
-                    'filename': f.filename,
-                    'description': f.description,
-                    'file_type': f.file_type,
-                    'created_at': f.created_at.isoformat(),
-                    'file_path': f.file_path
-                }
-                for f in self.search_files(query, limit=limit)
-            ]
+            results['files'] = [self._file_search_item(f) for f in self.search_files(query, limit=limit)]
         
         if search_memory:
             memory_content = self.read_memory()
@@ -274,14 +311,7 @@ class Workspace:
         
         if search_logs:
             results['logs'] = [
-                {
-                    'id': log.id,
-                    'timestamp': log.timestamp.isoformat(),
-                    'operation_type': log.operation_type,
-                    'resource_type': log.resource_type,
-                    'resource_id': log.resource_id,
-                    'details': log.details
-                }
+                self._log_search_item(log)
                 for log in self.log_manager.search_logs(query, limit=limit)
             ]
         

@@ -3,10 +3,7 @@
 from typing import Dict, Any, Optional, List
 from datetime import datetime
 
-from .models import (
-    Assistant, Agent, AgentExecution,
-    ExecutionStatus
-)
+from .models import AgentExecution, ExecutionStatus
 from .workspace import Workspace
 from ..task_stack.storage import storage as task_storage  # Read-only access to task storage
 from agents import get_agent_registry
@@ -47,8 +44,15 @@ class AssistantService:
             # Create global workspace if it doesn't exist
             workspace = self.storage.create_global_workspace()
         return workspace
+
+    def _get_agent_or_raise(self, agent_id: str):
+        """Resolve a sub-agent once and raise on missing IDs."""
+        agent_instance = self.agent_registry.get_agent(agent_id)
+        if agent_instance is None:
+            raise ValueError(f"Agent {agent_id} not found in registry")
+        return agent_instance
     
-    def query_agent_inputs(self, agent_id: str) -> Dict[str, Any]:
+    def query_agent_inputs(self, agent_id: str, agent_instance=None) -> Dict[str, Any]:
         """
         Query the required input parameters for an agent
         
@@ -61,10 +65,9 @@ class AssistantService:
         Raises:
             ValueError: If agent not found
         """
-        # Get agent from registry
-        agent_instance = self.agent_registry.get_agent(agent_id)
+        # Reuse the provided agent instance to avoid repeated registry lookups.
         if agent_instance is None:
-            raise ValueError(f"Agent {agent_id} not found in registry")
+            agent_instance = self._get_agent_or_raise(agent_id)
         
         return {
             "agent_id": agent_id,
@@ -141,7 +144,8 @@ class AssistantService:
         self,
         agent_id: str,
         task_id: str,
-        workspace: Workspace
+        workspace: Workspace,
+        agent_instance=None
     ) -> Dict[str, Any]:
         """
         Package relevant resources for agent execution
@@ -160,10 +164,9 @@ class AssistantService:
         Raises:
             ValueError: If agent or task not found
         """
-        # Get agent instance to understand its requirements
-        agent_instance = self.agent_registry.get_agent(agent_id)
+        # Keep this validation explicit, but reuse the already-resolved agent.
         if agent_instance is None:
-            raise ValueError(f"Agent {agent_id} not found in registry")
+            agent_instance = self._get_agent_or_raise(agent_id)
         
         # Get task from task storage (read-only)
         task = task_storage.get_task(task_id)
@@ -178,10 +181,6 @@ class AssistantService:
             context_keys=None  # Could be customized based on agent requirements
         )
         
-        # Get recent files and memory for context
-        recent_files = workspace.list_files(limit=10)
-        memory_content = workspace.read_memory()
-        
         # Build pipeline assets from historical execution results
         assets = self._build_pipeline_assets(task_id, task.description)
         
@@ -192,18 +191,9 @@ class AssistantService:
             "task_progress": task.progress,
             # Retrieved context from workspace (distributed by assistant)
             "workspace_context": context,
-            # Direct workspace access
-            "workspace_files": [
-                {
-                    "id": f.id,
-                    "filename": f.filename,
-                    "description": f.description,
-                    "file_type": f.file_type,
-                    "file_path": f.file_path
-                }
-                for f in recent_files
-            ],
-            "workspace_memory": memory_content[:1000] if memory_content else "",  # First 1000 chars
+            # Direct workspace access mirrors retriever context and avoids duplicate reads.
+            "workspace_files": context.get("files", []),
+            "workspace_memory": context.get("memory", "")[:1000],  # First 1000 chars
             # Pipeline assets from previous agent executions
             "assets": assets,
         }
@@ -214,7 +204,8 @@ class AssistantService:
         self,
         agent_id: str,
         task_id: str,
-        inputs: Dict[str, Any]
+        inputs: Dict[str, Any],
+        agent_instance=None
     ) -> AgentExecution:
         """
         Execute an agent and retrieve results
@@ -230,13 +221,11 @@ class AssistantService:
         Raises:
             ValueError: If agent or task not found
         """
-        # Get global assistant
-        assistant = self.storage.get_global_assistant()
+        # Ensure global assistant singleton exists.
+        self.storage.get_global_assistant()
         
-        # Validate agent exists in registry
-        agent_instance = self.agent_registry.get_agent(agent_id)
         if agent_instance is None:
-            raise ValueError(f"Agent {agent_id} not found in registry")
+            agent_instance = self._get_agent_or_raise(agent_id)
         
         # Create execution record
         execution = self.storage.create_execution(
@@ -246,12 +235,6 @@ class AssistantService:
         )
         
         try:
-            # Get agent instance from registry
-            agent_instance = self.agent_registry.get_agent(agent_id)
-            
-            if agent_instance is None:
-                raise ValueError(f"Agent {agent_id} not found in registry")
-            
             # Update execution status
             execution.status = ExecutionStatus.IN_PROGRESS
             execution.started_at = datetime.now()
@@ -274,6 +257,45 @@ class AssistantService:
             raise
         
         return execution
+
+    def _log_execution_result(self, execution: AgentExecution, workspace: Workspace) -> None:
+        workspace.log_manager.add_log(
+            operation_type='write',
+            resource_type='execution',
+            resource_id=execution.id,
+            agent_id=execution.agent_id,
+            task_id=execution.task_id,
+            details={
+                "status": execution.status.value,
+                "error": execution.error,
+                "has_results": execution.results is not None
+            }
+        )
+
+    def _store_file_result(self, workspace: Workspace, execution: AgentExecution, key: str, value: Dict[str, Any]) -> None:
+        workspace.store_file(
+            file_content=value['file_content'],
+            filename=value.get('filename', f'{key}.bin'),
+            description=value.get('description', f'File from execution {execution.id}'),
+            created_by=execution.agent_id,
+            tags=[execution.agent_id, execution.task_id],
+            metadata={'execution_id': execution.id}
+        )
+
+    def _store_execution_files(self, execution: AgentExecution, workspace: Workspace) -> None:
+        if not execution.results or not isinstance(execution.results, dict):
+            return
+
+        # Store inline file-shaped outputs.
+        for key, value in execution.results.items():
+            if isinstance(value, dict) and 'file_content' in value:
+                self._store_file_result(workspace, execution, key, value)
+
+        # Store batched media outputs.
+        media_files = execution.results.get("_media_files")
+        if isinstance(media_files, dict):
+            for key, value in media_files.items():
+                self._store_file_result(workspace, execution, key, value)
     
     def process_results(
         self,
@@ -290,49 +312,8 @@ class AssistantService:
         Returns:
             Dictionary containing processed results
         """
-        # Log execution using workspace log manager
-        workspace.log_manager.add_log(
-            operation_type='write',
-            resource_type='execution',
-            resource_id=execution.id,
-            agent_id=execution.agent_id,
-            task_id=execution.task_id,
-            details={
-                "status": execution.status.value,
-                "error": execution.error,
-                "has_results": execution.results is not None
-            }
-        )
-        
-        # If results contain files, store them in workspace
-        if execution.results:
-            # Check if results contain file data to store
-            if isinstance(execution.results, dict):
-                # Look for file-like data in results
-                for key, value in execution.results.items():
-                    if isinstance(value, dict) and 'file_content' in value:
-                        # Store file
-                        workspace.store_file(
-                            file_content=value['file_content'],
-                            filename=value.get('filename', f'{key}.bin'),
-                            description=value.get('description', f'File from execution {execution.id}'),
-                            created_by=execution.agent_id,
-                            tags=[execution.agent_id, execution.task_id],
-                            metadata={'execution_id': execution.id}
-                        )
-
-                # Batch from PipelineAgentAdapter._collect_media_files()
-                media_files = execution.results.get("_media_files")
-                if isinstance(media_files, dict):
-                    for key, value in media_files.items():
-                        workspace.store_file(
-                            file_content=value['file_content'],
-                            filename=value.get('filename', f'{key}.bin'),
-                            description=value.get('description', f'File from execution {execution.id}'),
-                            created_by=execution.agent_id,
-                            tags=[execution.agent_id, execution.task_id],
-                            metadata={'execution_id': execution.id}
-                        )
+        self._log_execution_result(execution, workspace)
+        self._store_execution_files(execution, workspace)
         
         # Return processed results
         return {
@@ -342,6 +323,48 @@ class AssistantService:
             "error": execution.error,
             "workspace_id": workspace.id
         }
+
+    def build_execution_inputs(
+        self,
+        agent_id: str,
+        task_id: str,
+        workspace: Workspace,
+        additional_inputs: Optional[Dict[str, Any]] = None,
+        agent_instance=None,
+    ) -> Dict[str, Any]:
+        """Boundary 1: build final execution inputs for a sub-agent."""
+        packaged_data = self.package_data(
+            agent_id=agent_id,
+            task_id=task_id,
+            workspace=workspace,
+            agent_instance=agent_instance,
+        )
+        if additional_inputs:
+            packaged_data.update(additional_inputs)
+        return packaged_data
+
+    def run_agent(
+        self,
+        agent_id: str,
+        task_id: str,
+        inputs: Dict[str, Any],
+        agent_instance=None,
+    ) -> AgentExecution:
+        """Boundary 2: execute one sub-agent run."""
+        return self.execute_agent(
+            agent_id=agent_id,
+            task_id=task_id,
+            inputs=inputs,
+            agent_instance=agent_instance,
+        )
+
+    def persist_execution_results(
+        self,
+        execution: AgentExecution,
+        workspace: Workspace,
+    ) -> Dict[str, Any]:
+        """Boundary 3: persist/log execution outputs and return API payload."""
+        return self.process_results(execution, workspace)
     
     def execute_agent_for_task(
         self,
@@ -352,12 +375,10 @@ class AssistantService:
         """
         Complete workflow: Execute an agent for a task
         
-        This method orchestrates the full execution flow:
-        1. Query agent inputs
-        2. Prepare environment
-        3. Package data
-        4. Execute agent
-        5. Process results
+        This method orchestrates three boundary responsibilities:
+        1. Build execution inputs
+        2. Run agent
+        3. Persist execution results
         
         Args:
             agent_id: ID of the agent to execute
@@ -367,28 +388,28 @@ class AssistantService:
         Returns:
             Dictionary containing execution results
         """
-        # Step 1: Query agent inputs (for validation)
-        input_info = self.query_agent_inputs(agent_id)
+        # Resolve once and reuse in all downstream steps.
+        agent_instance = self._get_agent_or_raise(agent_id)
         
-        # Step 2: Prepare environment
+        # Prepare environment
         workspace = self.prepare_environment(task_id)
         
-        # Step 3: Package data
-        packaged_data = self.package_data(agent_id, task_id, workspace)
-        
-        # Merge additional inputs if provided
-        inputs = packaged_data.copy()
-        if additional_inputs:
-            inputs.update(additional_inputs)
-        
-        # Step 4: Execute agent
-        execution = self.execute_agent(
+        # 1) Build inputs
+        inputs = self.build_execution_inputs(
             agent_id=agent_id,
             task_id=task_id,
-            inputs=inputs
+            workspace=workspace,
+            additional_inputs=additional_inputs,
+            agent_instance=agent_instance,
         )
         
-        # Step 5: Process results
-        results = self.process_results(execution, workspace)
+        # 2) Run agent
+        execution = self.run_agent(
+            agent_id=agent_id,
+            task_id=task_id,
+            inputs=inputs,
+            agent_instance=agent_instance
+        )
         
-        return results
+        # 3) Persist results
+        return self.persist_execution_results(execution, workspace)

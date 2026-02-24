@@ -9,6 +9,7 @@ import sys
 import importlib
 import inspect
 import logging
+from threading import Lock
 from typing import Dict, List, Optional, Type, Any
 from pathlib import Path
 
@@ -36,7 +37,11 @@ class AgentRegistry:
         self.agents_dir = Path(agents_dir)
         self._agents: Dict[str, BaseAgent] = {}
         self._agent_classes: Dict[str, Type[BaseAgent]] = {}
+        self._sync_factories: Dict[str, Type[BaseAgent]] = {}
         self._descriptors: Dict[str, Any] = {}
+        self._pipeline_llm_client: Optional[Any] = None
+        self._pipeline_init_lock = Lock()
+        self._sync_init_lock = Lock()
         self._discover_agents()
 
     # ------------------------------------------------------------------
@@ -93,10 +98,9 @@ class AgentRegistry:
                             and obj is not BaseAgent
                             and obj.__module__ == module.__name__
                         ):
-                            agent_instance = obj()
-                            agent_id = agent_instance.metadata.id
-                            self._agents[agent_id] = agent_instance
-                            self._agent_classes[agent_id] = obj
+                            # Lazy-load sync agent: register factory only.
+                            self._sync_factories[agent_name] = obj
+                            self._agent_classes[agent_name] = obj
                             return
                 except ImportError as e:
                     logger.debug("Import attempt %s failed: %s", module_name, e)
@@ -107,16 +111,105 @@ class AgentRegistry:
     # ------------------------------------------------------------------
 
     def get_agent(self, agent_id: str) -> Optional[BaseAgent]:
-        return self._agents.get(agent_id)
+        agent = self._agents.get(agent_id)
+        if agent is not None:
+            return agent
+
+        # Lazy-init sync agents when requested.
+        sync_cls = self._sync_factories.get(agent_id)
+        if sync_cls is not None:
+            with self._sync_init_lock:
+                agent = self._agents.get(agent_id)
+                if agent is not None:
+                    return agent
+                instance = sync_cls()
+                resolved_id = instance.metadata.id
+                self._agents[resolved_id] = instance
+                self._agent_classes[resolved_id] = sync_cls
+                if resolved_id != agent_id:
+                    # Keep alias compatibility when directory name != metadata.id.
+                    self._agents[agent_id] = instance
+                    self._agent_classes[agent_id] = sync_cls
+                return instance
+
+        # Fallback: if caller requested metadata.id (not directory key),
+        # resolve by progressively materializing remaining sync factories.
+        if self._sync_factories:
+            with self._sync_init_lock:
+                agent = self._agents.get(agent_id)
+                if agent is not None:
+                    return agent
+                for candidate_key, candidate_cls in list(self._sync_factories.items()):
+                    if candidate_key in self._agents:
+                        continue
+                    instance = candidate_cls()
+                    resolved_id = instance.metadata.id
+                    self._agents[resolved_id] = instance
+                    self._agent_classes[resolved_id] = candidate_cls
+                    if resolved_id != candidate_key:
+                        self._agents[candidate_key] = instance
+                        self._agent_classes[candidate_key] = candidate_cls
+                    if resolved_id == agent_id:
+                        return instance
+
+        descriptor = self._descriptors.get(agent_id)
+        if descriptor is None:
+            return None
+
+        # Lazy-init pipeline adapters only when actually requested.
+        with self._pipeline_init_lock:
+            agent = self._agents.get(agent_id)
+            if agent is not None:
+                return agent
+            adapter = PipelineAgentAdapter(descriptor, self._pipeline_llm_client)
+            self._agents[agent_id] = adapter
+            return adapter
 
     def get_agent_class(self, agent_id: str) -> Optional[Type[BaseAgent]]:
         return self._agent_classes.get(agent_id)
 
     def list_agents(self) -> List[str]:
-        return list(self._agents.keys())
+        return sorted(
+            set(self._agents.keys()) | set(self._descriptors.keys()) | set(self._sync_factories.keys())
+        )
 
     def get_all_agents_info(self) -> List[Dict[str, Any]]:
-        return [agent.get_info() for agent in self._agents.values()]
+        infos: List[Dict[str, Any]] = [agent.get_info() for agent in self._agents.values()]
+
+        for agent_id in self._sync_factories.keys():
+            if agent_id in self._agents:
+                continue
+            infos.append({
+                "id": agent_id,
+                "name": agent_id,
+                "description": "Sync agent (lazy-loaded)",
+                "version": "1.0.0",
+                "author": None,
+                "capabilities": [],
+                "input_schema": {},
+                "output_schema": {},
+                "created_at": "",
+                "updated_at": "",
+            })
+
+        for agent_id, descriptor in self._descriptors.items():
+            if agent_id in self._agents:
+                # Already instantiated; info is included above.
+                continue
+            infos.append({
+                "id": agent_id,
+                "name": agent_id,
+                "description": (descriptor.catalog_entry or "")[:200],
+                "version": "1.0.0",
+                "author": None,
+                "capabilities": ["pipeline_agent", descriptor.asset_key],
+                "input_schema": {},
+                "output_schema": {},
+                "created_at": "",
+                "updated_at": "",
+            })
+
+        return infos
 
     def gather_agents_info(self) -> Dict[str, Any]:
         agents_info = self.get_all_agents_info()
@@ -153,16 +246,16 @@ class AgentRegistry:
         Args:
             descriptors: ``{agent_name: SubAgentDescriptor}`` dict.
             llm_client:  Optional ``LLMClient`` instance.  If provided,
-                         adapters can execute; otherwise they are
+                         created adapters can execute; otherwise they are
                          discovery-only (visible in listings, but
-                         ``execute()`` raises).
+                         ``execute()`` raises). Adapters are lazily
+                         instantiated on first ``get_agent()``.
         """
+        self._pipeline_llm_client = llm_client
         for name, desc in descriptors.items():
-            if name in self._agents:
+            if name in self._descriptors or name in self._agents:
                 logger.debug("Pipeline agent %s already registered, skipping", name)
                 continue
-            adapter = PipelineAgentAdapter(desc, llm_client)
-            self._agents[name] = adapter
             self._agent_classes[name] = PipelineAgentAdapter
             self._descriptors[name] = desc
             logger.info("Registered pipeline agent: %s", name)
@@ -178,7 +271,9 @@ class AgentRegistry:
     def reload(self):
         self._agents.clear()
         self._agent_classes.clear()
+        self._sync_factories.clear()
         self._descriptors.clear()
+        self._pipeline_llm_client = None
         self._discover_agents()
 
 

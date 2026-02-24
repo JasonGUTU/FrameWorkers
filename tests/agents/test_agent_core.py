@@ -1,14 +1,39 @@
 # Unit tests for the agents package (migrated from agent_core)
 
+import os
 import sys
 from pathlib import Path
+from threading import Lock
 
 import pytest
 
+def _resolve_agents_project_root() -> Path:
+    """Resolve the project root that contains the ``agents`` package.
+
+    Priority:
+      1. ``FRAMEWORKERS_ROOT`` env var (if valid)
+      2. Walk upward from this test file until ``agents/__init__.py`` exists
+    """
+    env_root = os.getenv("FRAMEWORKERS_ROOT")
+    if env_root:
+        candidate = Path(env_root).expanduser().resolve()
+        if (candidate / "agents" / "__init__.py").exists():
+            return candidate
+
+    for parent in Path(__file__).resolve().parents:
+        if (parent / "agents" / "__init__.py").exists():
+            return parent
+
+    raise RuntimeError(
+        "Cannot locate project root containing agents/__init__.py. "
+        "Set FRAMEWORKERS_ROOT to override."
+    )
+
+
 # Add project root to sys.path so ``agents`` is importable as a package.
-_project_root = str(Path(__file__).resolve().parent.parent.parent)
-if _project_root not in sys.path:
-    sys.path.insert(0, _project_root)
+_project_root = _resolve_agents_project_root()
+if str(_project_root) not in sys.path:
+    sys.path.insert(0, str(_project_root))
 
 from agents.sync_adapter import (
     BaseAgent,
@@ -22,6 +47,18 @@ from agents.agent_registry import AgentRegistry
 # -----------------------------------------------------------------------
 # Fixtures / helpers
 # -----------------------------------------------------------------------
+
+def _make_empty_registry() -> AgentRegistry:
+    """Create a minimally initialized registry for isolated unit tests."""
+    registry = AgentRegistry.__new__(AgentRegistry)
+    registry._agents = {}
+    registry._agent_classes = {}
+    registry._sync_factories = {}
+    registry._descriptors = {}
+    registry._pipeline_llm_client = None
+    registry._pipeline_init_lock = Lock()
+    registry._sync_init_lock = Lock()
+    return registry
 
 class _SimpleAgent(BaseAgent):
     """Minimal agent with no evaluator."""
@@ -78,9 +115,7 @@ class TestBaseAgent:
 
 class TestAgentRegistry:
     def test_register_and_get(self):
-        registry = AgentRegistry.__new__(AgentRegistry)
-        registry._agents = {}
-        registry._agent_classes = {}
+        registry = _make_empty_registry()
 
         agent = _SimpleAgent()
         registry.register_agent(agent)
@@ -89,17 +124,13 @@ class TestAgentRegistry:
         assert registry.get_agent("nonexistent") is None
 
     def test_list_agents(self):
-        registry = AgentRegistry.__new__(AgentRegistry)
-        registry._agents = {}
-        registry._agent_classes = {}
+        registry = _make_empty_registry()
 
         registry.register_agent(_SimpleAgent())
         assert "simple_agent" in registry.list_agents()
 
     def test_get_all_agents_info(self):
-        registry = AgentRegistry.__new__(AgentRegistry)
-        registry._agents = {}
-        registry._agent_classes = {}
+        registry = _make_empty_registry()
 
         registry.register_agent(_SimpleAgent())
         infos = registry.get_all_agents_info()
@@ -107,9 +138,7 @@ class TestAgentRegistry:
         assert infos[0]["id"] == "simple_agent"
 
     def test_gather_agents_info(self):
-        registry = AgentRegistry.__new__(AgentRegistry)
-        registry._agents = {}
-        registry._agent_classes = {}
+        registry = _make_empty_registry()
 
         registry.register_agent(_SimpleAgent())
         gathered = registry.gather_agents_info()
@@ -347,10 +376,7 @@ class TestUnifiedRegistry:
         from agents.agent_registry import AgentRegistry
         from agents.descriptor import SubAgentDescriptor
 
-        registry = AgentRegistry.__new__(AgentRegistry)
-        registry._agents = {}
-        registry._agent_classes = {}
-        registry._descriptors = {}
+        registry = _make_empty_registry()
 
         desc = SubAgentDescriptor(
             agent_name="PipelineTest",
@@ -369,10 +395,7 @@ class TestUnifiedRegistry:
         from agents.agent_registry import AgentRegistry
         from agents.descriptor import SubAgentDescriptor
 
-        registry = AgentRegistry.__new__(AgentRegistry)
-        registry._agents = {}
-        registry._agent_classes = {}
-        registry._descriptors = {}
+        registry = _make_empty_registry()
 
         registry.register_agent(_SimpleAgent())
 
@@ -393,10 +416,7 @@ class TestUnifiedRegistry:
         from agents.agent_registry import AgentRegistry
         from agents.descriptor import SubAgentDescriptor
 
-        registry = AgentRegistry.__new__(AgentRegistry)
-        registry._agents = {}
-        registry._agent_classes = {}
-        registry._descriptors = {}
+        registry = _make_empty_registry()
 
         registry.register_agent(_SimpleAgent())
         desc = SubAgentDescriptor(
@@ -417,10 +437,7 @@ class TestUnifiedRegistry:
         from agents import AGENT_REGISTRY
         from agents.agent_registry import AgentRegistry
 
-        registry = AgentRegistry.__new__(AgentRegistry)
-        registry._agents = {}
-        registry._agent_classes = {}
-        registry._descriptors = {}
+        registry = _make_empty_registry()
 
         registry.register_pipeline_agents(AGENT_REGISTRY)
 

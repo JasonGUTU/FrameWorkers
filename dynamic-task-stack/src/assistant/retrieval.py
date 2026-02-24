@@ -1,5 +1,8 @@
-# Retrieval Module
-# This module handles information retrieval from the workspace file system
+"""Workspace retrieval boundary for Assistant.
+
+This module only retrieves and shapes context from Workspace. It does not
+execute agents or persist execution results.
+"""
 
 from typing import Dict, Any, List, Optional
 from .workspace import Workspace
@@ -21,6 +24,85 @@ class WorkspaceRetriever:
             workspace: The global workspace instance
         """
         self.workspace = workspace
+
+    # ------------------------------------------------------------------
+    # Serialization helpers (retrieval boundary only)
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _file_brief(file_meta) -> Dict[str, Any]:
+        return {
+            "id": file_meta.id,
+            "filename": file_meta.filename,
+            "description": file_meta.description,
+            "file_type": file_meta.file_type,
+            "file_path": file_meta.file_path,
+        }
+
+    @staticmethod
+    def _file_search_item(file_meta) -> Dict[str, Any]:
+        return {
+            "id": file_meta.id,
+            "filename": file_meta.filename,
+            "description": file_meta.description,
+            "file_type": file_meta.file_type,
+            "file_path": file_meta.file_path,
+            "created_at": file_meta.created_at.isoformat(),
+            "tags": file_meta.tags,
+        }
+
+    @staticmethod
+    def _log_search_item(log) -> Dict[str, Any]:
+        return {
+            "id": log.id,
+            "timestamp": log.timestamp.isoformat(),
+            "operation_type": log.operation_type,
+            "resource_type": log.resource_type,
+            "resource_id": log.resource_id,
+            "details": log.details,
+        }
+
+    @staticmethod
+    def _context_log_item(log) -> Dict[str, Any]:
+        return {
+            "timestamp": log.timestamp.isoformat(),
+            "operation_type": log.operation_type,
+            "resource_type": log.resource_type,
+            "resource_id": log.resource_id,
+        }
+
+    @staticmethod
+    def _memory_match_context(memory_content: str, pattern: str) -> Optional[str]:
+        if not pattern:
+            return None
+        lower_memory = memory_content.lower()
+        lower_pattern = pattern.lower()
+        if lower_pattern not in lower_memory:
+            return None
+        idx = lower_memory.find(lower_pattern)
+        start = max(0, idx - 100)
+        end = min(len(memory_content), idx + len(pattern) + 100)
+        return memory_content[start:end]
+
+    def _get_context_files(
+        self,
+        agent_id: str,
+        task_id: str,
+        context_keys: Optional[List[str]],
+    ) -> List[Dict[str, Any]]:
+        if context_keys:
+            files: List[Dict[str, Any]] = []
+            for file_id in context_keys:
+                file_meta = self.workspace.get_file(file_id)
+                if file_meta:
+                    files.append(self._file_brief(file_meta))
+            return files
+
+        # Default path: use recent files by agent + task tag.
+        agent_files = self.workspace.list_files(created_by=agent_id, limit=5)
+        task_files = self.workspace.list_files(tags=[task_id], limit=5)
+        all_files = {f.id: f for f in agent_files + task_files}
+        return [self._file_brief(f) for f in list(all_files.values())[:10]]
     
     def retrieve_files(
         self,
@@ -39,19 +121,12 @@ class WorkspaceRetriever:
         Returns:
             List of file information dictionaries
         """
-        files = self.workspace.search_files(query, file_type=file_types[0] if file_types else None, limit=limit)
-        return [
-            {
-                "id": f.id,
-                "filename": f.filename,
-                "description": f.description,
-                "file_type": f.file_type,
-                "file_path": f.file_path,
-                "created_at": f.created_at.isoformat(),
-                "tags": f.tags
-            }
-            for f in files
-        ]
+        files = self.workspace.search_files(
+            query,
+            file_type=file_types[0] if file_types else None,
+            limit=limit,
+        )
+        return [self._file_search_item(f) for f in files]
     
     def retrieve_memory(
         self,
@@ -76,13 +151,9 @@ class WorkspaceRetriever:
             "info": memory_info
         }
         
-        # If pattern provided, search in content
-        if pattern and pattern.lower() in memory_content.lower():
-            # Find context around pattern
-            idx = memory_content.lower().find(pattern.lower())
-            start = max(0, idx - 100)
-            end = min(len(memory_content), idx + len(pattern) + 100)
-            result["match_context"] = memory_content[start:end]
+        match_context = self._memory_match_context(memory_content, pattern or "")
+        if match_context:
+            result["match_context"] = match_context
         
         return result
     
@@ -104,14 +175,8 @@ class WorkspaceRetriever:
         files = self.workspace.list_files(file_type=asset_type, tags=tags)
         return [
             {
-                "id": f.id,
-                "filename": f.filename,
-                "description": f.description,
-                "file_type": f.file_type,
-                "file_path": f.file_path,
-                "created_at": f.created_at.isoformat(),
-                "tags": f.tags,
-                "metadata": f.metadata
+                **self._file_search_item(f),
+                "metadata": f.metadata,
             }
             for f in files
         ]
@@ -144,17 +209,7 @@ class WorkspaceRetriever:
         
         if 'logs' in search_types:
             logs = self.workspace.log_manager.search_logs(query)
-            results['logs'] = [
-                {
-                    "id": log.id,
-                    "timestamp": log.timestamp.isoformat(),
-                    "operation_type": log.operation_type,
-                    "resource_type": log.resource_type,
-                    "resource_id": log.resource_id,
-                    "details": log.details
-                }
-                for log in logs
-            ]
+            results['logs'] = [self._log_search_item(log) for log in logs]
         
         return results
     
@@ -178,48 +233,13 @@ class WorkspaceRetriever:
         Returns:
             Dictionary containing context information for the agent
         """
-        context = {
+        context: Dict[str, Any] = {
             "agent_id": agent_id,
             "task_id": task_id,
-            "files": [],
+            "files": self._get_context_files(agent_id, task_id, context_keys),
             "memory": "",
             "recent_logs": []
         }
-        
-        # Retrieve specific files if context_keys provided
-        if context_keys:
-            for file_id in context_keys:
-                file_meta = self.workspace.get_file(file_id)
-                if file_meta:
-                    context["files"].append({
-                        "id": file_meta.id,
-                        "filename": file_meta.filename,
-                        "description": file_meta.description,
-                        "file_type": file_meta.file_type,
-                        "file_path": file_meta.file_path
-                    })
-        else:
-            # Get recent files created by this agent or related to this task
-            agent_files = self.workspace.list_files(
-                created_by=agent_id,
-                limit=5
-            )
-            task_files = self.workspace.list_files(
-                tags=[task_id],
-                limit=5
-            )
-            # Combine and deduplicate
-            all_files = {f.id: f for f in agent_files + task_files}
-            context["files"] = [
-                {
-                    "id": f.id,
-                    "filename": f.filename,
-                    "description": f.description,
-                    "file_type": f.file_type,
-                    "file_path": f.file_path
-                }
-                for f in list(all_files.values())[:10]
-            ]
         
         # Retrieve Global Memory (first 2000 chars for context)
         memory_content = self.workspace.read_memory()
@@ -231,14 +251,6 @@ class WorkspaceRetriever:
             task_id=task_id,
             limit=10
         )
-        context["recent_logs"] = [
-            {
-                "timestamp": log.timestamp.isoformat(),
-                "operation_type": log.operation_type,
-                "resource_type": log.resource_type,
-                "resource_id": log.resource_id
-            }
-            for log in recent_logs
-        ]
+        context["recent_logs"] = [self._context_log_item(log) for log in recent_logs]
         
         return context

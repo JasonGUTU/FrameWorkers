@@ -1,10 +1,13 @@
-# Data models for Assistant System
+"""Data models for Assistant system boundaries.
+
+This module defines only Assistant-domain state objects. It should not contain
+retrieval/orchestration logic.
+"""
 
 from enum import Enum
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Optional, Dict, Any, List
-import uuid
 
 
 class AgentStatus(Enum):
@@ -66,6 +69,3 @@ class AgentExecution:
     completed_at: Optional[datetime] = None
     created_at: datetime = field(default_factory=datetime.now)
 
-
-# Workspace model
-from .workspace import Workspace

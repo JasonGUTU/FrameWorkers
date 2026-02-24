@@ -75,7 +75,12 @@ FrameWorkers/
 │   ├── package.json
 │   ├── vite.config.js
 │   └── README.md                    # 前端文档
-├── runtime/                         # 运行时目录（工作空间文件存储）
+├── install_requirements.py           # 统一依赖管理脚本
+├── requirements.txt                 # 统一依赖（自动生成）
+├── tests/                           # 根目录统一测试入口
+│   ├── agents/                      # Agents 核心测试
+│   └── assistant/                   # Assistant 单元测试
+├── Runtime/                         # 运行时目录（工作空间文件存储）
 ├── README.md                        # 本文档
 └── AGENTS_MIGRATION.md              # Agents 迁移说明
 ```
@@ -152,41 +157,13 @@ Web 前端界面：
 
 ### 1. 安装依赖
 
-#### 方式一：统一安装（推荐）
-
-项目提供了自动安装脚本，可以一次性安装所有子模块的依赖：
-
 ```bash
-# 使用 Python 脚本（推荐，会自动合并依赖并去重）
+# 创建 conda 环境 (frameworkers, python 3.11) 并安装所有依赖
 python install_requirements.py
+conda activate frameworkers
 
-# 或使用 Shell 脚本
-./install_requirements.sh
-
-# 或直接安装根目录的统一 requirements.txt
-pip install -r requirements.txt
-```
-
-#### 方式二：分别安装
-
-如果需要分别安装各模块的依赖：
-
-```bash
-# Backend
-cd dynamic-task-stack
-pip install -r requirements.txt
-
-# Director Agent
-cd ../director_agent
-pip install -r requirements.txt
-
-# Inference Module
-cd ../inference
-pip install -r requirements.txt
-
-# Frontend
-cd ../interface
-npm install
+# 前端依赖
+cd interface && npm install
 ```
 
 ### 2. 启动服务
@@ -207,8 +184,18 @@ npm run dev
 
 ### 3. 访问服务
 
-- Backend API: `http://localhost:5000`
-- Frontend: `http://localhost:5173` (Vite 默认端口)
+- Backend API: `http://localhost:5002`
+- Frontend: `http://localhost:3000`
+
+### 4. 运行测试
+
+```bash
+# agents 核心测试
+python -m pytest tests/agents/test_agent_core.py -v
+
+# assistant 单元测试
+python -m pytest tests/assistant/test_assistant_*.py -v
+```
 
 ## 系统架构
 
