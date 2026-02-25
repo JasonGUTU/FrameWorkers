@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import sys
 import types
 from pathlib import Path
@@ -116,6 +117,16 @@ def assistant_http_client(tmp_path, monkeypatch):
         yield client
 
 
+@pytest.fixture
+def assistant_http_client_real_agents(tmp_path, monkeypatch):
+    storage = AssistantStorage(runtime_base_path=tmp_path / "Runtime")
+    monkeypatch.setattr(routes_module, "assistant_storage", storage)
+
+    app = create_app({"TESTING": True})
+    with app.test_client() as client:
+        yield client
+
+
 def test_assistant_e2e_http_flow_covers_core_endpoints(assistant_http_client):
     client = assistant_http_client
 
@@ -208,3 +219,49 @@ def test_assistant_e2e_http_flow_covers_core_endpoints(assistant_http_client):
 
     search_resp = client.get("/api/assistant/workspace/search?query=integration")
     assert search_resp.status_code == 200
+
+
+@pytest.mark.skipif(
+    os.getenv("FW_ENABLE_LIVE_LLM_TESTS") != "1" or not os.getenv("OPENAI_API_KEY"),
+    reason=(
+        "Live LLM e2e test disabled. Set FW_ENABLE_LIVE_LLM_TESTS=1 and OPENAI_API_KEY "
+        "to run."
+    ),
+)
+def test_assistant_e2e_http_flow_with_real_story_agent(assistant_http_client_real_agents):
+    client = assistant_http_client_real_agents
+
+    create_task_resp = client.post(
+        "/api/tasks/create",
+        json={"description": {"goal": "Generate a concise story blueprint for a short film."}},
+    )
+    assert create_task_resp.status_code == 201
+    task_id = create_task_resp.get_json()["id"]
+
+    # Override task-derived assets to ensure StoryAgent receives a string draft_idea.
+    additional_inputs = {
+        "assets": {
+            "draft_idea": "A retired watchmaker discovers he can rewind one minute of time, "
+            "but only three times before midnight."
+        }
+    }
+
+    execute_resp = client.post(
+        "/api/assistant/execute",
+        json={
+            "agent_id": "StoryAgent",
+            "task_id": task_id,
+            "additional_inputs": additional_inputs,
+        },
+    )
+    assert execute_resp.status_code == 200
+    execution_payload = execute_resp.get_json()
+    assert execution_payload["status"] == "COMPLETED"
+    assert isinstance(execution_payload["results"], dict)
+    assert execution_payload["results"].get("content")
+    assert execution_payload["results"]["content"].get("logline")
+
+    execution_id = execution_payload["execution_id"]
+    execution_resp = client.get(f"/api/assistant/executions/{execution_id}")
+    assert execution_resp.status_code == 200
+    assert execution_resp.get_json()["status"] == "COMPLETED"
