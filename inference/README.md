@@ -3,19 +3,84 @@
 Inference 模块提供了完整的语言模型推理、Prompt 处理和多模态支持工具。该模块设计为独立模块，可在需要时被其他模块调用。
 
 > 边界说明（与 `agents/`）：当前 pipeline sub-agent 主执行链
-> （`dynamic-task-stack/src/assistant/service.py` -> `agents/llm_client.py`）
-> 使用的是 `agents` 内的 LLMClient。`inference` 仍作为独立能力库（LiteLLM、
-> 多模态工具、生成器注册）供其他流程或后续整合使用。
+> （`dynamic-task-stack/src/assistant/service.py`）已直接使用 `inference`
+> 中的 LLM 与媒体服务实现。`inference` 是统一基础能力库（LiteLLM、
+> OpenAI Chat 包装、多模态工具、生成器注册、媒体服务实现）。
+
+## 角色边界与拆分提案（对齐 `.cursorrules`）
+
+以下提案用于回答一个架构问题：是否可以把 `dynamic-task-stack/src/assistant/service.py`
+中部分 sub-agent service 能力下沉到 `inference/`。结论是：可以，但只迁移“纯推理执行层”
+能力，保持 `inference` 为可复用基础库，不承载业务编排状态。
+
+### `inference/` 应具备的能力（建议）
+
+- **模型调用与策略层**：统一 provider 适配、重试/超时、流式、JSON 约束、token/usage 观测。
+- **输入预处理层**：prompt 组装、消息压缩、上下文裁剪、多模态消息构造。
+- **执行运行时层（可新增）**：提供 descriptor 执行器等“无业务状态”的执行原语。
+- **结果标准化层（可新增）**：把 agent 原始输出统一成结构化结果与可选 media 文件集合。
+- **生成器扩展层**：图像/视频生成器注册、调用和能力发现。
+
+### `inference/` 不应承担的能力（保持在 Assistant）
+
+- **Task/Layer/Execution 业务状态**：任务读取、执行记录状态机、重试预算决策。
+- **Workspace 持久化**：文件/记忆/日志写入与检索。
+- **HTTP 与路由语义**：请求校验、错误码、接口响应结构。
+- **Agent 业务编排**：按任务上下文拼装 assets、跨执行历史聚合。
+
+### 从 `AssistantService` 可下沉到 `inference` 的候选点
+
+可迁移（纯函数/无后端状态依赖）：
+
+- `AssistantService._run_async`：异步协程运行器。
+- `AssistantService._new_pipeline_config`：推理配置标准化（建议升级为显式 schema）。
+- `AssistantService._collect_materialized_files`：media 结果收集与归一化。
+- `AssistantService._execute_pipeline_descriptor`：descriptor + llm + materializer 的通用执行流程。
+
+保留在 `AssistantService`（与后端状态耦合）：
+
+- `package_data()` / `build_execution_inputs()`：依赖 task storage + workspace retrieval。
+- `execute_agent()`：execution record 状态机（PENDING/IN_PROGRESS/COMPLETED/FAILED）。
+- `process_results()`：workspace 持久化和 API 返回拼装。
+
+### 推荐的目录演进（示意）
+
+```text
+inference/
+  orchestration/
+    descriptor_executor.py      # 运行 descriptor agent 的纯执行器
+    config_adapter.py           # 统一推理配置对象
+    materialized_assets.py      # media asset -> normalized files
+```
+
+### 迁移策略（低风险）
+
+1. **Phase 0 - 文档与契约**：先固定输入输出契约（不改行为）。
+2. **Phase 1 - 提取纯执行代码**：从 `assistant/service.py` 提取无状态函数到 `inference/orchestration/`。
+3. **Phase 2 - 反向注入**：`AssistantService` 调用 `inference` 执行器，保留原 API 与状态机。
+4. **Phase 3 - 测试对齐**：保留 dummy e2e + live e2e，同时补纯单测覆盖执行器边界。
+
+### 验收标准
+
+- 对 `POST /api/assistant/execute` 的请求/响应结构保持兼容。
+- `director_agent/api_client.py` 无需改动即可跑通。
+- 现有 `tests/assistant/test_assistant_http_e2e.py` 两类用例均通过。
+- workspace 行为（文件/memory/log）无语义变化。
 
 ## 功能特性
 
 - **通用模型调用接口**: 使用 LiteLLM 包装，提供统一的 OpenAI 兼容接口调用所有支持的模型
+- **OpenAI 兼容请求格式**: `chat_json/chat_text` 统一使用 `chat.completions` 兼容参数（如 `max_tokens`）
+- **LLM 客户端分层抽象**: `runtime/base_client.py` 提供公共基类与统一导出，具体实现集中在 `runtime/clients/`
+- **GPT-5 专用接口扩展**: `GPT5ChatClient` 提供 `max_completion_tokens`/`reasoning_effort` 风格请求参数
 - **自研模型接口**: 预留自定义模型接口，支持通过 LiteLLM 对接 Ollama 等本地模型
 - **多模态支持**: 提供图像 Base64 编码/解码及相关工具
 - **Prompt 处理工具**: Message 压缩、历史持久化等功能
 - **Prompt 模板系统**: Prompt 组合与模板管理
-- **图像生成模块**: 可扩展的图像生成器注册系统，支持文本到图像、图像到图像
-- **视频生成模块**: 可扩展的视频生成器注册系统，支持文本/图像/视频到视频
+- **图像生成模块**: 可扩展图像生成器注册系统，支持文本到图像、图像到图像
+- **视频生成模块**: 可扩展视频生成器注册系统，支持文本/图像/视频到视频
+- **音频生成模块**: 可扩展音频生成器注册系统，支持文本到语音与音频后处理
+- **媒体服务模块化实现**: 提供 image/video/audio 独立服务模块，供 agents 复用
 
 ## 目录结构
 
@@ -27,12 +92,16 @@ inference/
 ├── requirements.txt            # 依赖包
 ├── config/                     # 配置模块
 │   ├── __init__.py
+│   ├── config_loader.py        # 配置加载工具（YAML/JSON + 环境变量替换）
 │   ├── model_config.py         # 模型配置和注册表
 │   └── inference_config.yaml.example  # 配置文件示例
-├── core/                       # 核心推理模块
+├── runtime/                    # 运行时推理模块
 │   ├── __init__.py
-│   ├── llm_client.py           # LiteLLM 通用接口
-│   └── custom_model.py         # 自研模型接口
+│   ├── base_client.py          # 公共基类 + 统一导出入口
+│   └── clients/                # 具体实现
+│       ├── default_client.py   # 默认实现（LiteLLM completion + OpenAI chat）
+│       ├── gpt5_client.py      # GPT-5 专用 chat 实现
+│       └── custom_model.py     # 自研模型接口（Ollama 等）
 ├── multimodal/                 # 多模态支持
 │   ├── __init__.py
 │   ├── image_utils.py          # 图像工具（Base64 编码解码）
@@ -45,16 +114,25 @@ inference/
 ├── generation/                 # 生成模块
 │   ├── __init__.py
 │   ├── base_generator.py        # 生成器基类
-│   ├── image_generator_registry.py  # 图像生成器注册表
-│   ├── video_generator_registry.py  # 视频生成器注册表
-│   ├── image_generators/        # 图像生成器目录
-│   │   └── example_generator/   # 示例图像生成器
-│   ├── video_generators/        # 视频生成器目录
-│   │   └── example_generator/   # 示例视频生成器
+│   ├── base_registry.py         # 注册表基类（共享发现/加载逻辑）
+│   ├── image_generators/             # 图像生成域
+│   │   ├── registry.py               # 图像生成器注册表
+│   │   ├── service.py                # 图像服务（ImageService/MockImageService）
+│   │   └── generators/
+│   │       └── openrouter_image_generator/  # 具体实现（OpenRouter 图像后端）
+│   ├── video_generators/             # 视频生成域
+│   │   ├── registry.py               # 视频生成器注册表
+│   │   ├── service.py                # 视频服务（VideoService/MockVideoService）
+│   │   └── generators/
+│   │       └── mock_video_generator/       # 具体实现（Mock 视频后端）
+│   ├── audio_generators/             # 音频生成域
+│   │   ├── registry.py               # 音频生成器注册表
+│   │   ├── service.py                # 音频服务（AudioService/MockAudioService）
+│   │   └── generators/
+│   │       └── openai_tts_generator/       # 具体实现（OpenAI TTS 后端）
+│   ├── example_generators/           # 唯一示例模板目录（不参与自动发现）
 │   └── README.md                # 生成模块文档
-└── utils/                      # 工具模块
-    ├── __init__.py
-    └── config_loader.py        # 配置加载工具
+# 注：utils 目录已移除，ConfigLoader 位于 config/config_loader.py
 ```
 
 ## 安装
@@ -655,15 +733,12 @@ print(f"Available generators: {generators}")
 
 # 生成图像
 result = registry.generate(
-    generator_id="example_image_generator",
-    prompt="A beautiful sunset over the ocean",
-    width=1024,
-    height=1024,
-    style="realistic"
+    generator_id="openrouter_image_generator",
+    prompt="A beautiful sunset over the ocean"
 )
 
 print(f"Generated {len(result['images'])} image(s)")
-print(f"Saved to: {result['image_paths']}")
+print(f"Metadata: {result['metadata']}")
 ```
 
 ### 示例 6: 视频生成
@@ -675,17 +750,17 @@ registry = get_video_generator_registry()
 
 # 文本到视频
 result = registry.generate(
-    generator_id="example_video_generator",
+    generator_id="mock_video_generator",
     prompt="A cat walking on the beach",
     duration=5,
     fps=24
 )
 
-print(f"Generated video: {result['video_path']}")
+print(f"Generated bytes: {len(result['video'])}")
 
 # 图像到视频
 result = registry.generate(
-    generator_id="example_video_generator",
+    generator_id="mock_video_generator",
     prompt="Animate this image",
     images=["path/to/image.jpg"],
     duration=3
@@ -796,7 +871,19 @@ result = registry.generate(
 - `register_generator()`: 手动注册生成器
 - `reload()`: 重新加载所有生成器
 
-### BaseImageGenerator / BaseVideoGenerator
+### AudioGeneratorRegistry
+
+音频生成器注册表。
+
+**方法**:
+- `list_generators()`: 列出所有注册的生成器 ID
+- `get_generator()`: 获取生成器实例
+- `generate()`: 使用指定生成器生成音频（支持 text/prompt/audio_clips 等输入）
+- `get_all_generators_info()`: 获取所有生成器信息
+- `register_generator()`: 手动注册生成器
+- `reload()`: 重新加载所有生成器
+
+### BaseImageGenerator / BaseVideoGenerator / BaseAudioGenerator
 
 生成器基类，所有自定义生成器必须继承这些类。
 

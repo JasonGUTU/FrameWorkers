@@ -12,7 +12,7 @@ from .workspace import Workspace
 from ..task_stack.storage import storage as task_storage  # Read-only access to task storage
 from agents import get_agent_registry
 from agents.base_agent import MaterializeContext
-from agents.llm_client import LLMClient as PipelineLLMClient
+from inference.runtime.base_client import LLMClient as PipelineLLMClient
 from .retrieval import WorkspaceRetriever
 
 
@@ -130,6 +130,11 @@ class AssistantService:
             }
         return files
 
+    @staticmethod
+    def _should_keep_materialize_temp_dir() -> bool:
+        raw = os.getenv("FW_KEEP_ASSISTANT_TEMP", "").strip().lower()
+        return raw in {"1", "true", "yes", "on"}
+
     def _execute_pipeline_descriptor(self, descriptor: Any, inputs: Dict[str, Any]) -> Dict[str, Any]:
         project_id, draft_id, assets, config = self._map_pipeline_inputs(inputs)
 
@@ -139,8 +144,10 @@ class AssistantService:
 
         materialize_ctx = None
         temp_dir: Optional[str] = None
+        keep_temp_dir = False
         if getattr(agent, "materializer", None) is not None:
             temp_dir = tempfile.mkdtemp(prefix="fw_media_")
+            keep_temp_dir = self._should_keep_materialize_temp_dir()
 
             def _persist(media_asset):
                 path = os.path.join(temp_dir, f"{media_asset.sys_id}.{media_asset.extension}")
@@ -174,9 +181,11 @@ class AssistantService:
 
             if media_assets:
                 output["_media_files"] = self._collect_materialized_files(media_assets)
+            if temp_dir and keep_temp_dir:
+                output["_materialize_temp_dir"] = temp_dir
             return output
         finally:
-            if temp_dir:
+            if temp_dir and not keep_temp_dir:
                 shutil.rmtree(temp_dir, ignore_errors=True)
 
     def _get_task_or_raise(self, task_id: str):

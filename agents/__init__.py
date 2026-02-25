@@ -13,7 +13,7 @@ from .base_agent import MaterializeContext
 from .base_agent import ExecutionResult as LLMExecutionResult
 from .base_evaluator import BaseEvaluator as LLMBaseEvaluator
 from .base_evaluator import check_uri
-from .llm_client import LLMClient
+from inference.runtime.base_client import LLMClient
 from .descriptor import SubAgentDescriptor, BaseMaterializer, MediaAsset
 from .common_schema import Meta, ImageAsset, QualityScore, AssetRef, DurationEstimate
 

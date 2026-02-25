@@ -332,3 +332,89 @@ class BaseVideoGenerator(ABC):
             "created_at": self.metadata.created_at.isoformat(),
             "updated_at": self.metadata.updated_at.isoformat(),
         }
+
+
+class BaseAudioGenerator(ABC):
+    """
+    Abstract base class for all audio generators.
+
+    Similar to BaseImageGenerator/BaseVideoGenerator, but for audio generation.
+    Typical inputs include text/script/scene metadata; outputs are usually
+    encoded audio payloads and/or file paths.
+    """
+
+    def __init__(self):
+        self.metadata = self.get_metadata()
+
+    @abstractmethod
+    def get_metadata(self) -> GeneratorMetadata:
+        """Return generator metadata."""
+        pass
+
+    @abstractmethod
+    def generate(self, **kwargs) -> Dict[str, Any]:
+        """Generate audio data based on validated inputs."""
+        pass
+
+    def validate_inputs(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
+        """Validate and normalize inputs against metadata.input_schema."""
+        schema = self.metadata.input_schema
+        if not schema:
+            return inputs
+
+        validated: Dict[str, Any] = {}
+        for field_name, field_spec in schema.items():
+            if not isinstance(field_spec, dict):
+                continue
+
+            field_type = field_spec.get("type", "string")
+            required = field_spec.get("required", False)
+            default = field_spec.get("default")
+
+            if field_name in inputs:
+                value = inputs[field_name]
+                if not self._validate_type(value, field_type):
+                    raise ValueError(
+                        f"Field '{field_name}' must be of type {field_type}, got {type(value).__name__}"
+                    )
+                validated[field_name] = value
+            elif required:
+                raise ValueError(f"Required field '{field_name}' is missing")
+            elif default is not None:
+                validated[field_name] = default
+
+        return validated
+
+    def _validate_type(self, value: Any, expected_type: str) -> bool:
+        """Validate value type."""
+        type_mapping = {
+            "string": str,
+            "integer": int,
+            "float": (int, float),
+            "boolean": bool,
+            "array": list,
+            "object": dict,
+        }
+        if expected_type in type_mapping:
+            return isinstance(value, type_mapping[expected_type])
+        return True
+
+    def get_input_schema(self) -> Dict[str, Any]:
+        return self.metadata.input_schema
+
+    def get_output_schema(self) -> Dict[str, Any]:
+        return self.metadata.output_schema
+
+    def get_info(self) -> Dict[str, Any]:
+        return {
+            "id": self.metadata.id,
+            "name": self.metadata.name,
+            "description": self.metadata.description,
+            "version": self.metadata.version,
+            "author": self.metadata.author,
+            "capabilities": self.metadata.capabilities,
+            "input_schema": self.metadata.input_schema,
+            "output_schema": self.metadata.output_schema,
+            "created_at": self.metadata.created_at.isoformat(),
+            "updated_at": self.metadata.updated_at.isoformat(),
+        }

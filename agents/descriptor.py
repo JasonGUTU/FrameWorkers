@@ -31,7 +31,7 @@ from pydantic import BaseModel
 if TYPE_CHECKING:
     from .base_agent import BaseAgent
     from .base_evaluator import BaseEvaluator
-    from .llm_client import LLMClient
+    from inference.runtime.base_client import LLMClient
 
 logger = logging.getLogger(__name__)
 

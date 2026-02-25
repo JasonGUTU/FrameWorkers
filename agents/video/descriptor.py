@@ -11,7 +11,7 @@ from .agent import VideoAgent
 from .schema import VideoAgentInput
 from .evaluator import VideoEvaluator
 from .materializer import VideoMaterializer
-from .service import MockVideoService
+from inference.generation.video_generators.service import MockVideoService
 
 
 def build_input(

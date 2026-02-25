@@ -228,28 +228,54 @@ def test_assistant_e2e_http_flow_covers_core_endpoints(assistant_http_client):
         "to run."
     ),
 )
-def test_assistant_e2e_http_flow_with_real_story_agent(assistant_http_client_real_agents):
+@pytest.mark.parametrize(
+    "agent_id,task_goal,additional_inputs",
+    [
+        (
+            "StoryAgent",
+            "Generate a concise story blueprint for a short film.",
+            {
+                "assets": {
+                    "draft_idea": (
+                        "A retired watchmaker discovers he can rewind one minute of time, "
+                        "but only three times before midnight."
+                    )
+                }
+            },
+        ),
+        (
+            "ExamplePipelineAgent",
+            "Summarize a source text into a concise structured output.",
+            {
+                "assets": {
+                    "source_text": (
+                        "A small team builds a lightweight task orchestration backend. "
+                        "They prioritize clear API contracts, concise docs, and reliable tests."
+                    )
+                }
+            },
+        ),
+    ],
+)
+def test_assistant_e2e_http_flow_with_real_agents(
+    assistant_http_client_real_agents,
+    agent_id,
+    task_goal,
+    additional_inputs,
+):
     client = assistant_http_client_real_agents
 
     create_task_resp = client.post(
         "/api/tasks/create",
-        json={"description": {"goal": "Generate a concise story blueprint for a short film."}},
+        json={"description": {"goal": task_goal}},
     )
     assert create_task_resp.status_code == 201
     task_id = create_task_resp.get_json()["id"]
 
-    # Override task-derived assets to ensure StoryAgent receives a string draft_idea.
-    additional_inputs = {
-        "assets": {
-            "draft_idea": "A retired watchmaker discovers he can rewind one minute of time, "
-            "but only three times before midnight."
-        }
-    }
-
     execute_resp = client.post(
         "/api/assistant/execute",
         json={
-            "agent_id": "StoryAgent",
+            "agent_id": agent_id,
             "task_id": task_id,
             "additional_inputs": additional_inputs,
         },
@@ -259,7 +285,14 @@ def test_assistant_e2e_http_flow_with_real_story_agent(assistant_http_client_rea
     assert execution_payload["status"] == "COMPLETED"
     assert isinstance(execution_payload["results"], dict)
     assert execution_payload["results"].get("content")
-    assert execution_payload["results"]["content"].get("logline")
+
+    content = execution_payload["results"]["content"]
+    if agent_id == "StoryAgent":
+        assert content.get("logline")
+    elif agent_id == "ExamplePipelineAgent":
+        assert content.get("summary")
+    else:
+        raise AssertionError(f"Unexpected live test agent: {agent_id}")
 
     execution_id = execution_payload["execution_id"]
     execution_resp = client.get(f"/api/assistant/executions/{execution_id}")

@@ -31,7 +31,7 @@ from typing import Any, Generic, TypeVar
 
 from pydantic import BaseModel
 
-from .llm_client import LLMClient
+from inference.runtime.base_client import LLMClient
 
 logger = logging.getLogger(__name__)
 

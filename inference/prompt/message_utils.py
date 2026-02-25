@@ -5,7 +5,7 @@ Provides utilities for compressing and manipulating chat messages.
 """
 
 from typing import List, Dict, Any, Optional, Union
-from ..core.llm_client import Message
+from ..runtime.base_client import Message
 
 
 class MessageUtils:

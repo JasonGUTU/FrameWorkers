@@ -31,8 +31,10 @@ Agent 是 Frameworks Backend 中的核心功能单元，每个 Agent 负责实�
 - ✅ **统一管理**：通过 Assistant 系统统一管理和执行
 - ✅ **独立部署**：Agent 位于项目根目录，易于访问和修改
 
-当前 pipeline 运行链路使用 `agents/llm_client.py`。
-`inference/` 提供独立的 LiteLLM/多模态/生成器能力，不直接替代现有 agent 执行链。
+当前 pipeline 执行链路直接使用 `inference` 的统一实现：
+
+- LLM 调用：`inference/runtime/base_client.py`
+- 媒体服务（image/video/audio）：`inference/generation/image_generators/service.py`、`inference/generation/video_generators/service.py`、`inference/generation/audio_generators/service.py`
 
 ---
 
@@ -46,7 +48,6 @@ agents/
 │  # ── 核心框架 ─────────────────────────────────────
 ├── base_agent.py                # Async LLM BaseAgent（pipeline agents 基类）
 ├── base_evaluator.py            # BaseEvaluator（L1+L2+L3 质量评估）
-├── llm_client.py                # LLMClient（OpenAI wrapper）
 ├── descriptor.py                # SubAgentDescriptor / BaseMaterializer / MediaAsset
 ├── common_schema.py             # 共享 Pydantic 模型（Meta, ImageAsset 等）
 ├── agent_registry.py            # AgentRegistry（自动发现 + 管线注册）

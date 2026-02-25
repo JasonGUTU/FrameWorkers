@@ -1,10 +1,31 @@
 # Generation Module
 
-图像和视频生成模块，提供可扩展的生成器注册机制。
+图像、视频、音频生成模块，提供可扩展的生成器注册机制。
 
 ## 概述
 
-Generation 模块提供了统一的接口用于图像和视频生成，采用插件式的注册机制，类似于 Agent 系统。每个生成器都可以定义自己的输入参数（通过 `input_schema`），系统会自动验证和提取这些参数。
+Generation 模块提供了统一的接口用于图像、视频和音频生成，采用插件式的注册机制，类似于 Agent 系统。每个生成器都可以定义自己的输入参数（通过 `input_schema`），系统会自动验证和提取这些参数。
+
+另外，generation 提供了可复用的媒体服务实现（按模态分目录）：
+
+- `generation/image_generators/service.py`: `ImageService` / `MockImageService`
+- `generation/video_generators/service.py`: `VideoService` / `MockVideoService`
+- `generation/audio_generators/service.py`: `AudioService` / `MockAudioService`
+
+对应注册表：
+
+- `generation/image_generators/registry.py`
+- `generation/video_generators/registry.py`
+- `generation/audio_generators/registry.py`
+
+示例聚合目录（便于统一查看示例）：
+
+- `generation/example_generators/`
+
+这三者共享 `generation/base_registry.py` 的通用发现与注册逻辑，
+仅保留各模态自己的输入参数签名与 `generate()` 包装。
+
+这些服务用于承载 provider 耦合的执行逻辑，便于 `agents/` 直接复用。
 
 ## 核心概念
 
@@ -12,6 +33,13 @@ Generation 模块提供了统一的接口用于图像和视频生成，采用插
 
 - **BaseImageGenerator**: 所有图像生成器的基类
 - **BaseVideoGenerator**: 所有视频生成器的基类
+- **BaseAudioGenerator**: 所有音频生成器的基类
+
+针对 service 驱动实现，还提供了模态内复用基类（位于各自 `generators/` 目录）：
+
+- `BaseServiceImageGenerator`
+- `BaseServiceVideoGenerator`
+- `BaseServiceAudioGenerator`
 
 每个生成器必须：
 1. 继承对应的基类
@@ -20,9 +48,10 @@ Generation 模块提供了统一的接口用于图像和视频生成，采用插
 
 ### 2. 注册机制
 
-生成器通过自动发现机制注册：
-- 图像生成器：放置在 `generation/image_generators/` 目录下
-- 视频生成器：放置在 `generation/video_generators/` 目录下
+生成器通过自动发现机制注册（扫描各模态目录下的 `generators/` 子目录）：
+- 图像生成器：`generation/image_generators/generators/`
+- 视频生成器：`generation/video_generators/generators/`
+- 音频生成器：`generation/audio_generators/generators/`
 
 每个生成器应该是一个独立的目录，包含 `generator.py` 或 `__init__.py` 文件。
 
@@ -57,17 +86,26 @@ input_schema={
 ### 1. 列出可用的生成器
 
 ```python
-from inference import get_image_generator_registry, get_video_generator_registry
+from inference import (
+    get_image_generator_registry,
+    get_video_generator_registry,
+    get_audio_generator_registry,
+)
 
 # 图像生成器
 image_registry = get_image_generator_registry()
 generators = image_registry.list_generators()
-print(generators)  # ['example_image_generator', ...]
+print(generators)  # ['openrouter_image_generator', ...]
 
 # 视频生成器
 video_registry = get_video_generator_registry()
 generators = video_registry.list_generators()
-print(generators)  # ['example_video_generator', ...]
+print(generators)  # ['mock_video_generator', ...]
+
+# 音频生成器
+audio_registry = get_audio_generator_registry()
+generators = audio_registry.list_generators()
+print(generators)  # ['openai_tts_generator', ...]
 ```
 
 ### 2. 生成图像
@@ -79,24 +117,21 @@ registry = get_image_generator_registry()
 
 # 使用文本提示生成图像
 result = registry.generate(
-    generator_id="example_image_generator",
-    prompt="A beautiful sunset",
-    width=1024,
-    height=1024
+    generator_id="openrouter_image_generator",
+    prompt="A beautiful sunset"
 )
 
 print(result["images"])  # Base64 编码的图像列表
-print(result["image_paths"])  # 保存的文件路径列表
+print(result["metadata"])  # 生成模式、字节数等元信息
 ```
 
 ### 3. 使用输入图像（图像到图像）
 
 ```python
 result = registry.generate(
-    generator_id="example_image_generator",
+    generator_id="openrouter_image_generator",
     prompt="Transform this image",
-    images=["path/to/input1.jpg", "path/to/input2.jpg"],
-    style="artistic"
+    images=["path/to/input1.jpg", "path/to/input2.jpg"]
 )
 ```
 
@@ -109,7 +144,7 @@ registry = get_video_generator_registry()
 
 # 文本到视频
 result = registry.generate(
-    generator_id="example_video_generator",
+    generator_id="mock_video_generator",
     prompt="A cat walking",
     duration=5,
     fps=24
@@ -117,7 +152,7 @@ result = registry.generate(
 
 # 图像到视频
 result = registry.generate(
-    generator_id="example_video_generator",
+    generator_id="mock_video_generator",
     prompt="Animate this image",
     images=["path/to/image.jpg"],
     duration=3
@@ -125,17 +160,31 @@ result = registry.generate(
 
 # 视频到视频
 result = registry.generate(
-    generator_id="example_video_generator",
+    generator_id="mock_video_generator",
     prompt="Apply artistic style",
     videos=["path/to/video.mp4"],
     duration=5
 )
 ```
 
-### 5. 获取生成器信息
+### 5. 生成音频
 
 ```python
-generator = registry.get_generator("example_image_generator")
+from inference import get_audio_generator_registry
+
+registry = get_audio_generator_registry()
+
+result = registry.generate(
+    generator_id="openai_tts_generator",
+    text="Hello from FrameWorkers",
+    response_format="wav",
+)
+```
+
+### 6. 获取生成器信息
+
+```python
+generator = registry.get_generator("openrouter_image_generator")
 
 # 获取输入模式
 input_schema = generator.get_input_schema()
@@ -156,18 +205,19 @@ print(info)
 
 ```
 generation/
-└── image_generators/  # 或 video_generators/
-    └── my_generator/
-        ├── __init__.py
-        └── generator.py
+└── image_generators/  # 或 video_generators/ / audio_generators/
+    └── generators/
+        └── my_generator/
+            ├── __init__.py
+            └── generator.py
 ```
 
 ### 步骤 2: 实现生成器类
 
-参考 `example_generator/generator.py`，创建你的生成器：
+参考 `generation/example_generators/example_generator.py`，创建你的生成器：
 
 ```python
-from ...base_generator import BaseImageGenerator, GeneratorMetadata
+from ....base_generator import BaseImageGenerator, GeneratorMetadata
 
 class MyImageGenerator(BaseImageGenerator):
     def get_metadata(self) -> GeneratorMetadata:
@@ -264,7 +314,7 @@ output_schema={
 
 ## 示例生成器
 
-模块包含示例生成器（`example_generator`），展示了如何：
+模块包含统一示例生成器（`example_generators/example_generator.py`），展示了如何：
 - 定义输入/输出模式
 - 实现生成逻辑
 - 处理不同类型的输入

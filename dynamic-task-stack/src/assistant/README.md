@@ -27,6 +27,9 @@ Assistant 模块是“执行入口 + 执行编排器”，负责把 Task Stack �
 - 下游：`agents/`
   - 通过 `AgentRegistry` 发现 descriptor
   - 按 descriptor 构造输入并执行 pipeline agent
+- 推理能力来源：`inference/`
+  - LLM 客户端来自 `inference/runtime/base_client.py`
+  - media 服务（image/video/audio）由 `inference/generation/image_generators/service.py`、`inference/generation/video_generators/service.py`、`inference/generation/audio_generators/service.py` 提供
 - 数据落盘：`workspace/`
   - 保存执行产生的文件
   - 记录运行日志和全局记忆
@@ -95,6 +98,12 @@ Assistant 模块是“执行入口 + 执行编排器”，负责把 Task Stack �
 }
 ```
 
+调试说明（materializer 路径）：
+
+- 默认会清理 materializer 临时目录。
+- 设置 `FW_KEEP_ASSISTANT_TEMP=1` 后，临时目录不会被清理，且执行结果会包含
+  `results._materialize_temp_dir`，可用于手动检查中间产物。
+
 ### 4.4 Workspace 透传接口（由 assistant 暴露）
 
 - `GET /api/assistant/workspace`
@@ -125,3 +134,12 @@ Assistant 模块是“执行入口 + 执行编排器”，负责把 Task Stack �
 - 找不到 agent：检查 `AgentRegistry` 是否加载到 descriptor
 - 执行成功但结果为空：检查 `process_results` 的归一化规则和 workspace 写入路径
 - Director 侧字段不匹配：优先核对 `director_agent/api_client.py` 与此处请求体约定
+
+## 7. 与 `inference/` 的职责边界（迁移约束）
+
+为支持后续把部分 sub-agent 执行能力下沉到 `inference/`，Assistant 侧约束如下：
+
+- **Assistant 保留**：任务读取、workspace 检索/落盘、execution 状态机、HTTP 语义。
+- **Assistant 可下沉**：纯执行原语（如 descriptor 执行、media 文件归一化、推理配置适配）。
+- **边界原则**：`inference` 不感知 task/layer/execution 业务模型，不直接读写 workspace。
+- **兼容要求**：`/api/assistant/execute` 请求与响应结构保持不变，确保 Director/前端无感迁移。

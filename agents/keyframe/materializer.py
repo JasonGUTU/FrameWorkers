@@ -21,7 +21,7 @@ import logging
 from typing import Any
 
 from ..descriptor import BaseMaterializer, MediaAsset
-from .service import ImageService
+from inference.generation.image_generators.service import ImageService
 
 logger = logging.getLogger(__name__)
 

@@ -9,7 +9,7 @@ from pathlib import Path
 import json
 import pickle
 from datetime import datetime
-from ..core.llm_client import Message
+from ..runtime.base_client import Message
 
 
 class MessageHistory:

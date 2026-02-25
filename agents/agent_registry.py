@@ -111,7 +111,7 @@ def get_agent_registry() -> AgentRegistry:
         _registry = AgentRegistry()
         try:
             from . import AGENT_REGISTRY
-            from .llm_client import LLMClient
+            from inference.runtime.base_client import LLMClient
             _registry.register_pipeline_agents(AGENT_REGISTRY, llm_client=LLMClient())
         except ImportError:
             logger.debug("AGENT_REGISTRY not available; pipeline agents skipped")

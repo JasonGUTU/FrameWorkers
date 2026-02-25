@@ -11,7 +11,7 @@ from .agent import AudioAgent
 from .schema import AudioAgentInput
 from .evaluator import AudioEvaluator
 from .materializer import AudioMaterializer
-from .service import AudioService
+from inference.generation.audio_generators.service import AudioService
 
 
 def build_input(

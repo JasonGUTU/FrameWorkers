@@ -11,7 +11,7 @@ from .agent import KeyFrameAgent
 from .schema import KeyFrameAgentInput
 from .evaluator import KeyframeEvaluator
 from .materializer import KeyframeMaterializer
-from .service import ImageService
+from inference.generation.image_generators.service import ImageService
 
 
 def build_input(

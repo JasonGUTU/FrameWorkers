@@ -32,7 +32,7 @@ from typing import TYPE_CHECKING, Any, Callable, Generic, TypeVar, get_args
 
 from pydantic import BaseModel
 
-from .llm_client import LLMClient
+from inference.runtime.base_client import LLMClient
 
 if TYPE_CHECKING:
     from .base_evaluator import BaseEvaluator

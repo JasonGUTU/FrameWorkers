@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import os
+import shutil
 from datetime import datetime, timedelta
 from types import SimpleNamespace
 
@@ -147,3 +149,71 @@ def test_service_executes_pipeline_descriptor_without_adapter(tmp_path, monkeypa
 
     assert result["status"] == "COMPLETED"
     assert result["results"]["summary"] == "pipeline ok"
+
+
+def test_service_can_keep_materializer_temp_dir(tmp_path, monkeypatch):
+    class _DummyPipelineOutput:
+        def model_dump(self):
+            return {"summary": "pipeline ok"}
+
+    class _DummyMediaAsset:
+        def __init__(self):
+            self.sys_id = "tmp_asset"
+            self.extension = "png"
+            self.data = b"png-bytes"
+            self.uri_holder = {}
+
+    class _DummyPipelineResult:
+        def __init__(self, media_asset):
+            self.output = _DummyPipelineOutput()
+            self.asset_dict = None
+            self.media_assets = [media_asset]
+
+    class _DummyPipelineAgent:
+        materializer = object()
+
+        async def run(self, _typed_input, upstream=None, materialize_ctx=None):
+            media_asset = _DummyMediaAsset()
+            uri = materialize_ctx.persist_binary(media_asset)
+            media_asset.uri_holder = {"uri": uri}
+            return _DummyPipelineResult(media_asset)
+
+    class _DummyDescriptor:
+        asset_key = "dummy_asset"
+        catalog_entry = "Dummy pipeline descriptor"
+
+        def build_equipped_agent(self, _llm):
+            return _DummyPipelineAgent()
+
+        def build_input(self, project_id, draft_id, assets, config):
+            return {
+                "project_id": project_id,
+                "draft_id": draft_id,
+                "assets": assets,
+                "language": config.language,
+            }
+
+        def build_upstream(self, _assets):
+            return {}
+
+    class _DummyRegistry:
+        def get_descriptor(self, _agent_id: str):
+            return _DummyDescriptor()
+
+    storage = AssistantStorage(runtime_base_path=tmp_path / "Runtime")
+    monkeypatch.setenv("FW_KEEP_ASSISTANT_TEMP", "1")
+    monkeypatch.setattr(service_module, "get_agent_registry", lambda: _DummyRegistry())
+    monkeypatch.setattr(
+        service_module.task_storage,
+        "get_task",
+        lambda _task_id: SimpleNamespace(description="draft", progress={}),
+    )
+    svc = service_module.AssistantService(storage)
+
+    result = svc.execute_agent_for_task("PipelineWithMaterializer", "task_temp")
+    temp_dir = result["results"].get("_materialize_temp_dir")
+    assert temp_dir
+    assert os.path.isdir(temp_dir)
+
+    # Explicit cleanup in test to avoid leaking temp files.
+    shutil.rmtree(temp_dir, ignore_errors=True)

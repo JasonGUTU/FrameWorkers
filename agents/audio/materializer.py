@@ -11,7 +11,7 @@ import logging
 from typing import Any
 
 from ..descriptor import BaseMaterializer, MediaAsset
-from .service import AudioService
+from inference.generation.audio_generators.service import AudioService
 
 logger = logging.getLogger(__name__)
 

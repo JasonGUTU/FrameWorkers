@@ -100,20 +100,20 @@ class TestAgentRegistryDescriptorModel:
 
 class TestLLMClientImport:
     def test_llm_client_importable(self):
-        from agents.llm_client import LLMClient
+        from inference.runtime.base_client import LLMClient
 
         client = LLMClient(model="test-model", api_key="fake")
         assert client.model == "test-model"
-        assert client.max_tokens == 65536
+        assert client.max_tokens is None
 
     def test_chat_json_method_exists(self):
-        from agents.llm_client import LLMClient
+        from inference.runtime.base_client import LLMClient
         import inspect
 
         assert inspect.iscoroutinefunction(LLMClient.chat_json)
 
     def test_chat_text_method_exists(self):
-        from agents.llm_client import LLMClient
+        from inference.runtime.base_client import LLMClient
         import inspect
 
         assert inspect.iscoroutinefunction(LLMClient.chat_text)
