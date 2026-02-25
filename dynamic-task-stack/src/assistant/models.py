@@ -10,32 +10,12 @@ from datetime import datetime
 from typing import Optional, Dict, Any, List
 
 
-class AgentStatus(Enum):
-    """Agent execution status"""
-    IDLE = "IDLE"
-    EXECUTING = "EXECUTING"
-    COMPLETED = "COMPLETED"
-    FAILED = "FAILED"
-
-
 class ExecutionStatus(Enum):
     """Execution status for agent execution"""
     PENDING = "PENDING"
     IN_PROGRESS = "IN_PROGRESS"
     COMPLETED = "COMPLETED"
     FAILED = "FAILED"
-
-
-@dataclass
-class Agent:
-    """Sub-agent that can be executed by assistant"""
-    id: str
-    name: str
-    description: str
-    input_schema: Dict[str, Any]  # Schema defining required inputs
-    capabilities: List[str]  # List of capabilities this agent provides
-    created_at: datetime = field(default_factory=datetime.now)
-    updated_at: datetime = field(default_factory=datetime.now)
 
 
 @dataclass

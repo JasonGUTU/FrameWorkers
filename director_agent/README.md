@@ -82,6 +82,20 @@ python -m director_agent.main
 - `POST /api/assistant/execute` - Execute agent
 - `GET /api/assistant/executions/task/{task_id}` - Get executions for task
 - `GET /api/assistant/sub-agents` - Get available agents
+- `GET /api/assistant/sub-agents/{agent_id}` - Get single agent metadata
+- `GET /api/assistant/agents/{agent_id}/inputs` - Get agent input contract
+
+### Assistant Workspace API
+
+- `GET /api/assistant/workspace` - Workspace overview/summary
+- `GET /api/assistant/workspace/summary` - Workspace counters
+- `GET /api/assistant/workspace/files` - List files with filters
+- `GET /api/assistant/workspace/files/{file_id}` - Get file metadata
+- `GET /api/assistant/workspace/files/search` - Search files
+- `GET /api/assistant/workspace/memory` - Read memory
+- `POST /api/assistant/workspace/memory` - Write memory
+- `GET /api/assistant/workspace/logs` - Query logs
+- `GET /api/assistant/workspace/search` - Cross-source search
 
 ## Development
 
@@ -98,6 +112,12 @@ The reasoning engine (`reasoning.py`) currently contains placeholder implementat
 1. Add new API methods to `api_client.py` if needed
 2. Update `director.py` to use new features
 3. Update `reasoning.py` if reasoning logic changes
+
+Recent enhancements in `api_client.py`:
+- Normalizes `/api/assistant/sub-agents` response into a flat `List[agent]` for reasoning.
+- Adds explicit workspace helper methods so Director can inspect files/memory/logs and write summaries.
+- Adds strict response-shape checks and a `BackendAPIError` for invalid/non-JSON backend responses.
+- Aligns workspace memory usage parsing with backend key `usage_percent`.
 
 ## Notes
 

@@ -58,7 +58,7 @@ FrameWorkers/
 │   │           └── models.py        # 工作空间数据模型
 │   ├── requirements.txt
 │   ├── run.py
-│   ├── test_api.py
+│   ├── (manual API runner moved to `tests/dynamic_task_stack/manual_api_runner.py`)
 │   ├── README.md                    # Backend 详细文档
 │   └── USAGE_EXAMPLES.md            # 使用示例
 ├── interface/                       # 前端界面

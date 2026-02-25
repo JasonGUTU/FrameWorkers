@@ -8,6 +8,7 @@ from .file_manager import FileManager
 from .memory_manager import MemoryManager
 from .log_manager import LogManager
 from .models import FileMetadata, LogEntry
+from ..serializers import file_search_item_to_dict, log_search_item_to_dict
 
 
 class Workspace:
@@ -74,28 +75,6 @@ class Workspace:
             details=details or {},
         )
 
-    @staticmethod
-    def _file_search_item(file_meta: FileMetadata) -> Dict[str, Any]:
-        return {
-            'id': file_meta.id,
-            'filename': file_meta.filename,
-            'description': file_meta.description,
-            'file_type': file_meta.file_type,
-            'created_at': file_meta.created_at.isoformat(),
-            'file_path': file_meta.file_path,
-        }
-
-    @staticmethod
-    def _log_search_item(log: LogEntry) -> Dict[str, Any]:
-        return {
-            'id': log.id,
-            'timestamp': log.timestamp.isoformat(),
-            'operation_type': log.operation_type,
-            'resource_type': log.resource_type,
-            'resource_id': log.resource_id,
-            'details': log.details,
-        }
-    
     # File Management Methods
     
     def store_file(
@@ -296,7 +275,7 @@ class Workspace:
         results = {}
         
         if search_files:
-            results['files'] = [self._file_search_item(f) for f in self.search_files(query, limit=limit)]
+            results['files'] = [file_search_item_to_dict(f) for f in self.search_files(query, limit=limit)]
         
         if search_memory:
             memory_content = self.read_memory()
@@ -311,7 +290,7 @@ class Workspace:
         
         if search_logs:
             results['logs'] = [
-                self._log_search_item(log)
+                log_search_item_to_dict(log)
                 for log in self.log_manager.search_logs(query, limit=limit)
             ]
         

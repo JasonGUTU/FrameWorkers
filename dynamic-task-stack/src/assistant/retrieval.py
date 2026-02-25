@@ -6,6 +6,12 @@ execute agents or persist execution results.
 
 from typing import Dict, Any, List, Optional
 from .workspace import Workspace
+from .serializers import (
+    file_brief_to_dict,
+    file_search_item_to_dict,
+    log_search_item_to_dict,
+    context_log_item_to_dict,
+)
 
 
 class WorkspaceRetriever:
@@ -24,52 +30,6 @@ class WorkspaceRetriever:
             workspace: The global workspace instance
         """
         self.workspace = workspace
-
-    # ------------------------------------------------------------------
-    # Serialization helpers (retrieval boundary only)
-    # ------------------------------------------------------------------
-
-    @staticmethod
-    def _file_brief(file_meta) -> Dict[str, Any]:
-        return {
-            "id": file_meta.id,
-            "filename": file_meta.filename,
-            "description": file_meta.description,
-            "file_type": file_meta.file_type,
-            "file_path": file_meta.file_path,
-        }
-
-    @staticmethod
-    def _file_search_item(file_meta) -> Dict[str, Any]:
-        return {
-            "id": file_meta.id,
-            "filename": file_meta.filename,
-            "description": file_meta.description,
-            "file_type": file_meta.file_type,
-            "file_path": file_meta.file_path,
-            "created_at": file_meta.created_at.isoformat(),
-            "tags": file_meta.tags,
-        }
-
-    @staticmethod
-    def _log_search_item(log) -> Dict[str, Any]:
-        return {
-            "id": log.id,
-            "timestamp": log.timestamp.isoformat(),
-            "operation_type": log.operation_type,
-            "resource_type": log.resource_type,
-            "resource_id": log.resource_id,
-            "details": log.details,
-        }
-
-    @staticmethod
-    def _context_log_item(log) -> Dict[str, Any]:
-        return {
-            "timestamp": log.timestamp.isoformat(),
-            "operation_type": log.operation_type,
-            "resource_type": log.resource_type,
-            "resource_id": log.resource_id,
-        }
 
     @staticmethod
     def _memory_match_context(memory_content: str, pattern: str) -> Optional[str]:
@@ -95,14 +55,14 @@ class WorkspaceRetriever:
             for file_id in context_keys:
                 file_meta = self.workspace.get_file(file_id)
                 if file_meta:
-                    files.append(self._file_brief(file_meta))
+                    files.append(file_brief_to_dict(file_meta))
             return files
 
         # Default path: use recent files by agent + task tag.
         agent_files = self.workspace.list_files(created_by=agent_id, limit=5)
         task_files = self.workspace.list_files(tags=[task_id], limit=5)
         all_files = {f.id: f for f in agent_files + task_files}
-        return [self._file_brief(f) for f in list(all_files.values())[:10]]
+        return [file_brief_to_dict(f) for f in list(all_files.values())[:10]]
     
     def retrieve_files(
         self,
@@ -126,7 +86,13 @@ class WorkspaceRetriever:
             file_type=file_types[0] if file_types else None,
             limit=limit,
         )
-        return [self._file_search_item(f) for f in files]
+        return [
+            {
+                **file_search_item_to_dict(f),
+                "tags": f.tags,
+            }
+            for f in files
+        ]
     
     def retrieve_memory(
         self,
@@ -175,7 +141,8 @@ class WorkspaceRetriever:
         files = self.workspace.list_files(file_type=asset_type, tags=tags)
         return [
             {
-                **self._file_search_item(f),
+                **file_search_item_to_dict(f),
+                "tags": f.tags,
                 "metadata": f.metadata,
             }
             for f in files
@@ -209,7 +176,7 @@ class WorkspaceRetriever:
         
         if 'logs' in search_types:
             logs = self.workspace.log_manager.search_logs(query)
-            results['logs'] = [self._log_search_item(log) for log in logs]
+            results['logs'] = [log_search_item_to_dict(log) for log in logs]
         
         return results
     
@@ -251,6 +218,6 @@ class WorkspaceRetriever:
             task_id=task_id,
             limit=10
         )
-        context["recent_logs"] = [self._context_log_item(log) for log in recent_logs]
+        context["recent_logs"] = [context_log_item_to_dict(log) for log in recent_logs]
         
         return context

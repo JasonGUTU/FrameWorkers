@@ -59,7 +59,7 @@ dynamic-task-stack/
 │       ├── serializers.py           # Assistant 响应序列化工具
 │       ├── service.py               # Assistant 核心业务逻辑
 │       ├── storage.py               # Assistant 数据存储
-│       ├── retrieval.py             # 检索模块（PLACEHOLDER）
+│       ├── retrieval.py             # 检索与上下文组装（仅取数/整形）
 │       └── workspace/               # 工作空间模块
 │           ├── __init__.py
 │           ├── workspace.py         # 工作空间核心
@@ -69,7 +69,7 @@ dynamic-task-stack/
 │           └── models.py            # 工作空间数据模型
 ├── requirements.txt
 ├── run.py
-├── test_api.py
+├── (manual API runner moved to ../tests/dynamic_task_stack/manual_api_runner.py)
 ├── README.md                        # 本文档
 └── USAGE_EXAMPLES.md                # 使用示例
 ```
@@ -79,7 +79,7 @@ dynamic-task-stack/
 1. **代码隔离**：Task Stack 和 Assistant 系统完全分离，互不干扰
 2. **统一管理**：Assistant 统一管理所有 sub-agents
 3. **自动发现**：Agents 自动注册，无需手动配置
-4. **双层兼容**：sync agents 和 async pipeline agents 通过 `PipelineAgentAdapter` 共享同一个 `execute()` 接口
+4. **单一模型**：统一使用 descriptor-driven pipeline agents，由 Assistant 基于 descriptor 直接执行
 5. **易于扩展**：添加新 Agent 只需创建文件夹和实现类
 6. **线程安全**：所有存储操作都是线程安全的
 
@@ -205,11 +205,9 @@ dynamic-task-stack/
 定义了所有 Assistant 相关的数据模型：
 
 - **枚举类型**：
-  - `AgentStatus`: Agent 状态（IDLE, EXECUTING, COMPLETED, FAILED）
   - `ExecutionStatus`: 执行状态（PENDING, IN_PROGRESS, COMPLETED, FAILED）
 
 - **核心数据类**：
-  - `Agent`: Agent 信息
   - `Assistant`: Assistant 实例（全局单例）
   - `AgentExecution`: Agent 执行记录
 
@@ -236,21 +234,23 @@ dynamic-task-stack/
 `AssistantService` 类提供完整的执行流程：
 
 - `query_agent_inputs()`: 查询 agent 所需输入
-- `prepare_environment()`: 准备执行环境
+- `prepare_environment()`: 获取全局共享 workspace
 - `_build_pipeline_assets()`: 从历史执行记录构建 `assets` 字典（`agent_id → asset_key` 映射），实现 pipeline 链式传递
 - `package_data()`: 打包数据（包含 workspace context + pipeline assets，复用检索结果避免重复读取）
 - `execute_agent()`: 执行 agent（复用同一次解析到的 agent 实例）
 - `process_results()`: 处理结果（拆分为日志记录 + 文件入库，支持 `_media_files` 批量媒体资产写入）
-- `build_execution_inputs()` / `run_agent()` / `persist_execution_results()`: 执行边界三段式（组输入 → 执行 → 持久化）
+- `build_execution_inputs()`: 执行前输入组装（统一以 `workspace_context` 作为上下文入口）
 - `execute_agent_for_task()`: 完整的执行流程
 
-`retrieval.py` 仅负责从 workspace 取数与整形，不承担执行或持久化职责。
+`retrieval.py` 仅负责从 workspace 取数与整形，不承担执行或持久化职责；序列化结构与 `serializers.py` 复用，减少重复定义。
+当前 Assistant 设计只关注执行编排本身（选定 agent 的输入查询、上下文检索、执行、结果落库与摘要返回），不承载评估器策略或子 agent 实时控制逻辑。
+其中 pipeline agent 的执行由 `service.py` 基于 `SubAgentDescriptor` 直接驱动（`build_input` + `run`）。
 
 #### 4. routes.py - API 路由
 
 提供完整的 RESTful API：
 
-路由层已薄化：序列化细节抽离到 `serializers.py`，`routes.py` 主要负责参数校验和调用 service。
+路由层已薄化：序列化细节抽离到 `serializers.py`，`routes.py` 主要负责参数校验和调用 service（含通用 JSON/Query 校验 helper）。
 
 **Assistant 管理**：
 - `GET /api/assistant` - 获取全局 assistant（单例，预先定义）
@@ -286,7 +286,7 @@ Agent 核心框架已迁移至项目根目录 `agents/`。`service.py` 和 `rout
 **workspace.py**：
 - `Workspace`: 工作空间核心类
 - 文件、内存、日志的统一管理（facade）
-- 边界清晰化：公共日志写入与搜索项序列化使用私有 helper，manager 仅负责各自领域存取
+- 边界清晰化：公共日志写入在 facade；搜索项序列化复用 `assistant/serializers.py`
 
 **file_manager.py**：
 - 文件管理功能（路径/元数据/过滤边界通过私有 helper 显式化）
@@ -401,33 +401,12 @@ class BatchOperation:
 
 ### Assistant 数据结构
 
-#### AgentStatus（枚举）
-```python
-IDLE = "IDLE"                  # 空闲
-EXECUTING = "EXECUTING"         # 执行中
-COMPLETED = "COMPLETED"        # 已完成
-FAILED = "FAILED"              # 失败
-```
-
 #### ExecutionStatus（枚举）
 ```python
 PENDING = "PENDING"            # 等待中
 IN_PROGRESS = "IN_PROGRESS"    # 进行中
 COMPLETED = "COMPLETED"        # 已完成
 FAILED = "FAILED"              # 失败
-```
-
-#### Agent
-```python
-@dataclass
-class Agent:
-    id: str                     # Agent ID
-    name: str                   # Agent 名称
-    description: str            # Agent 描述
-    input_schema: Dict[str, Any] # 输入模式
-    capabilities: List[str]     # 能力列表
-    created_at: datetime        # 创建时间
-    updated_at: datetime        # 更新时间
 ```
 
 #### Assistant
@@ -547,7 +526,7 @@ pip install -r requirements.txt
 python run.py
 ```
 
-服务将在 `http://localhost:5000` 启动。
+服务将在 `http://localhost:5002` 启动。
 
 ### 3. 健康检查
 
@@ -748,25 +727,7 @@ POST /api/assistant/workspace/memory
 
 ### 创建新的 Agent
 
-#### 方式一：Sync Agent（简单任务）
-
-在 `agents/` 目录下创建子目录，实现 `sync_adapter.BaseAgent`：
-
-```python
-# agents/my_agent/agent.py
-from agents.sync_adapter import BaseAgent, AgentMetadata
-
-class MyAgent(BaseAgent):
-    def get_metadata(self):
-        return AgentMetadata(id="my_agent", name="My Agent", description="...")
-
-    def execute(self, inputs):
-        return {"result": "..."}
-```
-
-启动时自动从文件系统发现并注册。
-
-#### 方式二：Pipeline Agent（LLM 驱动）
+#### 方式一：Pipeline Agent（LLM 驱动）
 
 以 `agents/example_agent/` 为模板。完整的 pipeline agent 包含 5 个文件：
 
@@ -833,13 +794,12 @@ agents/
 ### 代码规范
 
 1. **命名规范**
-   - Sync Agent 文件夹名：使用下划线命名（snake_case），如 `example_agent`
-   - Pipeline Agent 文件夹名：使用下划线命名，如 `story`, `keyframe`
-   - Agent ID：Sync agents 与文件夹名一致；Pipeline agents 使用 PascalCase（如 `StoryAgent`）
+   - Pipeline Agent 文件夹名：使用下划线命名（snake_case），如 `story`, `keyframe`
+   - Agent ID：使用 PascalCase（如 `StoryAgent`）
 
 2. **错误处理**
    - 抛出有意义的异常信息
-   - 在 `execute()` 中处理所有可能的错误
+   - 在 `run()` 调用链中处理所有可能的错误
 
 3. **文档**
    - 为 Agent 类添加详细的 docstring
@@ -863,9 +823,11 @@ python -m pytest tests/agents/test_agent_core.py -v
 # 运行 assistant 单元测试
 python -m pytest tests/assistant/test_assistant_*.py -v
 
-# 运行 API 测试
-cd dynamic-task-stack
-python test_api.py
+# 模拟 Director HTTP 信号的 assistant E2E 测试（单文件完整流程）
+python -m pytest tests/assistant/test_assistant_http_e2e.py -v
+
+# 运行手动 API 联调脚本（需要后端已启动）
+python tests/dynamic_task_stack/manual_api_runner.py
 ```
 
 `tests/agents/test_agent_core.py` 会自动向上搜索包含 `agents/__init__.py` 的项目根目录。
@@ -881,7 +843,7 @@ python test_api.py
 4. **原子操作**：`replace_task_in_layer` 和 `insert_layer_with_tasks` 是原子操作，确保数据一致性
 5. **批量操作**：`modify_task_stack` 是统一的批量操作接口，所有操作在单个锁内执行，保证原子性
 6. **线程安全**：所有操作都是线程安全的，支持并发访问
-7. **Agent ID 唯一性**：Agent ID 必须唯一（sync agents 和 pipeline agents 共享同一命名空间）
+7. **Agent ID 唯一性**：Pipeline Agent 的 Agent ID 必须唯一
 8. **自动发现**：Agent 会在首次访问注册表时自动被发现和注册（懒加载）
 9. **LLM 依赖**：Pipeline agents（StoryAgent 等）需要 `OPENAI_API_KEY` 环境变量才能执行；未配置时启动不受影响，仅执行时报错
 

@@ -31,4 +31,5 @@ def create_app(config=None):
 
 if __name__ == '__main__':
     app = create_app()
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    # Keep local shortcut consistent with run.py default.
+    app.run(host='0.0.0.0', port=5002, debug=True)

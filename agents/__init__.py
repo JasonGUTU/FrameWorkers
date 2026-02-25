@@ -1,27 +1,10 @@
-"""Agents — pluggable agent framework for FrameWorkers.
+"""Agents — descriptor-driven pipeline agent framework for FrameWorkers.
 
-Two class hierarchies coexist:
-
-  **Sync adapter** (``sync_adapter.py``):
-    ``BaseAgent`` with ``execute(Dict) -> Dict``.  Used by ``service.py``,
-    ``AgentRegistry``, and ``PipelineAgentAdapter``.
-
-  **Async pipeline agents** (``base_agent.py`` / ``base_evaluator.py``):
-    ``BaseAgent`` (aliased as ``LLMBaseAgent``) with
-    ``async run(InputT) -> ExecutionResult``.  Used by the 7 pipeline
-    agents via ``SubAgentDescriptor``.
-
-The ``AGENT_REGISTRY`` dict holds ``SubAgentDescriptor`` instances for
-all pipeline agents.  ``get_agent_registry()`` returns the filesystem-
-based ``AgentRegistry`` for simple sync agents.
+The ``AGENT_REGISTRY`` dict holds ``SubAgentDescriptor`` instances for all
+pipeline agents. ``get_agent_registry()`` exposes descriptor metadata and
+lookup for runtime orchestration.
 """
 
-# -- Sync adapter layer (service.py interface) ----------------------------
-from .sync_adapter import (
-    BaseAgent,
-    AgentMetadata,
-    PipelineAgentAdapter,
-)
 from .agent_registry import AgentRegistry, get_agent_registry
 
 # -- Async / LLM layer (pipeline agents) ---------------------------------
@@ -89,10 +72,6 @@ AGENT_NAME_TO_ASSET_KEY: dict[str, str] = {
 }
 
 __all__ = [
-    # Sync adapter layer
-    "BaseAgent",
-    "AgentMetadata",
-    "PipelineAgentAdapter",
     "AgentRegistry",
     "get_agent_registry",
     # Async / LLM layer

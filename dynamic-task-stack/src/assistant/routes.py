@@ -20,6 +20,21 @@ def create_assistant_blueprint():
     # Initialize assistant service
     service = AssistantService(assistant_storage)
 
+    def _bad_request(message: str):
+        return jsonify({'error': message}), 400
+
+    def _json_body_or_error():
+        data = request.get_json()
+        if not data:
+            return None, _bad_request('Invalid JSON body')
+        return data, None
+
+    def _required_query_or_error(name: str):
+        value = request.args.get(name, '')
+        if not value:
+            return None, _bad_request(f'{name.capitalize()} parameter required')
+        return value, None
+
     def _get_workspace_or_404():
         workspace = assistant_storage.get_global_workspace()
         if workspace is None:
@@ -54,10 +69,23 @@ def create_assistant_blueprint():
     def get_sub_agent(agent_id: str):
         """Get information about a specific sub-agent"""
         registry = get_agent_registry()
-        agent = registry.get_agent(agent_id)
-        if agent is None:
+        descriptor = registry.get_descriptor(agent_id)
+        if descriptor is None:
             return jsonify({'error': 'Sub-agent not found'}), 404
-        return jsonify(agent.get_info())
+        return jsonify({
+            "id": agent_id,
+            "name": agent_id,
+            "description": (getattr(descriptor, "catalog_entry", "") or "")[:200],
+            "version": "1.0.0",
+            "author": None,
+            "capabilities": ["pipeline_agent", descriptor.asset_key],
+            "input_schema": {},
+            "output_schema": {},
+            "created_at": "",
+            "updated_at": "",
+            "asset_key": descriptor.asset_key,
+            "asset_type": getattr(descriptor, "asset_type", ""),
+        })
     
     @bp.route('/api/assistant/agents/<agent_id>/inputs', methods=['GET'])
     def get_agent_inputs(agent_id: str):
@@ -82,9 +110,9 @@ def create_assistant_blueprint():
         4. Execute agent
         5. Process results
         """
-        data = request.get_json()
-        if not data:
-            return jsonify({'error': 'Invalid JSON body'}), 400
+        data, error = _json_body_or_error()
+        if error:
+            return error
         
         agent_id = data.get('agent_id')
         task_id = data.get('task_id')
@@ -123,17 +151,9 @@ def create_assistant_blueprint():
     
     # Workspace routes
     @bp.route('/api/assistant/workspace', methods=['GET'])
-    def get_workspace():
-        """Get the global workspace shared by all agents"""
-        workspace, error = _get_workspace_or_404()
-        if error:
-            return error
-        summary = workspace.get_summary()
-        return jsonify(summary)
-    
     @bp.route('/api/assistant/workspace/summary', methods=['GET'])
     def get_workspace_summary():
-        """Get workspace summary with statistics"""
+        """Get workspace summary with statistics."""
         workspace, error = _get_workspace_or_404()
         if error:
             return error
@@ -180,13 +200,12 @@ def create_assistant_blueprint():
         if error:
             return error
         
-        query = request.args.get('query', '')
+        query, error = _required_query_or_error('query')
+        if error:
+            return error
         file_type = request.args.get('file_type')
         limit = request.args.get('limit', type=int, default=10)
-        
-        if not query:
-            return jsonify({'error': 'Query parameter required'}), 400
-        
+
         files = workspace.search_files(query, file_type=file_type, limit=limit)
         
         return jsonify([file_search_item_to_dict(f) for f in files])
@@ -213,9 +232,9 @@ def create_assistant_blueprint():
         if error:
             return error
         
-        data = request.get_json()
-        if not data:
-            return jsonify({'error': 'Invalid JSON body'}), 400
+        data, error = _json_body_or_error()
+        if error:
+            return error
         
         content = data.get('content')
         append = data.get('append', False)
@@ -256,12 +275,11 @@ def create_assistant_blueprint():
         if error:
             return error
         
-        query = request.args.get('query', '')
+        query, error = _required_query_or_error('query')
+        if error:
+            return error
         search_types = request.args.getlist('types') or ['files', 'memory', 'logs']
-        
-        if not query:
-            return jsonify({'error': 'Query parameter required'}), 400
-        
+
         results = workspace.search_all(
             query=query,
             search_files='files' in search_types,

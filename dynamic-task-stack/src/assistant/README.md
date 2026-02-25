@@ -96,20 +96,19 @@ Agent 执行记录数据结构：
 
 ### Agent 类型
 
-注册表中包含两种 agent：
+注册表统一使用 descriptor-driven pipeline agent 模型。
 
 | 类型 | 示例 | 接口 | 需要 LLM |
 |------|------|------|----------|
-| **Sync Agent** | `example_agent` | 直接 `execute(Dict) -> Dict` | 否 |
-| **Pipeline Agent** | `StoryAgent`, `VideoAgent` 等 | `PipelineAgentAdapter` 包装异步 agent | 是（`OPENAI_API_KEY`） |
+| **Pipeline Agent** | `StoryAgent`, `VideoAgent` 等 | `SubAgentDescriptor` + async `run()` | 是（`OPENAI_API_KEY`） |
 
-两种类型通过 `GET /api/assistant/sub-agents` 统一返回。Pipeline agents 的 `capabilities` 包含 `"pipeline_agent"` 标记。
+所有 agent 通过 `GET /api/assistant/sub-agents` 统一返回。Pipeline agents 的 `capabilities` 包含 `"pipeline_agent"` 标记。
 
 ### 获取所有 Sub-Agents
 
 **GET** `/api/assistant/sub-agents`
 
-获取所有已安装的 Sub-agents（sync + pipeline，从注册表自动发现）。
+获取所有已安装的 Sub-agents（descriptor 注册的 pipeline agents）。
 
 **响应：**
 
@@ -118,13 +117,6 @@ Agent 执行记录数据结构：
     "total_agents": 7,
     "agents": [
         {
-            "id": "example_agent",
-            "name": "Example Agent",
-            "description": "An example agent",
-            "capabilities": ["example_capability"],
-            ...
-        },
-        {
             "id": "StoryAgent",
             "name": "StoryAgent",
             "description": "Generates a story blueprint from a draft idea...",
@@ -132,8 +124,8 @@ Agent 执行记录数据结构：
             ...
         }
     ],
-    "all_capabilities": ["example_capability", "pipeline_agent", "story_blueprint", ...],
-    "agent_ids": ["example_agent", "StoryAgent", "ScreenplayAgent", ...]
+    "all_capabilities": ["pipeline_agent", "story_blueprint", ...],
+    "agent_ids": ["StoryAgent", "ScreenplayAgent", ...]
 }
 ```
 
@@ -152,16 +144,18 @@ Agent 执行记录数据结构：
 
 ```json
 {
-    "agent_id": "example_agent",
-    "name": "Example Agent",
-    "description": "An example agent",
-    "capabilities": ["example_capability"],
-    "input_schema": {...},
-    "output_schema": {...},
-    "metadata": {
-        "author": "Frameworkers",
-        "version": "1.0.0"
-    }
+    "id": "StoryAgent",
+    "name": "StoryAgent",
+    "description": "Generates a story blueprint from a draft idea...",
+    "version": "1.0.0",
+    "author": null,
+    "capabilities": ["pipeline_agent", "story_blueprint"],
+    "input_schema": {},
+    "output_schema": {},
+    "created_at": "",
+    "updated_at": "",
+    "asset_key": "story_blueprint",
+    "asset_type": "story_blueprint"
 }
 ```
 
@@ -181,28 +175,12 @@ Agent 执行记录数据结构：
 
 ```json
 {
-    "agent_id": "example_agent",
-    "agent_name": "Example Agent",
-    "input_schema": {
-        "type": "object",
-        "properties": {
-            "input": {
-                "type": "string",
-                "description": "Input string"
-            }
-        },
-        "required": ["input"]
-    },
-    "output_schema": {
-        "type": "object",
-        "properties": {
-            "result": {
-                "type": "string"
-            }
-        }
-    },
-    "capabilities": ["example_capability"],
-    "description": "An example agent"
+    "agent_id": "StoryAgent",
+    "agent_name": "StoryAgent",
+    "input_schema": {},
+    "output_schema": {},
+    "capabilities": ["pipeline_agent", "story_blueprint"],
+    "description": "Generates a story blueprint from a draft idea..."
 }
 ```
 
@@ -382,13 +360,11 @@ Workspace API 提供了文件管理、Global Memory 和日志管理功能。详�
 
 1. **全局单例**：系统只有一个全局 Assistant 实例，ID 固定为 `"assistant_global"`。Assistant 是预先定义好的，不需要更新。
 
-2. **Agent 注册表**：注册表统一管理两种 agent：
-   - **Sync agents**：从 `agents/` 目录自动扫描（如 `ExampleAgent`），直接实现 `execute(Dict) -> Dict`
-   - **Pipeline agents**：从 `AGENT_REGISTRY`（SubAgentDescriptor dict）自动注册（如 `StoryAgent`），通过 `PipelineAgentAdapter` 包装为同步接口
+2. **Agent 注册表**：注册表统一管理 descriptor-driven pipeline agents：
+   - 从 `AGENT_REGISTRY`（`SubAgentDescriptor` dict）自动注册（如 `StoryAgent`）
+   - Assistant 执行阶段基于 descriptor 直接构建输入并调用 async `run()`
 
-3. **质量门**：所有 agent 执行通过 `execute_with_quality_gate()` 统一调用：
-   - Sync agents：可选的 `BaseEvaluator`（同步结构检查 + 重试）
-   - Pipeline agents：内置三层评估（L1 结构 → L2 LLM 创意 → L3 资产）+ 自动重试
+3. **质量门**：pipeline agents 使用内置三层评估（L1 结构 → L2 LLM 创意 → L3 资产）+ 自动重试
 
 4. **LLM 配置**：Pipeline agents 需要 `OPENAI_API_KEY` 环境变量。`LLMClient` 在 `get_agent_registry()` 首次调用时创建并注入，采用 lazy-init：
    - 构造时不读 API key（不会阻止启动）
@@ -404,3 +380,8 @@ Workspace API 提供了文件管理、Global Memory 和日志管理功能。详�
 6. **工作空间共享**：所有 Agents 共享一个全局工作空间，可以访问相同的文件、记忆和日志。
 
 7. **执行记录**：每次 Agent 执行都会创建执行记录，结果中包含 `_eval_result`、`_passed`、`_attempts` 元数据。
+
+8. **Service 边界（单文件实现）**：`service.py` 当前保持单文件实现，不强制拆分模块；通过内部方法分区维持职责边界：
+   - Pipeline 执行辅助（`_map_pipeline_inputs`、`_execute_pipeline_descriptor`）
+   - 输入打包与上下文检索（`build_execution_inputs`、`package_data`）
+   - 结果落盘与日志（`process_results`、`_store_execution_files`）

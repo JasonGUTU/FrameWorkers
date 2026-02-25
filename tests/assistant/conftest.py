@@ -1,4 +1,9 @@
-"""Shared pytest fixtures/helpers for assistant unit tests."""
+"""Shared pytest fixtures/helpers for assistant unit tests.
+
+This file is auto-loaded by pytest for the entire `tests/assistant/` folder.
+It centralizes import path setup, stubs, and reusable fixtures so each test
+file can stay focused on behavior.
+"""
 
 from __future__ import annotations
 
@@ -25,35 +30,42 @@ import src.assistant.service as service_module
 from src.assistant.storage import AssistantStorage
 
 
-class DummyAgent:
-    def __init__(self, result=None):
-        self.metadata = SimpleNamespace(
-            id="DummyAgent",
-            name="Dummy Agent",
-            description="test agent",
-        )
-        self._result = result if result is not None else {"ok": True}
+class _DummyPipelineResult:
+    def __init__(self, output: dict | None = None):
+        self.output = SimpleNamespace(model_dump=lambda: output or {"ok": True})
+        self.asset_dict = None
+        self.media_assets = []
 
-    def get_input_schema(self):
-        return {"type": "object"}
 
-    def get_output_schema(self):
-        return {"type": "object"}
+class _DummyPipelineAgent:
+    async def run(self, _typed_input, upstream=None, materialize_ctx=None):
+        return _DummyPipelineResult()
 
-    def get_capabilities(self):
-        return ["unit_test"]
 
-    def execute(self, _inputs):
-        return self._result
+class DummyDescriptor:
+    def __init__(self, asset_key: str):
+        self.asset_key = asset_key
+        self.catalog_entry = "dummy descriptor"
+        self.asset_type = "dummy_asset_type"
+
+    def build_equipped_agent(self, _llm):
+        return _DummyPipelineAgent()
+
+    def build_input(self, project_id, draft_id, assets, config):
+        return {
+            "project_id": project_id,
+            "draft_id": draft_id,
+            "assets": assets,
+            "language": config.language,
+        }
+
+    def build_upstream(self, _assets):
+        return {}
 
 
 class DummyRegistry:
-    def __init__(self, agents: dict, descriptors: dict):
-        self._agents = agents
+    def __init__(self, descriptors: dict):
         self._descriptors = descriptors
-
-    def get_agent(self, agent_id: str):
-        return self._agents.get(agent_id)
 
     def get_descriptor(self, agent_id: str):
         return self._descriptors.get(agent_id)
@@ -62,12 +74,10 @@ class DummyRegistry:
 @pytest.fixture
 def assistant_env(tmp_path, monkeypatch):
     storage = AssistantStorage(runtime_base_path=tmp_path / "Runtime")
-    agent = DummyAgent()
     registry = DummyRegistry(
-        agents={"DummyAgent": agent},
         descriptors={
-            "UpstreamAgent": SimpleNamespace(asset_key="upstream_asset"),
-            "DummyAgent": SimpleNamespace(asset_key="dummy_asset"),
+            "UpstreamAgent": DummyDescriptor(asset_key="upstream_asset"),
+            "DummyAgent": DummyDescriptor(asset_key="dummy_asset"),
         },
     )
 
@@ -81,4 +91,4 @@ def assistant_env(tmp_path, monkeypatch):
         ),
     )
     svc = service_module.AssistantService(storage)
-    return svc, storage, agent
+    return svc, storage, None

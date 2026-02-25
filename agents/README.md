@@ -4,7 +4,7 @@
 
 **目录结构说明：**
 - `agents/`（根目录）：Agent 核心框架和所有 Agent 实现
-  - 核心框架文件：`base_agent.py`, `base_evaluator.py`, `sync_adapter.py`, `descriptor.py`, `llm_client.py`, `common_schema.py`, `agent_registry.py`
+  - 核心框架文件：`base_agent.py`, `base_evaluator.py`, `descriptor.py`, `llm_client.py`, `common_schema.py`, `agent_registry.py`
   - Pipeline Agent 子包：`story/`, `screenplay/`, `storyboard/`, `keyframe/`, `video/`, `audio/`
   - 示例 Agent：`example_agent/`
 
@@ -41,7 +41,6 @@ agents/
 ├── README.md                    # 本文档
 │
 │  # ── 核心框架 ─────────────────────────────────────
-├── sync_adapter.py              # Sync BaseAgent / AgentMetadata / PipelineAgentAdapter
 ├── base_agent.py                # Async LLM BaseAgent（pipeline agents 基类）
 ├── base_evaluator.py            # BaseEvaluator（L1+L2+L3 质量评估）
 ├── llm_client.py                # LLMClient（OpenAI wrapper）
@@ -188,11 +187,10 @@ curl http://localhost:5002/api/assistant/sub-agents
 
 ### 工作原理
 
-1. **启动时扫描**：Backend 启动时，`AgentRegistry` 会自动扫描 `agents/` 目录
-2. **Sync Agent 加载**：对于 sync agent 子目录，导入并注册 class 工厂（不立即实例化）
-3. **Pipeline 注册**：Pipeline agents 通过 `AGENT_REGISTRY` 仅注册 descriptor（不立即实例化 adapter）
-4. **按需实例化**：首次 `get_agent(agent_id)` / 执行时才创建对应实例（包含 sync 和 pipeline）
-5. **错误处理**：某个 Agent 加载失败会记录警告，但不会影响其他 Agent
+1. **Pipeline 注册**：Backend 启动时通过 `AGENT_REGISTRY` 注册 `SubAgentDescriptor`
+2. **统一模型**：仅使用 descriptor-driven pipeline agent 模型
+3. **按需装备**：执行阶段由 Assistant 基于 descriptor + `LLMClient` 装备并运行 agent
+4. **错误处理**：某个 Agent 加载失败会记录警告，但不会影响其他 Agent
 
 ---
 

@@ -144,11 +144,11 @@ class DirectorAgent:
             List of new user messages
         """
         try:
-            messages = self.api_client.get_user_messages()
-            new_messages = [
-                msg for msg in messages
-                if msg.get('director_read_status') == 'UNREAD'
-            ]
+            new_messages = self.api_client.get_unread_messages(
+                sender_type='user',
+                check_director_read=True,
+                check_user_read=False,
+            )
             
             if new_messages:
                 logger.info(f"Found {len(new_messages)} new user messages")
@@ -254,6 +254,11 @@ class DirectorAgent:
         # Select agent for task
         try:
             available_agents = self.api_client.get_all_agents()
+            if not available_agents:
+                logger.error("No available sub-agents discovered from Assistant")
+                self.api_client.update_task_status(task_id, 'FAILED')
+                return None
+
             agent_id = self.reasoning_engine.select_agent_for_task(
                 task or {},
                 available_agents
@@ -265,12 +270,28 @@ class DirectorAgent:
                 return None
             
             logger.info(f"Delegating task {task_id} to agent {agent_id}")
+            self.api_client.push_task_message(
+                task_id=task_id,
+                sender='director',
+                message=f"Delegated to assistant agent {agent_id}"
+            )
             
             # Execute agent (using global assistant)
             execution_result = self.api_client.execute_agent(
                 agent_id=agent_id,
                 task_id=task_id
             )
+
+            # Normalize result payload so downstream reflection can always find task id.
+            execution_result["task_id"] = task_id
+
+            execution_id = execution_result.get("execution_id")
+            if execution_id:
+                try:
+                    execution_detail = self.api_client.get_execution(execution_id)
+                    execution_result["execution"] = execution_detail
+                except Exception as e:
+                    logger.warning(f"Failed to fetch execution detail {execution_id}: {e}")
             
             logger.info(f"Task {task_id} execution completed: {execution_result.get('status')}")
             return execution_result
@@ -304,6 +325,7 @@ class DirectorAgent:
         try:
             if status == 'COMPLETED':
                 self.api_client.update_task_status(task_id, 'COMPLETED')
+                self._sync_workspace_memory_for_task(task_id, execution_result)
                 # Advance execution pointer
                 self.api_client.advance_execution_pointer()
             elif status == 'FAILED':
@@ -360,6 +382,29 @@ class DirectorAgent:
             logger.error(f"Error triggering reflection: {e}")
         
         return None
+
+    def _sync_workspace_memory_for_task(
+        self,
+        task_id: str,
+        execution_result: Dict[str, Any]
+    ):
+        """
+        Persist a lightweight execution summary into assistant workspace memory.
+        This gives Director a stable cross-task context channel.
+        """
+        try:
+            summary = self.api_client.get_workspace_summary()
+            memory_info = self.api_client.get_workspace_memory().get("info", {})
+            note = (
+                f"[director] task={task_id} status={execution_result.get('status')} "
+                f"execution_id={execution_result.get('execution_id', '')} "
+                f"workspace_files={summary.get('file_count', 0)} "
+                f"workspace_logs={summary.get('log_count', 0)} "
+                f"memory_usage={memory_info.get('usage_percent', 0)}%"
+            )
+            self.api_client.write_workspace_memory(content=note, append=True)
+        except Exception as e:
+            logger.warning(f"Failed to sync workspace memory for task {task_id}: {e}")
     
     def _handle_reflection_summary(self, reflection_summary: Dict[str, Any]):
         """
