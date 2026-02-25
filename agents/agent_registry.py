@@ -38,9 +38,20 @@ class AgentRegistry:
                 "description": (descriptor.catalog_entry or "")[:200],
                 "version": "1.0.0",
                 "author": None,
+                "agent_type": "pipeline",
                 "capabilities": ["pipeline_agent", descriptor.asset_key],
+                "asset_key": descriptor.asset_key,
+                "asset_type": getattr(descriptor, "asset_type", ""),
+                "schemas": {
+                    "input": {},
+                    "output": {},
+                },
                 "input_schema": {},
                 "output_schema": {},
+                "contract": {
+                    "version": "2",
+                    "deprecated_fields": ["input_schema", "output_schema"],
+                },
                 "created_at": "",
                 "updated_at": "",
             })

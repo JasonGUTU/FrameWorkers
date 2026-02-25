@@ -185,7 +185,9 @@ class BackendAPIClient:
         message: str
     ) -> Dict[str, Any]:
         """Push progress/message entry into task."""
-        data = {"sender": sender, "message": message}
+        # Backend contract uses content + sender_type.
+        sender_type = (sender or "user").lower()
+        data = {"content": message, "sender_type": sender_type}
         return self._request('POST', f'/api/tasks/{task_id}/messages', data=data)
     
     def create_layer(

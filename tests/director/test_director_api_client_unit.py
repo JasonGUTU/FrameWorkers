@@ -76,3 +76,22 @@ def test_request_raises_backend_error_for_non_json_response(monkeypatch):
 
     with pytest.raises(BackendAPIError):
         client._request("GET", "/health")
+
+
+def test_push_task_message_matches_backend_contract(monkeypatch):
+    client = BackendAPIClient(base_url="http://unit-test")
+    captured = {}
+
+    def _fake_request(method, endpoint, data=None, params=None):
+        captured["method"] = method
+        captured["endpoint"] = endpoint
+        captured["data"] = data
+        return {"ok": True}
+
+    monkeypatch.setattr(client, "_request", _fake_request)
+
+    client.push_task_message("task_1", sender="DIRECTOR", message="delegated")
+
+    assert captured["method"] == "POST"
+    assert captured["endpoint"] == "/api/tasks/task_1/messages"
+    assert captured["data"] == {"content": "delegated", "sender_type": "director"}

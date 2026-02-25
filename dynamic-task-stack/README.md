@@ -30,8 +30,8 @@ Dynamic Task Stack 由两个核心系统组成：
 
 ### 2. Assistant（助手系统）
 - **统一管理**：只有一个全局 assistant 来管理所有的 sub-agent
-- **双层 Agent 架构**：同步 Agent（简单任务）和异步 Pipeline Agent（LLM 驱动的影视生产流水线）共存于统一注册表
-- **自动发现**：同步 agents 从 `agents/` 目录扫描；Pipeline agents 从 `AGENT_REGISTRY`（SubAgentDescriptor）自动注册
+- **单一 Agent 模型**：统一使用 descriptor-driven pipeline agents（`SubAgentDescriptor` + async `run()`）
+- **自动发现**：从 `agents/__init__.py` 的 `AGENT_REGISTRY` 自动注册 descriptors
 - **质量门机制**：三层评估（L1 结构检查 → L2 LLM 创意评估 → L3 资产评估）+ 自动重试
 - **共享工作空间**：所有 agents 共享一个全局工作空间（文件系统）
 - **信息检索**：Assistant 从工作空间中检索信息，然后分发给各个 agent
@@ -159,6 +159,8 @@ dynamic-task-stack/
 
 提供完整的 RESTful API：
 
+路由层使用通用 JSON/枚举解析 helper，避免重复的请求体校验和错误格式分叉。
+
 **用户消息路由**：
 - `POST /api/messages/create` - 创建用户消息
 - `GET /api/messages/<msg_id>` - 获取消息
@@ -173,7 +175,7 @@ dynamic-task-stack/
 - `PUT /api/tasks/<task_id>` - 更新任务
 - `DELETE /api/tasks/<task_id>` - 删除任务
 - `PUT /api/tasks/<task_id>/status` - 更新任务状态
-- `POST /api/tasks/<task_id>/messages` - 推送消息到任务
+- `POST /api/tasks/<task_id>/messages` - 推送消息到任务（`content` + 可选 `sender_type`）
 
 **层路由**：
 - `POST /api/layers/create` - 创建层
@@ -459,7 +461,7 @@ class AgentExecution:
 - `PUT /api/tasks/<task_id>` - 更新任务
 - `DELETE /api/tasks/<task_id>` - 删除任务
 - `PUT /api/tasks/<task_id>/status` - 更新任务状态
-- `POST /api/tasks/<task_id>/messages` - 推送消息到任务
+- `POST /api/tasks/<task_id>/messages` - 推送消息到任务（`content` + 可选 `sender_type`）
 
 #### 层管理
 - `POST /api/layers/create` - 创建层（可选 layer_index, pre_hook, post_hook）
@@ -531,7 +533,7 @@ python run.py
 ### 3. 健康检查
 
 ```bash
-curl http://localhost:5000/health
+curl http://localhost:5002/health
 ```
 
 响应：
@@ -816,6 +818,9 @@ agents/
 ### 测试
 
 ```bash
+# 一键跑核心回归（项目根目录执行）
+bash tests/run_core_tests.sh
+
 # 运行 agents 单元测试（58 tests）
 cd ..
 python -m pytest tests/agents/test_agent_core.py -v

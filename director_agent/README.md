@@ -73,7 +73,8 @@ python -m director_agent.main
 - `GET /api/messages/list` - Get user messages
 - `GET /api/task-stack` - Get task stack
 - `GET /api/task-stack/next` - Get next task
-- `POST /api/tasks/create` - Create task
+- `POST /api/tasks/create` - Create task (`description` must be an object)
+- `POST /api/tasks/{task_id}/messages` - Push task-linked message (`content`, optional `sender_type`)
 - `PUT /api/tasks/{task_id}/status` - Update task status
 - `POST /api/execution-pointer/advance` - Advance execution pointer
 

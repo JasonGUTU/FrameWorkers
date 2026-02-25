@@ -142,7 +142,6 @@ def test_service_executes_pipeline_descriptor_without_adapter(tmp_path, monkeypa
         "get_task",
         lambda _task_id: SimpleNamespace(description="draft", progress={}),
     )
-
     svc = service_module.AssistantService(storage)
     result = svc.execute_agent_for_task("PipelineOnlyAgent", "task_pipeline")
 

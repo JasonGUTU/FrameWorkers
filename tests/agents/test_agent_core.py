@@ -74,6 +74,8 @@ class TestAgentRegistryDescriptorModel:
         assert "story_blueprint" in gathered["all_capabilities"]
         assert gathered["agents"][0]["input_schema"] == {}
         assert gathered["agents"][0]["output_schema"] == {}
+        assert gathered["agents"][0]["asset_key"] == "story_blueprint"
+        assert gathered["agents"][0]["asset_type"] == "dummy_asset_type"
 
     def test_get_agent_compatibility_requires_llm_client(self):
         registry = AgentRegistry()

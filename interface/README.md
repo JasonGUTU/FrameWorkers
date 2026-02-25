@@ -47,6 +47,10 @@ Update the API base URL in `src/services/api.js` if your backend is running on a
 const API_BASE_URL = 'http://localhost:5002/api'
 ```
 
+Task message API contract (`tasksAPI.pushMessage`) follows backend fields:
+- required: `content`
+- optional: `sender_type` (`user` / `director` / `subagent`)
+
 ## Project Structure
 
 ```

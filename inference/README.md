@@ -2,6 +2,11 @@
 
 Inference 模块提供了完整的语言模型推理、Prompt 处理和多模态支持工具。该模块设计为独立模块，可在需要时被其他模块调用。
 
+> 边界说明（与 `agents/`）：当前 pipeline sub-agent 主执行链
+> （`dynamic-task-stack/src/assistant/service.py` -> `agents/llm_client.py`）
+> 使用的是 `agents` 内的 LLMClient。`inference` 仍作为独立能力库（LiteLLM、
+> 多模态工具、生成器注册）供其他流程或后续整合使用。
+
 ## 功能特性
 
 - **通用模型调用接口**: 使用 LiteLLM 包装，提供统一的 OpenAI 兼容接口调用所有支持的模型

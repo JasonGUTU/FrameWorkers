@@ -39,7 +39,7 @@ export const tasksAPI = {
   update: (task_id, data) => api.put(`/tasks/${task_id}`, data),
   delete: (task_id) => api.delete(`/tasks/${task_id}`),
   updateStatus: (task_id, status) => api.put(`/tasks/${task_id}/status`, { status }),
-  pushMessage: (task_id, content, user_id) => api.post(`/tasks/${task_id}/messages`, { content, user_id })
+  pushMessage: (task_id, content, sender_type = 'user') => api.post(`/tasks/${task_id}/messages`, { content, sender_type })
 }
 
 // Layers API

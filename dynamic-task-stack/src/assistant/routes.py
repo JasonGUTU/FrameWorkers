@@ -69,23 +69,11 @@ def create_assistant_blueprint():
     def get_sub_agent(agent_id: str):
         """Get information about a specific sub-agent"""
         registry = get_agent_registry()
-        descriptor = registry.get_descriptor(agent_id)
-        if descriptor is None:
+        agents_info = registry.gather_agents_info().get("agents", [])
+        agent = next((item for item in agents_info if item.get("id") == agent_id), None)
+        if agent is None:
             return jsonify({'error': 'Sub-agent not found'}), 404
-        return jsonify({
-            "id": agent_id,
-            "name": agent_id,
-            "description": (getattr(descriptor, "catalog_entry", "") or "")[:200],
-            "version": "1.0.0",
-            "author": None,
-            "capabilities": ["pipeline_agent", descriptor.asset_key],
-            "input_schema": {},
-            "output_schema": {},
-            "created_at": "",
-            "updated_at": "",
-            "asset_key": descriptor.asset_key,
-            "asset_type": getattr(descriptor, "asset_type", ""),
-        })
+        return jsonify(agent)
     
     @bp.route('/api/assistant/agents/<agent_id>/inputs', methods=['GET'])
     def get_agent_inputs(agent_id: str):

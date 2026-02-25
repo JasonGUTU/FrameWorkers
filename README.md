@@ -190,6 +190,9 @@ npm run dev
 ### 4. 运行测试
 
 ```bash
+# 一键跑核心回归（assistant + director + task_stack app factory + agents）
+bash tests/run_core_tests.sh
+
 # agents 核心测试
 python -m pytest tests/agents/test_agent_core.py -v
 
