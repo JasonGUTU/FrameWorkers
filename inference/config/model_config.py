@@ -6,9 +6,6 @@ Provides model registry and configuration management for all supported models.
 
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
-from pathlib import Path
-import yaml
-import json
 
 
 @dataclass
@@ -34,6 +31,26 @@ class ModelRegistry:
     
     # Common OpenAI models
     OPENAI_MODELS = {
+        "gpt-5": ModelInfo(
+            name="GPT-5",
+            provider="openai",
+            model_id="gpt-5",
+            supports_streaming=True,
+            supports_multimodal=True,
+            max_tokens=16384,
+            context_window=200000,
+            description="OpenAI GPT-5 model"
+        ),
+        "gpt-5-mini": ModelInfo(
+            name="GPT-5 Mini",
+            provider="openai",
+            model_id="gpt-5-mini",
+            supports_streaming=True,
+            supports_multimodal=True,
+            max_tokens=16384,
+            context_window=200000,
+            description="OpenAI GPT-5 Mini model"
+        ),
         "gpt-4o": ModelInfo(
             name="GPT-4o",
             provider="openai",
@@ -284,19 +301,6 @@ class ModelRegistry:
 _registry: Optional[ModelRegistry] = None
 
 
-def get_model_registry() -> ModelRegistry:
-    """
-    Get the global model registry instance
-    
-    Returns:
-        ModelRegistry instance
-    """
-    global _registry
-    if _registry is None:
-        _registry = ModelRegistry()
-    return _registry
-
-
 def get_model_config(model_id: str) -> Optional[ModelInfo]:
     """
     Get model configuration by ID
@@ -307,30 +311,7 @@ def get_model_config(model_id: str) -> Optional[ModelInfo]:
     Returns:
         ModelInfo if found, None otherwise
     """
-    registry = get_model_registry()
-    return registry.get_model(model_id)
-
-
-def load_model_config(config_path: str) -> Dict[str, Any]:
-    """
-    Load model configuration from file
-    
-    Supports YAML and JSON formats.
-    
-    Args:
-        config_path: Path to configuration file
-        
-    Returns:
-        Dictionary containing configuration
-    """
-    path = Path(config_path)
-    if not path.exists():
-        raise FileNotFoundError(f"Configuration file not found: {config_path}")
-    
-    with open(path, 'r', encoding='utf-8') as f:
-        if path.suffix.lower() in ['.yaml', '.yml']:
-            return yaml.safe_load(f) or {}
-        elif path.suffix.lower() == '.json':
-            return json.load(f)
-        else:
-            raise ValueError(f"Unsupported configuration file format: {path.suffix}")
+    global _registry
+    if _registry is None:
+        _registry = ModelRegistry()
+    return _registry.get_model(model_id)

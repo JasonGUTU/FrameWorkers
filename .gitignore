@@ -137,6 +137,7 @@ celerybeat.pid
 # Environments
 .env
 .envrc
+inference_runtime.yaml
 .venv
 env/
 venv/

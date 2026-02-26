@@ -71,12 +71,11 @@ inference/
 
 - **通用模型调用接口**: 使用 LiteLLM 包装，提供统一的 OpenAI 兼容接口调用所有支持的模型
 - **OpenAI 兼容请求格式**: `chat_json/chat_text` 统一使用 `chat.completions` 兼容参数（如 `max_tokens`）
-- **LLM 客户端分层抽象**: `runtime/base_client.py` 提供公共基类与统一导出，具体实现集中在 `runtime/clients/`
+- **LLM 客户端分层抽象**: `runtime/` 根目录仅保留 `base_client.py` 作为公共基类/导出入口，具体实现集中在 `runtime/clients/`
+- **自动路由与 Key 选择**: `LLMClient` 会读取项目根目录路由配置，根据用户定义的 model/provider/client 映射选择执行路径，并使用对应 provider 的环境变量 key
 - **GPT-5 专用接口扩展**: `GPT5ChatClient` 提供 `max_completion_tokens`/`reasoning_effort` 风格请求参数
 - **自研模型接口**: 预留自定义模型接口，支持通过 LiteLLM 对接 Ollama 等本地模型
 - **多模态支持**: 提供图像 Base64 编码/解码及相关工具
-- **Prompt 处理工具**: Message 压缩、历史持久化等功能
-- **Prompt 模板系统**: Prompt 组合与模板管理
 - **图像生成模块**: 可扩展图像生成器注册系统，支持文本到图像、图像到图像
 - **视频生成模块**: 可扩展视频生成器注册系统，支持文本/图像/视频到视频
 - **音频生成模块**: 可扩展音频生成器注册系统，支持文本到语音与音频后处理
@@ -102,15 +101,10 @@ inference/
 │       ├── default_client.py   # 默认实现（LiteLLM completion + OpenAI chat）
 │       ├── gpt5_client.py      # GPT-5 专用 chat 实现
 │       └── custom_model.py     # 自研模型接口（Ollama 等）
-├── multimodal/                 # 多模态支持
+├── input_processing/           # 输入处理（文本+图像）
 │   ├── __init__.py
 │   ├── image_utils.py          # 图像工具（Base64 编码解码）
-│   └── multimodal_utils.py     # 多模态通用工具
-├── prompt/                     # Prompt 处理模块
-│   ├── __init__.py
-│   ├── message_utils.py        # Message 压缩等工具
-│   ├── history.py              # 历史 Message 持久化
-│   └── templates.py             # Prompt 模板和组合
+│   └── message_utils.py        # 消息输入工具（兼容别名 InputUtils/MultimodalUtils）
 ├── generation/                 # 生成模块
 │   ├── __init__.py
 │   ├── base_generator.py        # 生成器基类
@@ -348,12 +342,12 @@ print(info)  # {'width': 1920, 'height': 1080, 'format': 'PNG', ...}
 #### 创建多模态消息
 
 ```python
-from inference import ImageUtils, LLMClient
+from inference import InputUtils, LLMClient
 
 client = LLMClient()
 
 # 创建包含图像的消息
-multimodal_message = ImageUtils.create_multimodal_message(
+multimodal_message = InputUtils.create_multimodal_message(
     text="What's in this image?",
     image_path="path/to/image.png"
 )
@@ -364,13 +358,13 @@ response = client.call(
 )
 ```
 
-#### 多模态工具
+#### 输入处理工具（InputUtils）
 
 ```python
-from inference import MultimodalUtils
+from inference import InputUtils
 
 # 准备多模态内容
-content = MultimodalUtils.prepare_multimodal_content(
+content = InputUtils.prepare_multimodal_content(
     text="Analyze these images",
     images=["image1.png", "image2.jpg"]
 )
@@ -383,166 +377,19 @@ message = {
         {"type": "image_url", "image_url": {"url": "data:image/png;base64,..."}}
     ]
 }
-images = MultimodalUtils.extract_images_from_message(message)
+images = InputUtils.extract_images_from_message(message)
 
 # 提取文本
-text = MultimodalUtils.extract_text_from_message(message)
+text = InputUtils.extract_text_from_message(message)
 
 # 验证多模态消息格式
-is_valid = MultimodalUtils.validate_multimodal_message(message)
+is_valid = InputUtils.validate_multimodal_message(message)
 
 # 估算 token 数量
-tokens = MultimodalUtils.count_tokens_multimodal(message)
+tokens = InputUtils.count_tokens_multimodal(message)
 ```
 
-### 4. Prompt 处理工具
-
-#### Message 压缩
-
-```python
-from inference import MessageUtils
-
-messages = [
-    {"role": "system", "content": "You are a helpful assistant."},
-    {"role": "user", "content": "Message 1"},
-    {"role": "assistant", "content": "Response 1"},
-    {"role": "user", "content": "Message 2"},
-    {"role": "assistant", "content": "Response 2"},
-]
-
-# 压缩消息（移除最旧的消息）
-compressed = MessageUtils.compress_messages(
-    messages,
-    max_tokens=1000,
-    strategy="truncate_oldest"
-)
-
-# 合并相同角色的连续消息
-merged = MessageUtils.merge_consecutive_same_role(messages)
-
-# 估算 token 数量
-tokens = MessageUtils.estimate_tokens(messages)
-```
-
-#### 历史 Message 持久化
-
-```python
-from inference import MessageHistory
-
-# 初始化历史记录（自动保存到文件）
-history = MessageHistory(
-    storage_path="./data/conversation_history.json",
-    max_messages=100  # 最多保存 100 条消息
-)
-
-# 添加消息
-history.add_message(
-    role="user",
-    content="Hello!"
-)
-
-history.add_message(
-    role="assistant",
-    content="Hi! How can I help you?"
-)
-
-# 获取消息（用于 API 调用）
-messages = history.get_formatted_messages(for_api=True)
-
-# 获取特定角色的消息
-user_messages = history.get_messages(role="user")
-
-# 获取统计信息
-stats = history.get_statistics()
-print(stats)  # {'total_messages': 2, 'role_counts': {...}, ...}
-
-# 导出历史记录
-history.export("./backup.json")
-
-# 清空历史记录
-history.clear()
-```
-
-### 5. Prompt 模板和组合
-
-#### 创建和使用模板
-
-```python
-from inference import PromptTemplate, TemplateManager
-
-# 创建模板管理器
-manager = TemplateManager(storage_path="./data/templates")
-
-# 创建模板
-template = manager.create_template(
-    name="greeting",
-    template="Hello, {name}! Welcome to {place}.",
-    description="Greeting template",
-    variables=["name", "place"]
-)
-
-# 格式化模板
-prompt = manager.format_template(
-    "greeting",
-    name="Alice",
-    place="Wonderland"
-)
-print(prompt)  # "Hello, Alice! Welcome to Wonderland."
-
-# 或者直接使用 PromptTemplate
-template = PromptTemplate(
-    template="You are a {role}. Your task is to {task}.",
-    name="system_prompt"
-)
-
-formatted = template.format(role="assistant", task="help users")
-```
-
-#### 组合多个模板
-
-```python
-# 组合多个模板
-composed = manager.compose(
-    templates=["system_prompt", "user_query"],
-    separator="\n\n",
-    role="assistant",
-    task="answer questions",
-    query="What is Python?"
-)
-
-# 组合成消息列表
-messages = manager.compose_messages(
-    templates=[
-        {"role": "system", "template": "system_prompt"},
-        {"role": "user", "template": "user_query"}
-    ],
-    role="assistant",
-    task="help users",
-    query="Hello!"
-)
-```
-
-#### 模板管理
-
-```python
-# 列出所有模板
-templates = manager.list_templates()
-
-# 获取模板
-template = manager.get_template("greeting")
-
-# 验证模板变量
-is_valid, missing = template.validate(name="Alice", place="Wonderland")
-
-# 导出模板
-manager.export_template("greeting", "./greeting_template.json")
-
-# 导入模板
-manager.import_template("./greeting_template.json")
-
-# 删除模板
-manager.remove_template("greeting")
-```
+> 兼容性说明：`MultimodalUtils` 仍保留为 `InputUtils` 的别名，旧代码无需立即修改。
 
 ## 配置
 
@@ -577,6 +424,17 @@ model_configs:
 client = LLMClient(config_path="config/inference_config.yaml")
 ```
 
+### 运行时路由配置（项目根目录）
+
+项目根目录使用 `inference_runtime.yaml` 作为运行时路由配置文件。  
+该文件用于用户自定义：
+
+- `model_provider`：模型对应哪个 provider
+- `provider_client`：provider 走哪个 client 路径（`openai_sdk` / `gpt5_sdk` / `litellm`）
+- `provider_key_env`：provider 对应读取哪个环境变量作为 API Key
+
+也可通过 `INFERENCE_RUNTIME_CONFIG=/abs/path/to/your.yaml` 指定自定义路径。
+
 ### 环境变量方式
 
 ```bash
@@ -585,6 +443,8 @@ export OPENAI_API_KEY="your-key"
 export ANTHROPIC_API_KEY="your-key"
 export OLLAMA_BASE_URL="http://localhost:11434"
 ```
+
+如果项目根目录存在 `.env`，`BaseLLMClient` 在首次初始化时会自动向上搜索并加载该文件（仅填充当前缺失的变量，不覆盖已存在环境变量）。
 
 ### 代码方式
 
@@ -629,26 +489,24 @@ print(model_info.max_tokens)
 
 ## 完整示例
 
-### 示例 1: 带历史记录的对话
+### 示例 1: 多轮对话（手动维护消息列表）
 
 ```python
-from inference import LLMClient, MessageHistory
+from inference import LLMClient
 
 client = LLMClient(default_model="gpt-3.5-turbo")
-history = MessageHistory(storage_path="./conversation.json")
-
-# 添加系统消息
-history.add_message(role="system", content="You are a helpful assistant.")
-
-# 用户消息
-history.add_message(role="user", content="What is Python?")
+messages = [
+    {"role": "system", "content": "You are a helpful assistant."},
+    {"role": "user", "content": "What is Python?"},
+]
 
 # 调用模型
-response = client.call(messages=history.get_formatted_messages())
+response = client.call(messages=messages)
 
-# 保存助手回复
+# 继续追加新一轮对话
 assistant_reply = response["choices"][0]["message"]["content"]
-history.add_message(role="assistant", content=assistant_reply)
+messages.append({"role": "assistant", "content": assistant_reply})
+messages.append({"role": "user", "content": "Give me three short examples."})
 
 print(assistant_reply)
 ```
@@ -656,12 +514,12 @@ print(assistant_reply)
 ### 示例 2: 多模态图像分析
 
 ```python
-from inference import LLMClient, ImageUtils
+from inference import LLMClient, InputUtils
 
 client = LLMClient(default_model="gpt-4o")
 
 # 创建多模态消息
-message = ImageUtils.create_multimodal_message(
+message = InputUtils.create_multimodal_message(
     text="What objects are in this image? Describe them in detail.",
     image_path="photo.jpg"
 )
@@ -671,24 +529,17 @@ response = client.call(messages=[message])
 print(response["choices"][0]["message"]["content"])
 ```
 
-### 示例 3: 使用模板的批量处理
+### 示例 3: 批量文本处理
 
 ```python
-from inference import LLMClient, TemplateManager
+from inference import LLMClient
 
 client = LLMClient()
-manager = TemplateManager()
-
-# 创建模板
-manager.create_template(
-    name="analysis",
-    template="Analyze the following text and provide key insights:\n\n{text}"
-)
 
 # 批量处理
 texts = ["Text 1", "Text 2", "Text 3"]
 for text in texts:
-    prompt = manager.format_template("analysis", text=text)
+    prompt = f"Analyze the following text and provide key insights:\n\n{text}"
     response = client.call(messages=[{"role": "user", "content": prompt}])
     print(response["choices"][0]["message"]["content"])
 ```
@@ -773,6 +624,8 @@ result = registry.generate(
 
 主要的语言模型客户端类。
 
+说明：`chat_json/chat_text` 会按路由配置中的 model/provider/client 映射自动路由，并读取对应 provider 的环境变量 API key。
+
 **方法**:
 - `call()`: 同步调用模型
 - `acall()`: 异步调用模型
@@ -792,6 +645,15 @@ result = registry.generate(
 - `list_ollama_models()`: 列出 Ollama 模型
 - `pull_ollama_model()`: 拉取 Ollama 模型
 
+### ConfigLoader
+
+配置加载工具类（`inference/config/config_loader.py`）。
+
+**方法**:
+- `load()`: 从 YAML/JSON 加载配置并按需替换环境变量
+- `find_file_upwards()`: 从当前目录向上查找任意配置文件
+- `load_env_file()`: 加载 `.env` 到进程环境变量
+
 ### ImageUtils
 
 图像处理工具类。
@@ -802,50 +664,18 @@ result = registry.generate(
 - `save_base64_image()`: 保存 Base64 图像
 - `resize_image()`: 调整图像大小
 - `get_image_info()`: 获取图像信息
+
+### InputUtils
+
+消息输入处理工具类（文本+图像消息组装与解析）。
+
+**方法**:
 - `create_multimodal_message()`: 创建多模态消息
-
-### MessageUtils
-
-消息处理工具类。
-
-**方法**:
-- `compress_messages()`: 压缩消息
-- `merge_consecutive_same_role()`: 合并相同角色的消息
-- `truncate_messages()`: 截断消息
-- `estimate_tokens()`: 估算 token 数量
-- `extract_system_messages()`: 提取系统消息
-- `get_message_count_by_role()`: 按角色统计消息
-
-### MessageHistory
-
-消息历史管理类。
-
-**方法**:
-- `add_message()`: 添加消息
-- `add_messages()`: 批量添加消息
-- `get_messages()`: 获取消息
-- `get_formatted_messages()`: 获取格式化消息（用于 API）
-- `clear()`: 清空历史
-- `save()`: 保存历史
-- `load()`: 加载历史
-- `export()`: 导出历史
-- `get_statistics()`: 获取统计信息
-
-### TemplateManager
-
-模板管理器类。
-
-**方法**:
-- `create_template()`: 创建模板
-- `register_template()`: 注册模板
-- `get_template()`: 获取模板
-- `format_template()`: 格式化模板
-- `compose()`: 组合模板
-- `compose_messages()`: 组合为消息列表
-- `list_templates()`: 列出模板
-- `remove_template()`: 删除模板
-- `save()`: 保存模板
-- `load()`: 加载模板
+- `prepare_multimodal_content()`: 准备多模态 content 列表
+- `extract_images_from_message()`: 从消息中提取图像
+- `extract_text_from_message()`: 从消息中提取文本
+- `validate_multimodal_message()`: 验证多模态消息格式
+- `count_tokens_multimodal()`: 估算多模态 token 数量
 
 ### ImageGeneratorRegistry
 
@@ -899,7 +729,7 @@ result = registry.generate(
 
 1. **API Keys**: 确保正确配置 API Keys，可以通过环境变量或配置文件设置
 2. **模型可用性**: 某些模型可能需要特定的 API 访问权限
-3. **Token 限制**: 注意模型的 token 限制，使用 `MessageUtils.estimate_tokens()` 进行估算
+3. **Token 限制**: 注意模型上下文窗口与 `max_tokens` 配置，必要时缩短输入内容
 4. **多模态支持**: 只有部分模型支持多模态输入，请参考 [MODELS.md](./MODELS.md)
 5. **Ollama**: 使用 Ollama 模型需要本地运行 Ollama 服务器
 6. **异步调用**: 异步方法需要使用 `await` 关键字

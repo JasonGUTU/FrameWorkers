@@ -9,6 +9,7 @@ from pathlib import Path
 import yaml
 import json
 import os
+import re
 
 
 class ConfigLoader:
@@ -67,8 +68,6 @@ class ConfigLoader:
         if isinstance(obj, str):
             # Support ${VAR_NAME} syntax
             if "${" in obj:
-                import re
-
                 pattern = r"\$\{([^}]+)\}"
 
                 def replace_var(match):
@@ -84,52 +83,79 @@ class ConfigLoader:
         return obj
 
     @staticmethod
-    def save(config: Dict[str, Any], config_path: str, format: str = "yaml"):
-        """
-        Save configuration to file
-
-        Args:
-            config: Configuration dictionary
-            config_path: Path to save configuration file
-            format: File format ('yaml' or 'json')
-        """
-        path = Path(config_path)
-        path.parent.mkdir(parents=True, exist_ok=True)
-
-        with open(path, "w", encoding="utf-8") as f:
-            if format.lower() == "yaml":
-                yaml.dump(config, f, default_flow_style=False, allow_unicode=True)
-            elif format.lower() == "json":
-                json.dump(config, f, indent=2, ensure_ascii=False)
-            else:
-                raise ValueError(f"Unsupported format: {format}")
-
-    @staticmethod
-    def find_config_file(
-        filename: str, search_paths: Optional[list] = None
+    def find_file_upwards(
+        filename: str,
+        start_path: Optional[str] = None,
     ) -> Optional[str]:
         """
-        Find configuration file in common locations
+        Find a file by searching current directory upwards.
 
         Args:
-            filename: Name of configuration file
-            search_paths: Optional list of paths to search
+            filename: File name to search for.
+            start_path: Optional starting directory. Defaults to cwd.
 
         Returns:
-            Path to configuration file if found, None otherwise
+            Absolute path to file if found, None otherwise.
         """
-        if search_paths is None:
-            # Default search paths
-            search_paths = [
-                ".",
-                "~/.config/inference",
-                "/etc/inference",
-            ]
-
-        for search_path in search_paths:
-            expanded_path = Path(search_path).expanduser()
-            config_file = expanded_path / filename
-            if config_file.exists():
-                return str(config_file)
-
+        current = Path(start_path).expanduser().resolve() if start_path else Path.cwd().resolve()
+        for candidate_dir in [current, *current.parents]:
+            candidate = candidate_dir / filename
+            if candidate.exists() and candidate.is_file():
+                return str(candidate)
         return None
+
+    @staticmethod
+    def load_env_file(
+        env_path: Optional[str] = None,
+        *,
+        override: bool = False,
+    ) -> Optional[str]:
+        """
+        Load key/value pairs from a .env file into process environment.
+
+        Supports lines like:
+        - KEY=value
+        - export KEY=value
+        - empty lines / comments
+
+        Args:
+            env_path: Optional explicit env file path. If not provided,
+                search from cwd upwards for ".env".
+            override: If True, override existing environment variables.
+
+        Returns:
+            Loaded env file path if found and parsed; otherwise None.
+        """
+        resolved_path = env_path
+        if not resolved_path:
+            resolved_path = ConfigLoader.find_file_upwards(filename=".env")
+        if not resolved_path:
+            return None
+
+        path = Path(resolved_path)
+        if not path.exists() or not path.is_file():
+            return None
+
+        for raw_line in path.read_text(encoding="utf-8").splitlines():
+            line = raw_line.strip()
+            if not line or line.startswith("#"):
+                continue
+            if line.startswith("export "):
+                line = line[len("export ") :].strip()
+            if "=" not in line:
+                continue
+
+            key, value = line.split("=", 1)
+            key = key.strip()
+            value = value.strip()
+            if not key:
+                continue
+
+            # Strip paired quotes for common .env styles.
+            if len(value) >= 2 and value[0] == value[-1] and value[0] in {"'", '"'}:
+                value = value[1:-1]
+
+            if override or key not in os.environ:
+                os.environ[key] = value
+
+        return str(path)

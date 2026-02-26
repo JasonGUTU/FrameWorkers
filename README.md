@@ -61,6 +61,20 @@ FrameWorkers/
 │   ├── (manual API runner moved to `tests/dynamic_task_stack/manual_api_runner.py`)
 │   ├── README.md                    # Backend 详细文档
 │   └── USAGE_EXAMPLES.md            # 使用示例
+├── inference/                       # 推理与多模态能力库
+│   ├── __init__.py                  # inference 对外导出入口
+│   ├── runtime/                     # LLM 运行时
+│   │   ├── base_client.py           # BaseLLMClient + Message/ModelConfig + 兼容导出
+│   │   └── clients/                 # 具体客户端实现
+│   │       ├── default_client.py    # 默认 LLMClient（LiteLLM completion + OpenAI chat）
+│   │       ├── gpt5_client.py       # GPT-5 专用 chat 参数实现
+│   │       └── custom_model.py      # 自研模型客户端（如 Ollama）
+│   ├── generation/                  # image/video/audio 生成器与服务
+│   ├── multimodal/                  # 多模态工具
+│   ├── prompt/                      # prompt 与 history 工具
+│   ├── config/                      # 模型注册与配置加载
+│   ├── README.md                    # inference 详细文档
+│   └── MODELS.md                    # 模型清单
 ├── interface/                       # 前端界面
 │   ├── src/
 │   │   ├── App.vue                  # 主应用组件
@@ -132,7 +146,17 @@ Agent 自动发现和注册框架：
 
 详细文档：[director_agent/README.md](./director_agent/README.md)
 
-### 5. Workspace
+### 5. Inference Module
+
+统一提供 LLM 运行时与多模态生成能力：
+
+- **公共抽象层**：`inference/runtime/base_client.py` 统一定义 `BaseLLMClient`、消息结构与导出入口
+- **具体客户端层**：`inference/runtime/clients/` 下按实现拆分（`default_client.py`、`gpt5_client.py`、`custom_model.py`）
+- **生成能力层**：`inference/generation/` 提供 image/video/audio 三类 registry + service
+
+详细文档：[inference/README.md](./inference/README.md)
+
+### 6. Workspace
 
 全局共享工作空间：
 
@@ -143,7 +167,7 @@ Agent 自动发现和注册框架：
 
 详细文档：[dynamic-task-stack/src/assistant/workspace/README.md](./dynamic-task-stack/src/assistant/workspace/README.md)
 
-### 6. Interface
+### 7. Interface
 
 Web 前端界面：
 
@@ -343,6 +367,7 @@ POST /api/assistant/execute
 - [dynamic-task-stack/README.md](./dynamic-task-stack/README.md) - Backend 详细文档
 - [agents/README.md](./agents/README.md) - Agents 开发指南
 - [director_agent/README.md](./director_agent/README.md) - Director Agent 文档
+- [inference/README.md](./inference/README.md) - 推理与多模态能力文档
 - [interface/README.md](./interface/README.md) - 前端文档
 - [AGENTS_MIGRATION.md](./AGENTS_MIGRATION.md) - Agents 迁移说明
 

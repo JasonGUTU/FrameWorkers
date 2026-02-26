@@ -1,12 +1,10 @@
 """
-Inference Module - Language Model Inference and Prompt Processing Tools
+Inference Module - Language Model Inference and Input Processing Tools.
 
 This module provides:
 - Universal model calling interface (LiteLLM wrapper)
 - Custom model interface support (Ollama, etc.)
-- Multimodal support (image encoding/decoding)
-- Prompt processing tools (message compression, history persistence)
-- Prompt templates and composition utilities
+- Input processing support (text/image helpers)
 """
 
 from .runtime.base_client import (
@@ -18,11 +16,8 @@ from .runtime.base_client import (
     MessageRole,
     ModelConfig,
 )
-from .multimodal.image_utils import ImageUtils
-from .multimodal.multimodal_utils import MultimodalUtils
-from .prompt.message_utils import MessageUtils
-from .prompt.history import MessageHistory
-from .prompt.templates import PromptTemplate, TemplateManager
+from .input_processing.image_utils import ImageUtils
+from .input_processing.message_utils import InputUtils, MessageUtils, MultimodalUtils
 from .config.model_config import ModelRegistry, get_model_config
 from .generation.base_generator import (
     BaseAudioGenerator,
@@ -57,11 +52,9 @@ __all__ = [
     "ModelConfig",
     "CustomModelClient",
     "ImageUtils",
-    "MultimodalUtils",
+    "InputUtils",
     "MessageUtils",
-    "MessageHistory",
-    "PromptTemplate",
-    "TemplateManager",
+    "MultimodalUtils",
     "ModelRegistry",
     "get_model_config",
     "BaseAudioGenerator",

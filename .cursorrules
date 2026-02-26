@@ -82,14 +82,17 @@ Entry: `python -m director_agent.main` or `python director_agent/run.py`
 - `AgentRegistry`: discovers sync agents from `agents/` subdirs, registers pipeline agents from `AGENT_REGISTRY`
 - `descriptor.py`: `SubAgentDescriptor` manifest — factories, input builders, catalog
 - `base_evaluator.py`: 3-layer evaluation (structural → creative → asset)
-- `llm_client.py`: async OpenAI-compatible LLM client
+- LLM runtime client comes from `inference/runtime/base_client.py`
 - Pipeline sub-agents: `story/`, `screenplay/`, `storyboard/`, `keyframe/`, `video/`, `audio/`, `example_agent/`
 - Each has: `agent.py`, `schema.py`, `evaluator.py`, `descriptor.py`; media agents add `materializer.py`, `service.py`
 - Auto-discovered by `AgentRegistry` at startup via filesystem scan
 
 ### 4. `inference/` — LLM & Multimodal Library
 
-- `core/`: `LLMClient` (LiteLLM wrapper), `ModelConfig`, `CustomModelClient` (Ollama)
+- `runtime/base_client.py`: `BaseLLMClient`, `ModelConfig`, `Message`, compatibility exports
+- `runtime/clients/default_client.py`: default `LLMClient` implementation
+- `runtime/clients/gpt5_client.py`: GPT-5 specific client implementation
+- `runtime/clients/custom_model.py`: `CustomModelClient` (Ollama/custom backend)
 - `config/`: `ModelRegistry`, `get_model_config`; supports OpenAI, Anthropic, Google, Ollama
 - `multimodal/`: `ImageUtils`, `MultimodalUtils` (base64, resize, message helpers)
 - `prompt/`: `MessageUtils` (compress/truncate), `MessageHistory`, `PromptTemplate`
@@ -183,7 +186,6 @@ FrameWorkers/
 │   ├── base_evaluator.py
 │   ├── descriptor.py                #   SubAgentDescriptor
 │   ├── common_schema.py
-│   ├── llm_client.py
 │   ├── sync_adapter.py
 │   ├── agent_registry.py
 │   ├── story/                       #   agent.py  schema.py  evaluator.py  descriptor.py
@@ -229,8 +231,13 @@ FrameWorkers/
 │       └── test_agent_core.py
 │
 ├── inference/                       # ★ LLM & multimodal library (standalone)
-│   ├── core/                        #   LLMClient, ModelConfig, CustomModelClient
-│   ├── config/                      #   ModelRegistry, inference_config.yaml.example
+│   ├── runtime/                     #   Base client + concrete client implementations
+│   │   ├── base_client.py           #   BaseLLMClient + ModelConfig + Message + exports
+│   │   └── clients/
+│   │       ├── default_client.py    #   Default LLMClient implementation
+│   │       ├── gpt5_client.py       #   GPT-5 specific implementation
+│   │       └── custom_model.py      #   Ollama/custom model client
+│   ├── config/                      #   ModelRegistry, config_loader, inference_config.yaml.example
 │   ├── multimodal/                  #   ImageUtils, MultimodalUtils
 │   ├── prompt/                      #   MessageUtils, MessageHistory, PromptTemplate
 │   ├── generation/                  #   Image/Video generator registries

@@ -4,7 +4,8 @@
 
 **目录结构说明：**
 - `agents/`（根目录）：Agent 核心框架和所有 Agent 实现
-  - 核心框架文件：`base_agent.py`, `base_evaluator.py`, `descriptor.py`, `llm_client.py`, `common_schema.py`, `agent_registry.py`
+  - 核心框架文件：`base_agent.py`, `base_evaluator.py`, `descriptor.py`, `common_schema.py`, `agent_registry.py`
+  - LLM 运行时客户端统一来自：`inference/runtime/base_client.py`（具体实现在 `inference/runtime/clients/`）
   - Pipeline Agent 子包：`story/`, `screenplay/`, `storyboard/`, `keyframe/`, `video/`, `audio/`
   - 示例 Agent：`example_agent/`
 

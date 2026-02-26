@@ -24,6 +24,44 @@ from src.app import create_app
 import src.assistant.routes as routes_module
 import src.assistant.service as service_module
 from src.assistant.storage import AssistantStorage
+from inference.runtime.clients.default_client import LLMClient
+
+
+def _is_live_llm_env_ready() -> tuple[bool, str]:
+    """Check whether live LLM e2e preconditions are satisfied."""
+    if os.getenv("FW_ENABLE_LIVE_LLM_TESTS") != "1":
+        return (
+            False,
+            "Live LLM e2e test disabled. Set FW_ENABLE_LIVE_LLM_TESTS=1 to run.",
+        )
+
+    try:
+        client = LLMClient()
+        resolved_model = client.model or client.default_model
+        provider = client.resolve_provider_for_model(resolved_model)
+        routing = client.get_runtime_routing()
+        provider_key_env = (
+            routing.get("provider_key_env", {}).get(provider)
+            if isinstance(routing, dict)
+            else None
+        ) or f"{provider.upper()}_API_KEY"
+        key_value = os.getenv(provider_key_env, "").strip()
+    except Exception as exc:
+        return False, f"Live LLM e2e precheck failed: {exc}"
+
+    if not key_value:
+        return (
+            False,
+            (
+                "Live LLM e2e test missing provider key. "
+                f"Set {provider_key_env} or configure routing/api_keys."
+            ),
+        )
+
+    return True, ""
+
+
+_LIVE_READY, _LIVE_SKIP_REASON = _is_live_llm_env_ready()
 
 
 class _DummyPipelineResult:
@@ -222,11 +260,8 @@ def test_assistant_e2e_http_flow_covers_core_endpoints(assistant_http_client):
 
 
 @pytest.mark.skipif(
-    os.getenv("FW_ENABLE_LIVE_LLM_TESTS") != "1" or not os.getenv("OPENAI_API_KEY"),
-    reason=(
-        "Live LLM e2e test disabled. Set FW_ENABLE_LIVE_LLM_TESTS=1 and OPENAI_API_KEY "
-        "to run."
-    ),
+    not _LIVE_READY,
+    reason=_LIVE_SKIP_REASON,
 )
 @pytest.mark.parametrize(
     "agent_id,task_goal,additional_inputs",
