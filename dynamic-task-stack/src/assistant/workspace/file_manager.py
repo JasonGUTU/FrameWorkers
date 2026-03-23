@@ -1,13 +1,16 @@
 # File Manager - Manages all file resources in the workspace
 
-import os
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 from datetime import datetime
 import uuid
 import json
+import logging
+import re
 
 from .models import FileMetadata
+
+logger = logging.getLogger(__name__)
 
 
 class FileManager:
@@ -58,7 +61,7 @@ class FileManager:
                         meta_dict['created_at'] = datetime.fromisoformat(meta_dict['created_at'])
                         self._file_metadata[file_id] = FileMetadata(**meta_dict)
             except Exception as e:
-                print(f"Warning: Failed to load file metadata: {e}")
+                logger.warning("Failed to load file metadata: %s", e)
 
     # ------------------------------------------------------------------
     # Internal boundary helpers
@@ -104,7 +107,12 @@ class FileManager:
         self._file_counter += 1
         extension = self._get_file_extension(filename)
         file_id = f"file_{self._file_counter:06d}_{uuid.uuid4().hex[:8]}"
-        numbered_filename = f"file_{self._file_counter:06d}{extension}"
+        stem = Path(filename).stem
+        # Keep runtime file paths readable and filesystem-safe.
+        safe_stem = re.sub(r"[^a-zA-Z0-9._-]+", "_", stem).strip("._-").lower()
+        if not safe_stem:
+            safe_stem = "asset"
+        numbered_filename = f"{safe_stem}_file_{self._file_counter:06d}{extension}"
         return {
             "file_id": file_id,
             "extension": extension,
@@ -152,7 +160,7 @@ class FileManager:
             with open(metadata_file, 'w', encoding='utf-8') as f:
                 json.dump(data, f, indent=2, ensure_ascii=False)
         except Exception as e:
-            print(f"Warning: Failed to save file metadata: {e}")
+            logger.warning("Failed to save file metadata: %s", e)
     
     def _get_file_extension(self, filename: str) -> str:
         """Extract file extension from filename"""
@@ -227,45 +235,6 @@ class FileManager:
         
         return file_metadata
     
-    def store_file_from_path(
-        self,
-        source_path: str,
-        description: str,
-        created_by: Optional[str] = None,
-        tags: Optional[List[str]] = None,
-        metadata: Optional[Dict[str, Any]] = None
-    ) -> FileMetadata:
-        """
-        Store a file from an existing file path
-        
-        Args:
-            source_path: Path to the source file
-            description: Description of the file
-            created_by: Agent ID or user ID who created the file
-            tags: Optional list of tags
-            metadata: Optional additional metadata
-        
-        Returns:
-            FileMetadata instance
-        """
-        source = Path(source_path)
-        if not source.exists():
-            raise FileNotFoundError(f"Source file not found: {source_path}")
-        
-        # Read file content
-        with open(source, 'rb') as f:
-            file_content = f.read()
-        
-        # Store using store_file
-        return self.store_file(
-            file_content=file_content,
-            filename=source.name,
-            description=description,
-            created_by=created_by,
-            tags=tags,
-            metadata=metadata
-        )
-    
     def get_file(self, file_id: str) -> Optional[FileMetadata]:
         """
         Get file metadata by ID
@@ -293,11 +262,21 @@ class FileManager:
             return None
         
         file_path = Path(metadata.file_path)
-        if not file_path.exists():
+        return self.read_binary_from_uri(str(file_path))
+
+    def read_binary_from_uri(self, uri: str) -> Optional[bytes]:
+        """Read binary payload from a filesystem uri/path."""
+        if not uri:
             return None
-        
-        with open(file_path, 'rb') as f:
-            return f.read()
+
+        file_path = Path(uri)
+        if not file_path.exists() or not file_path.is_file():
+            return None
+
+        try:
+            return file_path.read_bytes()
+        except Exception:
+            return None
     
     def list_files(
         self,
@@ -393,57 +372,13 @@ class FileManager:
             try:
                 file_path.unlink()
             except Exception as e:
-                print(f"Warning: Failed to delete file {file_path}: {e}")
+                logger.warning("Failed to delete file %s: %s", file_path, e)
         
         # Remove from metadata
         del self._file_metadata[file_id]
         self._save_metadata()
         
         return True
-    
-    def update_file_metadata(
-        self,
-        file_id: str,
-        description: Optional[str] = None,
-        tags: Optional[List[str]] = None,
-        metadata: Optional[Dict[str, Any]] = None
-    ) -> bool:
-        """
-        Update file metadata
-        
-        Args:
-            file_id: File ID
-            description: New description (optional)
-            tags: New tags (optional)
-            metadata: Additional metadata to merge (optional)
-        
-        Returns:
-            True if updated successfully, False otherwise
-        """
-        file_meta = self._file_metadata.get(file_id)
-        if file_meta is None:
-            return False
-        
-        if description is not None:
-            file_meta.description = description
-        
-        if tags is not None:
-            file_meta.tags = tags
-        
-        if metadata is not None:
-            file_meta.metadata.update(metadata)
-        
-        self._save_metadata()
-        return True
-    
-    def get_all_files(self) -> List[FileMetadata]:
-        """
-        Get all files in the workspace
-        
-        Returns:
-            List of all FileMetadata instances
-        """
-        return list(self._file_metadata.values())
     
     def get_file_count(self) -> int:
         """Get total number of files"""

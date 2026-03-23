@@ -149,15 +149,25 @@ class ModelRegistry:
     
     # Google models
     GOOGLE_MODELS = {
-        "gemini-pro": ModelInfo(
-            name="Gemini Pro",
+        "google-ai-studio/gemini-2.5-flash": ModelInfo(
+            name="Gemini 2.5 Flash",
             provider="google",
-            model_id="gemini-pro",
+            model_id="google-ai-studio/gemini-2.5-flash",
             supports_streaming=True,
-            supports_multimodal=False,
+            supports_multimodal=True,
             max_tokens=8192,
-            context_window=32768,
-            description="Google Gemini Pro model"
+            context_window=1048576,
+            description="Google AI Studio Gemini 2.5 Flash model"
+        ),
+        "gemini-pro": ModelInfo(
+            name="Gemini Pro (Alias to Gemini 2.5 Flash)",
+            provider="google",
+            model_id="google-ai-studio/gemini-2.5-flash",
+            supports_streaming=True,
+            supports_multimodal=True,
+            max_tokens=8192,
+            context_window=1048576,
+            description="Compatibility alias to Google AI Studio Gemini 2.5 Flash"
         ),
         "gemini-pro-vision": ModelInfo(
             name="Gemini Pro Vision",

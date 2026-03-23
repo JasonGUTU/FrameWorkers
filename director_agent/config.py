@@ -14,6 +14,10 @@ DIRECTOR_AGENT_DESCRIPTION = os.getenv(
     'DIRECTOR_AGENT_DESCRIPTION',
     'Director Agent responsible for reasoning, planning, and task orchestration'
 )
+DIRECTOR_MEMORY_MODEL = os.getenv(
+    'DIRECTOR_MEMORY_MODEL',
+    os.getenv('INFERENCE_DEFAULT_MODEL', 'google-ai-studio/gemini-2.5-flash')
+)
 
 # Logging
 LOG_LEVEL = os.getenv('LOG_LEVEL', 'INFO')

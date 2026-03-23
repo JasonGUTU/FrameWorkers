@@ -1,0 +1,282 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "display_name": "",
+          "purpose": "style_anchor",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_141901_324081/img_loc_001_global_file_000004.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "The visual style should be intimate and detail-oriented, with a focus on Arthur's hands and the intricate watch. Lighting should be warm and atmospheric, primarily sourced from the workbench lamp, creating deep shadows and high contrasts to emphasize concentration and the passage of time. Use shallow depth of field to isolate key elements. The color palette should be muted, allowing the metallic gleam of the watch and the occasional flash of light to stand out. The tone should evoke a sense of quiet reverence, tension, and ultimate peace. Must avoid: Overly bright or flat lighting that diminishes the dramatic effect. Rapid, disorienting camera movements that distract from the delicate work. A chaotic or messy visual style that undermines the precision of watchmaking. A cozy, intimate watchmaker's workshop, meticulously cluttered yet organized, showcasing years of dedicated craftsmanship. The primary light source is a focused workbench lamp, casting an intense, warm pool of light directly onto the central work area, illuminating an intricate watch and delicate tools. The surrounding workshop is dimly lit, creating deep shadows and high contrasts, enhancing a sense of isolation and profound focus. In the background, a large window is visible, dark with only subtle hints of festive lights or distant activity from outside, contrasting the quiet, intense interior with an impending external celebration. Various small components, specialized tools, and aged watchmaking equipment are neatly arranged on shelves and within wooden drawers, reflecting a lifetime of work. The atmosphere is one of quiet dedication and intense concentration."
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_141901_324081/img_loc_001_sc_001_file_000005.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "The visual style should be intimate and detail-oriented, with a focus on Arthur's hands and the intricate watch. Lighting should be warm and atmospheric, primarily sourced from the workbench lamp, creating deep shadows and high contrasts to emphasize concentration and the passage of time. Use shallow depth of field to isolate key elements. The color palette should be muted, allowing the metallic gleam of the watch and the occasional flash of light to stand out. The tone should evoke a sense of quiet reverence, tension, and ultimate peace. Show Arthur's cozy and intimate workshop at night, filled with organized tools and components. The scene is predominantly lit by a focused workbench lamp, casting a warm, intense pool of light onto the work area and creating deep shadows in the dimly lit surroundings, enhancing a sense of isolation. A window in the background remains dark, showing only subtle hints of a festive night outside, creating a stark contrast with the quiet, focused interior."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_001",
+              "linked_blocks": [
+                "b_001"
+              ]
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_141901_324081/img_sh_001_kf_01_file_000006.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "The visual style should be intimate and detail-oriented, with a focus on Arthur's hands and the intricate watch. Lighting should be warm and atmospheric, primarily sourced from the workbench lamp, creating deep shadows and high contrasts to emphasize concentration and the passage of time. Use shallow depth of field to isolate key elements. The color palette should be muted, allowing the metallic gleam of the watch and the occasional flash of light to stand out. The tone should evoke a sense of quiet reverence, tension, and ultimate peace. Extreme high-angle close-up shot focused tightly on Arthur's weathered hands. He is meticulously manipulating the internal components of an antique, exquisitely detailed gold pocket watch (prop_001) under a worn watchmaker's loupe (prop_002). A focused workbench lamp (prop_005) illuminates the scene with a warm, intense glow, highlighting every intricate detail of the watch mechanism and the precision tools, creating sharp contrasts and deep shadows. The pocket watch rests on a clean, soft precision watchmaker's bench mat (prop_006). Shallow depth of field ensures the hands, watch, and loupe are in sharp focus, establishing the delicate nature of the task and Arthur's intense concentration.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_002",
+              "linked_blocks": [
+                "b_001",
+                "b_002"
+              ]
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_002",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_141901_324081/img_sh_002_kf_01_file_000009.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "The visual style should be intimate and detail-oriented, with a focus on Arthur's hands and the intricate watch. Lighting should be warm and atmospheric, primarily sourced from the workbench lamp, creating deep shadows and high contrasts to emphasize concentration and the passage of time. Use shallow depth of field to isolate key elements. The color palette should be muted, allowing the metallic gleam of the watch and the occasional flash of light to stand out. The tone should evoke a sense of quiet reverence, tension, and ultimate peace. Medium eye-level shot showing Arthur (char_001) hunched over his workbench, his back slightly curved, embodying intense focus. He holds fine-tipped tweezers (prop_003) with extreme care, his gaze, enhanced by the watchmaker's loupe (prop_002), fixed on a tiny screw within the antique pocket watch (prop_001). The workbench lamp (prop_005) casts a warm, focused light on his work, creating dramatic shadows around him. In the dimly lit background, subtly visible in the periphery, a small digital clock (prop_007) displays a countdown, showing '00:00:10' to '00:00:08', adding a quiet sense of mounting tension. Shallow depth of field keeps Arthur and his immediate workspace sharp.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_003",
+              "linked_blocks": [
+                "b_003"
+              ]
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_003",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_141901_324081/img_sh_003_kf_01_file_000011.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "The visual style should be intimate and detail-oriented, with a focus on Arthur's hands and the intricate watch. Lighting should be warm and atmospheric, primarily sourced from the workbench lamp, creating deep shadows and high contrasts to emphasize concentration and the passage of time. Use shallow depth of field to isolate key elements. The color palette should be muted, allowing the metallic gleam of the watch and the occasional flash of light to stand out. The tone should evoke a sense of quiet reverence, tension, and ultimate peace. Eye-level close-up shot, with a slight tremor in the camera, intensely focused on Arthur's hand as it holds fine-tipped tweezers (prop_003). The minuscule screw, caught between the tweezers, is barely perceptible but visibly wobbling, threatening to slip. The antique pocket watch (prop_001) is blurred just beneath, emphasizing the fragility of the moment and Arthur's momentary loss of composure. The warm light from the workbench lamp creates stark highlights on the metallic tweezers and subtle shadows, highlighting the delicate tension. A tiny screwdriver (prop_004) lies nearby, just out of sharp focus, reinforcing the meticulous environment.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "source": {
+              "storyboard_shot_id": "sh_004",
+              "linked_blocks": [
+                "b_004"
+              ]
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_004",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_141901_324081/img_sh_004_kf_01_file_000012.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "The visual style should be intimate and detail-oriented, with a focus on Arthur's hands and the intricate watch. Lighting should be warm and atmospheric, primarily sourced from the workbench lamp, creating deep shadows and high contrasts to emphasize concentration and the passage of time. Use shallow depth of field to isolate key elements. The color palette should be muted, allowing the metallic gleam of the watch and the occasional flash of light to stand out. The tone should evoke a sense of quiet reverence, tension, and ultimate peace. Medium close-up, eye-level shot on Arthur's (char_001) face, his worn watchmaker's loupe (prop_002) still perched over one eye. His brow is furrowed with deep concentration, but a visible tension washes over his features as he takes a slow, deep breath. The warm, directed light from the workbench lamp illuminates the contours of his face, emphasizing the shadows and highlights, capturing the nuanced internal battle. His eyes, though partially obscured by the loupe, show a gradual shift from strain to regained piercing clarity and determination. The background is softly blurred with shallow depth of field, maintaining focus on his expression.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 5,
+            "source": {
+              "storyboard_shot_id": "sh_005",
+              "linked_blocks": [
+                "b_005"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_005",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_141901_324081/img_sh_005_kf_01_file_000007.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "The visual style should be intimate and detail-oriented, with a focus on Arthur's hands and the intricate watch. Lighting should be warm and atmospheric, primarily sourced from the workbench lamp, creating deep shadows and high contrasts to emphasize concentration and the passage of time. Use shallow depth of field to isolate key elements. The color palette should be muted, allowing the metallic gleam of the watch and the occasional flash of light to stand out. The tone should evoke a sense of quiet reverence, tension, and ultimate peace. Ultra-tight, eye-level extreme close-up shot focused on the intricate mechanics of the antique pocket watch (prop_001). The scene captures the exact, exquisite moment a minuscule screw, guided by the tip of a tiny screwdriver (prop_004), slides perfectly into place. Simultaneously, the delicate balance wheel receives a gentle nudge, visibly activating and beginning its rhythmic oscillation. The warm, focused light from the workbench lamp creates incredible highlights on the metallic gears and springs, making every minute detail of the mechanism spectacularly clear, surrounded by deep, soft shadows. Shallow depth of field makes the tiny moving parts the absolute focal point.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 6,
+            "source": {
+              "storyboard_shot_id": "sh_006",
+              "linked_blocks": [
+                "b_006"
+              ]
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_006",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_141901_324081/img_sh_006_kf_01_file_000008.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "The visual style should be intimate and detail-oriented, with a focus on Arthur's hands and the intricate watch. Lighting should be warm and atmospheric, primarily sourced from the workbench lamp, creating deep shadows and high contrasts to emphasize concentration and the passage of time. Use shallow depth of field to isolate key elements. The color palette should be muted, allowing the metallic gleam of the watch and the occasional flash of light to stand out. The tone should evoke a sense of quiet reverence, tension, and ultimate peace. Medium wide, eye-level shot showing Arthur (char_001) slowly removing his watchmaker's loupe (prop_002) from his eye. His face, illuminated by the warm workbench lamp, shows an expression of profound relief and quiet triumph, forming a subtle, hopeful smile as he holds the antique pocket watch (prop_001). The distinct, rhythmic ticking of the watch is palpable. The background of his workshop is softly blurred with shallow depth of field, emphasizing Arthur and the watch in the immediate foreground, just before the external celebration begins.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_007",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_02",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_141901_324081/img_sh_006_kf_02_file_000010.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "The visual style should be intimate and detail-oriented, with a focus on Arthur's hands and the intricate watch. Lighting should be warm and atmospheric, primarily sourced from the workbench lamp, creating deep shadows and high contrasts to emphasize concentration and the passage of time. Use shallow depth of field to isolate key elements. The color palette should be muted, allowing the metallic gleam of the watch and the occasional flash of light to stand out. The tone should evoke a sense of quiet reverence, tension, and ultimate peace. Medium wide, eye-level shot. A smooth rack focus or subtle pan from Arthur's contented face (partially visible, perhaps a blurred silhouette in the foreground) shifts to the workshop window (prop_008). Outside, the dark night sky is dramatically punctuated by the first brilliant burst of New Year's fireworks, their vibrant colors reflecting momentarily on the glass. This visual explosion synchronizes with the quiet, steady ticking of the pocket watch (prop_001), which might be held gently in Arthur's hand, creating a profound sense of peace and closure, connecting his personal triumph with the joyous external celebration. The lighting from the workbench lamp still provides a warm glow within the workshop, contrasting with the bright, fleeting lights of the fireworks.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_count": 6,
+    "keyframe_count_total": 7,
+    "avg_keyframes_per_shot": 1.1666666666666667,
+    "global_character_anchor_count": 0,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 0,
+    "stability_location_keyframe_count": 1,
+    "stability_prop_keyframe_count": 0
+  }
+}

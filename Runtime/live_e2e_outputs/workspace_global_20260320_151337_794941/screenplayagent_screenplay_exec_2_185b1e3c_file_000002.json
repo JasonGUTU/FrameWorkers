@@ -1,0 +1,188 @@
+{
+  "meta": {
+    "project_id": "",
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-20T15:13:57.088934+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "Midnight Tick",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Elias's Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Elias, a retired watchmaker, races against the final seconds before midnight to repair his late wife's cherished pocket watch. A momentary error causes his hands to tremble, but he overcomes his grief and fear to complete the delicate repair just as the New Year begins, finding a quiet, hopeful connection.",
+        "estimated_duration": {
+          "seconds": 10.0,
+          "confidence": 0.9
+        },
+        "continuity": {
+          "props_present": [
+            "pocket watch",
+            "watchmaker's tools (tweezers, loupe)",
+            "desk lamp",
+            "workbench",
+            "small gears",
+            "digital clock",
+            "framed photo"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A well-worn, long-sleeved shirt with a practical, slightly stained apron over it. His spectacles are perched on his nose.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Elias is repairing his late wife's watch.",
+            "It is New Year's Eve, just before midnight.",
+            "Elias's hands tremble under pressure.",
+            "The watch ticks at midnight.",
+            "Fireworks are heard/seen at midnight."
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_001",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "CLOSE ON a vintage POCKET WATCH, its delicate mechanisms exposed under a bright desk lamp. ELIAS THORNE (80s, frail but focused), a magnifying loupe fixed to his eye, hovers over it with a pair of tiny tweezers. A digital clock on the workbench blares 00:00:10. TEN SECONDS TO MIDNIGHT.",
+            "continuity_refs": {
+              "props": [
+                "pocket watch",
+                "desk lamp",
+                "magnifying loupe",
+                "tweezers",
+                "digital clock",
+                "workbench"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_002",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "His breath hitches. This isn't just any repair; it's HERS. His late wife's watch, meant to chime the New Year.",
+            "continuity_refs": {
+              "props": [
+                "pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_003",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "His hand, usually steady as stone, TREMBLES. A microscopic gear SLIPS from the tweezers, bouncing on the workbench, rolling precariously close to the edge. His eyes widen in panic.",
+            "continuity_refs": {
+              "props": [
+                "tweezers",
+                "small gear",
+                "workbench"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_004",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The digital clock clicks: 00:00:05. Elias forces a deep, shaky breath, eyes darting to a framed photo of his smiling wife on the bench. Her gentle gaze seems to steady him.",
+            "continuity_refs": {
+              "props": [
+                "digital clock",
+                "framed photo"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_005",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "With renewed precision, he snatches the rogue gear. His fingers, now firm, guide it back into place. He delicately closes the watch casing.",
+            "continuity_refs": {
+              "props": [
+                "small gear",
+                "watch casing",
+                "pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_006",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The digital clock hits 00:00:01. He holds the watch to his ear, a hopeful grimace on his face.",
+            "continuity_refs": {
+              "props": [
+                "digital clock",
+                "pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_007",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "00:00:00. A soft, distinct TICK emanates from the watch. Simultaneously, a burst of FIREWORKS EXPLODES outside the window, painting the night sky in vibrant colors. Elias lets out a long, slow breath, a faint, peaceful smile gracing his lips. He clutches the ticking watch to his chest, looking towards the window, a quiet moment of connection found.",
+            "continuity_refs": {
+              "props": [
+                "pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "Elias overcomes his trembling hands and successfully repairs the watch at the last second, signifying a hopeful new beginning.",
+          "emotional_shift": "From tense grief and panic to profound peace and a sense of enduring connection."
+        }
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "estimated_total_duration_sec": 10.0,
+    "sum_scene_duration_sec": 10.0,
+    "scene_count": 1,
+    "dialogue_block_count": 0,
+    "action_block_count": 7
+  }
+}

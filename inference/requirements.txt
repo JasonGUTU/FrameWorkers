@@ -10,6 +10,7 @@ PyYAML>=6.0
 
 # HTTP requests (for Ollama direct API)
 requests>=2.31.0
+fal-client>=0.5.9
 
 # Optional: For better async support
 aiohttp>=3.9.0

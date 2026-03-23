@@ -1,6 +1,6 @@
 """ScreenplayAgent — produces a structured Screenplay.
 
-Input:  ScreenplayAgentInput (project_id, draft_id, story_blueprint, constraints)
+Input:  ScreenplayAgentInput (story_blueprint, constraints, user_provided_text)
 Output: ScreenplayAgentOutput (Screenplay with scenes → blocks, metrics)
 
 Two modes:
@@ -82,6 +82,9 @@ SCREENPLAY_OUTPUT_TEMPLATE = """{
 
 
 class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
+    def __init__(self, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+        self._target_duration_sec: float = 60.0
 
     # ------------------------------------------------------------------
     # Skeleton-first mode (blueprint path only)
@@ -96,6 +99,10 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
         When ``user_provided_text`` is set, returns ``None`` to use legacy
         mode — the LLM structures the raw text directly.
         """
+        self._target_duration_sec = float(
+            getattr(input_data.constraints, "target_duration_sec", 60.0) or 60.0
+        )
+
         if input_data.user_provided_text:
             return None  # user text → legacy mode
 
@@ -141,6 +148,7 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
 
         output = ScreenplayAgentOutput()
         output.content = ScreenplayContent(scenes=scenes)
+        output.metrics.target_duration_sec = self._target_duration_sec
         return output
 
     def build_creative_prompt(
@@ -209,6 +217,9 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
             "- Dialogue style: natural, filmable, concise.\n"
             "- Keep character voice consistent with profiles/motivation/flaw.\n"
             f"- Language: {input_data.constraints.language}\n\n"
+            f"- Target total duration: {input_data.constraints.target_duration_sec} seconds.\n"
+            f"- IMPORTANT: sum of all scene estimated_duration.seconds MUST stay close "
+            f"to {input_data.constraints.target_duration_sec} seconds (within +/-20%).\n\n"
             "Return JSON only."
         )
 
@@ -314,6 +325,9 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
 
         Preserves dialogue and action descriptions verbatim.
         """
+        self._target_duration_sec = float(
+            getattr(input_data.constraints, "target_duration_sec", 60.0) or 60.0
+        )
         return (
             "You are receiving raw screenplay text provided directly by the "
             "user. Your job is to **structure** this text into the required "
@@ -325,11 +339,14 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
             "--- END USER TEXT ---\n\n"
             f"Constraints:\n"
             f"- Language: {input_data.constraints.language}\n"
+            f"- Target total duration: {input_data.constraints.target_duration_sec} seconds.\n"
             f"- Assign scene_ids starting from sc_001.\n"
             f"- Assign character_ids starting from char_001.\n"
             f"- Assign location_ids starting from loc_001.\n"
             f"- Assign block_ids starting from b_001 globally.\n"
-            f"- Estimate per-scene duration (seconds, confidence).\n\n"
+            f"- Estimate per-scene duration (seconds, confidence).\n"
+            f"- Sum of all scene durations should be close to "
+            f"{input_data.constraints.target_duration_sec} seconds (+/-20%).\n\n"
             f"You MUST output JSON matching EXACTLY this structure "
             f"(fill in real content):\n"
             f"{SCREENPLAY_OUTPUT_TEMPLATE}\n\n"
@@ -343,6 +360,7 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
     def recompute_metrics(self, output: ScreenplayAgentOutput) -> None:
         c = output.content
         self._normalize_order(c.scenes)
+        output.metrics.target_duration_sec = self._target_duration_sec
         output.metrics.scene_count = len(c.scenes)
         output.metrics.dialogue_block_count = sum(
             1 for s in c.scenes for b in s.blocks if b.block_type == "dialogue"

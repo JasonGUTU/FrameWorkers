@@ -9,9 +9,9 @@ Each layer references ONLY the layer above it.
 Text descriptions (prompt_summary) are always included.
 No fallback needed — Gemini natively supports image editing.
 
-This materializer is a **pure generator** — it calls ImageService to
-produce image bytes and returns ``list[MediaAsset]``.  It never performs
-file I/O; persistence is handled exclusively by Assistant.
+This materializer calls ImageService to produce image bytes and returns
+``list[MediaAsset]`` for Assistant persistence. It does not perform local
+filesystem persistence by itself.
 """
 
 from __future__ import annotations
@@ -99,7 +99,7 @@ class KeyframeMaterializer(BaseMaterializer):
 
         l1_tasks: list[tuple[str, dict, str, str]] = []
 
-        for entity_list in ("characters", "locations", "props"):
+        for entity_list in ("characters", "locations"):
             for kf in global_anchors.get(entity_list, []):
                 eid = kf.get("entity_id", "unknown")
                 prompt = kf.get("prompt_summary", "")
@@ -144,7 +144,7 @@ class KeyframeMaterializer(BaseMaterializer):
         backfill_tasks: list[tuple[str, dict, str, str]] = []
         for scene in scenes:
             stab = scene.get("stability_keyframes", {})
-            for entity_list in ("characters", "locations", "props"):
+            for entity_list in ("characters", "locations"):
                 for kf in stab.get(entity_list, []):
                     eid = kf.get("entity_id", "unknown")
                     prompt = kf.get("prompt_summary", "")
@@ -215,7 +215,7 @@ class KeyframeMaterializer(BaseMaterializer):
             stab = scene.get("stability_keyframes", {})
             scene_stabs.append(stab)
 
-            for entity_list in ("characters", "locations", "props"):
+            for entity_list in ("characters", "locations"):
                 for kf in stab.get(entity_list, []):
                     eid = kf.get("entity_id", "unknown")
                     sys_id = f"img_{eid}_{scene_id}"
@@ -373,7 +373,7 @@ class KeyframeMaterializer(BaseMaterializer):
         return "\n" + " ".join(parts)
 
     # ------------------------------------------------------------------
-    # Layer helpers (pure generators — no file I/O)
+    # Layer helpers (generation only)
     # ------------------------------------------------------------------
 
     async def _generate(
@@ -440,11 +440,9 @@ class KeyframeMaterializer(BaseMaterializer):
         seen: set[str] = set()
 
         all_char_ids: list[str] = []
-        all_prop_ids: list[str] = []
         for kf in shot.get("keyframes", []):
             constraints = kf.get("constraints_applied", {})
             all_char_ids.extend(constraints.get("characters_in_frame", []))
-            all_prop_ids.extend(constraints.get("props_in_frame", []))
 
         for char_id in all_char_ids:
             if char_id in scene_images and char_id not in seen:
@@ -457,11 +455,6 @@ class KeyframeMaterializer(BaseMaterializer):
                 refs.append(scene_images[loc_id])
                 seen.add(loc_id)
                 break
-
-        for prop_id in all_prop_ids:
-            if prop_id in scene_images and prop_id not in seen:
-                refs.append(scene_images[prop_id])
-                seen.add(prop_id)
 
         return refs
 
@@ -498,7 +491,7 @@ class KeyframeMaterializer(BaseMaterializer):
                 ]).lower()
 
         entity_lookup: dict[str, tuple[dict[str, Any], str]] = {}
-        for entity_list in ("characters", "locations", "props"):
+        for entity_list in ("characters", "locations"):
             for kf in global_anchors.get(entity_list, []):
                 eid = kf.get("entity_id", "")
                 if eid:
@@ -507,7 +500,6 @@ class KeyframeMaterializer(BaseMaterializer):
         _TYPE_TO_CATEGORY = {
             "character": "characters",
             "location": "locations",
-            "prop": "props",
         }
 
         matched_count = 0
@@ -596,3 +588,4 @@ class KeyframeMaterializer(BaseMaterializer):
             "[L0-Ref] Reference image injection complete: %d/%d matched",
             matched_count, len(ref_images),
         )
+

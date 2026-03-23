@@ -1,0 +1,100 @@
+{
+  "meta": {
+    "project_id": "",
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-20T13:41:18.838557+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "logline": "On New Year's Eve, a grieving watchmaker races against the final seconds before midnight to repair his late wife's cherished pocket watch, finding a moment of peace and remembrance as the new year begins.",
+    "estimated_duration": {
+      "seconds": 10.0,
+      "confidence": 0.9
+    },
+    "style": {
+      "genre": [
+        "Drama",
+        "Slice of Life"
+      ],
+      "tone_keywords": [
+        "Poignant",
+        "Hopeful",
+        "Tense",
+        "Reflective"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Arthur",
+        "role": "protagonist",
+        "profile": "An elderly, retired watchmaker, still sharp-eyed and methodical, but carrying the quiet burden of recent grief for his late wife.",
+        "motivation": "To honor his late wife's memory by repairing her beloved pocket watch before a significant time (midnight on New Year's Eve), seeking a symbolic moment of closure or connection.",
+        "flaw": "His age and grief can cause his hands to tremble at critical moments, challenging his renowned precision."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Arthur's Workshop",
+        "description": "A cozy, dimly lit corner of Arthur's home, filled with the intricate tools and gears of a watchmaker's craft. The space is tidy but well-used, reflecting years of dedication. Outside a window, the city lights hint at the approaching New Year."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "climax",
+        "summary": "Arthur meticulously works on his late wife's pocket watch, fighting against the final ten seconds before midnight. A minor slip threatens to derail his progress, but he steadies himself and completes the repair, finding solace.",
+        "conflict": "Arthur battles against the ticking clock and his own emotional fragility (manifesting as a momentary tremor) to complete a delicate repair that holds deep personal significance.",
+        "turning_point": "The successful completion of the repair and the watch's first tick, immediately followed by the distant eruption of New Year's fireworks, signifying both personal achievement and the passage of time."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "resolution",
+        "summary": "With the watch now repaired and ticking, Arthur looks up from his work with a subtle smile as the New Year's fireworks begin, a moment of quiet triumph and peace.",
+        "conflict": "",
+        "turning_point": "Arthur's contented smile and the external celebration of the New Year, indicating a resolution to his internal struggle."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "For Arthur to successfully repair his late wife's pocket watch before midnight.",
+        "conflict": "Arthur's intense focus and delicate movements are momentarily interrupted by a small mistake, challenging his precision and the dwindling time.",
+        "turn": "Arthur steadies his trembling hands, makes the final crucial adjustment, and hears the soft, distinct tick of the watch just as the distant New Year's fireworks begin to explode."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Arthur experiences a moment of peace and closure.",
+        "conflict": "",
+        "turn": "Arthur looks up from the now-ticking watch, a subtle, contented smile gracing his face as the fireworks light up the sky, signaling both a new year and a quiet triumph."
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "character_count": 1,
+    "location_count": 1,
+    "scene_count": 2
+  }
+}

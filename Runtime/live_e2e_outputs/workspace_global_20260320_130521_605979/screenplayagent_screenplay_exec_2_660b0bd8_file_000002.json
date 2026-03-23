@@ -1,0 +1,409 @@
+{
+  "meta": {
+    "project_id": "",
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-20T13:05:45.647626+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "A Watchmaker's New Year",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Elias's Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Elias, a retired watchmaker, meticulously works on his late wife's pocket watch. A digital clock on his workbench counts down the final ten seconds to midnight, increasing the pressure to complete his task.",
+        "estimated_duration": {
+          "seconds": 2.5,
+          "confidence": 0.85
+        },
+        "continuity": {
+          "props_present": [
+            "pocket watch (cherished)",
+            "tiny watchmaking tools (tweezers, loupe)",
+            "workbench lamp",
+            "digital clock"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A worn but clean tweed vest over a practical long-sleeved shirt, sleeves rolled up. Spectacles perched on his nose.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "The digital clock clearly shows the countdown.",
+            "Elias is working with extreme focus."
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_001",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A SINGLE LAMP illuminates ELIAS THORNE (70s), hunched over a cluttered workbench. His hands, gnarled with age but still possessing a delicate touch, hover over an intricate POCKET WATCH.",
+            "continuity_refs": {
+              "props": [
+                "workbench lamp",
+                "pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_002",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A digital clock blares its bright red numbers: 00:00:10. Then, 00:00:09.",
+            "continuity_refs": {
+              "props": [
+                "digital clock"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_003",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Elias breathes slowly, his brow furrowed in concentration. He tries to seat a tiny spring with a pair of fine TWEEZERS. His hands tremble just slightly.",
+            "continuity_refs": {
+              "props": [
+                "tiny watchmaking tools (tweezers)",
+                "pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "The countdown intensifies, highlighting the urgency of Elias's task.",
+          "emotional_shift": "From focused determination to heightened tension."
+        }
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Elias's Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "As the seconds tick away, Elias's aging hands betray him, causing a critical tiny gear to slip from its position, threatening to ruin his progress.",
+        "estimated_duration": {
+          "seconds": 2.5,
+          "confidence": 0.85
+        },
+        "continuity": {
+          "props_present": [
+            "pocket watch",
+            "tiny gear",
+            "watchmaker's loupe"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Still wearing his tweed vest and spectacles, concentration etched on his face.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "The slipping gear is a direct result of Elias's trembling hands.",
+            "The digital clock continues its relentless countdown."
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_004",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "00:00:06. Elias leans closer, his eye pressed against a WATCHMAKER'S LOUPE.",
+            "continuity_refs": {
+              "props": [
+                "watchmaker's loupe"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_005",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He attempts to position a minuscule GEAR. His hand gives an involuntary jerk.",
+            "continuity_refs": {
+              "props": [
+                "tiny gear",
+                "pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_006",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The gear SKITTERS across the workbench, a tiny silver fleck against the dark wood. Elias curses under his breath, a gasp of frustration.",
+            "continuity_refs": {
+              "props": [
+                "tiny gear",
+                "workbench"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_007",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "00:00:04. His chest heaves, eyes wide with momentary panic.",
+            "continuity_refs": {
+              "props": [
+                "digital clock"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "A critical mistake due to Elias's physical limitations throws his progress into jeopardy and brings doubt.",
+          "emotional_shift": "From tension to frustration and self-doubt."
+        }
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_003",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Elias's Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Elias battles his rising frustration, taking a deep breath to steady his trembling hands. He executes a precise, final movement to correctly place the gear, drawing on years of experience.",
+        "estimated_duration": {
+          "seconds": 2.5,
+          "confidence": 0.85
+        },
+        "continuity": {
+          "props_present": [
+            "pocket watch",
+            "tweezers",
+            "loose gear"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "The tweed vest and spectacles are still on, symbolizing his dedication to his craft and the task.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Elias makes a conscious effort to regain control.",
+            "His love for his wife is implicitly his motivation for overcoming the hurdle."
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_008",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "00:00:03. Elias stares at the scattered gear, then at the half-assembled watch. He closes his eyes, takes a deep, ragged breath.",
+            "continuity_refs": {
+              "props": [
+                "digital clock",
+                "loose gear",
+                "pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_009",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He opens them, a newfound resolve in his gaze. He carefully picks up the errant gear with his tweezers. His hands, though still old, are steadier now.",
+            "continuity_refs": {
+              "props": [
+                "tweezers",
+                "loose gear"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_010",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "With meticulous precision, he lowers it into place. A tiny CLICK. It's perfectly seated.",
+            "continuity_refs": {
+              "props": [
+                "pocket watch",
+                "tweezers",
+                "loose gear"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "Elias overcomes his physical and emotional obstacles, achieving a moment of peak skill and resolve.",
+          "emotional_shift": "From frustration to determined focus and a surge of hope."
+        }
+      },
+      {
+        "scene_id": "sc_004",
+        "order": 4,
+        "linked_story_step_id": "arc_004",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Elias's Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "The watch emits a soft, clear tick as Elias gently closes its casing. He smiles, just as fireworks explode outside, marking the new year and a profound, bittersweet connection.",
+        "estimated_duration": {
+          "seconds": 2.2,
+          "confidence": 0.85
+        },
+        "continuity": {
+          "props_present": [
+            "repaired pocket watch"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "His vest and spectacles remain, but his expression has softened, conveying a sense of peace.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "The watch's first tick is audible and clear.",
+            "Fireworks erupt at the exact moment of the New Year."
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_011",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "00:00:01. Elias gently closes the casing of the pocket watch. He holds it to his ear, a hopeful anticipation in his eyes.",
+            "continuity_refs": {
+              "props": [
+                "digital clock",
+                "repaired pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_012",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Then, a soft, clear TICK. A moment of perfect silence, broken only by the watch's steady rhythm.",
+            "continuity_refs": {
+              "props": [
+                "repaired pocket watch"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_013",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A small, gentle smile spreads across Elias's face, a tear welling in the corner of his eye. It’s done. He connects with his late wife.",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_014",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Outside, a WHOOSH and a resounding BOOM as the first FIREWORKS of the New Year light up the night sky, their bursts reflecting in the workshop window.",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_015",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Elias looks up, a profound sense of peace washing over him, the watch clutched gently in his hand.",
+            "continuity_refs": {
+              "props": [
+                "repaired pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "The watch ticks, signifying success, and the new year's fireworks create a poignant moment of bittersweet triumph and connection.",
+          "emotional_shift": "From hopeful anticipation to peaceful resolution and bittersweet joy."
+        }
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "estimated_total_duration_sec": 9.7,
+    "sum_scene_duration_sec": 9.7,
+    "scene_count": 4,
+    "dialogue_block_count": 0,
+    "action_block_count": 15
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "meta": {
+    "project_id": "",
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-20T14:19:17.631354+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A retired watchmaker races against midnight to repair his late wife's treasured pocket watch, hoping to hear its final tick before the New Year begins.",
+    "estimated_duration": {
+      "seconds": 12.0,
+      "confidence": 0.9
+    },
+    "style": {
+      "genre": [
+        "Drama",
+        "Slice of Life"
+      ],
+      "tone_keywords": [
+        "Bittersweet",
+        "Hopeful",
+        "Tense",
+        "Sentimental"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Arthur",
+        "role": "protagonist",
+        "profile": "A skilled, elderly watchmaker, now retired. He carries the quiet grief of his late wife, channeled into meticulous work.",
+        "motivation": "To complete a sentimental repair for his late wife's pocket watch, symbolizing closure and a hopeful start to a new year.",
+        "flaw": "His grief can cause a momentary unsteadiness, affecting his precise work at critical moments."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Arthur's Workshop",
+        "description": "A cozy, somewhat cluttered home workshop within Arthur's living space, filled with intricate tools, spare parts, and personal mementos. A window looks out onto a dark, festive night."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Arthur, a retired watchmaker, meticulously works on his late wife's pocket watch, fully aware that midnight and the New Year are just seconds away.",
+        "conflict": "External: The rapidly approaching midnight deadline. Internal: The emotional weight of the task, linked to his grief for his wife.",
+        "turning_point": "The visible/audible countdown reaching its final ten seconds, significantly raising the stakes."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "crisis",
+        "summary": "With mere seconds remaining to complete the delicate repair, Arthur's hand trembles slightly due to the emotional pressure, causing a small, critical slip.",
+        "conflict": "Internal: His fleeting self-doubt and unsteadiness threaten to derail his efforts, failing his wife's memory. External: Time continues to run out.",
+        "turning_point": "The small mistake – a momentary near-failure that could prevent the watch from ticking before midnight."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "climax",
+        "summary": "Arthur takes a deep, steadying breath, regains his composure, and makes the perfect, final adjustment. The watch gives a single, distinct tick just as New Year's fireworks explode outside.",
+        "conflict": "The final micro-seconds of intense concentration against both external time and internal emotional turmoil.",
+        "turning_point": "The watch's first tick, perfectly synchronized with the fireworks, signifying both the success of the repair and a moment of personal triumph and hope."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "For Arthur to successfully repair his late wife's pocket watch before midnight strikes on New Year's Eve.",
+        "conflict": "Arthur battles the ticking clock and the emotional burden of the task, which briefly causes his hands to falter. The external pressure of the New Year's countdown amplifies his internal struggle.",
+        "turn": "After a momentary slip, Arthur steadies himself, completes the precise repair, and hears the watch tick just as fireworks ignite outside, transitioning his anxiety into a quiet, hopeful smile."
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "character_count": 1,
+    "location_count": 1,
+    "scene_count": 1
+  }
+}

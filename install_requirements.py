@@ -1,15 +1,27 @@
 #!/usr/bin/env python3
 """
 FrameWorkers 环境安装脚本。
-运行即创建 conda 环境并安装所有依赖。
+默认会：
+1) 自动汇总各子目录 requirements.txt
+2) 创建 conda 环境（已存在则跳过创建）
+3) 在该环境内 pip 安装业务依赖 + 测试依赖（pytest）
 
+兼容性：
+- 会优先使用 `conda run --no-banner`；
+- 若 conda 版本不支持该参数，会自动回退为不带 `--no-banner`。
+
+用法：
     python install_requirements.py
+
+说明：
+- 默认会安装 `pytest`，无需额外参数。
 """
 
 import os
 import re
 import subprocess
 import sys
+import json
 from collections import defaultdict
 from pathlib import Path
 
@@ -17,6 +29,7 @@ ENV_NAME = "frameworkers"
 PYTHON_VERSION = "3.11"
 SKIP_DIRS = {"node_modules", "__pycache__", ".git", ".venv", "venv", "env"}
 OUTPUT_FILE = "requirements.txt"
+TEST_PACKAGES = ["pytest"]
 
 
 def find_requirements_files() -> list[Path]:
@@ -93,7 +106,69 @@ def generate_requirements_txt(files: list[Path]):
     print(f"Wrote {out_path}")
 
 
+def conda_env_exists(env_name: str) -> bool:
+    """Return True if a conda environment already exists."""
+    try:
+        result = subprocess.run(
+            ["conda", "env", "list", "--json"],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        data = json.loads(result.stdout or "{}")
+        envs = data.get("envs", [])
+        suffix = f"/envs/{env_name}"
+        return any(str(path).endswith(suffix) for path in envs)
+    except Exception:
+        # Be conservative: if detection fails, continue with create flow.
+        return False
+
+
+def install_with_conda_run(env_name: str, reqs: list[str]) -> None:
+    """
+    Install requirements via `conda run`.
+
+    Uses `--no-banner` when available, and falls back for older conda versions
+    that don't support this flag.
+    """
+    cmd_with_banner_flag = [
+        "conda",
+        "run",
+        "-n",
+        env_name,
+        "--no-banner",
+        "pip",
+        "install",
+        *reqs,
+    ]
+    try:
+        subprocess.run(
+            cmd_with_banner_flag,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        return
+    except subprocess.CalledProcessError as exc:
+        err = (exc.stderr or "") + (exc.stdout or "")
+        if "--no-banner" not in err:
+            raise
+        print("Detected older conda: retrying pip install without --no-banner ...")
+
+    subprocess.run(
+        ["conda", "run", "-n", env_name, "pip", "install", *reqs],
+        check=True,
+    )
+
+
 def main() -> int:
+    if "--help" in sys.argv or "-h" in sys.argv:
+        print(
+            "Usage:\n"
+            "  python install_requirements.py              # one-click install (includes pytest)\n"
+        )
+        return 0
+
     if "--generate" in sys.argv:
         files = find_requirements_files()
         if not files:
@@ -110,24 +185,31 @@ def main() -> int:
     reqs = merge_requirements(files)
     print(f"Collected {len(reqs)} packages from {len(files)} sub-directories.")
 
-    print(f"\nCreating conda env '{ENV_NAME}' (python={PYTHON_VERSION}) …")
-    try:
-        subprocess.run(
-            ["conda", "create", "-n", ENV_NAME, f"python={PYTHON_VERSION}", "-y"],
-            check=True,
-        )
-    except subprocess.CalledProcessError as exc:
-        print(f"conda create failed (exit {exc.returncode})", file=sys.stderr)
-        return 1
+    if conda_env_exists(ENV_NAME):
+        print(f"\nConda env '{ENV_NAME}' already exists, skipping create.")
+    else:
+        print(f"\nCreating conda env '{ENV_NAME}' (python={PYTHON_VERSION}) …")
+        try:
+            subprocess.run(
+                ["conda", "create", "-n", ENV_NAME, f"python={PYTHON_VERSION}", "-y"],
+                check=True,
+            )
+        except subprocess.CalledProcessError as exc:
+            print(f"conda create failed (exit {exc.returncode})", file=sys.stderr)
+            return 1
 
     print(f"\nInstalling {len(reqs)} packages into '{ENV_NAME}' …")
     try:
-        subprocess.run(
-            ["conda", "run", "-n", ENV_NAME, "--no-banner", "pip", "install"] + reqs,
-            check=True,
-        )
+        install_with_conda_run(ENV_NAME, reqs)
     except subprocess.CalledProcessError as exc:
         print(f"pip install failed (exit {exc.returncode})", file=sys.stderr)
+        return 1
+
+    print(f"\nInstalling test packages into '{ENV_NAME}' …")
+    try:
+        install_with_conda_run(ENV_NAME, TEST_PACKAGES)
+    except subprocess.CalledProcessError as exc:
+        print(f"test package install failed (exit {exc.returncode})", file=sys.stderr)
         return 1
 
     print(f"\nDone! Run:\n  conda activate {ENV_NAME}")

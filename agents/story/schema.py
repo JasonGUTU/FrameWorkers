@@ -67,9 +67,15 @@ class StoryBlueprintContent(BaseModel):
 
 
 class StoryMetrics(BaseModel):
+    target_duration_sec: float = 0.0
     character_count: int = 0
     location_count: int = 0
     scene_count: int = 0
+
+
+class StoryConstraints(BaseModel):
+    target_duration_sec: float = 60.0
+    language: str = "en"
 
 
 # ---------------------------------------------------------------------------
@@ -94,9 +100,8 @@ class StoryAgentInput(BaseModel):
     empty in this case.
     """
 
-    project_id: str = ""
-    draft_id: str = ""
     draft_idea: str = ""
+    constraints: StoryConstraints = Field(default_factory=StoryConstraints)
     user_provided_text: str = Field(
         default="",
         description=(

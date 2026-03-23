@@ -89,5 +89,29 @@ class StoryEvaluator(BaseEvaluator[StoryAgentOutput]):
         if not c.story_arc:
             errors.append("story_arc is empty")
 
+        # --- Duration compliance against requested constraints ---
+        self._check_duration_compliance(errors, output, upstream)
+
         return errors
+
+    def _check_duration_compliance(
+        self,
+        errors: list[str],
+        output: StoryAgentOutput,
+        upstream: dict[str, Any] | None = None,
+    ) -> None:
+        target = float(getattr(output.metrics, "target_duration_sec", 0.0) or 0.0)
+        if target <= 0:
+            return
+
+        actual = float(output.content.estimated_duration.seconds or 0.0)
+        tolerance = max(2.0, target * 0.2)
+        lower = target - tolerance
+        upper = target + tolerance
+        if actual < lower or actual > upper:
+            errors.append(
+                "estimated_duration.seconds out of target range: "
+                f"actual={actual:.1f}s target={target:.1f}s "
+                f"allowed=[{lower:.1f},{upper:.1f}]"
+            )
 

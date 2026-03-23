@@ -7,17 +7,18 @@ from datetime import datetime
 from .file_manager import FileManager
 from .memory_manager import MemoryManager
 from .log_manager import LogManager
+from .asset_manager import AssetManager
 from .models import FileMetadata, LogEntry
-from ..serializers import file_search_item_to_dict, log_search_item_to_dict
+from ..response_serializers import file_search_item_to_dict, log_search_item_to_dict
 
 
 class Workspace:
     """
-    Workspace - Manages file system, global memory, and logs
-    
+    Workspace - Manages file system, short-term structured memory, and logs
+
     The workspace provides a unified interface for:
     - File management (images, videos, documents, etc.)
-    - Global Memory (Markdown-formatted long string)
+    - Short-term structured memory (STM JSON entries; long-term tier disabled)
     - Logs and records (JSON format)
     
     Each workspace has its own directory in Runtime/{workspace_id}/
@@ -40,6 +41,14 @@ class Workspace:
         self.file_manager = FileManager(workspace_id, runtime_base_path)
         self.memory_manager = MemoryManager(workspace_id, runtime_base_path)
         self.log_manager = LogManager(workspace_id, runtime_base_path)
+        self.asset_manager = AssetManager(
+            self.store_file,
+            self._add_log,
+            self.file_manager.read_binary_from_uri,
+            self.list_files,
+            self.delete_file,
+            on_change=self._touch,
+        )
         
         # Log workspace creation
         self.log_manager.add_log(
@@ -181,49 +190,83 @@ class Workspace:
             return success
         return False
     
-    # Global Memory Methods
-    
-    def read_memory(self) -> str:
-        """Read Global Memory"""
-        memory = self.memory_manager.read_memory()
-        self._add_log(
-            operation_type='read',
-            resource_type='memory'
+    def add_memory_entry(
+        self,
+        *,
+        content: str,
+        tier: str = "short_term",
+        kind: str = "note",
+        task_id: Optional[str] = None,
+        agent_id: Optional[str] = None,
+        source_asset_refs: Optional[List[str]] = None,
+        priority: int = 3,
+        confidence: Optional[float] = None,
+        ttl_runs: Optional[int] = None,
+        metadata: Optional[Dict[str, Any]] = None,
+    ) -> Dict[str, Any]:
+        """Add one structured memory entry."""
+        entry = self.memory_manager.add_memory_entry(
+            content=content,
+            tier=tier,
+            kind=kind,
+            task_id=task_id,
+            agent_id=agent_id,
+            source_asset_refs=source_asset_refs,
+            priority=priority,
+            confidence=confidence,
+            ttl_runs=ttl_runs,
+            metadata=metadata,
         )
-        return memory
-    
-    def write_memory(self, content: str, append: bool = False) -> Dict[str, Any]:
-        """
-        Write to Global Memory
-        
-        Args:
-            content: Content to write
-            append: If True, append to existing memory
-        
-        Returns:
-            Operation result dictionary
-        """
-        result = self.memory_manager.write_memory(content, append=append)
-        
         self._add_log(
-            operation_type='write',
-            resource_type='memory',
+            operation_type="write",
+            resource_type="memory",
+            resource_id=entry.get("id"),
+            agent_id=agent_id,
+            task_id=task_id,
             details={
-                'was_truncated': result['was_truncated'],
-                'original_length': result['original_length'],
-                'final_length': result['final_length']
-            }
+                "event_type": "memory_entry_added",
+                "tier": entry.get("tier"),
+                "kind": entry.get("kind"),
+                "priority": entry.get("priority"),
+            },
         )
-        
         self._touch()
-        return result
-    
-    def append_memory(self, content: str) -> Dict[str, Any]:
-        """Append to Global Memory"""
-        return self.write_memory(content, append=True)
-    
+        return entry
+
+    def list_memory_entries(
+        self,
+        *,
+        tier: Optional[str] = None,
+        task_id: Optional[str] = None,
+        agent_id: Optional[str] = None,
+        kinds: Optional[List[str]] = None,
+        limit: int = 20,
+    ) -> List[Dict[str, Any]]:
+        """List structured memory entries with optional filters."""
+        return self.memory_manager.list_memory_entries(
+            tier=tier,
+            task_id=task_id,
+            agent_id=agent_id,
+            kinds=kinds,
+            limit=limit,
+        )
+
+    def get_memory_brief(
+        self,
+        *,
+        task_id: Optional[str] = None,
+        agent_id: Optional[str] = None,
+        short_term_limit: int = 6,
+    ) -> Dict[str, Any]:
+        """Build concise memory brief for planning/execution."""
+        return self.memory_manager.get_memory_brief(
+            task_id=task_id,
+            agent_id=agent_id,
+            short_term_limit=short_term_limit,
+        )
+
     def get_memory_info(self) -> Dict[str, Any]:
-        """Get Global Memory information"""
+        """Get structured memory information"""
         return self.memory_manager.get_memory_info()
     
     # Log Methods
@@ -248,6 +291,118 @@ class Workspace:
     def get_recent_logs(self, count: int = 10) -> List[LogEntry]:
         """Get most recent logs"""
         return self.log_manager.get_recent_logs(count)
+
+    def get_log_insights(
+        self,
+        *,
+        window_hours: Optional[int] = None,
+        top_k: int = 5,
+    ) -> Dict[str, Any]:
+        """Get strategy-level log insights for triage and trend checks."""
+        return self.log_manager.get_strategy_insights(
+            window_hours=window_hours,
+            top_k=top_k,
+        )
+
+    def log_execution_started(self, execution: Any) -> None:
+        """Write execution started event for assistant orchestration."""
+        self._add_log(
+            operation_type="write",
+            resource_type="execution",
+            resource_id=execution.id,
+            agent_id=execution.agent_id,
+            task_id=execution.task_id,
+            details={
+                "event_type": "execution_started",
+                "status": str(getattr(execution.status, "value", execution.status)),
+            },
+        )
+
+    def log_execution_result(self, execution: Any) -> None:
+        """Write terminal execution event (completed/failed)."""
+        status = str(getattr(execution.status, "value", execution.status))
+        event_type = "execution_completed" if status == "COMPLETED" else "execution_failed"
+        retry_attempts = None
+        eval_summary = None
+        results = getattr(execution, "results", None)
+        if isinstance(results, dict):
+            debug = results.get("_execution_debug", {})
+            if isinstance(debug, dict):
+                attempts = debug.get("attempts")
+                if isinstance(attempts, int):
+                    retry_attempts = attempts
+                summary = debug.get("eval_summary")
+                if isinstance(summary, str) and summary:
+                    eval_summary = summary
+        self._add_log(
+            operation_type="write",
+            resource_type="execution",
+            resource_id=execution.id,
+            agent_id=execution.agent_id,
+            task_id=execution.task_id,
+            details={
+                "event_type": event_type,
+                "status": status,
+                "error": getattr(execution, "error", None),
+                "has_results": getattr(execution, "results", None) is not None,
+                "retry_attempts": retry_attempts,
+                "eval_summary": eval_summary,
+            },
+        )
+
+    # Asset Methods
+
+    def is_asset_index_entry(self, value: Any) -> bool:
+        """Check whether value is an asset index entry."""
+        return self.asset_manager.is_asset_index_entry(value)
+
+    def hydrate_indexed_assets(self, assets: Dict[str, Any]) -> Dict[str, Any]:
+        """Resolve lightweight asset indexes to full JSON payloads."""
+        return self.asset_manager.hydrate_indexed_assets(assets)
+
+    def collect_materialized_files(self, media_assets: list[Any]) -> Dict[str, Any]:
+        """Collect generated media files from temporary uris."""
+        return self.asset_manager.collect_materialized_files(media_assets)
+
+    def build_pipeline_asset_value(
+        self,
+        *,
+        execution_results: Optional[Dict[str, Any]],
+        descriptor_asset_key: str,
+        execution_id: str,
+    ) -> Dict[str, Any]:
+        """Build one entry for pipeline shared assets from an execution record."""
+        return self.asset_manager.build_pipeline_asset_value(
+            execution_results=execution_results,
+            descriptor_asset_key=descriptor_asset_key,
+            execution_id=execution_id,
+        )
+
+    def persist_execution_assets(
+        self,
+        execution: Any,
+        *,
+        overwrite_existing: bool = False,
+    ) -> Dict[str, str]:
+        """Persist file/media assets for an execution."""
+        return self.asset_manager.persist_execution_assets(
+            execution,
+            overwrite_existing=overwrite_existing,
+        )
+
+    def persist_execution_json_snapshot(
+        self,
+        execution: Any,
+        *,
+        asset_key: str,
+        overwrite_existing: bool = False,
+    ) -> Optional[Dict[str, Any]]:
+        """Persist JSON snapshot and return lightweight index for this execution."""
+        return self.asset_manager.persist_execution_json_snapshot(
+            execution,
+            asset_key=asset_key,
+            overwrite_existing=overwrite_existing,
+        )
     
     # Comprehensive Search Methods
     
@@ -278,15 +433,7 @@ class Workspace:
             results['files'] = [file_search_item_to_dict(f) for f in self.search_files(query, limit=limit)]
         
         if search_memory:
-            memory_content = self.read_memory()
-            if query.lower() in memory_content.lower():
-                results['memory'] = {
-                    'found': True,
-                    'length': len(memory_content),
-                    'preview': memory_content[:500] + '...' if len(memory_content) > 500 else memory_content
-                }
-            else:
-                results['memory'] = {'found': False}
+            results['memory'] = self.memory_manager.search_memory_entries(query, limit=limit)
         
         if search_logs:
             results['logs'] = [

@@ -1,17 +1,19 @@
 """Assistant module boundary.
 
-Exports only HTTP blueprint factory and global storage singleton.
+Exports HTTP blueprint factory and runtime state singletons.
 Business logic stays in service.py.
 """
 
-import sys
-from pathlib import Path
+from .state_store import assistant_state_store
 
-_project_root = str(Path(__file__).resolve().parent.parent.parent.parent)
-if _project_root not in sys.path:
-    sys.path.insert(0, _project_root)
 
-from .routes import create_assistant_blueprint
-from .storage import assistant_storage
+def create_assistant_blueprint():
+    """Lazy import to avoid route side effects on package import."""
+    from .routes import create_assistant_blueprint as _factory
+    return _factory()
 
-__all__ = ['create_assistant_blueprint', 'assistant_storage']
+
+__all__ = [
+    'create_assistant_blueprint',
+    'assistant_state_store',
+]

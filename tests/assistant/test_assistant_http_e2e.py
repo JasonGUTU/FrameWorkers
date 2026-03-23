@@ -23,8 +23,8 @@ if "flask_cors" not in sys.modules:
 from src.app import create_app
 import src.assistant.routes as routes_module
 import src.assistant.service as service_module
-from src.assistant.storage import AssistantStorage
-from inference.runtime.clients.default_client import LLMClient
+from src.assistant.state_store import AssistantStateStore
+from inference.clients import LLMClient
 
 
 def _is_live_llm_env_ready() -> tuple[bool, str]:
@@ -76,6 +76,25 @@ class _DummyPipelineAgent:
         return _DummyPipelineResult()
 
 
+class _EchoPipelineResult:
+    def __init__(self, payload: dict):
+        self.output = None
+        self.asset_dict = payload
+        self.media_assets = []
+
+
+class _ProducerPipelineAgent:
+    async def run(self, typed_input, upstream=None, materialize_ctx=None):
+        seed = typed_input.get("seed", "")
+        return _EchoPipelineResult({"content": {"seed": seed}})
+
+
+class _ConsumerPipelineAgent:
+    async def run(self, typed_input, upstream=None, materialize_ctx=None):
+        observed = typed_input.get("observed_seed", "")
+        return _EchoPipelineResult({"observed_seed": observed})
+
+
 class _DummyDescriptor:
     def __init__(self, name: str, asset_key: str, asset_type: str):
         self.agent_name = name
@@ -116,13 +135,10 @@ class _DummyRegistry:
                     "id": name,
                     "name": name,
                     "description": (desc.catalog_entry or "")[:200],
-                    "version": "1.0.0",
-                    "author": None,
+                    "agent_type": "pipeline",
                     "capabilities": caps,
-                    "input_schema": {},
-                    "output_schema": {},
-                    "created_at": "",
-                    "updated_at": "",
+                    "asset_key": desc.asset_key,
+                    "asset_type": getattr(desc, "asset_type", ""),
                 }
             )
         return {
@@ -133,9 +149,57 @@ class _DummyRegistry:
         }
 
 
+class _ProducerDescriptor:
+    agent_name = "ProducerAgent"
+    asset_key = "producer_asset"
+    asset_type = "producer_asset_type"
+    catalog_entry = "Producer integration descriptor"
+
+    def build_equipped_agent(self, _llm):
+        return _ProducerPipelineAgent()
+
+    def build_input(self, project_id, draft_id, assets, config):
+        draft_idea = assets.get("draft_idea", "")
+        if isinstance(draft_idea, dict):
+            draft_idea = draft_idea.get("goal", "")
+        return {
+            "project_id": project_id,
+            "draft_id": draft_id,
+            "seed": draft_idea,
+            "language": config.language,
+        }
+
+    def build_upstream(self, assets):
+        return assets
+
+
+class _ConsumerDescriptor:
+    agent_name = "ConsumerAgent"
+    asset_key = "consumer_asset"
+    asset_type = "consumer_asset_type"
+    upstream_keys = ["producer_asset"]
+    user_text_key = ""
+    catalog_entry = "Consumer integration descriptor"
+
+    def build_equipped_agent(self, _llm):
+        return _ConsumerPipelineAgent()
+
+    def build_input(self, project_id, draft_id, assets, config):
+        producer_asset = assets.get("producer_asset", {})
+        return {
+            "project_id": project_id,
+            "draft_id": draft_id,
+            "observed_seed": producer_asset.get("content", {}).get("seed", ""),
+            "language": config.language,
+        }
+
+    def build_upstream(self, assets):
+        return assets
+
+
 @pytest.fixture
 def assistant_http_client(tmp_path, monkeypatch):
-    storage = AssistantStorage(runtime_base_path=tmp_path / "Runtime")
+    storage = AssistantStateStore(runtime_base_path=tmp_path / "Runtime")
     registry = _DummyRegistry(
         descriptors={
             "DummyAgent": _DummyDescriptor(
@@ -146,7 +210,26 @@ def assistant_http_client(tmp_path, monkeypatch):
         }
     )
 
-    monkeypatch.setattr(routes_module, "assistant_storage", storage)
+    monkeypatch.setattr(routes_module, "assistant_state_store", storage)
+    monkeypatch.setattr(routes_module, "get_agent_registry", lambda: registry)
+    monkeypatch.setattr(service_module, "get_agent_registry", lambda: registry)
+
+    app = create_app({"TESTING": True})
+    with app.test_client() as client:
+        yield client
+
+
+@pytest.fixture
+def assistant_http_client_pipeline(tmp_path, monkeypatch):
+    storage = AssistantStateStore(runtime_base_path=tmp_path / "Runtime")
+    registry = _DummyRegistry(
+        descriptors={
+            "ProducerAgent": _ProducerDescriptor(),
+            "ConsumerAgent": _ConsumerDescriptor(),
+        }
+    )
+
+    monkeypatch.setattr(routes_module, "assistant_state_store", storage)
     monkeypatch.setattr(routes_module, "get_agent_registry", lambda: registry)
     monkeypatch.setattr(service_module, "get_agent_registry", lambda: registry)
 
@@ -157,8 +240,8 @@ def assistant_http_client(tmp_path, monkeypatch):
 
 @pytest.fixture
 def assistant_http_client_real_agents(tmp_path, monkeypatch):
-    storage = AssistantStorage(runtime_base_path=tmp_path / "Runtime")
-    monkeypatch.setattr(routes_module, "assistant_storage", storage)
+    storage = AssistantStateStore(runtime_base_path=tmp_path / "Runtime")
+    monkeypatch.setattr(routes_module, "assistant_state_store", storage)
 
     app = create_app({"TESTING": True})
     with app.test_client() as client:
@@ -218,7 +301,7 @@ def test_assistant_e2e_http_flow_covers_core_endpoints(assistant_http_client):
     assert len(executions) == 1
     assert executions[0]["agent_id"] == "DummyAgent"
 
-    # 5) Workspace endpoints (summary/files/logs/memory/search).
+    # 5) Workspace endpoints (summary/files/logs/structured-memory/search).
     workspace_resp = client.get("/api/assistant/workspace")
     assert workspace_resp.status_code == 200
     assert workspace_resp.get_json()["workspace_id"]
@@ -245,18 +328,194 @@ def test_assistant_e2e_http_flow_covers_core_endpoints(assistant_http_client):
     logs = logs_resp.get_json()
     assert any(log["resource_type"] == "execution" for log in logs)
 
-    write_mem_resp = client.post(
-        "/api/assistant/workspace/memory",
-        json={"content": "integration-memory-note", "append": False},
-    )
-    assert write_mem_resp.status_code == 200
+    insights_resp = client.get("/api/assistant/workspace/logs/insights?top_k=3")
+    assert insights_resp.status_code == 200
+    insights = insights_resp.get_json()
+    assert "totals" in insights
+    assert "breakdown" in insights
 
-    memory_resp = client.get("/api/assistant/workspace/memory")
-    assert memory_resp.status_code == 200
-    assert "integration-memory-note" in memory_resp.get_json()["content"]
+    add_entry_resp = client.post(
+        "/api/assistant/workspace/memory/entries",
+        json={
+            "content": "Prefer concise pacing for edits.",
+            "tier": "short_term",
+            "kind": "note",
+            "priority": 4,
+            "task_id": task_id,
+        },
+    )
+    assert add_entry_resp.status_code == 201
+    entry = add_entry_resp.get_json()
+    assert entry["tier"] == "short_term"
+
+    list_entries_resp = client.get(
+        f"/api/assistant/workspace/memory/entries?tier=short_term&task_id={task_id}"
+    )
+    assert list_entries_resp.status_code == 200
+    entries = list_entries_resp.get_json()
+    assert any(item["id"] == entry["id"] for item in entries)
+
+    ltm_reject = client.post(
+        "/api/assistant/workspace/memory/entries",
+        json={"content": "should fail", "tier": "long_term"},
+    )
+    assert ltm_reject.status_code == 400
+
+    brief_resp = client.get(f"/api/assistant/workspace/memory/brief?task_id={task_id}")
+    assert brief_resp.status_code == 200
+    brief = brief_resp.get_json()
+    assert "short_term" in brief
+    assert brief.get("long_term") == []
 
     search_resp = client.get("/api/assistant/workspace/search?query=integration")
     assert search_resp.status_code == 200
+
+
+def test_director_http_message_flow_supports_poll_and_read_ack(assistant_http_client):
+    client = assistant_http_client
+
+    create_message_resp = client.post(
+        "/api/messages/create",
+        json={"content": "please run assistant task", "sender_type": "director"},
+    )
+    assert create_message_resp.status_code == 201
+    message = create_message_resp.get_json()
+    message_id = message["id"]
+    assert message["sender_type"] == "director"
+    assert message["director_read_status"] == "UNREAD"
+
+    unread_resp = client.get(
+        "/api/messages/unread?sender_type=director&check_director_read=true"
+    )
+    assert unread_resp.status_code == 200
+    unread_messages = unread_resp.get_json()
+    assert any(item["id"] == message_id for item in unread_messages)
+
+    mark_read_resp = client.put(
+        f"/api/messages/{message_id}/read-status",
+        json={"director_read_status": "READ"},
+    )
+    assert mark_read_resp.status_code == 200
+    assert mark_read_resp.get_json()["director_read_status"] == "READ"
+
+    unread_after_ack_resp = client.get(
+        "/api/messages/unread?sender_type=director&check_director_read=true"
+    )
+    assert unread_after_ack_resp.status_code == 200
+    unread_after_ack = unread_after_ack_resp.get_json()
+    assert all(item["id"] != message_id for item in unread_after_ack)
+
+
+def test_assistant_pipeline_http_flow_reuses_previous_agent_asset(
+    assistant_http_client_pipeline,
+):
+    client = assistant_http_client_pipeline
+
+    create_task_resp = client.post(
+        "/api/tasks/create",
+        json={"description": {"goal": "chain pipeline assets over http"}},
+    )
+    assert create_task_resp.status_code == 201
+    task_id = create_task_resp.get_json()["id"]
+
+    producer_resp = client.post(
+        "/api/assistant/execute",
+        json={"agent_id": "ProducerAgent", "task_id": task_id},
+    )
+    assert producer_resp.status_code == 200
+    producer_payload = producer_resp.get_json()
+    assert producer_payload["status"] == "COMPLETED"
+    assert producer_payload["results"]["content"]["seed"] == "chain pipeline assets over http"
+
+    consumer_resp = client.post(
+        "/api/assistant/execute",
+        json={"agent_id": "ConsumerAgent", "task_id": task_id},
+    )
+    assert consumer_resp.status_code == 200
+    consumer_payload = consumer_resp.get_json()
+    assert consumer_payload["status"] == "COMPLETED"
+    assert (
+        consumer_payload["results"]["observed_seed"]
+        == "chain pipeline assets over http"
+    )
+
+
+@pytest.mark.parametrize(
+    "method,path,payload,expected_status,error_substring",
+    [
+        (
+            "post",
+            "/api/assistant/execute",
+            {},
+            400,
+            "Invalid JSON body",
+        ),
+        (
+            "get",
+            "/api/assistant/workspace/files/search",
+            None,
+            400,
+            "Query parameter required",
+        ),
+        (
+            "get",
+            "/api/assistant/workspace/search",
+            None,
+            400,
+            "Query parameter required",
+        ),
+        (
+            "get",
+            "/api/assistant/workspace/logs/insights?top_k=0",
+            None,
+            400,
+            "top_k must be a positive integer",
+        ),
+        (
+            "post",
+            "/api/messages/create",
+            {"content": "invalid sender", "sender_type": "directorx"},
+            400,
+            "Invalid sender_type",
+        ),
+    ],
+)
+def test_assistant_and_taskstack_http_contract_validation_errors(
+    assistant_http_client,
+    method,
+    path,
+    payload,
+    expected_status,
+    error_substring,
+):
+    client = assistant_http_client
+    request_fn = getattr(client, method)
+    if payload is None:
+        resp = request_fn(path)
+    else:
+        resp = request_fn(path, json=payload)
+
+    assert resp.status_code == expected_status
+    body = resp.get_json()
+    assert isinstance(body, dict)
+    assert error_substring in body.get("error", "")
+
+
+def test_assistant_execute_returns_404_for_unknown_sub_agent(assistant_http_client):
+    client = assistant_http_client
+    create_task_resp = client.post(
+        "/api/tasks/create",
+        json={"description": {"goal": "unknown agent contract"}},
+    )
+    assert create_task_resp.status_code == 201
+    task_id = create_task_resp.get_json()["id"]
+
+    execute_resp = client.post(
+        "/api/assistant/execute",
+        json={"agent_id": "UnknownAgent", "task_id": task_id},
+    )
+    assert execute_resp.status_code == 404
+    assert "not found in registry" in execute_resp.get_json()["error"]
 
 
 @pytest.mark.skipif(

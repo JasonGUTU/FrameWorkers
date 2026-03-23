@@ -10,9 +10,9 @@ from .base_registry import BaseGeneratorRegistry
 from .image_generators.registry import ImageGeneratorRegistry, get_image_generator_registry
 from .video_generators.registry import VideoGeneratorRegistry, get_video_generator_registry
 from .audio_generators.registry import AudioGeneratorRegistry, get_audio_generator_registry
-from .image_generators.service import ImageService, MockImageService
-from .video_generators.service import VideoService, MockVideoService
-from .audio_generators.service import AudioService, MockAudioService
+from .image_generators.service import FalImageService, ImageService, MockImageService
+from .video_generators.service import FalVideoService, MockVideoService, VideoService
+from .audio_generators.service import AudioService, FalAudioService, MockAudioService
 
 __all__ = [
     "BaseAudioGenerator",
@@ -26,10 +26,13 @@ __all__ = [
     "get_audio_generator_registry",
     "get_image_generator_registry",
     "get_video_generator_registry",
+    "FalImageService",
     "ImageService",
     "MockImageService",
+    "FalVideoService",
     "VideoService",
     "MockVideoService",
+    "FalAudioService",
     "AudioService",
     "MockAudioService",
 ]

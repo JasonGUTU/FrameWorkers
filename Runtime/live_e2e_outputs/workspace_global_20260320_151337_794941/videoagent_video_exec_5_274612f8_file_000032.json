@@ -1,0 +1,176 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "estimated_duration_sec": 1.5,
+            "actual_duration_sec": 1.5,
+            "video_asset": {
+              "asset_id": "clip_sh_001",
+              "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_151337_794941/clip_sh_001_file_000023.mp4",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 1.5,
+              "fps": 24
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "estimated_duration_sec": 1.0,
+            "actual_duration_sec": 1.0,
+            "video_asset": {
+              "asset_id": "clip_sh_002",
+              "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_151337_794941/clip_sh_002_file_000024.mp4",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 1.0,
+              "fps": 24
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "estimated_duration_sec": 1.0,
+            "actual_duration_sec": 1.0,
+            "video_asset": {
+              "asset_id": "clip_sh_003",
+              "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_151337_794941/clip_sh_003_file_000025.mp4",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 1.0,
+              "fps": 24
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "estimated_duration_sec": 1.5,
+            "actual_duration_sec": 1.5,
+            "video_asset": {
+              "asset_id": "clip_sh_004",
+              "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_151337_794941/clip_sh_004_file_000026.mp4",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 1.5,
+              "fps": 24
+            }
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 5,
+            "estimated_duration_sec": 1.0,
+            "actual_duration_sec": 1.0,
+            "video_asset": {
+              "asset_id": "clip_sh_005",
+              "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_151337_794941/clip_sh_005_file_000027.mp4",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 1.0,
+              "fps": 24
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 6,
+            "estimated_duration_sec": 1.0,
+            "actual_duration_sec": 1.0,
+            "video_asset": {
+              "asset_id": "clip_sh_006",
+              "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_151337_794941/clip_sh_006_file_000028.mp4",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 1.0,
+              "fps": 24
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 7,
+            "estimated_duration_sec": 3.0,
+            "actual_duration_sec": 3.0,
+            "video_asset": {
+              "asset_id": "clip_sh_007",
+              "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_151337_794941/clip_sh_007_file_000029.mp4",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 3.0,
+              "fps": 24
+            }
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut",
+            "duration_sec": 0.0
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut",
+            "duration_sec": 0.0
+          },
+          {
+            "from_shot_id": "sh_003",
+            "to_shot_id": "sh_004",
+            "transition_type": "cut",
+            "duration_sec": 0.0
+          },
+          {
+            "from_shot_id": "sh_004",
+            "to_shot_id": "sh_005",
+            "transition_type": "cut",
+            "duration_sec": 0.0
+          },
+          {
+            "from_shot_id": "sh_005",
+            "to_shot_id": "sh_006",
+            "transition_type": "cut",
+            "duration_sec": 0.0
+          },
+          {
+            "from_shot_id": "sh_006",
+            "to_shot_id": "sh_007",
+            "transition_type": "cut",
+            "duration_sec": 0.0
+          }
+        ],
+        "scene_clip_asset": {
+          "asset_id": "clip_sc_001",
+          "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_151337_794941/clip_sc_001_file_000030.mp4",
+          "scene_duration_sec": 10.0,
+          "format": "mp4"
+        }
+      }
+    ],
+    "final_video_asset": {
+      "asset_id": "clip_final",
+      "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_151337_794941/clip_final_file_000031.mp4",
+      "width": 1024,
+      "height": 576,
+      "format": "mp4",
+      "duration_sec": 10.0,
+      "fps": 24
+    }
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_segment_count": 7,
+    "total_duration_sec": 10.0,
+    "avg_shot_duration_sec": 1.4285714285714286
+  }
+}

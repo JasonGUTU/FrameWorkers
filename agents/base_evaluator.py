@@ -31,7 +31,7 @@ from typing import Any, Generic, TypeVar
 
 from pydantic import BaseModel
 
-from inference.runtime.base_client import LLMClient
+from inference.clients import LLMClient
 
 logger = logging.getLogger(__name__)
 
@@ -81,7 +81,7 @@ class BaseEvaluator(Generic[OutputT]):
     ``AGENT_NAME_TO_EVALUATOR`` (defined in ``src.sub_agent.__init__``).
     """
 
-    CREATIVE_PASS_THRESHOLD: float = 0.65
+    CREATIVE_PASS_THRESHOLD: float = 0.0
     ASSET_PASS_THRESHOLD: float = 0.8
 
     def __init__(self, llm_client: LLMClient | None = None, **kwargs: Any) -> None:

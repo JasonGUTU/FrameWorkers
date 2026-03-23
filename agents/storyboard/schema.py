@@ -129,8 +129,6 @@ class StoryboardAgentInput(BaseModel):
     LLM to fill creative fields (shots, consistency packs, etc.).
     """
 
-    project_id: str = ""
-    draft_id: str = ""
     screenplay: dict = Field(default_factory=dict)
     constraints: StoryboardConstraints = Field(default_factory=StoryboardConstraints)
 

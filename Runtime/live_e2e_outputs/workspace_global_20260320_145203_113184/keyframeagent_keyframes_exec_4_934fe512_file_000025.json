@@ -1,0 +1,530 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_type": "character",
+          "entity_id": "char_001",
+          "display_name": "",
+          "purpose": "identity_anchor",
+          "keyframe_id": "kf_global_char_001",
+          "image_asset": {
+            "asset_id": "img_char_001_global",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_145203_113184/img_char_001_global_file_000005.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Intimate, warm, and slightly claustrophobic lighting, emphasizing internal pressure. Soft, warm, and contemplative atmosphere. Close-ups on hands and face are crucial to convey internal struggle and precision. Avoid: Bright, sterile lighting that would diminish the intimate atmosphere; anything that distracts from intense focus; overly dramatic or sorrowful expressions. An elderly watchmaker with a focused and determined expression. He wears a comfortable, worn wool sweater over a collared shirt, simple trousers, and a functional leather watchmaker's apron. The attire speaks to his practical nature and long hours at the workbench. His hands are aged and precise, indicating years of meticulous work. His face conveys deep concentration and an unwavering resolve."
+        }
+      ],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "display_name": "",
+          "purpose": "style_anchor",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_145203_113184/img_loc_001_global_file_000004.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Intimate, warm, and slightly claustrophobic lighting, emphasizing internal pressure. Soft, warm, and contemplative atmosphere. Close-ups on hands and face are crucial to convey internal struggle and precision. Avoid: Bright, sterile lighting that would diminish the intimate atmosphere; anything that distracts from intense focus; overly dramatic or sorrowful expressions. A cozy, cluttered home workshop, filled with intricate watchmaking tools, old books, and personal mementos. The primary light source is a warm, focused desk lamp, casting a soft glow over a well-used workbench. An imposing antique wall clock with prominent hands and a classic design dominates one wall. A window offers a glimpse of the dark night outside, subtly suggesting external context."
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_001",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_145203_113184/img_char_001_sc_001_file_000006.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Intimate, warm, and slightly claustrophobic lighting, emphasizing the internal pressure Elias faces. Close-ups on hands and face are crucial to convey his internal struggle and the precision of his work. Pacing and sound design should build tension towards the critical fumble and subsequent regain of focus.; Maintain the intimate lighting, but build towards a crescendo that juxtapositions the minute detail of the watch with the grand external celebration. Emphasize Elias's agonizing precision, the high stakes of the final seconds, and the immediate relief and triumphant joy upon success. The visual and auditory blend of the watch ticking and fireworks is key.; Soft, warm, and contemplative lighting. The focus is entirely on Elias's quiet introspection, emotional resolution, and sentimental connection. The pacing is slow and deliberate, allowing moments to breathe and for the blend of the watch's ticking and fading fireworks to create a poignant soundscape. Elias, an elderly watchmaker, is illuminated by the warm, focused light of a desk lamp in his cozy workshop at night. His worn wool sweater over a collared shirt, simple trousers, and functional leather watchmaker's apron are visible, conveying his practical nature and long hours. His expression is of deep concentration, tinged with the pressure of his task."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_145203_113184/img_loc_001_sc_001_file_000007.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Intimate, warm, and slightly claustrophobic lighting, emphasizing the internal pressure Elias faces. Close-ups on hands and face are crucial to convey his internal struggle and the precision of his work. Pacing and sound design should build tension towards the critical fumble and subsequent regain of focus.; Maintain the intimate lighting, but build towards a crescendo that juxtapositions the minute detail of the watch with the grand external celebration. Emphasize Elias's agonizing precision, the high stakes of the final seconds, and the immediate relief and triumphant joy upon success. The visual and auditory blend of the watch ticking and fireworks is key.; Soft, warm, and contemplative lighting. The focus is entirely on Elias's quiet introspection, emotional resolution, and sentimental connection. The pacing is slow and deliberate, allowing moments to breathe and for the blend of the watch's ticking and fading fireworks to create a poignant soundscape. The cozy, cluttered home workshop is seen at night, bathed in the warm, intimate glow of a desk lamp that serves as the primary light source. The workbench is cluttered with intricate tools, old books, and personal mementos. An imposing antique wall clock dominates one wall, its presence palpable, and a dark night sky is visible through a window, providing a glimpse of the outside world."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_001",
+              "linked_blocks": [
+                "b_001",
+                "b_002"
+              ]
+            },
+            "estimated_duration_sec": 1.75,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_145203_113184/img_sh_001_kf_01_file_000022.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, warm, and slightly claustrophobic lighting, emphasizing the internal pressure Elias faces. Close-ups on hands and face are crucial to convey his internal struggle and the precision of his work. Pacing and sound design should build tension towards the critical fumble and subsequent regain of focus.; Maintain the intimate lighting, but build towards a crescendo that juxtapositions the minute detail of the watch with the grand external celebration. Emphasize Elias's agonizing precision, the high stakes of the final seconds, and the immediate relief and triumphant joy upon success. The visual and auditory blend of the watch ticking and fireworks is key.; Soft, warm, and contemplative lighting. The focus is entirely on Elias's quiet introspection, emotional resolution, and sentimental connection. The pacing is slow and deliberate, allowing moments to breathe and for the blend of the watch's ticking and fading fireworks to create a poignant soundscape. Medium shot at eye-level: Elias, an elderly watchmaker wearing a worn wool sweater and leather apron, is hunched over his cluttered workbench, illuminated by a warm desk lamp. He is intensely focused, straining through a watchmaker's loupe, his gnarled hands visible as he delicately attempts to position a microscopic watch gear into an antique pocket watch using fine-tipped tweezers. The initial framing establishes his deep concentration and the difficulty of his task.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_002",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_02",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_145203_113184/img_sh_001_kf_02_file_000015.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, warm, and slightly claustrophobic lighting, emphasizing the internal pressure Elias faces. Close-ups on hands and face are crucial to convey his internal struggle and the precision of his work. Pacing and sound design should build tension towards the critical fumble and subsequent regain of focus.; Maintain the intimate lighting, but build towards a crescendo that juxtapositions the minute detail of the watch with the grand external celebration. Emphasize Elias's agonizing precision, the high stakes of the final seconds, and the immediate relief and triumphant joy upon success. The visual and auditory blend of the watch ticking and fireworks is key.; Soft, warm, and contemplative lighting. The focus is entirely on Elias's quiet introspection, emotional resolution, and sentimental connection. The pacing is slow and deliberate, allowing moments to breathe and for the blend of the watch's ticking and fading fireworks to create a poignant soundscape. Close-up at eye-level, a slow push-in: Elias's gnarled hands, wearing his watchmaker's loupe, are seen trembling slightly under the warm desk lamp light, delicately manipulating a microscopic watch gear with fine-tipped tweezers over the intricate mechanism of an antique pocket watch. His brow is furrowed with extreme concentration, emphasizing the extreme delicacy and difficulty of his task, and the slight tremor signifies the pressure and his age. The background shows parts of the cluttered workbench.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_002",
+              "linked_blocks": [
+                "b_003",
+                "b_004"
+              ]
+            },
+            "estimated_duration_sec": 1.25,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_003",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_145203_113184/img_sh_002_kf_01_file_000013.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, warm, and slightly claustrophobic lighting, emphasizing the internal pressure Elias faces. Close-ups on hands and face are crucial to convey his internal struggle and the precision of his work. Pacing and sound design should build tension towards the critical fumble and subsequent regain of focus.; Maintain the intimate lighting, but build towards a crescendo that juxtapositions the minute detail of the watch with the grand external celebration. Emphasize Elias's agonizing precision, the high stakes of the final seconds, and the immediate relief and triumphant joy upon success. The visual and auditory blend of the watch ticking and fireworks is key.; Soft, warm, and contemplative lighting. The focus is entirely on Elias's quiet introspection, emotional resolution, and sentimental connection. The pacing is slow and deliberate, allowing moments to breathe and for the blend of the watch's ticking and fading fireworks to create a poignant soundscape. Close-up, Dutch angle: Elias's face, illuminated by the warm desk lamp, flinches dramatically. His eyes are wide with surprise and a hint of frustration. The sound of the antique wall clock chiming has just startled him, causing him to momentarily lose focus.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_004",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_02",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_145203_113184/img_sh_002_kf_02_file_000016.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, warm, and slightly claustrophobic lighting, emphasizing the internal pressure Elias faces. Close-ups on hands and face are crucial to convey his internal struggle and the precision of his work. Pacing and sound design should build tension towards the critical fumble and subsequent regain of focus.; Maintain the intimate lighting, but build towards a crescendo that juxtapositions the minute detail of the watch with the grand external celebration. Emphasize Elias's agonizing precision, the high stakes of the final seconds, and the immediate relief and triumphant joy upon success. The visual and auditory blend of the watch ticking and fireworks is key.; Soft, warm, and contemplative lighting. The focus is entirely on Elias's quiet introspection, emotional resolution, and sentimental connection. The pacing is slow and deliberate, allowing moments to breathe and for the blend of the watch's ticking and fading fireworks to create a poignant soundscape. Extreme close-up, Dutch angle with rack focus and quick pan: A microscopic watch gear, sharply in focus, slips from fine-tipped tweezers, bounces precariously on the cluttered workbench, and quickly disappears from view. The lighting is intimate and warm, emphasizing the critical, frustrating fumble and escalating tension.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_003",
+              "linked_blocks": [
+                "b_005"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_005",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_145203_113184/img_sh_003_kf_01_file_000014.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, warm, and slightly claustrophobic lighting, emphasizing the internal pressure Elias faces. Close-ups on hands and face are crucial to convey his internal struggle and the precision of his work. Pacing and sound design should build tension towards the critical fumble and subsequent regain of focus.; Maintain the intimate lighting, but build towards a crescendo that juxtapositions the minute detail of the watch with the grand external celebration. Emphasize Elias's agonizing precision, the high stakes of the final seconds, and the immediate relief and triumphant joy upon success. The visual and auditory blend of the watch ticking and fireworks is key.; Soft, warm, and contemplative lighting. The focus is entirely on Elias's quiet introspection, emotional resolution, and sentimental connection. The pacing is slow and deliberate, allowing moments to breathe and for the blend of the watch's ticking and fading fireworks to create a poignant soundscape. Static close-up at eye-level: Elias's face, illuminated by the warm desk lamp, shows a defeated sigh, his shoulders slightly slumped. His expression conveys momentary despair after the loss of the microscopic watch gear. The intimate lighting emphasizes his internal struggle.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_006",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_02",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_145203_113184/img_sh_003_kf_02_file_000012.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, warm, and slightly claustrophobic lighting, emphasizing the internal pressure Elias faces. Close-ups on hands and face are crucial to convey his internal struggle and the precision of his work. Pacing and sound design should build tension towards the critical fumble and subsequent regain of focus.; Maintain the intimate lighting, but build towards a crescendo that juxtapositions the minute detail of the watch with the grand external celebration. Emphasize Elias's agonizing precision, the high stakes of the final seconds, and the immediate relief and triumphant joy upon success. The visual and auditory blend of the watch ticking and fireworks is key.; Soft, warm, and contemplative lighting. The focus is entirely on Elias's quiet introspection, emotional resolution, and sentimental connection. The pacing is slow and deliberate, allowing moments to breathe and for the blend of the watch's ticking and fading fireworks to create a poignant soundscape. Subtle push-in close-up at eye-level: Elias's face, illuminated by the warm desk lamp, undergoes a transformation. His eyes are briefly closed as he takes a ragged breath, then reopen with a renewed, grim determination. His gaze hardens as he spots the lost microscopic watch gear, conveying his unwavering resolve and resilience under pressure. The intimate lighting enhances his internal shift.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_002"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_002",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_145203_113184/img_char_001_sc_002_file_000011.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Maintain the intimate lighting, but build towards a crescendo that juxtapositions the minute detail of the watch with the grand external celebration. Emphasize Elias's agonizing precision, the high stakes of the final seconds, and the immediate relief and triumphant joy upon success. The visual and auditory blend of the watch ticking and fireworks is key. Must avoid: Rushing the moment of success; losing focus on Elias's profound, immediate reaction; jarring transitions that would break the emotional connection between the watch and the fireworks. Show Elias, the elderly watchmaker, in his worn wool sweater, collared shirt, trousers, and leather apron, consistent with the previous scene. He is in his cozy home workshop, illuminated by the warm glow of the desk lamp, demonstrating remarkable steadiness and precision while working. His expression will transition from intense focus to profound disbelief, then dawning, quiet joy."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_002",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_145203_113184/img_loc_001_sc_002_file_000009.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Maintain the intimate lighting, but build towards a crescendo that juxtapositions the minute detail of the watch with the grand external celebration. Emphasize Elias's agonizing precision, the high stakes of the final seconds, and the immediate relief and triumphant joy upon success. The visual and auditory blend of the watch ticking and fireworks is key. Must avoid: Rushing the moment of success; losing focus on Elias's profound, immediate reaction; jarring transitions that would break the emotional connection between the watch and the fireworks. Show the cozy, cluttered home workshop at night, bathed in the warm, focused glow of the desk lamp highlighting Elias's workbench. An antique wall clock is visible in the background, and a window provides a clear view to the outside, anticipating the New Year's fireworks."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_004",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_004",
+              "linked_blocks": [
+                "b_006",
+                "b_007",
+                "b_008"
+              ]
+            },
+            "estimated_duration_sec": 1.75,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_007",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_145203_113184/img_sh_004_kf_01_file_000023.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Maintain the intimate lighting, but build towards a crescendo that juxtapositions the minute detail of the watch with the grand external celebration. Emphasize Elias's agonizing precision, the high stakes of the final seconds, and the immediate relief and triumphant joy upon success. The visual and auditory blend of the watch ticking and fireworks is key. Must avoid: Rushing the moment of success; losing focus on Elias's profound, immediate reaction; jarring transitions that would break the emotional connection between the watch and the fireworks. Close-up, eye-level shot on Elias's now remarkably steady hands. He is meticulously guiding a tiny final gear with fine-tipped tweezers, hovering it just above its housing in the antique pocket watch, which rests on his workbench. The warm, focused light from the desk lamp emphasizes the precision and builds agonizing suspense, with a very slow push-in camera movement towards the gear.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_008",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_02",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_145203_113184/img_sh_004_kf_02_file_000019.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Maintain the intimate lighting, but build towards a crescendo that juxtapositions the minute detail of the watch with the grand external celebration. Emphasize Elias's agonizing precision, the high stakes of the final seconds, and the immediate relief and triumphant joy upon success. The visual and auditory blend of the watch ticking and fireworks is key. Must avoid: Rushing the moment of success; losing focus on Elias's profound, immediate reaction; jarring transitions that would break the emotional connection between the watch and the fireworks. Extreme close-up, eye-level shot of the tiny gear as it gently and perfectly CLICKS into its housing within the antique pocket watch. The camera holds on the watch, emphasizing its intricate mechanics, as its first clear, rhythmic TICK-TOCK is visibly and audibly emitted, conveying immediate and satisfying success under the warm, intimate lighting.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_005",
+              "linked_blocks": [
+                "b_009",
+                "b_010"
+              ]
+            },
+            "estimated_duration_sec": 1.25,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_009",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_145203_113184/img_sh_005_kf_01_file_000018.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Maintain the intimate lighting, but build towards a crescendo that juxtapositions the minute detail of the watch with the grand external celebration. Emphasize Elias's agonizing precision, the high stakes of the final seconds, and the immediate relief and triumphant joy upon success. The visual and auditory blend of the watch ticking and fireworks is key. Must avoid: Rushing the moment of success; losing focus on Elias's profound, immediate reaction; jarring transitions that would break the emotional connection between the watch and the fireworks. Close-up, eye-level shot of Elias's face. He slowly lifts his head, his expression transitioning from profound disbelief and astonishment at the ticking antique pocket watch in his hand, to a dawning, quiet, and triumphant joy. The warm, intimate lighting highlights the emotional climax of his personal achievement.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_010",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_02",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_145203_113184/img_sh_005_kf_02_file_000020.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Maintain the intimate lighting, but build towards a crescendo that juxtapositions the minute detail of the watch with the grand external celebration. Emphasize Elias's agonizing precision, the high stakes of the final seconds, and the immediate relief and triumphant joy upon success. The visual and auditory blend of the watch ticking and fireworks is key. Must avoid: Rushing the moment of success; losing focus on Elias's profound, immediate reaction; jarring transitions that would break the emotional connection between the watch and the fireworks. Medium shot, eye-level. As a booming CRACK is heard, the camera dollies out slightly to reveal Elias, holding the ticking antique pocket watch, his face beaming with joy. Behind him, through the workshop window, the night sky erupts with a magnificent burst of colorful New Year's fireworks, creating a powerful visual juxtaposition of his intimate triumph and the grand external celebration.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_003"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_003",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_003",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_145203_113184/img_char_001_sc_003_file_000010.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Soft, warm, and contemplative lighting. The focus is entirely on Elias's quiet introspection, emotional resolution, and sentimental connection. The pacing is slow and deliberate, allowing moments to breathe and for the blend of the watch's ticking and fading fireworks to create a poignant soundscape. Show Elias, an elderly watchmaker, calm and content, experiencing a deep, quiet sense of peace, sentimental remembrance, and closure. He is wearing his worn wool sweater, collared shirt, trousers, and leather apron, consistent with previous scenes, under this reflective glow."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_003",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_003",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_145203_113184/img_loc_001_sc_003_file_000008.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Soft, warm, and contemplative lighting. The focus is entirely on Elias's quiet introspection, emotional resolution, and sentimental connection. The pacing is slow and deliberate, allowing moments to breathe and for the blend of the watch's ticking and fading fireworks to create a poignant soundscape. The tranquil home workshop is now bathed in a softer, more reflective glow at night. The frantic urgency has dissipated, replaced by a quiet sense of accomplishment. The environment emphasizes the sounds of the newly repaired watch and distant, fading fireworks, creating a poignant atmosphere."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_006",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_006",
+              "linked_blocks": [
+                "b_011",
+                "b_012",
+                "b_013",
+                "b_014",
+                "b_015"
+              ]
+            },
+            "estimated_duration_sec": 3.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_011",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_145203_113184/img_sh_006_kf_01_file_000017.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Soft, warm, and contemplative lighting. The focus is entirely on Elias's quiet introspection, emotional resolution, and sentimental connection. The pacing is slow and deliberate, allowing moments to breathe and for the blend of the watch's ticking and fading fireworks to create a poignant soundscape. Eye-level medium shot of Elias. He is slowly lifting the now fully functional and ticking antique pocket watch from his workbench. A gentle smile begins to spread across his lips, conveying profound peace, love, and connection, as the watch's steady ticking merges with the fading echoes of New Year's celebrations.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_012",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_02",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_145203_113184/img_sh_006_kf_02_file_000021.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Soft, warm, and contemplative lighting. The focus is entirely on Elias's quiet introspection, emotional resolution, and sentimental connection. The pacing is slow and deliberate, allowing moments to breathe and for the blend of the watch's ticking and fading fireworks to create a poignant soundscape. Eye-level shot, slowly pushing in from the previous medium shot. Elias brings the ticking antique pocket watch close to his ear, his eyes gently closing. He is listening intently to its steady rhythm, his expression serene and contemplative, embodying the successful repair and deep sentimental connection. The background workbench is softly lit.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_013",
+                "order": 3,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_03",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_145203_113184/img_sh_006_kf_03_file_000024.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Soft, warm, and contemplative lighting. The focus is entirely on Elias's quiet introspection, emotional resolution, and sentimental connection. The pacing is slow and deliberate, allowing moments to breathe and for the blend of the watch's ticking and fading fireworks to create a poignant soundscape. Eye-level close-up, following a slow continuous push-in. The camera subtly racks focus to Elias's glistening, peaceful eyes as he opens them, a single tear escaping, signifying emotional resolution. He gently presses the ticking antique pocket watch against his chest, a symbolic gesture of love and memory, and looks out the window towards the new year, his face radiating profound contentment as distant fireworks fade into silence.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 6,
+    "keyframe_count_total": 13,
+    "avg_keyframes_per_shot": 2.1666666666666665,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 3,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 0
+  }
+}

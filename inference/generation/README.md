@@ -27,6 +27,13 @@ Generation 模块提供了统一的接口用于图像、视频和音频生成，
 
 这些服务用于承载 provider 耦合的执行逻辑，便于 `agents/` 直接复用。
 
+fal 视频服务（`FalVideoService`）在输入多张 keyframe 图时，采用严格多图条件字段（`image_urls`）；如果模型不支持该字段会直接报错，不会自动降级为单图锚点。
+
+另外，`FalVideoService` 支持可选“结构化一致性约束”下沉：
+- 通过环境变量 `FAL_VIDEO_STRUCTURED_CONSTRAINTS_FIELD` 指定目标模型参数名（例如某些模型自定义的 `consistency_constraints`）
+- 当该变量非空且调用方传入 `consistency_constraints`（dict）时，服务会把该结构化数据作为独立 fal 参数透传，而不仅仅拼到 prompt 文本
+- 若未配置该变量，结构化约束不会被透传（保持默认兼容）
+
 ## 核心概念
 
 ### 1. 生成器基类

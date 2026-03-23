@@ -1,0 +1,138 @@
+{
+  "counter": 6,
+  "files": {
+    "file_000001_97400a51": {
+      "id": "file_000001_97400a51",
+      "filename": "aud_music_sc_001.wav",
+      "description": "Media asset aud_music_sc_001",
+      "file_type": "other",
+      "file_extension": ".wav",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/audio_only_replay_outputs/workspace_global_20260320_154315_242213/aud_music_sc_001_file_000001.wav",
+      "size_bytes": 44,
+      "created_at": "2026-03-20T15:43:44.772966",
+      "created_by": "AudioAgent",
+      "tags": [
+        "AudioAgent",
+        "task_1_dcc3f935"
+      ],
+      "metadata": {
+        "execution_id": "exec_1_5716a77e",
+        "task_id": "task_1_dcc3f935",
+        "producer_agent_id": "AudioAgent",
+        "asset_key": "aud_music_sc_001",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000002_97c3434d": {
+      "id": "file_000002_97c3434d",
+      "filename": "aud_amb_sc_001.wav",
+      "description": "Media asset aud_amb_sc_001",
+      "file_type": "other",
+      "file_extension": ".wav",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/audio_only_replay_outputs/workspace_global_20260320_154315_242213/aud_amb_sc_001_file_000002.wav",
+      "size_bytes": 44,
+      "created_at": "2026-03-20T15:43:44.787033",
+      "created_by": "AudioAgent",
+      "tags": [
+        "AudioAgent",
+        "task_1_dcc3f935"
+      ],
+      "metadata": {
+        "execution_id": "exec_1_5716a77e",
+        "task_id": "task_1_dcc3f935",
+        "producer_agent_id": "AudioAgent",
+        "asset_key": "aud_amb_sc_001",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000003_ef96b4f5": {
+      "id": "file_000003_ef96b4f5",
+      "filename": "aud_mix_sc_001.wav",
+      "description": "Media asset aud_mix_sc_001",
+      "file_type": "other",
+      "file_extension": ".wav",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/audio_only_replay_outputs/workspace_global_20260320_154315_242213/aud_mix_sc_001_file_000003.wav",
+      "size_bytes": 88,
+      "created_at": "2026-03-20T15:43:44.811224",
+      "created_by": "AudioAgent",
+      "tags": [
+        "AudioAgent",
+        "task_1_dcc3f935"
+      ],
+      "metadata": {
+        "execution_id": "exec_1_5716a77e",
+        "task_id": "task_1_dcc3f935",
+        "producer_agent_id": "AudioAgent",
+        "asset_key": "aud_mix_sc_001",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000004_6c338995": {
+      "id": "file_000004_6c338995",
+      "filename": "aud_final.wav",
+      "description": "Media asset aud_final",
+      "file_type": "other",
+      "file_extension": ".wav",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/audio_only_replay_outputs/workspace_global_20260320_154315_242213/aud_final_file_000004.wav",
+      "size_bytes": 88,
+      "created_at": "2026-03-20T15:43:44.834623",
+      "created_by": "AudioAgent",
+      "tags": [
+        "AudioAgent",
+        "task_1_dcc3f935"
+      ],
+      "metadata": {
+        "execution_id": "exec_1_5716a77e",
+        "task_id": "task_1_dcc3f935",
+        "producer_agent_id": "AudioAgent",
+        "asset_key": "aud_final",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000005_e221da21": {
+      "id": "file_000005_e221da21",
+      "filename": "delivery_final.mp4",
+      "description": "Media asset delivery_final",
+      "file_type": "video",
+      "file_extension": ".mp4",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/audio_only_replay_outputs/workspace_global_20260320_154315_242213/delivery_final_file_000005.mp4",
+      "size_bytes": 2600411,
+      "created_at": "2026-03-20T15:43:44.886251",
+      "created_by": "AudioAgent",
+      "tags": [
+        "AudioAgent",
+        "task_1_dcc3f935"
+      ],
+      "metadata": {
+        "execution_id": "exec_1_5716a77e",
+        "task_id": "task_1_dcc3f935",
+        "producer_agent_id": "AudioAgent",
+        "asset_key": "delivery_final",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000006_cd954aa4": {
+      "id": "file_000006_cd954aa4",
+      "filename": "audioagent_audio_exec_1_5716a77e.json",
+      "description": "Structured JSON snapshot for AudioAgent (exec_1_5716a77e)",
+      "file_type": "text",
+      "file_extension": ".json",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/audio_only_replay_outputs/workspace_global_20260320_154315_242213/audioagent_audio_exec_1_5716a77e_file_000006.json",
+      "size_bytes": 2631,
+      "created_at": "2026-03-20T15:43:44.913365",
+      "created_by": "AudioAgent",
+      "tags": [
+        "AudioAgent",
+        "task_1_dcc3f935",
+        "asset_json"
+      ],
+      "metadata": {
+        "execution_id": "exec_1_5716a77e",
+        "task_id": "task_1_dcc3f935",
+        "producer_agent_id": "AudioAgent",
+        "asset_key": "audio",
+        "asset_variant": "json_snapshot"
+      }
+    }
+  }
+}

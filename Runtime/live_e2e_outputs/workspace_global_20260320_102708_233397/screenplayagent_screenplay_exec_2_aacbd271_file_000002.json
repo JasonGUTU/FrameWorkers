@@ -1,0 +1,183 @@
+{
+  "meta": {
+    "project_id": "",
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-20T10:27:30.560329+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "On the brink of a new year, a grieving, retired watchmaker races against the final seconds of midnight to repair his late wife's cherished pocket watch, seeking a moment of peace and connection amidst the celebratory fireworks.",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Arthur's Workshop/Living Room",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "As the final seconds of the year tick away, Arthur, a grieving, retired watchmaker, intensely focuses on repairing his late wife's cherished pocket watch, battling unsteady hands and the emotional weight of his task to find a moment of peace and connection with her memory.",
+        "estimated_duration": {
+          "seconds": 10.0,
+          "confidence": 0.9
+        },
+        "continuity": {
+          "props_present": [
+            "Pocket watch",
+            "Jeweler's loupe",
+            "Fine tweezers",
+            "Desk lamp",
+            "Tiny gears",
+            "Watchmaker's tools",
+            "Work bench",
+            "Digital clock/phone"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A worn but comfortable tweed waistcoat over a simple button-down shirt, sleeves rolled up. Practical for his work, showing age and a life dedicated to his craft.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Arthur is repairing his late wife's pocket watch.",
+            "It's New Year's Eve, moments before midnight.",
+            "He needs extreme precision.",
+            "He experiences a momentary tremor.",
+            "He successfully completes the repair."
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_001",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "INT. ARTHUR'S WORKSHOP/LIVING ROOM - NIGHT\nFaint, celebratory NEW YEAR'S EVE FIREWORKS pop in the distance, a muffled percussion against the quiet of the room. ARTHUR (70s), an elderly, retired watchmaker, hunches over a cluttered workbench. The only light emanates from a focused DESK LAMP, illuminating his concentrated, weary face.",
+            "continuity_refs": {
+              "props": [
+                "Desk lamp",
+                "Work bench"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_002",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Through a JEWELER'S LOUPE, we see his hands. They tremble ever so slightly as he attempts to lower a minuscule SCREW into the exposed, intricate mechanism of a beautiful, antique POCKET WATCH. On a small digital CLOCK by his elbow, the time blazes: 00:00:10.",
+            "continuity_refs": {
+              "props": [
+                "Jeweler's loupe",
+                "Pocket watch",
+                "Tiny gears",
+                "Digital clock/phone"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_003",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He holds fine TWEEZERS with a surgeon's grip, but a fresh wave of fireworks outside causes his hand to flinch. The tiny screw slips, bouncing on the brass plate.",
+            "continuity_refs": {
+              "props": [
+                "Fine tweezers",
+                "Tiny gears"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_004",
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "Arthur",
+            "text": "Damn it...",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_005",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The clock ticks down: 00:00:05. Arthur closes his eyes for a split second, drawing a deep, shuddering breath. When they reopen, they're sharper, steadier. The decades of mastery overriding the grief and age.",
+            "continuity_refs": {
+              "props": [
+                "Digital clock/phone"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_006",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "With newfound resolve, his tweezers guide the screw into place. A soft CLICK. The clock flashes: 00:00:01. Then, a single, clear TICK emerges from the watch.",
+            "continuity_refs": {
+              "props": [
+                "Fine tweezers",
+                "Tiny gears",
+                "Pocket watch",
+                "Digital clock/phone"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_007",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "00:00:00.\nOutside, a deafening crescendo of FIREWORKS erupts. Arthur slowly pulls the loupe away, a profound, peaceful smile spreading across his face. He brings the ticking watch to his ear, a tear blurring his vision, but his eyes shine with a quiet, hopeful light.",
+            "continuity_refs": {
+              "props": [
+                "Jeweler's loupe",
+                "Pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "After making a small mistake due to trembling hands, Arthur takes a deep, steadying breath, summoning his decades of expertise to make the final, precise adjustment, successfully repairing the watch in the very last second.",
+          "emotional_shift": "From intense grief, tension, and self-doubt to profound peace, a sense of connection, and hopeful acceptance as the New Year begins."
+        }
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "estimated_total_duration_sec": 10.0,
+    "sum_scene_duration_sec": 10.0,
+    "scene_count": 1,
+    "dialogue_block_count": 0,
+    "action_block_count": 7
+  }
+}

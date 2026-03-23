@@ -11,18 +11,16 @@ from .agent import KeyFrameAgent
 from .schema import KeyFrameAgentInput
 from .evaluator import KeyframeEvaluator
 from .materializer import KeyframeMaterializer
-from inference.generation.image_generators.service import ImageService
+from inference.generation.image_generators.service import FalImageService
 
 
 def build_input(
-    project_id: str,
-    draft_id: str,
+    _project_id: str,
+    _draft_id: str,
     assets: dict[str, Any],
     config: Any,
 ) -> BaseModel:
     return KeyFrameAgentInput(
-        project_id=project_id,
-        draft_id=draft_id,
         storyboard=assets.get("storyboard", {}),
     )
 
@@ -48,7 +46,7 @@ DESCRIPTOR = SubAgentDescriptor(
     evaluator_factory=KeyframeEvaluator,
     build_input=build_input,
     service_factories={
-        "image_service": lambda ctx: ImageService(),
+        "image_service": lambda ctx: FalImageService(),
     },
     materializer_factory=materializer_factory,
 )

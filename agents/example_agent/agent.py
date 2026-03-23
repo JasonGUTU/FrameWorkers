@@ -41,8 +41,6 @@ class ExamplePipelineAgent(BaseAgent[ExamplePipelineInput, ExamplePipelineOutput
         return (
             f"Please summarize the following text:\n\n"
             f"{input_data.source_text}\n\n"
-            f"project_id: {input_data.project_id}\n"
-            f"draft_id: {input_data.draft_id}\n\n"
             "Return JSON matching this structure:\n"
             "{\n"
             '  "content": {\n'

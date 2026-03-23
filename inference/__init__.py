@@ -7,7 +7,7 @@ This module provides:
 - Input processing support (text/image helpers)
 """
 
-from .runtime.base_client import (
+from .clients import (
     BaseLLMClient,
     CustomModelClient,
     GPT5ChatClient,
@@ -38,9 +38,9 @@ from .generation.audio_generators.registry import (
     AudioGeneratorRegistry,
     get_audio_generator_registry,
 )
-from .generation.image_generators.service import ImageService, MockImageService
-from .generation.video_generators.service import VideoService, MockVideoService
-from .generation.audio_generators.service import AudioService, MockAudioService
+from .generation.image_generators.service import FalImageService, ImageService, MockImageService
+from .generation.video_generators.service import FalVideoService, MockVideoService, VideoService
+from .generation.audio_generators.service import AudioService, FalAudioService, MockAudioService
 
 __version__ = "0.1.0"
 __all__ = [
@@ -68,10 +68,13 @@ __all__ = [
     "get_audio_generator_registry",
     "get_image_generator_registry",
     "get_video_generator_registry",
+    "FalImageService",
     "ImageService",
     "MockImageService",
+    "FalVideoService",
     "VideoService",
     "MockVideoService",
+    "FalAudioService",
     "AudioService",
     "MockAudioService",
 ]

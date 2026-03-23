@@ -65,6 +65,15 @@ class AudioMix(BaseModel):
     audio_asset: AudioAsset = Field(default_factory=AudioAsset)
 
 
+class DeliveryVideoAsset(BaseModel):
+    """Pointer to final muxed video (video + audio)."""
+
+    asset_id: str = ""
+    uri: str = ""
+    format: str = "mp4"
+    duration_sec: float = 0.0
+
+
 class AudioScene(BaseModel):
     scene_id: str = ""
     order: int = 0
@@ -82,6 +91,7 @@ class AudioScene(BaseModel):
 class AudioContent(BaseModel):
     scenes: list[AudioScene] = Field(default_factory=list)
     final_audio_asset: AudioAsset = Field(default_factory=AudioAsset)
+    final_delivery_asset: DeliveryVideoAsset = Field(default_factory=DeliveryVideoAsset)
 
 
 class AudioMetrics(BaseModel):
@@ -112,8 +122,6 @@ class AudioAgentInput(BaseModel):
       3. Hard boundary: scene (from Video) — max duration
     """
 
-    project_id: str = ""
-    draft_id: str = ""
     screenplay: dict = Field(default_factory=dict)
     storyboard: dict = Field(default_factory=dict)
     video: dict = Field(default_factory=dict)

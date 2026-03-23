@@ -1,0 +1,378 @@
+{
+  "meta": {
+    "project_id": "",
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-20T14:52:27.604339+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "The Final Tick",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Elias's Home Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Elias races against the final ten seconds of the year to fix his late wife's pocket watch, but his trembling hands cause a critical component to slip, forcing him to regain focus under immense pressure.",
+        "estimated_duration": {
+          "seconds": 4.0,
+          "confidence": 0.9
+        },
+        "continuity": {
+          "props_present": [
+            "Pocket watch",
+            "Watchmaker's loupe",
+            "Tweezers",
+            "Tiny gears",
+            "Workbench",
+            "Desk lamp",
+            "Antique wall clock"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A comfortable, worn wool sweater over a collared shirt, simple trousers, and a leather watchmaker's apron.",
+              "must_keep": [
+                "Elderly, practical, and a bit disheveled from focused work."
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Elias is attempting to fix his wife's pocket watch.",
+            "He fumbles a critical piece of the watch.",
+            "He regains his focus after the fumble."
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_001",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The cozy, cluttered WORKSHOP of ELIAS THORNE (70s) is bathed in the warm glow of a single desk lamp. The rhythmic TICK-TOCK of a large antique WALL CLOCK dominates the silence. Elias, hunched over his workbench, strains through a jeweler's loupe, his brow furrowed in intense concentration.",
+            "continuity_refs": {
+              "props": [
+                "Workbench",
+                "Desk lamp",
+                "Antique wall clock",
+                "Jeweler's loupe"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_002",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Close on ELIAS’S HANDS, gnarled with age, but still capable. They tremble ever so slightly as he attempts to position a microscopic GEAR with fine-tipped TWEEZERS into the delicate mechanism of a beautiful, antique POCKET WATCH.",
+            "continuity_refs": {
+              "props": [
+                "Pocket watch",
+                "Tiny gears",
+                "Tweezers"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_003",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The antique WALL CLOCK CHIMES, a deep, resonant tone. Elias flinches, his breath catching. We hear the clock’s loud ticks, now counting down the final ten seconds of the year.",
+            "continuity_refs": {
+              "props": [
+                "Antique wall clock"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_004",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "In his momentary distraction, the tiny gear slips from the tweezers, bouncing once on the workbench before disappearing into the mess of tools and components. Elias exhales a heavy, defeated sigh, his shoulders slumping.",
+            "continuity_refs": {
+              "props": [
+                "Tiny gears",
+                "Tweezers",
+                "Workbench"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_005",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He closes his eyes, takes a slow, ragged breath, then opens them, a newfound, grim determination hardening his gaze. He spots the gear and re-extends his trembling hands, renewed focus now etched on his face.",
+            "continuity_refs": {
+              "props": [
+                "Tiny gears"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "Elias takes a deep breath and steadies himself, regaining intense focus after a critical fumble.",
+          "emotional_shift": "From frantic anxiety and momentary despair to renewed, unwavering resolve."
+        }
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Elias's Home Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "With seconds remaining, Elias meticulously places the final, microscopic component. Just as the watch LOUDLY TICKS for the first time, fireworks erupt outside, signaling the New Year and a moment of triumphant completion.",
+        "estimated_duration": {
+          "seconds": 3.0,
+          "confidence": 0.9
+        },
+        "continuity": {
+          "props_present": [
+            "Pocket watch",
+            "Tweezers",
+            "Workbench",
+            "Desk lamp",
+            "Window"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Same worn wool sweater, collared shirt, trousers, and leather apron.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Elias successfully places the final piece into the watch.",
+            "The watch emits its first tick.",
+            "New Year's fireworks erupt outside at the same moment."
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_006",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Elias's hands, though still aged, are remarkably steady now. With agonizing precision, he guides the tiny gear, holding his breath as the final seconds count down from the antique clock.",
+            "continuity_refs": {
+              "props": [
+                "Tiny gears",
+                "Tweezers",
+                "Antique wall clock"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_007",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "EXTREME CLOSE-UP on the gear. It HOVERS for a micro-second, then gently, perfectly, CLICKS into its housing. Elias freezes, eyes wide, barely daring to breathe.",
+            "continuity_refs": {
+              "props": [
+                "Tiny gears",
+                "Pocket watch"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_008",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A soft, then unmistakable, TICK-TOCK. The pocket watch, silent for so long, has sprung to life.",
+            "continuity_refs": {
+              "props": [
+                "Pocket watch"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_009",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Elias slowly lifts his head, a look of profound disbelief and dawning joy spreading across his face. He stares at the watch.",
+            "continuity_refs": {
+              "props": [
+                "Pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_010",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A sudden, booming CRACK from outside. Through the workshop WINDOW, a burst of bright, colorful FIREWORKS explodes in the night sky. Midnight. New Year.",
+            "continuity_refs": {
+              "props": [
+                "Window"
+              ],
+              "wardrobe_character_ids": []
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "The watch emits its first successful tick, coinciding with the New Year's fireworks, marking the successful completion of the repair.",
+          "emotional_shift": "From intense focus and high anticipation to immediate, profound relief and a sense of accomplishment."
+        }
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_003",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Elias's Home Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Elias holds the newly repaired pocket watch, a gentle smile on his face as its steady ticking merges with the fading echoes of New Year's celebrations, finding a quiet, profound peace.",
+        "estimated_duration": {
+          "seconds": 3.0,
+          "confidence": 0.9
+        },
+        "continuity": {
+          "props_present": [
+            "Repaired pocket watch",
+            "Workbench"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Same worn wool sweater, collared shirt, trousers, and leather apron.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Elias holds the ticking watch.",
+            "He smiles gently.",
+            "He finds a sense of peace."
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_011",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Elias slowly lifts the now-ticking POCKET WATCH, turning it over in his hand. A gentle, almost shy, smile spreads across his lips, erasing the lines of worry and grief.",
+            "continuity_refs": {
+              "props": [
+                "Repaired pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_012",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The watch's TICK-TOCK is clear and strong, a steady heartbeat in the quiet workshop.",
+            "continuity_refs": {
+              "props": [
+                "Repaired pocket watch"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_013",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He brings the watch to his ear, closing his eyes. He listens, not just to the mechanism, but to a memory. The sound is a bridge.",
+            "continuity_refs": {
+              "props": [
+                "Repaired pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_014",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The distant, fading echoes of FIREWORKS blend seamlessly with the rhythmic ticking of the watch, creating a poignant symphony.",
+            "continuity_refs": {
+              "props": [
+                "Repaired pocket watch"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_015",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Elias opens his eyes, which are now glistening, but peaceful. He gently presses the watch against his chest, a profound sense of connection and quiet resolve washing over him. He has done it. For her. A single, silent tear escapes, a tear of love, not sorrow. He looks out the window, into the new year.",
+            "continuity_refs": {
+              "props": [
+                "Repaired pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "Elias quietly accepts the peace and satisfaction of completing his mission, holding the ticking watch to his chest.",
+          "emotional_shift": "From immediate relief to a quiet, deep, and sentimental sense of peace, closure, and connection."
+        }
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "estimated_total_duration_sec": 10.0,
+    "sum_scene_duration_sec": 10.0,
+    "scene_count": 3,
+    "dialogue_block_count": 0,
+    "action_block_count": 15
+  }
+}

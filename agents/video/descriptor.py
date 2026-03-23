@@ -11,18 +11,16 @@ from .agent import VideoAgent
 from .schema import VideoAgentInput
 from .evaluator import VideoEvaluator
 from .materializer import VideoMaterializer
-from inference.generation.video_generators.service import MockVideoService
+from inference.generation.video_generators.service import FalVideoService
 
 
 def build_input(
-    project_id: str,
-    draft_id: str,
+    _project_id: str,
+    _draft_id: str,
     assets: dict[str, Any],
     config: Any,
 ) -> BaseModel:
     return VideoAgentInput(
-        project_id=project_id,
-        draft_id=draft_id,
         storyboard=assets.get("storyboard", {}),
         keyframes=assets.get("keyframes", {}),
     )
@@ -49,7 +47,7 @@ DESCRIPTOR = SubAgentDescriptor(
     evaluator_factory=VideoEvaluator,
     build_input=build_input,
     service_factories={
-        "video_service": lambda ctx: MockVideoService(),
+        "video_service": lambda ctx: FalVideoService(),
     },
     materializer_factory=materializer_factory,
 )

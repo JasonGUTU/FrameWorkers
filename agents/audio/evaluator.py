@@ -247,6 +247,17 @@ class AudioEvaluator(BaseEvaluator[AudioAgentOutput]):
         # --- Final audio ---
         final = content.get("final_audio_asset", {})
         final_ok = check_uri(final.get("uri", "")) == "success"
+        video_final_uri = ""
+        if upstream and "video" in upstream:
+            video_final_uri = (
+                upstream["video"]
+                .get("content", {})
+                .get("final_video_asset", {})
+                .get("uri", "")
+            )
+        delivery_expected = bool(video_final_uri)
+        delivery = content.get("final_delivery_asset", {})
+        delivery_ok = check_uri(delivery.get("uri", "")) == "success"
 
         # --- Compute scores ---
         narr_rate = narr_success / narr_planned if narr_planned else 0.0
@@ -279,6 +290,11 @@ class AudioEvaluator(BaseEvaluator[AudioAgentOutput]):
                     f"{mix_success}/{mix_planned} scene mixes created",
                     f"ambience: {amb_success}/{amb_planned}",
                     f"final audio: {'OK' if final_ok else 'MISSING'}",
+                    (
+                        f"final delivery muxed: {'OK' if delivery_ok else 'MISSING'}"
+                        if delivery_expected
+                        else "final delivery muxed: SKIPPED(no upstream video uri)"
+                    ),
                 ],
             },
             "audio_quality": {
@@ -292,11 +308,14 @@ class AudioEvaluator(BaseEvaluator[AudioAgentOutput]):
         }
 
         overall_pass = narr_rate >= self.ASSET_PASS_THRESHOLD and music_rate >= 0.5
+        if delivery_expected:
+            overall_pass = overall_pass and delivery_ok
         summary = (
             f"Audio asset eval: TTS {narr_success}/{narr_planned} "
             f"({narr_rate:.0%}), music {music_success}/{music_planned}, "
             f"mixes {mix_success}/{mix_planned}, "
-            f"final={'OK' if final_ok else 'MISSING'}."
+            f"final_audio={'OK' if final_ok else 'MISSING'}, "
+            f"final_delivery={'OK' if delivery_ok else 'MISSING' if delivery_expected else 'SKIPPED'}."
         )
 
         return {

@@ -1,0 +1,194 @@
+{
+  "meta": {
+    "project_id": "",
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-20T14:06:12.980411+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "The Midnight Tick",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Elias's Workshop Corner",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Elias, a retired watchmaker, battles trembling hands and a ticking clock to repair his late wife's precious pocket watch before midnight, achieving a moment of quiet triumph as the New Year begins.",
+        "estimated_duration": {
+          "seconds": 10.0,
+          "confidence": 0.9
+        },
+        "continuity": {
+          "props_present": [
+            "Workbench",
+            "Watchmaker's loupe",
+            "Fine-tipped tweezers",
+            "Tiny screwdriver",
+            "Pocket watch (gold, ornate)",
+            "Vintage grandfather clock",
+            "Desk lamp",
+            "Small watch gears",
+            "Soft cloth",
+            "Fireworks"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A worn, tweed vest over a practical button-down shirt with sleeves rolled up, emphasizing his working hands. His reading glasses rest on his nose.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": []
+        },
+        "blocks": [
+          {
+            "block_id": "b_001",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "INT. ELIAS'S WORKSHOP CORNER - NIGHT\n\nELIAS THORNE (70s, sharp but weary eyes), a retired watchmaker, hunches over his cluttered workbench. A single desk lamp casts a warm glow on his trembling hands. He wears a WATCHMAKER'S LOUPE over one eye, magnifying the delicate components of a beautiful, ornate GOLD POCKET WATCH.",
+            "continuity_refs": {
+              "props": [
+                "Workbench",
+                "Desk lamp",
+                "Watchmaker's loupe",
+                "Pocket watch (gold, ornate)"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_002",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "His brow is furrowed with intense concentration. Tiny gears and springs are spread on a soft cloth. Next to him, a majestic VINTAGE GRANDFATHER CLOCK SWINGS its pendulum with a solemn, rhythmic TICK-TOCK, its hands nearing midnight: 11:59 P.M.",
+            "continuity_refs": {
+              "props": [
+                "Vintage grandfather clock",
+                "Small watch gears",
+                "Soft cloth"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_003",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Elias carefully picks up a microscopic SCREW with FINE-TIPPED TWEEZERS. His hand hovers, a slight tremor threatening the precision needed. He exhales slowly, trying to steady himself, memories of his late wife, ELEANOR, filling his mind.",
+            "continuity_refs": {
+              "props": [
+                "Fine-tipped tweezers",
+                "Tiny screwdriver"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_004",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The grandfather clock CHIMES, indicating the last minute. Elias's hand, under immense pressure, gives a barely perceptible JOLT. The tiny screw, almost in place, SKITTERS across the workbench, disappearing for a heart-stopping second.",
+            "continuity_refs": {
+              "props": [
+                "Vintage grandfather clock",
+                "Tiny screwdriver"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_005",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Elias's eyes widen, a flicker of despair. He takes a deep, ragged breath, closing his eyes for just a moment. He reopens them, newly determined, scanning the surface. He spots the screw and, with newfound steadiness, retrieves it.",
+            "continuity_refs": {
+              "props": [
+                "Tiny screwdriver"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_006",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "With absolute, unwavering focus, he guides the screw into its housing. The grandfather clock begins its final, resonant CHIME for midnight. As the final gong sounds, Elias, with a gentle click, closes the watch back plate.",
+            "continuity_refs": {
+              "props": [
+                "Vintage grandfather clock",
+                "Pocket watch (gold, ornate)"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_007",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A soft, perfect TICK... TICK... TICK... emanates from the restored pocket watch. Simultaneously, a burst of FIREWORKS ERUPTS outside the window, painting the night sky with vibrant colors. Elias removes his loupe.",
+            "continuity_refs": {
+              "props": [
+                "Pocket watch (gold, ornate)",
+                "Fireworks"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_008",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A gentle, poignant smile spreads across Elias's face, a silent tribute to Eleanor. He holds the ticking watch to his ear, a tear glistening. New Year, new beginning, a cherished memory brought back to life.",
+            "continuity_refs": {
+              "props": [
+                "Pocket watch (gold, ornate)"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "Elias successfully repairs the watch, hearing its tick just as midnight strikes and fireworks erupt outside.",
+          "emotional_shift": "From intense focus and tension to relief, quiet triumph, and poignant peace."
+        }
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "estimated_total_duration_sec": 10.0,
+    "sum_scene_duration_sec": 10.0,
+    "scene_count": 1,
+    "dialogue_block_count": 0,
+    "action_block_count": 8
+  }
+}

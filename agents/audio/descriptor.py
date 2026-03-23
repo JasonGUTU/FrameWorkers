@@ -11,18 +11,16 @@ from .agent import AudioAgent
 from .schema import AudioAgentInput
 from .evaluator import AudioEvaluator
 from .materializer import AudioMaterializer
-from inference.generation.audio_generators.service import AudioService
+from inference.generation.audio_generators.service import FalAudioService
 
 
 def build_input(
-    project_id: str,
-    draft_id: str,
+    _project_id: str,
+    _draft_id: str,
     assets: dict[str, Any],
     config: Any,
 ) -> BaseModel:
     return AudioAgentInput(
-        project_id=project_id,
-        draft_id=draft_id,
         screenplay=assets.get("screenplay", {}),
         storyboard=assets.get("storyboard", {}),
         video=assets.get("video", {}),
@@ -50,7 +48,7 @@ DESCRIPTOR = SubAgentDescriptor(
     evaluator_factory=AudioEvaluator,
     build_input=build_input,
     service_factories={
-        "audio_service": lambda ctx: AudioService(client=ctx["llm_client"].client),
+        "audio_service": lambda ctx: FalAudioService(),
     },
     materializer_factory=materializer_factory,
 )

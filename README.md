@@ -46,9 +46,10 @@ FrameWorkers/
 │   │       ├── __init__.py
 │   │       ├── models.py            # Assistant 数据模型
 │   │       ├── routes.py            # Assistant API 路由
+│   │       ├── response_serializers.py # Assistant 响应序列化（主实现）
 │   │       ├── service.py           # Assistant 核心业务逻辑
-│   │       ├── storage.py           # Assistant 数据存储
-│   │       ├── retrieval.py         # 检索模块
+│   │       ├── state_store.py       # Assistant 运行态存储（主实现）
+│   │       ├── workspace_context.py # 检索与上下文组装
 │   │       └── workspace/           # 工作空间模块
 │   │           ├── __init__.py
 │   │           ├── workspace.py    # 工作空间核心
@@ -63,9 +64,10 @@ FrameWorkers/
 │   └── USAGE_EXAMPLES.md            # 使用示例
 ├── inference/                       # 推理与多模态能力库
 │   ├── __init__.py                  # inference 对外导出入口
-│   ├── runtime/                     # LLM 运行时
-│   │   ├── base_client.py           # BaseLLMClient + Message/ModelConfig + 兼容导出
-│   │   └── clients/                 # 具体客户端实现
+│   ├── clients/                     # LLM 客户端主命名空间（推荐）
+│   │   ├── base/                    # 抽象层（协议/数据结构）
+│   │   │   └── base_client.py       # BaseLLMClient + Message/ModelConfig
+│   │   └── implementations/         # 具体实现层
 │   │       ├── default_client.py    # 默认 LLMClient（LiteLLM completion + OpenAI chat）
 │   │       ├── gpt5_client.py       # GPT-5 专用 chat 参数实现
 │   │       └── custom_model.py      # 自研模型客户端（如 Ollama）
@@ -150,8 +152,8 @@ Agent 自动发现和注册框架：
 
 统一提供 LLM 运行时与多模态生成能力：
 
-- **公共抽象层**：`inference/runtime/base_client.py` 统一定义 `BaseLLMClient`、消息结构与导出入口
-- **具体客户端层**：`inference/runtime/clients/` 下按实现拆分（`default_client.py`、`gpt5_client.py`、`custom_model.py`）
+- **公共抽象层**：`inference/clients/base/base_client.py` 统一定义 `BaseLLMClient`、消息结构与抽象接口
+- **具体客户端层**：`inference/clients/implementations/` 下按实现拆分（`default_client.py`、`gpt5_client.py`、`custom_model.py`）
 - **生成能力层**：`inference/generation/` 提供 image/video/audio 三类 registry + service
 
 详细文档：[inference/README.md](./inference/README.md)
@@ -182,13 +184,15 @@ Web 前端界面：
 ### 1. 安装依赖
 
 ```bash
-# 创建 conda 环境 (frameworkers, python 3.11) 并安装所有依赖
+# 创建 conda 环境 (frameworkers, python 3.11) 并安装所有依赖（包含 pytest）
 python install_requirements.py
 conda activate frameworkers
 
 # 前端依赖
 cd interface && npm install
 ```
+
+`install_requirements.py` 支持重复执行：若 `frameworkers` 环境已存在会跳过创建，仅更新依赖；对不支持 `conda run --no-banner` 的旧版 conda 会自动回退兼容参数。
 
 ### 2. 启动服务
 

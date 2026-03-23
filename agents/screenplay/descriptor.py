@@ -16,16 +16,14 @@ from .evaluator import ScreenplayEvaluator
 
 
 def build_input(
-    project_id: str,
-    draft_id: str,
+    _project_id: str,
+    _draft_id: str,
     assets: dict[str, Any],
     config: Any,
 ) -> BaseModel:
     story_dict = assets.get("story_blueprint", {})
     content = story_dict.get("content", {})
     return ScreenplayAgentInput(
-        project_id=project_id,
-        draft_id=draft_id,
         story_blueprint=content,
         constraints=ScreenplayConstraints(
             target_duration_sec=config.target_total_duration_sec,

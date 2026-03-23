@@ -1,6 +1,6 @@
 """KeyFrameAgent — generates keyframe image prompts for each shot.
 
-Input:  KeyFrameAgentInput (project_id, draft_id, storyboard, constraints)
+Input:  KeyFrameAgentInput (storyboard, constraints)
 Output: KeyFrameAgentOutput (KeyframesPackage with stability_keyframes +
         shot keyframes, metrics)
 
@@ -23,6 +23,7 @@ from __future__ import annotations
 import asyncio
 import json
 import logging
+import os
 from typing import Any
 
 from ..base_agent import BaseAgent
@@ -60,6 +61,13 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self._prop_name_to_id: dict[str, str] = {}
+        # Unified switch first, then legacy switch for backward compatibility.
+        # Default off for faster low-latency runs.
+        raw = os.getenv(
+            "FW_ENABLE_PROP_PIPELINE",
+            os.getenv("FW_ENABLE_PROP_KEYFRAMES", "0"),
+        ).strip().lower()
+        self._enable_prop_keyframes = raw in {"1", "true", "yes", "on"}
 
     # ------------------------------------------------------------------
     # Prompts (system prompt shared by both legacy and skeleton modes)
@@ -128,11 +136,17 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
             for ch in pack.get("character_locks", []):
                 if ch.get("character_id"):
                     all_char_ids[ch["character_id"]] = True
-            for pr in pack.get("props_lock", []):
-                pid = pr.get("prop_id", "")
-                pname = pr.get("prop_name", "")
-                if pid:
-                    all_props[pid] = pname
+            # Fallback: some storyboard outputs carry character IDs only at shot level.
+            for shot in sb_scene.get("shots", []):
+                for cid in shot.get("characters_in_frame", []):
+                    if isinstance(cid, str) and cid:
+                        all_char_ids[cid] = True
+            if self._enable_prop_keyframes:
+                for pr in pack.get("props_lock", []):
+                    pid = pr.get("prop_id", "")
+                    pname = pr.get("prop_name", "")
+                    if pid:
+                        all_props[pid] = pname
 
         # Build reverse mapping (name → id) for prompt context
         self._prop_name_to_id = {v: k for k, v in all_props.items()}
@@ -184,12 +198,20 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
                 for ch in pack.get("character_locks", [])
                 if ch.get("character_id")
             ]
+            # Keep scene-level character anchors available even when character_locks
+            # is empty but shot-level character assignment exists.
+            for shot in sb_scene.get("shots", []):
+                for cid in shot.get("characters_in_frame", []):
+                    if isinstance(cid, str) and cid and cid not in scene_char_ids:
+                        scene_char_ids.append(cid)
             scene_loc_id = pack.get("location_lock", {}).get("location_id", "")
-            scene_props: list[tuple[str, str]] = [
-                (pr["prop_id"], pr.get("prop_name", ""))
-                for pr in pack.get("props_lock", [])
-                if pr.get("prop_id")
-            ]
+            scene_props: list[tuple[str, str]] = []
+            if self._enable_prop_keyframes:
+                scene_props = [
+                    (pr["prop_id"], pr.get("prop_name", ""))
+                    for pr in pack.get("props_lock", [])
+                    if pr.get("prop_id")
+                ]
 
             stab_chars = [
                 StabilityAnchorKeyframe(
@@ -243,8 +265,10 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
                                 characters_in_frame=sb_shot.get(
                                     "characters_in_frame", []
                                 ),
-                                props_in_frame=sb_shot.get(
-                                    "props_in_frame", []
+                                props_in_frame=(
+                                    sb_shot.get("props_in_frame", [])
+                                    if self._enable_prop_keyframes
+                                    else []
                                 ),
                             ),
                         )

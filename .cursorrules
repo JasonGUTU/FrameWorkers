@@ -54,8 +54,8 @@ Two blueprints:
 - Global singleton Assistant manages all sub-agents
 - 6-step execution flow: query inputs → prepare environment → retrieve context → package data → execute agent → process results
 - `service.py`: `AssistantService` orchestrates the full flow
-- `storage.py`: in-memory store for assistant, executions, global workspace
-- `retrieval.py`: `WorkspaceRetriever` feeds agent context from workspace
+- `state_store.py`: in-memory runtime state for assistant, executions, global workspace
+- `workspace_context.py`: `WorkspaceContextBuilder` feeds agent context from workspace
 
 **Workspace** (`src/assistant/workspace/`)
 - `workspace.py`: core workspace object
@@ -82,17 +82,17 @@ Entry: `python -m director_agent.main` or `python director_agent/run.py`
 - `AgentRegistry`: discovers sync agents from `agents/` subdirs, registers pipeline agents from `AGENT_REGISTRY`
 - `descriptor.py`: `SubAgentDescriptor` manifest — factories, input builders, catalog
 - `base_evaluator.py`: 3-layer evaluation (structural → creative → asset)
-- LLM runtime client comes from `inference/runtime/base_client.py`
+- LLM runtime client comes from `inference/clients/base/base_client.py`
 - Pipeline sub-agents: `story/`, `screenplay/`, `storyboard/`, `keyframe/`, `video/`, `audio/`, `example_agent/`
 - Each has: `agent.py`, `schema.py`, `evaluator.py`, `descriptor.py`; media agents add `materializer.py`, `service.py`
 - Auto-discovered by `AgentRegistry` at startup via filesystem scan
 
 ### 4. `inference/` — LLM & Multimodal Library
 
-- `runtime/base_client.py`: `BaseLLMClient`, `ModelConfig`, `Message`, compatibility exports
-- `runtime/clients/default_client.py`: default `LLMClient` implementation
-- `runtime/clients/gpt5_client.py`: GPT-5 specific client implementation
-- `runtime/clients/custom_model.py`: `CustomModelClient` (Ollama/custom backend)
+- `clients/base/base_client.py`: `BaseLLMClient`, `ModelConfig`, `Message`
+- `clients/implementations/default_client.py`: default `LLMClient` implementation
+- `clients/implementations/gpt5_client.py`: GPT-5 specific client implementation
+- `clients/implementations/custom_model.py`: `CustomModelClient` (Ollama/custom backend)
 - `config/`: `ModelRegistry`, `get_model_config`; supports OpenAI, Anthropic, Google, Ollama
 - `multimodal/`: `ImageUtils`, `MultimodalUtils` (base64, resize, message helpers)
 - `prompt/`: `MessageUtils` (compress/truncate), `MessageHistory`, `PromptTemplate`
@@ -219,8 +219,8 @@ FrameWorkers/
 │   │       ├── models.py
 │   │       ├── routes.py
 │   │       ├── service.py           #   AssistantService (6-step flow)
-│   │       ├── storage.py           #   In-memory: assistant + executions + workspace
-│   │       ├── retrieval.py         #   WorkspaceRetriever
+│   │       ├── state_store.py       #   In-memory: assistant + executions + workspace
+│   │       ├── workspace_context.py #   WorkspaceContextBuilder
 │   │       └── workspace/           #   Global shared workspace
 │   │           ├── workspace.py
 │   │           ├── file_manager.py
@@ -231,9 +231,10 @@ FrameWorkers/
 │       └── test_agent_core.py
 │
 ├── inference/                       # ★ LLM & multimodal library (standalone)
-│   ├── runtime/                     #   Base client + concrete client implementations
-│   │   ├── base_client.py           #   BaseLLMClient + ModelConfig + Message + exports
-│   │   └── clients/
+│   ├── clients/                     #   Base abstractions + concrete client implementations
+│   │   ├── base/
+│   │   │   └── base_client.py       #   BaseLLMClient + ModelConfig + Message
+│   │   └── implementations/
 │   │       ├── default_client.py    #   Default LLMClient implementation
 │   │       ├── gpt5_client.py       #   GPT-5 specific implementation
 │   │       └── custom_model.py      #   Ollama/custom model client

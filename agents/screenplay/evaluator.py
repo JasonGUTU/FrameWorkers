@@ -98,6 +98,7 @@ class ScreenplayEvaluator(BaseEvaluator[ScreenplayAgentOutput]):
             errors, "action_block_count", output.metrics.action_block_count,
             sum(1 for s in c.scenes for b in s.blocks if b.block_type == "action"),
         )
+        self._check_duration_compliance(errors, output)
 
         # --- Scene order continuity ---
         self._check_order_continuous(errors, "scene", [s.order for s in c.scenes])
@@ -110,4 +111,24 @@ class ScreenplayEvaluator(BaseEvaluator[ScreenplayAgentOutput]):
                 errors.append(f"scene {scene.scene_id} has no blocks")
 
         return errors
+
+    def _check_duration_compliance(
+        self,
+        errors: list[str],
+        output: ScreenplayAgentOutput,
+    ) -> None:
+        target = float(getattr(output.metrics, "target_duration_sec", 0.0) or 0.0)
+        actual = float(getattr(output.metrics, "sum_scene_duration_sec", 0.0) or 0.0)
+        if target <= 0:
+            return
+
+        tolerance = max(2.0, target * 0.2)
+        lower = target - tolerance
+        upper = target + tolerance
+        if actual < lower or actual > upper:
+            errors.append(
+                "sum_scene_duration_sec out of target range: "
+                f"actual={actual:.1f}s target={target:.1f}s "
+                f"allowed=[{lower:.1f},{upper:.1f}]"
+            )
 

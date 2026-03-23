@@ -65,20 +65,25 @@ inference/
 - 对 `POST /api/assistant/execute` 的请求/响应结构保持兼容。
 - `director_agent/api_client.py` 无需改动即可跑通。
 - 现有 `tests/assistant/test_assistant_http_e2e.py` 两类用例均通过。
-- workspace 行为（文件/memory/log）无语义变化。
+- workspace 行为（文件/STM memory/log）：长期记忆（LTM）写入已关闭，其余无语义变化。
 
 ## 功能特性
 
 - **通用模型调用接口**: 使用 LiteLLM 包装，提供统一的 OpenAI 兼容接口调用所有支持的模型
 - **OpenAI 兼容请求格式**: `chat_json/chat_text` 统一使用 `chat.completions` 兼容参数（如 `max_tokens`）
-- **LLM 客户端分层抽象**: `runtime/` 根目录仅保留 `base_client.py` 作为公共基类/导出入口，具体实现集中在 `runtime/clients/`
+- **LLM 客户端分层抽象**: `clients/` 作为主命名空间；抽象层在 `clients/base/`，具体实现在 `clients/implementations/`
 - **自动路由与 Key 选择**: `LLMClient` 会读取项目根目录路由配置，根据用户定义的 model/provider/client 映射选择执行路径，并使用对应 provider 的环境变量 key
 - **GPT-5 专用接口扩展**: `GPT5ChatClient` 提供 `max_completion_tokens`/`reasoning_effort` 风格请求参数
 - **自研模型接口**: 预留自定义模型接口，支持通过 LiteLLM 对接 Ollama 等本地模型
 - **多模态支持**: 提供图像 Base64 编码/解码及相关工具
 - **图像生成模块**: 可扩展图像生成器注册系统，支持文本到图像、图像到图像
 - **视频生成模块**: 可扩展视频生成器注册系统，支持文本/图像/视频到视频
-- **音频生成模块**: 可扩展音频生成器注册系统，支持文本到语音与音频后处理
+- **音频生成模块**: 可扩展音频生成器注册系统，支持文本到语音、音频后处理、以及最终音视频 mux
+- **fal.ai 生成后端**: 支持通过 `FAL_API_KEY` 调用 fal.ai 图像/视频/语音生成器
+- **fal 视频严格多锚点策略**: 多 keyframe 输入时仅传 `image_urls`，不自动回退到 `image_url`
+- **fal 视频结构化一致性透传**: 可通过 `FAL_VIDEO_STRUCTURED_CONSTRAINTS_FIELD` 把 `consistency_constraints` 作为独立参数传给支持该字段的模型
+- **视频拼接语义修复**: `VideoService.assemble_scene/assemble_final` 默认使用 `ffmpeg concat` 合成，避免二进制直接拼接导致最终时长错误
+- **最终交付 mux 修复**: `AudioService.mux_audio_with_video` 对短音频执行 `apad` 后再 mux，避免 `delivery_final` 被极短音频截断
 - **媒体服务模块化实现**: 提供 image/video/audio 独立服务模块，供 agents 复用
 
 ## 目录结构
@@ -94,10 +99,13 @@ inference/
 │   ├── config_loader.py        # 配置加载工具（YAML/JSON + 环境变量替换）
 │   ├── model_config.py         # 模型配置和注册表
 │   └── inference_config.yaml.example  # 配置文件示例
-├── runtime/                    # 运行时推理模块
-│   ├── __init__.py
-│   ├── base_client.py          # 公共基类 + 统一导出入口
-│   └── clients/                # 具体实现
+├── clients/                    # 客户端主命名空间（推荐）
+│   ├── __init__.py             # 统一导出入口（建议业务代码优先从这里导入）
+│   ├── base/                   # 抽象层
+│   │   ├── __init__.py
+│   │   └── base_client.py      # BaseLLMClient / Message / ModelConfig
+│   └── implementations/        # 具体实现层
+│       ├── __init__.py
 │       ├── default_client.py   # 默认实现（LiteLLM completion + OpenAI chat）
 │       ├── gpt5_client.py      # GPT-5 专用 chat 实现
 │       └── custom_model.py     # 自研模型接口（Ollama 等）
@@ -262,7 +270,7 @@ response = client.call(
 # 调用 Google 模型
 response = client.call(
     messages=[{"role": "user", "content": "Hello!"}],
-    model="gemini-pro"
+    model="google-ai-studio/gemini-2.5-flash"
 )
 ```
 
@@ -432,6 +440,25 @@ client = LLMClient(config_path="config/inference_config.yaml")
 - `model_provider`：模型对应哪个 provider
 - `provider_client`：provider 走哪个 client 路径（`openai_sdk` / `gpt5_sdk` / `litellm`）
 - `provider_key_env`：provider 对应读取哪个环境变量作为 API Key
+- `provider_base_url_env`：provider 对应读取哪个环境变量作为 Base URL
+- `provider_default_headers`：provider 默认请求头（用于 OpenAI 兼容网关）
+
+Cloudflare AI Gateway（OpenAI 兼容）示例：
+
+```yaml
+routing:
+  model_provider:
+    google-ai-studio/gemini-3.1-pro-preview: cf_aig
+  provider_client:
+    cf_aig: openai_sdk
+  provider_key_env:
+    cf_aig: CF_AIG_TOKEN
+  provider_base_url_env:
+    cf_aig: CF_AIG_BASE_URL
+  provider_default_headers:
+    cf_aig:
+      cf-aig-metadata: '{"project_id":"${CF_PROJECT_ID}","user_id":"${CF_USER_ID}"}'
+```
 
 也可通过 `INFERENCE_RUNTIME_CONFIG=/abs/path/to/your.yaml` 指定自定义路径。
 
@@ -442,9 +469,23 @@ export INFERENCE_DEFAULT_MODEL="gpt-4o"
 export OPENAI_API_KEY="your-key"
 export ANTHROPIC_API_KEY="your-key"
 export OLLAMA_BASE_URL="http://localhost:11434"
+export FAL_API_KEY="your-fal-api-key"
+export FAL_IMAGE_MODEL="fal-ai/flux/schnell"
+export FAL_VIDEO_MODEL="fal-ai/ltx-video-v095"
+export FAL_TTS_MODEL="fal-ai/minimax/speech-02-turbo"
 ```
 
 如果项目根目录存在 `.env`，`BaseLLMClient` 在首次初始化时会自动向上搜索并加载该文件（仅填充当前缺失的变量，不覆盖已存在环境变量）。
+
+媒体生成器会自动发现 fal.ai 插件：
+- `fal_image_generator`
+- `fal_video_generator`
+- `fal_tts_generator`
+
+fal 服务会按以下优先级选择模型：
+1) 代码初始化显式传参  
+2) 环境变量（`FAL_IMAGE_MODEL` / `FAL_VIDEO_MODEL` / `FAL_TTS_MODEL`）  
+3) 内置默认值
 
 ### 代码方式
 
@@ -615,6 +656,32 @@ result = registry.generate(
     prompt="Animate this image",
     images=["path/to/image.jpg"],
     duration=3
+)
+```
+
+### 示例 7: fal.ai 生成器
+
+```python
+from inference import (
+    get_audio_generator_registry,
+    get_image_generator_registry,
+    get_video_generator_registry,
+)
+
+image_result = get_image_generator_registry().generate(
+    generator_id="fal_image_generator",
+    prompt="A cinematic mountain landscape at golden hour"
+)
+
+video_result = get_video_generator_registry().generate(
+    generator_id="fal_video_generator",
+    prompt="A slow drone shot over snowy mountains",
+    duration=1
+)
+
+audio_result = get_audio_generator_registry().generate(
+    generator_id="fal_tts_generator",
+    text="Welcome to FrameWorkers powered by fal.ai"
 )
 ```
 

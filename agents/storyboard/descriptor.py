@@ -16,14 +16,12 @@ from .evaluator import StoryboardEvaluator
 
 
 def build_input(
-    project_id: str,
-    draft_id: str,
+    _project_id: str,
+    _draft_id: str,
     assets: dict[str, Any],
     config: Any,
 ) -> BaseModel:
     return StoryboardAgentInput(
-        project_id=project_id,
-        draft_id=draft_id,
         screenplay=assets.get("screenplay", {}),
         constraints=StoryboardConstraints(language=config.language),
     )

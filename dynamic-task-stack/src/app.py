@@ -1,7 +1,15 @@
 # Main Flask application for Frameworks Backend
 
+import sys
+from pathlib import Path
+
 from flask import Flask
 from flask_cors import CORS
+
+_project_root = str(Path(__file__).resolve().parent.parent.parent)
+if _project_root not in sys.path:
+    sys.path.insert(0, _project_root)
+
 from .task_stack import create_blueprint
 from .assistant import create_assistant_blueprint
 

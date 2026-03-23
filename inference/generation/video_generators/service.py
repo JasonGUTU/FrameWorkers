@@ -2,8 +2,17 @@
 
 from __future__ import annotations
 
+import asyncio
+import base64
 import logging
+import os
+import shutil
+import subprocess
+import tempfile
+from pathlib import Path
 from typing import Any
+
+import httpx
 
 logger = logging.getLogger(__name__)
 
@@ -42,14 +51,97 @@ class VideoService:
         clip_bytes_list: list[bytes],
         transitions: list[dict[str, Any]],
     ) -> bytes:
-        return b"".join(clip_bytes_list)
+        return await self._concat_mp4_segments(
+            clip_bytes_list,
+            label=f"scene:{scene_id}",
+        )
 
     async def assemble_final(
         self,
         *,
         scene_bytes_list: list[bytes],
     ) -> bytes:
-        return b"".join(scene_bytes_list)
+        return await self._concat_mp4_segments(
+            scene_bytes_list,
+            label="final",
+        )
+
+    async def _concat_mp4_segments(self, segments: list[bytes], *, label: str) -> bytes:
+        """Concatenate mp4 segments with ffmpeg concat demuxer.
+
+        Falls back to legacy byte-join only when ffmpeg is unavailable or concat
+        fails, so callers still receive a non-empty payload.
+        """
+        non_empty = [seg for seg in segments if isinstance(seg, (bytes, bytearray)) and seg]
+        if not non_empty:
+            return b""
+        if len(non_empty) == 1:
+            return bytes(non_empty[0])
+
+        ffmpeg_bin = shutil.which("ffmpeg")
+        if not ffmpeg_bin:
+            logger.warning(
+                "[VideoService] ffmpeg not found; fallback to byte-join for %s",
+                label,
+            )
+            return b"".join(non_empty)
+
+        try:
+            return await asyncio.to_thread(
+                self._concat_mp4_segments_sync,
+                ffmpeg_bin,
+                [bytes(seg) for seg in non_empty],
+                label,
+            )
+        except Exception as exc:
+            logger.warning(
+                "[VideoService] ffmpeg concat failed for %s; fallback to byte-join: %s",
+                label,
+                exc,
+            )
+            return b"".join(non_empty)
+
+    @staticmethod
+    def _concat_mp4_segments_sync(ffmpeg_bin: str, segments: list[bytes], label: str) -> bytes:
+        with tempfile.TemporaryDirectory(prefix="fw_video_concat_") as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            parts_file = tmp_path / "parts.txt"
+            out_file = tmp_path / "out.mp4"
+
+            lines: list[str] = []
+            for idx, payload in enumerate(segments):
+                clip_path = tmp_path / f"part_{idx:04d}.mp4"
+                clip_path.write_bytes(payload)
+                lines.append(f"file '{clip_path.as_posix()}'")
+            parts_file.write_text("\n".join(lines), encoding="utf-8")
+
+            proc = subprocess.run(
+                [
+                    ffmpeg_bin,
+                    "-y",
+                    "-f",
+                    "concat",
+                    "-safe",
+                    "0",
+                    "-i",
+                    str(parts_file),
+                    "-c",
+                    "copy",
+                    str(out_file),
+                ],
+                capture_output=True,
+                text=True,
+            )
+            if proc.returncode != 0 or not out_file.exists():
+                stderr_tail = (proc.stderr or "").strip()[-500:]
+                raise RuntimeError(
+                    f"ffmpeg concat failed for {label} (code={proc.returncode}): {stderr_tail}"
+                )
+
+            merged = out_file.read_bytes()
+            if not merged:
+                raise RuntimeError(f"ffmpeg concat produced empty output for {label}")
+            return merged
 
 
 class MockVideoService(VideoService):
@@ -91,3 +183,152 @@ class MockVideoService(VideoService):
     ) -> bytes:
         logger.info("[MockVideoService] Assembling final video")
         return _MOCK_MP4_HEADER
+
+
+class FalVideoService(VideoService):
+    """Video generation service backed by fal.ai."""
+
+    def __init__(
+        self,
+        api_key: str | None = None,
+        model: str | None = None,
+        timeout: float = 300.0,
+        structured_constraints_field: str | None = None,
+    ) -> None:
+        self._api_key = api_key or os.getenv("FAL_API_KEY", "")
+        self.model = model or os.getenv("FAL_VIDEO_MODEL", "fal-ai/ltx-video-v095")
+        self.timeout = timeout
+        self.structured_constraints_field = (
+            structured_constraints_field
+            if structured_constraints_field is not None
+            else os.getenv("FAL_VIDEO_STRUCTURED_CONSTRAINTS_FIELD", "").strip()
+        )
+        self._http: httpx.AsyncClient | None = None
+
+    @property
+    def http(self) -> httpx.AsyncClient:
+        if self._http is None or self._http.is_closed:
+            self._http = httpx.AsyncClient(timeout=self.timeout)
+        return self._http
+
+    async def close(self) -> None:
+        if self._http and not self._http.is_closed:
+            await self._http.aclose()
+
+    async def generate_clip(
+        self,
+        *,
+        shot_id: str,
+        keyframe_images: list[bytes],
+        prompt: str,
+        duration_sec: float,
+        fps: int = 24,
+        width: int = 1024,
+        height: int = 576,
+        **kwargs: Any,
+    ) -> bytes:
+        logger.info("[fal.ai] Generating video shot=%s model=%s", shot_id, self.model)
+        arguments: dict[str, Any] = {"prompt": prompt}
+
+        image_data_urls: list[str] = []
+        if keyframe_images:
+            image_data_urls = [
+                f"data:image/png;base64,{base64.b64encode(img).decode('utf-8')}"
+                for img in keyframe_images
+            ]
+
+        source_video_url = kwargs.get("source_video_url")
+        if isinstance(source_video_url, str) and source_video_url:
+            arguments["video_url"] = source_video_url
+
+        # Optional: pass structured consistency constraints as a dedicated field
+        # when the target fal model endpoint supports it.
+        constraints = kwargs.get("consistency_constraints")
+        if (
+            self.structured_constraints_field
+            and isinstance(constraints, dict)
+            and constraints
+        ):
+            arguments[self.structured_constraints_field] = constraints
+
+        # Keep common generation knobs optional to maximize model compatibility.
+        if duration_sec > 0:
+            arguments["duration"] = int(round(duration_sec))
+        if fps > 0:
+            arguments["fps"] = int(fps)
+        if width > 0 and height > 0:
+            # ltx-video-v095 accepts preset labels instead of WxH.
+            if "ltx-video-v095" in self.model:
+                arguments["resolution"] = "480p" if int(height) <= 480 else "720p"
+            else:
+                arguments["resolution"] = f"{int(width)}x{int(height)}"
+
+        result: dict[str, Any]
+        if len(image_data_urls) > 1:
+            logger.info(
+                "[fal.ai] Using multi-keyframe conditioning for shot=%s (%d anchors)",
+                shot_id,
+                len(image_data_urls),
+            )
+            arguments["image_urls"] = image_data_urls
+            result = await self._submit(arguments)
+        else:
+            if image_data_urls:
+                arguments["image_url"] = image_data_urls[0]
+            result = await self._submit(arguments)
+
+        video_url = self._extract_video_url(result)
+        return await self._download_binary(video_url)
+
+    async def _submit(self, arguments: dict[str, Any]) -> dict[str, Any]:
+        if not self._api_key:
+            raise RuntimeError("FAL_API_KEY is required for FalVideoService")
+        try:
+            import fal_client
+        except ImportError as exc:
+            raise RuntimeError("fal-client is required. Install with `pip install fal-client`.") from exc
+
+        previous = os.getenv("FAL_KEY")
+        os.environ["FAL_KEY"] = self._api_key
+        try:
+            result = await asyncio.to_thread(
+                fal_client.subscribe,
+                self.model,
+                arguments=arguments,
+                with_logs=False,
+            )
+            if not isinstance(result, dict):
+                raise RuntimeError(f"Unexpected fal.ai response type: {type(result).__name__}")
+            return result
+        finally:
+            if previous is None:
+                os.environ.pop("FAL_KEY", None)
+            else:
+                os.environ["FAL_KEY"] = previous
+
+    async def _download_binary(self, url: str) -> bytes:
+        resp = await self.http.get(url)
+        resp.raise_for_status()
+        return resp.content
+
+    @staticmethod
+    def _extract_video_url(result: dict[str, Any]) -> str:
+        video_obj = result.get("video")
+        if isinstance(video_obj, dict):
+            url = video_obj.get("url")
+            if isinstance(url, str) and url:
+                return url
+
+        videos = result.get("videos")
+        if isinstance(videos, list) and videos:
+            first = videos[0]
+            if isinstance(first, dict):
+                url = first.get("url")
+                if isinstance(url, str) and url:
+                    return url
+
+        direct_url = result.get("video_url") or result.get("url")
+        if isinstance(direct_url, str) and direct_url:
+            return direct_url
+
+        raise RuntimeError(f"No video URL found in fal.ai response keys={list(result.keys())}")

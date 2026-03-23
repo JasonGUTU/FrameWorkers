@@ -1,6 +1,6 @@
 """VideoAgent — renders keyframes into video clips.
 
-Input:  VideoAgentInput (project_id, draft_id, storyboard, keyframes, constraints)
+Input:  VideoAgentInput (storyboard, keyframes, constraints)
 Output: VideoAgentOutput (VideoPackage with shot_segments, transition_plan,
         scene_clip_assets, metrics)
 

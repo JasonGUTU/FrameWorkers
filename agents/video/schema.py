@@ -97,8 +97,6 @@ class VideoConstraints(BaseModel):
 class VideoAgentInput(BaseModel):
     """Input payload for VideoAgent."""
 
-    project_id: str = ""
-    draft_id: str = ""
     storyboard: dict = Field(default_factory=dict)
     keyframes: dict = Field(default_factory=dict)
     constraints: VideoConstraints = Field(default_factory=VideoConstraints)

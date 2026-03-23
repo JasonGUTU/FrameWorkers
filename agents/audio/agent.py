@@ -1,9 +1,9 @@
 """AudioAgent — generates narration, music, and ambience aligned with video.
 
-Input:  AudioAgentInput (project_id, draft_id, screenplay, storyboard, video,
+Input:  AudioAgentInput (screenplay, storyboard, video,
         constraints)
 Output: AudioAgentOutput (AudioPackage with narration segments, music cues,
-        ambience beds, per-scene mixes, metrics)
+        ambience beds, per-scene mixes, final muxed delivery, metrics)
 
 Audio alignment rules (three-layer):
   1. Semantic source: block (from Screenplay) — determines WHAT to say
@@ -33,6 +33,7 @@ from .schema import (
     AudioContent,
     AudioMix,
     AudioScene,
+    DeliveryVideoAsset,
     MusicCue,
     NarrationSegment,
 )
@@ -218,6 +219,12 @@ class AudioAgent(BaseAgent[AudioAgentInput, AudioAgentOutput]):
                 format="wav",
                 duration_sec=total_dur,
                 sample_rate=44100,
+            ),
+            final_delivery_asset=DeliveryVideoAsset(
+                asset_id="delivery_final",
+                uri="placeholder",
+                format="mp4",
+                duration_sec=total_dur,
             ),
         )
         return output

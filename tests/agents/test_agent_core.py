@@ -56,10 +56,13 @@ class TestAgentRegistryDescriptorModel:
         }
         registry.register_pipeline_agents(descriptors)
 
-        assert registry.list_agents() == ["AudioAgent", "StoryAgent"]
+        assert sorted(registry.gather_agents_info()["agent_ids"]) == [
+            "AudioAgent",
+            "StoryAgent",
+        ]
         assert registry.get_descriptor("StoryAgent").asset_key == "story_blueprint"
-        assert registry.is_pipeline_agent("AudioAgent") is True
-        assert registry.is_pipeline_agent("UnknownAgent") is False
+        assert registry.get_descriptor("AudioAgent") is not None
+        assert registry.get_descriptor("UnknownAgent") is None
 
     def test_gather_agents_info_returns_descriptor_metadata(self):
         registry = AgentRegistry()
@@ -72,48 +75,33 @@ class TestAgentRegistryDescriptorModel:
         assert gathered["agent_ids"] == ["StoryAgent"]
         assert "pipeline_agent" in gathered["all_capabilities"]
         assert "story_blueprint" in gathered["all_capabilities"]
-        assert gathered["agents"][0]["input_schema"] == {}
-        assert gathered["agents"][0]["output_schema"] == {}
         assert gathered["agents"][0]["asset_key"] == "story_blueprint"
         assert gathered["agents"][0]["asset_type"] == "dummy_asset_type"
-
-    def test_get_agent_compatibility_requires_llm_client(self):
-        registry = AgentRegistry()
-        descriptor = _DummyDescriptor("StoryAgent")
-        registry.register_pipeline_agents({"StoryAgent": descriptor}, llm_client=None)
-
-        assert registry.get_agent("StoryAgent") is None
-
-        fake_llm = object()
-        registry.register_pipeline_agents({}, llm_client=fake_llm)
-        equipped = registry.get_agent("StoryAgent")
-        assert equipped["agent_name"] == "StoryAgent"
-        assert equipped["llm_client"] is fake_llm
 
     def test_reload_clears_descriptors(self):
         registry = AgentRegistry()
         registry.register_pipeline_agents({"StoryAgent": _DummyDescriptor("StoryAgent")})
-        assert registry.list_agents() == ["StoryAgent"]
+        assert registry.gather_agents_info()["agent_ids"] == ["StoryAgent"]
         registry.reload()
-        assert registry.list_agents() == []
+        assert registry.gather_agents_info()["agent_ids"] == []
 
 
 class TestLLMClientImport:
     def test_llm_client_importable(self):
-        from inference.runtime.base_client import LLMClient
+        from inference.clients import LLMClient
 
         client = LLMClient(model="test-model", api_key="fake")
         assert client.model == "test-model"
         assert client.max_tokens is None
 
     def test_chat_json_method_exists(self):
-        from inference.runtime.base_client import LLMClient
+        from inference.clients import LLMClient
         import inspect
 
         assert inspect.iscoroutinefunction(LLMClient.chat_json)
 
     def test_chat_text_method_exists(self):
-        from inference.runtime.base_client import LLMClient
+        from inference.clients import LLMClient
         import inspect
 
         assert inspect.iscoroutinefunction(LLMClient.chat_text)

@@ -1,0 +1,352 @@
+{
+  "meta": {
+    "project_id": "",
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-20T15:14:20.932673+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_001"
+        },
+        "estimated_duration": {
+          "seconds": 10.0,
+          "confidence": 0.9
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "A dimly lit, vintage watchmaker's workshop.",
+              "Workbench is cluttered with tools, gears, and personal items, bathed in the focused, warm glow of a desk lamp.",
+              "The rest of the room is in shadow, creating an intimate, almost isolated atmosphere.",
+              "A window is visible, revealing the dark night sky, later illuminated by fireworks."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Elias Thorne: 80s, frail but deeply focused.",
+                "Carries a quiet grief for his late wife, which motivates his actions.",
+                "Initially tense and shaky, but finds resolve and peace."
+              ],
+              "wardrobe_notes": [
+                "A well-worn, long-sleeved shirt with a practical, slightly stained apron over it.",
+                "His spectacles are perched on his nose, essential for close-up work."
+              ],
+              "must_keep": [
+                "His age and frailty.",
+                "His intense focus during repair.",
+                "His emotional connection to the watch and his wife.",
+                "The trembling of his hands under pressure, and his eventual steadying."
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "pocket watch",
+              "must_keep": [
+                "Vintage and delicate in appearance.",
+                "Its internal mechanisms must be visible at first.",
+                "Must visibly tick at the end of the scene."
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "watchmaker's tools",
+              "must_keep": [
+                "Specific tools: tweezers, magnifying loupe."
+              ]
+            },
+            {
+              "prop_id": "prop_003",
+              "prop_name": "desk lamp",
+              "must_keep": [
+                "Provides a strong, localized light source on the workbench."
+              ]
+            },
+            {
+              "prop_id": "prop_004",
+              "prop_name": "workbench",
+              "must_keep": [
+                "Appears well-used and slightly cluttered."
+              ]
+            },
+            {
+              "prop_id": "prop_005",
+              "prop_name": "small gears",
+              "must_keep": [
+                "One must be microscopic and visibly slip from the tweezers."
+              ]
+            },
+            {
+              "prop_id": "prop_006",
+              "prop_name": "digital clock",
+              "must_keep": [
+                "Clearly displays the countdown to midnight."
+              ]
+            },
+            {
+              "prop_id": "prop_007",
+              "prop_name": "framed photo",
+              "must_keep": [
+                "A photo of Elias's late, smiling wife, serving as a subtle emotional anchor."
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Intimate and contemplative, with a building sense of tension that resolves into quiet hope.",
+              "Emphasis on close-ups to highlight delicate work, Elias's hands, and his subtle emotional shifts.",
+              "Lighting should be warm and focused on the workbench, with the surrounding room in soft shadow.",
+              "Sound design is crucial: delicate mechanical sounds, the digital clock's clicks, a sudden loud tick, and distant fireworks."
+            ],
+            "must_avoid": [
+              "Overly dramatic or frantic camera movements that would detract from the delicate nature of the work.",
+              "Bright, sterile, or overly modern aesthetics that contradict the vintage, lived-in feel of the workshop.",
+              "Any overt expressions of grief or sadness after the repair is complete; the emotion should be peaceful and reflective."
+            ]
+          }
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "linked_blocks": [
+              "b_001"
+            ],
+            "estimated_duration_sec": 1.5,
+            "shot_type": "extreme_close_up",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "static",
+              "framing_notes": "Tightly framed on the open pocket watch mechanism, Elias's hands, the loupe, and the digital clock (showing 00:00:10) in the background."
+            },
+            "visual_goal": "Establish the intricate task, the intense focus, and the critical time constraint.",
+            "action_focus": "Elias's delicate manipulation of the watch with tweezers, the countdown on the digital clock.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_003",
+              "magnifying loupe",
+              "tweezers",
+              "prop_006",
+              "prop_004"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": [
+                "Elias's hands intently working on the watch, digital clock visible at 00:00:10."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "linked_blocks": [
+              "b_002"
+            ],
+            "estimated_duration_sec": 1.0,
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Elias's face, highlighting his concentration and a flicker of underlying emotion (grief, determination)."
+            },
+            "visual_goal": "Convey the personal significance of the watch and the emotional weight Elias carries.",
+            "action_focus": "Elias's expression, a subtle hitch in his breath.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "magnifying loupe"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": [
+                "Elias's strained, determined face, eyes focused through the loupe."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "linked_blocks": [
+              "b_003"
+            ],
+            "estimated_duration_sec": 1.0,
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Tight on Elias's trembling hand as a tiny gear slips from the tweezers and bounces on the workbench, rolling towards the edge."
+            },
+            "visual_goal": "Show the critical mistake and the sudden surge of panic and vulnerability.",
+            "action_focus": "The trembling hand, the slipping gear, its precarious movement.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "tweezers",
+              "small gear",
+              "prop_004",
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Elias's hand trembling, gear slipping from tweezers.",
+                "Gear rolling dangerously close to the workbench edge."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "linked_blocks": [
+              "b_004"
+            ],
+            "estimated_duration_sec": 1.5,
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "pan",
+              "framing_notes": "Starts on the digital clock (00:00:05), then pans to Elias's panicked face, finally settling on the framed photo of his wife beside him."
+            },
+            "visual_goal": "Emphasize the dwindling time and Elias's emotional anchor that helps him regain composure.",
+            "action_focus": "The ticking clock, Elias's shift from panic to resolve, his gaze towards the photo.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_006",
+              "prop_007",
+              "prop_004"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 3,
+              "keyframe_notes": [
+                "Digital clock showing 00:00:05.",
+                "Elias's eyes wide in panic.",
+                "Elias looking at the framed photo of his wife, a moment of calm."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 5,
+            "linked_blocks": [
+              "b_005"
+            ],
+            "estimated_duration_sec": 1.0,
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "static",
+              "framing_notes": "Focus on Elias's now steady hands as he deftly picks up the gear and guides it back into the watch, then carefully closes the casing."
+            },
+            "visual_goal": "Show Elias's renewed precision and the successful, delicate completion of the mechanical task.",
+            "action_focus": "The confident, precise movements of Elias's hands.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "small gear",
+              "tweezers",
+              "prop_001",
+              "watch casing"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Elias placing the gear with firm fingers.",
+                "The watch casing closing with a delicate click."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 6,
+            "linked_blocks": [
+              "b_006"
+            ],
+            "estimated_duration_sec": 1.0,
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Quick cut from digital clock hitting 00:00:01 to Elias holding the closed watch to his ear, a hopeful grimace on his face."
+            },
+            "visual_goal": "Build final suspense as time runs out, focusing on Elias's anticipation.",
+            "action_focus": "The last second on the clock, Elias's anxious yet hopeful posture.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_006",
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Digital clock displays '00:00:01'.",
+                "Elias's ear pressed to the watch, holding his breath."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 7,
+            "linked_blocks": [
+              "b_007"
+            ],
+            "estimated_duration_sec": 3.0,
+            "shot_type": "medium_shot",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "dolly_out",
+              "framing_notes": "Starts on Elias's face, then slowly dollies out to reveal him clutching the watch to his chest, looking towards the window where fireworks explode. The ticking sound is prominent."
+            },
+            "visual_goal": "Deliver the emotional climax, showing the watch's successful repair coinciding with the New Year and Elias finding peace.",
+            "action_focus": "The watch ticking, the fireworks outside, Elias's shift to a peaceful smile and contented gaze.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 3,
+              "keyframe_notes": [
+                "Elias's face as the watch ticks, a gentle smile appearing.",
+                "Fireworks bursting outside the window, reflected in his glasses or background.",
+                "Elias holding the watch to his chest, looking out, at peace."
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_count_total": 7,
+    "avg_shots_per_scene": 7.0,
+    "sum_shot_duration_sec": 10.0,
+    "duration_match_score": 0.0
+  }
+}

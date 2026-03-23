@@ -143,3 +143,102 @@ class MockImageService(ImageService):
     ) -> bytes:
         logger.info("[MockImageService] Placeholder edit for: %.80s...", prompt)
         return _MOCK_PNG
+
+
+class FalImageService(ImageService):
+    """Image generation/editing service backed by fal.ai."""
+
+    def __init__(
+        self,
+        api_key: str | None = None,
+        model: str | None = None,
+        timeout: float = 120.0,
+    ) -> None:
+        self._api_key = api_key or os.getenv("FAL_API_KEY", "")
+        self.model = model or os.getenv("FAL_IMAGE_MODEL", "fal-ai/flux/schnell")
+        self.timeout = timeout
+        self._http: httpx.AsyncClient | None = None
+
+    @property
+    def http(self) -> httpx.AsyncClient:
+        if self._http is None or self._http.is_closed:
+            self._http = httpx.AsyncClient(timeout=self.timeout)
+        return self._http
+
+    async def close(self) -> None:
+        if self._http and not self._http.is_closed:
+            await self._http.aclose()
+
+    async def generate_image(self, prompt: str) -> bytes:
+        logger.info("[fal.ai] Generating image with model=%s", self.model)
+        result = await self._submit({"prompt": prompt})
+        image_url = self._extract_image_url(result)
+        return await self._download_binary(image_url)
+
+    async def edit_image(
+        self,
+        reference_images: bytes | list[bytes],
+        prompt: str,
+    ) -> bytes:
+        refs = [reference_images] if isinstance(reference_images, bytes) else list(reference_images)
+        if not refs:
+            raise ValueError("reference_images cannot be empty for fal edit_image")
+
+        # fal image-to-image models commonly accept a single image_url input.
+        image_url = f"data:image/png;base64,{base64.b64encode(refs[0]).decode('utf-8')}"
+        result = await self._submit({"prompt": prompt, "image_url": image_url})
+        out_url = self._extract_image_url(result)
+        return await self._download_binary(out_url)
+
+    async def _submit(self, arguments: dict[str, Any]) -> dict[str, Any]:
+        if not self._api_key:
+            raise RuntimeError("FAL_API_KEY is required for FalImageService")
+        try:
+            import fal_client
+        except ImportError as exc:
+            raise RuntimeError("fal-client is required. Install with `pip install fal-client`.") from exc
+
+        previous = os.getenv("FAL_KEY")
+        os.environ["FAL_KEY"] = self._api_key
+        try:
+            result = await asyncio.to_thread(
+                fal_client.subscribe,
+                self.model,
+                arguments=arguments,
+                with_logs=False,
+            )
+            if not isinstance(result, dict):
+                raise RuntimeError(f"Unexpected fal.ai response type: {type(result).__name__}")
+            return result
+        finally:
+            if previous is None:
+                os.environ.pop("FAL_KEY", None)
+            else:
+                os.environ["FAL_KEY"] = previous
+
+    async def _download_binary(self, url: str) -> bytes:
+        resp = await self.http.get(url)
+        resp.raise_for_status()
+        return resp.content
+
+    @staticmethod
+    def _extract_image_url(result: dict[str, Any]) -> str:
+        images = result.get("images")
+        if isinstance(images, list) and images:
+            first = images[0]
+            if isinstance(first, dict):
+                url = first.get("url")
+                if isinstance(url, str) and url:
+                    return url
+
+        image_obj = result.get("image")
+        if isinstance(image_obj, dict):
+            url = image_obj.get("url")
+            if isinstance(url, str) and url:
+                return url
+
+        direct_url = result.get("image_url")
+        if isinstance(direct_url, str) and direct_url:
+            return direct_url
+
+        raise RuntimeError(f"No image URL found in fal.ai response keys={list(result.keys())}")

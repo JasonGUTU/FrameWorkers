@@ -1,0 +1,40 @@
+{
+  "status": "ok",
+  "output_dir": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/fal_one_shot/20260320_120021",
+  "workspace_dir": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_105714_349207",
+  "selected_shot": {
+    "scene_id": "sc_001",
+    "shot_id": "sh_001",
+    "linked_blocks": [
+      "b_001"
+    ],
+    "duration_sec": 1.0,
+    "note_1": "Arthur, illuminated by task lamp, engrossed in work at his bench.",
+    "note_2": "Arthur, illuminated by task lamp, engrossed in work at his bench."
+  },
+  "narration_text": "The hushed glow of a vintage workshop. ARTHUR (70s, character_id: char_001), a man etched with quiet grief but unwavering focus, hunches over a cluttered workbench. The AIR hums with an almost electric tension.",
+  "files": {
+    "keyframe_1": "kf_01.png",
+    "keyframe_2": "kf_02.png",
+    "shot_clip": "clip_sh_001.mp4",
+    "voice": "voice.wav",
+    "delivery": "delivery_sh_001.mp4"
+  },
+  "bytes": {
+    "keyframe_1": 380827,
+    "keyframe_2": 266895,
+    "shot_clip": 606285,
+    "voice": 280250,
+    "delivery": 651525
+  },
+  "fal_models": {
+    "image": "fal-ai/flux/schnell",
+    "video": "fal-ai/ltx-video-v095",
+    "tts": "fal-ai/minimax/speech-02-turbo"
+  },
+  "notes": [
+    "Video was generated from one shot using two keyframe anchors.",
+    "Keyframes are used as stability/consistency anchors.",
+    "If ffmpeg is unavailable, delivery may match raw clip bytes."
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "display_name": "",
+          "purpose": "style_anchor",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_135010_471943/img_loc_001_global_file_000004.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Intimate and observational, focusing on Elias's internal struggle and precision.; Use warm, focused lighting to highlight the workbench and Elias's face.; Emphasize the contrast between the quiet intensity of his work and the celebratory noise of the New Year's countdown.; Melancholic undertones give way to a sense of peace and quiet triumph. A classic, somewhat cluttered watchmaker's workshop and study. The room features a sturdy wooden workbench bathed in warm, focused light, creating a bright pool against the ambient, slightly dimmer light of the rest of the space. Visible dust motes dance and shimmer in the focused light beams. Around the room, personal touches are evident: several framed, slightly aged photographs on shelves, stacks of old, leather-bound books, and a comfortable, worn leather armchair in a quiet corner, all contributing to a lived-in, thoughtful atmosphere without being distracting. Must avoid: Overly bright or harsh lighting outside the workbench's focus.; Distracting background elements that draw attention from Elias's task.; Unnecessary camera movements that detract from the stillness and concentration."
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_135010_471943/img_loc_001_sc_001_file_000005.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Intimate and observational, focusing on Elias's internal struggle and precision.; Use warm, focused lighting to highlight the workbench and Elias's face.; Emphasize the contrast between the quiet intensity of his work and the celebratory noise of the New Year's countdown.; Melancholic undertones give way to a sense of peace and quiet triumph. Show a classic, somewhat cluttered watchmaker's workshop/study at night. The environment should feature warm, focused lighting directly on a sturdy wooden workbench, with ambient, slightly dimmer light in the rest of the room. Dust motes must be visible, caught in the light beams, adding to the atmosphere. Include hints of personal touches like framed photos, old books, and a comfortable, worn chair in the background, ensuring no distracting background elements draw attention from the central focus."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_001",
+              "linked_blocks": [
+                "b_001"
+              ]
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_135010_471943/img_sh_001_kf_01_file_000006.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and observational, focusing on Elias's internal struggle and precision.; Use warm, focused lighting to highlight the workbench and Elias's face.; Emphasize the contrast between the quiet intensity of his work and the celebratory noise of the New Year's countdown.; Melancholic undertones give way to a sense of peace and quiet triumph. Medium shot. Elias, an older man with a weathered but kind face, hunches intently over a sturdy, well-organized wooden workbench, using a worn jeweller's loupe to examine the intricate internal mechanisms of an antique, ornate gold pocket watch, his expression reflecting deep concentration and internal struggle. He is positioned off-center, with the workbench dominating the foreground. In the background, slightly out of focus but clearly visible, a slightly older model television displays a New Year's countdown, its bright numbers providing a subtle, contrasting element to the quiet intensity of the scene. The camera is static and at eye-level, maintaining the stillness and concentration, avoiding unnecessary camera movements.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_count": 1,
+    "keyframe_count_total": 1,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 0,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 0,
+    "stability_location_keyframe_count": 1,
+    "stability_prop_keyframe_count": 0
+  }
+}

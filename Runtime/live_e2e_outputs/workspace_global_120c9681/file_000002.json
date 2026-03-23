@@ -1,0 +1,566 @@
+{
+  "meta": {
+    "project_id": "",
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-20T03:08:30.808317+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "The Midnight Watchmaker",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Elias's Workshop",
+          "interior_exterior": "INT.",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Elias Thorne sits alone in his cozy workshop, a solitary figure surrounded by the quiet ticking of his many timepieces. He gazes at his late wife's broken pocket watch, a symbol of his lingering grief. He notices the wall clock, marking only an hour until midnight, and resolves to repair the watch as a final tribute before the new year.",
+        "estimated_duration": {
+          "seconds": 10.0,
+          "confidence": 0.7
+        },
+        "continuity": {
+          "props_present": [
+            "late wife's pocket watch (broken)",
+            "wall clock",
+            "workbench",
+            "desk lamp",
+            "various watchmaking tools"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A worn but clean tweed vest over a long-sleeved shirt, practical work trousers, and spectacles perched low on his nose.",
+              "must_keep": [
+                "Practical",
+                "Slightly old-fashioned"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Elias is alone",
+            "The pocket watch is broken",
+            "Midnight is one hour away",
+            "Elias resolves to fix the watch tonight"
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_001",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The soft glow of a desk lamp illuminates ELIAS THORNE (70s), a man whose weathered hands betray a lifetime of intricate work. He sits hunched over a cluttered workbench, a magnifying loupe resting near his eye.",
+            "continuity_refs": {
+              "props": [
+                "desk lamp",
+                "workbench",
+                "magnifying loupe"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_002",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "In his steady hand, he holds an antique POCKET WATCH. Its ornate casing is tarnished, the crystal cracked, and its hands frozen at a quarter past three. It's his late wife's.",
+            "continuity_refs": {
+              "props": [
+                "pocket watch"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_003",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Elias glances up at an old WALL CLOCK. Its steady TICK-TOCK resonates in the quiet room. The hands point to eleven o'clock. One hour until midnight. One hour until a new year.",
+            "continuity_refs": {
+              "props": [
+                "wall clock"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_004",
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "Elias Thorne",
+            "text": "A flicker of determination crosses Elias's face. His gaze returns to the broken watch. Tonight. It has to be tonight.",
+            "continuity_refs": {
+              "props": [
+                "pocket watch"
+              ],
+              "wardrobe_character_ids": []
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "Elias firmly decides to repair the broken pocket watch before midnight, transforming his quiet contemplation into a purposeful quest.",
+          "emotional_shift": "From wistful grief and contemplation to focused determination and a renewed sense of purpose."
+        }
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Elias's Workshop",
+          "interior_exterior": "INT.",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Elias begins the delicate task of opening his wife's pocket watch, his hands moving with practiced precision. However, as he meticulously disassembles a component, a crucial tiny spring snaps, presenting the first unexpected setback in his race against time. He experiences a moment of frustration but quickly recomposes himself, ready to find a solution.",
+        "estimated_duration": {
+          "seconds": 12.0,
+          "confidence": 0.7
+        },
+        "continuity": {
+          "props_present": [
+            "pocket watch (partially disassembled)",
+            "watchmaker's tools (tweezers, screwdrivers, loupe)",
+            "tiny broken spring",
+            "organizer tray for parts"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "The same worn tweed vest, shirt, and trousers.",
+              "must_keep": [
+                "Consistent with a working craftsman"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "A critical spring breaks during disassembly",
+            "Elias is frustrated but recommits"
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_005",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Elias puts on his loupe, its lens magnifying the intricate world before him. His aged fingers, surprisingly steady, select the smallest screwdriver from an array of tools.",
+            "continuity_refs": {
+              "props": [
+                "magnifying loupe",
+                "small screwdriver",
+                "watchmaker's tools"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_006",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He meticulously opens the watch casing, exposing a labyrinth of tiny gears and levers. The familiar scent of aged brass and oil fills the air.",
+            "continuity_refs": {
+              "props": [
+                "pocket watch",
+                "watch casing"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_007",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "With delicate tweezers, he begins to remove a minuscule component. His concentration is absolute. But then—",
+            "continuity_refs": {
+              "props": [
+                "tweezers"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_008",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A faint METALLIC PING echoes. A hair-thin SPRING, vital to the watch's function, SNAPS in two. One half FLIES across the workbench.",
+            "continuity_refs": {
+              "props": [
+                "tiny broken spring"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_009",
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "Elias Thorne",
+            "text": "Elias lets out a soft, frustrated sigh. He closes his eyes for a brief moment, then reopens them with renewed resolve. He picks up the broken pieces, inspecting them under the loupe.",
+            "continuity_refs": {
+              "props": [
+                "magnifying loupe",
+                "tiny broken spring"
+              ],
+              "wardrobe_character_ids": []
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "Elias experiences a flash of frustration at the broken spring but quickly refocuses, ready to adapt and overcome this initial mechanical failure.",
+          "emotional_shift": "From intense focus to momentary frustration, then quickly returning to determined problem-solving."
+        }
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_003",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Elias's Workshop",
+          "interior_exterior": "INT.",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Having successfully replaced the broken spring, Elias moves on to reassembling a complex gear train. Just as he's about to position a minuscule cog, it slips from his tweezers and disappears into the shadowed recesses of his cluttered workbench. A tense, frantic search ensues, highlighting the increasing time pressure and the extreme fragility of the task.",
+        "estimated_duration": {
+          "seconds": 13.0,
+          "confidence": 0.7
+        },
+        "continuity": {
+          "props_present": [
+            "pocket watch (partially reassembled)",
+            "tweezers",
+            "tiny cog",
+            "workbench clutter (other gears, tools)",
+            "desk lamp"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "The same workshop attire, perhaps a slight sheen of sweat on his brow.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "The broken spring has been replaced",
+            "A crucial cog slips and is lost temporarily",
+            "The incident significantly increases time pressure"
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_010",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Minutes later, a new, tiny spring is deftly installed. Elias now works on the gear train, his breathing shallow with concentration. He holds a minuscule COG with his tweezers.",
+            "continuity_refs": {
+              "props": [
+                "new spring",
+                "pocket watch (partially reassembled)",
+                "tweezers",
+                "tiny cog"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_011",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "His hand tremors, barely perceptible. The cog, no larger than a grain of sand, slips from the tweezers, bouncing ONCE off the polished wood.",
+            "continuity_refs": {
+              "props": [
+                "tiny cog",
+                "tweezers",
+                "workbench"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_012",
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "Elias Thorne",
+            "text": "Elias freezes. His eyes dart around the cluttered workbench, searching desperately. He uses a small brush, gently sweeping parts aside, his heart pounding a little faster.",
+            "continuity_refs": {
+              "props": [
+                "small brush",
+                "workbench"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_013",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The WALL CLOCK TICK-TOCKS, a relentless reminder of the dwindling time. Elias lets out a heavy breath, his brow furrowed with growing anxiety. He finally spots it, half-hidden beneath a stray spring.",
+            "continuity_refs": {
+              "props": [
+                "wall clock",
+                "tiny cog"
+              ],
+              "wardrobe_character_ids": []
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "Elias successfully locates the missing cog, but the incident significantly amplifies the urgency and pressure of the ticking clock, making him acutely aware of his limited time.",
+          "emotional_shift": "From heightened concentration to brief panic and intense frustration, settling into a state of amplified urgency and mounting pressure."
+        }
+      },
+      {
+        "scene_id": "sc_004",
+        "order": 4,
+        "linked_story_step_id": "arc_004",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Elias's Workshop",
+          "interior_exterior": "INT.",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "With the watch nearly reassembled, Elias performs a preliminary test, but it remains stubbornly silent. Using his loupe, he discovers the most challenging setback yet: a microscopic piece of grit jamming a critical pivot. Despair flickers in his eyes as time rapidly diminishes, but a sudden, profound determination overtakes him, compelling him to meticulously clean the pivot, knowing this is his last, best chance.",
+        "estimated_duration": {
+          "seconds": 15.0,
+          "confidence": 0.7
+        },
+        "continuity": {
+          "props_present": [
+            "pocket watch (mostly reassembled)",
+            "magnifying loupe",
+            "tiny cleaning tools (brush, oiler)",
+            "wall clock"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "The same vest and shirt, now with a faint smudge of oil.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Watch fails preliminary test",
+            "Microscopic grit jams a pivot",
+            "Elias experiences near defeat but regains determination"
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_014",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Elias carefully closes the watch case, leaving it slightly ajar for the final adjustments. He winds the stem, a moment of hopeful anticipation.",
+            "continuity_refs": {
+              "props": [
+                "pocket watch"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_015",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He lifts the watch to his ear, listening intently. SILENCE. His shoulders slump. Despair washes over him.",
+            "continuity_refs": {
+              "props": [
+                "pocket watch"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_016",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He peers through his loupe again, examining every minuscule detail. His eyes narrow. He spots it – a microscopic SPECK OF GRIT, lodged in a critical pivot, barely visible.",
+            "continuity_refs": {
+              "props": [
+                "magnifying loupe",
+                "pocket watch"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_017",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The wall clock shows only a few minutes to midnight. Elias pushes his glasses up, rubs his tired eyes. He's so close, yet so far.",
+            "continuity_refs": {
+              "props": [
+                "wall clock"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_018",
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "Elias Thorne",
+            "text": "A renewed fire lights in his gaze. This is the last hurdle. He selects the finest, softest brush and, with almost surgical precision, begins the agonizingly slow task of dislodging the grit.",
+            "continuity_refs": {
+              "props": [
+                "tiny cleaning tools (brush)",
+                "pocket watch"
+              ],
+              "wardrobe_character_ids": []
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "After a moment of near defeat, Elias draws upon a deep reservoir of resolve, dedicating himself to the painstaking task of cleaning the pivot, understanding this is his ultimate test.",
+          "emotional_shift": "From despair and exhaustion to a resolute, almost desperate, surge of determination."
+        }
+      },
+      {
+        "scene_id": "sc_005",
+        "order": 5,
+        "linked_story_step_id": "arc_005",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Elias's Workshop",
+          "interior_exterior": "INT.",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Elias makes the final, infinitesimal adjustments to the watch, his breath held in anticipation. He gently winds it, then brings it to his ear, listening intently. After a moment of agonizing silence, a faint but distinct ticking sound emerges, signifying his triumph. Simultaneously, brilliant fireworks erupt outside his window, marking midnight and a new year, bringing a profound sense of peace and closure to Elias as he gently closes the now-working timepiece.",
+        "estimated_duration": {
+          "seconds": 10.0,
+          "confidence": 0.7
+        },
+        "continuity": {
+          "props_present": [
+            "working pocket watch",
+            "wall clock",
+            "fireworks (sound and light, outside window)"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Watch starts ticking",
+            "Fireworks mark midnight/new year",
+            "Elias experiences peace and closure"
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_019",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Elias makes one final, microscopic adjustment, his hand hovering over the delicate mechanism. His breath is held, every nerve strained.",
+            "continuity_refs": {
+              "props": [
+                "pocket watch",
+                "tiny tools"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_020",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He gently winds the watch stem. The metallic WHIR of the gears is faint, almost imperceptible.",
+            "continuity_refs": {
+              "props": [
+                "pocket watch"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_021",
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "Elias Thorne",
+            "text": "Elias slowly raises the watch to his ear, his eyes closed. The silence is deafening. A beat. Another. Then—",
+            "continuity_refs": {
+              "props": [
+                "pocket watch"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_022",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A faint, rhythmic TICK-TOCK. Then louder. The watch is alive. Elias's eyes spring open, a soft smile spreading across his face.",
+            "continuity_refs": {
+              "props": [
+                "working pocket watch"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_023",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Suddenly, a series of distant, muffled BOOMS erupt outside. Brilliant FLASHES OF LIGHT illuminate the workshop window. FIREWORKS. Midnight. A new year.",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_024",
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "Elias Thorne",
+            "text": "Elias gently snaps the watch case shut. He holds the now-ticking watch, looking at it with a profound sense of peace. He glances towards the window, a bittersweet joy in his eyes.",
+            "continuity_refs": {
+              "props": [
+                "working pocket watch"
+              ],
+              "wardrobe_character_ids": []
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "The soft, rhythmic tick of the watch fills the silence, immediately followed by the distant sound and light of fireworks, bringing a profound sense of peace and closure to Elias as he gently closes the now-working timepiece.",
+          "emotional_shift": "From agonizing anticipation and hope to profound relief, joy, and a deep, peaceful sense of closure and renewed connection."
+        }
+      }
+    ]
+  },
+  "metrics": {
+    "estimated_total_duration_sec": 60.0,
+    "sum_scene_duration_sec": 60.0,
+    "scene_count": 5,
+    "dialogue_block_count": 0,
+    "action_block_count": 24
+  }
+}

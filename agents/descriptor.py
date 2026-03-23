@@ -31,7 +31,7 @@ from pydantic import BaseModel
 if TYPE_CHECKING:
     from .base_agent import BaseAgent
     from .base_evaluator import BaseEvaluator
-    from inference.runtime.base_client import LLMClient
+    from inference.clients import LLMClient
 
 logger = logging.getLogger(__name__)
 
@@ -147,7 +147,10 @@ class SubAgentDescriptor:
         build_input:
             ``(project_id, draft_id, assets, config) -> BaseModel`` —
             constructs the agent's typed input from the shared asset cache
-            and pipeline config.
+            and pipeline config.  Assistant always passes ``project_id`` /
+            ``draft_id`` (derived from ``task_id``); agents that do not need
+            them in prompts may name the parameters ``_project_id`` /
+            ``_draft_id`` and omit them from the returned Pydantic model.
         build_upstream:
             ``(assets) -> dict | None`` — extracts the upstream context
             dict needed by the evaluator for cross-asset checks.

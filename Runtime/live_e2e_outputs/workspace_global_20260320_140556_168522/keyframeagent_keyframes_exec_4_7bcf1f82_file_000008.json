@@ -1,0 +1,122 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "display_name": "",
+          "purpose": "style_anchor",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_140556_168522/img_loc_001_global_file_000004.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Intimate and atmospheric lighting, emphasizing a single warm light source against a darker, subdued background to create focus on Elias and his work.; Heavy use of close-ups and shallow depth of field to convey intense concentration and the delicate nature of the task.; A deliberate, slow pacing in the opening and closing shots to evoke a sense of quiet reflection and the inexorable passage of time.; Subtle visual metaphors for fragility, precision, and the weight of memory.; Warm color palette dominated by amber, gold, and deep browns, with accents of metallic gleam. A cluttered, cozy workshop corner, viewed from a slightly elevated angle. The space is bathed in the intense, focused warm glow of a single desk lamp positioned on a heavy, dark wooden workbench, creating strong contrast with the deeper shadows in the rest of the room. The workshop feels deeply lived-in, accumulated over years, with shelves overflowing with antique clocks, old books, and various mechanical parts, all coated with a fine, undisturbed layer of dust. Subtle dust motes dance visibly in the beam of the desk lamp, illuminated like tiny stars, emphasizing the quiet passage of time. In the background, a small, slightly smudged window offers a faint, dark silhouette of the outside world, hinting at the potential for external events without revealing too much detail. The overall atmosphere is one of quiet dedication and historical depth, with rich textures of aged wood, tarnished metals, and soft, muted fabrics."
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_140556_168522/img_loc_001_sc_001_file_000005.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Intimate and atmospheric lighting, emphasizing a single warm light source against a darker, subdued background to create focus on Elias and his work.; Heavy use of close-ups and shallow depth of field to convey intense concentration and the delicate nature of the task.; A deliberate, slow pacing in the opening and closing shots to evoke a sense of quiet reflection and the inexorable passage of time.; Subtle visual metaphors for fragility, precision, and the weight of memory.; Warm color palette dominated by amber, gold, and deep browns, with accents of metallic gleam. Show a cluttered, cozy workshop corner at night, bathed entirely in the warm, focused glow of a single desk lamp. The room feels deeply lived-in, filled with the patina of years of dedication, with watchmaking tools and tiny components scattered across an old workbench. Subtle dust motes catch the lamplight, dancing gently. In the subdued background, a window provides a faint, dark hint of the outside world, subtly signaling the coming New Year."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_001",
+              "linked_blocks": [
+                "b_001",
+                "b_002"
+              ]
+            },
+            "estimated_duration_sec": 3.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_140556_168522/img_sh_001_kf_01_file_000006.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and atmospheric lighting, emphasizing a single warm light source against a darker, subdued background to create focus on Elias and his work.; Heavy use of close-ups and shallow depth of field to convey intense concentration and the delicate nature of the task.; A deliberate, slow pacing in the opening and closing shots to evoke a sense of quiet reflection and the inexorable passage of time.; Subtle visual metaphors for fragility, precision, and the weight of memory.; Warm color palette dominated by amber, gold, and deep browns, with accents of metallic gleam. Medium close-up, eye-level shot: Elias, wearing his watchmaker's loupe, hunches intently over a cluttered workbench. His brow is deeply furrowed with concentration, illuminated by the focused, warm glow of a desk lamp. His hands, holding fine-tipped tweezers, are precisely positioned over an ornate gold pocket watch, resting on a soft cloth amidst scattered small gears. In the mid-background, slightly out of focus but clearly visible, a vintage grandfather clock stands majestically, its pendulum swinging slowly, its hands showing it is moments before midnight. The overall scene conveys a sense of deep focus and the delicate nature of his urgent task, with the clock acting as a visual cue for the passage of time.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_002",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_02",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260320_140556_168522/img_sh_001_kf_02_file_000007.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and atmospheric lighting, emphasizing a single warm light source against a darker, subdued background to create focus on Elias and his work.; Heavy use of close-ups and shallow depth of field to convey intense concentration and the delicate nature of the task.; A deliberate, slow pacing in the opening and closing shots to evoke a sense of quiet reflection and the inexorable passage of time.; Subtle visual metaphors for fragility, precision, and the weight of memory.; Warm color palette dominated by amber, gold, and deep browns, with accents of metallic gleam. Medium close-up, eye-level shot: Elias's face is a study in intense focus, with the watchmaker's loupe magnifying his eye as he works. His delicate fingers, holding fine-tipped tweezers, carefully maneuver a minuscule component within the open mechanism of the gold pocket watch, which glints under the warm, single light source of the desk lamp. The shallow depth of field ensures the watch and Elias's hands are razor-sharp. In the soft-focus background, the vintage grandfather clock's ornate face looms, its hands now almost touching the midnight mark, adding to the silent, mounting pressure and the weight of memory.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_count": 1,
+    "keyframe_count_total": 2,
+    "avg_keyframes_per_shot": 2.0,
+    "global_character_anchor_count": 0,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 0,
+    "stability_location_keyframe_count": 1,
+    "stability_prop_keyframe_count": 0
+  }
+}

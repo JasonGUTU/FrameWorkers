@@ -8,20 +8,22 @@ from pydantic import BaseModel
 
 from ..descriptor import SubAgentDescriptor
 from .agent import StoryAgent
-from .schema import StoryAgentInput
+from .schema import StoryAgentInput, StoryConstraints
 from .evaluator import StoryEvaluator
 
 
 def build_input(
-    project_id: str,
-    draft_id: str,
+    _project_id: str,
+    _draft_id: str,
     assets: dict[str, Any],
     config: Any,
 ) -> BaseModel:
     return StoryAgentInput(
-        project_id=project_id,
-        draft_id=draft_id,
         draft_idea=assets.get("draft_idea", ""),
+        constraints=StoryConstraints(
+            target_duration_sec=config.target_total_duration_sec,
+            language=config.language,
+        ),
         user_provided_text=assets.get("user_story_outline", ""),
     )
 

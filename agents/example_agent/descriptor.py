@@ -22,8 +22,8 @@ from .evaluator import ExamplePipelineEvaluator
 
 
 def build_input(
-    project_id: str,
-    draft_id: str,
+    _project_id: str,
+    _draft_id: str,
     assets: dict[str, Any],
     config: Any,
 ) -> BaseModel:
@@ -34,8 +34,6 @@ def build_input(
     Pydantic input model.
     """
     return ExamplePipelineInput(
-        project_id=project_id,
-        draft_id=draft_id,
         source_text=assets.get("source_text", ""),
     )
 

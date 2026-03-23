@@ -1,201 +1,223 @@
-# Memory Manager - Manages Global Memory (Markdown format)
+# Memory Manager — short-term structured memory only (STM).
+# Long-term (LTM) persistence and brief aggregation are intentionally disabled.
 
+from __future__ import annotations
+
+import json
+import logging
+import uuid
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any, Dict, List, Optional
+
+logger = logging.getLogger(__name__)
 
 
 class MemoryManager:
     """
-    Manages Global Memory - a Markdown-formatted long string
-    
-    Responsibilities:
-    - Store and retrieve Global Memory
-    - Validate memory length (with max length limit)
-    - Provide read/write operations
-    - Handle memory truncation when too long
+    Manages structured short-term memory entries (JSON file on disk).
+
+    Long-term tier is not stored: ``add_memory_entry(..., tier='long_term')`` raises
+    ``ValueError``; ``list_memory_entries(tier='long_term')`` returns ``[]``;
+    ``get_memory_brief`` always returns ``long_term: []``.
     """
-    
-    # Maximum memory length (in characters)
-    MAX_MEMORY_LENGTH = 100000  # 100KB of text
-    
+
+    MAX_ENTRY_COUNT = 2000
+    MEMORY_KINDS = {
+        "note",
+        "constraint",
+        "decision",
+        "strategy",
+        "failure_pattern",
+        "next_action",
+        "user_preference",
+        "execution_summary",
+    }
+
     def __init__(self, workspace_id: str, runtime_base_path: Path):
-        """
-        Initialize memory manager
-        
-        Args:
-            workspace_id: ID of the workspace
-            runtime_base_path: Base path to Runtime directory
-        """
         self.workspace_id = workspace_id
         self.runtime_base_path = Path(runtime_base_path)
         self.workspace_runtime_path = self.runtime_base_path / workspace_id
-        self.memory_file_path = self.workspace_runtime_path / "global_memory.md"
-        
-        # Ensure workspace directory exists
+        self.short_term_entries_path = (
+            self.workspace_runtime_path / "memory_entries_short_term.json"
+        )
+        self.legacy_entries_path = self.workspace_runtime_path / "memory_entries.json"
         self.workspace_runtime_path.mkdir(parents=True, exist_ok=True)
-        
-        # Initialize memory if it doesn't exist
-        if not self.memory_file_path.exists():
-            self._write_memory("")
+        self._ensure_structured_entries_storage()
 
-    # ------------------------------------------------------------------
-    # Internal boundary helpers
-    # ------------------------------------------------------------------
-
-    def _compose_new_content(self, content: str, append: bool) -> str:
-        if not append:
-            return content
-        existing = self._read_memory()
-        if not existing:
-            return content
-        return existing + "\n\n" + content
+    def _ensure_structured_entries_storage(self) -> None:
+        if not self.short_term_entries_path.exists():
+            self._write_entries(self.short_term_entries_path, [])
 
     @staticmethod
-    def _usage_percent(length: int, max_length: int) -> float:
-        return (length / max_length) * 100 if max_length > 0 else 0.0
-    
-    def _read_memory(self) -> str:
-        """Read memory from disk"""
-        if not self.memory_file_path.exists():
-            return ""
-        
+    def _sanitize_text(value: Any) -> str:
+        return str(value or "").strip()
+
+    @staticmethod
+    def _normalize_kind(kind: str) -> str:
+        normalized = MemoryManager._sanitize_text(kind).lower()
+        return normalized if normalized in MemoryManager.MEMORY_KINDS else "note"
+
+    def _read_entries(self, path: Path) -> List[Dict[str, Any]]:
+        if not path.exists():
+            return []
         try:
-            with open(self.memory_file_path, 'r', encoding='utf-8') as f:
-                return f.read()
-        except Exception as e:
-            print(f"Warning: Failed to read memory: {e}")
-            return ""
-    
-    def _write_memory(self, content: str):
-        """Write memory to disk"""
+            raw = path.read_text(encoding="utf-8")
+            data = json.loads(raw) if raw.strip() else []
+            return data if isinstance(data, list) else []
+        except Exception as exc:
+            logger.warning("Failed to read memory entries file %s: %s", path, exc)
+            return []
+
+    def _write_entries(self, path: Path, entries: List[Dict[str, Any]]) -> None:
         try:
-            with open(self.memory_file_path, 'w', encoding='utf-8') as f:
-                f.write(content)
-        except Exception as e:
-            print(f"Warning: Failed to write memory: {e}")
+            path.write_text(
+                json.dumps(entries, ensure_ascii=False, indent=2),
+                encoding="utf-8",
+            )
+        except Exception as exc:
+            logger.warning("Failed to write memory entries file %s: %s", path, exc)
             raise
-    
-    def _validate_length(self, content: str) -> tuple:
-        """
-        Validate memory length and truncate if necessary
-        
-        Args:
-            content: Memory content to validate
-        
-        Returns:
-            Tuple of (validated_content, was_truncated)
-        """
-        if len(content) <= self.MAX_MEMORY_LENGTH:
-            return content, False
-        
-        # Truncate content
-        truncated = content[:self.MAX_MEMORY_LENGTH]
-        
-        # Try to truncate at a reasonable point (end of line or sentence)
-        # Find last newline or period before limit
-        last_newline = truncated.rfind('\n')
-        last_period = truncated.rfind('.')
-        
-        cutoff = max(last_newline, last_period)
-        if cutoff > self.MAX_MEMORY_LENGTH * 0.9:  # Only if reasonable cutoff point
-            truncated = truncated[:cutoff + 1]
-        
-        # Add truncation notice
-        truncated += f"\n\n---\n*[Memory truncated due to length limit. Original length: {len(content)} characters]*\n"
-        
-        return truncated, True
-    
-    def read_memory(self) -> str:
-        """
-        Read Global Memory
-        
-        Returns:
-            Memory content as string
-        """
-        return self._read_memory()
-    
-    def write_memory(self, content: str, append: bool = False) -> Dict[str, Any]:
-        """
-        Write to Global Memory
-        
-        Args:
-            content: Content to write
-            append: If True, append to existing memory; otherwise replace
-        
-        Returns:
-            Dictionary with operation result:
-            - success: bool
-            - was_truncated: bool
-            - original_length: int
-            - final_length: int
-            - message: str
-        """
-        content = self._compose_new_content(content, append=append)
-        new_content, was_truncated = self._validate_length(content)
-        
-        original_length = len(content)
-        final_length = len(new_content)
-        
-        # Write to disk
-        self._write_memory(new_content)
-        
-        result = {
-            "success": True,
-            "was_truncated": was_truncated,
-            "original_length": original_length,
-            "final_length": final_length,
-            "message": "Memory written successfully" + (" (truncated)" if was_truncated else "")
+
+    def add_memory_entry(
+        self,
+        *,
+        content: str,
+        tier: str = "short_term",
+        kind: str = "note",
+        task_id: Optional[str] = None,
+        agent_id: Optional[str] = None,
+        source_asset_refs: Optional[List[str]] = None,
+        priority: int = 3,
+        confidence: Optional[float] = None,
+        ttl_runs: Optional[int] = None,
+        metadata: Optional[Dict[str, Any]] = None,
+    ) -> Dict[str, Any]:
+        normalized_tier = self._sanitize_text(tier).lower()
+        if normalized_tier == "long_term":
+            raise ValueError(
+                "long_term memory is disabled; only short_term entries are supported"
+            )
+        if normalized_tier != "short_term":
+            normalized_tier = "short_term"
+
+        text = self._sanitize_text(content)
+        if not text:
+            raise ValueError("content must be non-empty")
+
+        entry: Dict[str, Any] = {
+            "id": f"mem_{uuid.uuid4().hex[:12]}",
+            "tier": "short_term",
+            "kind": self._normalize_kind(kind),
+            "content": text,
+            "task_id": task_id or "",
+            "agent_id": agent_id or "",
+            "source_asset_refs": list(source_asset_refs or []),
+            "priority": int(priority),
+            "confidence": confidence,
+            "ttl_runs": ttl_runs,
+            "metadata": dict(metadata or {}),
+            "created_at": datetime.now(UTC).isoformat(),
         }
-        
-        return result
-    
-    def append_memory(self, content: str) -> Dict[str, Any]:
-        """
-        Append to Global Memory (convenience method)
-        
-        Args:
-            content: Content to append
-        
-        Returns:
-            Dictionary with operation result
-        """
-        return self.write_memory(content, append=True)
-    
-    def clear_memory(self):
-        """Clear Global Memory"""
-        self._write_memory("")
-    
-    def get_memory_length(self) -> int:
-        """
-        Get current memory length
-        
-        Returns:
-            Number of characters in memory
-        """
-        return len(self._read_memory())
-    
-    def is_memory_full(self) -> bool:
-        """
-        Check if memory is at or near capacity
-        
-        Returns:
-            True if memory length >= 90% of max length
-        """
-        current_length = self.get_memory_length()
-        return current_length >= (self.MAX_MEMORY_LENGTH * 0.9)
-    
-    def get_memory_info(self) -> Dict[str, Any]:
-        """
-        Get memory information
-        
-        Returns:
-            Dictionary with memory stats
-        """
-        content = self._read_memory()
+
+        entries = self._read_entries(self.short_term_entries_path)
+        entries.append(entry)
+        if len(entries) > self.MAX_ENTRY_COUNT:
+            entries = entries[-self.MAX_ENTRY_COUNT :]
+        self._write_entries(self.short_term_entries_path, entries)
+        return entry
+
+    def list_memory_entries(
+        self,
+        *,
+        tier: Optional[str] = None,
+        task_id: Optional[str] = None,
+        agent_id: Optional[str] = None,
+        kinds: Optional[List[str]] = None,
+        limit: int = 20,
+    ) -> List[Dict[str, Any]]:
+        if tier and self._sanitize_text(tier).lower() == "long_term":
+            return []
+
+        entries = self._read_entries(self.short_term_entries_path)
+        filtered: List[Dict[str, Any]] = []
+        for item in reversed(entries):
+            if not isinstance(item, dict):
+                continue
+            if task_id and item.get("task_id") != task_id:
+                continue
+            if agent_id and item.get("agent_id") != agent_id:
+                continue
+            if kinds and item.get("kind") not in kinds:
+                continue
+            filtered.append(item)
+            if len(filtered) >= limit:
+                break
+        return list(reversed(filtered))
+
+    def search_memory_entries(self, query: str, limit: int = 20) -> List[Dict[str, Any]]:
+        q = self._sanitize_text(query).lower()
+        if not q:
+            return []
+        matches: List[Dict[str, Any]] = []
+        for item in reversed(self._read_entries(self.short_term_entries_path)):
+            if not isinstance(item, dict):
+                continue
+            if q in self._sanitize_text(item.get("content", "")).lower():
+                matches.append(item)
+            if len(matches) >= limit:
+                break
+        return list(reversed(matches))
+
+    @staticmethod
+    def _score_entry(entry: Dict[str, Any]) -> float:
+        try:
+            p = float(entry.get("priority", 3))
+        except (TypeError, ValueError):
+            p = 3.0
+        try:
+            c = float(entry.get("confidence", 0.5) or 0.5)
+        except (TypeError, ValueError):
+            c = 0.5
+        return p * 10 + c
+
+    def get_memory_brief(
+        self,
+        *,
+        task_id: Optional[str] = None,
+        agent_id: Optional[str] = None,
+        short_term_limit: int = 6,
+    ) -> Dict[str, Any]:
+        all_entries = self._read_entries(self.short_term_entries_path)
+        candidates: List[Dict[str, Any]] = []
+        for item in all_entries:
+            if not isinstance(item, dict):
+                continue
+            if task_id and agent_id:
+                if item.get("task_id") != task_id and item.get("agent_id") != agent_id:
+                    continue
+            elif task_id:
+                if item.get("task_id") != task_id:
+                    continue
+            elif agent_id:
+                if item.get("agent_id") != agent_id:
+                    continue
+            candidates.append(item)
+
+        candidates.sort(key=self._score_entry, reverse=True)
+        cap = max(0, short_term_limit)
         return {
-            "length": len(content),
-            "max_length": self.MAX_MEMORY_LENGTH,
-            "usage_percent": self._usage_percent(len(content), self.MAX_MEMORY_LENGTH),
-            "is_full": self.is_memory_full(),
-            "file_path": str(self.memory_file_path)
+            "short_term": candidates[:cap],
+            "long_term": [],
+        }
+
+    def get_memory_info(self) -> Dict[str, Any]:
+        entries = self._read_entries(self.short_term_entries_path)
+        return {
+            "entries_count": len(entries),
+            "short_term_entries_count": len(entries),
+            "long_term_entries_count": 0,
+            "short_term_entries_file_path": str(self.short_term_entries_path),
+            "long_term_entries_file_path": None,
+            "legacy_entries_file_path": str(self.legacy_entries_path),
         }

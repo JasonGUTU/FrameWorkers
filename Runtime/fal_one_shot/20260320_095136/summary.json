@@ -1,0 +1,28 @@
+{
+  "status": "ok",
+  "output_dir": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/fal_one_shot/20260320_095136",
+  "files": {
+    "keyframe_1": "kf_01.png",
+    "keyframe_2": "kf_02.png",
+    "shot_clip": "clip_sh_001.mp4",
+    "voice": "voice.wav",
+    "delivery": "delivery_sh_001.mp4"
+  },
+  "bytes": {
+    "keyframe_1": 169457,
+    "keyframe_2": 148362,
+    "shot_clip": 1575190,
+    "voice": 80178,
+    "delivery": 1620048
+  },
+  "fal_models": {
+    "image": "fal-ai/flux/schnell",
+    "video": "fal-ai/ltx-video-v095",
+    "tts": "fal-ai/minimax/speech-02-turbo"
+  },
+  "notes": [
+    "Video was generated from one shot using two keyframe anchors.",
+    "Keyframes are used as stability/consistency anchors.",
+    "If ffmpeg is unavailable, delivery may match raw clip bytes."
+  ]
+}

@@ -1,0 +1,283 @@
+{
+  "meta": {
+    "project_id": "",
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-20T13:50:53.450779+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_001"
+        },
+        "estimated_duration": {
+          "seconds": 10.0,
+          "confidence": 0.9
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "A classic, somewhat cluttered watchmaker's workshop/study.",
+              "Warm, focused lighting on the workbench, with ambient, slightly dimmer light in the rest of the room.",
+              "Dust motes visible in the light beams.",
+              "Hints of personal touches: framed photos, old books, a comfortable, worn chair."
+            ]
+          },
+          "character_locks": [],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "late wife's gold pocket watch",
+              "must_keep": [
+                "It must be an antique, ornate gold pocket watch, visibly cherished.",
+                "Must be open to reveal intricate internal mechanisms.",
+                "Its ticking at the end is crucial for emotional impact."
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "watchmaker's tools",
+              "must_keep": [
+                "Include a jeweller's loupe, worn and well-used.",
+                "Fine-tipped tweezers, reflecting precision work."
+              ]
+            },
+            {
+              "prop_id": "prop_003",
+              "prop_name": "workbench",
+              "must_keep": [
+                "A sturdy, well-organized wooden workbench, with small compartments and tools neatly arranged."
+              ]
+            },
+            {
+              "prop_id": "prop_004",
+              "prop_name": "small television",
+              "must_keep": [
+                "A slightly older model TV, not a modern flat screen.",
+                "Clearly displays a New Year's countdown."
+              ]
+            },
+            {
+              "prop_id": "prop_005",
+              "prop_name": "minuscule watch gear",
+              "must_keep": [
+                "Visually very small, emphasizing the difficulty of the task.",
+                "Must be distinct enough to be seen slipping and being re-placed."
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Intimate and observational, focusing on Elias's internal struggle and precision.",
+              "Use warm, focused lighting to highlight the workbench and Elias's face.",
+              "Emphasize the contrast between the quiet intensity of his work and the celebratory noise of the New Year's countdown.",
+              "Melancholic undertones give way to a sense of peace and quiet triumph."
+            ],
+            "must_avoid": [
+              "Overly bright or harsh lighting outside the workbench's focus.",
+              "Distracting background elements that draw attention from Elias's task.",
+              "Unnecessary camera movements that detract from the stillness and concentration."
+            ]
+          }
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "linked_blocks": [
+              "b_001"
+            ],
+            "estimated_duration_sec": 2.0,
+            "shot_type": "medium_shot",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Elias is positioned off-center, with the workbench dominating the foreground. The small TV showing the countdown is visible in the background, slightly out of focus."
+            },
+            "visual_goal": "Establish Elias in his workspace, his intense focus, and the impending New Year's countdown creating pressure.",
+            "action_focus": "Elias hunches over his workbench with a loupe, the TV countdown prominent.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_003",
+              "jeweller's loupe",
+              "prop_004"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": [
+                "Elias, loupe to eye, intensely focused on his work, with the 'TEN SECONDS' countdown visible on the TV in the background."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "linked_blocks": [
+              "b_002"
+            ],
+            "estimated_duration_sec": 2.0,
+            "shot_type": "extreme_close_up",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "static",
+              "framing_notes": "Fill the frame entirely with Elias's aged hands, the intricate watch mechanism, tweezers, and the minuscule gear."
+            },
+            "visual_goal": "Highlight the delicacy of the task and the visible tension in Elias's trembling hands.",
+            "action_focus": "Elias's hands attempting to place the minuscule gear into the open pocket watch with tweezers.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "tweezers",
+              "prop_005"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": [
+                "Elias's slightly trembling hands, holding tweezers with the tiny gear, hovering over the open pocket watch."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "linked_blocks": [
+              "b_003"
+            ],
+            "estimated_duration_sec": 1.5,
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "quick_pan",
+              "framing_notes": "Start on the gear slipping, then pan quickly to Elias's jaw/mouth area."
+            },
+            "visual_goal": "Emphasize the frustration and the critical mistake of the dropped gear.",
+            "action_focus": "The minuscule gear slipping and falling, followed by Elias's subtle, frustrated reaction.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_005",
+              "tweezers"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "The tiny gear hitting the polished wood of the workbench.",
+                "Elias's jaw tightening in frustration, a soft sound escaping his lips."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "linked_blocks": [
+              "b_004"
+            ],
+            "estimated_duration_sec": 1.5,
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Elias's face, allowing his expressions to convey the emotional shift. The TV's sound, rather than visual, will convey the countdown."
+            },
+            "visual_goal": "Show Elias battling his internal struggle and regaining his resolve under pressure.",
+            "action_focus": "Elias closing his eyes in resignation, taking a breath, then opening them with renewed determination as the 'FIVE SECONDS' shout is heard.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Elias's face, eyes closed, a shaky breath leaving him.",
+                "Elias's face, eyes wide open with a firm, determined gaze."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 5,
+            "linked_blocks": [
+              "b_005"
+            ],
+            "estimated_duration_sec": 1.5,
+            "shot_type": "extreme_close_up",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "static",
+              "framing_notes": "Extremely tight shot on the watch, gear, and Elias's hands, then quickly cut to the watch case snapping shut."
+            },
+            "visual_goal": "Emphasize the successful, precise placement of the gear and the completion of the repair.",
+            "action_focus": "Elias's hands precisely placing the gear, followed by the definitive snap of the watch case.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_005",
+              "tweezers",
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "The tiny gear perfectly slotting into place in the watch mechanism.",
+                "Elias's fingers confidently snapping the gold pocket watch case shut."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 6,
+            "linked_blocks": [
+              "b_006"
+            ],
+            "estimated_duration_sec": 1.5,
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "low_angle_to_eye_level",
+              "movement": "slow_pull_back",
+              "framing_notes": "Begin on Elias's ear and the watch, slowly pulling back to reveal his tear-streaked face illuminated by fireworks from a window in the background."
+            },
+            "visual_goal": "Capture Elias's emotional payoff: relief, joy, and closure, perfectly synchronized with the New Year celebration.",
+            "action_focus": "Elias holding the watch to his ear, hearing the tick-tock, his eyes welling up, and fireworks lighting his face.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_004"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Elias's ear with the gold pocket watch, his eyes closed in anticipation.",
+                "Elias's tear-streaked face, eyes open, a gentle smile, illuminated by colorful fireworks erupting outside."
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_count_total": 6,
+    "avg_shots_per_scene": 6.0,
+    "sum_shot_duration_sec": 10.0,
+    "duration_match_score": 0.0
+  }
+}

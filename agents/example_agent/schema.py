@@ -40,12 +40,9 @@ class SummaryContent(BaseModel):
 class ExamplePipelineInput(BaseModel):
     """Input payload for ExamplePipelineAgent.
 
-    project_id and draft_id are standard pipeline fields.
     source_text is the domain-specific input this agent processes.
     """
 
-    project_id: str = ""
-    draft_id: str = ""
     source_text: str = Field("", description="The text to summarize")
 
 

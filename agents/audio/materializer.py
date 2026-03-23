@@ -8,6 +8,7 @@ file I/O; persistence is handled exclusively by Assistant.
 from __future__ import annotations
 
 import logging
+import os
 from typing import Any
 
 from ..descriptor import BaseMaterializer, MediaAsset
@@ -25,6 +26,29 @@ class AudioMaterializer(BaseMaterializer):
 
     def __init__(self, audio_service: AudioService) -> None:
         self.audio_svc = audio_service
+
+    @staticmethod
+    def _normalize_local_path(uri: str) -> str:
+        if not uri:
+            return ""
+        if uri.startswith("file://"):
+            return uri[7:]
+        return uri
+
+    @classmethod
+    def _load_video_bytes_from_assets(cls, assets: dict[str, Any]) -> bytes | None:
+        """Load final video bytes from upstream `video` asset uri if available."""
+        video = (assets or {}).get("video", {})
+        content = video.get("content", {}) if isinstance(video, dict) else {}
+        final_video = content.get("final_video_asset", {})
+        video_uri = cls._normalize_local_path(final_video.get("uri", ""))
+        if not video_uri or not os.path.isfile(video_uri):
+            return None
+        try:
+            with open(video_uri, "rb") as fh:
+                return fh.read()
+        except Exception:
+            return None
 
     async def materialize(
         self,
@@ -47,6 +71,7 @@ class AudioMaterializer(BaseMaterializer):
         pending: list[MediaAsset] = []
         content = asset_dict.get("content", {})
         scene_mix_bytes_list: list[bytes] = []
+        final_bytes: bytes | None = None
 
         for scene in content.get("scenes", []):
             scene_id = scene.get("scene_id", "")
@@ -155,6 +180,30 @@ class AudioMaterializer(BaseMaterializer):
                 ))
             except Exception as exc:
                 logger.error("Final audio assembly failed: %s", exc)
+
+        # --- Final delivery mux (video + final audio) ---
+        final_delivery = content.setdefault("final_delivery_asset", {})
+        final_delivery["asset_id"] = "delivery_final"
+        if final_bytes:
+            video_bytes = self._load_video_bytes_from_assets(assets)
+            if video_bytes:
+                try:
+                    muxed_video_bytes = await self.audio_svc.mux_audio_with_video(
+                        video_bytes=video_bytes,
+                        audio_bytes=final_bytes,
+                    )
+                    pending.append(MediaAsset(
+                        sys_id="delivery_final",
+                        data=muxed_video_bytes,
+                        extension="mp4",
+                        uri_holder=final_delivery,
+                    ))
+                except Exception as exc:
+                    logger.error("Final delivery mux failed: %s", exc)
+            else:
+                logger.info(
+                    "Skipping final delivery mux: missing upstream final video or final audio"
+                )
 
         logger.info("All audio tracks materialized for %s", project_id)
         return pending

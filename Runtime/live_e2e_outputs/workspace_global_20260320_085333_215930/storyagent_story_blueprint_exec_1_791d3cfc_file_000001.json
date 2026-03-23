@@ -1,0 +1,183 @@
+{
+  "meta": {
+    "project_id": "",
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-20T08:53:49.400598+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "logline": "On the eve of a new year, a quiet old watchmaker races against the clock to repair his late wife's pocket watch, finding a moment of connection amidst three challenging setbacks before midnight.",
+    "estimated_duration": {
+      "seconds": 60.0,
+      "confidence": 0.7
+    },
+    "style": {
+      "genre": [
+        "Drama",
+        "Slice of Life"
+      ],
+      "tone_keywords": [
+        "Sentimental",
+        "Contemplative",
+        "Hopeful",
+        "Bittersweet"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Elias Thorne",
+        "role": "protagonist",
+        "profile": "A man of quiet precision and deep sentiment, Elias is an aging watchmaker whose life is defined by the intricate mechanisms he repairs and the cherished memories of his late wife. He finds solace and purpose in his craft.",
+        "motivation": "To honor the memory of his late wife by restoring a beloved possession, to find a moment of peace and connection with her, and to fulfill a personal, almost sacred, ritual.",
+        "flaw": "His grief can make him withdrawn and hyper-focused, sometimes leading to self-imposed pressure that makes delicate work even harder."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Elias's Workshop",
+        "description": "A small, cozy, and meticulously cluttered room that serves as Elias's sanctuary and workspace. Filled with the quiet hum of countless clocks, the scent of old wood, and metallic oils, his workbench is illuminated by a single, focused brass lamp, creating an intimate, timeless atmosphere."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Elias, a quiet watchmaker, sits down at his workbench with his late wife's broken pocket watch, noting the clock shows less than an hour until midnight.",
+        "conflict": "Internal pressure of the deadline and the sentimental weight of the task against his own grief and the watch's delicate complexity.",
+        "turning_point": "His decision to open the watch and begin the repair, fully committing to the challenge."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "crisis",
+        "summary": "While carefully disassembling the watch, a tiny, crucial spring snaps or flies off, causing a momentary panic.",
+        "conflict": "A critical component is broken, threatening to derail the repair and intensify his frustration and the ticking clock.",
+        "turning_point": "Elias calmly locates a replacement spring or meticulously retrieves the errant part, reaffirming his skill and determination."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "crisis",
+        "summary": "Later, he struggles with a stubborn, calcified gear or mechanism that resists his attempts to re-seat it, further eating into his dwindling time.",
+        "conflict": "The physical resistance of the old mechanism challenges his precision and patience, and the deadline looms closer.",
+        "turning_point": "Using his experienced touch and specialized tools, Elias carefully coaxes the part into place, maintaining his focus."
+      },
+      {
+        "step_id": "arc_004",
+        "order": 4,
+        "step_type": "crisis",
+        "summary": "With mere minutes left, Elias's hands tremble slightly as he attempts the final, most delicate adjustment, fearing he might fail.",
+        "conflict": "Internal doubt and physical fatigue combine with the extreme time pressure, creating a moment of intense vulnerability.",
+        "turning_point": "He takes a deep breath, steadies himself, and commits to the final, precise movement, drawing on years of expertise and inner strength."
+      },
+      {
+        "step_id": "arc_005",
+        "order": 5,
+        "step_type": "climax",
+        "summary": "He makes the last adjustment, holds the watch to his ear, and after a tense pause, hears the distinct, rhythmic tick-tock of the restored watch.",
+        "conflict": "The suspense of success or failure in the exact moment of completion.",
+        "turning_point": "The sound of the ticking watch signifies the successful repair and the culmination of his efforts."
+      },
+      {
+        "step_id": "arc_006",
+        "order": 6,
+        "step_type": "resolution",
+        "summary": "Elias gazes at the newly ticking watch, a soft smile spreading across his face, just as the first distant fireworks burst outside his window, marking midnight.",
+        "conflict": "The lingering echoes of his grief and the arduous task give way to a sense of peace and accomplishment.",
+        "turning_point": "The synchronized arrival of the watch's ticking and the new year's fireworks provides a powerful, cathartic moment of closure and renewed hope."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Introduce Elias, the broken watch, and the one-hour deadline before midnight.",
+        "conflict": "The solemn weight of the task, the ticking clock on the wall, and Elias's personal connection to the item.",
+        "turn": "Elias gently opens the watch casing, revealing its intricate, broken internal world."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Confront the first mechanical setback.",
+        "conflict": "A tiny, crucial spring snaps or flies off during disassembly, creating a momentary frustration.",
+        "turn": "Elias carefully retrieves the errant part or finds a suitable replacement, refocusing on the task."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Overcome the second mechanical challenge.",
+        "conflict": "A stubborn gear or mechanism resists being re-seated, requiring extreme precision and patience as time dwindles.",
+        "turn": "Through focused effort and a steady hand, Elias manages to manipulate the recalcitrant part into its proper place."
+      },
+      {
+        "scene_id": "sc_004",
+        "order": 4,
+        "linked_step_id": "arc_004",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Make the final, critical adjustment under immense pressure.",
+        "conflict": "Elias's hands tremble slightly due to fatigue and the approaching deadline, threatening the delicate final step.",
+        "turn": "He takes a deep breath, clears his mind, and steadies his hands for the ultimate precise maneuver."
+      },
+      {
+        "scene_id": "sc_005",
+        "order": 5,
+        "linked_step_id": "arc_005",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Successfully complete the repair and hear the watch tick.",
+        "conflict": "The intense suspense of waiting to see if the final adjustment has worked.",
+        "turn": "The soft, rhythmic tick-tock of the watch begins, filling the quiet workshop."
+      },
+      {
+        "scene_id": "sc_006",
+        "order": 6,
+        "linked_step_id": "arc_006",
+        "location_id": "loc_001",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Experience a moment of peace and resolution.",
+        "conflict": "The lingering exhaustion and emotional weight transform into relief and quiet joy.",
+        "turn": "Elias smiles gently, looking up as distant fireworks light up the night sky, marking the new year and a fresh beginning."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 1,
+    "location_count": 1,
+    "scene_count": 6
+  }
+}

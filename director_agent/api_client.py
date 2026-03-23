@@ -167,6 +167,13 @@ class BackendAPIClient:
     def get_task(self, task_id: str) -> Dict[str, Any]:
         """Get a task by ID"""
         return self._request('GET', f'/api/tasks/{task_id}')
+
+    def get_all_tasks(self) -> List[Dict[str, Any]]:
+        """Get all tasks."""
+        response = self._request('GET', '/api/tasks/list')
+        if isinstance(response, list):
+            return response
+        raise BackendAPIError("Expected list from /api/tasks/list")
     
     def update_task_status(self, task_id: str, status: str) -> Dict[str, Any]:
         """Update task status"""
@@ -346,13 +353,6 @@ class BackendAPIClient:
             return response
         raise BackendAPIError("Expected list from /api/assistant/workspace/files")
 
-    def get_workspace_memory(self) -> Dict[str, Any]:
-        """Read assistant workspace memory."""
-        response = self._request('GET', '/api/assistant/workspace/memory')
-        if isinstance(response, dict):
-            return response
-        raise BackendAPIError("Expected object from /api/assistant/workspace/memory")
-
     def get_workspace_file(self, file_id: str) -> Dict[str, Any]:
         """Get one workspace file metadata by id."""
         response = self._request('GET', f'/api/assistant/workspace/files/{file_id}')
@@ -375,16 +375,87 @@ class BackendAPIClient:
             return response
         raise BackendAPIError("Expected list from /api/assistant/workspace/files/search")
 
-    def write_workspace_memory(self, content: str, append: bool = False) -> Dict[str, Any]:
-        """Write assistant workspace memory."""
-        response = self._request(
-            'POST',
-            '/api/assistant/workspace/memory',
-            data={"content": content, "append": append},
-        )
+    def list_workspace_memory_entries(
+        self,
+        *,
+        tier: Optional[str] = None,
+        task_id: Optional[str] = None,
+        agent_id: Optional[str] = None,
+        kinds: Optional[List[str]] = None,
+        limit: int = 20,
+    ) -> List[Dict[str, Any]]:
+        """List structured memory entries."""
+        params: Dict[str, Any] = {"limit": limit}
+        if tier:
+            params["tier"] = tier
+        if task_id:
+            params["task_id"] = task_id
+        if agent_id:
+            params["agent_id"] = agent_id
+        if kinds:
+            params["kind"] = kinds
+        response = self._request('GET', '/api/assistant/workspace/memory/entries', params=params)
+        if isinstance(response, list):
+            return response
+        raise BackendAPIError("Expected list from /api/assistant/workspace/memory/entries")
+
+    def add_workspace_memory_entry(
+        self,
+        *,
+        content: str,
+        tier: str = "short_term",
+        kind: str = "note",
+        task_id: Optional[str] = None,
+        agent_id: Optional[str] = None,
+        source_asset_refs: Optional[List[str]] = None,
+        priority: int = 3,
+        confidence: Optional[float] = None,
+        ttl_runs: Optional[int] = None,
+        metadata: Optional[Dict[str, Any]] = None,
+    ) -> Dict[str, Any]:
+        """Create one structured memory entry."""
+        data: Dict[str, Any] = {
+            "content": content,
+            "tier": tier,
+            "kind": kind,
+            "priority": priority,
+        }
+        if task_id:
+            data["task_id"] = task_id
+        if agent_id:
+            data["agent_id"] = agent_id
+        if source_asset_refs:
+            data["source_asset_refs"] = source_asset_refs
+        if confidence is not None:
+            data["confidence"] = confidence
+        if ttl_runs is not None:
+            data["ttl_runs"] = ttl_runs
+        if metadata:
+            data["metadata"] = metadata
+        response = self._request('POST', '/api/assistant/workspace/memory/entries', data=data)
         if isinstance(response, dict):
             return response
-        raise BackendAPIError("Expected object from POST /api/assistant/workspace/memory")
+        raise BackendAPIError("Expected object from POST /api/assistant/workspace/memory/entries")
+
+    def get_workspace_memory_brief(
+        self,
+        *,
+        task_id: Optional[str] = None,
+        agent_id: Optional[str] = None,
+        short_term_limit: int = 6,
+    ) -> Dict[str, Any]:
+        """Fetch concise STM memory brief (LTM disabled; ``long_term`` is always empty)."""
+        params: Dict[str, Any] = {
+            "short_term_limit": short_term_limit,
+        }
+        if task_id:
+            params["task_id"] = task_id
+        if agent_id:
+            params["agent_id"] = agent_id
+        response = self._request('GET', '/api/assistant/workspace/memory/brief', params=params)
+        if isinstance(response, dict):
+            return response
+        raise BackendAPIError("Expected object from /api/assistant/workspace/memory/brief")
 
     def get_workspace_logs(
         self,

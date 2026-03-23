@@ -27,8 +27,10 @@ This document lists all supported models in the Inference module.
 
 | Model ID | Name | Multimodal | Max Tokens | Context Window |
 |----------|------|------------|------------|----------------|
-| `gemini-pro` | Gemini Pro | ❌ | 8192 | 32768 |
+| `google-ai-studio/gemini-2.5-flash` | Gemini 2.5 Flash | ✅ | 8192 | 1048576 |
 | `gemini-pro-vision` | Gemini Pro Vision | ✅ | 4096 | 16384 |
+
+`gemini-pro` is kept as a compatibility alias and is automatically canonicalized to `google-ai-studio/gemini-2.5-flash`.
 
 ### Ollama Models (Local/Custom)
 

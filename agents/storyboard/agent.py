@@ -1,6 +1,6 @@
 """StoryboardAgent — translates Screenplay into a Storyboard (scene → shots).
 
-Input:  StoryboardAgentInput (project_id, draft_id, screenplay, constraints)
+Input:  StoryboardAgentInput (screenplay, constraints)
 Output: StoryboardAgentOutput (Storyboard with scene_consistency_pack, shots,
         metrics)
 
@@ -69,12 +69,38 @@ class StoryboardAgent(BaseAgent[StoryboardAgentInput, StoryboardAgentOutput]):
             scene_id = sp_scene.get("scene_id", "")
             heading = sp_scene.get("heading", {})
 
-            # Extract unique characters from this scene's blocks
+            # Extract unique characters from this scene.
+            # Primary source: explicit block.character_id.
+            # Fallback sources: continuity wardrobe refs and block continuity refs.
             char_ids: dict[str, bool] = {}
             for block in sp_scene.get("blocks", []):
                 cid = block.get("character_id", "")
                 if cid:
                     char_ids[cid] = True
+                refs = block.get("continuity_refs", {})
+                wardrobe_ids = (
+                    refs.get("wardrobe_character_ids", [])
+                    if isinstance(refs, dict)
+                    else []
+                )
+                if isinstance(wardrobe_ids, list):
+                    for wid in wardrobe_ids:
+                        if isinstance(wid, str) and wid:
+                            char_ids[wid] = True
+
+            continuity = sp_scene.get("continuity", {})
+            wardrobe_notes = (
+                continuity.get("character_wardrobe_notes", [])
+                if isinstance(continuity, dict)
+                else []
+            )
+            if isinstance(wardrobe_notes, list):
+                for item in wardrobe_notes:
+                    if not isinstance(item, dict):
+                        continue
+                    cid = item.get("character_id", "")
+                    if isinstance(cid, str) and cid:
+                        char_ids[cid] = True
 
             scenes.append(
                 StoryboardScene(

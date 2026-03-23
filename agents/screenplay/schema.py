@@ -73,6 +73,7 @@ class ScreenplayContent(BaseModel):
 
 
 class ScreenplayMetrics(BaseModel):
+    target_duration_sec: float = 0.0
     estimated_total_duration_sec: float = 0.0
     sum_scene_duration_sec: float = 0.0
     scene_count: int = 0
@@ -106,8 +107,6 @@ class ScreenplayAgentInput(BaseModel):
     story blueprint.  ``story_blueprint`` may be empty in this case.
     """
 
-    project_id: str = ""
-    draft_id: str = ""
     story_blueprint: dict = Field(default_factory=dict)
     constraints: ScreenplayConstraints = Field(default_factory=ScreenplayConstraints)
     user_provided_text: str = Field(

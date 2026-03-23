@@ -124,8 +124,6 @@ class KeyframeConstraints(BaseModel):
 class KeyFrameAgentInput(BaseModel):
     """Input payload for KeyFrameAgent."""
 
-    project_id: str = ""
-    draft_id: str = ""
     storyboard: dict = Field(default_factory=dict)
     constraints: KeyframeConstraints = Field(default_factory=KeyframeConstraints)
 

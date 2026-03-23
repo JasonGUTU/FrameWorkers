@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "project_id": "",
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-20T15:13:50.399480+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A retired watchmaker races against the final ten seconds before midnight to repair his late wife's cherished pocket watch, seeking a moment of peace and connection as the new year begins.",
+    "estimated_duration": {
+      "seconds": 12.0,
+      "confidence": 0.8
+    },
+    "style": {
+      "genre": [
+        "Drama",
+        "Slice of Life"
+      ],
+      "tone_keywords": [
+        "Poignant",
+        "Hopeful",
+        "Tense",
+        "Nostalgic"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Elias Thorne",
+        "role": "protagonist",
+        "profile": "An elderly, meticulous retired watchmaker, still quietly grieving the loss of his wife. He finds solace and purpose in the intricate work of his craft.",
+        "motivation": "To honor his late wife's memory by fixing her prized possession and to find a moment of closure or connection with her on New Year's Eve.",
+        "flaw": "His grief makes him vulnerable to pressure, causing his hands to tremble when under extreme emotional stress or a tight deadline."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Elias's Workshop",
+        "description": "A cozy, slightly cluttered workshop within Elias's home. It's filled with specialized tools, tiny gears, magnifying glasses, and sentimental objects, warmly lit by a single desk lamp as night descends."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Elias, intensely focused, works on his late wife's pocket watch with only seconds remaining before midnight, establishing the emotional stakes and the ticking clock.",
+        "conflict": "Internal: Elias's grief and the pressure to complete this emotionally significant task perfectly. External: The dwindling time before midnight.",
+        "turning_point": "The realization that he is truly down to the final seconds, amplifying the urgency."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "crisis",
+        "summary": "A small, critical mistake causes Elias's hands to falter, momentarily paralyzing him with fear and exacerbating the internal pressure.",
+        "conflict": "Internal: Elias fights against his own trembling hands and the sudden doubt caused by the error. External: Time continues to run out mercilessly.",
+        "turning_point": "His brief glance at a clock, confirming the extreme lack of time, forces him to steady his resolve."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "climax",
+        "summary": "With newfound resolve, Elias meticulously corrects his mistake and performs the final, delicate repair just as midnight arrives.",
+        "conflict": "Internal: The battle against his own nerves to execute the precise movement. External: The literal last second struggle.",
+        "turning_point": "The watch's distinct 'tick' signifies successful repair and the symbolic start of a new, hopeful chapter."
+      },
+      {
+        "step_id": "arc_004",
+        "order": 4,
+        "step_type": "resolution",
+        "summary": "The watch ticks, Elias smiles softly amidst bursting fireworks, finding a quiet moment of peace and connection.",
+        "conflict": "The resolution of Elias's internal struggle and the external pressure.",
+        "turning_point": "The simultaneous sound of the watch ticking and the sight of fireworks, signifying a personal and universal fresh start."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To successfully repair his wife's pocket watch before the clock strikes midnight.",
+        "conflict": "Elias faces a race against time and the immense emotional pressure of fixing a sentimental item, compounded by a momentary error that threatens failure.",
+        "turn": "After a brief moment of panic from a mistake, Elias steadies his trembling hands and, with renewed determination, performs the final delicate repair."
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "character_count": 1,
+    "location_count": 1,
+    "scene_count": 1
+  }
+}

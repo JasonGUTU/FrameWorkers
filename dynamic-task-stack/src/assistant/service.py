@@ -4,6 +4,8 @@ import asyncio
 import os
 import shutil
 import tempfile
+from copy import deepcopy
+from types import MappingProxyType
 from typing import Dict, Any, Optional
 from datetime import datetime
 
@@ -12,8 +14,8 @@ from .workspace import Workspace
 from ..task_stack.storage import storage as task_storage  # Read-only access to task storage
 from agents import get_agent_registry
 from agents.base_agent import MaterializeContext
-from inference.runtime.base_client import LLMClient as PipelineLLMClient
-from .retrieval import WorkspaceRetriever
+from inference.clients import LLMClient as PipelineLLMClient
+from .workspace_context import WorkspaceContextBuilder
 
 
 class AssistantService:
@@ -24,19 +26,19 @@ class AssistantService:
     All agents share a single workspace (file system).
     """
     
-    def __init__(self, assistant_storage):
+    def __init__(self, assistant_state_store):
         """
         Initialize assistant service
         
         Args:
-            assistant_storage: Storage instance for assistant data
+            assistant_state_store: Runtime state store instance for assistant data
         """
-        self.storage = assistant_storage
+        self.storage = assistant_state_store
         self.agent_registry = get_agent_registry()
         self.pipeline_llm_client = PipelineLLMClient()
         # Get or create the global workspace
         self.workspace = self._get_global_workspace()
-        self.retriever = WorkspaceRetriever(self.workspace)
+        self.context_builder = WorkspaceContextBuilder(self.workspace)
     
     def _get_global_workspace(self) -> Workspace:
         """
@@ -113,22 +115,46 @@ class AssistantService:
         return project_id, draft_id, assets, config
 
     @staticmethod
-    def _collect_materialized_files(media_assets: list[Any]) -> Dict[str, Any]:
-        files: Dict[str, Any] = {}
-        for asset in media_assets:
-            uri = getattr(asset, "uri_holder", {}).get("uri", "")
-            if not uri or not os.path.isfile(uri):
+    def _merge_execution_inputs(
+        packaged_data: Dict[str, Any],
+        additional_inputs: Optional[Dict[str, Any]],
+    ) -> Dict[str, Any]:
+        """Merge caller overrides without clobbering existing assets wholesale."""
+        merged = dict(packaged_data)
+        if not additional_inputs:
+            return merged
+
+        for key, value in additional_inputs.items():
+            if key == "assets" and isinstance(value, dict):
+                base_assets = merged.get("assets", {})
+                if not isinstance(base_assets, dict):
+                    base_assets = {}
+                combined_assets = dict(base_assets)
+                combined_assets.update(value)
+                merged["assets"] = combined_assets
                 continue
-            with open(uri, "rb") as fh:
-                data = fh.read()
-            sys_id = getattr(asset, "sys_id", "")
-            extension = getattr(asset, "extension", "bin")
-            files[sys_id] = {
-                "file_content": data,
-                "filename": f"{sys_id}.{extension}",
-                "description": f"Media asset {sys_id}",
-            }
-        return files
+            merged[key] = value
+        return merged
+
+    @staticmethod
+    def _split_additional_inputs(
+        additional_inputs: Optional[Dict[str, Any]],
+    ) -> tuple[Optional[Dict[str, Any]], Dict[str, Any]]:
+        """
+        Split caller-provided additional inputs into:
+        - agent-visible inputs
+        - assistant-only control options
+        """
+        if not additional_inputs:
+            return None, {}
+        if not isinstance(additional_inputs, dict):
+            return additional_inputs, {}
+
+        copied = dict(additional_inputs)
+        control = copied.pop("_assistant_control", {})
+        if not isinstance(control, dict):
+            control = {}
+        return copied, control
 
     @staticmethod
     def _should_keep_materialize_temp_dir() -> bool:
@@ -137,10 +163,12 @@ class AssistantService:
 
     def _execute_pipeline_descriptor(self, descriptor: Any, inputs: Dict[str, Any]) -> Dict[str, Any]:
         project_id, draft_id, assets, config = self._map_pipeline_inputs(inputs)
+        hydrated_assets = self.workspace.hydrate_indexed_assets(assets)
+        readonly_assets = MappingProxyType(deepcopy(hydrated_assets))
 
         agent = descriptor.build_equipped_agent(self.pipeline_llm_client)
-        typed_input = descriptor.build_input(project_id, draft_id, assets, config)
-        upstream = descriptor.build_upstream(assets)
+        typed_input = descriptor.build_input(project_id, draft_id, readonly_assets, config)
+        upstream = descriptor.build_upstream(readonly_assets)
 
         materialize_ctx = None
         temp_dir: Optional[str] = None
@@ -157,7 +185,7 @@ class AssistantService:
 
             materialize_ctx = MaterializeContext(
                 project_id=project_id,
-                assets=assets,
+                assets=deepcopy(hydrated_assets),
                 persist_binary=_persist,
             )
 
@@ -173,6 +201,8 @@ class AssistantService:
             asset_dict = getattr(result, "asset_dict", None)
             raw_output = getattr(result, "output", None)
             media_assets = getattr(result, "media_assets", [])
+            attempts = getattr(result, "attempts", None)
+            eval_result = getattr(result, "eval_result", None)
 
             if asset_dict is not None:
                 output = asset_dict
@@ -180,9 +210,19 @@ class AssistantService:
                 output = raw_output.model_dump() if hasattr(raw_output, "model_dump") else dict(raw_output)
 
             if media_assets:
-                output["_media_files"] = self._collect_materialized_files(media_assets)
+                output["_media_files"] = self.workspace.collect_materialized_files(media_assets)
             if temp_dir and keep_temp_dir:
                 output["_materialize_temp_dir"] = temp_dir
+            if isinstance(attempts, int):
+                debug_payload = {"attempts": attempts}
+                if isinstance(eval_result, dict):
+                    debug_payload["overall_pass"] = bool(
+                        eval_result.get("overall_pass", True)
+                    )
+                    summary = eval_result.get("summary")
+                    if isinstance(summary, str) and summary:
+                        debug_payload["eval_summary"] = summary
+                output["_execution_debug"] = debug_payload
             return output
         finally:
             if temp_dir and not keep_temp_dir:
@@ -213,8 +253,8 @@ class AssistantService:
         return {
             "agent_id": agent_id,
             "agent_name": agent_id,
-            "input_schema": {},
-            "output_schema": {},
+            "asset_key": descriptor.asset_key,
+            "asset_type": getattr(descriptor, "asset_type", ""),
             "capabilities": ["pipeline_agent", descriptor.asset_key],
             "description": (getattr(descriptor, "catalog_entry", "") or "")[:200],
         }
@@ -272,11 +312,11 @@ class AssistantService:
             descriptor = self.agent_registry.get_descriptor(agent_id)
             if descriptor is None:
                 continue
-            results = {
-                k: v for k, v in execution.results.items()
-                if not k.startswith("_")
-            }
-            assets[descriptor.asset_key] = results
+            assets[descriptor.asset_key] = self.workspace.build_pipeline_asset_value(
+                execution_results=execution.results,
+                descriptor_asset_key=descriptor.asset_key,
+                execution_id=execution.id,
+            )
 
         return assets
 
@@ -312,8 +352,12 @@ class AssistantService:
         
         # Retrieve relevant context from workspace using the retriever
         # The assistant searches the workspace and distributes information to agents
-        retriever = self.retriever if workspace is self.workspace else WorkspaceRetriever(workspace)
-        context = retriever.get_context_for_agent(
+        context_builder = (
+            self.context_builder
+            if workspace is self.workspace
+            else WorkspaceContextBuilder(workspace)
+        )
+        context = context_builder.get_context_for_agent(
             agent_id=agent_id,
             task_id=task_id,
             context_keys=None  # Could be customized based on agent requirements
@@ -370,6 +414,7 @@ class AssistantService:
             execution.status = ExecutionStatus.IN_PROGRESS
             execution.started_at = datetime.now()
             self.storage.update_execution(execution)
+            self.workspace.log_execution_started(execution)
             
             # Execute selected descriptor-based pipeline agent.
             results = self._execute_pipeline_descriptor(descriptor, inputs)
@@ -388,47 +433,12 @@ class AssistantService:
         
         return execution
 
-    def _log_execution_result(self, execution: AgentExecution, workspace: Workspace) -> None:
-        workspace.log_manager.add_log(
-            operation_type="write",
-            resource_type="execution",
-            resource_id=execution.id,
-            agent_id=execution.agent_id,
-            task_id=execution.task_id,
-            details={
-                "status": execution.status.value,
-                "error": execution.error,
-                "has_results": execution.results is not None,
-            },
-        )
-
-    def _store_file_result(self, workspace: Workspace, execution: AgentExecution, key: str, value: Dict[str, Any]) -> None:
-        workspace.store_file(
-            file_content=value["file_content"],
-            filename=value.get("filename", f"{key}.bin"),
-            description=value.get("description", f"File from execution {execution.id}"),
-            created_by=execution.agent_id,
-            tags=[execution.agent_id, execution.task_id],
-            metadata={"execution_id": execution.id},
-        )
-
-    def _store_execution_files(self, execution: AgentExecution, workspace: Workspace) -> None:
-        if not execution.results or not isinstance(execution.results, dict):
-            return
-
-        for key, value in execution.results.items():
-            if isinstance(value, dict) and "file_content" in value:
-                self._store_file_result(workspace, execution, key, value)
-
-        media_files = execution.results.get("_media_files")
-        if isinstance(media_files, dict):
-            for key, value in media_files.items():
-                self._store_file_result(workspace, execution, key, value)
-
     def process_results(
         self,
         execution: AgentExecution,
-        workspace: Workspace
+        workspace: Workspace,
+        *,
+        overwrite_existing_assets: bool = False,
     ) -> Dict[str, Any]:
         """
         Process execution results and store in workspace
@@ -440,8 +450,22 @@ class AssistantService:
         Returns:
             Dictionary containing processed results
         """
-        self._log_execution_result(execution, workspace)
-        self._store_execution_files(execution, workspace)
+        workspace.log_execution_result(execution)
+        persisted_paths = workspace.persist_execution_assets(
+            execution,
+            overwrite_existing=overwrite_existing_assets,
+        )
+        descriptor = self.agent_registry.get_descriptor(execution.agent_id)
+        asset_key = getattr(descriptor, "asset_key", execution.agent_id)
+        asset_index = workspace.persist_execution_json_snapshot(
+            execution,
+            asset_key=asset_key,
+            overwrite_existing=overwrite_existing_assets,
+        )
+        if asset_index and isinstance(execution.results, dict):
+            execution.results["_asset_index"] = asset_index
+        if persisted_paths or asset_index:
+            self.storage.update_execution(execution)
         return {
             "execution_id": execution.id,
             "status": execution.status.value,
@@ -463,9 +487,7 @@ class AssistantService:
             task_id=task_id,
             workspace=workspace,
         )
-        if additional_inputs:
-            packaged_data.update(additional_inputs)
-        return packaged_data
+        return self._merge_execution_inputs(packaged_data, additional_inputs)
 
     def execute_agent_for_task(
         self,
@@ -491,13 +513,15 @@ class AssistantService:
         """
         # Prepare environment
         workspace = self.prepare_environment()
+        runtime_inputs, control_options = self._split_additional_inputs(additional_inputs)
+        overwrite_existing_assets = bool(control_options.get("overwrite_assets", False))
         
         # 1) Build inputs (agent requirements + workspace context + task metadata)
         inputs = self.build_execution_inputs(
             agent_id=agent_id,
             task_id=task_id,
             workspace=workspace,
-            additional_inputs=additional_inputs,
+            additional_inputs=runtime_inputs,
         )
         
         # 2) Run selected agent
@@ -508,4 +532,8 @@ class AssistantService:
         )
         
         # 3) Persist results and return task-running summary payload
-        return self.process_results(execution, workspace)
+        return self.process_results(
+            execution,
+            workspace,
+            overwrite_existing_assets=overwrite_existing_assets,
+        )

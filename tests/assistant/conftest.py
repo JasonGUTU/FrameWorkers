@@ -27,7 +27,7 @@ if "flask_cors" not in sys.modules:
     sys.modules["flask_cors"] = flask_cors_stub
 
 import src.assistant.service as service_module
-from src.assistant.storage import AssistantStorage
+from src.assistant.state_store import AssistantStateStore
 
 
 class _DummyPipelineResult:
@@ -73,7 +73,7 @@ class DummyRegistry:
 
 @pytest.fixture
 def assistant_env(tmp_path, monkeypatch):
-    storage = AssistantStorage(runtime_base_path=tmp_path / "Runtime")
+    storage = AssistantStateStore(runtime_base_path=tmp_path / "Runtime")
     registry = DummyRegistry(
         descriptors={
             "UpstreamAgent": DummyDescriptor(asset_key="upstream_asset"),

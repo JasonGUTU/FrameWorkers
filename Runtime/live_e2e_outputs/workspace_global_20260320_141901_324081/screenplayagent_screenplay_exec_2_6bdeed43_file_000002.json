@@ -1,0 +1,156 @@
+{
+  "meta": {
+    "project_id": "",
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-20T14:19:25.052965+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "Midnight Tick",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Arthur's Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Arthur, an elderly, retired watchmaker, meticulously works on his late wife's treasured pocket watch. As New Year's Eve midnight approaches, the pressure mounts, causing his hand to tremble. He steadies himself, makes the final delicate adjustment, and the watch ticks just as fireworks explode outside, bringing him a bittersweet sense of peace.",
+        "estimated_duration": {
+          "seconds": 10.0,
+          "confidence": 0.9
+        },
+        "continuity": {
+          "props_present": [
+            "Pocket watch (intricate, antique)",
+            "Watchmaker's loupe",
+            "Fine-tipped tweezers",
+            "Tiny screwdriver",
+            "Workbench lamp (focused beam)",
+            "Precision watchmaker's bench mat",
+            "Digital clock or radio (displaying countdown)",
+            "Window (revealing dark, festive night)"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Arthur wears a simple, worn, but clean plaid shirt over a plain t-shirt, and practical trousers. His reading glasses are perched on his nose, and a leather apron covers his front.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Arthur is repairing his late wife's pocket watch.",
+            "It's New Year's Eve, seconds before midnight.",
+            "Arthur's hand trembles due to emotional pressure.",
+            "The watch ticks right as New Year's fireworks begin."
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_001",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The soft glow of a workbench lamp illuminates ARTHUR (70s), hunched over an antique pocket watch. He wears a jeweler's loupe, his focus intense. His workshop is cozy, a world of intricate gears and springs. A digital clock in the background flashes 00:00:10.",
+            "continuity_refs": {
+              "props": [
+                "Workbench lamp",
+                "Pocket watch",
+                "Watchmaker's loupe",
+                "Digital clock"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_002",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Arthur holds a minuscule screw with tweezers. Outside, faint, muffled sounds of a crowd counting down begin to seep in. 9... 8... The pressure is palpable.",
+            "continuity_refs": {
+              "props": [
+                "Tweezers"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_003",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "His hand, usually so steady, gives a barely perceptible tremor. The screw wobbles, almost slipping from the tweezers. Arthur's brow furrows, a ghost of his grief briefly clouding his concentration. 5... 4...",
+            "continuity_refs": {
+              "props": [
+                "Tweezers"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_004",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He takes a slow, deep breath, exhaling the tension. His eyes, though old, regain their piercing clarity. He leans closer, refocusing with renewed determination. 3... 2...",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_005",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "With exquisite precision, his hand moves. The tiny screw slides perfectly into place, a click almost inaudible. He gently nudges a balance wheel. 1...",
+            "continuity_refs": {
+              "props": [
+                "Tiny screwdriver"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_006",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The pocket watch emits a soft, clear TICK. At the exact same instant, the night sky outside the window explodes with a brilliant burst of New Year's fireworks. Arthur removes his loupe, a quiet, hopeful smile spreading across his face as he listens to the steady rhythm of the watch.",
+            "continuity_refs": {
+              "props": [
+                "Pocket watch",
+                "Watchmaker's loupe"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "Arthur successfully repairs the watch, achieving closure and a symbolic fresh start as the watch ticks in sync with the New Year's fireworks.",
+          "emotional_shift": "From tense concentration and fleeting doubt to quiet triumph, relief, and a bittersweet sense of hope."
+        }
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "estimated_total_duration_sec": 10.0,
+    "sum_scene_duration_sec": 10.0,
+    "scene_count": 1,
+    "dialogue_block_count": 0,
+    "action_block_count": 6
+  }
+}

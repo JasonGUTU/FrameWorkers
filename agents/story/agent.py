@@ -1,6 +1,6 @@
 """StoryAgent — expands a draft idea into a Story Blueprint.
 
-Input:  StoryAgentInput  (project_id, draft_id, draft_idea)
+Input:  StoryAgentInput  (draft_idea, constraints, user_provided_text)
 Output: StoryAgentOutput (Story Blueprint with logline, cast, locations,
         story_arc, scene_outline, metrics)
 
@@ -67,6 +67,9 @@ STORY_OUTPUT_TEMPLATE = """{
 
 
 class StoryAgent(BaseAgent[StoryAgentInput, StoryAgentOutput]):
+    def __init__(self, **kwargs: Any) -> None:
+        super().__init__(**kwargs)
+        self._target_duration_sec: float = 60.0
 
     # ------------------------------------------------------------------
     # Prompts
@@ -103,13 +106,15 @@ class StoryAgent(BaseAgent[StoryAgentInput, StoryAgentOutput]):
 
     def _build_generate_prompt(self, input_data: StoryAgentInput) -> str:
         """User prompt for generation mode (brief draft idea → blueprint)."""
+        self._target_duration_sec = float(
+            getattr(input_data.constraints, "target_duration_sec", 60.0) or 60.0
+        )
         return (
             f"Draft idea (raw): {input_data.draft_idea}\n\n"
-            f"project_id: {input_data.project_id}\n"
-            f"draft_id: {input_data.draft_id}\n\n"
             f"Constraints:\n"
-            f"- Target duration: 60 seconds (estimate)\n"
-            f"- Language: en\n\n"
+            f"- Target duration: {input_data.constraints.target_duration_sec} seconds (estimate)\n"
+            f"- Language: {input_data.constraints.language}\n"
+            f"- Keep narrative scope aligned to the target duration (shorter target => fewer beats/scenes).\n\n"
             f"You MUST output JSON matching EXACTLY this structure (fill in real content):\n"
             f"{STORY_OUTPUT_TEMPLATE}\n\n"
             "Self-check before finalizing:\n"
@@ -117,6 +122,8 @@ class StoryAgent(BaseAgent[StoryAgentInput, StoryAgentOutput]):
             "- Every character_id referenced exists in cast[]\n"
             "- story_arc order is continuous starting at 1\n"
             "- scene_outline order is continuous starting at 1\n\n"
+            f"- content.estimated_duration.seconds is close to {input_data.constraints.target_duration_sec} "
+            f"(within +/-20%)\n\n"
             "Return JSON only."
         )
 
@@ -129,6 +136,9 @@ class StoryAgent(BaseAgent[StoryAgentInput, StoryAgentOutput]):
         flaw, conflict, turning_point) but does NOT rewrite what the user
         already provided.
         """
+        self._target_duration_sec = float(
+            getattr(input_data.constraints, "target_duration_sec", 60.0) or 60.0
+        )
         return (
             "=== STRUCTURING MODE ===\n"
             "You have received a DETAILED STORY OUTLINE from the user.  "
@@ -153,12 +163,13 @@ class StoryAgent(BaseAgent[StoryAgentInput, StoryAgentOutput]):
             "  - scene_outline[].goal, scene_outline[].conflict, "
             "scene_outline[].turn\n"
             "- Assign stable IDs: char_001, loc_001, arc_001, sc_001, etc.\n"
-            "- Keep scope realistic for a ~60 second video.\n\n"
+            f"- Keep scope realistic for a ~{input_data.constraints.target_duration_sec:.0f} second video.\n\n"
             "=== USER-PROVIDED STORY OUTLINE ===\n"
             f"{input_data.user_provided_text}\n"
             "=== END USER OUTLINE ===\n\n"
-            f"project_id: {input_data.project_id}\n"
-            f"draft_id: {input_data.draft_id}\n\n"
+            f"Constraints:\n"
+            f"- Target duration: {input_data.constraints.target_duration_sec} seconds (estimate)\n"
+            f"- Language: {input_data.constraints.language}\n\n"
             f"You MUST output JSON matching EXACTLY this structure:\n"
             f"{STORY_OUTPUT_TEMPLATE}\n\n"
             "Self-check before finalizing:\n"
@@ -168,6 +179,8 @@ class StoryAgent(BaseAgent[StoryAgentInput, StoryAgentOutput]):
             "- scene_outline order is continuous starting at 1\n"
             "- Character names match the user's original names exactly\n"
             "- Location names match the user's original names exactly\n\n"
+            f"- content.estimated_duration.seconds is close to {input_data.constraints.target_duration_sec} "
+            f"(within +/-20%)\n\n"
             "Return JSON only."
         )
 
@@ -175,6 +188,7 @@ class StoryAgent(BaseAgent[StoryAgentInput, StoryAgentOutput]):
         c = output.content
         self._normalize_order(c.story_arc)
         self._normalize_order(c.scene_outline)
+        output.metrics.target_duration_sec = self._target_duration_sec
         output.metrics.character_count = len(c.cast)
         output.metrics.location_count = len(c.locations)
         output.metrics.scene_count = len(c.scene_outline)

@@ -1,0 +1,328 @@
+{
+  "meta": {
+    "project_id": "",
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-20T13:42:33.668927+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_001"
+        },
+        "estimated_duration": {
+          "seconds": 7.0,
+          "confidence": 0.9
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "Cozy, cluttered but organized workshop, filled with antique tools, gears, and watch parts.",
+              "Warm, focused lighting on the workbench, creating an intimate glow around Arthur.",
+              "A window is visible in the background or side, showing distant city lights and hinting at the outside world's New Year's Eve celebration.",
+              "Dust motes visible in the lamp light, adding to the atmosphere of a timeless craft."
+            ]
+          },
+          "character_locks": [],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Pocket watch",
+              "must_keep": [
+                "Ornate, delicate, clearly cherished."
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "Watchmaker's tools",
+              "must_keep": [
+                "Magnifying loupe worn over one eye.",
+                "Fine-tipped tweezers, tiny screwdrivers."
+              ]
+            },
+            {
+              "prop_id": "prop_003",
+              "prop_name": "Workshop lamp",
+              "must_keep": [
+                "Provides a focused, warm pool of light on the workbench."
+              ]
+            },
+            {
+              "prop_id": "prop_004",
+              "prop_name": "Tiny gears and springs",
+              "must_keep": [
+                "Visible on the workbench, representing the intricate challenge."
+              ]
+            },
+            {
+              "prop_id": "prop_005",
+              "prop_name": "Workbench",
+              "must_keep": [
+                "Polished surface, organized but showing signs of years of use."
+              ]
+            },
+            {
+              "prop_id": "prop_006",
+              "prop_name": "City lights",
+              "must_keep": [
+                "Visible faintly outside the window, contrasting with the intimate workshop."
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Intimate, focused atmosphere, emphasizing the delicate nature of Arthur's work.",
+              "Warm, directional lighting to create a sense of concentrated effort and a slightly melancholic tone.",
+              "Pacing starts tense, with quick cuts during moments of urgency, then slows for Arthur's resolve.",
+              "Sound design integral: ticking clock, muffled countdown, sharp sounds of dropping parts, then the soft tick of the repaired watch and distant fireworks."
+            ],
+            "must_avoid": [
+              "Overly bright or harsh lighting that would diminish the intimate feel.",
+              "Shallow depth of field that obscures the intricate details of the workbench.",
+              "Unnecessary camera movement that distracts from Arthur's focus."
+            ]
+          }
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "linked_blocks": [
+              "b_001",
+              "b_002"
+            ],
+            "estimated_duration_sec": 3.0,
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Tight on Arthur's hands and the pocket watch, capturing the intricate details of his work and the magnifying loupe over his eye. A small sliver of his focused brow might be visible."
+            },
+            "visual_goal": "Establish the intense, delicate nature of Arthur's task and the pressure of the ticking clock/countdown.",
+            "action_focus": "Arthur's old, steady hands meticulously manipulating a tiny gear with tweezers inside the watch.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002",
+              "Magnifying loupe",
+              "Tiny gear"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Arthur's hands, steady, beginning the delicate operation.",
+                "Arthur's face, magnifying loupe, intense concentration as he guides the gear."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "linked_blocks": [
+              "b_003"
+            ],
+            "estimated_duration_sec": 2.0,
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "quick_zoom_out",
+              "framing_notes": "Start close on the trembling hand, then quickly pull back slightly to include Arthur's face, revealing his frustration and panic."
+            },
+            "visual_goal": "Emphasize the sudden, disruptive tremor and Arthur's immediate emotional reaction.",
+            "action_focus": "Arthur's hand trembling, the tiny gear slipping from the tweezers and falling onto the workbench. Arthur looking up, eyes wide with panic.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "Tweezers",
+              "Tiny gear",
+              "prop_005"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Trembling hand as the gear slips.",
+                "Arthur's face, looking up, wide-eyed with a mix of frustration and panic."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "linked_blocks": [
+              "b_004",
+              "b_005"
+            ],
+            "estimated_duration_sec": 2.0,
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "static",
+              "framing_notes": "Return to a close-up on Arthur's hands and the watch, but from a slightly lower angle, conveying a sense of renewed determination. The watch's face should be prominent."
+            },
+            "visual_goal": "Show Arthur's recovery, renewed focus, and the triumphant moment of the watch's repair synchronized with the New Year.",
+            "action_focus": "Arthur's hand steadying, retrieving and perfectly placing the gear, making the final adjustment with a tiny screwdriver. The watch emits a soft, distinct TICK as distant fireworks begin.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "Tiny gear",
+              "prop_001",
+              "Tiny screwdriver"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Arthur's steady hand precisely placing the gear.",
+                "The watch face as it gives its first, successful 'tick', concurrent with distant fireworks."
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_002"
+        },
+        "estimated_duration": {
+          "seconds": 3.0,
+          "confidence": 0.9
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "Same cozy workshop, but the focus shifts slightly towards the window.",
+              "The ambient lighting from the workshop lamp is now complemented by the flashing colors of fireworks outside.",
+              "The contrast between the warm interior and the vibrant, exploding exterior should be evident."
+            ]
+          },
+          "character_locks": [],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Pocket watch",
+              "must_keep": [
+                "Still held gently in Arthur's hand, now consistently ticking."
+              ]
+            },
+            {
+              "prop_id": "prop_007",
+              "prop_name": "Window",
+              "must_keep": [
+                "Clearly visible, serving as a portal to the outside world's celebrations."
+              ]
+            },
+            {
+              "prop_id": "prop_008",
+              "prop_name": "Fireworks",
+              "must_keep": [
+                "Visible as bright, colorful explosions against the night sky outside the window."
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Softer, more reflective pacing, allowing the viewer to absorb Arthur's emotional shift.",
+              "Use of light from fireworks to symbolically illuminate Arthur's face, highlighting his contentment.",
+              "Visual emphasis on Arthur's subtle facial expressions and the quiet tick of the watch.",
+              "Gentle camera movements, if any, to underscore the peaceful mood."
+            ],
+            "must_avoid": [
+              "Sudden cuts or jarring camera work that would disrupt the calm.",
+              "Any dialogue or sound that detracts from the quiet, personal moment.",
+              "Overly dramatic or overtly sad portrayal; the mood should be one of quiet triumph and peace."
+            ]
+          }
+        },
+        "shots": [
+          {
+            "shot_id": "sh_004",
+            "order": 1,
+            "linked_blocks": [
+              "b_006"
+            ],
+            "estimated_duration_sec": 1.0,
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Arthur's hand gently cupping the pocket watch. His chest and a hint of his face, still slightly bowed, can be seen, conveying a sense of relief and ownership over his success."
+            },
+            "visual_goal": "Show Arthur's immediate, quiet satisfaction and connection to the now-ticking watch.",
+            "action_focus": "Arthur gently holding the perfectly ticking pocket watch, listening to its rhythm.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": [
+                "Arthur's hand, softly cradling the ticking watch."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 2,
+            "linked_blocks": [
+              "b_007",
+              "b_008"
+            ],
+            "estimated_duration_sec": 2.0,
+            "shot_type": "medium_shot",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "very_slow_dolly_in",
+              "framing_notes": "Start on Arthur's upper body as he slowly raises his head, allowing the background window and fireworks to come into view. Slowly push in as his smile forms and light bathes his face."
+            },
+            "visual_goal": "Capture Arthur's transition from focused relief to profound contentment and remembrance, as he connects his personal triumph with the New Year's celebration.",
+            "action_focus": "Arthur slowly raising his head, looking towards the window where fireworks erupt. A subtle, contented smile spreading across his face, illuminated by the flashes of light. He briefly closes his eyes, savoring the moment.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_007",
+              "prop_008"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 3,
+              "keyframe_notes": [
+                "Arthur lifting his head, eyes turning towards the window.",
+                "Arthur's face, subtly smiling, illuminated by a burst of fireworks.",
+                "Arthur with eyes gently closed, a serene expression, bathed in the fading light of a firework."
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 2,
+    "shot_count_total": 5,
+    "avg_shots_per_scene": 2.5,
+    "sum_shot_duration_sec": 10.0,
+    "duration_match_score": 0.0
+  }
+}

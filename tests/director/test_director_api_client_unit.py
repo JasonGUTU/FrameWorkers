@@ -65,6 +65,30 @@ def test_workspace_search_methods_return_expected_shapes(monkeypatch):
     assert "logs" in all_results
 
 
+def test_workspace_memory_entry_methods_return_expected_shapes(monkeypatch):
+    client = BackendAPIClient(base_url="http://unit-test")
+
+    def _fake_request(method, endpoint, data=None, params=None):
+        if endpoint == "/api/assistant/workspace/memory/entries" and method == "GET":
+            return [{"id": "mem_1", "tier": "short_term"}]
+        if endpoint == "/api/assistant/workspace/memory/entries" and method == "POST":
+            return {"id": "mem_2", "tier": "long_term"}
+        if endpoint == "/api/assistant/workspace/memory/brief":
+            return {"short_term": [], "long_term": []}
+        raise AssertionError(f"Unexpected endpoint: {endpoint}")
+
+    monkeypatch.setattr(client, "_request", _fake_request)
+
+    listed = client.list_workspace_memory_entries(tier="short_term", task_id="task_1")
+    assert listed[0]["id"] == "mem_1"
+
+    created = client.add_workspace_memory_entry(content="prefers cinematic", tier="long_term")
+    assert created["id"] == "mem_2"
+
+    brief = client.get_workspace_memory_brief(task_id="task_1")
+    assert "short_term" in brief and "long_term" in brief
+
+
 def test_request_raises_backend_error_for_non_json_response(monkeypatch):
     client = BackendAPIClient(base_url="http://unit-test")
 
