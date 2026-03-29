@@ -1,10 +1,11 @@
-"""StoryAgent — expands a draft idea into a Story Blueprint.
+"""StoryAgent — expands source text into a Story Blueprint.
 
 Input:  StoryAgentInput  (draft_idea, constraints, user_provided_text)
 Output: StoryAgentOutput (Story Blueprint with logline, cast, locations,
         story_arc, scene_outline, metrics)
 
-Coupling: receives draft_idea from Orchestrator; output feeds ScreenplayAgent.
+Coupling: receives canonical `source_text` from orchestrator (mapped to
+`StoryAgentInput.draft_idea` in descriptor); output feeds ScreenplayAgent.
 """
 
 from __future__ import annotations

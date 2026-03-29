@@ -6,7 +6,7 @@ agent-specific logic.  Think of it as an LLM tool definition: name,
 description, input builder, dependencies, and execution hooks.
 
 Adding a new agent = create a sub-package with a ``DESCRIPTOR`` and register
-it in ``src.sub_agent.__init__``.  Zero edits to orchestration code.
+it in ``agents/__init__.py`` (``AGENT_REGISTRY``).  Zero edits to orchestration code.
 
 This module also defines ``BaseMaterializer`` — the abstract base for
 post-LLM media generation (images, video, audio).  Media-producing agents
@@ -27,6 +27,7 @@ from dataclasses import dataclass, field
 from typing import Any, Callable, TYPE_CHECKING
 
 from pydantic import BaseModel
+from .contracts.input_bundle_v2 import InputBundleV2
 
 if TYPE_CHECKING:
     from .base_agent import BaseAgent
@@ -34,11 +35,6 @@ if TYPE_CHECKING:
     from inference.clients import LLMClient
 
 logger = logging.getLogger(__name__)
-
-
-def _default_build_upstream(assets: dict[str, Any]) -> dict[str, Any] | None:
-    """Sentinel default — replaced by __post_init__ in SubAgentDescriptor."""
-    return None
 
 
 # ---------------------------------------------------------------------------
@@ -86,9 +82,9 @@ class BaseMaterializer(ABC):
     @abstractmethod
     async def materialize(
         self,
-        project_id: str,
+        task_id: str,
         asset_dict: dict[str, Any],
-        assets: dict[str, Any],
+        input_bundle_v2: InputBundleV2,
     ) -> list[MediaAsset]:
         """Generate binary assets and return them for persistence.
 
@@ -97,12 +93,10 @@ class BaseMaterializer(ABC):
         fills it after saving.
 
         Args:
-            project_id: Current project identifier.
+            task_id: Current task identifier.
             asset_dict: The agent's output dict (``asset_id`` fields are
                 written in-place; ``uri`` fields are left for Assistant).
-            assets: Full in-memory asset cache (read-only context — e.g.
-                ``assets["storyboard"]`` for style info, or
-                ``assets["reference_images"]`` for user-provided images).
+            input_bundle_v2: Mutable deep copy of v2 generic input bundle.
 
         Returns:
             List of ``MediaAsset`` objects to be persisted by Assistant.
@@ -122,18 +116,13 @@ class SubAgentDescriptor:
     ``AGENT_REGISTRY`` to discover agents dynamically.
 
     Attributes:
-        agent_name:
+        agent_id:
             Unique agent identifier, e.g. ``"AudioAgent"``.  Used as the
-            lookup key in the registry and in ``RoutingStep.agent_name``.
+            lookup key in the registry and in ``RoutingStep.agent_id``.
         asset_key:
-            In-memory asset cache key, e.g. ``"audio"``.  The agent's
-            output dict is stored at ``assets[asset_key]``.
-        asset_type:
-            Versioning key for ``AssetManager``, e.g. ``"audio_package"``.
-        upstream_keys:
-            List of ``asset_key`` values this agent reads from upstream.
-            Used for dependency documentation and auto-generation of
-            ``build_upstream``.
+            Registry-facing artifact id, e.g. ``"story_blueprint"``. The
+            agent's JSON snapshot is tagged with this key in workspace
+            metadata.
         catalog_entry:
             Human-readable text describing this agent's purpose, inputs,
             outputs, and dependencies.  Fed to DirectorAgent's planning
@@ -145,15 +134,11 @@ class SubAgentDescriptor:
         evaluator_factory:
             ``() -> BaseEvaluator`` — creates an evaluator instance.
         build_input:
-            ``(project_id, draft_id, assets, config) -> BaseModel`` —
-            constructs the agent's typed input from the shared asset cache
-            and pipeline config.  Assistant always passes ``project_id`` /
-            ``draft_id`` (derived from ``task_id``); agents that do not need
-            them in prompts may name the parameters ``_project_id`` /
-            ``_draft_id`` and omit them from the returned Pydantic model.
-        build_upstream:
-            ``(assets) -> dict | None`` — extracts the upstream context
-            dict needed by the evaluator for cross-asset checks.
+            ``(task_id, input_bundle_v2, config) -> BaseModel`` —
+            constructs the agent's typed input from :class:`~agents.contracts.input_bundle_v2.InputBundleV2`.
+            Assistant always passes
+            the Task Stack ``task_id``; agents that do not need it may name the
+            parameter ``_task_id`` and omit it from the returned Pydantic model.
         service_factories:
             Mapping of ``service_key -> factory(ctx) -> service_instance``.
             ``ctx`` is a dict with at least ``{"llm_client": LLMClient}``.
@@ -170,10 +155,8 @@ class SubAgentDescriptor:
             the agent does not accept user text.
     """
 
-    agent_name: str
+    agent_id: str
     asset_key: str
-    asset_type: str
-    upstream_keys: list[str] = field(default_factory=list)
     catalog_entry: str = ""
 
     agent_factory: Callable[..., Any] = field(repr=False, default=lambda llm: None)
@@ -181,13 +164,8 @@ class SubAgentDescriptor:
 
     build_input: Callable[..., BaseModel] = field(
         repr=False,
-        default=lambda project_id, draft_id, assets, config: None,
+        default=lambda task_id, input_bundle_v2, config: None,
     )
-    build_upstream: Callable[..., dict[str, Any] | None] = field(
-        repr=False,
-        default=_default_build_upstream,
-    )
-
     service_factories: dict[str, Callable[..., Any]] = field(
         repr=False, default_factory=dict,
     )
@@ -195,24 +173,6 @@ class SubAgentDescriptor:
         repr=False, default=None,
     )
     user_text_key: str = ""
-
-    def __post_init__(self) -> None:
-        """Auto-generate ``build_upstream`` from ``upstream_keys`` if not
-        explicitly provided.
-
-        The auto-generated version returns
-        ``{key: assets.get(key, {}) for key in upstream_keys}``.
-        Agents that need a custom mapping (e.g. StoryAgent where
-        ``draft_idea`` is a string, not a dict) provide their own
-        ``build_upstream`` at construction time.
-        """
-        if self.build_upstream is _default_build_upstream and self.upstream_keys:
-            keys = list(self.upstream_keys)
-            object.__setattr__(
-                self,
-                "build_upstream",
-                lambda assets: {k: assets.get(k, {}) for k in keys},
-            )
 
     # ------------------------------------------------------------------
     # Fully-equipped agent factory

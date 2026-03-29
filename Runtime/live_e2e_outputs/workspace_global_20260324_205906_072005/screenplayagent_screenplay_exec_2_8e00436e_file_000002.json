@@ -1,0 +1,480 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-24T20:59:52.721765+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "The Midnight Watchmaker",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Elias's Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "In his dimly lit workshop, Elias, a renowned watchmaker, meticulously works on a challenging antique timepiece. The visible wall clock reveals time is slipping away, intensifying the pressure of his task.",
+        "estimated_duration": {
+          "seconds": 15.0,
+          "confidence": 0.7
+        },
+        "continuity": {
+          "props_present": [
+            "antique pocket watch",
+            "watchmaker's loupe",
+            "fine tweezers",
+            "workbench",
+            "desk lamp",
+            "large wall clock",
+            "various watch tools"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A practical, well-worn dark canvas apron over a simple, long-sleeved shirt and trousers. His glasses are perched on his nose.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Elias is working on a complex antique watch.",
+            "The wall clock shows time is nearing midnight."
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_001",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The soft, rhythmic TICK-TOCK of countless clocks fills ELIAS'S WORKSHOP. Dust motes dance in the single beam of a desk lamp, illuminating a worn wooden workbench.",
+            "continuity_refs": {
+              "props": [
+                "workbench",
+                "desk lamp"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_002",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "ELIAS (50s, focused), a solitary figure, hunches over an antique pocket watch. A watchmaker's loupe is screwed into his eye, magnifying the intricate world within.",
+            "continuity_refs": {
+              "props": [
+                "antique pocket watch",
+                "watchmaker's loupe"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_003",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "His skilled fingers, guided by years of practice, delicately manipulate a tiny gear with fine tweezers. Sweat beads on his brow.",
+            "continuity_refs": {
+              "props": [
+                "fine tweezers"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_004",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A quick glance at a large, ornate WALL CLOCK on the far wall. The hands point perilously close to midnight.",
+            "continuity_refs": {
+              "props": [
+                "large wall clock"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_005",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He tries to set a tiny balance wheel, but it doesn't quite catch. He removes the loupe, rubbing his tired eyes. He leans closer, realizing the problem runs deeper than surface level.",
+            "continuity_refs": {
+              "props": [
+                "watchmaker's loupe",
+                "antique pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "Elias discovers a deeper, unexpected issue with the watch's internal mechanism.",
+          "emotional_shift": "Initial focused determination shifts to heightened concern and intensified concentration."
+        }
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Elias's Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Elias grapples with a critical malfunction in the antique watch. The stubborn component resists his efforts, escalating his frustration as the wall clock ominously ticks closer to the deadline.",
+        "estimated_duration": {
+          "seconds": 15.0,
+          "confidence": 0.7
+        },
+        "continuity": {
+          "props_present": [
+            "disassembled antique watch parts",
+            "micro-tweezers",
+            "small screwdrivers",
+            "loupe",
+            "large wall clock"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A practical, well-worn dark canvas apron over a simple, long-sleeved shirt and trousers. His glasses are perched on his nose.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Elias encounters a significant mechanical challenge within the watch.",
+            "The deadline of midnight is visibly approaching."
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_006",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Elias meticulously disassembles more of the watch, revealing a tiny, recalcitrant escapement wheel. It's stuck fast.",
+            "continuity_refs": {
+              "props": [
+                "disassembled antique watch parts",
+                "small screwdrivers"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_007",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He tries various micro-tweezers, gently probing, then applying slightly more pressure. The wheel refuses to budge. A bead of sweat drips from his temple.",
+            "continuity_refs": {
+              "props": [
+                "micro-tweezers"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_008",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "CLOSE UP on the WALL CLOCK. The minute hand JERKS FORWARD, now only fifteen minutes to midnight.",
+            "continuity_refs": {
+              "props": [
+                "large wall clock"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_009",
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "Elias",
+            "text": "Damn it...",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_010",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Elias pulls back, frustration etched on his face. He closes his eyes, takes a deep, steadying breath, then re-opens them, newfound resolve in their depth. He won't be beaten.",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "After a moment of near defeat, Elias refocuses, determined to find a solution to the stubborn malfunction.",
+          "emotional_shift": "Frustration and doubt morph into resolute determination and renewed focus."
+        }
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_003",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Elias's Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "With a sudden, focused insight, Elias performs a delicate and precise adjustment to the watch's mechanism, bringing the antique timepiece back to life just in the nick of time.",
+        "estimated_duration": {
+          "seconds": 15.0,
+          "confidence": 0.7
+        },
+        "continuity": {
+          "props_present": [
+            "antique pocket watch (partially assembled)",
+            "fine oiler tool",
+            "watchmaker's loupe",
+            "precision tweezers",
+            "desk lamp"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A practical, well-worn dark canvas apron over a simple, long-sleeved shirt and trousers. His glasses are perched on his nose.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Elias identifies the specific solution to the watch's malfunction.",
+            "The watch's mechanism is successfully repaired and begins to move again."
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_011",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Elias stares intently at the tiny escapement wheel, his mind working through possibilities. A sudden, quiet 'Aha' crosses his face. He knows what to do.",
+            "continuity_refs": {
+              "props": [
+                "antique pocket watch (partially assembled)"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_012",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He selects a minuscule oiler tool, dips its tip into a drop of specialized lubricant, and with surgical precision, touches it to an almost invisible pivot point next to the stubborn wheel.",
+            "continuity_refs": {
+              "props": [
+                "fine oiler tool",
+                "lubricant drop"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_013",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "With a steady hand and a deep breath, he applies the barest whisper of pressure with precision tweezers.",
+            "continuity_refs": {
+              "props": [
+                "precision tweezers"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_014",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A tiny, almost imperceptible CLICK. The escapement wheel shudders, then BEGINS TO ROTATE smoothly. The watch's internal gears SPRING TO LIFE with a delicate, rhythmic whir.",
+            "continuity_refs": {
+              "props": [
+                "antique pocket watch (partially assembled)"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_015",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Elias lets out the breath he didn't realize he was holding, a small, almost imperceptible nod of satisfaction.",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "The watch's internal mechanisms spring to life with a satisfying whir, confirming the success of the delicate repair.",
+          "emotional_shift": "Intense tension and focus release into cautious relief and profound satisfaction."
+        }
+      },
+      {
+        "scene_id": "sc_004",
+        "order": 4,
+        "linked_story_step_id": "arc_004",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Elias's Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Elias carefully reassembles the now-working watch. As its steady tick joins the workshop's chorus, the wall clock strikes midnight, marking a quiet, personal victory for the dedicated watchmaker.",
+        "estimated_duration": {
+          "seconds": 15.0,
+          "confidence": 0.7
+        },
+        "continuity": {
+          "props_present": [
+            "repaired antique pocket watch",
+            "watch case closer",
+            "large wall clock",
+            "workbench"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A practical, well-worn dark canvas apron over a simple, long-sleeved shirt and trousers. His glasses are perched on his nose.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "The antique watch is fully functional and reassembled.",
+            "The wall clock strikes midnight at the moment of completion."
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_016",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "With the mechanism working perfectly, Elias meticulously reassembles the watch's casing, snapping the backplate into place with a practiced motion.",
+            "continuity_refs": {
+              "props": [
+                "repaired antique pocket watch",
+                "watch case closer"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_017",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He holds the now-complete antique pocket watch to his ear. A strong, clear TICK-TOCK resonates, distinct from the background hum of other clocks.",
+            "continuity_refs": {
+              "props": [
+                "repaired antique pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_018",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He looks up at the large WALL CLOCK. The minute hand aligns perfectly with the twelve.",
+            "continuity_refs": {
+              "props": [
+                "large wall clock"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_019",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A deep, resonant CHIME rings out from the wall clock – MIDNIGHT.",
+            "continuity_refs": {
+              "props": [
+                "large wall clock"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_020",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Elias gently places the working watch on a velvet cloth on his workbench. He allows himself a small, content smile, a quiet victory earned by skill and dedication.",
+            "continuity_refs": {
+              "props": [
+                "repaired antique pocket watch",
+                "workbench"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "The wall clock's chimes indicate midnight, perfectly timed with the restored watch's first strong tick, and Elias allows himself a small, content smile.",
+          "emotional_shift": "Intense focus gives way to calm satisfaction and quiet triumph."
+        }
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 60.0,
+    "estimated_total_duration_sec": 60.0,
+    "sum_scene_duration_sec": 60.0,
+    "scene_count": 4,
+    "dialogue_block_count": 0,
+    "action_block_count": 20
+  }
+}

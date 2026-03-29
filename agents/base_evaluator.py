@@ -32,6 +32,7 @@ from typing import Any, Generic, TypeVar
 from pydantic import BaseModel
 
 from inference.clients import LLMClient
+from .contracts.input_bundle_v2 import InputBundleV2
 
 logger = logging.getLogger(__name__)
 
@@ -77,8 +78,8 @@ class BaseEvaluator(Generic[OutputT]):
     Assistant before materialization.  ``evaluate_asset()`` is called
     separately after materialization completes.
 
-    Assistant looks up the correct evaluator via
-    ``AGENT_NAME_TO_EVALUATOR`` (defined in ``src.sub_agent.__init__``).
+    The equipped pipeline agent holds its evaluator from the descriptor’s
+    ``evaluator_factory`` (see ``SubAgentDescriptor`` / ``build_equipped_agent``).
     """
 
     CREATIVE_PASS_THRESHOLD: float = 0.0
@@ -99,7 +100,7 @@ class BaseEvaluator(Generic[OutputT]):
     def check_structure(
         self,
         output: OutputT,
-        upstream: dict[str, Any] | None = None,
+        input_bundle_v2: InputBundleV2 | None = None,
     ) -> list[str]:
         """Rule-based structural checks.  Override per evaluator.
 
@@ -108,7 +109,7 @@ class BaseEvaluator(Generic[OutputT]):
 
         Args:
             output: The parsed agent output (Pydantic model).
-            upstream: Optional dict of upstream asset dicts for cross-check.
+            input_bundle_v2: Optional shared input bundle for cross-check.
 
         Returns:
             List of error strings.  Empty list means all checks passed.
@@ -135,9 +136,9 @@ class BaseEvaluator(Generic[OutputT]):
     def _build_creative_context(
         self,
         output: OutputT,
-        upstream: dict[str, Any] | None,
+        input_bundle_v2: InputBundleV2 | None,
     ) -> str:
-        """Return upstream context string for the creative evaluation prompt.
+        """Return shared-asset context string for the creative evaluation prompt.
 
         Override in evaluators that have creative dimensions.  The returned
         string is inserted into the user prompt above the creative content.
@@ -149,7 +150,7 @@ class BaseEvaluator(Generic[OutputT]):
     async def evaluate_creative(
         self,
         output: OutputT,
-        upstream: dict[str, Any] | None = None,
+        input_bundle_v2: InputBundleV2 | None = None,
     ) -> dict[str, Any]:
         """LLM-based creative quality evaluation (template method).
 
@@ -189,7 +190,7 @@ class BaseEvaluator(Generic[OutputT]):
         )
 
         # --- Build user prompt ---
-        context = self._build_creative_context(output, upstream)
+        context = self._build_creative_context(output, input_bundle_v2)
         creative_content = self.extract_creative_fields(output.content)
         content_json = json.dumps(creative_content, ensure_ascii=False, indent=2)
         user = (
@@ -218,7 +219,7 @@ class BaseEvaluator(Generic[OutputT]):
     async def evaluate(
         self,
         output: OutputT,
-        upstream: dict[str, Any] | None = None,
+        input_bundle_v2: InputBundleV2 | None = None,
     ) -> dict[str, Any]:
         """Full evaluation: structural rules first, then LLM creative.
 
@@ -230,7 +231,7 @@ class BaseEvaluator(Generic[OutputT]):
             ``overall_pass``, and ``summary``.
         """
         # Layer 1: rule-based (fast, free, deterministic)
-        structural_errors = self.check_structure(output, upstream)
+        structural_errors = self.check_structure(output, input_bundle_v2)
         if structural_errors:
             logger.warning(
                 "[%s] Structural validation failed: %s",
@@ -249,7 +250,7 @@ class BaseEvaluator(Generic[OutputT]):
             }
 
         # Layer 2: LLM creative evaluation
-        creative_result = await self.evaluate_creative(output, upstream)
+        creative_result = await self.evaluate_creative(output, input_bundle_v2)
         creative_result["structural_errors"] = []
         return creative_result
 
@@ -260,7 +261,7 @@ class BaseEvaluator(Generic[OutputT]):
     async def evaluate_asset(
         self,
         asset_data: dict[str, Any],
-        upstream: dict[str, Any] | None = None,
+        input_bundle_v2: InputBundleV2 | None = None,
     ) -> dict[str, Any]:
         """Evaluate materialized binary assets.  Override for media agents.
 
@@ -270,7 +271,7 @@ class BaseEvaluator(Generic[OutputT]):
 
         Args:
             asset_data: The complete asset dict with materialized URIs.
-            upstream: Optional upstream asset dicts for context.
+            input_bundle_v2: Optional shared input bundle for context.
 
         Returns:
             Evaluation result dict with ``dimensions``, ``overall_pass``,

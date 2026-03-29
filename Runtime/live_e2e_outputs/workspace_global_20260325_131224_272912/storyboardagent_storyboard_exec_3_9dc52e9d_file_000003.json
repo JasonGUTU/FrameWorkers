@@ -1,0 +1,590 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-25T13:13:20.800256+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_001"
+        },
+        "estimated_duration": {
+          "seconds": 2.0,
+          "confidence": 0.8
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "Dimly lit, cozy, and somewhat cluttered watchmaker's workshop.",
+              "Warm, focused lighting from a desk lamp illuminating the workbench.",
+              "Predominantly wooden textures, brass, and glass.",
+              "A large, prominent grandfather clock, a central visual element."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Elias Thorne: an elderly man in his 70s, sharp, intense, and deeply focused eyes.",
+                "He possesses the meticulous skill of a seasoned watchmaker.",
+                "Under significant pressure and urgency."
+              ],
+              "wardrobe_notes": [
+                "A worn but clean linen shirt, sleeves carefully rolled to the elbows.",
+                "A practical, well-used leather apron.",
+                "Glasses perched on his nose, possibly slightly askew during intense moments."
+              ],
+              "must_keep": [
+                "Elias is elderly and wears glasses.",
+                "His attire reflects his profession and experience.",
+                "His intense focus and precision are central to his character."
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "broken pocket watch",
+              "must_keep": [
+                "Its intricate gears must be exposed.",
+                "It is the central object of Elias's work."
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "jeweler's loupe",
+              "must_keep": [
+                "Must be pressed to Elias's eye for magnified viewing."
+              ]
+            },
+            {
+              "prop_id": "prop_003",
+              "prop_name": "tweezers",
+              "must_keep": [
+                "Delicate and precise, used by Elias to manipulate small components."
+              ]
+            },
+            {
+              "prop_id": "prop_004",
+              "prop_name": "tiny gear",
+              "must_keep": [
+                "Small, stubborn, and resisting placement, causing frustration for Elias."
+              ]
+            },
+            {
+              "prop_id": "prop_005",
+              "prop_name": "desk lamp",
+              "must_keep": [
+                "Provides dim, focused light on Elias's workbench, creating high contrast."
+              ]
+            },
+            {
+              "prop_id": "prop_006",
+              "prop_name": "grandfather clock",
+              "must_keep": [
+                "Prominently visible in the background, clearly displaying 'ELEVEN FIFTY-EIGHT'.",
+                "Its rhythmic ticking adds to the scene's tension."
+              ]
+            },
+            {
+              "prop_id": "prop_007",
+              "prop_name": "workbench",
+              "must_keep": [
+                "Cluttered with tools and watch components, serving as Elias's primary workspace."
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "High contrast lighting, with a focus on details illuminated by the desk lamp.",
+              "Intimate and tense atmosphere, emphasizing the pressure Elias is under.",
+              "Classic, traditional aesthetic befitting an old watchmaker's workshop."
+            ],
+            "must_avoid": [
+              "Modern, sleek aesthetics or overly bright, flat lighting.",
+              "Fast-paced editing in the initial shots to build tension."
+            ]
+          }
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "linked_blocks": [
+              "b_001",
+              "b_002"
+            ],
+            "estimated_duration_sec": 0.7,
+            "shot_type": "medium_wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Frame Elias hunched over his workbench, with the prominent grandfather clock visible in the background. Emphasize the dim, focused light on his workspace."
+            },
+            "visual_goal": "Establish the quiet, tense atmosphere of the workshop and Elias's deep concentration, while highlighting the looming presence of the clock.",
+            "action_focus": "Elias's posture of intense focus at the workbench, the workshop's quiet ambiance, and the rhythmic ticking of the grandfather clock.",
+            "characters_in_frame": [
+              "Elias Thorne"
+            ],
+            "props_in_frame": [
+              "prop_007",
+              "prop_006",
+              "prop_005",
+              "tools"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Elias hunched over workbench, light on his hands and face.",
+                "Grandfather clock subtly prominent in the background."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "linked_blocks": [
+              "b_002",
+              "b_003"
+            ],
+            "estimated_duration_sec": 0.6,
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Elias's face, dominated by the jeweler's loupe, revealing his intense, furrowed brow. Transition to a tight shot on his aged, yet steady, hands manipulating the tiny gear with tweezers."
+            },
+            "visual_goal": "Emphasize Elias's meticulous skill, intense concentration, and the intricate, delicate nature of his task.",
+            "action_focus": "Elias's focused expression through the loupe, and the precise, careful movements of his hands with the tweezers on the tiny gear.",
+            "characters_in_frame": [
+              "Elias Thorne"
+            ],
+            "props_in_frame": [
+              "prop_002",
+              "prop_003",
+              "prop_001",
+              "prop_004",
+              "prop_007"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Elias's eye framed by the jeweler's loupe, intense focus.",
+                "Close-up of tweezers attempting to place the tiny gear in the pocket watch."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "linked_blocks": [
+              "b_004"
+            ],
+            "estimated_duration_sec": 0.3,
+            "shot_type": "extreme_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Tight shot on the grandfather clock's face, clearly displaying the time: 'ELEVEN FIFTY-EIGHT'."
+            },
+            "visual_goal": "Highlight the extreme time pressure and urgency Elias is feeling.",
+            "action_focus": "The static hands of the grandfather clock, marking the critical time.",
+            "characters_in_frame": [],
+            "props_in_frame": [
+              "prop_006"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": [
+                "Grandfather clock face clearly showing '11:58'."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "linked_blocks": [
+              "b_005"
+            ],
+            "estimated_duration_sec": 0.4,
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "subtle_push_in",
+              "framing_notes": "Focus on Elias's hands and the tweezers, showing a faint tremor as he carefully repositions them over the watch. His breath exhaling visible if possible."
+            },
+            "visual_goal": "Illustrate Elias's anxiety and the physical manifestation of the pressure, contrasting with his usual precision.",
+            "action_focus": "Elias's trembling hands and the delicate, yet strained, repositioning of the tweezers.",
+            "characters_in_frame": [
+              "Elias Thorne"
+            ],
+            "props_in_frame": [
+              "prop_003",
+              "prop_004",
+              "prop_001",
+              "prop_007"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": [
+                "Elias's hands with a faint tremor, carefully repositioning tweezers over the watch."
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_002"
+        },
+        "estimated_duration": {
+          "seconds": 2.0,
+          "confidence": 0.8
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "The same watchmaker's workshop, but the atmosphere now carries an air of intense anticipation.",
+              "The focused lighting remains, creating dramatic contrast."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Elias Thorne: maintains absolute concentration, holding his breath.",
+                "His expression shifts from intense focus to a moment of widening eyes and realization.",
+                "Still the skilled and precise watchmaker, but now on the verge of success."
+              ],
+              "wardrobe_notes": [
+                "A worn but clean linen shirt, sleeves rolled to the elbows.",
+                "A practical leather apron covering his chest and waist.",
+                "His glasses perch on his nose."
+              ],
+              "must_keep": [
+                "Elias is elderly and wears glasses.",
+                "His attire remains consistent.",
+                "His absolute concentration and eventual relief are key."
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_008",
+              "prop_name": "pocket watch",
+              "must_keep": [
+                "Its mechanism must spring to life, with hands beginning to move.",
+                "The minute hand must align perfectly with the 'TWELVE'."
+              ]
+            },
+            {
+              "prop_id": "prop_006",
+              "prop_name": "grandfather clock",
+              "must_keep": [
+                "Begins its deep, resonant midnight chime simultaneously with the watch's repair.",
+                "Its chimes synchronize with the watch's movement."
+              ]
+            },
+            {
+              "prop_id": "prop_003",
+              "prop_name": "tweezers",
+              "must_keep": [
+                "Used for the final, infinitesimal adjustment of the tiny gear."
+              ]
+            },
+            {
+              "prop_id": "prop_004",
+              "prop_name": "tiny gear",
+              "must_keep": [
+                "Must make a soft, satisfying 'CLICK' as it falls into place."
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.",
+              "Strong emphasis on sound design for the 'CLICK' and the clock's chimes.",
+              "Building triumph and relief, contrasted with previous tension."
+            ],
+            "must_avoid": [
+              "Any lack of synchronization between the watch's repair and the clock's chime.",
+              "Distracting background elements during the climax."
+            ]
+          }
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "order": 1,
+            "linked_blocks": [
+              "b_006",
+              "b_007"
+            ],
+            "estimated_duration_sec": 0.8,
+            "shot_type": "extreme_close_up",
+            "camera": {
+              "angle": "macro_level",
+              "movement": "static",
+              "framing_notes": "Tight, detailed shot on the tiny gear within the pocket watch, and the tip of the tweezers. Focus on the infinitesimal nudge and the soft 'CLICK'."
+            },
+            "visual_goal": "Convey the peak of Elias's precision and the satisfying, crucial moment of the tiny gear locking into place.",
+            "action_focus": "The tweezers making the final adjustment, the subtle movement of the tiny gear, and its audible 'CLICK'.",
+            "characters_in_frame": [
+              "Elias Thorne"
+            ],
+            "props_in_frame": [
+              "prop_003",
+              "prop_004",
+              "prop_008"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Tweezers nudging the tiny gear.",
+                "The tiny gear visibly clicking into its final position."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 2,
+            "linked_blocks": [
+              "b_008",
+              "b_009"
+            ],
+            "estimated_duration_sec": 0.7,
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "rack_focus",
+              "framing_notes": "A shot showing both the grandfather clock (chiming) and the pocket watch (mechanism whirring) with a quick rack focus between them, or a split diopter shot, emphasizing their perfect synchronization. Focus initially on the clock, then the watch."
+            },
+            "visual_goal": "Visually link the grandfather clock's resonant chime with the pocket watch's sudden activation, highlighting the precise timing of midnight.",
+            "action_focus": "The grandfather clock beginning to chime, followed immediately by the pocket watch's mechanism whirring to life and its hands sweeping to 'TWELVE'.",
+            "characters_in_frame": [],
+            "props_in_frame": [
+              "prop_006",
+              "prop_008"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Grandfather clock bell striking, blurred watch in foreground.",
+                "Pocket watch hands sweeping to 12, blurred clock in background."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 3,
+            "linked_blocks": [
+              "b_009",
+              "b_010"
+            ],
+            "estimated_duration_sec": 0.5,
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Elias's face, specifically his eyes, as they widen slightly in a moment of pure realization and quiet success. The sound of the ticking watch is prominent."
+            },
+            "visual_goal": "Capture Elias's immediate, understated reaction to his triumph, revealing his internal relief.",
+            "action_focus": "Elias's subtle facial expression change, from intense concentration to understated success.",
+            "characters_in_frame": [
+              "Elias Thorne"
+            ],
+            "props_in_frame": [
+              "prop_008"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": [
+                "Elias's eyes widening slightly, a glimmer of success in his expression."
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_003"
+        },
+        "estimated_duration": {
+          "seconds": 1.0,
+          "confidence": 0.8
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "The watchmaker's workshop, now imbued with a sense of calm, accomplishment, and lingering echoes of the chimes.",
+              "The dim, focused lighting now accentuates the serene mood."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Elias Thorne: a profound sense of relief and quiet triumph settles over him.",
+                "His expression transitions from tension to deep, subtle satisfaction.",
+                "He savors the moment of successful completion."
+              ],
+              "wardrobe_notes": [
+                "A worn but clean linen shirt, sleeves rolled to the elbows.",
+                "A practical leather apron covering his chest and waist.",
+                "His glasses perch on his nose."
+              ],
+              "must_keep": [
+                "Elias is elderly and wears glasses.",
+                "His attire remains consistent.",
+                "His profound, quiet satisfaction is the emotional core of the scene."
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_008",
+              "prop_name": "pocket watch",
+              "must_keep": [
+                "Now fully functional, its steady tick-tock is a symbol of success.",
+                "Elias carefully closes it, signifying the completion of his task."
+              ]
+            },
+            {
+              "prop_id": "prop_006",
+              "prop_name": "grandfather clock",
+              "must_keep": [
+                "Finishes its final, lingering chime of midnight, signifying the end of the critical period."
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "A peaceful, reflective resolution to the tension.",
+              "Focus on subtle emotional cues and the lingering sounds of the clock.",
+              "Warm, soft lighting to convey a sense of calm and accomplishment."
+            ],
+            "must_avoid": [
+              "An abrupt or overly dramatic ending.",
+              "Anything that detracts from Elias's personal moment of triumph."
+            ]
+          }
+        },
+        "shots": [
+          {
+            "shot_id": "sh_008",
+            "order": 1,
+            "linked_blocks": [
+              "b_011",
+              "b_012"
+            ],
+            "estimated_duration_sec": 0.5,
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "pan",
+              "framing_notes": "Start on Elias gently holding the now-ticking pocket watch. Pan slowly from the watch up to Elias's face, then his gaze drifts to the grandfather clock as its final chime fades."
+            },
+            "visual_goal": "Show Elias's quiet appreciation for the repaired watch and connect it visually to the grandfather clock, marking the end of the challenging task.",
+            "action_focus": "Elias listening to the watch, then his eyes shifting towards the grandfather clock.",
+            "characters_in_frame": [
+              "Elias Thorne"
+            ],
+            "props_in_frame": [
+              "prop_008",
+              "prop_006"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Elias holding and listening to the ticking pocket watch.",
+                "Elias's gaze fixed on the chiming grandfather clock."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 2,
+            "linked_blocks": [
+              "b_013"
+            ],
+            "estimated_duration_sec": 0.3,
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Tight focus on Elias's face, capturing the slow, profound smile that spreads across it – not a wide grin, but a deep, quiet satisfaction."
+            },
+            "visual_goal": "Emphasize the deep, internal sense of accomplishment and peace Elias feels after completing his difficult work.",
+            "action_focus": "Elias's subtle, profound smile of contentment.",
+            "characters_in_frame": [
+              "Elias Thorne"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": [
+                "Elias's face showing a slow, profound smile of satisfaction."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 3,
+            "linked_blocks": [
+              "b_014"
+            ],
+            "estimated_duration_sec": 0.2,
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "static",
+              "framing_notes": "Shot focusing on Elias's hands as he carefully and deliberately closes the now-working pocket watch."
+            },
+            "visual_goal": "Provide a final, symbolic action of closure and the victorious completion of his struggle against time.",
+            "action_focus": "Elias's hands gently closing the pocket watch.",
+            "characters_in_frame": [
+              "Elias Thorne"
+            ],
+            "props_in_frame": [
+              "prop_008"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": [
+                "Elias's hands carefully closing the pocket watch."
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count_total": 10,
+    "avg_shots_per_scene": 3.3333333333333335,
+    "sum_shot_duration_sec": 5.0,
+    "duration_match_score": 0.0
+  }
+}

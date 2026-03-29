@@ -30,9 +30,12 @@ class ImageAsset(BaseModel):
 
 
 class Meta(BaseModel):
-    """Standard asset metadata header shared by all agent outputs."""
+    """Standard asset metadata header shared by all agent outputs.
 
-    project_id: str = ""
+    Orchestration uses Task Stack task_id elsewhere. Do not add project_id
+    to LLM JSON; it is not part of this schema.
+    """
+
     draft_id: str = ""
     asset_id: str = ""
     asset_type: str = ""

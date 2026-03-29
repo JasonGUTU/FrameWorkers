@@ -2,7 +2,7 @@
 
 `Workspace` is the facade; managers encapsulate their own storage concerns:
 - `FileManager`: file bytes + metadata persistence
-- `MemoryManager`: short-term structured memory (STM) persistence; LTM disabled
+- `MemoryManager`: per-task ``global_memory.md`` (structured entries + file tree)
 - `LogManager`: append-only operation logs
 - `AssetManager`: asset persistence, snapshot index, hydration
 """

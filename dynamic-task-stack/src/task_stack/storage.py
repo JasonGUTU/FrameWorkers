@@ -327,10 +327,6 @@ class TaskStackService:
             
             return True
     
-    def _is_task_executed(self, layer_index: int, task_index: int) -> bool:
-        """Check if a task at given position has been executed"""
-        return self._batch_mutator.is_task_executed(layer_index, task_index)
-    
     def remove_task_from_layer(
         self,
         layer_index: int,
@@ -353,7 +349,7 @@ class TaskStackService:
                 return False
             
             # Check if task has been executed
-            if self._is_task_executed(layer_index, task_index):
+            if self._batch_mutator.is_task_executed(layer_index, task_index):
                 return False  # Cannot remove executed task
             
             # Remove task
@@ -399,7 +395,7 @@ class TaskStackService:
                 return False
             
             # Check if task has been executed
-            if self._is_task_executed(layer_index, old_task_index):
+            if self._batch_mutator.is_task_executed(layer_index, old_task_index):
                 return False  # Cannot replace executed task
             
             # Check if new task already exists in this layer

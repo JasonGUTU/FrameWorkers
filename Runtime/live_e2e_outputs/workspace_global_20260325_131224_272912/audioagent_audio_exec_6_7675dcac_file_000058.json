@@ -1,0 +1,163 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_duration_sec": 2.0,
+        "narration_segments": [],
+        "music_cue": {
+          "cue_id": "music_sc_001",
+          "scene_id": "sc_001",
+          "mood": "tense, intricate, urgent, determined, building hope",
+          "start_sec": 0.0,
+          "end_sec": 2.0,
+          "audio_asset": {
+            "asset_id": "aud_music_sc_001",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/aud_music_sc_001_file_000047.wav",
+            "format": "wav",
+            "duration_sec": 2.0,
+            "sample_rate": 44100
+          }
+        },
+        "ambience_bed": {
+          "ambience_id": "amb_sc_001",
+          "scene_id": "sc_001",
+          "description": "Faint ticking, delicate tool sounds, distant grandfather clock ticks, Elias's strained breaths, subtle metallic clicks.",
+          "start_sec": 0.0,
+          "end_sec": 2.0,
+          "audio_asset": {
+            "asset_id": "aud_amb_sc_001",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/aud_amb_sc_001_file_000048.wav",
+            "format": "wav",
+            "duration_sec": 2.0,
+            "sample_rate": 44100
+          }
+        },
+        "mix": {
+          "mix_id": "mix_sc_001",
+          "scene_id": "sc_001",
+          "duration_sec": 2.0,
+          "audio_asset": {
+            "asset_id": "aud_mix_sc_001",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/aud_mix_sc_001_file_000049.wav",
+            "format": "wav",
+            "duration_sec": 2.0,
+            "sample_rate": 44100
+          }
+        }
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_duration_sec": 2.0,
+        "narration_segments": [],
+        "music_cue": {
+          "cue_id": "music_sc_002",
+          "scene_id": "sc_002",
+          "mood": "tense, climactic, triumphant, intricate, precise, resolving",
+          "start_sec": 0.0,
+          "end_sec": 2.0,
+          "audio_asset": {
+            "asset_id": "aud_music_sc_002",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/aud_music_sc_002_file_000050.wav",
+            "format": "wav",
+            "duration_sec": 2.0,
+            "sample_rate": 44100
+          }
+        },
+        "ambience_bed": {
+          "ambience_id": "amb_sc_002",
+          "scene_id": "sc_002",
+          "description": "Resonant grandfather clock chimes, distinct clicking of tiny gears, powerful new pocket watch ticking, soft mechanical whirring.",
+          "start_sec": 0.0,
+          "end_sec": 2.0,
+          "audio_asset": {
+            "asset_id": "aud_amb_sc_002",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/aud_amb_sc_002_file_000051.wav",
+            "format": "wav",
+            "duration_sec": 2.0,
+            "sample_rate": 44100
+          }
+        },
+        "mix": {
+          "mix_id": "mix_sc_002",
+          "scene_id": "sc_002",
+          "duration_sec": 2.0,
+          "audio_asset": {
+            "asset_id": "aud_mix_sc_002",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/aud_mix_sc_002_file_000052.wav",
+            "format": "wav",
+            "duration_sec": 2.0,
+            "sample_rate": 44100
+          }
+        }
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "scene_duration_sec": 1.0,
+        "narration_segments": [],
+        "music_cue": {
+          "cue_id": "music_sc_003",
+          "scene_id": "sc_003",
+          "mood": "serene, resolved, peaceful, proud, reflective, quiet triumph",
+          "start_sec": 0.0,
+          "end_sec": 1.0,
+          "audio_asset": {
+            "asset_id": "aud_music_sc_003",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/aud_music_sc_003_file_000053.wav",
+            "format": "wav",
+            "duration_sec": 1.0,
+            "sample_rate": 44100
+          }
+        },
+        "ambience_bed": {
+          "ambience_id": "amb_sc_003",
+          "scene_id": "sc_003",
+          "description": "Fading grandfather clock chimes, steady pocket watch ticking, gentle workshop hum, Elias's soft sighs of relief.",
+          "start_sec": 0.0,
+          "end_sec": 1.0,
+          "audio_asset": {
+            "asset_id": "aud_amb_sc_003",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/aud_amb_sc_003_file_000054.wav",
+            "format": "wav",
+            "duration_sec": 1.0,
+            "sample_rate": 44100
+          }
+        },
+        "mix": {
+          "mix_id": "mix_sc_003",
+          "scene_id": "sc_003",
+          "duration_sec": 1.0,
+          "audio_asset": {
+            "asset_id": "aud_mix_sc_003",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/aud_mix_sc_003_file_000055.wav",
+            "format": "wav",
+            "duration_sec": 1.0,
+            "sample_rate": 44100
+          }
+        }
+      }
+    ],
+    "final_audio_asset": {
+      "asset_id": "aud_final",
+      "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/aud_final_file_000056.wav",
+      "format": "wav",
+      "duration_sec": 5.0,
+      "sample_rate": 44100
+    },
+    "final_delivery_asset": {
+      "asset_id": "delivery_final",
+      "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/delivery_final_file_000057.mp4",
+      "format": "mp4",
+      "duration_sec": 5.0
+    }
+  },
+  "metrics": {
+    "scene_count": 3,
+    "narration_segment_count": 0,
+    "total_narration_duration_sec": 0,
+    "total_music_duration_sec": 5.0
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-25T13:12:41.001125+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A meticulous watchmaker races against the ticking clock to repair a crucial timepiece before midnight strikes.",
+    "estimated_duration": {
+      "seconds": 5.0,
+      "confidence": 0.9
+    },
+    "style": {
+      "genre": [
+        "Drama",
+        "Slice of Life"
+      ],
+      "tone_keywords": [
+        "Tense",
+        "Meticulous",
+        "Urgent",
+        "Satisfying"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Elias Thorne",
+        "role": "protagonist",
+        "profile": "An elderly, highly skilled watchmaker with decades of experience, dedicated to his craft and the precision of time.",
+        "motivation": "A deep-seated commitment to his intricate work and the satisfaction of restoring a broken mechanism to perfect function.",
+        "flaw": "Can become overly consumed by his work, losing track of time itself when engrossed in a delicate repair."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Elias's Workshop",
+        "description": "A small, cluttered workshop filled with antique tools, magnifying glasses, gears, and the quiet ticking of countless timepieces. Dimly lit by a single desk lamp, casting focused light on Elias's workspace. A prominent grandfather clock stands in the background."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "crisis",
+        "summary": "Elias intensely focuses on a broken pocket watch, hands trembling slightly with the delicacy required, as a nearby clock shows minutes remaining before midnight.",
+        "conflict": "The critical repair must be completed under immense time pressure, a tiny component resisting his efforts.",
+        "turning_point": "The realization that there is only one last, precise movement to make before the deadline."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "climax",
+        "summary": "With a final, expert adjustment, a tiny gear clicks into place. The watch mechanism whirs, and its hands begin to move just as the grandfather clock in the background begins to chime midnight.",
+        "conflict": "The high-stakes moment of success or failure, resolved by Elias's skill against the unforgiving deadline.",
+        "turning_point": "The watch springs to life, perfectly synchronized with the stroke of midnight."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "resolution",
+        "summary": "Elias looks from the newly ticking pocket watch to the chiming grandfather clock, a subtle but profound expression of relief and quiet triumph on his face.",
+        "conflict": "",
+        "turning_point": "The successful completion of his urgent task, restoring order to time."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To make the final, critical repair on the broken watch.",
+        "conflict": "The race against the clock to fix the intricate mechanism.",
+        "turn": "Elias makes the final adjustment, and the watch begins to tick."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Witness the watch's successful operation simultaneous with the midnight chime.",
+        "conflict": "The lingering tension of whether the repair is truly successful.",
+        "turn": "The watch's hands move in sync with the first chime of midnight, confirming success."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Show Elias's quiet satisfaction.",
+        "conflict": "",
+        "turn": "Elias's expression changes from intense focus to subtle triumph."
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 5.0,
+    "character_count": 1,
+    "location_count": 1,
+    "scene_count": 3
+  }
+}

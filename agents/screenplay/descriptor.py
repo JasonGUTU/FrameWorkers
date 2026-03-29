@@ -7,6 +7,7 @@ from typing import Any
 from pydantic import BaseModel
 
 from ..descriptor import SubAgentDescriptor
+from ..contracts import InputBundleV2
 from .agent import ScreenplayAgent
 from .schema import (
     ScreenplayAgentInput,
@@ -14,22 +15,29 @@ from .schema import (
 )
 from .evaluator import ScreenplayEvaluator
 
+OUTPUT_ASSET_KEY = "screenplay"
+USER_TEXT_KEY = "user_screenplay"
+
 
 def build_input(
-    _project_id: str,
-    _draft_id: str,
-    assets: dict[str, Any],
+    _task_id: str,
+    input_bundle_v2: InputBundleV2,
     config: Any,
 ) -> BaseModel:
-    story_dict = assets.get("story_blueprint", {})
-    content = story_dict.get("content", {})
+    resolved = (
+        input_bundle_v2.context.get("resolved_inputs", {})
+        if isinstance(getattr(input_bundle_v2, "context", None), dict)
+        else {}
+    )
+    story_dict = resolved.get("story_blueprint", {}) if isinstance(resolved, dict) else {}
+    content = story_dict.get("content", {}) if isinstance(story_dict, dict) else {}
     return ScreenplayAgentInput(
         story_blueprint=content,
         constraints=ScreenplayConstraints(
             target_duration_sec=config.target_total_duration_sec,
             language=config.language,
         ),
-        user_provided_text=assets.get("user_screenplay", ""),
+        user_provided_text=(resolved.get(USER_TEXT_KEY, "") if isinstance(resolved, dict) else ""),
     )
 
 
@@ -41,14 +49,12 @@ CATALOG_ENTRY = (
 )
 
 DESCRIPTOR = SubAgentDescriptor(
-    agent_name="ScreenplayAgent",
-    asset_key="screenplay",
-    asset_type="screenplay",
-    upstream_keys=["story_blueprint"],
+    agent_id="ScreenplayAgent",
+    asset_key=OUTPUT_ASSET_KEY,
     catalog_entry=CATALOG_ENTRY,
     agent_factory=lambda llm: ScreenplayAgent(llm_client=llm),
     evaluator_factory=ScreenplayEvaluator,
     build_input=build_input,
     materializer_factory=None,
-    user_text_key="user_screenplay",
+    user_text_key=USER_TEXT_KEY,
 )

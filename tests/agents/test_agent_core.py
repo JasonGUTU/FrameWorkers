@@ -32,19 +32,15 @@ from agents.agent_registry import AgentRegistry
 
 class _DummyDescriptor:
     def __init__(self, name: str, asset_key: str = "asset", catalog_entry: str = "desc"):
-        self.agent_name = name
+        self.agent_id = name
         self.asset_key = asset_key
-        self.asset_type = "dummy_asset_type"
         self.catalog_entry = catalog_entry
 
     def build_equipped_agent(self, llm_client):
-        return {"agent_name": self.agent_name, "llm_client": llm_client}
+        return {"agent_id": self.agent_id, "llm_client": llm_client}
 
-    def build_input(self, project_id, draft_id, assets, config):
-        return {"project_id": project_id, "draft_id": draft_id}
-
-    def build_upstream(self, assets):
-        return assets
+    def build_input(self, task_id, input_bundle_v2, config):
+        return {"task_id": task_id}
 
 
 class TestAgentRegistryDescriptorModel:
@@ -76,7 +72,7 @@ class TestAgentRegistryDescriptorModel:
         assert "pipeline_agent" in gathered["all_capabilities"]
         assert "story_blueprint" in gathered["all_capabilities"]
         assert gathered["agents"][0]["asset_key"] == "story_blueprint"
-        assert gathered["agents"][0]["asset_type"] == "dummy_asset_type"
+        assert "asset_type" not in gathered["agents"][0]
 
     def test_reload_clears_descriptors(self):
         registry = AgentRegistry()
@@ -142,10 +138,9 @@ class TestSubAgentDescriptor:
         from agents.descriptor import SubAgentDescriptor
 
         desc = SubAgentDescriptor(
-            agent_name="TestAgent",
+            agent_id="TestAgent",
             asset_key="test",
-            asset_type="test_output",
         )
-        assert desc.agent_name == "TestAgent"
+        assert desc.agent_id == "TestAgent"
         assert desc.asset_key == "test"
         assert desc.materializer_factory is None

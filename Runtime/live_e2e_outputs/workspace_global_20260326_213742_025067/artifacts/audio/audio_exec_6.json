@@ -1,0 +1,71 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_duration_sec": 5.0,
+        "narration_segments": [],
+        "music_cue": {
+          "cue_id": "music_sc_001",
+          "scene_id": "sc_001",
+          "mood": "Whimsical, anticipatory, gentle, subtly melancholic, wistful",
+          "start_sec": 0.0,
+          "end_sec": 5.0,
+          "audio_asset": {
+            "asset_id": "aud_music_sc_001",
+            "uri": "/tmp/fw_media_778f5o69/aud_music_sc_001.wav",
+            "format": "wav",
+            "duration_sec": 5.0,
+            "sample_rate": 44100
+          }
+        },
+        "ambience_bed": {
+          "ambience_id": "amb_sc_001",
+          "scene_id": "sc_001",
+          "description": "Soft rustling of autumn leaves, gentle breeze, distant park chatter, sudden strong gust of wind",
+          "start_sec": 0.0,
+          "end_sec": 5.0,
+          "audio_asset": {
+            "asset_id": "aud_amb_sc_001",
+            "uri": "/tmp/fw_media_778f5o69/aud_amb_sc_001.wav",
+            "format": "wav",
+            "duration_sec": 5.0,
+            "sample_rate": 44100
+          }
+        },
+        "mix": {
+          "mix_id": "mix_sc_001",
+          "scene_id": "sc_001",
+          "duration_sec": 5.0,
+          "audio_asset": {
+            "asset_id": "aud_mix_sc_001",
+            "uri": "/tmp/fw_media_778f5o69/aud_mix_sc_001.wav",
+            "format": "wav",
+            "duration_sec": 5.0,
+            "sample_rate": 44100
+          }
+        }
+      }
+    ],
+    "final_audio_asset": {
+      "asset_id": "aud_final",
+      "uri": "/tmp/fw_media_778f5o69/aud_final.wav",
+      "format": "wav",
+      "duration_sec": 5.0,
+      "sample_rate": 44100
+    },
+    "final_delivery_asset": {
+      "asset_id": "delivery_final",
+      "uri": "placeholder",
+      "format": "mp4",
+      "duration_sec": 5.0
+    }
+  },
+  "metrics": {
+    "scene_count": 1,
+    "narration_segment_count": 0,
+    "total_narration_duration_sec": 0,
+    "total_music_duration_sec": 5.0
+  }
+}

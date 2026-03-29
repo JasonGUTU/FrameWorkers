@@ -3,20 +3,34 @@
 import logging
 import time
 import json
-import asyncio
 from typing import Dict, Any, Optional, List
-from datetime import datetime
 
 from .api_client import BackendAPIClient
-from .reasoning import ReasoningEngine
-from inference.clients import LLMClient
+from .reasoning import LlmSubAgentPlanner, ReasoningEngine
 from .config import (
     POLLING_INTERVAL,
     DIRECTOR_AGENT_NAME,
-    DIRECTOR_MEMORY_MODEL,
 )
 
 logger = logging.getLogger(__name__)
+
+
+def _task_stack_description_to_assistant_text(raw: Any) -> str:
+    """Task Stack 里 ``description`` 当前多为 **dict**；Assistant 的 ``execute_fields.text`` 仅为 **str**。
+
+    仅在此处做一层对齐（不在 Assistant 里做结构化解析）。若已是字符串则原样；
+    若为 dict 则优先使用常见的 ``goal`` 字符串；否则退回 JSON 文本以便不丢信息。
+    """
+    if raw is None or raw == "":
+        return ""
+    if isinstance(raw, str):
+        return raw.strip()
+    if isinstance(raw, dict):
+        g = raw.get("goal")
+        if isinstance(g, str) and g.strip():
+            return g.strip()
+        return json.dumps(raw, ensure_ascii=False)
+    return str(raw).strip()
 
 
 class DirectorAgent:
@@ -32,19 +46,22 @@ class DirectorAgent:
     6. Updates task stack based on results
     """
     
-    def __init__(self, api_client: Optional[BackendAPIClient] = None):
+    def __init__(
+        self,
+        api_client: Optional[BackendAPIClient] = None,
+        sub_agent_planner: Optional[LlmSubAgentPlanner] = None,
+    ):
         """
         Initialize Director Agent
         
         Args:
             api_client: Backend API client instance (creates new if None)
+            sub_agent_planner: LLM router for ``agent_id`` (tests may inject a mock)
         """
         self.api_client = api_client or BackendAPIClient()
         self.reasoning_engine = ReasoningEngine()
-        self.llm_client = LLMClient()
-        self.memory_llm_model = str(DIRECTOR_MEMORY_MODEL or "").strip() or None
+        self._sub_agent_planner = sub_agent_planner or LlmSubAgentPlanner()
         self.running = False
-        self.last_message_check_time: Optional[datetime] = None
         
         logger.info(f"{DIRECTOR_AGENT_NAME} initialized")
     
@@ -105,21 +122,19 @@ class DirectorAgent:
         
         # Step 3: Get current task stack status
         task_stack = self._get_task_stack()
-        _ = self._get_execution_pointer()
 
         latest_message = new_messages[-1] if new_messages else None
         target_task_id = self._extract_target_task_id(latest_message) if latest_message else None
         task_summary = self._get_latest_task_execution_summary(target_task_id) if target_task_id else None
         memory_brief = self._get_memory_brief_for_task(target_task_id)
-        short_term_memory = memory_brief.get("short_term", []) if isinstance(memory_brief, dict) else []
+        global_memory = memory_brief.get("global_memory", []) if isinstance(memory_brief, dict) else []
 
         # Step 4: Perform reasoning and planning
         planning_result = self.reasoning_engine.reason_and_plan(
             user_message=latest_message,
             task_stack=task_stack,
-            current_task=None,  # Will be updated when we get next task
             task_summary=task_summary,
-            short_term_memory=short_term_memory,
+            global_memory=global_memory,
         )
         
         # Step 5: Update task stack based on planning
@@ -282,10 +297,10 @@ class DirectorAgent:
                 
                 # Create or get layer 0
                 try:
-                    layer = self.api_client.get_layer(0)
+                    self.api_client.get_layer(0)
                 except:
                     # Layer doesn't exist, create it
-                    layer = self.api_client.create_layer(layer_index=0)
+                    self.api_client.create_layer(layer_index=0)
                 
                 # Add task to layer
                 self.api_client.add_task_to_layer(0, task_id)
@@ -307,20 +322,17 @@ class DirectorAgent:
         Expected planning_result payload:
         {
             "target_task_id": "task_xxx",
-            "preferred_agent_id": "VideoAgent",
             "message_content": "..."
         }
+        Sub-agent id is chosen by ``LlmSubAgentPlanner`` (catalog + global_memory brief).
         """
         task_id = planning_result.get("target_task_id")
-        preferred_agent_id = planning_result.get("preferred_agent_id")
         message_content = str(planning_result.get("message_content", "") or "")
 
         if not task_id:
             logger.warning("execute_task action missing target_task_id")
             return
         task = self.api_client.get_task(task_id)
-        if preferred_agent_id and isinstance(task.get("description"), dict):
-            task["description"]["preferred_agent_id"] = preferred_agent_id
 
         next_task_info = {
             "task_id": task_id,
@@ -329,6 +341,7 @@ class DirectorAgent:
         execution_result = self._delegate_to_assistant(
             next_task_info,
             message_content=message_content,
+            routing_mode="followup",
         )
         if execution_result:
             self._handle_execution_summary(
@@ -340,79 +353,43 @@ class DirectorAgent:
     def _build_assistant_inputs_for_execution(
         self,
         *,
-        task_id: str,
-        agent_id: str,
-        message_content: str = "",
+        task: Dict[str, Any],
     ) -> Optional[Dict[str, Any]]:
-        memory_brief = self._get_memory_brief_for_task(task_id, agent_id=agent_id)
-        short_term_memory = memory_brief.get("short_term", []) if isinstance(memory_brief, dict) else []
-        overwrite_assets = self._should_overwrite_assets(task_id=task_id, agent_id=agent_id)
-        additional_inputs: Dict[str, Any] = {}
-        if overwrite_assets:
-            additional_inputs["_assistant_control"] = {"overwrite_assets": True}
-        if short_term_memory:
-            additional_inputs["_memory_brief"] = {
-                "short_term": short_term_memory,
-                "long_term": [],
-            }
-        if message_content:
-            text = str(message_content or "").strip()
-            additional_inputs["assets"] = {
-                "source_text": text,
-                "draft_idea": text,
-                "short_term_memory": short_term_memory,
-            }
-        return additional_inputs or None
-
-    def _should_overwrite_assets(self, *, task_id: str, agent_id: str) -> bool:
-        try:
-            files = self.api_client.get_workspace_files(
-                created_by=agent_id,
-                tags=[task_id],
-            )
-            if not files:
-                return False
-            for file_item in files:
-                metadata = file_item.get("metadata", {})
-                if not isinstance(metadata, dict):
-                    continue
-                if metadata.get("task_id") != task_id:
-                    continue
-                if metadata.get("producer_agent_id") != agent_id:
-                    continue
-                if metadata.get("asset_key"):
-                    return True
-            return False
-        except Exception as e:
-            logger.warning(
-                "Failed to inspect existing assets for overwrite decision (task=%s, agent=%s): %s",
-                task_id,
-                agent_id,
-                e,
-            )
-            return False
+        """Build ``execute_fields`` for Assistant. Global memory is loaded server-side in ``build_execution_inputs``."""
+        execute_fields: Dict[str, Any] = {}
+        execute_fields["text"] = _task_stack_description_to_assistant_text(task.get("description"))
+        return execute_fields or None
     
     def _delegate_to_assistant(
         self,
         next_task_info: Dict[str, Any],
         message_content: str = "",
+        *,
+        routing_mode: str = "stack",
     ) -> Optional[Dict[str, Any]]:
         """
-        Delegate task execution to Assistant Agent
-        
-        Args:
-            next_task_info: Information about the next task to execute
-            
-        Returns:
-            Execution result or None if failed
+        Delegate task execution to Assistant Agent.
+
+        ``routing_mode``:
+        - ``stack`` — next task from execution pointer; route from task description + sub-agent catalog.
+        - ``followup`` — user message tied to ``task_id``; route with catalog + ``global_memory`` brief + latest execution summary.
         """
         task_id = next_task_info.get('task_id')
-        task = next_task_info.get('task')
-        
         if not task_id:
             logger.error("No task_id in next_task_info")
             return None
-        
+
+        task = next_task_info.get("task")
+        if not isinstance(task, dict):
+            task = None
+        if task is None:
+            try:
+                task = self.api_client.get_task(task_id)
+            except Exception as e:
+                logger.error("Failed to load task snapshot for assistant: %s", e)
+                return None
+        next_task_info["task"] = task
+
         # Update task status to IN_PROGRESS
         try:
             self.api_client.update_task_status(task_id, 'IN_PROGRESS')
@@ -427,13 +404,28 @@ class DirectorAgent:
                 self.api_client.update_task_status(task_id, 'FAILED')
                 return None
 
-            agent_id = self.reasoning_engine.select_agent_for_task(
-                task or {},
-                available_agents
-            )
-            
+            task_intent = _task_stack_description_to_assistant_text(task.get("description"))
+            if routing_mode == "followup":
+                brief = self._get_memory_brief_for_task(task_id)
+                gm = brief.get("global_memory") if isinstance(brief, dict) else []
+                if not isinstance(gm, list):
+                    gm = []
+                summary = self._get_latest_task_execution_summary(task_id)
+                agent_id = self._sub_agent_planner.choose_for_followup(
+                    message_content=message_content,
+                    task_intent_text=task_intent,
+                    available_agents=available_agents,
+                    global_memory=gm,
+                    execution_summary=summary,
+                )
+            else:
+                agent_id = self._sub_agent_planner.choose_for_stack_task(
+                    task_intent_text=task_intent,
+                    available_agents=available_agents,
+                )
+
             if not agent_id:
-                logger.error("No suitable agent found for task")
+                logger.error("No suitable agent found for task (LLM routing returned none)")
                 self.api_client.update_task_status(task_id, 'FAILED')
                 return None
             
@@ -444,28 +436,22 @@ class DirectorAgent:
                 message=f"Delegated to assistant agent {agent_id}"
             )
             assistant_inputs = self._build_assistant_inputs_for_execution(
-                task_id=task_id,
-                agent_id=agent_id,
-                message_content=message_content,
+                task=task,
             )
             
             # Execute agent (using global assistant)
             execution_result = self.api_client.execute_agent(
                 agent_id=agent_id,
                 task_id=task_id,
-                additional_inputs=assistant_inputs,
+                execute_fields=assistant_inputs,
             )
 
-            # Normalize result payload so downstream reflection can always find task id.
-            execution_result["task_id"] = task_id
-
-            execution_id = execution_result.get("execution_id")
-            if execution_id:
-                try:
-                    execution_detail = self.api_client.get_execution(execution_id)
-                    execution_result["execution"] = execution_detail
-                except Exception as e:
-                    logger.warning(f"Failed to fetch execution detail {execution_id}: {e}")
+            try:
+                executions = self.api_client.get_executions_by_task(task_id)
+                if executions:
+                    execution_result["execution"] = executions[-1]
+            except Exception as e:
+                logger.warning("Failed to fetch latest execution detail for task %s: %s", task_id, e)
             
             logger.info(f"Task {task_id} execution completed: {execution_result.get('status')}")
             return execution_result
@@ -501,13 +487,11 @@ class DirectorAgent:
         try:
             if status == 'COMPLETED':
                 self.api_client.update_task_status(task_id, 'COMPLETED')
-                self._sync_short_term_memory_for_execution(task_id, execution_result)
                 # Advance execution pointer
                 if advance_pointer:
                     self.api_client.advance_execution_pointer()
             elif status == 'FAILED':
                 self.api_client.update_task_status(task_id, 'FAILED')
-                self._sync_short_term_memory_for_execution(task_id, execution_result)
                 # Advance execution pointer even on failure
                 if advance_pointer:
                     self.api_client.advance_execution_pointer()
@@ -565,138 +549,16 @@ class DirectorAgent:
     def _get_memory_brief_for_task(
         self,
         task_id: Optional[str],
-        *,
-        agent_id: Optional[str] = None,
     ) -> Dict[str, Any]:
         if not task_id:
-            return {"short_term": [], "long_term": []}
+            return {"global_memory": []}
         try:
             return self.api_client.get_workspace_memory_brief(
                 task_id=task_id,
-                agent_id=agent_id,
-                short_term_limit=8,
             )
         except Exception as exc:
             logger.warning("Failed to fetch workspace memory brief for task %s: %s", task_id, exc)
-            return {"short_term": [], "long_term": []}
-
-    @staticmethod
-    def _run_async(coro):
-        loop = asyncio.new_event_loop()
-        try:
-            return loop.run_until_complete(coro)
-        finally:
-            loop.close()
-
-    def _sync_short_term_memory_for_execution(
-        self,
-        task_id: str,
-        execution_result: Dict[str, Any],
-    ) -> None:
-        """Persist one STM entry generated by LLM from execution result."""
-        try:
-            execution = execution_result.get("execution", {})
-            agent_id = (
-                execution_result.get("agent_id")
-                or execution.get("agent_id")
-                or ""
-            )
-            status = str(execution_result.get("status", "") or "")
-            extracted = self._extract_stm_entry_with_llm(
-                task_id=task_id,
-                execution_result=execution_result,
-            )
-            summary_content = extracted.get("content") or (
-                f"task={task_id} execution={execution_result.get('execution_id', '')} "
-                f"agent={agent_id or 'unknown'} status={status or 'unknown'}"
-            )
-            metadata = {"status": status}
-            suggested_next_agent = str(extracted.get("suggested_next_agent", "") or "").strip()
-            if suggested_next_agent:
-                metadata["suggested_next_agent"] = suggested_next_agent
-            self.api_client.add_workspace_memory_entry(
-                content=summary_content,
-                tier="short_term",
-                kind="execution_summary",
-                task_id=task_id,
-                agent_id=agent_id or None,
-                source_asset_refs=[
-                    str(execution_result.get("execution_id", "") or ""),
-                ],
-                priority=int(extracted.get("priority", 4 if status == "FAILED" else 3)),
-                confidence=float(extracted.get("confidence", 0.7)),
-                metadata=metadata,
-            )
-        except Exception as exc:
-            logger.warning("Failed to write short-term memory for task %s: %s", task_id, exc)
-
-    def _extract_stm_entry_with_llm(
-        self,
-        *,
-        task_id: str,
-        execution_result: Dict[str, Any],
-    ) -> Dict[str, Any]:
-        """Use LLM to summarize one execution into STM entry fields."""
-        payload = {
-            "task_id": task_id,
-            "execution_id": execution_result.get("execution_id"),
-            "status": execution_result.get("status"),
-            "agent_id": execution_result.get("agent_id"),
-            "error": execution_result.get("error"),
-            "results": execution_result.get("results"),
-        }
-        system_prompt = (
-            "You convert one agent execution record into short-term memory for planning. "
-            "Return strict JSON only."
-        )
-        user_prompt = (
-            "Execution payload (JSON):\n"
-            f"{json.dumps(payload, ensure_ascii=False)}\n\n"
-            "Return JSON with shape:\n"
-            "{\n"
-            '  "content": "one concise planning summary sentence",\n'
-            '  "suggested_next_agent": "AgentId or empty string",\n'
-            '  "confidence": 0.0,\n'
-            '  "priority": 3\n'
-            "}\n"
-            "Rules:\n"
-            "- confidence is between 0 and 1\n"
-            "- priority is integer 1..5\n"
-            "- suggested_next_agent can be empty string when uncertain"
-        )
-        try:
-            parsed = self._run_async(
-                self.llm_client.chat_json(
-                    system_prompt=system_prompt,
-                    user_prompt=user_prompt,
-                    max_tokens=500,
-                    reasoning_effort="medium",
-                    model=self.memory_llm_model,
-                )
-            )
-        except Exception as exc:
-            logger.warning("Failed to extract STM entry via LLM: %s", exc)
-            return {}
-        if not isinstance(parsed, dict):
-            return {}
-        content = str(parsed.get("content", "") or "").strip()
-        suggested_next_agent = str(parsed.get("suggested_next_agent", "") or "").strip()
-        try:
-            confidence = float(parsed.get("confidence", 0.7))
-        except (TypeError, ValueError):
-            confidence = 0.7
-        confidence = max(0.0, min(1.0, confidence))
-        try:
-            priority = int(parsed.get("priority", 3))
-        except (TypeError, ValueError):
-            priority = 3
-        priority = max(1, min(5, priority))
-        return {
-            "content": content,
-            "suggested_next_agent": suggested_next_agent,
-            "confidence": confidence,
-            "priority": priority,
-        }
+            return {"global_memory": []}
 
     def _handle_reflection_summary(self, reflection_summary: Dict[str, Any]):
         """

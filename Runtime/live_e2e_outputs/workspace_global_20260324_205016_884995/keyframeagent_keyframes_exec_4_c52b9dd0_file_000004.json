@@ -1,0 +1,959 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-24T20:55:28.122214+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_type": "character",
+          "entity_id": "char_001",
+          "display_name": "",
+          "purpose": "identity_anchor",
+          "keyframe_id": "kf_global_char_001",
+          "image_asset": {
+            "asset_id": "",
+            "uri": "placeholder",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; Increased tension and urgency. Focus on the struggle, frustration, and eventual triumph of precision. Close-ups continue to be critical. Use sound (ticking, grunt, click, exhale) to build drama. The lighting might feel a bit more stark, highlighting sweat and stress.; Shift to a mood of triumph, relief, and profound peace. Lingering shots, contemplative pacing to allow the emotional beats to land. The sound of the ticking watch and the chimes are critical. Warm, soft lighting, perhaps with subtle glints off the repaired watch. Elias, a man in his 70s, with a face deeply etched by a lifetime of meticulous work. He possesses intelligent, highly focused eyes that show a slight weariness, but an unyielding precision. His hands are gnarled, showing the marks of age and constant delicate labor. He wears sturdy spectacles perched on his nose. His attire consists of a worn but immaculately clean tweed vest, a dark, earthy brown with subtle flecks, over a crisp white button-down shirt. The sleeves of his shirt are carefully rolled up to just below the elbow, revealing forearms that, while aged, still possess a quiet strength. His overall demeanor is one of intense concentration and quiet dedication, with a subtle air of wisdom and resilience."
+        }
+      ],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "display_name": "",
+          "purpose": "style_anchor",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "",
+            "uri": "placeholder",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; Increased tension and urgency. Focus on the struggle, frustration, and eventual triumph of precision. Close-ups continue to be critical. Use sound (ticking, grunt, click, exhale) to build drama. The lighting might feel a bit more stark, highlighting sweat and stress.; Shift to a mood of triumph, relief, and profound peace. Lingering shots, contemplative pacing to allow the emotional beats to land. The sound of the ticking watch and the chimes are critical. Warm, soft lighting, perhaps with subtle glints off the repaired watch. A cluttered, warm, and dimly lit watchmaker's workshop. The air is thick with history and dust motes, visibly dancing in the occasional shafts of golden light filtering through a high, grimy window or cast by a single, focused desk lamp. The space is filled with an overwhelming collection of antique tools, some polished to a sheen, others coated in a fine layer of dust, all meticulously arranged and overflowing from drawers and shelves. Gears, springs, and various intricate watch components are scattered across surfaces. Dominating one side of the room is a tall, imposing grandfather clock, its dark wood imposing and ancient, casting long shadows. In the foreground, a well-used workbench, scarred and stained, serves as the central hub of activity, littered with tiny components, magnifying glasses, and delicate instruments. The overall atmosphere is one of deep contemplation and the quiet hum of forgotten mechanisms, a sanctuary for precision."
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_001",
+              "image_asset": {
+                "asset_id": "",
+                "uri": "placeholder",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; Show Elias, a man in his 70s with intelligent, focused, and slightly weary eyes behind sturdy spectacles. His gnarled and precise hands are visible. He wears a worn but clean tweed vest over a crisp white shirt with rolled-up sleeves. He is illuminated by the focused, warm glow of a desk lamp in the dead of night, casting deep shadows and highlighting the lines on his face and hands, maintaining his established canonical appearance."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "",
+                "uri": "placeholder",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; Show a cluttered, warm, and dimly lit workshop at night. Dust motes are visible dancing in the focused beams of a desk lamp, cutting through the darkness. Antique tools, intricate gears, and delicate springs are strewn across a well-used wooden workbench. A tall, imposing grandfather clock stands in the background, its dark wood catching subtle glints of light, creating a sense of quiet solitude and establishing the workshop's consistent atmosphere and contents."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_001",
+              "linked_blocks": [
+                "b_001"
+              ]
+            },
+            "estimated_duration_sec": 5.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; A wide, slightly high-angle view looking into Elias's dimly lit workshop at night. The scene is dominated by the tall, imposing grandfather clock in the background and a well-used workbench in the midground. A single, warm beam from a desk lamp illuminates a section of the workbench, and tiny dust motes are visible dancing within this light. Antique tools are scattered subtly. The camera slowly pushes in, emphasizing the quiet atmosphere and the soft glow.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_002",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; A wide, eye-level shot with a slight high angle looking into Elias's dimly lit workshop. The grandfather clock looms impressively, its dark wood catching subtle reflections from the ambient light. On the well-used workbench, a focused beam from a desk lamp highlights intricate antique tools. Dust motes are clearly visible, suspended and sparkling in the warm light, creating an atmospheric, contemplative feel as the camera gently pushes in, establishing the setting and atmospheric lighting.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_002",
+              "linked_blocks": [
+                "b_001",
+                "b_002"
+              ]
+            },
+            "estimated_duration_sec": 6.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_003",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; A medium shot, high angle, of Elias hunched intently over his well-used workbench in his dimly lit workshop at night. He is wearing his spectacles and a worn tweed vest with rolled-up sleeves. His gnarled fingers, illuminated by the desk lamp's warm glow, meticulously manipulate a small screwdriver and tiny gears, while a jeweler's loupe is fixed to his eye. His expression is one of deep concentration, casting his face in chiaroscuro. The cluttered workspace with various watch parts and springs is visible around him.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_004",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; A medium shot from a high angle, capturing Elias at his workbench. He is deeply engrossed in his work, his brow furrowed in concentration. The jeweler's loupe is prominent on his eye, and his precise, gnarled hands delicately hold a small screwdriver, coaxing a minuscule gear into place within a pocket watch mechanism. The warm, focused light from the desk lamp creates strong chiaroscuro, highlighting the texture of his tweed vest and the intricate details of the small parts on the cluttered workbench, showing his deep concentration and meticulous work.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_003",
+              "linked_blocks": [
+                "b_002"
+              ]
+            },
+            "estimated_duration_sec": 7.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_005",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; An extreme close-up, eye-level shot. The focus is incredibly tight on Elias's eye, with the jeweler's loupe magnifying his iris, reflecting the tiny watch mechanism. His gnarled, steady fingers are visible just below, holding a tiny screwdriver. The tip of the screwdriver is meticulously coaxing a microscopic gear into its exact position within the intricate workings of a pocket watch. Chiaroscuro lighting emphasizes the precision and delicacy of the task, with glints of light on the metal parts.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_006",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; An extreme close-up, eye-level shot, focusing on Elias's precise, gnarled hands. One hand is steadying a tiny pocket watch mechanism, while the other, holding a small screwdriver, delicately pushes a minuscule spring into place. The jeweler's loupe, barely visible at the top of the frame, suggests his intense focus. The warm, directed light from a desk lamp creates deep shadows and stark highlights, emphasizing every minute detail and the tension in his concentrated effort.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_007",
+                "order": 3,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; An extreme close-up, eye-level shot, capturing the culmination of a precise movement. Elias's steady, gnarled hand, guided by the jeweler's loupe, uses a tiny screwdriver to definitively set a microscopic gear into its final position within the pocket watch. The light from the desk lamp creates dramatic chiaroscuro, highlighting the texture of his skin and the intricate, gleaming metal parts. The focus is sharp on the moment of perfect alignment, conveying intense focus and delicate triumph, emphasizing the intricacy and precision.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "source": {
+              "storyboard_shot_id": "sh_004",
+              "linked_blocks": [
+                "b_003"
+              ]
+            },
+            "estimated_duration_sec": 4.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_008",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; A medium close-up, eye-level shot of Elias's face. He has just finished a delicate task, and his gnarled hand is shown slowly removing the jeweler's loupe from his eye. His expression is one of profound concentration giving way to momentary relief and slight weariness, lines etched around his eyes visible in the chiaroscuro lighting. The warm light from his desk lamp casts soft shadows, emphasizing the intimate moment.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_009",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; A medium close-up, eye-level shot of Elias's face. After removing his jeweler's loupe, his gnarled fingers gently reach up to rub his tired eye. His spectacles are still on. The chiaroscuro lighting emphasizes the weariness in his intelligent eyes and the subtle shift in his expression from intense focus to a brief, contemplative pause. The warmth of the desk lamp highlights the texture of his skin and the quiet intimacy of the moment, showing the subtle shift from concentration to relief.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 5,
+            "source": {
+              "storyboard_shot_id": "sh_005",
+              "linked_blocks": [
+                "b_003"
+              ]
+            },
+            "estimated_duration_sec": 3.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_010",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; A wide, eye-level shot of Elias seated at his well-used workbench in the dimly lit workshop. He has just looked up from his work on the small pocket watch, and his gaze is now directed towards the towering, imposing grandfather clock prominently in the background. The warm, focused light from his desk lamp illuminates him and his immediate workspace, while the rest of the room, including the clock, is in atmospheric chiaroscuro, creating a subtle tension as he contemplates the approaching midnight deadline, contrasting the small work with the looming clock.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_002"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_002",
+              "image_asset": {
+                "asset_id": "",
+                "uri": "placeholder",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; Increased tension and urgency. Focus on the struggle, frustration, and eventual triumph of precision. Close-ups continue to be critical. Use sound (ticking, grunt, click, exhale) to build drama. The lighting might feel a bit more stark, highlighting sweat and stress. Elias is a middle-aged man with sharp, intelligent eyes often magnified by round spectacles perched on his nose. His face is lean, showing the marks of deep concentration and perhaps a touch of perpetual worry, with fine lines around his eyes. He has neat, greying hair, meticulously combed but often slightly disheveled during intense work. He wears a well-worn, dark tweed vest over a crisp, white long-sleeved shirt with the sleeves usually rolled up to the forearms, revealing strong, capable hands. His posture is often hunched over his work, indicative of a craftsman. His fingers are long and precise, accustomed to delicate movements. His workshop attire is practical yet traditional, suggesting a deep respect for his craft. Adapt this image of Elias: His face is now etched with profound strain and growing frustration, yet also a fierce resilience. A bead of sweat forms on his temple. His strong, capable hands, now showing a tremor of fatigue, are still resolute. His worn tweed vest is slightly disheveled, and his rolled-up sleeves are rumpled from intense, prolonged focus. His round spectacles remain firmly in place, reflecting the concentrated light. He is under the stark, isolated glow of his desk lamp at night, with deep shadows in the workshop emphasizing his solitary struggle and the added weight of urgency."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_002",
+              "image_asset": {
+                "asset_id": "",
+                "uri": "placeholder",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; Increased tension and urgency. Focus on the struggle, frustration, and eventual triumph of precision. Close-ups continue to be critical. Use sound (ticking, grunt, click, exhale) to build drama. The lighting might feel a bit more stark, highlighting sweat and stress. The watchmaker's workshop is a cluttered but organized space, rich with the scent of oil and old wood. The room is small, filled with tall, dark wooden shelves packed with antique clocks, components, tools, and dusty ledgers. A sturdy, heavy wooden workbench dominates the center, illuminated by a single, focused desk lamp with a brass shade, casting pools of warm, isolated light and deep, chiaroscuro shadows across the room. The walls are dark, possibly paneled or painted a deep, muted color, adorned with framed blueprints of clock mechanisms and faded photographs of master watchmakers. A grand, ornate grandfather clock stands imposingly in a corner, its polished wood gleaming faintly in the dim light. The atmosphere is one of quiet dedication and historical craftsmanship, filled with the faint ticking of numerous timepieces. Adapt this workshop image: The atmosphere now carries an added weight of urgency and tension. The single desk lamp casts a more isolated, stark pool of light onto the workbench, deepening the chiaroscuro shadows throughout the cluttered room. The tall, dark wooden shelves and the imposing grandfather clock in the corner are largely swallowed by shadow, their details hinted at rather than fully revealed, creating a sense of enclosing pressure around Elias's workspace at night."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_006",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_006",
+              "linked_blocks": [
+                "b_004"
+              ]
+            },
+            "estimated_duration_sec": 4.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_011",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; Increased tension and urgency. Focus on the struggle, frustration, and eventual triumph of precision. Close-ups continue to be critical. Use sound (ticking, grunt, click, exhale) to build drama. The lighting might feel a bit more stark, highlighting sweat and stress. Medium shot: The ornate face of an antique grandfather clock, its hands nearing midnight, under stark, dramatic chiaroscuro lighting that casts deep shadows, emphasizing the imminent deadline. The polished dark wood of the clock gleams faintly in the low light.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_012",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; Increased tension and urgency. Focus on the struggle, frustration, and eventual triumph of precision. Close-ups continue to be critical. Use sound (ticking, grunt, click, exhale) to build drama. The lighting might feel a bit more stark, highlighting sweat and stress. Medium shot, eye-level: Slowly pan from the grandfather clock's face to Elias's strained face at his workbench, illuminated by the stark, isolated light of his desk lamp. His brow is furrowed with intense concentration and exhaustion, a bead of sweat clinging to his temple, showcasing his physical and emotional toll and the pressure of time.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_007",
+              "linked_blocks": [
+                "b_004",
+                "b_005"
+              ]
+            },
+            "estimated_duration_sec": 6.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_013",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; Increased tension and urgency. Focus on the struggle, frustration, and eventual triumph of precision. Close-ups continue to be critical. Use sound (ticking, grunt, click, exhale) to build drama. The lighting might feel a bit more stark, highlighting sweat and stress. Extremely tight low-angle shot on Elias's trembling hands, holding fine tweezers, as he meticulously attempts to place a minuscule, fragile balance staff into the open mechanism of a pocket watch resting on his workbench. The harsh light creates sharp highlights and deep shadows, emphasizing the immense difficulty and precision required.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_014",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; Increased tension and urgency. Focus on the struggle, frustration, and eventual triumph of precision. Close-ups continue to be critical. Use sound (ticking, grunt, click, exhale) to build drama. The lighting might feel a bit more stark, highlighting sweat and stress. Extremely tight low-angle shot: The minuscule balance staff slips from the tweezers, caught precariously by Elias's other hand, hovering just above the delicate, exposed watch mechanism. The shot dramatically emphasizes the extreme fragility and complexity of the components, highlighting the imminent failure and the growing tension.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_015",
+                "order": 3,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; Increased tension and urgency. Focus on the struggle, frustration, and eventual triumph of precision. Close-ups continue to be critical. Use sound (ticking, grunt, click, exhale) to build drama. The lighting might feel a bit more stark, highlighting sweat and stress. Extremely tight low-angle shot: Elias's frustrated, white-knuckled grip on the tweezers and the barely-caught balance staff. His fingers are tense, showing the raw physical and emotional toll of the struggle, emphasizing the difficulty of the task.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_008",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_008",
+              "linked_blocks": [
+                "b_005",
+                "b_006"
+              ]
+            },
+            "estimated_duration_sec": 3.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_016",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; Increased tension and urgency. Focus on the struggle, frustration, and eventual triumph of precision. Close-ups continue to be critical. Use sound (ticking, grunt, click, exhale) to build drama. The lighting might feel a bit more stark, highlighting sweat and stress. Close-up, eye-level: Elias's face, harshly illuminated by the desk lamp. His eyes close for a fleeting moment of pure resignation as a frustrated grunt escapes his lips, capturing the raw emotional impact of the component nearly slipping, showing his immediate, internal reaction.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_017",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; Increased tension and urgency. Focus on the struggle, frustration, and eventual triumph of precision. Close-ups continue to be critical. Use sound (ticking, grunt, click, exhale) to build drama. The lighting might feel a bit more stark, highlighting sweat and stress. Close-up, eye-level: Elias's eyes snap open with renewed, fierce resolve and determination. His jaw clenches, his gaze hardening as he steel his will to continue the incredibly delicate and stressful task, emphasizing his resilience.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 4,
+            "source": {
+              "storyboard_shot_id": "sh_009",
+              "linked_blocks": [
+                "b_006",
+                "b_007"
+              ]
+            },
+            "estimated_duration_sec": 7.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_018",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; Increased tension and urgency. Focus on the struggle, frustration, and eventual triumph of precision. Close-ups continue to be critical. Use sound (ticking, grunt, click, exhale) to build drama. The lighting might feel a bit more stark, highlighting sweat and stress. Extreme close-up on the watch mechanism and Elias's trembling hands, from a slightly different angle than the previous attempt shot. He meticulously re-positions the tiny component with tweezers. His hand trembles subtly, but his focus is absolute, sweat beading on his forehead, highlighting his intense concentration and the fragile re-attempt.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_019",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; Increased tension and urgency. Focus on the struggle, frustration, and eventual triumph of precision. Close-ups continue to be critical. Use sound (ticking, grunt, click, exhale) to build drama. The lighting might feel a bit more stark, highlighting sweat and stress. Extreme close-up on the watch mechanism, capturing the almost imperceptible, delicate 'CLICK' as the tiny component finally settles precisely and successfully into its place. The stark lighting dramatically highlights the intricate details and the successful connection, a moment of triumph for precision.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_020",
+                "order": 3,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; Increased tension and urgency. Focus on the struggle, frustration, and eventual triumph of precision. Close-ups continue to be critical. Use sound (ticking, grunt, click, exhale) to build drama. The lighting might feel a bit more stark, highlighting sweat and stress. Extreme close-up on Elias's mouth and jawline, showing a long, quiet exhale of profound relief and exhaustion, the subtle tension in his facial muscles finally releasing after the successful placement of the component. The moment is intimate and powerful.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 5,
+            "source": {
+              "storyboard_shot_id": "sh_010",
+              "linked_blocks": [
+                "b_007",
+                "b_008"
+              ]
+            },
+            "estimated_duration_sec": 5.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_021",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; Increased tension and urgency. Focus on the struggle, frustration, and eventual triumph of precision. Close-ups continue to be critical. Use sound (ticking, grunt, click, exhale) to build drama. The lighting might feel a bit more stark, highlighting sweat and stress. Medium close-up, eye-level: Elias's hands, with extreme care and reverence, slowly and precisely closing the watch case. He then gently wipes away a tiny smudge from the polished surface with a soft polishing cloth, his movements deliberate and focused, signaling the careful culmination of the repair.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_022",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Use of chiaroscuro lighting, emphasizing Elias's focus and the delicate work. Contemplative pacing. Close-ups on hands and watch mechanisms. Build subtle tension.; Increased tension and urgency. Focus on the struggle, frustration, and eventual triumph of precision. Close-ups continue to be critical. Use sound (ticking, grunt, click, exhale) to build drama. The lighting might feel a bit more stark, highlighting sweat and stress. Medium close-up, eye-level: Elias lifts the newly reassembled pocket watch to his ear, holding it absolutely still. His entire body is tensed in intense anticipation, his gaze fixed, as he listens intently for the faint, rhythmic sound of its successful ticking. The stark lighting emphasizes his expectant, focused expression, waiting for validation of his triumph.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_003"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_003",
+              "image_asset": {
+                "asset_id": "",
+                "uri": "placeholder",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Intimate, detailed, atmospheric. Shift to a mood of triumph, relief, and profound peace. Show Elias, a man in his late 40s with a lean build, thoughtful face, short dark hair, and neatly trimmed grey-streaked beard. His intelligent hazel eyes, usually narrowed in concentration, are now softened with profound relief and quiet joy, and a deep satisfaction blooms on his face, reflecting deep accomplishment. He wears his meticulously tailored dark brown tweed vest over a crisp white collared shirt with rolled-up sleeves and a silver watch chain, but his attire now carries an air of settled accomplishment after a long night, slightly disheveled but imbued with the peace of victory."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_003",
+              "image_asset": {
+                "asset_id": "",
+                "uri": "placeholder",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Intimate, detailed, atmospheric. Shift to a mood of triumph, relief, and profound peace. Show Elias's antique watchmaker's workshop at night. The narrow, tall space, with its cluttered wooden workbench, shelves filled with intricate tools, gears, and mechanisms, and dark wood paneling showing signs of age, now feels triumphant and less oppressive. The same setting, including the large, ornate grandfather clock standing tall, is present, but with a palpable shift in atmosphere from tension to a deep, quiet peace, as if the entire workshop breathes a sigh of relief. Warm, soft lighting emanates from the brass desk lamp, casting gentle glints off the repaired watch and illuminating the space in a comforting glow, with dust motes dancing in the air."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_011",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_011",
+              "linked_blocks": [
+                "b_009"
+              ]
+            },
+            "estimated_duration_sec": 4.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_023",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Shift to a mood of triumph, relief, and profound peace. Close-up, eye-level, static shot: Elias's right ear is pressed against the repaired pocket watch, listening intently to its steady tick-tock. Warm, soft chiaroscuro lighting highlights the delicate mechanisms of the watch and the subtle concentration on his face. The moment is contemplative, quiet, focusing on the auditory confirmation of his success.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_024",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Shift to a mood of triumph, relief, and profound peace. Close-up, eye-level, static shot: Following the previous frame, Elias's hazel eye, still close to the watch but now widening in understanding and profound realization. A slow, soft smile begins to spread across the corner of his mouth, reflecting deep satisfaction and the initial flush of triumph. The warm, soft lighting gently illuminates this subtle shift in expression.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_012",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_012",
+              "linked_blocks": [
+                "b_009"
+              ]
+            },
+            "estimated_duration_sec": 3.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_025",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Shift to a mood of triumph, relief, and profound peace. Medium close-up, eye-level, static shot: Elias, with profound relief and quiet joy on his softened face, slowly pulls the ticking repaired pocket watch away from his ear. He holds it up, his slender, capable hands carefully cradling the intricate object, his gaze fixed on it with a proud, triumphant expression. Warm, soft lighting highlights the subtle glints off the watch and the deep satisfaction in his eyes, reflecting his hard-won accomplishment.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_013",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_013",
+              "linked_blocks": [
+                "b_010",
+                "b_011"
+              ]
+            },
+            "estimated_duration_sec": 7.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_026",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Shift to a mood of triumph, relief, and profound peace. Wide shot, eye-level, slow pull back: The ornate grandfather clock in the corner of the workshop begins to chime, a rich, resonant sound. Elias, seated at his workbench, still holds the ticking repaired pocket watch, his face relaxed in profound relief. The warm, soft lighting creates a contemplative atmosphere as the chimes fill the space.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_027",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Shift to a mood of triumph, relief, and profound peace. Wide shot, eye-level, slow pull back: Elias slowly leans back in his chair, eyes gently closed, his head resting against the backrest. He holds the ticking repaired pocket watch to his chest, feeling the rhythm against him as the grandfather clock continues its long chimes. The tension visibly drains from his body, replaced by a deep, quiet peace. Warm, soft chiaroscuro lighting emphasizes the profound emotional release.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_028",
+                "order": 3,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Shift to a mood of triumph, relief, and profound peace. Wide shot, eye-level, slow pull back: The grandfather clock completes its twelve chimes, its resonant sound lingering in the air. Elias remains leaned back, eyes still closed, holding the ticking watch, completely immersed in the moment of his victory. The workshop, bathed in warm, soft light, feels completely at peace, a quiet witness to his long night's endeavor.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_014",
+            "order": 4,
+            "source": {
+              "storyboard_shot_id": "sh_014",
+              "linked_blocks": [
+                "b_012"
+              ]
+            },
+            "estimated_duration_sec": 4.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_029",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Shift to a mood of triumph, relief, and profound peace. Medium close-up, eye-level, static shot: Elias opens his hazel eyes, which are now calm and filled with a quiet satisfaction. He gazes down at the ticking repaired pocket watch held gently in his hands. The warm, soft lighting illuminates the subtle details of his softened face and the intricate watch, emphasizing the profound peace of his accomplishment.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_030",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate, detailed, atmospheric. Shift to a mood of triumph, relief, and profound peace. Medium close-up, eye-level, static shot: Elias shifts his gaze from the ticking pocket watch in his hands to the now silent grandfather clock in the background. A quiet, deep satisfaction blooms on his face, his eyes reflecting the finality and profound peace of his victory. The contemplative pacing allows the emotional weight of the moment to settle, bathed in warm, soft lighting.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 14,
+    "keyframe_count_total": 30,
+    "avg_keyframes_per_shot": 2.142857142857143,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 3,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 0
+  }
+}

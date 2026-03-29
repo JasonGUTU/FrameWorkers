@@ -14,10 +14,17 @@ DIRECTOR_AGENT_DESCRIPTION = os.getenv(
     'DIRECTOR_AGENT_DESCRIPTION',
     'Director Agent responsible for reasoning, planning, and task orchestration'
 )
+# Legacy alias: `AssistantService` reads `ASSISTANT_MEMORY_MODEL` first for global_memory summary LLM.
 DIRECTOR_MEMORY_MODEL = os.getenv(
     'DIRECTOR_MEMORY_MODEL',
     os.getenv('INFERENCE_DEFAULT_MODEL', 'google-ai-studio/gemini-2.5-flash')
 )
+
+# Sub-agent routing (LLM picks one registered ``agent_id`` for ``POST /api/assistant/execute``).
+DIRECTOR_ROUTING_MODEL = os.getenv(
+    'DIRECTOR_ROUTING_MODEL',
+    DIRECTOR_MEMORY_MODEL,
+).strip()
 
 # Logging
 LOG_LEVEL = os.getenv('LOG_LEVEL', 'INFO')

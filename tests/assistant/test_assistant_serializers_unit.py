@@ -5,7 +5,6 @@ from datetime import datetime
 from src.assistant.models import Assistant, AgentExecution, ExecutionStatus
 from src.assistant.response_serializers import (
     file_metadata_to_dict,
-    file_search_item_to_dict,
     log_entry_to_dict,
     serialize_response_value,
 )
@@ -65,11 +64,10 @@ def test_serializers_file_and_log_dict_helpers():
     )
 
     full_file = file_metadata_to_dict(file_meta)
-    search_file = file_search_item_to_dict(file_meta)
     log_dict = log_entry_to_dict(log)
 
     assert full_file["file_extension"] == ".txt"
-    assert "size_bytes" not in search_file
+    assert full_file["size_bytes"] == 3
     assert log_dict["resource_type"] == "file"
 
 

@@ -19,7 +19,7 @@ Layer 2 — creative assessment:
 from __future__ import annotations
 
 import json
-from typing import Any
+from typing import Any, Mapping
 
 from ..base_evaluator import BaseEvaluator
 from .schema import ScreenplayAgentOutput
@@ -33,8 +33,8 @@ class ScreenplayEvaluator(BaseEvaluator[ScreenplayAgentOutput]):
         ("dramatic_flow", "Does the dialogue/action flow naturally? Are scene turns and emotional shifts effective?"),
     ]
 
-    def _build_creative_context(self, output, upstream):
-        story_data = (upstream or {}).get("story_blueprint", {})
+    def _build_creative_context(self, output, input_bundle_v2):
+        story_data = (input_bundle_v2 or {}).get("story_blueprint", {})
         if story_data:
             return f"Story Blueprint:\n{json.dumps(story_data, ensure_ascii=False, indent=2)}"
         return ""
@@ -46,14 +46,14 @@ class ScreenplayEvaluator(BaseEvaluator[ScreenplayAgentOutput]):
     def check_structure(
         self,
         output: ScreenplayAgentOutput,
-        upstream: dict[str, Any] | None = None,
+        input_bundle_v2: Mapping[str, Any] | None = None,
     ) -> list[str]:
         """Rule-based structural validation for Screenplay."""
         errors: list[str] = []
         c = output.content
 
         # --- Upstream cross-check: scene_ids must match story_blueprint ---
-        bp = (upstream or {}).get("story_blueprint", {})
+        bp = (input_bundle_v2 or {}).get("story_blueprint", {})
         bp_content = bp.get("content", {}) if isinstance(bp, dict) else {}
         bp_scenes = bp_content.get("scene_outline", [])
         if bp_scenes:

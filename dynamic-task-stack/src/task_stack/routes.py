@@ -1,87 +1,40 @@
 # API routes for Frameworks Backend
 
 from flask import Blueprint, request, jsonify
-from typing import Optional, Callable, TypeVar, Any
-from dataclasses import is_dataclass, fields
-from datetime import datetime
-from enum import Enum
+from typing import Optional, Any
 
+from ..common_http import (
+    bad_request,
+    json_body_or_error,
+    parse_bool_query_param,
+    parse_enum_or_error,
+)
+from .api_serialize import serialize_for_api
 from .storage import storage
 from .models import (
     TaskStatus, ReadingStatus, MessageSenderType,
     BatchOperation, BatchOperationType
 )
 
-EnumT = TypeVar("EnumT")
-
 
 def create_blueprint():
     """Create and configure the Flask blueprint"""
     bp = Blueprint('task_stack', __name__)
-    
-    # Shared response/validation helpers
-    def serialize_enum(obj):
-        if isinstance(obj, Enum):
-            return obj.value
-        if isinstance(obj, datetime):
-            return obj.isoformat()
-        if is_dataclass(obj):
-            return {field.name: serialize_enum(getattr(obj, field.name)) for field in fields(obj)}
-        if isinstance(obj, list):
-            return [serialize_enum(item) for item in obj]
-        if isinstance(obj, dict):
-            return {key: serialize_enum(value) for key, value in obj.items()}
-        return obj
-
-    def _bad_request(message: str):
-        return jsonify({"error": message}), 400
-
-    def _json_body_or_error(*, allow_empty: bool = False):
-        data = request.get_json()
-        if data is None:
-            return None, _bad_request("Invalid JSON body")
-        if not allow_empty and not data:
-            return None, _bad_request("Invalid JSON body")
-        return data, None
-
-    def _parse_enum_or_error(
-        enum_cls: type[EnumT],
-        raw_value: Optional[str],
-        *,
-        field_name: str,
-        normalizer: Optional[Callable[[str], str]] = None,
-        choices_hint: Optional[str] = None,
-    ) -> tuple[Optional[EnumT], Optional[Any]]:
-        if raw_value is None:
-            return None, None
-        normalized = normalizer(raw_value) if normalizer else raw_value
-        try:
-            return enum_cls(normalized), None
-        except ValueError:
-            if choices_hint:
-                return None, _bad_request(f"Invalid {field_name}: {raw_value}. Must be one of: {choices_hint}")
-            return None, _bad_request(f"Invalid {field_name}: {raw_value}")
-
-    def _parse_bool_query_param(name: str) -> Optional[bool]:
-        raw = request.args.get(name)
-        if raw is None:
-            return None
-        return raw.lower() == 'true'
 
     def _parse_sender_type_or_error(raw_value: Optional[str]):
-        return _parse_enum_or_error(
+        return parse_enum_or_error(
             MessageSenderType,
             raw_value,
             field_name="sender_type",
             normalizer=str.lower,
             choices_hint="director, subagent, user",
         )
-    
+
     # User Message routes
     @bp.route('/api/messages/create', methods=['POST'])
     def create_user_message():
         """Create a new user message"""
-        data, error = _json_body_or_error()
+        data, error = json_body_or_error()
         if error:
             return error
         
@@ -89,17 +42,15 @@ def create_blueprint():
         sender_type_str = data.get('sender_type', 'user')
         
         if not content:
-            return jsonify({
-                'error': 'Missing required field: content'
-            }), 400
-        
+            return bad_request('Missing required field: content')
+
         # Convert sender_type string to enum
         sender_type, error = _parse_sender_type_or_error(sender_type_str)
         if error:
             return error
         
         message = storage.create_user_message(content, sender_type)
-        return jsonify(serialize_enum(message)), 201
+        return jsonify(serialize_for_api(message)), 201
     
     @bp.route('/api/messages/<msg_id>', methods=['GET'])
     def get_user_message(msg_id: str):
@@ -107,13 +58,13 @@ def create_blueprint():
         message = storage.get_user_message(msg_id)
         if message is None:
             return jsonify({'error': 'Message not found'}), 404
-        return jsonify(serialize_enum(message))
+        return jsonify(serialize_for_api(message))
     
     @bp.route('/api/messages/list', methods=['GET'])
     def get_all_user_messages():
         """Get all user messages"""
         messages = storage.get_all_user_messages()
-        return jsonify([serialize_enum(msg) for msg in messages])
+        return jsonify([serialize_for_api(msg) for msg in messages])
     
     @bp.route('/api/messages/unread', methods=['GET'])
     def get_unread_messages():
@@ -129,8 +80,8 @@ def create_blueprint():
               defaults to check_director_read=true
         """
         sender_type_str = request.args.get('sender_type')
-        check_director_read = _parse_bool_query_param('check_director_read')
-        check_user_read = _parse_bool_query_param('check_user_read')
+        check_director_read = parse_bool_query_param('check_director_read')
+        check_user_read = parse_bool_query_param('check_user_read')
 
         # Default to check_director_read if neither is specified
         if check_director_read is None and check_user_read is None:
@@ -151,12 +102,12 @@ def create_blueprint():
             check_director_read=check_director_read,
             check_user_read=check_user_read
         )
-        return jsonify([serialize_enum(msg) for msg in messages])
+        return jsonify([serialize_for_api(msg) for msg in messages])
     
     @bp.route('/api/messages/<msg_id>/read-status', methods=['PUT'])
     def update_message_read_status(msg_id: str):
         """Update read status of a message"""
-        data, error = _json_body_or_error()
+        data, error = json_body_or_error()
         if error:
             return error
         
@@ -164,7 +115,7 @@ def create_blueprint():
         user_status_str = data.get('user_read_status')
         
         # Convert string to enum
-        director_status, error = _parse_enum_or_error(
+        director_status, error = parse_enum_or_error(
             ReadingStatus,
             director_status_str,
             field_name="director_read_status",
@@ -173,7 +124,7 @@ def create_blueprint():
         if error:
             return error
         
-        user_status, error = _parse_enum_or_error(
+        user_status, error = parse_enum_or_error(
             ReadingStatus,
             user_status_str,
             field_name="user_read_status",
@@ -187,7 +138,7 @@ def create_blueprint():
         )
         if updated_msg is None:
             return jsonify({'error': 'Message not found'}), 404
-        return jsonify(serialize_enum(updated_msg))
+        return jsonify(serialize_for_api(updated_msg))
     
     @bp.route('/api/messages/<msg_id>/check', methods=['GET'])
     def check_user_message(msg_id: str):
@@ -199,7 +150,7 @@ def create_blueprint():
         is_new = storage.is_new_task(msg_id)
         
         response = {
-            'message': serialize_enum(message),
+            'message': serialize_for_api(message),
             'is_new_task': is_new,
             'task_state': 'new_task' if is_new else 'existing_or_no_task',
         }
@@ -209,19 +160,19 @@ def create_blueprint():
     @bp.route('/api/tasks/create', methods=['POST'])
     def create_task():
         """Create a new task (does not add to stack automatically)"""
-        data, error = _json_body_or_error()
+        data, error = json_body_or_error()
         if error:
             return error
         
         description = data.get('description')
         
         if not description or not isinstance(description, dict):
-            return jsonify({
-                'error': 'Missing or invalid required field: description (must be a dictionary)'
-            }), 400
-        
+            return bad_request(
+                'Missing or invalid required field: description (must be a dictionary)'
+            )
+
         task = storage.create_task(description)
-        return jsonify(serialize_enum(task)), 201
+        return jsonify(serialize_for_api(task)), 201
     
     @bp.route('/api/tasks/<task_id>', methods=['GET'])
     def get_task(task_id: str):
@@ -229,18 +180,18 @@ def create_blueprint():
         task = storage.get_task(task_id)
         if task is None:
             return jsonify({'error': 'Task not found'}), 404
-        return jsonify(serialize_enum(task))
+        return jsonify(serialize_for_api(task))
     
     @bp.route('/api/tasks/list', methods=['GET'])
     def get_all_tasks():
         """Get all tasks"""
         tasks = storage.get_all_tasks()
-        return jsonify([serialize_enum(task) for task in tasks])
+        return jsonify([serialize_for_api(task) for task in tasks])
     
     @bp.route('/api/tasks/<task_id>', methods=['PUT'])
     def update_task(task_id: str):
         """Update a task"""
-        data, error = _json_body_or_error()
+        data, error = json_body_or_error()
         if error:
             return error
         
@@ -251,17 +202,13 @@ def create_blueprint():
         
         # Validate description and progress are dicts if provided
         if description is not None and not isinstance(description, dict):
-            return jsonify({
-                'error': 'description must be a dictionary'
-            }), 400
-        
+            return bad_request('description must be a dictionary')
+
         if progress is not None and not isinstance(progress, dict):
-            return jsonify({
-                'error': 'progress must be a dictionary'
-            }), 400
+            return bad_request('progress must be a dictionary')
         
         # Convert status string to enum
-        status, error = _parse_enum_or_error(
+        status, error = parse_enum_or_error(
             TaskStatus,
             status_str,
             field_name="status",
@@ -275,7 +222,7 @@ def create_blueprint():
         )
         if updated_task is None:
             return jsonify({'error': 'Task not found'}), 404
-        return jsonify(serialize_enum(updated_task))
+        return jsonify(serialize_for_api(updated_task))
     
     @bp.route('/api/tasks/<task_id>', methods=['DELETE'])
     def delete_task(task_id: str):
@@ -289,7 +236,7 @@ def create_blueprint():
     @bp.route('/api/layers/create', methods=['POST'])
     def create_layer():
         """Create a new task layer"""
-        data, error = _json_body_or_error(allow_empty=True)
+        data, error = json_body_or_error(allow_empty=True)
         if error:
             return error
         layer_index = data.get('layer_index')
@@ -298,15 +245,15 @@ def create_blueprint():
         
         try:
             layer = storage.create_layer(layer_index, pre_hook, post_hook)
-            return jsonify(serialize_enum(layer)), 201
+            return jsonify(serialize_for_api(layer)), 201
         except Exception as e:
-            return jsonify({'error': str(e)}), 400
-    
+            return bad_request(str(e))
+
     @bp.route('/api/layers/list', methods=['GET'])
     def get_all_layers():
         """Get all task layers"""
         layers = storage.get_all_layers()
-        return jsonify([serialize_enum(layer) for layer in layers])
+        return jsonify([serialize_for_api(layer) for layer in layers])
     
     @bp.route('/api/layers/<int:layer_index>', methods=['GET'])
     def get_layer(layer_index: int):
@@ -314,12 +261,12 @@ def create_blueprint():
         layer = storage.get_layer(layer_index)
         if layer is None:
             return jsonify({'error': 'Layer not found'}), 404
-        return jsonify(serialize_enum(layer))
+        return jsonify(serialize_for_api(layer))
     
     @bp.route('/api/layers/<int:layer_index>/hooks', methods=['PUT'])
     def update_layer_hooks(layer_index: int):
         """Update hooks for a layer"""
-        data, error = _json_body_or_error()
+        data, error = json_body_or_error()
         if error:
             return error
         
@@ -333,19 +280,19 @@ def create_blueprint():
             }), 404
         
         layer = storage.get_layer(layer_index)
-        return jsonify(serialize_enum(layer))
+        return jsonify(serialize_for_api(layer))
     
     @bp.route('/api/layers/<int:layer_index>/tasks', methods=['POST'])
     def add_task_to_layer(layer_index: int):
         """Add a task to a layer"""
-        data, error = _json_body_or_error()
+        data, error = json_body_or_error()
         if error:
             return error
         
         task_id = data.get('task_id')
         if not task_id:
-            return jsonify({'error': 'Missing required field: task_id'}), 400
-        
+            return bad_request('Missing required field: task_id')
+
         insert_index = data.get('insert_index')
         success = storage.add_task_to_layer(layer_index, task_id, insert_index)
         if not success:
@@ -354,7 +301,7 @@ def create_blueprint():
             }), 404
         
         layer = storage.get_layer(layer_index)
-        return jsonify(serialize_enum(layer))
+        return jsonify(serialize_for_api(layer))
     
     @bp.route('/api/layers/<int:layer_index>/tasks/<task_id>', methods=['DELETE'])
     def remove_task_from_layer(layer_index: int, task_id: str):
@@ -369,7 +316,7 @@ def create_blueprint():
     @bp.route('/api/layers/<int:layer_index>/tasks/replace', methods=['POST'])
     def replace_task_in_layer(layer_index: int):
         """Atomically replace a task in a layer (cancel old, add new)"""
-        data, error = _json_body_or_error()
+        data, error = json_body_or_error()
         if error:
             return error
         
@@ -377,10 +324,8 @@ def create_blueprint():
         new_task_id = data.get('new_task_id')
         
         if not old_task_id or not new_task_id:
-            return jsonify({
-                'error': 'Missing required fields: old_task_id, new_task_id'
-            }), 400
-        
+            return bad_request('Missing required fields: old_task_id, new_task_id')
+
         success = storage.replace_task_in_layer(layer_index, old_task_id, new_task_id)
         if not success:
             return jsonify({
@@ -388,7 +333,7 @@ def create_blueprint():
             }), 404
         
         layer = storage.get_layer(layer_index)
-        return jsonify(serialize_enum(layer))
+        return jsonify(serialize_for_api(layer))
     
     # Execution pointer routes
     @bp.route('/api/execution-pointer/get', methods=['GET'])
@@ -397,12 +342,12 @@ def create_blueprint():
         pointer = storage.get_execution_pointer()
         if pointer is None:
             return jsonify({'message': 'No execution pointer set'})
-        return jsonify(serialize_enum(pointer))
+        return jsonify(serialize_for_api(pointer))
     
     @bp.route('/api/execution-pointer/set', methods=['PUT'])
     def set_execution_pointer():
         """Set execution pointer"""
-        data, error = _json_body_or_error()
+        data, error = json_body_or_error()
         if error:
             return error
         
@@ -412,10 +357,8 @@ def create_blueprint():
         is_executing_post_hook = data.get('is_executing_post_hook', False)
         
         if layer_index is None or task_index is None:
-            return jsonify({
-                'error': 'Missing required fields: layer_index, task_index'
-            }), 400
-        
+            return bad_request('Missing required fields: layer_index, task_index')
+
         try:
             success = storage.set_execution_pointer(
                 int(layer_index),
@@ -424,22 +367,22 @@ def create_blueprint():
                 bool(is_executing_post_hook)
             )
             if not success:
-                return jsonify({'error': 'Invalid layer_index or task_index'}), 400
-            
+                return bad_request('Invalid layer_index or task_index')
+
             pointer = storage.get_execution_pointer()
-            return jsonify(serialize_enum(pointer))
+            return jsonify(serialize_for_api(pointer))
         except (ValueError, TypeError):
-            return jsonify({'error': 'Invalid layer_index or task_index format'}), 400
-    
+            return bad_request('Invalid layer_index or task_index format')
+
     @bp.route('/api/execution-pointer/advance', methods=['POST'])
     def advance_execution_pointer():
         """Advance execution pointer to next task"""
         success = storage.advance_execution_pointer()
         if not success:
-            return jsonify({'error': 'Cannot advance pointer'}), 400
-        
+            return bad_request('Cannot advance pointer')
+
         pointer = storage.get_execution_pointer()
-        return jsonify(serialize_enum(pointer))
+        return jsonify(serialize_for_api(pointer))
     
     # Task Stack routes
     @bp.route('/api/task-stack/next', methods=['GET'])
@@ -454,8 +397,8 @@ def create_blueprint():
             'layer_index': next_task_info['layer_index'],
             'task_index': next_task_info['task_index'],
             'task_id': next_task_info['task_id'],
-            'task': serialize_enum(task) if task else None,
-            'layer': serialize_enum(next_task_info['layer']),
+            'task': serialize_for_api(task) if task else None,
+            'layer': serialize_for_api(next_task_info['layer']),
             'is_pre_hook': next_task_info.get('is_pre_hook', False)
         }
         return jsonify(response)
@@ -464,7 +407,7 @@ def create_blueprint():
     def get_task_stack():
         """Get all layers in the task stack"""
         layers = storage.get_all_layers()
-        return jsonify([serialize_enum(layer) for layer in layers])
+        return jsonify([serialize_for_api(layer) for layer in layers])
     
     @bp.route('/api/task-stack/insert-layer', methods=['POST'])
     def insert_layer_with_tasks():
@@ -501,7 +444,7 @@ def create_blueprint():
             "post_hook": {"type": "hook", "action": "cleanup"}
         }
         """
-        data, error = _json_body_or_error()
+        data, error = json_body_or_error()
         if error:
             return error
         
@@ -511,23 +454,17 @@ def create_blueprint():
         post_hook = data.get('post_hook')
         
         if insert_layer_index is None:
-            return jsonify({
-                'error': 'Missing required field: insert_layer_index'
-            }), 400
-        
+            return bad_request('Missing required field: insert_layer_index')
+
         # Validate task_ids if provided
         if task_ids is not None and not isinstance(task_ids, list):
-            return jsonify({
-                'error': 'task_ids must be a list or omitted'
-            }), 400
-        
+            return bad_request('task_ids must be a list or omitted')
+
         try:
             insert_layer_index = int(insert_layer_index)
         except (ValueError, TypeError):
-            return jsonify({
-                'error': 'insert_layer_index must be an integer'
-            }), 400
-        
+            return bad_request('insert_layer_index must be an integer')
+
         layer = storage.insert_layer_with_tasks(
             insert_layer_index=insert_layer_index,
             task_ids=task_ids,
@@ -536,24 +473,25 @@ def create_blueprint():
         )
         
         if layer is None:
-            return jsonify({
-                'error': 'Failed to insert layer. Possible reasons: invalid index, task not found, or cannot insert before executed layers'
-            }), 400
-        
-        return jsonify(serialize_enum(layer)), 201
+            return bad_request(
+                'Failed to insert layer. Possible reasons: invalid index, task not found, '
+                'or cannot insert before executed layers'
+            )
+
+        return jsonify(serialize_for_api(layer)), 201
     
     @bp.route('/api/tasks/<task_id>/status', methods=['PUT'])
     def update_task_status(task_id: str):
         """Update task status"""
-        data, error = _json_body_or_error()
+        data, error = json_body_or_error()
         if error:
             return error
         
         status_str = data.get('status')
         if not status_str:
-            return jsonify({'error': 'Missing required field: status'}), 400
-        
-        status, error = _parse_enum_or_error(
+            return bad_request('Missing required field: status')
+
+        status, error = parse_enum_or_error(
             TaskStatus,
             status_str,
             field_name="status",
@@ -565,12 +503,12 @@ def create_blueprint():
         updated_task = storage.update_task(task_id, None, status, None, None)
         if updated_task is None:
             return jsonify({'error': 'Task not found'}), 404
-        return jsonify(serialize_enum(updated_task))
+        return jsonify(serialize_for_api(updated_task))
     
     @bp.route('/api/tasks/<task_id>/messages', methods=['POST'])
     def push_user_message_to_task(task_id: str):
         """Push a user message to a task"""
-        data, error = _json_body_or_error()
+        data, error = json_body_or_error()
         if error:
             return error
         
@@ -578,10 +516,8 @@ def create_blueprint():
         sender_type_str = data.get('sender_type', 'user')
         
         if not content:
-            return jsonify({
-                'error': 'Missing required field: content'
-            }), 400
-        
+            return bad_request('Missing required field: content')
+
         # Verify task exists
         task = storage.get_task(task_id)
         if task is None:
@@ -593,7 +529,7 @@ def create_blueprint():
             return error
         
         message = storage.create_user_message(content, sender_type, task_id)
-        return jsonify(serialize_enum(message)), 201
+        return jsonify(serialize_for_api(message)), 201
     
     # Batch operations route
     @bp.route('/api/task-stack/modify', methods=['POST'])
@@ -692,32 +628,28 @@ def create_blueprint():
             "created_layer_indices": [...]
         }
         """
-        data, error = _json_body_or_error()
+        data, error = json_body_or_error()
         if error:
             return error
         
         operations_data = data.get('operations', [])
         if not isinstance(operations_data, list):
-            return jsonify({'error': 'operations must be a list'}), 400
-        
+            return bad_request('operations must be a list')
+
         if not operations_data:
-            return jsonify({'error': 'operations list cannot be empty'}), 400
-        
+            return bad_request('operations list cannot be empty')
+
         # Parse operations
         operations = []
         for op_data in operations_data:
             if not isinstance(op_data, dict):
-                return jsonify({
-                    'error': 'Each operation must be a dictionary'
-                }), 400
-            
+                return bad_request('Each operation must be a dictionary')
+
             op_type_str = op_data.get('type')
             if not op_type_str:
-                return jsonify({
-                    'error': 'Each operation must have a "type" field'
-                }), 400
+                return bad_request('Each operation must have a "type" field')
             
-            op_type, error = _parse_enum_or_error(
+            op_type, error = parse_enum_or_error(
                 BatchOperationType,
                 op_type_str,
                 field_name="operation type",
@@ -728,17 +660,15 @@ def create_blueprint():
             
             params = op_data.get('params', {})
             if not isinstance(params, dict):
-                return jsonify({
-                    'error': 'Each operation must have "params" as a dictionary'
-                }), 400
-            
+                return bad_request('Each operation must have "params" as a dictionary')
+
             operations.append(BatchOperation(type=op_type, params=params))
         
         # Execute batch operations
         result = storage.modify_task_stack(operations)
         
         # Serialize result
-        return jsonify(serialize_enum(result))
+        return jsonify(serialize_for_api(result))
     
     # Health check route
     @bp.route('/health', methods=['GET'])

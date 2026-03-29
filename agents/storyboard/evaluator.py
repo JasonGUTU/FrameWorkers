@@ -20,7 +20,7 @@ Layer 2 — creative assessment:
 from __future__ import annotations
 
 import json
-from typing import Any
+from typing import Any, Mapping
 
 from ..base_evaluator import BaseEvaluator
 from .schema import StoryboardAgentOutput
@@ -34,8 +34,8 @@ class StoryboardEvaluator(BaseEvaluator[StoryboardAgentOutput]):
         ("pacing_fit", "Do shot durations and shot count create appropriate pacing? Not too fast, not too slow?"),
     ]
 
-    def _build_creative_context(self, output, upstream):
-        sp_data = (upstream or {}).get("screenplay", {})
+    def _build_creative_context(self, output, input_bundle_v2):
+        sp_data = (input_bundle_v2 or {}).get("screenplay", {})
         if sp_data:
             return f"Screenplay:\n{json.dumps(sp_data, ensure_ascii=False, indent=2)}"
         return ""
@@ -47,15 +47,15 @@ class StoryboardEvaluator(BaseEvaluator[StoryboardAgentOutput]):
     def check_structure(
         self,
         output: StoryboardAgentOutput,
-        upstream: dict[str, Any] | None = None,
+        input_bundle_v2: Mapping[str, Any] | None = None,
     ) -> list[str]:
         """Rule-based structural validation for Storyboard."""
         errors: list[str] = []
         c = output.content
 
         # --- Upstream cross-check: scene_ids must match screenplay ---
-        if upstream and "screenplay" in upstream:
-            sp_content = upstream["screenplay"].get("content", {})
+        if input_bundle_v2 and "screenplay" in input_bundle_v2:
+            sp_content = input_bundle_v2["screenplay"].get("content", {})
             sp_scene_ids = {
                 s.get("scene_id", "") for s in sp_content.get("scenes", [])
             }
@@ -75,8 +75,8 @@ class StoryboardEvaluator(BaseEvaluator[StoryboardAgentOutput]):
             errors.append(f"duplicate shot_ids: {sorted(set(dup_shots))}")
 
         # --- linked_blocks must reference existing block IDs from screenplay ---
-        if upstream and "screenplay" in upstream:
-            sp_content = upstream["screenplay"].get("content", {})
+        if input_bundle_v2 and "screenplay" in input_bundle_v2:
+            sp_content = input_bundle_v2["screenplay"].get("content", {})
             all_block_ids: set[str] = set()
             for sp_scene in sp_content.get("scenes", []):
                 for block in sp_scene.get("blocks", []):

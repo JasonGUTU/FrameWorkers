@@ -34,6 +34,7 @@ if str(_project_root) not in sys.path:
 
 
 from agents.audio.materializer import AudioMaterializer
+from agents.contracts import ArtifactRefV2, InputBundleV2
 from agents.keyframe.materializer import KeyframeMaterializer
 from agents.video.materializer import VideoMaterializer
 from inference.generation.audio_generators.service import AudioService
@@ -147,6 +148,22 @@ class _FalVideoServiceSpy(FalVideoService):
         return f"video:{url}".encode("utf-8")
 
 
+def _bundle_from_assets(task_id: str, assets: dict[str, object]) -> InputBundleV2:
+    artifacts = [
+        ArtifactRefV2(
+            artifact_id=f"art_{semantic_type}",
+            semantic_type=semantic_type,
+            payload=payload,
+        )
+        for semantic_type, payload in assets.items()
+    ]
+    return InputBundleV2(
+        task_id=task_id,
+        artifacts=artifacts,
+        context={"resolved_inputs": dict(assets)},
+    )
+
+
 def test_video_materializer_uses_keyframe_images_for_clip_generation(monkeypatch):
     monkeypatch.setenv("FW_ENABLE_PROP_PIPELINE", "1")
     with tempfile.TemporaryDirectory() as tmp_dir:
@@ -249,7 +266,8 @@ def test_video_materializer_uses_keyframe_images_for_clip_generation(monkeypatch
             },
         }
 
-        asyncio.run(materializer.materialize("proj_1", asset_dict, assets))
+        input_bundle_v2 = _bundle_from_assets("task_1", assets)
+        asyncio.run(materializer.materialize("task_1", asset_dict, input_bundle_v2))
 
     assert len(video_service.generate_calls) == 1
     call = video_service.generate_calls[0]
@@ -339,10 +357,16 @@ def test_keyframe_materializer_returns_assets_without_local_progress_snapshots(m
             }
         }
 
-        media_assets = asyncio.run(materializer.materialize("proj_test", asset_dict, {}))
+        media_assets = asyncio.run(
+            materializer.materialize(
+                "task_test",
+                asset_dict,
+                InputBundleV2(task_id="task_test"),
+            )
+        )
 
         assert len(media_assets) >= 1
-        run_dir = progress_dir / "proj_test" / "unit"
+        run_dir = progress_dir / "task_test" / "unit"
         # Keyframe materializer should not write local progress snapshots.
         assert not run_dir.exists()
 
@@ -397,7 +421,8 @@ def test_audio_materializer_mixes_final_delivery_video():
             }
         }
 
-        media_assets = asyncio.run(materializer.materialize("proj_1", asset_dict, assets))
+        input_bundle_v2 = _bundle_from_assets("task_1", assets)
+        media_assets = asyncio.run(materializer.materialize("task_1", asset_dict, input_bundle_v2))
 
     ids = {m.sys_id for m in media_assets}
     assert "aud_final" in ids

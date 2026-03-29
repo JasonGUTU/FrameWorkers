@@ -1,5 +1,7 @@
 # Dynamic Task Stack 使用示例
 
+> 本文 HTTP 路径与 `dynamic-task-stack/src/task_stack/routes.py` 一致：创建任务/层使用 `POST /api/tasks/create`、`POST /api/layers/create`，列表使用 `GET /api/tasks/list`、`GET /api/layers/list`，执行指针使用 `GET|PUT /api/execution-pointer/get|set`。
+
 ## 系统概述
 
 Dynamic Task Stack 是一个分层级的任务执行系统，支持：
@@ -16,7 +18,7 @@ Dynamic Task Stack 是一个分层级的任务执行系统，支持：
 
 #### 步骤 1: 创建第一层
 ```bash
-POST /api/layers
+POST /api/layers/create
 Content-Type: application/json
 
 {
@@ -46,7 +48,7 @@ Content-Type: application/json
 
 #### 步骤 2: 创建任务
 ```bash
-POST /api/tasks
+POST /api/tasks/create
 Content-Type: application/json
 
 {
@@ -85,14 +87,14 @@ Content-Type: application/json
 #### 步骤 4: 创建第二层并添加任务
 ```bash
 # 创建第二层
-POST /api/layers
+POST /api/layers/create
 {
   "pre_hook": {"type": "middleware", "action": "prepare"},
   "post_hook": {"type": "hook", "action": "finalize"}
 }
 
 # 创建任务
-POST /api/tasks
+POST /api/tasks/create
 {
   "description": {
     "overall_description": "执行数据分析",
@@ -109,7 +111,7 @@ POST /api/layers/1/tasks
 }
 
 # 再添加一个任务到第二层
-POST /api/tasks
+POST /api/tasks/create
 {
   "description": {
     "overall_description": "生成报告",
@@ -129,7 +131,7 @@ POST /api/layers/1/tasks
 
 #### 步骤 1: 设置执行指针（从第一层第一个任务开始）
 ```bash
-PUT /api/execution-pointer
+PUT /api/execution-pointer/set
 Content-Type: application/json
 
 {
@@ -194,7 +196,7 @@ GET /api/task-stack/next
 
 ```bash
 # 1. 创建新任务
-POST /api/tasks
+POST /api/tasks/create
 {
   "description": {
     "overall_description": "新的任务描述",
@@ -232,7 +234,7 @@ DELETE /api/layers/1/tasks/task_3_ghi789
 
 ```bash
 # 创建新任务
-POST /api/tasks
+POST /api/tasks/create
 {
   "description": {...}
 }
@@ -250,7 +252,7 @@ POST /api/layers/1/tasks
 
 ```bash
 # 假设当前执行到 Layer 1，我们想在 Layer 2 位置插入新层
-POST /api/layers
+POST /api/layers/create
 {
   "layer_index": 2,
   "pre_hook": {...},
@@ -258,7 +260,7 @@ POST /api/layers
 }
 
 # 添加任务到新层
-POST /api/tasks
+POST /api/tasks/create
 {
   "description": {...}
 }
@@ -273,7 +275,7 @@ POST /api/layers/2/tasks
 
 #### 获取所有层
 ```bash
-GET /api/layers
+GET /api/layers/list
 ```
 
 #### 获取特定层
@@ -283,12 +285,12 @@ GET /api/layers/0
 
 #### 获取当前执行指针
 ```bash
-GET /api/execution-pointer
+GET /api/execution-pointer/get
 ```
 
 #### 获取所有任务
 ```bash
-GET /api/tasks
+GET /api/tasks/list
 ```
 
 #### 获取特定任务
@@ -298,7 +300,7 @@ GET /api/tasks/task_1_abc123
 
 ### 5. 更新操作
 
-#### 更新任务状态
+#### 更新任务（状态 / 进度 / 结果 / 描述）
 ```bash
 PUT /api/tasks/task_1_abc123
 Content-Type: application/json
@@ -315,6 +317,8 @@ Content-Type: application/json
   }
 }
 ```
+
+若**仅**更新状态，也可用 `PUT /api/tasks/task_1_abc123/status`，请求体为 `{ "status": "COMPLETED" }`。
 
 #### 更新层的 Hook
 ```bash

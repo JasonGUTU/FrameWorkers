@@ -12,6 +12,7 @@ import os
 from typing import Any
 
 from ..descriptor import BaseMaterializer, MediaAsset
+from ..contracts.input_bundle_v2 import InputBundleV2
 from inference.generation.video_generators.service import VideoService
 
 logger = logging.getLogger(__name__)
@@ -35,6 +36,30 @@ class VideoMaterializer(BaseMaterializer):
         self._enable_prop_consistency = raw in {"1", "true", "yes", "on"}
 
     @staticmethod
+    def naming_spec_v2() -> dict[str, Any]:
+        return {
+            "agent_id": "VideoAgent",
+            "spec_version": "1.0",
+            "rules": [
+                {
+                    "artifact_family": "video_clip",
+                    "semantic_meaning": "shot/scene/final video clips",
+                    "recommended_name_pattern": "clip_{shot_or_scene_or_final}.mp4",
+                    "id_source": "storyboard shot_id and scene_id",
+                    "ordering_rules": "shot clips follow scene shot order",
+                    "examples": ["clip_sh_001.mp4", "clip_sc_001.mp4", "clip_final.mp4"],
+                    "rename_hints": {"stable_parts": "clip prefix and id token", "mutable_parts": "optional readability infix"},
+                }
+            ],
+        }
+
+    @staticmethod
+    def _resolved_inputs(input_bundle_v2: InputBundleV2) -> dict[str, Any]:
+        ctx = getattr(input_bundle_v2, "context", {})
+        resolved = ctx.get("resolved_inputs") if isinstance(ctx, dict) else None
+        return resolved if isinstance(resolved, dict) else {}
+
+    @staticmethod
     def _normalize_local_path(uri: str) -> str:
         if not uri:
             return ""
@@ -43,11 +68,11 @@ class VideoMaterializer(BaseMaterializer):
         return uri
 
     def _build_shot_keyframe_inputs_index(
-        self, assets: dict[str, Any]
+        self, input_bundle_v2: InputBundleV2
     ) -> dict[str, list[dict[str, str]]]:
         """Build shot_id -> ordered keyframe inputs (uri + prompt summary)."""
         index: dict[str, list[dict[str, str]]] = {}
-        keyframes = (assets or {}).get("keyframes", {})
+        keyframes = self._resolved_inputs(input_bundle_v2).get("keyframes", {})
         content = keyframes.get("content", {}) if isinstance(keyframes, dict) else {}
         for scene in content.get("scenes", []):
             consistency_pack = (
@@ -85,10 +110,10 @@ class VideoMaterializer(BaseMaterializer):
                     index[shot_id] = inputs
         return index
 
-    def _build_storyboard_shot_index(self, assets: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    def _build_storyboard_shot_index(self, input_bundle_v2: InputBundleV2) -> dict[str, dict[str, Any]]:
         """Build shot_id -> storyboard shot metadata used for clip prompting."""
         index: dict[str, dict[str, Any]] = {}
-        storyboard = (assets or {}).get("storyboard", {})
+        storyboard = self._resolved_inputs(input_bundle_v2).get("storyboard", {})
         content = storyboard.get("content", {}) if isinstance(storyboard, dict) else {}
         for scene in content.get("scenes", []):
             consistency_pack = (
@@ -277,9 +302,9 @@ class VideoMaterializer(BaseMaterializer):
 
     async def materialize(
         self,
-        project_id: str,
+        task_id: str,
         asset_dict: dict[str, Any],
-        assets: dict[str, Any],
+        input_bundle_v2: InputBundleV2,
     ) -> list[MediaAsset]:
         """Generate actual video clips for all shots.
 
@@ -294,8 +319,8 @@ class VideoMaterializer(BaseMaterializer):
         pending: list[MediaAsset] = []
         content = asset_dict.get("content", {})
         scene_bytes_list: list[bytes] = []
-        shot_keyframe_inputs = self._build_shot_keyframe_inputs_index(assets)
-        storyboard_shot_index = self._build_storyboard_shot_index(assets)
+        shot_keyframe_inputs = self._build_shot_keyframe_inputs_index(input_bundle_v2)
+        storyboard_shot_index = self._build_storyboard_shot_index(input_bundle_v2)
 
         for scene in content.get("scenes", []):
             scene_id = scene.get("scene_id", "")
@@ -369,5 +394,5 @@ class VideoMaterializer(BaseMaterializer):
             except Exception as exc:
                 logger.error("Final video assembly failed: %s", exc)
 
-        logger.info("All video clips materialized for %s", project_id)
+        logger.info("All video clips materialized for %s", task_id)
         return pending

@@ -1,0 +1,326 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_type": "character",
+          "entity_id": "char_001",
+          "display_name": "",
+          "purpose": "identity_anchor",
+          "keyframe_id": "kf_global_char_001",
+          "image_asset": {
+            "asset_id": "img_char_001_global",
+            "uri": "/tmp/fw_media_xqy3ptyy/img_char_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Warm, naturalistic lighting, emphasizing the soft, diffused light of an autumn day. Focus on natural textures and an earthy, rich color palette, with the crimson leaf as a strong accent. A gentle, slightly melancholic aesthetic. Use of shallow depth of field to draw focus to key elements. Must avoid: Harsh, artificial lighting or over-stylized color grading; Fast-paced, jarring cuts or hyper-realistic action; Overly dramatic or exaggerated emotional expressions. A solitary, contemplative individual seen from a distance, walking slowly. Their face is largely obscured by the angle of the shot, emphasizing their archetypal 'passerby' role. They wear a thick, functional, deep olive green autumn coat, a muted charcoal knitted scarf, and practical, dark brown gloves. The clothing is textural and blends seamlessly with the surrounding autumn hues. Their posture suggests a quiet, reflective demeanor as they move through a crisp, clear autumn day."
+        }
+      ],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "display_name": "",
+          "purpose": "style_anchor",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/tmp/fw_media_xqy3ptyy/img_loc_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Warm, naturalistic lighting, emphasizing the soft, diffused light of an autumn day. Focus on natural textures and an earthy, rich color palette, with the crimson leaf as a strong accent. A gentle, slightly melancholic aesthetic. Use of shallow depth of field to draw focus to key elements. Must avoid: Harsh, artificial lighting or over-stylized color grading; Fast-paced, jarring cuts or hyper-realistic action; Overly dramatic or exaggerated emotional expressions. A serene, winding autumn park path. Mature trees with vibrant fall foliage in shades of gold, amber, and deep crimson line both sides of the path, forming a majestic canopy. Soft, diffused sunlight filters and dapples through the leaves, creating intricate patterns of light and shadow on the ground. The path itself is almost entirely obscured by a thick, colorful carpet of fallen leaves in various autumn hues. The air appears crisp and clear, conveying a sense of tranquil beauty. Natural textures like bark, dry leaves, and soft ground are emphasized."
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_001",
+                "uri": "/tmp/fw_media_xqy3ptyy/img_char_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Warm, naturalistic lighting, emphasizing the soft, diffused light of an autumn day. Focus on natural textures and an earthy, rich color palette, with the crimson leaf as a strong accent. A gentle, slightly melancholic aesthetic. Use of shallow depth of field to draw focus to key elements. Show the character, a solitary individual, dressed in a warm, olive-green autumn coat, a deep brown knitted scarf, and charcoal gloves. Their face is partially obscured, suggesting a universal passerby. They embody a quiet, reflective demeanor, perfectly integrated into the crisp, clear atmosphere of an autumn park at midday."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/tmp/fw_media_xqy3ptyy/img_loc_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Warm, naturalistic lighting, emphasizing the soft, diffused light of an autumn day. Focus on natural textures and an earthy, rich color palette, with the crimson leaf as a strong accent. A gentle, slightly melancholic aesthetic. Use of shallow depth of field to draw focus to key elements. Show a serene autumn park path during daytime, with mature trees displaying vibrant fall foliage in reds, oranges, and yellows. Sunlight softly dappling through the canopy, casting dynamic patterns of light and shadow on the path. The ground is thickly covered with a rich blanket of colorful, fallen leaves. The air is visibly crisp and clear, enhancing the natural textures and earthy tones."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_001",
+              "linked_blocks": [
+                "b_001"
+              ]
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_01",
+                  "uri": "/tmp/fw_media_xqy3ptyy/img_sh_001_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Warm, naturalistic lighting, emphasizing the soft, diffused light of an autumn day. Focus on natural textures and an earthy, rich color palette, with the crimson leaf as a strong accent. A gentle, slightly melancholic aesthetic. Use of shallow depth of field to draw focus to key elements. Eye-level, wide shot, tracking forward behind a solitary individual (The Passerby) walking slowly down a serene, tree-lined autumn park path. Vibrant fall foliage covers the trees and the ground, which is carpeted with colorful fallen leaves. Dappled sunlight filters through the canopy, creating a play of light and shadow on the path and the Passerby's warm autumn coat. The frame shows the expansive park environment, emphasizing the quiet, contemplative mood.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_002",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_02",
+                  "uri": "/tmp/fw_media_xqy3ptyy/img_sh_001_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Warm, naturalistic lighting, emphasizing the soft, diffused light of an autumn day. Focus on natural textures and an earthy, rich color palette, with the crimson leaf as a strong accent. A gentle, slightly melancholic aesthetic. Use of shallow depth of field to draw focus to key elements. Eye-level, slightly wider than medium shot, tracking forward from slightly to the side of The Passerby. They continue to amble calmly down the quiet path, their figure framed against the backdrop of vibrant autumn trees and sun-dappled foliage. The ground is richly covered with fallen leaves. The shot captures the crisp atmosphere and the gentle rhythm of their walk, reinforcing the serene and contemplative mood of the autumn day.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_002",
+              "linked_blocks": [
+                "b_002",
+                "b_003"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_003",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_01",
+                  "uri": "/tmp/fw_media_xqy3ptyy/img_sh_002_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Warm, naturalistic lighting, emphasizing the soft, diffused light of an autumn day. Focus on natural textures and an earthy, rich color palette, with the crimson leaf as a strong accent. A gentle, slightly melancholic aesthetic. Use of shallow depth of field to draw focus to key elements. Eye-level, static medium shot, focusing on The Passerby's upper body. A single, vibrant crimson leaf detaches from above and twirls gracefully into the frame, beginning its descent. The Passerby's head turns slightly, their gaze fixed on the falling leaf, a subtle curiosity sparking in their eyes, hinting at gentle anticipation. Shallow depth of field ensures the leaf and the character are in focus against the soft autumn backdrop.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_004",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_02",
+                  "uri": "/tmp/fw_media_xqy3ptyy/img_sh_002_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Warm, naturalistic lighting, emphasizing the soft, diffused light of an autumn day. Focus on natural textures and an earthy, rich color palette, with the crimson leaf as a strong accent. A gentle, slightly melancholic aesthetic. Use of shallow depth of field to draw focus to key elements. Eye-level, static medium shot, maintaining focus on The Passerby's upper body. The vibrant crimson leaf continues its elegant descent, now closer to The Passerby's eye level. A soft, knowing smile plays on their lips, and their gloved hand, still slightly lowered, begins to slowly extend, poised for a gentle catch. The backdrop remains a soft blur of autumn colors.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_003",
+              "linked_blocks": [
+                "b_004"
+              ]
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_005",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_01",
+                  "uri": "/tmp/fw_media_xqy3ptyy/img_sh_003_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Warm, naturalistic lighting, emphasizing the soft, diffused light of an autumn day. Focus on natural textures and an earthy, rich color palette, with the crimson leaf as a strong accent. A gentle, slightly melancholic aesthetic. Use of shallow depth of field to draw focus to key elements. Eye-level, static close-up shot, tight on The Passerby's gloved hand. Their fingers are gently spread, poised. The vibrant crimson leaf is in sharp focus, mere millimeters from the gloved fingertips, illuminated by soft autumn light. The background is an extreme, soft blur, emphasizing the delicate, almost-achieved moment of contact.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_006",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_02",
+                  "uri": "/tmp/fw_media_xqy3ptyy/img_sh_003_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Warm, naturalistic lighting, emphasizing the soft, diffused light of an autumn day. Focus on natural textures and an earthy, rich color palette, with the crimson leaf as a strong accent. A gentle, slightly melancholic aesthetic. Use of shallow depth of field to draw focus to key elements. Eye-level, static close-up. The vibrant crimson leaf, still in sharp focus, is just touching The Passerby's gloved fingertips. A subtle, unseen gust of wind begins to disrupt the air around the leaf, indicated by a slight blurring or vibration effect, creating a tense anticipation of interruption. The fingers are still outstretched, ready to cup the leaf.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_007",
+                "order": 3,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_03",
+                  "uri": "/tmp/fw_media_xqy3ptyy/img_sh_003_kf_03.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Warm, naturalistic lighting, emphasizing the soft, diffused light of an autumn day. Focus on natural textures and an earthy, rich color palette, with the crimson leaf as a strong accent. A gentle, slightly melancholic aesthetic. Use of shallow depth of field to draw focus to key elements. Eye-level, static close-up. A dramatic, unseen gust of wind whips through the frame, clearly visible by the sudden, violent movement of the vibrant crimson leaf. The leaf is snatched away from The Passerby's still-outstretched gloved fingertips, spiraling rapidly out of frame. The dynamic effect of the wind is evident, contrasting sharply with the previously serene moment, conveying a jarring interruption and a sense of sudden loss.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "source": {
+              "storyboard_shot_id": "sh_004",
+              "linked_blocks": [
+                "b_005"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_008",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_01",
+                  "uri": "/tmp/fw_media_xqy3ptyy/img_sh_004_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Warm, naturalistic lighting, emphasizing the soft, diffused light of an autumn day. Focus on natural textures and an earthy, rich color palette, with the crimson leaf as a strong accent. A gentle, slightly melancholic aesthetic. Use of shallow depth of field to draw focus to key elements. Eye-level, static medium shot, returning to The Passerby's upper body and expression. Their empty, gloved hand slowly and deliberately lowers from where it was outstretched. Their gaze is directed off-frame, following the now distant crimson leaf as it disappears among the vibrant autumn trees, a subtle, quiet resignation beginning to form on their face.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_009",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_02",
+                  "uri": "/tmp/fw_media_xqy3ptyy/img_sh_004_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Warm, naturalistic lighting, emphasizing the soft, diffused light of an autumn day. Focus on natural textures and an earthy, rich color palette, with the crimson leaf as a strong accent. A gentle, slightly melancholic aesthetic. Use of shallow depth of field to draw focus to key elements. Eye-level, static medium shot, focusing on The Passerby's full upper body. Their empty hand is now fully lowered. A subtle, knowing sigh escapes their lips, visible in the slight relaxation of their jaw and shoulders. Their gaze remains on the empty space where the leaf vanished, conveying quiet acceptance and a gentle understanding of nature's unpredictable indifference. The wider angle emphasizes the absence of the leaf in the beautiful yet indifferent autumn landscape.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_count": 4,
+    "keyframe_count_total": 9,
+    "avg_keyframes_per_shot": 2.25,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 1,
+    "stability_location_keyframe_count": 1,
+    "stability_prop_keyframe_count": 0
+  }
+}

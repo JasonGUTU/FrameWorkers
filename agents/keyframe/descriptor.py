@@ -7,21 +7,28 @@ from typing import Any
 from pydantic import BaseModel
 
 from ..descriptor import SubAgentDescriptor
+from ..contracts import InputBundleV2
 from .agent import KeyFrameAgent
 from .schema import KeyFrameAgentInput
 from .evaluator import KeyframeEvaluator
 from .materializer import KeyframeMaterializer
 from inference.generation.image_generators.service import FalImageService
 
+OUTPUT_ASSET_KEY = "keyframes"
+
 
 def build_input(
-    _project_id: str,
-    _draft_id: str,
-    assets: dict[str, Any],
+    _task_id: str,
+    input_bundle_v2: InputBundleV2,
     config: Any,
 ) -> BaseModel:
+    resolved = (
+        input_bundle_v2.context.get("resolved_inputs", {})
+        if isinstance(getattr(input_bundle_v2, "context", None), dict)
+        else {}
+    )
     return KeyFrameAgentInput(
-        storyboard=assets.get("storyboard", {}),
+        storyboard=resolved.get("storyboard", {}),
     )
 
 
@@ -37,10 +44,8 @@ CATALOG_ENTRY = (
 )
 
 DESCRIPTOR = SubAgentDescriptor(
-    agent_name="KeyFrameAgent",
-    asset_key="keyframes",
-    asset_type="keyframes_package",
-    upstream_keys=["storyboard"],
+    agent_id="KeyFrameAgent",
+    asset_key=OUTPUT_ASSET_KEY,
     catalog_entry=CATALOG_ENTRY,
     agent_factory=lambda llm: KeyFrameAgent(llm_client=llm),
     evaluator_factory=KeyframeEvaluator,

@@ -76,17 +76,6 @@ class BackendAPIClient:
     
     # Task Stack API methods
     
-    def get_user_messages(self) -> List[Dict[str, Any]]:
-        """Get all user messages"""
-        response = self._request('GET', '/api/messages/list')
-        if isinstance(response, list):
-            return response
-        raise BackendAPIError("Expected list from /api/messages/list")
-    
-    def get_user_message(self, msg_id: str) -> Dict[str, Any]:
-        """Get a specific user message"""
-        return self._request('GET', f'/api/messages/{msg_id}')
-
     def get_unread_messages(
         self,
         sender_type: Optional[str] = None,
@@ -104,10 +93,6 @@ class BackendAPIClient:
         if isinstance(response, list):
             return response
         raise BackendAPIError("Expected list from /api/messages/unread")
-    
-    def check_user_message(self, msg_id: str) -> Dict[str, Any]:
-        """Check user message (data structure, read status, is new task)"""
-        return self._request('GET', f'/api/messages/{msg_id}/check')
     
     def update_message_read_status(
         self,
@@ -229,54 +214,26 @@ class BackendAPIClient:
         """Get a specific layer"""
         return self._request('GET', f'/api/layers/{layer_index}')
 
-    def insert_layer_with_tasks(
-        self,
-        insert_layer_index: int,
-        task_ids: Optional[List[str]] = None,
-        pre_hook: Optional[Dict[str, Any]] = None,
-        post_hook: Optional[Dict[str, Any]] = None
-    ) -> Dict[str, Any]:
-        """Insert layer and optionally attach tasks atomically."""
-        data: Dict[str, Any] = {"insert_layer_index": insert_layer_index}
-        if task_ids is not None:
-            data["task_ids"] = task_ids
-        if pre_hook is not None:
-            data["pre_hook"] = pre_hook
-        if post_hook is not None:
-            data["post_hook"] = post_hook
-        return self._request('POST', '/api/task-stack/insert-layer', data=data)
-
-    def modify_task_stack(self, operations: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Perform atomic batch task-stack modifications."""
-        return self._request('POST', '/api/task-stack/modify', data={"operations": operations})
-    
     # Assistant API methods
     
     def execute_agent(
         self,
         agent_id: str,
         task_id: str,
-        additional_inputs: Optional[Dict[str, Any]] = None
+        execute_fields: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """
-        Execute an agent for a task
-        
-        Args:
-            agent_id: ID of the agent to execute
-            task_id: ID of the task
-            additional_inputs: Optional additional inputs
+        Execute an agent for a task.
+
+        The HTTP body is ``agent_id``, ``task_id``, and nested ``execute_fields``
+        (``text``, ``image``, ``video``, …).
         """
-        data = {
+        data: Dict[str, Any] = {
             'agent_id': agent_id,
-            'task_id': task_id
+            'task_id': task_id,
+            'execute_fields': dict(execute_fields) if execute_fields else {},
         }
-        if additional_inputs:
-            data['additional_inputs'] = additional_inputs
         return self._request('POST', '/api/assistant/execute', data=data)
-    
-    def get_execution(self, execution_id: str) -> Dict[str, Any]:
-        """Get execution by ID"""
-        return self._request('GET', f'/api/assistant/executions/{execution_id}')
     
     def get_executions_by_task(self, task_id: str) -> List[Dict[str, Any]]:
         """Get all executions for a task"""
@@ -284,12 +241,6 @@ class BackendAPIClient:
         if isinstance(response, list):
             return response
         raise BackendAPIError(f"Expected list from /api/assistant/executions/task/{task_id}")
-    
-    def get_assistant(self) -> Dict[str, Any]:
-        """
-        Get the global assistant instance
-        """
-        return self._request('GET', '/api/assistant')
     
     def get_all_agents(self) -> List[Dict[str, Any]]:
         """Get all available agents as a flat list."""
@@ -302,152 +253,14 @@ class BackendAPIClient:
             return response
         raise BackendAPIError("Unexpected response shape from /api/assistant/sub-agents")
 
-    def get_sub_agent(self, agent_id: str) -> Dict[str, Any]:
-        """Get metadata for one sub-agent."""
-        response = self._request('GET', f'/api/assistant/sub-agents/{agent_id}')
-        if isinstance(response, dict):
-            return response
-        raise BackendAPIError(f"Expected object from /api/assistant/sub-agents/{agent_id}")
-
-    def get_agent_inputs(self, agent_id: str) -> Dict[str, Any]:
-        """Get input contract for one sub-agent."""
-        response = self._request('GET', f'/api/assistant/agents/{agent_id}/inputs')
-        if isinstance(response, dict):
-            return response
-        raise BackendAPIError(f"Expected object from /api/assistant/agents/{agent_id}/inputs")
-
-    # Workspace API helpers
-    def get_workspace_summary(self) -> Dict[str, Any]:
-        """Get assistant workspace summary."""
-        response = self._request('GET', '/api/assistant/workspace/summary')
-        if isinstance(response, dict):
-            return response
-        raise BackendAPIError("Expected object from /api/assistant/workspace/summary")
-
-    def get_workspace(self) -> Dict[str, Any]:
-        """Get assistant workspace summary alias endpoint."""
-        response = self._request('GET', '/api/assistant/workspace')
-        if isinstance(response, dict):
-            return response
-        raise BackendAPIError("Expected object from /api/assistant/workspace")
-
-    def get_workspace_files(
-        self,
-        file_type: Optional[str] = None,
-        created_by: Optional[str] = None,
-        limit: Optional[int] = None,
-        tags: Optional[List[str]] = None,
-    ) -> List[Dict[str, Any]]:
-        """List files in assistant workspace."""
-        params: Dict[str, Any] = {}
-        if file_type:
-            params["file_type"] = file_type
-        if created_by:
-            params["created_by"] = created_by
-        if limit is not None:
-            params["limit"] = limit
-        if tags:
-            params["tags"] = tags
-        response = self._request('GET', '/api/assistant/workspace/files', params=params or None)
-        if isinstance(response, list):
-            return response
-        raise BackendAPIError("Expected list from /api/assistant/workspace/files")
-
-    def get_workspace_file(self, file_id: str) -> Dict[str, Any]:
-        """Get one workspace file metadata by id."""
-        response = self._request('GET', f'/api/assistant/workspace/files/{file_id}')
-        if isinstance(response, dict):
-            return response
-        raise BackendAPIError(f"Expected object from /api/assistant/workspace/files/{file_id}")
-
-    def search_workspace_files(
-        self,
-        query: str,
-        file_type: Optional[str] = None,
-        limit: int = 10,
-    ) -> List[Dict[str, Any]]:
-        """Search workspace files by textual query."""
-        params: Dict[str, Any] = {"query": query, "limit": limit}
-        if file_type:
-            params["file_type"] = file_type
-        response = self._request('GET', '/api/assistant/workspace/files/search', params=params)
-        if isinstance(response, list):
-            return response
-        raise BackendAPIError("Expected list from /api/assistant/workspace/files/search")
-
-    def list_workspace_memory_entries(
-        self,
-        *,
-        tier: Optional[str] = None,
-        task_id: Optional[str] = None,
-        agent_id: Optional[str] = None,
-        kinds: Optional[List[str]] = None,
-        limit: int = 20,
-    ) -> List[Dict[str, Any]]:
-        """List structured memory entries."""
-        params: Dict[str, Any] = {"limit": limit}
-        if tier:
-            params["tier"] = tier
-        if task_id:
-            params["task_id"] = task_id
-        if agent_id:
-            params["agent_id"] = agent_id
-        if kinds:
-            params["kind"] = kinds
-        response = self._request('GET', '/api/assistant/workspace/memory/entries', params=params)
-        if isinstance(response, list):
-            return response
-        raise BackendAPIError("Expected list from /api/assistant/workspace/memory/entries")
-
-    def add_workspace_memory_entry(
-        self,
-        *,
-        content: str,
-        tier: str = "short_term",
-        kind: str = "note",
-        task_id: Optional[str] = None,
-        agent_id: Optional[str] = None,
-        source_asset_refs: Optional[List[str]] = None,
-        priority: int = 3,
-        confidence: Optional[float] = None,
-        ttl_runs: Optional[int] = None,
-        metadata: Optional[Dict[str, Any]] = None,
-    ) -> Dict[str, Any]:
-        """Create one structured memory entry."""
-        data: Dict[str, Any] = {
-            "content": content,
-            "tier": tier,
-            "kind": kind,
-            "priority": priority,
-        }
-        if task_id:
-            data["task_id"] = task_id
-        if agent_id:
-            data["agent_id"] = agent_id
-        if source_asset_refs:
-            data["source_asset_refs"] = source_asset_refs
-        if confidence is not None:
-            data["confidence"] = confidence
-        if ttl_runs is not None:
-            data["ttl_runs"] = ttl_runs
-        if metadata:
-            data["metadata"] = metadata
-        response = self._request('POST', '/api/assistant/workspace/memory/entries', data=data)
-        if isinstance(response, dict):
-            return response
-        raise BackendAPIError("Expected object from POST /api/assistant/workspace/memory/entries")
-
     def get_workspace_memory_brief(
         self,
         *,
         task_id: Optional[str] = None,
         agent_id: Optional[str] = None,
-        short_term_limit: int = 6,
     ) -> Dict[str, Any]:
-        """Fetch concise STM memory brief (LTM disabled; ``long_term`` is always empty)."""
-        params: Dict[str, Any] = {
-            "short_term_limit": short_term_limit,
-        }
+        """Fetch ``global_memory`` brief (rows omit ``content``)."""
+        params: Dict[str, Any] = {}
         if task_id:
             params["task_id"] = task_id
         if agent_id:
@@ -457,45 +270,6 @@ class BackendAPIClient:
             return response
         raise BackendAPIError("Expected object from /api/assistant/workspace/memory/brief")
 
-    def get_workspace_logs(
-        self,
-        operation_type: Optional[str] = None,
-        resource_type: Optional[str] = None,
-        agent_id: Optional[str] = None,
-        task_id: Optional[str] = None,
-        limit: Optional[int] = None,
-    ) -> List[Dict[str, Any]]:
-        """Get workspace logs with optional filters."""
-        params: Dict[str, Any] = {}
-        if operation_type:
-            params["operation_type"] = operation_type
-        if resource_type:
-            params["resource_type"] = resource_type
-        if agent_id:
-            params["agent_id"] = agent_id
-        if task_id:
-            params["task_id"] = task_id
-        if limit is not None:
-            params["limit"] = limit
-        response = self._request('GET', '/api/assistant/workspace/logs', params=params or None)
-        if isinstance(response, list):
-            return response
-        raise BackendAPIError("Expected list from /api/assistant/workspace/logs")
-
-    def search_workspace(
-        self,
-        query: str,
-        types: Optional[List[str]] = None
-    ) -> Dict[str, Any]:
-        """Run comprehensive workspace search across files/memory/logs."""
-        params: Dict[str, Any] = {"query": query}
-        if types:
-            params["types"] = types
-        response = self._request('GET', '/api/assistant/workspace/search', params=params)
-        if isinstance(response, dict):
-            return response
-        raise BackendAPIError("Expected object from /api/assistant/workspace/search")
-    
     def health_check(self) -> Dict[str, Any]:
         """Health check"""
         return self._request('GET', '/health')

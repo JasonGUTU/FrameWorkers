@@ -6,99 +6,84 @@ FrameWorkers 是一个强大的任务管理和 Agent 编排框架，提供分层
 
 FrameWorkers 是一个完整的任务编排和 Agent 管理系统，由以下核心组件组成：
 
-- **Dynamic Task Stack**: 分层级任务管理和执行系统
-- **Assistant System**: 统一的 Agent 管理和编排系统
-- **Agent Framework**: Agent 自动发现和注册框架
-- **Workspace**: 全局共享工作空间（文件、内存、日志）
-- **Interface**: Web 前端界面
+- **Dynamic Task Stack**: 分层级任务管理与 Flask `/api/` 编排
+- **Assistant System**: 基于 `SubAgentDescriptor` 的流水线执行与 Workspace 落盘
+- **Agent Framework**（`agents/`）: 注册表、评估器与媒体 materializer
+- **Director Agent**: 轮询后端、推理与任务栈更新
+- **Inference**: LLM 客户端与 image/video/audio 生成服务（独立库）
+- **Workspace**: 全局共享工作空间（文件、**global_memory**、日志、资产索引）
+- **Interface**: Web 前端（Vue 3 + Vite）
 
 ## 目录结构
 
+与架构约定以仓库根目录 [`.cursorrules`](./.cursorrules) 为准；以下为与代码树同步的摘要。
+
 ```
 FrameWorkers/
-├── agents/                          # Agents 目录（项目根目录）
-│   ├── __init__.py
-│   ├── base_agent.py                # BaseAgent 导入辅助模块
-│   ├── README.md                    # Agents 详细文档
-│   └── example_agent/               # 示例 Agent
-│       ├── __init__.py
-│       └── agent.py
-├── director_agent/                  # Director Agent（任务编排和推理）
-│   ├── __init__.py
-│   ├── director.py                  # Director 核心逻辑
-│   ├── api_client.py                # Backend API 客户端
-│   ├── reasoning.py                 # 推理模块
-│   ├── config.py                    # 配置
-│   ├── main.py                      # 主入口
-│   ├── run.py                       # 运行脚本
-│   ├── requirements.txt             # 依赖
-│   ├── README.md                    # Director Agent 文档
-│   └── FLOW_SUMMARY.md              # 流程总结
-├── dynamic-task-stack/              # Backend 主目录
-│   ├── src/
-│   │   ├── app.py                   # Flask 应用入口
-│   │   ├── task_stack/              # Task Stack 模块
-│   │   │   ├── __init__.py
-│   │   │   ├── models.py            # 数据模型
-│   │   │   ├── routes.py            # API 路由
-│   │   │   └── storage.py           # 数据存储
-│   │   └── assistant/               # Assistant 模块
-│   │       ├── __init__.py
-│   │       ├── models.py            # Assistant 数据模型
-│   │       ├── routes.py            # Assistant API 路由
-│   │       ├── response_serializers.py # Assistant 响应序列化（主实现）
-│   │       ├── service.py           # Assistant 核心业务逻辑
-│   │       ├── state_store.py       # Assistant 运行态存储（主实现）
-│   │       ├── workspace_context.py # 检索与上下文组装
-│   │       └── workspace/           # 工作空间模块
-│   │           ├── __init__.py
-│   │           ├── workspace.py    # 工作空间核心
-│   │           ├── file_manager.py  # 文件管理
-│   │           ├── log_manager.py   # 日志管理
-│   │           ├── memory_manager.py # 内存管理
-│   │           └── models.py        # 工作空间数据模型
-│   ├── requirements.txt
+├── .cursorrules                     # AI / 贡献者架构单源说明（与实现同步维护）
+├── agents/                          # Agent 框架与流水线实现（根目录，运行时注册）
+│   ├── __init__.py                  # AGENT_REGISTRY、LLMClient（来自 inference）等导出
+│   ├── base_agent.py                # 流水线 BaseAgent（LLMBaseAgent）
+│   ├── base_evaluator.py
+│   ├── descriptor.py                # SubAgentDescriptor
+│   ├── common_schema.py
+│   ├── agent_registry.py
+│   ├── README.md
+│   ├── story/ … example_agent/     # 各子目录：agent / schema / evaluator / descriptor；媒体类含 materializer
+│   └── …                            # 完整列表见 agents/README.md
+├── director_agent/
+│   ├── director.py
+│   ├── api_client.py                # 仅封装 Director 主循环与仓库内测试实际调用的 HTTP 端点
+│   ├── reasoning.py
+│   ├── config.py
+│   ├── main.py
 │   ├── run.py
-│   ├── (manual API runner moved to `tests/dynamic_task_stack/manual_api_runner.py`)
-│   ├── README.md                    # Backend 详细文档
-│   └── USAGE_EXAMPLES.md            # 使用示例
-├── inference/                       # 推理与多模态能力库
-│   ├── __init__.py                  # inference 对外导出入口
-│   ├── clients/                     # LLM 客户端主命名空间（推荐）
-│   │   ├── base/                    # 抽象层（协议/数据结构）
-│   │   │   └── base_client.py       # BaseLLMClient + Message/ModelConfig
-│   │   └── implementations/         # 具体实现层
-│   │       ├── default_client.py    # 默认 LLMClient（LiteLLM completion + OpenAI chat）
-│   │       ├── gpt5_client.py       # GPT-5 专用 chat 参数实现
-│   │       └── custom_model.py      # 自研模型客户端（如 Ollama）
-│   ├── generation/                  # image/video/audio 生成器与服务
-│   ├── multimodal/                  # 多模态工具
-│   ├── prompt/                      # prompt 与 history 工具
-│   ├── config/                      # 模型注册与配置加载
-│   ├── README.md                    # inference 详细文档
-│   └── MODELS.md                    # 模型清单
-├── interface/                       # 前端界面
+│   ├── requirements.txt
+│   └── README.md
+├── dynamic-task-stack/
 │   ├── src/
-│   │   ├── App.vue                  # 主应用组件
-│   │   ├── components/              # Vue 组件
-│   │   │   ├── ChatWindow.vue       # 聊天窗口
-│   │   │   ├── SystemStatus.vue     # 系统状态
-│   │   │   └── TaskStackMonitor.vue # 任务栈监控
-│   │   ├── services/                # 服务
-│   │   │   ├── api.js               # API 客户端
-│   │   │   └── polling.js           # 轮询服务
-│   │   └── main.js                  # 入口文件
-│   ├── package.json
-│   ├── vite.config.js
-│   └── README.md                    # 前端文档
-├── install_requirements.py           # 统一依赖管理脚本
-├── requirements.txt                 # 统一依赖（自动生成）
-├── tests/                           # 根目录统一测试入口
-│   ├── agents/                      # Agents 核心测试
-│   └── assistant/                   # Assistant 单元测试
-├── Runtime/                         # 运行时目录（工作空间文件存储）
-├── README.md                        # 本文档
-└── AGENTS_MIGRATION.md              # Agents 迁移说明
+│   │   ├── app.py
+│   │   ├── common_http.py           # Task Stack + Assistant 共用：JSON body、bad_request、query 等
+│   │   ├── task_stack/
+│   │   │   ├── models.py
+│   │   │   ├── routes.py            # 使用 common_http + api_serialize
+│   │   │   ├── api_serialize.py     # serialize_for_api（dataclass/enum JSON）
+│   │   │   ├── state_store.py
+│   │   │   ├── execution_flow.py
+│   │   │   ├── batch_mutator.py
+│   │   │   └── storage.py           # 门面 + 全局 storage 单例
+│   │   └── assistant/
+│   │       ├── models.py
+│   │       ├── routes.py            # 与 task_stack 共用 common_http
+│   │       ├── response_serializers.py
+│   │       ├── service.py           # AssistantService（descriptor 流水线执行）
+│   │       ├── state_store.py
+│   │       └── workspace/
+│   │           ├── workspace.py
+│   │           ├── file_manager.py
+│   │           ├── memory_manager.py
+│   │           ├── log_manager.py
+│   │           ├── asset_manager.py
+│   │           └── models.py
+│   ├── run.py
+│   ├── requirements.txt
+│   ├── README.md
+│   └── USAGE_EXAMPLES.md
+├── inference/
+│   ├── clients/                     # base + implementations（LLMClient 等）
+│   ├── input_processing/            # ImageUtils、MessageUtils / MultimodalUtils 别名
+│   ├── generation/                  # image / video / audio 注册表与服务；fal_helpers（fal 订阅与下载）
+│   ├── config/
+│   ├── README.md
+│   └── MODELS.md
+├── interface/
+│   └── src/ …                       # Vue 3 + Vite，api.js / polling.js
+├── tests/                           # agents、assistant、director 等（含 HTTP e2e）
+├── Runtime/                         # Workspace 运行时文件
+├── install_requirements.py
+├── requirements.txt
+├── README.md
+└── AGENTS_MIGRATION.md
 ```
 
 ## 核心组件
@@ -109,31 +94,33 @@ FrameWorkers/
 
 - **分层级任务管理**：多层级任务组织，每层可包含多个任务
 - **Hook 机制**：每层支持执行前后的 Pre-hook 和 Post-hook
-- **执行指针**：跟踪当前执行位置，支持动态修改未执行的任务
-- **原子操作**：任务替换、插入层并添加任务等操作的原子性保证
-- **批量操作**：统一的批量操作接口，支持一次性执行多个操作（创建任务、创建层、添加任务到层等）
+- **执行指针**：跟踪当前执行位置，支持动态修改未执行的任务（`execution_flow` + `storage`）
+- **原子写路径**：`batch_mutator` 承载批量/多步修改；`state_store` 为纯状态容器
+- **批量操作**：`POST /api/task-stack/modify` 等统一原子接口
+- **HTTP 层**：`routes.py` 复用 `src/common_http.py` 与 `api_serialize.serialize_for_api`，减少与 Assistant 蓝图重复的校验代码
 
 详细文档：[dynamic-task-stack/README.md](./dynamic-task-stack/README.md)
 
 ### 2. Assistant System
 
-统一的 Agent 管理和编排系统，提供：
+统一的 Agent 管理与执行入口，提供：
 
-- **全局单例 Assistant**：只有一个全局 assistant 管理所有 sub-agents
-- **自动发现**：自动扫描和注册根目录下的所有 agents
-- **共享工作空间**：所有 agents 共享一个全局工作空间（文件系统）
-- **信息检索**：Assistant 从工作空间中检索信息，然后分发给各个 agent
-- **完整执行流程**：6 步执行流程（查询输入 → 准备环境 → 检索信息 → 打包数据 → 执行 → 处理结果）
+- **全局单例 Assistant**：一个全局 assistant 管理所有 sub-agents（`state_store`）
+- **自动发现**：通过 `agents.AgentRegistry` / `AGENT_REGISTRY` 与 `SubAgentDescriptor` 驱动 **descriptor 流水线**（无单独 sync adapter 路径）
+- **共享工作空间**：文件、**global_memory**、日志、执行资产索引（`asset_manager`）
+- **执行流程**：查询输入 → 准备环境 → `build_execution_inputs`（global_memory + LLM `selected_roles` → `input_bundle_v2` / `resolved_inputs`）→ 执行 pipeline agent → 处理结果并落盘
 
-详细文档：[dynamic-task-stack/README.md](./dynamic-task-stack/README.md)
+详细文档：[dynamic-task-stack/README.md](./dynamic-task-stack/README.md)（含 `src/assistant/README.md`）
 
 ### 3. Agent Framework
 
-Agent 自动发现和注册框架：
+流水线 Agent 框架（与 Assistant 对齐）：
 
-- **BaseAgent**：Agent 抽象基类，定义标准接口
-- **Agent Registry**：自动发现和注册机制
-- **Metadata**：Agent 元数据管理（名称、描述、能力、输入输出模式）
+- **LLMBaseAgent**（`base_agent.BaseAgent`）：异步 pipeline 执行体
+- **SubAgentDescriptor**：`build_input` / `build_equipped_agent` / `run` 契约；在 `agents/__init__.py` 的 `AGENT_REGISTRY` 中登记
+- **AgentRegistry**：文件系统扫描 + 注册表聚合
+- **BaseEvaluator**：结构 / 创意 / 资产 三层评估与重试预算
+- **LLMClient**：类型由 `inference.clients` 提供，在 `agents/__init__.py` 中再导出
 
 详细文档：[agents/README.md](./agents/README.md)
 
@@ -143,8 +130,9 @@ Agent 自动发现和注册框架：
 
 - **任务编排**：根据用户消息和任务栈状态进行推理和规划
 - **任务委托**：将任务委托给 Assistant Agent 执行
-- **执行总结**：接收执行结果并进行反思
+- **执行总结**：接收执行结果并进行反思（部分分支仍为占位实现，见 `director.py` 注释）
 - **任务栈更新**：根据执行结果更新任务栈
+- **HTTP 客户端**：`api_client.BackendAPIClient` **仅包装** Director 主循环与仓库内单测实际调用的后端路由；其余 REST 仍可由脚本或临时扩展 client 直调 Flask
 
 详细文档：[director_agent/README.md](./director_agent/README.md)
 
@@ -152,9 +140,10 @@ Agent 自动发现和注册框架：
 
 统一提供 LLM 运行时与多模态生成能力：
 
-- **公共抽象层**：`inference/clients/base/base_client.py` 统一定义 `BaseLLMClient`、消息结构与抽象接口
-- **具体客户端层**：`inference/clients/implementations/` 下按实现拆分（`default_client.py`、`gpt5_client.py`、`custom_model.py`）
-- **生成能力层**：`inference/generation/` 提供 image/video/audio 三类 registry + service
+- **公共抽象层**：`inference/clients/base/base_client.py`（`BaseLLMClient`、`Message`、`ModelConfig`）
+- **具体客户端层**：`inference/clients/implementations/`（`default_client`、`gpt5_client`、`custom_model`）
+- **输入处理**：`inference/input_processing/`（图像与消息工具；兼容 `MultimodalUtils` 等别名）
+- **生成能力层**：`inference/generation/` — image / video / **audio** 注册表与 `ImageService` / `VideoService` / `AudioService` 等；fal.ai 后端共享 `generation/fal_helpers.py`（`fal_client.subscribe` 与环境键、HTTP 下载）
 
 详细文档：[inference/README.md](./inference/README.md)
 
@@ -163,9 +152,10 @@ Agent 自动发现和注册框架：
 全局共享工作空间：
 
 - **文件管理**：文件创建、查询、搜索、标签管理
-- **内存管理**：全局内存读写
-- **日志管理**：操作日志记录和查询
-- **综合搜索**：跨文件、内存、日志的搜索
+- **结构化记忆**：**global_memory**（见 Assistant / workspace 文档）
+- **日志管理**：操作日志记录和查询（含聚合 insights 等 API）
+- **资产索引**：`asset_manager` 与执行结果 JSON 快照等持久化
+- **综合搜索**：跨文件、记忆、日志（HTTP 层 `Workspace.search_all` 等）
 
 详细文档：[dynamic-task-stack/src/assistant/workspace/README.md](./dynamic-task-stack/src/assistant/workspace/README.md)
 
@@ -267,24 +257,24 @@ Director Agent（反思和更新）
 ### Assistant System
 
 - **Assistant（助手）**：全局单例，管理所有 sub-agents
-- **Agent（代理）**：具体的功能实现单元
-- **Workspace（工作空间）**：全局共享的文件、内存、日志存储
-- **Execution（执行）**：Agent 执行记录
+- **Descriptor 流水线**：每个 sub-agent 对应 `SubAgentDescriptor` + pipeline `BaseAgent`
+- **Workspace（工作空间）**：文件、**global_memory**、日志与执行资产
+- **Execution（执行）**：`AgentExecution` 记录（状态、结果、错误）
 
 ### Agent Framework
 
-- **BaseAgent**：所有 Agent 的基类
-- **AgentMetadata**：Agent 元数据（名称、描述、能力、输入输出模式）
-- **Agent Registry**：自动发现和注册机制
+- **SubAgentDescriptor**：声明 agent 名称、evaluator、materializer、`build_input` 等
+- **LLMBaseAgent**：流水线执行类；由 descriptor `build_equipped_agent` 装配
+- **AgentRegistry / AGENT_REGISTRY**：发现与静态登记
 
 ## 开发指南
 
 ### 创建新的 Agent
 
-1. 在 `agents/` 目录下创建新的文件夹
-2. 实现 `agent.py`，继承 `BaseAgent`
-3. 实现 `get_metadata()` 和 `execute()` 方法
-4. Agent 会自动被发现和注册
+1. 在 `agents/` 下新增子目录（如 `my_agent/`）
+2. 按流水线约定实现 `agent.py`、`schema.py`、`evaluator.py`、`descriptor.py`（媒体类可加 `materializer.py`）
+3. 在 `descriptor.py` 中导出 `DESCRIPTOR`，并在 `agents/__init__.py` 的 `AGENT_REGISTRY` 中注册
+4. 运行测试与 Assistant 执行路径验证
 
 详细步骤：[agents/README.md](./agents/README.md)
 
@@ -360,14 +350,16 @@ POST /api/assistant/execute
 {
   "agent_id": "my_agent",
   "task_id": "task_1",
-  "additional_inputs": {}
+  "execute_fields": { "text": "…" }
 }
+# 200 响应体含 task_id、execution_id、status、results、error、workspace_id
 ```
 
 详细 API 文档：[dynamic-task-stack/README.md](./dynamic-task-stack/README.md)
 
 ## 相关文档
 
+- [.cursorrules](./.cursorrules) - 五包架构、目录与维护约定（与代码同步）
 - [dynamic-task-stack/README.md](./dynamic-task-stack/README.md) - Backend 详细文档
 - [agents/README.md](./agents/README.md) - Agents 开发指南
 - [director_agent/README.md](./director_agent/README.md) - Director Agent 文档

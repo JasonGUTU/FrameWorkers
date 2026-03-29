@@ -20,8 +20,10 @@ Task Stack provides layered task orchestration for the backend. It owns:
   - Atomic batch write helpers and `modify_task_stack` orchestration
 - `storage.py`
   - `TaskStackService` facade used by routes and callers
+- `api_serialize.py`
+  - JSON-safe serialization for dataclass/enum payloads returned by Task Stack routes
 - `routes.py`
-  - HTTP API layer with request parsing/validation + response serialization
+  - HTTP API layer with request parsing/validation; uses `../common_http.py` for JSON body / enum parsing / `bad_request`（400）与 `api_serialize.serialize_for_api` 做响应序列化
 
 ## Public Entry Points
 

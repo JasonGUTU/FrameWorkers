@@ -1,16 +1,35 @@
 # API routes for Assistant System
 
+from typing import Any, Dict
+
 from flask import Blueprint, request, jsonify
 
-from .service import AssistantService
+from ..common_http import bad_request, json_body_or_error
+from .service import (
+    AssistantService,
+    AssistantBadExecuteFieldsError,
+    AssistantGlobalMemorySyncError,
+)
 from .state_store import assistant_state_store
 from .response_serializers import (
     serialize_response_value,
     file_metadata_to_dict,
-    file_search_item_to_dict,
     log_entry_to_dict,
 )
 from agents import get_agent_registry
+
+
+def _execute_fields_from_http_body(data: Dict[str, Any]) -> Dict[str, Any]:
+    """Return the nested ``execute_fields`` object from ``POST /api/assistant/execute``.
+
+    Root JSON must expose ``execute_fields`` as a JSON object (may be empty ``{}``).
+    """
+    raw = data.get("execute_fields")
+    if raw is None:
+        return {}
+    if not isinstance(raw, dict):
+        raise ValueError("execute_fields must be a JSON object")
+    return dict(raw)
 
 
 def create_assistant_blueprint():
@@ -19,21 +38,6 @@ def create_assistant_blueprint():
     
     # Initialize assistant service
     service = AssistantService(assistant_state_store)
-
-    def _bad_request(message: str):
-        return jsonify({'error': message}), 400
-
-    def _json_body_or_error():
-        data = request.get_json()
-        if not data:
-            return None, _bad_request('Invalid JSON body')
-        return data, None
-
-    def _required_query_or_error(name: str):
-        value = request.args.get(name, '')
-        if not value:
-            return None, _bad_request(f'{name.capitalize()} parameter required')
-        return value, None
 
     def _get_workspace_or_404():
         workspace = assistant_state_store.get_global_workspace()
@@ -75,61 +79,46 @@ def create_assistant_blueprint():
             return jsonify({'error': 'Sub-agent not found'}), 404
         return jsonify(agent)
     
-    @bp.route('/api/assistant/agents/<agent_id>/inputs', methods=['GET'])
-    def get_agent_inputs(agent_id: str):
-        """Get agent input requirements"""
-        try:
-            input_info = service.query_agent_inputs(agent_id)
-            return jsonify(input_info)
-        except ValueError as e:
-            return jsonify({'error': str(e)}), 404
-    
     # Execution routes
     @bp.route('/api/assistant/execute', methods=['POST'])
     def execute_agent():
         """
-        Execute an agent for a task
-        
-        This is the main entry point for agent execution.
-        It orchestrates the full workflow:
-        1. Query agent inputs
-        2. Prepare environment
-        3. Package data
-        4. Execute agent
-        5. Process results
+        Execute an agent for a task.
+
+        JSON body: ``agent_id``, ``task_id`` (required), and ``execute_fields`` (object,
+        optional keys ``text``, ``image``, ``video``, ``audio``, …).
         """
-        data, error = _json_body_or_error()
+        data, error = json_body_or_error()
         if error:
             return error
         
         agent_id = data.get('agent_id')
         task_id = data.get('task_id')
-        additional_inputs = data.get('additional_inputs')
-        
+        try:
+            execute_fields = _execute_fields_from_http_body(data)
+        except ValueError as e:
+            return jsonify({'error': str(e)}), 400
+
         if not agent_id or not task_id:
             return jsonify({
                 'error': 'Missing required fields: agent_id, task_id'
             }), 400
-        
+
         try:
             results = service.execute_agent_for_task(
                 agent_id=agent_id,
                 task_id=task_id,
-                additional_inputs=additional_inputs
+                execute_fields=execute_fields
             )
             return jsonify(serialize_response_value(results)), 200
+        except AssistantBadExecuteFieldsError as e:
+            return jsonify({'error': str(e)}), 400
+        except AssistantGlobalMemorySyncError as e:
+            return jsonify({'error': str(e)}), 500
         except ValueError as e:
             return jsonify({'error': str(e)}), 404
         except Exception as e:
             return jsonify({'error': f'Execution failed: {str(e)}'}), 500
-    
-    @bp.route('/api/assistant/executions/<execution_id>', methods=['GET'])
-    def get_execution(execution_id: str):
-        """Get an execution by ID"""
-        execution = assistant_state_store.get_execution(execution_id)
-        if execution is None:
-            return jsonify({'error': 'Execution not found'}), 404
-        return jsonify(serialize_response_value(execution))
     
     @bp.route('/api/assistant/executions/task/<task_id>', methods=['GET'])
     def get_executions_by_task(task_id: str):
@@ -138,33 +127,13 @@ def create_assistant_blueprint():
         return jsonify([serialize_response_value(e) for e in executions])
     
     # Workspace routes
-    @bp.route('/api/assistant/workspace', methods=['GET'])
-    @bp.route('/api/assistant/workspace/summary', methods=['GET'])
-    def get_workspace_summary():
-        """Get workspace summary with statistics."""
-        workspace, error = _get_workspace_or_404()
-        if error:
-            return error
-        return jsonify(workspace.get_summary())
-    
     @bp.route('/api/assistant/workspace/files', methods=['GET'])
     def list_workspace_files():
         """List files in workspace"""
         workspace, error = _get_workspace_or_404()
         if error:
             return error
-        
-        file_type = request.args.get('file_type')
-        tags = request.args.getlist('tags')
-        created_by = request.args.get('created_by')
-        limit = request.args.get('limit', type=int)
-        
-        files = workspace.list_files(
-            file_type=file_type,
-            tags=tags if tags else None,
-            created_by=created_by,
-            limit=limit
-        )
+        files = workspace.list_files()
         
         return jsonify([file_metadata_to_dict(f) for f in files])
     
@@ -181,43 +150,22 @@ def create_assistant_blueprint():
         
         return jsonify(file_metadata_to_dict(file_meta))
     
-    @bp.route('/api/assistant/workspace/files/search', methods=['GET'])
-    def search_workspace_files():
-        """Search files in workspace"""
-        workspace, error = _get_workspace_or_404()
-        if error:
-            return error
-        
-        query, error = _required_query_or_error('query')
-        if error:
-            return error
-        file_type = request.args.get('file_type')
-        limit = request.args.get('limit', type=int, default=10)
-
-        files = workspace.search_files(query, file_type=file_type, limit=limit)
-        
-        return jsonify([file_search_item_to_dict(f) for f in files])
-    
     @bp.route('/api/assistant/workspace/memory/entries', methods=['GET'])
     def list_workspace_memory_entries():
-        """List structured memory entries (short-term / long-term)."""
+        """List global memory entries."""
         workspace, error = _get_workspace_or_404()
         if error:
             return error
 
-        tier = request.args.get('tier')
         task_id = request.args.get('task_id')
         agent_id = request.args.get('agent_id')
-        kinds = request.args.getlist('kind')
         limit = request.args.get('limit', type=int, default=20)
         if limit <= 0:
-            return _bad_request('limit must be a positive integer')
+            return bad_request('limit must be a positive integer')
 
         entries = workspace.list_memory_entries(
-            tier=tier,
             task_id=task_id,
             agent_id=agent_id,
-            kinds=kinds if kinds else None,
             limit=limit,
         )
         return jsonify(entries)
@@ -229,7 +177,7 @@ def create_assistant_blueprint():
         if error:
             return error
 
-        data, error = _json_body_or_error()
+        data, error = json_body_or_error()
         if error:
             return error
 
@@ -240,15 +188,10 @@ def create_assistant_blueprint():
         try:
             entry = workspace.add_memory_entry(
                 content=content,
-                tier=data.get('tier', 'short_term'),
-                kind=data.get('kind', 'note'),
                 task_id=data.get('task_id'),
                 agent_id=data.get('agent_id'),
-                source_asset_refs=data.get('source_asset_refs'),
-                priority=data.get('priority', 3),
-                confidence=data.get('confidence'),
-                ttl_runs=data.get('ttl_runs'),
-                metadata=data.get('metadata'),
+                execution_result=data.get('execution_result'),
+                artifact_locations=data.get('artifact_locations'),
             )
         except ValueError as exc:
             return jsonify({'error': str(exc)}), 400
@@ -256,21 +199,17 @@ def create_assistant_blueprint():
 
     @bp.route('/api/assistant/workspace/memory/brief', methods=['GET'])
     def get_workspace_memory_brief():
-        """Get concise memory brief for planning/execution."""
+        """Memory brief: ``{"global_memory": [...]}`` (no ``content`` keys; all matches, ``created_at`` desc)."""
         workspace, error = _get_workspace_or_404()
         if error:
             return error
 
         task_id = request.args.get('task_id')
         agent_id = request.args.get('agent_id')
-        short_term_limit = request.args.get('short_term_limit', type=int, default=6)
-        if short_term_limit <= 0:
-            return _bad_request('short_term_limit must be a positive integer')
 
         brief = workspace.get_memory_brief(
             task_id=task_id,
             agent_id=agent_id,
-            short_term_limit=short_term_limit,
         )
         return jsonify(brief)
     
@@ -297,45 +236,4 @@ def create_assistant_blueprint():
         
         return jsonify([log_entry_to_dict(log) for log in logs])
 
-    @bp.route('/api/assistant/workspace/logs/insights', methods=['GET'])
-    def get_workspace_log_insights():
-        """Get aggregated log insights for trend/failure analysis."""
-        workspace, error = _get_workspace_or_404()
-        if error:
-            return error
-
-        window_hours = request.args.get('window_hours', type=int)
-        top_k = request.args.get('top_k', type=int, default=5)
-        if top_k <= 0:
-            return _bad_request('top_k must be a positive integer')
-
-        insights = workspace.get_log_insights(
-            window_hours=window_hours,
-            top_k=top_k,
-        )
-        return jsonify(insights)
-    
-    @bp.route('/api/assistant/workspace/search', methods=['GET'])
-    def search_workspace():
-        """Comprehensive search across workspace"""
-        workspace, error = _get_workspace_or_404()
-        if error:
-            return error
-        
-        query, error = _required_query_or_error('query')
-        if error:
-            return error
-        search_types = request.args.getlist('types') or ['files', 'memory', 'logs']
-
-        results = workspace.search_all(
-            query=query,
-            search_files='files' in search_types,
-            search_memory='memory' in search_types,
-            search_logs='logs' in search_types,
-            limit=10
-        )
-        
-        return jsonify(results)
-    
-    
     return bp

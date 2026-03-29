@@ -60,40 +60,6 @@ def file_metadata_to_dict(file_meta: FileMetadata) -> dict[str, Any]:
     }
 
 
-def file_brief_to_dict(file_meta: FileMetadata) -> dict[str, Any]:
-    """Compact file payload for execution context packaging."""
-    return _file_core_fields(file_meta)
-
-
-def file_search_item_to_dict(file_meta: FileMetadata) -> dict[str, Any]:
-    return {
-        **_file_core_fields(file_meta),
-        "created_at": file_meta.created_at.isoformat(),
-    }
-
-
-def log_search_item_to_dict(log: LogEntry) -> dict[str, Any]:
-    """Search-friendly log payload."""
-    return {
-        "id": log.id,
-        "timestamp": log.timestamp.isoformat(),
-        "operation_type": log.operation_type,
-        "resource_type": log.resource_type,
-        "resource_id": log.resource_id,
-        "details": log.details,
-    }
-
-
-def context_log_item_to_dict(log: LogEntry) -> dict[str, Any]:
-    """Compact log payload for execution context packaging."""
-    return {
-        "timestamp": log.timestamp.isoformat(),
-        "operation_type": log.operation_type,
-        "resource_type": log.resource_type,
-        "resource_id": log.resource_id,
-    }
-
-
 def log_entry_to_dict(log: LogEntry) -> dict[str, Any]:
     return {
         "id": log.id,

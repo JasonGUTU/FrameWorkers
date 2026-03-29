@@ -15,7 +15,7 @@ narration text/speaker come from screenplay, timing from storyboard/video,
 IDs and asset placeholders are system-generated.  The LLM is only asked
 to fill ``music_cue.mood`` and ``ambience_bed.description`` per scene.
 
-Coupling: receives Screenplay + Storyboard + Video from upstream; output is
+Coupling: receives Screenplay + Storyboard + Video from shared assets; output is
 the final audio layer that gets combined with video.
 """
 

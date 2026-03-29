@@ -10,7 +10,7 @@ No L3 (asset evaluation) since this agent produces no binary assets.
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Mapping
 
 from ..base_evaluator import BaseEvaluator
 from .schema import ExamplePipelineOutput
@@ -23,8 +23,8 @@ class ExamplePipelineEvaluator(BaseEvaluator[ExamplePipelineOutput]):
         ("conciseness", "Is the summary concise without losing key information?"),
     ]
 
-    def _build_creative_context(self, output, upstream):
-        source_text = (upstream or {}).get("source_text", "")
+    def _build_creative_context(self, output, input_bundle_v2):
+        source_text = (input_bundle_v2 or {}).get("source_text", "")
         return f"Source text: {source_text[:500]}"
 
     # ------------------------------------------------------------------
@@ -34,7 +34,7 @@ class ExamplePipelineEvaluator(BaseEvaluator[ExamplePipelineOutput]):
     def check_structure(
         self,
         output: ExamplePipelineOutput,
-        upstream: dict[str, Any] | None = None,
+        input_bundle_v2: Mapping[str, Any] | None = None,
     ) -> list[str]:
         errors: list[str] = []
         c = output.content

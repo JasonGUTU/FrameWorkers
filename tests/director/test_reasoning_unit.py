@@ -11,7 +11,7 @@ if str(_repo_root) not in sys.path:
 from director_agent.reasoning import ReasoningEngine
 
 
-def test_reasoning_creates_execute_plan_for_existing_task_message():
+def test_reasoning_execute_task_when_message_has_task_id():
     engine = ReasoningEngine()
 
     plan = engine.reason_and_plan(
@@ -24,72 +24,38 @@ def test_reasoning_creates_execute_plan_for_existing_task_message():
 
     assert plan["action"] == "execute_task"
     assert plan["target_task_id"] == "task_1"
-    assert plan["preferred_agent_id"] == "VideoAgent"
+    assert "preferred_agent_id" not in plan
 
 
-def test_reasoning_prefers_explicit_agent_from_json_content():
+def test_reasoning_execute_task_when_json_content_has_task_id():
     engine = ReasoningEngine()
 
     plan = engine.reason_and_plan(
         user_message={
             "id": "msg_2",
-            "task_id": "task_2",
-            "content": '{"rerun_agents": ["AudioAgent", "StoryboardAgent"]}',
+            "content": '{"task_id": "task_2", "note": "retry"}',
         }
     )
 
     assert plan["action"] == "execute_task"
-    assert plan["preferred_agent_id"] == "AudioAgent"
+    assert plan["target_task_id"] == "task_2"
 
 
-def test_select_agent_for_task_honors_preferred_agent_id():
+def test_reasoning_create_task_from_plain_message():
     engine = ReasoningEngine()
-    selected = engine.select_agent_for_task(
-        task={
-            "description": {
-                "preferred_agent_id": "AudioAgent",
-            }
-        },
-        available_agents=[
-            {"id": "StoryAgent"},
-            {"id": "AudioAgent"},
-        ],
-    )
-    assert selected == "AudioAgent"
 
-
-def test_reasoning_falls_back_to_latest_execution_agent():
-    engine = ReasoningEngine()
     plan = engine.reason_and_plan(
         user_message={
             "id": "msg_3",
-            "task_id": "task_3",
-            "content": "Please optimize this output.",
-        },
-        task_summary={
-            "task_id": "task_3",
-            "agent_id": "VideoAgent",
-            "status": "COMPLETED",
-        },
+            "content": "Write a short story about a robot.",
+        }
     )
-    assert plan["action"] == "execute_task"
-    assert plan["preferred_agent_id"] == "VideoAgent"
+
+    assert plan["action"] == "create_task"
+    assert plan["task_updates"][0]["description"]["overall_description"].startswith("Write")
 
 
-def test_reasoning_can_suggest_agent_from_short_term_memory():
+def test_reasoning_wait_by_default():
     engine = ReasoningEngine()
-    plan = engine.reason_and_plan(
-        user_message={
-            "id": "msg_4",
-            "task_id": "task_4",
-            "content": "继续处理这个任务。",
-        },
-        short_term_memory=[
-            {
-                "kind": "execution_summary",
-                "metadata": {"suggested_next_agent": "AudioAgent"},
-            }
-        ],
-    )
-    assert plan["action"] == "execute_task"
-    assert plan["preferred_agent_id"] == "AudioAgent"
+    plan = engine.reason_and_plan()
+    assert plan["action"] == "wait"

@@ -125,7 +125,7 @@ class StoryboardAgentInput(BaseModel):
     """Input payload for StoryboardAgent.
 
     StoryboardAgent always operates in **skeleton-first mode**: it
-    pre-builds scene shells from the upstream screenplay and asks the
+    pre-builds scene shells from the shared screenplay asset and asks the
     LLM to fill creative fields (shots, consistency packs, etc.).
     """
 

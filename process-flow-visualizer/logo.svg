@@ -1,0 +1,25 @@
+<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fw-grad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#4f8ef7"/>
+      <stop offset="55%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+    <linearGradient id="fw-bg" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1a2a4a"/>
+      <stop offset="100%" stop-color="#1e1a3a"/>
+    </linearGradient>
+  </defs>
+  <rect width="48" height="48" rx="12" fill="url(#fw-bg)"/>
+  <rect x="1.25" y="1.25" width="45.5" height="45.5" rx="10.75" stroke="url(#fw-grad)" stroke-width="1.5"/>
+  <!-- F lettermark -->
+  <line x1="13" y1="12" x2="13" y2="36" stroke="url(#fw-grad)" stroke-width="3" stroke-linecap="round"/>
+  <line x1="13" y1="12" x2="30" y2="12" stroke="url(#fw-grad)" stroke-width="3" stroke-linecap="round"/>
+  <line x1="13" y1="23" x2="26" y2="23" stroke="url(#fw-grad)" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Worker node (bottom-right) -->
+  <circle cx="34" cy="34" r="5" fill="url(#fw-grad)" opacity="0.25"/>
+  <circle cx="34" cy="34" r="3" stroke="url(#fw-grad)" stroke-width="1.5"/>
+  <circle cx="34" cy="34" r="1.2" fill="url(#fw-grad)"/>
+  <!-- Connector line from F to node -->
+  <line x1="26" y1="23" x2="31" y2="31" stroke="url(#fw-grad)" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+</svg>

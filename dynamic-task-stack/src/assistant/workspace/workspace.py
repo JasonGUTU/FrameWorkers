@@ -9,18 +9,17 @@ from .memory_manager import MemoryManager
 from .log_manager import LogManager
 from .asset_manager import AssetManager
 from .models import FileMetadata, LogEntry
-from ..response_serializers import file_search_item_to_dict, log_search_item_to_dict
 
 
 class Workspace:
     """
-    Workspace - Manages file system, short-term structured memory, and logs
+    Workspace - Manages file system, global memory, and logs
 
     The workspace provides a unified interface for:
     - File management (images, videos, documents, etc.)
-    - Short-term structured memory (STM JSON entries; long-term tier disabled)
+    - Global memory (``global_memory.md`` under workspace runtime root)
     - Logs and records (JSON format)
-    
+
     Each workspace has its own directory in Runtime/{workspace_id}/
     """
     
@@ -42,7 +41,7 @@ class Workspace:
         self.memory_manager = MemoryManager(workspace_id, runtime_base_path)
         self.log_manager = LogManager(workspace_id, runtime_base_path)
         self.asset_manager = AssetManager(
-            self.store_file,
+            self.store_file_at_relative_path,
             self._add_log,
             self.file_manager.read_binary_from_uri,
             self.list_files,
@@ -85,53 +84,40 @@ class Workspace:
         )
 
     # File Management Methods
-    
-    def store_file(
+
+    def store_file_at_relative_path(
         self,
+        relative_path: str,
         file_content: bytes,
         filename: str,
         description: str,
         created_by: Optional[str] = None,
         tags: Optional[List[str]] = None,
-        metadata: Optional[Dict[str, Any]] = None
+        metadata: Optional[Dict[str, Any]] = None,
     ) -> FileMetadata:
-        """
-        Store a file in the workspace
-        
-        Args:
-            file_content: File content as bytes
-            filename: Original filename
-            description: Description of the file
-            created_by: Agent ID or user ID
-            tags: Optional tags
-            metadata: Optional additional metadata
-        
-        Returns:
-            FileMetadata instance
-        """
-        file_metadata = self.file_manager.store_file(
+        """Write under ``Runtime/{workspace_id}/<relative_path>`` (task-scoped tree)."""
+        file_metadata = self.file_manager.store_file_at_relative_path(
+            relative_path,
             file_content=file_content,
             filename=filename,
             description=description,
             created_by=created_by,
             tags=tags,
-            metadata=metadata
+            metadata=metadata,
         )
-        
-        # Log file creation
         self._add_log(
-            operation_type='create',
-            resource_type='file',
+            operation_type="create",
+            resource_type="file",
             resource_id=file_metadata.id,
             agent_id=created_by,
             details={
-                'filename': filename,
-                'description': description,
-                'file_type': file_metadata.file_type,
-                'size_bytes': file_metadata.size_bytes
-            }
+                "filename": filename,
+                "description": description,
+                "file_type": file_metadata.file_type,
+                "size_bytes": file_metadata.size_bytes,
+            },
         )
-        
+        self.memory_manager.refresh_file_tree()
         self._touch()
         return file_metadata
     
@@ -139,40 +125,9 @@ class Workspace:
         """Get file metadata by ID"""
         return self.file_manager.get_file(file_id)
     
-    def get_file_content(self, file_id: str) -> Optional[bytes]:
-        """Get file content by ID"""
-        content = self.file_manager.get_file_content(file_id)
-        if content:
-            self._add_log(
-                operation_type='read',
-                resource_type='file',
-                resource_id=file_id
-            )
-        return content
-    
-    def list_files(
-        self,
-        file_type: Optional[str] = None,
-        tags: Optional[List[str]] = None,
-        created_by: Optional[str] = None,
-        limit: Optional[int] = None
-    ) -> List[FileMetadata]:
-        """List files with optional filters"""
-        return self.file_manager.list_files(
-            file_type=file_type,
-            tags=tags,
-            created_by=created_by,
-            limit=limit
-        )
-    
-    def search_files(
-        self,
-        query: str,
-        file_type: Optional[str] = None,
-        limit: int = 10
-    ) -> List[FileMetadata]:
-        """Search files by description or filename"""
-        return self.file_manager.search_files(query, file_type, limit)
+    def list_files(self) -> List[FileMetadata]:
+        """List files in workspace."""
+        return self.file_manager.list_files()
     
     def delete_file(self, file_id: str) -> bool:
         """Delete a file from the workspace"""
@@ -186,6 +141,7 @@ class Workspace:
                     resource_id=file_id,
                     details={'filename': file_meta.filename}
                 )
+                self.memory_manager.refresh_file_tree()
                 self._touch()
             return success
         return False
@@ -194,41 +150,26 @@ class Workspace:
         self,
         *,
         content: str,
-        tier: str = "short_term",
-        kind: str = "note",
         task_id: Optional[str] = None,
         agent_id: Optional[str] = None,
-        source_asset_refs: Optional[List[str]] = None,
-        priority: int = 3,
-        confidence: Optional[float] = None,
-        ttl_runs: Optional[int] = None,
-        metadata: Optional[Dict[str, Any]] = None,
+        execution_result: Optional[Any] = None,
+        artifact_locations: Optional[Any] = None,
     ) -> Dict[str, Any]:
-        """Add one structured memory entry."""
+        """Add one structured memory entry (``content``, ``agent_id``, ``created_at``, ``execution_result``, optional ``artifact_locations``)."""
         entry = self.memory_manager.add_memory_entry(
             content=content,
-            tier=tier,
-            kind=kind,
             task_id=task_id,
             agent_id=agent_id,
-            source_asset_refs=source_asset_refs,
-            priority=priority,
-            confidence=confidence,
-            ttl_runs=ttl_runs,
-            metadata=metadata,
+            execution_result=execution_result,
+            artifact_locations=artifact_locations,
         )
         self._add_log(
             operation_type="write",
             resource_type="memory",
-            resource_id=entry.get("id"),
+            resource_id=entry.get("created_at"),
             agent_id=agent_id,
             task_id=task_id,
-            details={
-                "event_type": "memory_entry_added",
-                "tier": entry.get("tier"),
-                "kind": entry.get("kind"),
-                "priority": entry.get("priority"),
-            },
+            details={"event_type": "memory_entry_added"},
         )
         self._touch()
         return entry
@@ -236,18 +177,14 @@ class Workspace:
     def list_memory_entries(
         self,
         *,
-        tier: Optional[str] = None,
         task_id: Optional[str] = None,
         agent_id: Optional[str] = None,
-        kinds: Optional[List[str]] = None,
         limit: int = 20,
     ) -> List[Dict[str, Any]]:
-        """List structured memory entries with optional filters."""
+        """List global memory entries with optional filters."""
         return self.memory_manager.list_memory_entries(
-            tier=tier,
             task_id=task_id,
             agent_id=agent_id,
-            kinds=kinds,
             limit=limit,
         )
 
@@ -256,19 +193,21 @@ class Workspace:
         *,
         task_id: Optional[str] = None,
         agent_id: Optional[str] = None,
-        short_term_limit: int = 6,
     ) -> Dict[str, Any]:
-        """Build concise memory brief for planning/execution."""
+        """``{"global_memory": [...]}`` without ``content`` (Director / API brief)."""
         return self.memory_manager.get_memory_brief(
             task_id=task_id,
             agent_id=agent_id,
-            short_term_limit=short_term_limit,
         )
 
-    def get_memory_info(self) -> Dict[str, Any]:
-        """Get structured memory information"""
-        return self.memory_manager.get_memory_info()
-    
+    def get_task_file_tree_text(self, task_id: str) -> str:
+        """File tree for task runtime dir (for input-package LLM)."""
+        return self.memory_manager.file_tree_text_for_task(task_id)
+
+    def get_workspace_root_file_tree_text(self) -> str:
+        """Full file tree under workspace runtime root (includes ``artifacts/``); for persist-path LLM."""
+        return self.memory_manager.workspace_root_file_tree_text()
+
     # Log Methods
     
     def get_logs(
@@ -288,22 +227,6 @@ class Workspace:
             limit=limit
         )
     
-    def get_recent_logs(self, count: int = 10) -> List[LogEntry]:
-        """Get most recent logs"""
-        return self.log_manager.get_recent_logs(count)
-
-    def get_log_insights(
-        self,
-        *,
-        window_hours: Optional[int] = None,
-        top_k: int = 5,
-    ) -> Dict[str, Any]:
-        """Get strategy-level log insights for triage and trend checks."""
-        return self.log_manager.get_strategy_insights(
-            window_hours=window_hours,
-            top_k=top_k,
-        )
-
     def log_execution_started(self, execution: Any) -> None:
         """Write execution started event for assistant orchestration."""
         self._add_log(
@@ -352,10 +275,6 @@ class Workspace:
 
     # Asset Methods
 
-    def is_asset_index_entry(self, value: Any) -> bool:
-        """Check whether value is an asset index entry."""
-        return self.asset_manager.is_asset_index_entry(value)
-
     def hydrate_indexed_assets(self, assets: Dict[str, Any]) -> Dict[str, Any]:
         """Resolve lightweight asset indexes to full JSON payloads."""
         return self.asset_manager.hydrate_indexed_assets(assets)
@@ -364,98 +283,17 @@ class Workspace:
         """Collect generated media files from temporary uris."""
         return self.asset_manager.collect_materialized_files(media_assets)
 
-    def build_pipeline_asset_value(
-        self,
-        *,
-        execution_results: Optional[Dict[str, Any]],
-        descriptor_asset_key: str,
-        execution_id: str,
-    ) -> Dict[str, Any]:
-        """Build one entry for pipeline shared assets from an execution record."""
-        return self.asset_manager.build_pipeline_asset_value(
-            execution_results=execution_results,
-            descriptor_asset_key=descriptor_asset_key,
-            execution_id=execution_id,
-        )
-
-    def persist_execution_assets(
+    def persist_execution_from_plan(
         self,
         execution: Any,
+        assignments: List[Dict[str, Any]],
         *,
         overwrite_existing: bool = False,
-    ) -> Dict[str, str]:
-        """Persist file/media assets for an execution."""
-        return self.asset_manager.persist_execution_assets(
+    ) -> tuple[Dict[str, str], Optional[Dict[str, Any]], List[Dict[str, str]]]:
+        """Persist binaries, media, manifest, and JSON snapshot via a single plan."""
+        return self.asset_manager.persist_execution_from_plan(
             execution,
+            assignments,
             overwrite_existing=overwrite_existing,
         )
 
-    def persist_execution_json_snapshot(
-        self,
-        execution: Any,
-        *,
-        asset_key: str,
-        overwrite_existing: bool = False,
-    ) -> Optional[Dict[str, Any]]:
-        """Persist JSON snapshot and return lightweight index for this execution."""
-        return self.asset_manager.persist_execution_json_snapshot(
-            execution,
-            asset_key=asset_key,
-            overwrite_existing=overwrite_existing,
-        )
-    
-    # Comprehensive Search Methods
-    
-    def search_all(
-        self,
-        query: str,
-        search_files: bool = True,
-        search_memory: bool = True,
-        search_logs: bool = True,
-        limit: int = 10
-    ) -> Dict[str, Any]:
-        """
-        Comprehensive search across workspace
-        
-        Args:
-            query: Search query string
-            search_files: Whether to search files
-            search_memory: Whether to search memory
-            search_logs: Whether to search logs
-            limit: Maximum results per category
-        
-        Returns:
-            Dictionary with search results
-        """
-        results = {}
-        
-        if search_files:
-            results['files'] = [file_search_item_to_dict(f) for f in self.search_files(query, limit=limit)]
-        
-        if search_memory:
-            results['memory'] = self.memory_manager.search_memory_entries(query, limit=limit)
-        
-        if search_logs:
-            results['logs'] = [
-                log_search_item_to_dict(log)
-                for log in self.log_manager.search_logs(query, limit=limit)
-            ]
-        
-        return results
-    
-    def get_summary(self) -> Dict[str, Any]:
-        """
-        Get workspace summary
-        
-        Returns:
-            Dictionary with workspace statistics
-        """
-        return {
-            'workspace_id': self.id,
-            'created_at': self.created_at.isoformat(),
-            'updated_at': self.updated_at.isoformat(),
-            'file_count': self.file_manager.get_file_count(),
-            'memory_info': self.memory_manager.get_memory_info(),
-            'log_count': self.log_manager.get_log_count(),
-            'runtime_path': str(self.file_manager.workspace_runtime_path)
-        }

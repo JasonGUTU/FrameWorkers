@@ -80,32 +80,6 @@ class ExecutionPointer:
     is_executing_post_hook: bool = False  # Whether currently executing post-hook
 
 
-# Request/Response DTOs
-@dataclass
-class CreateUserMessageRequest:
-    content: str
-    user_id: str
-
-
-@dataclass
-class CreateTaskRequest:
-    description: Dict[str, Any]
-
-
-@dataclass
-class UpdateTaskRequest:
-    description: Optional[Dict[str, Any]] = None
-    status: Optional[TaskStatus] = None
-    progress: Optional[Dict[str, Any]] = None
-    results: Optional[Dict[str, Any]] = None
-
-
-@dataclass
-class UpdateMessageReadStatusRequest:
-    director_read_status: Optional[ReadingStatus] = None
-    user_read_status: Optional[ReadingStatus] = None
-
-
 # Batch operation models
 class BatchOperationType(Enum):
     """Batch operation types"""
@@ -130,12 +104,3 @@ class BatchOperation:
     params: Dict[str, Any]
 
 
-@dataclass
-class BatchOperationsRequest:
-    """
-    Request for batch operations
-    
-    Contains a list of operations to execute atomically.
-    All operations are executed within a single lock, ensuring atomicity.
-    """
-    operations: List[BatchOperation]

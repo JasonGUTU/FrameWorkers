@@ -22,7 +22,6 @@ class AgentRegistry:
                 "agent_type": "pipeline",
                 "capabilities": ["pipeline_agent", descriptor.asset_key],
                 "asset_key": descriptor.asset_key,
-                "asset_type": getattr(descriptor, "asset_type", ""),
             })
 
         return infos

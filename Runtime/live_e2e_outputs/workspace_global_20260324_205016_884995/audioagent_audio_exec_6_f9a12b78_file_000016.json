@@ -1,0 +1,163 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_duration_sec": 25.0,
+        "narration_segments": [],
+        "music_cue": {
+          "cue_id": "music_sc_001",
+          "scene_id": "sc_001",
+          "mood": "intricate, reflective, subtly tense, minimalist, ticking",
+          "start_sec": 0.0,
+          "end_sec": 25.0,
+          "audio_asset": {
+            "asset_id": "aud_music_sc_001",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205016_884995/aud_music_sc_001_file_000006.wav",
+            "format": "wav",
+            "duration_sec": 25.0,
+            "sample_rate": 44100
+          }
+        },
+        "ambience_bed": {
+          "ambience_id": "amb_sc_001",
+          "scene_id": "sc_001",
+          "description": "Delicate clockwork mechanisms, distant grandfather clock ticks, Elias's focused breathing, subtle workshop hum.",
+          "start_sec": 0.0,
+          "end_sec": 25.0,
+          "audio_asset": {
+            "asset_id": "aud_amb_sc_001",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205016_884995/aud_amb_sc_001_file_000007.wav",
+            "format": "wav",
+            "duration_sec": 25.0,
+            "sample_rate": 44100
+          }
+        },
+        "mix": {
+          "mix_id": "mix_sc_001",
+          "scene_id": "sc_001",
+          "duration_sec": 25.0,
+          "audio_asset": {
+            "asset_id": "aud_mix_sc_001",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205016_884995/aud_mix_sc_001_file_000008.wav",
+            "format": "wav",
+            "duration_sec": 25.0,
+            "sample_rate": 44100
+          }
+        }
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_duration_sec": 25.0,
+        "narration_segments": [],
+        "music_cue": {
+          "cue_id": "music_sc_002",
+          "scene_id": "sc_002",
+          "mood": "tense, percussive, frustrated, building, hopeful",
+          "start_sec": 0.0,
+          "end_sec": 25.0,
+          "audio_asset": {
+            "asset_id": "aud_music_sc_002",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205016_884995/aud_music_sc_002_file_000009.wav",
+            "format": "wav",
+            "duration_sec": 25.0,
+            "sample_rate": 44100
+          }
+        },
+        "ambience_bed": {
+          "ambience_id": "amb_sc_002",
+          "scene_id": "sc_002",
+          "description": "Close-up, struggling mechanical sounds, strained breaths, increasing clock tension, faint new ticking emerges.",
+          "start_sec": 0.0,
+          "end_sec": 25.0,
+          "audio_asset": {
+            "asset_id": "aud_amb_sc_002",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205016_884995/aud_amb_sc_002_file_000010.wav",
+            "format": "wav",
+            "duration_sec": 25.0,
+            "sample_rate": 44100
+          }
+        },
+        "mix": {
+          "mix_id": "mix_sc_002",
+          "scene_id": "sc_002",
+          "duration_sec": 25.0,
+          "audio_asset": {
+            "asset_id": "aud_mix_sc_002",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205016_884995/aud_mix_sc_002_file_000011.wav",
+            "format": "wav",
+            "duration_sec": 25.0,
+            "sample_rate": 44100
+          }
+        }
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "scene_duration_sec": 18.0,
+        "narration_segments": [],
+        "music_cue": {
+          "cue_id": "music_sc_003",
+          "scene_id": "sc_003",
+          "mood": "triumphant, peaceful, harmonious, warm, resolving",
+          "start_sec": 0.0,
+          "end_sec": 18.0,
+          "audio_asset": {
+            "asset_id": "aud_music_sc_003",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205016_884995/aud_music_sc_003_file_000012.wav",
+            "format": "wav",
+            "duration_sec": 18.0,
+            "sample_rate": 44100
+          }
+        },
+        "ambience_bed": {
+          "ambience_id": "amb_sc_003",
+          "scene_id": "sc_003",
+          "description": "Synchronized steady ticking of repaired watch and grandfather clock, resonant midnight chimes, quiet stillness.",
+          "start_sec": 0.0,
+          "end_sec": 18.0,
+          "audio_asset": {
+            "asset_id": "aud_amb_sc_003",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205016_884995/aud_amb_sc_003_file_000013.wav",
+            "format": "wav",
+            "duration_sec": 18.0,
+            "sample_rate": 44100
+          }
+        },
+        "mix": {
+          "mix_id": "mix_sc_003",
+          "scene_id": "sc_003",
+          "duration_sec": 18.0,
+          "audio_asset": {
+            "asset_id": "aud_mix_sc_003",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205016_884995/aud_mix_sc_003_file_000014.wav",
+            "format": "wav",
+            "duration_sec": 18.0,
+            "sample_rate": 44100
+          }
+        }
+      }
+    ],
+    "final_audio_asset": {
+      "asset_id": "aud_final",
+      "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205016_884995/aud_final_file_000015.wav",
+      "format": "wav",
+      "duration_sec": 68.0,
+      "sample_rate": 44100
+    },
+    "final_delivery_asset": {
+      "asset_id": "delivery_final",
+      "uri": "placeholder",
+      "format": "mp4",
+      "duration_sec": 68.0
+    }
+  },
+  "metrics": {
+    "scene_count": 3,
+    "narration_segment_count": 0,
+    "total_narration_duration_sec": 0,
+    "total_music_duration_sec": 68.0
+  }
+}

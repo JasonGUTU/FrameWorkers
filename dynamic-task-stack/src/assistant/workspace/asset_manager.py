@@ -3,7 +3,10 @@
 from __future__ import annotations
 
 import json
+import logging
 from typing import Any, Callable, Dict, Optional, List
+
+logger = logging.getLogger(__name__)
 
 from .models import FileMetadata
 
@@ -13,7 +16,7 @@ class AssetManager:
 
     def __init__(
         self,
-        store_file: Callable[..., FileMetadata],
+        store_file_at_relative_path: Callable[..., FileMetadata],
         add_log: Callable[..., None],
         read_binary_from_uri: Callable[[str], Optional[bytes]],
         list_files: Callable[..., List[FileMetadata]],
@@ -21,7 +24,7 @@ class AssetManager:
         *,
         on_change: Optional[Callable[[], None]] = None,
     ):
-        self._store_file = store_file
+        self._store_file_at_relative_path = store_file_at_relative_path
         self._add_log = add_log
         self._read_binary_from_uri = read_binary_from_uri
         self._list_files = list_files
@@ -76,33 +79,6 @@ class AssetManager:
             }
         return files
 
-    def build_pipeline_asset_value(
-        self,
-        *,
-        execution_results: Optional[Dict[str, Any]],
-        descriptor_asset_key: str,
-        execution_id: str,
-    ) -> Dict[str, Any]:
-        """Build execution result payload for the shared pipeline ``assets`` dict."""
-        if not execution_results or not isinstance(execution_results, dict):
-            return {}
-
-        index = execution_results.get("_asset_index")
-        if self.is_asset_index_entry(index):
-            return {
-                "asset_key": index.get("asset_key", descriptor_asset_key),
-                "json_uri": index.get("json_uri", ""),
-                "file_id": index.get("file_id", ""),
-                "execution_id": index.get("execution_id", execution_id),
-            }
-
-        # Backward-compatible fallback for legacy executions/tests without index.
-        return {
-            key: value
-            for key, value in execution_results.items()
-            if not key.startswith("_")
-        }
-
     @staticmethod
     def _build_json_snapshot_payload(results: Dict[str, Any]) -> Dict[str, Any]:
         payload: Dict[str, Any] = {}
@@ -113,6 +89,24 @@ class AssetManager:
                 continue
             payload[key] = value
         return payload
+
+    @staticmethod
+    def _short_execution_label(execution_id: str) -> str:
+        raw = str(execution_id or "").strip()
+        if not raw:
+            return "exec"
+        parts = raw.split("_")
+        if len(parts) >= 2 and parts[0] == "exec" and parts[1]:
+            return f"exec_{parts[1]}"
+        return raw
+
+    @staticmethod
+    def snapshot_filename(role: str, execution_id: str) -> str:
+        safe_role = "".join(
+            ch.lower() if ch.isalnum() or ch in {"_", "-"} else "_"
+            for ch in str(role or "snapshot")
+        ).strip("_") or "snapshot"
+        return f"{safe_role}_{AssetManager._short_execution_label(execution_id)}.json"
 
     @staticmethod
     def _rewrite_asset_uris_with_persisted_paths(node: Any, persisted_media_paths: Dict[str, str]) -> None:
@@ -127,39 +121,6 @@ class AssetManager:
         if isinstance(node, list):
             for item in node:
                 AssetManager._rewrite_asset_uris_with_persisted_paths(item, persisted_media_paths)
-
-    def _store_file_asset(self, execution: Any, key: str, value: Dict[str, Any]) -> FileMetadata:
-        file_metadata = {
-            "execution_id": execution.id,
-            "task_id": execution.task_id,
-            "producer_agent_id": execution.agent_id,
-            "asset_key": key,
-            "asset_variant": "binary",
-        }
-        file_meta = self._store_file(
-            file_content=value["file_content"],
-            filename=value.get("filename", f"{key}.bin"),
-            description=value.get("description", f"File from execution {execution.id}"),
-            created_by=execution.agent_id,
-            tags=[execution.agent_id, execution.task_id],
-            metadata=file_metadata,
-        )
-        self._add_log(
-            operation_type="write",
-            resource_type="asset",
-            resource_id=file_meta.id,
-            agent_id=execution.agent_id,
-            task_id=execution.task_id,
-            details={
-                "event_type": "asset_persisted",
-                "asset_key": key,
-                "asset_status": "ready",
-                "file_type": file_meta.file_type,
-                "filename": file_meta.filename,
-            },
-        )
-        self._touch()
-        return file_meta
 
     def _matches_asset_metadata(
         self,
@@ -189,10 +150,7 @@ class AssetManager:
         asset_key: str,
         asset_variant: str,
     ) -> None:
-        files = self._list_files(
-            created_by=execution.agent_id,
-            tags=[execution.task_id],
-        )
+        files = self._list_files()
         deleted_file_ids: List[str] = []
         deleted_filenames: List[str] = []
         for file_meta in files:
@@ -224,107 +182,250 @@ class AssetManager:
             )
             self._touch()
 
-    def persist_execution_assets(
+    @staticmethod
+    def is_safe_artifacts_relative_path(rel_path: str) -> bool:
+        rel = (rel_path or "").strip().replace("\\", "/")
+        if not rel:
+            return False
+        if ".." in rel.split("/"):
+            return False
+        return rel.startswith("artifacts/")
+
+    @staticmethod
+    def _has_allowed_extension(rel_path: str) -> bool:
+        allowed = {
+            ".json", ".png", ".jpg", ".jpeg", ".webp", ".wav", ".mp3", ".mp4", ".mov", ".bin", ".txt"
+        }
+        path = (rel_path or "").strip().lower()
+        for ext in allowed:
+            if path.endswith(ext):
+                return True
+        return False
+
+    def persist_execution_from_plan(
         self,
         execution: Any,
+        assignments: List[Dict[str, Any]],
         *,
         overwrite_existing: bool = False,
-    ) -> Dict[str, str]:
+    ) -> tuple[Dict[str, str], Optional[Dict[str, Any]], List[Dict[str, str]]]:
+        """Write execution outputs using an explicit path plan (LLM and/or deterministic).
+
+        Each assignment is a dict with:
+          - ``kind``: ``binary`` | ``media`` | ``json_snapshot`` | ``keyframes_manifest``
+          - ``relative_path``: must start with ``artifacts/``
+          - ``source_key``: for ``binary`` / ``media``
+          - ``role`` / ``asset_key``: for ``json_snapshot`` (defaults to descriptor asset_key)
+          - ``manifest_document``: dict payload for ``keyframes_manifest``
+
+        Returns:
+            ``(persisted_media_paths, asset_index, extra_artifact_locations)``
+        """
         if not execution.results or not isinstance(execution.results, dict):
-            return {}
+            return {}, None, []
 
+        results: Dict[str, Any] = execution.results
         persisted_media_paths: Dict[str, str] = {}
-        for key, value in execution.results.items():
-            if isinstance(value, dict) and "file_content" in value:
-                if overwrite_existing:
-                    self._purge_existing_asset_files(
-                        execution=execution,
-                        asset_key=key,
-                        asset_variant="binary",
-                    )
-                self._store_file_asset(execution, key, value)
+        asset_index: Optional[Dict[str, Any]] = None
+        extra_locs: List[Dict[str, str]] = []
+        for raw in assignments:
+            if not isinstance(raw, dict):
+                continue
+            rel = str(raw.get("relative_path") or "").strip().replace("\\", "/")
+            if not self.is_safe_artifacts_relative_path(rel):
+                logger.warning("persist plan: skip unsafe path %r", rel)
+                continue
+            if not self._has_allowed_extension(rel):
+                logger.warning("persist plan: skip disallowed extension path %r", rel)
+                continue
+            kind = str(raw.get("kind") or "").strip()
 
-        media_files = execution.results.get("_media_files")
-        if isinstance(media_files, dict):
-            for key, value in media_files.items():
+            if kind == "binary":
+                sk = str(raw.get("source_key") or "").strip()
+                if not sk:
+                    continue
+                val = results.get(sk)
+                if not isinstance(val, dict) or "file_content" not in val:
+                    continue
                 if overwrite_existing:
                     self._purge_existing_asset_files(
                         execution=execution,
-                        asset_key=key,
+                        asset_key=sk,
                         asset_variant="binary",
                     )
-                file_meta = self._store_file_asset(execution, key, value)
-                persisted_media_paths[key] = file_meta.file_path
+                fn = val.get("filename") or f"{sk}.bin"
+                file_meta = self._store_file_at_relative_path(
+                    rel,
+                    file_content=val["file_content"],
+                    filename=fn,
+                    description=val.get("description", f"File from execution {execution.id}"),
+                    created_by=execution.agent_id,
+                    tags=[execution.agent_id, execution.task_id],
+                    metadata={
+                        "execution_id": execution.id,
+                        "task_id": execution.task_id,
+                        "producer_agent_id": execution.agent_id,
+                        "asset_key": sk,
+                        "asset_variant": "binary",
+                    },
+                )
+                self._add_log(
+                    operation_type="write",
+                    resource_type="asset",
+                    resource_id=file_meta.id,
+                    agent_id=execution.agent_id,
+                    task_id=execution.task_id,
+                    details={
+                        "event_type": "asset_persisted",
+                        "asset_key": sk,
+                        "asset_status": "ready",
+                        "file_type": file_meta.file_type,
+                        "filename": file_meta.filename,
+                        "persist_plan": True,
+                    },
+                )
+                self._touch()
+
+            elif kind == "media":
+                sk = str(raw.get("source_key") or "").strip()
+                if not sk:
+                    continue
+                media = results.get("_media_files")
+                if not isinstance(media, dict):
+                    continue
+                val = media.get(sk)
+                if not isinstance(val, dict) or "file_content" not in val:
+                    continue
+                if overwrite_existing:
+                    self._purge_existing_asset_files(
+                        execution=execution,
+                        asset_key=sk,
+                        asset_variant="binary",
+                    )
+                fn = val.get("filename") or f"{sk}.bin"
+                file_meta = self._store_file_at_relative_path(
+                    rel,
+                    file_content=val["file_content"],
+                    filename=fn,
+                    description=val.get("description", f"Media asset {sk}"),
+                    created_by=execution.agent_id,
+                    tags=[execution.agent_id, execution.task_id],
+                    metadata={
+                        "execution_id": execution.id,
+                        "task_id": execution.task_id,
+                        "producer_agent_id": execution.agent_id,
+                        "asset_key": sk,
+                        "asset_variant": "binary",
+                    },
+                )
+                persisted_media_paths[sk] = file_meta.file_path
+                self._add_log(
+                    operation_type="write",
+                    resource_type="asset",
+                    resource_id=file_meta.id,
+                    agent_id=execution.agent_id,
+                    task_id=execution.task_id,
+                    details={
+                        "event_type": "asset_persisted",
+                        "asset_key": sk,
+                        "persist_plan": True,
+                    },
+                )
+                self._touch()
+
+            elif kind == "keyframes_manifest":
+                doc = raw.get("manifest_document")
+                if not isinstance(doc, dict):
+                    continue
+                try:
+                    body = json.dumps(doc, ensure_ascii=False, indent=2).encode("utf-8")
+                except (TypeError, ValueError):
+                    continue
+                if overwrite_existing:
+                    self._purge_existing_asset_files(
+                        execution=execution,
+                        asset_key="keyframes_manifest",
+                        asset_variant="manifest",
+                    )
+                file_meta = self._store_file_at_relative_path(
+                    rel,
+                    file_content=body,
+                    filename="keyframes_manifest.json",
+                    description=f"Keyframe manifest ({execution.task_id})",
+                    created_by=execution.agent_id,
+                    tags=[execution.task_id, execution.agent_id, "keyframes_manifest"],
+                    metadata={
+                        "task_id": execution.task_id,
+                        "execution_id": execution.id,
+                        "producer_agent_id": execution.agent_id,
+                        "asset_variant": "manifest",
+                        "role": "keyframes_manifest",
+                    },
+                )
+                self._add_log(
+                    operation_type="write",
+                    resource_type="asset",
+                    resource_id=file_meta.id,
+                    agent_id=execution.agent_id,
+                    task_id=execution.task_id,
+                    details={"event_type": "keyframes_manifest_persisted", "persist_plan": True},
+                )
+                self._touch()
+                extra_locs.append({"role": "keyframes_manifest", "path": file_meta.file_path})
+
+            elif kind == "json_snapshot":
+                role = str(
+                    raw.get("role") or raw.get("asset_key") or execution.agent_id or "json_snapshot"
+                ).strip()
+                payload = self._build_json_snapshot_payload(results)
+                if not payload:
+                    continue
+                try:
+                    json_bytes = json.dumps(payload, ensure_ascii=False, indent=2).encode("utf-8")
+                except (TypeError, ValueError):
+                    continue
+                if overwrite_existing:
+                    self._purge_existing_asset_files(
+                        execution=execution,
+                        asset_key=role,
+                        asset_variant="json_snapshot",
+                    )
+                filename = self.snapshot_filename(role, execution.id)
+                file_meta = self._store_file_at_relative_path(
+                    rel,
+                    file_content=json_bytes,
+                    filename=filename,
+                    description=f"Structured JSON snapshot for {execution.agent_id} ({execution.id})",
+                    created_by=execution.agent_id,
+                    tags=[execution.agent_id, execution.task_id, "asset_json"],
+                    metadata={
+                        "execution_id": execution.id,
+                        "task_id": execution.task_id,
+                        "producer_agent_id": execution.agent_id,
+                        "asset_key": role,
+                        "asset_variant": "json_snapshot",
+                    },
+                )
+                self._add_log(
+                    operation_type="write",
+                    resource_type="asset",
+                    resource_id=file_meta.id,
+                    agent_id=execution.agent_id,
+                    task_id=execution.task_id,
+                    details={
+                        "event_type": "asset_json_snapshot_persisted",
+                        "asset_key": role,
+                        "persist_plan": True,
+                    },
+                )
+                self._touch()
+                asset_index = {
+                    "asset_key": role,
+                    "json_uri": file_meta.file_path,
+                    "file_id": file_meta.id,
+                    "execution_id": execution.id,
+                }
 
         if persisted_media_paths:
-            self._rewrite_asset_uris_with_persisted_paths(
-                execution.results,
-                persisted_media_paths,
-            )
-        return persisted_media_paths
-
-    def persist_execution_json_snapshot(
-        self,
-        execution: Any,
-        *,
-        asset_key: str,
-        overwrite_existing: bool = False,
-    ) -> Optional[Dict[str, Any]]:
-        if not execution.results or not isinstance(execution.results, dict):
-            return None
-
-        payload = self._build_json_snapshot_payload(execution.results)
-        if not payload:
-            return None
-
-        try:
-            json_bytes = json.dumps(payload, ensure_ascii=False, indent=2).encode("utf-8")
-        except Exception:
-            return None
-
-        if overwrite_existing:
-            self._purge_existing_asset_files(
-                execution=execution,
-                asset_key=asset_key,
-                asset_variant="json_snapshot",
-            )
-
-        agent_name = str(getattr(execution, "agent_id", "agent") or "agent").strip()
-        safe_agent = "".join(
-            ch.lower() if ch.isalnum() or ch in {"_", "-"} else "_"
-            for ch in agent_name
-        ).strip("_") or "agent"
-        filename = f"{safe_agent}_{asset_key}_{execution.id}.json"
-        file_meta = self._store_file(
-            file_content=json_bytes,
-            filename=filename,
-            description=f"Structured JSON snapshot for {execution.agent_id} ({execution.id})",
-            created_by=execution.agent_id,
-            tags=[execution.agent_id, execution.task_id, "asset_json"],
-            metadata={
-                "execution_id": execution.id,
-                "task_id": execution.task_id,
-                "producer_agent_id": execution.agent_id,
-                "asset_key": asset_key,
-                "asset_variant": "json_snapshot",
-            },
-        )
-        self._add_log(
-            operation_type="write",
-            resource_type="asset",
-            resource_id=file_meta.id,
-            agent_id=execution.agent_id,
-            task_id=execution.task_id,
-            details={
-                "event_type": "asset_json_snapshot_persisted",
-                "asset_key": asset_key,
-                "filename": file_meta.filename,
-            },
-        )
-        self._touch()
-        return {
-            "asset_key": asset_key,
-            "json_uri": file_meta.file_path,
-            "file_id": file_meta.id,
-            "execution_id": execution.id,
-        }
+            self._rewrite_asset_uris_with_persisted_paths(results, persisted_media_paths)
+        return persisted_media_paths, asset_index, extra_locs

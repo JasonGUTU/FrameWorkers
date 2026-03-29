@@ -24,7 +24,7 @@ Layer 3 -- post-materialization asset checks:
 from __future__ import annotations
 
 import json
-from typing import Any
+from typing import Any, Mapping
 
 from ..base_evaluator import BaseEvaluator, check_uri
 from .schema import KeyFrameAgentOutput
@@ -37,8 +37,8 @@ class KeyframeEvaluator(BaseEvaluator[KeyFrameAgentOutput]):
         ("overall_visual_quality", "Are the prompt descriptions specific enough to generate good images? Do they include composition, lighting, mood, and action details?"),
     ]
 
-    def _build_creative_context(self, output, upstream):
-        sb_data = (upstream or {}).get("storyboard", {})
+    def _build_creative_context(self, output, input_bundle_v2):
+        sb_data = (input_bundle_v2 or {}).get("storyboard", {})
         if sb_data:
             return f"Storyboard:\n{json.dumps(sb_data, ensure_ascii=False, indent=2)}"
         return ""
@@ -50,7 +50,7 @@ class KeyframeEvaluator(BaseEvaluator[KeyFrameAgentOutput]):
     def check_structure(
         self,
         output: KeyFrameAgentOutput,
-        upstream: dict[str, Any] | None = None,
+        input_bundle_v2: Mapping[str, Any] | None = None,
     ) -> list[str]:
         """Rule-based structural validation for Keyframes Package."""
         errors: list[str] = []
@@ -90,8 +90,8 @@ class KeyframeEvaluator(BaseEvaluator[KeyFrameAgentOutput]):
                     )
 
         # --- Upstream cross-check: scene/shot IDs must match storyboard ---
-        if upstream and "storyboard" in upstream:
-            sb_content = upstream["storyboard"].get("content", {})
+        if input_bundle_v2 and "storyboard" in input_bundle_v2:
+            sb_content = input_bundle_v2["storyboard"].get("content", {})
             sb_scene_ids = {
                 s.get("scene_id", "") for s in sb_content.get("scenes", [])
             }
@@ -164,7 +164,7 @@ class KeyframeEvaluator(BaseEvaluator[KeyFrameAgentOutput]):
     async def evaluate_asset(
         self,
         asset_data: dict[str, Any],
-        upstream: dict[str, Any] | None = None,
+        input_bundle_v2: Mapping[str, Any] | None = None,
     ) -> dict[str, Any]:
         """Check that the three-layer image pipeline produced actual images."""
         content = asset_data.get("content", {})

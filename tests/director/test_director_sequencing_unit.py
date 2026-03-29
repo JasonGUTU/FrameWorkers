@@ -14,11 +14,11 @@ from director_agent.director import DirectorAgent
 class _ReasoningCapture:
     def __init__(self):
         self.last_task_summary = None
-        self.last_short_term_memory = None
+        self.last_global_memory = None
 
     def reason_and_plan(self, **kwargs):
         self.last_task_summary = kwargs.get("task_summary")
-        self.last_short_term_memory = kwargs.get("short_term_memory")
+        self.last_global_memory = kwargs.get("global_memory")
         return {
             "action": "wait",
             "task_updates": [],
@@ -73,12 +73,22 @@ class _ApiIdle:
             }
         ]
 
-    def get_workspace_memory_brief(self, task_id=None, agent_id=None, short_term_limit=6):
+    def get_workspace_memory_brief(
+        self, task_id=None, agent_id=None
+    ):
         return {
             "task_id": task_id,
             "agent_id": agent_id,
-            "short_term": [{"kind": "execution_summary", "content": "recent run"}],
-            "long_term": [],
+            "global_memory": [
+                {
+                    "agent_id": "VideoAgent",
+                    "created_at": "2026-01-01T00:00:00+00:00",
+                    "execution_result": {
+                        "status": "COMPLETED",
+                        "execution_id": "ex1",
+                    },
+                }
+            ],
         }
 
     def get_next_task(self):
@@ -106,21 +116,20 @@ def test_director_passes_latest_execution_summary_to_reasoning():
     assert reasoning.last_task_summary is not None
     assert reasoning.last_task_summary["task_id"] == "task_1"
     assert reasoning.last_task_summary["agent_id"] == "VideoAgent"
-    assert reasoning.last_short_term_memory is not None
-    assert reasoning.last_short_term_memory[0]["kind"] == "execution_summary"
+    assert reasoning.last_global_memory is not None
+    assert reasoning.last_global_memory[0]["agent_id"] == "VideoAgent"
+    assert "content" not in reasoning.last_global_memory[0]
 
 
-def test_director_passes_message_content_without_ltm_rewrite():
+def test_director_does_not_send_assets_in_execute_inputs():
     api = _ApiIdle()
     director = DirectorAgent(api_client=api)
 
     inputs = director._build_assistant_inputs_for_execution(
-        task_id="task_1",
-        agent_id="VideoAgent",
-        message_content="Please regenerate this video.",
+        task={"description": {"goal": "unit"}, "progress": {}},
     )
 
     assert inputs is not None
-    assert "assets" in inputs
-    assert inputs["assets"]["source_text"] == "Please regenerate this video."
-    assert inputs["_memory_brief"]["long_term"] == []
+    assert inputs["text"] == "unit"
+    assert "assets" not in inputs
+    assert "_memory_brief" not in inputs

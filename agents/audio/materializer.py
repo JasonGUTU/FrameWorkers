@@ -12,6 +12,7 @@ import os
 from typing import Any
 
 from ..descriptor import BaseMaterializer, MediaAsset
+from ..contracts.input_bundle_v2 import InputBundleV2
 from inference.generation.audio_generators.service import AudioService
 
 logger = logging.getLogger(__name__)
@@ -28,6 +29,30 @@ class AudioMaterializer(BaseMaterializer):
         self.audio_svc = audio_service
 
     @staticmethod
+    def naming_spec_v2() -> dict[str, Any]:
+        return {
+            "agent_id": "AudioAgent",
+            "spec_version": "1.0",
+            "rules": [
+                {
+                    "artifact_family": "audio_track",
+                    "semantic_meaning": "narration/music/ambience/mix/final audio artifacts",
+                    "recommended_name_pattern": "aud_{type}_{scene_or_final}_{seq}.wav",
+                    "id_source": "screenplay scene_id and segment order",
+                    "ordering_rules": "narration sequence follows segment timing",
+                    "examples": ["aud_narr_sc_001_01.wav", "aud_music_sc_001.wav", "aud_final.wav"],
+                    "rename_hints": {"stable_parts": "aud prefix and type token", "mutable_parts": "separator style"},
+                }
+            ],
+        }
+
+    @staticmethod
+    def _resolved_inputs(input_bundle_v2: InputBundleV2) -> dict[str, Any]:
+        ctx = getattr(input_bundle_v2, "context", {})
+        resolved = ctx.get("resolved_inputs") if isinstance(ctx, dict) else None
+        return resolved if isinstance(resolved, dict) else {}
+
+    @staticmethod
     def _normalize_local_path(uri: str) -> str:
         if not uri:
             return ""
@@ -36,9 +61,9 @@ class AudioMaterializer(BaseMaterializer):
         return uri
 
     @classmethod
-    def _load_video_bytes_from_assets(cls, assets: dict[str, Any]) -> bytes | None:
-        """Load final video bytes from upstream `video` asset uri if available."""
-        video = (assets or {}).get("video", {})
+    def _load_video_bytes_from_bundle(cls, input_bundle_v2: InputBundleV2) -> bytes | None:
+        """Load final video bytes from shared `video` asset uri if available."""
+        video = cls._resolved_inputs(input_bundle_v2).get("video", {})
         content = video.get("content", {}) if isinstance(video, dict) else {}
         final_video = content.get("final_video_asset", {})
         video_uri = cls._normalize_local_path(final_video.get("uri", ""))
@@ -52,9 +77,9 @@ class AudioMaterializer(BaseMaterializer):
 
     async def materialize(
         self,
-        project_id: str,
+        task_id: str,
         asset_dict: dict[str, Any],
-        assets: dict[str, Any],
+        input_bundle_v2: InputBundleV2,
     ) -> list[MediaAsset]:
         """Generate actual audio tracks for all scenes.
 
@@ -185,7 +210,7 @@ class AudioMaterializer(BaseMaterializer):
         final_delivery = content.setdefault("final_delivery_asset", {})
         final_delivery["asset_id"] = "delivery_final"
         if final_bytes:
-            video_bytes = self._load_video_bytes_from_assets(assets)
+            video_bytes = self._load_video_bytes_from_bundle(input_bundle_v2)
             if video_bytes:
                 try:
                     muxed_video_bytes = await self.audio_svc.mux_audio_with_video(
@@ -202,10 +227,10 @@ class AudioMaterializer(BaseMaterializer):
                     logger.error("Final delivery mux failed: %s", exc)
             else:
                 logger.info(
-                    "Skipping final delivery mux: missing upstream final video or final audio"
+                    "Skipping final delivery mux: missing shared final video or final audio"
                 )
 
-        logger.info("All audio tracks materialized for %s", project_id)
+        logger.info("All audio tracks materialized for %s", task_id)
         return pending
 
     @staticmethod

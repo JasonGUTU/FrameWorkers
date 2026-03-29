@@ -38,7 +38,7 @@ class _DummyPipelineResult:
 
 
 class _DummyPipelineAgent:
-    async def run(self, _typed_input, upstream=None, materialize_ctx=None):
+    async def run(self, _typed_input, input_bundle_v2=None, materialize_ctx=None):
         return _DummyPipelineResult()
 
 
@@ -46,21 +46,16 @@ class DummyDescriptor:
     def __init__(self, asset_key: str):
         self.asset_key = asset_key
         self.catalog_entry = "dummy descriptor"
-        self.asset_type = "dummy_asset_type"
 
     def build_equipped_agent(self, _llm):
         return _DummyPipelineAgent()
 
-    def build_input(self, project_id, draft_id, assets, config):
+    def build_input(self, task_id, input_bundle_v2, config):
         return {
-            "project_id": project_id,
-            "draft_id": draft_id,
-            "assets": assets,
+            "task_id": task_id,
+            "input_bundle_v2": input_bundle_v2,
             "language": config.language,
         }
-
-    def build_upstream(self, _assets):
-        return {}
 
 
 class DummyRegistry:
@@ -69,6 +64,77 @@ class DummyRegistry:
 
     def get_descriptor(self, agent_id: str):
         return self._descriptors.get(agent_id)
+
+
+@pytest.fixture(autouse=True)
+def stub_global_memory_summary_llm(monkeypatch):
+    """Avoid real LLM calls when persisting global_memory after each test execution."""
+
+    def _stub(self, execution, deterministic_artifacts=None):
+        return {
+            "content": "global_memory test summary",
+            "artifact_locations": list(deterministic_artifacts or []),
+            "artifact_briefs": [],
+        }
+
+    monkeypatch.setattr(
+        service_module.AssistantService,
+        "_extract_global_memory_summary_with_llm",
+        _stub,
+    )
+
+
+@pytest.fixture(autouse=True)
+def stub_output_persist_plan_llm(monkeypatch):
+    """Skip output path LLM; use deterministic persist plan in tests."""
+
+    def _stub(self, workspace, execution, descriptor, base_plan):
+        return base_plan
+
+    monkeypatch.setattr(
+        service_module.AssistantService,
+        "_refine_output_persist_plan_with_llm",
+        _stub,
+    )
+
+
+@pytest.fixture(autouse=True)
+def stub_input_package_llm(monkeypatch):
+    """Avoid real LLM calls for per-execution input packaging."""
+
+    def _stub(self, agent_id, task_id, workspace, packaged_data):
+        mem = packaged_data.get("global_memory") or []
+        roles: list[str] = []
+        for entry in mem:
+            if not isinstance(entry, dict):
+                continue
+            for loc in entry.get("artifact_locations") or []:
+                if not isinstance(loc, dict):
+                    continue
+                role = loc.get("role")
+                path = loc.get("path")
+                if not (isinstance(role, str) and role.strip()):
+                    continue
+                # For tests, only select JSON roles; binary roles (e.g. media sys_id)
+                # are not loadable via JSON hydration.
+                if isinstance(path, str) and path.strip().lower().endswith(".json"):
+                    roles.append(role.strip())
+        # Stable order + de-dupe
+        roles = list(dict.fromkeys(roles))
+        if not roles:
+            return {}
+        return {
+            "rationale": "test stub: select all available roles",
+            "required_roles": roles,
+            "selected_roles": roles,
+            "append_to_source_text": "",
+        }
+
+    monkeypatch.setattr(
+        service_module.AssistantService,
+        "_resolve_inputs_for_agent_with_llm",
+        _stub,
+    )
 
 
 @pytest.fixture
@@ -82,13 +148,5 @@ def assistant_env(tmp_path, monkeypatch):
     )
 
     monkeypatch.setattr(service_module, "get_agent_registry", lambda: registry)
-    monkeypatch.setattr(
-        service_module.task_storage,
-        "get_task",
-        lambda _task_id: SimpleNamespace(
-            description="draft idea",
-            progress={"stage": "unit-test"},
-        ),
-    )
     svc = service_module.AssistantService(storage)
     return svc, storage, None

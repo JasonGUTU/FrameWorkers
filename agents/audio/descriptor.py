@@ -7,23 +7,30 @@ from typing import Any
 from pydantic import BaseModel
 
 from ..descriptor import SubAgentDescriptor
+from ..contracts import InputBundleV2
 from .agent import AudioAgent
 from .schema import AudioAgentInput
 from .evaluator import AudioEvaluator
 from .materializer import AudioMaterializer
 from inference.generation.audio_generators.service import FalAudioService
 
+OUTPUT_ASSET_KEY = "audio"
+
 
 def build_input(
-    _project_id: str,
-    _draft_id: str,
-    assets: dict[str, Any],
+    _task_id: str,
+    input_bundle_v2: InputBundleV2,
     config: Any,
 ) -> BaseModel:
+    resolved = (
+        input_bundle_v2.context.get("resolved_inputs", {})
+        if isinstance(getattr(input_bundle_v2, "context", None), dict)
+        else {}
+    )
     return AudioAgentInput(
-        screenplay=assets.get("screenplay", {}),
-        storyboard=assets.get("storyboard", {}),
-        video=assets.get("video", {}),
+        screenplay=resolved.get("screenplay", {}),
+        storyboard=resolved.get("storyboard", {}),
+        video=resolved.get("video", {}),
     )
 
 
@@ -39,10 +46,8 @@ CATALOG_ENTRY = (
 )
 
 DESCRIPTOR = SubAgentDescriptor(
-    agent_name="AudioAgent",
-    asset_key="audio",
-    asset_type="audio_package",
-    upstream_keys=["screenplay", "storyboard", "video"],
+    agent_id="AudioAgent",
+    asset_key=OUTPUT_ASSET_KEY,
     catalog_entry=CATALOG_ENTRY,
     agent_factory=lambda llm: AudioAgent(llm_client=llm),
     evaluator_factory=AudioEvaluator,

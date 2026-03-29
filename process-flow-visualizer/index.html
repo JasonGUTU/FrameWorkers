@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frameworkers — Pipeline I/O</title>
+  <link rel="icon" type="image/svg+xml" href="./logo.svg" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="page">
+
+    <header class="header">
+      <div class="logo-row">
+        <img class="logo-mark" src="./logo.svg" alt="Frameworkers logo" />
+        <div class="logo-text">
+          <span class="logo-name">Frameworkers</span>
+          <span class="logo-tagline">AI Production Pipeline</span>
+        </div>
+      </div>
+      <div class="header-divider"></div>
+      <div class="header-badge">⚡ Pipeline I/O Visualizer</div>
+      <h1>Pipeline 接口输入输出</h1>
+      <p>静态示意：<code>POST /api/assistant/execute</code> 的请求/响应，以及 Assistant 内部三个执行阶段与 Sub-agent、Workspace 的真实读写边界。</p>
+    </header>
+
+    <div id="flowViz"></div>
+    <section id="httpViz"></section>
+    <section id="phasesViz"></section>
+    <section class="two-col-boundaries">
+      <div id="subagentViz"></div>
+      <div id="workspaceViz"></div>
+    </section>
+
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>

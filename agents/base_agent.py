@@ -18,7 +18,7 @@ assets produced.
 Skeleton-first mode (opt-in per agent):
   When ``build_skeleton()`` returns a non-None output, the agent switches to
   skeleton mode.  The system pre-builds all structural fields (IDs, order,
-  source refs, placeholders) from upstream data, and the LLM is asked only
+  source refs, placeholders) from shared assets, and the LLM is asked only
   to fill creative fields (prompt_summary, dialogue text, mood, etc.).
   This eliminates structural errors and reduces output tokens by 35-70%.
 """
@@ -33,6 +33,7 @@ from typing import TYPE_CHECKING, Any, Callable, Generic, TypeVar, get_args
 from pydantic import BaseModel
 
 from inference.clients import LLMClient
+from .contracts.input_bundle_v2 import InputBundleV2
 
 if TYPE_CHECKING:
     from .base_evaluator import BaseEvaluator
@@ -58,15 +59,14 @@ class MaterializeContext:
     (e.g. ``dynamic-task-stack``).
 
     Attributes:
-        project_id:      Current project identifier.
-        assets:          Full in-memory asset cache (read context for the
-                         materializer, e.g. ``assets["storyboard"]``).
-        persist_binary:  Callback that saves a ``MediaAsset`` to disk and
-                         returns the URI string of the saved file.
+        task_id:           Current task identifier (same scope as Task Stack ``task_id``).
+        input_bundle_v2:   Mutable deep copy of v2 generic inputs for materializer.
+        persist_binary:    Callback that saves a ``MediaAsset`` to disk and
+                           returns the URI string of the saved file.
     """
 
-    project_id: str
-    assets: dict[str, Any]
+    task_id: str
+    input_bundle_v2: InputBundleV2
     persist_binary: Callable[[MediaAsset], str]
 
 
@@ -199,10 +199,10 @@ class BaseAgent(Generic[InputT, OutputT]):
         return False
 
     def build_skeleton(self, input_data: InputT) -> OutputT | None:
-        """Pre-build structural output from upstream data.
+        """Pre-build structural output from shared assets.
 
         Override in agents where the output structure (IDs, order, source
-        refs, placeholders) is fully deterministic from upstream.  The
+        refs, placeholders) is fully deterministic from shared assets.  The
         returned skeleton has all structural fields filled and creative
         fields left as empty strings.
 
@@ -219,7 +219,7 @@ class BaseAgent(Generic[InputT, OutputT]):
         Must be overridden by agents that use skeleton mode.
 
         Args:
-            input_data: The agent's typed input (for upstream context).
+            input_data: The agent's typed input (for shared-asset context).
             skeleton: The pre-built structural skeleton.
 
         Returns:
@@ -257,7 +257,7 @@ class BaseAgent(Generic[InputT, OutputT]):
         self,
         input_data: InputT,
         *,
-        upstream: dict[str, Any] | None = None,
+        input_bundle_v2: InputBundleV2 | None = None,
         rework_notes: str = "",
         max_retries: int = 3,
         materialize_ctx: MaterializeContext | None = None,
@@ -278,7 +278,7 @@ class BaseAgent(Generic[InputT, OutputT]):
 
         Args:
             input_data:      Typed agent input payload.
-            upstream:        Upstream asset dicts for evaluator cross-checks.
+            input_bundle_v2: Shared v2 input bundle for evaluator cross-checks.
             rework_notes:    Initial rework instructions (e.g. from the
                              Director when action is ``"regenerate"``).
             max_retries:     Total attempts before giving up.
@@ -308,7 +308,7 @@ class BaseAgent(Generic[InputT, OutputT]):
             # --- Step 2: L1+L2 evaluation (structural + creative) ---
             if self.evaluator is not None:
                 try:
-                    eval_result = await self.evaluator.evaluate(output, upstream)
+                    eval_result = await self.evaluator.evaluate(output, input_bundle_v2)
                 except Exception as exc:
                     logger.error(
                         "[%s] Evaluation error on attempt %d: %s",
@@ -343,9 +343,9 @@ class BaseAgent(Generic[InputT, OutputT]):
                 asset_dict = output.model_dump(exclude={"meta"})
                 try:
                     raw_media = await self.materializer.materialize(
-                        materialize_ctx.project_id,
+                        materialize_ctx.task_id,
                         asset_dict,
-                        materialize_ctx.assets,
+                        materialize_ctx.input_bundle_v2,
                     )
                     for media in raw_media:
                         uri = materialize_ctx.persist_binary(media)
@@ -373,7 +373,7 @@ class BaseAgent(Generic[InputT, OutputT]):
                 if self.evaluator is not None:
                     try:
                         asset_eval = await self.evaluator.evaluate_asset(
-                            asset_dict, upstream,
+                            asset_dict, input_bundle_v2,
                         )
                     except Exception as exc:
                         logger.error(
@@ -555,12 +555,3 @@ class BaseAgent(Generic[InputT, OutputT]):
         for i, item in enumerate(items, 1):
             setattr(item, attr, i)
 
-    @staticmethod
-    def to_json_str(model: BaseModel) -> str:
-        """Serialize a Pydantic model to a compact JSON string."""
-        return model.model_dump_json(indent=2, exclude_none=False)
-
-    @staticmethod
-    def dict_to_json_str(data: dict) -> str:
-        """Serialize a dict to a JSON string."""
-        return json.dumps(data, ensure_ascii=False, indent=2)

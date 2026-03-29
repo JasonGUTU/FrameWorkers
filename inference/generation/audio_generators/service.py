@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import asyncio
 import logging
 import os
 import subprocess
@@ -11,6 +10,8 @@ from typing import Any
 
 import httpx
 from openai import AsyncOpenAI
+
+from ..fal_helpers import fal_subscribe, http_download_bytes
 
 logger = logging.getLogger(__name__)
 
@@ -319,35 +320,10 @@ class FalAudioService(AudioService):
         return audio_bytes
 
     async def _submit(self, *, model_id: str, arguments: dict[str, Any]) -> dict[str, Any]:
-        if not self._api_key:
-            raise RuntimeError("FAL_API_KEY is required for FalAudioService")
-        try:
-            import fal_client
-        except ImportError as exc:
-            raise RuntimeError("fal-client is required. Install with `pip install fal-client`.") from exc
-
-        previous = os.getenv("FAL_KEY")
-        os.environ["FAL_KEY"] = self._api_key
-        try:
-            result = await asyncio.to_thread(
-                fal_client.subscribe,
-                model_id,
-                arguments=arguments,
-                with_logs=False,
-            )
-            if not isinstance(result, dict):
-                raise RuntimeError(f"Unexpected fal.ai response type: {type(result).__name__}")
-            return result
-        finally:
-            if previous is None:
-                os.environ.pop("FAL_KEY", None)
-            else:
-                os.environ["FAL_KEY"] = previous
+        return await fal_subscribe(self._api_key, model_id, arguments)
 
     async def _download_binary(self, url: str) -> bytes:
-        resp = await self.http.get(url)
-        resp.raise_for_status()
-        return resp.content
+        return await http_download_bytes(self.http, url)
 
     @staticmethod
     def _extract_audio_url(result: dict[str, Any]) -> str:

@@ -20,6 +20,7 @@ import asyncio
 import logging
 from typing import Any
 
+from ..contracts.input_bundle_v2 import InputBundleV2
 from ..descriptor import BaseMaterializer, MediaAsset
 from inference.generation.image_generators.service import ImageService
 
@@ -27,6 +28,14 @@ logger = logging.getLogger(__name__)
 
 
 class KeyframeMaterializer(BaseMaterializer):
+    @staticmethod
+    def _resolved_inputs(input_bundle_v2: InputBundleV2 | None) -> dict[str, Any]:
+        if not input_bundle_v2:
+            return {}
+        ctx = getattr(input_bundle_v2, "context", {})
+        resolved = ctx.get("resolved_inputs") if isinstance(ctx, dict) else None
+        return resolved if isinstance(resolved, dict) else {}
+
     """Three-layer keyframe image materializer.
 
     Constructor:
@@ -36,15 +45,33 @@ class KeyframeMaterializer(BaseMaterializer):
     def __init__(self, image_service: ImageService) -> None:
         self.image_svc = image_service
 
+    @staticmethod
+    def naming_spec_v2() -> dict[str, Any]:
+        return {
+            "agent_id": "KeyFrameAgent",
+            "spec_version": "1.0",
+            "rules": [
+                {
+                    "artifact_family": "keyframe_image",
+                    "semantic_meaning": "generated keyframe images for global/scene/shot anchors",
+                    "recommended_name_pattern": "img_{entity_or_shot_id}_{scope_or_seq}.png",
+                    "id_source": "storyboard/keyframe IDs",
+                    "ordering_rules": "for shot keyframes, preserve storyboard order",
+                    "examples": ["img_char_001_global.png", "img_loc_001_sc_001.png", "img_sh_001_kf_01.png"],
+                    "rename_hints": {"stable_parts": "img prefix and id tokens", "mutable_parts": "suffix formatting"},
+                }
+            ],
+        }
+
     # ------------------------------------------------------------------
     # Main entry point (called by Assistant)
     # ------------------------------------------------------------------
 
     async def materialize(
         self,
-        project_id: str,
+        task_id: str,
         asset_dict: dict[str, Any],
-        assets: dict[str, Any],
+        input_bundle_v2: InputBundleV2,
     ) -> list[MediaAsset]:
         """Generate keyframe images with three-layer consistency chain.
 
@@ -52,7 +79,7 @@ class KeyframeMaterializer(BaseMaterializer):
         ``asyncio.gather``.  Layers are executed sequentially because each
         layer depends on the previous layer's output.
 
-        When ``assets`` contains ``"reference_images"`` (a list of dicts
+        When ``input_bundle_v2`` contains ``"reference_images"`` (a list of dicts
         with ``label``, ``entity_type``, and ``image_bytes``), those
         user-provided images are injected as pre-existing global anchors
         **before** Layer 1 generation.  Entities matched to a reference
@@ -74,7 +101,7 @@ class KeyframeMaterializer(BaseMaterializer):
         content = asset_dict.get("content", {})
         scenes = content.get("scenes", [])
 
-        style_suffix = self._build_style_suffix(assets)
+        style_suffix = self._build_style_suffix(input_bundle_v2)
 
         MAX_LAYER_RETRIES = 10
 
@@ -85,12 +112,14 @@ class KeyframeMaterializer(BaseMaterializer):
         global_image_bytes: dict[str, bytes] = {}
 
         ref_images: list[dict[str, Any]] = (
-            (assets or {}).get("reference_images", [])
+            self._resolved_inputs(input_bundle_v2).get("reference_images", [])
+            if input_bundle_v2
+            else []
         )
         if ref_images:
             self._inject_reference_images(
                 ref_images, global_anchors, global_image_bytes,
-                assets=assets,
+                input_bundle_v2=input_bundle_v2,
             )
 
         # ══════════════════════════════════════════════════════════════
@@ -332,7 +361,7 @@ class KeyframeMaterializer(BaseMaterializer):
             )
         logger.info(
             "All three layers materialized for %s (L1=%d, L2=%d, L3=%d)",
-            project_id,
+            task_id,
             len(l1_tasks),
             len(l2_tasks),
             len(l3_tasks),
@@ -345,11 +374,11 @@ class KeyframeMaterializer(BaseMaterializer):
     # ------------------------------------------------------------------
 
     @staticmethod
-    def _build_style_suffix(assets: dict[str, Any] | None) -> str:
+    def _build_style_suffix(input_bundle_v2: InputBundleV2 | None) -> str:
         """Extract style_lock from storyboard and build a prompt suffix."""
-        if not assets:
+        if not input_bundle_v2:
             return ""
-        sb = assets.get("storyboard", {})
+        sb = KeyframeMaterializer._resolved_inputs(input_bundle_v2).get("storyboard", {})
         sb_content = sb.get("content", {})
 
         style_notes: list[str] = []
@@ -464,11 +493,11 @@ class KeyframeMaterializer(BaseMaterializer):
         global_anchors: dict[str, Any],
         global_image_bytes: dict[str, bytes],
         *,
-        assets: dict[str, Any] | None = None,
+        input_bundle_v2: InputBundleV2 | None = None,
     ) -> None:
         """Match user-provided reference images to global anchor entities."""
         blueprint_text: dict[str, str] = {}
-        blueprint = (assets or {}).get("story_blueprint", {})
+        blueprint = KeyframeMaterializer._resolved_inputs(input_bundle_v2).get("story_blueprint", {})
         bp_content = blueprint.get("content", {}) if isinstance(blueprint, dict) else {}
 
         for char in bp_content.get("cast", []):

@@ -26,14 +26,14 @@ Inference 模块提供了完整的语言模型推理、Prompt 处理和多模态
 - **Task/Layer/Execution 业务状态**：任务读取、执行记录状态机、重试预算决策。
 - **Workspace 持久化**：文件/记忆/日志写入与检索。
 - **HTTP 与路由语义**：请求校验、错误码、接口响应结构。
-- **Agent 业务编排**：按任务上下文拼装 assets、跨执行历史聚合。
+- **Agent 业务编排**：按任务上下文拼装 **`input_bundle_v2` / `resolved_inputs`**、跨执行历史聚合（由 Assistant 完成）。
 
 ### 从 `AssistantService` 可下沉到 `inference` 的候选点
 
 可迁移（纯函数/无后端状态依赖）：
 
 - `AssistantService._run_async`：异步协程运行器。
-- `AssistantService._new_pipeline_config`：推理配置标准化（建议升级为显式 schema）。
+- `AssistantService._default_pipeline_config`：子 agent 管线默认时长/语言等（服务内固定，不由 HTTP 覆盖；建议升级为显式 schema）。
 - `AssistantService._collect_materialized_files`：media 结果收集与归一化。
 - `AssistantService._execute_pipeline_descriptor`：descriptor + llm + materializer 的通用执行流程。
 
@@ -62,10 +62,10 @@ inference/
 
 ### 验收标准
 
-- 对 `POST /api/assistant/execute` 的请求/响应结构保持兼容。
-- `director_agent/api_client.py` 无需改动即可跑通。
-- 现有 `tests/assistant/test_assistant_http_e2e.py` 两类用例均通过。
-- workspace 行为（文件/STM memory/log）：长期记忆（LTM）写入已关闭，其余无语义变化。
+- 对 `POST /api/assistant/execute` 的**响应**信封保持兼容；请求根级为 `agent_id`、`task_id`、`execute_fields`（其中 `text` 为任务快照；Director 负责注入）。
+- `director_agent` 与 Assistant 的 HTTP 契约对齐（任务快照由 Director 拉取后传入）。
+- 现有 `tests/assistant/test_assistant_http_e2e.py` 中保留的 Assistant HTTP e2e 用例均通过。
+- workspace 行为（文件 / **global_memory** / log）：与 Assistant 文档一致。
 
 ## 功能特性
 
@@ -79,7 +79,7 @@ inference/
 - **图像生成模块**: 可扩展图像生成器注册系统，支持文本到图像、图像到图像
 - **视频生成模块**: 可扩展视频生成器注册系统，支持文本/图像/视频到视频
 - **音频生成模块**: 可扩展音频生成器注册系统，支持文本到语音、音频后处理、以及最终音视频 mux
-- **fal.ai 生成后端**: 支持通过 `FAL_API_KEY` 调用 fal.ai 图像/视频/语音生成器
+- **fal.ai 生成后端**: 支持通过 `FAL_API_KEY` 调用 fal.ai 图像/视频/语音生成器；`generation/fal_helpers.py` 集中实现 `fal_client.subscribe` 的 `FAL_KEY` 环境与 `httpx` 下载，供 `FalImageService` / `FalVideoService` / `FalAudioService` 复用
 - **fal 视频严格多锚点策略**: 多 keyframe 输入时仅传 `image_urls`，不自动回退到 `image_url`
 - **fal 视频结构化一致性透传**: 可通过 `FAL_VIDEO_STRUCTURED_CONSTRAINTS_FIELD` 把 `consistency_constraints` 作为独立参数传给支持该字段的模型
 - **视频拼接语义修复**: `VideoService.assemble_scene/assemble_final` 默认使用 `ffmpeg concat` 合成，避免二进制直接拼接导致最终时长错误
@@ -115,6 +115,7 @@ inference/
 │   └── message_utils.py        # 消息输入工具（兼容别名 InputUtils/MultimodalUtils）
 ├── generation/                 # 生成模块
 │   ├── __init__.py
+│   ├── fal_helpers.py           # fal.ai subscribe + HTTP 下载（Fal*Service 共享）
 │   ├── base_generator.py        # 生成器基类
 │   ├── base_registry.py         # 注册表基类（共享发现/加载逻辑）
 │   ├── image_generators/             # 图像生成域

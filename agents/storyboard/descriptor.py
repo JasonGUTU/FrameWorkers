@@ -7,6 +7,7 @@ from typing import Any
 from pydantic import BaseModel
 
 from ..descriptor import SubAgentDescriptor
+from ..contracts import InputBundleV2
 from .agent import StoryboardAgent
 from .schema import (
     StoryboardAgentInput,
@@ -14,15 +15,21 @@ from .schema import (
 )
 from .evaluator import StoryboardEvaluator
 
+OUTPUT_ASSET_KEY = "storyboard"
+
 
 def build_input(
-    _project_id: str,
-    _draft_id: str,
-    assets: dict[str, Any],
+    _task_id: str,
+    input_bundle_v2: InputBundleV2,
     config: Any,
 ) -> BaseModel:
+    resolved = (
+        input_bundle_v2.context.get("resolved_inputs", {})
+        if isinstance(getattr(input_bundle_v2, "context", None), dict)
+        else {}
+    )
     return StoryboardAgentInput(
-        screenplay=assets.get("screenplay", {}),
+        screenplay=resolved.get("screenplay", {}),
         constraints=StoryboardConstraints(language=config.language),
     )
 
@@ -35,10 +42,8 @@ CATALOG_ENTRY = (
 )
 
 DESCRIPTOR = SubAgentDescriptor(
-    agent_name="StoryboardAgent",
-    asset_key="storyboard",
-    asset_type="storyboard",
-    upstream_keys=["screenplay"],
+    agent_id="StoryboardAgent",
+    asset_key=OUTPUT_ASSET_KEY,
     catalog_entry=CATALOG_ENTRY,
     agent_factory=lambda llm: StoryboardAgent(llm_client=llm),
     evaluator_factory=StoryboardEvaluator,

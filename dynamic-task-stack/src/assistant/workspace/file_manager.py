@@ -19,7 +19,7 @@ class FileManager:
     
     Responsibilities:
     - Store files in Runtime/{workspace_id}/ directory
-    - Assign unique IDs and numbers to files
+    - Assign unique IDs to files
     - Track file metadata (description, time, path)
     - Provide file query and retrieval interfaces
     """
@@ -39,7 +39,7 @@ class FileManager:
         # File metadata storage: file_id -> FileMetadata
         self._file_metadata: Dict[str, FileMetadata] = {}
         
-        # File counter for numbering
+        # Monotonic counter for file_id generation
         self._file_counter = 0
         
         # Ensure workspace directory exists
@@ -84,39 +84,27 @@ class FileManager:
         }
 
     @staticmethod
-    def _metadata_matches(
-        metadata: FileMetadata,
-        *,
-        file_type: Optional[str] = None,
-        tags: Optional[List[str]] = None,
-        created_by: Optional[str] = None,
-    ) -> bool:
-        if file_type and metadata.file_type != file_type:
-            return False
-        if tags and not all(tag in metadata.tags for tag in tags):
-            return False
-        if created_by and metadata.created_by != created_by:
-            return False
-        return True
-
-    @staticmethod
     def _sort_newest_first(files: List[FileMetadata]) -> List[FileMetadata]:
         return sorted(files, key=lambda x: x.created_at, reverse=True)
 
-    def _next_file_identity(self, filename: str) -> Dict[str, str]:
+    @staticmethod
+    def _sanitize_relative_workspace_path(raw: str) -> Path:
+        """Return a path relative to ``workspace_runtime_path``; reject escapes."""
+        if not raw or not str(raw).strip():
+            raise ValueError("relative_path must be non-empty")
+        s = str(raw).strip().replace("\\", "/")
+        if ".." in s or s.startswith("/"):
+            raise ValueError("invalid relative_path")
+        rel = Path(s)
+        if any(p == ".." for p in rel.parts):
+            raise ValueError("invalid relative_path")
+        return rel
+
+    def _next_file_identity(self) -> Dict[str, str]:
         self._file_counter += 1
-        extension = self._get_file_extension(filename)
         file_id = f"file_{self._file_counter:06d}_{uuid.uuid4().hex[:8]}"
-        stem = Path(filename).stem
-        # Keep runtime file paths readable and filesystem-safe.
-        safe_stem = re.sub(r"[^a-zA-Z0-9._-]+", "_", stem).strip("._-").lower()
-        if not safe_stem:
-            safe_stem = "asset"
-        numbered_filename = f"{safe_stem}_file_{self._file_counter:06d}{extension}"
         return {
             "file_id": file_id,
-            "extension": extension,
-            "numbered_filename": numbered_filename,
         }
 
     def _build_file_metadata(
@@ -181,58 +169,47 @@ class FileManager:
         else:
             return 'other'
     
-    def store_file(
+    def store_file_at_relative_path(
         self,
+        relative_path: str,
         file_content: bytes,
         filename: str,
         description: str,
         created_by: Optional[str] = None,
         tags: Optional[List[str]] = None,
-        metadata: Optional[Dict[str, Any]] = None
+        metadata: Optional[Dict[str, Any]] = None,
     ) -> FileMetadata:
         """
-        Store a file in the workspace
-        
-        Args:
-            file_content: File content as bytes
-            filename: Original filename
-            description: Description of the file
-            created_by: Agent ID or user ID who created the file
-            tags: Optional list of tags
-            metadata: Optional additional metadata
-        
-        Returns:
-            FileMetadata instance
+        Write bytes to ``workspace_runtime_path / relative_path`` (task-scoped layout).
+
+        ``relative_path`` uses ``/`` separators; ``..`` and absolute paths are rejected.
         """
-        identity = self._next_file_identity(filename)
+        rel = self._sanitize_relative_workspace_path(relative_path)
+        dest = (self.workspace_runtime_path / rel).resolve()
+        base = self.workspace_runtime_path.resolve()
+        if not str(dest).startswith(str(base)):
+            raise ValueError("path escapes workspace")
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        with open(dest, "wb") as fh:
+            fh.write(file_content)
+
+        identity = self._next_file_identity()
         file_id = identity["file_id"]
-        extension = identity["extension"]
-        file_path = self.workspace_runtime_path / identity["numbered_filename"]
-        
-        # Write file to disk
-        with open(file_path, 'wb') as f:
-            f.write(file_content)
-        
-        # Get file size
+        extension = self._get_file_extension(filename)
         size_bytes = len(file_content)
-        
-        # Create metadata
         file_metadata = self._build_file_metadata(
             file_id=file_id,
             filename=filename,
             description=description,
             extension=extension,
-            file_path=file_path,
+            file_path=dest,
             size_bytes=size_bytes,
             created_by=created_by,
             tags=tags,
             metadata=metadata,
         )
-        
-        # Store metadata
         self._file_metadata[file_id] = file_metadata
         self._save_metadata()
-        
         return file_metadata
     
     def get_file(self, file_id: str) -> Optional[FileMetadata]:
@@ -247,23 +224,6 @@ class FileManager:
         """
         return self._file_metadata.get(file_id)
     
-    def get_file_content(self, file_id: str) -> Optional[bytes]:
-        """
-        Get file content by ID
-        
-        Args:
-            file_id: File ID
-        
-        Returns:
-            File content as bytes or None if not found
-        """
-        metadata = self.get_file(file_id)
-        if metadata is None:
-            return None
-        
-        file_path = Path(metadata.file_path)
-        return self.read_binary_from_uri(str(file_path))
-
     def read_binary_from_uri(self, uri: str) -> Optional[bytes]:
         """Read binary payload from a filesystem uri/path."""
         if not uri:
@@ -278,79 +238,17 @@ class FileManager:
         except Exception:
             return None
     
-    def list_files(
-        self,
-        file_type: Optional[str] = None,
-        tags: Optional[List[str]] = None,
-        created_by: Optional[str] = None,
-        limit: Optional[int] = None
-    ) -> List[FileMetadata]:
+    def list_files(self) -> List[FileMetadata]:
         """
-        List files with optional filters
+        List files in workspace.
         
-        Args:
-            file_type: Filter by file type ('image', 'video', 'text', 'other')
-            tags: Filter by tags (file must have all specified tags)
-            created_by: Filter by creator
-            limit: Maximum number of results
-        
-        Returns:
-            List of FileMetadata instances
+        Returns list of FileMetadata instances.
         """
-        results = [
-            metadata
-            for metadata in self._file_metadata.values()
-            if self._metadata_matches(
-                metadata,
-                file_type=file_type,
-                tags=tags,
-                created_by=created_by,
-            )
-        ]
+        results = list(self._file_metadata.values())
 
         # Sort by creation time (newest first)
         results = self._sort_newest_first(results)
-        
-        # Apply limit
-        if limit:
-            results = results[:limit]
-        
         return results
-    
-    def search_files(
-        self,
-        query: str,
-        file_type: Optional[str] = None,
-        limit: int = 10
-    ) -> List[FileMetadata]:
-        """
-        Search files by description or filename
-        
-        Args:
-            query: Search query string
-            file_type: Optional file type filter
-            limit: Maximum number of results
-        
-        Returns:
-            List of matching FileMetadata instances
-        """
-        query_lower = query.lower()
-        results = []
-        
-        for metadata in self._file_metadata.values():
-            # Apply file type filter
-            if file_type and metadata.file_type != file_type:
-                continue
-            
-            # Search in description and filename
-            if (query_lower in metadata.description.lower() or 
-                query_lower in metadata.filename.lower()):
-                results.append(metadata)
-        
-        # Sort by creation time (newest first)
-        results = self._sort_newest_first(results)
-        
-        return results[:limit]
     
     def delete_file(self, file_id: str) -> bool:
         """
@@ -380,6 +278,3 @@ class FileManager:
         
         return True
     
-    def get_file_count(self) -> int:
-        """Get total number of files"""
-        return len(self._file_metadata)

@@ -83,6 +83,8 @@ Default artifact location for this test:
 
 - `Runtime/live_e2e_outputs/workspace_global_<id>/` (project root)
 
+Persisted **binary media** from Assistant follow `artifacts/media/<sub_agent_id>/<video|audio|image|other>/…`; JSON snapshots remain under `artifacts/<asset_key>/…` (see `dynamic-task-stack/src/assistant/README.md`).
+
 Optional override:
 
 - `FW_LIVE_E2E_RUNTIME_DIR=/absolute/path/to/output_dir`
@@ -100,9 +102,10 @@ Optional media-stage trim knobs (applied after Storyboard, before KeyFrame):
 - `FW_MEDIA_TRIM_PREFER_CHARACTER_SHOTS` (default `1`, prioritize scenes/shots
   that include characters so KeyFrame output still covers character anchors)
 
-This keeps Story/Screenplay/Storyboard fully real, then narrows media workload
-for `KeyFrameAgent` / `VideoAgent` / `AudioAgent` by overriding `assets.storyboard`
-and `assets.screenplay` in `additional_inputs`.
+This keeps Story/Screenplay/Storyboard fully real, then optionally narrows media
+workload for `KeyFrameAgent` / `VideoAgent` / `AudioAgent` via the trim env vars
+above (see `test_full_pipeline_live_e2e.py`; pipeline inputs are assembled by
+Assistant — `execute_fields` + global_memory / LLM role selection — not passed as raw HTTP `assets`).
 
 JSON response note:
 
@@ -110,10 +113,6 @@ JSON response note:
 - Raw binary payloads are not returned directly in HTTP JSON; binary fields are
   normalized as metadata stubs (type + size) for traceability.
 
-## Optional temp artifact retention
+## Materializer temp artifacts
 
-When testing materializer-based agents, set this to keep temporary media files:
-
-- `FW_KEEP_ASSISTANT_TEMP=1`
-
-If enabled, execution results include `_materialize_temp_dir` for inspection.
+Temporary materializer files are cleaned automatically after execution.

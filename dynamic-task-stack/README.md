@@ -36,6 +36,7 @@ Dynamic Task Stack 由两个核心系统组成：
 - **共享工作空间**：所有 agents 共享一个全局工作空间（文件系统）
 - **信息检索**：Assistant 从工作空间中检索信息，然后分发给各个 agent
 - **执行流程**：完整的 5 步执行流程（查询输入 → 准备环境 → 打包数据 → 执行 → 处理结果）
+- **契约文档**：Director / HTTP 与 Sub-agent 的四条数据边界见 `src/assistant/README.md` §3.5
 
 ---
 
@@ -47,9 +48,11 @@ Dynamic Task Stack 由两个核心系统组成：
 dynamic-task-stack/
 ├── src/
 │   ├── app.py                       # Flask 应用入口
+│   ├── common_http.py               # Task Stack + Assistant 共用的 JSON body / bad_request(400) / query 校验
 │   ├── task_stack/                  # Task Stack 模块
 │   │   ├── __init__.py
 │   │   ├── models.py                # 数据模型
+│   │   ├── api_serialize.py         # Task Stack 响应 JSON 序列化（dataclass/enum/嵌套）
 │   │   ├── routes.py                # API 路由
 │   │   ├── state_store.py           # Task Stack 运行态存储（仅状态容器）
 │   │   ├── execution_flow.py        # 执行指针状态机与推进逻辑
@@ -59,10 +62,9 @@ dynamic-task-stack/
 │       ├── __init__.py
 │       ├── models.py                # Assistant 数据模型
 │       ├── routes.py                # Assistant API 路由
-│       ├── response_serializers.py  # Assistant 响应序列化工具（主实现）
+│       ├── response_serializers.py  # Assistant 响应序列化（仅导出路由/search 等实际使用的 helper）
 │       ├── service.py               # Assistant 核心业务逻辑
 │       ├── state_store.py           # Assistant 运行态存储（主实现）
-│       ├── workspace_context.py     # 检索与上下文组装（仅取数/整形）
 │       └── workspace/               # 工作空间模块
 │           ├── __init__.py
 │           ├── workspace.py         # 工作空间核心
@@ -110,7 +112,6 @@ dynamic-task-stack/
 
 - **批量操作模型**：
   - `BatchOperation`: 单个批量操作
-  - `BatchOperationsRequest`: 批量操作请求
 
 #### 2. state_store.py + storage.py - 状态与服务分层
 
@@ -225,29 +226,24 @@ dynamic-task-stack/
 
 **执行操作**：
 - `create_execution()`: 创建执行记录
-- `get_execution()`: 获取执行记录
 - `get_executions_by_task()`: 获取任务的所有执行记录
 - `update_execution()`: 更新执行记录
 
 **工作空间操作**：
 - `create_global_workspace()`: 创建全局工作空间
 - `get_global_workspace()`: 获取全局工作空间
-- `update_workspace()`: 更新工作空间
 
 #### 3. service.py - 核心业务逻辑
 
 `AssistantService` 类提供完整的执行流程：
 
-- `query_agent_inputs()`: 查询 agent 所需输入
 - `prepare_environment()`: 获取全局共享 workspace
-- `_build_pipeline_assets()`: 从历史执行记录构建 `assets` 字典（`agent_id → asset_key` 映射），实现 pipeline 链式传递
-- `package_data()`: 打包数据（包含 workspace context + pipeline assets，复用检索结果避免重复读取）
+- `package_data()`: 打包执行期 hints（`source_text` / 可选媒体）；历史产物由输入打包 LLM 按 `global_memory.artifact_locations` 的 role 回填，**不读 Task Stack**
 - `execute_agent()`: 执行 agent（复用同一次解析到的 agent 实例）
-- `process_results()`: 处理结果（拆分为日志记录 + 文件入库，支持 `_media_files` 批量媒体资产写入）
-- `build_execution_inputs()`: 执行前输入组装（统一以 `workspace_context` 作为上下文入口）
+- `process_results()`: 处理结果（拆分为日志记录 + 文件入库，支持 `_media_files` 批量媒体资产写入）；HTTP 摘要返回 **`task_id`**、**`execution_id`**、`status`、`results`、`error`、`workspace_id`
+- `build_execution_inputs()`: 执行前输入组装（`execute_fields` + `global_memory` 简报 + LLM `selected_roles` → 装配 `input_bundle_v2` 与 `context.resolved_inputs`）
 - `execute_agent_for_task()`: 完整的执行流程
 
-`workspace_context.py` 仅负责从 workspace 取数与整形，不承担执行或持久化职责；序列化结构统一复用 `response_serializers.py`，减少重复定义。
 当前 Assistant 设计只关注执行编排本身（选定 agent 的输入查询、上下文检索、执行、结果落库与摘要返回），不承载评估器策略或子 agent 实时控制逻辑。
 其中 pipeline agent 的执行由 `service.py` 基于 `SubAgentDescriptor` 直接驱动（`build_input` + `run`）。
 
@@ -255,7 +251,7 @@ dynamic-task-stack/
 
 提供完整的 RESTful API：
 
-路由层已薄化：序列化细节抽离到 `response_serializers.py`，`routes.py` 主要负责参数校验和调用 service（含通用 JSON/Query 校验 helper）。
+路由层已薄化：序列化细节抽离到 `response_serializers.py`，`routes.py` 主要负责参数校验和调用 service；与 Task Stack 共用的 JSON body、400 响应、必填 query 等 helper 集中在 `src/common_http.py`，避免两套蓝图各写一份。
 
 **Assistant 管理**：
 - `GET /api/assistant` - 获取全局 assistant（单例，预先定义）
@@ -265,21 +261,16 @@ dynamic-task-stack/
 - `GET /api/assistant/sub-agents/<agent_id>` - 获取特定 sub-agent 信息
 
 **Agent 执行**：
-- `POST /api/assistant/execute` - 执行 agent
-- `GET /api/assistant/executions/<execution_id>` - 获取执行记录
-- `GET /api/assistant/executions/task/<task_id>` - 获取任务的所有执行记录
+- `POST /api/assistant/execute` - 执行 agent（JSON 根级：`agent_id`、`task_id`、`execute_fields`）
+- `GET /api/assistant/executions/task/<task_id>` - 获取任务的所有执行记录（含各条 `id` / `status` / `inputs` / `results`）
 
 **工作空间**：
-- `GET /api/assistant/workspace` - 获取全局工作空间
-- `GET /api/assistant/workspace/summary` - 获取工作空间摘要
 - `GET /api/assistant/workspace/files` - 列出工作空间文件
 - `GET /api/assistant/workspace/files/<file_id>` - 获取文件元数据
-- `GET /api/assistant/workspace/files/search` - 搜索文件
-- `GET /api/assistant/workspace/memory/entries` - 查询结构化 memory 条目（仅 STM；`tier=long_term` 返回空列表）
-- `POST /api/assistant/workspace/memory/entries` - 写入结构化 memory 条目（拒绝 `tier=long_term`）
-- `GET /api/assistant/workspace/memory/brief` - 获取规划用 STM 简报（`long_term` 恒为空数组）
+- `GET /api/assistant/workspace/memory/entries` - 查询 **global_memory** 条目
+- `POST /api/assistant/workspace/memory/entries` - 写入 **global_memory** 条目
+- `GET /api/assistant/workspace/memory/brief` - 简报：**`global_memory`**（无 `content` 键），供 Director
 - `GET /api/assistant/workspace/logs` - 获取日志
-- `GET /api/assistant/workspace/search` - 综合搜索
 
 #### 5. agents/ - Agent 核心框架（根目录）
 
@@ -302,8 +293,8 @@ Agent 核心框架已迁移至项目根目录 `agents/`。`service.py` 和 `rout
 - 异常告警统一通过 `logging` 输出（替代 `print`）
 
 **memory_manager.py**：
-- 短期结构化条目（`memory_entries_short_term.json`）
-- `memory_brief` 仅聚合 STM；LTM 已关闭（`long_term` 始终 `[]`，写入 `long_term` 会报错）
+- 全局记忆按 workspace 单文件落盘为 **`Runtime/{workspace_id}/global_memory.md`**（内嵌 JSON 条目数组：`content` / `task_id` / `agent_id` / `created_at` / `execution_result` / 可选 **`artifact_locations`** + 自动刷新的 **File tree**）
+- `get_memory_brief`：返回无 `content` 的 `global_memory`（`created_at` 降序，全量）；Director 与 `build_execution_inputs` / 上下文均用同一形状。新条目在 `process_results` 由 Assistant 写入：**摘要 LLM 为严格模式**（失败或非法 JSON 则整次执行失败并返回 **500**，无空 `{}` 或确定性文案回退），并与确定性路径做 **`artifact_locations` 合并**。`build_execution_inputs` 会运行一次输入打包 LLM（按 role 回填输入）。HTTP **`execute_fields`** 若含已废弃键 **`_memory_brief`**，会被静默忽略（不进入 `execute_fields`）。
 
 ---
 
@@ -502,18 +493,13 @@ class AgentExecution:
 - `GET /api/assistant/sub-agents/<agent_id>` - 获取特定 sub-agent 信息
 
 #### Agent 执行
-- `POST /api/assistant/execute` - 执行 agent
-- `GET /api/assistant/executions/<execution_id>` - 获取执行记录
+- `POST /api/assistant/execute` - 执行 agent（JSON 根级：`agent_id`、`task_id`、`execute_fields`）
 - `GET /api/assistant/executions/task/<task_id>` - 获取任务的所有执行记录
 
 #### 工作空间
-- `GET /api/assistant/workspace` - 获取全局工作空间
-- `GET /api/assistant/workspace/summary` - 获取工作空间摘要
-- `GET /api/assistant/workspace/files` - 列出工作空间文件（可选过滤）
+- `GET /api/assistant/workspace/files` - 列出工作空间文件
 - `GET /api/assistant/workspace/files/<file_id>` - 获取文件元数据
-- `GET /api/assistant/workspace/files/search` - 搜索文件
 - `GET /api/assistant/workspace/logs` - 获取日志（可选过滤）
-- `GET /api/assistant/workspace/search` - 综合搜索
 
 ---
 
@@ -696,26 +682,19 @@ POST /api/assistant/execute
 {
   "agent_id": "my_agent",
   "task_id": "task_1",
-  "additional_inputs": {
-    "input": "test data"
-  }
+  "execute_fields": { "text": "test data" }
 }
+# 200：{ "task_id", "execution_id", "status", "results", "error", "workspace_id" }
 ```
 
 #### 工作空间操作
 
 ```bash
-# 获取工作空间
-GET /api/assistant/workspace
-
 # 列出文件
 GET /api/assistant/workspace/files
 
-# 搜索文件
-GET /api/assistant/workspace/files/search?query=test
-
-# 查询结构化记忆条目（STM/LTM）
-GET /api/assistant/workspace/memory/entries?tier=short_term
+# 查询 global_memory 条目
+GET /api/assistant/workspace/memory/entries?task_id=task_xxx
 ```
 
 更多详细示例请参考 [USAGE_EXAMPLES.md](./USAGE_EXAMPLES.md)。
@@ -747,7 +726,6 @@ agents/
 2. **`schema.py`** — 定义 Pydantic 输入输出模型：
    ```python
    class MyAgentInput(BaseModel):
-       project_id: str = ""
        draft_id: str = ""
        my_field: str = ""           # 你的 agent 需要的输入
 
@@ -825,11 +803,11 @@ python -m pytest tests/agents/test_agent_core.py -v
 # 运行 assistant 单元测试
 python -m pytest tests/assistant/test_assistant_*.py -v
 
-# 模拟 Director HTTP 信号的 assistant E2E 测试（单文件完整流程）
+# Assistant HTTP E2E（假 agent + 假 pipeline）
 python -m pytest tests/assistant/test_assistant_http_e2e.py -v
 
-# 仅运行 Director HTTP 轮询/回执 + pipeline 链路 + 契约校验子集
-python -m pytest tests/assistant/test_assistant_http_e2e.py -k "director_http or pipeline_http_flow or contract_validation or unknown_sub_agent" -v
+# 仅运行假 pipeline 串联（Producer → Consumer）
+python -m pytest tests/assistant/test_assistant_http_e2e.py -k pipeline_http_flow -v
 
 # 运行手动 API 联调脚本（需要后端已启动）
 python tests/dynamic_task_stack/manual_api_runner.py
@@ -857,7 +835,7 @@ python tests/dynamic_task_stack/manual_api_runner.py
 ## 相关文档
 
 - [agents/README.md](../agents/README.md) - Agents 详细开发指南
-- [USAGE_EXAMPLES.md](./USAGE_EXAMPLES.md) - 使用示例
+- [USAGE_EXAMPLES.md](./USAGE_EXAMPLES.md) - Task Stack 使用示例（HTTP 路径与 `src/task_stack/routes.py` 对齐维护）
 - [AGENTS_MIGRATION.md](../AGENTS_MIGRATION.md) - Agents 迁移说明
 
 ---

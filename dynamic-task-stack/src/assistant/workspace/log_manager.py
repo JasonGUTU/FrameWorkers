@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 from typing import Dict, Any, List, Optional
-from datetime import datetime, timedelta
+from datetime import datetime
 import uuid
 import logging
 
@@ -93,16 +93,6 @@ class LogManager:
     def _sort_newest_first(logs: List[LogEntry]) -> List[LogEntry]:
         return sorted(logs, key=lambda x: x.timestamp, reverse=True)
 
-    @staticmethod
-    def _top_counts(values: List[str], limit: int) -> List[Dict[str, Any]]:
-        counter: Dict[str, int] = {}
-        for value in values:
-            if not value:
-                continue
-            counter[value] = counter.get(value, 0) + 1
-        pairs = sorted(counter.items(), key=lambda item: (-item[1], item[0]))
-        return [{"key": key, "count": count} for key, count in pairs[:limit]]
-    
     def _load_logs(self):
         """Load logs from disk"""
         if not self.log_file_path.exists():
@@ -212,119 +202,3 @@ class LogManager:
         
         return results
     
-    def search_logs(
-        self,
-        query: str,
-        limit: int = 50
-    ) -> List[LogEntry]:
-        """
-        Search logs by query string (searches in details)
-        
-        Args:
-            query: Search query string
-            limit: Maximum number of results
-        
-        Returns:
-            List of matching LogEntry instances
-        """
-        query_lower = query.lower()
-        results = []
-        
-        for log_entry in self._logs:
-            # Search in details JSON
-            details_str = json.dumps(log_entry.details, ensure_ascii=False).lower()
-            if query_lower in details_str:
-                results.append(log_entry)
-        
-        # Sort by timestamp (newest first)
-        results = self._sort_newest_first(results)
-        
-        return results[:limit]
-    
-    def get_recent_logs(self, count: int = 10) -> List[LogEntry]:
-        """
-        Get most recent logs
-        
-        Args:
-            count: Number of recent logs to retrieve
-        
-        Returns:
-            List of recent LogEntry instances
-        """
-        return self.get_logs(limit=count)
-    
-    def get_log_count(self) -> int:
-        """Get total number of log entries"""
-        return len(self._logs)
-
-    def get_strategy_insights(
-        self,
-        *,
-        window_hours: Optional[int] = None,
-        top_k: int = 5,
-    ) -> Dict[str, Any]:
-        """Return strategy-level aggregate insights for operational debugging.
-
-        Insights focus on execution outcomes, failure hotspots, and cross-task
-        activity patterns for quick triage.
-        """
-        logs = list(self._logs)
-        since: Optional[datetime] = None
-        if window_hours and window_hours > 0:
-            since = datetime.now() - timedelta(hours=window_hours)
-            logs = [entry for entry in logs if entry.timestamp >= since]
-
-        operation_counts = self._top_counts([entry.operation_type for entry in logs], top_k)
-        resource_counts = self._top_counts([entry.resource_type for entry in logs], top_k)
-        event_counts = self._top_counts(
-            [str(entry.details.get("event_type", "")) for entry in logs],
-            top_k,
-        )
-
-        execution_logs = [entry for entry in logs if entry.resource_type == "execution"]
-        execution_statuses = [
-            str(entry.details.get("status", "")).upper()
-            for entry in execution_logs
-            if entry.details.get("status")
-        ]
-        completed = sum(1 for status in execution_statuses if status == "COMPLETED")
-        failed = sum(1 for status in execution_statuses if status == "FAILED")
-        fail_rate = (failed / len(execution_statuses)) if execution_statuses else 0.0
-
-        failed_execution_logs = [
-            entry
-            for entry in execution_logs
-            if str(entry.details.get("status", "")).upper() == "FAILED"
-        ]
-        failures_by_agent = self._top_counts(
-            [entry.agent_id or "" for entry in failed_execution_logs],
-            top_k,
-        )
-        failures_by_task = self._top_counts(
-            [entry.task_id or "" for entry in failed_execution_logs],
-            top_k,
-        )
-
-        task_activity = self._top_counts([entry.task_id or "" for entry in logs], top_k)
-
-        return {
-            "window_hours": window_hours,
-            "since": since.isoformat() if since else None,
-            "totals": {
-                "log_count": len(logs),
-                "execution_event_count": len(execution_statuses),
-                "execution_completed": completed,
-                "execution_failed": failed,
-                "execution_fail_rate": round(fail_rate, 4),
-            },
-            "breakdown": {
-                "by_operation_type": operation_counts,
-                "by_resource_type": resource_counts,
-                "by_event_type": event_counts,
-            },
-            "failure_hotspots": {
-                "by_agent": failures_by_agent,
-                "by_task": failures_by_task,
-            },
-            "cross_task_activity": task_activity,
-        }

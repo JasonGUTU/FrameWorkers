@@ -1,0 +1,126 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-26T21:37:58.776214+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "Autumn's Whim",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Autumn Park Path",
+          "interior_exterior": "EXT",
+          "time_of_day": "DAY"
+        },
+        "summary": "A lone passerby attempts to catch a perfectly falling autumn leaf, only for a sudden gust of wind to snatch it away at the last second, leaving them with an empty hand and a subtle sense of resignation.",
+        "estimated_duration": {
+          "seconds": 5.0,
+          "confidence": 0.9
+        },
+        "continuity": {
+          "props_present": [
+            "Autumn leaves",
+            "Wind"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A warm, nondescript autumn coat, a knitted scarf, and practical gloves.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Passerby attempts to catch a leaf",
+            "Wind snatches the leaf away",
+            "Passerby is left empty-handed"
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_001",
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "The Passerby",
+            "text": "EXT. AUTUMN PARK PATH - DAY\nThe PASSERBY ambles down a quiet, tree-lined path, sunlight dappling through the canopy. The air is crisp, and colorful leaves blanket the ground.",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_002",
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "The Passerby",
+            "text": "A single, vibrant crimson LEAF detaches from a branch, twirling gracefully as it descends directly into The Passerby's path, seemingly destined for their grasp.",
+            "continuity_refs": {
+              "props": [
+                "Autumn leaves"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_003",
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "The Passerby",
+            "text": "A soft smile plays on The Passerby's lips. Slowly, a gloved hand extends, fingers spread, poised to gently cup the falling beauty.",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_004",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Just as their fingertips almost brush the leaf, an unseen GUST OF WIND whips through the air. The leaf is instantly snatched upwards, carried rapidly out of reach.",
+            "continuity_refs": {
+              "props": [
+                "Wind",
+                "Autumn leaves"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_005",
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "The Passerby",
+            "text": "The Passerby's hand remains suspended for a beat, empty, before slowly lowering. Their gaze follows the now distant leaf until it disappears among the trees, a subtle, knowing sigh escaping their lips.",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "A sudden, unpredictable gust of wind diverts the falling leaf, preventing it from being caught.",
+          "emotional_shift": "From hopeful anticipation to a quiet, resigned acceptance of nature's indifference."
+        }
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 5.0,
+    "estimated_total_duration_sec": 5.0,
+    "sum_scene_duration_sec": 5.0,
+    "scene_count": 1,
+    "dialogue_block_count": 0,
+    "action_block_count": 5
+  }
+}

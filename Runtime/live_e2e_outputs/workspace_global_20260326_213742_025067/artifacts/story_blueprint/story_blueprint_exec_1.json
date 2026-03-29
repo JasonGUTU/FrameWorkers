@@ -1,0 +1,93 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-26T21:37:52.459998+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A moment of simple natural beauty is playfully snatched away by an unexpected gust of wind, leaving an observer with a subtle sense of resignation.",
+    "estimated_duration": {
+      "seconds": 5.0,
+      "confidence": 0.9
+    },
+    "style": {
+      "genre": [
+        "Slice of Life",
+        "Micro-drama"
+      ],
+      "tone_keywords": [
+        "Whimsical",
+        "Fleeting",
+        "Mildly poignant"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "The Passerby",
+        "role": "protagonist",
+        "profile": "An ordinary individual who finds simple joy in the small details of life.",
+        "motivation": "To momentarily connect with and appreciate a piece of fleeting natural beauty.",
+        "flaw": "Powerless against the larger, unpredictable forces of nature."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Autumn Park Path",
+        "description": "A quiet, tree-lined path in a park during autumn, with colorful leaves gently drifting down from above."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "The Passerby walks along an autumn path, noticing a particularly beautiful leaf falling within reach.",
+        "conflict": "The Passerby's internal desire for a small, tangible moment of beauty.",
+        "turning_point": "The decision to reach out for the leaf."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "climax",
+        "summary": "Just as the Passerby's hand extends, a sudden gust of wind snatches the leaf away, carrying it out of reach.",
+        "conflict": "Human intention and desire against the arbitrary power of nature.",
+        "turning_point": "The leaf being unexpectedly swept away by the wind."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "resolution",
+        "summary": "The Passerby's hand is left empty, watching the leaf disappear with a subtle, resigned expression.",
+        "conflict": "None, as the Passerby accepts the outcome.",
+        "turning_point": "The acceptance of nature's whimsical indifference."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To catch a beautiful falling leaf.",
+        "conflict": "The Passerby's attempt to capture a fleeting moment vs. the unpredictable forces of nature.",
+        "turn": "A sudden gust of wind diverts the leaf just as it's about to be caught."
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 5.0,
+    "character_count": 1,
+    "location_count": 1,
+    "scene_count": 1
+  }
+}

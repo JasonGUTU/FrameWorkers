@@ -1,0 +1,671 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_type": "character",
+          "entity_id": "char_001",
+          "display_name": "",
+          "purpose": "identity_anchor",
+          "keyframe_id": "kf_global_char_001",
+          "image_asset": {
+            "asset_id": "img_char_001_global",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_char_001_global_file_000005.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Elias Thorne is an elderly man in his 70s, with a lean build and a face etched with wisdom and experience. He possesses sharp, intense, and deeply focused eyes that reflect his meticulous skill as a seasoned watchmaker. He wears a worn but immaculately clean linen shirt, its sleeves carefully rolled up to his elbows, revealing capable, precise hands. A practical, well-used dark leather apron covers his chest and waist. A pair of wire-rimmed glasses is perched on his nose, sometimes slightly askew, indicative of his intense concentration."
+        },
+        {
+          "entity_type": "character",
+          "entity_id": "Elias Thorne",
+          "display_name": "",
+          "purpose": "identity_anchor",
+          "keyframe_id": "kf_global_Elias Thorne",
+          "image_asset": {
+            "asset_id": "img_Elias Thorne_global",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_elias_thorne_global_file_000004.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Elias Thorne is an elderly man in his 70s, with a lean build and a face etched with wisdom and experience. He possesses sharp, intense, and deeply focused eyes that reflect his meticulous skill as a seasoned watchmaker. He wears a worn but immaculately clean linen shirt, its sleeves carefully rolled up to his elbows, revealing capable, precise hands. A practical, well-used dark leather apron covers his chest and waist. A pair of wire-rimmed glasses is perched on his nose, sometimes slightly askew, indicative of his intense concentration."
+        }
+      ],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "display_name": "",
+          "purpose": "style_anchor",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_loc_001_global_file_000006.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. A dimly lit, cozy, and somewhat cluttered traditional watchmaker's workshop. The space features predominantly rich wooden textures for its walls, floor, and heavy antique furniture. Various brass components, finely crafted tools, and intricate watch parts glint and gleam from surfaces. Clear glass display cases, vials, and magnifying lenses add to the traditional aesthetic. A robust, well-worn wooden workbench serves as the central workspace, illuminated by a focused, warm glow from an antique desk lamp. A large, prominent, and stately grandfather clock stands majestically in the background, a central visual element with its polished dark wood casing and detailed brass pendulum."
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_001",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_char_001_sc_001_file_000015.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Show Elias Thorne, an elderly man in his 70s, under the warm, focused light of a desk lamp in his dimly lit watchmaker's workshop at night. His sharp, intense, and deeply focused eyes are visible, reflecting the immense pressure he is under. He wears a worn but clean linen shirt with sleeves rolled to the elbows and a practical, well-used leather apron. His glasses are perched on his nose, slightly askew, emphasizing his intense concentration and the urgency of his task."
+            },
+            {
+              "entity_type": "character",
+              "entity_id": "Elias Thorne",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_Elias Thorne_sc_001",
+              "image_asset": {
+                "asset_id": "img_Elias Thorne_sc_001",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_elias_thorne_sc_001_file_000013.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Show Elias Thorne, an elderly man in his 70s, under the warm, focused light of a desk lamp in his dimly lit watchmaker's workshop at night. His sharp, intense, and deeply focused eyes are visible, reflecting the immense pressure he is under. He wears a worn but clean linen shirt with sleeves rolled to the elbows and a practical, well-used leather apron. His glasses are perched on his nose, slightly askew, emphasizing his intense concentration and the urgency of his task."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_loc_001_sc_001_file_000008.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Show a dimly lit, cozy, and somewhat cluttered traditional watchmaker's workshop at night. A warm, focused light emanates from a desk lamp, sharply illuminating a wooden workbench cluttered with tools, gears, and watch components. The environment is rich with predominantly wooden textures, polished brass, and reflective glass surfaces. A large, prominent grandfather clock stands in the background, its rhythmic ticking adding to the scene's tense atmosphere."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_001",
+              "linked_blocks": [
+                "b_001",
+                "b_002"
+              ]
+            },
+            "estimated_duration_sec": 0.7,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_sh_001_kf_01_file_000017.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Medium-wide, eye-level static shot: Elias Thorne, an elderly watchmaker, is hunched over his cluttered wooden workbench. He is deeply concentrated on the intricate components of a broken pocket watch, illuminated by the intense, focused beam of a desk lamp that creates stark contrasts. In the background, partially silhouetted by the dim workshop light, a large, traditional grandfather clock stands prominently, a silent, ticking observer. The overall atmosphere is quiet, tense, and focused on Elias's solitary work.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "Elias Thorne"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_002",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_02",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_sh_001_kf_02_file_000020.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Medium-wide, eye-level static shot: Elias Thorne, leaning over his workbench in a dimly lit, traditional workshop at night. His posture conveys intense focus on the small parts of the broken pocket watch, which are bathed in the sharp, warm light from the desk lamp. The cluttered workbench and the textures of wood and brass are visible. Behind him, the imposing grandfather clock stands, its face obscured slightly but its overall form and scale indicating its significance in the scene, establishing the tense, quiet ambiance.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "Elias Thorne"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_002",
+              "linked_blocks": [
+                "b_002",
+                "b_003"
+              ]
+            },
+            "estimated_duration_sec": 0.6,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_003",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_sh_002_kf_01_file_000019.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Close-up, eye-level static shot: Elias Thorne's elderly face, dominated by the jeweler's loupe pressed to his eye. The loupe magnifies his intense, furrowed brow, revealing deep concentration and the strain of his meticulous task. His glasses are slightly askew beneath the loupe. The sharp, focused light from the desk lamp highlights the lines of his aged face and the precision in his gaze, emphasizing the pressure of his work on the broken pocket watch.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "Elias Thorne"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_004",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_02",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_sh_002_kf_02_file_000018.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Close-up, eye-level static shot: A tight focus on Elias Thorne's aged, yet steady, hands. They delicately hold precise tweezers, manipulating a tiny, stubborn gear within the exposed, intricate mechanism of the broken pocket watch. The focused beam of the desk lamp creates dramatic highlights and shadows on his skin and the metallic watch parts, emphasizing the precision and the delicate nature of the task under intense time pressure on the workbench.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "Elias Thorne"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_003",
+              "linked_blocks": [
+                "b_004"
+              ]
+            },
+            "estimated_duration_sec": 0.3,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_005",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_sh_003_kf_01_file_000021.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Extreme close-up, eye-level static shot: The ornate face of a traditional grandfather clock, clearly displaying the critical time 'ELEVEN FIFTY-EIGHT'. The hands are static, starkly indicating the impending deadline. The focused, high-contrast lighting subtly illuminates the polished brass and glass of the clock face, intensifying the sense of urgency and emphasizing the ticking sound that fills the tense workshop atmosphere.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "source": {
+              "storyboard_shot_id": "sh_004",
+              "linked_blocks": [
+                "b_005"
+              ]
+            },
+            "estimated_duration_sec": 0.4,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_006",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_sh_004_kf_01_file_000023.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Medium close-up, high-angle shot with a subtle push-in: Elias Thorne's hands are shown, now with a faint, anxious tremor, as he uses the delicate tweezers to carefully reposition the tiny, stubborn gear within the broken pocket watch on the workbench. The intense, focused light from the desk lamp highlights the strained veins on his skin and the glint off the metal tools and watch parts. The subtle movement captures the physical manifestation of his escalating pressure and anxiety, contrasting with his usual unwavering precision. His breath exhaling is subtly visible in the cool night air of the workshop.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "Elias Thorne"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_002"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_002",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_char_001_sc_002_file_000011.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Show Elias Thorne, an elderly watchmaker with glasses, wearing his worn but clean linen shirt with sleeves rolled to the elbows, and a practical leather apron. He is in his workshop at night, his face illuminated by a desk lamp, displaying an expression of profound, breath-holding concentration, his entire being focused on a delicate task, on the verge of success."
+            },
+            {
+              "entity_type": "character",
+              "entity_id": "Elias Thorne",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_Elias Thorne_sc_002",
+              "image_asset": {
+                "asset_id": "img_Elias Thorne_sc_002",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_elias_thorne_sc_002_file_000012.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Show Elias Thorne, an elderly watchmaker with glasses, wearing his worn but clean linen shirt with sleeves rolled to the elbows, and a practical leather apron. He is in his workshop at night, his face illuminated by a desk lamp, displaying an expression of profound, breath-holding concentration, his entire being focused on a delicate task, on the verge of success."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_002",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_loc_001_sc_002_file_000009.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Show the traditional watchmaker's workshop at night, its interior cast in dramatic high contrast shadows and warm, focused light emanating from a single desk lamp. The air is thick with anticipation and quiet tension, emphasizing the intricate and delicate nature of the work being performed within this classic, timeless setting."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_005",
+              "linked_blocks": [
+                "b_006",
+                "b_007"
+              ]
+            },
+            "estimated_duration_sec": 0.8,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_007",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_sh_005_kf_01_file_000029.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Macro-level static extreme close-up, focusing intensely on the intricate mechanism inside an antique pocket watch. The very tip of a fine pair of tweezers, held by Elias Thorne's steady hand, is poised to make an infinitesimal adjustment to a tiny, almost invisible gear. The gear is almost in place, but not quite, building anticipation.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "Elias Thorne"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_008",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_02",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_sh_005_kf_02_file_000022.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Macro-level static extreme close-up, maintaining the focus on the pocket watch mechanism. The tiny gear has now precisely fallen into its slot with a soft, satisfying 'CLICK', perfectly aligned. The tip of the tweezers is slightly withdrawn, indicating the successful completion of the delicate adjustment, and the watch mechanism is visibly settled, just before springing to life.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "Elias Thorne"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_006",
+              "linked_blocks": [
+                "b_008",
+                "b_009"
+              ]
+            },
+            "estimated_duration_sec": 0.7,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_009",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_sh_006_kf_01_file_000024.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Medium eye-level shot, initially focusing on the grand, traditional grandfather clock in the watchmaker's workshop. Its pendulum swings, and the mechanism inside begins to stir, ready to strike midnight with its deep, resonant chimes, creating an auditory and visual cue for synchronization. The background elements of the workshop are slightly blurred, emphasizing the clock.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_010",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_02",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_sh_006_kf_02_file_000016.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Medium eye-level shot, now with a rack focus or split diopter effect, bringing the antique pocket watch into sharp focus. Its delicate mechanism is visibly whirring to life, and its minute hand is sweeping purposefully towards the 'TWELVE' mark, perfectly aligning as the deep chimes of the grandfather clock continue in the background, now slightly out of focus. The synchronization is palpable.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_007",
+              "linked_blocks": [
+                "b_009",
+                "b_010"
+              ]
+            },
+            "estimated_duration_sec": 0.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_011",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_007_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_sh_007_kf_01_file_000030.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Close-up eye-level shot on Elias Thorne's face, illuminated by the soft glow of a desk lamp. His intense concentration subtly breaks, his eyes widening just slightly, reflecting a quiet moment of pure realization and understated triumph. A faint, almost imperceptible smile or softening of his gaze hints at the internal relief and success, with the gentle ticking of the now-repaired pocket watch being subtly audible.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "Elias Thorne"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_003"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_003",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_003",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_char_001_sc_003_file_000010.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Show Elias Thorne with a profound sense of relief and quiet triumph settling over his elderly face, his expression transitioning from the previous tension to a deep, subtle satisfaction. He savors the moment of successful completion. His worn but clean linen shirt, with sleeves rolled to the elbows, and his practical leather apron covering his chest and waist remain consistent. His glasses perch on his nose, reflecting the warm, soft light from the desk lamp. His posture is now relaxed, conveying quiet contentment. Avoid any abrupt or overly dramatic expression, and anything that detracts from his personal moment of triumph."
+            },
+            {
+              "entity_type": "character",
+              "entity_id": "Elias Thorne",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_Elias Thorne_sc_003",
+              "image_asset": {
+                "asset_id": "img_Elias Thorne_sc_003",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_elias_thorne_sc_003_file_000014.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Show Elias Thorne, an elderly man with glasses, his attire consisting of a worn but clean linen shirt with rolled sleeves and a practical leather apron. His profound, quiet satisfaction is evident in his relaxed posture and a subtle, content smile. The warm, soft light from the desk lamp gently illuminates his face, highlighting the lines of his aged wisdom and relief. Avoid any abrupt or overly dramatic ending or any distracting background elements."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_003",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_003",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_loc_001_sc_003_file_000007.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Render the watchmaker's workshop at night, now imbued with a pervasive sense of calm and accomplishment. The previously dim, focused lighting from the desk lamp now accentuates a serene mood, casting warm, soft glows on the workbench and surrounding tools. Shadows are deep but not oppressive, contributing to the intimate atmosphere. The grandfather clock stands majestically in the background, its final, lingering chime of midnight having just faded, leaving a quiet resonance in the air. The overall aesthetic is classic and traditional, free from any modern or sleek elements. Avoid overly bright, flat lighting or distracting background elements."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_008",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_008",
+              "linked_blocks": [
+                "b_011",
+                "b_012"
+              ]
+            },
+            "estimated_duration_sec": 0.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_012",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_008_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_sh_008_kf_01_file_000026.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Medium close-up, eye-level angle. Start on Elias's hands gently holding the now fully functional pocket watch. The watch's steady tick-tock is palpable, symbolizing success. The warm, soft light from the desk lamp illuminates his aged, steady hands and the gleaming watch, highlighting its delicate craftsmanship and the intricate details. The focus is sharp on the watch and hands, emphasizing the micro-action of listening. Avoid any fast-paced editing or distracting background elements during this initial shot.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "Elias Thorne"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_013",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_008_kf_02",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_sh_008_kf_02_file_000028.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Medium close-up, eye-level angle, panning slowly. Continue from the previous shot, panning slowly from the pocket watch up to Elias Thorne's face. His expression transitions from focused listening to a profound, quiet satisfaction and relief. His gaze drifts calmly towards the grandfather clock in the background, which is completing its final, lingering chime of midnight. The warm, soft light from the desk lamp accentuates the subtle emotional cues on his elderly face. The workshop environment around him is serene, imbued with a sense of accomplishment. Avoid an abrupt or overly dramatic transition or anything that detracts from Elias's personal moment of triumph.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "Elias Thorne"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_009",
+              "linked_blocks": [
+                "b_013"
+              ]
+            },
+            "estimated_duration_sec": 0.3,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_014",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_009_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_sh_009_kf_01_file_000027.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Close-up, eye-level, static shot. Tight focus on Elias Thorne's elderly face, capturing the slow, profound smile of contentment that spreads across it. This is not a wide grin, but a deep, quiet satisfaction. His glasses frame his eyes, which hold a peaceful, reflective quality. The warm, soft light from the desk lamp casts gentle highlights and shadows, emphasizing the subtle emotional cues and the lines of a man who has successfully completed a challenging task. Avoid an abrupt or overly dramatic expression and anything that detracting from his personal moment of triumph.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "Elias Thorne"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_010",
+              "linked_blocks": [
+                "b_014"
+              ]
+            },
+            "estimated_duration_sec": 0.2,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_015",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_010_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260325_131224_272912/img_sh_010_kf_01_file_000025.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast lighting, with a focus on details illuminated by the desk lamp.; Intimate and tense atmosphere, emphasizing the pressure Elias is under.; Classic, traditional aesthetic befitting an old watchmaker's workshop.; Intensifying focus on the micro-actions, leading to a grand, synchronized resolution.; Strong emphasis on sound design for the 'CLICK' and the clock's chimes.; Building triumph and relief, contrasted with previous tension.; A peaceful, reflective resolution to the tension.; Focus on subtle emotional cues and the lingering sounds of the clock.; Warm, soft lighting to convey a sense of calm and accomplishment. Close-up, high-angle, static shot. Focus on Elias Thorne's hands as he carefully and deliberately closes the now-working pocket watch. His movements are gentle and precise, a symbolic act of closure after his struggle. The warm, soft light from the desk lamp illuminates his aged, capable hands and the gleaming, restored pocket watch, highlighting the materials and the quiet triumph of his craft. The composition emphasizes the finality and success of the task. Avoid anything that detracts from Elias's personal moment of triumph or an abrupt ending to the scene.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "Elias Thorne"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 10,
+    "keyframe_count_total": 15,
+    "avg_keyframes_per_shot": 1.5,
+    "global_character_anchor_count": 2,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 6,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 0
+  }
+}

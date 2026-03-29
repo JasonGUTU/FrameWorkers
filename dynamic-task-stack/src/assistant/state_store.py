@@ -86,11 +86,6 @@ class AssistantStateStore:
             self.executions[execution_id] = execution
             return execution
 
-    def get_execution(self, execution_id: str) -> Optional[AgentExecution]:
-        """Get an execution by ID."""
-        with self.lock:
-            return self.executions.get(execution_id)
-
     def get_executions_by_task(self, task_id: str) -> List[AgentExecution]:
         """Get all executions for a task."""
         with self.lock:

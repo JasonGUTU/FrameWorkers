@@ -1,0 +1,21 @@
+{
+  "version": "v2.0",
+  "description": "Naming and placement constraints for assistant persist plan.",
+  "path_rules": {
+    "must_start_with_task_id_prefix": true,
+    "forbid_parent_traversal": true
+  },
+  "allowed_extensions": [
+    ".json",
+    ".png",
+    ".jpg",
+    ".jpeg",
+    ".webp",
+    ".wav",
+    ".mp3",
+    ".mp4",
+    ".mov",
+    ".bin",
+    ".txt"
+  ]
+}

@@ -7,50 +7,51 @@ from typing import Any
 from pydantic import BaseModel
 
 from ..descriptor import SubAgentDescriptor
+from ..contracts import InputBundleV2
 from .agent import StoryAgent
 from .schema import StoryAgentInput, StoryConstraints
 from .evaluator import StoryEvaluator
 
+OUTPUT_ASSET_KEY = "story_blueprint"
+USER_TEXT_KEY = "user_story_outline"
+
 
 def build_input(
-    _project_id: str,
-    _draft_id: str,
-    assets: dict[str, Any],
+    _task_id: str,
+    input_bundle_v2: InputBundleV2,
     config: Any,
 ) -> BaseModel:
+    resolved = (
+        input_bundle_v2.context.get("resolved_inputs", {})
+        if isinstance(getattr(input_bundle_v2, "context", None), dict)
+        else {}
+    )
+    raw = resolved.get("source_text", "")
+    source_text = raw if isinstance(raw, str) else str(raw)
     return StoryAgentInput(
-        draft_idea=assets.get("draft_idea", ""),
+        draft_idea=source_text,
         constraints=StoryConstraints(
             target_duration_sec=config.target_total_duration_sec,
             language=config.language,
         ),
-        user_provided_text=assets.get("user_story_outline", ""),
+        user_provided_text=(resolved.get(USER_TEXT_KEY, "") if isinstance(resolved, dict) else ""),
     )
-
-
-def build_upstream(assets: dict[str, Any]) -> dict[str, Any] | None:
-    return {
-        "draft_idea": assets.get("draft_idea", ""),
-    }
 
 
 CATALOG_ENTRY = (
     "StoryAgent\n"
-    "  - Input: draft_idea (text) OR user_story_outline (detailed outline text)\n"
+    "  - Input: source_text (text) OR user_story_outline (detailed outline text)\n"
     "  - Output: story_blueprint (logline, cast, locations, story_arc, scene_outline)\n"
     "  - Purpose: Produce a structured story blueprint. Structures user outline if provided."
 )
 
 DESCRIPTOR = SubAgentDescriptor(
-    agent_name="StoryAgent",
-    asset_key="story_blueprint",
-    asset_type="story_blueprint",
-    upstream_keys=["draft_idea"],
+    agent_id="StoryAgent",
+    asset_key=OUTPUT_ASSET_KEY,
     catalog_entry=CATALOG_ENTRY,
     agent_factory=lambda llm: StoryAgent(llm_client=llm),
     evaluator_factory=StoryEvaluator,
     build_input=build_input,
-    build_upstream=build_upstream,
     materializer_factory=None,
-    user_text_key="user_story_outline",
+    user_text_key=USER_TEXT_KEY,
 )

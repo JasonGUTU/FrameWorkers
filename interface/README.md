@@ -51,6 +51,8 @@ Task message API contract (`tasksAPI.pushMessage`) follows backend fields:
 - required: `content`
 - optional: `sender_type` (`user` / `director` / `subagent`)
 
+This UI targets the **Task Stack + messages** HTTP API. **Sub-agent execution** (`POST /api/assistant/execute` with `agent_id`, `task_id`, `execute_fields`) is invoked by the **Director** process, not by this client; server-side **`input_bundle_v2`** / **`resolved_inputs`** assembly is documented in `dynamic-task-stack/src/assistant/README.md`.
+
 ## Project Structure
 
 ```

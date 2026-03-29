@@ -10,11 +10,15 @@ from pathlib import Path
 
 import pytest
 
-# Make `dynamic-task-stack/src` package importable.
+# Make `dynamic-task-stack/src` and repo root importable.
 _repo_root = Path(__file__).resolve().parents[2]
 _pkg_root = _repo_root / "dynamic-task-stack"
+if str(_repo_root) not in sys.path:
+    sys.path.insert(0, str(_repo_root))
 if str(_pkg_root) not in sys.path:
     sys.path.insert(0, str(_pkg_root))
+
+from director_agent.director import _task_stack_description_to_assistant_text
 
 # `src/__init__.py` imports app.py -> flask_cors.
 if "flask_cors" not in sys.modules:
@@ -326,9 +330,6 @@ def test_full_pipeline_live_http_flow_generates_about_one_minute_video(
     target_seconds = int(os.getenv("FW_PIPELINE_TARGET_SECONDS", "10"))
     min_seconds = int(os.getenv("FW_PIPELINE_MIN_SECONDS", "8"))
     max_seconds = int(os.getenv("FW_PIPELINE_MAX_SECONDS", "20"))
-    # <= 0 means "no trim" (keep full generated storyboard/screenplay).
-    trim_scene_limit = int(os.getenv("FW_MEDIA_TRIM_SCENES", "0"))
-    trim_shot_limit = int(os.getenv("FW_MEDIA_TRIM_SHOTS_PER_SCENE", "0"))
 
     create_task_resp = client.post(
         "/api/tasks/create",
@@ -350,27 +351,11 @@ def test_full_pipeline_live_http_flow_generates_about_one_minute_video(
         },
     )
     assert create_task_resp.status_code == 201
-    task_id = create_task_resp.get_json()["id"]
+    task_body = create_task_resp.get_json()
+    task_id = task_body["id"]
 
     common_inputs = {
-        "assets": {
-            "draft_idea": (
-                "A retired watchmaker has ten seconds before midnight to fix "
-                "his late wife's pocket watch. After one small mistake, he "
-                "steadies his hands, repairs it, hears a single tick, and "
-                "smiles as fireworks begin."
-            ),
-            "source_text": (
-                "A retired watchmaker has ten seconds before midnight to fix "
-                "his late wife's pocket watch. After one small mistake, he "
-                "steadies his hands, repairs it, hears a single tick, and "
-                "smiles as fireworks begin."
-            ),
-        },
-        "config": {
-            "target_total_duration_sec": target_seconds,
-            "language": "en",
-        }
+        "execute_fields": {"text": _task_stack_description_to_assistant_text(task_body["description"])},
     }
     payloads: dict[str, dict] = {}
 
@@ -383,7 +368,7 @@ def test_full_pipeline_live_http_flow_generates_about_one_minute_video(
             json={
                 "agent_id": agent_id,
                 "task_id": task_id,
-                "additional_inputs": common_inputs,
+                **common_inputs,
             },
         )
         body = execute_resp.get_json()
@@ -402,35 +387,13 @@ def test_full_pipeline_live_http_flow_generates_about_one_minute_video(
         assert isinstance(body.get("results"), dict)
         payloads[agent_id] = body
 
-    trimmed_screenplay, trimmed_storyboard, trim_summary = (
-        _trim_storyboard_and_screenplay_for_media_agents(
-            payloads["ScreenplayAgent"]["results"],
-            payloads["StoryboardAgent"]["results"],
-            max_scenes=trim_scene_limit,
-            max_shots_per_scene=trim_shot_limit,
-        )
-    )
-    _append_debug_record(
-        debug_file,
-        {
-            "step": "trim_media_inputs",
-            "task_id": task_id,
-            "trim_summary": trim_summary,
-        },
-    )
-
-    media_inputs = deepcopy(common_inputs)
-    media_inputs_assets = media_inputs.setdefault("assets", {})
-    media_inputs_assets["screenplay"] = trimmed_screenplay
-    media_inputs_assets["storyboard"] = trimmed_storyboard
-
     for agent_id in media_agents:
         execute_resp = client.post(
             "/api/assistant/execute",
             json={
                 "agent_id": agent_id,
                 "task_id": task_id,
-                "additional_inputs": media_inputs,
+                **common_inputs,
             },
         )
         body = execute_resp.get_json()

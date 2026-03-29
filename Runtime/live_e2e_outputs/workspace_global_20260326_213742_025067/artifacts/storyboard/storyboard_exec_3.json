@@ -1,0 +1,205 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-26T21:38:16.344204+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_001"
+        },
+        "estimated_duration": {
+          "seconds": 5.0,
+          "confidence": 0.9
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "A serene autumn park path, lined with mature trees displaying vibrant fall foliage. Sunlight dappling through the canopy, creating a play of light and shadow. The ground is covered with a blanket of colorful, fallen leaves. The air appears crisp and clear."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "A solitary, contemplative individual. Their face is largely obscured by distance or angle, emphasizing their role as an archetypal 'passerby' rather than a specific person. They exude a quiet, reflective demeanor."
+              ],
+              "wardrobe_notes": [
+                "A warm, nondescript autumn coat (e.g., olive green, deep brown, or charcoal), a knitted scarf, and practical gloves. The clothing should be functional and blend with the autumn setting, suggesting a person prepared for the crisp weather."
+              ],
+              "must_keep": [
+                "Gloved hand",
+                "Warm autumn attire",
+                "Nondescript appearance"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Autumn leaves",
+              "must_keep": [
+                "One distinct, vibrant crimson leaf that falls gracefully",
+                "A carpet of various colorful fallen leaves on the ground"
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "Wind",
+              "must_keep": [
+                "Invisible, but its effect must be clearly visible on the leaf's movement and subtly on the environment/character's clothing"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Warm, naturalistic lighting, emphasizing the soft, diffused light of an autumn day. Focus on natural textures and an earthy, rich color palette, with the crimson leaf as a strong accent. A gentle, slightly melancholic aesthetic. Use of shallow depth of field to draw focus to key elements."
+            ],
+            "must_avoid": [
+              "Harsh, artificial lighting or over-stylized color grading",
+              "Fast-paced, jarring cuts or hyper-realistic action",
+              "Overly dramatic or exaggerated emotional expressions"
+            ]
+          }
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "linked_blocks": [
+              "b_001"
+            ],
+            "estimated_duration_sec": 1.5,
+            "shot_type": "establishing_shot",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "tracking_forward",
+              "framing_notes": "Follows The Passerby from behind or slightly to the side, maintaining a wide enough frame to show the tree-lined path, dappled sunlight, and fallen leaves underfoot."
+            },
+            "visual_goal": "Establish the serene, atmospheric autumn park setting and introduce The Passerby as a solitary figure moving through it, setting a contemplative mood.",
+            "action_focus": "The Passerby ambles slowly and calmly down the quiet, tree-lined path, surrounded by vibrant autumn foliage.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Wide shot of The Passerby walking along the path, sunlight filtering through trees.",
+                "Slightly closer shot of The Passerby's back, still walking, showing the depth of the autumn path ahead."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "linked_blocks": [
+              "b_002",
+              "b_003"
+            ],
+            "estimated_duration_sec": 1.0,
+            "shot_type": "medium_shot",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on The Passerby's upper body and the space immediately in front of them. The crimson leaf begins its descent into the frame from above and to the side of The Passerby."
+            },
+            "visual_goal": "Show the elegant descent of the leaf, drawing The Passerby's attention and sparking a moment of gentle anticipation and a soft smile.",
+            "action_focus": "A single, vibrant crimson leaf detaches and twirls gracefully into The Passerby's path, catching their eye. A soft smile plays on their lips as their gloved hand begins to slowly extend.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Leaf beginning its graceful descent into frame, Passerby's gaze follows it.",
+                "Passerby's face with a soft smile, hand starting to rise."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "linked_blocks": [
+              "b_004"
+            ],
+            "estimated_duration_sec": 1.5,
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Tight on The Passerby's gloved hand, fingers spread, poised to catch the leaf. The crimson leaf is in sharp focus, nearing the fingertips. A sudden, dynamic visual effect for the gust of wind."
+            },
+            "visual_goal": "Emphasize the delicate, almost-achieved moment of contact and the sudden, jarring interruption by the unseen force of the wind, creating a sense of loss.",
+            "action_focus": "The gloved fingertips are mere millimeters from the crimson leaf. Suddenly, an unseen gust of wind whips through, snatching the leaf away dramatically, out of reach and frame.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 3,
+              "keyframe_notes": [
+                "Gloved hand and crimson leaf almost touching, high anticipation.",
+                "Moment of the wind gust: leaf being violently pulled away from the hand.",
+                "The hand remains suspended for a beat, completely empty."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "linked_blocks": [
+              "b_005"
+            ],
+            "estimated_duration_sec": 1.0,
+            "shot_type": "medium_shot",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Returns to The Passerby, showing their full upper body and expression. Wider angle to include the direction the leaf disappeared, highlighting its absence."
+            },
+            "visual_goal": "Convey The Passerby's quiet, resigned acceptance and the subtle melancholy of the moment, reinforcing nature's unpredictable indifference.",
+            "action_focus": "The Passerby's empty hand slowly lowers. Their gaze follows the now distant leaf until it disappears among the trees, a subtle, knowing sigh escaping their lips, implying a quiet understanding.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Passerby's hand slowly lowering, their face showing a subtle shift to resignation.",
+                "Passerby looking into the distance where the leaf disappeared, a quiet sigh."
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_count_total": 4,
+    "avg_shots_per_scene": 4.0,
+    "sum_shot_duration_sec": 5.0,
+    "duration_match_score": 0.0
+  }
+}

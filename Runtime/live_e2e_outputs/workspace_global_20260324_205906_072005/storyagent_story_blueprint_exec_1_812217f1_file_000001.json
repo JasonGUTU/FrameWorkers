@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-24T20:59:43.628091+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A dedicated watchmaker races against the clock to meticulously repair a treasured antique timepiece before the stroke of midnight.",
+    "estimated_duration": {
+      "seconds": 60.0,
+      "confidence": 0.7
+    },
+    "style": {
+      "genre": [
+        "Drama",
+        "Short Film"
+      ],
+      "tone_keywords": [
+        "Tense",
+        "Focused",
+        "Satisfying",
+        "Precise"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Elias",
+        "role": "protagonist",
+        "profile": "A seasoned, solitary watchmaker with a reputation for impossible repairs and an unwavering dedication to his craft.",
+        "motivation": "To honor his craft, preserve the intricate beauty of timepieces, and successfully complete every repair, especially those with sentimental value or tight deadlines.",
+        "flaw": "His perfectionism often leads to self-imposed pressure, making every challenge a personal trial."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Elias's Workshop",
+        "description": "A cozy, dimly lit workshop filled with the quiet tick-tock of countless clocks, intricate tools, magnifying glasses, and shelves laden with antique timepieces and spare parts. It's late evening, nearing midnight."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Elias, a meticulous watchmaker, is engrossed in a particularly challenging repair on an antique watch, with a large wall clock prominently displaying time nearing midnight.",
+        "conflict": "The stubborn complexity of the broken watch versus Elias's renowned skill and the looming deadline.",
+        "turning_point": "The initial assessment reveals the repair is far more intricate and time-sensitive than expected."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "inciting",
+        "summary": "Elias delves deeper into the mechanism, encountering a critical malfunction that seems to defy solution, heightening the tension as the minutes tick away.",
+        "conflict": "A tiny, recalcitrant gear or spring within the watch mechanism threatens to derail the entire repair.",
+        "turning_point": "A moment of intense frustration or doubt as Elias realizes the depth of the problem."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "climax",
+        "summary": "With a sudden flash of insight and a steady hand, Elias makes a precise, delicate adjustment that brings the intricate mechanism back to life.",
+        "conflict": "Elias's deep knowledge and precision against the last, most difficult hurdle of the repair.",
+        "turning_point": "The successful application of a crucial technique, leading to the watch's internal gears beginning to move once more."
+      },
+      {
+        "step_id": "arc_004",
+        "order": 4,
+        "step_type": "resolution",
+        "summary": "Elias closes the now-working watch and places it on his counter, its steady tick joining the chorus of other clocks just as the wall clock strikes midnight, a quiet victory.",
+        "conflict": "The successful completion of the repair against the backdrop of the deadline.",
+        "turning_point": "The moment the repaired watch ticks perfectly, signifying completion."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To establish Elias's skill and the urgent task at hand: repairing a complex watch before midnight.",
+        "conflict": "The difficulty of the tiny, intricate mechanism and the visible progress of time.",
+        "turn": "Elias discovers a deeper, unexpected issue with the watch."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To show Elias's focused struggle against the watch's malfunction and the increasing time pressure.",
+        "conflict": "Elias's expertise is tested by a stubborn part or an elusive problem, and the wall clock's hands move visibly.",
+        "turn": "After a moment of near defeat, Elias refocuses, determined to find a solution."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To depict the breakthrough moment where Elias successfully fixes the core issue.",
+        "conflict": "The precise, high-stakes final adjustment that could either succeed or cause irreparable damage.",
+        "turn": "The watch's internal mechanisms spring to life with a satisfying whir, confirming the repair."
+      },
+      {
+        "scene_id": "sc_004",
+        "order": 4,
+        "linked_step_id": "arc_004",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To conclude with the watch working and Elias's quiet sense of accomplishment.",
+        "conflict": "The final moments before midnight, ensuring the watch is truly fixed and fully assembled.",
+        "turn": "The wall clock's chimes indicate midnight, perfectly timed with the restored watch's first strong tick, and Elias allows himself a small, content smile."
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 60.0,
+    "character_count": 1,
+    "location_count": 1,
+    "scene_count": 4
+  }
+}

@@ -7,22 +7,29 @@ from typing import Any
 from pydantic import BaseModel
 
 from ..descriptor import SubAgentDescriptor
+from ..contracts import InputBundleV2
 from .agent import VideoAgent
 from .schema import VideoAgentInput
 from .evaluator import VideoEvaluator
 from .materializer import VideoMaterializer
 from inference.generation.video_generators.service import FalVideoService
 
+OUTPUT_ASSET_KEY = "video"
+
 
 def build_input(
-    _project_id: str,
-    _draft_id: str,
-    assets: dict[str, Any],
+    _task_id: str,
+    input_bundle_v2: InputBundleV2,
     config: Any,
 ) -> BaseModel:
+    resolved = (
+        input_bundle_v2.context.get("resolved_inputs", {})
+        if isinstance(getattr(input_bundle_v2, "context", None), dict)
+        else {}
+    )
     return VideoAgentInput(
-        storyboard=assets.get("storyboard", {}),
-        keyframes=assets.get("keyframes", {}),
+        storyboard=resolved.get("storyboard", {}),
+        keyframes=resolved.get("keyframes", {}),
     )
 
 
@@ -38,10 +45,8 @@ CATALOG_ENTRY = (
 )
 
 DESCRIPTOR = SubAgentDescriptor(
-    agent_name="VideoAgent",
-    asset_key="video",
-    asset_type="video_package",
-    upstream_keys=["storyboard", "keyframes"],
+    agent_id="VideoAgent",
+    asset_key=OUTPUT_ASSET_KEY,
     catalog_entry=CATALOG_ENTRY,
     agent_factory=lambda llm: VideoAgent(llm_client=llm),
     evaluator_factory=VideoEvaluator,

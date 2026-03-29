@@ -26,7 +26,7 @@ Layer 3 -- post-materialization asset checks:
 from __future__ import annotations
 
 import json
-from typing import Any
+from typing import Any, Mapping
 
 from ..base_evaluator import BaseEvaluator, check_uri
 from .schema import AudioAgentOutput
@@ -39,8 +39,8 @@ class AudioEvaluator(BaseEvaluator[AudioAgentOutput]):
         ("music_mood_fit", "Do the music cue moods match the emotional arc of each scene? Does the ambience description fit the location and atmosphere?"),
     ]
 
-    def _build_creative_context(self, output, upstream):
-        sp_data = (upstream or {}).get("screenplay", {})
+    def _build_creative_context(self, output, input_bundle_v2):
+        sp_data = (input_bundle_v2 or {}).get("screenplay", {})
         if sp_data:
             return f"Screenplay:\n{json.dumps(sp_data, ensure_ascii=False, indent=2)}"
         return ""
@@ -52,15 +52,15 @@ class AudioEvaluator(BaseEvaluator[AudioAgentOutput]):
     def check_structure(
         self,
         output: AudioAgentOutput,
-        upstream: dict[str, Any] | None = None,
+        input_bundle_v2: Mapping[str, Any] | None = None,
     ) -> list[str]:
         """Rule-based structural validation for Audio Package."""
         errors: list[str] = []
         c = output.content
 
         # --- Upstream cross-check: scene_ids must match video ---
-        if upstream and "video" in upstream:
-            vid_content = upstream["video"].get("content", {})
+        if input_bundle_v2 and "video" in input_bundle_v2:
+            vid_content = input_bundle_v2["video"].get("content", {})
             vid_scene_ids = {
                 s.get("scene_id", "") for s in vid_content.get("scenes", [])
             }
@@ -115,8 +115,8 @@ class AudioEvaluator(BaseEvaluator[AudioAgentOutput]):
                     )
 
         # --- Upstream cross-check: linked_block_id must exist in screenplay ---
-        if upstream and "screenplay" in upstream:
-            sp_content = upstream["screenplay"].get("content", {})
+        if input_bundle_v2 and "screenplay" in input_bundle_v2:
+            sp_content = input_bundle_v2["screenplay"].get("content", {})
             all_block_ids: set[str] = set()
             for sp_scene in sp_content.get("scenes", []):
                 for block in sp_scene.get("blocks", []):
@@ -194,7 +194,7 @@ class AudioEvaluator(BaseEvaluator[AudioAgentOutput]):
     async def evaluate_asset(
         self,
         asset_data: dict[str, Any],
-        upstream: dict[str, Any] | None = None,
+        input_bundle_v2: Mapping[str, Any] | None = None,
     ) -> dict[str, Any]:
         """Check TTS narration, music, ambience, scene mixes, and final audio."""
         content = asset_data.get("content", {})
@@ -248,9 +248,9 @@ class AudioEvaluator(BaseEvaluator[AudioAgentOutput]):
         final = content.get("final_audio_asset", {})
         final_ok = check_uri(final.get("uri", "")) == "success"
         video_final_uri = ""
-        if upstream and "video" in upstream:
+        if input_bundle_v2 and "video" in input_bundle_v2:
             video_final_uri = (
-                upstream["video"]
+                input_bundle_v2["video"]
                 .get("content", {})
                 .get("final_video_asset", {})
                 .get("uri", "")
@@ -293,7 +293,7 @@ class AudioEvaluator(BaseEvaluator[AudioAgentOutput]):
                     (
                         f"final delivery muxed: {'OK' if delivery_ok else 'MISSING'}"
                         if delivery_expected
-                        else "final delivery muxed: SKIPPED(no upstream video uri)"
+                        else "final delivery muxed: SKIPPED(no shared video uri)"
                     ),
                 ],
             },

@@ -4,8 +4,7 @@ The descriptor is the glue between the agent and the orchestration layer.
 It tells the registry:
   - How to create the agent (``agent_factory``)
   - How to create the evaluator (``evaluator_factory``)
-  - How to build typed input from the shared asset cache (``build_input``)
-  - What upstream data the evaluator needs (``build_upstream``)
+  - How to build typed input from the pipeline bundle (``build_input``)
   - Human-readable description for planning LLMs (``catalog_entry``)
 """
 
@@ -16,33 +15,28 @@ from typing import Any
 from pydantic import BaseModel
 
 from ..descriptor import SubAgentDescriptor
+from ..contracts import InputBundleV2
 from .agent import ExamplePipelineAgent
 from .schema import ExamplePipelineInput
 from .evaluator import ExamplePipelineEvaluator
 
+OUTPUT_ASSET_KEY = "example_summary"
+
 
 def build_input(
-    _project_id: str,
-    _draft_id: str,
-    assets: dict[str, Any],
+    _task_id: str,
+    input_bundle_v2: InputBundleV2,
     config: Any,
 ) -> BaseModel:
-    """Construct typed input from the shared asset cache.
-
-    ``assets`` is the global asset dict maintained by the orchestration
-    layer.  Extract the keys your agent needs and map them to the
-    Pydantic input model.
-    """
-    return ExamplePipelineInput(
-        source_text=assets.get("source_text", ""),
+    """Construct typed input from the pipeline bundle."""
+    resolved = (
+        input_bundle_v2.context.get("resolved_inputs", {})
+        if isinstance(getattr(input_bundle_v2, "context", None), dict)
+        else {}
     )
-
-
-def build_upstream(assets: dict[str, Any]) -> dict[str, Any] | None:
-    """Extract upstream context for the evaluator's cross-checks."""
-    return {
-        "source_text": assets.get("source_text", ""),
-    }
+    return ExamplePipelineInput(
+        source_text=resolved.get("source_text", ""),
+    )
 
 
 CATALOG_ENTRY = (
@@ -53,14 +47,11 @@ CATALOG_ENTRY = (
 )
 
 DESCRIPTOR = SubAgentDescriptor(
-    agent_name="ExamplePipelineAgent",
-    asset_key="example_summary",
-    asset_type="example_summary",
-    upstream_keys=["source_text"],
+    agent_id="ExamplePipelineAgent",
+    asset_key=OUTPUT_ASSET_KEY,
     catalog_entry=CATALOG_ENTRY,
     agent_factory=lambda llm: ExamplePipelineAgent(llm_client=llm),
     evaluator_factory=ExamplePipelineEvaluator,
     build_input=build_input,
-    build_upstream=build_upstream,
     materializer_factory=None,
 )

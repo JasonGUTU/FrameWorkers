@@ -15,6 +15,7 @@ from .base_evaluator import BaseEvaluator as LLMBaseEvaluator
 from .base_evaluator import check_uri
 from inference.clients import LLMClient
 from .descriptor import SubAgentDescriptor, BaseMaterializer, MediaAsset
+from .contracts import InputBundleV2, OutputEnvelopeV2, NamingSpecV2
 from .common_schema import Meta, ImageAsset, QualityScore, AssetRef, DurationEstimate
 
 # -- Agent classes (convenience re-exports) --------------------------------
@@ -49,7 +50,7 @@ from .example_agent.descriptor import DESCRIPTOR as _example_desc
 # ---------------------------------------------------------------------------
 
 AGENT_REGISTRY: dict[str, SubAgentDescriptor] = {
-    d.agent_name: d
+    d.agent_id: d
     for d in [
         _story_desc,
         _screenplay_desc,
@@ -59,16 +60,6 @@ AGENT_REGISTRY: dict[str, SubAgentDescriptor] = {
         _audio_desc,
         _example_desc,
     ]
-}
-
-AGENT_NAME_TO_EVALUATOR: dict[str, LLMBaseEvaluator] = {
-    name: desc.evaluator_factory()
-    for name, desc in AGENT_REGISTRY.items()
-}
-
-AGENT_NAME_TO_ASSET_KEY: dict[str, str] = {
-    name: desc.asset_key
-    for name, desc in AGENT_REGISTRY.items()
 }
 
 __all__ = [
@@ -84,6 +75,9 @@ __all__ = [
     "SubAgentDescriptor",
     "BaseMaterializer",
     "MediaAsset",
+    "InputBundleV2",
+    "OutputEnvelopeV2",
+    "NamingSpecV2",
     # Common schema
     "Meta",
     "ImageAsset",
@@ -92,8 +86,6 @@ __all__ = [
     "DurationEstimate",
     # Registry
     "AGENT_REGISTRY",
-    "AGENT_NAME_TO_EVALUATOR",
-    "AGENT_NAME_TO_ASSET_KEY",
     # Agent classes
     "StoryAgent",
     "ScreenplayAgent",

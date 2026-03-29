@@ -10,6 +10,8 @@ from typing import Any
 
 import httpx
 
+from ..fal_helpers import fal_subscribe, http_download_bytes
+
 logger = logging.getLogger(__name__)
 
 _DEFAULT_IMAGE_MODEL = "google/gemini-2.5-flash-image"
@@ -191,35 +193,10 @@ class FalImageService(ImageService):
         return await self._download_binary(out_url)
 
     async def _submit(self, arguments: dict[str, Any]) -> dict[str, Any]:
-        if not self._api_key:
-            raise RuntimeError("FAL_API_KEY is required for FalImageService")
-        try:
-            import fal_client
-        except ImportError as exc:
-            raise RuntimeError("fal-client is required. Install with `pip install fal-client`.") from exc
-
-        previous = os.getenv("FAL_KEY")
-        os.environ["FAL_KEY"] = self._api_key
-        try:
-            result = await asyncio.to_thread(
-                fal_client.subscribe,
-                self.model,
-                arguments=arguments,
-                with_logs=False,
-            )
-            if not isinstance(result, dict):
-                raise RuntimeError(f"Unexpected fal.ai response type: {type(result).__name__}")
-            return result
-        finally:
-            if previous is None:
-                os.environ.pop("FAL_KEY", None)
-            else:
-                os.environ["FAL_KEY"] = previous
+        return await fal_subscribe(self._api_key, self.model, arguments)
 
     async def _download_binary(self, url: str) -> bytes:
-        resp = await self.http.get(url)
-        resp.raise_for_status()
-        return resp.content
+        return await http_download_bytes(self.http, url)
 
     @staticmethod
     def _extract_image_url(result: dict[str, Any]) -> str:

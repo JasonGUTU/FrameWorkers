@@ -25,7 +25,7 @@ Layer 3 -- post-materialization asset checks:
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Mapping
 
 from ..base_evaluator import BaseEvaluator, check_uri
 from .schema import VideoAgentOutput
@@ -40,15 +40,15 @@ class VideoEvaluator(BaseEvaluator[VideoAgentOutput]):
     def check_structure(
         self,
         output: VideoAgentOutput,
-        upstream: dict[str, Any] | None = None,
+        input_bundle_v2: Mapping[str, Any] | None = None,
     ) -> list[str]:
         """Rule-based structural validation for Video Package."""
         errors: list[str] = []
         c = output.content
 
         # --- Upstream cross-check: scene/shot IDs must match storyboard ---
-        if upstream and "storyboard" in upstream:
-            sb_content = upstream["storyboard"].get("content", {})
+        if input_bundle_v2 and "storyboard" in input_bundle_v2:
+            sb_content = input_bundle_v2["storyboard"].get("content", {})
             sb_scene_ids = {
                 s.get("scene_id", "") for s in sb_content.get("scenes", [])
             }
@@ -152,7 +152,7 @@ class VideoEvaluator(BaseEvaluator[VideoAgentOutput]):
     async def evaluate_asset(
         self,
         asset_data: dict[str, Any],
-        upstream: dict[str, Any] | None = None,
+        input_bundle_v2: Mapping[str, Any] | None = None,
     ) -> dict[str, Any]:
         """Check that shot clips, scene clips, and final video were generated."""
         content = asset_data.get("content", {})

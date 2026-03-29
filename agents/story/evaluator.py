@@ -16,7 +16,7 @@ Layer 2 — creative assessment:
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Mapping
 
 from ..base_evaluator import BaseEvaluator
 from .schema import StoryAgentOutput
@@ -30,9 +30,9 @@ class StoryEvaluator(BaseEvaluator[StoryAgentOutput]):
         ("coherence", "Characters, locations, scenes internally consistent and well-connected?"),
     ]
 
-    def _build_creative_context(self, output, upstream):
-        draft_idea = (upstream or {}).get("draft_idea", "")
-        return f"Draft idea: {draft_idea}"
+    def _build_creative_context(self, output, input_bundle_v2):
+        source_text = (input_bundle_v2 or {}).get("source_text", "")
+        return f"Source text: {source_text}"
 
     # ------------------------------------------------------------------
     # Layer 1 — Rule-based structural validation
@@ -41,7 +41,7 @@ class StoryEvaluator(BaseEvaluator[StoryAgentOutput]):
     def check_structure(
         self,
         output: StoryAgentOutput,
-        upstream: dict[str, Any] | None = None,
+        input_bundle_v2: Mapping[str, Any] | None = None,
     ) -> list[str]:
         """Rule-based structural validation for Story Blueprint."""
         errors: list[str] = []
@@ -90,7 +90,7 @@ class StoryEvaluator(BaseEvaluator[StoryAgentOutput]):
             errors.append("story_arc is empty")
 
         # --- Duration compliance against requested constraints ---
-        self._check_duration_compliance(errors, output, upstream)
+        self._check_duration_compliance(errors, output, input_bundle_v2)
 
         return errors
 
@@ -98,7 +98,7 @@ class StoryEvaluator(BaseEvaluator[StoryAgentOutput]):
         self,
         errors: list[str],
         output: StoryAgentOutput,
-        upstream: dict[str, Any] | None = None,
+        input_bundle_v2: Mapping[str, Any] | None = None,
     ) -> None:
         target = float(getattr(output.metrics, "target_duration_sec", 0.0) or 0.0)
         if target <= 0:

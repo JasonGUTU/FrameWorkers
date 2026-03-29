@@ -1,0 +1,1051 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_type": "character",
+          "entity_id": "char_001",
+          "display_name": "",
+          "purpose": "identity_anchor",
+          "keyframe_id": "kf_global_char_001",
+          "image_asset": {
+            "asset_id": "img_char_001_global",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_char_001_global_file_000005.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. A male in his 50s, Elias is a seasoned and highly skilled watchmaker. He has a solitary demeanor but conveys a quiet wisdom and deep dedication to his craft, appearing worn but respected. He wears a practical, well-worn dark canvas apron over a simple, long-sleeved shirt and trousers. His glasses are perched on his nose, possibly slightly askew from intense concentration, reflecting his almost meditative focus when working."
+        }
+      ],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "display_name": "",
+          "purpose": "style_anchor",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_loc_001_global_file_000004.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. A dimly lit, cluttered workshop interior, characteristic of an old craftsman's space. A warm glow emanates from a single desk lamp, casting strong contrasts and deep shadows across the room. Clocks of various sizes, from small wall pieces to antique grandfather clocks, are subtly visible in the background, hinting at the pervasive ticking sound. Dust motes dance visibly and beautifully within the concentrated beam of the lamp, highlighting the quiet, still air."
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_001",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_char_001_sc_001_file_000009.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Show Elias, a male in his 50s, a seasoned and highly skilled watchmaker, working intently at his workbench under the focused, warm beam of a desk lamp. His face shows deep, meditative focus, with a quiet wisdom reflecting years of dedication. He wears a practical, well-worn dark canvas apron over a simple, long-sleeved shirt and trousers. His glasses are perched slightly askew on his nose, suggesting intense concentration. His hands, though showing signs of age, are steady and skilled. Ensure no bright, harsh, or sterile lighting; no fast-paced editing; no overly clean workshop; no excessive dialogue or background noise; no relaxed or casual pacing; no wide, detached shots; no sense of ease or quick resolution; no visuals suggesting messiness or lack of control; no unclear or obscured movements; nothing that diminishes the importance of the delicate repair; no lingering tension, urgency, or frustration; no rushed editing; no overly dramatic or exaggerated expressions of triumph."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_loc_001_sc_001_file_000008.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Present a dimly lit, cluttered workshop at night. The primary light source is a single, old-fashioned, adjustable desk lamp emitting a focused, warm beam of light directly onto a heavy, worn wooden workbench. This creates strong contrasts and deep shadows in the background. Clocks of various sizes, including an ornate, antique large wall clock, are subtly visible in the blurred background. Dust motes are visibly dancing in the lamp's concentrated beam, adding to the atmosphere. The color palette is muted, dominated by warm browns and dark woods, with metallic glints from tools and clock parts. Ensure no bright, harsh, or sterile lighting; no fast-paced editing; no overly clean workshop; no excessive dialogue or background noise; no relaxed or casual pacing; no wide, detached shots; no sense of ease or quick resolution; no visuals suggesting messiness or lack of control; no unclear or obscured movements; nothing that diminishes the importance of the delicate repair; no lingering tension, urgency, or frustration; no rushed editing; no overly dramatic or exaggerated expressions of triumph."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_001",
+              "linked_blocks": [
+                "b_001"
+              ]
+            },
+            "estimated_duration_sec": 3.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_001_kf_01_file_000019.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Wide, eye-level, static shot: Establish the overall dimly lit workshop environment at night, emphasizing the warm, focused glow of an old-fashioned desk lamp on a heavy, worn wooden workbench. Various specialized, tiny tools are scattered around the workbench, along with other small components. In the blurred background, several clocks of different sizes are visible, including an ornate, antique large wall clock prominently displayed, subtly contributing to the pervasive ticking sound. Dust motes dance visibly in the concentrated beam of the desk lamp, creating an atmosphere of quiet industry and nighttime. Ensure no bright, harsh, or sterile lighting; no fast-paced editing; no overly clean workshop; no excessive dialogue or background noise; no relaxed or casual pacing; no wide, detached shots; no sense of ease or quick resolution; no visuals suggesting messiness or lack of control; no unclear or obscured movements; nothing that diminishes the importance of the delicate repair; no lingering tension, urgency, or frustration; no rushed editing; no overly dramatic or exaggerated expressions of triumph.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_002",
+              "linked_blocks": [
+                "b_002"
+              ]
+            },
+            "estimated_duration_sec": 4.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_002",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_002_kf_01_file_000043.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Medium close-up, eye-level, static shot: Elias is hunched over the antique pocket watch on his worn wooden workbench, entirely absorbed in his work. He wears his dark canvas apron and glasses, with a watchmaker's loupe securely screwed into his eye. The focused, warm beam of the desk lamp illuminates his concentrated profile and the intricate watch, highlighting his deep dedication and the delicate nature of his craft. Ensure no bright, harsh, or sterile lighting; no fast-paced editing; no overly clean workshop; no excessive dialogue or background noise; no relaxed or casual pacing; no wide, detached shots; no sense of ease or quick resolution; no visuals suggesting messiness or lack of control; no unclear or obscured movements; nothing that diminishes the importance of the delicate repair; no lingering tension, urgency, or frustration; no rushed editing; no overly dramatic or exaggerated expressions of triumph.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_003",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_02",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_002_kf_02_file_000015.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Medium close-up, eye-level, slow dolly-in shot: Dolly slowly push in on Elias's profile as he remains hunched over the antique pocket watch on his worn wooden workbench. The loupe is fixed in his eye. The movement emphasizes his posture and the intensity of his concentration, highlighting the intricate details of his work under the warm, focused beam of the desk lamp. His practical, well-worn dark canvas apron and glasses are visible. Ensure no bright, harsh, or sterile lighting; no fast-paced editing; no overly clean workshop; no excessive dialogue or background noise; no relaxed or casual pacing; no wide, detached shots; no sense of ease or quick resolution; no visuals suggesting messiness or lack of control; no unclear or obscured movements; nothing that diminishes the importance of the delicate repair; no lingering tension, urgency, or frustration; no rushed editing; no overly dramatic or exaggerated expressions of triumph.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_003",
+              "linked_blocks": [
+                "b_003"
+              ]
+            },
+            "estimated_duration_sec": 3.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_004",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_003_kf_01_file_000016.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Extreme close-up, overhead, static shot: Focus tightly on Elias's skilled fingers, showing signs of age and skilled work, as they delicately manipulate a tiny gear within the intricate mechanism of the antique pocket watch using extremely delicate and precise fine tweezers. The light from the desk lamp is soft and diffused, minimizing harsh shadows on the miniature components. A single, subtle bead of sweat is visible on Elias's brow, emphasizing the extreme precision and delicate skill required, and the quiet tension. Ensure no bright, harsh, or sterile lighting; no fast-paced editing; no overly clean workshop; no excessive dialogue or background noise; no relaxed or casual pacing; no wide, detached shots; no sense of ease or quick resolution; no visuals suggesting messiness or lack of control; no unclear or obscured movements; nothing that diminishes the importance of the delicate repair; no lingering tension, urgency, or frustration; no rushed editing; no overly dramatic or exaggerated expressions of triumph.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "source": {
+              "storyboard_shot_id": "sh_004",
+              "linked_blocks": [
+                "b_004"
+              ]
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_005",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_004_kf_01_file_000017.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Close-up, eye-level, static shot: Fill the frame with the ornate, antique large wall clock, prominently displayed on the workshop wall. The minute and hour hands are ominously close to midnight, highlighting the approaching deadline and the pressure Elias is under. The intricate details of its face are clearly visible under the muted lighting, creating a sense of foreboding. Ensure no bright, harsh, or sterile lighting; no fast-paced editing; no overly clean workshop; no excessive dialogue or background noise; no relaxed or casual pacing; no wide, detached shots; no sense of ease or quick resolution; no visuals suggesting messiness or lack of control; no unclear or obscured movements; nothing that diminishes the importance of the delicate repair; no lingering tension, urgency, or frustration; no rushed editing; no overly dramatic or exaggerated expressions of triumph.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 5,
+            "source": {
+              "storyboard_shot_id": "sh_005",
+              "linked_blocks": [
+                "b_005"
+              ]
+            },
+            "estimated_duration_sec": 3.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_006",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_005_kf_01_file_000039.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Medium close-up, eye-level, static shot: Frame Elias as he physically removes the watchmaker's loupe from his eye and rubs his tired eyes with his fingers, revealing a hint of physical fatigue. His expression shifts from intense, focused determination to concerned contemplation. The antique pocket watch rests on his worn wooden workbench under the desk lamp's warm glow. Elias wears his dark canvas apron and glasses. Ensure no bright, harsh, or sterile lighting; no fast-paced editing; no overly clean workshop; no excessive dialogue or background noise; no relaxed or casual pacing; no wide, detached shots; no sense of ease or quick resolution; no visuals suggesting messiness or lack of control; no unclear or obscured movements; nothing that diminishes the importance of the delicate repair; no lingering tension, urgency, or frustration; no rushed editing; no overly dramatic or exaggerated expressions of triumph.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_007",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_02",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_005_kf_02_file_000018.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Medium close-up, eye-level, static shot: Elias, having removed his loupe, shifts his posture to lean in even closer to the antique pocket watch resting on his worn wooden workbench, signifying a deeper, unexpected problem or inspection. His expression is one of dawning concern and contemplation as he scrutinizes the intricate mechanism. The desk lamp's warm light illuminates his focused face. He wears his dark canvas apron and glasses. Ensure no bright, harsh, or sterile lighting; no fast-paced editing; no overly clean workshop; no excessive dialogue or background noise; no relaxed or casual pacing; no wide, detached shots; no sense of ease or quick resolution; no visuals suggesting messiness or lack of control; no unclear or obscured movements; nothing that diminishes the importance of the delicate repair; no lingering tension, urgency, or frustration; no rushed editing; no overly dramatic or exaggerated expressions of triumph.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_002"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_002",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_char_001_sc_002_file_000006.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure. Elias is depicted as a determined watchmaker, now showing visible signs of frustration and mounting pressure on his face and in his posture, yet underpinned by a deep resilience. He wears his signature practical, well-worn dark canvas apron over a simple, long-sleeved shirt and trousers. His glasses remain perched on his nose, slightly fogged from the stress of the intricate work. This portrayal avoids any sense of ease or quick resolution, focusing instead on his struggle and unwavering commitment."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_002",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_loc_001_sc_002_file_000013.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure. The workshop interior is dimly lit at night, intensifying the focus on Elias's workbench. Shadows deepen around the periphery, creating a more confined and tense atmosphere. The isolated beam of the desk lamp feels more intense, highlighting the struggle. The large wall clock's ornate hands are now visibly closer to midnight, serving as a constant, ominous reminder of the ticking deadline. This environment avoids being overly clean or organized, and there is no sense of relaxed or casual pacing."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_006",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_006",
+              "linked_blocks": [
+                "b_006"
+              ]
+            },
+            "estimated_duration_sec": 3.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_008",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_006_kf_01_file_000014.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure. Overhead close-up shot: Elias's hands (partially in frame) meticulously disassembling the antique watch. The camera tightly frames the disassemblied watch on the workbench, focusing with extreme precision on a tiny, recalcitrant escapement wheel, which is clearly visible as the source of the problem. Small screwdrivers and other intricately disassembled watch parts are carefully laid out on a clean pad nearby. The lighting is almost surgical in its intensity, highlighting the intricate details and precise movements, while emphasizing the quiet tension and dedication of the task. No sense of ease or quick resolution.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_007",
+              "linked_blocks": [
+                "b_007"
+              ]
+            },
+            "estimated_duration_sec": 4.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_009",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_007_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_007_kf_01_file_000025.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure. Extreme close-up, eye-level shot: Elias's hand, holding micro-tweezers, is taut with precision as he repeatedly attempts to manipulate the stubborn escapement wheel of the disassembled antique watch. The wheel visibly refuses to budge, conveying the difficulty and mounting frustration. The intense, focused beam of the desk lamp casts sharp, dramatic shadows, emphasizing the minute details and the high-stakes nature of this delicate repair, avoiding any sense of ease or quick resolution.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_010",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_007_kf_02",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_007_kf_02_file_000029.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure. Extreme close-up, eye-level shot: A single bead of sweat drips slowly from Elias's temple, glistening under the intense, focused beam of the desk lamp. The harsh shadows and muted color palette heighten the sense of physical and mental strain, emphasizing the difficulty and mounting pressure of the task at hand. The shot captures the quiet tension and dedication, reinforcing the high-stakes surgical procedure and Elias's internal struggle, with no sense of quick resolution.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_008",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_008",
+              "linked_blocks": [
+                "b_008"
+              ]
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_011",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_008_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_008_kf_01_file_000033.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure. Eye-level close-up shot: The camera performs a slight zoom in on the large, ornate wall clock. The minute hand visibly and audibly jerks forward, now showing only fifteen minutes to midnight. This shot dramatically heightens the sense of urgency and impending deadline, emphasizing the relentless, almost mocking, march of time. The muted color palette with harsher shadows reflects the increasing pressure, avoiding any relaxed or casual pacing.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 4,
+            "source": {
+              "storyboard_shot_id": "sh_009",
+              "linked_blocks": [
+                "b_009"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_012",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_009_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_009_kf_01_file_000026.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure. Medium close-up, eye-level shot: The camera tightly frames Elias's face, capturing his immediate, raw frustration. His expression is tight with mounting pressure, showing a momentary crack in his composure as he mutters 'Damn it...' under his breath. The intense lighting emphasizes the harsh shadows on his face, highlighting his internal struggle and the emotional toll the task is taking on him. This shot avoids any sense of ease or quick resolution, maintaining the high-stakes atmosphere.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 5,
+            "source": {
+              "storyboard_shot_id": "sh_010",
+              "linked_blocks": [
+                "b_010"
+              ]
+            },
+            "estimated_duration_sec": 5.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_013",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_010_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_010_kf_01_file_000036.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure. Medium shot, eye-level: The camera begins on Elias's hands and the disassembled antique watch on the workbench, then slowly pulls back and tilts up to reveal Elias pulling his upper body back from the bench. His eyes close momentarily, processing his intense frustration. The focused desk lamp beam isolates him, with slightly harsher shadows deepening around him, emphasizing his internal struggle and the quiet tension of the moment, avoiding any relaxed pacing.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_014",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_010_kf_02",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_010_kf_02_file_000022.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure. Medium shot, eye-level: Elias is framed as he takes a deep, steadying breath, his eyes still closed. The camera, having tilted up, captures the subtle rise and fall of his chest. This moment emphasizes his attempt to re-center himself amidst the high-stakes surgical procedure, maintaining the pervasive sense of quiet tension and dedication. The lighting continues to highlight his struggle with focused intensity, avoiding any sense of ease or quick resolution.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_015",
+                "order": 3,
+                "image_asset": {
+                  "asset_id": "img_sh_010_kf_03",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_010_kf_03_file_000042.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure. Medium shot, eye-level: Elias reopens his eyes, now filled with a newfound, firm resolve. His expression is determined and focused, reflecting his renewed commitment to overcoming the challenge. The lighting sharply emphasizes his face, capturing this pivotal shift from internal struggle to decisive action. The scene conveys intense dedication and quiet tension, reflecting the increasing pressure while carefully avoiding any relaxed or casual pacing or any sense of ease or quick resolution.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_003"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_003",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_003",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_char_001_sc_003_file_000010.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Show Elias, the watchmaker, under the focused, almost surgical light of his desk lamp, reflecting his newfound calm and meditative state of problem-solving. His expression conveys a sudden, focused insight, an 'Aha!' moment of understanding, yet with an underlying sense of quiet anticipation. He wears his practical, well-worn dark canvas apron over a simple, long-sleeved shirt and trousers, with his glasses perched on his nose, essential for intricate work. His determination has transformed into an almost meditative state of problem-solving, poised for action."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_003",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_003",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_loc_001_sc_003_file_000007.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Depict the workshop interior at night, with the desk lamp's light feeling exceptionally sharp and focused, casting stark, precise beams directly onto the workbench. The surrounding workshop is dimly lit, emphasizing the area of intense concentration, but still revealing the rustic, tool-filled environment. The atmosphere should convey quiet anticipation and heightened mental clarity, with no visual elements suggesting messiness or lack of control."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_011",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_011",
+              "linked_blocks": [
+                "b_011"
+              ]
+            },
+            "estimated_duration_sec": 3.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_016",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_011_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_011_kf_01_file_000034.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Medium close-up, eye-level, static shot: Frame Elias's face and upper torso, capturing his intense thought process. He is intently focused on the partially assembled antique pocket watch, which is just visible in the foreground, his brow slightly furrowed in deep thought. His expression conveys profound concentration, on the verge of a breakthrough, under the sharp, isolating beam of the desk lamp.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_017",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_011_kf_02",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_011_kf_02_file_000023.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Medium close-up, eye-level, static shot: Frame Elias's face and upper torso. His gaze is still on the antique pocket watch, but his expression has subtly shifted. A soft light of realization enters his eyes, a faint, content smile or a slight widening of the eyes indicating an 'Aha!' moment of understanding and insight has just occurred. The sharp light on his face highlights this internal revelation, conveying quiet clarity and readiness.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_012",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_012",
+              "linked_blocks": [
+                "b_012"
+              ]
+            },
+            "estimated_duration_sec": 4.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_018",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_012_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_012_kf_01_file_000038.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Close-up, overhead, static shot: Focus tightly on the fine oiler tool, its minuscule needle-tip glistening with an almost invisible, perfectly formed drop of specialized watch lubricant. The sharp, focused desk lamp light glints off the metallic tool and the lubricant, making the tiny drop appear monumental and perfectly isolated against a muted, out-of-focus background of the workshop bench, ready for precise application.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_019",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_012_kf_02",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_012_kf_02_file_000020.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Close-up, overhead, static pan left shot: Smoothly follow Elias's steady, precise hand, now visible in the frame, as he guides the fine oiler tool. The needle-tip delicately touches and applies the minuscule drop of lubricant to an almost invisible pivot point on the exposed escapement wheel of the antique pocket watch. The entire movement is surgical, deliberate, and controlled, highlighted by the intense, focused beam of light that emphasizes the extreme precision of the action.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_013",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_013",
+              "linked_blocks": [
+                "b_013"
+              ]
+            },
+            "estimated_duration_sec": 3.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_020",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_013_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_013_kf_01_file_000024.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Extreme close-up, eye-level, static shot: Maintain an incredibly tight focus on the precision tweezers, held by Elias's steady hand, making the final, delicate adjustment to the escapement wheel of the antique pocket watch. The ultra-fine, sharp tips of the tweezers apply the barest, most careful whisper of pressure, a minuscule correction. The surgical intensity of the lighting highlights every minute detail of the metallic tool, the tiny watch part, and the unwavering control of his fingers, emphasizing the critical delicacy of the moment.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_014",
+            "order": 4,
+            "source": {
+              "storyboard_shot_id": "sh_014",
+              "linked_blocks": [
+                "b_014"
+              ]
+            },
+            "estimated_duration_sec": 3.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_021",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_014_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_014_kf_01_file_000028.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Close-up, overhead, static shot: Focus intently on the exposed escapement wheel and surrounding internal gears of the antique pocket watch. The lighting is surgically bright on the components, emphasizing their intricate structure. The escapement wheel shudders almost imperceptibly, a subtle tremor indicating the mechanism is about to engage, holding a moment of suspense before springing to life. The detail is so sharp it feels monumental.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_022",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_014_kf_02",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_014_kf_02_file_000032.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Close-up, overhead, static shot: The escapement wheel of the antique pocket watch is now smoothly rotating with delicate, rhythmic precision, its intricate internal gears coming to life with a quiet, satisfying whir. The surgical lighting illuminates the successful, seamless movement of the restored mechanism, confirming the triumph of the repair. Every minute gear and spring is perfectly in focus, showcasing the intricate ballet of a fully functioning watch.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_015",
+            "order": 5,
+            "source": {
+              "storyboard_shot_id": "sh_015",
+              "linked_blocks": [
+                "b_015"
+              ]
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_023",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_015_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_015_kf_01_file_000030.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Medium close-up, eye-level, static shot: Capture Elias's face as he slowly and deliberately exhales a long-held breath, a visible release of intense tension. A subtle, serene smile or a small, almost imperceptible nod of deep satisfaction and quiet triumph settles on his features. The lighting is warm and celebratory, though still subtle, reflecting the peaceful closure of a challenging task, emphasizing his earned contentment and profound accomplishment without any overly dramatic expressions of victory.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_004",
+        "order": 4,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_004"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_004",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_004",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_char_001_sc_004_file_000011.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Show Elias, the watchmaker, in a state of quiet triumph and deep contentment. His previous focused tension has completely dissipated, replaced by a serene expression of accomplishment and a subtle, proud smile. He wears his practical, well-worn dark canvas apron over a simple, long-sleeved shirt and trousers, with his glasses slightly relaxed on his nose. Avoid any lingering tension, urgency, frustration, rushed editing, or overly dramatic expressions of triumph."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_004",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_004",
+                "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_loc_001_sc_004_file_000012.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Depict the workshop interior at night. The atmosphere has shifted to one of profound calm and serene accomplishment. The desk lamp's beam, while still focused, now casts a comforting, less urgent light. The usual workshop clutter subtly recedes into the soft shadows, emphasizing the personal space of a quiet victory. Avoid any lingering tension, urgency, frustration, rushed editing, or overly dramatic expressions of triumph."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_016",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_016",
+              "linked_blocks": [
+                "b_016"
+              ]
+            },
+            "estimated_duration_sec": 3.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_024",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_016_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_016_kf_01_file_000031.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Overhead close-up shot: Elias's skilled hands, moving with practiced ease and expertise, meticulously use a watch case closer to snap the backplate of the repaired antique pocket watch into place. The action is precise and confident, highlighting the final, successful step of reassembly. The focus is tight on his hands and the watch. Avoid any lingering tension, urgency, frustration, rushed editing, or overly dramatic expressions of triumph.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_017",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_017",
+              "linked_blocks": [
+                "b_017"
+              ]
+            },
+            "estimated_duration_sec": 3.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_025",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_017_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_017_kf_01_file_000037.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Medium close-up, eye-level, static shot: Elias holds the fully repaired antique pocket watch to his ear, listening intently to its strong, clear, rhythmic tick-tock. A subtle, content smile slowly forms on his face, conveying deep relief and a personal sense of accomplishment. Focus on his expression and the watch. Avoid any lingering tension, urgency, frustration, rushed editing, or overly dramatic expressions of triumph.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_018",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_018",
+              "linked_blocks": [
+                "b_018",
+                "b_019"
+              ]
+            },
+            "estimated_duration_sec": 5.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_026",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_018_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_018_kf_01_file_000041.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Close-up, eye-level, static shot: The ornate large wall clock, its minute hand aligning perfectly with the twelve. The frame is tight on the clock face, highlighting the precise moment of alignment. Avoid any lingering tension, urgency, frustration, rushed editing, or overly dramatic expressions of triumph.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_027",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_018_kf_02",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_018_kf_02_file_000021.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Close-up, eye-level, static shot: The ornate large wall clock, its minute hand now perfectly aligned with the twelve. The frame holds steady as a deep, resonant chime reverberates, marking the stroke of midnight. The moment is impactful and quiet. Avoid any lingering tension, urgency, frustration, rushed editing, or overly dramatic expressions of triumph.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_028",
+                "order": 3,
+                "image_asset": {
+                  "asset_id": "img_sh_018_kf_03",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_018_kf_03_file_000035.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Eye-level shot, slowly zooming out from the large wall clock to reveal Elias. His gaze is directed upwards towards the clock, a knowing, quietly triumphant glance confirming the precise timing of midnight. His expression is one of serene accomplishment. Avoid any lingering tension, urgency, frustration, rushed editing, or overly dramatic expressions of triumph.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_019",
+            "order": 4,
+            "source": {
+              "storyboard_shot_id": "sh_019",
+              "linked_blocks": [
+                "b_020"
+              ]
+            },
+            "estimated_duration_sec": 4.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_029",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_019_kf_01",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_019_kf_01_file_000027.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Medium, eye-level, static shot: Elias's hands gently place the fully working antique pocket watch onto a soft velvet cloth on his workbench. The action is careful and reverent, conveying the value of his restored masterpiece. His face begins to show a small, content smile. Avoid any lingering tension, urgency, frustration, rushed editing, or overly dramatic expressions of triumph.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_030",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_019_kf_02",
+                  "uri": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260324_205906_072005/img_sh_019_kf_02_file_000040.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric, warm, and intimate lighting, emphasizing the focused beam of the desk lamp against the dim workshop. A muted color palette, dominated by warm browns, dark woods, and metallic glints. Extreme focus on intricate details and Elias's precise movements. A pervasive sense of quiet tension and dedication.; Intensified tension through tighter framing and more urgent, but still precise, camera movements. The lighting emphasizes Elias's face and the minute details of the watch, creating a sense of a high-stakes surgical procedure. Focus on Elias's internal struggle and external actions.; The color palette remains muted but with slightly harsher shadows, reflecting the increasing pressure.; A shift towards a moment of quiet revelation, extreme precision, and eventual triumph. The cinematography will focus sharply on the minute actions, making the tiny watch components feel monumental. Lighting is almost surgical in its intensity, isolating Elias and his work. Pacing builds from thoughtful contemplation to decisive action and release.; A sense of peaceful closure and profound accomplishment. The lighting is warm and celebratory, though still subtle. Focus on the final, satisfying details and Elias's quiet, personal triumph. Pacing is gentle and deliberate, allowing the moment of victory to resonate.; The overall mood is one of earned contentment and quiet pride. Medium, eye-level, static shot: Elias's face, now fully relaxed and illuminated by the comforting desk lamp. A small, profound, and content smile graces his lips as he gazes at the working antique pocket watch resting on the velvet cloth on his workbench. The focus is on his peaceful, accomplished expression, serving as the final beat of his triumph. Avoid any lingering tension, urgency, frustration, rushed editing, or overly dramatic expressions of triumph.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 4,
+    "shot_count": 19,
+    "keyframe_count_total": 30,
+    "avg_keyframes_per_shot": 1.5789473684210527,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 4,
+    "stability_location_keyframe_count": 4,
+    "stability_prop_keyframe_count": 0
+  }
+}

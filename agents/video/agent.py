@@ -4,7 +4,7 @@ Input:  VideoAgentInput (storyboard, keyframes, constraints)
 Output: VideoAgentOutput (VideoPackage with shot_segments, transition_plan,
         scene_clip_assets, metrics)
 
-Coupling: receives Storyboard + Keyframes from upstream; output feeds AudioAgent.
+Coupling: receives Storyboard + Keyframes from shared assets; output feeds AudioAgent.
 
 Uses **LLM-free skeleton mode**: the entire output is deterministic — scene IDs,
 shot segments, durations, transitions, and asset placeholders are all derived
