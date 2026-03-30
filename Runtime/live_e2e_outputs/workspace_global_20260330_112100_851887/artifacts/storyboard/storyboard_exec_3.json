@@ -1,0 +1,548 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-30T11:21:50.299361+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_001"
+        },
+        "estimated_duration": {
+          "seconds": 3.0,
+          "confidence": 0.9
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "A cluttered, old-fashioned clock workshop. Dimly lit with a single focused lamp, creating dramatic shadows.",
+              "Dust motes visible in the lamplight. Numerous clocks of various sizes and ages adorn the shelves and walls.",
+              "The dominant feature is a grand, ornate grandfather clock, its pendulum visible."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Arthur Pendelton, an elderly watchmaker in his 70s. His face shows signs of age but also intense concentration and precision.",
+                "He has a focused, meticulous demeanor, but underlying stress is beginning to show."
+              ],
+              "wardrobe_notes": [
+                "A practical, slightly worn linen vest over a long-sleeved, button-up shirt with the sleeves rolled to the elbows. His spectacles are perched precariously on the end of his nose."
+              ],
+              "must_keep": [
+                "spectacles"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "delicate watch",
+              "must_keep": [
+                "intricate mechanisms"
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "workbench",
+              "must_keep": []
+            },
+            {
+              "prop_id": "prop_003",
+              "prop_name": "focused lamp",
+              "must_keep": [
+                "casts bright pool of light"
+              ]
+            },
+            {
+              "prop_id": "prop_004",
+              "prop_name": "numerous clocks",
+              "must_keep": []
+            },
+            {
+              "prop_id": "prop_005",
+              "prop_name": "grandfather clock",
+              "must_keep": [
+                "ornate and imposing",
+                "heavy pendulum",
+                "hands showing minutes to midnight"
+              ]
+            },
+            {
+              "prop_id": "prop_006",
+              "prop_name": "spectacles",
+              "must_keep": []
+            },
+            {
+              "prop_id": "prop_007",
+              "prop_name": "sweat bead",
+              "must_keep": []
+            },
+            {
+              "prop_id": "prop_008",
+              "prop_name": "tiny tools",
+              "must_keep": []
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Moody, atmospheric lighting with strong contrasts between light and shadow.",
+              "Warm, aged color palette dominated by wood tones and metallic glints.",
+              "Sense of quiet urgency and focused intensity, building tension."
+            ],
+            "must_avoid": [
+              "Bright, even lighting",
+              "Modern aesthetics",
+              "Distracting background elements"
+            ]
+          }
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "linked_blocks": [
+              "b_001"
+            ],
+            "estimated_duration_sec": 1.0,
+            "shot_type": "wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Frame the workshop, highlighting the imposing grandfather clock and the focused lamp on the workbench. Emphasize the dimly lit surroundings."
+            },
+            "visual_goal": "Establish the scene's setting, atmosphere, and the central motif of time (clocks).",
+            "action_focus": "The swinging pendulum of the grandfather clock, the general ticking ambiance.",
+            "characters_in_frame": [],
+            "props_in_frame": [
+              "prop_005",
+              "clocks",
+              "prop_003",
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": [
+                "Wide shot of the workshop, grandfather clock center-left, light pool on workbench center-right."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "linked_blocks": [
+              "b_002"
+            ],
+            "estimated_duration_sec": 1.0,
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Arthur hunched over the workbench, capturing his face in profile or slight angle, his hands, and the delicate watch. Spectacles prominent."
+            },
+            "visual_goal": "Introduce Arthur and show his intense concentration and meticulous work.",
+            "action_focus": "Arthur's hands moving tiny tools with precision on the watch. A bead of sweat tracing his temple.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_006",
+              "prop_008",
+              "prop_002",
+              "prop_003"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": [
+                "Arthur's profile, hands working on the watch under lamplight, bead of sweat visible."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "linked_blocks": [
+              "b_003"
+            ],
+            "estimated_duration_sec": 1.0,
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "quick pan",
+              "framing_notes": "Start on Arthur wiping sweat, quickly pan to the grandfather clock face, emphasizing the time remaining."
+            },
+            "visual_goal": "Heighten the sense of urgency and show Arthur's growing anxiety.",
+            "action_focus": "Arthur's nervous glance from his work to the grandfather clock's face.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_005",
+              "prop_006",
+              "prop_007"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Arthur wiping sweat, eyes darting up.",
+                "Close-up on grandfather clock face, hands showing four minutes to midnight."
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_002"
+        },
+        "estimated_duration": {
+          "seconds": 3.5,
+          "confidence": 0.9
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "The same dimly lit workshop, the intense light from the focused lamp creating deep shadows around Arthur's workspace.",
+              "The grandfather clock remains in the background, its ticking a constant reminder of time."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Arthur is visibly more tense and stressed. His aged hands show a slight tremor now, betraying the pressure he's under.",
+                "His eyes are narrowed in fierce concentration, his jaw tight."
+              ],
+              "wardrobe_notes": [
+                "Still in his linen vest and rolled-sleeve shirt, his spectacles slightly askew from his intensity. A fresh sheen of sweat glistens on his brow."
+              ],
+              "must_keep": [
+                "spectacles"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_009",
+              "prop_name": "watch",
+              "must_keep": [
+                "intricate mechanisms"
+              ]
+            },
+            {
+              "prop_id": "prop_010",
+              "prop_name": "tweezers",
+              "must_keep": [
+                "holding tiny component"
+              ]
+            },
+            {
+              "prop_id": "prop_011",
+              "prop_name": "tiny component",
+              "must_keep": [
+                "barely visible",
+                "slips and teeters"
+              ]
+            },
+            {
+              "prop_id": "prop_012",
+              "prop_name": "magnifying glass",
+              "must_keep": []
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Extreme close-ups to emphasize the delicate work and the smallness of the components.",
+              "Shallow depth of field to isolate the action and heighten tension.",
+              "Focus on micro-expressions of panic and concentration."
+            ],
+            "must_avoid": [
+              "Wide shots that reduce the impact of the delicate task",
+              "Fast-paced cutting until the moment of panic"
+            ]
+          }
+        },
+        "shots": [
+          {
+            "shot_id": "sh_004",
+            "order": 1,
+            "linked_blocks": [
+              "b_004"
+            ],
+            "estimated_duration_sec": 1.0,
+            "shot_type": "extreme_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Tight frame on the tweezers holding the minuscule gear, Arthur's trembling fingers just visible at the edge of the frame."
+            },
+            "visual_goal": "Show the extreme delicacy of the task and the subtle signs of Arthur's stress.",
+            "action_focus": "The minuscule gear held by tweezers, and the barely perceptible tremor in Arthur's hand.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_010",
+              "prop_011",
+              "prop_009"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": [
+                "Extreme close-up of tweezers holding a tiny gear, with Arthur's trembling fingers."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 2,
+            "linked_blocks": [
+              "b_005"
+            ],
+            "estimated_duration_sec": 1.5,
+            "shot_type": "extreme_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Split-second cuts or rack focus between the component teetering and Arthur's eyes widening in panic. Show the component on the edge of the watch mechanism."
+            },
+            "visual_goal": "Create a sudden moment of high tension and panic.",
+            "action_focus": "The component slipping, then Arthur's sharp intake of breath and widened eyes.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_009",
+              "prop_010",
+              "prop_011"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Extreme close-up of tiny component slipping from tweezers, teetering.",
+                "Close-up of Arthur's eyes widening in panic, slight gasp."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 3,
+            "linked_blocks": [
+              "b_006"
+            ],
+            "estimated_duration_sec": 1.0,
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Arthur's face as he steadies himself, then slightly lower to his hands as he precisely places the component. Emphasize jaw tightening."
+            },
+            "visual_goal": "Show Arthur regaining control through fierce concentration and successfully completing the critical step.",
+            "action_focus": "Arthur's visible effort to steady his hand, the tightening of his jaw, and the gentle, firm placement of the component.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_009",
+              "prop_010",
+              "prop_011"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Close-up on Arthur's face, jaw tightening, eyes narrowing in focus.",
+                "Medium close-up on steady hands guiding the component into place, a subtle 'CLICK'."
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_003"
+        },
+        "estimated_duration": {
+          "seconds": 3.5,
+          "confidence": 0.9
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "The same workshop, still dimly lit, but the oppressive feeling begins to lift.",
+              "The grandfather clock's chimes fill the space."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Arthur is now showing profound weariness but also a quiet sense of triumph and relief. His posture relaxes."
+              ],
+              "wardrobe_notes": [
+                "His linen vest and shirt are slightly disheveled. His spectacles are still on, but his face shows a profound weariness, softened by a faint, proud smile."
+              ],
+              "must_keep": [
+                "spectacles"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_013",
+              "prop_name": "repaired watch",
+              "must_keep": [
+                "ticking steadily"
+              ]
+            },
+            {
+              "prop_id": "prop_005",
+              "prop_name": "grandfather clock",
+              "must_keep": [
+                "chiming midnight"
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "workbench",
+              "must_keep": []
+            },
+            {
+              "prop_id": "prop_014",
+              "prop_name": "chair",
+              "must_keep": []
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "A gradual shift from tense, focused visuals to a sense of calm and relief.",
+              "Use of sound (ticking, chiming) to punctuate the success.",
+              "Focus on Arthur's subtle expressions of satisfaction and exhaustion."
+            ],
+            "must_avoid": [
+              "Continued high tension visuals",
+              "Ambiguous outcome visuals"
+            ]
+          }
+        },
+        "shots": [
+          {
+            "shot_id": "sh_007",
+            "order": 1,
+            "linked_blocks": [
+              "b_007"
+            ],
+            "estimated_duration_sec": 1.0,
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Arthur holding the watch to his ear, then slowly pull back to include his weary face as a faint smile spreads."
+            },
+            "visual_goal": "Show the successful repair of the watch and Arthur's initial, quiet joy.",
+            "action_focus": "The watch ticking, Arthur's subtle smile of relief.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_013"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Close-up of Arthur holding watch to ear.",
+                "Slight pull back to reveal a slow smile on his face."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_008",
+            "order": 2,
+            "linked_blocks": [
+              "b_008"
+            ],
+            "estimated_duration_sec": 1.0,
+            "shot_type": "medium_shot",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "static",
+              "framing_notes": "Frame Arthur in the foreground, slumping slightly, with the imposing grandfather clock chiming in the background, its hands visible."
+            },
+            "visual_goal": "Connect the watch's ticking to the chiming clock, marking the successful completion at the stroke of midnight.",
+            "action_focus": "The grandfather clock chiming, Arthur exhaling in relief.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_005"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": [
+                "Arthur exhaling, looking towards the grandfather clock, which begins to chime midnight."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 3,
+            "linked_blocks": [
+              "b_009"
+            ],
+            "estimated_duration_sec": 1.5,
+            "shot_type": "medium_shot",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Capture Arthur slumping back in his chair, exhausted but triumphant. His gaze remains fixed on the now-ticking watch, held gently in his hand."
+            },
+            "visual_goal": "Show Arthur's final state of exhausted triumph and the weight lifting from his shoulders.",
+            "action_focus": "Arthur relaxing into his chair, holding the ticking watch, his expression conveying relief and pride.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_014",
+              "prop_013"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": [
+                "Arthur slumped in his chair, eyes on the watch, a look of profound relief and quiet triumph."
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count_total": 9,
+    "avg_shots_per_scene": 3.0,
+    "sum_shot_duration_sec": 10.0,
+    "duration_match_score": 0.0
+  }
+}

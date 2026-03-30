@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-30T12:10:15.269147+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "logline": "An elderly librarian's quiet closing routine is shattered by a cryptic bookmark in a returned book, hinting at a reunion with someone she thought was lost forever.",
+    "estimated_duration": {
+      "seconds": 10.0,
+      "confidence": 0.8
+    },
+    "style": {
+      "genre": [
+        "Drama",
+        "Slice of Life"
+      ],
+      "tone_keywords": [
+        "Poignant",
+        "Quiet",
+        "Emotional",
+        "Hopeful"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Elara Vance",
+        "role": "protagonist",
+        "profile": "A meticulous, slightly reclusive elderly librarian, she finds solace and predictability in her routine. She carries a quiet dignity and a hidden wistfulness.",
+        "motivation": "To maintain order and meaning in her solitary life, finding comfort in the world of books, while perhaps secretly longing for genuine connection.",
+        "flaw": "A deep-seated reluctance to confront or rekindle past emotional connections, preferring the safety of solitude and routine."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "The Old Town Library",
+        "description": "A cozy, slightly aged library filled with towering bookshelves, the scent of old paper, and a single, well-worn circulation desk. At blue hour, it's dimly lit, casting long shadows and enhancing its intimate, almost magical atmosphere."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "inciting",
+        "summary": "Elara, in her quiet closing routine, discovers an unexpected bookmark with a deeply personal note tucked into a returned book, instantly rekindling a long-lost connection from her past.",
+        "conflict": "The established, comforting solitude of Elara's routine is abruptly challenged by the sudden, overwhelming emotional jolt of a past relationship unexpectedly resurfacing.",
+        "turning_point": "The moment Elara's fingers brush against the bookmark and she reads the familiar handwriting and message, changing her state from routine efficiency to profound surprise and poignant reflection."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To efficiently and meticulously close the library for the night, completing her final task of shelving returned books.",
+        "conflict": "Initially, the conflict is internal – the quiet resignation to another solitary evening. This is externalized when the physical discovery of the bookmark and note forces an unexpected emotional confrontation with her past.",
+        "turn": "Elara's expression, initially calm and focused on her task, visibly softens and fills with a mix of surprise, nostalgia, and a glimmer of hope as she reads the note, indicating a significant emotional shift."
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "character_count": 1,
+    "location_count": 1,
+    "scene_count": 1
+  }
+}

@@ -6,7 +6,7 @@
 - `agents/`（根目录）：Agent 核心框架和所有 Agent 实现
   - 核心框架文件：`base_agent.py`, `base_evaluator.py`, `descriptor.py`, `common_schema.py`, `agent_registry.py`
   - 子 agent 只通过 `InputBundleV2.context["resolved_inputs"]` 读取 Assistant 预解析后的结构化输入（已移除未使用的 `contracts/query.py`、`latest_payload`、以及 bundle 上的 `find_artifacts` / `first_payload`）
-  - 媒体 materializer 的 `materialize(..., input_bundle_v2)` 及其内部 helper 统一使用 `InputBundleV2` 类型标注
+  - 媒体 materializer 的 `materialize(..., input_bundle_v2)` 及其内部 helper 统一使用 `InputBundleV2` 类型标注；`contracts/input_bundle_v2.py` 仅保留 `InputBundleV2`（已移除只读子类 `FrozenInputBundleV2`，约定上避免在执行路径中原地修改 Assistant 传入的 bundle）
   - 已删除未接入任何导入链路的占位文件 `input_bundle.py`（原 `ExecutionInputBundle` 未被使用）
   - LLM 运行时客户端统一来自：`inference/clients/base/base_client.py`（推荐业务代码直接从 `inference/clients/__init__.py` 导入）
   - Pipeline Agent 子包：`story/`, `screenplay/`, `storyboard/`, `keyframe/`, `video/`, `audio/`
@@ -16,13 +16,14 @@
   - 兼容历史配置：`FW_ENABLE_PROP_KEYFRAMES` 与 `FW_VIDEO_ENABLE_PROP_CONSISTENCY` 仍可单独生效；当 `FW_ENABLE_PROP_PIPELINE` 设置时，以它为准
   - `keyframe/` 不再在本地执行增量快照写盘；图片仅通过 `MediaAsset` 返回，由 assistant 统一持久化
   - `audio/` materializer 会在 `final_audio_asset` 之后执行音视频 mux，输出 `final_delivery_asset`
-- `story/` 会显式遵循 `target_duration_sec` 约束，并在 evaluator 中校验 `content.estimated_duration.seconds` 容差（默认 ±20%）；`story/descriptor.py` 将 Assistant 注入的整份 `source_text`（常为 Task `description` 对象）在需要时编码为 JSON 字符串再填入 `draft_idea`，不在 Assistant service 层解析具体字段
-- `screenplay/` 会显式遵循 `target_duration_sec` 约束，并在 evaluator 中校验总时长容差（默认 ±20%）
+- `story/` 会显式遵循 `target_duration_sec` 约束，并在 evaluator 中校验 `content.estimated_duration.seconds` 容差（默认 ±20%）；`StoryConstraints.target_duration_sec` 与 agent 内部回退默认 **10s**（用户未写明长度时 prompt 亦按约 10 秒引导）；`story/descriptor.py` 将 Assistant 注入的整份 `source_text`（常为 Task `description` 对象）在需要时编码为 JSON 字符串再填入 `draft_idea`，不在 Assistant service 层解析具体字段
+- `screenplay/` 会显式遵循 `target_duration_sec` 约束，并在 evaluator 中校验总时长容差（默认 ±20%）；`ScreenplayConstraints.target_duration_sec` 与 agent 内部回退默认 **10s**
 - `storyboard/` 会从 screenplay 的 `blocks[].character_id`、`blocks[].continuity_refs.wardrobe_character_ids` 和 `continuity.character_wardrobe_notes[].character_id` 汇总 `character_locks`，避免动作块未显式写角色 ID 时丢失人物锚点
 - `keyframe/` 在构建人物锚点时会同时读取 `scene_consistency_pack.character_locks` 与 `shots[].characters_in_frame`，保证人物全局/场景锚点可生成
   - `keyframe/descriptor.py` 默认使用 `FalImageService` 作为图片生成后端（需配置 `FAL_API_KEY` 与可选 `FAL_IMAGE_MODEL`）
   - `video/descriptor.py` 默认使用 `FalVideoService` 作为视频生成后端（需配置 `FAL_API_KEY` 与可选 `FAL_VIDEO_MODEL`）
   - `audio/descriptor.py` 默认使用 `FalAudioService` 作为 TTS 后端（需配置 `FAL_API_KEY` 与可选 `FAL_TTS_MODEL`）
+- `audio/agent.py` 在 skeleton-first 的 creative-fill 阶段对输出做严格 JSON 约束（禁止 `TypeOf:` 等类型提示行），避免 `chat_json` 因非 JSON 输出而失败
   - 示例 Agent：`example_agent/`
 - `common_schema.Meta` 不包含 `project_id`；LLM 输出中的 `meta` 仅使用该模型已声明字段（与外部服务如 Cloudflare 请求头里的 `project_id` 无关）
 
@@ -175,7 +176,7 @@ DESCRIPTOR = SubAgentDescriptor(
 )
 ```
 
-说明：Assistant 调用 `build_input(task_id, input_bundle_v2, config)`。结构化上游产物由 **`input_bundle_v2.context["resolved_inputs"]`** 提供（键为语义 **role**，由输入打包 LLM 从 `global_memory.artifact_locations` 选出并加载）；`input_bundle_v2.hints` 含 `source_text`（来自 `execute_fields.text`）以及可选 **`image` / `video` / `audio`**（来自 `execute_fields` 同名字段）。**`global_memory`** 仅在执行 `inputs` 顶层存在，供编排与审计，不合并进 bundle。磁盘 **`global_memory.md`** 条目可含完整 `content`；HTTP brief 无 `content`。另可有 **`input_package`**（输入打包 LLM 的 `rationale` / `selected_roles` 等元信息）。
+说明：Assistant 调用 `build_input(task_id, input_bundle_v2)`（**无** 第三个 `config` 参数）。结构化上游产物由 **`input_bundle_v2.context["resolved_inputs"]`** 提供（键为语义 **role**，由输入打包 LLM 从 `global_memory.artifact_locations` 选出并加载）；`input_bundle_v2.hints` 含 `source_text`（来自 `execute_fields.text`）以及可选 **`image` / `video` / `audio`**（来自 `execute_fields` 同名字段）。**`global_memory`** 仅在执行 `inputs` 顶层存在，供编排与审计，不合并进 bundle。时长、语言等创作约束由各 agent 的 **LLM 从正文与上游 JSON 推断**，不在 Python 层做关键词/正则解析。磁盘 **`global_memory.md`** 条目可含完整 `content` 与 **`artifact_locations`**；HTTP **`memory/brief`** 仅四键薄行（无 `content`、无 **`artifact_locations`**）。另可有 **`input_package`**（输入打包 LLM 的 `rationale` / `selected_roles` 等元信息）。
 
 **__init__.py** — 导出：
 

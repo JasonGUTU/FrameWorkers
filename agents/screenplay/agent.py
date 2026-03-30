@@ -84,7 +84,7 @@ SCREENPLAY_OUTPUT_TEMPLATE = """{
 class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
-        self._target_duration_sec: float = 60.0
+        self._target_duration_sec: float = 10.0
 
     # ------------------------------------------------------------------
     # Skeleton-first mode (blueprint path only)
@@ -99,16 +99,22 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
         When ``user_provided_text`` is set, returns ``None`` to use legacy
         mode — the LLM structures the raw text directly.
         """
-        self._target_duration_sec = float(
-            getattr(input_data.constraints, "target_duration_sec", 60.0) or 60.0
-        )
-
         if input_data.user_provided_text:
             return None  # user text → legacy mode
 
         bp = input_data.story_blueprint
         if not bp:
             return None
+
+        self._target_duration_sec = 10.0
+        ed = bp.get("estimated_duration", {}) if isinstance(bp, dict) else {}
+        if isinstance(ed, dict):
+            try:
+                sec = float(ed.get("seconds") or 0)
+                if sec > 0:
+                    self._target_duration_sec = sec
+            except (TypeError, ValueError):
+                pass
 
         # bp is already the content portion (assistant extracts it)
         locations = {
@@ -216,10 +222,10 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
             "generate ALL blocks (typically 3-10 per scene).\n"
             "- Dialogue style: natural, filmable, concise.\n"
             "- Keep character voice consistent with profiles/motivation/flaw.\n"
-            f"- Language: {input_data.constraints.language}\n\n"
-            f"- Target total duration: {input_data.constraints.target_duration_sec} seconds.\n"
-            f"- IMPORTANT: sum of all scene estimated_duration.seconds MUST stay close "
-            f"to {input_data.constraints.target_duration_sec} seconds (within +/-20%).\n\n"
+            "- Infer dialogue/narration language and total runtime from the story blueprint "
+            "(dialogue samples, logline, style, and content.estimated_duration if present).\n"
+            "- If unclear, default to English and align scene durations to roughly match the blueprint estimate.\n"
+            "- Sum of scene estimated_duration.seconds should stay within ~+/-20% of that inferred total.\n\n"
             "Return JSON only."
         )
 
@@ -325,9 +331,7 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
 
         Preserves dialogue and action descriptions verbatim.
         """
-        self._target_duration_sec = float(
-            getattr(input_data.constraints, "target_duration_sec", 60.0) or 60.0
-        )
+        self._target_duration_sec = 10.0
         return (
             "You are receiving raw screenplay text provided directly by the "
             "user. Your job is to **structure** this text into the required "
@@ -337,16 +341,14 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
             "--- BEGIN USER TEXT ---\n"
             f"{input_data.user_provided_text}\n"
             "--- END USER TEXT ---\n\n"
-            f"Constraints:\n"
-            f"- Language: {input_data.constraints.language}\n"
-            f"- Target total duration: {input_data.constraints.target_duration_sec} seconds.\n"
-            f"- Assign scene_ids starting from sc_001.\n"
-            f"- Assign character_ids starting from char_001.\n"
-            f"- Assign location_ids starting from loc_001.\n"
-            f"- Assign block_ids starting from b_001 globally.\n"
-            f"- Estimate per-scene duration (seconds, confidence).\n"
-            f"- Sum of all scene durations should be close to "
-            f"{input_data.constraints.target_duration_sec} seconds (+/-20%).\n\n"
+            "Instructions:\n"
+            "- Infer primary language and implied total runtime **only from the user's text** "
+            "(scene headings, dialogue language, any stated length).\n"
+            "- Assign scene_ids starting from sc_001.\n"
+            "- Assign character_ids starting from char_001.\n"
+            "- Assign location_ids starting from loc_001.\n"
+            "- Assign block_ids starting from b_001 globally.\n"
+            "- Estimate per-scene duration (seconds, confidence); scene sums should match your inferred total (~+/-20%).\n\n"
             f"You MUST output JSON matching EXACTLY this structure "
             f"(fill in real content):\n"
             f"{SCREENPLAY_OUTPUT_TEMPLATE}\n\n"
@@ -360,6 +362,9 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
     def recompute_metrics(self, output: ScreenplayAgentOutput) -> None:
         c = output.content
         self._normalize_order(c.scenes)
+        sum_dur = sum(s.estimated_duration.seconds for s in c.scenes)
+        if sum_dur > 0:
+            self._target_duration_sec = float(sum_dur)
         output.metrics.target_duration_sec = self._target_duration_sec
         output.metrics.scene_count = len(c.scenes)
         output.metrics.dialogue_block_count = sum(

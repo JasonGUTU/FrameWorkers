@@ -181,7 +181,7 @@ class Workspace:
         agent_id: Optional[str] = None,
         limit: int = 20,
     ) -> List[Dict[str, Any]]:
-        """List global memory entries with optional filters."""
+        """List global memory entries with optional filters (newest tail, default 20)."""
         return self.memory_manager.list_memory_entries(
             task_id=task_id,
             agent_id=agent_id,
@@ -193,16 +193,14 @@ class Workspace:
         *,
         task_id: Optional[str] = None,
         agent_id: Optional[str] = None,
+        limit: Optional[int] = None,
     ) -> Dict[str, Any]:
-        """``{"global_memory": [...]}`` without ``content`` (Director / API brief)."""
+        """``{"global_memory": [...]}`` — brief rows: ``task_id``, ``agent_id``, ``created_at``, ``execution_result`` only."""
         return self.memory_manager.get_memory_brief(
             task_id=task_id,
             agent_id=agent_id,
+            limit=limit,
         )
-
-    def get_task_file_tree_text(self, task_id: str) -> str:
-        """File tree for task runtime dir (for input-package LLM)."""
-        return self.memory_manager.file_tree_text_for_task(task_id)
 
     def get_workspace_root_file_tree_text(self) -> str:
         """Full file tree under workspace runtime root (includes ``artifacts/``); for persist-path LLM."""

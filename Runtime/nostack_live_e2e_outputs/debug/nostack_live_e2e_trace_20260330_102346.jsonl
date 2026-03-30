@@ -1,0 +1,3 @@
+{"step": "user_brief", "task_id": "nostack_live_e2e_tid", "text": "Generate about a 10-second cinematic clip: rain on cobblestones, a cyclist rolls under one warm streetlight; no dialogue, slow mood."}
+{"step": "director_messages", "count": 1, "messages": ["[DirectorNoStack] Execute failed at step 1: POST /api/assistant/execute -> 400: {\"error\":\"input package LLM failed: LLM response is not valid JSON: Unterminated string starting at: line 3 column 3 (char 28)\",\"error_reasoning\":null}\n"]}
+{"step": "executions", "count": 0, "executions": []}

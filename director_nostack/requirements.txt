@@ -1,0 +1,4 @@
+# Merged into repo root requirements.txt by install_requirements.py.
+# Director no-stack uses inference LLMClient (LiteLLM) for merge_session_goal / routing.
+litellm>=1.40.0
+requests>=2.31.0

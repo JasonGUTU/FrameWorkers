@@ -1,0 +1,236 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-30T11:36:17.009410+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_001"
+        },
+        "estimated_duration": {
+          "seconds": 10.0,
+          "confidence": 0.9
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "Rain-slicked cobblestone alley, creating reflective surfaces.",
+              "Pervasive, cold darkness dominates the scene, punctuated by a single warm streetlight.",
+              "A distant, diffuse city glow hints at civilization but remains indistinct.",
+              "Steady, silent rain is a constant atmospheric element."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "A solitary, determined figure; identity obscured by helmet and dark gear, emphasizing anonymity and universal experience.",
+                "Posture suggests quiet endurance and resignation to the harsh environment."
+              ],
+              "wardrobe_notes": [
+                "Dark, practical cycling gear.",
+                "A reflective but muted rain jacket to subtly catch available light.",
+                "Helmet obscuring the face completely."
+              ],
+              "must_keep": [
+                "Weather-appropriate for rain.",
+                "Suggests a solitary, no-fuss approach.",
+                "Helmet obscures face to maintain anonymity and focus on the overall human condition."
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "bicycle",
+              "must_keep": [
+                "A utilitarian, no-frills road bicycle, possibly with minimal mudguards."
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "rain",
+              "must_keep": [
+                "Steady, silent, atmospheric rain, consistently creating reflections on surfaces."
+              ]
+            },
+            {
+              "prop_id": "prop_003",
+              "prop_name": "streetlight",
+              "must_keep": [
+                "A classic, single streetlamp, emitting a distinct warm, orange-yellow pool of light."
+              ]
+            },
+            {
+              "prop_id": "prop_004",
+              "prop_name": "cobblestones",
+              "must_keep": [
+                "Wet, reflective cobblestones, emphasizing texture and light play."
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Emphasize high contrast between deep shadows and the single source of warm light.",
+              "Muted color palette dominated by blues, greys, and blacks, with a strong emphasis on the solitary orange glow.",
+              "Reflective surfaces (wet ground, rain) are crucial for visual interest and to heighten the sense of atmosphere.",
+              "A slow, deliberate, and contemplative pace is essential, allowing the audience to feel the solitude and the fleeting warmth.",
+              "The overall atmosphere should feel melancholic, isolated, yet visually rich."
+            ],
+            "must_avoid": [
+              "Bright, saturated colors outside the streetlight's immediate glow.",
+              "Fast-paced editing or quick cuts.",
+              "Overly clear or close-up shots revealing the cyclist's face or distinct features.",
+              "An upbeat or cheerful mood; maintain a sense of solemnity and introspection."
+            ]
+          }
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "linked_blocks": [
+              "b_001",
+              "b_002",
+              "b_003"
+            ],
+            "estimated_duration_sec": 3.0,
+            "shot_type": "long_shot",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "tracking_forward",
+              "framing_notes": "Emphasize the imposing darkness and the wet, reflective ground; the cyclist emerges from the background gloom into the middle ground."
+            },
+            "visual_goal": "Establish the desolate, rainy environment and introduce the solitary cyclist as a dark silhouette integrated within it.",
+            "action_focus": "The world as a wash of dark, reflective surfaces, with the cyclist slowly emerging and moving through the rain-swept alley.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "1: Wide view of the dark, wet alley, rain falling silently, reflective cobblestones.",
+                "2: The cyclist appears in the distance, a hunched, dark shape against the diffused, distant city glow, moving steadily."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "linked_blocks": [
+              "b_003",
+              "b_004",
+              "b_005"
+            ],
+            "estimated_duration_sec": 3.0,
+            "shot_type": "medium_long_shot",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "tracking_side",
+              "framing_notes": "Follow the cyclist as they approach the warm streetlight, contrasting their dark form against the impending, inviting light."
+            },
+            "visual_goal": "Show the immediate and striking contrast as the cyclist approaches and begins to enter the distinct, warm pool of light.",
+            "action_focus": "The cyclist steadily moving towards the single streetlight, their form gradually becoming illuminated as they enter its glow, rain sparkling.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002",
+              "prop_003"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "1: The cyclist's silhouette moving towards the single, distant streetlight, which casts an isolated, warm glow.",
+                "2: The cyclist's front wheel and helmet begin to enter the warm light, rain catching the glow, cobblestones subtly brightening."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "linked_blocks": [
+              "b_005",
+              "b_006"
+            ],
+            "estimated_duration_sec": 2.5,
+            "shot_type": "medium_shot",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "dolly_out",
+              "framing_notes": "Initially focus on the cyclist within the light, then pull back slightly as they exit, emphasizing the swift transition from warmth back to gloom."
+            },
+            "visual_goal": "Highlight the fleeting nature of the moment of warmth and the subtle, imperceptible change in the cyclist's demeanor, followed by their rapid return to the enveloping darkness.",
+            "action_focus": "The cyclist passing through the streetlight's glow; rain catching the light and sparkling; then, just as quickly, exiting the circle of light and being swallowed by the gloom.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002",
+              "prop_003"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "1: The cyclist fully within the warm light, surrounded by sparkling rain, wet cobblestones vibrant with golden reflections; a momentary softening of their hunched posture.",
+                "2: The cyclist's rear wheel leaves the light, their form quickly dissolving back into the rain-swept darkness as the warmth recedes."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "linked_blocks": [
+              "b_007"
+            ],
+            "estimated_duration_sec": 1.5,
+            "shot_type": "wide_shot",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "A poignant, static shot of the empty streetlight, emphasizing its solitary, constant glow in the vast, cold darkness."
+            },
+            "visual_goal": "Underscore the transient nature of the cyclist's presence and the enduring, yet now empty, solace offered by the light.",
+            "action_focus": "The static streetlight glowing, its immediate area now empty of the cyclist, only falling rain and wet cobblestones illuminated by its warmth.",
+            "characters_in_frame": [],
+            "props_in_frame": [
+              "prop_003",
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": [
+                "1: The single streetlight stands alone, its warm glow illuminating only falling rain and wet cobblestones, its brief embrace now empty, surrounded by the persistent darkness."
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_count_total": 4,
+    "avg_shots_per_scene": 4.0,
+    "sum_shot_duration_sec": 10.0,
+    "duration_match_score": 0.0
+  }
+}

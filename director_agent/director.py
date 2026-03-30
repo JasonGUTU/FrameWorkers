@@ -355,10 +355,16 @@ class DirectorAgent:
         *,
         task: Dict[str, Any],
     ) -> Optional[Dict[str, Any]]:
-        """Build ``execute_fields`` for Assistant. Global memory is loaded server-side in ``build_execution_inputs``."""
-        execute_fields: Dict[str, Any] = {}
-        execute_fields["text"] = _task_stack_description_to_assistant_text(task.get("description"))
-        return execute_fields or None
+        """Build ``execute_fields`` for Assistant.
+
+        Director only passes the raw text intent; each sub-agent's descriptor.build_input
+        is responsible for extracting agent-specific config from source_text.
+        Global memory is loaded server-side.
+        """
+        execute_fields: Dict[str, Any] = {
+            "text": _task_stack_description_to_assistant_text(task.get("description")),
+        }
+        return execute_fields
     
     def _delegate_to_assistant(
         self,

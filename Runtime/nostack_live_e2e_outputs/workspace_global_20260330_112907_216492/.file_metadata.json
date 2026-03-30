@@ -1,0 +1,28 @@
+{
+  "counter": 1,
+  "files": {
+    "file_000001_1358f061": {
+      "id": "file_000001_1358f061",
+      "filename": "story_blueprint_exec_1.json",
+      "description": "Structured JSON snapshot for StoryAgent (exec_1_a6ea8ca4)",
+      "file_type": "text",
+      "file_extension": ".json",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/nostack_live_e2e_outputs/workspace_global_20260330_112907_216492/artifacts/story_blueprint/nostack_live_e2e_tid_story_blueprint_exec_1.json",
+      "size_bytes": 2700,
+      "created_at": "2026-03-30T11:29:28.037174",
+      "created_by": "StoryAgent",
+      "tags": [
+        "StoryAgent",
+        "nostack_live_e2e_tid",
+        "asset_json"
+      ],
+      "metadata": {
+        "execution_id": "exec_1_a6ea8ca4",
+        "task_id": "nostack_live_e2e_tid",
+        "producer_agent_id": "StoryAgent",
+        "asset_key": "story_blueprint",
+        "asset_variant": "json_snapshot"
+      }
+    }
+  }
+}

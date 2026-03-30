@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Any
-
 from pydantic import BaseModel
 
 from ..descriptor import SubAgentDescriptor
@@ -19,21 +17,18 @@ USER_TEXT_KEY = "user_story_outline"
 def build_input(
     _task_id: str,
     input_bundle_v2: InputBundleV2,
-    config: Any,
 ) -> BaseModel:
     resolved = (
         input_bundle_v2.context.get("resolved_inputs", {})
         if isinstance(getattr(input_bundle_v2, "context", None), dict)
         else {}
     )
-    raw = resolved.get("source_text", "")
+    hints = getattr(input_bundle_v2, "hints", {}) or {}
+    raw = resolved.get("source_text") or hints.get("source_text", "")
     source_text = raw if isinstance(raw, str) else str(raw)
     return StoryAgentInput(
         draft_idea=source_text,
-        constraints=StoryConstraints(
-            target_duration_sec=config.target_total_duration_sec,
-            language=config.language,
-        ),
+        constraints=StoryConstraints(),
         user_provided_text=(resolved.get(USER_TEXT_KEY, "") if isinstance(resolved, dict) else ""),
     )
 

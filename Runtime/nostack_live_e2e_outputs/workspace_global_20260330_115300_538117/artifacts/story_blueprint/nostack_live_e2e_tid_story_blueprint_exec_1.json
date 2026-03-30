@@ -1,0 +1,120 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-30T11:53:19.053890+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A solitary old librarian's routine closing ritual is quietly disrupted when she discovers a sentimental note from a long-lost connection, hidden within a returned book.",
+    "estimated_duration": {
+      "seconds": 10.0,
+      "confidence": 0.9
+    },
+    "style": {
+      "genre": [
+        "Drama",
+        "Slice of Life"
+      ],
+      "tone_keywords": [
+        "Nostalgic",
+        "Emotional",
+        "Quiet",
+        "Hopeful"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Eleanor Vance",
+        "role": "protagonist",
+        "profile": "An elderly librarian, a woman of quiet routine and deep internal life, who has found her sanctuary among books. Her demeanor is calm and methodical, but beneath it lies a hint of unspoken longing.",
+        "motivation": "To maintain order and comfort in her solitary world; to find quiet contentment in her daily rituals.",
+        "flaw": "Her dedication to routine and quiet stoicism can sometimes shield her from facing past emotions or embracing new connections."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "The Quiet Corner Library",
+        "description": "An old, charming community library. At blue hour, it's dimly lit, shelves cast long shadows, creating an atmosphere of quiet reflection and nostalgia. Familiar and comforting, yet slightly melancholic."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Eleanor performs her familiar closing routine, securing the library for the night, establishing her quiet, methodical nature.",
+        "conflict": "The inherent loneliness of a solitary existence, though accepted, is a quiet undercurrent to her routine.",
+        "turning_point": ""
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "inciting",
+        "summary": "While tidying a returned book, Eleanor discovers a hidden bookmark with a handwritten note that instantly stirs old memories.",
+        "conflict": "The past unexpectedly intrudes upon the present, disrupting Eleanor's carefully maintained emotional equilibrium.",
+        "turning_point": "The physical discovery of the note."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "resolution",
+        "summary": "Eleanor recognizes the handwriting and the sender, a person she thought she'd never hear from again, prompting a silent, emotional reaction of surprise and rekindled hope.",
+        "conflict": "Internal struggle between resignation and the sudden reawakening of deep-seated emotions.",
+        "turning_point": "The moment of recognition and the subsequent emotional shift."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To methodically close the library for the night.",
+        "conflict": "The quiet, almost ritualistic completion of tasks, masking an underlying sense of solitude.",
+        "turn": "None specific; establishes the baseline for the upcoming turn."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To process returned books and prepare them for shelving.",
+        "conflict": "The mundane task is suddenly interrupted by an unexpected discovery.",
+        "turn": "Eleanor finds the bookmark and note, which is not part of her usual routine."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_001",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To comprehend the message and its sender.",
+        "conflict": "An internal surge of emotion as the past resurfaces unexpectedly.",
+        "turn": "Eleanor's expression visibly changes from surprise to profound emotion (e.g., a silent gasp, a tear forming, a faint smile) as she recognizes the handwriting."
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "character_count": 1,
+    "location_count": 1,
+    "scene_count": 3
+  }
+}

@@ -1,0 +1,36 @@
+=== raw (strip) ===
+{
+  "scenes": [
+    {
+      "scene_id": "sc_001",
+      "music_mood": "Tense, intricate, rhythmic, building pressure, contemplative",
+      "ambience_description": "Relentless, prominent ticking of grandfather clock, subtle mechanical whirs, distant workshop creaks."
+    TypeOf: string
+    },
+    {
+      "scene_id": "sc_002",
+      "music_mood": "Anxious, staccato, urgent, suspenseful, momentary panic",
+      "ambience_description": "Heightened close-up mechanical sounds, trembling tools, Arthur's strained breathing, insistent clock ticking."
+    TypeOf: string
+    },
+    {
+      "scene_id": "sc_003",
+      "music_mood": "Resolved, peaceful, warm, gentle triumph, exhausted relief",
+      "ambience_description": "Clear, steady ticking of new watch, resonant midnight chimes, Arthur's deep sigh of relief, quiet workshop hum."
+    TypeOf: string
+    }
+  ]
+}
+
+=== error ===
+Expecting ',' delimiter: line 7 column 5 (char 272)
+
+=== diag ===
+JSONDecodeError pos=272 line=7 col=5 len=865; context:
+ng of grandfather clock, subtle mechanical whirs, distant workshop creaks."
+    TypeOf: string
+    },
+    {
+      "scene_id": "sc_002",
+      "music_mood": "Anx
+                                                                                ^

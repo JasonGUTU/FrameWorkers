@@ -39,7 +39,7 @@ class _DummyDescriptor:
     def build_equipped_agent(self, llm_client):
         return {"agent_id": self.agent_id, "llm_client": llm_client}
 
-    def build_input(self, task_id, input_bundle_v2, config):
+    def build_input(self, task_id, input_bundle_v2):
         return {"task_id": task_id}
 
 

@@ -12,6 +12,16 @@ from src.assistant.models import AgentExecution, ExecutionStatus
 from src.assistant.state_store import AssistantStateStore
 
 
+def _execution_results_dict(storage: AssistantStateStore, result: dict) -> dict:
+    """Sub-agent payload lives on stored ``AgentExecution``, not on ``execute`` HTTP summary."""
+    ex_id = result.get("execution_id")
+    assert ex_id
+    ex = storage.get_execution(ex_id)
+    assert ex is not None
+    assert isinstance(ex.results, dict)
+    return ex.results
+
+
 def _seed_json_snapshot(
     workspace,
     *,
@@ -152,7 +162,7 @@ def test_service_build_execution_inputs_text_seed_and_optional_media(assistant_e
     assert m["input_bundle_v2"]["video"] == "https://example.com/v.mp4"
 
 
-def test_service_passes_full_assets_to_descriptor_and_blocks_mutation(tmp_path, monkeypatch):
+def test_service_passes_full_assets_to_descriptor(tmp_path, monkeypatch):
     class _EchoPipelineResult:
         def __init__(self, payload):
             self.output = None
@@ -171,18 +181,12 @@ def test_service_passes_full_assets_to_descriptor_and_blocks_mutation(tmp_path, 
         def build_equipped_agent(self, _llm):
             return _EchoPipelineAgent()
 
-        def build_input(self, task_id, input_bundle_v2, config):
-            mutable = True
-            try:
-                input_bundle_v2["source_text"] = "mutated"
-            except TypeError:
-                mutable = False
+        def build_input(self, task_id, input_bundle_v2):
             return {
                 "task_id": task_id,
                 "allowed_keys": sorted(list(input_bundle_v2.keys())),
-                "mutable": mutable,
                 "source_text": input_bundle_v2.get("source_text", ""),
-                "language": config.language,
+                "language": (getattr(input_bundle_v2, "hints", None) or {}).get("language") or "en",
             }
 
     class _StoryStubDescriptor:
@@ -231,10 +235,9 @@ def test_service_passes_full_assets_to_descriptor_and_blocks_mutation(tmp_path, 
         },
     )
 
-    echo = result["results"]["echo"]
+    echo = _execution_results_dict(storage, result)["echo"]
     assert echo["source_text"] == "allowed text"
     assert {"source_text", "story_blueprint"}.issubset(set(echo["allowed_keys"]))
-    assert echo["mutable"] is False
 
 
 def test_service_execute_and_persist_file_outputs(tmp_path, monkeypatch):
@@ -266,11 +269,11 @@ def test_service_execute_and_persist_file_outputs(tmp_path, monkeypatch):
         def build_equipped_agent(self, _llm):
             return _DummyPipelineAgent()
 
-        def build_input(self, task_id, input_bundle_v2, config):
+        def build_input(self, task_id, input_bundle_v2):
             return {
                 "task_id": task_id,
                 "input_bundle_v2": input_bundle_v2,
-                "language": config.language,
+                "language": (getattr(input_bundle_v2, "hints", None) or {}).get("language") or "en",
             }
 
     class _DummyRegistry:
@@ -298,8 +301,9 @@ def test_service_execute_and_persist_file_outputs(tmp_path, monkeypatch):
     files = workspace.list_files()
 
     assert result["status"] == "COMPLETED"
-    assert result["results"]["_execution_debug"]["attempts"] == 2
-    assert result["results"]["_execution_debug"]["overall_pass"] is True
+    rdict = _execution_results_dict(storage, result)
+    assert rdict["_execution_debug"]["attempts"] == 2
+    assert rdict["_execution_debug"]["overall_pass"] is True
     assert len(files) == 1
     assert files[0].filename == "report.txt"
     latest_execution_id = storage.get_executions_by_task("task_file")[-1].id
@@ -344,11 +348,11 @@ def test_service_overwrite_mode_replaces_previous_asset_files(tmp_path, monkeypa
         def build_equipped_agent(self, _llm):
             return self._agent
 
-        def build_input(self, task_id, input_bundle_v2, config):
+        def build_input(self, task_id, input_bundle_v2):
             return {
                 "task_id": task_id,
                 "input_bundle_v2": input_bundle_v2,
-                "language": config.language,
+                "language": (getattr(input_bundle_v2, "hints", None) or {}).get("language") or "en",
             }
 
     class _DummyRegistry:
@@ -387,7 +391,7 @@ def test_service_overwrite_mode_replaces_previous_asset_files(tmp_path, monkeypa
 
     assert first["status"] == "COMPLETED"
     assert second["status"] == "COMPLETED"
-    assert second["results"]["content"]["text"] == "v2"
+    assert _execution_results_dict(storage, second)["content"]["text"] == "v2"
     latest_execution_id = storage.get_executions_by_task("task_overwrite")[-1].id
     assert len(binary_assets) == 1
     assert binary_assets[0].metadata["execution_id"] == latest_execution_id
@@ -417,11 +421,11 @@ def test_service_executes_pipeline_descriptor_without_adapter(tmp_path, monkeypa
         def build_equipped_agent(self, _llm):
             return _DummyPipelineAgent()
 
-        def build_input(self, task_id, input_bundle_v2, config):
+        def build_input(self, task_id, input_bundle_v2):
             return {
                 "task_id": task_id,
                 "input_bundle_v2": input_bundle_v2,
-                "language": config.language,
+                "language": (getattr(input_bundle_v2, "hints", None) or {}).get("language") or "en",
             }
 
     class _DummyRegistry:
@@ -440,7 +444,7 @@ def test_service_executes_pipeline_descriptor_without_adapter(tmp_path, monkeypa
     )
 
     assert result["status"] == "COMPLETED"
-    assert result["results"]["summary"] == "pipeline ok"
+    assert _execution_results_dict(storage, result)["summary"] == "pipeline ok"
 
 
 def test_service_materializer_temp_dir_is_cleaned(tmp_path, monkeypatch):
@@ -477,11 +481,11 @@ def test_service_materializer_temp_dir_is_cleaned(tmp_path, monkeypatch):
         def build_equipped_agent(self, _llm):
             return _DummyPipelineAgent()
 
-        def build_input(self, task_id, input_bundle_v2, config):
+        def build_input(self, task_id, input_bundle_v2):
             return {
                 "task_id": task_id,
                 "input_bundle_v2": input_bundle_v2,
-                "language": config.language,
+                "language": (getattr(input_bundle_v2, "hints", None) or {}).get("language") or "en",
             }
 
     class _DummyRegistry:
@@ -499,7 +503,7 @@ def test_service_materializer_temp_dir_is_cleaned(tmp_path, monkeypatch):
             "text": "draft",
         },
     )
-    assert "_materialize_temp_dir" not in result["results"]
+    assert "_materialize_temp_dir" not in _execution_results_dict(storage, result)
 
 
 def test_service_rewrites_media_asset_uri_to_workspace_path(tmp_path, monkeypatch):
@@ -557,11 +561,11 @@ def test_service_rewrites_media_asset_uri_to_workspace_path(tmp_path, monkeypatc
         def build_equipped_agent(self, _llm):
             return _DummyPipelineAgent()
 
-        def build_input(self, task_id, input_bundle_v2, config):
+        def build_input(self, task_id, input_bundle_v2):
             return {
                 "task_id": task_id,
                 "input_bundle_v2": input_bundle_v2,
-                "language": config.language,
+                "language": (getattr(input_bundle_v2, "hints", None) or {}).get("language") or "en",
             }
 
     class _DummyRegistry:
@@ -579,7 +583,7 @@ def test_service_rewrites_media_asset_uri_to_workspace_path(tmp_path, monkeypatc
             "text": "draft",
         },
     )
-    keyframes_result = result["results"]
+    keyframes_result = _execution_results_dict(storage, result)
     persisted_uri = (
         keyframes_result["content"]["scenes"][0]["shots"][0]["keyframes"][0]["image_asset"]["uri"]
     )
@@ -628,7 +632,7 @@ def test_service_hydrates_indexed_assets_before_agent_build_input(tmp_path, monk
         def build_equipped_agent(self, _llm):
             return _ProducerAgent()
 
-        def build_input(self, task_id, input_bundle_v2, config):
+        def build_input(self, task_id, input_bundle_v2):
             return {"task_id": task_id}
 
     class _ConsumerDescriptor:
@@ -639,7 +643,7 @@ def test_service_hydrates_indexed_assets_before_agent_build_input(tmp_path, monk
         def build_equipped_agent(self, _llm):
             return _ConsumerAgent()
 
-        def build_input(self, task_id, input_bundle_v2, config):
+        def build_input(self, task_id, input_bundle_v2):
             # Should receive hydrated JSON dict, not index-only dict.
             producer = input_bundle_v2.get("producer_asset", {})
             return {
@@ -664,7 +668,7 @@ def test_service_hydrates_indexed_assets_before_agent_build_input(tmp_path, monk
         "ProducerAgent", "task_hydrate", execute_fields=dict(_snap)
     )
     assert producer_result["status"] == "COMPLETED"
-    assert producer_result["results"]["_asset_index"]["asset_key"] == "producer_asset"
+    assert _execution_results_dict(storage, producer_result)["_asset_index"]["asset_key"] == "producer_asset"
 
     packaged = svc.build_execution_inputs(
         agent_id="ConsumerAgent",
@@ -678,7 +682,7 @@ def test_service_hydrates_indexed_assets_before_agent_build_input(tmp_path, monk
         "ConsumerAgent", "task_hydrate", execute_fields=dict(_snap)
     )
     assert consumer_result["status"] == "COMPLETED"
-    assert consumer_result["results"]["observed"] == 42
+    assert _execution_results_dict(storage, consumer_result)["observed"] == 42
 
 
 def test_service_build_execution_inputs_includes_global_memory_list(assistant_env):
@@ -697,7 +701,8 @@ def test_service_build_execution_inputs_includes_global_memory_list(assistant_en
     gm = inputs.get("global_memory")
     assert isinstance(gm, list)
     assert len(gm) >= 1
-    assert "content" not in gm[0]
+    # build_execution_inputs uses list_memory_entries (full rows, includes content for packaging LLM)
+    assert gm[0].get("content") == "stm note"
     assert gm[0].get("agent_id") == "DummyAgent"
 
 

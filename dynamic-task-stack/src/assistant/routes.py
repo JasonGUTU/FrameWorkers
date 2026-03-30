@@ -1,6 +1,6 @@
 # API routes for Assistant System
 
-from typing import Any, Dict
+from typing import Any, Dict, Optional, Tuple
 
 from flask import Blueprint, request, jsonify
 
@@ -30,6 +30,16 @@ def _execute_fields_from_http_body(data: Dict[str, Any]) -> Dict[str, Any]:
     if not isinstance(raw, dict):
         raise ValueError("execute_fields must be a JSON object")
     return dict(raw)
+
+
+def _execute_error_response(
+    message: str,
+    status: int,
+    *,
+    error_reasoning: Optional[str] = None,
+) -> Tuple[Any, int]:
+    """Uniform error JSON for ``POST /execute`` (``error_reasoning`` reserved for richer context)."""
+    return jsonify({"error": message, "error_reasoning": error_reasoning}), status
 
 
 def create_assistant_blueprint():
@@ -87,6 +97,13 @@ def create_assistant_blueprint():
 
         JSON body: ``agent_id``, ``task_id`` (required), and ``execute_fields`` (object,
         optional keys ``text``, ``image``, ``video``, ``audio``, …).
+
+        Success body: ``task_id``, ``execution_id``, ``status``, ``error``, ``error_reasoning``,
+        ``workspace_id``, ``global_memory_brief`` (no ``content`` in rows). Sub-agent ``results``
+        are on ``GET /api/assistant/executions/task/<task_id>``. ``error_reasoning`` is reserved
+        for structured/longer failure explanation (currently often ``null``).
+
+        Error body (4xx/5xx on this route): ``error``, ``error_reasoning`` (placeholder, often ``null``).
         """
         data, error = json_body_or_error()
         if error:
@@ -97,12 +114,12 @@ def create_assistant_blueprint():
         try:
             execute_fields = _execute_fields_from_http_body(data)
         except ValueError as e:
-            return jsonify({'error': str(e)}), 400
+            return _execute_error_response(str(e), 400)
 
         if not agent_id or not task_id:
-            return jsonify({
-                'error': 'Missing required fields: agent_id, task_id'
-            }), 400
+            return _execute_error_response(
+                "Missing required fields: agent_id, task_id", 400
+            )
 
         try:
             results = service.execute_agent_for_task(
@@ -112,13 +129,13 @@ def create_assistant_blueprint():
             )
             return jsonify(serialize_response_value(results)), 200
         except AssistantBadExecuteFieldsError as e:
-            return jsonify({'error': str(e)}), 400
+            return _execute_error_response(str(e), 400)
         except AssistantGlobalMemorySyncError as e:
-            return jsonify({'error': str(e)}), 500
+            return _execute_error_response(str(e), 500)
         except ValueError as e:
-            return jsonify({'error': str(e)}), 404
+            return _execute_error_response(str(e), 404)
         except Exception as e:
-            return jsonify({'error': f'Execution failed: {str(e)}'}), 500
+            return _execute_error_response(f"Execution failed: {str(e)}", 500)
     
     @bp.route('/api/assistant/executions/task/<task_id>', methods=['GET'])
     def get_executions_by_task(task_id: str):
@@ -199,17 +216,29 @@ def create_assistant_blueprint():
 
     @bp.route('/api/assistant/workspace/memory/brief', methods=['GET'])
     def get_workspace_memory_brief():
-        """Memory brief: ``{"global_memory": [...]}`` (no ``content`` keys; all matches, ``created_at`` desc)."""
+        """Memory brief: ``{"global_memory": [...]}`` (rows: ``task_id``, ``agent_id``, ``created_at``, ``execution_result`` only; newest first).
+
+        Query: ``limit`` omitted → use default (``ASSISTANT_GLOBAL_MEMORY_CONTEXT_ENTRIES_MAX``, default **20** recent rows). ``limit=0`` → all matching rows.
+        """
         workspace, error = _get_workspace_or_404()
         if error:
             return error
 
         task_id = request.args.get('task_id')
         agent_id = request.args.get('agent_id')
+        limit_raw = request.args.get('limit', type=int)
+        limit: Optional[int]
+        if limit_raw is None:
+            limit = None
+        elif limit_raw < 0:
+            return bad_request('limit must be >= 0 (0 = no cap)')
+        else:
+            limit = limit_raw
 
         brief = workspace.get_memory_brief(
             task_id=task_id,
             agent_id=agent_id,
+            limit=limit,
         )
         return jsonify(brief)
     

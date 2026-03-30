@@ -1,0 +1,290 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_type": "character",
+          "entity_id": "char_001",
+          "display_name": "",
+          "purpose": "identity_anchor",
+          "keyframe_id": "kf_global_char_001",
+          "image_asset": {
+            "asset_id": "img_char_001_global",
+            "uri": "/tmp/fw_media_l00freie/img_char_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Emphasize high contrast between deep shadows and the single source of warm light.; Muted color palette dominated by blues, greys, and blacks, with a strong emphasis on the solitary orange glow.; Reflective surfaces (wet ground, rain) are crucial for visual interest and to heighten the sense of atmosphere.; A slow, deliberate, and contemplative pace is essential, allowing the audience to feel the solitude and the fleeting warmth.; The overall atmosphere should feel melancholic, isolated, yet visually rich. A solitary figure, identity entirely obscured by a dark, aerodynamic helmet and practical, dark cycling gear. They wear a muted, subtly reflective rain jacket that catches minimal light. Their posture conveys quiet endurance and resignation to a harsh, wet environment, emphasizing anonymity and a universal experience against the elements."
+        }
+      ],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "display_name": "",
+          "purpose": "style_anchor",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/tmp/fw_media_l00freie/img_loc_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Emphasize high contrast between deep shadows and the single source of warm light.; Muted color palette dominated by blues, greys, and blacks, with a strong emphasis on the solitary orange glow.; Reflective surfaces (wet ground, rain) are crucial for visual interest and to heighten the sense of atmosphere.; A slow, deliberate, and contemplative pace is essential, allowing the audience to feel the solitude and the fleeting warmth.; The overall atmosphere should feel melancholic, isolated, yet visually rich. A desolate, rain-slicked cobblestone alley. Pervasive, cold darkness dominates the scene, punctuated solely by the distinct, warm, orange-yellow pool of light cast by a single, classic streetlamp. The wet, reflective cobblestones shimmer, mirroring the sparse light and the steady, silent rain. In the far distance, a diffuse, indistinct city glow hints at civilization, contrasting with the immediate isolation."
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_001",
+                "uri": "/tmp/fw_media_l00freie/img_char_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Emphasize high contrast between deep shadows and the single source of warm light.; Muted color palette dominated by blues, greys, and blacks, with a strong emphasis on the solitary orange glow.; Reflective surfaces (wet ground, rain) are crucial for visual interest and to heighten the sense of atmosphere.; A slow, deliberate, and contemplative pace is essential, allowing the audience to feel the solitude and the fleeting warmth.; The overall atmosphere should feel melancholic, isolated, yet visually rich. Show a solitary cyclist clad in dark, practical cycling gear, including a slightly reflective muted rain jacket and a helmet that completely obscures their face. They are seen under the pervasive cold darkness of a rain-swept night, their posture conveying quiet endurance and resignation as steady rain falls around them, creating subtle gleams on their dark clothing."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/tmp/fw_media_l00freie/img_loc_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Emphasize high contrast between deep shadows and the single source of warm light.; Muted color palette dominated by blues, greys, and blacks, with a strong emphasis on the solitary orange glow.; Reflective surfaces (wet ground, rain) are crucial for visual interest and to heighten the sense of atmosphere.; A slow, deliberate, and contemplative pace is essential, allowing the audience to feel the solitude and the fleeting warmth.; The overall atmosphere should feel melancholic, isolated, yet visually rich. Depict a rain-slicked cobblestone alley at night, pervasive cold darkness dominating the scene. A single classic streetlamp emits a distinct warm, orange-yellow pool of light, creating sharp contrast with the surrounding blues, greys, and deep shadows. The wet cobblestones reflect the light dramatically, enhancing the melancholic atmosphere. Distant, diffuse city glow is barely visible on the horizon, hinting at civilization but remaining indistinct, while steady, silent rain continuously falls, adding texture and reflective sheen to all surfaces."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_001",
+              "linked_blocks": [
+                "b_001",
+                "b_002",
+                "b_003"
+              ]
+            },
+            "estimated_duration_sec": 3.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_01",
+                  "uri": "/tmp/fw_media_l00freie/img_sh_001_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Emphasize high contrast between deep shadows and the single source of warm light.; Muted color palette dominated by blues, greys, and blacks, with a strong emphasis on the solitary orange glow.; Reflective surfaces (wet ground, rain) are crucial for visual interest and to heighten the sense of atmosphere.; A slow, deliberate, and contemplative pace is essential, allowing the audience to feel the solitude and the fleeting warmth.; The overall atmosphere should feel melancholic, isolated, yet visually rich. Low angle long shot, tracking forward: A solitary cyclist, a dark silhouette against the desolate, rain-swept cobblestone alley at night. The wet ground reflects the deep blues and greys of the pervasive cold darkness. Steady rain falls, barely visible. The cyclist slowly emerges from the background gloom into the middle ground, their form an indistinct shadow. The only hint of light is a distant, solitary warm orange glow, not yet illuminating the cyclist.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_002",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_02",
+                  "uri": "/tmp/fw_media_l00freie/img_sh_001_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Emphasize high contrast between deep shadows and the single source of warm light.; Muted color palette dominated by blues, greys, and blacks, with a strong emphasis on the solitary orange glow.; Reflective surfaces (wet ground, rain) are crucial for visual interest and to heighten the sense of atmosphere.; A slow, deliberate, and contemplative pace is essential, allowing the audience to feel the solitude and the fleeting warmth.; The overall atmosphere should feel melancholic, isolated, yet visually rich. Low angle long shot, tracking forward: The solitary cyclist, still a dark silhouette, moves steadily through the deeply shadowed, rain-slicked cobblestone alley. The wet surfaces intensely reflect the surrounding cold darkness. The distant warm orange streetlight is now slightly larger, a beacon in the oppressive gloom, but the cyclist remains in shadow, their anonymous form moving with quiet endurance. Steady, silent rain continues to fall.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_002",
+              "linked_blocks": [
+                "b_003",
+                "b_004",
+                "b_005"
+              ]
+            },
+            "estimated_duration_sec": 3.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_003",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_01",
+                  "uri": "/tmp/fw_media_l00freie/img_sh_002_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Emphasize high contrast between deep shadows and the single source of warm light.; Muted color palette dominated by blues, greys, and blacks, with a strong emphasis on the solitary orange glow.; Reflective surfaces (wet ground, rain) are crucial for visual interest and to heighten the sense of atmosphere.; A slow, deliberate, and contemplative pace is essential, allowing the audience to feel the solitude and the fleeting warmth.; The overall atmosphere should feel melancholic, isolated, yet visually rich. Eye level medium long shot, tracking side: The cyclist, still primarily shrouded in the deep blues and greys of the night, steadily approaches a single, classic streetlight. Its warm, orange-yellow glow creates a striking pool of light on the wet cobblestones ahead, with rain visibly sparkling as it enters the illuminated area. The contrast between the cold darkness and the approaching warmth is stark, hinting at the fleeting solace. The cyclist's dark form is just about to break the threshold into the light.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_004",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_02",
+                  "uri": "/tmp/fw_media_l00freie/img_sh_002_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Emphasize high contrast between deep shadows and the single source of warm light.; Muted color palette dominated by blues, greys, and blacks, with a strong emphasis on the solitary orange glow.; Reflective surfaces (wet ground, rain) are crucial for visual interest and to heighten the sense of atmosphere.; A slow, deliberate, and contemplative pace is essential, allowing the audience to feel the solitude and the fleeting warmth.; The overall atmosphere should feel melancholic, isolated, yet visually rich. Eye level medium long shot, tracking side: The solitary cyclist now fully enters the warm, orange-yellow pool of light from the streetlamp. Their dark, reflective rain jacket catches the golden glow, creating subtle highlights and a momentary visual warmth against the surrounding deep blues and greys. Steady rain is clearly visible, sparkling brilliantly within the illuminated circle. The wet cobblestones reflect the warm light intensely, creating a shimmering path. The cyclist's helmeted head is turned slightly, maintaining anonymity, as they pedal slowly through this brief moment of brightness.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_003",
+              "linked_blocks": [
+                "b_005",
+                "b_006"
+              ]
+            },
+            "estimated_duration_sec": 2.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_005",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_01",
+                  "uri": "/tmp/fw_media_l00freie/img_sh_003_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Emphasize high contrast between deep shadows and the single source of warm light.; Muted color palette dominated by blues, greys, and blacks, with a strong emphasis on the solitary orange glow.; Reflective surfaces (wet ground, rain) are crucial for visual interest and to heighten the sense of atmosphere.; A slow, deliberate, and contemplative pace is essential, allowing the audience to feel the solitude and the fleeting warmth.; The overall atmosphere should feel melancholic, isolated, yet visually rich. Eye level medium shot, static: The solitary cyclist is fully enveloped in the intense, warm orange-yellow glow of the single streetlamp. Rain streaks diagonally through the light, sparkling like tiny jewels. The wet cobblestones below reflect the golden warmth, creating a vibrant, yet melancholic, pool of light. The cyclist's dark, anonymous form, illuminated by the transient warmth, shows subtle highlights on their reflective rain jacket, emphasizing their brief interaction with the light before the encroaching darkness.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_006",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_02",
+                  "uri": "/tmp/fw_media_l00freie/img_sh_003_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Emphasize high contrast between deep shadows and the single source of warm light.; Muted color palette dominated by blues, greys, and blacks, with a strong emphasis on the solitary orange glow.; Reflective surfaces (wet ground, rain) are crucial for visual interest and to heighten the sense of atmosphere.; A slow, deliberate, and contemplative pace is essential, allowing the audience to feel the solitude and the fleeting warmth.; The overall atmosphere should feel melancholic, isolated, yet visually rich. Eye level medium shot, dolly out: The cyclist, having just passed through the peak illumination, is now rapidly exiting the warm orange-yellow pool of light. Their form quickly recedes back into the deep blues, greys, and blacks of the surrounding night. The rain continues to fall, sparkling less intensely as the cyclist moves away from the streetlight's glow. The camera pulls back slightly, emphasizing the swift transition from the fleeting warmth back into the overwhelming gloom, leaving the light behind as an isolated beacon.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "source": {
+              "storyboard_shot_id": "sh_004",
+              "linked_blocks": [
+                "b_007"
+              ]
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_007",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_01",
+                  "uri": "/tmp/fw_media_l00freie/img_sh_004_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Emphasize high contrast between deep shadows and the single source of warm light.; Muted color palette dominated by blues, greys, and blacks, with a strong emphasis on the solitary orange glow.; Reflective surfaces (wet ground, rain) are crucial for visual interest and to heighten the sense of atmosphere.; A slow, deliberate, and contemplative pace is essential, allowing the audience to feel the solitude and the fleeting warmth.; The overall atmosphere should feel melancholic, isolated, yet visually rich. Eye level wide shot, static: A poignant, static shot of the empty cobblestone alley at night. The single, classic streetlamp glows with a distinct warm, orange-yellow light, intensely illuminating a circular area of wet, reflective cobblestones. Steady, silent rain falls continuously within its glow, creating shimmering patterns. The area is now devoid of the cyclist, emphasizing the transient nature of their presence and the enduring, yet solitary, solace offered by the light. The vast, cold darkness of deep blues, greys, and blacks surrounds the solitary warm glow, making it a melancholic focal point.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_count": 4,
+    "keyframe_count_total": 7,
+    "avg_keyframes_per_shot": 1.75,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 1,
+    "stability_location_keyframe_count": 1,
+    "stability_prop_keyframe_count": 0
+  }
+}

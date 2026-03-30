@@ -1,0 +1,163 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-30T11:30:39.206010+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "The Glimmer",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Old Town Cobblestone Street",
+          "interior_exterior": "EXT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "A solitary cyclist navigates a rain-slicked cobblestone street, briefly passing through the warm, inviting glow of a lone streetlight before continuing into the vast, dark night.",
+        "estimated_duration": {
+          "seconds": 10.0,
+          "confidence": 0.9
+        },
+        "continuity": {
+          "props_present": [
+            "Bicycle",
+            "Rain",
+            "Cobblestone Street",
+            "Streetlight"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Dark, practical, water-resistant cycling jacket (hood up), dark trousers, weathered cycling shoes. A subtle reflective strip visible on their back or jacket.",
+              "must_keep": [
+                "Weather-appropriate",
+                "Subdued color",
+                "Obscuring identity"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Rainy night",
+            "Cobblestone street",
+            "Solitary cyclist",
+            "Warm streetlight's glow is temporary"
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_001",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "EXT. OLD TOWN COBBLESTONE STREET - NIGHT (RAINING)\n\nHeavy rain falls in sheets, turning the ancient cobblestones into a mosaic of shimmering dark reflections. The only sound is the rhythmic hiss of tires on wet stone, growing steadily louder.",
+            "continuity_refs": {
+              "props": [
+                "Rain",
+                "Cobblestone Street"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_002",
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "The Cyclist",
+            "text": "THE CYCLIST, a lone silhouette against the oppressive darkness, pedals slowly but steadily into view. Their face is obscured by a hooded jacket, a figure of quiet, anonymous resolve. A faint bicycle headlight cuts a small, transient path through the downpour.",
+            "continuity_refs": {
+              "props": [
+                "Bicycle",
+                "Rain"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_003",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Ahead, a single, old-fashioned STREETLIGHT casts a surprisingly warm, amber glow, a beacon in the cold, wet expanse. Raindrops sparkle like falling diamonds within its inviting halo.",
+            "continuity_refs": {
+              "props": [
+                "Streetlight",
+                "Rain"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_004",
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "The Cyclist",
+            "text": "The Cyclist glides into the pool of light. For a brief moment, the rain on their jacket and the spokes of their bicycle catch the warmth, casting fleeting, dancing shadows on the wet ground. There's a subtle, almost imperceptible pause in their cadence, a moment of transient solace.",
+            "continuity_refs": {
+              "props": [
+                "Bicycle",
+                "Rain",
+                "Streetlight"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_005",
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "The Cyclist",
+            "text": "Just as quickly, The Cyclist emerges from the glow, disappearing back into the indistinguishable grey-black of the rainy night. The rhythmic hiss of tires continues, fading as they become one with the surrounding gloom.",
+            "continuity_refs": {
+              "props": [
+                "Bicycle",
+                "Rain"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_006",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The streetlight remains, its warm glow now empty, momentarily brighter against the persistent darkness. The cobblestones still glisten, reflecting only the street's solitary light.",
+            "continuity_refs": {
+              "props": [
+                "Streetlight",
+                "Cobblestone Street",
+                "Rain"
+              ],
+              "wardrobe_character_ids": []
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "The cyclist passes through the ephemeral comfort of the streetlight's glow, experiencing a momentary highlight before continuing their journey into the persistent darkness and solitude.",
+          "emotional_shift": "From an initial sense of melancholic endurance, there's a fleeting moment of serene beauty and warmth, concluding with a return to quiet contemplation and the vast indifference of the elements."
+        }
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "estimated_total_duration_sec": 10.0,
+    "sum_scene_duration_sec": 10.0,
+    "scene_count": 1,
+    "dialogue_block_count": 0,
+    "action_block_count": 6
+  }
+}

@@ -70,7 +70,7 @@ def test_memory_manager_structured_entries_and_brief(tmp_path):
     assert ex0["execution_result"]["error"] == "boom"
 
 def test_memory_brief_slim_all_entries(tmp_path):
-    """Brief omits content and returns all matching rows."""
+    """Brief returns slim rows (no content / artifact_locations); default cap is recent N (env default)."""
     mm = MemoryManager("ws_1", tmp_path)
     for i in range(5):
         mm.add_memory_entry(
@@ -82,6 +82,24 @@ def test_memory_brief_slim_all_entries(tmp_path):
     full_slim = mm.get_memory_brief(task_id="task_many")
     assert len(full_slim["global_memory"]) == 5
     assert all("content" not in e for e in full_slim["global_memory"])
+    unlimited = mm.get_memory_brief(task_id="task_many", limit=0)
+    assert len(unlimited["global_memory"]) == 5
+
+
+def test_memory_brief_default_caps_at_twenty_newest(tmp_path):
+    mm = MemoryManager("ws_1", tmp_path)
+    for i in range(25):
+        mm.add_memory_entry(
+            content=f"note {i}",
+            task_id="task_many_brief",
+            agent_id="StoryAgent",
+            execution_result={"status": "COMPLETED", "execution_id": f"ex_{i}"},
+        )
+    brief = mm.get_memory_brief(task_id="task_many_brief")
+    assert len(brief["global_memory"]) == 20
+    ids = {e["execution_result"]["execution_id"] for e in brief["global_memory"]}
+    assert len(ids) == 20
+    assert ids <= {f"ex_{j}" for j in range(25)}
 
 
 def test_memory_brief_task_id_unique_no_or_with_agent_id(tmp_path):
@@ -129,7 +147,9 @@ def test_memory_manager_artifact_locations_roundtrip(tmp_path):
     assert rows[0].get("artifact_locations")
     assert rows[0]["artifact_locations"][0]["path"] == "/tmp/x.json"
     brief = mm.get_memory_brief(task_id="task_art")
-    assert brief["global_memory"][0]["artifact_locations"][0]["role"] == "story_blueprint"
+    row0 = brief["global_memory"][0]
+    assert "artifact_locations" not in row0
+    assert set(row0.keys()) <= {"task_id", "agent_id", "created_at", "execution_result"}
 
 
 def test_global_memory_md_created_empty_then_sections_after_entry(tmp_path):

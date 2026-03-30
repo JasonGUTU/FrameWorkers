@@ -4,6 +4,8 @@ import json
 import sys
 from pathlib import Path
 
+import pytest
+
 _repo_root = Path(__file__).resolve().parents[2]
 if str(_repo_root) not in sys.path:
     sys.path.insert(0, str(_repo_root))
@@ -14,10 +16,16 @@ from director_agent.reasoning import (
 )
 
 
-def test_parse_router_json_strips_markdown_fence():
-    raw = '```json\n{"agent_id": "StoryAgent", "rationale": "x"}\n```'
+def test_parse_router_json_plain_object():
+    raw = '{"agent_id": "StoryAgent", "rationale": "x"}'
     data = _parse_router_json(raw)
     assert data["agent_id"] == "StoryAgent"
+
+
+def test_parse_router_json_rejects_markdown_fence():
+    raw = '```json\n{"agent_id": "StoryAgent", "rationale": "x"}\n```'
+    with pytest.raises(ValueError, match="router JSON invalid"):
+        _parse_router_json(raw)
 
 
 def test_choose_for_stack_task_uses_mock_llm():

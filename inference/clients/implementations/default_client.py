@@ -4,15 +4,20 @@ from __future__ import annotations
 
 import json
 import os
+from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any, AsyncIterator, Dict, Iterator, List, Optional, Union
 
 from openai import AsyncOpenAI
 
 from ..base.base_client import BaseLLMClient, Message, ModelConfig
+from ..json_parse_diag import describe_json_decode_error
 
 try:
-    import litellm  # noqa: F401
-    from litellm import acompletion, astream, completion, stream
+    # NOTE: LiteLLM's public symbols have changed across versions.
+    # Import the module only; call `litellm.*` at runtime to avoid hard failures
+    # when optional helpers are renamed/removed.
+    import litellm  # type: ignore  # noqa: F401
 
     LITELLM_AVAILABLE = True
 except ImportError:
@@ -165,11 +170,47 @@ class LLMClient(BaseLLMClient):
         }
 
     @staticmethod
-    def _parse_json_text(raw: str) -> dict[str, Any]:
+    def _parse_json_object_strict(raw: str) -> dict[str, Any]:
+        """
+        Parse **chat_json** responses: one JSON object only, no fence-stripping or substring recovery.
+        Call sites must use provider JSON mode (``response_format`` / OpenAI json_mode); failures surface here.
+        """
+        text = (raw or "").strip()
+        if not text:
+            raise ValueError("chat_json: empty model content (expected a JSON object)")
         try:
-            return json.loads(raw)
+            obj = json.loads(text)
         except json.JSONDecodeError as exc:
-            raise ValueError(f"LLM response is not valid JSON: {exc}") from exc
+            diag = describe_json_decode_error(text, exc)
+            # Optional diagnostics: dump raw model output to disk for post-mortem.
+            # This is off by default to avoid leaking prompts/outputs.
+            if os.getenv("FW_JSON_DIAG_DUMP", "").strip().lower() in {"1", "true", "yes", "on"}:
+                dump_dir = os.getenv("FW_JSON_DIAG_DUMP_DIR", "").strip() or "Runtime/debug/json_parse_failures"
+                try:
+                    p = Path(dump_dir)
+                    if not p.is_absolute():
+                        p = Path.cwd() / p
+                    p.mkdir(parents=True, exist_ok=True)
+                    ts = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+                    out_path = p / f"chat_json_invalid_{ts}.txt"
+                    out_path.write_text(
+                        "=== raw (strip) ===\n"
+                        + text
+                        + "\n\n=== error ===\n"
+                        + f"{exc}\n\n=== diag ===\n"
+                        + diag
+                        + "\n",
+                        encoding="utf-8",
+                    )
+                except Exception:
+                    # Never hide the underlying parse failure.
+                    pass
+            raise ValueError(
+                f"chat_json: model output is not valid JSON: {exc}; {diag}"
+            ) from exc
+        if not isinstance(obj, dict):
+            raise ValueError("chat_json: root JSON value must be an object")
+        return obj
 
     @staticmethod
     def _extract_assistant_text(response: Dict[str, Any]) -> str:
@@ -231,7 +272,7 @@ class LLMClient(BaseLLMClient):
         resolved_model = self._canonicalize_model(model or self.default_model)
         formatted_messages = self._format_messages(messages)
         call_params = self._build_call_params(resolved_model, config, **kwargs)
-        response = completion(
+        response = litellm.completion(
             model=resolved_model, messages=formatted_messages, **call_params
         )
         return self._format_response(response)
@@ -247,7 +288,7 @@ class LLMClient(BaseLLMClient):
         resolved_model = self._canonicalize_model(model or self.default_model)
         formatted_messages = self._format_messages(messages)
         call_params = self._build_call_params(resolved_model, config, **kwargs)
-        response = await acompletion(
+        response = await litellm.acompletion(
             model=resolved_model, messages=formatted_messages, **call_params
         )
         return self._format_response(response)
@@ -265,7 +306,7 @@ class LLMClient(BaseLLMClient):
         call_params = self._build_call_params(
             resolved_model, config, stream=True, **kwargs
         )
-        for chunk in stream(
+        for chunk in litellm.stream(
             model=resolved_model, messages=formatted_messages, **call_params
         ):
             yield self._format_chunk(chunk)
@@ -283,7 +324,7 @@ class LLMClient(BaseLLMClient):
         call_params = self._build_call_params(
             resolved_model, config, stream=True, **kwargs
         )
-        async for chunk in astream(
+        async for chunk in litellm.astream(
             model=resolved_model, messages=formatted_messages, **call_params
         ):
             yield self._format_chunk(chunk)
@@ -314,10 +355,10 @@ class LLMClient(BaseLLMClient):
                 client_type=client_type,
             )
             response = await openai_client.chat.completions.create(**request_kwargs)
-            raw = response.choices[0].message.content or "{}"
-            return self._parse_json_text(raw)
+            raw = response.choices[0].message.content or ""
+            return self._parse_json_object_strict(raw)
 
-        # Provider routes configured to LiteLLM.
+        # Provider routes configured to LiteLLM — require JSON mode; no silent fallback without it.
         self._ensure_litellm()
         litellm_kwargs: Dict[str, Any] = {}
         resolved_max_tokens = max_tokens if max_tokens is not None else self.max_tokens
@@ -328,23 +369,15 @@ class LLMClient(BaseLLMClient):
         elif self.reasoning_effort:
             litellm_kwargs["reasoning_effort"] = self.reasoning_effort
 
-        try:
-            response = await acompletion(
-                model=resolved_model,
-                messages=messages,
-                response_format={"type": "json_object"},
-                **litellm_kwargs,
-            )
-        except Exception:
-            # Some providers don't support response_format; retry without it.
-            response = await acompletion(
-                model=resolved_model,
-                messages=messages,
-                **litellm_kwargs,
-            )
+        response = await litellm.acompletion(
+            model=resolved_model,
+            messages=messages,
+            response_format={"type": "json_object"},
+            **litellm_kwargs,
+        )
 
-        raw = self._extract_assistant_text(self._format_response(response)) or "{}"
-        return self._parse_json_text(raw)
+        raw = self._extract_assistant_text(self._format_response(response)) or ""
+        return self._parse_json_object_strict(raw)
 
     async def chat_text(
         self,
@@ -384,7 +417,7 @@ class LLMClient(BaseLLMClient):
         elif self.reasoning_effort:
             litellm_kwargs["reasoning_effort"] = self.reasoning_effort
 
-        response = await acompletion(
+        response = await litellm.acompletion(
             model=resolved_model,
             messages=messages,
             **litellm_kwargs,

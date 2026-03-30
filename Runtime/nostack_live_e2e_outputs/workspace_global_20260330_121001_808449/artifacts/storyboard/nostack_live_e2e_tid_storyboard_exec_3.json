@@ -1,0 +1,276 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-30T12:11:18.563892+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_001"
+        },
+        "estimated_duration": {
+          "seconds": 11.0,
+          "confidence": 0.8
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "CUSTOM",
+            "environment_notes": [
+              "A quiet, traditional old town library at dusk. Soft, fading blue light filtering through large windows. Warm, inviting interior with wooden shelves and a well-worn circulation desk. A sense of history and calm."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Elara is in her 60s, meticulous, composed, and carries a quiet wisdom. Her routine is her comfort."
+              ],
+              "wardrobe_notes": [
+                "Sensible, comfortable cardigan over a simple blouse and skirt. Practical, low-heeled shoes. Hair neatly styled in a bun, perhaps with a few wisps escaping. Neutral, muted colors."
+              ],
+              "must_keep": [
+                "Meticulous appearance",
+                "Composed demeanor",
+                "Age (60s)"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Stack of returned books",
+              "must_keep": [
+                "Visible on circulation desk"
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "Classic novel ('Wuthering Heights')",
+              "must_keep": [
+                "Well-loved appearance",
+                "Central to the discovery"
+              ]
+            },
+            {
+              "prop_id": "prop_003",
+              "prop_name": "Pressed rose bookmark with handwritten note",
+              "must_keep": [
+                "Faded, delicate appearance",
+                "Meticulously dried and laminated",
+                "Elegant, familiar handwritten script 'Still waiting for our story to continue. - L.'"
+              ]
+            },
+            {
+              "prop_id": "prop_004",
+              "prop_name": "Circulation desk",
+              "must_keep": [
+                "Traditional, wooden, well-maintained"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Quiet and contemplative atmosphere",
+              "Soft, natural 'blue hour' lighting, evoking nostalgia and possibility",
+              "Intimate camera work emphasizing Elara's internal world and the discovery",
+              "Focus on subtle emotional shifts and tactile details."
+            ],
+            "must_avoid": [
+              "Harsh lighting",
+              "Rapid cuts (unless for dramatic effect during discovery)",
+              "Overly dramatic or exaggerated expressions/movements from Elara (maintain subtlety)"
+            ]
+          }
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "linked_blocks": [
+              "b_001"
+            ],
+            "estimated_duration_sec": 2.5,
+            "shot_type": "medium_wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Frame Elara at the circulation desk, showing the library's quiet ambiance in the background."
+            },
+            "visual_goal": "Establish Elara's meticulous routine and the serene, 'blue hour' atmosphere of the library.",
+            "action_focus": "Elara tidying the circulation desk with practiced, calm movements.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_004",
+              "Various library items"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": [
+                "Elara, composed and methodical, at the circulation desk, bathed in soft blue light."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "linked_blocks": [
+              "b_002"
+            ],
+            "estimated_duration_sec": 1.5,
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Elara's upper body and hands as she interacts with the books."
+            },
+            "visual_goal": "Highlight the ritualistic nature of Elara's actions with the returned book.",
+            "action_focus": "Elara picking up 'Wuthering Heights' from a small stack of returned books.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": [
+                "Elara's hands gently picking up the copy of 'Wuthering Heights'."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "linked_blocks": [
+              "b_003"
+            ],
+            "estimated_duration_sec": 1.5,
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Tight on the book and Elara's hands, obscuring her face to emphasize the discovery."
+            },
+            "visual_goal": "Build anticipation as Elara discovers something unexpected within the book.",
+            "action_focus": "Elara's fingers brushing against and then carefully pulling out a thin object from the pages of the book.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_002",
+              "prop_003"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Elara's finger brushing against the hidden object.",
+                "Elara carefully pulling the object out."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "linked_blocks": [
+              "b_004"
+            ],
+            "estimated_duration_sec": 2.0,
+            "shot_type": "extreme_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Fill the frame with the bookmark, focusing on its details."
+            },
+            "visual_goal": "Clearly reveal the personal and nostalgic details of the bookmark.",
+            "action_focus": "The pressed rose bookmark with its faded flower and handwritten note becoming fully visible.",
+            "characters_in_frame": [],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": [
+                "The pressed, faded rose bookmark with the elegant handwritten note visible on its back."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 5,
+            "linked_blocks": [
+              "b_005"
+            ],
+            "estimated_duration_sec": 1.5,
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Frame Elara's face, specifically her eyes, with the bookmark held near for context."
+            },
+            "visual_goal": "Capture Elara's initial, subtle reaction and recognition of the note.",
+            "action_focus": "Elara's eyes widening imperceptibly as she reads the familiar handwritten script.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": [
+                "Elara's face, eyes focused on the bookmark, a flicker of recognition and surprise."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 6,
+            "linked_blocks": [
+              "b_006"
+            ],
+            "estimated_duration_sec": 2.0,
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "subtle_push_in",
+              "framing_notes": "Capture Elara's full facial expression, allowing her gaze to drift out of frame towards the window."
+            },
+            "visual_goal": "Show Elara's profound emotional shift and the dawning realization of new possibilities.",
+            "action_focus": "A ghost of a smile appearing and then giving way to wistful surprise, followed by her gaze drifting towards the dark library windows.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Elara with a fleeting, soft smile, lost in thought.",
+                "Elara's gaze, filled with wistful surprise, drifting towards the unseen windows, contemplating new possibilities."
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_count_total": 6,
+    "avg_shots_per_scene": 6.0,
+    "sum_shot_duration_sec": 11.0,
+    "duration_match_score": 0.0
+  }
+}

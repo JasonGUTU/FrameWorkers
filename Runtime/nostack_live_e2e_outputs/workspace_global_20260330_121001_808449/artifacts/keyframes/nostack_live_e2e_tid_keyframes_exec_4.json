@@ -1,0 +1,330 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_type": "character",
+          "entity_id": "char_001",
+          "display_name": "",
+          "purpose": "identity_anchor",
+          "keyframe_id": "kf_global_char_001",
+          "image_asset": {
+            "asset_id": "img_char_001_global",
+            "uri": "/tmp/fw_media_kh9qiwwq/img_char_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Quiet and contemplative atmosphere; Soft, natural 'blue hour' lighting, evoking nostalgia and possibility; Intimate camera work emphasizing Elara's internal world and the discovery; Focus on subtle emotional shifts and tactile details. Elara, a woman in her early 60s, stands with an air of quiet wisdom and meticulous composure. Her silver-streaked dark hair is neatly styled in a low, elegant bun, with a few soft wisps gently escaping around her temples. She wears a comfortable, muted olive green cardigan over a simple cream-colored blouse and a charcoal grey A-line skirt, all made from soft, natural fabrics. Her practical, low-heeled dark leather shoes are sensible and well-maintained. Her expression is calm and thoughtful, with gentle, observant eyes that convey a lifetime of experience. The overall palette of her attire is neutral and understated, reflecting her grounded nature and quiet strength."
+        }
+      ],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "display_name": "",
+          "purpose": "style_anchor",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/tmp/fw_media_kh9qiwwq/img_loc_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Quiet and contemplative atmosphere; Soft, natural 'blue hour' lighting, evoking nostalgia and possibility; Intimate camera work emphasizing Elara's internal world and the discovery; Focus on subtle emotional shifts and tactile details. A quiet, traditional old town library at dusk. The expansive interior is bathed in a serene, soft, fading blue light filtering through tall, leaded-glass windows that overlook a silent, historical street. The air is still and carries the comforting scent of old paper and polished wood. Grand, dark mahogany wooden shelves, meticulously organized and brimming with countless well-loved books, line the walls from floor to ceiling, creating a warm, inviting labyrinth. A prominent, sturdy, and well-worn dark oak circulation desk, with its smooth, polished surface, serves as the central focal point. The atmosphere throughout the library is profoundly warm, inviting, and steeped in a palpable sense of history and calm, with subtle dust motes softly dancing in the ethereal 'blue hour' light."
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_001",
+                "uri": "/tmp/fw_media_kh9qiwwq/img_char_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Quiet and contemplative atmosphere; Soft, natural 'blue hour' lighting, evoking nostalgia and possibility; Intimate camera work emphasizing Elara's internal world and the discovery; Focus on subtle emotional shifts and tactile details. Show Elara, a woman in her 60s, with a meticulous and composed demeanor, illuminated by the soft, fading blue light filtering through large windows. She wears a sensible, neutral-colored cardigan over a simple blouse and skirt, her hair neatly styled in a bun. The cool ambient light subtly highlights her features, giving her a serene, thoughtful expression consistent with her quiet wisdom, avoiding harsh shadows or overly dramatic expressions."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/tmp/fw_media_kh9qiwwq/img_loc_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Quiet and contemplative atmosphere; Soft, natural 'blue hour' lighting, evoking nostalgia and possibility; Intimate camera work emphasizing Elara's internal world and the discovery; Focus on subtle emotional shifts and tactile details. Depict a quiet, traditional old town library at dusk. Soft, natural 'blue hour' light streams through large, tall windows, casting a gentle, cool glow across the scene. The interior maintains a warm, inviting feel with rich wooden shelves filled with books and a well-worn, sturdy wooden circulation desk, all bathed in the tranquil, fading light. The atmosphere is calm and filled with a sense of history, with soft highlights on aged wood and subtle reflections in the dimming light, avoiding any harsh or overly bright illumination."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_001",
+              "linked_blocks": [
+                "b_001"
+              ]
+            },
+            "estimated_duration_sec": 2.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_01",
+                  "uri": "/tmp/fw_media_kh9qiwwq/img_sh_001_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Quiet and contemplative atmosphere; Soft, natural 'blue hour' lighting, evoking nostalgia and possibility; Intimate camera work emphasizing Elara's internal world and the discovery; Focus on subtle emotional shifts and tactile details. Medium-wide, eye-level, static shot: Elara, a meticulous woman in her 60s, tidies the traditional wooden circulation desk with practiced, calm movements. The soft, fading blue light of 'blue hour' filters through large windows in the background, subtly illuminating the wooden shelves and creating a serene, quiet library ambiance. Various library items are neatly arranged on the desk, emphasizing her routine. The scene avoids harsh lighting and maintains Elara's composed demeanor.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_002",
+              "linked_blocks": [
+                "b_002"
+              ]
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_002",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_01",
+                  "uri": "/tmp/fw_media_kh9qiwwq/img_sh_002_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Quiet and contemplative atmosphere; Soft, natural 'blue hour' lighting, evoking nostalgia and possibility; Intimate camera work emphasizing Elara's internal world and the discovery; Focus on subtle emotional shifts and tactile details. Medium, eye-level, static shot: Focus on Elara's upper body and hands as she ritualistically picks up a well-loved copy of 'Wuthering Heights' from a small, neat stack of returned books on the circulation desk. Her movements are deliberate and calm under the soft 'blue hour' lighting. The background remains a soft blur of the library's interior, maintaining the contemplative mood. Avoid any dramatic gestures, emphasizing the quiet routine.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_003",
+              "linked_blocks": [
+                "b_003"
+              ]
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_003",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_01",
+                  "uri": "/tmp/fw_media_kh9qiwwq/img_sh_003_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Quiet and contemplative atmosphere; Soft, natural 'blue hour' lighting, evoking nostalgia and possibility; Intimate camera work emphasizing Elara's internal world and the discovery; Focus on subtle emotional shifts and tactile details. Close-up, eye-level, static shot: Elara's meticulous fingers gently brush against a thin, unseen object nestled deep within the pages of the well-loved 'Wuthering Heights'. The soft, 'blue hour' light illuminates the texture of the book's aged pages and Elara's skin. Her face is obscured, placing emphasis solely on the tactile moment of initial discovery and building anticipation. Avoid harsh lighting or exaggerated hand movements.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_004",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_02",
+                  "uri": "/tmp/fw_media_kh9qiwwq/img_sh_003_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Quiet and contemplative atmosphere; Soft, natural 'blue hour' lighting, evoking nostalgia and possibility; Intimate camera work emphasizing Elara's internal world and the discovery; Focus on subtle emotional shifts and tactile details. Close-up, eye-level, static shot: Elara's fingers delicately and carefully pull a thin, flat, delicate object, partially obscured, from between the pages of the 'Wuthering Heights' book. The soft 'blue hour' lighting creates subtle shadows and highlights on the book and her hands, emphasizing the suspense of the discovery. Her face remains out of frame, focusing the viewer's attention entirely on the object emerging.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "source": {
+              "storyboard_shot_id": "sh_004",
+              "linked_blocks": [
+                "b_004"
+              ]
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_005",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_01",
+                  "uri": "/tmp/fw_media_kh9qiwwq/img_sh_004_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Quiet and contemplative atmosphere; Soft, natural 'blue hour' lighting, evoking nostalgia and possibility; Intimate camera work emphasizing Elara's internal world and the discovery; Focus on subtle emotional shifts and tactile details. Extreme close-up, eye-level, static shot: The frame is completely filled by the delicate, faded pressed rose bookmark, meticulously dried and laminated. The soft 'blue hour' light gently highlights the intricate details of the rose petals and the elegant, familiar handwritten script. The note 'Still waiting for our story to continue. - L.' is clearly visible, evoking a strong sense of personal history and nostalgia. Focus on the delicate textures and the fading colors, avoiding any harsh reflections.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 5,
+            "source": {
+              "storyboard_shot_id": "sh_005",
+              "linked_blocks": [
+                "b_005"
+              ]
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_006",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_01",
+                  "uri": "/tmp/fw_media_kh9qiwwq/img_sh_005_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Quiet and contemplative atmosphere; Soft, natural 'blue hour' lighting, evoking nostalgia and possibility; Intimate camera work emphasizing Elara's internal world and the discovery; Focus on subtle emotional shifts and tactile details. Close-up, eye-level, static shot: Elara's face, specifically her eyes, framed under the soft 'blue hour' lighting. She holds the pressed rose bookmark near, its details subtly visible in the foreground for context. Her eyes widen almost imperceptibly as she reads the familiar handwritten script, a flicker of recognition and surprise crossing her otherwise composed features. Her expression is subtle and internal, avoiding any overly dramatic reactions, emphasizing the quiet emotional shift.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 6,
+            "source": {
+              "storyboard_shot_id": "sh_006",
+              "linked_blocks": [
+                "b_006"
+              ]
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_007",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_01",
+                  "uri": "/tmp/fw_media_kh9qiwwq/img_sh_006_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Quiet and contemplative atmosphere; Soft, natural 'blue hour' lighting, evoking nostalgia and possibility; Intimate camera work emphasizing Elara's internal world and the discovery; Focus on subtle emotional shifts and tactile details. Medium close-up, eye-level shot: Elara's face, bathed in the gentle 'blue hour' light. A faint, 'ghost of a smile' touches her lips, quickly giving way to an expression of wistful surprise and dawning realization. Her emotions are conveyed subtly, primarily through her eyes and the slight softening of her features. Her gaze is still fixed, internalizing the discovery. The camera is static at this moment, capturing the immediate emotional shift.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_008",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_02",
+                  "uri": "/tmp/fw_media_kh9qiwwq/img_sh_006_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Quiet and contemplative atmosphere; Soft, natural 'blue hour' lighting, evoking nostalgia and possibility; Intimate camera work emphasizing Elara's internal world and the discovery; Focus on subtle emotional shifts and tactile details. Medium close-up, eye-level shot with a subtle push-in: Elara's full facial expression, now reflecting a deeper sense of wistful surprise and possibility. Her gaze slowly drifts from the bookmark, out of frame, towards the dark library windows, suggesting an awakening to new thoughts and future possibilities. The subtle camera movement emphasizes her internal journey. The 'blue hour' light continues to create a contemplative and intimate atmosphere around her, without harshness or exaggeration in her expression.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_count": 6,
+    "keyframe_count_total": 8,
+    "avg_keyframes_per_shot": 1.3333333333333333,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 1,
+    "stability_location_keyframe_count": 1,
+    "stability_prop_keyframe_count": 0
+  }
+}

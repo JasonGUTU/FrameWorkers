@@ -134,11 +134,15 @@ class SubAgentDescriptor:
         evaluator_factory:
             ``() -> BaseEvaluator`` — creates an evaluator instance.
         build_input:
-            ``(task_id, input_bundle_v2, config) -> BaseModel`` —
+            ``(task_id, input_bundle_v2) -> BaseModel`` —
             constructs the agent's typed input from :class:`~agents.contracts.input_bundle_v2.InputBundleV2`.
             Assistant always passes
             the Task Stack ``task_id``; agents that do not need it may name the
             parameter ``_task_id`` and omit it from the returned Pydantic model.
+            Duration, language, and other creative intent must be **inferred by the
+            sub-agent LLM** from ``hints`` / ``context["resolved_inputs"]`` (e.g.
+            ``source_text``, prior JSON assets) — not from a separate orchestrator
+            ``config`` object or deterministic keyword parsing in Python.
         service_factories:
             Mapping of ``service_key -> factory(ctx) -> service_instance``.
             ``ctx`` is a dict with at least ``{"llm_client": LLMClient}``.
@@ -164,7 +168,7 @@ class SubAgentDescriptor:
 
     build_input: Callable[..., BaseModel] = field(
         repr=False,
-        default=lambda task_id, input_bundle_v2, config: None,
+        default=lambda task_id, input_bundle_v2: None,
     )
     service_factories: dict[str, Callable[..., Any]] = field(
         repr=False, default_factory=dict,

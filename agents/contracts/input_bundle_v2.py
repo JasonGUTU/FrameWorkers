@@ -57,12 +57,3 @@ class InputBundleV2(MutableMapping[str, Any]):
     def __len__(self) -> int:
         return len(self._as_mapping())
 
-@dataclass
-class FrozenInputBundleV2(InputBundleV2):
-    """Read-only view for descriptor/evaluator safety."""
-
-    def __setitem__(self, key: str, value: Any) -> None:  # pragma: no cover
-        raise TypeError("FrozenInputBundleV2 is read-only")
-
-    def __delitem__(self, key: str) -> None:  # pragma: no cover
-        raise TypeError("FrozenInputBundleV2 is read-only")

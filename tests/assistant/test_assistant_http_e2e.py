@@ -68,11 +68,12 @@ class _DummyDescriptor:
     def build_equipped_agent(self, _llm):
         return _DummyPipelineAgent()
 
-    def build_input(self, task_id, input_bundle_v2, config):
+    def build_input(self, task_id, input_bundle_v2):
+        hints = getattr(input_bundle_v2, "hints", None) or {}
         return {
             "task_id": task_id,
             "input_bundle_v2": input_bundle_v2,
-            "language": config.language,
+            "language": hints.get("language") or "en",
         }
 
 
@@ -115,14 +116,15 @@ class _ProducerDescriptor:
     def build_equipped_agent(self, _llm):
         return _ProducerPipelineAgent()
 
-    def build_input(self, task_id, input_bundle_v2, config):
+    def build_input(self, task_id, input_bundle_v2):
         source_text = input_bundle_v2.get("source_text", "")
         if isinstance(source_text, dict):
             source_text = source_text.get("goal", "")
+        hints = getattr(input_bundle_v2, "hints", None) or {}
         return {
             "task_id": task_id,
             "seed": source_text,
-            "language": config.language,
+            "language": hints.get("language") or "en",
         }
 
 
@@ -134,12 +136,13 @@ class _ConsumerDescriptor:
     def build_equipped_agent(self, _llm):
         return _ConsumerPipelineAgent()
 
-    def build_input(self, task_id, input_bundle_v2, config):
+    def build_input(self, task_id, input_bundle_v2):
         producer_asset = input_bundle_v2.get("producer_asset", {})
+        hints = getattr(input_bundle_v2, "hints", None) or {}
         return {
             "task_id": task_id,
             "observed_seed": producer_asset.get("content", {}).get("seed", ""),
-            "language": config.language,
+            "language": hints.get("language") or "en",
         }
 
 
@@ -230,7 +233,10 @@ def test_assistant_e2e_http_flow_covers_core_endpoints(assistant_http_client):
     assert execution_payload.get("execution_id")
     assert execution_payload["workspace_id"]
     assert execution_payload["status"] == "COMPLETED"
-    assert execution_payload["results"]["summary"] == "integration ok"
+    assert "global_memory_brief" in execution_payload
+    assert "error_reasoning" in execution_payload
+    assert execution_payload["error_reasoning"] is None
+    assert isinstance(execution_payload["global_memory_brief"].get("global_memory"), list)
 
     # Step 4: Query execution detail and list APIs to confirm persistence.
     executions_resp = client.get(f"/api/assistant/executions/task/{task_id}")
@@ -243,6 +249,7 @@ def test_assistant_e2e_http_flow_covers_core_endpoints(assistant_http_client):
     assert execution_payload["execution_id"] == execution_id
     assert executions[0]["task_id"] == task_id
     assert executions[0]["status"] == "COMPLETED"
+    assert executions[0]["results"]["summary"] == "integration ok"
 
     # Step 5: Validate workspace APIs (files/logs/memory).
 
@@ -318,7 +325,9 @@ def test_assistant_execute_text_must_be_string_when_present(assistant_http_clien
         },
     )
     assert bad.status_code == 400
-    assert "string" in bad.get_json().get("error", "").lower()
+    body = bad.get_json()
+    assert "string" in body.get("error", "").lower()
+    assert body.get("error_reasoning") is None
 
 
 def test_assistant_execute_ignores_memory_brief_key(assistant_http_client):
@@ -382,7 +391,10 @@ def test_assistant_pipeline_http_flow_reuses_previous_agent_asset(
     producer_payload = producer_resp.get_json()
     assert producer_payload["task_id"] == task_id
     assert producer_payload["status"] == "COMPLETED"
-    assert producer_payload["results"]["content"]["seed"] == "chain pipeline assets over http"
+    assert "global_memory_brief" in producer_payload
+
+    producer_execs = client.get(f"/api/assistant/executions/task/{task_id}").get_json()
+    assert producer_execs[-1]["results"]["content"]["seed"] == "chain pipeline assets over http"
 
     consumer_resp = client.post(
         "/api/assistant/execute",
@@ -396,8 +408,10 @@ def test_assistant_pipeline_http_flow_reuses_previous_agent_asset(
     consumer_payload = consumer_resp.get_json()
     assert consumer_payload["task_id"] == task_id
     assert consumer_payload["status"] == "COMPLETED"
+    assert "global_memory_brief" in consumer_payload
+    consumer_execs = client.get(f"/api/assistant/executions/task/{task_id}").get_json()
     assert (
-        consumer_payload["results"]["observed_seed"]
+        consumer_execs[-1]["results"]["observed_seed"]
         == "chain pipeline assets over http"
     )
 

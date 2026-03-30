@@ -74,7 +74,7 @@ class StoryMetrics(BaseModel):
 
 
 class StoryConstraints(BaseModel):
-    target_duration_sec: float = 60.0
+    target_duration_sec: float = 10.0
     language: str = "en"
 
 

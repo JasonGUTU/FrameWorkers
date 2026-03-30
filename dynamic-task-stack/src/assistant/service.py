@@ -15,11 +15,43 @@ from .models import AgentExecution, ExecutionStatus
 from .workspace import Workspace
 from .workspace.asset_manager import AssetManager
 from agents import get_agent_registry
-from agents.contracts import ArtifactRefV2, FrozenInputBundleV2, InputBundleV2
+from agents.contracts import ArtifactRefV2, InputBundleV2
 from agents.base_agent import MaterializeContext
 from inference.clients import LLMClient as PipelineLLMClient
 
 logger = logging.getLogger(__name__)
+
+
+def _parse_positive_int_list(env_name: str, default: tuple[int, ...]) -> tuple[int, ...]:
+    """Comma-separated positive ints, e.g. ``4096,8192,16384`` for chat_json retry caps."""
+    raw = os.getenv(env_name, "").strip()
+    if not raw:
+        return default
+    out: list[int] = []
+    for part in raw.split(","):
+        p = part.strip()
+        if not p:
+            continue
+        try:
+            n = int(p)
+        except ValueError:
+            continue
+        if n > 0:
+            out.append(n)
+    return tuple(out) if out else default
+
+
+def _env_int(name: str, default: int, *, lo: int, hi: int) -> int:
+    try:
+        n = int(os.getenv(name, str(default)).strip())
+        return max(lo, min(n, hi))
+    except ValueError:
+        return default
+
+
+def _global_memory_context_entries_limit() -> int:
+    """Recent N memory rows for packaging LLMs (default 20). Full history stays on disk."""
+    return _env_int("ASSISTANT_GLOBAL_MEMORY_CONTEXT_ENTRIES_MAX", 20, lo=1, hi=500)
 
 
 class AssistantBadExecuteFieldsError(Exception):
@@ -85,25 +117,6 @@ class AssistantService:
             and hasattr(descriptor, "build_equipped_agent")
             and hasattr(descriptor, "build_input")
         )
-
-    @staticmethod
-    def _default_pipeline_config() -> Any:
-        """Fixed runtime knobs for ``descriptor.build_input`` (not overridable via HTTP / Director)."""
-        data = {
-            "target_total_duration_sec": 5,
-            "language": "en",
-        }
-
-        class _AttrDict:
-            def __init__(self, payload: Dict[str, Any]):
-                self._data = payload
-
-            def __getattr__(self, name: str) -> Any:
-                if name.startswith("_") or name not in self._data:
-                    raise AttributeError(name)
-                return self._data[name]
-
-        return _AttrDict(data)
 
     @staticmethod
     def _json_preview(value: Any, *, max_chars: int = 14_000) -> Any:
@@ -326,7 +339,7 @@ class AssistantService:
     @staticmethod
     def _map_pipeline_inputs(
         inputs: Dict[str, Any],
-    ) -> tuple[str, InputBundleV2, Any]:
+    ) -> tuple[str, InputBundleV2]:
         task_id = inputs.get("task_id") or ""
 
         raw = inputs.get("input_bundle_v2")
@@ -340,8 +353,7 @@ class AssistantService:
         text = ef.get("text") if isinstance(ef, dict) else None
         if text and "source_text" not in hydrated:
             hydrated["source_text"] = AssistantService._text_for_source_text(text)
-        config = AssistantService._default_pipeline_config()
-        return task_id, AssistantService._mapping_to_input_bundle_v2(task_id, hydrated), config
+        return task_id, AssistantService._mapping_to_input_bundle_v2(task_id, hydrated)
 
     @staticmethod
     def _merge_execution_inputs(
@@ -393,19 +405,18 @@ class AssistantService:
         descriptor: Any,
         task_id: str,
         readonly_bundle: Any,
-        config: Any,
     ) -> Any:
-        return descriptor.build_input(task_id, readonly_bundle, config)
+        return descriptor.build_input(task_id, readonly_bundle)
 
     def _execute_pipeline_descriptor(self, descriptor: Any, inputs: Dict[str, Any]) -> Dict[str, Any]:
-        task_id, input_bundle_v2, config = self._map_pipeline_inputs(inputs)
-        hydrated = self.workspace.hydrate_indexed_assets(dict(input_bundle_v2))
+        task_id, ib_mapped = self._map_pipeline_inputs(inputs)
+        hydrated = self.workspace.hydrate_indexed_assets(dict(ib_mapped))
         ib_after = self._mapping_to_input_bundle_v2(task_id, hydrated)
         # Preserve Assistant-filled context (e.g. resolved_inputs); hydrate only expands json_uri indexes into payloads.
-        readonly_input_bundle_v2 = FrozenInputBundleV2(
+        input_bundle_v2 = InputBundleV2(
             task_id=task_id,
             artifacts=ib_after.artifacts,
-            context=dict(input_bundle_v2.context),
+            context=dict(ib_mapped.context),
             hints=ib_after.hints,
         )
 
@@ -413,8 +424,7 @@ class AssistantService:
         typed_input = self._build_descriptor_input(
             descriptor,
             task_id,
-            readonly_input_bundle_v2,
-            config,
+            input_bundle_v2,
         )
 
         materialize_ctx = None
@@ -430,7 +440,7 @@ class AssistantService:
 
             materialize_ctx = MaterializeContext(
                 task_id=task_id,
-                input_bundle_v2=readonly_input_bundle_v2,
+                input_bundle_v2=input_bundle_v2,
                 persist_binary=_persist,
             )
 
@@ -438,7 +448,7 @@ class AssistantService:
             result = self._run_async(
                 agent.run(
                     typed_input,
-                    input_bundle_v2=readonly_input_bundle_v2,
+                    input_bundle_v2=input_bundle_v2,
                     materialize_ctx=materialize_ctx,
                 )
             )
@@ -558,22 +568,33 @@ class AssistantService:
             descriptor = self.agent_registry.get_descriptor(agent_id)
         except Exception:
             raise AssistantBadExecuteFieldsError(f"unknown agent_id: {agent_id}")
-        desc_text = (getattr(descriptor, "catalog_entry", "") or "")[:1200]
+        desc_text = getattr(descriptor, "catalog_entry", "") or ""
         gm = packaged_data.get("global_memory") or []
         if not isinstance(gm, list):
             gm = []
         available_roles = self._available_roles_from_memory(gm)
+        if not available_roles:
+            # Cold start: no prior artifacts for this task_id. Most agents can run from source_text
+            # alone, so skip the role-selection LLM pass entirely.
+            return {
+                "required_roles": [],
+                "selected_roles": [],
+                "append_to_source_text": "",
+                "rationale": "no available_roles in global_memory (cold start)",
+            }
         blob = {
             "target_agent_id": agent_id,
             "descriptor_hint": desc_text,
             "available_roles": available_roles,
-            "global_memory": self._json_preview(gm, max_chars=9000),
-            "file_tree": workspace.get_task_file_tree_text(task_id),
+            "global_memory": gm,
+            "workspace_file_tree": workspace.get_workspace_root_file_tree_text(),
         }
         system_prompt = (
             "You select which semantic artifacts this sub-agent needs next. "
             "Use only role values from available_roles. "
-            "Use global_memory.artifact_locations (role+path) and file_tree. "
+            "Use global_memory entries: read each entry's content (planning summary) to understand "
+            "what was produced and why, and use artifact_locations (role+path) to find the file paths. "
+            "Use workspace_file_tree as on-disk ground truth (includes artifacts/). "
             "You MUST infer required_roles from descriptor_hint and include every required_roles value in selected_roles. "
             "Return strict JSON only."
         )
@@ -582,34 +603,41 @@ class AssistantService:
             f"{json.dumps(blob, ensure_ascii=False)}\n\n"
             "Return JSON:\n"
             "{\n"
-            '  "required_roles": ["non-empty subset of available_roles"],\n'
+            '  "required_roles": ["subset of available_roles"],\n'
             '  "selected_roles": ["subset of available_roles"],\n'
             '  "append_to_source_text": "optional short prefix merged before existing source_text",\n'
             '  "rationale": "one short sentence"\n'
             "}\n"
         )
-        try:
-            parsed = self._run_async(
-                self.pipeline_llm_client.chat_json(
-                    system_prompt=system_prompt,
-                    user_prompt=user_prompt,
-                    max_tokens=700,
-                    reasoning_effort="low",
-                    model=self.input_package_model,
+        parsed: Dict[str, Any] | None = None
+        last_exc: Exception | None = None
+        for max_tok in (16384, 32768, 65536):
+            try:
+                parsed = self._run_async(
+                    self.pipeline_llm_client.chat_json(
+                        system_prompt=system_prompt,
+                        user_prompt=user_prompt,
+                        max_tokens=max_tok,
+                        reasoning_effort="low",
+                        model=self.input_package_model,
+                    )
                 )
-            )
-        except Exception as exc:
-            raise AssistantBadExecuteFieldsError(f"input package LLM failed: {exc}") from exc
+                break
+            except Exception as exc:
+                last_exc = exc
+                continue
+        if parsed is None:
+            raise AssistantBadExecuteFieldsError(
+                f"input package LLM failed: {last_exc}"
+            ) from last_exc
         if not isinstance(parsed, dict):
             raise AssistantBadExecuteFieldsError("input package LLM returned non-object JSON")
         rr = parsed.get("required_roles")
-        if not isinstance(rr, list) or not rr:
-            raise AssistantBadExecuteFieldsError(
-                "input package LLM must return non-empty required_roles"
-            )
+        if not isinstance(rr, list):
+            raise AssistantBadExecuteFieldsError("input package LLM must return required_roles list")
         picked = parsed.get("selected_roles")
-        if not isinstance(picked, list) or not picked:
-            raise AssistantBadExecuteFieldsError("input package LLM must return non-empty selected_roles")
+        if not isinstance(picked, list):
+            raise AssistantBadExecuteFieldsError("input package LLM must return selected_roles list")
         picked_set = {str(x).strip() for x in picked if str(x).strip()}
         required_set = {str(x).strip() for x in rr if str(x).strip()}
         missing = [r for r in sorted(required_set) if r and r not in picked_set]
@@ -664,8 +692,11 @@ class AssistantService:
         if not isinstance(bundle, dict) or not pkg:
             return
         roles = pkg.get("selected_roles")
-        if not isinstance(roles, list) or not roles:
-            raise AssistantBadExecuteFieldsError("input package selected_roles must be a non-empty list")
+        if not isinstance(roles, list):
+            raise AssistantBadExecuteFieldsError("input package selected_roles must be a list")
+        if not roles:
+            # Nothing to merge for cold-start or agents that don't need prior artifacts.
+            return
 
         mem = packaged_data.get("global_memory") or []
         if not isinstance(mem, list):
@@ -821,7 +852,8 @@ class AssistantService:
         }
         system_prompt = (
             "You convert one agent execution record into a global_memory planning row. "
-            "Deterministic paths are authoritative; echo them in artifact_locations with clear roles. "
+            "Deterministic artifact paths are merged server-side — do NOT echo long path strings "
+            "unless you add an optional extra location; prefer \"artifact_locations\": []. "
             "Return strict JSON only."
         )
         user_prompt = (
@@ -830,27 +862,40 @@ class AssistantService:
             "Return JSON with shape:\n"
             "{\n"
             '  "content": "one concise planning summary sentence",\n'
-            '  "artifact_locations": [\n'
-            '    {"role": "semantic role name", "path": "absolute or workspace path"}\n'
-            "  ],\n"
-            '  "artifact_briefs": [{"path": "path", "brief": "what this file is"}]\n'
+            '  "artifact_locations": [],\n'
+            '  "artifact_briefs": [{"path": "short basename or relative", "brief": "what this file is"}]\n'
             "}\n"
-            "artifact_locations must include every path from deterministic_artifact_paths (same paths)."
+            "Use artifact_locations [] unless you must add a path not already in deterministic_artifact_paths; "
+            "never paste full workspace paths to save tokens."
         )
-        try:
-            parsed = self._run_async(
-                self.pipeline_llm_client.chat_json(
-                    system_prompt=system_prompt,
-                    user_prompt=user_prompt,
-                    max_tokens=800,
-                    reasoning_effort="medium",
-                    model=self.global_memory_summary_model,
+        parsed: Dict[str, Any] | None = None
+        last_exc: Exception | None = None
+        # ``max_tokens`` = completion budget (provider-dependent; reasoning models also consume it).
+        # Retry with larger caps when JSON is truncated. Override:
+        # ``ASSISTANT_GLOBAL_MEMORY_MAX_TOKENS_RETRIES=4096,8192,16384,32768``
+        mem_retries = _parse_positive_int_list(
+            "ASSISTANT_GLOBAL_MEMORY_MAX_TOKENS_RETRIES",
+            (32768, 65536),
+        )
+        for max_tok in mem_retries:
+            try:
+                parsed = self._run_async(
+                    self.pipeline_llm_client.chat_json(
+                        system_prompt=system_prompt,
+                        user_prompt=user_prompt,
+                        max_tokens=max_tok,
+                        reasoning_effort="medium",
+                        model=self.global_memory_summary_model,
+                    )
                 )
-            )
-        except Exception as exc:
+                break
+            except Exception as exc:
+                last_exc = exc
+                continue
+        if parsed is None:
             raise AssistantGlobalMemorySyncError(
-                f"global_memory summary LLM failed: {exc}"
-            ) from exc
+                f"global_memory summary LLM failed: {last_exc}"
+            ) from last_exc
         if not isinstance(parsed, dict):
             raise AssistantGlobalMemorySyncError(
                 "global_memory summary LLM returned non-object JSON"
@@ -1044,7 +1089,7 @@ class AssistantService:
     ) -> List[Dict[str, Any]]:
         if not base_plan:
             return []
-        desc_text = (getattr(descriptor, "catalog_entry", "") or "")[:900]
+        desc_text = getattr(descriptor, "catalog_entry", "") or ""
         blob = {
             "target_agent_id": execution.agent_id,
             "task_id": execution.task_id,
@@ -1056,13 +1101,12 @@ class AssistantService:
                 else []
             ),
             "naming_policy": self._load_persist_naming_policy(),
-            # Ground truth for layout: full workspace tree (includes artifacts/ at repo root).
+            # Ground truth for layout: full workspace runtime tree (includes artifacts/).
             "workspace_file_tree": workspace.get_workspace_root_file_tree_text(),
-            "task_runtime_file_tree": workspace.get_task_file_tree_text(execution.task_id),
         }
         system_prompt = (
             "You orchestrate workspace-relative output paths for ONE agent execution. "
-            "Use workspace_file_tree (and task_runtime_file_tree) as ground truth: see what "
+            "Use workspace_file_tree as ground truth: see what "
             "already exists under artifacts/, avoid name collisions, and align new paths with "
             "the current layout (e.g. artifacts/media/<Agent>/<video|audio|image|other>/). "
             "proposed_assignments is the deterministic starting point—adjust relative_path when "
@@ -1072,7 +1116,7 @@ class AssistantService:
             "Return strict JSON only."
         )
         user_prompt = (
-            "Orchestrate paths using the trees above. Context:\n"
+            "Orchestrate paths using workspace_file_tree above. Context:\n"
             f"{json.dumps(blob, ensure_ascii=False)}\n\n"
             "Return JSON:\n"
             '{"assignments": [\n'
@@ -1081,18 +1125,27 @@ class AssistantService:
             '"relative_path": "artifacts/...", "role": "required for json_snapshot"}\n'
             "]}\n"
         )
-        try:
-            parsed = self._run_async(
-                self.pipeline_llm_client.chat_json(
-                    system_prompt=system_prompt,
-                    user_prompt=user_prompt,
-                    max_tokens=4000,
-                    reasoning_effort="low",
-                    model=self.output_persist_model,
+        parsed: Dict[str, Any] | None = None
+        last_exc: Exception | None = None
+        for max_tok in (16384, 32768, 65536):
+            try:
+                parsed = self._run_async(
+                    self.pipeline_llm_client.chat_json(
+                        system_prompt=system_prompt,
+                        user_prompt=user_prompt,
+                        max_tokens=max_tok,
+                        reasoning_effort="low",
+                        model=self.output_persist_model,
+                    )
                 )
-            )
-        except Exception as exc:
-            raise AssistantBadExecuteFieldsError(f"output persist plan LLM failed: {exc}") from exc
+                break
+            except Exception as exc:
+                last_exc = exc
+                continue
+        if parsed is None:
+            raise AssistantBadExecuteFieldsError(
+                f"output persist plan LLM failed: {last_exc}"
+            ) from last_exc
         if not isinstance(parsed, dict):
             raise AssistantBadExecuteFieldsError("output persist plan LLM returned non-object JSON")
         ov = parsed.get("assignments")
@@ -1118,7 +1171,12 @@ class AssistantService:
             
         Returns:
             Dictionary with ``task_id``, ``execution_id``, ``status``,
-            ``results``, ``error``, ``workspace_id``.
+            ``error``, ``error_reasoning`` (reserved for richer failure context; often ``null``),
+            ``workspace_id``, and ``global_memory_brief`` (same shape as
+            ``GET /api/assistant/workspace/memory/brief`` — ``{"global_memory": [...]}`` without
+            ``content`` keys). Full sub-agent payload remains on the stored
+            ``AgentExecution.results``; clients fetch it via
+            ``GET /api/assistant/executions/task/{task_id}`` when needed.
         """
         workspace.log_execution_result(execution)
         descriptor = self.agent_registry.get_descriptor(execution.agent_id)
@@ -1151,13 +1209,15 @@ class AssistantService:
             persisted_media_paths=persisted_paths or None,
             extra_artifact_locations=extra_locs or None,
         )
+        memory_brief = workspace.get_memory_brief(task_id=execution.task_id)
         return {
             "task_id": execution.task_id,
             "execution_id": execution.id,
             "status": execution.status.value,
-            "results": execution.results,
             "error": execution.error,
+            "error_reasoning": None,
             "workspace_id": workspace.id,
+            "global_memory_brief": memory_brief,
         }
 
     def build_execution_inputs(
@@ -1172,8 +1232,9 @@ class AssistantService:
         *execute_fields* is the JSON object from ``POST ... {"execute_fields": {...}}``:
         optional keys ``text``, ``image``, ``video``, ``audio``, etc.
 
-        Loads persisted global memory via ``get_memory_brief`` (same slim rows as Director:
-        no ``content``) into ``global_memory`` alongside ``input_bundle_v2``.
+        Loads persisted global memory via ``list_memory_entries`` (includes ``content``)
+        so that ``_resolve_inputs_for_agent_with_llm`` can use the planning summaries
+        alongside ``artifact_locations`` when selecting artifact roles.
 
         """
         runtime = dict(execute_fields or {})
@@ -1184,8 +1245,10 @@ class AssistantService:
             task_id=task_id,
             text_seed=text_seed,
         )
-        memory_brief = workspace.get_memory_brief(task_id=task_id)
-        packaged_data["global_memory"] = memory_brief.get("global_memory", [])
+        packaged_data["global_memory"] = workspace.list_memory_entries(
+            task_id=task_id,
+            limit=_global_memory_context_entries_limit(),
+        )
         self._inject_execute_media_into_bundle(packaged_data["input_bundle_v2"], runtime)
         pkg = self._resolve_inputs_for_agent_with_llm(
             agent_id, task_id, workspace, packaged_data
@@ -1218,7 +1281,8 @@ class AssistantService:
 
         Returns:
             Execution summary dict (``task_id``, ``execution_id``, ``status``,
-            ``results``, ``error``, ``workspace_id``).
+            ``error``, ``error_reasoning``, ``workspace_id``, ``global_memory_brief``).
+            Sub-agent ``results`` are not included; use executions list API to load them.
         """
         # Prepare environment
         workspace = self.prepare_environment()

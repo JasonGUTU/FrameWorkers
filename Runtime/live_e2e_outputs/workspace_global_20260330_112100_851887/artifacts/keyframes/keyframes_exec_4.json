@@ -1,0 +1,558 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_type": "character",
+          "entity_id": "char_001",
+          "display_name": "",
+          "purpose": "identity_anchor",
+          "keyframe_id": "kf_global_char_001",
+          "image_asset": {
+            "asset_id": "img_char_001_global",
+            "uri": "/tmp/fw_media_v87icvw8/img_char_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Moody, atmospheric lighting with strong contrasts between light and shadow.; Warm, aged color palette dominated by wood tones and metallic glints.; Sense of quiet urgency and focused intensity, building tension.; Extreme close-ups to emphasize the delicate work and the smallness of the components.; Shallow depth of field to isolate the action and heighten tension.; Focus on micro-expressions of panic and concentration.; A gradual shift from tense, focused visuals to a sense of calm and relief.; Use of sound (ticking, chiming) to punctuate the success.; Focus on Arthur's subtle expressions of satisfaction and exhaustion. An elderly watchmaker in his 70s, Arthur Pendelton, with a face showing the deep lines of age yet marked by intense concentration and precision. He wears a practical, slightly worn linen vest over a long-sleeved, button-up shirt with sleeves rolled to the elbows. His spectacles are perched precariously on the end of his nose. His demeanor is meticulously focused, but an underlying stress creates a subtle tension in his jaw and a slight narrowing of his eyes. His aged hands, while steady, show the faint signs of a tremor under pressure. A fresh sheen of sweat glistens subtly on his brow."
+        }
+      ],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "display_name": "",
+          "purpose": "style_anchor",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/tmp/fw_media_v87icvw8/img_loc_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Moody, atmospheric lighting with strong contrasts between light and shadow.; Warm, aged color palette dominated by wood tones and metallic glints.; Sense of quiet urgency and focused intensity, building tension.; Extreme close-ups to emphasize the delicate work and the smallness of the components.; Shallow depth of field to isolate the action and heighten tension.; Focus on micro-expressions of panic and concentration.; A gradual shift from tense, focused visuals to a sense of calm and relief.; Use of sound (ticking, chiming) to punctuate the success.; Focus on Arthur's subtle expressions of satisfaction and exhaustion. A cluttered, old-fashioned clock workshop, bathed in moody, atmospheric lighting with strong contrasts between light and shadow. A single focused lamp casts a bright, isolated pool of light onto a workbench, creating dramatic, deep shadows throughout the space. Dust motes are visible dancing within the lamplight. Numerous clocks of various sizes and ages, their brass and wood gleaming faintly, adorn the shelves and walls. The dominant feature in the background is a grand, ornate grandfather clock, its heavy pendulum visible, its hands indicating minutes to midnight. The overall atmosphere is one of quiet urgency and focused intensity, building tension, captured with a warm, aged color palette dominated by rich wood tones and metallic glints."
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_001",
+                "uri": "/tmp/fw_media_v87icvw8/img_char_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Show Arthur Pendelton, an elderly watchmaker in his 70s, under a single focused lamp, casting dramatic shadows that highlight the lines of age and his intense concentration. His face reveals a meticulous demeanor, with underlying stress subtly beginning to show. He is wearing a practical, slightly worn linen vest over a long-sleeved, button-up shirt with the sleeves rolled to the elbows. His spectacles are perched precariously on the end of his nose, prominent in the dim, atmospheric light. The mood is one of quiet urgency and focused intensity, building tension, within a warm, aged color palette."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/tmp/fw_media_v87icvw8/img_loc_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Depict the cluttered, old-fashioned clock workshop at NIGHT, bathed in Moody, atmospheric lighting with strong contrasts between light and shadow, emanating from a single focused lamp on the workbench. The warm, aged color palette dominates, with rich wood tones and metallic glints from numerous clocks of various sizes and ages adorning the shelves and walls. Dust motes dance visibly in the lamplight. The grand, ornate grandfather clock, its heavy pendulum visible, is an imposing, central feature, its presence contributing to the sense of quiet urgency and building tension within the confined space. Avoid bright, even lighting, modern aesthetics, and distracting background elements."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_001",
+              "linked_blocks": [
+                "b_001"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_01",
+                  "uri": "/tmp/fw_media_v87icvw8/img_sh_001_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Moody, atmospheric lighting with strong contrasts between light and shadow.; Warm, aged color palette dominated by wood tones and metallic glints.; Sense of quiet urgency and focused intensity, building tension.; Extreme close-ups to emphasize the delicate work and the smallness of the components.; Shallow depth of field to isolate the action and heighten tension.; Focus on micro-expressions of panic and concentration.; A gradual shift from tense, focused visuals to a sense of calm and relief.; Use of sound (ticking, chiming) to punctuate the success.; Focus on Arthur's subtle expressions of satisfaction and exhaustion. A wide, eye-level, static shot framing the workshop, highlighting the imposing, ornate grandfather clock with its heavy pendulum swinging slowly, and the bright, focused lamp on the workbench. The surroundings are dimly lit, shrouded in dramatic shadows, emphasizing the vast collection of clocks on shelves and walls. Dust motes are visible in the lamplight, creating an atmospheric haze. The scene evokes a sense of quiet urgency and focused intensity, building tension, with a warm, aged color palette dominated by wood tones and metallic glints.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_002",
+              "linked_blocks": [
+                "b_002"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_002",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_01",
+                  "uri": "/tmp/fw_media_v87icvw8/img_sh_002_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Moody, atmospheric lighting with strong contrasts between light and shadow.; Warm, aged color palette dominated by wood tones and metallic glints.; Sense of quiet urgency and focused intensity, building tension.; Extreme close-ups to emphasize the delicate work and the smallness of the components.; Shallow depth of field to isolate the action and heighten tension.; Focus on micro-expressions of panic and concentration.; A gradual shift from tense, focused visuals to a sense of calm and relief.; Use of sound (ticking, chiming) to punctuate the success.; Focus on Arthur's subtle expressions of satisfaction and exhaustion. A medium-close-up, eye-level, static shot focusing on Arthur Pendelton hunched over the workbench. His face, in profile or a slight angle, shows intense concentration, with his spectacles perched prominently on his nose. His aged, precise hands meticulously manipulate tiny tools over the intricate mechanisms of the delicate watch (prop_001), bathed in the bright pool of light from the focused lamp (prop_003). A bead of sweat (prop_007) traces his temple, highlighting the quiet urgency and focused intensity, building tension. The background is softly blurred with shallow depth of field, maintaining the warm, aged color palette with metallic glints from the watch components.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_003",
+              "linked_blocks": [
+                "b_003"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_003",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_01",
+                  "uri": "/tmp/fw_media_v87icvw8/img_sh_003_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Moody, atmospheric lighting with strong contrasts between light and shadow.; Warm, aged color palette dominated by wood tones and metallic glints.; Sense of quiet urgency and focused intensity, building tension.; Extreme close-ups to emphasize the delicate work and the smallness of the components.; Shallow depth of field to isolate the action and heighten tension.; Focus on micro-expressions of panic and concentration.; A gradual shift from tense, focused visuals to a sense of calm and relief.; Use of sound (ticking, chiming) to punctuate the success.; Focus on Arthur's subtle expressions of satisfaction and exhaustion. A medium-close-up, eye-level shot focusing on Arthur Pendelton's face. His expression shows growing anxiety and focused intensity, and his hand quickly wipes a bead of sweat (prop_007) from his temple. His spectacles (prop_006) are still perched on his nose, his features highlighted by the dramatic, high-contrast lighting of the focused lamp. The warm, aged color palette enhances the sense of quiet urgency.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_004",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_02",
+                  "uri": "/tmp/fw_media_v87icvw8/img_sh_003_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Moody, atmospheric lighting with strong contrasts between light and shadow.; Warm, aged color palette dominated by wood tones and metallic glints.; Sense of quiet urgency and focused intensity, building tension.; Extreme close-ups to emphasize the delicate work and the smallness of the components.; Shallow depth of field to isolate the action and heighten tension.; Focus on micro-expressions of panic and concentration.; A gradual shift from tense, focused visuals to a sense of calm and relief.; Use of sound (ticking, chiming) to punctuate the success.; Focus on Arthur's subtle expressions of satisfaction and exhaustion. A quick pan from Arthur's anxious face to a medium-close-up, eye-level shot of the ornate grandfather clock's face (prop_005). The heavy pendulum is visible, and the hands clearly show minutes to midnight, emphasizing the rapidly approaching deadline. The metallic glints of the clock face are highlighted by the dramatic, high-contrast lighting, intensifying the sense of quiet urgency and building tension. The warm, aged color palette underscores the gravitas of the impending time.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_002"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_002",
+                "uri": "/tmp/fw_media_v87icvw8/img_char_001_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Moody, atmospheric lighting with strong contrasts between light and shadow.; Warm, aged color palette dominated by wood tones and metallic glints.; Sense of quiet urgency and focused intensity, building tension.; Extreme close-ups to emphasize the delicate work and the smallness of the components.; Shallow depth of field to isolate the action and heighten tension.; Focus on micro-expressions of panic and concentration.; A gradual shift from tense, focused visuals to a sense of calm and relief.; Use of sound (ticking, chiming) to punctuate the success.; Focus on Arthur's subtle expressions of satisfaction and exhaustion. Show Arthur, maintaining his linen vest and rolled-sleeve shirt, but now visibly more tense and stressed. His aged hands display a slight tremor under the pressure, and his eyes are narrowed in fierce concentration. His jaw is tight, spectacles slightly askew, and a fresh sheen of sweat glistens on his brow, emphasizing his intense focus during the delicate task."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_002",
+                "uri": "/tmp/fw_media_v87icvw8/img_loc_001_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Moody, atmospheric lighting with strong contrasts between light and shadow.; Warm, aged color palette dominated by wood tones and metallic glints.; Sense of quiet urgency and focused intensity, building tension.; Extreme close-ups to emphasize the delicate work and the smallness of the components.; Shallow depth of field to isolate the action and heighten tension.; Focus on micro-expressions of panic and concentration.; A gradual shift from tense, focused visuals to a sense of calm and relief.; Use of sound (ticking, chiming) to punctuate the success.; Focus on Arthur's subtle expressions of satisfaction and exhaustion. Show the workshop during the night, dimly lit except for the intense, focused light from a single lamp directly illuminating Arthur's workspace, creating deep, dramatic shadows around the periphery. The antique grandfather clock remains clearly visible in the background, its presence adding to the sense of time and pressure."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_004",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_004",
+              "linked_blocks": [
+                "b_004"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_005",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_01",
+                  "uri": "/tmp/fw_media_v87icvw8/img_sh_004_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Moody, atmospheric lighting with strong contrasts between light and shadow.; Warm, aged color palette dominated by wood tones and metallic glints.; Sense of quiet urgency and focused intensity, building tension.; Extreme close-ups to emphasize the delicate work and the smallness of the components.; Shallow depth of field to isolate the action and heighten tension.; Focus on micro-expressions of panic and concentration.; A gradual shift from tense, focused visuals to a sense of calm and relief.; Use of sound (ticking, chiming) to punctuate the success.; Focus on Arthur's subtle expressions of satisfaction and exhaustion. Extreme close-up, eye-level, static camera: A pair of fine tweezers delicately holds a minuscule gear. Arthur's aged, slightly trembling fingers are just visible at the very edge of the tight frame, emphasizing the extreme delicacy of the task and the subtle signs of his mounting stress. The background is a soft, out-of-focus blur of the watch's intricate mechanisms.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_005",
+              "linked_blocks": [
+                "b_005"
+              ]
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_006",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_01",
+                  "uri": "/tmp/fw_media_v87icvw8/img_sh_005_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Moody, atmospheric lighting with strong contrasts between light and shadow.; Warm, aged color palette dominated by wood tones and metallic glints.; Sense of quiet urgency and focused intensity, building tension.; Extreme close-ups to emphasize the delicate work and the smallness of the components.; Shallow depth of field to isolate the action and heighten tension.; Focus on micro-expressions of panic and concentration.; A gradual shift from tense, focused visuals to a sense of calm and relief.; Use of sound (ticking, chiming) to punctuate the success.; Focus on Arthur's subtle expressions of satisfaction and exhaustion. Extreme close-up, eye-level, static camera: The minuscule component, barely visible, slips from the tweezers and teeters precariously on the very edge of the open watch mechanism. The shallow depth of field isolates the component, heightening the sudden moment of impending disaster and tension.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_007",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_02",
+                  "uri": "/tmp/fw_media_v87icvw8/img_sh_005_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Moody, atmospheric lighting with strong contrasts between light and shadow.; Warm, aged color palette dominated by wood tones and metallic glints.; Sense of quiet urgency and focused intensity, building tension.; Extreme close-ups to emphasize the delicate work and the smallness of the components.; Shallow depth of field to isolate the action and heighten tension.; Focus on micro-expressions of panic and concentration.; A gradual shift from tense, focused visuals to a sense of calm and relief.; Use of sound (ticking, chiming) to punctuate the success.; Focus on Arthur's subtle expressions of satisfaction and exhaustion. Extreme close-up, eye-level, static camera: Arthur's eyes, slightly widened in a micro-expression of sudden panic, his lips slightly parted as he takes a sharp, audible intake of breath. His spectacles are askew, and a bead of sweat runs down his temple, emphasizing the intense pressure.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_006",
+              "linked_blocks": [
+                "b_006"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_008",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_01",
+                  "uri": "/tmp/fw_media_v87icvw8/img_sh_006_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Moody, atmospheric lighting with strong contrasts between light and shadow.; Warm, aged color palette dominated by wood tones and metallic glints.; Sense of quiet urgency and focused intensity, building tension.; Extreme close-ups to emphasize the delicate work and the smallness of the components.; Shallow depth of field to isolate the action and heighten tension.; Focus on micro-expressions of panic and concentration.; A gradual shift from tense, focused visuals to a sense of calm and relief.; Use of sound (ticking, chiming) to punctuate the success.; Focus on Arthur's subtle expressions of satisfaction and exhaustion. Medium close-up, eye-level, static camera: Focus on Arthur's face as he regains control. His jaw tightens with fierce concentration, eyes narrowed, brow furrowed. Visible effort is etched on his features as he steadies his trembling hand, spectacles askew, demonstrating his resolve to overcome the mishap.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_009",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_02",
+                  "uri": "/tmp/fw_media_v87icvw8/img_sh_006_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Moody, atmospheric lighting with strong contrasts between light and shadow.; Warm, aged color palette dominated by wood tones and metallic glints.; Sense of quiet urgency and focused intensity, building tension.; Extreme close-ups to emphasize the delicate work and the smallness of the components.; Shallow depth of field to isolate the action and heighten tension.; Focus on micro-expressions of panic and concentration.; A gradual shift from tense, focused visuals to a sense of calm and relief.; Use of sound (ticking, chiming) to punctuate the success.; Focus on Arthur's subtle expressions of satisfaction and exhaustion. Medium close-up, eye-level, static camera (slightly lower from his face): Arthur's aged hands, now visibly steady, meticulously and with gentle firmness place the tiny component precisely into its position within the watch mechanism. The composition highlights the delicate, successful completion of the critical step, with the intricate workings of the watch subtly in focus around the action.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_003"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_003",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_003",
+                "uri": "/tmp/fw_media_v87icvw8/img_char_001_sc_003.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Moody, atmospheric lighting with strong contrasts between light and shadow.; Warm, aged color palette dominated by wood tones and metallic glints.; Sense of quiet urgency and focused intensity, building tension.; Extreme close-ups to emphasize the delicate work and the smallness of the components.; Shallow depth of field to isolate the action and heighten tension.; Focus on micro-expressions of panic and concentration.; A gradual shift from tense, focused visuals to a sense of calm and relief.; Use of sound (ticking, chiming) to punctuate the success.; Focus on Arthur's subtle expressions of satisfaction and exhaustion. Show Arthur in the dimly lit workshop at night, now displaying profound weariness and exhaustion but also a quiet sense of triumph and relief. His posture is beginning to relax from the previous tension. His linen vest and shirt are slightly disheveled from the long night's work. He wears his spectacles, and his face, though tired, is softened by a faint, proud smile, reflecting the successful completion of his task."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_003",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_003",
+                "uri": "/tmp/fw_media_v87icvw8/img_loc_001_sc_003.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Moody, atmospheric lighting with strong contrasts between light and shadow.; Warm, aged color palette dominated by wood tones and metallic glints.; Sense of quiet urgency and focused intensity, building tension.; Extreme close-ups to emphasize the delicate work and the smallness of the components.; Shallow depth of field to isolate the action and heighten tension.; Focus on micro-expressions of panic and concentration.; A gradual shift from tense, focused visuals to a sense of calm and relief.; Use of sound (ticking, chiming) to punctuate the success.; Focus on Arthur's subtle expressions of satisfaction and exhaustion. Show the workshop at night, still dimly lit but with a noticeable shift in atmosphere; the oppressive feeling of urgency and tension has begun to lift, replaced by a sense of calm relief. Warm, aged light from oil lamps casts long shadows, highlighting the wooden interior and metallic tools, with soft light on the workbench."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_007",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_007",
+              "linked_blocks": [
+                "b_007"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_010",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_007_kf_01",
+                  "uri": "/tmp/fw_media_v87icvw8/img_sh_007_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Moody, atmospheric lighting with strong contrasts between light and shadow.; Warm, aged color palette dominated by wood tones and metallic glints.; Sense of quiet urgency and focused intensity, building tension.; Extreme close-ups to emphasize the delicate work and the smallness of the components.; Shallow depth of field to isolate the action and heighten tension.; Focus on micro-expressions of panic and concentration.; A gradual shift from tense, focused visuals to a sense of calm and relief.; Use of sound (ticking, chiming) to punctuate the success.; Focus on Arthur's subtle expressions of satisfaction and exhaustion. Extreme close-up, eye-level shot: Focus on the intricate details of the repaired pocket watch, now ticking steadily and audibly. The watch is held close to an ear, with only the edge of a weary, clean-shaven cheek and part of a hand visible in the frame. The background is softly blurred. The lighting is warm and contrasts, highlighting the metallic glint of the watch.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_011",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_007_kf_02",
+                  "uri": "/tmp/fw_media_v87icvw8/img_sh_007_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Moody, atmospheric lighting with strong contrasts between light and shadow.; Warm, aged color palette dominated by wood tones and metallic glints.; Sense of quiet urgency and focused intensity, building tension.; Extreme close-ups to emphasize the delicate work and the smallness of the components.; Shallow depth of field to isolate the action and heighten tension.; Focus on micro-expressions of panic and concentration.; A gradual shift from tense, focused visuals to a sense of calm and relief.; Use of sound (ticking, chiming) to punctuate the success.; Focus on Arthur's subtle expressions of satisfaction and exhaustion. Close-up, eye-level shot: Slowly pull back from the ticking watch to reveal Arthur's face. He holds the watch gently to his ear, his eyes closed in quiet contemplation, then a faint, weary smile slowly spreads across his features, conveying profound relief and satisfaction after successfully repairing the mechanism. His spectacles are still on, and the warm, atmospheric lighting emphasizes the contours of his face and the subtle play of shadows.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_008",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_008",
+              "linked_blocks": [
+                "b_008"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_012",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_008_kf_01",
+                  "uri": "/tmp/fw_media_v87icvw8/img_sh_008_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Moody, atmospheric lighting with strong contrasts between light and shadow.; Warm, aged color palette dominated by wood tones and metallic glints.; Sense of quiet urgency and focused intensity, building tension.; Extreme close-ups to emphasize the delicate work and the smallness of the components.; Shallow depth of field to isolate the action and heighten tension.; Focus on micro-expressions of panic and concentration.; A gradual shift from tense, focused visuals to a sense of calm and relief.; Use of sound (ticking, chiming) to punctuate the success.; Focus on Arthur's subtle expressions of satisfaction and exhaustion. Medium shot, low-angle: Arthur is in the foreground, his body slumping slightly in his chair, head tilted back, exhaling a long breath of relief. His expression is one of complete exhaustion mixed with quiet triumph. Behind him, the imposing grandfather clock, its pendulum swinging, prominently displays its hands striking midnight. The clock begins to chime, its sound filling the workshop and punctuating the success. The warm, aged color palette and dramatic lighting create strong contrasts, with the clock illuminated by a soft glow.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_009",
+              "linked_blocks": [
+                "b_009"
+              ]
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_013",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_009_kf_01",
+                  "uri": "/tmp/fw_media_v87icvw8/img_sh_009_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Moody, atmospheric lighting with strong contrasts between light and shadow.; Warm, aged color palette dominated by wood tones and metallic glints.; Sense of quiet urgency and focused intensity, building tension.; Extreme close-ups to emphasize the delicate work and the smallness of the components.; Shallow depth of field to isolate the action and heighten tension.; Focus on micro-expressions of panic and concentration.; A gradual shift from tense, focused visuals to a sense of calm and relief.; Use of sound (ticking, chiming) to punctuate the success.; Focus on Arthur's subtle expressions of satisfaction and exhaustion. Medium shot, eye-level: Arthur slumps back into his chair, the weight visibly lifting from his shoulders after the successful repair. His eyes are fixed on the now-ticking watch, held gently in his hand, a look of profound relief and quiet pride etched on his weary face. His linen vest and shirt are slightly disheveled. The atmospheric lighting creates deep shadows and warm highlights, emphasizing his relaxed posture and the sense of calm. The background of the dimly lit workshop is softly blurred.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 9,
+    "keyframe_count_total": 13,
+    "avg_keyframes_per_shot": 1.4444444444444444,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 3,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 0
+  }
+}

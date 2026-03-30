@@ -1,0 +1,120 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-30T11:21:15.857187+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A meticulous watchmaker races against the final seconds before midnight to repair a critical timepiece, his skill and determination against the relentless march of time.",
+    "estimated_duration": {
+      "seconds": 10.0,
+      "confidence": 0.8
+    },
+    "style": {
+      "genre": [
+        "Suspense",
+        "Drama"
+      ],
+      "tone_keywords": [
+        "Tense",
+        "Focused",
+        "Determined",
+        "Urgent"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Arthur Pendelton",
+        "role": "protagonist",
+        "profile": "An elderly watchmaker, spectacles perched on his nose, hands steady from years of intricate work, but showing the slight tremor of age and intense pressure. His face is etched with deep concentration.",
+        "motivation": "To uphold his reputation, to complete his craft perfectly, and to beat the looming deadline of midnight for a client's crucial timepiece.",
+        "flaw": "Over-perfectionism, leading to immense self-imposed pressure, and a slight tremor in his hands when under extreme stress."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Arthur's Grandfather Clock Workshop",
+        "description": "A dimly lit, cluttered workshop filled with the quiet ticking of numerous clocks and the aroma of oil and old wood. A single, focused lamp illuminates his workbench, casting deep shadows. A large, ornate grandfather clock dominates the background, its hands nearing midnight."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Arthur intensely works on a delicate watch, bathed in the light of his lamp, as the prominent grandfather clock in his workshop ticks closer to midnight.",
+        "conflict": "Arthur's meticulous skill vs. the relentless, rapidly approaching deadline of midnight.",
+        "turning_point": "The visible proximity of midnight on the grandfather clock's face underscores the immediate urgency for Arthur."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "crisis",
+        "summary": "Arthur attempts a final, critical adjustment; a tiny, crucial component nearly slips from his tweezers, causing a moment of intense panic and heightened tension.",
+        "conflict": "The need for absolute precision vs. Arthur's slightly trembling hands under immense time pressure.",
+        "turning_point": "With a sharp intake of breath, Arthur steadies his hands and successfully secures the recalcitrant piece into place, overcoming the immediate hurdle."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "resolution",
+        "summary": "The repaired watch ticks clearly to life just as the grandfather clock begins to chime the first stroke of midnight, bringing Arthur a wave of exhausted relief.",
+        "conflict": "The internal tension of the race against time is finally released as success is achieved.",
+        "turning_point": "The watch's steady tick and the chiming of midnight mark the simultaneous completion of the task and the meeting of the deadline."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Establish Arthur's intense focus on the watch and the looming deadline of midnight.",
+        "conflict": "Arthur battles the ticking clock while performing highly delicate work.",
+        "turn": "Arthur wipes a bead of sweat from his brow, his gaze flicking nervously to the grandfather clock showing minutes to midnight."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Show the critical moment of potential failure and Arthur's immediate recovery.",
+        "conflict": "A tiny watch component almost slips from his tweezers, threatening to ruin everything.",
+        "turn": "With a visible effort, Arthur steadies his trembling hand, his eyes narrowing in concentration, and firmly places the piece."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Conclude with the successful repair and the symbolic arrival of midnight.",
+        "conflict": "The tension of the final seconds before the deadline.",
+        "turn": "The repaired watch begins to tick clearly and steadily. Simultaneously, the grandfather clock begins to chime the first stroke of midnight, and Arthur slumps back in his chair, exhaling in relief with a faint, weary smile."
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "character_count": 1,
+    "location_count": 1,
+    "scene_count": 3
+  }
+}

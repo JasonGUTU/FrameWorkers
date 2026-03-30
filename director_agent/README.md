@@ -2,6 +2,8 @@
 
 Director Agent is responsible for reasoning, planning, and task orchestration in the FrameWorkers system.
 
+For a **Task Stack–free** variant that only consumes chat messages and calls Assistant, see **`director_nostack/`** at the repo root (`director_nostack/README.md`). It ships a **separate copy** of the routing planner in `director_nostack/router.py` (kept in sync by hand with `reasoning.py` here).
+
 ## Overview
 
 The Director Agent:
@@ -69,7 +71,7 @@ Director talks to Assistant **only** via `POST /api/assistant/execute`. The JSON
 | `text` | **String** passed to Assistant. If Task Stack still stores ``description`` as a **dict** (current API), Director uses ``_task_stack_description_to_assistant_text()`` to turn it into one string (typically the ``goal`` line). When your product stores ``description`` as a **string**, Director passes it through unchanged. |
 | `image` / `video` / `audio` | Optional reference strings (e.g. data URI or URL) merged into the Assistant-side input bundle **hints** for multimodal agents. |
 
-**Response (200):** `task_id`（与请求一致）、`execution_id`（本次执行记录 id）、`status`, `results`, `error`, `workspace_id`。`agent_id` 仅在请求根级传入，响应不重复。Director **不再**在进程内补写 `task_id`。随后可再 `GET /api/assistant/executions/task/{task_id}` 取列表并在其中按 `id` 匹配该次执行。Errors: **400** / **404** / **500** with `{ "error": "..." }`.
+**Response (200):** `task_id`（与请求一致）、`execution_id`（本次执行记录 id）、`status`, `error`, `error_reasoning`（预留，多为 `null`）, `workspace_id`, `global_memory_brief`（无根级 `results`；整包见 `GET …/executions/task/{task_id}` 条目的 `results`）。`agent_id` 仅在请求根级传入，响应不重复。Director **不再**在进程内补写 `task_id`。Errors: **400** / **404** / **500** with `{ "error": "...", "error_reasoning": null }`（`error_reasoning` 占位）。
 
 **Assistant ↔ Sub-agent** (in-process `build_input` / `run` / result dict) is documented in `dynamic-task-stack/src/assistant/README.md` §3.5.
 
@@ -81,6 +83,8 @@ Set environment variables:
 - `POLLING_INTERVAL`: Polling interval in seconds (default: `2.0`)
 - `ASSISTANT_MEMORY_MODEL`: LLM used by **Assistant** to produce the text `content` for each new **global_memory** row (default: `INFERENCE_DEFAULT_MODEL` or `google-ai-studio/gemini-2.5-flash`). `DIRECTOR_MEMORY_MODEL` is a **legacy alias** for the same setting.
 - `DIRECTOR_ROUTING_MODEL`: LLM used by **`LlmSubAgentPlanner`** to choose `agent_id` (defaults to `DIRECTOR_MEMORY_MODEL`). Requires `inference` on `PYTHONPATH` (install merged repo `requirements.txt` from the project root).
+- `DIRECTOR_ROUTING_MEMORY_ROWS_MAX` (default `10`): **recent** global_memory rows included in routing prompts (same as `director_nostack`).
+- `DIRECTOR_ROUTING_MEMORY_JSON_MAX_CHARS` (default `200000`): cap when serializing memory into the routing prompt.
 - `LOG_LEVEL`: Logging level (default: `INFO`)
 
 ## Usage
@@ -128,11 +132,11 @@ python -m director_agent.main
 - `GET /api/assistant/workspace/files` - List files with filters
 - `GET /api/assistant/workspace/memory/entries` - Read structured memory entries
 - `POST /api/assistant/workspace/memory/entries` - Write structured memory entries
-- `GET /api/assistant/workspace/memory/brief` - Returns **`global_memory`** rows **without** `content` (all matches, `created_at` desc; Director uses `agent_id` / `created_at` / `execution_result` / optional **`artifact_locations`**).
+- `GET /api/assistant/workspace/memory/brief` - Returns **`global_memory`** slim rows (**only** `task_id`, `agent_id`, `created_at`, `execution_result`; **no** `content` / **`artifact_locations`**; `created_at` desc).
 
 ### Global memory
 
-**Assistant** owns writes: in `process_results` it appends **global_memory** entries (LLM `content`, optional **`artifact_locations`**, `agent_id`, `created_at`, **`execution_result`**) under **`Runtime/{workspace_id}/{task_id}/global_memory.md`**. Director **only reads** `GET /memory/brief` for planning — response rows omit `content`; it does not write rows.
+**Assistant** owns writes: in `process_results` it appends **global_memory** entries (LLM `content`, optional **`artifact_locations`**, `agent_id`, `created_at`, **`execution_result`**) under **`Runtime/{workspace_id}/{task_id}/global_memory.md`**. Director **only reads** `GET /memory/brief` for planning — response rows are **slim** (no `content`, no **`artifact_locations`**); it does not write rows.
 
 The LLM router may use failed/success rows in `global_memory` implicitly when choosing the next agent; there is no separate keyword-based path.
 
@@ -184,6 +188,7 @@ Recent enhancements in `api_client.py`:
 
 ## Notes
 
+- **`reasoning.py` routing JSON**: `_parse_router_json` uses strict `json.loads` on the full stripped model body (no markdown-fence stripping or substring recovery); invalid JSON raises **`ValueError`**. User-message structured fields: `_parse_message_content_as_json` logs **`warning`** on **`JSONDecodeError`** or non-object root, then returns `{}` so the planner can still fall back to **create_task** / plain text — failures are visible in logs.
 - Director Agent runs in a continuous loop, polling the backend
 - It handles errors gracefully and continues running
 - Use SIGINT or SIGTERM for graceful shutdown

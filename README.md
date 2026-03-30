@@ -10,6 +10,7 @@ FrameWorkers 是一个完整的任务编排和 Agent 管理系统，由以下核
 - **Assistant System**: 基于 `SubAgentDescriptor` 的流水线执行与 Workspace 落盘
 - **Agent Framework**（`agents/`）: 注册表、评估器与媒体 materializer
 - **Director Agent**: 轮询后端、推理与任务栈更新
+- **Director (no stack)**（`director_nostack/`）: 仅用聊天消息 + Assistant，**不**使用 Task Stack；**`merge_session_goal`** 会合并「新一行 + 更早用户原文（messages list）+ memory + execution」再选下一 sub-agent（见该目录 `README.md`）
 - **Inference**: LLM 客户端与 image/video/audio 生成服务（独立库）
 - **Workspace**: 全局共享工作空间（文件、**global_memory**、日志、资产索引）
 - **Interface**: Web 前端（Vue 3 + Vite）
@@ -39,6 +40,15 @@ FrameWorkers/
 │   ├── main.py
 │   ├── run.py
 │   ├── requirements.txt
+│   └── README.md
+├── director_nostack/                # 可选：无任务栈编排（聊天 → Assistant）
+│   ├── director.py                  # DirectorNoStack + run_nostack_pipeline
+│   ├── router.py                    # LlmSubAgentPlanner（调用 + 解析）
+│   ├── prompts.py                   # system 文案与 user 拼装
+│   ├── api_client.py
+│   ├── config.py
+│   ├── main.py
+│   ├── run.py
 │   └── README.md
 ├── dynamic-task-stack/
 │   ├── src/
@@ -174,15 +184,18 @@ Web 前端界面：
 ### 1. 安装依赖
 
 ```bash
-# 创建 conda 环境 (frameworkers, python 3.11) 并安装所有依赖（包含 pytest）
-python install_requirements.py
+# 推荐：先激活环境再安装（用当前解释器 pip，不依赖 PATH 里必须有 conda）
 conda activate frameworkers
+python install_requirements.py
+
+# 若尚未创建环境：可在 conda base 下直接执行脚本（需 conda 在 PATH），脚本会创建 frameworkers 后再安装
+# python install_requirements.py
 
 # 前端依赖
 cd interface && npm install
 ```
 
-`install_requirements.py` 支持重复执行：若 `frameworkers` 环境已存在会跳过创建，仅更新依赖；对不支持 `conda run --no-banner` 的旧版 conda 会自动回退兼容参数。
+`install_requirements.py` 支持重复执行：若 `frameworkers` 环境已存在会跳过创建，仅更新依赖。已激活 `frameworkers` 时直接用 `python -m pip install`；否则使用 `CONDA_EXE` 或 PATH 中的 `conda` 执行 `conda run`。对不支持 `conda run --no-banner` 的旧版 conda 会自动回退兼容参数。
 
 ### 2. 启动服务
 

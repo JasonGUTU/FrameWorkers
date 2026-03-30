@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Any
-
 from pydantic import BaseModel
 
 from ..descriptor import SubAgentDescriptor
@@ -21,7 +19,6 @@ OUTPUT_ASSET_KEY = "storyboard"
 def build_input(
     _task_id: str,
     input_bundle_v2: InputBundleV2,
-    config: Any,
 ) -> BaseModel:
     resolved = (
         input_bundle_v2.context.get("resolved_inputs", {})
@@ -30,7 +27,7 @@ def build_input(
     )
     return StoryboardAgentInput(
         screenplay=resolved.get("screenplay", {}),
-        constraints=StoryboardConstraints(language=config.language),
+        constraints=StoryboardConstraints(),
     )
 
 

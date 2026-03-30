@@ -1,0 +1,295 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-30T11:31:19.400082+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_001"
+        },
+        "estimated_duration": {
+          "seconds": 10.0,
+          "confidence": 0.9
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "Ancient European cobblestone street, wet and highly reflective from heavy, persistent rain.",
+              "Predominantly dark and oppressive night, with only a single, old-fashioned streetlight providing a surprisingly warm, amber glow.",
+              "Overcast, dark night sky, adding to the somber atmosphere."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Anonymous and solitary figure, whose face is obscured by a hooded jacket.",
+                "Projects an aura of quiet determination and resilience.",
+                "Their presence is defined by their journey through the elements rather than specific features."
+              ],
+              "wardrobe_notes": [
+                "Dark, practical, and water-resistant cycling jacket with the hood pulled up.",
+                "Dark trousers and weathered cycling shoes.",
+                "A subtle reflective strip is visible on their back or jacket, offering a momentary glint in the darkness."
+              ],
+              "must_keep": [
+                "Weather-appropriate for heavy rain",
+                "Subdued and dark color palette (greys, blacks, deep blues)",
+                "Hood completely obscuring the face to maintain anonymity",
+                "Subtle reflective element to catch light"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Bicycle",
+              "must_keep": [
+                "Standard road bike or commuter style",
+                "Faint but functional front headlight, cutting a narrow beam",
+                "Sounds of tires hissing on wet pavement"
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "Rain",
+              "must_keep": [
+                "Heavy and continuous downpour, visible in sheets and individual drops",
+                "Creates glistening, reflective surfaces on cobblestones and character's gear",
+                "Sounds of rain distinct and pervasive"
+              ]
+            },
+            {
+              "prop_id": "prop_003",
+              "prop_name": "Cobblestone Street",
+              "must_keep": [
+                "Irregular, aged stones with visible textures",
+                "Completely wet and highly reflective surface, mirroring light sources",
+                "Appears vast and winding"
+              ]
+            },
+            {
+              "prop_id": "prop_004",
+              "prop_name": "Streetlight",
+              "must_keep": [
+                "Old-fashioned, possibly gas lamp style, design",
+                "Emits a warm, amber, inviting glow",
+                "Creates a distinct halo of light against the surrounding darkness",
+                "Raindrops sparkle within its light"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Melancholic yet resilient tone, emphasizing solitude and endurance.",
+              "High contrast lighting, with deep shadows and a single warm light source.",
+              "Strong emphasis on reflections, wet textures, and atmospheric elements (rain, fog, mist if applicable).",
+              "Focus on subtle, observational storytelling, allowing the environment to convey mood.",
+              "Color palette dominated by blues, greys, and blacks, with a striking amber highlight."
+            ],
+            "must_avoid": [
+              "Bright, cheerful, or overly saturated colors.",
+              "Rapid cuts or frantic camera movement.",
+              "Close-ups revealing the character's face or distinct identity.",
+              "Modern, sterile, or brightly lit environments."
+            ]
+          }
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "linked_blocks": [
+              "b_001"
+            ],
+            "estimated_duration_sec": 2.0,
+            "shot_type": "wide_shot",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "static",
+              "framing_notes": "Framing emphasizes the vastness of the wet street and the heavy rain. Cobblestones take up much of the foreground, glistening."
+            },
+            "visual_goal": "Establish the oppressive, wet, and solitary environment of the street under heavy rain.",
+            "action_focus": "Sheets of rain falling, turning cobblestones into a dark, shimmering mosaic. The only sounds are the rain and distant, growing tire hiss.",
+            "characters_in_frame": [],
+            "props_in_frame": [
+              "prop_002",
+              "prop_003"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": [
+                "Wide shot of an empty, rain-slicked cobblestone street at night. Rain visibly falls, creating ripples and reflections."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "linked_blocks": [
+              "b_002"
+            ],
+            "estimated_duration_sec": 2.0,
+            "shot_type": "medium_long_shot",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "tracking",
+              "framing_notes": "Camera slightly pulls back as the cyclist approaches, maintaining distance to emphasize solitude."
+            },
+            "visual_goal": "Introduce the anonymous Cyclist, highlighting their solitude and quiet resolve against the dark, wet backdrop.",
+            "action_focus": "The Cyclist, a hooded silhouette, pedals slowly but steadily into view from the deep background. Their faint bicycle headlight cuts a small path.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Cyclist appearing as a dark silhouette in the distance, only a faint headlight visible.",
+                "Cyclist closer, still a silhouette, pedaling steadily, rain visible around them."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "linked_blocks": [
+              "b_003"
+            ],
+            "estimated_duration_sec": 1.5,
+            "shot_type": "medium_shot",
+            "camera": {
+              "angle": "slightly_high_angle",
+              "movement": "static",
+              "framing_notes": "Framed to highlight the halo of light and the sparkling raindrops within it."
+            },
+            "visual_goal": "Present the streetlight as a stark contrast and beacon of warmth in the cold, wet expanse.",
+            "action_focus": "A single, old-fashioned streetlight casting a warm, amber glow. Raindrops sparkle and fall visibly within its inviting halo.",
+            "characters_in_frame": [],
+            "props_in_frame": [
+              "prop_004",
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": [
+                "Medium shot of the streetlight's warm glow, with rain visibly sparkling in its light."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "linked_blocks": [
+              "b_004"
+            ],
+            "estimated_duration_sec": 2.0,
+            "shot_type": "medium_shot",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "tracking",
+              "framing_notes": "Camera tracks with the Cyclist from a side profile, showcasing their brief illumination."
+            },
+            "visual_goal": "Show the Cyclist's momentary entry into warmth and transient solace.",
+            "action_focus": "The Cyclist glides into the pool of light. Rain on their jacket and bicycle spokes catch the warmth, casting fleeting shadows. A subtle, almost imperceptible pause in cadence.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002",
+              "prop_004"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Cyclist entering the streetlight's glow, their dark form suddenly illuminated.",
+                "Rain on the cyclist's jacket and bike spokes briefly sparkling in the warm light, a moment of fleeting warmth."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 5,
+            "linked_blocks": [
+              "b_005"
+            ],
+            "estimated_duration_sec": 1.5,
+            "shot_type": "medium_long_shot",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Camera remains static, letting the Cyclist move out of frame and into the darkness."
+            },
+            "visual_goal": "Emphasize the return to solitude and the vast, indifferent darkness after the brief moment of light.",
+            "action_focus": "The Cyclist quickly emerges from the glow, disappearing back into the indistinguishable grey-black of the rainy night. The rhythmic hiss of tires fades.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 2,
+              "keyframe_notes": [
+                "Cyclist just leaving the edge of the streetlight's glow, fading back into silhouette.",
+                "Cyclist's form almost entirely consumed by the distant darkness, only sound remains."
+              ]
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 6,
+            "linked_blocks": [
+              "b_006"
+            ],
+            "estimated_duration_sec": 1.0,
+            "shot_type": "medium_shot",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on the streetlight, then a slight pan to empty, glistening cobblestones."
+            },
+            "visual_goal": "Conclude the scene with the lingering effect of the streetlight, now empty, highlighting the transient nature of comfort.",
+            "action_focus": "The streetlight remains, its warm glow now empty, appearing momentarily brighter against the persistent darkness. The cobblestones still glisten, reflecting only its solitary light.",
+            "characters_in_frame": [],
+            "props_in_frame": [
+              "prop_004",
+              "prop_003",
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": [
+                "Medium shot of the empty streetlight glowing, its light reflecting off the wet, empty cobblestones."
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_count_total": 6,
+    "avg_shots_per_scene": 6.0,
+    "sum_shot_duration_sec": 10.0,
+    "duration_match_score": 0.0
+  }
+}

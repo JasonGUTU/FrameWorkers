@@ -1,0 +1,166 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-30T11:35:14.203459+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "A Fleeting Glow",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Rainy Cobblestone Alley",
+          "interior_exterior": "EXT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "A solitary cyclist rides through a rain-slicked cobblestone alley at night. They briefly pass through the warm, comforting glow of a single streetlight before continuing into the vast, cold darkness, leaving the transient light behind.",
+        "estimated_duration": {
+          "seconds": 10.0,
+          "confidence": 0.7
+        },
+        "continuity": {
+          "props_present": [
+            "bicycle",
+            "rain",
+            "streetlight"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Dark, practical cycling gear; a reflective but muted rain jacket; helmet obscuring face.",
+              "must_keep": [
+                "Weather-appropriate for rain",
+                "Suggests a solitary, no-fuss approach"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "The street is cobblestone and wet.",
+            "There is a single, warm streetlight.",
+            "The moment of warmth is brief and fleeting."
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_001",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "EXT. RAINY COBBLESTONE ALLEY - NIGHT",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_002",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The world is a wash of dark, reflective surfaces. Wet cobblestones shimmer under a distant, diffuse city glow, but mostly, there is only a pervasive, cold darkness. RAIN falls steadily, silently.",
+            "continuity_refs": {
+              "props": [
+                "rain"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_003",
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "The Cyclist",
+            "text": "From the gloom, THE CYCLIST (char_001) emerges, a hunched silhouette on a bicycle. They move with quiet determination, the rain seeming to bypass them entirely. Their dark attire offers no contrast to the night.",
+            "continuity_refs": {
+              "props": [
+                "bicycle"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_004",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Ahead, a single STREETLIGHT casts a warm, inviting pool of orange light. It's an isolated beacon in the endless wet.",
+            "continuity_refs": {
+              "props": [
+                "streetlight"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_005",
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "The Cyclist",
+            "text": "The Cyclist glides into this luminous circle. For a fleeting moment, the rain catches the light, sparkling around them. The cobblestones beneath their wheels are briefly vibrant, reflecting the golden warmth. The Cyclist's posture seems to soften, imperceptibly, within this temporary sanctuary.",
+            "continuity_refs": {
+              "props": [
+                "bicycle",
+                "rain",
+                "streetlight"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_006",
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "The Cyclist",
+            "text": "Then, as quickly as they entered, The Cyclist passes through, leaving the circle of light behind. They are swallowed once more by the rain-swept darkness, the warmth an echo.",
+            "continuity_refs": {
+              "props": [
+                "bicycle",
+                "rain"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_007",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The streetlight remains, a solitary, constant glow, its brief embrace now empty.",
+            "continuity_refs": {
+              "props": [
+                "streetlight"
+              ],
+              "wardrobe_character_ids": []
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "The cyclist exits the streetlight's radiant zone, returning to the anonymity and cold of the dark, rainy alley.",
+          "emotional_shift": "From a brief, almost unconscious sense of temporary solace and warmth to a renewed state of solitary endurance and melancholy."
+        }
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "estimated_total_duration_sec": 10.0,
+    "sum_scene_duration_sec": 10.0,
+    "scene_count": 1,
+    "dialogue_block_count": 0,
+    "action_block_count": 7
+  }
+}

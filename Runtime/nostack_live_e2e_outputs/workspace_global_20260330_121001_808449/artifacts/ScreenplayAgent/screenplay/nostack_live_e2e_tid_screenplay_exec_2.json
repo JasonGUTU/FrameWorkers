@@ -1,0 +1,138 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-30T12:10:36.895041+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "The Blue Hour Bookmark",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "The Old Town Library",
+          "interior_exterior": "INT.",
+          "time_of_day": "CUSTOM"
+        },
+        "summary": "Elara, an elderly librarian, performs her quiet closing ritual in the Old Town Library. As she processes the final returned book, she discovers a deeply personal bookmark with a cryptic message, stirring old emotions and hinting at a long-lost connection.",
+        "estimated_duration": {
+          "seconds": 10.0,
+          "confidence": 0.8
+        },
+        "continuity": {
+          "props_present": [
+            "Stack of returned books",
+            "Classic novel (e.g., 'Wuthering Heights')",
+            "Pressed rose bookmark with handwritten note"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A sensible, comfortable cardigan over a simple blouse and skirt. Practical shoes. Her hair is neatly styled in a bun.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Elara discovers a personal bookmark in a returned book.",
+            "The bookmark contains a handwritten note from someone from her past.",
+            "The note implies a possibility of rekindling a past connection."
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_001",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "INT. OLD TOWN LIBRARY - BLUE HOUR\n\nELARA VANCE (60s), meticulous and composed, tidies the last few items on the circulation desk. The library is quiet, bathed in the soft, fading blue light of dusk.",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_002",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "She picks up the final returned book, a well-loved copy of 'Wuthering Heights', from a small stack. Her movements are practiced, almost ritualistic.",
+            "continuity_refs": {
+              "props": [
+                "Stack of returned books",
+                "Classic novel (e.g., 'Wuthering Heights')"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_003",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "As she opens it to mark its return, her fingers brush against something thin nestled within the pages. She carefully pulls it out.",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_004",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "It’s a pressed, faded rose, meticulously dried and laminated, serving as a bookmark. On its back, a small, elegant handwritten note.",
+            "continuity_refs": {
+              "props": [
+                "Pressed rose bookmark with handwritten note"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_005",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "CLOSE ON Elara’s face. Her eyes, initially focused on the task, widen imperceptibly as she reads the familiar script:\n\n“Still waiting for our story to continue. - L.”",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_006",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A ghost of a smile touches her lips, quickly replaced by a profound, wistful surprise. Her gaze drifts to the dark windows, the quiet world outside suddenly full of unexpected possibilities.",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "Elara discovers a deeply personal bookmark from her past, with a note hinting at rekindling a long-lost connection, shattering her quiet routine.",
+          "emotional_shift": "From a state of quiet, solitary contentment and methodical routine to profound surprise, poignant nostalgia, and a burgeoning sense of hope."
+        }
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "estimated_total_duration_sec": 10.0,
+    "sum_scene_duration_sec": 10.0,
+    "scene_count": 1,
+    "dialogue_block_count": 0,
+    "action_block_count": 6
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-30T11:34:52.972191+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A solitary cyclist finds a fleeting moment of warmth and solitude beneath a single streetlight on a rain-slicked cobblestone street.",
+    "estimated_duration": {
+      "seconds": 10.0,
+      "confidence": 0.7
+    },
+    "style": {
+      "genre": [
+        "Slice of Life",
+        "Atmospheric"
+      ],
+      "tone_keywords": [
+        "Melancholy",
+        "Contemplative",
+        "Serene",
+        "Transient"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "The Cyclist",
+        "role": "protagonist",
+        "profile": "A lone figure, quietly navigating the urban landscape on their bicycle late at night, seemingly indifferent to the rain.",
+        "motivation": "To reach their destination, to endure the journey.",
+        "flaw": "Perhaps a sense of isolation, or an unnoticed resignation to their solitary path."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Rainy Cobblestone Alley",
+        "description": "A narrow, old-world street paved with wet, dark cobblestones reflecting the dim city lights, illuminated by one particularly warm, glowing streetlight."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "A cyclist passes through a single warm streetlight on a rainy cobblestone street, briefly entering a pool of light and warmth before continuing into the darkness.",
+        "conflict": "The cold, wet, expansive night vs. the fleeting, comforting glow of the isolated streetlight.",
+        "turning_point": "The moment the cyclist enters, then exits, the streetlight's radius of light and warmth."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To capture a momentary contrast between the harshness of the weather and a brief, warm sanctuary.",
+        "conflict": "The persistent, cold rain and the overwhelming darkness against the ephemeral warmth and brightness of the streetlight.",
+        "turn": "The cyclist's silent passage through the light, signaling the end of the brief moment of respite."
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "character_count": 1,
+    "location_count": 1,
+    "scene_count": 1
+  }
+}

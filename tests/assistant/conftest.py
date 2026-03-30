@@ -50,11 +50,12 @@ class DummyDescriptor:
     def build_equipped_agent(self, _llm):
         return _DummyPipelineAgent()
 
-    def build_input(self, task_id, input_bundle_v2, config):
+    def build_input(self, task_id, input_bundle_v2):
+        hints = getattr(input_bundle_v2, "hints", None) or {}
         return {
             "task_id": task_id,
             "input_bundle_v2": input_bundle_v2,
-            "language": config.language,
+            "language": hints.get("language") or "en",
         }
 
 

@@ -20,7 +20,6 @@ OUTPUT_ASSET_KEY = "video"
 def build_input(
     _task_id: str,
     input_bundle_v2: InputBundleV2,
-    config: Any,
 ) -> BaseModel:
     resolved = (
         input_bundle_v2.context.get("resolved_inputs", {})

@@ -1,0 +1,28 @@
+{
+  "counter": 1,
+  "files": {
+    "file_000001_fc17898a": {
+      "id": "file_000001_fc17898a",
+      "filename": "nostack_e2e_asset_exec_1.json",
+      "description": "Structured JSON snapshot for NostackE2eAgent (exec_1_3af19aab)",
+      "file_type": "text",
+      "file_extension": ".json",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/nostack_live_e2e_outputs/workspace_global_20260330_121001_689404/artifacts/nostack_e2e_asset/nostack_e2e_asset_exec_1.json",
+      "size_bytes": 33,
+      "created_at": "2026-03-30T12:10:01.697358",
+      "created_by": "NostackE2eAgent",
+      "tags": [
+        "NostackE2eAgent",
+        "nostack_http_e2e_tid",
+        "asset_json"
+      ],
+      "metadata": {
+        "execution_id": "exec_1_3af19aab",
+        "task_id": "nostack_http_e2e_tid",
+        "producer_agent_id": "NostackE2eAgent",
+        "asset_key": "nostack_e2e_asset",
+        "asset_variant": "json_snapshot"
+      }
+    }
+  }
+}

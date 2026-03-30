@@ -1,0 +1,362 @@
+{
+  "counter": 16,
+  "files": {
+    "file_000001_ad250af3": {
+      "id": "file_000001_ad250af3",
+      "filename": "story_blueprint_exec_1.json",
+      "description": "Structured JSON snapshot for StoryAgent (exec_1_c9ef3d73)",
+      "file_type": "text",
+      "file_extension": ".json",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/nostack_live_e2e_outputs/workspace_global_20260330_113441_853472/artifacts/story_blueprint/nostack_live_e2e_tid_story_blueprint_exec_1.json",
+      "size_bytes": 2737,
+      "created_at": "2026-03-30T11:35:04.209717",
+      "created_by": "StoryAgent",
+      "tags": [
+        "StoryAgent",
+        "nostack_live_e2e_tid",
+        "asset_json"
+      ],
+      "metadata": {
+        "execution_id": "exec_1_c9ef3d73",
+        "task_id": "nostack_live_e2e_tid",
+        "producer_agent_id": "StoryAgent",
+        "asset_key": "story_blueprint",
+        "asset_variant": "json_snapshot"
+      }
+    },
+    "file_000002_e2db9e32": {
+      "id": "file_000002_e2db9e32",
+      "filename": "screenplay_exec_2.json",
+      "description": "Structured JSON snapshot for ScreenplayAgent (exec_2_df1d4d10)",
+      "file_type": "text",
+      "file_extension": ".json",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/nostack_live_e2e_outputs/workspace_global_20260330_113441_853472/artifacts/screenplay/nostack_live_e2e_tid_screenplay_exec_1.json",
+      "size_bytes": 5983,
+      "created_at": "2026-03-30T11:35:35.579031",
+      "created_by": "ScreenplayAgent",
+      "tags": [
+        "ScreenplayAgent",
+        "nostack_live_e2e_tid",
+        "asset_json"
+      ],
+      "metadata": {
+        "execution_id": "exec_2_df1d4d10",
+        "task_id": "nostack_live_e2e_tid",
+        "producer_agent_id": "ScreenplayAgent",
+        "asset_key": "screenplay",
+        "asset_variant": "json_snapshot"
+      }
+    },
+    "file_000003_4563aacf": {
+      "id": "file_000003_4563aacf",
+      "filename": "storyboard_exec_3.json",
+      "description": "Structured JSON snapshot for StoryboardAgent (exec_3_cccf6926)",
+      "file_type": "text",
+      "file_extension": ".json",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/nostack_live_e2e_outputs/workspace_global_20260330_113441_853472/artifacts/storyboard/nostack_live_e2e_tid_storyboard_exec_3.json",
+      "size_bytes": 10068,
+      "created_at": "2026-03-30T11:36:51.953338",
+      "created_by": "StoryboardAgent",
+      "tags": [
+        "StoryboardAgent",
+        "nostack_live_e2e_tid",
+        "asset_json"
+      ],
+      "metadata": {
+        "execution_id": "exec_3_cccf6926",
+        "task_id": "nostack_live_e2e_tid",
+        "producer_agent_id": "StoryboardAgent",
+        "asset_key": "storyboard",
+        "asset_variant": "json_snapshot"
+      }
+    },
+    "file_000004_6ebc111e": {
+      "id": "file_000004_6ebc111e",
+      "filename": "img_loc_001_global.png",
+      "description": "Media asset img_loc_001_global",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/nostack_live_e2e_outputs/workspace_global_20260330_113441_853472/artifacts/media/KeyFrameAgent/image/nostack_live_e2e_tid_img_loc_001_global.png",
+      "size_bytes": 163593,
+      "created_at": "2026-03-30T11:39:39.526420",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "nostack_live_e2e_tid"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_f3cefbf6",
+        "task_id": "nostack_live_e2e_tid",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_loc_001_global",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000005_2254c3e1": {
+      "id": "file_000005_2254c3e1",
+      "filename": "img_char_001_global.png",
+      "description": "Media asset img_char_001_global",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/nostack_live_e2e_outputs/workspace_global_20260330_113441_853472/artifacts/media/KeyFrameAgent/image/nostack_live_e2e_tid_img_char_001_global.png",
+      "size_bytes": 104812,
+      "created_at": "2026-03-30T11:39:39.551659",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "nostack_live_e2e_tid"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_f3cefbf6",
+        "task_id": "nostack_live_e2e_tid",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_char_001_global",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000006_e7a5b2e7": {
+      "id": "file_000006_e7a5b2e7",
+      "filename": "img_loc_001_sc_001.png",
+      "description": "Media asset img_loc_001_sc_001",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/nostack_live_e2e_outputs/workspace_global_20260330_113441_853472/artifacts/media/KeyFrameAgent/image/nostack_live_e2e_tid_img_loc_001_sc_001.png",
+      "size_bytes": 170275,
+      "created_at": "2026-03-30T11:39:39.570123",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "nostack_live_e2e_tid"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_f3cefbf6",
+        "task_id": "nostack_live_e2e_tid",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_loc_001_sc_001",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000007_906b7daa": {
+      "id": "file_000007_906b7daa",
+      "filename": "img_char_001_sc_001.png",
+      "description": "Media asset img_char_001_sc_001",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/nostack_live_e2e_outputs/workspace_global_20260330_113441_853472/artifacts/media/KeyFrameAgent/image/nostack_live_e2e_tid_img_char_001_sc_001.png",
+      "size_bytes": 109933,
+      "created_at": "2026-03-30T11:39:39.589432",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "nostack_live_e2e_tid"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_f3cefbf6",
+        "task_id": "nostack_live_e2e_tid",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_char_001_sc_001",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000008_88bc7cac": {
+      "id": "file_000008_88bc7cac",
+      "filename": "img_sh_001_kf_02.png",
+      "description": "Media asset img_sh_001_kf_02",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/nostack_live_e2e_outputs/workspace_global_20260330_113441_853472/artifacts/media/KeyFrameAgent/image/nostack_live_e2e_tid_img_sh_001_kf_02.png",
+      "size_bytes": 154402,
+      "created_at": "2026-03-30T11:39:39.609649",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "nostack_live_e2e_tid"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_f3cefbf6",
+        "task_id": "nostack_live_e2e_tid",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_sh_001_kf_02",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000009_d6c4ead8": {
+      "id": "file_000009_d6c4ead8",
+      "filename": "img_sh_001_kf_01.png",
+      "description": "Media asset img_sh_001_kf_01",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/nostack_live_e2e_outputs/workspace_global_20260330_113441_853472/artifacts/media/KeyFrameAgent/image/nostack_live_e2e_tid_img_sh_001_kf_01.png",
+      "size_bytes": 156838,
+      "created_at": "2026-03-30T11:39:39.631110",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "nostack_live_e2e_tid"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_f3cefbf6",
+        "task_id": "nostack_live_e2e_tid",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_sh_001_kf_01",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000010_be1f98e0": {
+      "id": "file_000010_be1f98e0",
+      "filename": "img_sh_003_kf_02.png",
+      "description": "Media asset img_sh_003_kf_02",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/nostack_live_e2e_outputs/workspace_global_20260330_113441_853472/artifacts/media/KeyFrameAgent/image/nostack_live_e2e_tid_img_sh_003_kf_02.png",
+      "size_bytes": 90221,
+      "created_at": "2026-03-30T11:39:39.655843",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "nostack_live_e2e_tid"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_f3cefbf6",
+        "task_id": "nostack_live_e2e_tid",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_sh_003_kf_02",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000011_0ed09190": {
+      "id": "file_000011_0ed09190",
+      "filename": "img_sh_002_kf_01.png",
+      "description": "Media asset img_sh_002_kf_01",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/nostack_live_e2e_outputs/workspace_global_20260330_113441_853472/artifacts/media/KeyFrameAgent/image/nostack_live_e2e_tid_img_sh_002_kf_01.png",
+      "size_bytes": 107481,
+      "created_at": "2026-03-30T11:39:39.676925",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "nostack_live_e2e_tid"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_f3cefbf6",
+        "task_id": "nostack_live_e2e_tid",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_sh_002_kf_01",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000012_35ea5d18": {
+      "id": "file_000012_35ea5d18",
+      "filename": "img_sh_002_kf_02.png",
+      "description": "Media asset img_sh_002_kf_02",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/nostack_live_e2e_outputs/workspace_global_20260330_113441_853472/artifacts/media/KeyFrameAgent/image/nostack_live_e2e_tid_img_sh_002_kf_02.png",
+      "size_bytes": 154888,
+      "created_at": "2026-03-30T11:39:39.698312",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "nostack_live_e2e_tid"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_f3cefbf6",
+        "task_id": "nostack_live_e2e_tid",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_sh_002_kf_02",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000013_fd92a9bc": {
+      "id": "file_000013_fd92a9bc",
+      "filename": "img_sh_003_kf_01.png",
+      "description": "Media asset img_sh_003_kf_01",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/nostack_live_e2e_outputs/workspace_global_20260330_113441_853472/artifacts/media/KeyFrameAgent/image/nostack_live_e2e_tid_img_sh_003_kf_01.png",
+      "size_bytes": 165797,
+      "created_at": "2026-03-30T11:39:39.720762",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "nostack_live_e2e_tid"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_f3cefbf6",
+        "task_id": "nostack_live_e2e_tid",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_sh_003_kf_01",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000014_66119e65": {
+      "id": "file_000014_66119e65",
+      "filename": "img_sh_004_kf_01.png",
+      "description": "Media asset img_sh_004_kf_01",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/nostack_live_e2e_outputs/workspace_global_20260330_113441_853472/artifacts/media/KeyFrameAgent/image/nostack_live_e2e_tid_img_sh_004_kf_01.png",
+      "size_bytes": 220808,
+      "created_at": "2026-03-30T11:39:39.742354",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "nostack_live_e2e_tid"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_f3cefbf6",
+        "task_id": "nostack_live_e2e_tid",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_sh_004_kf_01",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000015_225b0650": {
+      "id": "file_000015_225b0650",
+      "filename": "keyframes_manifest.json",
+      "description": "Keyframe manifest (nostack_live_e2e_tid)",
+      "file_type": "text",
+      "file_extension": ".json",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/nostack_live_e2e_outputs/workspace_global_20260330_113441_853472/artifacts/keyframes/nostack_live_e2e_tid_keyframes_manifest.json",
+      "size_bytes": 3235,
+      "created_at": "2026-03-30T11:39:39.765332",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "nostack_live_e2e_tid",
+        "KeyFrameAgent",
+        "keyframes_manifest"
+      ],
+      "metadata": {
+        "task_id": "nostack_live_e2e_tid",
+        "execution_id": "exec_4_f3cefbf6",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_variant": "manifest",
+        "role": "keyframes_manifest"
+      }
+    },
+    "file_000016_f7c80eaf": {
+      "id": "file_000016_f7c80eaf",
+      "filename": "keyframes_exec_4.json",
+      "description": "Structured JSON snapshot for KeyFrameAgent (exec_4_f3cefbf6)",
+      "file_type": "text",
+      "file_extension": ".json",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/nostack_live_e2e_outputs/workspace_global_20260330_113441_853472/artifacts/keyframes/nostack_live_e2e_tid_keyframes_exec_4.json",
+      "size_bytes": 19762,
+      "created_at": "2026-03-30T11:39:39.787382",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "nostack_live_e2e_tid",
+        "asset_json"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_f3cefbf6",
+        "task_id": "nostack_live_e2e_tid",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "keyframes",
+        "asset_variant": "json_snapshot"
+      }
+    }
+  }
+}

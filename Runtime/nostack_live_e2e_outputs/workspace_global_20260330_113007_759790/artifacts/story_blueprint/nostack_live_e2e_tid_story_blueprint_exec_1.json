@@ -1,0 +1,78 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-30T11:30:19.230891+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A solitary cyclist navigates a rain-slicked cobblestone street, briefly illuminated by the solitary glow of a warm streetlight, embodying quiet perseverance.",
+    "estimated_duration": {
+      "seconds": 10.0,
+      "confidence": 0.9
+    },
+    "style": {
+      "genre": [
+        "Atmospheric",
+        "Slice of Life"
+      ],
+      "tone_keywords": [
+        "Melancholy",
+        "Serene",
+        "Contemplative",
+        "Introspective"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "The Cyclist",
+        "role": "protagonist",
+        "profile": "An anonymous figure, perhaps an everyday commuter or a wanderer, defined by their solitary journey through the night. Their face is obscured, emphasizing their universal experience rather than individual identity.",
+        "motivation": "To reach a destination, or perhaps simply to find a moment of peace and endurance amidst the elements.",
+        "flaw": "Isolation; the constant battle against external forces and the feeling of being a small part of a larger, indifferent world."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Old Town Cobblestone Street",
+        "description": "A narrow street paved with ancient, glistening cobblestones, reflecting the light and blurring with the rain. Dominant features include a single, old-fashioned streetlight casting a warm, inviting glow, creating a striking contrast with the dark, rainy night."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "A lone cyclist rides through a silent, rainy night, briefly passing through a single pool of warm light before continuing into the darkness.",
+        "conflict": "The individual's transient journey and quiet endurance against the vast, indifferent elements of rain and night.",
+        "turning_point": "The brief passage through the single, warm pool of light provides a momentary sense of comfort or a brief highlight in an otherwise monotonous journey, only for it to be left behind."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To capture a fleeting moment of quiet beauty, endurance, and atmospheric reflection.",
+        "conflict": "The pervasive chill and darkness of the rain-soaked night versus the transient, inviting warmth and solace offered by the streetlight's glow.",
+        "turn": "The cyclist passes through the light's glow, experiencing its momentary comfort, then continues their journey into the surrounding darkness, leaving the warmth behind."
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "character_count": 1,
+    "location_count": 1,
+    "scene_count": 1
+  }
+}

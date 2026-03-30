@@ -38,8 +38,8 @@ class GPT5ChatClient(LLMClient):
         if resolved_reasoning_effort:
             request_kwargs["reasoning_effort"] = resolved_reasoning_effort
         response = await self.client.chat.completions.create(**request_kwargs)
-        raw = response.choices[0].message.content or "{}"
-        return self._parse_json_text(raw)
+        raw = response.choices[0].message.content or ""
+        return self._parse_json_object_strict(raw)
 
     async def chat_text(
         self,

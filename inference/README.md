@@ -86,6 +86,19 @@ inference/
 - **最终交付 mux 修复**: `AudioService.mux_audio_with_video` 对短音频执行 `apad` 后再 mux，避免 `delivery_final` 被极短音频截断
 - **媒体服务模块化实现**: 提供 image/video/audio 独立服务模块，供 agents 复用
 
+## 严格 JSON 模式与诊断（`chat_json`）
+
+本项目对 `chat_json` 采取 **严格 JSON** 策略：只接受 **单个 JSON object**，不做 fence stripping、不做 substring recovery。
+当模型输出不是合法 JSON 时，会抛出 `ValueError("chat_json: model output is not valid JSON: ...")` 并终止执行（不做静默降级）。
+
+为定位偶发的 JSON 语法错误（少逗号、截断、混入说明文字等），可以开启可选的落盘诊断：
+
+- **开启 dump**：`FW_JSON_DIAG_DUMP=1`
+- **dump 目录（可选）**：`FW_JSON_DIAG_DUMP_DIR=Runtime/debug/json_parse_failures`
+
+开启后，当 `json.loads` 失败，会把 **原始模型输出（strip 后）+ 错误信息 + caret 定位 diag**
+写入 `FW_JSON_DIAG_DUMP_DIR`，用于复盘“到底模型返回了什么”。
+
 ## 目录结构
 
 ```
@@ -463,6 +476,17 @@ routing:
 
 也可通过 `INFERENCE_RUNTIME_CONFIG=/abs/path/to/your.yaml` 指定自定义路径。
 
+#### `chat_json` 的契约（严格 JSON）
+
+`LLMClient.chat_json(...)` **只**接受「模型在 JSON mode 下返回的、**整段正文即一个 JSON object**」：
+
+- **OpenAI 兼容路径**：使用 `response_format` / `json_mode` 与 `json_object`。
+- **LiteLLM 路径**：始终传入 `response_format={"type":"json_object"}`；**不再**在失败时退化为「不带 JSON mode 的普通 completion」——若上游不支持该参数，调用会失败，由部署侧换模型/换路由或换网关，而不是在客户端静默降级。
+- 解析侧只做 **`strip` + `json.loads`**；若根值不是 object 或不是合法 JSON，直接抛错。不把「从 markdown 里抠 JSON」当作正常路径。
+- **`JSONDecodeError` 诊断**：异常信息会附带 **`pos` / `line` / `col`** 与错误位置附近的 **snippet + `^` 指针**（实现见 `inference/clients/json_parse_diag.py`），便于判断是截断、未闭合字符串、还是正文前多了说明文字。
+
+**全库约定**：不在推理层用「失败后换一条更弱的调用」掩盖错误；其它包若存在不可避免的降级，须在日志与 README 中可审计（见根目录 `.cursorrules` Maintenance Rule 6）。
+
 ### 环境变量方式
 
 ```bash
@@ -811,6 +835,10 @@ audio_result = get_audio_generator_registry().generate(
 ```bash
 pip install litellm
 ```
+
+补充：LiteLLM 在不同版本中部分顶层函数/别名可能变动。本项目的默认 client 会在运行时通过
+`litellm.<fn>` 调用（而非 `from litellm import <fn>` 的硬绑定），以提升跨版本兼容性；若你
+升级/降级 LiteLLM 后仍有报错，请优先确认当前环境中 `litellm` 与其依赖完整安装。
 
 ### Ollama 连接错误
 

@@ -1,0 +1,74 @@
+{
+  "counter": 3,
+  "files": {
+    "file_000001_352cef25": {
+      "id": "file_000001_352cef25",
+      "filename": "story_blueprint_exec_1.json",
+      "description": "Structured JSON snapshot for StoryAgent (exec_1_f63aefb9)",
+      "file_type": "text",
+      "file_extension": ".json",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/nostack_live_e2e_outputs/workspace_global_20260330_113007_759790/artifacts/story_blueprint/nostack_live_e2e_tid_story_blueprint_exec_1.json",
+      "size_bytes": 3236,
+      "created_at": "2026-03-30T11:30:29.187929",
+      "created_by": "StoryAgent",
+      "tags": [
+        "StoryAgent",
+        "nostack_live_e2e_tid",
+        "asset_json"
+      ],
+      "metadata": {
+        "execution_id": "exec_1_f63aefb9",
+        "task_id": "nostack_live_e2e_tid",
+        "producer_agent_id": "StoryAgent",
+        "asset_key": "story_blueprint",
+        "asset_variant": "json_snapshot"
+      }
+    },
+    "file_000002_411b7ebd": {
+      "id": "file_000002_411b7ebd",
+      "filename": "screenplay_exec_2.json",
+      "description": "Structured JSON snapshot for ScreenplayAgent (exec_2_09bed796)",
+      "file_type": "text",
+      "file_extension": ".json",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/nostack_live_e2e_outputs/workspace_global_20260330_113007_759790/artifacts/screenplay/nostack_live_e2e_tid_screenplay_exec_1.json",
+      "size_bytes": 6266,
+      "created_at": "2026-03-30T11:31:08.235254",
+      "created_by": "ScreenplayAgent",
+      "tags": [
+        "ScreenplayAgent",
+        "nostack_live_e2e_tid",
+        "asset_json"
+      ],
+      "metadata": {
+        "execution_id": "exec_2_09bed796",
+        "task_id": "nostack_live_e2e_tid",
+        "producer_agent_id": "ScreenplayAgent",
+        "asset_key": "screenplay",
+        "asset_variant": "json_snapshot"
+      }
+    },
+    "file_000003_5a42018e": {
+      "id": "file_000003_5a42018e",
+      "filename": "storyboard_exec_3.json",
+      "description": "Structured JSON snapshot for StoryboardAgent (exec_3_ea35b702)",
+      "file_type": "text",
+      "file_extension": ".json",
+      "file_path": "/home/zhendong_li/frameworkers/FrameWorkers/Runtime/nostack_live_e2e_outputs/workspace_global_20260330_113007_759790/artifacts/storyboard/nostack_live_e2e_tid_storyboard_exec_3.json",
+      "size_bytes": 12262,
+      "created_at": "2026-03-30T11:31:55.825785",
+      "created_by": "StoryboardAgent",
+      "tags": [
+        "StoryboardAgent",
+        "nostack_live_e2e_tid",
+        "asset_json"
+      ],
+      "metadata": {
+        "execution_id": "exec_3_ea35b702",
+        "task_id": "nostack_live_e2e_tid",
+        "producer_agent_id": "StoryboardAgent",
+        "asset_key": "storyboard",
+        "asset_variant": "json_snapshot"
+      }
+    }
+  }
+}

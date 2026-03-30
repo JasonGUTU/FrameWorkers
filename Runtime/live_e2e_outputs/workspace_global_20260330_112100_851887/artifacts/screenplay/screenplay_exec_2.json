@@ -1,0 +1,275 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-03-30T11:21:23.568996+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "The Midnight Watchmaker",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Arthur's Grandfather Clock Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Arthur Pendelton, an elderly watchmaker, is intensely focused on repairing a delicate timepiece in his dimly lit workshop. The relentless ticking of a large grandfather clock in the background, its hands nearing midnight, underscores the mounting pressure and his race against time.",
+        "estimated_duration": {
+          "seconds": 3.0,
+          "confidence": 0.9
+        },
+        "continuity": {
+          "props_present": [
+            "delicate watch",
+            "workbench",
+            "focused lamp",
+            "numerous clocks",
+            "grandfather clock",
+            "spectacles",
+            "sweat bead"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A practical, slightly worn linen vest over a long-sleeved, button-up shirt with the sleeves rolled to the elbows. His spectacles are perched precariously on the end of his nose.",
+              "must_keep": [
+                "spectacles"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": []
+        },
+        "blocks": [
+          {
+            "block_id": "b_001",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The GRANDFATHER CLOCK, ornate and imposing, dominates the workshop, its heavy pendulum swinging, its hands showing five minutes to midnight. Around it, other clocks TICK softly, a rhythmic, insistent chorus. A single focused LAMP casts a bright pool of light on a WORKBENCH.",
+            "continuity_refs": {
+              "props": [
+                "grandfather clock",
+                "lamp",
+                "workbench",
+                "clocks"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_002",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "ARTHUR PENDELTON (70s, \"char_001\"), spectacles perched on his nose, hunches over a DELICATE WATCH. His hands, though aged, move with practiced precision, tiny tools glinting in the lamplight. A bead of sweat traces a path down his temple.",
+            "continuity_refs": {
+              "props": [
+                "delicate watch",
+                "spectacles",
+                "tools"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_003",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He blinks, wiping the sweat with the back of his hand, and his gaze flicks nervously to the grandfather clock. Only four minutes remain.",
+            "continuity_refs": {
+              "props": [
+                "grandfather clock"
+              ],
+              "wardrobe_character_ids": []
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "Arthur wipes a bead of sweat from his brow, his gaze flicking nervously to the grandfather clock showing minutes to midnight.",
+          "emotional_shift": "Arthur's initial calm focus gives way to palpable urgency and anxiety as the deadline becomes visually imminent."
+        }
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Arthur's Grandfather Clock Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Under intense pressure, Arthur attempts a final, critical adjustment. A tiny component nearly slips from his trembling tweezers, creating a moment of heightened panic before he regains control and secures it.",
+        "estimated_duration": {
+          "seconds": 3.5,
+          "confidence": 0.9
+        },
+        "continuity": {
+          "props_present": [
+            "watch",
+            "tweezers",
+            "tiny component",
+            "magnifying glass"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Still in his linen vest and rolled-sleeve shirt, his spectacles slightly askew from his intensity. A fresh sheen of sweat glistens on his brow.",
+              "must_keep": [
+                "spectacles"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": []
+        },
+        "blocks": [
+          {
+            "block_id": "b_004",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Arthur leans closer, his breath held. He picks up a minuscule gear with his TWEEZERS, the TINY COMPONENT barely visible to the naked eye. His hand trembles, a barely perceptible tremor of age and stress.",
+            "continuity_refs": {
+              "props": [
+                "tweezers",
+                "tiny component"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_005",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The component slips! It teeters on the edge of the tweezers, threatening to fall into the intricate mechanisms of the WATCH. Arthur's eyes WIDEN in a flash of panic. A sharp, involuntary intake of breath.",
+            "continuity_refs": {
+              "props": [
+                "watch",
+                "tweezers",
+                "tiny component"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_006",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "With a visible effort, Arthur steadies his trembling hand. His jaw tightens, eyes narrowing in fierce concentration. He gently, firmly, guides the recalcitrant piece into its housing with a soft CLICK.",
+            "continuity_refs": {
+              "props": [
+                "tiny component"
+              ],
+              "wardrobe_character_ids": []
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "With a visible effort, Arthur steadies his trembling hand, his eyes narrowing in concentration, and firmly places the piece, overcoming the immediate hurdle.",
+          "emotional_shift": "From a moment of intense panic and near failure, Arthur regains his composure and determination, experiencing a brief surge of relief as he overcomes the immediate crisis."
+        }
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_003",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Arthur's Grandfather Clock Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "The repaired watch ticks to life just as the grandfather clock begins to chime midnight, marking Arthur's successful completion of his task and bringing him a wave of exhausted relief.",
+        "estimated_duration": {
+          "seconds": 3.5,
+          "confidence": 0.9
+        },
+        "continuity": {
+          "props_present": [
+            "repaired watch",
+            "grandfather clock",
+            "workbench",
+            "chair"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "His linen vest and shirt are slightly disheveled. His spectacles are still on, but his face shows a profound weariness, softened by a faint, proud smile.",
+              "must_keep": [
+                "spectacles"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": []
+        },
+        "blocks": [
+          {
+            "block_id": "b_007",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Arthur holds the newly assembled WATCH to his ear. Silence. Then, a faint, steady TICK-TOCK. A perfect, rhythmic beat. A slow smile spreads across his weary face.",
+            "continuity_refs": {
+              "props": [
+                "repaired watch"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_008",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "In the background, the GRANDFATHER CLOCK lets out a deep, resonant CHIME. The first stroke of midnight. Arthur exhales slowly, a long, drawn-out breath of pure relief.",
+            "continuity_refs": {
+              "props": [
+                "grandfather clock"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_009",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He slumps back in his CHAIR, exhausted but triumphant, his eyes still fixed on the steadily ticking watch. The weight of the world lifts from his shoulders.",
+            "continuity_refs": {
+              "props": [
+                "chair",
+                "repaired watch"
+              ],
+              "wardrobe_character_ids": []
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "The repaired watch begins to tick clearly and steadily. Simultaneously, the grandfather clock begins to chime the first stroke of midnight, and Arthur slumps back in his chair, exhaling in relief with a faint, weary smile.",
+          "emotional_shift": "The internal tension of the race against time finally releases, replaced by profound exhaustion, satisfaction, and a quiet sense of triumph."
+        }
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "estimated_total_duration_sec": 10.0,
+    "sum_scene_duration_sec": 10.0,
+    "scene_count": 3,
+    "dialogue_block_count": 0,
+    "action_block_count": 9
+  }
+}

@@ -8,12 +8,13 @@ agents can be registered and orchestrated through the same Task Stack + Assistan
 
 ## Architecture Overview
 
-### Five independent packages (each runnable or importable separately)
+### Core packages (each runnable or importable separately)
 
 | Package | Type | Purpose |
 |---------|------|---------|
 | `dynamic-task-stack/` | Backend (Flask) | Task Stack + Assistant + Agent Core + Workspace — the execution engine |
 | `director_agent/` | Standalone process | Polls backend, reasons about user intent, plans/updates task stack, delegates to Assistant |
+| `director_nostack/` | Standalone process (optional) | Same chat + Assistant loop **without** Task Stack; polls `/api/messages/unread`, fixed `task_id`, posts director replies via `/api/messages/create` |
 | `agents/` | Library | Root-level agent implementations; auto-discovered by AgentRegistry at runtime |
 | `inference/` | Library | LLM calls (LiteLLM), multimodal utils, prompt tools, pluggable image/video generators |
 | `interface/` | Frontend (Vue 3 + Vite) | Chat UI, system status, task stack monitor; communicates with backend via REST + polling |
@@ -54,7 +55,7 @@ Two blueprints:
 **Assistant** (`src/assistant/`) — `/api/assistant/`
 - Global singleton Assistant manages all sub-agents
 - Descriptor-driven pipeline execution (no separate sync agent path in routes)
-- `service.py`: `AssistantService` orchestrates prepare → context → execute → process results; **does not read Task Stack** — `POST /api/assistant/execute` JSON has **`agent_id`**, **`task_id`**, and nested **`execute_fields`** (`text`, `image`, `video`, `audio`, …). Deprecated **`_memory_brief`** in **`execute_fields`** is **ignored** (key stripped; prefer top-level injected **`global_memory`**). Prior global memory for the task is injected server-side on execution **inputs** top-level as **`global_memory`** (not via `execute_fields`, not inside sub-agent `InputBundleV2`). **`build_execution_inputs`** runs an LLM pass to pick **`selected_roles`** from `artifact_locations`, loads JSON into the bundle, and sets **`InputBundleV2.context["resolved_inputs"]`** for `build_input` / materializers. After success, **`global_memory` summary LLM** is **strict** (failure → **`AssistantGlobalMemorySyncError`**, HTTP **500**, no empty fallback). Text seed comes from `execute_fields.text` (`_text_for_source_text`). Director maps task `description` → `execute_fields.text`. Success response includes **`task_id`**, **`execution_id`**, **`status`**, **`results`**, **`error`**, **`workspace_id`**.
+- `service.py`: `AssistantService` orchestrates prepare → context → execute → process results; **does not read Task Stack** — `POST /api/assistant/execute` JSON has **`agent_id`**, **`task_id`**, and nested **`execute_fields`** (`text`, `image`, `video`, `audio`, …). Deprecated **`_memory_brief`** in **`execute_fields`** is **ignored** (key stripped; prefer top-level injected **`global_memory`**). Prior global memory for the task is injected server-side on execution **inputs** top-level as **`global_memory`** (not via `execute_fields`, not inside sub-agent `InputBundleV2`). **`build_execution_inputs`** runs an LLM pass to pick **`selected_roles`** from `artifact_locations`, loads JSON into the bundle, and sets **`InputBundleV2.context["resolved_inputs"]`** for `build_input` / materializers. After success, **`global_memory` summary LLM** is **strict** (failure → **`AssistantGlobalMemorySyncError`**, HTTP **500**, no empty fallback). Text seed comes from `execute_fields.text` (`_text_for_source_text`). Director maps task `description` → `execute_fields.text`. Success response includes **`task_id`**, **`execution_id`**, **`status`**, **`error`**, **`error_reasoning`** (reserved, often null), **`workspace_id`**, **`global_memory_brief`** (slim rows: `task_id`, `agent_id`, `created_at`, `execution_result` only — no `content`, no `artifact_locations`); sub-agent **`results`** are read via **`GET /api/assistant/executions/task/{task_id}`**. Execute-route errors use **`error`** + **`error_reasoning`** JSON keys.
 - `state_store.py`: in-memory runtime state for assistant, executions, global workspace
 - `response_serializers.py`: HTTP response shaping for assistant/workspace models
 - `routes.py`: shares `src/common_http.py` with Task Stack for JSON body / `bad_request` / required query params
@@ -79,12 +80,20 @@ Entry: `python -m director_agent.main` or `python director_agent/run.py`
 - `reasoning.py`: `ReasoningEngine` (create_task / execute_task / update_plan / wait) and `LlmSubAgentPlanner` (LLM picks `agent_id` from Assistant catalog + optional `global_memory` brief)
 - `config.py`: `BACKEND_BASE_URL`, `POLLING_INTERVAL`, etc. from env
 
+### 2b. `director_nostack/` — Orchestrator (no Task Stack)
+
+Entry: `python -m director_nostack.main` or `python director_nostack/run.py` (repo root, `PYTHONPATH=.`)
+
+- `director.py` (`DirectorNoStack`): poll **user** unread messages; `run_nostack_pipeline` (same module) — `merge_session_goal` then loop `choose_pipeline_step` → `POST /api/assistant/execute` until `action:done` or error; `prompts.py` holds LLM prompt text / user assembly
+- `api_client.py` (`NoStackAPIClient`): messages (incl. `list` for prior user lines) + Assistant + memory brief + `/health` only — **no** task-stack routes
+- `config.py`: `BACKEND_BASE_URL`, `POLLING_INTERVAL`, `DIRECTOR_STANDALONE_TASK_ID`, etc.
+
 ### 3. `agents/` — Agent Framework & Implementations
 
 - Core framework: `base_agent.py`, `base_evaluator.py`, `descriptor.py`, `common_schema.py`, `agent_registry.py`
 - **Single execution path**: async pipeline agents (`base_agent.BaseAgent`, exported as `LLMBaseAgent` in `agents/__init__.py`) driven by `SubAgentDescriptor` (`build_input`, `build_equipped_agent`, `run`). Assistant calls these via registry — there is **no** `sync_adapter` / separate sync adapter layer in tree.
 - `AgentRegistry`: filesystem scan for package layout + `AGENT_REGISTRY` dict maps pipeline descriptors (`agents/__init__.py`)
-- `descriptor.py`: `SubAgentDescriptor` manifest — factories, `build_input(task_id, input_bundle_v2, config)`, catalog; `agents/contracts/`: `InputBundleV2` / `OutputEnvelopeV2` / `NamingSpecV2`
+- `descriptor.py`: `SubAgentDescriptor` manifest — factories, `build_input(task_id, input_bundle_v2)`, catalog; `agents/contracts/`: `InputBundleV2` / `OutputEnvelopeV2` / `NamingSpecV2`
 - `base_evaluator.py`: 3-layer evaluation (structural → creative → asset)
 - LLM client type re-exported from `inference.clients` (`LLMClient`); implementations live under `inference/clients/`
 - Pipeline sub-agents: `story/`, `screenplay/`, `storyboard/`, `keyframe/`, `video/`, `audio/`, `example_agent/`
@@ -208,6 +217,16 @@ FrameWorkers/
 │   ├── requirements.txt
 │   └── README.md, FLOW_SUMMARY.md
 │
+├── director_nostack/                #   Optional orchestrator: chat → Assistant only (no Task Stack)
+│   ├── director.py                  #   DirectorNoStack + run_nostack_pipeline (merge + multi-step loop)
+│   ├── router.py                    #   LlmSubAgentPlanner: LLM call + JSON parse
+│   ├── prompts.py                   #   merge/routing system prompts + user message builders
+│   ├── api_client.py
+│   ├── config.py
+│   ├── main.py
+│   ├── run.py
+│   └── README.md
+│
 ├── dynamic-task-stack/              # ★ Backend (Flask, port 5002)
 │   ├── run.py                       #   Entry: python run.py
 │   ├── requirements.txt
@@ -287,6 +306,7 @@ FrameWorkers/
 4. **Cross-Package Consistency**: When modifying shared concepts (agent descriptors, schemas,
    registry API, task models), search all five packages for references and update together.
 5. **`.cursorrules` map**: When you change canonical layout (new shared modules under `dynamic-task-stack/src/`, remove/rename top-level agent or inference entrypoints, or narrow/expand `director_agent/api_client.py`), update this `.cursorrules` in the same effort so the architecture section stays the single source of truth.
+6. **No silent LLM / JSON fallbacks**: Do not hide failures behind alternate code paths that discard the real error (e.g. retrying the same LLM call **without** JSON mode when JSON mode fails; stripping markdown / substring-recovering JSON instead of failing fast). **Product-level** fallbacks (e.g. merge returns latest user line when merge-LLM fails) are allowed only if **logged** (e.g. `warning`/`error`) and **documented** in the package README. `LLMClient.chat_json` contract: see `inference/README.md` (strict JSON mode + `json.loads` only).
 
 ## Development Workflow Rules (MUST follow)
 

@@ -10,8 +10,6 @@ It tells the registry:
 
 from __future__ import annotations
 
-from typing import Any
-
 from pydantic import BaseModel
 
 from ..descriptor import SubAgentDescriptor
@@ -26,7 +24,6 @@ OUTPUT_ASSET_KEY = "example_summary"
 def build_input(
     _task_id: str,
     input_bundle_v2: InputBundleV2,
-    config: Any,
 ) -> BaseModel:
     """Construct typed input from the pipeline bundle."""
     resolved = (
@@ -34,8 +31,10 @@ def build_input(
         if isinstance(getattr(input_bundle_v2, "context", None), dict)
         else {}
     )
+    hints = getattr(input_bundle_v2, "hints", {}) or {}
+    raw = resolved.get("source_text") or hints.get("source_text", "")
     return ExamplePipelineInput(
-        source_text=resolved.get("source_text", ""),
+        source_text=raw if isinstance(raw, str) else str(raw),
     )
 
 

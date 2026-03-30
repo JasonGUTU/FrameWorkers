@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Any
-
 from pydantic import BaseModel
 
 from ..descriptor import SubAgentDescriptor
@@ -22,7 +20,6 @@ USER_TEXT_KEY = "user_screenplay"
 def build_input(
     _task_id: str,
     input_bundle_v2: InputBundleV2,
-    config: Any,
 ) -> BaseModel:
     resolved = (
         input_bundle_v2.context.get("resolved_inputs", {})
@@ -33,10 +30,7 @@ def build_input(
     content = story_dict.get("content", {}) if isinstance(story_dict, dict) else {}
     return ScreenplayAgentInput(
         story_blueprint=content,
-        constraints=ScreenplayConstraints(
-            target_duration_sec=config.target_total_duration_sec,
-            language=config.language,
-        ),
+        constraints=ScreenplayConstraints(),
         user_provided_text=(resolved.get(USER_TEXT_KEY, "") if isinstance(resolved, dict) else ""),
     )
 

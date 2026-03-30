@@ -240,8 +240,8 @@ dynamic-task-stack/
 - `prepare_environment()`: 获取全局共享 workspace
 - `package_data()`: 打包执行期 hints（`source_text` / 可选媒体）；历史产物由输入打包 LLM 按 `global_memory.artifact_locations` 的 role 回填，**不读 Task Stack**
 - `execute_agent()`: 执行 agent（复用同一次解析到的 agent 实例）
-- `process_results()`: 处理结果（拆分为日志记录 + 文件入库，支持 `_media_files` 批量媒体资产写入）；HTTP 摘要返回 **`task_id`**、**`execution_id`**、`status`、`results`、`error`、`workspace_id`
-- `build_execution_inputs()`: 执行前输入组装（`execute_fields` + `global_memory` 简报 + LLM `selected_roles` → 装配 `input_bundle_v2` 与 `context.resolved_inputs`）
+- `process_results()`: 处理结果（拆分为日志记录 + 文件入库，支持 `_media_files` 批量媒体资产写入）；HTTP 摘要返回 **`task_id`**、**`execution_id`**、`status`、`error`、`error_reasoning`（预留）、`workspace_id`、`global_memory_brief`（无根级 `results`）
+- `build_execution_inputs()`: 执行前输入组装（`execute_fields` + `list_memory_entries` 拉取的 `global_memory`（含 `content`）+ LLM `selected_roles` → 装配 `input_bundle_v2` 与 `context.resolved_inputs`）
 - `execute_agent_for_task()`: 完整的执行流程
 
 当前 Assistant 设计只关注执行编排本身（选定 agent 的输入查询、上下文检索、执行、结果落库与摘要返回），不承载评估器策略或子 agent 实时控制逻辑。
@@ -294,7 +294,7 @@ Agent 核心框架已迁移至项目根目录 `agents/`。`service.py` 和 `rout
 
 **memory_manager.py**：
 - 全局记忆按 workspace 单文件落盘为 **`Runtime/{workspace_id}/global_memory.md`**（内嵌 JSON 条目数组：`content` / `task_id` / `agent_id` / `created_at` / `execution_result` / 可选 **`artifact_locations`** + 自动刷新的 **File tree**）
-- `get_memory_brief`：返回无 `content` 的 `global_memory`（`created_at` 降序，全量）；Director 与 `build_execution_inputs` / 上下文均用同一形状。新条目在 `process_results` 由 Assistant 写入：**摘要 LLM 为严格模式**（失败或非法 JSON 则整次执行失败并返回 **500**，无空 `{}` 或确定性文案回退），并与确定性路径做 **`artifact_locations` 合并**。`build_execution_inputs` 会运行一次输入打包 LLM（按 role 回填输入）。HTTP **`execute_fields`** 若含已废弃键 **`_memory_brief`**，会被静默忽略（不进入 `execute_fields`）。
+- `get_memory_brief`：返回极薄 `global_memory` 行（仅 `task_id` / `agent_id` / `created_at` / `execution_result`；**无** `content` / **`artifact_locations`**；`created_at` 降序）；**Director** 与 **`GET /memory/brief`** 使用。`build_execution_inputs` 使用 **`list_memory_entries`**（含 `content` 与 **`artifact_locations`**）。新条目在 `process_results` 由 Assistant 写入：**LLM #3（global_memory 摘要）为严格模式**（失败或非法 JSON 则整次执行失败并返回 **500**，无空 `{}` 或确定性文案回退），并与确定性路径做 **`artifact_locations` 合并**。`build_execution_inputs` 可运行 **LLM #1（输入打包）**（按 role 回填输入；冷启动无 artifact 时跳过）。HTTP **`execute_fields`** 若含已废弃键 **`_memory_brief`**，会被静默忽略（不进入 `execute_fields`）。
 
 ---
 

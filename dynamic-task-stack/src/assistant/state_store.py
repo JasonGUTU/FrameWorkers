@@ -95,6 +95,11 @@ class AssistantStateStore:
                 if execution.task_id == task_id
             ]
 
+    def get_execution(self, execution_id: str) -> Optional[AgentExecution]:
+        """Return a single execution by id, or None."""
+        with self.lock:
+            return self.executions.get(execution_id)
+
     def update_execution(self, execution: AgentExecution) -> bool:
         """Update an execution record."""
         with self.lock:

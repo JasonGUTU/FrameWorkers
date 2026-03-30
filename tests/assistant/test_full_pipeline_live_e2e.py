@@ -384,8 +384,10 @@ def test_full_pipeline_live_http_flow_generates_about_one_minute_video(
         )
         assert execute_resp.status_code == 200, f"{agent_id} failed: {body}"
         assert body["status"] == "COMPLETED"
-        assert isinstance(body.get("results"), dict)
-        payloads[agent_id] = body
+        assert "global_memory_brief" in body
+        ex_list = client.get(f"/api/assistant/executions/task/{task_id}").get_json()
+        assert isinstance(ex_list[-1].get("results"), dict)
+        payloads[agent_id] = ex_list[-1]["results"]
 
     for agent_id in media_agents:
         execute_resp = client.post(
@@ -409,34 +411,36 @@ def test_full_pipeline_live_http_flow_generates_about_one_minute_video(
         )
         assert execute_resp.status_code == 200, f"{agent_id} failed: {body}"
         assert body["status"] == "COMPLETED"
-        assert isinstance(body.get("results"), dict)
-        payloads[agent_id] = body
+        assert "global_memory_brief" in body
+        ex_list = client.get(f"/api/assistant/executions/task/{task_id}").get_json()
+        assert isinstance(ex_list[-1].get("results"), dict)
+        payloads[agent_id] = ex_list[-1]["results"]
 
-    story_content = payloads["StoryAgent"]["results"].get("content", {})
+    story_content = payloads["StoryAgent"].get("content", {})
     assert story_content.get("logline")
 
-    screenplay_scenes = payloads["ScreenplayAgent"]["results"].get("content", {}).get(
+    screenplay_scenes = payloads["ScreenplayAgent"].get("content", {}).get(
         "scenes", []
     )
     assert screenplay_scenes
 
-    storyboard_scenes = payloads["StoryboardAgent"]["results"].get("content", {}).get(
+    storyboard_scenes = payloads["StoryboardAgent"].get("content", {}).get(
         "scenes", []
     )
     assert storyboard_scenes
     assert any(scene.get("shots") for scene in storyboard_scenes if isinstance(scene, dict))
 
-    keyframe_results = payloads["KeyFrameAgent"]["results"]
+    keyframe_results = payloads["KeyFrameAgent"]
     assert keyframe_results.get("content")
     media_files = keyframe_results.get("_media_files", {})
     assert isinstance(media_files, dict)
     assert media_files, "Expected KeyFrameAgent to return media files metadata"
     assert not _contains_raw_bytes(media_files), "JSON response still contains raw bytes"
 
-    video_results = payloads["VideoAgent"]["results"]
+    video_results = payloads["VideoAgent"]
     assert video_results.get("content", {}).get("final_video_asset")
 
-    audio_results = payloads["AudioAgent"]["results"]
+    audio_results = payloads["AudioAgent"]
     assert audio_results.get("content", {}).get("final_delivery_asset")
 
     final_duration_sec = _extract_duration_seconds(audio_results, video_results)

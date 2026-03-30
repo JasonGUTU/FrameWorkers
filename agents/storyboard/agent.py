@@ -212,7 +212,7 @@ class StoryboardAgent(BaseAgent[StoryboardAgentInput, StoryboardAgentOutput]):
             "the screenplay.\n"
             f"- Max shots per scene: "
             f"{input_data.constraints.max_shots_per_scene}\n"
-            f"- Language: {input_data.constraints.language}\n\n"
+            "- Infer shot-description / visual language from the screenplay (dominant dialogue and action language).\n\n"
             "Return JSON only."
         )
 

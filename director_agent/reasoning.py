@@ -7,15 +7,26 @@ from __future__ import annotations
 
 import json
 import logging
-import re
+import os
 from typing import Any, Dict, List, Optional
+
+from inference.clients.json_parse_diag import describe_json_decode_error, preview_text_for_log
 
 from .config import DIRECTOR_MEMORY_MODEL, DIRECTOR_ROUTING_MODEL
 
 logger = logging.getLogger(__name__)
 
-_MAX_MEMORY_ROWS = 40
-_MAX_JSON_CHARS = 24_000
+
+def _env_int(name: str, default: int, *, lo: int, hi: int) -> int:
+    try:
+        n = int(os.getenv(name, str(default)).strip())
+        return max(lo, min(n, hi))
+    except ValueError:
+        return default
+
+
+_MAX_MEMORY_ROWS = _env_int("DIRECTOR_ROUTING_MEMORY_ROWS_MAX", 10, lo=1, hi=500)
+_MAX_JSON_CHARS = _env_int("DIRECTOR_ROUTING_MEMORY_JSON_MAX_CHARS", 200_000, lo=5_000, hi=2_000_000)
 
 
 class ReasoningEngine:
@@ -101,9 +112,18 @@ class ReasoningEngine:
             return {}
         try:
             parsed = json.loads(content)
-        except Exception:
+        except json.JSONDecodeError as exc:
+            logger.warning(
+                "User message content is not valid JSON; skipping structured fields: %s",
+                exc,
+            )
             return {}
-        return parsed if isinstance(parsed, dict) else {}
+        if not isinstance(parsed, dict):
+            logger.warning(
+                "User message JSON root is not an object; skipping structured fields"
+            )
+            return {}
+        return parsed
 
 
 # --- LLM sub-agent routing (same module; used by ``DirectorAgent._delegate_to_assistant``) ---
@@ -150,11 +170,23 @@ def _extract_assistant_text(response: Dict[str, Any]) -> str:
 
 
 def _parse_router_json(raw: str) -> Dict[str, Any]:
-    text = raw.strip()
-    if text.startswith("```"):
-        text = re.sub(r"^```[a-zA-Z]*\s*", "", text)
-        text = re.sub(r"\s*```$", "", text)
-    return json.loads(text)
+    """Strict parse: one JSON object — no markdown fence recovery (see project Maintenance Rules)."""
+    text = (raw or "").strip()
+    if not text:
+        raise ValueError("empty router LLM response")
+    try:
+        obj = json.loads(text)
+    except json.JSONDecodeError as exc:
+        diag = describe_json_decode_error(text, exc)
+        logger.error(
+            "Director router JSON parse failed: %s | preview=%s",
+            diag,
+            preview_text_for_log(text),
+        )
+        raise ValueError(f"router JSON invalid: {exc}; {diag}") from exc
+    if not isinstance(obj, dict):
+        raise ValueError("router JSON root must be an object")
+    return obj
 
 
 class LlmSubAgentPlanner:
@@ -246,7 +278,8 @@ class LlmSubAgentPlanner:
 
         system = (
             "You are the Director router. The user is continuing an existing task. "
-            "Use global_memory (newest first; rows may omit content) and the latest execution summary "
+            "Use global_memory (newest first; slim rows: task_id, agent_id, created_at, execution_result only) "
+            "and the latest execution summary "
             "to decide the single best next pipeline agent. "
             "Respond with JSON only, no markdown: "
             '{"agent_id":"<id>","rationale":"<short reason>"}'

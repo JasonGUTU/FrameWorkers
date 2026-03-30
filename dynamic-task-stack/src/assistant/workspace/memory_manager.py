@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import re
 from datetime import UTC, datetime
 from pathlib import Path
@@ -21,6 +22,15 @@ JSON_FENCE_OPEN = "```json"
 JSON_FENCE_CLOSE = "```"
 
 
+def _assistant_global_memory_row_limit_default() -> int:
+    """Same default as ``AssistantService`` packaging: recent N rows (default 20)."""
+    try:
+        n = int(os.getenv("ASSISTANT_GLOBAL_MEMORY_CONTEXT_ENTRIES_MAX", "20").strip())
+        return max(1, min(n, 500))
+    except ValueError:
+        return 20
+
+
 class MemoryManager:
     """
     Global memory is one file per workspace:
@@ -34,7 +44,7 @@ class MemoryManager:
     ``{"role", "path", ...}`` rows for durable artifact paths).
 
     The markdown file may include a **File tree** snapshot for **human reading** only.
-    Automation must use **live** APIs (``get_workspace_root_file_tree_text``, etc.) and
+    Automation must use **live** ``get_workspace_root_file_tree_text`` and
     ``artifact_locations`` — the embedded tree is not authoritative.
     """
 
@@ -296,15 +306,21 @@ class MemoryManager:
     def _created_at_sort_key(entry: Dict[str, Any]) -> str:
         return str(entry.get("created_at") or "")
 
-    @staticmethod
-    def _entries_without_content(entries: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Same ``global_memory`` entry rows without ``content``; keep ``agent_id`` / ``created_at`` / ``execution_result``."""
+    _BRIEF_ROW_KEYS: tuple[str, ...] = (
+        "task_id",
+        "agent_id",
+        "created_at",
+        "execution_result",
+    )
+
+    @classmethod
+    def _brief_memory_rows(cls, entries: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Director / HTTP brief: only identity + timing + execution snapshot (no paths, no content)."""
         out: List[Dict[str, Any]] = []
         for e in entries:
             if not isinstance(e, dict):
                 continue
-            slim = {k: v for k, v in e.items() if k != "content"}
-            out.append(slim)
+            out.append({k: e[k] for k in cls._BRIEF_ROW_KEYS if k in e})
         return out
 
     def _collect_candidates(
@@ -328,17 +344,23 @@ class MemoryManager:
         *,
         task_id: Optional[str] = None,
         agent_id: Optional[str] = None,
+        limit: Optional[int] = None,
     ) -> Dict[str, Any]:
-        """``{"global_memory": [...]}`` without ``content`` (small rows for Director / HTTP)."""
+        """``{"global_memory": [...]}`` — each row only ``task_id``, ``agent_id``, ``created_at``, ``execution_result``.
+
+        Rows are **newest first** (same order as internal routing). By default returns at most
+        **N** rows (``ASSISTANT_GLOBAL_MEMORY_CONTEXT_ENTRIES_MAX``, default **20**) — i.e. recent
+        sub-agent executions as reflected in memory. Pass ``limit=0`` for no cap (all matching rows).
+        """
         candidates = self._collect_candidates(task_id, agent_id)
-        return {"global_memory": self._entries_without_content(candidates)}
+        if limit is None:
+            candidates = candidates[: _assistant_global_memory_row_limit_default()]
+        elif limit == 0:
+            pass
+        else:
+            candidates = candidates[: max(1, int(limit))]
+        return {"global_memory": self._brief_memory_rows(candidates)}
 
     def workspace_root_file_tree_text(self) -> str:
         """Human-readable tree of all files under the workspace runtime root (includes ``artifacts/``)."""
         return self._build_file_tree_text(self.workspace_runtime_path)
-
-    def file_tree_text_for_task(self, task_id: str) -> str:
-        """Human-readable tree of files under this task's runtime directory (for LLM input packing)."""
-        tid = self._require_task_id(task_id)
-        root = self.workspace_runtime_path / tid
-        return self._build_file_tree_text(root)

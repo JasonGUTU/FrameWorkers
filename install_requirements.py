@@ -10,18 +10,23 @@ FrameWorkers 环境安装脚本。
 - 会优先使用 `conda run --no-banner`；
 - 若 conda 版本不支持该参数，会自动回退为不带 `--no-banner`。
 
-用法：
+用法（推荐先激活目标环境，再执行脚本；此时无需 ``conda`` 在 PATH 上）::
+
+    conda activate frameworkers
     python install_requirements.py
 
 说明：
 - 默认会安装 `pytest`，无需额外参数。
+- 若当前已 ``conda activate frameworkers``，直接用当前解释器执行 ``pip install``，不依赖 ``conda run``。
+- 否则使用环境变量 ``CONDA_EXE`` 或 PATH 中的 ``conda`` 做 ``conda run`` / ``conda create``。
 """
 
+import json
 import os
 import re
+import shutil
 import subprocess
 import sys
-import json
 from collections import defaultdict
 from pathlib import Path
 
@@ -106,33 +111,75 @@ def generate_requirements_txt(files: list[Path]):
     print(f"Wrote {out_path}")
 
 
+def _conda_executable() -> str | None:
+    """``conda`` binary: ``CONDA_EXE`` (set after ``conda activate``) or PATH."""
+    exe = os.environ.get("CONDA_EXE")
+    if exe and Path(exe).is_file():
+        return exe
+    return shutil.which("conda")
+
+
+def _running_inside_conda_env(env_name: str) -> bool:
+    """True if the current interpreter is already that named conda env."""
+    if os.environ.get("CONDA_DEFAULT_ENV") == env_name:
+        return True
+    prefix = os.environ.get("CONDA_PREFIX")
+    if prefix and Path(prefix).name == env_name:
+        return True
+    return False
+
+
 def conda_env_exists(env_name: str) -> bool:
-    """Return True if a conda environment already exists."""
+    """Return True if a conda environment already exists (or we are already inside it)."""
+    if _running_inside_conda_env(env_name):
+        return True
+    conda_exe = _conda_executable()
+    if not conda_exe:
+        return False
     try:
         result = subprocess.run(
-            ["conda", "env", "list", "--json"],
+            [conda_exe, "env", "list", "--json"],
             check=True,
             capture_output=True,
             text=True,
         )
         data = json.loads(result.stdout or "{}")
         envs = data.get("envs", [])
-        suffix = f"/envs/{env_name}"
-        return any(str(path).endswith(suffix) for path in envs)
+        for raw in envs:
+            if Path(str(raw)).name == env_name:
+                return True
+            if str(raw).replace("\\", "/").endswith(f"/envs/{env_name}"):
+                return True
+        return False
     except Exception:
-        # Be conservative: if detection fails, continue with create flow.
         return False
 
 
-def install_with_conda_run(env_name: str, reqs: list[str]) -> None:
+def install_requirements_into_target_env(env_name: str, reqs: list[str]) -> None:
     """
-    Install requirements via `conda run`.
+    Install packages into ``env_name``.
 
-    Uses `--no-banner` when available, and falls back for older conda versions
-    that don't support this flag.
+    If the active interpreter is already that env (e.g. after ``conda activate frameworkers``),
+    use ``sys.executable -m pip`` so we never need ``conda`` on PATH.
+
+    Otherwise use ``conda run -n <env> pip install ...`` with ``CONDA_EXE`` or ``conda``.
     """
+    if _running_inside_conda_env(env_name):
+        subprocess.run([sys.executable, "-m", "pip", "install", *reqs], check=True)
+        return
+
+    conda_exe = _conda_executable()
+    if not conda_exe:
+        print(
+            "找不到 conda（且当前不在目标环境中）。请先执行：\n"
+            f"  conda activate {env_name}\n"
+            "或确保已安装 conda 并加入 PATH，或设置环境变量 CONDA_EXE。",
+            file=sys.stderr,
+        )
+        raise SystemExit(1)
+
     cmd_with_banner_flag = [
-        "conda",
+        conda_exe,
         "run",
         "-n",
         env_name,
@@ -156,7 +203,7 @@ def install_with_conda_run(env_name: str, reqs: list[str]) -> None:
         print("Detected older conda: retrying pip install without --no-banner ...")
 
     subprocess.run(
-        ["conda", "run", "-n", env_name, "pip", "install", *reqs],
+        [conda_exe, "run", "-n", env_name, "pip", "install", *reqs],
         check=True,
     )
 
@@ -188,26 +235,39 @@ def main() -> int:
     if conda_env_exists(ENV_NAME):
         print(f"\nConda env '{ENV_NAME}' already exists, skipping create.")
     else:
+        conda_exe = _conda_executable()
+        if not conda_exe:
+            print(
+                "目标环境不存在，且找不到 conda 可执行文件。请先：\n"
+                f"  conda create -n {ENV_NAME} python={PYTHON_VERSION} -y\n"
+                f"  conda activate {ENV_NAME}\n"
+                "然后重新运行本脚本。",
+                file=sys.stderr,
+            )
+            return 1
         print(f"\nCreating conda env '{ENV_NAME}' (python={PYTHON_VERSION}) …")
         try:
             subprocess.run(
-                ["conda", "create", "-n", ENV_NAME, f"python={PYTHON_VERSION}", "-y"],
+                [conda_exe, "create", "-n", ENV_NAME, f"python={PYTHON_VERSION}", "-y"],
                 check=True,
             )
         except subprocess.CalledProcessError as exc:
             print(f"conda create failed (exit {exc.returncode})", file=sys.stderr)
             return 1
 
-    print(f"\nInstalling {len(reqs)} packages into '{ENV_NAME}' …")
+    if _running_inside_conda_env(ENV_NAME):
+        print(f"\nInstalling {len(reqs)} packages into current env (active: {ENV_NAME}) …")
+    else:
+        print(f"\nInstalling {len(reqs)} packages into '{ENV_NAME}' …")
     try:
-        install_with_conda_run(ENV_NAME, reqs)
+        install_requirements_into_target_env(ENV_NAME, reqs)
     except subprocess.CalledProcessError as exc:
         print(f"pip install failed (exit {exc.returncode})", file=sys.stderr)
         return 1
 
     print(f"\nInstalling test packages into '{ENV_NAME}' …")
     try:
-        install_with_conda_run(ENV_NAME, TEST_PACKAGES)
+        install_requirements_into_target_env(ENV_NAME, TEST_PACKAGES)
     except subprocess.CalledProcessError as exc:
         print(f"test package install failed (exit {exc.returncode})", file=sys.stderr)
         return 1
