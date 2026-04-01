@@ -1,0 +1,324 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_type": "character",
+          "entity_id": "char_001",
+          "display_name": "",
+          "purpose": "identity_anchor",
+          "keyframe_id": "kf_global_char_001",
+          "image_asset": {
+            "asset_id": "img_char_001_global",
+            "uri": "/tmp/fw_media_umvvgoub/img_char_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Atmospheric lighting, with warm, focused pools of light.; Emphasis on intricate details and textures of old wood, brass, and tiny mechanisms.; A sense of quiet intensity and building suspense, leading to a moment of relief.; Classic, almost timeless aesthetic. An elderly man named Elias, a highly skilled and meticulous watchmaker, with a kind, deeply-lined face and intense, focused eyes. He wears round, wire-frame spectacles perched precisely on his nose. His attire consists of a worn but immaculately clean tweed vest in a deep forest green, over a practical, pale blue button-up shirt with sleeves slightly rolled up to reveal his steady hands. A dark, well-oiled leather apron, softened and marked by years of use, protects his clothes. He exudes an aura of quiet wisdom, deep concentration, and calm determination, his posture reflecting years of precise, delicate work."
+        }
+      ],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "display_name": "",
+          "purpose": "style_anchor",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/tmp/fw_media_umvvgoub/img_loc_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Atmospheric lighting, with warm, focused pools of light.; Emphasis on intricate details and textures of old wood, brass, and tiny mechanisms.; A sense of quiet intensity and building suspense, leading to a moment of relief.; Classic, almost timeless aesthetic. A cluttered, cozy, and warmly lit watchmaker's workshop. The room is a treasure trove of antique clocks and tools, creating a rich visual tapestry of brass, polished wood, and aged metal. Intimate lighting primarily emanates from a single, green-shaded brass desk lamp, casting a concentrated, warm glow onto a heavy oak workbench. The workbench itself is a finely detailed chaos of tiny gears, delicate springs, precision screwdrivers, magnifying loupes, and other microscopic instruments. Shelves line the walls, packed with various ornate antique clocks, from intricate mantelpieces to cuckoo clocks. Dominating the room is an imposing, tall mahogany grandfather clock, its polished wooden case gleaming subtly in the soft light, with a large brass pendulum visible through its glass door."
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_001",
+                "uri": "/tmp/fw_media_umvvgoub/img_char_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Elias is an elderly, highly skilled and meticulous watchmaker with a gentle, wise face framed by neatly combed grey hair. He possesses steady hands and intense focus, exuding calm determination. His demeanor is one of quiet wisdom and deep concentration. He wears a worn but clean tweed vest over a practical button-up shirt, a sturdy leather apron for protection and utility, and round spectacles perched on his nose, essential for close work, evoking a sense of classic craftsmanship."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/tmp/fw_media_umvvgoub/img_loc_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "The location is a cluttered, cozy, and warm workshop filled with antique clocks of various designs and sizes, along with an array of intricate tools. The lighting is intimate, primarily from a single desk lamp that casts warm, focused pools of light onto a workbench. This workbench is a detailed scene of tiny gears, springs, and microscopic precision instruments. An imposing grandfather clock, a key focal point, stands prominently, its dark wood and brass details catching the light, with its hands nearing midnight."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_001",
+              "linked_blocks": [
+                "b_001"
+              ]
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_01",
+                  "uri": "/tmp/fw_media_umvvgoub/img_sh_001_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric lighting, with warm, focused pools of light.; Emphasis on intricate details and textures of old wood, brass, and tiny mechanisms.; A sense of quiet intensity and building suspense, leading to a moment of relief.; Classic, almost timeless aesthetic. Medium-wide, eye-level shot: Establish Elias, an elderly watchmaker in his worn tweed vest, leather apron, and spectacles, meticulously working under the warm, focused light of a desk lamp at his workbench. The workbench is cluttered with tiny gears, springs, and various tools, but maintains an organized nature. In the background, the imposing grandfather clock dominates the room, its hands nearing midnight, emphasizing the overall cozy and tool-filled workshop environment as Elias begins his repair.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_002",
+              "linked_blocks": [
+                "b_002"
+              ]
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_002",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_01",
+                  "uri": "/tmp/fw_media_umvvgoub/img_sh_002_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric lighting, with warm, focused pools of light.; Emphasis on intricate details and textures of old wood, brass, and tiny mechanisms.; A sense of quiet intensity and building suspense, leading to a moment of relief.; Classic, almost timeless aesthetic. Close-up, eye-level shot: Focus tightly on Elias's steady but struggling hands as he attempts to fit a microscopic component into the delicate mechanism of a broken pocket watch. Tiny tools are held with precision, highlighting the extreme difficulty and the meticulous nature of the task. The warm, focused light illuminates the intricate details of the tiny gears and springs, emphasizing the challenge of the delicate mechanism.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_003",
+              "linked_blocks": [
+                "b_003"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_003",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_01",
+                  "uri": "/tmp/fw_media_umvvgoub/img_sh_003_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric lighting, with warm, focused pools of light.; Emphasis on intricate details and textures of old wood, brass, and tiny mechanisms.; A sense of quiet intensity and building suspense, leading to a moment of relief.; Classic, almost timeless aesthetic. Extreme close-up, eye-level shot: Fill the frame with the ornate face of the imposing grandfather clock. The minute hand is prominently displayed, ticking ever closer to the twelve, visually reinforcing the dwindling time and building intense suspense as midnight approaches. The warm light highlights the brass and wooden textures of the clock's face.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "source": {
+              "storyboard_shot_id": "sh_004",
+              "linked_blocks": [
+                "b_003"
+              ]
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_004",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_01",
+                  "uri": "/tmp/fw_media_umvvgoub/img_sh_004_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric lighting, with warm, focused pools of light.; Emphasis on intricate details and textures of old wood, brass, and tiny mechanisms.; A sense of quiet intensity and building suspense, leading to a moment of relief.; Classic, almost timeless aesthetic. Close-up, eye-level shot: Focus tightly on Elias's face, illuminated by the warm, focused light of his desk lamp. His eyes narrow with intense concentration, a bead of sweat visible on his temple, as he takes a deep, fortifying breath. His expression conveys his internal struggle, rising tension, and renewed determination to complete the repair. His round spectacles are perched on his nose, enhancing his focused gaze.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 5,
+            "source": {
+              "storyboard_shot_id": "sh_005",
+              "linked_blocks": [
+                "b_004"
+              ]
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_005",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_01",
+                  "uri": "/tmp/fw_media_umvvgoub/img_sh_005_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric lighting, with warm, focused pools of light.; Emphasis on intricate details and textures of old wood, brass, and tiny mechanisms.; A sense of quiet intensity and building suspense, leading to a moment of relief.; Classic, almost timeless aesthetic. Close-up, low-angle shot: Focus on the broken pocket watch as Elias, using tiny precision tools, makes a final, critical adjustment to its balance wheel. The warm light from the desk lamp highlights the intricate brass mechanisms, conveying the masterful skill and the precise moment of success just before the watch comes back to life.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_006",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_02",
+                  "uri": "/tmp/fw_media_umvvgoub/img_sh_005_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric lighting, with warm, focused pools of light.; Emphasis on intricate details and textures of old wood, brass, and tiny mechanisms.; A sense of quiet intensity and building suspense, leading to a moment of relief.; Classic, almost timeless aesthetic. Close-up, low-angle shot: The pocket watch, now fully repaired, lies on the workbench. Its balance wheel is visibly ticking for the first time, a clear sign of its restoration. The rhythmic movement is captured in the warm, focused light, emphasizing the 'birth' of the ticking watch and the triumph of Elias's masterful skill.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 6,
+            "source": {
+              "storyboard_shot_id": "sh_006",
+              "linked_blocks": [
+                "b_005"
+              ]
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_007",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_01",
+                  "uri": "/tmp/fw_media_umvvgoub/img_sh_006_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric lighting, with warm, focused pools of light.; Emphasis on intricate details and textures of old wood, brass, and tiny mechanisms.; A sense of quiet intensity and building suspense, leading to a moment of relief.; Classic, almost timeless aesthetic. Medium shot, eye-level: The imposing grandfather clock, with its dark wood and brass details illuminated by warm light, loudly chimes midnight. Its hands are perfectly aligned at the twelve, marking the simultaneous climax of the scene and the moment of triumphant completion.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_008",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_02",
+                  "uri": "/tmp/fw_media_umvvgoub/img_sh_006_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Atmospheric lighting, with warm, focused pools of light.; Emphasis on intricate details and textures of old wood, brass, and tiny mechanisms.; A sense of quiet intensity and building suspense, leading to a moment of relief.; Classic, almost timeless aesthetic. Medium shot, eye-level: Elias, now holding the restored, ticking pocket watch in his steady hands, looks at it with a quiet, satisfied smile. The warm light from the desk lamp illuminates his face and the functional timepiece, conveying the profound sense of relief and triumph following his intense efforts, with the grandfather clock still visible in the background, having just chimed.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_count": 6,
+    "keyframe_count_total": 8,
+    "avg_keyframes_per_shot": 1.3333333333333333,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 1,
+    "stability_location_keyframe_count": 1,
+    "stability_prop_keyframe_count": 0
+  }
+}

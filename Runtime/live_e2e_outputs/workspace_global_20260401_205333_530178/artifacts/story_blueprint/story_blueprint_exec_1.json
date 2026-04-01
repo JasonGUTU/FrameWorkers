@@ -1,0 +1,94 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-01T20:53:42.511111+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A determined watchmaker races against the clock to repair a delicate timepiece, hoping to bring it back to life before the stroke of midnight.",
+    "estimated_duration": {
+      "seconds": 10.0,
+      "confidence": 0.7
+    },
+    "style": {
+      "genre": [
+        "drama",
+        "short"
+      ],
+      "tone_keywords": [
+        "tense",
+        "focused",
+        "hopeful",
+        "triumphant"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Elias",
+        "role": "protagonist",
+        "profile": "An elderly, meticulous watchmaker, his hands are steady despite their age, full of experience and dedication to his craft.",
+        "motivation": "To perfectly restore the intricate mechanisms of timepieces, driven by a deep respect for his work and a personal challenge to beat the deadline.",
+        "flaw": "Obsessive perfectionism, leading him to push limits, even against time."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Elias's Workshop",
+        "description": "A cluttered, cozy workshop filled with antique clocks, tiny tools, magnifying glasses, and the soft glow of a desk lamp, emphasizing the intricate nature of his work. A grandfather clock prominently displays the time nearing midnight."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Elias meticulously works on a broken pocket watch, the visible grandfather clock in his workshop showing the time rapidly approaching midnight.",
+        "conflict": "The delicate nature of the repair against the rapidly diminishing time.",
+        "turning_point": "The urgency becomes palpable as the clock ticks louder, highlighting the impending deadline."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "climax",
+        "summary": "With intense focus and seconds to spare, Elias makes a final, critical adjustment to the watch's internal mechanism.",
+        "conflict": "The extreme pressure to get the precise movement right on the very last try, before the deadline.",
+        "turning_point": "The moment of the final, decisive action, a risky maneuver that will either succeed or fail."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "resolution",
+        "summary": "The repaired watch springs to life, its hands beginning to move just as the grandfather clock chimes midnight, signalling Elias's successful race against time.",
+        "conflict": "The external pressure of time is overcome by internal skill and perseverance.",
+        "turning_point": "The sound of the watch ticking, confirming the repair."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To successfully fix the broken watch before midnight.",
+        "conflict": "The race against the clock and the intricate, unforgiving nature of watch repair.",
+        "turn": "The watch hands begin to tick just as the grandfather clock begins to chime midnight."
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "character_count": 1,
+    "location_count": 1,
+    "scene_count": 1
+  }
+}

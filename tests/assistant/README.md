@@ -71,7 +71,7 @@ conda activate frameworkers && python tests/assistant/replay_simplified_workspac
 ```
 
 This script snapshots:
-- `Runtime/live_e2e_outputs/workspace_global_20260320_105714_349207`
+- `Runtime/live_e2e_outputs/workspace_global_20260320_105714`
 
 into:
 - `Runtime/saved_workspaces/workspace_simplified_20260320_105714`

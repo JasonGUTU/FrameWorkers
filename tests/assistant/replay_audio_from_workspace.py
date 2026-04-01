@@ -9,7 +9,7 @@ Example (no API calls)::
 
     cd /path/to/FrameWorkers
     PYTHONPATH=. python tests/assistant/replay_audio_from_workspace.py \\
-        --workspace Runtime/live_e2e_outputs/workspace_global_20260330_112100_851887
+        --workspace Runtime/live_e2e_outputs/workspace_global_20260330_112100
 
 Optional: one real ``chat_json`` call to reproduce parse failures::
 
@@ -58,7 +58,7 @@ def main() -> int:
         "--workspace",
         type=Path,
         default=_repo_root()
-        / "Runtime/live_e2e_outputs/workspace_global_20260330_112100_851887",
+        / "Runtime/live_e2e_outputs/workspace_global_20260330_112100",
         help="Path to workspace_global_* directory",
     )
     parser.add_argument(

@@ -45,7 +45,7 @@ Runtime/{workspace_id}/
 
 补充：
 
-- `workspace_id` 通常为全局实例（例如 `workspace_global_20260320_083015_123456`）
+- `workspace_id` 通常为全局实例（例如 `workspace_global_20260320_083015`）
 - Runtime 目录由系统自动创建并维护
 
 ## 3. 对外 API（由 Assistant 暴露）

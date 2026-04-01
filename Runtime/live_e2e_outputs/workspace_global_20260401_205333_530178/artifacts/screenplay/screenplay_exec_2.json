@@ -1,0 +1,154 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-01T20:53:53.819003+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "The Midnight Watchmaker",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Elias's Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "In his cluttered workshop, Elias, an elderly watchmaker, races against the clock to repair a delicate pocket watch. The ticking of a prominent grandfather clock heightens the tension as midnight approaches, culminating in a final, successful adjustment just as the hour strikes.",
+        "estimated_duration": {
+          "seconds": 10.0,
+          "confidence": 0.7
+        },
+        "continuity": {
+          "props_present": [
+            "antique clocks",
+            "tiny tools",
+            "magnifying glasses",
+            "desk lamp",
+            "broken pocket watch",
+            "grandfather clock"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A worn but clean tweed vest over a practical button-up shirt, a leather apron, and round spectacles perched on his nose.",
+              "must_keep": [
+                "practical for a watchmaker",
+                "evokes a sense of classic craftsmanship"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Elias is meticulously working on a broken pocket watch.",
+            "A grandfather clock prominently displays the time nearing midnight.",
+            "The repair must be completed before midnight."
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_001",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "INT. ELIAS'S WORKSHOP - NIGHT\n\nSOUND of soft, rhythmic ticking\n\nA single DESK LAMP casts a warm, focused glow over ELIAS (70s), his aged, steady hands working with microscopic precision. Tiny gears and springs are spread across his workbench. He peers through a magnifying loupe, his brow furrowed in intense concentration. Beside him, a towering GRANDFATHER CLOCK DOMINATES the room, its hands nearing midnight.",
+            "continuity_refs": {
+              "props": [
+                "desk lamp",
+                "tiny gears",
+                "springs",
+                "workbench",
+                "magnifying loupe",
+                "grandfather clock"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_002",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "CLOSE ON Elias's meticulous movements as he attempts to fit a miniscule component into a broken pocket watch. His breath hitches. The delicate mechanism fights him. The ticking of the grandfather clock grows noticeably LOUDER, a relentless march.",
+            "continuity_refs": {
+              "props": [
+                "pocket watch",
+                "microscopic component",
+                "grandfather clock"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_003",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Elias glances at the grandfather clock. The minute hand hovers just seconds from the top. Sweat beads on his temple. He takes a deep, fortifying breath, his eyes narrowing with a renewed, almost desperate focus.",
+            "continuity_refs": {
+              "props": [
+                "grandfather clock"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_004",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "With the steadiness of a surgeon, Elias makes one final, critical adjustment to the watch’s internal balance wheel. It's a gamble. For a moment, nothing. Then, a faint, almost imperceptible TICK-TOCK. The pocket watch SPRINGS TO LIFE, its tiny hands beginning to move.",
+            "continuity_refs": {
+              "props": [
+                "pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_005",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "SIMULTANEOUSLY, the grandfather clock emits a deep, resonant CHIME. ONE. TWO. THREE... signalling the stroke of midnight. Elias leans back, a quiet, knowing smile spreading across his face, his gaze fixed on the perfectly restored pocket watch, now ticking robustly in his palm.",
+            "continuity_refs": {
+              "props": [
+                "grandfather clock",
+                "pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "The repaired pocket watch begins to tick just as the grandfather clock chimes midnight, confirming Elias's success.",
+          "emotional_shift": "From intense pressure and anxiety to quiet triumph and relief."
+        }
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "estimated_total_duration_sec": 10.0,
+    "sum_scene_duration_sec": 10.0,
+    "scene_count": 1,
+    "dialogue_block_count": 0,
+    "action_block_count": 5
+  }
+}

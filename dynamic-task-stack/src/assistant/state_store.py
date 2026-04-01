@@ -115,7 +115,7 @@ class AssistantStateStore:
                 return self.global_workspace
 
             workspace_id = "workspace_global_" + datetime.now().strftime(
-                "%Y%m%d_%H%M%S_%f"
+                "%Y%m%d_%H%M%S"
             )
             workspace = Workspace(
                 workspace_id=workspace_id,

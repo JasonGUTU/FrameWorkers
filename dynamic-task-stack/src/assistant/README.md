@@ -269,7 +269,7 @@ Assistant 模块是“执行入口 + 执行编排器”，负责把 Task Stack �
     }
   },
   "error": null,
-  "workspace_id": "workspace_global_20260320_083015_123456"
+  "workspace_id": "workspace_global_20260320_083015"
 }
 ```
 
