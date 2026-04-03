@@ -27,7 +27,9 @@ Generation 模块提供了统一的接口用于图像、视频和音频生成，
 
 这些服务用于承载 provider 耦合的执行逻辑，便于 `agents/` 直接复用。
 
-fal 视频服务（`FalVideoService`）在输入多张 keyframe 图时，采用严格多图条件字段（`image_urls`）；如果模型不支持该字段会直接报错，不会自动降级为单图锚点。
+**Fal 模型 ID**：`FalImageService` / `FalVideoService` 的 `FAL_IMAGE_MODEL`、`FAL_VIDEO_MODEL` 仅从环境读取（构造前由 `fal_helpers.ensure_fal_runtime_env_loaded()` 合并仓库根 `.env` 与 `.env.example`，不覆盖已存在的 `os.environ`）。Python 内不再写死默认端点字符串。
+
+fal 视频服务（`FalVideoService`）对 **非 Kling** 模型：多 keyframe 时走 `image_urls`（严格多锚点，不支持则由 fal 报错）。**Kling**（`fal-ai/kling-video/...`）：多图时映射为首尾帧——`v2.6` / `v3` / `o3` 等使用 `start_image_url` + `end_image_url`，其余 Kling 变体使用 `image_url` + `tail_image_url`；`duration` 会收敛为 Kling 常见的 `"5"` / `"10"` 秒枚举。Kling 路径下不会透传 `FAL_VIDEO_STRUCTURED_CONSTRAINTS_FIELD`（避免未知参数导致 400）。
 
 另外，`FalVideoService` 支持可选“结构化一致性约束”下沉：
 - 通过环境变量 `FAL_VIDEO_STRUCTURED_CONSTRAINTS_FIELD` 指定目标模型参数名（例如某些模型自定义的 `consistency_constraints`）

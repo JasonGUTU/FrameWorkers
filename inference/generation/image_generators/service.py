@@ -10,7 +10,7 @@ from typing import Any
 
 import httpx
 
-from ..fal_helpers import fal_subscribe, http_download_bytes
+from ..fal_helpers import fal_subscribe, http_download_bytes, require_fal_model_var
 
 logger = logging.getLogger(__name__)
 
@@ -157,7 +157,7 @@ class FalImageService(ImageService):
         timeout: float = 120.0,
     ) -> None:
         self._api_key = api_key or os.getenv("FAL_API_KEY", "")
-        self.model = model or os.getenv("FAL_IMAGE_MODEL", "fal-ai/flux/schnell")
+        self.model = require_fal_model_var("FAL_IMAGE_MODEL", explicit=model)
         self.timeout = timeout
         self._http: httpx.AsyncClient | None = None
 
@@ -186,14 +186,29 @@ class FalImageService(ImageService):
         if not refs:
             raise ValueError("reference_images cannot be empty for fal edit_image")
 
-        # fal image-to-image models commonly accept a single image_url input.
-        image_url = f"data:image/png;base64,{base64.b64encode(refs[0]).decode('utf-8')}"
-        result = await self._submit({"prompt": prompt, "image_url": image_url})
+        if self._is_nano_banana2_base_model(self.model):
+            # fal-ai/nano-banana-2/edit expects image_urls (list), not image_url.
+            image_urls = [
+                f"data:image/png;base64,{base64.b64encode(r).decode('utf-8')}" for r in refs
+            ]
+            edit_model = "fal-ai/nano-banana-2/edit"
+            logger.info("[fal.ai] Editing image with model=%s", edit_model)
+            result = await self._submit_model(edit_model, {"prompt": prompt, "image_urls": image_urls})
+        else:
+            image_url = f"data:image/png;base64,{base64.b64encode(refs[0]).decode('utf-8')}"
+            result = await self._submit_model(self.model, {"prompt": prompt, "image_url": image_url})
         out_url = self._extract_image_url(result)
         return await self._download_binary(out_url)
 
+    @staticmethod
+    def _is_nano_banana2_base_model(model: str) -> bool:
+        return model.rstrip("/") == "fal-ai/nano-banana-2"
+
     async def _submit(self, arguments: dict[str, Any]) -> dict[str, Any]:
-        return await fal_subscribe(self._api_key, self.model, arguments)
+        return await self._submit_model(self.model, arguments)
+
+    async def _submit_model(self, model_id: str, arguments: dict[str, Any]) -> dict[str, Any]:
+        return await fal_subscribe(self._api_key, model_id, arguments)
 
     async def _download_binary(self, url: str) -> bytes:
         return await http_download_bytes(self.http, url)

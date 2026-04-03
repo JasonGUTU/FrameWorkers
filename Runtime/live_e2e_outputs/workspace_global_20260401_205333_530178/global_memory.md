@@ -7,8 +7,13 @@ Global memory for workspace `workspace_global_20260401_205333_530178`. The **Ent
 <!-- FW_FILE_TREE_BEGIN -->
 ```
 .file_metadata.json
+    audio_exec_6.json
     keyframes_exec_4.json
     keyframes_manifest.json
+        aud_amb_sc_001.wav
+        aud_final.wav
+        aud_mix_sc_001.wav
+        aud_music_sc_001.wav
         img_char_001_global.png
         img_char_001_sc_001.png
         img_loc_001_global.png
@@ -21,9 +26,18 @@ Global memory for workspace `workspace_global_20260401_205333_530178`. The **Ent
         img_sh_005_kf_02.png
         img_sh_006_kf_01.png
         img_sh_006_kf_02.png
+        clip_final.mp4
+        clip_sc_001.mp4
+        clip_sh_001.mp4
+        clip_sh_002.mp4
+        clip_sh_003.mp4
+        clip_sh_004.mp4
+        clip_sh_005.mp4
+        clip_sh_006.mp4
     screenplay_exec_2.json
     story_blueprint_exec_1.json
     storyboard_exec_3.json
+    video_exec_5.json
 global_memory.md
 logs.jsonl
 ```
@@ -162,6 +176,94 @@ logs.jsonl
       {
         "role": "keyframes_manifest",
         "path": "/home/zhendong_li/test_frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260401_205333_530178/artifacts/keyframes/keyframes_manifest.json"
+      }
+    ]
+  },
+  {
+    "content": "global_memory test summary",
+    "agent_id": "VideoAgent",
+    "task_id": "task_1_cfaab40a",
+    "created_at": "2026-04-01T21:19:29.035164+00:00",
+    "execution_result": {
+      "status": "COMPLETED",
+      "execution_id": "exec_5_ded921df",
+      "persist_plan_meta": {
+        "naming_policy_version": "v2.0",
+        "persist_plan_digest": "aeabcdcd41ab483312e0073a02b4f210ed00560af9e9bd66aed623a895d147bc"
+      }
+    },
+    "artifact_locations": [
+      {
+        "role": "video",
+        "path": "/home/zhendong_li/test_frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260401_205333_530178/artifacts/video/video_exec_5.json"
+      },
+      {
+        "role": "clip_sh_001",
+        "path": "/home/zhendong_li/test_frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260401_205333_530178/artifacts/media/VideoAgent/video/clip_sh_001.mp4"
+      },
+      {
+        "role": "clip_sh_002",
+        "path": "/home/zhendong_li/test_frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260401_205333_530178/artifacts/media/VideoAgent/video/clip_sh_002.mp4"
+      },
+      {
+        "role": "clip_sh_003",
+        "path": "/home/zhendong_li/test_frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260401_205333_530178/artifacts/media/VideoAgent/video/clip_sh_003.mp4"
+      },
+      {
+        "role": "clip_sh_004",
+        "path": "/home/zhendong_li/test_frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260401_205333_530178/artifacts/media/VideoAgent/video/clip_sh_004.mp4"
+      },
+      {
+        "role": "clip_sh_005",
+        "path": "/home/zhendong_li/test_frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260401_205333_530178/artifacts/media/VideoAgent/video/clip_sh_005.mp4"
+      },
+      {
+        "role": "clip_sh_006",
+        "path": "/home/zhendong_li/test_frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260401_205333_530178/artifacts/media/VideoAgent/video/clip_sh_006.mp4"
+      },
+      {
+        "role": "clip_sc_001",
+        "path": "/home/zhendong_li/test_frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260401_205333_530178/artifacts/media/VideoAgent/video/clip_sc_001.mp4"
+      },
+      {
+        "role": "clip_final",
+        "path": "/home/zhendong_li/test_frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260401_205333_530178/artifacts/media/VideoAgent/video/clip_final.mp4"
+      }
+    ]
+  },
+  {
+    "content": "global_memory test summary",
+    "agent_id": "AudioAgent",
+    "task_id": "task_1_cfaab40a",
+    "created_at": "2026-04-01T21:19:56.326776+00:00",
+    "execution_result": {
+      "status": "COMPLETED",
+      "execution_id": "exec_6_2bbd9cc4",
+      "persist_plan_meta": {
+        "naming_policy_version": "v2.0",
+        "persist_plan_digest": "bf9b8f8a59e33eb3bef31d42a44b9a4c33d4c70275f3e68650e8953037a9788c"
+      }
+    },
+    "artifact_locations": [
+      {
+        "role": "audio",
+        "path": "/home/zhendong_li/test_frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260401_205333_530178/artifacts/audio/audio_exec_6.json"
+      },
+      {
+        "role": "aud_music_sc_001",
+        "path": "/home/zhendong_li/test_frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260401_205333_530178/artifacts/media/AudioAgent/audio/aud_music_sc_001.wav"
+      },
+      {
+        "role": "aud_amb_sc_001",
+        "path": "/home/zhendong_li/test_frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260401_205333_530178/artifacts/media/AudioAgent/audio/aud_amb_sc_001.wav"
+      },
+      {
+        "role": "aud_mix_sc_001",
+        "path": "/home/zhendong_li/test_frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260401_205333_530178/artifacts/media/AudioAgent/audio/aud_mix_sc_001.wav"
+      },
+      {
+        "role": "aud_final",
+        "path": "/home/zhendong_li/test_frameworkers/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260401_205333_530178/artifacts/media/AudioAgent/audio/aud_final.wav"
       }
     ]
   }

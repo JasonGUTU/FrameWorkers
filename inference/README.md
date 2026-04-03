@@ -495,22 +495,26 @@ export OPENAI_API_KEY="your-key"
 export ANTHROPIC_API_KEY="your-key"
 export OLLAMA_BASE_URL="http://localhost:11434"
 export FAL_API_KEY="your-fal-api-key"
-export FAL_IMAGE_MODEL="fal-ai/flux/schnell"
-export FAL_VIDEO_MODEL="fal-ai/ltx-video-v095"
+export FAL_IMAGE_MODEL="fal-ai/nano-banana-2"
+export FAL_VIDEO_MODEL="fal-ai/kling-video/v2.6/pro/image-to-video"
 export FAL_TTS_MODEL="fal-ai/minimax/speech-02-turbo"
 ```
 
 如果项目根目录存在 `.env`，`BaseLLMClient` 在首次初始化时会自动向上搜索并加载该文件（仅填充当前缺失的变量，不覆盖已存在环境变量）。
+
+**Fal 图像/视频模型**：`FalImageService` / `FalVideoService` 在构造时会通过 `generation/fal_helpers.py` 合并**仓库根目录**的 `.env` 与 `.env.example`（仅写入尚未设置的键），然后读取 **`FAL_IMAGE_MODEL`** / **`FAL_VIDEO_MODEL`**；若仍为空则抛错。不在 Python 里写死默认端点 ID——改模型只需编辑 `.env`（或复制 `.env.example` 再改）。
+
+**离线从 storyboard 到成片（KeyFrame + Video fal）**：**`scripts/run_storyboard_to_video.py`** — 进程内 `descriptor.build_equipped_agent` + `run()`，不经过 Task Stack / `POST /api/assistant/execute`。输出目录下 `keyframes/`（PNG + `keyframes_package.json`）与 `video/`（`clip_*.mp4`、`video_package.json` 等）。VideoAgent 仍为骨架生成计划（无 LLM），与线上一致。`--no-video-materialize` 只跑到 keyframes；`--no-keyframe-materialize` 须配合 `--no-video-materialize`（仅 LLM+L1/L2、无 fal 图）。
 
 媒体生成器会自动发现 fal.ai 插件：
 - `fal_image_generator`
 - `fal_video_generator`
 - `fal_tts_generator`
 
-fal 服务会按以下优先级选择模型：
-1) 代码初始化显式传参  
-2) 环境变量（`FAL_IMAGE_MODEL` / `FAL_VIDEO_MODEL` / `FAL_TTS_MODEL`）  
-3) 内置默认值
+fal 图像/视频服务会按以下优先级选择模型：
+1) 构造函数显式传参 `model=`  
+2) 环境变量 `FAL_IMAGE_MODEL` / `FAL_VIDEO_MODEL`（由仓库根 `.env` 与 `.env.example` 合并注入，见上）  
+3) 无内置 Python 默认值；未设置时抛错。推荐端点仍写在根目录 **`.env.example`** 中便于复制。`nano-banana-2` 的编辑层仍由代码路由到 `fal-ai/nano-banana-2/edit`（见 `generation/image_generators/service.py`）。Kling 请求体映射见 `generation/README.md`。
 
 ### 代码方式
 

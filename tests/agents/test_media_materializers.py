@@ -432,6 +432,42 @@ def test_audio_materializer_mixes_final_delivery_video():
     assert audio_service.mux_calls[0]["audio_bytes"] == b"final_audio"
 
 
+class _KlingFalVideoSpy(FalVideoService):
+    def __init__(self) -> None:
+        super().__init__(
+            api_key="test",
+            model="fal-ai/kling-video/v2.6/pro/image-to-video",
+        )
+        self.submitted: list[dict] = []
+
+    async def _submit(self, arguments: dict[str, object]) -> dict[str, object]:
+        self.submitted.append(arguments)
+        return {"video": {"url": "https://example.com/video.mp4"}}
+
+    async def _download_binary(self, url: str) -> bytes:
+        return f"video:{url}".encode("utf-8")
+
+
+def test_fal_video_service_kling_maps_start_end_and_duration_enum():
+    svc = _KlingFalVideoSpy()
+    out = asyncio.run(
+        svc.generate_clip(
+            shot_id="sh_001",
+            keyframe_images=[b"img1", b"img2"],
+            prompt="prompt",
+            duration_sec=2.0,
+        )
+    )
+    assert out.startswith(b"video:https://example.com/")
+    assert len(svc.submitted) == 1
+    arg = svc.submitted[0]
+    assert arg["duration"] == "5"
+    assert arg["start_image_url"].startswith("data:image/png;base64,")
+    assert arg["end_image_url"].startswith("data:image/png;base64,")
+    assert "image_urls" not in arg
+    assert "fps" not in arg
+
+
 def test_fal_video_service_uses_multi_image_payload_when_supported():
     svc = _FalVideoServiceSpy(fail_multi=False)
     out = asyncio.run(

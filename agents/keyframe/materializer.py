@@ -1,13 +1,11 @@
 """Keyframe image materializer — three-layer consistency chain.
 
-All layers use OpenRouter + Gemini 2.5 Flash Image:
   Layer 1 — Global anchors:  text -> generate_image()
   Layer 2 — Scene anchors:   global anchor img + prompt -> edit_image()
   Layer 3 — Shot keyframes:  scene anchor img(s) + prompt -> edit_image()
 
 Each layer references ONLY the layer above it.
 Text descriptions (prompt_summary) are always included.
-No fallback needed — Gemini natively supports image editing.
 
 This materializer calls ImageService to produce image bytes and returns
 ``list[MediaAsset]`` for Assistant persistence. It does not perform local

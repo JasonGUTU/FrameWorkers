@@ -14,7 +14,7 @@ from typing import Any
 
 import httpx
 
-from ..fal_helpers import fal_subscribe, http_download_bytes
+from ..fal_helpers import fal_subscribe, http_download_bytes, require_fal_model_var
 
 logger = logging.getLogger(__name__)
 
@@ -198,7 +198,7 @@ class FalVideoService(VideoService):
         structured_constraints_field: str | None = None,
     ) -> None:
         self._api_key = api_key or os.getenv("FAL_API_KEY", "")
-        self.model = model or os.getenv("FAL_VIDEO_MODEL", "fal-ai/ltx-video-v095")
+        self.model = require_fal_model_var("FAL_VIDEO_MODEL", explicit=model)
         self.timeout = timeout
         self.structured_constraints_field = (
             structured_constraints_field
@@ -216,6 +216,25 @@ class FalVideoService(VideoService):
     async def close(self) -> None:
         if self._http and not self._http.is_closed:
             await self._http.aclose()
+
+    @staticmethod
+    def _is_fal_kling_model(model: str) -> bool:
+        return "kling-video" in model
+
+    @staticmethod
+    def _kling_uses_start_end_frame_fields(model: str) -> bool:
+        """Kling 2.6+ / v3 / o3 use start_image_url (+ optional end_image_url)."""
+        return (
+            "/v2.6/" in model
+            or "/v3/" in model
+            or "/o3/" in model
+            or "/v2.7/" in model
+        )
+
+    @staticmethod
+    def _kling_duration_enum(duration_sec: float) -> str:
+        """Many Kling endpoints only allow 5s or 10s (string enum)."""
+        return "10" if float(duration_sec) > 5.5 else "5"
 
     async def generate_clip(
         self,
@@ -250,34 +269,62 @@ class FalVideoService(VideoService):
             self.structured_constraints_field
             and isinstance(constraints, dict)
             and constraints
+            and not self._is_fal_kling_model(self.model)
         ):
             arguments[self.structured_constraints_field] = constraints
 
-        # Keep common generation knobs optional to maximize model compatibility.
-        if duration_sec > 0:
-            arguments["duration"] = int(round(duration_sec))
-        if fps > 0:
-            arguments["fps"] = int(fps)
-        if width > 0 and height > 0:
-            # ltx-video-v095 accepts preset labels instead of WxH.
-            if "ltx-video-v095" in self.model:
-                arguments["resolution"] = "480p" if int(height) <= 480 else "720p"
-            else:
-                arguments["resolution"] = f"{int(width)}x{int(height)}"
-
         result: dict[str, Any]
-        if len(image_data_urls) > 1:
-            logger.info(
-                "[fal.ai] Using multi-keyframe conditioning for shot=%s (%d anchors)",
-                shot_id,
-                len(image_data_urls),
+        if self._is_fal_kling_model(self.model):
+            arguments["duration"] = self._kling_duration_enum(
+                duration_sec if duration_sec > 0 else 5.0
             )
-            arguments["image_urls"] = image_data_urls
+            if len(image_data_urls) >= 2 and self._kling_uses_start_end_frame_fields(self.model):
+                arguments["start_image_url"] = image_data_urls[0]
+                arguments["end_image_url"] = image_data_urls[-1]
+                logger.info(
+                    "[fal.ai] Kling start/end frames for shot=%s (%d anchors -> 2)",
+                    shot_id,
+                    len(image_data_urls),
+                )
+            elif len(image_data_urls) >= 2:
+                arguments["image_url"] = image_data_urls[0]
+                arguments["tail_image_url"] = image_data_urls[-1]
+                logger.info(
+                    "[fal.ai] Kling image_url/tail for shot=%s (%d anchors -> 2)",
+                    shot_id,
+                    len(image_data_urls),
+                )
+            elif len(image_data_urls) == 1:
+                if self._kling_uses_start_end_frame_fields(self.model):
+                    arguments["start_image_url"] = image_data_urls[0]
+                else:
+                    arguments["image_url"] = image_data_urls[0]
             result = await self._submit(arguments)
         else:
-            if image_data_urls:
-                arguments["image_url"] = image_data_urls[0]
-            result = await self._submit(arguments)
+            # Keep common generation knobs optional to maximize model compatibility.
+            if duration_sec > 0:
+                arguments["duration"] = int(round(duration_sec))
+            if fps > 0:
+                arguments["fps"] = int(fps)
+            if width > 0 and height > 0:
+                # ltx-video-v095 accepts preset labels instead of WxH.
+                if "ltx-video-v095" in self.model:
+                    arguments["resolution"] = "480p" if int(height) <= 480 else "720p"
+                else:
+                    arguments["resolution"] = f"{int(width)}x{int(height)}"
+
+            if len(image_data_urls) > 1:
+                logger.info(
+                    "[fal.ai] Using multi-keyframe conditioning for shot=%s (%d anchors)",
+                    shot_id,
+                    len(image_data_urls),
+                )
+                arguments["image_urls"] = image_data_urls
+                result = await self._submit(arguments)
+            else:
+                if image_data_urls:
+                    arguments["image_url"] = image_data_urls[0]
+                result = await self._submit(arguments)
 
         video_url = self._extract_video_url(result)
         return await self._download_binary(video_url)

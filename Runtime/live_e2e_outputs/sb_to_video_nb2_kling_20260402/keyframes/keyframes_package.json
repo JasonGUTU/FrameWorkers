@@ -1,0 +1,459 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_type": "character",
+          "entity_id": "char_001",
+          "display_name": "",
+          "purpose": "identity_anchor",
+          "keyframe_id": "kf_global_char_001",
+          "image_asset": {
+            "asset_id": "img_char_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_nb2_kling_20260402/keyframes/img_char_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope. Emphasis on close-ups to highlight delicate work, Elias's hands, and his subtle emotional shifts. Lighting should be warm and focused on the workbench, with the surrounding room in soft shadow. Sound design is crucial: delicate mechanical sounds, the digital clock's clicks, a sudden loud tick, and distant fireworks. Elias Thorne, an 80-year-old man, his face etched with life's experiences, yet deeply focused. He wears a well-worn, long-sleeved button-up shirt in a muted, earthy tone, possibly a faded blue or gray, underneath a practical, slightly stained brown canvas apron. His hands, though slender and somewhat frail, show a lifetime of intricate work. His silver-rimmed spectacles are perched precisely on the bridge of his nose, reflecting the warm glow of a desk lamp. His eyes, behind the lenses, convey a quiet, contemplative grief, mixed with an underlying current of determination. His posture is slightly hunched over his work, indicative of deep concentration."
+        }
+      ],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "display_name": "",
+          "purpose": "style_anchor",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_nb2_kling_20260402/keyframes/img_loc_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope. Emphasis on close-ups to highlight delicate work, Elias's hands, and his subtle emotional shifts. Lighting should be warm and focused on the workbench, with the surrounding room in soft shadow. Sound design is crucial: delicate mechanical sounds, the digital clock's clicks, a sudden loud tick, and distant fireworks. A vintage watchmaker's workshop, dimly lit and imbued with a sense of history. The central feature is a sturdy, dark wooden workbench, its surface well-used and showing the patina of age, heavily cluttered with an array of intricate watchmaking tools, disassembled clock mechanisms, and small, glinting gears. A focused, warm, golden light spills from an old-fashioned brass desk lamp, illuminating only the immediate working area on the bench, creating a stark contrast with the rest of the room. The surrounding walls and furniture are plunged into soft, deep shadows, making the space feel intimate and almost isolated, as if time itself is slowing down within its confines. A window on the far wall is a dark, rectangular void against the muted backdrop, offering a glimpse of the inky night sky outside."
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_nb2_kling_20260402/keyframes/img_char_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope. Show Elias Thorne, an 80-year-old man, appearing frail yet deeply focused, wearing a well-worn, long-sleeved shirt and a practical, slightly stained apron over it. His spectacles are perched on his nose. He is illuminated by the warm, focused glow of a desk lamp in a dimly lit watchmaker's workshop at night. His hands are initially tense and slightly shaky, reflecting his quiet grief, but his expression maintains an intense focus on his work. Avoid bright or sterile aesthetics."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_nb2_kling_20260402/keyframes/img_loc_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope. A vintage watchmaker's workshop, depicted at night. The workbench is the central focus, cluttered with watchmaker's tools, gears, and personal items, bathed in the strong, localized warm glow of a desk lamp. The rest of the room recedes into soft, deep shadow, creating an intimate, almost isolated atmosphere. A window is visible, revealing the dark night sky outside, which will later be illuminated by distant fireworks. The overall feel should be lived-in and reflective, not overly modern."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_001",
+              "linked_blocks": [
+                "b_001"
+              ]
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_01",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_nb2_kling_20260402/keyframes/img_sh_001_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope. Extreme high-angle close-up, static shot. Tightly framed on the open, vintage pocket watch mechanism on a cluttered, well-used workbench, bathed in the strong, localized warm glow of a desk lamp. Elias Thorne's frail hands, adorned with a slightly stained apron and spectacles, delicately manipulate a tiny component with tweezers under a magnifying loupe. In the soft-shadowed background, a digital clock clearly displays '00:00:10', emphasizing the critical time constraint. Focus on the intricate details of the watch and the intense concentration in his hands. Avoid sterile or modern aesthetics.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_002",
+              "linked_blocks": [
+                "b_002"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_002",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_01",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_nb2_kling_20260402/keyframes/img_sh_002_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope. Eye-level close-up, static shot. Focus on Elias Thorne's aged face, illuminated by the warm desk lamp, highlighting his deep concentration through his spectacles. A subtle flicker of underlying emotion \u2013 a mix of quiet grief and fierce determination \u2013 is visible in his eyes, hinting at the personal significance of his work on the watch. He wears his well-worn apron. The room around him recedes into soft shadow, enhancing the intimate, contemplative mood. Avoid overly dramatic expressions; keep it subtle and reflective.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_003",
+              "linked_blocks": [
+                "b_003"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_003",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_01",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_nb2_kling_20260402/keyframes/img_sh_003_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope. Eye-level close-up, static shot. Focus tight on Elias Thorne's trembling hand holding tweezers over the open vintage pocket watch mechanism on his cluttered workbench, illuminated by the warm desk lamp. A microscopic gear is precariously balanced in the tweezers, beginning to slip due to the tremor, reflecting his sudden panic and vulnerability. The surrounding workshop is softly shadowed, enhancing the intimate feel.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_004",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_02",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_nb2_kling_20260402/keyframes/img_sh_003_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope. Eye-level close-up, static shot. The tiny, microscopic gear, having slipped from Elias Thorne's tweezers, bounces lightly on the well-used workbench surface, then begins to roll ominously towards the edge of the work area. Elias's hand, still in his apron, is visible, frozen in a moment of acute distress. The warm, focused light of the desk lamp highlights the small gear and the texture of the workbench. The mood shifts to one of heightened tension and anxiety.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "source": {
+              "storyboard_shot_id": "sh_004",
+              "linked_blocks": [
+                "b_004"
+              ]
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_005",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_01",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_nb2_kling_20260402/keyframes/img_sh_004_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope. Eye-level medium close-up, static shot. The digital clock on the workbench is prominently displayed, its red digits starkly reading '00:00:05', glowing softly in the warm, focused light of the desk lamp. The time is critically dwindling. The cluttered, vintage workbench is visible around it, with the surrounding workshop in soft shadow. The ticking sound is almost audibly present, building tension.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_006",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_02",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_nb2_kling_20260402/keyframes/img_sh_004_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope. Eye-level medium close-up, panning from the digital clock. Elias Thorne's face is now visible, spectacles on, his expression one of palpable panic and vulnerability, hands slightly unsteady. The warm desk lamp light accentuates the lines of worry on his aged face, still wearing his well-worn apron and shirt. The background remains softly shadowed, enhancing the intimate feel of the moment, as he struggles with the mounting pressure.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_007",
+                "order": 3,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_03",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_nb2_kling_20260402/keyframes/img_sh_004_kf_03.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope. Eye-level medium close-up, panning from Elias's panicked face and settling. Focus on a vintage, framed photograph of Elias's late, smiling wife, positioned on the cluttered workbench next to him. Elias's gaze is directed towards the photo, his expression gradually shifting from panic to a quiet, determined resolve, finding solace and strength. The warm desk lamp illuminates the photograph, making it a clear emotional anchor in the softly shadowed workshop.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 5,
+            "source": {
+              "storyboard_shot_id": "sh_005",
+              "linked_blocks": [
+                "b_005"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_008",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_01",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_nb2_kling_20260402/keyframes/img_sh_005_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope. High-angle close-up, static shot. Elias Thorne's now steady and precise hands, wearing his apron, deftly use tweezers to pick up the microscopic gear from the workbench. His spectacles are visible as he guides it confidently and delicately back into the open mechanism of the vintage pocket watch. The warm desk lamp intensely illuminates the intricate work, showcasing renewed focus and precision, while the background remains softly shadowed. The atmosphere shifts to one of quiet competence.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_009",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_02",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_nb2_kling_20260402/keyframes/img_sh_005_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope. High-angle close-up, static shot. Elias Thorne's steady hands carefully and confidently close the ornate casing of the vintage pocket watch, having successfully placed the gear. The action is deliberate and precise, a testament to his renewed composure and skill. The closed watch is centered on the workbench, under the warm, focused light of the desk lamp. The intimate atmosphere of the vintage workshop is maintained, with delicate mechanical sounds implied.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 6,
+            "source": {
+              "storyboard_shot_id": "sh_006",
+              "linked_blocks": [
+                "b_006"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_010",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_01",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_nb2_kling_20260402/keyframes/img_sh_006_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope. Eye-level close-up, static shot. The digital clock prominently displays '00:00:01', its red digits glowing intensely in the warm light. The last second before midnight ticks away, building final suspense. The cluttered workbench is visible around the clock, with the surrounding workshop in soft shadow. The atmosphere is thick with anticipation.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_011",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_02",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_nb2_kling_20260402/keyframes/img_sh_006_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope. Eye-level close-up, static shot, a quick cut from the digital clock. Elias Thorne, spectacles on and wearing his apron, holds the now closed vintage pocket watch closely to his ear. A hopeful, anxious grimace is on his aged face as he listens intently for a sound. The warm desk lamp illuminates his face and the watch, emphasizing his profound anticipation. The room behind him is in soft shadow, maintaining the intimate, contemplative mood, waiting for the tick.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 7,
+            "source": {
+              "storyboard_shot_id": "sh_007",
+              "linked_blocks": [
+                "b_007"
+              ]
+            },
+            "estimated_duration_sec": 3.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_012",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_007_kf_01",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_nb2_kling_20260402/keyframes/img_sh_007_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope. Eye-level medium shot, beginning with a close focus on Elias Thorne's face. He is wearing his spectacles and apron, holding the vintage pocket watch clutched to his chest. His expression is one of profound relief and a dawning, quiet peace, having just heard the watch tick. The warm desk lamp highlights his face and the watch, while the background remains in soft shadow. The prominent ticking sound of the watch signifies success and a shift in his emotional state.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_013",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_007_kf_02",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_nb2_kling_20260402/keyframes/img_sh_007_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope. Eye-level medium shot, slowly dollying out from Elias Thorne. He is seen clutching the vintage pocket watch to his chest, his gaze shifting towards the window. Through the window, the dark night sky is momentarily illuminated by the first burst of distant fireworks, subtly signalling the New Year. His expression is now a gentle smile, filled with quiet hope and contentment. The workbench is partially visible, bathed in warm light, while the rest of the room is in soft shadow, enhancing the intimate resolve.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_014",
+                "order": 3,
+                "image_asset": {
+                  "asset_id": "img_sh_007_kf_03",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_nb2_kling_20260402/keyframes/img_sh_007_kf_03.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope. Eye-level medium shot, fully dollied out. Elias Thorne, spectacles on and wearing his apron, is seated at his workbench, holding the ticking vintage pocket watch against his chest. His face wears a serene, peaceful smile as he looks out the window, which is now regularly illuminated by the vibrant, distant fireworks celebrating the New Year. The warm desk lamp softly lights his immediate area, with the vintage workshop receding into soft shadows, completing a scene of quiet hope and resolved tension. The overall emotion is peaceful and reflective, avoiding any overt expressions of sadness.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_count": 7,
+    "keyframe_count_total": 14,
+    "avg_keyframes_per_shot": 2.0,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 1,
+    "stability_location_keyframe_count": 1,
+    "stability_prop_keyframe_count": 0
+  }
+}

@@ -215,3 +215,6 @@ Thumbs.db
 *.swo
 *~
 
+*.png
+*.mp4
+*.wav

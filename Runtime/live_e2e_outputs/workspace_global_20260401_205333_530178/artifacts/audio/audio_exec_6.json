@@ -1,0 +1,71 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_duration_sec": 10.0,
+        "narration_segments": [],
+        "music_cue": {
+          "cue_id": "music_sc_001",
+          "scene_id": "sc_001",
+          "mood": "tense, intricate, suspenseful, resolved, triumphant",
+          "start_sec": 0.0,
+          "end_sec": 10.0,
+          "audio_asset": {
+            "asset_id": "aud_music_sc_001",
+            "uri": "/tmp/fw_media_v8qy9omu/aud_music_sc_001.wav",
+            "format": "wav",
+            "duration_sec": 10.0,
+            "sample_rate": 44100
+          }
+        },
+        "ambience_bed": {
+          "ambience_id": "amb_sc_001",
+          "scene_id": "sc_001",
+          "description": "Subtle clockwork mechanisms, delicate metallic adjustments, distant city quiet, resonant grandfather clock chimes",
+          "start_sec": 0.0,
+          "end_sec": 10.0,
+          "audio_asset": {
+            "asset_id": "aud_amb_sc_001",
+            "uri": "/tmp/fw_media_v8qy9omu/aud_amb_sc_001.wav",
+            "format": "wav",
+            "duration_sec": 10.0,
+            "sample_rate": 44100
+          }
+        },
+        "mix": {
+          "mix_id": "mix_sc_001",
+          "scene_id": "sc_001",
+          "duration_sec": 10.0,
+          "audio_asset": {
+            "asset_id": "aud_mix_sc_001",
+            "uri": "/tmp/fw_media_v8qy9omu/aud_mix_sc_001.wav",
+            "format": "wav",
+            "duration_sec": 10.0,
+            "sample_rate": 44100
+          }
+        }
+      }
+    ],
+    "final_audio_asset": {
+      "asset_id": "aud_final",
+      "uri": "/tmp/fw_media_v8qy9omu/aud_final.wav",
+      "format": "wav",
+      "duration_sec": 10.0,
+      "sample_rate": 44100
+    },
+    "final_delivery_asset": {
+      "asset_id": "delivery_final",
+      "uri": "placeholder",
+      "format": "mp4",
+      "duration_sec": 10.0
+    }
+  },
+  "metrics": {
+    "scene_count": 1,
+    "narration_segment_count": 0,
+    "total_narration_duration_sec": 0,
+    "total_music_duration_sec": 10.0
+  }
+}

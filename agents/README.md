@@ -15,13 +15,14 @@
   - `props` 相关路径（KeyFrame 生成 props anchors + Video 注入 props 一致性约束）统一由 `FW_ENABLE_PROP_PIPELINE` 控制（默认 `0` 关闭）
   - 兼容历史配置：`FW_ENABLE_PROP_KEYFRAMES` 与 `FW_VIDEO_ENABLE_PROP_CONSISTENCY` 仍可单独生效；当 `FW_ENABLE_PROP_PIPELINE` 设置时，以它为准
   - `keyframe/` 不再在本地执行增量快照写盘；图片仅通过 `MediaAsset` 返回，由 assistant 统一持久化
+  - 离线从 **storyboard JSON** 一路跑到成片（KeyFrameAgent LLM + fal 出图 → VideoAgent fal）：**`scripts/run_storyboard_to_video.py`**（不经过 Task Stack；可用 `--no-video-materialize` 只跑到 keyframes，或 `--no-keyframe-materialize` + `--no-video-materialize` 只做 KeyFrame LLM+L1/L2）
   - `audio/` materializer 会在 `final_audio_asset` 之后执行音视频 mux，输出 `final_delivery_asset`
 - `story/` 会显式遵循 `target_duration_sec` 约束，并在 evaluator 中校验 `content.estimated_duration.seconds` 容差（默认 ±20%）；`StoryConstraints.target_duration_sec` 与 agent 内部回退默认 **10s**（用户未写明长度时 prompt 亦按约 10 秒引导）；`story/descriptor.py` 将 Assistant 注入的整份 `source_text`（常为 Task `description` 对象）在需要时编码为 JSON 字符串再填入 `draft_idea`，不在 Assistant service 层解析具体字段
 - `screenplay/` 会显式遵循 `target_duration_sec` 约束，并在 evaluator 中校验总时长容差（默认 ±20%）；`ScreenplayConstraints.target_duration_sec` 与 agent 内部回退默认 **10s**
 - `storyboard/` 会从 screenplay 的 `blocks[].character_id`、`blocks[].continuity_refs.wardrobe_character_ids` 和 `continuity.character_wardrobe_notes[].character_id` 汇总 `character_locks`，避免动作块未显式写角色 ID 时丢失人物锚点
 - `keyframe/` 在构建人物锚点时会同时读取 `scene_consistency_pack.character_locks` 与 `shots[].characters_in_frame`，保证人物全局/场景锚点可生成
-  - `keyframe/descriptor.py` 默认使用 `FalImageService` 作为图片生成后端（需配置 `FAL_API_KEY` 与可选 `FAL_IMAGE_MODEL`）
-  - `video/descriptor.py` 默认使用 `FalVideoService` 作为视频生成后端（需配置 `FAL_API_KEY` 与可选 `FAL_VIDEO_MODEL`）
+  - `keyframe/descriptor.py` 默认使用 `FalImageService`（需 `FAL_API_KEY`；`FAL_IMAGE_MODEL` 由仓库根 `.env` / `.env.example` 提供，见 `inference/generation/fal_helpers.py`；`fal-ai/nano-banana-2` 时编辑层走 `fal-ai/nano-banana-2/edit`）
+  - `video/descriptor.py` 默认使用 `FalVideoService`（需 `FAL_API_KEY`；`FAL_VIDEO_MODEL` 同上来自环境，无 Python 内置默认端点）
   - `audio/descriptor.py` 默认使用 `FalAudioService` 作为 TTS 后端（需配置 `FAL_API_KEY` 与可选 `FAL_TTS_MODEL`）
 - `audio/agent.py` 在 skeleton-first 的 creative-fill 阶段对输出做严格 JSON 约束（禁止 `TypeOf:` 等类型提示行），避免 `chat_json` 因非 JSON 输出而失败
   - 示例 Agent：`example_agent/`

@@ -1,0 +1,459 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_type": "character",
+          "entity_id": "char_001",
+          "display_name": "",
+          "purpose": "identity_anchor",
+          "keyframe_id": "kf_global_char_001",
+          "image_asset": {
+            "asset_id": "img_char_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_conda_20260402/keyframes/img_char_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope.; Emphasis on close-ups to highlight delicate work, Elias's hands, and his subtle emotional shifts.; Lighting should be warm and focused on the workbench, with the surrounding room in soft shadow.; Sound design is crucial: delicate mechanical sounds, the digital clock's clicks, a sudden loud tick, and distant fireworks. Elias Thorne, an 80-year-old man, appearing frail yet intensely focused. He wears a well-worn, long-sleeved shirt with a practical, slightly stained brown apron over it. His spectacles are perched precisely on his nose, essential for intricate close-up work. His face shows a subtle weariness and a quiet, contemplative grief, with a furrowed brow suggesting deep concentration and underlying tension."
+        }
+      ],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "display_name": "",
+          "purpose": "style_anchor",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_conda_20260402/keyframes/img_loc_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope.; Emphasis on close-ups to highlight delicate work, Elias's hands, and his subtle emotional shifts.; Lighting should be warm and focused on the workbench, with the surrounding room in soft shadow.; Sound design is crucial: delicate mechanical sounds, the digital clock's clicks, a sudden loud tick, and distant fireworks. A dimly lit, vintage watchmaker's workshop, creating an intimate, almost isolated atmosphere. A sturdy, dark wooden workbench is the focal point, heavily cluttered with various tools, intricate gears, and a few personal items. The workbench is bathed in the focused, warm glow emanating from a vintage industrial-style desk lamp. The rest of the room recedes into soft, deep shadows. A window is visible in the background, revealing the dark, starless night sky."
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_conda_20260402/keyframes/img_char_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope.; Emphasis on close-ups to highlight delicate work, Elias's hands, and his subtle emotional shifts.; Lighting should be warm and focused on the workbench, with the surrounding room in soft shadow.; Sound design is crucial: delicate mechanical sounds, the digital clock's clicks, a sudden loud tick, and distant fireworks. Show Elias Thorne, an 80-year-old man, frail yet deeply focused, working intensely at his workbench during the night. He wears a well-worn, long-sleeved shirt with a practical, slightly stained apron and his spectacles are perched on his nose. His expression carries a quiet grief, mixed with intense concentration and determination to repair the watch. His hands should initially show a subtle trembling from the pressure, gradually steadying as he finds resolve."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_conda_20260402/keyframes/img_loc_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope.; Emphasis on close-ups to highlight delicate work, Elias's hands, and his subtle emotional shifts.; Lighting should be warm and focused on the workbench, with the surrounding room in soft shadow.; Sound design is crucial: delicate mechanical sounds, the digital clock's clicks, a sudden loud tick, and distant fireworks. Show a vintage watchmaker's workshop at night. The workbench is the central focus, warmly illuminated by a desk lamp, cluttered with various tools, gears, and personal items like a framed photo. The rest of the room recedes into soft, deep shadows, creating an intimate, almost isolated atmosphere. A window in the background reveals the dark night sky, later to be lit by distant fireworks, maintaining a lived-in, un-modern aesthetic."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_001",
+              "linked_blocks": [
+                "b_001"
+              ]
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_01",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_conda_20260402/keyframes/img_sh_001_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope.; Emphasis on close-ups to highlight delicate work, Elias's hands, and his subtle emotional shifts.; Lighting should be warm and focused on the workbench, with the surrounding room in soft shadow.; Sound design is crucial: delicate mechanical sounds, the digital clock's clicks, a sudden loud tick, and distant fireworks. Extreme close-up, high angle shot, static camera. Tightly framed on the open, intricate mechanism of a vintage pocket watch on a cluttered workbench, bathed in the warm, focused light of a desk lamp. Elias Thorne's frail hands, wearing spectacles, are carefully manipulating tiny components with fine tweezers and a magnifying loupe over the watch. In the soft, dark background, a digital clock displays '00:00:10', highlighting the critical time constraint.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_002",
+              "linked_blocks": [
+                "b_002"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_002",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_01",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_conda_20260402/keyframes/img_sh_002_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope.; Emphasis on close-ups to highlight delicate work, Elias's hands, and his subtle emotional shifts.; Lighting should be warm and focused on the workbench, with the surrounding room in soft shadow.; Sound design is crucial: delicate mechanical sounds, the digital clock's clicks, a sudden loud tick, and distant fireworks. Close-up, eye-level, static shot focusing intensely on Elias Thorne's face. He is wearing his spectacles and a magnifying loupe, his expression a mix of intense concentration and a subtle flicker of underlying emotion\u2014perhaps quiet grief and unwavering determination. The warm light from the desk lamp illuminates his face, leaving the background in soft shadow.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_003",
+              "linked_blocks": [
+                "b_003"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_003",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_01",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_conda_20260402/keyframes/img_sh_003_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope.; Emphasis on close-ups to highlight delicate work, Elias's hands, and his subtle emotional shifts.; Lighting should be warm and focused on the workbench, with the surrounding room in soft shadow.; Sound design is crucial: delicate mechanical sounds, the digital clock's clicks, a sudden loud tick, and distant fireworks. Close-up, eye-level, static shot, tightly framed on Elias Thorne's trembling hand holding tweezers. A microscopic small gear has just slipped from the tweezers, bouncing precariously on the cluttered workbench, near the opened pocket watch mechanism, under the warm, focused desk lamp light. The soft shadows of the workshop loom in the periphery, emphasizing the high stakes of the delicate work.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_004",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_02",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_conda_20260402/keyframes/img_sh_003_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope.; Emphasis on close-ups to highlight delicate work, Elias's hands, and his subtle emotional shifts.; Lighting should be warm and focused on the workbench, with the surrounding room in soft shadow.; Sound design is crucial: delicate mechanical sounds, the digital clock's clicks, a sudden loud tick, and distant fireworks. Close-up, eye-level, static shot. The tiny, slipped small gear is seen rolling perilously close to the edge of the cluttered workbench, its movement highlighted by the warm, focused light of the desk lamp. Elias Thorne's trembling hand, still holding the tweezers, is visible in the frame, conveying his sudden panic and vulnerability.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "source": {
+              "storyboard_shot_id": "sh_004",
+              "linked_blocks": [
+                "b_004"
+              ]
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_005",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_01",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_conda_20260402/keyframes/img_sh_004_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope.; Emphasis on close-ups to highlight delicate work, Elias's hands, and his subtle emotional shifts.; Lighting should be warm and focused on the workbench, with the surrounding room in soft shadow.; Sound design is crucial: delicate mechanical sounds, the digital clock's clicks, a sudden loud tick, and distant fireworks. Medium close-up, eye-level shot. The camera is static, focused intently on a digital clock on the workbench, clearly displaying '00:00:05'. The warm light from the desk lamp illuminates the clock, while the surrounding workshop remains in soft shadow, creating a palpable sense of dwindling time and escalating tension.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_006",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_02",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_conda_20260402/keyframes/img_sh_004_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope.; Emphasis on close-ups to highlight delicate work, Elias's hands, and his subtle emotional shifts.; Lighting should be warm and focused on the workbench, with the surrounding room in soft shadow.; Sound design is crucial: delicate mechanical sounds, the digital clock's clicks, a sudden loud tick, and distant fireworks. Medium close-up, eye-level, panning shot. The camera slowly pans from the ticking digital clock to Elias Thorne's face. His expression shifts from initial panic and desperation, visible in his wide eyes and slightly parted lips, to a moment of deep resolve, his brow furrowing as he regains composure. The warm desk lamp highlights his features, casting his immediate surroundings in soft focus.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_007",
+                "order": 3,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_03",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_conda_20260402/keyframes/img_sh_004_kf_03.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope.; Emphasis on close-ups to highlight delicate work, Elias's hands, and his subtle emotional shifts.; Lighting should be warm and focused on the workbench, with the surrounding room in soft shadow.; Sound design is crucial: delicate mechanical sounds, the digital clock's clicks, a sudden loud tick, and distant fireworks. Medium close-up, eye-level, panning shot. The camera settles on a framed photograph of Elias's late, smiling wife, positioned on the cluttered workbench next to him. Elias's gaze is directed towards the photo, drawing strength and resolve from this emotional anchor. The warm light from the desk lamp softly illuminates the photo and a portion of the workbench, with the rest of the room in gentle shadow.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 5,
+            "source": {
+              "storyboard_shot_id": "sh_005",
+              "linked_blocks": [
+                "b_005"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_008",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_01",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_conda_20260402/keyframes/img_sh_005_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope.; Emphasis on close-ups to highlight delicate work, Elias's hands, and his subtle emotional shifts.; Lighting should be warm and focused on the workbench, with the surrounding room in soft shadow.; Sound design is crucial: delicate mechanical sounds, the digital clock's clicks, a sudden loud tick, and distant fireworks. Close-up, high angle, static shot, focused on Elias Thorne's now steady and precise hands. His fingers, holding tweezers, deftly pick up the tiny, fallen small gear from the workbench. The warm, focused light from the desk lamp illuminates the intricate task, emphasizing the renewed confidence and precision in his movements. The open pocket watch mechanism is visible.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_009",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_02",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_conda_20260402/keyframes/img_sh_005_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope.; Emphasis on close-ups to highlight delicate work, Elias's hands, and his subtle emotional shifts.; Lighting should be warm and focused on the workbench, with the surrounding room in soft shadow.; Sound design is crucial: delicate mechanical sounds, the digital clock's clicks, a sudden loud tick, and distant fireworks. Close-up, high angle, static shot, focused on Elias Thorne's steady hands as he carefully guides the tiny small gear back into the intricate mechanism of the vintage pocket watch. Once the gear is in place, his hands smoothly close the watch casing, signifying the successful completion of the delicate repair. The warm desk lamp highlights every precise movement, with the surrounding workshop in soft shadow.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 6,
+            "source": {
+              "storyboard_shot_id": "sh_006",
+              "linked_blocks": [
+                "b_006"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_010",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_01",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_conda_20260402/keyframes/img_sh_006_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope.; Emphasis on close-ups to highlight delicate work, Elias's hands, and his subtle emotional shifts.; Lighting should be warm and focused on the workbench, with the surrounding room in soft shadow.; Sound design is crucial: delicate mechanical sounds, the digital clock's clicks, a sudden loud tick, and distant fireworks. Quick cut, eye-level, static shot. The frame is tightly focused on the digital clock, which prominently displays '00:00:01', building intense suspense as the final second ticks away. The warm light from the desk lamp illuminates the clock, with the soft, dark workshop in the background.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_011",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_02",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_conda_20260402/keyframes/img_sh_006_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope.; Emphasis on close-ups to highlight delicate work, Elias's hands, and his subtle emotional shifts.; Lighting should be warm and focused on the workbench, with the surrounding room in soft shadow.; Sound design is crucial: delicate mechanical sounds, the digital clock's clicks, a sudden loud tick, and distant fireworks. Quick cut, eye-level, static shot. Elias Thorne is holding the now-closed vintage pocket watch to his ear, his face showing a hopeful grimace, eyes slightly wide with anxious anticipation. The warm desk lamp highlights his focused expression, and the background remains in soft shadow.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 7,
+            "source": {
+              "storyboard_shot_id": "sh_007",
+              "linked_blocks": [
+                "b_007"
+              ]
+            },
+            "estimated_duration_sec": 3.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_012",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_007_kf_01",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_conda_20260402/keyframes/img_sh_007_kf_01.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope.; Emphasis on close-ups to highlight delicate work, Elias's hands, and his subtle emotional shifts.; Lighting should be warm and focused on the workbench, with the surrounding room in soft shadow.; Sound design is crucial: delicate mechanical sounds, the digital clock's clicks, a sudden loud tick, and distant fireworks. Medium shot, eye-level. The camera is static, focused on Elias Thorne's face as he holds the vintage pocket watch to his ear. A peaceful smile slowly spreads across his features, and his eyes soften as he hears the watch begin to tick. The warm desk lamp light illuminates his face, with the workshop in soft shadow behind him.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_013",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "img_sh_007_kf_02",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_conda_20260402/keyframes/img_sh_007_kf_02.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope.; Emphasis on close-ups to highlight delicate work, Elias's hands, and his subtle emotional shifts.; Lighting should be warm and focused on the workbench, with the surrounding room in soft shadow.; Sound design is crucial: delicate mechanical sounds, the digital clock's clicks, a sudden loud tick, and distant fireworks. Medium shot, eye-level, dolly-out. The camera slowly dollies out, revealing Elias Thorne clutching the now-ticking vintage pocket watch to his chest with a contented, peaceful expression. He gently turns his gaze towards the workshop window, where the dark night sky is suddenly illuminated by a vibrant burst of distant fireworks. The warm desk lamp light remains focused on him, with the rest of the workshop softly receding into shadow.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_014",
+                "order": 3,
+                "image_asset": {
+                  "asset_id": "img_sh_007_kf_03",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/sb_to_video_conda_20260402/keyframes/img_sh_007_kf_03.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Intimate and contemplative, with a building sense of tension that resolves into quiet hope.; Emphasis on close-ups to highlight delicate work, Elias's hands, and his subtle emotional shifts.; Lighting should be warm and focused on the workbench, with the surrounding room in soft shadow.; Sound design is crucial: delicate mechanical sounds, the digital clock's clicks, a sudden loud tick, and distant fireworks. Medium shot, eye-level, dolly-out. The camera continues to dolly out, showing Elias Thorne, still clutching the ticking vintage pocket watch to his chest, looking out the window with a serene and hopeful expression as multiple fireworks explode in the dark night sky. The warm desk lamp creates a soft glow around him and the workbench, while the rest of the vintage workshop remains in deep, soft shadow, emphasizing his quiet moment of resolution and peace at the start of the New Year.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_count": 7,
+    "keyframe_count_total": 14,
+    "avg_keyframes_per_shot": 2.0,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 1,
+    "stability_location_keyframe_count": 1,
+    "stability_prop_keyframe_count": 0
+  }
+}
