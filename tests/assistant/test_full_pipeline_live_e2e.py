@@ -93,6 +93,17 @@ def assistant_http_client_real_agents(tmp_path, monkeypatch):
     storage = AssistantStateStore(runtime_base_path=runtime_base)
     monkeypatch.setattr(routes_module, "assistant_state_store", storage)
 
+    # Default on for this suite: prop L1/L2 keyframes + video prop constraints.
+    # Set FW_ENABLE_PROP_KEYFRAMES / FW_ENABLE_PROP_PIPELINE in the shell to override.
+    monkeypatch.setenv(
+        "FW_ENABLE_PROP_KEYFRAMES",
+        os.getenv("FW_ENABLE_PROP_KEYFRAMES", "1"),
+    )
+    monkeypatch.setenv(
+        "FW_ENABLE_PROP_PIPELINE",
+        os.getenv("FW_ENABLE_PROP_PIPELINE", "1"),
+    )
+
     app = create_app({"TESTING": True})
     with app.test_client() as client:
         setattr(client, "_fw_runtime_base", str(runtime_base))
@@ -138,20 +149,17 @@ def _contains_raw_bytes(node: object) -> bool:
     return False
 
 
-def _trim_storyboard_and_screenplay_for_media_agents(
+def _trim_screenplay_for_media_agents(
     screenplay_asset: dict,
-    storyboard_asset: dict,
     *,
     max_scenes: int,
     max_shots_per_scene: int,
-) -> tuple[dict, dict, dict]:
-    """Trim generated screenplay/storyboard before media-heavy agents.
+) -> tuple[dict, dict]:
+    """Trim unified screenplay before media-heavy agents (optional helper).
 
-    Keeps upstream creative generation intact, then reduces media workload
-    by shrinking storyboard shots and corresponding screenplay blocks.
+    Reduces media workload by shrinking ``content.scenes`` / ``shots[]``.
     """
-    trimmed_screenplay = deepcopy(screenplay_asset) if isinstance(screenplay_asset, dict) else {}
-    trimmed_storyboard = deepcopy(storyboard_asset) if isinstance(storyboard_asset, dict) else {}
+    trimmed = deepcopy(screenplay_asset) if isinstance(screenplay_asset, dict) else {}
 
     def _scene_has_characters(scene: dict) -> bool:
         pack = scene.get("scene_consistency_pack", {}) if isinstance(scene, dict) else {}
@@ -201,12 +209,8 @@ def _trim_storyboard_and_screenplay_for_media_agents(
         in {"1", "true", "yes", "on"}
     )
 
-    sb_content = (
-        trimmed_storyboard.get("content", {})
-        if isinstance(trimmed_storyboard.get("content", {}), dict)
-        else {}
-    )
-    original_scenes = sb_content.get("scenes", []) if isinstance(sb_content.get("scenes", []), list) else []
+    sp_content = trimmed.get("content", {}) if isinstance(trimmed.get("content"), dict) else {}
+    original_scenes = sp_content.get("scenes", []) if isinstance(sp_content.get("scenes"), list) else []
     scene_limit = int(max_scenes) if isinstance(max_scenes, int) else 0
     shot_limit = int(max_shots_per_scene) if isinstance(max_shots_per_scene, int) else 0
     trim_scenes_enabled = scene_limit > 0
@@ -220,11 +224,12 @@ def _trim_storyboard_and_screenplay_for_media_agents(
         )
     else:
         kept_scenes = list(original_scenes)
-    kept_block_ids: list[str] = []
+
+    kept_shot_ids: list[str] = []
     total_shot_duration = 0.0
 
     for scene in kept_scenes:
-        shots = scene.get("shots", []) if isinstance(scene.get("shots", []), list) else []
+        shots = scene.get("shots", []) if isinstance(scene.get("shots"), list) else []
         if trim_shots_enabled:
             trimmed_shots = _pick_shots(
                 shots,
@@ -239,68 +244,43 @@ def _trim_storyboard_and_screenplay_for_media_agents(
                 total_shot_duration += float(shot.get("estimated_duration_sec", 0.0) or 0.0)
             except Exception:
                 pass
-            linked_blocks = shot.get("linked_blocks", [])
-            if isinstance(linked_blocks, list):
-                for block_id in linked_blocks:
-                    if isinstance(block_id, str) and block_id and block_id not in kept_block_ids:
-                        kept_block_ids.append(block_id)
+            sid = shot.get("shot_id", "")
+            if isinstance(sid, str) and sid and sid not in kept_shot_ids:
+                kept_shot_ids.append(sid)
 
-    sb_content["scenes"] = kept_scenes
-    trimmed_storyboard["content"] = sb_content
-    sb_metrics = trimmed_storyboard.get("metrics", {})
-    if isinstance(sb_metrics, dict):
+    sp_content["scenes"] = kept_scenes
+    trimmed["content"] = sp_content
+
+    sp_metrics = trimmed.get("metrics", {})
+    if isinstance(sp_metrics, dict):
+        dialogue_count = sum(
+            1 for s in kept_scenes for sh in s.get("shots", [])
+            if isinstance(sh, dict) and sh.get("block_type") == "dialogue"
+        )
+        action_count = sum(
+            1 for s in kept_scenes for sh in s.get("shots", [])
+            if isinstance(sh, dict) and sh.get("block_type") == "action"
+        )
         scene_count = len(kept_scenes)
         shot_count = sum(
-            len(scene.get("shots", []) if isinstance(scene.get("shots", []), list) else [])
-            for scene in kept_scenes
+            len(s.get("shots", [])) if isinstance(s.get("shots"), list) else 0
+            for s in kept_scenes
         )
-        sb_metrics["scene_count"] = scene_count
-        sb_metrics["shot_count_total"] = shot_count
-        sb_metrics["avg_shots_per_scene"] = float(shot_count / scene_count) if scene_count else 0.0
-        sb_metrics["sum_shot_duration_sec"] = round(total_shot_duration, 2)
-        trimmed_storyboard["metrics"] = sb_metrics
+        sp_metrics["scene_count"] = scene_count
+        sp_metrics["shot_count_total"] = shot_count
+        sp_metrics["avg_shots_per_scene"] = float(shot_count / scene_count) if scene_count else 0.0
+        sp_metrics["sum_shot_duration_sec"] = round(total_shot_duration, 2)
+        sp_metrics["sum_scene_duration_sec"] = round(total_shot_duration, 2)
+        sp_metrics["estimated_total_duration_sec"] = round(total_shot_duration, 2)
+        sp_metrics["dialogue_block_count"] = dialogue_count
+        sp_metrics["action_block_count"] = action_count
+        trimmed["metrics"] = sp_metrics
 
-    sp_content = (
-        trimmed_screenplay.get("content", {})
-        if isinstance(trimmed_screenplay.get("content", {}), dict)
-        else {}
-    )
-    sp_scenes = sp_content.get("scenes", []) if isinstance(sp_content.get("scenes", []), list) else []
     kept_scene_ids = {
         scene.get("scene_id", "")
         for scene in kept_scenes
         if isinstance(scene, dict) and isinstance(scene.get("scene_id", ""), str)
     }
-    trimmed_sp_scenes = [
-        scene for scene in sp_scenes
-        if isinstance(scene, dict) and scene.get("scene_id", "") in kept_scene_ids
-    ]
-    for scene in trimmed_sp_scenes:
-        blocks = scene.get("blocks", []) if isinstance(scene.get("blocks", []), list) else []
-        scene["blocks"] = [
-            block for block in blocks
-            if isinstance(block, dict) and block.get("block_id", "") in kept_block_ids
-        ]
-        scene["estimated_duration"] = {"seconds": round(total_shot_duration, 2), "confidence": 0.7}
-    sp_content["scenes"] = trimmed_sp_scenes
-    trimmed_screenplay["content"] = sp_content
-    sp_metrics = trimmed_screenplay.get("metrics", {})
-    if isinstance(sp_metrics, dict):
-        action_count = 0
-        dialogue_count = 0
-        for scene in trimmed_sp_scenes:
-            for block in scene.get("blocks", []):
-                if block.get("block_type") == "dialogue":
-                    dialogue_count += 1
-                elif block.get("block_type") == "action":
-                    action_count += 1
-        sp_metrics["scene_count"] = len(trimmed_sp_scenes)
-        sp_metrics["estimated_total_duration_sec"] = round(total_shot_duration, 2)
-        sp_metrics["sum_scene_duration_sec"] = round(total_shot_duration, 2)
-        sp_metrics["action_block_count"] = action_count
-        sp_metrics["dialogue_block_count"] = dialogue_count
-        trimmed_screenplay["metrics"] = sp_metrics
-
     trim_summary = {
         "max_scenes": max_scenes,
         "max_shots_per_scene": max_shots_per_scene,
@@ -308,10 +288,12 @@ def _trim_storyboard_and_screenplay_for_media_agents(
         "trim_shots_enabled": trim_shots_enabled,
         "prefer_character_coverage": prefer_character_coverage,
         "kept_scene_ids": sorted(kept_scene_ids),
-        "kept_block_ids": kept_block_ids,
+        "kept_shot_ids": kept_shot_ids,
         "total_shot_duration_sec": round(total_shot_duration, 2),
     }
-    return trimmed_screenplay, trimmed_storyboard, trim_summary
+    return trimmed, trim_summary
+
+
 
 
 @pytest.mark.skipif(
@@ -336,8 +318,10 @@ def test_full_pipeline_live_http_flow_generates_about_one_minute_video(
         json={
             "description": {
                 "goal": (
-                    "Create a simple cinematic short video around ten seconds "
-                    "long: a watchmaker fixes one broken watch before midnight."
+                    "Create a simple cinematic short video: "
+                    "A retired watchmaker races against the final moments before "
+                    "midnight to repair his late wife's cherished pocket watch, seeking "
+                    "a moment of peace and connection as the new year begins."
                 )
             }
         },
@@ -359,7 +343,7 @@ def test_full_pipeline_live_http_flow_generates_about_one_minute_video(
     }
     payloads: dict[str, dict] = {}
 
-    pre_media_agents = ["StoryAgent", "ScreenplayAgent", "StoryboardAgent"]
+    pre_media_agents = ["StoryAgent", "ScreenplayAgent"]
     media_agents = ["KeyFrameAgent", "VideoAgent", "AudioAgent"]
 
     for agent_id in pre_media_agents:
@@ -423,12 +407,11 @@ def test_full_pipeline_live_http_flow_generates_about_one_minute_video(
         "scenes", []
     )
     assert screenplay_scenes
-
-    storyboard_scenes = payloads["StoryboardAgent"].get("content", {}).get(
-        "scenes", []
+    assert any(
+        scene.get("shots")
+        for scene in screenplay_scenes
+        if isinstance(scene, dict)
     )
-    assert storyboard_scenes
-    assert any(scene.get("shots") for scene in storyboard_scenes if isinstance(scene, dict))
 
     keyframe_results = payloads["KeyFrameAgent"]
     assert keyframe_results.get("content")

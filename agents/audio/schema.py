@@ -25,13 +25,13 @@ class NarrationSegment(BaseModel):
     """A single narration/dialogue segment aligned to a shot."""
 
     segment_id: str = ""
-    linked_block_id: str = ""
     linked_shot_id: str = ""
     speaker: str = ""
     text: str = Field("", json_schema_extra={"creative": True})
     start_sec: float = 0.0
     end_sec: float = 0.0
     audio_asset: AudioAsset = Field(default_factory=AudioAsset)
+    audio_generation_prompt: str = ""
 
 
 class MusicCue(BaseModel):
@@ -43,6 +43,7 @@ class MusicCue(BaseModel):
     start_sec: float = 0.0
     end_sec: float = 0.0
     audio_asset: AudioAsset = Field(default_factory=AudioAsset)
+    audio_generation_prompt: str = ""
 
 
 class AmbienceBed(BaseModel):
@@ -54,6 +55,7 @@ class AmbienceBed(BaseModel):
     start_sec: float = 0.0
     end_sec: float = 0.0
     audio_asset: AudioAsset = Field(default_factory=AudioAsset)
+    audio_generation_prompt: str = ""
 
 
 class AudioMix(BaseModel):
@@ -117,13 +119,12 @@ class AudioAgentInput(BaseModel):
     """Input payload for AudioAgent.
 
     Audio alignment rules:
-      1. Semantic source: block (from Screenplay) — what to say
-      2. Timing alignment: shot (from Storyboard) — when to say
+      1. Semantic source: unified screenplay shots (dialogue/narration text)
+      2. Timing: shot duration from screenplay + video scene bounds
       3. Hard boundary: scene (from Video) — max duration
     """
 
     screenplay: dict = Field(default_factory=dict)
-    storyboard: dict = Field(default_factory=dict)
     video: dict = Field(default_factory=dict)
     constraints: dict = Field(default_factory=dict)
 

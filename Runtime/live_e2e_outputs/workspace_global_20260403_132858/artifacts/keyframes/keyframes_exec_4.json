@@ -1,0 +1,696 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_type": "character",
+          "entity_id": "char_001",
+          "display_name": "",
+          "purpose": "identity_anchor",
+          "keyframe_id": "kf_global_char_001",
+          "image_asset": {
+            "asset_id": "img_char_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_132858/artifacts/media/KeyFrameAgent/image/img_char_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Tense, intimate, and highly detailed visual storytelling.; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency.; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene.; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof).; Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal.; Subtle lighting changes to reflect the emotional shift from tension to fragile hope.; Poetic, melancholic yet deeply hopeful, and tender.; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection.; Emphasis on reflective moments and the quiet beauty of memory and connection. An elderly, venerable man named Elias, his face etched with the lines of a lifetime dedicated to precision work. His demeanor conveys a weary but determined resolve, deeply affected by grief yet driven by a profound, fragile hope. He wears a worn, dark tweed vest over a practical, long-sleeved shirt, reflecting his simple habits and deep focus on his craft. His posture and the subtle tension in his body should convey a man holding his entire world in suspense, a figure of profound anxiety, vulnerability, and anticipation. His hands are aged but steady, accustomed to intricate tasks. The chiaroscuro lighting highlights the texture of his aged skin and the fabric of his clothes, casting deep, dramatic shadows that emphasize his isolation."
+        }
+      ],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "display_name": "",
+          "purpose": "style_anchor",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_132858/artifacts/media/KeyFrameAgent/image/img_loc_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Tense, intimate, and highly detailed visual storytelling.; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency.; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene.; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof).; Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal.; Subtle lighting changes to reflect the emotional shift from tension to fragile hope.; Poetic, melancholic yet deeply hopeful, and tender.; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection.; Emphasis on reflective moments and the quiet beauty of memory and connection. A cluttered, old-fashioned watchmaker's workshop, enveloped in a warm, intimate, and slightly claustrophobic atmosphere. It is dimly lit, with the primary light source being a single, focused lamp positioned directly over a heavily used workbench, creating dramatic chiaroscuro. Visible dust motes dance in the lamp's concentrated beam, adding to the pervasive sense of time and age within the room. The workshop is filled with rich textures: old, worn wood of the workbench and shelves, tarnished metals of various tools, and the aged, almost tangible atmosphere. Deep shadows stretch into the periphery, emphasizing the concentrated light and the isolation of the work area. The overall feeling is one of profound tension and anticipation, yet imbued with a melancholic beauty."
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_132858/artifacts/media/KeyFrameAgent/image/img_char_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Tense, intimate, and highly detailed visual storytelling.; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency.; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene.; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof).; Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal.; Subtle lighting changes to reflect the emotional shift from tension to fragile hope.; Poetic, melancholic yet deeply hopeful, and tender.; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection.; Emphasis on reflective moments and the quiet beauty of memory and connection. Depict Elias, an elderly man with a venerable demeanor, wearing a worn tweed vest over a practical long-sleeved shirt. He is illuminated by the focused, warm light of a workbench lamp, creating stark chiaroscuro shadows around him. His aged face reflects weary resolve and intense concentration, deeply affected by grief but driven by a fragile hope. Emphasize his hands, which appear aged and visibly tremble under the pressure of his task, conveying the emotional weight he carries."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_132858/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Tense, intimate, and highly detailed visual storytelling.; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency.; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene.; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof).; Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal.; Subtle lighting changes to reflect the emotional shift from tension to fragile hope.; Poetic, melancholic yet deeply hopeful, and tender.; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection.; Emphasis on reflective moments and the quiet beauty of memory and connection. Show a cluttered, old-fashioned watchmaker's workshop at night. The room is dimly lit, with a single, warm, focused practical light from a workbench lamp creating dramatic chiaroscuro effects and deep shadows, emphasizing the isolation. Dust motes are visible dancing in the light beam, adding to the sense of time and age. The atmosphere is warm, intimate, and slightly claustrophobic, enhancing the dramatic tension through high contrast and rich textures of old wood and various tools."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_001",
+              "linked_blocks": [
+                "b_001"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, intimate, and highly detailed visual storytelling.; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency.; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene.; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof).; Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal.; Subtle lighting changes to reflect the emotional shift from tension to fragile hope.; Poetic, melancholic yet deeply hopeful, and tender.; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection.; Emphasis on reflective moments and the quiet beauty of memory and connection. Extreme close-up, eye-level, static shot. Fill the frame with Elias's aged, trembling hands, their worn skin texture visible under the warm, focused light of the workbench lamp. Fine, antique watchmaker's tweezers (prop_003) are held precariously, attempting to grasp and stabilize an almost imperceptibly tiny gear (prop_002). A shallow depth of field isolates the minuscule gear and the tips of the tweezers, emphasizing the intense fragility of the task and the physical manifestation of Elias's anxiety. Deep chiaroscuro shadows fall just beyond the focused light, enhancing the dramatic tension.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_002",
+              "linked_blocks": [
+                "b_002"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_002",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, intimate, and highly detailed visual storytelling.; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency.; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene.; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof).; Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal.; Subtle lighting changes to reflect the emotional shift from tension to fragile hope.; Poetic, melancholic yet deeply hopeful, and tender.; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection.; Emphasis on reflective moments and the quiet beauty of memory and connection. Medium close-up, low-angle, static shot. A slightly angled view of Elias (char_001) as he leans over his cluttered workbench (prop_006). His brow is furrowed in intense concentration, a traditional magnifying loupe (prop_004) pulled tight against his eye. He gazes down intently at the intricate mechanism of the partially disassembled antique pocket watch (prop_001) resting on a worn leather mat (prop_007). Chiaroscuro lighting from the workbench lamp highlights his features and the delicate mechanism, creating deep shadows that emphasize the personal stakes and the profound anticipation involved in the watch repair.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_003",
+              "linked_blocks": [
+                "b_003"
+              ]
+            },
+            "estimated_duration_sec": 0.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_003",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, intimate, and highly detailed visual storytelling.; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency.; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene.; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof).; Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal.; Subtle lighting changes to reflect the emotional shift from tension to fragile hope.; Poetic, melancholic yet deeply hopeful, and tender.; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection.; Emphasis on reflective moments and the quiet beauty of memory and connection. Close-up, eye-level, static shot. Tight on the ornate face of an antique grandfather clock (prop_005). The clock's hands prominently display 11:59:57. The second hand sweeps relentlessly, its movement emphasized, visually representing the ominous march of time and the urgent, ticking deadline. Chiaroscuro lighting, with a warm, focused light, highlights the intricate details of the clock face. The background is slightly out of focus to emphasize the clock's face, enhancing the dramatic tension and profound anticipation.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "source": {
+              "storyboard_shot_id": "sh_004",
+              "linked_blocks": [
+                "b_004"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_004",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, intimate, and highly detailed visual storytelling.; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency.; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene.; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof).; Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal.; Subtle lighting changes to reflect the emotional shift from tension to fragile hope.; Poetic, melancholic yet deeply hopeful, and tender.; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection.; Emphasis on reflective moments and the quiet beauty of memory and connection. Close-up, eye-level shot, starting tightly framed on Elias's (char_001) temple. A glistening bead of sweat is visible, catching the warm, focused light from the workbench lamp, powerfully underscoring his extreme concentration and the high stakes of the moment. The surrounding chiaroscuro lighting casts deep shadows, emphasizing his isolation and the urgency of his task. High contrast and the rich texture of his aged skin are prominent. This shot initiates a very slow push-in camera movement.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_005",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, intimate, and highly detailed visual storytelling.; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency.; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene.; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof).; Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal.; Subtle lighting changes to reflect the emotional shift from tension to fragile hope.; Poetic, melancholic yet deeply hopeful, and tender.; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection.; Emphasis on reflective moments and the quiet beauty of memory and connection. Close-up, eye-level shot, completing a very slow push-in movement from Elias's temple to his hands. His aged, trembling hands (char_001) are meticulously guiding the tiny gear (prop_002) with fine, antique watchmaker's tweezers (prop_003) into the intricate mechanism of the antique pocket watch (prop_001). The action is painstaking and depicted in slow motion, as the tiny gear is successfully, yet precariously, seated. Warm, focused chiaroscuro lighting highlights the precise movement, emphasizing the profound anticipation and the critical nature of this delicate task, showcasing rich textures of metal and aged skin.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_002"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_002",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_132858/artifacts/media/KeyFrameAgent/image/img_char_001_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Tense, intimate, and highly detailed visual storytelling; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof); Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal; Subtle lighting changes to reflect the emotional shift from tension to fragile hope; Poetic, melancholic yet deeply hopeful, and tender; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection; Emphasis on reflective moments and the quiet beauty of memory and connection. Show Elias under intense, focused light, his face etched with profound anxiety and fragile hope, his posture conveying a man holding his breath, leaning forward in desperate anticipation. His worn tweed vest and long-sleeved shirt appear part of his steadfast vigil, emphasizing his vulnerability and the weight of the moment as he listens intently for the watch."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_002",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_132858/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Tense, intimate, and highly detailed visual storytelling; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof); Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal; Subtle lighting changes to reflect the emotional shift from tension to fragile hope; Poetic, melancholic yet deeply hopeful, and tender; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection; Emphasis on reflective moments and the quiet beauty of memory and connection. The workshop at night, its intimate, dimly lit quality intensified, with even deeper shadows around the periphery. The warm, focused practical light from the workbench lamp should dramatically highlight Elias and the immediate area of the watch, creating a stronger sense of isolation and focusing all attention on the central figure, emphasizing the profound anticipation and the quiet drama unfolding."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_005",
+              "linked_blocks": [
+                "b_005"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_006",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, intimate, and highly detailed visual storytelling; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof); Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal; Subtle lighting changes to reflect the emotional shift from tension to fragile hope; Poetic, melancholic yet deeply hopeful, and tender; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection; Emphasis on reflective moments and the quiet beauty of memory and connection. Medium close-up, eye-level shot of Elias slowly pulling the magnifying loupe from his right eye. His face is illuminated by the warm workbench lamp, casting deep shadows around him. His gaze is intensely focused, immediately fixing on the pocket watch in his left hand, an expression of meticulous care and dawning anxiety on his worn face. Rich textures of his aged skin and worn fabric are prominent, with shallow depth of field emphasizing Elias and the watch.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_007",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, intimate, and highly detailed visual storytelling; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof); Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal; Subtle lighting changes to reflect the emotional shift from tension to fragile hope; Poetic, melancholic yet deeply hopeful, and tender; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection; Emphasis on reflective moments and the quiet beauty of memory and connection. Medium close-up, eye-level shot, smoothly transitioned to Elias's hands as he gently and meticulously closes the casing of the antique pocket watch. His fingers, showing signs of age and work, handle the delicate mechanism with profound reverence under the warm, focused light from the workbench lamp. Deep shadows envelop the background, emphasizing the intimacy and isolation of this critical act. High contrast and rich textures of the metal watch and Elias's skin are highlighted with shallow depth of field.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_006",
+              "linked_blocks": [
+                "b_006"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_008",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, intimate, and highly detailed visual storytelling; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof); Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal; Subtle lighting changes to reflect the emotional shift from tension to fragile hope; Poetic, melancholic yet deeply hopeful, and tender; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection; Emphasis on reflective moments and the quiet beauty of memory and connection. Close-up, eye-level shot, tightly framed on Elias's ear and the antique pocket watch pressed gently against it. His head is slightly tilted, every muscle in his neck and jaw conveying extreme tension as he holds his breath, straining to hear the faintest tick. The warm, focused light highlights the delicate silver of the watch and the fine hairs on his ear, while the background dissolves into deep, chiaroscuro shadows, emphasizing the agonizing silence and his profound anticipation. High contrast and rich textures are key, with shallow depth of field focusing solely on the watch and ear.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_009",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, intimate, and highly detailed visual storytelling; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof); Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal; Subtle lighting changes to reflect the emotional shift from tension to fragile hope; Poetic, melancholic yet deeply hopeful, and tender; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection; Emphasis on reflective moments and the quiet beauty of memory and connection. Quick cut to a close-up, eye-level shot of the face of the imposing grandfather clock in the background. Its ornate, dark wood frame is partially obscured by deep shadows, but the illuminated clock face clearly displays the time: 11:59:58. The minute hand is poised just before midnight, emphasizing the rapidly dwindling time and the immense pressure Elias is under. High contrast highlights the intricate details of the clock mechanism and hands against the stark white face, while shallow depth of field maintains focus on the time.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_007",
+              "linked_blocks": [
+                "b_007"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_010",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, intimate, and highly detailed visual storytelling; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof); Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal; Subtle lighting changes to reflect the emotional shift from tension to fragile hope; Poetic, melancholic yet deeply hopeful, and tender; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection; Emphasis on reflective moments and the quiet beauty of memory and connection. Extreme close-up, eye-level shot on the antique pocket watch, held utterly still in Elias's hand. The watch is silent, its metallic surface gleaming softly under the focused, warm light from the workbench lamp. Its intricate details and rich textures are highly visible, almost abstract, against a deep, dark, featureless background, creating immense suspense. Shallow depth of field ensures the watch is the sole, dramatic focus, emphasizing the absence of sound.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_011",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, intimate, and highly detailed visual storytelling; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof); Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal; Subtle lighting changes to reflect the emotional shift from tension to fragile hope; Poetic, melancholic yet deeply hopeful, and tender; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection; Emphasis on reflective moments and the quiet beauty of memory and connection. A slow pull back from the extreme close-up of the watch to a medium close-up, eye-level shot, revealing Elias's face as the faint, rhythmic ticking of the pocket watch begins. His taut, anxious expression instantly transforms into one of profound, quiet relief, a fragile hope blossoming. The warm, focused light on his face softens slightly, suggesting an ethereal quality to reflect the emotional connection, while deep, rich shadows still define the room's periphery. High contrast and rich textures highlight his aged skin and the watch, with shallow depth of field keeping Elias and the watch intimately isolated.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_003"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_003",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_003",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_132858/artifacts/media/KeyFrameAgent/image/img_char_001_sc_003.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Tense, intimate, and highly detailed visual storytelling.; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency.; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene.; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof).; Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal.; Subtle lighting changes to reflect the emotional shift from tension to fragile hope.; Poetic, melancholic yet deeply hopeful, and tender.; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection.; Emphasis on reflective moments and the quiet beauty of memory and connection. Show Elias, a man now embodying quiet triumph, deep contentment, and a renewed spiritual connection. His expression conveys peaceful acceptance and a knowing warmth, a soft, triumphant smile slowly spreading across his face as he looks gently at his wife's photograph. A single tear, clearly of peace and not sorrow, wells in his eye. He is wearing his familiar worn tweed vest and shirt, which now appear to be part of his enduring character."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_003",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_003",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_132858/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_003.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Tense, intimate, and highly detailed visual storytelling.; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency.; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene.; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof).; Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal.; Subtle lighting changes to reflect the emotional shift from tension to fragile hope.; Poetic, melancholic yet deeply hopeful, and tender.; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection.; Emphasis on reflective moments and the quiet beauty of memory and connection. The old, cluttered workshop environment, loc_001, is now imbued with a subtle, peaceful glow. The lighting, primarily from the workbench lamp, casts warm, focused light, but it has softened, losing its previous urgency. The deep shadows in the room now contribute to an atmosphere of quiet reflection and gentle solace, contrasting with the earlier tension as midnight has arrived. Rich textures of old wood and metal are still evident, but bathed in this serene illumination."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_008",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_008",
+              "linked_blocks": [
+                "b_008"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_012",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, intimate, and highly detailed visual storytelling.; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency.; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene.; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof).; Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal.; Subtle lighting changes to reflect the emotional shift from tension to fragile hope.; Poetic, melancholic yet deeply hopeful, and tender.; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection.; Emphasis on reflective moments and the quiet beauty of memory and connection. A medium close-up, eye-level shot of Elias's face. A soft, triumphant, and knowing smile slowly spreads across his features as he listens intently to the steady ticking of the pocket watch, prop_001, just out of frame. Warm, soft light from the workbench lamp illuminates his face, creating gentle shadows that emphasize his peaceful triumph and deep contentment. His worn tweed vest and shirt are subtly visible, contributing to the rich textures.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_013",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, intimate, and highly detailed visual storytelling.; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency.; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene.; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof).; Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal.; Subtle lighting changes to reflect the emotional shift from tension to fragile hope.; Poetic, melancholic yet deeply hopeful, and tender.; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection.; Emphasis on reflective moments and the quiet beauty of memory and connection. A sharp cut to a close-up shot of the grandfather clock face, prop_005. The hands are precisely striking midnight (11:59:59... BONG), highlighting the impactful moment. The clock's ornate details and rich textures are visible, bathed in a soft, ethereal glow, emphasizing the solemnity of the new year's arrival. Deep shadows frame the clock, enhancing its dramatic presence.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_009",
+              "linked_blocks": [
+                "b_009"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_014",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, intimate, and highly detailed visual storytelling.; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency.; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene.; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof).; Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal.; Subtle lighting changes to reflect the emotional shift from tension to fragile hope.; Poetic, melancholic yet deeply hopeful, and tender.; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection.; Emphasis on reflective moments and the quiet beauty of memory and connection. A medium shot, eye-level, showing Elias (char_001) at his workbench, prop_006. He gently places the steadily ticking pocket watch, prop_001, onto the worn wooden surface. His worn tweed vest and shirt are visible. The scene is illuminated by the soft, warm practical light from the workbench lamp, casting a gentle glow on the watch and Elias's hands. Shallow depth of field keeps focus on the objects and Elias's careful actions.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_015",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, intimate, and highly detailed visual storytelling.; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency.; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene.; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof).; Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal.; Subtle lighting changes to reflect the emotional shift from tension to fragile hope.; Poetic, melancholic yet deeply hopeful, and tender.; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection.; Emphasis on reflective moments and the quiet beauty of memory and connection. Continuing the medium shot, Elias (char_001) reaches with deliberate tenderness for the small, framed photograph of his wife, prop_008, resting on the workbench, prop_006. His gaze shifts from the ticking watch to the cherished faded photograph, his expression softening further into knowing warmth and contentment. The scene retains its soft, warm lighting and shallow depth of field, highlighting the intimate moment between Elias and the photograph.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_010",
+              "linked_blocks": [
+                "b_010"
+              ]
+            },
+            "estimated_duration_sec": 0.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_016",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, intimate, and highly detailed visual storytelling.; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency.; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene.; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof).; Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal.; Subtle lighting changes to reflect the emotional shift from tension to fragile hope.; Poetic, melancholic yet deeply hopeful, and tender.; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection.; Emphasis on reflective moments and the quiet beauty of memory and connection. A close-up, low-angle shot of the grandfather clock, prop_005. The elegant pendulum swings rhythmically, visually representing the continuous midnight chimes. The ornate casing of the clock is bathed in a soft, ethereal light, emphasizing its rich, aged textures. A subtle, slow pan down the decorative details of its casing reinforces the solemn, ceremonial nature of the moment. Deep shadows cradle the clock, enhancing its dramatic and reflective presence.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_011",
+            "order": 4,
+            "source": {
+              "storyboard_shot_id": "sh_011",
+              "linked_blocks": [
+                "b_011"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_017",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, intimate, and highly detailed visual storytelling.; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency.; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene.; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof).; Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal.; Subtle lighting changes to reflect the emotional shift from tension to fragile hope.; Poetic, melancholic yet deeply hopeful, and tender.; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection.; Emphasis on reflective moments and the quiet beauty of memory and connection. A close-up shot on Elias's face (char_001), seen eye-level. His expression is one of quiet, knowing triumph and profound contentment, a gentle smile gracing his lips as he gazes at his wife's photograph (prop_008), just out of frame. The lighting is soft and warm, with a subtle ethereal quality that emphasizes his renewed spiritual connection and peaceful acceptance. Rich textures of his aged skin and worn clothing are visible.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_018",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, intimate, and highly detailed visual storytelling.; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency.; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene.; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof).; Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal.; Subtle lighting changes to reflect the emotional shift from tension to fragile hope.; Poetic, melancholic yet deeply hopeful, and tender.; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection.; Emphasis on reflective moments and the quiet beauty of memory and connection. A sharp cut to a close-up shot of his wife's smiling face in the small, faded, framed photograph (prop_008). The photograph depicts a kind and smiling woman, her image slightly softened by time but still radiating warmth. The lighting is delicate and nostalgic, emphasizing the cherished memory and emotional connection. The rich textures of the old photograph paper and frame are visible.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_019",
+                "order": 3,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, intimate, and highly detailed visual storytelling.; Utilize chiaroscuro lighting, with a warm, focused practical light from the workbench lamp, creating deep shadows in the room to emphasize Elias's isolation and the urgency.; High contrast and rich textures (old wood, worn fabric, metal, aged skin) to enhance the tactile feel of the scene.; Heightened tension and profound anticipation, focusing on the auditory element (or lack thereof).; Utilize shallow depth of field to isolate Elias and the watch, making the moment deeply personal.; Subtle lighting changes to reflect the emotional shift from tension to fragile hope.; Poetic, melancholic yet deeply hopeful, and tender.; Softer, warmer lighting, possibly with a subtle ethereal quality to suggest the emotional connection.; Emphasis on reflective moments and the quiet beauty of memory and connection. A cut back to a close-up on Elias's face (char_001), eye-level, focusing specifically on his eye. A single tear, clearly signifying peace and not sorrow, wells up, glistening in the soft, ethereal light, and perhaps slowly falls. His expression remains one of profound acceptance, peace, and deep emotional connection. The shallow depth of field ensures the tear and his eye are the sole focus, making the moment deeply personal and tender.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 11,
+    "keyframe_count_total": 19,
+    "avg_keyframes_per_shot": 1.7272727272727273,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 3,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 0
+  }
+}

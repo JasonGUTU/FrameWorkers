@@ -1,14 +1,14 @@
 """VideoAgent — renders keyframes into video clips.
 
-Input:  VideoAgentInput (storyboard, keyframes, constraints)
+Input:  VideoAgentInput (screenplay, keyframes, constraints)
 Output: VideoAgentOutput (VideoPackage with shot_segments, transition_plan,
         scene_clip_assets, metrics)
 
-Coupling: receives Storyboard + Keyframes from shared assets; output feeds AudioAgent.
+Coupling: receives Screenplay + Keyframes from shared assets; output feeds AudioAgent.
 
 Uses **LLM-free skeleton mode**: the entire output is deterministic — scene IDs,
 shot segments, durations, transitions, and asset placeholders are all derived
-from the storyboard.  No LLM call is made.  The VideoAgent schema has zero
+from the screenplay (unified shots).  No LLM call is made.  The VideoAgent schema has zero
 creative fields.
 
 Note: Actual video generation requires a backend (Wan2.6, Runway, etc.).
@@ -46,17 +46,17 @@ class VideoAgent(BaseAgent[VideoAgentInput, VideoAgentOutput]):
     def build_skeleton(
         self, input_data: VideoAgentInput
     ) -> VideoAgentOutput | None:
-        """Build the complete video package deterministically from storyboard.
+        """Build the complete video package deterministically from screenplay.
 
         VideoAgent's output has zero creative fields — everything (scene IDs,
         shot segments, durations, transitions, asset placeholders) is derived
-        from the storyboard.  No LLM call is needed.
+        from the screenplay.  No LLM call is needed.
         """
-        sb = input_data.storyboard
-        sb_content = sb.get("content", {})
-        sb_scenes = sb_content.get("scenes", [])
+        sp = input_data.screenplay
+        sp_content = sp.get("content", {})
+        sp_scenes = sp_content.get("scenes", [])
 
-        if not sb_scenes:
+        if not sp_scenes:
             return None  # fall back to legacy mode
 
         fps = input_data.constraints.fps
@@ -68,15 +68,15 @@ class VideoAgent(BaseAgent[VideoAgentInput, VideoAgentOutput]):
         scenes: list[VideoScene] = []
         total_duration = 0.0
 
-        for scene_order, sb_scene in enumerate(sb_scenes, 1):
-            scene_id = sb_scene.get("scene_id", f"sc_{scene_order:03d}")
-            sb_shots = sb_scene.get("shots", [])
+        for scene_order, sp_scene in enumerate(sp_scenes, 1):
+            scene_id = sp_scene.get("scene_id", f"sc_{scene_order:03d}")
+            sp_shots = sp_scene.get("shots", [])
 
             # --- Shot segments ---
             segments: list[ShotSegment] = []
-            for shot_order, sb_shot in enumerate(sb_shots, 1):
-                shot_id = sb_shot.get("shot_id", "")
-                duration = sb_shot.get("estimated_duration_sec", 3.0)
+            for shot_order, sp_shot in enumerate(sp_shots, 1):
+                shot_id = sp_shot.get("shot_id", "")
+                duration = sp_shot.get("estimated_duration_sec", 3.0)
                 segments.append(
                     ShotSegment(
                         shot_id=shot_id,

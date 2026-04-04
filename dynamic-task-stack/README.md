@@ -60,6 +60,7 @@ dynamic-task-stack/
 │   │   └── storage.py               # Task Stack 门面服务（兼容导出 storage）
 │   └── assistant/                   # Assistant 模块
 │       ├── __init__.py
+│       ├── keyframes_manifest.py    # KeyFrame manifest items 构建（persist 与 service 共用）
 │       ├── models.py                # Assistant 数据模型
 │       ├── routes.py                # Assistant API 路由
 │       ├── response_serializers.py  # Assistant 响应序列化（仅导出路由/search 等实际使用的 helper）

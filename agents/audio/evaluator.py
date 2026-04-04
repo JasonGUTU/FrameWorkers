@@ -6,7 +6,7 @@ Layer 1 -- structural checks:
   - Upstream cross-check (scene_ids match video)
   - Timing: narration must not exceed scene duration
   - Narration segments must have text + speaker
-  - Upstream cross-check (linked_block_id exists in screenplay)
+  - Upstream cross-check (linked_shot_id exists in screenplay)
   - Metrics consistency (scene_count, narration_segment_count)
   - Timing accuracy (no narration overlap, music/ambience span scene)
   - Required content (non-empty scenes, music mood, ambience description)
@@ -114,23 +114,23 @@ class AudioEvaluator(BaseEvaluator[AudioAgentOutput]):
                         f"narration segment {seg.segment_id} has empty speaker"
                     )
 
-        # --- Upstream cross-check: linked_block_id must exist in screenplay ---
+        # --- Upstream cross-check: linked_shot_id must exist in screenplay ---
         if input_bundle_v2 and "screenplay" in input_bundle_v2:
             sp_content = input_bundle_v2["screenplay"].get("content", {})
-            all_block_ids: set[str] = set()
+            all_shot_ids: set[str] = set()
             for sp_scene in sp_content.get("scenes", []):
-                for block in sp_scene.get("blocks", []):
-                    all_block_ids.add(block.get("block_id", ""))
-            if all_block_ids:
+                for shot in sp_scene.get("shots", []):
+                    sid = str(shot.get("shot_id", "") or "").strip()
+                    if sid:
+                        all_shot_ids.add(sid)
+            if all_shot_ids:
                 for scene in c.scenes:
                     for seg in scene.narration_segments:
-                        if (
-                            seg.linked_block_id
-                            and seg.linked_block_id not in all_block_ids
-                        ):
+                        lsid = str(seg.linked_shot_id or "").strip()
+                        if lsid and lsid not in all_shot_ids:
                             errors.append(
                                 f"narration segment {seg.segment_id} references "
-                                f"unknown block {seg.linked_block_id}"
+                                f"unknown shot {lsid}"
                             )
 
         # --- Metrics consistency ---

@@ -1,0 +1,120 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-04T19:10:07.227231+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A retired watchmaker races against the final moments before midnight to repair his late wife's cherished pocket watch, seeking a moment of peace and connection as the new year begins.",
+    "estimated_duration": {
+      "seconds": 10.0,
+      "confidence": 0.7
+    },
+    "style": {
+      "genre": [
+        "Drama",
+        "Sentimental"
+      ],
+      "tone_keywords": [
+        "Melancholic",
+        "Hopeful",
+        "Tense",
+        "Intimate"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Elias Thorne",
+        "role": "protagonist",
+        "profile": "A meticulous, elderly watchmaker, widowed and living with the quiet echoes of his past, his hands still possess the skill, but his heart carries a heavy burden.",
+        "motivation": "To honor his late wife's memory, find solace, and reconnect with a cherished part of their life through the successful repair of her pocket watch.",
+        "flaw": "His grief can sometimes make him obsessive or resistant to moving forward, anchoring him to the past."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Elias's Workshop",
+        "description": "A dimly lit, cluttered workshop within his cozy home, filled with intricate tools, countless ticking clocks, magnifying glasses, and the faint, familiar smell of oil and old wood, hinting at decades of dedication and quiet solitude."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Elias sits hunched over his workbench, intensely focused on a broken pocket watch, the only sound the audible ticking of a nearby clock drawing closer to midnight.",
+        "conflict": "He faces the technical challenge of repairing the delicate mechanism under immense time pressure, compounded by the emotional weight of his late wife's memory.",
+        "turning_point": "He glances at the wall clock, realizing with a jolt how little time remains before the New Year."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "climax",
+        "summary": "With trembling hands, Elias performs the final, critical adjustment to the pocket watch as distant sounds of a New Year's Eve countdown begin to filter in.",
+        "conflict": "The pressure to succeed before midnight is absolute; one wrong move could mean failure, shattering his hope for connection and peace.",
+        "turning_point": "The pocket watch springs to life, its internal gears whirring into motion, and the faint but steady tick begins just as the final countdown ends."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "resolution",
+        "summary": "Elias holds the now ticking pocket watch, a gentle smile appearing on his face as he acknowledges both the passing of the old year and the quiet solace of his achieved task.",
+        "conflict": "The lingering sadness of his loss is momentarily overshadowed by the accomplishment and the symbolic reconnection with his wife.",
+        "turning_point": "A moment of profound, quiet peace washes over him, a sense of closure and hope for the new beginning, reflecting in his eyes."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To diagnose and begin the repair of the cherished pocket watch.",
+        "conflict": "The intricate mechanism proves stubborn; Elias's focus is fractured by the rapidly approaching midnight deadline and his internal grief.",
+        "turn": "Elias checks a large workshop clock, his expression tightening as he realizes the urgency."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To complete the final, critical repair of the pocket watch before midnight.",
+        "conflict": "Extreme precision is required under intense time pressure; the distant sounds of New Year's Eve celebrations underscore the race against the clock.",
+        "turn": "With a delicate click, the pocket watch's balance wheel begins to oscillate, and a soft ticking sound emerges."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To experience a moment of peace, connection, and emotional resolution.",
+        "conflict": "The immediate relief of success confronts the underlying sorrow of his wife's absence.",
+        "turn": "Elias holds the ticking watch to his ear, a soft, melancholic yet content smile slowly forming on his face as he looks towards a framed photograph, finding quiet solace."
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "character_count": 1,
+    "location_count": 1,
+    "scene_count": 3
+  }
+}

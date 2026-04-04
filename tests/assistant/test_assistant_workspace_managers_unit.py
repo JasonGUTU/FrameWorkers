@@ -225,6 +225,78 @@ def test_asset_manager_hydrate_and_persist_index(tmp_path):
     assert len(files) == 1
 
 
+def test_asset_manager_persist_rewrites_uris_before_json_snapshot(tmp_path):
+    """Media must be written and URIs rewritten before JSON snapshot is serialized."""
+    fm = FileManager("ws_1", tmp_path)
+    lm = LogManager("ws_1", tmp_path)
+    am = _build_asset_manager(fm, lm)
+
+    stale_uri = str(tmp_path / "gone" / "img_001.png")
+    execution = SimpleNamespace(
+        id="exec_7",
+        task_id="task_uri",
+        agent_id="KeyFrameAgent",
+        results={
+            "content": {
+                "global_anchors": {
+                    "characters": [
+                        {
+                            "entity_id": "char_001",
+                            "image_asset": {
+                                "asset_id": "img_char_001_global",
+                                "uri": stale_uri,
+                                "format": "png",
+                            },
+                        }
+                    ],
+                    "locations": [],
+                    "props": [],
+                },
+                "scenes": [],
+            },
+            "_media_files": {
+                "img_char_001_global": {
+                    "file_content": b"\x89PNG\r\n",
+                    "filename": "img_char_001_global.png",
+                    "description": "test",
+                },
+            },
+        },
+    )
+
+    am.persist_execution_from_plan(
+        execution,
+        assignments=[
+            {
+                "kind": "media",
+                "source_key": "img_char_001_global",
+                "relative_path": (
+                    "artifacts/media/KeyFrameAgent/image/img_char_001_global.png"
+                ),
+            },
+            {
+                "kind": "json_snapshot",
+                "source_key": "",
+                "role": "keyframes",
+                "relative_path": "artifacts/keyframes/keyframes_exec_7.json",
+            },
+        ],
+    )
+
+    written = (
+        tmp_path
+        / "ws_1"
+        / "artifacts"
+        / "keyframes"
+        / "keyframes_exec_7.json"
+    )
+    assert written.exists()
+    text = written.read_text(encoding="utf-8")
+    assert stale_uri not in text
+    assert "img_char_001_global.png" in text
+    assert str(tmp_path / "ws_1") in text or "/ws_1/" in text.replace("\\", "/")
+
+
 def test_asset_manager_collect_materialized_files_reads_binary_by_uri(tmp_path):
     fm = FileManager("ws_1", tmp_path)
     lm = LogManager("ws_1", tmp_path)

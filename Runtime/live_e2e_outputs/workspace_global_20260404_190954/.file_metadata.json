@@ -1,0 +1,1001 @@
+{
+  "counter": 45,
+  "files": {
+    "file_000001_7c061abc": {
+      "id": "file_000001_7c061abc",
+      "filename": "story_blueprint_exec_1.json",
+      "description": "Structured JSON snapshot for StoryAgent (exec_1_3acf0ffa)",
+      "file_type": "text",
+      "file_extension": ".json",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/story_blueprint/story_blueprint_exec_1.json",
+      "size_bytes": 5525,
+      "created_at": "2026-04-04T19:10:12.832022",
+      "created_by": "StoryAgent",
+      "tags": [
+        "StoryAgent",
+        "task_1_0f696dda",
+        "asset_json"
+      ],
+      "metadata": {
+        "execution_id": "exec_1_3acf0ffa",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "StoryAgent",
+        "asset_key": "story_blueprint",
+        "asset_variant": "json_snapshot"
+      }
+    },
+    "file_000002_e27bb521": {
+      "id": "file_000002_e27bb521",
+      "filename": "screenplay_exec_2.json",
+      "description": "Structured JSON snapshot for ScreenplayAgent (exec_2_7b00aeee)",
+      "file_type": "text",
+      "file_extension": ".json",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/screenplay/screenplay_exec_2.json",
+      "size_bytes": 20928,
+      "created_at": "2026-04-04T19:10:55.162853",
+      "created_by": "ScreenplayAgent",
+      "tags": [
+        "ScreenplayAgent",
+        "task_1_0f696dda",
+        "asset_json"
+      ],
+      "metadata": {
+        "execution_id": "exec_2_7b00aeee",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "ScreenplayAgent",
+        "asset_key": "screenplay",
+        "asset_variant": "json_snapshot"
+      }
+    },
+    "file_000003_36c93098": {
+      "id": "file_000003_36c93098",
+      "filename": "img_loc_001_global.png",
+      "description": "Media asset img_loc_001_global",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_loc_001_global.png",
+      "size_bytes": 1738635,
+      "created_at": "2026-04-04T19:13:47.936807",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_3_073e6575",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_loc_001_global",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000004_6b52b832": {
+      "id": "file_000004_6b52b832",
+      "filename": "img_prop_001_global.png",
+      "description": "Media asset img_prop_001_global",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_prop_001_global.png",
+      "size_bytes": 1685020,
+      "created_at": "2026-04-04T19:13:47.965204",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_3_073e6575",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_prop_001_global",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000005_be4b32c6": {
+      "id": "file_000005_be4b32c6",
+      "filename": "img_char_001_global.png",
+      "description": "Media asset img_char_001_global",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_char_001_global.png",
+      "size_bytes": 1468996,
+      "created_at": "2026-04-04T19:13:47.994519",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_3_073e6575",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_char_001_global",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000006_809c5203": {
+      "id": "file_000006_809c5203",
+      "filename": "img_char_001_sc_002.png",
+      "description": "Media asset img_char_001_sc_002",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_char_001_sc_002.png",
+      "size_bytes": 1432577,
+      "created_at": "2026-04-04T19:13:48.018580",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_3_073e6575",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_char_001_sc_002",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000007_3270a860": {
+      "id": "file_000007_3270a860",
+      "filename": "img_prop_001_sc_001.png",
+      "description": "Media asset img_prop_001_sc_001",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_prop_001_sc_001.png",
+      "size_bytes": 1630713,
+      "created_at": "2026-04-04T19:13:48.044082",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_3_073e6575",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_prop_001_sc_001",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000008_58919ab9": {
+      "id": "file_000008_58919ab9",
+      "filename": "img_char_001_sc_001.png",
+      "description": "Media asset img_char_001_sc_001",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_char_001_sc_001.png",
+      "size_bytes": 1584750,
+      "created_at": "2026-04-04T19:13:48.072672",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_3_073e6575",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_char_001_sc_001",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000009_f8e9c697": {
+      "id": "file_000009_f8e9c697",
+      "filename": "img_loc_001_sc_002.png",
+      "description": "Media asset img_loc_001_sc_002",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_002.png",
+      "size_bytes": 1489164,
+      "created_at": "2026-04-04T19:13:48.098271",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_3_073e6575",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_loc_001_sc_002",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000010_8f8abe5f": {
+      "id": "file_000010_8f8abe5f",
+      "filename": "img_loc_001_sc_003.png",
+      "description": "Media asset img_loc_001_sc_003",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_003.png",
+      "size_bytes": 1621836,
+      "created_at": "2026-04-04T19:13:48.124501",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_3_073e6575",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_loc_001_sc_003",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000011_40182ea7": {
+      "id": "file_000011_40182ea7",
+      "filename": "img_prop_001_sc_002.png",
+      "description": "Media asset img_prop_001_sc_002",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_prop_001_sc_002.png",
+      "size_bytes": 1630981,
+      "created_at": "2026-04-04T19:13:48.151577",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_3_073e6575",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_prop_001_sc_002",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000012_c32c0ca2": {
+      "id": "file_000012_c32c0ca2",
+      "filename": "img_char_001_sc_003.png",
+      "description": "Media asset img_char_001_sc_003",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_char_001_sc_003.png",
+      "size_bytes": 1422559,
+      "created_at": "2026-04-04T19:13:48.179882",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_3_073e6575",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_char_001_sc_003",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000013_c438ed88": {
+      "id": "file_000013_c438ed88",
+      "filename": "img_prop_001_sc_003.png",
+      "description": "Media asset img_prop_001_sc_003",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_prop_001_sc_003.png",
+      "size_bytes": 1587243,
+      "created_at": "2026-04-04T19:13:48.205435",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_3_073e6575",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_prop_001_sc_003",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000014_95596a66": {
+      "id": "file_000014_95596a66",
+      "filename": "img_loc_001_sc_001.png",
+      "description": "Media asset img_loc_001_sc_001",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_001.png",
+      "size_bytes": 1658948,
+      "created_at": "2026-04-04T19:13:48.230498",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_3_073e6575",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_loc_001_sc_001",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000015_51557fad": {
+      "id": "file_000015_51557fad",
+      "filename": "img_sh_003_kf_003.png",
+      "description": "Media asset img_sh_003_kf_003",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_sh_003_kf_003.png",
+      "size_bytes": 1513197,
+      "created_at": "2026-04-04T19:13:48.258389",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_3_073e6575",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_sh_003_kf_003",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000016_524d1eee": {
+      "id": "file_000016_524d1eee",
+      "filename": "img_sh_001_kf_001.png",
+      "description": "Media asset img_sh_001_kf_001",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_sh_001_kf_001.png",
+      "size_bytes": 1654728,
+      "created_at": "2026-04-04T19:13:48.284990",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_3_073e6575",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_sh_001_kf_001",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000017_8311c179": {
+      "id": "file_000017_8311c179",
+      "filename": "img_sh_005_kf_005.png",
+      "description": "Media asset img_sh_005_kf_005",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_sh_005_kf_005.png",
+      "size_bytes": 1603224,
+      "created_at": "2026-04-04T19:13:48.314015",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_3_073e6575",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_sh_005_kf_005",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000018_eb422cfc": {
+      "id": "file_000018_eb422cfc",
+      "filename": "img_sh_006_kf_006.png",
+      "description": "Media asset img_sh_006_kf_006",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_sh_006_kf_006.png",
+      "size_bytes": 1613008,
+      "created_at": "2026-04-04T19:13:48.340142",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_3_073e6575",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_sh_006_kf_006",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000019_68641d8a": {
+      "id": "file_000019_68641d8a",
+      "filename": "img_sh_004_kf_004.png",
+      "description": "Media asset img_sh_004_kf_004",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_sh_004_kf_004.png",
+      "size_bytes": 1695676,
+      "created_at": "2026-04-04T19:13:48.367574",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_3_073e6575",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_sh_004_kf_004",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000020_1b3215fd": {
+      "id": "file_000020_1b3215fd",
+      "filename": "img_sh_002_kf_002.png",
+      "description": "Media asset img_sh_002_kf_002",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_sh_002_kf_002.png",
+      "size_bytes": 1613184,
+      "created_at": "2026-04-04T19:13:48.393145",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_3_073e6575",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "img_sh_002_kf_002",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000021_48b3bfdc": {
+      "id": "file_000021_48b3bfdc",
+      "filename": "keyframes_manifest.json",
+      "description": "Keyframe manifest (task_1_0f696dda)",
+      "file_type": "text",
+      "file_extension": ".json",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/keyframes/keyframes_manifest.json",
+      "size_bytes": 7068,
+      "created_at": "2026-04-04T19:13:48.429797",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "task_1_0f696dda",
+        "KeyFrameAgent",
+        "keyframes_manifest"
+      ],
+      "metadata": {
+        "task_id": "task_1_0f696dda",
+        "execution_id": "exec_3_073e6575",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_variant": "manifest",
+        "role": "keyframes_manifest"
+      }
+    },
+    "file_000022_6f3fa549": {
+      "id": "file_000022_6f3fa549",
+      "filename": "keyframes_exec_3.json",
+      "description": "Structured JSON snapshot for KeyFrameAgent (exec_3_073e6575)",
+      "file_type": "text",
+      "file_extension": ".json",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/keyframes/keyframes_exec_3.json",
+      "size_bytes": 29169,
+      "created_at": "2026-04-04T19:13:48.453934",
+      "created_by": "KeyFrameAgent",
+      "tags": [
+        "KeyFrameAgent",
+        "task_1_0f696dda",
+        "asset_json"
+      ],
+      "metadata": {
+        "execution_id": "exec_3_073e6575",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "KeyFrameAgent",
+        "asset_key": "keyframes",
+        "asset_variant": "json_snapshot"
+      }
+    },
+    "file_000023_33aea5de": {
+      "id": "file_000023_33aea5de",
+      "filename": "clip_sh_001.mp4",
+      "description": "Media asset clip_sh_001",
+      "file_type": "video",
+      "file_extension": ".mp4",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/VideoAgent/video/clip_sh_001.mp4",
+      "size_bytes": 4605976,
+      "created_at": "2026-04-04T19:21:48.128851",
+      "created_by": "VideoAgent",
+      "tags": [
+        "VideoAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_9a7bcb69",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "VideoAgent",
+        "asset_key": "clip_sh_001",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000024_6b17996b": {
+      "id": "file_000024_6b17996b",
+      "filename": "clip_sh_002.mp4",
+      "description": "Media asset clip_sh_002",
+      "file_type": "video",
+      "file_extension": ".mp4",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/VideoAgent/video/clip_sh_002.mp4",
+      "size_bytes": 4512107,
+      "created_at": "2026-04-04T19:21:48.174951",
+      "created_by": "VideoAgent",
+      "tags": [
+        "VideoAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_9a7bcb69",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "VideoAgent",
+        "asset_key": "clip_sh_002",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000025_08b32ebf": {
+      "id": "file_000025_08b32ebf",
+      "filename": "clip_sc_001.mp4",
+      "description": "Media asset clip_sc_001",
+      "file_type": "video",
+      "file_extension": ".mp4",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/VideoAgent/video/clip_sc_001.mp4",
+      "size_bytes": 9116427,
+      "created_at": "2026-04-04T19:21:48.213247",
+      "created_by": "VideoAgent",
+      "tags": [
+        "VideoAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_9a7bcb69",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "VideoAgent",
+        "asset_key": "clip_sc_001",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000026_db0fb977": {
+      "id": "file_000026_db0fb977",
+      "filename": "clip_sh_003.mp4",
+      "description": "Media asset clip_sh_003",
+      "file_type": "video",
+      "file_extension": ".mp4",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/VideoAgent/video/clip_sh_003.mp4",
+      "size_bytes": 6174646,
+      "created_at": "2026-04-04T19:21:48.250705",
+      "created_by": "VideoAgent",
+      "tags": [
+        "VideoAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_9a7bcb69",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "VideoAgent",
+        "asset_key": "clip_sh_003",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000027_38298113": {
+      "id": "file_000027_38298113",
+      "filename": "clip_sh_004.mp4",
+      "description": "Media asset clip_sh_004",
+      "file_type": "video",
+      "file_extension": ".mp4",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/VideoAgent/video/clip_sh_004.mp4",
+      "size_bytes": 8804567,
+      "created_at": "2026-04-04T19:21:48.288562",
+      "created_by": "VideoAgent",
+      "tags": [
+        "VideoAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_9a7bcb69",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "VideoAgent",
+        "asset_key": "clip_sh_004",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000028_aa2eb669": {
+      "id": "file_000028_aa2eb669",
+      "filename": "clip_sc_002.mp4",
+      "description": "Media asset clip_sc_002",
+      "file_type": "video",
+      "file_extension": ".mp4",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/VideoAgent/video/clip_sc_002.mp4",
+      "size_bytes": 14977557,
+      "created_at": "2026-04-04T19:21:48.326042",
+      "created_by": "VideoAgent",
+      "tags": [
+        "VideoAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_9a7bcb69",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "VideoAgent",
+        "asset_key": "clip_sc_002",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000029_54afe9eb": {
+      "id": "file_000029_54afe9eb",
+      "filename": "clip_sh_005.mp4",
+      "description": "Media asset clip_sh_005",
+      "file_type": "video",
+      "file_extension": ".mp4",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/VideoAgent/video/clip_sh_005.mp4",
+      "size_bytes": 7761895,
+      "created_at": "2026-04-04T19:21:48.360611",
+      "created_by": "VideoAgent",
+      "tags": [
+        "VideoAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_9a7bcb69",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "VideoAgent",
+        "asset_key": "clip_sh_005",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000030_6edc76eb": {
+      "id": "file_000030_6edc76eb",
+      "filename": "clip_sh_006.mp4",
+      "description": "Media asset clip_sh_006",
+      "file_type": "video",
+      "file_extension": ".mp4",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/VideoAgent/video/clip_sh_006.mp4",
+      "size_bytes": 5069962,
+      "created_at": "2026-04-04T19:21:48.394161",
+      "created_by": "VideoAgent",
+      "tags": [
+        "VideoAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_9a7bcb69",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "VideoAgent",
+        "asset_key": "clip_sh_006",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000031_15bf3683": {
+      "id": "file_000031_15bf3683",
+      "filename": "clip_sc_003.mp4",
+      "description": "Media asset clip_sc_003",
+      "file_type": "video",
+      "file_extension": ".mp4",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/VideoAgent/video/clip_sc_003.mp4",
+      "size_bytes": 12830201,
+      "created_at": "2026-04-04T19:21:48.431905",
+      "created_by": "VideoAgent",
+      "tags": [
+        "VideoAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_9a7bcb69",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "VideoAgent",
+        "asset_key": "clip_sc_003",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000032_8afd0552": {
+      "id": "file_000032_8afd0552",
+      "filename": "clip_final.mp4",
+      "description": "Media asset clip_final",
+      "file_type": "video",
+      "file_extension": ".mp4",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/VideoAgent/video/clip_final.mp4",
+      "size_bytes": 36921345,
+      "created_at": "2026-04-04T19:21:48.479936",
+      "created_by": "VideoAgent",
+      "tags": [
+        "VideoAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_9a7bcb69",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "VideoAgent",
+        "asset_key": "clip_final",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000033_a3f013fa": {
+      "id": "file_000033_a3f013fa",
+      "filename": "video_exec_4.json",
+      "description": "Structured JSON snapshot for VideoAgent (exec_4_9a7bcb69)",
+      "file_type": "text",
+      "file_extension": ".json",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/video/video_exec_4.json",
+      "size_bytes": 20821,
+      "created_at": "2026-04-04T19:21:48.506384",
+      "created_by": "VideoAgent",
+      "tags": [
+        "VideoAgent",
+        "task_1_0f696dda",
+        "asset_json"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_9a7bcb69",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "VideoAgent",
+        "asset_key": "video",
+        "asset_variant": "json_snapshot"
+      }
+    },
+    "file_000034_4539f5a6": {
+      "id": "file_000034_4539f5a6",
+      "filename": "aud_music_sc_001.wav",
+      "description": "Media asset aud_music_sc_001",
+      "file_type": "other",
+      "file_extension": ".wav",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/AudioAgent/audio/aud_music_sc_001.wav",
+      "size_bytes": 44,
+      "created_at": "2026-04-04T19:22:26.618016",
+      "created_by": "AudioAgent",
+      "tags": [
+        "AudioAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_5_a7cebb7b",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "AudioAgent",
+        "asset_key": "aud_music_sc_001",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000035_bcbc981a": {
+      "id": "file_000035_bcbc981a",
+      "filename": "aud_amb_sc_001.wav",
+      "description": "Media asset aud_amb_sc_001",
+      "file_type": "other",
+      "file_extension": ".wav",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/AudioAgent/audio/aud_amb_sc_001.wav",
+      "size_bytes": 44,
+      "created_at": "2026-04-04T19:22:26.637018",
+      "created_by": "AudioAgent",
+      "tags": [
+        "AudioAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_5_a7cebb7b",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "AudioAgent",
+        "asset_key": "aud_amb_sc_001",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000036_5c43c94e": {
+      "id": "file_000036_5c43c94e",
+      "filename": "aud_mix_sc_001.wav",
+      "description": "Media asset aud_mix_sc_001",
+      "file_type": "other",
+      "file_extension": ".wav",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/AudioAgent/audio/aud_mix_sc_001.wav",
+      "size_bytes": 88,
+      "created_at": "2026-04-04T19:22:26.661072",
+      "created_by": "AudioAgent",
+      "tags": [
+        "AudioAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_5_a7cebb7b",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "AudioAgent",
+        "asset_key": "aud_mix_sc_001",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000037_fec8cd74": {
+      "id": "file_000037_fec8cd74",
+      "filename": "aud_music_sc_002.wav",
+      "description": "Media asset aud_music_sc_002",
+      "file_type": "other",
+      "file_extension": ".wav",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/AudioAgent/audio/aud_music_sc_002.wav",
+      "size_bytes": 44,
+      "created_at": "2026-04-04T19:22:26.683517",
+      "created_by": "AudioAgent",
+      "tags": [
+        "AudioAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_5_a7cebb7b",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "AudioAgent",
+        "asset_key": "aud_music_sc_002",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000038_643069dc": {
+      "id": "file_000038_643069dc",
+      "filename": "aud_amb_sc_002.wav",
+      "description": "Media asset aud_amb_sc_002",
+      "file_type": "other",
+      "file_extension": ".wav",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/AudioAgent/audio/aud_amb_sc_002.wav",
+      "size_bytes": 44,
+      "created_at": "2026-04-04T19:22:26.705897",
+      "created_by": "AudioAgent",
+      "tags": [
+        "AudioAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_5_a7cebb7b",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "AudioAgent",
+        "asset_key": "aud_amb_sc_002",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000039_68b641c6": {
+      "id": "file_000039_68b641c6",
+      "filename": "aud_mix_sc_002.wav",
+      "description": "Media asset aud_mix_sc_002",
+      "file_type": "other",
+      "file_extension": ".wav",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/AudioAgent/audio/aud_mix_sc_002.wav",
+      "size_bytes": 88,
+      "created_at": "2026-04-04T19:22:26.727255",
+      "created_by": "AudioAgent",
+      "tags": [
+        "AudioAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_5_a7cebb7b",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "AudioAgent",
+        "asset_key": "aud_mix_sc_002",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000040_75d31738": {
+      "id": "file_000040_75d31738",
+      "filename": "aud_music_sc_003.wav",
+      "description": "Media asset aud_music_sc_003",
+      "file_type": "other",
+      "file_extension": ".wav",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/AudioAgent/audio/aud_music_sc_003.wav",
+      "size_bytes": 44,
+      "created_at": "2026-04-04T19:22:26.751418",
+      "created_by": "AudioAgent",
+      "tags": [
+        "AudioAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_5_a7cebb7b",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "AudioAgent",
+        "asset_key": "aud_music_sc_003",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000041_46735362": {
+      "id": "file_000041_46735362",
+      "filename": "aud_amb_sc_003.wav",
+      "description": "Media asset aud_amb_sc_003",
+      "file_type": "other",
+      "file_extension": ".wav",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/AudioAgent/audio/aud_amb_sc_003.wav",
+      "size_bytes": 44,
+      "created_at": "2026-04-04T19:22:26.777063",
+      "created_by": "AudioAgent",
+      "tags": [
+        "AudioAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_5_a7cebb7b",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "AudioAgent",
+        "asset_key": "aud_amb_sc_003",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000042_5ed69494": {
+      "id": "file_000042_5ed69494",
+      "filename": "aud_mix_sc_003.wav",
+      "description": "Media asset aud_mix_sc_003",
+      "file_type": "other",
+      "file_extension": ".wav",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/AudioAgent/audio/aud_mix_sc_003.wav",
+      "size_bytes": 88,
+      "created_at": "2026-04-04T19:22:26.799762",
+      "created_by": "AudioAgent",
+      "tags": [
+        "AudioAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_5_a7cebb7b",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "AudioAgent",
+        "asset_key": "aud_mix_sc_003",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000043_8b19c09d": {
+      "id": "file_000043_8b19c09d",
+      "filename": "aud_final.wav",
+      "description": "Media asset aud_final",
+      "file_type": "other",
+      "file_extension": ".wav",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/AudioAgent/audio/aud_final.wav",
+      "size_bytes": 264,
+      "created_at": "2026-04-04T19:22:26.818624",
+      "created_by": "AudioAgent",
+      "tags": [
+        "AudioAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_5_a7cebb7b",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "AudioAgent",
+        "asset_key": "aud_final",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000044_2c1ac9ec": {
+      "id": "file_000044_2c1ac9ec",
+      "filename": "delivery_final.mp4",
+      "description": "Media asset delivery_final",
+      "file_type": "video",
+      "file_extension": ".mp4",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/AudioAgent/video/delivery_final.mp4",
+      "size_bytes": 36436917,
+      "created_at": "2026-04-04T19:22:26.858088",
+      "created_by": "AudioAgent",
+      "tags": [
+        "AudioAgent",
+        "task_1_0f696dda"
+      ],
+      "metadata": {
+        "execution_id": "exec_5_a7cebb7b",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "AudioAgent",
+        "asset_key": "delivery_final",
+        "asset_variant": "binary"
+      }
+    },
+    "file_000045_4cedb2b9": {
+      "id": "file_000045_4cedb2b9",
+      "filename": "audio_exec_5.json",
+      "description": "Structured JSON snapshot for AudioAgent (exec_5_a7cebb7b)",
+      "file_type": "text",
+      "file_extension": ".json",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/audio/audio_exec_5.json",
+      "size_bytes": 7564,
+      "created_at": "2026-04-04T19:22:26.883277",
+      "created_by": "AudioAgent",
+      "tags": [
+        "AudioAgent",
+        "task_1_0f696dda",
+        "asset_json"
+      ],
+      "metadata": {
+        "execution_id": "exec_5_a7cebb7b",
+        "task_id": "task_1_0f696dda",
+        "producer_agent_id": "AudioAgent",
+        "asset_key": "audio",
+        "asset_variant": "json_snapshot"
+      }
+    }
+  }
+}

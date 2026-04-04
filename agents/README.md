@@ -3,28 +3,30 @@
 本文档详细说明如何创建、开发和部署 Agent 到 Frameworks Backend。
 
 **目录结构说明：**
+- **Schema 瘦身评估**（Story / KeyFrame / Video / Audio，在保持现有功能前提下的字段与 token 分析）：[`SCHEMA_SLIMDOWN_EVAL.md`](SCHEMA_SLIMDOWN_EVAL.md)
 - `agents/`（根目录）：Agent 核心框架和所有 Agent 实现
   - 核心框架文件：`base_agent.py`, `base_evaluator.py`, `descriptor.py`, `common_schema.py`, `agent_registry.py`
   - 子 agent 只通过 `InputBundleV2.context["resolved_inputs"]` 读取 Assistant 预解析后的结构化输入（已移除未使用的 `contracts/query.py`、`latest_payload`、以及 bundle 上的 `find_artifacts` / `first_payload`）
   - 媒体 materializer 的 `materialize(..., input_bundle_v2)` 及其内部 helper 统一使用 `InputBundleV2` 类型标注；`contracts/input_bundle_v2.py` 仅保留 `InputBundleV2`（已移除只读子类 `FrozenInputBundleV2`，约定上避免在执行路径中原地修改 Assistant 传入的 bundle）
   - 已删除未接入任何导入链路的占位文件 `input_bundle.py`（原 `ExecutionInputBundle` 未被使用）
   - LLM 运行时客户端统一来自：`inference/clients/base/base_client.py`（推荐业务代码直接从 `inference/clients/__init__.py` 导入）
-  - Pipeline Agent 子包：`story/`, `screenplay/`, `storyboard/`, `keyframe/`, `video/`, `audio/`
-  - 其中 `video/` materializer 会消费 `keyframe` 的图片 URI（按 `shot_id` 对齐）
-  - 且 `video/` 会把同一 keyframe 条目的 `prompt_summary` 与图片一起对齐传给视频后端，并追加 storyboard 的 shot 语义字段（`visual_goal` / `action_focus` / `camera.framing_notes` / `keyframe_notes` / `characters_in_frame`）以及 scene 一致性字段（`scene_consistency_pack.location_lock/environment_notes/style_lock`）构造 clip prompt；多 keyframe 被视为同一 shot 的实体一致性锚点（人物/场景），不是时间起止帧
-  - `props` 相关路径（KeyFrame 生成 props anchors + Video 注入 props 一致性约束）统一由 `FW_ENABLE_PROP_PIPELINE` 控制（默认 `0` 关闭）
-  - 兼容历史配置：`FW_ENABLE_PROP_KEYFRAMES` 与 `FW_VIDEO_ENABLE_PROP_CONSISTENCY` 仍可单独生效；当 `FW_ENABLE_PROP_PIPELINE` 设置时，以它为准
+  - Pipeline Agent 子包：`story/`, `screenplay/`, `keyframe/`, `video/`, `audio/`（**无**独立 `storyboard/`：镜头与 `keyframe_plan` 在 **ScreenplayAgent** 的 `scenes[].shots[]`）
+  - 其中 `video/` materializer 按 `shot_id` 只取 **该 shot 的第一条** `shots[].keyframes[]` 上 **可读本地** 的 Layer-3 PNG（**一张**）；缺文件则 **跳过该镜头** 的 `generate_clip`，**不再**从 L2 `stability_keyframes` 回退或做多图拼接。I2V 文本前缀 **仅**在 **`video_motion_hint` 非空**时前置；**不**用 `prompt_summary` 顶替。`video_motion_hint` 非空时 clip 正文省略 scene 的 environment/style/must_avoid 三行。结构化约束仍含 `keyframe_prompt_summaries` 与 `keyframe_video_motion_hints`；`keyframe_role` 为 `shot_still_l3_only`，`composite_layout` 固定 `shot_l3_single`（详见 `video/README.md`）
+  - **`VideoMaterializer._merge_keyframe_images_for_video_api`** 仅保留给 **测试 / 工具**（如 `tests/inference/test_fal_kling_merged_keyframe_live.py`）验证横向合成与 Kling 宽高比；**管线主路径不调用**
+  - **`KeyframeMaterializer`**：**L1** 全局锚点、**L2** 场景锚点（**characters、locations、props**，与 `FW_ENABLE_PROP_KEYFRAMES` 等一致）、**L3** 每 shot **恰好一张** `img_{shot_id}_{keyframe_id}.png`（默认以场景 location 的 L2 图为 edit 参考，无则 t2i）。LLM 骨架为每 shot **一个** keyframe 行（与 screenplay `keyframe_plan.keyframe_count=1` 对齐）。**KeyFrameAgent** 将 `prompt_summary` 限定为 **静帧出图**文案，并与 **Video** 侧约定解耦（不写声音/剪辑节奏等；详见 `keyframe/README.md`）。分场景 creative user 使用 **紧凑 scene pack 行**（非整段 `consistency_pack` JSON），减轻与 Screenplay 的 token 重复。`keyframe/schema.py` 中锚点 `purpose` / `display_name` 与 L3 `constraints_applied` 为 **`Field(..., exclude=True)`**，落盘 JSON 更瘦且不参与 materializer 拼 prompt（见 `keyframe/README.md`）。
+  - **L2/L3 edit**：编辑前缀已缩短；`style_lock` 在全剧范围 **归一化去重** 后再拼后缀；L2/L3 **edit** 仅追加过滤后的 `must_avoid`，**不**再叠 `Visual style:`（参考图已承载观感）。L1 与 L3 **t2i 回退**仍为完整 `Visual style` + `must_avoid`。**`FW_KEYFRAME_L2_MODE=t2i`** 时 L2 纯文生图（见 `keyframe/README.md`）
+  - **媒体 API prompt 落盘**：`KeyframeMaterializer` / `VideoMaterializer` / `AudioMaterializer` 在调用各后端前，将**实际送入 API 的文案**写回对应 artifact 节点（`image_generation_prompt`、`video_generation_prompt` + `video_generation_constraints_json`、TTS/音乐/环境声的 `audio_generation_prompt` JSON 行），随 workspace JSON 快照一并持久化；不再使用 `Runtime/prompt_audit` JSONL。
+  - `FW_ENABLE_PROP_KEYFRAMES` 默认 **`0`**（骨架层 props 文案）；`FW_ENABLE_PROP_PIPELINE` 控制 Video 侧 screenplay 约束里 `props_in_frame` 等（见 `video/materializer`）
   - `keyframe/` 不再在本地执行增量快照写盘；图片仅通过 `MediaAsset` 返回，由 assistant 统一持久化
-  - 离线从 **storyboard JSON** 一路跑到成片（KeyFrameAgent LLM + fal 出图 → VideoAgent fal）：**`scripts/run_storyboard_to_video.py`**（不经过 Task Stack；可用 `--no-video-materialize` 只跑到 keyframes，或 `--no-keyframe-materialize` + `--no-video-materialize` 只做 KeyFrame LLM+L1/L2）
+  - 离线从 **统一 screenplay JSON** 一路跑到成片（KeyFrameAgent LLM + fal 出 L1/L2 图 → VideoAgent fal）：**`scripts/run_storyboard_to_video.py`**（`--screenplay` 为主，`--storyboard` 为别名；不经过 Task Stack；可用 `--no-video-materialize` 只跑到 keyframes，或 `--no-keyframe-materialize` + `--no-video-materialize` 只做 KeyFrame LLM）
   - `audio/` materializer 会在 `final_audio_asset` 之后执行音视频 mux，输出 `final_delivery_asset`
-- `story/` 会显式遵循 `target_duration_sec` 约束，并在 evaluator 中校验 `content.estimated_duration.seconds` 容差（默认 ±20%）；`StoryConstraints.target_duration_sec` 与 agent 内部回退默认 **10s**（用户未写明长度时 prompt 亦按约 10 秒引导）；`story/descriptor.py` 将 Assistant 注入的整份 `source_text`（常为 Task `description` 对象）在需要时编码为 JSON 字符串再填入 `draft_idea`，不在 Assistant service 层解析具体字段
-- `screenplay/` 会显式遵循 `target_duration_sec` 约束，并在 evaluator 中校验总时长容差（默认 ±20%）；`ScreenplayConstraints.target_duration_sec` 与 agent 内部回退默认 **10s**
-- `storyboard/` 会从 screenplay 的 `blocks[].character_id`、`blocks[].continuity_refs.wardrobe_character_ids` 和 `continuity.character_wardrobe_notes[].character_id` 汇总 `character_locks`，避免动作块未显式写角色 ID 时丢失人物锚点
+- `story/` 会显式遵循 `target_duration_sec` 约束，并在 evaluator 中校验 `content.estimated_duration.seconds` 容差（默认 ±20%）；`StoryConstraints.target_duration_sec` 与 agent 内部回退默认 **10s**（用户未写明长度时 prompt 亦按约 10 秒引导）；`story/descriptor.py` 将 Assistant 注入的整份 `source_text`（常为 Task `description` 对象）在需要时编码为 JSON 字符串再填入 `draft_idea`，不在 Assistant service 层解析具体字段。**`story/agent.py` 的 system/user 提示已精简**，减少与模板、evaluator 的重复说明。**ScreenplayAgent** 在 `build_creative_prompt` 内用 **`_story_content_embed_for_creative_llm`** 决定写入该次 LLM user 的 story 字段子集（见 `story/README.md`）；持久化 story 资产仍为完整 JSON。
+- `screenplay/` 会显式遵循 `target_duration_sec` 约束，并在 evaluator 中校验总时长容差（默认 ±20%）；`ScreenplayConstraints.target_duration_sec` 与 agent 内部回退默认 **10s**；统一 `scenes[].shots[]`（含 `scene_consistency_pack`、`keyframe_plan`），由 `ScreenplayEvaluator` L1 校验镜头与 `keyframe_plan` 等约束。**`screenplay/agent.py` 的 system、structuring 与 blueprint creative-fill 用户提示已精简**。
 - `keyframe/` 在构建人物锚点时会同时读取 `scene_consistency_pack.character_locks` 与 `shots[].characters_in_frame`，保证人物全局/场景锚点可生成
   - `keyframe/descriptor.py` 默认使用 `FalImageService`（需 `FAL_API_KEY`；`FAL_IMAGE_MODEL` 由仓库根 `.env` / `.env.example` 提供，见 `inference/generation/fal_helpers.py`；`fal-ai/nano-banana-2` 时编辑层走 `fal-ai/nano-banana-2/edit`）
-  - `video/descriptor.py` 默认使用 `FalVideoService`（需 `FAL_API_KEY`；`FAL_VIDEO_MODEL` 同上来自环境，无 Python 内置默认端点）
+  - `video/descriptor.py` 按 **`FW_VIDEO_BACKEND`** 选择视频后端：默认 **`fal`** → `FalVideoService`（`FAL_API_KEY`、`FAL_VIDEO_MODEL`）；**`wavespeed`** → `WavespeedVideoService`（`WAVESPEED_API_KEY` 等，见根目录 `.env.example` 与 `agents/video/README.md`）
   - `audio/descriptor.py` 默认使用 `FalAudioService` 作为 TTS 后端（需配置 `FAL_API_KEY` 与可选 `FAL_TTS_MODEL`）
-- `audio/agent.py` 在 skeleton-first 的 creative-fill 阶段对输出做严格 JSON 约束（禁止 `TypeOf:` 等类型提示行），避免 `chat_json` 因非 JSON 输出而失败
+- `audio/agent.py` 在 skeleton-first 的 creative-fill 阶段对输出做严格 JSON 约束（禁止 `TypeOf:` 等类型提示行），避免 `chat_json` 因非 JSON 输出而失败；**不在 evaluator 里用字符上限**「假装」控制 prompt — 过长由后端/API 报错暴露
   - 示例 Agent：`example_agent/`
 - `common_schema.Meta` 不包含 `project_id`；LLM 输出中的 `meta` 仅使用该模型已声明字段（与外部服务如 Cloudflare 请求头里的 `project_id` 无关）
 
@@ -75,8 +77,7 @@ agents/
 │
 │  # ── Pipeline Agents ──────────────────────────────
 ├── story/                       # StoryAgent
-├── screenplay/                  # ScreenplayAgent
-├── storyboard/                  # StoryboardAgent
+├── screenplay/                  # ScreenplayAgent（含统一 shots / keyframe_plan）
 ├── keyframe/                    # KeyFrameAgent（含 materializer）
 ├── video/                       # VideoAgent（含 materializer）
 ├── audio/                       # AudioAgent（含 materializer）
@@ -227,7 +228,7 @@ curl http://localhost:5002/api/assistant/sub-agents
 
 - **目录名**：使用下划线命名（snake_case），如 `storyboard_agent`
 - **Agent ID**：与目录名保持一致
-- **类名**：使用驼峰命名（PascalCase），如 `StoryboardAgent`
+- **类名**：使用驼峰命名（PascalCase），如 `ScreenplayAgent`
 - **Descriptor 常量（推荐统一）**：
   - 输出资产键：`OUTPUT_ASSET_KEY = "xxx"`
   - 上游输入语义角色（role）由 Assistant 的输入打包 LLM 从 `CATALOG_ENTRY` 推导并回填；descriptor 侧不再推荐定义 `INPUT_<NAME>_ASSET_KEY = "yyy"` 常量来手工索引上游产物。

@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
-"""Storyboard JSON → **KeyFrameAgent** (LLM + fal) → **VideoAgent** (skeleton + fal) → MP4.
+"""Unified screenplay JSON to KeyFrameAgent (LLM + fal) to VideoAgent (skeleton + fal) to MP4.
 
-One-shot offline pipeline (no Task Stack, no ``POST /api/assistant/execute``). VideoAgent is
-skeleton-only (no LLM): shot list and durations come from the storyboard; clips are rendered
-from keyframe PNGs via ``VideoMaterializer`` / ``FalVideoService``.
+One-shot offline pipeline (no Task Stack, no POST /api/assistant/execute). VideoAgent is
+skeleton-only (no LLM): shot list and durations come from the screenplay; clips are rendered
+from keyframe PNGs via VideoMaterializer / FalVideoService.
 
-Requires: chat model env (same as pipeline) + ``FAL_API_KEY`` for images and video unless
-you use ``--no-keyframe-materialize`` / ``--no-video-materialize`` to skip the corresponding fal steps.
+Requires: chat model env (same as pipeline) + FAL_API_KEY for images and video unless
+you use --no-keyframe-materialize / --no-video-materialize to skip the corresponding fal steps.
 
 Example::
 
   python3 scripts/run_storyboard_to_video.py \\
-    --storyboard Runtime/live_e2e_outputs/.../storyboardagent_*.json \\
-    --output-dir Runtime/live_e2e_outputs/sb_to_video_run_001
+    --screenplay Runtime/live_e2e_outputs/.../screenplayagent_*.json \\
+    --output-dir Runtime/live_e2e_outputs/sp_to_video_run_001
+
+Legacy: --storyboard is an alias for --screenplay (same JSON shape).
 """
 
 from __future__ import annotations
@@ -39,7 +41,7 @@ logger = logging.getLogger(__name__)
 
 async def _run_keyframe_agent_local(
     *,
-    storyboard: dict[str, Any],
+    screenplay: dict[str, Any],
     task_id: str,
     out_dir: Path,
     materialize: bool,
@@ -49,7 +51,7 @@ async def _run_keyframe_agent_local(
 
     bundle = InputBundleV2(
         task_id=task_id,
-        context={"resolved_inputs": {"storyboard": storyboard}},
+        context={"resolved_inputs": {"screenplay": screenplay}},
     )
 
     registry = get_agent_registry()
@@ -127,7 +129,7 @@ async def _run_keyframe_agent_local(
 
 async def _run_video_agent_local(
     *,
-    storyboard: dict[str, Any],
+    screenplay: dict[str, Any],
     keyframes: dict[str, Any],
     task_id: str,
     out_dir: Path,
@@ -140,7 +142,7 @@ async def _run_video_agent_local(
         task_id=task_id,
         context={
             "resolved_inputs": {
-                "storyboard": storyboard,
+                "screenplay": screenplay,
                 "keyframes": keyframes,
             }
         },
@@ -221,7 +223,7 @@ async def _run_video_agent_local(
 
 async def _pipeline_async(
     *,
-    storyboard: dict,
+    screenplay: dict,
     task_id: str,
     out_dir: Path,
     keyframe_materialize: bool,
@@ -232,7 +234,7 @@ async def _pipeline_async(
     vid_dir = out_dir / "video"
 
     kf_code, kf_payload = await _run_keyframe_agent_local(
-        storyboard=storyboard,
+        screenplay=screenplay,
         task_id=f"{task_id}_keyframe",
         out_dir=kf_dir,
         materialize=keyframe_materialize,
@@ -248,7 +250,7 @@ async def _pipeline_async(
         return 0
 
     v_code, _vp = await _run_video_agent_local(
-        storyboard=storyboard,
+        screenplay=screenplay,
         keyframes=kf_payload,
         task_id=f"{task_id}_video",
         out_dir=vid_dir,
@@ -260,7 +262,14 @@ async def _pipeline_async(
 def main() -> None:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--storyboard", required=True, help="Path to storyboardagent_*.json")
+    p.add_argument(
+        "--screenplay",
+        help="Path to unified screenplay JSON (e.g. screenplayagent_*.json)",
+    )
+    p.add_argument(
+        "--storyboard",
+        help="Alias for --screenplay (legacy)",
+    )
     p.add_argument(
         "--output-dir",
         required=True,
@@ -268,7 +277,7 @@ def main() -> None:
     )
     p.add_argument(
         "--task-id",
-        default="local_storyboard_to_video",
+        default="local_screenplay_to_video",
         help="Synthetic task id prefix",
     )
     p.add_argument(
@@ -283,21 +292,25 @@ def main() -> None:
     )
     args = p.parse_args()
 
+    if bool(args.screenplay) == bool(args.storyboard):
+        raise SystemExit("Provide exactly one of --screenplay or --storyboard (alias).")
+
     if args.no_keyframe_materialize and not args.no_video_materialize:
         raise SystemExit(
             "--no-keyframe-materialize leaves no images; add --no-video-materialize "
             "or remove --no-keyframe-materialize."
         )
 
-    sb_path = Path(args.storyboard).resolve()
-    storyboard = json.loads(sb_path.read_text(encoding="utf-8"))
-    if not isinstance(storyboard, dict):
-        raise SystemExit("Storyboard JSON root must be an object")
+    path_str = args.screenplay or args.storyboard
+    sp_path = Path(path_str).resolve()
+    screenplay = json.loads(sp_path.read_text(encoding="utf-8"))
+    if not isinstance(screenplay, dict):
+        raise SystemExit("Screenplay JSON root must be an object")
 
     out_dir = Path(args.output_dir).resolve()
     code = asyncio.run(
         _pipeline_async(
-            storyboard=storyboard,
+            screenplay=screenplay,
             task_id=str(args.task_id),
             out_dir=out_dir,
             keyframe_materialize=not args.no_keyframe_materialize,

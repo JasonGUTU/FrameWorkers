@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Offline (and optional live) replay of AudioAgent against saved workspace JSON.
 
-Use this to verify that screenplay + storyboard + video snapshots still form a
+Use this to verify that unified screenplay + video snapshots still form a
 valid skeleton and to inspect the creative-fill prompt size (the step that calls
 ``chat_json`` in skeleton mode).
 
@@ -31,11 +31,10 @@ def _repo_root() -> Path:
 
 
 def load_audio_inputs(workspace: Path) -> dict:
-    """Load the three assets AudioAgent expects (same shape as hydrated registry JSON)."""
+    """Load screenplay + video assets for AudioAgent."""
     base = workspace / "artifacts"
     paths = {
         "screenplay": base / "screenplay" / "screenplay_exec_2.json",
-        "storyboard": base / "storyboard" / "storyboard_exec_3.json",
         "video": base / "video" / "video_exec_5.json",
     }
     missing = [str(p) for p in paths.values() if not p.is_file()]
@@ -45,7 +44,6 @@ def load_audio_inputs(workspace: Path) -> dict:
         )
     return {
         "screenplay": json.loads(paths["screenplay"].read_text(encoding="utf-8")),
-        "storyboard": json.loads(paths["storyboard"].read_text(encoding="utf-8")),
         "video": json.loads(paths["video"].read_text(encoding="utf-8")),
     }
 
@@ -88,7 +86,6 @@ def main() -> int:
     assets = load_audio_inputs(ws)
     inp = AudioAgentInput(
         screenplay=assets["screenplay"],
-        storyboard=assets["storyboard"],
         video=assets["video"],
     )
 
@@ -96,7 +93,7 @@ def main() -> int:
     sk = agent.build_skeleton(inp)
     if sk is None:
         print(
-            "build_skeleton returned None — check screenplay/storyboard/video "
+            "build_skeleton returned None — check screenplay/video "
             "non-empty and video content.scenes present.",
             file=sys.stderr,
         )

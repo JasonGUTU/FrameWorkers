@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from typing import Any
 
 from pydantic import BaseModel
@@ -12,7 +13,7 @@ from .agent import VideoAgent
 from .schema import VideoAgentInput
 from .evaluator import VideoEvaluator
 from .materializer import VideoMaterializer
-from inference.generation.video_generators.service import FalVideoService
+from inference.generation.video_generators.service import FalVideoService, WavespeedVideoService
 
 OUTPUT_ASSET_KEY = "video"
 
@@ -27,7 +28,7 @@ def build_input(
         else {}
     )
     return VideoAgentInput(
-        storyboard=resolved.get("storyboard", {}),
+        screenplay=resolved.get("screenplay", {}),
         keyframes=resolved.get("keyframes", {}),
     )
 
@@ -36,9 +37,24 @@ def materializer_factory(services: dict[str, Any]) -> VideoMaterializer:
     return VideoMaterializer(video_service=services["video_service"])
 
 
+def _video_service_factory(_ctx: dict[str, Any] | None = None) -> FalVideoService | WavespeedVideoService:
+    """Select pipeline video backend (Layer A: alternate provider inside inference).
+
+    - ``FW_VIDEO_BACKEND=fal`` (default): ``FalVideoService`` + fal env vars.
+    - ``FW_VIDEO_BACKEND=wavespeed``: ``WavespeedVideoService`` + ``WAVESPEED_*`` env vars.
+
+    Sidecar UniVA HTTP (Layer B) and MCP tool processes (Layer C) stay out of this
+    factory; see ``inference/README.md`` (UniVA integration).
+    """
+    backend = os.getenv("FW_VIDEO_BACKEND", "fal").strip().lower()
+    if backend in ("wavespeed", "wave_speed", "ws"):
+        return WavespeedVideoService()
+    return FalVideoService()
+
+
 CATALOG_ENTRY = (
     "VideoAgent\n"
-    "  - Input: storyboard + keyframes\n"
+    "  - Input: screenplay + keyframes\n"
     "  - Output: video_package (shot segments, scene clips, final video)\n"
     "  - Purpose: Plan video clip generation from keyframe images."
 )
@@ -51,7 +67,7 @@ DESCRIPTOR = SubAgentDescriptor(
     evaluator_factory=VideoEvaluator,
     build_input=build_input,
     service_factories={
-        "video_service": lambda ctx: FalVideoService(),
+        "video_service": lambda ctx: _video_service_factory(ctx),
     },
     materializer_factory=materializer_factory,
 )

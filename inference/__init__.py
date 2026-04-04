@@ -39,7 +39,12 @@ from .generation.audio_generators.registry import (
     get_audio_generator_registry,
 )
 from .generation.image_generators.service import FalImageService, ImageService, MockImageService
-from .generation.video_generators.service import FalVideoService, MockVideoService, VideoService
+from .generation.video_generators.service import (
+    FalVideoService,
+    MockVideoService,
+    VideoService,
+    WavespeedVideoService,
+)
 from .generation.audio_generators.service import AudioService, FalAudioService, MockAudioService
 
 __version__ = "0.1.0"
@@ -72,6 +77,7 @@ __all__ = [
     "ImageService",
     "MockImageService",
     "FalVideoService",
+    "WavespeedVideoService",
     "VideoService",
     "MockVideoService",
     "FalAudioService",

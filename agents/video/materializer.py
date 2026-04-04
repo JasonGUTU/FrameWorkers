@@ -7,9 +7,14 @@ file I/O; persistence is handled exclusively by Assistant.
 
 from __future__ import annotations
 
+import json
 import logging
+import math
 import os
+from io import BytesIO
 from typing import Any
+
+from PIL import Image
 
 from ..descriptor import BaseMaterializer, MediaAsset
 from ..contracts.input_bundle_v2 import InputBundleV2
@@ -45,7 +50,7 @@ class VideoMaterializer(BaseMaterializer):
                     "artifact_family": "video_clip",
                     "semantic_meaning": "shot/scene/final video clips",
                     "recommended_name_pattern": "clip_{shot_or_scene_or_final}.mp4",
-                    "id_source": "storyboard shot_id and scene_id",
+                    "id_source": "screenplay shot_id and scene_id",
                     "ordering_rules": "shot clips follow scene shot order",
                     "examples": ["clip_sh_001.mp4", "clip_sc_001.mp4", "clip_final.mp4"],
                     "rename_hints": {"stable_parts": "clip prefix and id token", "mutable_parts": "optional readability infix"},
@@ -67,54 +72,124 @@ class VideoMaterializer(BaseMaterializer):
             return uri[7:]
         return uri
 
+    @staticmethod
+    def _merge_keyframe_images_for_video_api(
+        images: list[bytes],
+        prompt_summaries: list[str],
+    ) -> tuple[list[bytes], list[str], str]:
+        """Stitch multiple PNGs into one horizontal strip (tests / tooling only).
+
+        **Production video** uses a single Layer-3 shot PNG per ``VideoMaterializer``
+        call; this helper remains for ``tests/inference`` merge smoke tests.
+
+        Returns:
+            (``[merged_png]``, ``[summary_for_constraints]``, layout_tag)
+        """
+        n = len(images)
+        if n <= 1:
+            return images, prompt_summaries, "unchanged_single_or_empty"
+
+        panels = [Image.open(BytesIO(b)).convert("RGB") for b in images]
+        h = max(p.height for p in panels)
+        scaled: list[Image.Image] = []
+        for p in panels:
+            nw = max(1, int(round(p.width * h / p.height)))
+            scaled.append(p.resize((nw, h), Image.Resampling.LANCZOS))
+        total_w = sum(p.width for p in scaled)
+        canvas = Image.new("RGB", (total_w, h))
+        x = 0
+        for p in scaled:
+            canvas.paste(p, (x, 0))
+            x += p.width
+
+        # fal Kling image-to-video rejects conditioning images outside 0.4 <= w/h <= 2.5
+        # (wide horizontal merges exceed the max unless letterboxed).
+        tw, th = canvas.size
+        ar = tw / max(th, 1)
+        _KLING_AR_MIN, _KLING_AR_MAX = 0.4, 2.5
+        pad_color = (16, 16, 16)
+        if ar > _KLING_AR_MAX:
+            new_h = max(1, int(math.ceil(tw / _KLING_AR_MAX)))
+            bg = Image.new("RGB", (tw, new_h), pad_color)
+            y0 = max(0, (new_h - th) // 2)
+            bg.paste(canvas, (0, y0))
+            canvas = bg
+        elif ar < _KLING_AR_MIN:
+            new_w = max(1, int(math.ceil(th * _KLING_AR_MIN)))
+            bg = Image.new("RGB", (new_w, th), pad_color)
+            x0 = max(0, (new_w - tw) // 2)
+            bg.paste(canvas, (x0, 0))
+            canvas = bg
+
+        out = BytesIO()
+        canvas.save(out, format="PNG")
+        merged = out.getvalue()
+
+        if n == 2:
+            summary = (
+                "Reference: single horizontal composite PNG (two equal-height panels "
+                "left-to-right). Left panel = first reference; right panel = second. "
+                "Use this one image as the sole visual conditioning input."
+            )
+            if len(prompt_summaries) >= 2:
+                summary += (
+                    " | Panel text notes (left then right): "
+                    + prompt_summaries[0]
+                    + " || "
+                    + prompt_summaries[1]
+                )
+            elif prompt_summaries:
+                summary += " | Notes: " + " | ".join(prompt_summaries)
+        else:
+            summary = (
+                f"Reference: single horizontal composite of {n} panels "
+                "(left-to-right, equalized height). Sole conditioning image."
+            )
+            if prompt_summaries:
+                summary += " | Notes: " + " || ".join(prompt_summaries)
+
+        return [merged], [summary], f"horizontal_merge_{n}_panels"
+
     def _build_shot_keyframe_inputs_index(
         self, input_bundle_v2: InputBundleV2
     ) -> dict[str, list[dict[str, str]]]:
-        """Build shot_id -> ordered keyframe inputs (uri + prompt summary)."""
+        """Map shot_id → at most one loadable L3 keyframe row.
+
+        Row keys: ``uri``, ``prompt_summary`` (image / constraints), optional
+        ``video_motion_hint`` (I2V text prefix only; no substitute for empty).
+        """
         index: dict[str, list[dict[str, str]]] = {}
         keyframes = self._resolved_inputs(input_bundle_v2).get("keyframes", {})
         content = keyframes.get("content", {}) if isinstance(keyframes, dict) else {}
+
         for scene in content.get("scenes", []):
-            consistency_pack = (
-                scene.get("scene_consistency_pack", {})
-                if isinstance(scene.get("scene_consistency_pack", {}), dict)
-                else {}
-            )
-            location_lock = (
-                consistency_pack.get("location_lock", {})
-                if isinstance(consistency_pack.get("location_lock", {}), dict)
-                else {}
-            )
-            style_lock = (
-                consistency_pack.get("style_lock", {})
-                if isinstance(consistency_pack.get("style_lock", {}), dict)
-                else {}
-            )
             for shot in scene.get("shots", []):
                 shot_id = shot.get("shot_id", "")
                 if not shot_id:
                     continue
-                inputs: list[dict[str, str]] = []
                 for kf in shot.get("keyframes", []):
                     image_asset = kf.get("image_asset", {})
                     uri = self._normalize_local_path(image_asset.get("uri", ""))
                     prompt_summary = str(kf.get("prompt_summary", "")).strip()
-                    if uri or prompt_summary:
-                        inputs.append(
-                            {
-                                "uri": uri,
-                                "prompt_summary": prompt_summary,
-                            }
-                        )
-                if inputs:
-                    index[shot_id] = inputs
+                    video_motion_hint = str(kf.get("video_motion_hint", "") or "").strip()
+                    if not uri and not prompt_summary:
+                        continue
+                    index[shot_id] = [
+                        {
+                            "uri": uri,
+                            "prompt_summary": prompt_summary,
+                            "video_motion_hint": video_motion_hint,
+                        }
+                    ]
+                    break
+
         return index
 
-    def _build_storyboard_shot_index(self, input_bundle_v2: InputBundleV2) -> dict[str, dict[str, Any]]:
-        """Build shot_id -> storyboard shot metadata used for clip prompting."""
+    def _build_screenplay_shot_index(self, input_bundle_v2: InputBundleV2) -> dict[str, dict[str, Any]]:
+        """Build shot_id -> screenplay shot metadata used for clip prompting."""
         index: dict[str, dict[str, Any]] = {}
-        storyboard = self._resolved_inputs(input_bundle_v2).get("storyboard", {})
-        content = storyboard.get("content", {}) if isinstance(storyboard, dict) else {}
+        screenplay = self._resolved_inputs(input_bundle_v2).get("screenplay", {})
+        content = screenplay.get("content", {}) if isinstance(screenplay, dict) else {}
         for scene in content.get("scenes", []):
             consistency_pack = (
                 scene.get("scene_consistency_pack", {})
@@ -193,12 +268,15 @@ class VideoMaterializer(BaseMaterializer):
         shot_id: str,
         prompt_summaries: list[str],
         storyboard_shot: dict[str, Any],
+        *,
+        video_motion_hints: list[str] | None = None,
     ) -> dict[str, Any]:
         """Build model-facing structured consistency constraints for one shot."""
+        vmh = list(video_motion_hints) if video_motion_hints else []
         return {
             "shot_id": shot_id,
             "consistency_type": "entity_anchor_constraints",
-            "keyframe_role": "stability_and_consistency_only",
+            "keyframe_role": "shot_still_l3_only",
             "characters_in_frame": storyboard_shot.get("characters_in_frame", []),
             "scene_context": {
                 "scene_id": storyboard_shot.get("scene_id", ""),
@@ -217,6 +295,7 @@ class VideoMaterializer(BaseMaterializer):
             },
             "storyboard_keyframe_notes": storyboard_shot.get("keyframe_notes", []),
             "keyframe_prompt_summaries": prompt_summaries,
+            "keyframe_video_motion_hints": vmh,
         }
 
     @staticmethod
@@ -224,13 +303,26 @@ class VideoMaterializer(BaseMaterializer):
         shot_id: str,
         prompt_summaries: list[str],
         storyboard_shot: dict[str, Any],
+        *,
+        anchor_image_count: int,
+        omit_scene_tone_blocks: bool = False,
     ) -> str:
-        """Compose a concise, task-first shot prompt for video generation."""
+        """Compose a concise, task-first shot prompt for video generation.
+
+        When ``omit_scene_tone_blocks`` is True (used with a non-empty
+        ``video_motion_hint`` prefix), environment/style/must_avoid lines are
+        omitted — they duplicate the L3 still + motion prefix for I2V.
+        """
         parts: list[str] = [f"Shot {shot_id}"]
-        parts.append(
-            "Keyframe policy: keyframe anchors are for stability/consistency only "
-            "(identity, props state, scene look), not additional story actions."
-        )
+        if omit_scene_tone_blocks:
+            parts.append(
+                "Ref: one L3 still for look; motion from text prefix + below."
+            )
+        else:
+            parts.append(
+                "Visual reference: a single Layer-3 shot still (composition, cast, props); "
+                "use it for look consistency only — motion/timing follow this text prompt."
+            )
         shot_type = storyboard_shot.get("shot_type", "")
         if shot_type:
             parts.append(f"Type: {shot_type}")
@@ -253,13 +345,13 @@ class VideoMaterializer(BaseMaterializer):
                 scene_context_bits.append(f"time_of_day={scene_time_of_day}")
             parts.append("Scene context: " + ", ".join(scene_context_bits))
         scene_environment_notes = storyboard_shot.get("scene_environment_notes", [])
-        if scene_environment_notes:
+        if not omit_scene_tone_blocks and scene_environment_notes:
             parts.append("Scene environment notes: " + " || ".join(scene_environment_notes))
         scene_style_notes = storyboard_shot.get("scene_style_notes", [])
-        if scene_style_notes:
+        if not omit_scene_tone_blocks and scene_style_notes:
             parts.append("Scene style notes: " + " || ".join(scene_style_notes))
         scene_must_avoid = storyboard_shot.get("scene_must_avoid", [])
-        if scene_must_avoid:
+        if not omit_scene_tone_blocks and scene_must_avoid:
             parts.append("Scene must avoid: " + " || ".join(scene_must_avoid))
         camera_angle = storyboard_shot.get("camera_angle", "")
         camera_movement = storyboard_shot.get("camera_movement", "")
@@ -273,18 +365,19 @@ class VideoMaterializer(BaseMaterializer):
         framing_notes = storyboard_shot.get("framing_notes", "")
         if framing_notes:
             parts.append(f"Framing notes: {framing_notes}")
-        keyframe_count = max(len(prompt_summaries), len(storyboard_shot.get("keyframe_notes", [])))
-        parts.append(f"Anchor images: {keyframe_count}")
-        if action_focus:
+        parts.append(f"Anchor images: {anchor_image_count}")
+        if action_focus and not omit_scene_tone_blocks:
             parts.append("Task focus: in this scene, complete this shot action: " + action_focus)
         return " | ".join(parts)
 
     @staticmethod
     def _load_keyframe_images_with_prompts(
         keyframe_inputs: list[dict[str, str]],
-    ) -> tuple[list[bytes], list[str]]:
+    ) -> tuple[list[bytes], list[str], list[str]]:
+        """Load L3 PNGs plus parallel ``prompt_summary`` / ``video_motion_hint`` lists."""
         images: list[bytes] = []
         prompt_summaries: list[str] = []
+        video_motion_hints: list[str] = []
         for item in keyframe_inputs:
             uri = item.get("uri", "")
             if not uri or not os.path.isfile(uri):
@@ -292,13 +385,16 @@ class VideoMaterializer(BaseMaterializer):
             try:
                 with open(uri, "rb") as fh:
                     images.append(fh.read())
-                prompt_summary = item.get("prompt_summary", "")
-                if prompt_summary:
-                    prompt_summaries.append(prompt_summary)
+                ps = str(item.get("prompt_summary", "") or "")
+                vmh = str(item.get("video_motion_hint", "") or "").strip()
+                if ps.strip():
+                    prompt_summaries.append(ps)
+                else:
+                    prompt_summaries.append("")
+                video_motion_hints.append(vmh)
             except Exception:
-                # Skip bad inputs and let backend fall back gracefully.
                 continue
-        return images, prompt_summaries
+        return images, prompt_summaries, video_motion_hints
 
     async def materialize(
         self,
@@ -320,7 +416,7 @@ class VideoMaterializer(BaseMaterializer):
         content = asset_dict.get("content", {})
         scene_bytes_list: list[bytes] = []
         shot_keyframe_inputs = self._build_shot_keyframe_inputs_index(input_bundle_v2)
-        storyboard_shot_index = self._build_storyboard_shot_index(input_bundle_v2)
+        screenplay_shot_index = self._build_screenplay_shot_index(input_bundle_v2)
 
         for scene in content.get("scenes", []):
             scene_id = scene.get("scene_id", "")
@@ -331,18 +427,44 @@ class VideoMaterializer(BaseMaterializer):
                 video_asset = seg.get("video_asset", {})
                 sys_vid_id = f"clip_{shot_id}"
                 video_asset["asset_id"] = sys_vid_id
-                keyframe_images, prompt_summaries = self._load_keyframe_images_with_prompts(
+                (
+                    keyframe_images,
+                    prompt_summaries,
+                    video_motion_hints,
+                ) = self._load_keyframe_images_with_prompts(
                     shot_keyframe_inputs.get(shot_id, [])
                 )
+                if not keyframe_images:
+                    logger.error(
+                        "Video clip skipped for %s: missing on-disk L3 shot keyframe",
+                        shot_id,
+                    )
+                    continue
+
+                vmh0 = str(video_motion_hints[0]).strip() if video_motion_hints else ""
+                motion_active = bool(vmh0)
                 clip_prompt = self._build_clip_prompt(
                     shot_id=shot_id,
                     prompt_summaries=prompt_summaries,
-                    storyboard_shot=storyboard_shot_index.get(shot_id, {}),
+                    storyboard_shot=screenplay_shot_index.get(shot_id, {}),
+                    anchor_image_count=len(keyframe_images),
+                    omit_scene_tone_blocks=motion_active,
                 )
+                if motion_active:
+                    clip_prompt = vmh0 + " | " + clip_prompt
+
                 structured_constraints = self._build_structured_constraints(
                     shot_id=shot_id,
                     prompt_summaries=prompt_summaries,
-                    storyboard_shot=storyboard_shot_index.get(shot_id, {}),
+                    storyboard_shot=screenplay_shot_index.get(shot_id, {}),
+                    video_motion_hints=video_motion_hints,
+                )
+
+                seg["video_generation_prompt"] = clip_prompt
+                seg["video_generation_constraints_json"] = (
+                    json.dumps(structured_constraints, ensure_ascii=False)
+                    if structured_constraints
+                    else ""
                 )
 
                 try:

@@ -28,7 +28,6 @@ def build_input(
     )
     return AudioAgentInput(
         screenplay=resolved.get("screenplay", {}),
-        storyboard=resolved.get("storyboard", {}),
         video=resolved.get("video", {}),
     )
 
@@ -39,7 +38,7 @@ def materializer_factory(services: dict[str, Any]) -> AudioMaterializer:
 
 CATALOG_ENTRY = (
     "AudioAgent\n"
-    "  - Input: screenplay + storyboard + video\n"
+    "  - Input: screenplay + video\n"
     "  - Output: audio_package (narration, music, ambience, scene mix, final audio)\n"
     "  - Purpose: Plan audio aligned with video timing."
 )

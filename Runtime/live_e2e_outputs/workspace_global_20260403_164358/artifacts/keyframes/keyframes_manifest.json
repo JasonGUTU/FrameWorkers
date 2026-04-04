@@ -1,0 +1,283 @@
+{
+  "schema_version": "1.0",
+  "role": "keyframes_manifest",
+  "task_id": "task_1_ab353b24",
+  "execution_id": "exec_4_a006b719",
+  "items": [
+    {
+      "path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_164358/artifacts/media/KeyFrameAgent/image/img_char_001_global.png",
+      "sys_id": "char_001",
+      "entity_id": "char_001",
+      "entity_type": "character",
+      "layer": "global_character",
+      "scene_id": "",
+      "shot_id": "",
+      "kf_index": 0,
+      "order": 0
+    },
+    {
+      "path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_164358/artifacts/media/KeyFrameAgent/image/img_loc_001_global.png",
+      "sys_id": "loc_001",
+      "entity_id": "loc_001",
+      "entity_type": "location",
+      "layer": "global_location",
+      "scene_id": "",
+      "shot_id": "",
+      "kf_index": 0,
+      "order": 0
+    },
+    {
+      "path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_164358/artifacts/media/KeyFrameAgent/image/img_char_001_sc_001.png",
+      "sys_id": "char_001",
+      "entity_id": "char_001",
+      "entity_type": "character",
+      "layer": "scene_character",
+      "scene_id": "sc_001",
+      "shot_id": "",
+      "kf_index": 0,
+      "order": 0
+    },
+    {
+      "path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_164358/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_001.png",
+      "sys_id": "loc_001",
+      "entity_id": "loc_001",
+      "entity_type": "location",
+      "layer": "scene_location",
+      "scene_id": "sc_001",
+      "shot_id": "",
+      "kf_index": 0,
+      "order": 0
+    },
+    {
+      "path": "placeholder",
+      "sys_id": "kf_001",
+      "entity_id": "",
+      "entity_type": "shot_keyframe",
+      "layer": "shot",
+      "scene_id": "sc_001",
+      "shot_id": "sh_001",
+      "kf_index": 1,
+      "order": 1
+    },
+    {
+      "path": "placeholder",
+      "sys_id": "kf_002",
+      "entity_id": "",
+      "entity_type": "shot_keyframe",
+      "layer": "shot",
+      "scene_id": "sc_001",
+      "shot_id": "sh_002",
+      "kf_index": 1,
+      "order": 1
+    },
+    {
+      "path": "placeholder",
+      "sys_id": "kf_003",
+      "entity_id": "",
+      "entity_type": "shot_keyframe",
+      "layer": "shot",
+      "scene_id": "sc_001",
+      "shot_id": "sh_003",
+      "kf_index": 1,
+      "order": 1
+    },
+    {
+      "path": "placeholder",
+      "sys_id": "kf_004",
+      "entity_id": "",
+      "entity_type": "shot_keyframe",
+      "layer": "shot",
+      "scene_id": "sc_001",
+      "shot_id": "sh_003",
+      "kf_index": 2,
+      "order": 2
+    },
+    {
+      "path": "placeholder",
+      "sys_id": "kf_005",
+      "entity_id": "",
+      "entity_type": "shot_keyframe",
+      "layer": "shot",
+      "scene_id": "sc_001",
+      "shot_id": "sh_004",
+      "kf_index": 1,
+      "order": 1
+    },
+    {
+      "path": "placeholder",
+      "sys_id": "kf_006",
+      "entity_id": "",
+      "entity_type": "shot_keyframe",
+      "layer": "shot",
+      "scene_id": "sc_001",
+      "shot_id": "sh_004",
+      "kf_index": 2,
+      "order": 2
+    },
+    {
+      "path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_164358/artifacts/media/KeyFrameAgent/image/img_char_001_sc_002.png",
+      "sys_id": "char_001",
+      "entity_id": "char_001",
+      "entity_type": "character",
+      "layer": "scene_character",
+      "scene_id": "sc_002",
+      "shot_id": "",
+      "kf_index": 0,
+      "order": 0
+    },
+    {
+      "path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_164358/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_002.png",
+      "sys_id": "loc_001",
+      "entity_id": "loc_001",
+      "entity_type": "location",
+      "layer": "scene_location",
+      "scene_id": "sc_002",
+      "shot_id": "",
+      "kf_index": 0,
+      "order": 0
+    },
+    {
+      "path": "placeholder",
+      "sys_id": "kf_007",
+      "entity_id": "",
+      "entity_type": "shot_keyframe",
+      "layer": "shot",
+      "scene_id": "sc_002",
+      "shot_id": "sh_005",
+      "kf_index": 1,
+      "order": 1
+    },
+    {
+      "path": "placeholder",
+      "sys_id": "kf_008",
+      "entity_id": "",
+      "entity_type": "shot_keyframe",
+      "layer": "shot",
+      "scene_id": "sc_002",
+      "shot_id": "sh_006",
+      "kf_index": 1,
+      "order": 1
+    },
+    {
+      "path": "placeholder",
+      "sys_id": "kf_009",
+      "entity_id": "",
+      "entity_type": "shot_keyframe",
+      "layer": "shot",
+      "scene_id": "sc_002",
+      "shot_id": "sh_007",
+      "kf_index": 1,
+      "order": 1
+    },
+    {
+      "path": "placeholder",
+      "sys_id": "kf_010",
+      "entity_id": "",
+      "entity_type": "shot_keyframe",
+      "layer": "shot",
+      "scene_id": "sc_002",
+      "shot_id": "sh_008",
+      "kf_index": 1,
+      "order": 1
+    },
+    {
+      "path": "placeholder",
+      "sys_id": "kf_011",
+      "entity_id": "",
+      "entity_type": "shot_keyframe",
+      "layer": "shot",
+      "scene_id": "sc_002",
+      "shot_id": "sh_008",
+      "kf_index": 2,
+      "order": 2
+    },
+    {
+      "path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_164358/artifacts/media/KeyFrameAgent/image/img_char_001_sc_003.png",
+      "sys_id": "char_001",
+      "entity_id": "char_001",
+      "entity_type": "character",
+      "layer": "scene_character",
+      "scene_id": "sc_003",
+      "shot_id": "",
+      "kf_index": 0,
+      "order": 0
+    },
+    {
+      "path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_164358/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_003.png",
+      "sys_id": "loc_001",
+      "entity_id": "loc_001",
+      "entity_type": "location",
+      "layer": "scene_location",
+      "scene_id": "sc_003",
+      "shot_id": "",
+      "kf_index": 0,
+      "order": 0
+    },
+    {
+      "path": "placeholder",
+      "sys_id": "kf_012",
+      "entity_id": "",
+      "entity_type": "shot_keyframe",
+      "layer": "shot",
+      "scene_id": "sc_003",
+      "shot_id": "sh_009",
+      "kf_index": 1,
+      "order": 1
+    },
+    {
+      "path": "placeholder",
+      "sys_id": "kf_013",
+      "entity_id": "",
+      "entity_type": "shot_keyframe",
+      "layer": "shot",
+      "scene_id": "sc_003",
+      "shot_id": "sh_010",
+      "kf_index": 1,
+      "order": 1
+    },
+    {
+      "path": "placeholder",
+      "sys_id": "kf_014",
+      "entity_id": "",
+      "entity_type": "shot_keyframe",
+      "layer": "shot",
+      "scene_id": "sc_003",
+      "shot_id": "sh_011",
+      "kf_index": 1,
+      "order": 1
+    },
+    {
+      "path": "placeholder",
+      "sys_id": "kf_015",
+      "entity_id": "",
+      "entity_type": "shot_keyframe",
+      "layer": "shot",
+      "scene_id": "sc_003",
+      "shot_id": "sh_011",
+      "kf_index": 2,
+      "order": 2
+    },
+    {
+      "path": "placeholder",
+      "sys_id": "kf_016",
+      "entity_id": "",
+      "entity_type": "shot_keyframe",
+      "layer": "shot",
+      "scene_id": "sc_003",
+      "shot_id": "sh_012",
+      "kf_index": 1,
+      "order": 1
+    },
+    {
+      "path": "placeholder",
+      "sys_id": "kf_017",
+      "entity_id": "",
+      "entity_type": "shot_keyframe",
+      "layer": "shot",
+      "scene_id": "sc_003",
+      "shot_id": "sh_012",
+      "kf_index": 2,
+      "order": 2
+    }
+  ]
+}

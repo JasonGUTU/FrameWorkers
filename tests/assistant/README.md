@@ -25,10 +25,10 @@ This directory contains end-to-end HTTP tests for the backend assistant APIs.
   payload handling against a real model provider.
 - `test_full_pipeline_live_http_flow_generates_about_one_minute_video`:
   runs a full live pipeline over HTTP (`StoryAgent` -> `ScreenplayAgent` ->
-  `StoryboardAgent` -> `KeyFrameAgent` -> `VideoAgent` -> `AudioAgent`) from
+  `KeyFrameAgent` -> `VideoAgent` -> `AudioAgent`) from
   a draft idea and validates final duration is near one minute. To reduce media
   cost/latency while keeping end-to-end flow real, the test can trim generated
-  screenplay/storyboard before media agents.
+  screenplay before media agents (helper `_trim_screenplay_for_media_agents`).
 
 ## Running live LLM test
 

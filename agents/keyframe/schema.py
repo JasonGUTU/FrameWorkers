@@ -18,20 +18,34 @@ class KeyframeConstraintsApplied(BaseModel):
 
 
 class Keyframe(BaseModel):
-    """A single generated keyframe image for a shot."""
+    """A single generated keyframe image for a shot.
+
+    ``prompt_summary`` is for **image** APIs only (L3 still). ``video_motion_hint``
+    is for **image-to-video** text: subtle motion / temporal intent, kept separate
+    to avoid duplicating long still descriptions in the video model prompt.
+    """
 
     keyframe_id: str = ""
     order: int = 0
     image_asset: ImageAsset = Field(default_factory=ImageAsset)
     prompt_summary: str = Field("", json_schema_extra={"creative": True})
+    video_motion_hint: str = Field(
+        "",
+        json_schema_extra={"creative": True},
+        description="Short I2V motion cue; not sent to image generation.",
+    )
+    # Filled by KeyframeMaterializer: exact string sent to the image API (incl. style suffix).
+    image_generation_prompt: str = ""
+    # Filled in-process for skeleton consistency; not read by KeyframeMaterializer or Video.
+    # Excluded from model_dump → smaller workspace JSON, no change to image/video prompts.
     constraints_applied: KeyframeConstraintsApplied = Field(
-        default_factory=KeyframeConstraintsApplied
+        default_factory=KeyframeConstraintsApplied,
+        exclude=True,
     )
 
 
 class ShotKeyframeSource(BaseModel):
-    storyboard_shot_id: str = ""
-    linked_blocks: list[str] = Field(default_factory=list)
+    source_shot_id: str = ""
 
 
 class ShotKeyframes(BaseModel):
@@ -53,11 +67,13 @@ class StabilityAnchorKeyframe(BaseModel):
 
     entity_type: str = ""  # character | location | prop
     entity_id: str = ""  # char_001, loc_001, prop_001
-    display_name: str = ""  # human-readable name (props only)
-    purpose: str = ""
+    # Skeleton / audit only; materializer ignores. Omitted from persisted JSON.
+    display_name: str = Field(default="", exclude=True)
+    purpose: str = Field(default="", exclude=True)
     keyframe_id: str = ""
     image_asset: ImageAsset = Field(default_factory=ImageAsset)
     prompt_summary: str = Field("", json_schema_extra={"creative": True})
+    image_generation_prompt: str = ""
 
 
 class StabilityKeyframes(BaseModel):
@@ -67,8 +83,8 @@ class StabilityKeyframes(BaseModel):
 
 
 class KeyframeSceneSource(BaseModel):
-    storyboard_asset_id: str = ""
-    storyboard_scene_id: str = ""
+    screenplay_asset_id: str = ""
+    screenplay_scene_id: str = ""
 
 
 class KeyframeScene(BaseModel):
@@ -124,7 +140,7 @@ class KeyframeConstraints(BaseModel):
 class KeyFrameAgentInput(BaseModel):
     """Input payload for KeyFrameAgent."""
 
-    storyboard: dict = Field(default_factory=dict)
+    screenplay: dict = Field(default_factory=dict)
     constraints: KeyframeConstraints = Field(default_factory=KeyframeConstraints)
 
 

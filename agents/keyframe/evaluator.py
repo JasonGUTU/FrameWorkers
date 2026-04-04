@@ -5,9 +5,10 @@ All three layers:
 Layer 1 -- structural checks:
   - Global anchor completeness
   - Scene stability_keyframes reference global anchors
-  - Upstream cross-check (scene/shot IDs match storyboard)
+  - Upstream cross-check (scene/shot IDs match screenplay)
   - Every shot has at least 1 keyframe
-  - Every prompt_summary is non-empty
+  - Every prompt_summary is non-empty (anchors + L3)
+  - Every L3 keyframe has non-empty video_motion_hint
   - Metrics consistency (scene_count, shot_count, keyframe_count_total)
   - Required content
 
@@ -16,7 +17,8 @@ Layer 2 -- creative assessment:
   - overall_visual_quality: prompt descriptions are specific enough
 
 Layer 3 -- post-materialization asset checks:
-  - image_generation_success: success rate across all layers
+  - image_generation_success: success rate for **global + scene stability** images
+    (shot keyframe PNGs are not materialized; excluded from counts)
   - image_format_compliance: (TODO) file header / resolution check
   - visual_consistency: (TODO) vision-model cross-layer comparison
 """
@@ -38,9 +40,9 @@ class KeyframeEvaluator(BaseEvaluator[KeyFrameAgentOutput]):
     ]
 
     def _build_creative_context(self, output, input_bundle_v2):
-        sb_data = (input_bundle_v2 or {}).get("storyboard", {})
-        if sb_data:
-            return f"Storyboard:\n{json.dumps(sb_data, ensure_ascii=False, indent=2)}"
+        sp_data = (input_bundle_v2 or {}).get("screenplay", {})
+        if sp_data:
+            return f"Screenplay:\n{json.dumps(sp_data, ensure_ascii=False, indent=2)}"
         return ""
 
     # ------------------------------------------------------------------
@@ -89,28 +91,28 @@ class KeyframeEvaluator(BaseEvaluator[KeyFrameAgentOutput]):
                         f"prop '{p.entity_id}' not in global_anchors"
                     )
 
-        # --- Upstream cross-check: scene/shot IDs must match storyboard ---
-        if input_bundle_v2 and "storyboard" in input_bundle_v2:
-            sb_content = input_bundle_v2["storyboard"].get("content", {})
-            sb_scene_ids = {
-                s.get("scene_id", "") for s in sb_content.get("scenes", [])
+        # --- Upstream cross-check: scene/shot IDs must match screenplay ---
+        if input_bundle_v2 and "screenplay" in input_bundle_v2:
+            sp_content = input_bundle_v2["screenplay"].get("content", {})
+            sp_scene_ids = {
+                s.get("scene_id", "") for s in sp_content.get("scenes", [])
             }
             kf_scene_ids = {s.scene_id for s in c.scenes}
             self._check_id_coverage(
-                errors, "keyframes vs storyboard scenes",
-                sb_scene_ids, kf_scene_ids,
+                errors, "keyframes vs screenplay scenes",
+                sp_scene_ids, kf_scene_ids,
             )
 
-            sb_shot_ids: set[str] = set()
-            for sb_scene in sb_content.get("scenes", []):
-                for shot in sb_scene.get("shots", []):
-                    sb_shot_ids.add(shot.get("shot_id", ""))
+            sp_shot_ids: set[str] = set()
+            for sp_scene in sp_content.get("scenes", []):
+                for shot in sp_scene.get("shots", []):
+                    sp_shot_ids.add(shot.get("shot_id", ""))
             kf_shot_ids = {
                 shot.shot_id for scene in c.scenes for shot in scene.shots
             }
             self._check_id_coverage(
-                errors, "keyframes vs storyboard shots",
-                sb_shot_ids, kf_shot_ids,
+                errors, "keyframes vs screenplay shots",
+                sp_shot_ids, kf_shot_ids,
             )
 
         # --- Every shot must have at least 1 keyframe ---
@@ -142,6 +144,11 @@ class KeyframeEvaluator(BaseEvaluator[KeyFrameAgentOutput]):
                             f"shot {shot.shot_id} keyframe {kf.keyframe_id} "
                             f"has empty prompt_summary"
                         )
+                    if not (kf.video_motion_hint or "").strip():
+                        errors.append(
+                            f"shot {shot.shot_id} keyframe {kf.keyframe_id} "
+                            f"has empty video_motion_hint"
+                        )
 
         # --- Metrics consistency ---
         self._check_metric(errors, "scene_count", output.metrics.scene_count, len(c.scenes))
@@ -166,7 +173,7 @@ class KeyframeEvaluator(BaseEvaluator[KeyFrameAgentOutput]):
         asset_data: dict[str, Any],
         input_bundle_v2: Mapping[str, Any] | None = None,
     ) -> dict[str, Any]:
-        """Check that the three-layer image pipeline produced actual images."""
+        """Check L1/L2 anchors and L3 per-shot stills exist on disk."""
         content = asset_data.get("content", {})
         scenes = content.get("scenes", [])
         global_anchors = content.get("global_anchors", {})
@@ -207,10 +214,10 @@ class KeyframeEvaluator(BaseEvaluator[KeyFrameAgentOutput]):
                     elif status == "error":
                         total_error += 1
 
-        # --- Layer 3: shot keyframes ---
+        # --- Layer 3: one PNG per shot ---
         for scene in scenes:
-            for shot in scene.get("shots", []):
-                for kf in shot.get("keyframes", []):
+            for shot in scene.get("shots", []) or []:
+                for kf in shot.get("keyframes", []) or []:
                     uri = kf.get("image_asset", {}).get("uri", "")
                     total_planned += 1
                     status = check_uri(uri)

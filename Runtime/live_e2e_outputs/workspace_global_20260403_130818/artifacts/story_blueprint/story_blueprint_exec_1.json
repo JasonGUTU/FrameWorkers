@@ -1,0 +1,94 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-03T13:08:31.764656+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A retired watchmaker races against the final ten seconds before midnight to repair his late wife's cherished pocket watch, seeking a moment of peace and connection as the new year begins.",
+    "estimated_duration": {
+      "seconds": 10.0,
+      "confidence": 0.7
+    },
+    "style": {
+      "genre": [
+        "Drama",
+        "Poignant Short"
+      ],
+      "tone_keywords": [
+        "Hopeful",
+        "Nostalgic",
+        "Tense",
+        "Sentimental"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Arthur Finch",
+        "role": "protagonist",
+        "profile": "A skilled, elderly watchmaker, recently retired, haunted by the loss of his beloved wife. He carries a quiet dignity but also a deep sorrow.",
+        "motivation": "To successfully repair his late wife's cherished pocket watch by the stroke of midnight, symbolizing a moment of personal closure and a continued connection to her memory.",
+        "flaw": "His profound grief makes it difficult for him to fully move on, causing him to cling to tangible memories and past routines."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Arthur's Workshop/Home",
+        "description": "A cozy, dimly lit corner within Arthur's home, serving as his watchmaking workshop. It's cluttered with intricate tools, tiny gears, spare parts, and personal mementos. A grandfather clock prominently displays the time, nearing midnight."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Arthur is at his workbench, struggling with a delicate part of his wife's pocket watch. The grandfather clock looms, showing mere seconds until midnight.",
+        "conflict": "External: The extreme pressure of time running out. Internal: His grief and the emotional significance of the repair threaten to overwhelm his focus.",
+        "turning_point": "The clock's chimes begin, signaling the final ten seconds, intensifying the urgency."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "crisis",
+        "summary": "Arthur frantically tries to place a microscopic component into the watch's mechanism as the seconds tick down, his hands trembling slightly.",
+        "conflict": "External: The precision required versus the speed demanded by the ticking clock. Internal: The fear of failure, of not completing this final act of devotion.",
+        "turning_point": "He manages to secure the component just as the final second approaches, holding his breath as he closes the watch."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "resolution",
+        "summary": "As the grandfather clock strikes midnight, the repaired pocket watch gives a gentle, satisfying tick, and Arthur looks up with a small, peaceful smile.",
+        "conflict": "Internal: The lingering sadness and the struggle to find peace are momentarily overcome by a sense of accomplishment and connection.",
+        "turning_point": "The watch's successful operation, synchronized with the New Year's arrival, provides Arthur with a moment of serene emotional release and hope."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "For Arthur to repair his late wife's pocket watch before the new year officially begins, symbolizing a personal act of remembrance and seeking emotional peace.",
+        "conflict": "Arthur battles the rapidly diminishing seconds, the delicate nature of the watch repair, and his personal grief, all intensifying the pressure to succeed.",
+        "turn": "The watch ticks to life precisely as the grandfather clock strikes midnight, bringing a profound sense of quiet accomplishment and a moment of solace to Arthur."
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "character_count": 1,
+    "location_count": 1,
+    "scene_count": 1
+  }
+}

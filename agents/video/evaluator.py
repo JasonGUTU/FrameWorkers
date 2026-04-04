@@ -3,7 +3,7 @@
 All three layers:
 
 Layer 1 -- structural checks:
-  - Upstream cross-check (scene/shot IDs match storyboard)
+  - Upstream cross-check (scene/shot IDs match screenplay)
   - Transition plan from/to shot_ids exist in scene
   - Metrics consistency (scene_count, shot_segment_count)
   - Shot order continuity per scene
@@ -46,29 +46,29 @@ class VideoEvaluator(BaseEvaluator[VideoAgentOutput]):
         errors: list[str] = []
         c = output.content
 
-        # --- Upstream cross-check: scene/shot IDs must match storyboard ---
-        if input_bundle_v2 and "storyboard" in input_bundle_v2:
-            sb_content = input_bundle_v2["storyboard"].get("content", {})
-            sb_scene_ids = {
-                s.get("scene_id", "") for s in sb_content.get("scenes", [])
+        # --- Upstream cross-check: scene/shot IDs must match screenplay ---
+        if input_bundle_v2 and "screenplay" in input_bundle_v2:
+            sp_content = input_bundle_v2["screenplay"].get("content", {})
+            sp_scene_ids = {
+                s.get("scene_id", "") for s in sp_content.get("scenes", [])
             }
             vid_scene_ids = {s.scene_id for s in c.scenes}
             self._check_id_coverage(
-                errors, "video vs storyboard scenes",
-                sb_scene_ids, vid_scene_ids,
+                errors, "video vs screenplay scenes",
+                sp_scene_ids, vid_scene_ids,
             )
 
-            sb_shot_ids: set[str] = set()
-            for sb_scene in sb_content.get("scenes", []):
-                for shot in sb_scene.get("shots", []):
-                    sb_shot_ids.add(shot.get("shot_id", ""))
+            sp_shot_ids: set[str] = set()
+            for sp_scene in sp_content.get("scenes", []):
+                for shot in sp_scene.get("shots", []):
+                    sp_shot_ids.add(shot.get("shot_id", ""))
             vid_shot_ids = {
                 seg.shot_id for scene in c.scenes
                 for seg in scene.shot_segments
             }
             self._check_id_coverage(
-                errors, "video vs storyboard shots",
-                sb_shot_ids, vid_shot_ids,
+                errors, "video vs screenplay shots",
+                sp_shot_ids, vid_shot_ids,
             )
 
         # --- Transition plan: from/to shot_ids must exist in the scene ---

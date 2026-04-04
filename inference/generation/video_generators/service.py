@@ -14,7 +14,18 @@ from typing import Any
 
 import httpx
 
-from ..fal_helpers import fal_subscribe, http_download_bytes, require_fal_model_var
+from ..fal_helpers import (
+    ensure_fal_runtime_env_loaded,
+    fal_subscribe,
+    http_download_bytes,
+    require_fal_model_var,
+)
+from ..wavespeed_predict import (
+    wavespeed_download_video,
+    wavespeed_poll_until_done,
+    wavespeed_submit_image_to_video,
+    wavespeed_submit_text_to_video,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -278,9 +289,11 @@ class FalVideoService(VideoService):
             arguments["duration"] = self._kling_duration_enum(
                 duration_sec if duration_sec > 0 else 5.0
             )
+            kling_dual_anchor = False
             if len(image_data_urls) >= 2 and self._kling_uses_start_end_frame_fields(self.model):
                 arguments["start_image_url"] = image_data_urls[0]
                 arguments["end_image_url"] = image_data_urls[-1]
+                kling_dual_anchor = True
                 logger.info(
                     "[fal.ai] Kling start/end frames for shot=%s (%d anchors -> 2)",
                     shot_id,
@@ -289,6 +302,7 @@ class FalVideoService(VideoService):
             elif len(image_data_urls) >= 2:
                 arguments["image_url"] = image_data_urls[0]
                 arguments["tail_image_url"] = image_data_urls[-1]
+                kling_dual_anchor = True
                 logger.info(
                     "[fal.ai] Kling image_url/tail for shot=%s (%d anchors -> 2)",
                     shot_id,
@@ -299,6 +313,14 @@ class FalVideoService(VideoService):
                     arguments["start_image_url"] = image_data_urls[0]
                 else:
                     arguments["image_url"] = image_data_urls[0]
+            # Kling rejects end_image_url when default generate_audio is on; dual-anchor
+            # calls default to silent video unless caller passes generate_audio explicitly.
+            if kling_dual_anchor:
+                arguments["generate_audio"] = (
+                    bool(kwargs["generate_audio"])
+                    if "generate_audio" in kwargs
+                    else False
+                )
             result = await self._submit(arguments)
         else:
             # Keep common generation knobs optional to maximize model compatibility.
@@ -356,3 +378,105 @@ class FalVideoService(VideoService):
             return direct_url
 
         raise RuntimeError(f"No video URL found in fal.ai response keys={list(result.keys())}")
+
+
+def _wavespeed_duration_int(duration_sec: float) -> int:
+    """Many Seedance-style endpoints accept 5 or 10 second clips."""
+    return 10 if float(duration_sec) > 5.5 else 5
+
+
+class WavespeedVideoService(VideoService):
+    """Video generation via WaveSpeed.ai (UniVA-compatible T2V / I2V endpoints)."""
+
+    def __init__(
+        self,
+        api_key: str | None = None,
+        *,
+        provider: str | None = None,
+        t2v_model: str | None = None,
+        i2v_model: str | None = None,
+        aspect_ratio: str | None = None,
+        timeout: float = 300.0,
+        poll_interval_sec: float = 2.0,
+    ) -> None:
+        ensure_fal_runtime_env_loaded()
+        self._api_key = (api_key or os.getenv("WAVESPEED_API_KEY", "")).strip()
+        if not self._api_key:
+            raise RuntimeError(
+                "WAVESPEED_API_KEY is required for WavespeedVideoService. "
+                "Set it in `.env` (see `.env.example`) or pass api_key=..."
+            )
+        self.provider = (provider or os.getenv("WAVESPEED_VIDEO_PROVIDER", "bytedance")).strip()
+        self.t2v_model = (
+            t2v_model or os.getenv("WAVESPEED_VIDEO_T2V_MODEL", "seedance-v1-pro-t2v-480p")
+        ).strip()
+        self.i2v_model = (
+            i2v_model or os.getenv("WAVESPEED_VIDEO_I2V_MODEL", "seedance-v1-pro-i2v-480p")
+        ).strip()
+        self.aspect_ratio = (
+            aspect_ratio or os.getenv("WAVESPEED_VIDEO_ASPECT_RATIO", "16:9")
+        ).strip()
+        self.timeout = timeout
+        self.poll_interval_sec = poll_interval_sec
+        self._http: httpx.AsyncClient | None = None
+
+    @property
+    def http(self) -> httpx.AsyncClient:
+        if self._http is None or self._http.is_closed:
+            self._http = httpx.AsyncClient(timeout=self.timeout)
+        return self._http
+
+    async def close(self) -> None:
+        if self._http and not self._http.is_closed:
+            await self._http.aclose()
+
+    async def generate_clip(
+        self,
+        *,
+        shot_id: str,
+        keyframe_images: list[bytes],
+        prompt: str,
+        duration_sec: float,
+        fps: int = 24,
+        width: int = 1024,
+        height: int = 576,
+        **kwargs: Any,
+    ) -> bytes:
+        del fps, width, height  # WaveSpeed payload uses fixed profile per model
+        dur = _wavespeed_duration_int(duration_sec if duration_sec > 0 else 5.0)
+        logger.info(
+            "[wavespeed] Generating video shot=%s provider=%s t2v=%s i2v=%s",
+            shot_id,
+            self.provider,
+            self.t2v_model,
+            self.i2v_model,
+        )
+        client = self.http
+        if keyframe_images:
+            request_id = await wavespeed_submit_image_to_video(
+                client,
+                self._api_key,
+                provider=self.provider,
+                model=self.i2v_model,
+                prompt=prompt,
+                image_png_or_jpeg=keyframe_images[0],
+                duration=dur,
+            )
+        else:
+            request_id = await wavespeed_submit_text_to_video(
+                client,
+                self._api_key,
+                provider=self.provider,
+                model=self.t2v_model,
+                prompt=prompt,
+                aspect_ratio=self.aspect_ratio,
+                duration=dur,
+            )
+        out_url = await wavespeed_poll_until_done(
+            client,
+            self._api_key,
+            request_id,
+            poll_interval_sec=self.poll_interval_sec,
+            timeout_sec=self.timeout,
+        )
+        return await wavespeed_download_video(client, out_url)

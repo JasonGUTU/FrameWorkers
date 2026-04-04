@@ -31,6 +31,9 @@ class ShotSegment(BaseModel):
     estimated_duration_sec: float = 3.0
     actual_duration_sec: float = 0.0
     video_asset: VideoAsset = Field(default_factory=VideoAsset)
+    # Filled by VideoMaterializer: main prompt and JSON-serialized consistency_constraints.
+    video_generation_prompt: str = ""
+    video_generation_constraints_json: str = ""
 
 
 class TransitionPlan(BaseModel):
@@ -97,7 +100,7 @@ class VideoConstraints(BaseModel):
 class VideoAgentInput(BaseModel):
     """Input payload for VideoAgent."""
 
-    storyboard: dict = Field(default_factory=dict)
+    screenplay: dict = Field(default_factory=dict)
     keyframes: dict = Field(default_factory=dict)
     constraints: VideoConstraints = Field(default_factory=VideoConstraints)
 

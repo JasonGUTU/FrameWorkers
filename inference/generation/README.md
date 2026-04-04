@@ -9,7 +9,8 @@ Generation 模块提供了统一的接口用于图像、视频和音频生成，
 另外，generation 提供了可复用的媒体服务实现（按模态分目录）：
 
 - `generation/image_generators/service.py`: `ImageService` / `MockImageService`
-- `generation/video_generators/service.py`: `VideoService` / `MockVideoService`
+- `generation/video_generators/service.py`: `VideoService` / `MockVideoService` / `FalVideoService` / `WavespeedVideoService`
+- `generation/wavespeed_predict.py`: WaveSpeed 预测 API 异步客户端（供 `WavespeedVideoService` 使用）
 - `generation/audio_generators/service.py`: `AudioService` / `MockAudioService`
 
 对应注册表：
@@ -29,7 +30,13 @@ Generation 模块提供了统一的接口用于图像、视频和音频生成，
 
 **Fal 模型 ID**：`FalImageService` / `FalVideoService` 的 `FAL_IMAGE_MODEL`、`FAL_VIDEO_MODEL` 仅从环境读取（构造前由 `fal_helpers.ensure_fal_runtime_env_loaded()` 合并仓库根 `.env` 与 `.env.example`，不覆盖已存在的 `os.environ`）。Python 内不再写死默认端点字符串。
 
-fal 视频服务（`FalVideoService`）对 **非 Kling** 模型：多 keyframe 时走 `image_urls`（严格多锚点，不支持则由 fal 报错）。**Kling**（`fal-ai/kling-video/...`）：多图时映射为首尾帧——`v2.6` / `v3` / `o3` 等使用 `start_image_url` + `end_image_url`，其余 Kling 变体使用 `image_url` + `tail_image_url`；`duration` 会收敛为 Kling 常见的 `"5"` / `"10"` 秒枚举。Kling 路径下不会透传 `FAL_VIDEO_STRUCTURED_CONSTRAINTS_FIELD`（避免未知参数导致 400）。
+**WaveSpeed 视频**：`WavespeedVideoService` 使用同一套 `.env` 合并逻辑读取 **`WAVESPEED_API_KEY`**、**`WAVESPEED_VIDEO_PROVIDER`**、**`WAVESPEED_VIDEO_T2V_MODEL`**、**`WAVESPEED_VIDEO_I2V_MODEL`**、**`WAVESPEED_VIDEO_ASPECT_RATIO`**。`generate_clip` 在无 keyframe 时走 T2V，有 keyframe 时对 **第一张** 图走 I2V（与 UniVA Seedance 风格一致）。VideoAgent 通过 **`FW_VIDEO_BACKEND=wavespeed`** 选用（见 `agents/video/descriptor.py`）。
+
+fal 视频服务（`FalVideoService`）对 **非 Kling** 模型：多 keyframe 时走 `image_urls`（严格多锚点，不支持则由 fal 报错）。**Kling**（`fal-ai/kling-video/...`）：多图时映射为首尾帧——`v2.6` / `v3` / `o3` 等使用 `start_image_url` + `end_image_url`，其余 Kling 变体使用 `image_url` + `tail_image_url`；`duration` 会收敛为 Kling 常见的 `"5"` / `"10"` 秒枚举。Kling 路径下不会透传 `FAL_VIDEO_STRUCTURED_CONSTRAINTS_FIELD`（避免未知参数导致 400）。**单图**时上述 Kling 路径只填 start（或 `image_url`）。**双锚点**（首尾或 image/tail）时默认设置 `generate_audio: false`，否则 fal 在启用口型/音频生成时不接受 `end_image_url`；若需在双帧下开音频，可显式传入 `generate_clip(..., generate_audio=True)`（以当前端点能力为准）。
+
+**管线**：`agents/video/materializer.py` 对每个 shot 只传 **一张** Layer-3 shot PNG（第一条可读 `keyframes[]`）；无文件则跳过该镜头。**不再**在管线内做 L2 回退或多 keyframe 横向拼接。`VideoMaterializer._merge_keyframe_images_for_video_api` 仅用于 **测试**：把多张 PNG 合成一张并做 Kling 宽高比 letterbox（约 0.4–2.5），避免 `image_aspect_ratio_error`。
+
+**Live 冒烟**（可选）：设 `FW_ENABLE_FAL_VIDEO_MERGED_KEYFRAME_LIVE=1` 跑 `tests/inference/test_fal_kling_merged_keyframe_live.py`：用两张磁盘 PNG 调用上述 **合并 helper** 再 `FalVideoService.generate_clip`（**非**默认 Video 管线路径）。`FalVideoService` 对 Kling 仍保留「多图 → 首尾帧」映射，供直接调用。
 
 另外，`FalVideoService` 支持可选“结构化一致性约束”下沉：
 - 通过环境变量 `FAL_VIDEO_STRUCTURED_CONSTRAINTS_FIELD` 指定目标模型参数名（例如某些模型自定义的 `consistency_constraints`）

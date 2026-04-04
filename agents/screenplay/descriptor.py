@@ -38,8 +38,8 @@ def build_input(
 CATALOG_ENTRY = (
     "ScreenplayAgent\n"
     "  - Input: story_blueprint OR user_screenplay (raw screenplay text)\n"
-    "  - Output: screenplay (scenes -> blocks with dialogue, action, narration)\n"
-    "  - Purpose: Produce a structured screenplay JSON. Structures user text if provided."
+    "  - Output: screenplay (scenes -> shots: script + visual plan + consistency packs)\n"
+    "  - Purpose: Unified screenplay; feeds KeyFrameAgent (no separate storyboard artifact)."
 )
 
 DESCRIPTOR = SubAgentDescriptor(

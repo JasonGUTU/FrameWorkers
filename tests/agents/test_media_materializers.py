@@ -1,14 +1,27 @@
 from __future__ import annotations
 
 import asyncio
+import json
 import os
 import shutil
 import subprocess
 import sys
 import tempfile
+from io import BytesIO
 from pathlib import Path
 
 import pytest
+from PIL import Image
+
+
+def _tiny_png_rgb(
+    w: int = 4,
+    h: int = 4,
+    color: tuple[int, int, int] = (10, 20, 30),
+) -> bytes:
+    buf = BytesIO()
+    Image.new("RGB", (w, h), color=color).save(buf, format="PNG")
+    return buf.getvalue()
 
 
 def _resolve_agents_project_root() -> Path:
@@ -35,7 +48,10 @@ if str(_project_root) not in sys.path:
 
 from agents.audio.materializer import AudioMaterializer
 from agents.contracts import ArtifactRefV2, InputBundleV2
-from agents.keyframe.materializer import KeyframeMaterializer
+from agents.keyframe.materializer import (
+    KeyframeMaterializer,
+    _filter_still_image_must_avoid,
+)
 from agents.video.materializer import VideoMaterializer
 from inference.generation.audio_generators.service import AudioService
 from inference.generation.video_generators.service import FalVideoService
@@ -169,8 +185,8 @@ def test_video_materializer_uses_keyframe_images_for_clip_generation(monkeypatch
     with tempfile.TemporaryDirectory() as tmp_dir:
         kf1 = Path(tmp_dir) / "kf1.png"
         kf2 = Path(tmp_dir) / "kf2.png"
-        kf1.write_bytes(b"kf_image_1")
-        kf2.write_bytes(b"kf_image_2")
+        kf1.write_bytes(_tiny_png_rgb(8, 8, (200, 0, 0)))
+        kf2.write_bytes(_tiny_png_rgb(8, 8, (0, 0, 200)))
 
         video_service = _CaptureVideoService()
         materializer = VideoMaterializer(video_service=video_service)
@@ -194,7 +210,7 @@ def test_video_materializer_uses_keyframe_images_for_clip_generation(monkeypatch
             }
         }
         assets = {
-            "storyboard": {
+            "screenplay": {
                 "content": {
                     "scenes": [
                         {
@@ -251,7 +267,8 @@ def test_video_materializer_uses_keyframe_images_for_clip_generation(monkeypatch
                                     "keyframes": [
                                         {
                                             "image_asset": {"uri": str(kf1)},
-                                            "prompt_summary": "wide establishing frame",
+                                            "prompt_summary": "Still: wide interior, rain, neon reflections.",
+                                            "video_motion_hint": "Slow push-in; hold composition; subtle rain on glass.",
                                         },
                                         {
                                             "image_asset": {"uri": str(kf2)},
@@ -272,25 +289,262 @@ def test_video_materializer_uses_keyframe_images_for_clip_generation(monkeypatch
     assert len(video_service.generate_calls) == 1
     call = video_service.generate_calls[0]
     assert call["shot_id"] == "sh_001"
-    assert call["keyframe_images"] == [b"kf_image_1", b"kf_image_2"]
-    assert "Keyframe policy: keyframe anchors are for stability/consistency only" in call["prompt"]
+    assert len(call["keyframe_images"]) == 1
+    assert call["keyframe_images"][0].startswith(b"\x89PNG\r\n\x1a\n")
+    assert "Ref: one L3 still" in call["prompt"]
     assert "Show the character entering frame." in call["prompt"]
     assert "Character walks in from left." in call["prompt"]
     assert "Characters in frame: char_001" in call["prompt"]
     assert "Scene context: location_id=loc_001, time_of_day=NIGHT" in call["prompt"]
-    assert "Scene environment notes: Rain-soaked street with reflective neon lights." in call["prompt"]
-    assert "Scene style notes: Moody cinematic contrast with cool highlights." in call["prompt"]
-    assert "Scene must avoid: Flat lighting and washed-out colors." in call["prompt"]
+    # With non-empty video_motion_hint, clip body omits env/style/must_avoid (I2V slim path).
+    assert "Scene environment notes:" not in call["prompt"]
+    assert "Scene style notes:" not in call["prompt"]
+    assert "Scene must avoid:" not in call["prompt"]
     assert "Follow the character into center frame." in call["prompt"]
-    assert "Anchor images: 2" in call["prompt"]
-    assert "Task focus: in this scene, complete this shot action: Character walks in from left." in call["prompt"]
+    assert "Anchor images: 1" in call["prompt"]
+    assert "Ref: one L3 still" in call["prompt"]
+    assert "Task focus:" not in call["prompt"]
+    assert call["prompt"].startswith("Slow push-in")
+    assert "Still: wide interior" not in call["prompt"]
     constraints = call["kwargs"].get("consistency_constraints", {})
     assert constraints.get("consistency_type") == "entity_anchor_constraints"
-    assert constraints.get("keyframe_role") == "stability_and_consistency_only"
+    assert constraints.get("keyframe_role") == "shot_still_l3_only"
     assert constraints.get("characters_in_frame") == ["char_001"]
     assert constraints.get("scene_context", {}).get("location_id") == "loc_001"
     assert constraints.get("scene_context", {}).get("time_of_day") == "NIGHT"
-    assert "wide establishing frame" in constraints.get("keyframe_prompt_summaries", [])
+    kps = constraints.get("keyframe_prompt_summaries", [])
+    assert len(kps) == 1
+    assert "still:" in kps[0].lower() or "interior" in kps[0].lower()
+    vmh = constraints.get("keyframe_video_motion_hints", [])
+    assert vmh == ["Slow push-in; hold composition; subtle rain on glass."]
+    seg0 = asset_dict["content"]["scenes"][0]["shot_segments"][0]
+    assert seg0["video_generation_prompt"] == call["prompt"]
+    assert json.loads(seg0["video_generation_constraints_json"]) == constraints
+
+
+def test_video_materializer_empty_motion_hint_no_prefix_keeps_scene_tone(monkeypatch):
+    """No I2V motion prefix: do not use prompt_summary as prefix; keep full clip body."""
+    monkeypatch.setenv("FW_ENABLE_PROP_PIPELINE", "1")
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        kf1 = Path(tmp_dir) / "kf1.png"
+        kf1.write_bytes(_tiny_png_rgb(8, 8, (200, 0, 0)))
+
+        video_service = _CaptureVideoService()
+        materializer = VideoMaterializer(video_service=video_service)
+        asset_dict = {
+            "content": {
+                "scenes": [
+                    {
+                        "scene_id": "sc_001",
+                        "shot_segments": [
+                            {
+                                "shot_id": "sh_001",
+                                "estimated_duration_sec": 2.0,
+                                "video_asset": {"format": "mp4"},
+                            }
+                        ],
+                        "transition_plan": [],
+                        "scene_clip_asset": {"format": "mp4"},
+                    }
+                ],
+                "final_video_asset": {"format": "mp4"},
+            }
+        }
+        assets = {
+            "screenplay": {
+                "content": {
+                    "scenes": [
+                        {
+                            "scene_id": "sc_001",
+                            "scene_consistency_pack": {
+                                "location_lock": {
+                                    "location_id": "loc_001",
+                                    "time_of_day": "DAY",
+                                    "environment_notes": ["Bright daylight studio."],
+                                },
+                                "style_lock": {
+                                    "global_style_notes": ["Clean high-key look."],
+                                    "must_avoid": ["Heavy grain."],
+                                },
+                            },
+                            "shots": [
+                                {
+                                    "shot_id": "sh_001",
+                                    "shot_type": "wide",
+                                    "visual_goal": "Establish space.",
+                                    "action_focus": "Talent idle.",
+                                    "characters_in_frame": [],
+                                    "camera": {"angle": "high", "movement": "static"},
+                                }
+                            ],
+                        }
+                    ]
+                }
+            },
+            "keyframes": {
+                "content": {
+                    "scenes": [
+                        {
+                            "scene_id": "sc_001",
+                            "shots": [
+                                {
+                                    "shot_id": "sh_001",
+                                    "keyframes": [
+                                        {
+                                            "image_asset": {"uri": str(kf1)},
+                                            "prompt_summary": "Still: empty white cyclorama.",
+                                            "video_motion_hint": "",
+                                        },
+                                    ],
+                                }
+                            ],
+                        }
+                    ]
+                }
+            },
+        }
+
+        input_bundle_v2 = _bundle_from_assets("task_vmh_empty", assets)
+        asyncio.run(materializer.materialize("task_vmh_empty", asset_dict, input_bundle_v2))
+
+    assert len(video_service.generate_calls) == 1
+    call = video_service.generate_calls[0]
+    assert call["prompt"].startswith("Shot sh_001")
+    assert "Scene environment notes: Bright daylight studio." in call["prompt"]
+    assert "Scene style notes: Clean high-key look." in call["prompt"]
+    assert "Scene must avoid: Heavy grain." in call["prompt"]
+    assert "Still: empty white cyclorama." not in call["prompt"]
+    assert "Task focus: in this scene, complete this shot action: Talent idle." in call["prompt"]
+    vmh = call["kwargs"].get("consistency_constraints", {}).get(
+        "keyframe_video_motion_hints", []
+    )
+    assert vmh == [""]
+
+
+def test_video_materializer_skips_shot_when_no_l3_keyframe_file(monkeypatch):
+    """Placeholder L3 URI: no VideoService call (L2 is not wired into Video anymore)."""
+    monkeypatch.delenv("FW_ENABLE_PROP_PIPELINE", raising=False)
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        char_path = Path(tmp_dir) / "char_sc.png"
+        loc_path = Path(tmp_dir) / "loc_sc.png"
+        char_path.write_bytes(_tiny_png_rgb(6, 6, (100, 0, 0)))
+        loc_path.write_bytes(_tiny_png_rgb(6, 6, (0, 100, 0)))
+
+        video_service = _CaptureVideoService()
+        materializer = VideoMaterializer(video_service=video_service)
+        asset_dict = {
+            "content": {
+                "scenes": [
+                    {
+                        "scene_id": "sc_001",
+                        "shot_segments": [
+                            {
+                                "shot_id": "sh_001",
+                                "estimated_duration_sec": 2.0,
+                                "video_asset": {"format": "mp4"},
+                            }
+                        ],
+                        "transition_plan": [],
+                        "scene_clip_asset": {"format": "mp4"},
+                    }
+                ],
+                "final_video_asset": {"format": "mp4"},
+            }
+        }
+        assets = {
+            "screenplay": {
+                "content": {
+                    "scenes": [
+                        {
+                            "scene_id": "sc_001",
+                            "scene_consistency_pack": {
+                                "location_lock": {"location_id": "loc_001"},
+                            },
+                            "shots": [
+                                {
+                                    "shot_id": "sh_001",
+                                    "shot_type": "medium",
+                                    "visual_goal": "Establish the room.",
+                                    "action_focus": "Actor stands center.",
+                                    "characters_in_frame": ["char_001"],
+                                    "camera": {},
+                                }
+                            ],
+                        }
+                    ]
+                }
+            },
+            "keyframes": {
+                "content": {
+                    "scenes": [
+                        {
+                            "scene_id": "sc_001",
+                            "stability_keyframes": {
+                                "characters": [
+                                    {
+                                        "entity_id": "char_001",
+                                        "prompt_summary": "scene char",
+                                        "image_asset": {"uri": str(char_path)},
+                                    }
+                                ],
+                                "locations": [
+                                    {
+                                        "entity_id": "loc_001",
+                                        "prompt_summary": "scene loc",
+                                        "image_asset": {"uri": str(loc_path)},
+                                    }
+                                ],
+                            },
+                            "shots": [
+                                {
+                                    "shot_id": "sh_001",
+                                    "keyframes": [
+                                        {
+                                            "image_asset": {"uri": "placeholder"},
+                                            "prompt_summary": "no file",
+                                        }
+                                    ],
+                                }
+                            ],
+                        }
+                    ]
+                }
+            },
+        }
+
+        input_bundle_v2 = _bundle_from_assets("task_l2", assets)
+        asyncio.run(materializer.materialize("task_l2", asset_dict, input_bundle_v2))
+
+    assert video_service.generate_calls == []
+
+
+def test_filter_must_avoid_drops_non_still_image_lines():
+    raw = [
+        "Bright, clinical lighting",
+        "Fast, choppy cuts that obscure the action",
+        "Sudden, unrelated loud noises",
+        "Harsh lighting on the subject",
+    ]
+    got = _filter_still_image_must_avoid(raw)
+    assert got == ["Bright, clinical lighting", "Harsh lighting on the subject"]
+
+
+def test_compose_l2_suffix_omits_visual_style_block():
+    suf = KeyframeMaterializer._compose_style_suffix(
+        ["moody cinematic"],
+        ["neon overload"],
+        include_visual_style=False,
+    )
+    assert "Visual style" not in suf
+    assert "Do NOT use" in suf
+    assert "moody cinematic" not in suf
+
+
+def test_dedupe_preserve_order_normalized_merges_case_and_whitespace():
+    got = KeyframeMaterializer._dedupe_preserve_order_normalized(
+        ["  Noir look  ", "noir look", "NOIR   LOOK", "Other"]
+    )
+    assert got == ["Noir look", "Other"]
 
 
 def test_keyframe_materializer_returns_assets_without_local_progress_snapshots(monkeypatch):
@@ -370,6 +624,15 @@ def test_keyframe_materializer_returns_assets_without_local_progress_snapshots(m
         # Keyframe materializer should not write local progress snapshots.
         assert not run_dir.exists()
 
+        ga_c = asset_dict["content"]["global_anchors"]["characters"][0]
+        assert ga_c["image_generation_prompt"] == "global character prompt"
+        stab_c = asset_dict["content"]["scenes"][0]["stability_keyframes"]["characters"][0]
+        assert stab_c["image_generation_prompt"].startswith("Edit the attached reference")
+        assert "scene character prompt" in stab_c["image_generation_prompt"]
+        kf0 = asset_dict["content"]["scenes"][0]["shots"][0]["keyframes"][0]
+        assert kf0["image_generation_prompt"].startswith("Edit the attached reference")
+        assert "shot prompt" in kf0["image_generation_prompt"]
+
 
 def test_audio_materializer_mixes_final_delivery_video():
     with tempfile.TemporaryDirectory() as tmp_dir:
@@ -424,6 +687,17 @@ def test_audio_materializer_mixes_final_delivery_video():
         input_bundle_v2 = _bundle_from_assets("task_1", assets)
         media_assets = asyncio.run(materializer.materialize("task_1", asset_dict, input_bundle_v2))
 
+        seg = asset_dict["content"]["scenes"][0]["narration_segments"][0]
+        narr_spec = json.loads(seg["audio_generation_prompt"])
+        assert narr_spec["kind"] == "tts"
+        assert narr_spec["text"] == "hello world"
+        mc = asset_dict["content"]["scenes"][0]["music_cue"]
+        music_spec = json.loads(mc["audio_generation_prompt"])
+        assert music_spec["kind"] == "music" and music_spec["mood"] == "calm"
+        amb = asset_dict["content"]["scenes"][0]["ambience_bed"]
+        amb_spec = json.loads(amb["audio_generation_prompt"])
+        assert amb_spec["kind"] == "ambience" and amb_spec["description"] == "wind"
+
     ids = {m.sys_id for m in media_assets}
     assert "aud_final" in ids
     assert "delivery_final" in ids
@@ -464,6 +738,7 @@ def test_fal_video_service_kling_maps_start_end_and_duration_enum():
     assert arg["duration"] == "5"
     assert arg["start_image_url"].startswith("data:image/png;base64,")
     assert arg["end_image_url"].startswith("data:image/png;base64,")
+    assert arg.get("generate_audio") is False
     assert "image_urls" not in arg
     assert "fps" not in arg
 

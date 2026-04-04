@@ -44,7 +44,6 @@ function hydrateIndexedAssets(assets) {
 const DESCRIPTOR_MAP = {
   StoryAgent: "story_blueprint",
   ScreenplayAgent: "screenplay",
-  StoryboardAgent: "storyboard",
   KeyFrameAgent: "keyframes",
   VideoAgent: "video_package",
   AudioAgent: "audio_package",
@@ -798,7 +797,7 @@ function render() {
       index: "03",
       title: "优化 Sub-agent",
       items: [
-        "提升各 sub-agent（Story / Screenplay / Storyboard / KeyFrame / Video / Audio）输出质量与一致性",
+        "提升各 sub-agent（Story / Screenplay / KeyFrame / Video / Audio）输出质量与一致性",
         "优化 agent 间上下文传递，减少信息丢失",
         "引入更细粒度的 eval 指标，量化每个 agent 的产出质量",
       ],

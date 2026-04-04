@@ -1,0 +1,445 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_type": "character",
+          "entity_id": "char_001",
+          "display_name": "",
+          "purpose": "identity_anchor",
+          "keyframe_id": "kf_global_char_001",
+          "image_asset": {
+            "asset_id": "img_char_001_global",
+            "uri": "/tmp/fw_media_w5i_3vgx/img_char_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "High contrast, intimate lighting focusing primarily on the workbench and Arthur's face/hands. A sense of quiet tension and meticulous detail should pervade. Use shallow depth of field to emphasize the watch mechanism and Arthur's immediate actions. The pacing should be rapid and kinetic during the countdown, building tension with quick cuts, then culminate in a serene, lingering shot of resolution. Must avoid: Overly bright or sterile lighting that diminishes the intimate atmosphere.; Wide, detached shots that diminish the focus on the small, intricate details of the watch.; Any sense of slapstick or lightheartedness; the tone is somber, tense, and ultimately hopeful. A solemn elderly man in his 70s, his face etched with profound sorrow and visible grief. His hands are trembling slightly from age and emotional pressure, yet hold fierce determination. He wears a simple, well-worn dark button-up shirt, a practical tweed waistcoat, and a jeweler's apron tied loosely around his waist. His sleeves are rolled up, revealing thin, aged forearms. His expression conveys a mix of desperation, precision, and a deep longing for peace and connection."
+        }
+      ],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "display_name": "",
+          "purpose": "style_anchor",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/tmp/fw_media_w5i_3vgx/img_loc_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "High contrast, intimate lighting focusing primarily on the workbench and Arthur's face/hands. A sense of quiet tension and meticulous detail should pervade. Use shallow depth of field to emphasize the watch mechanism and Arthur's immediate actions. The pacing should be rapid and kinetic during the countdown, building tension with quick cuts, then culminate in a serene, lingering shot of resolution. Must avoid: Overly bright or sterile lighting that diminishes the intimate atmosphere.; Wide, detached shots that diminish the focus on the small, intricate details of the watch.; Any sense of slapstick or lightheartedness; the tone is somber, tense, and ultimately hopeful. A cluttered but meticulously organized watchmaker's workshop, imbued with a strong sense of history and quiet solitude. Warm, dim lighting emanates from a focused magnifying lamp, creating a pool of intimate light that highlights the central workbench. Various tools, tiny gears, springs, and watch parts are neatly arranged amidst a slight dusting, testifying to years of dedicated craft. A grand, ornate wooden grandfather clock stands prominently in the background, anchoring the room with its imposing presence and traditional, antique design, its face clearly displaying the time at 10 seconds to midnight."
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_001",
+                "uri": "/tmp/fw_media_w5i_3vgx/img_char_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "High contrast, intimate lighting focusing primarily on the workbench and Arthur's face/hands. A sense of quiet tension and meticulous detail should pervade. Use shallow depth of field to emphasize the watch mechanism and Arthur's immediate actions. The pacing should be rapid and kinetic during the countdown, building tension with quick cuts, then culminate in a serene, lingering shot of resolution. Show Arthur, an elderly man in his 70s, under the warm, dim glow of a magnifying lamp in his cluttered watchmaker's workshop at night. His face is deeply etched with profound sorrow and grief, yet illuminated by fierce determination. His hands are visibly trembling from age and emotional pressure. He wears a well-worn dark button-up shirt, a practical tweed waistcoat, and a jeweler's apron loosely tied, with sleeves rolled to reveal thin, aged forearms. The intimate lighting emphasizes his deep internal struggle for peace and connection, ensuring his sorrowful expression and trembling hands are central to his character, transitioning towards eventual relief."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/tmp/fw_media_w5i_3vgx/img_loc_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "High contrast, intimate lighting focusing primarily on the workbench and Arthur's face/hands. A sense of quiet tension and meticulous detail should pervade. Use shallow depth of field to emphasize the watch mechanism and Arthur's immediate actions. The pacing should be rapid and kinetic during the countdown, building tension with quick cuts, then culminate in a serene, lingering shot of resolution. The watchmaker's workshop at night, seen under the warm, dim, focused light of a magnifying lamp illuminating only the workbench area. The room is cluttered yet organized, displaying years of dedication. A grand, ornate grandfather clock stands prominently in the background, subtly catching the low light. The atmosphere is intimate, slightly dusty, imbued with a sense of history and quiet solitude, avoiding any bright or sterile lighting that diminishes this intimate feel."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_001",
+              "linked_blocks": [
+                "b_001",
+                "b_003"
+              ]
+            },
+            "estimated_duration_sec": 1.8,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast, intimate lighting focusing primarily on the workbench and Arthur's face/hands. A sense of quiet tension and meticulous detail should pervade. Use shallow depth of field to emphasize the watch mechanism and Arthur's immediate actions. The pacing should be rapid and kinetic during the countdown, building tension with quick cuts, then culminate in a serene, lingering shot of resolution. Extreme high-angle close-up shot focusing tightly on Arthur's aged, trembling hand. His thin fingers, holding fine-tipped tweezers with a tiny gear, hover above the delicate open mechanism of an old, cherished pocket watch on a workbench. A watchmaker's loupe is visible, partially covering his eye. The shallow depth of field emphasizes the minuscule gear and the unsteady tremor in his hand, conveying emotional fragility.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_002",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast, intimate lighting focusing primarily on the workbench and Arthur's face/hands. A sense of quiet tension and meticulous detail should pervade. Use shallow depth of field to emphasize the watch mechanism and Arthur's immediate actions. The pacing should be rapid and kinetic during the countdown, building tension with quick cuts, then culminate in a serene, lingering shot of resolution. Extreme high-angle close-up shot, static. Arthur's visibly trembling hand, holding tweezers with a minuscule gear, is positioned very close to the intricate, open mechanism of the delicate pocket watch. The tiny gear struggles to align with the complex internal workings, creating intense visual tension. The focus remains on the meticulous, high-stakes task and Arthur's unsteady attempt.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_002",
+              "linked_blocks": [
+                "b_002"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_003",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast, intimate lighting focusing primarily on the workbench and Arthur's face/hands. A sense of quiet tension and meticulous detail should pervade. Use shallow depth of field to emphasize the watch mechanism and Arthur's immediate actions. The pacing should be rapid and kinetic during the countdown, building tension with quick cuts, then culminate in a serene, lingering shot of resolution. Eye-level medium shot of the grand, ornate grandfather clock. Its face clearly shows the time at 'TEN SECONDS TO MIDNIGHT'. The intricate details of the clock face are highlighted by the warm, dim workshop lighting. A subtle visual implication of a 'resonant HUM' begins, emphasizing the imposing presence and relentless ticking of time.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_003",
+              "linked_blocks": [
+                "b_004",
+                "b_005"
+              ]
+            },
+            "estimated_duration_sec": 1.7,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_004",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast, intimate lighting focusing primarily on the workbench and Arthur's face/hands. A sense of quiet tension and meticulous detail should pervade. Use shallow depth of field to emphasize the watch mechanism and Arthur's immediate actions. The pacing should be rapid and kinetic during the countdown, building tension with quick cuts, then culminate in a serene, lingering shot of resolution. Eye-level close-up, quick cut to Arthur's face. His expression is intense, a bead of sweat glistens on his brow as he flinches slightly, reacting to an unseen chime. Profound sorrow and stress are visible, highlighting the pressure of the countdown and his emotional state.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_005",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast, intimate lighting focusing primarily on the workbench and Arthur's face/hands. A sense of quiet tension and meticulous detail should pervade. Use shallow depth of field to emphasize the watch mechanism and Arthur's immediate actions. The pacing should be rapid and kinetic during the countdown, building tension with quick cuts, then culminate in a serene, lingering shot of resolution. Eye-level close-up, quick cut back to Arthur's trembling hand holding fine-tipped tweezers over the open pocket watch mechanism. The minuscule gear, previously held, slips precariously from the tweezers, creating an immediate setback and visible struggle. Shallow depth of field keeps the focus on the slipping component and the urgency of the moment.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_006",
+                "order": 3,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast, intimate lighting focusing primarily on the workbench and Arthur's face/hands. A sense of quiet tension and meticulous detail should pervade. Use shallow depth of field to emphasize the watch mechanism and Arthur's immediate actions. The pacing should be rapid and kinetic during the countdown, building tension with quick cuts, then culminate in a serene, lingering shot of resolution. Eye-level close-up, quick cut to Arthur's face. His jaw is visibly tightening, and his eyes burn with fierce determination, overriding the grief and setback. The intimate lighting emphasizes his resolute expression, conveying his struggle to regain control and his unwavering focus on the task despite the pressure.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "source": {
+              "storyboard_shot_id": "sh_004",
+              "linked_blocks": [
+                "b_006",
+                "b_007"
+              ]
+            },
+            "estimated_duration_sec": 1.8,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_007",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast, intimate lighting focusing primarily on the workbench and Arthur's face/hands. A sense of quiet tension and meticulous detail should pervade. Use shallow depth of field to emphasize the watch mechanism and Arthur's immediate actions. The pacing should be rapid and kinetic during the countdown, building tension with quick cuts, then culminate in a serene, lingering shot of resolution. Extreme high-angle close-up, beginning with a static shot. The tiny gear, previously a struggle, drops perfectly and precisely into place within the intricate mechanism of the delicate pocket watch. Fine-tipped tweezers are seen withdrawing. This shot emphasizes the successful completion of the critical repair and Arthur's meticulous skill.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_008",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast, intimate lighting focusing primarily on the workbench and Arthur's face/hands. A sense of quiet tension and meticulous detail should pervade. Use shallow depth of field to emphasize the watch mechanism and Arthur's immediate actions. The pacing should be rapid and kinetic during the countdown, building tension with quick cuts, then culminate in a serene, lingering shot of resolution. Extreme high-angle close-up, slightly pulling back. Arthur's aged hands carefully and deliberately close the casing of the delicate pocket watch after the gear is placed. A crisp, satisfying 'CLICK' is implied, signaling the completion of the physical repair. The focus remains on the meticulous action and the watch.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_009",
+                "order": 3,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast, intimate lighting focusing primarily on the workbench and Arthur's face/hands. A sense of quiet tension and meticulous detail should pervade. Use shallow depth of field to emphasize the watch mechanism and Arthur's immediate actions. The pacing should be rapid and kinetic during the countdown, building tension with quick cuts, then culminate in a serene, lingering shot of resolution. Extreme high-angle close-up, static shot. Arthur brings the now-closed delicate pocket watch to his ear, his expression of intense focus subtly shifting to anticipation. His face, partially seen, shows a hint of hope as he strains to hear the ticking, confirming the repair's success and his immediate verification.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 5,
+            "source": {
+              "storyboard_shot_id": "sh_005",
+              "linked_blocks": [
+                "b_008",
+                "b_009"
+              ]
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_010",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast, intimate lighting focusing primarily on the workbench and Arthur's face/hands. A sense of quiet tension and meticulous detail should pervade. Use shallow depth of field to emphasize the watch mechanism and Arthur's immediate actions. The pacing should be rapid and kinetic during the countdown, building tension with quick cuts, then culminate in a serene, lingering shot of resolution. Low-angle medium shot, static. The grand, ornate grandfather clock is captured mid-chime, its elegant hands visibly striking midnight. The pendulum swings dramatically. The intimate lighting emphasizes the clock's imposing height and the solemnity of the moment, marking the climax of the countdown.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_011",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast, intimate lighting focusing primarily on the workbench and Arthur's face/hands. A sense of quiet tension and meticulous detail should pervade. Use shallow depth of field to emphasize the watch mechanism and Arthur's immediate actions. The pacing should be rapid and kinetic during the countdown, building tension with quick cuts, then culminate in a serene, lingering shot of resolution. Low-angle medium shot, static, held for a beat of silence. The grand, ornate grandfather clock stands after its final chime. Its pendulum continues a slow, rhythmic swing. The hands are now firmly at midnight, conveying a sense of finality and resolution. The overall atmosphere is intimate and historical, focused on the clock's imposing presence.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 6,
+            "source": {
+              "storyboard_shot_id": "sh_006",
+              "linked_blocks": [
+                "b_010",
+                "b_011"
+              ]
+            },
+            "estimated_duration_sec": 2.2,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_012",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast, intimate lighting focusing primarily on the workbench and Arthur's face/hands. A sense of quiet tension and meticulous detail should pervade. Use shallow depth of field to emphasize the watch mechanism and Arthur's immediate actions. The pacing should be rapid and kinetic during the countdown, building tension with quick cuts, then culminate in a serene, lingering shot of resolution. Eye-level close-up, starting tight on Arthur's eyes. They well up with disbelief and profound relief, reflecting the warm, intimate lighting of the workshop. The sorrow previously etched on his face begins to soften, hinting at the emotional payoff as he hears the watch ticking.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_013",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast, intimate lighting focusing primarily on the workbench and Arthur's face/hands. A sense of quiet tension and meticulous detail should pervade. Use shallow depth of field to emphasize the watch mechanism and Arthur's immediate actions. The pacing should be rapid and kinetic during the countdown, building tension with quick cuts, then culminate in a serene, lingering shot of resolution. Eye-level close-up, slowly dollying out from Arthur's face. A subtle, peaceful smile spreads across his features, replacing the grief and tension. His eyes, now clear, convey a deep sense of connection and serenity, emphasized by the intimate lighting, as the ticking of the watch brings him peace.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_014",
+                "order": 3,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "High contrast, intimate lighting focusing primarily on the workbench and Arthur's face/hands. A sense of quiet tension and meticulous detail should pervade. Use shallow depth of field to emphasize the watch mechanism and Arthur's immediate actions. The pacing should be rapid and kinetic during the countdown, building tension with quick cuts, then culminate in a serene, lingering shot of resolution. Eye-level close-up, continuing to dolly out slightly. Arthur's hand, holding the now-working delicate pocket watch, gently presses it to his heart. His face displays a serene, peaceful smile. The subtle details of the ticking watch in his hand are visible, representing profound connection and the culmination of his desperate efforts.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_count": 6,
+    "keyframe_count_total": 14,
+    "avg_keyframes_per_shot": 2.3333333333333335,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 1,
+    "stability_location_keyframe_count": 1,
+    "stability_prop_keyframe_count": 0
+  }
+}

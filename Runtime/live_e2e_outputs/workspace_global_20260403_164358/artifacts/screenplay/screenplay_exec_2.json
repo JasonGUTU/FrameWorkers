@@ -1,0 +1,402 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-03T16:44:18.940922+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "A Final Tick",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Arthur's Home Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Arthur sits in his dimly lit workshop, observing his late wife's broken pocket watch and the rapidly approaching midnight on the grandfather clock, grief weighing on him. He resolves to repair it.",
+        "estimated_duration": {
+          "seconds": 3.5,
+          "confidence": 0.7
+        },
+        "continuity": {
+          "props_present": [
+            "broken pocket watch",
+            "grandfather clock",
+            "workbench",
+            "desk lamp",
+            "magnifying loupe",
+            "watchmaker's tools"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A worn, dark green cardigan over a simple collared shirt, spectacles resting on his nose.",
+              "must_keep": [
+                "Cardigan",
+                "Spectacles"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "The pocket watch is broken.",
+            "Midnight is fast approaching.",
+            "Arthur is visibly burdened by grief."
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_001",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The GRANDFATHER CLOCK in ARTHUR's home workshop TICKS LOUDLY. It's almost midnight on New Year's Eve. Dust motes dance in the beam of a desk lamp, illuminating a cluttered workbench.",
+            "continuity_refs": {
+              "props": [
+                "grandfather clock",
+                "workbench",
+                "desk lamp"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_002",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "ARTHUR (70s, character_id: char_001), a retired watchmaker, sits hunched over. His face is etched with quiet grief. In his delicate, trembling hands, he holds a beautiful, but BROKEN POCKET WATCH.",
+            "continuity_refs": {
+              "props": [
+                "broken pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_003",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "CLOSE ON: The intricate, motionless gears of the pocket watch, then CUT TO: The grandfather clock's hands, almost touching 12.",
+            "continuity_refs": {
+              "props": [
+                "broken pocket watch",
+                "grandfather clock"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_004",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Arthur lets out a heavy, shaky breath. He glances at a faded photograph on the bench – a woman's smiling face. His jaw tightens with resolve. This is his final chance.",
+            "continuity_refs": {
+              "props": [
+                "photograph"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_005",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He reaches for a magnifying loupe and a selection of tiny, specialized tools, his hands now steadying with purpose.",
+            "continuity_refs": {
+              "props": [
+                "magnifying loupe",
+                "watchmaker's tools"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "Arthur takes a deep breath and picks up his finest tools, focused on the task.",
+          "emotional_shift": "From overwhelming grief and contemplation to focused determination and a glimmer of hope."
+        }
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Arthur's Home Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Arthur intensely works on the tiny watch mechanism, his aging hands struggling against the delicate parts and the relentless march of time, feeling the pressure mount.",
+        "estimated_duration": {
+          "seconds": 3.5,
+          "confidence": 0.7
+        },
+        "continuity": {
+          "props_present": [
+            "disassembled pocket watch",
+            "tweezers",
+            "magnifying loupe",
+            "tiny gears",
+            "springs",
+            "workbench",
+            "desk lamp"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Same worn, dark green cardigan and collared shirt. Spectacles are now positioned on his nose, deep in concentration.",
+              "must_keep": [
+                "Cardigan",
+                "Spectacles"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Arthur is struggling with the intricate repair.",
+            "Time is running critically low.",
+            "The delicacy of the parts highlights his precision."
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_006",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Arthur, his brow furrowed in concentration, meticulously works under the magnifying loupe. The pocket watch is a constellation of minuscule gears, springs, and levers on a velvet cloth.",
+            "continuity_refs": {
+              "props": [
+                "disassembled pocket watch",
+                "magnifying loupe",
+                "tiny gears",
+                "springs",
+                "velvet cloth"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_007",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "His aged hands, once perfectly steady, now show a faint tremor. He delicately picks up a hair-thin spring with tweezers, his breath held.",
+            "continuity_refs": {
+              "props": [
+                "tweezers",
+                "hair-thin spring"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_008",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The GRANDFATHER CLOCK'S TICKS GROW LOUDER, more insistent, drumming against the silence. Only a few minutes remain.",
+            "continuity_refs": {
+              "props": [
+                "grandfather clock"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_009",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A tiny gear slips from his tweezers, falling onto the bench. Arthur freezes, a gasp escaping his lips. He carefully retrieves it, his heart pounding.",
+            "continuity_refs": {
+              "props": [
+                "tiny gear",
+                "tweezers",
+                "workbench"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_010",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He wipes a bead of sweat from his temple. With renewed, intense focus, he leans back into the task, his movements becoming precise, almost ritualistic.",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "With a final, trembling movement, he successfully seats the tiny escapement, holding his breath.",
+          "emotional_shift": "From intense focus and mounting anxiety to cautious relief and a surge of determination."
+        }
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_003",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Arthur's Home Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Arthur closes the watch, listening intently. It begins to tick just as the grandfather clock chimes midnight, bringing a profound sense of peace and a final connection to his wife.",
+        "estimated_duration": {
+          "seconds": 3.0,
+          "confidence": 0.7
+        },
+        "continuity": {
+          "props_present": [
+            "repaired pocket watch",
+            "grandfather clock",
+            "workbench"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Same worn, dark green cardigan, collared shirt, and spectacles. A faint sheen of perspiration on his forehead.",
+              "must_keep": [
+                "Cardigan",
+                "Spectacles"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "The watch starts ticking.",
+            "The grandfather clock strikes midnight.",
+            "Arthur finds peace and connection."
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_011",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Arthur gently, almost reverently, closes the back casing of the pocket watch. The final click echoes loudly in the quiet room.",
+            "continuity_refs": {
+              "props": [
+                "repaired pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_012",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He brings the watch close to his ear, his eyes wide with anticipation, his entire body rigid.",
+            "continuity_refs": {
+              "props": [
+                "repaired pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_013",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "For a long beat, nothing. Then, a faint, almost imperceptible TICK... TICK... TICK. The watch is alive.",
+            "continuity_refs": {
+              "props": [
+                "repaired pocket watch"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_014",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Simultaneously, the GRANDFATHER CLOCK BEGINS TO CHIME, deep and resonant, marking the new year. One... Two... Three...",
+            "continuity_refs": {
+              "props": [
+                "grandfather clock"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_015",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A slow, soft smile spreads across Arthur's face, replacing the grief and tension. He closes his eyes, holding the ticking watch against his chest.",
+            "continuity_refs": {
+              "props": [
+                "repaired pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_016",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The chimes continue, but now, the rhythm of the tiny watch, beating against his heart, is the loudest sound in the world.",
+            "continuity_refs": {
+              "props": [
+                "repaired pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "The watch begins to tick, coinciding with the first chime of the grandfather clock striking midnight, and a soft smile finally graces Arthur's face.",
+          "emotional_shift": "From intense anxiety and lingering despair to profound peace, relief, and a deep, comforting sense of connection."
+        }
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "estimated_total_duration_sec": 10.0,
+    "sum_scene_duration_sec": 10.0,
+    "scene_count": 3,
+    "dialogue_block_count": 0,
+    "action_block_count": 16
+  }
+}

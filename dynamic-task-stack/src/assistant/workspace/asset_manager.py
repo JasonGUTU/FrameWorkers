@@ -8,6 +8,7 @@ from typing import Any, Callable, Dict, Optional, List
 
 logger = logging.getLogger(__name__)
 
+from ..keyframes_manifest import build_keyframes_manifest_items
 from .models import FileMetadata
 
 
@@ -216,7 +217,8 @@ class AssetManager:
           - ``relative_path``: must start with ``artifacts/``
           - ``source_key``: for ``binary`` / ``media``
           - ``role`` / ``asset_key``: for ``json_snapshot`` (defaults to descriptor asset_key)
-          - ``manifest_document``: dict payload for ``keyframes_manifest``
+          - ``keyframes_manifest``: path comes from the plan; the manifest body is
+            rebuilt **after** media URIs are rewritten so ``path`` rows match workspace files.
 
         Returns:
             ``(persisted_media_paths, asset_index, extra_artifact_locations)``
@@ -228,9 +230,20 @@ class AssetManager:
         persisted_media_paths: Dict[str, str] = {}
         asset_index: Optional[Dict[str, Any]] = None
         extra_locs: List[Dict[str, str]] = []
+        deferred_json_snapshots: List[Dict[str, Any]] = []
+        deferred_keyframes_manifests: List[Dict[str, Any]] = []
+
         for raw in assignments:
             if not isinstance(raw, dict):
                 continue
+            kind_early = str(raw.get("kind") or "").strip()
+            if kind_early == "json_snapshot":
+                deferred_json_snapshots.append(raw)
+                continue
+            if kind_early == "keyframes_manifest":
+                deferred_keyframes_manifests.append(raw)
+                continue
+
             rel = str(raw.get("relative_path") or "").strip().replace("\\", "/")
             if not self.is_safe_artifacts_relative_path(rel):
                 logger.warning("persist plan: skip unsafe path %r", rel)
@@ -333,99 +346,125 @@ class AssetManager:
                 )
                 self._touch()
 
-            elif kind == "keyframes_manifest":
-                doc = raw.get("manifest_document")
-                if not isinstance(doc, dict):
-                    continue
-                try:
-                    body = json.dumps(doc, ensure_ascii=False, indent=2).encode("utf-8")
-                except (TypeError, ValueError):
-                    continue
-                if overwrite_existing:
-                    self._purge_existing_asset_files(
-                        execution=execution,
-                        asset_key="keyframes_manifest",
-                        asset_variant="manifest",
-                    )
-                file_meta = self._store_file_at_relative_path(
-                    rel,
-                    file_content=body,
-                    filename="keyframes_manifest.json",
-                    description=f"Keyframe manifest ({execution.task_id})",
-                    created_by=execution.agent_id,
-                    tags=[execution.task_id, execution.agent_id, "keyframes_manifest"],
-                    metadata={
-                        "task_id": execution.task_id,
-                        "execution_id": execution.id,
-                        "producer_agent_id": execution.agent_id,
-                        "asset_variant": "manifest",
-                        "role": "keyframes_manifest",
-                    },
-                )
-                self._add_log(
-                    operation_type="write",
-                    resource_type="asset",
-                    resource_id=file_meta.id,
-                    agent_id=execution.agent_id,
-                    task_id=execution.task_id,
-                    details={"event_type": "keyframes_manifest_persisted", "persist_plan": True},
-                )
-                self._touch()
-                extra_locs.append({"role": "keyframes_manifest", "path": file_meta.file_path})
-
-            elif kind == "json_snapshot":
-                role = str(
-                    raw.get("role") or raw.get("asset_key") or execution.agent_id or "json_snapshot"
-                ).strip()
-                payload = self._build_json_snapshot_payload(results)
-                if not payload:
-                    continue
-                try:
-                    json_bytes = json.dumps(payload, ensure_ascii=False, indent=2).encode("utf-8")
-                except (TypeError, ValueError):
-                    continue
-                if overwrite_existing:
-                    self._purge_existing_asset_files(
-                        execution=execution,
-                        asset_key=role,
-                        asset_variant="json_snapshot",
-                    )
-                filename = self.snapshot_filename(role, execution.id)
-                file_meta = self._store_file_at_relative_path(
-                    rel,
-                    file_content=json_bytes,
-                    filename=filename,
-                    description=f"Structured JSON snapshot for {execution.agent_id} ({execution.id})",
-                    created_by=execution.agent_id,
-                    tags=[execution.agent_id, execution.task_id, "asset_json"],
-                    metadata={
-                        "execution_id": execution.id,
-                        "task_id": execution.task_id,
-                        "producer_agent_id": execution.agent_id,
-                        "asset_key": role,
-                        "asset_variant": "json_snapshot",
-                    },
-                )
-                self._add_log(
-                    operation_type="write",
-                    resource_type="asset",
-                    resource_id=file_meta.id,
-                    agent_id=execution.agent_id,
-                    task_id=execution.task_id,
-                    details={
-                        "event_type": "asset_json_snapshot_persisted",
-                        "asset_key": role,
-                        "persist_plan": True,
-                    },
-                )
-                self._touch()
-                asset_index = {
-                    "asset_key": role,
-                    "json_uri": file_meta.file_path,
-                    "file_id": file_meta.id,
-                    "execution_id": execution.id,
-                }
-
         if persisted_media_paths:
             self._rewrite_asset_uris_with_persisted_paths(results, persisted_media_paths)
+
+        for raw in deferred_keyframes_manifests:
+            if not isinstance(raw, dict):
+                continue
+            rel = str(raw.get("relative_path") or "").strip().replace("\\", "/")
+            if not self.is_safe_artifacts_relative_path(rel):
+                logger.warning("persist plan: skip unsafe path %r", rel)
+                continue
+            if not self._has_allowed_extension(rel):
+                logger.warning("persist plan: skip disallowed extension path %r", rel)
+                continue
+            items = build_keyframes_manifest_items(results)
+            if not items:
+                continue
+            doc = {
+                "schema_version": "1.0",
+                "role": "keyframes_manifest",
+                "task_id": execution.task_id,
+                "execution_id": execution.id,
+                "items": items,
+            }
+            try:
+                body = json.dumps(doc, ensure_ascii=False, indent=2).encode("utf-8")
+            except (TypeError, ValueError):
+                continue
+            if overwrite_existing:
+                self._purge_existing_asset_files(
+                    execution=execution,
+                    asset_key="keyframes_manifest",
+                    asset_variant="manifest",
+                )
+            file_meta = self._store_file_at_relative_path(
+                rel,
+                file_content=body,
+                filename="keyframes_manifest.json",
+                description=f"Keyframe manifest ({execution.task_id})",
+                created_by=execution.agent_id,
+                tags=[execution.task_id, execution.agent_id, "keyframes_manifest"],
+                metadata={
+                    "task_id": execution.task_id,
+                    "execution_id": execution.id,
+                    "producer_agent_id": execution.agent_id,
+                    "asset_variant": "manifest",
+                    "role": "keyframes_manifest",
+                },
+            )
+            self._add_log(
+                operation_type="write",
+                resource_type="asset",
+                resource_id=file_meta.id,
+                agent_id=execution.agent_id,
+                task_id=execution.task_id,
+                details={"event_type": "keyframes_manifest_persisted", "persist_plan": True},
+            )
+            self._touch()
+            extra_locs.append({"role": "keyframes_manifest", "path": file_meta.file_path})
+
+        for raw in deferred_json_snapshots:
+            if not isinstance(raw, dict):
+                continue
+            rel = str(raw.get("relative_path") or "").strip().replace("\\", "/")
+            if not self.is_safe_artifacts_relative_path(rel):
+                logger.warning("persist plan: skip unsafe path %r", rel)
+                continue
+            if not self._has_allowed_extension(rel):
+                logger.warning("persist plan: skip disallowed extension path %r", rel)
+                continue
+            role = str(
+                raw.get("role") or raw.get("asset_key") or execution.agent_id or "json_snapshot"
+            ).strip()
+            payload = self._build_json_snapshot_payload(results)
+            if not payload:
+                continue
+            try:
+                json_bytes = json.dumps(payload, ensure_ascii=False, indent=2).encode("utf-8")
+            except (TypeError, ValueError):
+                continue
+            if overwrite_existing:
+                self._purge_existing_asset_files(
+                    execution=execution,
+                    asset_key=role,
+                    asset_variant="json_snapshot",
+                )
+            filename = self.snapshot_filename(role, execution.id)
+            file_meta = self._store_file_at_relative_path(
+                rel,
+                file_content=json_bytes,
+                filename=filename,
+                description=f"Structured JSON snapshot for {execution.agent_id} ({execution.id})",
+                created_by=execution.agent_id,
+                tags=[execution.agent_id, execution.task_id, "asset_json"],
+                metadata={
+                    "execution_id": execution.id,
+                    "task_id": execution.task_id,
+                    "producer_agent_id": execution.agent_id,
+                    "asset_key": role,
+                    "asset_variant": "json_snapshot",
+                },
+            )
+            self._add_log(
+                operation_type="write",
+                resource_type="asset",
+                resource_id=file_meta.id,
+                agent_id=execution.agent_id,
+                task_id=execution.task_id,
+                details={
+                    "event_type": "asset_json_snapshot_persisted",
+                    "asset_key": role,
+                    "persist_plan": True,
+                },
+            )
+            self._touch()
+            asset_index = {
+                "asset_key": role,
+                "json_uri": file_meta.file_path,
+                "file_id": file_meta.id,
+                "execution_id": execution.id,
+            }
+
         return persisted_media_paths, asset_index, extra_locs

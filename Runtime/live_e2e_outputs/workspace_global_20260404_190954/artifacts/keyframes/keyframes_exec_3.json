@@ -1,0 +1,392 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_type": "character",
+          "entity_id": "char_001",
+          "keyframe_id": "kf_global_char_001",
+          "image_asset": {
+            "asset_id": "img_char_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_char_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Elias Thorne, a man in his late 60s, with a weary but determined face. His aged hands possess a delicate precision. He wears practical, slightly old-fashioned clothing suitable for a craftsman.",
+          "image_generation_prompt": "Elias Thorne, a man in his late 60s, with a weary but determined face. His aged hands possess a delicate precision. He wears practical, slightly old-fashioned clothing suitable for a craftsman.\nVisual style: Intimate and focused, emphasizing Elias's internal struggle and precision. The visual tone should be warm but slightly melancholic, with a building sense of urgency.; The tension should be palpable, amplified by the contrast between the quiet workshop and the distant, celebratory sounds. Emphasize the precision and the high stakes of Elias's actions.; A sense of quiet resolution and hopeful melancholy. The visuals should evoke a feeling of warmth, intimacy, and the profound weight of a personal triumph. Emphasize the subtle emotional shifts.. Do NOT use: Bright, chaotic, or overly modern aesthetics.; Any sense of ease or casualness.; Overly dramatic gestures or an abrupt change in the quiet tone.."
+        }
+      ],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_loc_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "A cluttered but organized watchmaker's workshop. It is dimly lit by a single desk lamp, with dust motes visible in the light. An antique wall clock ticks loudly, dominating the soundscape.",
+          "image_generation_prompt": "A cluttered but organized watchmaker's workshop. It is dimly lit by a single desk lamp, with dust motes visible in the light. An antique wall clock ticks loudly, dominating the soundscape.\nVisual style: Intimate and focused, emphasizing Elias's internal struggle and precision. The visual tone should be warm but slightly melancholic, with a building sense of urgency.; The tension should be palpable, amplified by the contrast between the quiet workshop and the distant, celebratory sounds. Emphasize the precision and the high stakes of Elias's actions.; A sense of quiet resolution and hopeful melancholy. The visuals should evoke a feeling of warmth, intimacy, and the profound weight of a personal triumph. Emphasize the subtle emotional shifts.. Do NOT use: Bright, chaotic, or overly modern aesthetics.; Any sense of ease or casualness.; Overly dramatic gestures or an abrupt change in the quiet tone.."
+        }
+      ],
+      "props": [
+        {
+          "entity_type": "prop",
+          "entity_id": "prop_001",
+          "keyframe_id": "kf_global_prop_001",
+          "image_asset": {
+            "asset_id": "img_prop_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_prop_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "An intricate pocket watch, clearly broken and showing visible signs of age. It holds significant sentimental value, having belonged to a late wife.",
+          "image_generation_prompt": "An intricate pocket watch, clearly broken and showing visible signs of age. It holds significant sentimental value, having belonged to a late wife.\nVisual style: Intimate and focused, emphasizing Elias's internal struggle and precision. The visual tone should be warm but slightly melancholic, with a building sense of urgency.; The tension should be palpable, amplified by the contrast between the quiet workshop and the distant, celebratory sounds. Emphasize the precision and the high stakes of Elias's actions.; A sense of quiet resolution and hopeful melancholy. The visuals should evoke a feeling of warmth, intimacy, and the profound weight of a personal triumph. Emphasize the subtle emotional shifts.. Do NOT use: Bright, chaotic, or overly modern aesthetics.; Any sense of ease or casualness.; Overly dramatic gestures or an abrupt change in the quiet tone.."
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "keyframe_id": "kf_char_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_char_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Elias Thorne, a man in his late 60s, appears weary yet determined. His hands are aged but possess remarkable precision. He wears practical, slightly old-fashioned clothing, reflecting a craftsman's life.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nElias Thorne, a man in his late 60s, appears weary yet determined. His hands are aged but possess remarkable precision. He wears practical, slightly old-fashioned clothing, reflecting a craftsman's life.\nDo NOT use: Bright, chaotic, or overly modern aesthetics.; Any sense of ease or casualness.; Overly dramatic gestures or an abrupt change in the quiet tone.."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "A cluttered but organized watchmaker's workshop is dimly lit by a single desk lamp. Dust motes are visible dancing in the light. An antique wall clock prominently ticks, setting a melancholic, warm tone.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA cluttered but organized watchmaker's workshop is dimly lit by a single desk lamp. Dust motes are visible dancing in the light. An antique wall clock prominently ticks, setting a melancholic, warm tone.\nDo NOT use: Bright, chaotic, or overly modern aesthetics.; Any sense of ease or casualness.; Overly dramatic gestures or an abrupt change in the quiet tone.."
+            }
+          ],
+          "props": [
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_001",
+              "keyframe_id": "kf_prop_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_prop_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_prop_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "An intricate pocket watch, showing visible signs of age and sentimental value. It is clearly broken, with its delicate mechanism exposed.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nAn intricate pocket watch, showing visible signs of age and sentimental value. It is clearly broken, with its delicate mechanism exposed.\nDo NOT use: Bright, chaotic, or overly modern aesthetics.; Any sense of ease or casualness.; Overly dramatic gestures or an abrupt change in the quiet tone.."
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "source_shot_id": "sh_001"
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_001",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_sh_001_kf_001.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Show a close-up, low-angle shot of Elias's aged hands, meticulously repairing the intricate, broken pocket watch mechanism. He uses fine-tipped tweezers and a magnifying loupe. The lighting is warm and focused from a desk lamp, creating soft shadows and a shallow depth of field.",
+                "video_motion_hint": "Elias's fingers make subtle, precise adjustments with the tweezers, barely moving as they manipulate a tiny gear. A faint shimmer catches the light on the metallic components.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nShow a close-up, low-angle shot of Elias's aged hands, meticulously repairing the intricate, broken pocket watch mechanism. He uses fine-tipped tweezers and a magnifying loupe. The lighting is warm and focused from a desk lamp, creating soft shadows and a shallow depth of field.\nDo NOT use: Bright, chaotic, or overly modern aesthetics.; Any sense of ease or casualness.; Overly dramatic gestures or an abrupt change in the quiet tone.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "source_shot_id": "sh_002"
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_002",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_002",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_sh_002_kf_002.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Frame Elias from eye-level in a medium shot, hunched over his workbench in the dimly lit, cluttered workshop. His posture is entirely absorbed in his work, illuminated by the focused light of a single desk lamp. An antique wall clock is prominently visible in the background, reinforcing the looming deadline with its presence.",
+                "video_motion_hint": "Elias's head slightly inclines, a subtle nod of deep concentration. The antique wall clock's pendulum swings with a steady, hypnotic rhythm, and dust motes gently drift and swirl in the desk lamp's beam.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nFrame Elias from eye-level in a medium shot, hunched over his workbench in the dimly lit, cluttered workshop. His posture is entirely absorbed in his work, illuminated by the focused light of a single desk lamp. An antique wall clock is prominently visible in the background, reinforcing the looming deadline with its presence.\nDo NOT use: Bright, chaotic, or overly modern aesthetics.; Any sense of ease or casualness.; Overly dramatic gestures or an abrupt change in the quiet tone.."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_002"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "keyframe_id": "kf_char_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_002",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_char_001_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Elias's face shows extreme concentration, his brow furrowed, with fine beads of sweat visible. His hands exhibit a delicate tremor from the intense effort, maintaining a posture of heightened stress.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nElias's face shows extreme concentration, his brow furrowed, with fine beads of sweat visible. His hands exhibit a delicate tremor from the intense effort, maintaining a posture of heightened stress.\nDo NOT use: Bright, chaotic, or overly modern aesthetics.; Any sense of ease or casualness.; Overly dramatic gestures or an abrupt change in the quiet tone.."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "keyframe_id": "kf_loc_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_002",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "The workshop is dimly lit, illuminated primarily by the soft, warm glow of a desk lamp. This creates a focused, intimate pool of light, contrasting with the dark background.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nThe workshop is dimly lit, illuminated primarily by the soft, warm glow of a desk lamp. This creates a focused, intimate pool of light, contrasting with the dark background.\nDo NOT use: Bright, chaotic, or overly modern aesthetics.; Any sense of ease or casualness.; Overly dramatic gestures or an abrupt change in the quiet tone.."
+            }
+          ],
+          "props": [
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_001",
+              "keyframe_id": "kf_prop_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_prop_001_sc_002",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_prop_001_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "The watch's intricate mechanism is fully exposed and brightly lit. A tiny, critical component rests on a soft surface, poised for its final, precise placement.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nThe watch's intricate mechanism is fully exposed and brightly lit. A tiny, critical component rests on a soft surface, poised for its final, precise placement.\nDo NOT use: Bright, chaotic, or overly modern aesthetics.; Any sense of ease or casualness.; Overly dramatic gestures or an abrupt change in the quiet tone.."
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_003",
+            "order": 1,
+            "source": {
+              "source_shot_id": "sh_003"
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_003",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_003",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_sh_003_kf_003.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A tight, eye-level close-up of Elias's face reveals his intense concentration, with furrowed brows and beads of sweat on his forehead. His eyes are narrowed, fixed on his intricate work. A soft, warm light from a desk lamp casts a glow on his features.",
+                "video_motion_hint": "Elias's eyes subtly shift, tracking his precise movements. A barely perceptible tension in his jaw muscles indicates his profound focus.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA tight, eye-level close-up of Elias's face reveals his intense concentration, with furrowed brows and beads of sweat on his forehead. His eyes are narrowed, fixed on his intricate work. A soft, warm light from a desk lamp casts a glow on his features.\nDo NOT use: Bright, chaotic, or overly modern aesthetics.; Any sense of ease or casualness.; Overly dramatic gestures or an abrupt change in the quiet tone.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 2,
+            "source": {
+              "source_shot_id": "sh_004"
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_004",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_004",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_sh_004_kf_004.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "An extreme close-up, from a high angle, focuses on the watch mechanism. A tiny, crucial gear is held between the fine tips of tweezers, poised over its intended slot. Elias's trembling fingers, visible at the frame's edge, delicately guide the tool.",
+                "video_motion_hint": "The camera slowly pushes in, amplifying the tension on the minuscule gear. A subtle, high-frequency wobble in the frame mirrors the tremor in Elias's hands as he attempts to steady them for the critical placement.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nAn extreme close-up, from a high angle, focuses on the watch mechanism. A tiny, crucial gear is held between the fine tips of tweezers, poised over its intended slot. Elias's trembling fingers, visible at the frame's edge, delicately guide the tool.\nDo NOT use: Bright, chaotic, or overly modern aesthetics.; Any sense of ease or casualness.; Overly dramatic gestures or an abrupt change in the quiet tone.."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_003"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "keyframe_id": "kf_char_001_sc_003",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_003",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_char_001_sc_003.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Show Elias with a softened expression, a gentle smile replacing his previous tension. His eyes convey quiet joy, profound relief, and enduring remembrance, reflecting a sense of quiet resolution.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nShow Elias with a softened expression, a gentle smile replacing his previous tension. His eyes convey quiet joy, profound relief, and enduring remembrance, reflecting a sense of quiet resolution.\nDo NOT use: Bright, chaotic, or overly modern aesthetics.; Any sense of ease or casualness.; Overly dramatic gestures or an abrupt change in the quiet tone.."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "keyframe_id": "kf_loc_001_sc_003",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_003",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_003.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Frame the workshop as peaceful and still, bathed in the warm, focused glow of a desk lamp. The clutter appears comforting, contrasting subtly with faint, celebratory sounds from outside.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nFrame the workshop as peaceful and still, bathed in the warm, focused glow of a desk lamp. The clutter appears comforting, contrasting subtly with faint, celebratory sounds from outside.\nDo NOT use: Bright, chaotic, or overly modern aesthetics.; Any sense of ease or casualness.; Overly dramatic gestures or an abrupt change in the quiet tone.."
+            }
+          ],
+          "props": [
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_001",
+              "keyframe_id": "kf_prop_001_sc_003",
+              "image_asset": {
+                "asset_id": "img_prop_001_sc_003",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_prop_001_sc_003.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Feature the watch as fully functional, its clear, steady ticking audible. It is held with deep reverence, a tangible symbol of Elias's achievement and his enduring love.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nFeature the watch as fully functional, its clear, steady ticking audible. It is held with deep reverence, a tangible symbol of Elias's achievement and his enduring love.\nDo NOT use: Bright, chaotic, or overly modern aesthetics.; Any sense of ease or casualness.; Overly dramatic gestures or an abrupt change in the quiet tone.."
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "order": 1,
+            "source": {
+              "source_shot_id": "sh_005"
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_005",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_005",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_sh_005_kf_005.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Close-up on Elias's hands as he delicately closes the fully repaired watch, its metal glinting in the warm desk lamp light. He then brings the watch to his ear, listening intently to its clear, steady tick.",
+                "video_motion_hint": "Elias's fingers subtly adjust the watch as he closes it, then his hand lifts the watch smoothly towards his ear. His head tilts slightly to focus on the sound.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nClose-up on Elias's hands as he delicately closes the fully repaired watch, its metal glinting in the warm desk lamp light. He then brings the watch to his ear, listening intently to its clear, steady tick.\nDo NOT use: Bright, chaotic, or overly modern aesthetics.; Any sense of ease or casualness.; Overly dramatic gestures or an abrupt change in the quiet tone.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 2,
+            "source": {
+              "source_shot_id": "sh_006"
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_006",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_006",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260404_190954/artifacts/media/KeyFrameAgent/image/img_sh_006_kf_006.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Medium close-up on Elias's face, illuminated by a soft, warm glow. A subtle, gentle smile plays on his lips, his eyes conveying a mix of relief, quiet joy, and deep, internal remembrance. He holds the ticking watch reverently in one hand, near a framed photograph on his workbench.",
+                "video_motion_hint": "Elias's gaze slowly shifts from the watch in his hand towards the framed photograph, a subtle flicker of emotion crossing his face as he looks at it.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nMedium close-up on Elias's face, illuminated by a soft, warm glow. A subtle, gentle smile plays on his lips, his eyes conveying a mix of relief, quiet joy, and deep, internal remembrance. He holds the ticking watch reverently in one hand, near a framed photograph on his workbench.\nDo NOT use: Bright, chaotic, or overly modern aesthetics.; Any sense of ease or casualness.; Overly dramatic gestures or an abrupt change in the quiet tone.."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 6,
+    "keyframe_count_total": 6,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 1,
+    "stability_character_keyframe_count": 3,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 3
+  }
+}

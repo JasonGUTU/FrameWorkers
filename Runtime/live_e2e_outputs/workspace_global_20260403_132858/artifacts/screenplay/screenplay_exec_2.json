@@ -1,0 +1,316 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-03T13:29:15.531488+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "Ten Seconds to Midnight",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Elias's Workshop/Study",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Elias, a venerable watchmaker, frantically works to place a tiny, critical gear into his late wife's pocket watch as a grandfather clock ominously counts down the last few seconds to midnight. His hands tremble with age and urgency, the pressure mounting.",
+        "estimated_duration": {
+          "seconds": 3.5,
+          "confidence": 0.9
+        },
+        "continuity": {
+          "props_present": [
+            "pocket watch",
+            "tiny gear",
+            "watchmaker's tweezers",
+            "magnifying loupe",
+            "grandfather clock",
+            "workbench",
+            "worn leather mat"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A worn tweed vest over a practical, long-sleeved shirt.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Elias's hands are trembling",
+            "The grandfather clock shows crucial seconds left",
+            "He is working on his late wife's pocket watch"
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_001",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "INT. ELIAS'S WORKSHOP/STUDY - NIGHT. CLOSE UP on ELIAS’s (70s, weary but determined) trembling, aged hands, holding a pair of fine WATCHMAKER'S TWEEZERS. A TINY, almost invisible GEAR rests precariously in the tips.",
+            "continuity_refs": {
+              "props": [
+                "watchmaker's tweezers",
+                "tiny gear"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_002",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "His brow is furrowed with intense concentration, a magnifying LOUPE pulled tight against his eye. The intricate MECHANISM of an open POCKET WATCH lies before him on a worn leather mat.",
+            "continuity_refs": {
+              "props": [
+                "magnifying loupe",
+                "pocket watch",
+                "worn leather mat"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_003",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A deep, resonant TICK-TOCK from a GRANDFATHER CLOCK in the background punctuates the silence. The clock's face shows 11:59:57.",
+            "continuity_refs": {
+              "props": [
+                "grandfather clock"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_004",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Elias guides the gear with painstaking slowness, his breath hitched in his throat. Sweat beads on his temple.",
+            "continuity_refs": {
+              "props": [
+                "tiny gear"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "Elias successfully places the minuscule gear into the watch mechanism, a moment of fragile success against the ticking clock.",
+          "emotional_shift": "Intense urgency and anxiety give way to a moment of focused relief, but the outcome is still uncertain, leaving him holding his breath."
+        }
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Elias's Workshop/Study",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Having placed the final component, Elias leans in, holding his breath, desperate to hear the first tick of his wife's restored pocket watch as the seconds dwindle down to midnight.",
+        "estimated_duration": {
+          "seconds": 3.0,
+          "confidence": 0.9
+        },
+        "continuity": {
+          "props_present": [
+            "pocket watch",
+            "grandfather clock"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A worn tweed vest over a practical, long-sleeved shirt.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Elias is listening intently for a tick",
+            "The grandfather clock continues its countdown"
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_005",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Elias pulls the magnifying LOUPE from his eye, his gaze fixed on the POCKET WATCH. He gently closes the watch casing.",
+            "continuity_refs": {
+              "props": [
+                "magnifying loupe",
+                "pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_006",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He brings the watch to his ear, his own breathing almost imperceptible. The GRANDFATHER CLOCK ticks -- 11:59:58.",
+            "continuity_refs": {
+              "props": [
+                "pocket watch",
+                "grandfather clock"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_007",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A beat of agonizing silence, stretched taut. Then, a faint, rhythmic TICK... TICK... TICK... The sound is small but clear.",
+            "continuity_refs": {
+              "props": [
+                "pocket watch"
+              ],
+              "wardrobe_character_ids": []
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "The watch begins to tick, a quiet but distinct sound breaking the overwhelming tension.",
+          "emotional_shift": "Anxious dread transforms into profound relief and a glimmer of hope, though still tinged with the memory of time's passage."
+        }
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_003",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Elias's Workshop/Study",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "As the grandfather clock chimes midnight, Elias looks from the now ticking pocket watch to a faded photograph of his late wife, a gentle, knowing smile finally gracing his lips, finding solace and connection in the new year.",
+        "estimated_duration": {
+          "seconds": 3.5,
+          "confidence": 0.9
+        },
+        "continuity": {
+          "props_present": [
+            "pocket watch",
+            "grandfather clock",
+            "framed photograph of wife"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A worn tweed vest over a practical, long-sleeved shirt.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "The grandfather clock chimes midnight",
+            "Elias looks at his wife's photograph",
+            "A knowing smile appears on Elias's face"
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_008",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A soft, triumphant smile spreads across Elias’s face as he listens to the steady rhythm of the POCKET WATCH. The GRANDFATHER CLOCK strikes its first CHIME. 11:59:59... *BONG*.",
+            "continuity_refs": {
+              "props": [
+                "pocket watch",
+                "grandfather clock"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_009",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Elias gently lays the ticking watch down on the workbench and reaches for a small, FADED PHOTOGRAPH of his WIFE. He looks at her smiling face in the frame.",
+            "continuity_refs": {
+              "props": [
+                "pocket watch",
+                "workbench",
+                "framed photograph of wife"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          },
+          {
+            "block_id": "b_010",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The GRANDFATHER CLOCK continues its midnight CHIMES. One... two... three...",
+            "continuity_refs": {
+              "props": [
+                "grandfather clock"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_011",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Elias meets his wife's gaze in the photograph, a quiet, knowing smile gracing his lips. A single tear, not of sorrow but of profound peace, wells in his eye.",
+            "continuity_refs": {
+              "props": [
+                "framed photograph of wife"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "Elias finds a moment of peaceful connection and acceptance with his wife's memory as the new year begins.",
+          "emotional_shift": "Lingering grief and urgency transition to quiet contentment, acceptance, and a hopeful, renewed connection, marking a moment of solace."
+        }
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "estimated_total_duration_sec": 10.0,
+    "sum_scene_duration_sec": 10.0,
+    "scene_count": 3,
+    "dialogue_block_count": 0,
+    "action_block_count": 11
+  }
+}

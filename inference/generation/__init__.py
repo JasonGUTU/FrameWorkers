@@ -11,7 +11,7 @@ from .image_generators.registry import ImageGeneratorRegistry, get_image_generat
 from .video_generators.registry import VideoGeneratorRegistry, get_video_generator_registry
 from .audio_generators.registry import AudioGeneratorRegistry, get_audio_generator_registry
 from .image_generators.service import FalImageService, ImageService, MockImageService
-from .video_generators.service import FalVideoService, MockVideoService, VideoService
+from .video_generators.service import FalVideoService, MockVideoService, VideoService, WavespeedVideoService
 from .audio_generators.service import AudioService, FalAudioService, MockAudioService
 
 __all__ = [
@@ -30,6 +30,7 @@ __all__ = [
     "ImageService",
     "MockImageService",
     "FalVideoService",
+    "WavespeedVideoService",
     "VideoService",
     "MockVideoService",
     "FalAudioService",

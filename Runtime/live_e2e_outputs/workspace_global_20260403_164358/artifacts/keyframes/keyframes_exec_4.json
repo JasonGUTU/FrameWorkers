@@ -1,0 +1,667 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_type": "character",
+          "entity_id": "char_001",
+          "display_name": "",
+          "purpose": "identity_anchor",
+          "keyframe_id": "kf_global_char_001",
+          "image_asset": {
+            "asset_id": "img_char_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_164358/artifacts/media/KeyFrameAgent/image/img_char_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Somber and intimate, with a melancholic tone that shifts towards determined. Use warm, focused lighting contrasting with deep shadows to emphasize details and Arthur's emotional state. Texture and age are important visual elements.; Tense, anxious, and highly focused. Utilize extreme close-ups on the intricate mechanisms and Arthur's hands to convey the difficulty of the task. Sound design should emphasize the amplified ticks of the clock and the delicate sounds of tools. Lighting remains dim overall with a bright, concentrated spot.; Profound, emotional, and peaceful. Pacing should be slow and deliberate, allowing moments to linger. Sound design is paramount, emphasizing the watch's tick and the clock's chimes. Warm, soft lighting. Lingering shots on Arthur's face conveying emotional release. Must avoid: Bright, sterile, or overly modern aesthetic. Rapid-fire editing.; Bright or clinical full room lighting. Distracting background elements that detract from the focus on the repair.; Fast cuts or abrupt transitions that would disrupt the sense of peace and emotional resolution. Arthur, a man in his early 70s, with a gentle but weary face marked by life's experiences. He wears a well-worn, dark green knitted cardigan over a simple, light-colored collared shirt. His silver-rimmed spectacles are typically resting on the bridge of his nose. His hands, though aged, retain a delicate quality. His posture often suggests a quiet burden of grief, yet with an underlying current of resilience and quiet resolve. The lighting is warm and focused, casting soft highlights on his face and the textures of his clothing, while deep shadows frame his form, enhancing a melancholic and intimate atmosphere."
+        }
+      ],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "display_name": "",
+          "purpose": "style_anchor",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_164358/artifacts/media/KeyFrameAgent/image/img_loc_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Somber and intimate, with a melancholic tone that shifts towards determined. Use warm, focused lighting contrasting with deep shadows to emphasize details and Arthur's emotional state. Texture and age are important visual elements.; Tense, anxious, and highly focused. Utilize extreme close-ups on the intricate mechanisms and Arthur's hands to convey the difficulty of the task. Sound design should emphasize the amplified ticks of the clock and the delicate sounds of tools. Lighting remains dim overall with a bright, concentrated spot.; Profound, emotional, and peaceful. Pacing should be slow and deliberate, allowing moments to linger. Sound design is paramount, emphasizing the watch's tick and the clock's chimes. Warm, soft lighting. Lingering shots on Arthur's face conveying emotional release. Must avoid: Bright, sterile, or overly modern aesthetic. Rapid-fire editing.; Bright or clinical full room lighting. Distracting background elements that detract from the focus on the repair.; Fast cuts or abrupt transitions that would disrupt the sense of peace and emotional resolution. A dimly lit, cluttered home workshop at night, exuding a profound sense of history and a life deeply lived. The air is thick with a slightly melancholic atmosphere. A single desk lamp casts a warm, focused beam of light onto a central workbench area, highlighting intricate dust motes suspended in the air. The workbench itself is heavily cluttered with various watchmaking tools, small components, old books, and personal mementos. Deep shadows envelop the rest of the room, creating an intimate contrast. The walls are lined with wooden shelves packed with objects that hint at decades of work and memories. Textures of aged wood, tarnished metal, and worn fabric are prominent, contributing to the overall somber and intimate feel."
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_164358/artifacts/media/KeyFrameAgent/image/img_char_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Somber and intimate, with a melancholic tone that shifts towards determined. Use warm, focused lighting contrasting with deep shadows to emphasize details and Arthur's emotional state. Texture and age are important visual elements. Show Arthur, a man in his 70s, as a retired watchmaker, initially burdened by quiet grief, transitioning to quiet resolve. He wears a worn, dark green cardigan over a simple collared shirt, with spectacles resting on his nose. His face is etched with the subtle lines of age and quiet grief. The lighting is dim, cast by a single desk lamp, highlighting the textures of his clothing and skin, creating deep shadows that convey his burdened emotional state. Dust motes are visible in the concentrated beam of light."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_164358/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Somber and intimate, with a melancholic tone that shifts towards determined. Use warm, focused lighting contrasting with deep shadows to emphasize details and Arthur's emotional state. Texture and age are important visual elements. Depict a home workshop at night, dimly lit and highly cluttered. The atmosphere is one of history and lived-in space, slightly melancholic. A single desk lamp casts a focused, warm beam of light onto a workbench, emphasizing the rich textures of aged wood, scattered tiny, specialized watchmaker's tools and various objects. Deep shadows engulf the rest of the room. Dust motes are visibly dancing within the desk lamp's beam, suggesting the passage of time and the quiet stillness of the night."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_001",
+              "linked_blocks": [
+                "b_001"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Somber and intimate, with a melancholic tone that shifts towards determined. Use warm, focused lighting contrasting with deep shadows to emphasize details and Arthur's emotional state. Texture and age are important visual elements. Low angle, static shot of a dimly lit, cluttered home workshop at night. Focus on an imposing, antique grandfather clock with a loud ticking mechanism, almost midnight, in the background and a cluttered workbench with a desk lamp in the mid-ground. The desk lamp casts a warm, focused beam, illuminating the workbench and causing dust motes to dance visibly in the air. Deep shadows dominate the periphery, establishing a melancholic, aged atmosphere and emphasizing the prominent presence of the grandfather clock.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_002",
+              "linked_blocks": [
+                "b_002"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_002",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Somber and intimate, with a melancholic tone that shifts towards determined. Use warm, focused lighting contrasting with deep shadows to emphasize details and Arthur's emotional state. Texture and age are important visual elements. Medium, eye-level, static shot of Arthur, a man in his 70s, hunched over from the chest up. He wears a worn, dark green cardigan over a simple collared shirt, spectacles resting on his nose. His face is etched with quiet grief, illuminated by a warm, focused desk lamp, contrasting with deep shadows. His delicate, slightly trembling hands hold a broken, intricate pocket watch with motionless gears. The overall mood is melancholic and intimate, conveying his emotional burden.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_003",
+              "linked_blocks": [
+                "b_003"
+              ]
+            },
+            "estimated_duration_sec": 0.7,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_003",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, anxious, and highly focused. Utilize extreme close-ups on the intricate mechanisms and Arthur's hands to convey the difficulty of the task. Sound design should emphasize the amplified ticks of the clock and the delicate sounds of tools. Lighting remains dim overall with a bright, concentrated spot. Tight close-up, eye-level, static shot focusing on the intricate, motionless gears of a broken antique pocket watch. The lighting is dim overall, with a bright, concentrated spot emphasizing the delicate, unmoving parts of the watch, creating a sense of tension and highlighting its stillness amidst the implied urgency of time.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_004",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, anxious, and highly focused. Utilize extreme close-ups on the intricate mechanisms and Arthur's hands to convey the difficulty of the task. Sound design should emphasize the amplified ticks of the clock and the delicate sounds of tools. Lighting remains dim overall with a bright, concentrated spot. Quick cut to a close-up, eye-level, static shot of the grandfather clock's hands, ticking loudly and almost touching 12. The dim, concentrated lighting emphasizes the urgency and the amplified presence of the ticking clock, creating a tense and anxious atmosphere, contrasting sharply with the motionless pocket watch.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "source": {
+              "storyboard_shot_id": "sh_004",
+              "linked_blocks": [
+                "b_004",
+                "b_005"
+              ]
+            },
+            "estimated_duration_sec": 0.8,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_005",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Profound, emotional, and peaceful. Pacing should be slow and deliberate, allowing moments to linger. Sound design is paramount, emphasizing the watch's tick and the clock's chimes. Warm, soft lighting. Lingering shots on Arthur's face conveying emotional release. Medium close-up, eye-level shot with a slight push-in movement, focusing on Arthur's face. His expression subtly shifts from deep grief to a firm resolve as he glances at a faded photograph of a woman's smiling face. The lighting is warm and soft, accentuating the nuanced emotional change and the peaceful, profound moment of internal transition.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_006",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Profound, emotional, and peaceful. Pacing should be slow and deliberate, allowing moments to linger. Sound design is paramount, emphasizing the watch's tick and the clock's chimes. Warm, soft lighting. Lingering shots on Arthur's face conveying emotional release. The camera lingers, then Arthur's hands enter the frame, reaching purposefully for a magnifying loupe and tiny, specialized watchmaker's tools scattered on a cluttered workbench. The warm, soft lighting highlights the texture of his aged hands and the tools, signifying a determined shift from passive grief to active resolve, maintaining a profound and peaceful tone.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_002"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_002",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_164358/artifacts/media/KeyFrameAgent/image/img_char_001_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Tense, anxious, and highly focused. Utilize extreme close-ups on the intricate mechanisms and Arthur's hands to convey the difficulty of the task. Sound design should emphasize the amplified ticks of the clock and the delicate sounds of tools. Lighting remains dim overall with a bright, concentrated spot. Edit Arthur's global anchor. Show him in his worn, dark green cardigan and collared shirt. He is wearing his spectacles, positioned on his nose, indicating deep concentration. His aging hands are intensely focused and meticulous, displaying a faint tremor under pressure. The overall lighting is dim, with a bright, concentrated spot illuminating his work."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_002",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_164358/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Tense, anxious, and highly focused. Utilize extreme close-ups on the intricate mechanisms and Arthur's hands to convey the difficulty of the task. Sound design should emphasize the amplified ticks of the clock and the delicate sounds of tools. Lighting remains dim overall with a bright, concentrated spot. Edit the workshop's global anchor. Show an intensely focused area of the workbench, brightly illuminated by a desk lamp. The rest of the workshop recedes into deep, dark shadows, creating a sense of isolation around Arthur's task. The grandfather clock is present, its form visible but receding into the darkness, with its presence implied more by sound."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_005",
+              "linked_blocks": [
+                "b_006"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_007",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, anxious, and highly focused. Utilize extreme close-ups on the intricate mechanisms and Arthur's hands to convey the difficulty of the task. Sound design should emphasize the amplified ticks of the clock and the delicate sounds of tools. Lighting remains dim overall with a bright, concentrated spot. High angle, static shot. Tight shot on Arthur's aging hands, which are intensely focused and meticulous, under a magnifying loupe on a cluttered workbench. The disassembled pocket watch components – a constellation of minuscule gears, hair-thin springs, and levers – are meticulously arranged on a velvet cloth. Arthur's furrowed brow is visible in the upper frame, indicating deep concentration on the extreme intricacy of the task. The area under the loupe is brightly illuminated by a desk lamp, contrasting with the deep shadows around.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_006",
+              "linked_blocks": [
+                "b_007"
+              ]
+            },
+            "estimated_duration_sec": 0.8,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_008",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, anxious, and highly focused. Utilize extreme close-ups on the intricate mechanisms and Arthur's hands to convey the difficulty of the task. Sound design should emphasize the amplified ticks of the clock and the delicate sounds of tools. Lighting remains dim overall with a bright, concentrated spot. Eye-level, static, extreme close-up shot on Arthur's aged, trembling hand, clad in a dark green cardigan sleeve, holding delicate tweezers. He is carefully attempting to pick up a single, hair-thin spring from the velvet cloth. The slight, almost imperceptible tremor in his hand is subtly emphasized by the focused light and deep shadows, highlighting the physical challenge and fragility of the watch components.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_007",
+              "linked_blocks": [
+                "b_008"
+              ]
+            },
+            "estimated_duration_sec": 0.7,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_009",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, anxious, and highly focused. Utilize extreme close-ups on the intricate mechanisms and Arthur's hands to convey the difficulty of the task. Sound design should emphasize the amplified ticks of the clock and the delicate sounds of tools. Lighting remains dim overall with a bright, concentrated spot. Low angle, static shot focusing on the pendulum of an old grandfather clock. The pendulum is in rhythmic, insistent motion, slightly out of focus. The clock face is prominent in the background, subtly receding into the dim lighting, reinforcing the relentless march of time and mounting pressure on Arthur, with an amplified and ominous ticking sound implied.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_008",
+            "order": 4,
+            "source": {
+              "storyboard_shot_id": "sh_008",
+              "linked_blocks": [
+                "b_009",
+                "b_010"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_010",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, anxious, and highly focused. Utilize extreme close-ups on the intricate mechanisms and Arthur's hands to convey the difficulty of the task. Sound design should emphasize the amplified ticks of the clock and the delicate sounds of tools. Lighting remains dim overall with a bright, concentrated spot. Eye-level, static shot of Arthur's aged hands over the workbench. A tiny gear has just slipped from his delicate tweezers, landing silently on the velvet cloth. His hands freeze momentarily, conveying a sudden gasp of dismay and panic, under the intense, focused light of the desk lamp.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_011",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Tense, anxious, and highly focused. Utilize extreme close-ups on the intricate mechanisms and Arthur's hands to convey the difficulty of the task. Sound design should emphasize the amplified ticks of the clock and the delicate sounds of tools. Lighting remains dim overall with a bright, concentrated spot. Eye-level shot, with a slight zoom out from the previous frame. Arthur's hands, now steadied with renewed, almost ritualistic focus, carefully retrieve the tiny gear using the tweezers from the workbench. His spectacles are visible, indicating intense concentration, as he re-asserts control and determination over the delicate task, bathed in the focused beam of the desk lamp.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "source": {
+          "storyboard_asset_id": "",
+          "storyboard_scene_id": "sc_003"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_003",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_003",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_164358/artifacts/media/KeyFrameAgent/image/img_char_001_sc_003.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Profound, emotional, and peaceful. Pacing should be slow and deliberate, allowing moments to linger. Sound design is paramount, emphasizing the watch's tick and the clock's chimes. Warm, soft lighting. Lingering shots on Arthur's face conveying emotional release. Show Arthur, in his worn, dark green cardigan, collared shirt, and spectacles, with a faint sheen of perspiration on his forehead. His expression transitions from intense anticipation and lingering despair to profound peace, relief, and a deep, comforting sense of connection, illuminated by warm, soft light that highlights his features and emphasizes deep shadows."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_003",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_003",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_164358/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_003.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Profound, emotional, and peaceful. Pacing should be slow and deliberate, allowing moments to linger. Sound design is paramount, emphasizing the watch's tick and the clock's chimes. Warm, soft lighting. Lingering shots on Arthur's face conveying emotional release. Depict the workshop at night, quiet and almost reverent. A focused desk lamp illuminates the workbench area, casting warm, soft light on the immediate surroundings, while deep shadows envelop the rest of the room, creating an atmosphere of profound peace and intimacy. The workbench area is clear, focusing on Arthur's actions."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_009",
+            "order": 1,
+            "source": {
+              "storyboard_shot_id": "sh_009",
+              "linked_blocks": [
+                "b_011"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_012",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Profound, emotional, and peaceful. Pacing should be slow and deliberate, allowing moments to linger. Sound design is paramount, emphasizing the watch's tick and the clock's chimes. Warm, soft lighting. Lingering shots on Arthur's face conveying emotional release. A tight close-up, eye-level, static shot, on Arthur's hands as he gently, almost reverently, closes the back casing of the repaired pocket watch. His movements are precise and deliberate, conveying the finality and culmination of his work. Warm, focused light illuminates the intricate details of the watch and his careful hands, contrasting with deep shadows.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 2,
+            "source": {
+              "storyboard_shot_id": "sh_010",
+              "linked_blocks": [
+                "b_012"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_013",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Profound, emotional, and peaceful. Pacing should be slow and deliberate, allowing moments to linger. Sound design is paramount, emphasizing the watch's tick and the clock's chimes. Warm, soft lighting. Lingering shots on Arthur's face conveying emotional release. A medium close-up, eye-level shot, with a slight push in, focusing on Arthur's face and upper body. He brings the repaired pocket watch close to his ear, his eyes wide with intense anticipation, his entire body rigid with expectation. Warm, soft, focused light emphasizes his anxious yet hopeful expression, with deep shadows enhancing the mood of profound emotional investment.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_011",
+            "order": 3,
+            "source": {
+              "storyboard_shot_id": "sh_011",
+              "linked_blocks": [
+                "b_013",
+                "b_014"
+              ]
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_014",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Profound, emotional, and peaceful. Pacing should be slow and deliberate, allowing moments to linger. Sound design is paramount, emphasizing the watch's tick and the clock's chimes. Warm, soft lighting. Lingering shots on Arthur's face conveying emotional release. An extreme close-up, eye-level, static shot, of the face of the repaired pocket watch. The minute hand makes its first, almost imperceptible TICK, signalling its miraculous reawakening. The watch is illuminated by a warm, focused light, highlighting its intricate details, while deep shadows frame the moment of profound significance.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_015",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Profound, emotional, and peaceful. Pacing should be slow and deliberate, allowing moments to linger. Sound design is paramount, emphasizing the watch's tick and the clock's chimes. Warm, soft lighting. Lingering shots on Arthur's face conveying emotional release. A medium shot, eye-level, static, of the grandfather clock's face. Its hands precisely hit 12 as deep, resonant chimes begin, synchronizing with the watch's first tick. Warm, soft light gently illuminates the clock, with deep shadows contributing to the solemn, emotional atmosphere of this climatic moment.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_012",
+            "order": 4,
+            "source": {
+              "storyboard_shot_id": "sh_012",
+              "linked_blocks": [
+                "b_015",
+                "b_016"
+              ]
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_016",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Profound, emotional, and peaceful. Pacing should be slow and deliberate, allowing moments to linger. Sound design is paramount, emphasizing the watch's tick and the clock's chimes. Warm, soft lighting. Lingering shots on Arthur's face conveying emotional release. A close-up, eye-level shot, focusing on Arthur's face. A slow, soft, profound smile begins to replace his grief and tension, his eyes gently closing in the initial wave of relief. Warm, soft lighting exquisitely highlights his features, with deep shadows deepening the emotional impact of this internal resolution.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              },
+              {
+                "keyframe_id": "kf_017",
+                "order": 2,
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "placeholder",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Profound, emotional, and peaceful. Pacing should be slow and deliberate, allowing moments to linger. Sound design is paramount, emphasizing the watch's tick and the clock's chimes. Warm, soft lighting. Lingering shots on Arthur's face conveying emotional release. An eye-level shot, slowly pulling out from Arthur's face, to show him holding the now ticking pocket watch against his chest. His eyes remain gently closed, his expression serene, conveying ultimate peace and a deep, comforting sense of connection. The chimes of the grandfather clock continue softly in the background, but the focus is entirely on Arthur's internal emotional release, emphasized by warm, soft lighting and profound shadows.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 12,
+    "keyframe_count_total": 17,
+    "avg_keyframes_per_shot": 1.4166666666666667,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 3,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 0
+  }
+}

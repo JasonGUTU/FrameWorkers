@@ -1,0 +1,451 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_type": "character",
+          "entity_id": "char_001",
+          "display_name": "",
+          "purpose": "identity_anchor",
+          "keyframe_id": "kf_global_char_001",
+          "image_asset": {
+            "asset_id": "img_char_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_221709/artifacts/media/KeyFrameAgent/image/img_char_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Use warm, low-key lighting to enhance the melancholy and nostalgic tone.; Maintain a slow, deliberate pace during precise work, contrasting with quick cuts for urgency.; Focus on tactile details and close-ups to convey Elias's skill and emotional connection.; Lighting remains intimate, possibly casting dramatic shadows during moments of struggle.; Pacing becomes slightly quicker, with tighter cuts, to convey the building tension and urgency.; Heighten sound design for the clock's ticking and the delicate, frustrating sounds of the watch parts.; Lighting softens further, creating a gentle glow around Elias and the watch.; Pacing slows, allowing for the emotional weight of the moment to settle.; Sound design emphasizes the delicate ticking of the watch, contrasted with the powerful chimes of the grandfather clock and distant celebrations. A venerable, silver-haired man, Elias, with kind but weary eyes, deeply focused on a delicate task. He wears comfortable, slightly worn attire, reflecting his retired status and practical nature. His expression is one of profound concentration, hinting at a deep connection to his work."
+        }
+      ],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "display_name": "",
+          "purpose": "style_anchor",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_221709/artifacts/media/KeyFrameAgent/image/img_loc_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Use warm, low-key lighting to enhance the melancholy and nostalgic tone.; Maintain a slow, deliberate pace during precise work, contrasting with quick cuts for urgency.; Focus on tactile details and close-ups to convey Elias's skill and emotional connection.; Lighting remains intimate, possibly casting dramatic shadows during moments of struggle.; Pacing becomes slightly quicker, with tighter cuts, to convey the building tension and urgency.; Heighten sound design for the clock's ticking and the delicate, frustrating sounds of the watch parts.; Lighting softens further, creating a gentle glow around Elias and the watch.; Pacing slows, allowing for the emotional weight of the moment to settle.; Sound design emphasizes the delicate ticking of the watch, contrasted with the powerful chimes of the grandfather clock and distant celebrations. A warm, dimly lit workshop and living room combined, illuminated primarily by a single desk lamp casting intimate pools of light on a workbench. The room is filled with a clutter of watchmaker's tools and antique watches, hinting at a life dedicated to the craft. A prominent grandfather clock stands against a wall, its large face visible, exuding a commanding presence. The overall atmosphere is subdued and a sanctuary for meticulous work."
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_221709/artifacts/media/KeyFrameAgent/image/img_char_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Use warm, low-key lighting to enhance the melancholy and nostalgic tone.; Maintain a slow, deliberate pace during precise work, contrasting with quick cuts for urgency.; Focus on tactile details and close-ups to convey Elias's skill and emotional connection.; Lighting remains intimate, possibly casting dramatic shadows during moments of struggle.; Pacing becomes slightly quicker, with tighter cuts, to convey the building tension and urgency.; Heighten sound design for the clock's ticking and the delicate, frustrating sounds of the watch parts.; Lighting softens further, creating a gentle glow around Elias and the watch.; Pacing slows, allowing for the emotional weight of the moment to settle.; Sound design emphasizes the delicate ticking of the watch, contrasted with the powerful chimes of the grandfather clock and distant celebrations. Show Elias, a venerable, silver-haired man with kind but weary eyes, under the warm, dim light of a desk lamp at night. His focused expression is visible, and his hands, precise and steady despite showing signs of age, are at work. He wears comfortable, slightly worn attire, reflecting his retired status and practical nature."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_221709/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Use warm, low-key lighting to enhance the melancholy and nostalgic tone.; Maintain a slow, deliberate pace during precise work, contrasting with quick cuts for urgency.; Focus on tactile details and close-ups to convey Elias's skill and emotional connection.; Lighting remains intimate, possibly casting dramatic shadows during moments of struggle.; Pacing becomes slightly quicker, with tighter cuts, to convey the building tension and urgency.; Heighten sound design for the clock's ticking and the delicate, frustrating sounds of the watch parts.; Lighting softens further, creating a gentle glow around Elias and the watch.; Pacing slows, allowing for the emotional weight of the moment to settle.; Sound design emphasizes the delicate ticking of the watch, contrasted with the powerful chimes of the grandfather clock and distant celebrations. Show the workshop/living room at night, dimly lit by a single desk lamp that creates intimate pools of light. The space is cluttered with watchmaker's tools and antique watches, suggesting a life dedicated to the craft. A prominent grandfather clock stands in the background, its rhythmic ticking almost audible in the quiet room."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "source_shot_id": "sh_001"
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_001",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_221709/artifacts/media/KeyFrameAgent/image/img_sh_001_kf_001.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Use warm, low-key lighting to enhance the melancholy and nostalgic tone.; Maintain a slow, deliberate pace during precise work, contrasting with quick cuts for urgency.; Focus on tactile details and close-ups to convey Elias's skill and emotional connection.; Lighting remains intimate, possibly casting dramatic shadows during moments of struggle.; Pacing becomes slightly quicker, with tighter cuts, to convey the building tension and urgency.; Heighten sound design for the clock's ticking and the delicate, frustrating sounds of the watch parts.; Lighting softens further, creating a gentle glow around Elias and the watch.; Pacing slows, allowing for the emotional weight of the moment to settle.; Sound design emphasizes the delicate ticking of the watch, contrasted with the powerful chimes of the grandfather clock and distant celebrations. Medium close-up, eye-level, static shot of Elias, a venerable, silver-haired man, concentrating intently. His aged, precise hands are carefully working on the delicate, ornate, disassembled late wife's pocket watch under the warm, focused beam of a desk lamp. Various watchmaker's tools, including microscopes, tweezers, and tiny screwdrivers, are organized on his workbench around the intricate watch parts. The frame emphasizes his upper body, his hands, and the workbench, highlighting his deep concentration and the delicate nature of his work.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "source_shot_id": "sh_002"
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_002",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_002",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_221709/artifacts/media/KeyFrameAgent/image/img_sh_002_kf_002.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Use warm, low-key lighting to enhance the melancholy and nostalgic tone.; Maintain a slow, deliberate pace during precise work, contrasting with quick cuts for urgency.; Focus on tactile details and close-ups to convey Elias's skill and emotional connection.; Lighting remains intimate, possibly casting dramatic shadows during moments of struggle.; Pacing becomes slightly quicker, with tighter cuts, to convey the building tension and urgency.; Heighten sound design for the clock's ticking and the delicate, frustrating sounds of the watch parts.; Lighting softens further, creating a gentle glow around Elias and the watch.; Pacing slows, allowing for the emotional weight of the moment to settle.; Sound design emphasizes the delicate ticking of the watch, contrasted with the powerful chimes of the grandfather clock and distant celebrations. Close-up, eye-level, static shot focusing tightly on the dominant presence of the grandfather clock. The pendulum swings rhythmically, and the clock face clearly shows the time approaching midnight, emphasizing the passage of time and the approaching deadline. The warm, low-key lighting of the room casts soft shadows on its polished wood.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "source": {
+              "source_shot_id": "sh_003"
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_003",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_003",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_221709/artifacts/media/KeyFrameAgent/image/img_sh_003_kf_003.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Use warm, low-key lighting to enhance the melancholy and nostalgic tone.; Maintain a slow, deliberate pace during precise work, contrasting with quick cuts for urgency.; Focus on tactile details and close-ups to convey Elias's skill and emotional connection.; Lighting remains intimate, possibly casting dramatic shadows during moments of struggle.; Pacing becomes slightly quicker, with tighter cuts, to convey the building tension and urgency.; Heighten sound design for the clock's ticking and the delicate, frustrating sounds of the watch parts.; Lighting softens further, creating a gentle glow around Elias and the watch.; Pacing slows, allowing for the emotional weight of the moment to settle.; Sound design emphasizes the delicate ticking of the watch, contrasted with the powerful chimes of the grandfather clock and distant celebrations. Medium close-up, eye-level, static shot of Elias's face, a venerable, silver-haired man with kind but weary eyes. His expression shows a subtle shift, a nuanced wistfulness, as he acknowledges the rhythmic ticking of the grandfather clock and the limited time. The warm, low-key lighting from the desk lamp softly illuminates his features, capturing his internal pressure and awareness without overt joy or sadness.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_002"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_002",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_221709/artifacts/media/KeyFrameAgent/image/img_char_001_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Elias in his comfortable, slightly worn attire, illuminated by warm, low-key light that casts dramatic shadows. His expression shifts from intense concentration to frustration, his eyes narrowing slightly, and then settles into resolute determination. His hands, still dexterous despite their age, show fleeting moments of tremor under stress as he meticulously works on the watch."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_002",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_221709/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "The workshop interior at night, bathed in warm, subdued, low-key lighting that intensely focuses on Elias's workbench. Shadows are deep and dramatic, emphasizing the intimate and melancholy atmosphere. The air is still, save for the prominently emphasized, almost palpable ticking of the grandfather clock, cutting through the silence of the room."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_004",
+            "order": 1,
+            "source": {
+              "source_shot_id": "sh_004"
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_004",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_004",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_221709/artifacts/media/KeyFrameAgent/image/img_sh_004_kf_004.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Use warm, low-key lighting to enhance the melancholy and nostalgic tone.; Maintain a slow, deliberate pace during precise work, contrasting with quick cuts for urgency.; Focus on tactile details and close-ups to convey Elias's skill and emotional connection.; Lighting remains intimate, possibly casting dramatic shadows during moments of struggle.; Pacing becomes slightly quicker, with tighter cuts, to convey the building tension and urgency.; Heighten sound design for the clock's ticking and the delicate, frustrating sounds of the watch parts.; Lighting softens further, creating a gentle glow around Elias and the watch.; Pacing slows, allowing for the emotional weight of the moment to settle.; Sound design emphasizes the delicate ticking of the watch, contrasted with the powerful chimes of the grandfather clock and distant celebrations. Extreme high-angle static shot, an extreme close-up on the intricate inner workings of the late wife's pocket watch. A tiny, unseated gear is precisely at the center, stubbornly resisting placement. Elias's aged but remarkably dexterous fingertips, slightly trembling with frustration and concentration, hold delicate watchmaker's tweezers. The tweezers are attempting to carefully manipulate the gear into place. The lighting is dramatically intimate, highlighting every metallic detail and the fine hair on his fingers, casting long, stark shadows that underscore the difficulty.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 2,
+            "source": {
+              "source_shot_id": "sh_005"
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_005",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_005",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_221709/artifacts/media/KeyFrameAgent/image/img_sh_005_kf_005.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Use warm, low-key lighting to enhance the melancholy and nostalgic tone.; Maintain a slow, deliberate pace during precise work, contrasting with quick cuts for urgency.; Focus on tactile details and close-ups to convey Elias's skill and emotional connection.; Lighting remains intimate, possibly casting dramatic shadows during moments of struggle.; Pacing becomes slightly quicker, with tighter cuts, to convey the building tension and urgency.; Heighten sound design for the clock's ticking and the delicate, frustrating sounds of the watch parts.; Lighting softens further, creating a gentle glow around Elias and the watch.; Pacing slows, allowing for the emotional weight of the moment to settle.; Sound design emphasizes the delicate ticking of the watch, contrasted with the powerful chimes of the grandfather clock and distant celebrations. Eye-level static shot, a tight close-up on the ornate face of the grandfather clock. The minute hand is prominently featured, ominously close to the midnight hour. The warm, low-key lighting catches the polished brass and the glass, emphasizing the urgency of the rapidly passing time with dramatic shadows across the clock face. The prominent, insistent ticking sound is almost palpable, a constant reminder of the countdown.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 3,
+            "source": {
+              "source_shot_id": "sh_006"
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_006",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_006",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_221709/artifacts/media/KeyFrameAgent/image/img_sh_006_kf_006.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Use warm, low-key lighting to enhance the melancholy and nostalgic tone.; Maintain a slow, deliberate pace during precise work, contrasting with quick cuts for urgency.; Focus on tactile details and close-ups to convey Elias's skill and emotional connection.; Lighting remains intimate, possibly casting dramatic shadows during moments of struggle.; Pacing becomes slightly quicker, with tighter cuts, to convey the building tension and urgency.; Heighten sound design for the clock's ticking and the delicate, frustrating sounds of the watch parts.; Lighting softens further, creating a gentle glow around Elias and the watch.; Pacing slows, allowing for the emotional weight of the moment to settle.; Sound design emphasizes the delicate ticking of the watch, contrasted with the powerful chimes of the grandfather clock and distant celebrations. Eye-level static shot, a medium close-up of Elias. His face is framed, showing a resolute determination now overriding his previous momentary frustration. His eyes are intensely focused on the late wife's pocket watch, held carefully in his hands. His dexterous hands, still showing a slight tremor under stress, are now moving with a renewed, firm purpose with the watchmaker's tweezers. Warm, intimate, low-key lighting casts dramatic shadows, highlighting the contours of his face and the delicate, precise work.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_003"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_char_001_sc_003",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_003",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_221709/artifacts/media/KeyFrameAgent/image/img_char_001_sc_003.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Show Elias under warm, low-key lighting that casts a gentle glow around him, his face softening from intense focus to a gentle, wistful smile reflecting relief and a touch of melancholy. He wears his comfortable, slightly worn attire, consistent with previous scenes. His hands, previously tense from work, now hold the repaired late wife's pocket watch with tenderness and reverence."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "display_name": "",
+              "purpose": "scene_adaptation",
+              "keyframe_id": "kf_loc_001_sc_003",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_003",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_221709/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_003.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Show Elias's workshop/home at night, bathed in warm, subdued, low-key lighting that feels comforting and acts as a sanctuary. The ambiance is intimate and soft. Subtle, muffled sounds of distant New Year's celebrations, like chimes and faint fireworks, filter in through the quiet, emphasizing the world outside while maintaining the internal focus."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_007",
+            "order": 1,
+            "source": {
+              "source_shot_id": "sh_007"
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_007",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_007_kf_007",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_221709/artifacts/media/KeyFrameAgent/image/img_sh_007_kf_007.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Use warm, low-key lighting to enhance the melancholy and nostalgic tone.; Maintain a slow, deliberate pace during precise work, contrasting with quick cuts for urgency.; Focus on tactile details and close-ups to convey Elias's skill and emotional connection.; Lighting remains intimate, possibly casting dramatic shadows during moments of struggle.; Pacing becomes slightly quicker, with tighter cuts, to convey the building tension and urgency.; Heighten sound design for the clock's ticking and the delicate, frustrating sounds of the watch parts.; Lighting softens further, creating a gentle glow around Elias and the watch.; Pacing slows, allowing for the emotional weight of the moment to settle.; Sound design emphasizes the delicate ticking of the watch, contrasted with the powerful chimes of the grandfather clock and distant celebrations. Extreme close-up, eye-level, static shot of the late wife's pocket watch. The fully repaired watch is now audibly ticking, its golden mechanism glinting softly in the intimate, gentle glow of the room. Focus tightly on the intricate details of the watch's inner workings, specifically capturing the subtle, rhythmic movement of the balance wheel as it begins its new life, symbolizing renewed connection and hope. The textures of the metal are highlighted.",
+                "constraints_applied": {
+                  "characters_in_frame": [],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_008",
+            "order": 2,
+            "source": {
+              "source_shot_id": "sh_008"
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_008",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_008_kf_008",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_221709/artifacts/media/KeyFrameAgent/image/img_sh_008_kf_008.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Use warm, low-key lighting to enhance the melancholy and nostalgic tone.; Maintain a slow, deliberate pace during precise work, contrasting with quick cuts for urgency.; Focus on tactile details and close-ups to convey Elias's skill and emotional connection.; Lighting remains intimate, possibly casting dramatic shadows during moments of struggle.; Pacing becomes slightly quicker, with tighter cuts, to convey the building tension and urgency.; Heighten sound design for the clock's ticking and the delicate, frustrating sounds of the watch parts.; Lighting softens further, creating a gentle glow around Elias and the watch.; Pacing slows, allowing for the emotional weight of the moment to settle.; Sound design emphasizes the delicate ticking of the watch, contrasted with the powerful chimes of the grandfather clock and distant celebrations. Medium shot, eye-level, static shot. The prominent grandfather clock stands tall and majestic, its elegant pendulum slowly swinging, bathed in warm, low-key light from the room. Its hands are precisely at the stroke of twelve, and the clock is in the act of chiming loudly, its powerful chimes announcing the New Year, resonating with resolution. In the softly blurred background, Elias is subtly visible, a gentle glow around him, looking towards the clock with a wistful expression, holding the now-ticking pocket watch.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 3,
+            "source": {
+              "source_shot_id": "sh_009"
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_009",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_009_kf_009",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260403_221709/artifacts/media/KeyFrameAgent/image/img_sh_009_kf_009.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Use warm, low-key lighting to enhance the melancholy and nostalgic tone.; Maintain a slow, deliberate pace during precise work, contrasting with quick cuts for urgency.; Focus on tactile details and close-ups to convey Elias's skill and emotional connection.; Lighting remains intimate, possibly casting dramatic shadows during moments of struggle.; Pacing becomes slightly quicker, with tighter cuts, to convey the building tension and urgency.; Heighten sound design for the clock's ticking and the delicate, frustrating sounds of the watch parts.; Lighting softens further, creating a gentle glow around Elias and the watch.; Pacing slows, allowing for the emotional weight of the moment to settle.; Sound design emphasizes the delicate ticking of the watch, contrasted with the powerful chimes of the grandfather clock and distant celebrations. Close-up, eye-level, static shot. Elias's face is central in the frame, illuminated by a gentle, soft glow, revealing a profound sense of emotional resolution and peace. His expression holds a nuanced, wistful smile, marked by relief and a touch of melancholy, carefully avoiding overt joy or sadness. His comfortable, slightly worn hands are tenderly holding his late wife's repaired pocket watch to his heart, symbolizing renewed connection and hope. The subtle, delicate ticking of the watch is palpable against his chest, a soft counterpoint to the distant celebratory sounds.",
+                "constraints_applied": {
+                  "characters_in_frame": [
+                    "char_001"
+                  ],
+                  "props_in_frame": [],
+                  "style_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 9,
+    "keyframe_count_total": 9,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 3,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 0
+  }
+}

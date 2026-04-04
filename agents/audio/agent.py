@@ -1,21 +1,20 @@
 """AudioAgent — generates narration, music, and ambience aligned with video.
 
-Input:  AudioAgentInput (screenplay, storyboard, video,
-        constraints)
+Input:  AudioAgentInput (screenplay, video, constraints)
 Output: AudioAgentOutput (AudioPackage with narration segments, music cues,
         ambience beds, per-scene mixes, final muxed delivery, metrics)
 
 Audio alignment rules (three-layer):
-  1. Semantic source: block (from Screenplay) — determines WHAT to say
-  2. Timing alignment: shot (from Storyboard) — determines WHEN to say
+  1. Semantic source: screenplay shots (dialogue/narration/monologue text)
+  2. Timing: per-shot duration from screenplay, scaled to scene video duration
   3. Hard boundary: scene (from Video) — determines MAX duration
 
 Uses **skeleton-first mode**: most of the output is deterministic —
-narration text/speaker come from screenplay, timing from storyboard/video,
+narration text/speaker come from screenplay, timing from screenplay/video,
 IDs and asset placeholders are system-generated.  The LLM is only asked
 to fill ``music_cue.mood`` and ``ambience_bed.description`` per scene.
 
-Coupling: receives Screenplay + Storyboard + Video from shared assets; output is
+Coupling: receives unified Screenplay + Video from shared assets; output is
 the final audio layer that gets combined with video.
 """
 
@@ -48,41 +47,27 @@ class AudioAgent(BaseAgent[AudioAgentInput, AudioAgentOutput]):
     def build_skeleton(
         self, input_data: AudioAgentInput
     ) -> AudioAgentOutput | None:
-        """Pre-build the audio package from screenplay + storyboard + video.
+        """Pre-build the audio package from screenplay + video.
 
-        Narration text and speaker are copied from screenplay dialogue/
-        narration blocks.  Timing is estimated from storyboard shot
-        durations.  Scene boundaries come from the video package.
+        Narration text and speaker are copied from screenplay shots whose
+        block_type is dialogue/narration/monologue.  Timing is estimated from
+        shot estimated_duration_sec, scaled to the video scene duration.
         Only ``music_cue.mood`` and ``ambience_bed.description`` are left
         empty for the LLM.
         """
         sp = input_data.screenplay
-        sb = input_data.storyboard
         vid = input_data.video
 
-        if not sp or not sb or not vid:
+        if not sp or not vid:
             return None
 
         sp_content = sp.get("content", {})
-        sb_content = sb.get("content", {})
         vid_content = vid.get("content", {})
         vid_scenes = vid_content.get("scenes", [])
 
         if not vid_scenes:
             return None
 
-        # --- Build block → shot mapping from storyboard ---
-        block_to_shot: dict[str, str] = {}
-        for sb_scene in sb_content.get("scenes", []):
-            for shot in sb_scene.get("shots", []):
-                shot_id = shot.get("shot_id", "")
-                for bid in shot.get("linked_blocks", []):
-                    block_to_shot[bid] = shot_id
-
-        # --- Build scene lookups ---
-        vid_scene_map = {
-            vs.get("scene_id", ""): vs for vs in vid_scenes
-        }
         sp_scene_map = {
             s.get("scene_id", ""): s
             for s in sp_content.get("scenes", [])
@@ -93,7 +78,6 @@ class AudioAgent(BaseAgent[AudioAgentInput, AudioAgentOutput]):
 
         for scene_order, vs in enumerate(vid_scenes, 1):
             scene_id = vs.get("scene_id", "")
-            # Scene duration from video
             clip = vs.get("scene_clip_asset", {})
             scene_dur = clip.get("scene_duration_sec", 0.0)
             if scene_dur <= 0:
@@ -104,24 +88,20 @@ class AudioAgent(BaseAgent[AudioAgentInput, AudioAgentOutput]):
 
             sp_scene = sp_scene_map.get(scene_id, {})
 
-            # --- Build narration segments from screenplay dialogue/narration ---
-            # Two-pass: first estimate raw durations, then proportionally
-            # compress if total exceeds scene_dur so every block gets narration.
-            raw_entries: list[tuple[str, str, str, str, float]] = []
+            raw_entries: list[tuple[str, str, str, float]] = []
             total_raw = 0.0
-            for block in sp_scene.get("blocks", []):
-                block_id = block.get("block_id", "")
-                block_type = block.get("block_type", "")
+            for shot in sp_scene.get("shots", []):
+                block_type = shot.get("block_type", "")
                 if block_type not in ("dialogue", "narration", "monologue"):
                     continue
-                text = block.get("text", "")
-                speaker = block.get("character_name", "")
+                text = shot.get("text", "")
+                speaker = shot.get("character_name", "")
                 if not speaker and block_type == "narration":
                     speaker = "Narrator"
-                shot_id = block_to_shot.get(block_id, "")
+                shot_id = str(shot.get("shot_id", "") or "")
                 word_count = len(text.split()) if text else 0
                 est_dur = max(word_count / 2.5, 1.0)
-                raw_entries.append((block_id, shot_id, speaker, text, est_dur))
+                raw_entries.append((shot_id, speaker, text, est_dur))
                 total_raw += est_dur
 
             scale = 1.0
@@ -130,7 +110,7 @@ class AudioAgent(BaseAgent[AudioAgentInput, AudioAgentOutput]):
 
             segments: list[NarrationSegment] = []
             current_sec = 0.0
-            for block_id, shot_id, speaker, text, est_dur in raw_entries:
+            for shot_id, speaker, text, est_dur in raw_entries:
                 scaled_dur = round(est_dur * scale, 2)
                 scaled_dur = max(scaled_dur, 0.1)
                 start = round(current_sec, 2)
@@ -141,7 +121,6 @@ class AudioAgent(BaseAgent[AudioAgentInput, AudioAgentOutput]):
                 segments.append(
                     NarrationSegment(
                         segment_id=f"narr_{narr_counter:03d}",
-                        linked_block_id=block_id,
                         linked_shot_id=shot_id,
                         speaker=speaker,
                         text=text,

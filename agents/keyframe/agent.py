@@ -1,14 +1,14 @@
 """KeyFrameAgent — generates keyframe image prompts for each shot.
 
-Input:  KeyFrameAgentInput (storyboard, constraints)
+Input:  KeyFrameAgentInput (screenplay, constraints)
 Output: KeyFrameAgentOutput (KeyframesPackage with stability_keyframes +
         shot keyframes, metrics)
 
-Coupling: receives Storyboard from StoryboardAgent; output feeds VideoAgent.
+Coupling: receives unified screenplay from ScreenplayAgent; output feeds VideoAgent.
 
 Uses **skeleton-first mode**: the structural scaffold (IDs, order, source refs,
 image_asset placeholders, keyframe_ids) is pre-built deterministically from
-the storyboard.  The LLM is asked only to fill ``prompt_summary`` fields
+the screenplay (shots + consistency packs).  The LLM is asked only to fill ``prompt_summary`` fields
 (the creative image-generation prompts).  This eliminates ~67% of output
 tokens and makes structural errors impossible.
 
@@ -21,12 +21,12 @@ that occurs when all prompt_summaries are requested in one massive response.
 from __future__ import annotations
 
 import asyncio
-import json
 import logging
 import os
 from typing import Any
 
-from ..base_agent import BaseAgent
+from ..base_agent import BaseAgent, ExecutionResult
+from ..contracts.input_bundle_v2 import InputBundleV2
 from ..common_schema import ImageAsset
 from .schema import (
     KeyFrameAgentInput,
@@ -75,29 +75,15 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
 
     def system_prompt(self) -> str:
         return (
-            "You are KeyFrameAgent.\n"
-            "Task: Write image-generation prompts for keyframes in THREE LAYERS.\n\n"
-            "=== THREE-LAYER IMAGE ARCHITECTURE ===\n\n"
-            "Layer 1 — global_anchors (ONE per unique entity):\n"
-            "  Standalone text-to-image prompt capturing the entity's canonical\n"
-            "  appearance / identity.  Be EXTREMELY specific about physical\n"
-            "  traits, clothing, colours, architecture, materials, atmosphere.\n\n"
-            "Layer 2 — stability_keyframes (per-scene anchors):\n"
-            "  Edit instructions that adapt the global anchor to THIS scene's\n"
-            "  context (lighting, time of day, weather, mood).\n"
-            "  Focus on WHAT CHANGES; identity / clothing MUST stay consistent.\n\n"
-            "Layer 3 — shot keyframes:\n"
-            "  Edit instructions that compose the final frame.\n"
-            "  Describe camera angle, composition, action, expression.\n\n"
-            "=== PROMPT WRITING RULES ===\n"
-            "- Layer 1: standalone text descriptions (no 'edit this image').\n"
-            "- Layer 2: edit instructions ('Show this character under warm sunset…').\n"
-            "- Layer 3: edit instructions ('Medium shot: character reaches…').\n"
-            "- ALL prompts must be in English.\n\n"
-            "Output Rules:\n"
-            "- Return JSON only, no markdown, no code fences.\n"
-            "- If something is unknown, use empty string, not null.\n"
-            "- Every prompt_summary MUST be non-empty and detailed."
+            "You are KeyFrameAgent: three layers of STATIC image prompts only.\n"
+            "L1 global_anchors: standalone t2i — canonical look per entity; simple bg unless "
+            "the entity is a place; avoid pasting global style paragraphs (backend adds style).\n"
+            "L2 stability_keyframes: short edit deltas vs global — light/environment/pose only.\n"
+            "L3 per shot: prompt_summary = one frozen frame (no sound/edit/dialogue/music meta); "
+            "video_motion_hint = 1–3 sentences of subtle I2V motion only, not a copy of the still.\n"
+            "L1 standalone wording; L2/L3 may use edit phrasing ('Show…', 'Frame…'). English; "
+            "2–6 short sentences per prompt_summary. JSON only; empty string not null; "
+            "every prompt_summary non-empty."
         )
 
     # ------------------------------------------------------------------
@@ -107,20 +93,20 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
     def build_skeleton(
         self, input_data: KeyFrameAgentInput
     ) -> KeyFrameAgentOutput | None:
-        """Pre-build the full keyframes structure from the storyboard.
+        """Pre-build the full keyframes structure from the screenplay.
 
-        Walks the storyboard to extract all scenes, shots, characters,
+        Walks the screenplay to extract all scenes, shots, characters,
         locations, and props.  Creates the complete KeyFrameAgentOutput
         with every structural field filled and all ``prompt_summary``
         fields left as empty strings for the LLM to fill.
         """
-        sb = input_data.storyboard
-        sb_content = sb.get("content", {})
-        sb_scenes = sb_content.get("scenes", [])
-        sb_asset_id = sb.get("meta", {}).get("asset_id", "")
+        sp = input_data.screenplay
+        sp_content = sp.get("content", {})
+        sp_scenes = sp_content.get("scenes", [])
+        sp_asset_id = sp.get("meta", {}).get("asset_id", "")
         img_fmt = input_data.constraints.image_format
 
-        if not sb_scenes:
+        if not sp_scenes:
             return None  # fall back to legacy mode
 
         # --- Collect all unique entities across scenes ---
@@ -128,16 +114,16 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
         all_loc_ids: dict[str, bool] = {}
         all_props: dict[str, str] = {}  # prop_id → prop_name (ordered)
 
-        for sb_scene in sb_scenes:
-            pack = sb_scene.get("scene_consistency_pack", {})
+        for sp_scene in sp_scenes:
+            pack = sp_scene.get("scene_consistency_pack", {})
             loc = pack.get("location_lock", {})
             if loc.get("location_id"):
                 all_loc_ids[loc["location_id"]] = True
             for ch in pack.get("character_locks", []):
                 if ch.get("character_id"):
                     all_char_ids[ch["character_id"]] = True
-            # Fallback: some storyboard outputs carry character IDs only at shot level.
-            for shot in sb_scene.get("shots", []):
+            # Fallback: character IDs only at shot level.
+            for shot in sp_scene.get("shots", []):
                 for cid in shot.get("characters_in_frame", []):
                     if isinstance(cid, str) and cid:
                         all_char_ids[cid] = True
@@ -188,9 +174,9 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
         kf_global_counter = 1
         scenes: list[KeyframeScene] = []
 
-        for scene_order, sb_scene in enumerate(sb_scenes, 1):
-            scene_id = sb_scene.get("scene_id", f"sc_{scene_order:03d}")
-            pack = sb_scene.get("scene_consistency_pack", {})
+        for scene_order, sp_scene in enumerate(sp_scenes, 1):
+            scene_id = sp_scene.get("scene_id", f"sc_{scene_order:03d}")
+            pack = sp_scene.get("scene_consistency_pack", {})
 
             # Layer 2: stability_keyframes for this scene
             scene_char_ids = [
@@ -200,7 +186,7 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
             ]
             # Keep scene-level character anchors available even when character_locks
             # is empty but shot-level character assignment exists.
-            for shot in sb_scene.get("shots", []):
+            for shot in sp_scene.get("shots", []):
                 for cid in shot.get("characters_in_frame", []):
                     if isinstance(cid, str) and cid and cid not in scene_char_ids:
                         scene_char_ids.append(cid)
@@ -246,44 +232,36 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
 
             # Layer 3: shot keyframes
             shot_list: list[ShotKeyframes] = []
-            for shot_order, sb_shot in enumerate(
-                sb_scene.get("shots", []), 1
+            for shot_order, sp_shot in enumerate(
+                sp_scene.get("shots", []), 1
             ):
-                shot_id = sb_shot.get("shot_id", "")
-                kf_count = max(
-                    sb_shot.get("keyframe_plan", {}).get("keyframe_count", 1),
-                    1,
-                )
-                keyframes: list[Keyframe] = []
-                for ki in range(1, kf_count + 1):
-                    keyframes.append(
-                        Keyframe(
-                            keyframe_id=f"kf_{kf_global_counter:03d}",
-                            order=ki,
-                            image_asset=_placeholder_image(img_fmt),
-                            constraints_applied=KeyframeConstraintsApplied(
-                                characters_in_frame=sb_shot.get(
-                                    "characters_in_frame", []
-                                ),
-                                props_in_frame=(
-                                    sb_shot.get("props_in_frame", [])
-                                    if self._enable_prop_keyframes
-                                    else []
-                                ),
+                shot_id = sp_shot.get("shot_id", "")
+                # One still per shot — VideoAgent uses this PNG as the sole conditioning image.
+                keyframes: list[Keyframe] = [
+                    Keyframe(
+                        keyframe_id=f"kf_{kf_global_counter:03d}",
+                        order=1,
+                        image_asset=_placeholder_image(img_fmt),
+                        constraints_applied=KeyframeConstraintsApplied(
+                            characters_in_frame=sp_shot.get(
+                                "characters_in_frame", []
                             ),
-                        )
+                            props_in_frame=(
+                                sp_shot.get("props_in_frame", [])
+                                if self._enable_prop_keyframes
+                                else []
+                            ),
+                        ),
                     )
-                    kf_global_counter += 1
+                ]
+                kf_global_counter += 1
 
                 shot_list.append(
                     ShotKeyframes(
                         shot_id=shot_id,
                         order=shot_order,
-                        source=ShotKeyframeSource(
-                            storyboard_shot_id=shot_id,
-                            linked_blocks=sb_shot.get("linked_blocks", []),
-                        ),
-                        estimated_duration_sec=sb_shot.get(
+                        source=ShotKeyframeSource(source_shot_id=shot_id),
+                        estimated_duration_sec=sp_shot.get(
                             "estimated_duration_sec", 3.0
                         ),
                         keyframes=keyframes,
@@ -295,8 +273,8 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
                     scene_id=scene_id,
                     order=scene_order,
                     source=KeyframeSceneSource(
-                        storyboard_asset_id=sb_asset_id,
-                        storyboard_scene_id=scene_id,
+                        screenplay_asset_id=sp_asset_id,
+                        screenplay_scene_id=scene_id,
                     ),
                     stability_keyframes=StabilityKeyframes(
                         characters=stab_chars,
@@ -322,12 +300,12 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
     # Style extraction helper
     # ------------------------------------------------------------------
 
-    def _extract_style_section(self, sb_content: dict) -> str:
-        """Build style directive text from storyboard style_lock."""
+    def _extract_style_section(self, sp_content: dict) -> str:
+        """Build style directive text from screenplay scene style_lock."""
         style_notes: list[str] = []
         must_avoid: list[str] = []
-        for sb_scene in sb_content.get("scenes", []):
-            sl = sb_scene.get("scene_consistency_pack", {}).get("style_lock", {})
+        for sp_scene in sp_content.get("scenes", []):
+            sl = sp_scene.get("scene_consistency_pack", {}).get("style_lock", {})
             style_notes.extend(sl.get("global_style_notes", []))
             must_avoid.extend(sl.get("must_avoid", []))
         style_notes = list(dict.fromkeys(style_notes))
@@ -340,10 +318,9 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
         if must_avoid:
             parts.append("Must avoid: " + "; ".join(must_avoid))
         return (
-            "=== VISUAL STYLE (MANDATORY — apply to EVERY prompt_summary) ===\n"
+            "=== STYLE REF (do not paste verbatim; backend re-injects) ===\n"
             + "\n".join(parts) + "\n"
-            "Every prompt_summary MUST begin with the style directive above.\n"
-            "All images in this project must share the SAME visual style.\n\n"
+            "Anchor mood in concrete light/materials; at most one short phrase per summary.\n\n"
         )
 
     # ------------------------------------------------------------------
@@ -351,7 +328,7 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
     # ------------------------------------------------------------------
 
     def _build_creative_prompt_global(
-        self, sb_content: dict, skeleton: KeyFrameAgentOutput
+        self, sp_content: dict, skeleton: KeyFrameAgentOutput
     ) -> str:
         """Prompt asking the LLM to fill global_anchors prompt_summary only."""
         ga = skeleton.content.global_anchors
@@ -372,29 +349,77 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
             '  "locations": [\n' + ",\n".join(ga_locs) + "\n  ],\n"
             '  "props": [\n' + ",\n".join(ga_props) + "\n  ]\n}"
         )
-        # Gather a brief character/location/prop summary from storyboard
-        # so the LLM knows what each entity looks like.
-        entity_context = self._gather_entity_context(sb_content)
-        style = self._extract_style_section(sb_content)
+        # Gather a brief character/location/prop summary from screenplay packs.
+        entity_context = self._gather_entity_context(sp_content)
+        style = self._extract_style_section(sp_content)
         return (
-            "Write Layer 1 (global anchor) prompt_summaries.\n"
-            "These are STANDALONE text-to-image prompts — detailed physical "
-            "descriptions of each entity's canonical appearance.\n\n"
+            "Layer 1: standalone t2i prompt per entity — canonical physical look.\n\n"
             f"{style}"
-            f"=== ENTITY CONTEXT ===\n{entity_context}\n\n"
-            "=== OUTPUT FORMAT ===\n"
-            "Replace every \"<FILL>\" with a detailed image-generation prompt.\n"
+            f"=== ENTITIES ===\n{entity_context}\n\n"
+            "Replace each <FILL> with a full image prompt.\n"
             f"{template}\n\n"
             "Return JSON only."
         )
 
     @staticmethod
-    def _gather_entity_context(sb_content: dict) -> str:
-        """Extract character/location/prop descriptions from storyboard packs."""
+    def _join_note_list(raw: Any) -> str:
+        if not isinstance(raw, list):
+            return ""
+        bits = [str(x).strip() for x in raw if str(x).strip()]
+        return " | ".join(bits)
+
+    @classmethod
+    def _compact_scene_pack_lines(cls, pack: dict) -> str:
+        """Scene pack as compact lines (same facts as JSON; no list/row caps — long prompts surface upstream)."""
+        if not isinstance(pack, dict):
+            return ""
+        lines: list[str] = []
+        loc = pack.get("location_lock") or {}
+        if isinstance(loc, dict):
+            lid = str(loc.get("location_id", "")).strip()
+            tod = str(loc.get("time_of_day", "")).strip()
+            lines.append(f"location: id={lid} time={tod}")
+            env_s = cls._join_note_list(loc.get("environment_notes"))
+            if env_s:
+                lines.append(f"environment: {env_s}")
+        for cl in pack.get("character_locks") or []:
+            if not isinstance(cl, dict):
+                continue
+            cid = str(cl.get("character_id", "")).strip()
+            if not cid:
+                continue
+            idn = cls._join_note_list(cl.get("identity_notes"))
+            wn = cls._join_note_list(cl.get("wardrobe_notes"))
+            mk = cls._join_note_list(cl.get("must_keep"))
+            bits = " | ".join(b for b in (idn, wn, mk) if b)
+            lines.append(f"char {cid}: {bits}" if bits else f"char {cid}")
+        for pl in pack.get("props_lock") or []:
+            if not isinstance(pl, dict):
+                continue
+            pid = str(pl.get("prop_id", "")).strip()
+            pn = str(pl.get("prop_name", "")).strip()
+            label = pid or pn
+            if not label:
+                continue
+            mk = cls._join_note_list(pl.get("must_keep"))
+            lines.append(f"prop {label}: {mk}" if mk else f"prop {label}")
+        st = pack.get("style_lock") or {}
+        if isinstance(st, dict):
+            gs = cls._join_note_list(st.get("global_style_notes"))
+            ma = cls._join_note_list(st.get("must_avoid"))
+            if gs:
+                lines.append(f"style: {gs}")
+            if ma:
+                lines.append(f"avoid: {ma}")
+        return "\n".join(lines) if lines else "(no pack fields)"
+
+    @staticmethod
+    def _gather_entity_context(sp_content: dict) -> str:
+        """Extract character/location/prop descriptions from screenplay packs."""
         chars: dict[str, list[str]] = {}
         locs: dict[str, list[str]] = {}
         props: dict[str, tuple[str, list[str]]] = {}  # prop_id → (name, notes)
-        for sc in sb_content.get("scenes", []):
+        for sc in sp_content.get("scenes", []):
             pack = sc.get("scene_consistency_pack", {})
             for cl in pack.get("character_locks", []):
                 cid = cl.get("character_id", "")
@@ -425,14 +450,14 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
         return "\n".join(parts)
 
     def _build_creative_prompt_scene(
-        self, sb_scene: dict, skel_scene: KeyframeScene, sb_content: dict
+        self, sp_scene: dict, skel_scene: KeyframeScene, sp_content: dict
     ) -> str:
         """Prompt asking the LLM to fill one scene's prompt_summary fields."""
-        scene_id = sb_scene.get("scene_id", "")
-        pack = sb_scene.get("scene_consistency_pack", {})
+        scene_id = sp_scene.get("scene_id", "")
+        pack = sp_scene.get("scene_consistency_pack", {})
 
         shots_summary: list[str] = []
-        for sh in sb_scene.get("shots", []):
+        for sh in sp_scene.get("shots", []):
             shots_summary.append(
                 f"  {sh.get('shot_id','')}: type={sh.get('shot_type','')}, "
                 f"visual_goal=\"{sh.get('visual_goal','')}\", "
@@ -442,8 +467,9 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
                 f"camera={sh.get('camera',{})}"
             )
         context = (
-            f"consistency_pack: {json.dumps(pack, ensure_ascii=False)}\n"
-            f"shots:\n" + "\n".join(shots_summary)
+            "=== SCENE PACK (compact) ===\n"
+            f"{self._compact_scene_pack_lines(pack)}\n"
+            "=== SHOTS ===\n" + "\n".join(shots_summary)
         )
 
         stab = skel_scene.stability_keyframes
@@ -462,7 +488,8 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
         shot_parts: list[str] = []
         for shot in skel_scene.shots:
             kf_entries = [
-                f'          {{"keyframe_id": "{kf.keyframe_id}", "prompt_summary": "<FILL>"}}'
+                f'          {{"keyframe_id": "{kf.keyframe_id}", '
+                f'"prompt_summary": "<FILL>", "video_motion_hint": "<FILL>"}}'
                 for kf in shot.keyframes
             ]
             shot_parts.append(
@@ -479,16 +506,15 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
             '  },\n'
             '  "shots": [\n' + ",\n".join(shot_parts) + "\n  ]\n}"
         )
-        style = self._extract_style_section(sb_content)
+        style = self._extract_style_section(sp_content)
         return (
-            f"Write prompt_summaries for scene {scene_id}.\n"
-            "Layer 2 (stability_keyframes): edit instructions adapting "
-            "global anchors to this scene.\n"
-            "Layer 3 (shot keyframes): edit instructions for each frame.\n\n"
+            f"Scene {scene_id}: fill L2 stability_keyframes + L3 shot rows.\n"
+            "L2: edit deltas vs global anchor; do not dump full style lists.\n"
+            "L3: one keyframe per shot — prompt_summary (still) and video_motion_hint (motion); "
+            "do not duplicate still text into motion.\n\n"
             f"{style}"
-            f"=== SCENE CONTEXT ===\n{context}\n\n"
-            "=== OUTPUT FORMAT ===\n"
-            "Replace every \"<FILL>\" with a detailed image-generation prompt.\n"
+            f"{context}\n\n"
+            "Replace each <FILL>.\n"
             f"{template}\n\n"
             "Return JSON only."
         )
@@ -508,8 +534,8 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
         Overrides ``BaseAgent._run_skeleton_mode`` to avoid a single massive
         LLM call that would time out.
         """
-        sb_content = input_data.storyboard.get("content", {})
-        sb_scenes = sb_content.get("scenes", [])
+        sp_content = input_data.screenplay.get("content", {})
+        sp_scenes = sp_content.get("scenes", [])
         system = self.system_prompt()
 
         rework_suffix = ""
@@ -522,12 +548,12 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
             )
 
         # Build all prompts
-        global_prompt = self._build_creative_prompt_global(sb_content, skeleton) + rework_suffix
+        global_prompt = self._build_creative_prompt_global(sp_content, skeleton) + rework_suffix
 
         scene_prompts: list[str] = []
-        for sb_scene, skel_scene in zip(sb_scenes, skeleton.content.scenes):
+        for sp_scene, skel_scene in zip(sp_scenes, skeleton.content.scenes):
             scene_prompts.append(
-                self._build_creative_prompt_scene(sb_scene, skel_scene, sb_content) + rework_suffix
+                self._build_creative_prompt_scene(sp_scene, skel_scene, sp_content) + rework_suffix
             )
 
         # Fire all LLM calls in parallel
@@ -625,12 +651,17 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
         }
         for shot in skel_scene.shots:
             shot_data = shot_map.get(shot.shot_id, {})
-            kf_map: dict[str, str] = {
-                k.get("keyframe_id", ""): k.get("prompt_summary", "")
-                for k in shot_data.get("keyframes", [])
-            }
+            kf_map: dict[str, tuple[str, str]] = {}
+            for k in shot_data.get("keyframes", []):
+                kid = k.get("keyframe_id", "")
+                kf_map[kid] = (
+                    str(k.get("prompt_summary", "") or ""),
+                    str(k.get("video_motion_hint", "") or "").strip(),
+                )
             for kf in shot.keyframes:
-                kf.prompt_summary = kf_map.get(kf.keyframe_id, "")
+                ps, vm = kf_map.get(kf.keyframe_id, ("", ""))
+                kf.prompt_summary = ps
+                kf.video_motion_hint = vm
 
     def recompute_metrics(self, output: KeyFrameAgentOutput) -> None:
         c = output.content

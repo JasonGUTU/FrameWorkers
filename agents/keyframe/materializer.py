@@ -1,11 +1,18 @@
-"""Keyframe image materializer — three-layer consistency chain.
+"""Keyframe image materializer — global + scene + shot anchor chain.
 
-  Layer 1 — Global anchors:  text -> generate_image()
-  Layer 2 — Scene anchors:   global anchor img + prompt -> edit_image()
-  Layer 3 — Shot keyframes:  scene anchor img(s) + prompt -> edit_image()
+  Layer 1 — Global anchors: text -> ``generate_image()`` (characters, locations, props*)
+  Layer 2 — Scene anchors: default global ref + prompt -> ``edit_image()``; or ``t2i`` mode.
+  Layer 3 — One still per shot: edit from scene **location** L2 (or text-only fallback) so the
+            PNG matches the shot ``prompt_summary``; VideoAgent consumes **only** this URI.
 
-Each layer references ONLY the layer above it.
-Text descriptions (prompt_summary) are always included.
+*Props are included when KeyFrameAgent emitted prop anchors (``FW_ENABLE_PROP_KEYFRAMES``).
+
+Text descriptions (prompt_summary) are always included.  **L2/L3 edit** paths
+use the same suffix: filtered ``must_avoid`` only (no ``Visual style:`` block),
+because the reference image already carries global look.  **L1** and **L3 t2i**
+(fallback when no location L2 ref) still get the full ``Visual style`` + ``must_avoid``
+suffix.  Screenplay ``style_lock`` lines are deduped across scenes by normalized
+text (whitespace + casefold) to reduce repeated suffix bulk without slicing strings.
 
 This materializer calls ImageService to produce image bytes and returns
 ``list[MediaAsset]`` for Assistant persistence. It does not perform local
@@ -16,6 +23,8 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import os
+import re
 from typing import Any
 
 from ..contracts.input_bundle_v2 import InputBundleV2
@@ -23,6 +32,43 @@ from ..descriptor import BaseMaterializer, MediaAsset
 from inference.generation.image_generators.service import ImageService
 
 logger = logging.getLogger(__name__)
+
+# Prepended to L2/L3 **edit** prompts (reference image already encodes global style).
+_L2_EDIT_INSTRUCTION_PREFIX = (
+    "Edit the attached reference to match the text below; keep subject identity "
+    "recognizable; apply lighting, framing, pose, and environment as described.\n\n"
+)
+
+
+def _keep_must_avoid_for_still_image(line: str) -> bool:
+    """Drop style_lock must_avoid lines that target film/audio editing, not a single frame."""
+    s = line.strip()
+    if not s:
+        return False
+    low = s.lower()
+    if re.search(
+        r"\b(loud|noise|noises|audio|sound|sounds)\b",
+        low,
+    ):
+        return False
+    if re.search(
+        r"(choppy|jarring|abrupt).{0,80}\bcuts?\b|\bcuts?.{0,80}(choppy|jarring|obscure)",
+        low,
+    ):
+        return False
+    if re.search(r"\b(montage|transitions?|pacing)\b", low):
+        return False
+    if re.search(r"\b(subtitle|subtitles|caption|captions)\b", low):
+        return False
+    return True
+
+
+def _filter_still_image_must_avoid(items: list[str]) -> list[str]:
+    out: list[str] = []
+    for raw in items:
+        if isinstance(raw, str) and _keep_must_avoid_for_still_image(raw):
+            out.append(raw.strip())
+    return list(dict.fromkeys(out))
 
 
 class KeyframeMaterializer(BaseMaterializer):
@@ -34,7 +80,7 @@ class KeyframeMaterializer(BaseMaterializer):
         resolved = ctx.get("resolved_inputs") if isinstance(ctx, dict) else None
         return resolved if isinstance(resolved, dict) else {}
 
-    """Three-layer keyframe image materializer.
+    """L1/L2/L3 keyframe image materializer.
 
     Constructor:
         image_service: ``ImageService`` instance for Gemini image gen/edit.
@@ -42,6 +88,14 @@ class KeyframeMaterializer(BaseMaterializer):
 
     def __init__(self, image_service: ImageService) -> None:
         self.image_svc = image_service
+
+    @staticmethod
+    def _l2_mode() -> str:
+        """``edit`` (default): image+prompt edit. ``t2i``: scene anchors from text only (no global ref)."""
+        v = os.getenv("FW_KEYFRAME_L2_MODE", "edit").strip().lower()
+        if v in {"t2i", "generate", "text2image", "txt2img"}:
+            return "t2i"
+        return "edit"
 
     @staticmethod
     def naming_spec_v2() -> dict[str, Any]:
@@ -53,9 +107,9 @@ class KeyframeMaterializer(BaseMaterializer):
                     "artifact_family": "keyframe_image",
                     "semantic_meaning": "generated keyframe images for global/scene/shot anchors",
                     "recommended_name_pattern": "img_{entity_or_shot_id}_{scope_or_seq}.png",
-                    "id_source": "storyboard/keyframe IDs",
-                    "ordering_rules": "for shot keyframes, preserve storyboard order",
-                    "examples": ["img_char_001_global.png", "img_loc_001_sc_001.png", "img_sh_001_kf_01.png"],
+                    "id_source": "screenplay/keyframe IDs",
+                    "ordering_rules": "for shot keyframes, preserve screenplay shot order",
+                    "examples": ["img_char_001_global.png", "img_loc_001_sc_001.png"],
                     "rename_hints": {"stable_parts": "img prefix and id tokens", "mutable_parts": "suffix formatting"},
                 }
             ],
@@ -71,35 +125,35 @@ class KeyframeMaterializer(BaseMaterializer):
         asset_dict: dict[str, Any],
         input_bundle_v2: InputBundleV2,
     ) -> list[MediaAsset]:
-        """Generate keyframe images with three-layer consistency chain.
+        """Generate L1 global, L2 scene, and L3 per-shot stills.
 
-        Within each layer, all images are generated **in parallel** via
-        ``asyncio.gather``.  Layers are executed sequentially because each
-        layer depends on the previous layer's output.
+        Parallel ``asyncio.gather`` within each retry round. L2 depends on L1;
+        L3 depends on L2 location anchors for the default **edit-from-scene-loc**
+        path (falls back to text-only generation if no location ref).
 
-        When ``input_bundle_v2`` contains ``"reference_images"`` (a list of dicts
-        with ``label``, ``entity_type``, and ``image_bytes``), those
-        user-provided images are injected as pre-existing global anchors
-        **before** Layer 1 generation.  Entities matched to a reference
-        image skip generation entirely.
+        Optional ``reference_images`` in resolved inputs inject L0 global anchors.
 
-        Naming conventions (all system-generated, IDs already include type prefix):
-          Layer 1 (global):  ``img_{char_id}_global``, ``img_{loc_id}_global``, ...
-          Layer 2 (scene):   ``img_{char_id}_{scene_id}``, ``img_{loc_id}_{scene_id}``, ...
-          Layer 3 (shot):    ``img_{shot_id}_kf_{NN}``
-
-        Examples with actual IDs:
-          ``img_char_001_global``, ``img_loc_001_sc_001``, ``img_sh_001_kf_01``
+        Naming:
+          L1: ``img_{entity_id}_global``
+          L2: ``img_{entity_id}_{scene_id}``
+          L3: ``img_{shot_id}_{keyframe_id}`` (one row per shot; first keyframe only)
 
         Returns:
-            List of ``MediaAsset`` objects for Assistant to persist.
+            ``MediaAsset`` list for Assistant persistence.
         """
         self._pending: list[MediaAsset] = []
 
         content = asset_dict.get("content", {})
         scenes = content.get("scenes", [])
 
-        style_suffix = self._build_style_suffix(input_bundle_v2)
+        style_notes, must_avoid = self._extract_style_lock_lists(input_bundle_v2)
+        must_avoid = _filter_still_image_must_avoid(must_avoid)
+        l1_style_suffix = self._compose_style_suffix(style_notes, must_avoid, include_visual_style=True)
+        l2_edit_suffix = self._compose_style_suffix(style_notes, must_avoid, include_visual_style=False)
+        l2_t2i_suffix = l1_style_suffix
+
+        l2_mode = self._l2_mode()
+        logger.info("Keyframe L2 scene-anchor mode: %s", l2_mode)
 
         MAX_LAYER_RETRIES = 10
 
@@ -126,13 +180,13 @@ class KeyframeMaterializer(BaseMaterializer):
 
         l1_tasks: list[tuple[str, dict, str, str]] = []
 
-        for entity_list in ("characters", "locations"):
+        for entity_list in ("characters", "locations", "props"):
             for kf in global_anchors.get(entity_list, []):
                 eid = kf.get("entity_id", "unknown")
                 prompt = kf.get("prompt_summary", "")
                 if prompt:
                     l1_tasks.append(
-                        (eid, kf, prompt + style_suffix, f"img_{eid}_global")
+                        (eid, kf, prompt + l1_style_suffix, f"img_{eid}_global")
                     )
 
         for attempt in range(1, MAX_LAYER_RETRIES + 1):
@@ -144,7 +198,7 @@ class KeyframeMaterializer(BaseMaterializer):
                 len(pending), attempt, MAX_LAYER_RETRIES,
             )
             coros = [
-                self._generate(kf, prompt, sys_id)
+                self._generate(kf, prompt, sys_id, layer_tag="L1")
                 for _, kf, prompt, sys_id in pending
             ]
             results = await asyncio.gather(*coros, return_exceptions=True)
@@ -171,13 +225,13 @@ class KeyframeMaterializer(BaseMaterializer):
         backfill_tasks: list[tuple[str, dict, str, str]] = []
         for scene in scenes:
             stab = scene.get("stability_keyframes", {})
-            for entity_list in ("characters", "locations"):
+            for entity_list in ("characters", "locations", "props"):
                 for kf in stab.get(entity_list, []):
                     eid = kf.get("entity_id", "unknown")
                     prompt = kf.get("prompt_summary", "")
                     if prompt and eid not in global_image_bytes:
                         backfill_tasks.append(
-                            (eid, kf, prompt + style_suffix, f"img_{eid}_global")
+                            (eid, kf, prompt + l1_style_suffix, f"img_{eid}_global")
                         )
         seen_backfill: set[str] = set()
         unique_backfill: list[tuple[str, dict, str, str]] = []
@@ -204,7 +258,7 @@ class KeyframeMaterializer(BaseMaterializer):
                     len(pending_bf), attempt, MAX_LAYER_RETRIES,
                 )
                 coros = [
-                    self._generate(kf, prompt, sys_id)
+                    self._generate(kf, prompt, sys_id, layer_tag="L1.5")
                     for _, kf, prompt, sys_id in pending_bf
                 ]
                 results = await asyncio.gather(*coros, return_exceptions=True)
@@ -232,33 +286,39 @@ class KeyframeMaterializer(BaseMaterializer):
             )
 
         # ══════════════════════════════════════════════════════════════
-        # Layer 2: Scene Anchors — global anchor + prompt -> Gemini edit
+        # Layer 2: Scene anchors — edit (default) or text-only (FW_KEYFRAME_L2_MODE=t2i)
         # ══════════════════════════════════════════════════════════════
         l2_tasks: list[tuple[str, int, str, dict, str, str]] = []
-        scene_stabs: list[dict] = []
 
         for si, scene in enumerate(scenes):
             scene_id = scene.get("scene_id", "")
             stab = scene.get("stability_keyframes", {})
-            scene_stabs.append(stab)
 
-            for entity_list in ("characters", "locations"):
+            for entity_list in ("characters", "locations", "props"):
                 for kf in stab.get(entity_list, []):
                     eid = kf.get("entity_id", "unknown")
                     sys_id = f"img_{eid}_{scene_id}"
-                    prompt = kf.get("prompt_summary", "")
-                    if not prompt:
+                    raw_summary = kf.get("prompt_summary", "")
+                    if not raw_summary:
                         continue
-                    if eid not in global_image_bytes:
-                        logger.warning(
-                            "[L2] Global anchor still missing for %s; skipping %s",
-                            eid, sys_id,
+                    if l2_mode == "edit":
+                        if eid not in global_image_bytes:
+                            logger.warning(
+                                "[L2] Global anchor still missing for %s; skipping %s",
+                                eid, sys_id,
+                            )
+                            continue
+                        composed = (
+                            _L2_EDIT_INSTRUCTION_PREFIX
+                            + raw_summary
+                            + l2_edit_suffix
                         )
-                        continue
-                    l2_tasks.append((sys_id, si, eid, kf, eid, prompt + style_suffix))
+                    else:
+                        composed = raw_summary + l2_t2i_suffix
+                    l2_tasks.append((sys_id, si, eid, kf, eid, composed))
 
-        scene_image_bytes_list: list[dict[str, bytes]] = [{} for _ in scenes]
         completed_l2: set[str] = set()
+        l2_bytes_by_sys_id: dict[str, bytes] = {}
 
         for attempt in range(1, MAX_LAYER_RETRIES + 1):
             pending = [t for t in l2_tasks if t[0] not in completed_l2]
@@ -266,24 +326,33 @@ class KeyframeMaterializer(BaseMaterializer):
                 break
             logger.info(
                 "=== Layer 2: Generating %d scene anchors across %d scenes "
-                "(attempt %d/%d) ===",
-                len(pending), len(scenes), attempt, MAX_LAYER_RETRIES,
+                "(attempt %d/%d, mode=%s) ===",
+                len(pending), len(scenes), attempt, MAX_LAYER_RETRIES, l2_mode,
             )
-            coros = [
-                self._edit(
-                    kf, global_image_bytes[ref_key], prompt, sys_id,
-                    layer_tag="L2",
-                )
-                for sys_id, _, _, kf, ref_key, prompt in pending
-            ]
+            if l2_mode == "t2i":
+                coros = [
+                    self._generate(kf, prompt, sys_id, layer_tag="L2-t2i")
+                    for sys_id, _, _, kf, _, prompt in pending
+                ]
+            else:
+                coros = [
+                    self._edit(
+                        kf,
+                        global_image_bytes[ref_key],
+                        prompt,
+                        sys_id,
+                        layer_tag="L2",
+                    )
+                    for sys_id, _, _, kf, ref_key, prompt in pending
+                ]
             results = await asyncio.gather(*coros, return_exceptions=True)
             for task, result in zip(pending, results):
-                sys_id, si, entity_key = task[0], task[1], task[2]
+                sys_id, _, _ = task[0], task[1], task[2]
                 if isinstance(result, Exception):
                     logger.error("[L2] Error for %s: %s", sys_id, result)
                 elif isinstance(result, bytes):
-                    scene_image_bytes_list[si][entity_key] = result
                     completed_l2.add(sys_id)
+                    l2_bytes_by_sys_id[sys_id] = result
                 else:
                     logger.warning("[L2] No image for %s (attempt %d)", sys_id, attempt)
 
@@ -299,66 +368,112 @@ class KeyframeMaterializer(BaseMaterializer):
         )
 
         # ══════════════════════════════════════════════════════════════
-        # Layer 3: Shot Keyframes — scene anchor(s) + shot prompt ->
-        #          Gemini edit
+        # Layer 3: one still per shot (edit from scene location L2, else t2i)
         # ══════════════════════════════════════════════════════════════
-        l3_tasks: list[tuple[str, dict, list[bytes], str]] = []
+        l3_tasks: list[tuple[str, dict[str, Any], str, bytes | None, bool]] = []
+        for scene in scenes:
+            scene_id = str(scene.get("scene_id", "") or "").strip()
+            stab = scene.get("stability_keyframes", {}) or {}
+            loc_id = ""
+            for lk in stab.get("locations") or []:
+                if not isinstance(lk, dict):
+                    continue
+                loc_id = str(lk.get("entity_id", "") or "").strip()
+                if loc_id:
+                    break
+            loc_sys = f"img_{loc_id}_{scene_id}" if loc_id and scene_id else ""
+            ref_loc = l2_bytes_by_sys_id.get(loc_sys) if loc_sys else None
+            if ref_loc is None and loc_id:
+                ref_loc = global_image_bytes.get(loc_id)
 
-        for si, scene in enumerate(scenes):
-            scene_imgs = scene_image_bytes_list[si]
-            stab = scene_stabs[si] if si < len(scene_stabs) else {}
-
-            for shot in scene.get("shots", []):
-                shot_id = shot.get("shot_id", "unknown")
-                shot_ref_images = self._collect_shot_references(shot, scene_imgs, stab)
-                kf_counter = 0
-                for kf in shot.get("keyframes", []):
-                    kf_counter += 1
-                    sys_id = f"img_{shot_id}_kf_{kf_counter:02d}"
-                    prompt = kf.get("prompt_summary", "")
-                    if not prompt:
-                        continue
-                    if not shot_ref_images:
-                        raise RuntimeError(
-                            f"[L3] No Layer 2 scene anchor references for "
-                            f"{shot_id}; cannot generate keyframe {sys_id}"
+            for shot in scene.get("shots") or []:
+                if not isinstance(shot, dict):
+                    continue
+                shot_id = str(shot.get("shot_id", "") or "").strip()
+                kfs = shot.get("keyframes") or []
+                if not kfs:
+                    continue
+                kf0 = kfs[0]
+                if not isinstance(kf0, dict):
+                    continue
+                kid = str(kf0.get("keyframe_id", "") or "kf_001").strip() or "kf_001"
+                sys_id = f"img_{shot_id}_{kid}"
+                raw_summary = str(kf0.get("prompt_summary", "") or "").strip()
+                if not raw_summary:
+                    logger.warning("[L3] skip shot %s: empty prompt_summary", shot_id)
+                    continue
+                if ref_loc is not None:
+                    composed = (
+                        _L2_EDIT_INSTRUCTION_PREFIX + raw_summary + l2_edit_suffix
+                    )
+                    l3_tasks.append((sys_id, kf0, composed, ref_loc, True))
+                else:
+                    l3_tasks.append(
+                        (
+                            sys_id,
+                            kf0,
+                            raw_summary + l1_style_suffix,
+                            None,
+                            False,
                         )
-                    l3_tasks.append((sys_id, kf, shot_ref_images, prompt + style_suffix))
+                    )
 
         completed_l3: set[str] = set()
-
         for attempt in range(1, MAX_LAYER_RETRIES + 1):
-            pending = [t for t in l3_tasks if t[0] not in completed_l3]
-            if not pending:
+            pending_l3 = [t for t in l3_tasks if t[0] not in completed_l3]
+            if not pending_l3:
                 break
             logger.info(
-                "=== Layer 3: Generating %d shot keyframes (attempt %d/%d) ===",
-                len(pending), attempt, MAX_LAYER_RETRIES,
+                "=== Layer 3: %d shot stills (attempt %d/%d) ===",
+                len(pending_l3),
+                attempt,
+                MAX_LAYER_RETRIES,
             )
-            coros = [
-                self._edit(
-                    kf, ref_imgs, prompt, sys_id,
-                    layer_tag="L3",
-                )
-                for sys_id, kf, ref_imgs, prompt in pending
-            ]
-            results = await asyncio.gather(*coros, return_exceptions=True)
-            for (sys_id, _, _, _), result in zip(pending, results):
-                if isinstance(result, Exception):
-                    logger.error("[L3] Error for %s: %s", sys_id, result)
-                elif isinstance(result, bytes):
-                    completed_l3.add(sys_id)
+            coros_l3: list[Any] = []
+            for sys_id, kf_dict, prompt, ref_b, use_edit in pending_l3:
+                if use_edit and ref_b is not None:
+                    coros_l3.append(
+                        self._edit(
+                            kf_dict,
+                            ref_b,
+                            prompt,
+                            sys_id,
+                            layer_tag="L3",
+                        )
+                    )
                 else:
-                    logger.warning("[L3] No image for %s (attempt %d)", sys_id, attempt)
+                    coros_l3.append(
+                        self._generate(
+                            kf_dict,
+                            prompt,
+                            sys_id,
+                            layer_tag="L3-t2i",
+                        )
+                    )
+            results_l3 = await asyncio.gather(*coros_l3, return_exceptions=True)
+            for task_t, result in zip(pending_l3, results_l3):
+                sid = task_t[0]
+                if isinstance(result, Exception):
+                    logger.error("[L3] Error for %s: %s", sid, result)
+                elif isinstance(result, bytes):
+                    completed_l3.add(sid)
+                else:
+                    logger.warning("[L3] No image for %s (attempt %d)", sid, attempt)
 
         failed_l3 = [t[0] for t in l3_tasks if t[0] not in completed_l3]
         if failed_l3:
             raise RuntimeError(
-                f"Layer 3: failed to generate shot keyframes after "
+                f"Layer 3: failed shot keyframe images after "
                 f"{MAX_LAYER_RETRIES} attempts: {failed_l3}"
             )
         logger.info(
-            "All three layers materialized for %s (L1=%d, L2=%d, L3=%d)",
+            "Layer 3 complete: %d/%d shot stills generated",
+            len(completed_l3),
+            len(l3_tasks),
+        )
+
+        logger.info(
+            "Keyframe materialize complete for %s (L1=%d, L2=%d, L3=%d)",
             task_id,
             len(l1_tasks),
             len(l2_tasks),
@@ -372,31 +487,72 @@ class KeyframeMaterializer(BaseMaterializer):
     # ------------------------------------------------------------------
 
     @staticmethod
-    def _build_style_suffix(input_bundle_v2: InputBundleV2 | None) -> str:
-        """Extract style_lock from storyboard and build a prompt suffix."""
+    def _extract_style_lock_lists(
+        input_bundle_v2: InputBundleV2 | None,
+    ) -> tuple[list[str], list[str]]:
+        """Return deduped ``global_style_notes`` and raw ``must_avoid`` from screenplay."""
         if not input_bundle_v2:
-            return ""
-        sb = KeyframeMaterializer._resolved_inputs(input_bundle_v2).get("storyboard", {})
-        sb_content = sb.get("content", {})
+            return [], []
+        sb = KeyframeMaterializer._resolved_inputs(input_bundle_v2).get("screenplay", {})
+        sb_content = sb.get("content", {}) if isinstance(sb, dict) else {}
 
         style_notes: list[str] = []
         must_avoid: list[str] = []
         for scene in sb_content.get("scenes", []):
+            if not isinstance(scene, dict):
+                continue
             sl = scene.get("scene_consistency_pack", {}).get("style_lock", {})
-            style_notes.extend(sl.get("global_style_notes", []))
-            must_avoid.extend(sl.get("must_avoid", []))
+            if not isinstance(sl, dict):
+                continue
+            for x in sl.get("global_style_notes", []) or []:
+                if isinstance(x, str) and x.strip():
+                    style_notes.append(x.strip())
+            for x in sl.get("must_avoid", []) or []:
+                if isinstance(x, str) and x.strip():
+                    must_avoid.append(x.strip())
 
-        style_notes = list(dict.fromkeys(style_notes))
-        must_avoid = list(dict.fromkeys(must_avoid))
+        return (
+            KeyframeMaterializer._dedupe_preserve_order_normalized(style_notes),
+            KeyframeMaterializer._dedupe_preserve_order_normalized(must_avoid),
+        )
 
-        if not style_notes and not must_avoid:
-            return ""
+    @staticmethod
+    def _dedupe_preserve_order_normalized(strings: list[str]) -> list[str]:
+        """Drop exact duplicates after whitespace-normalization and casefold.
 
+        Merges repeated ``style_lock`` lines across many scenes when producers
+        paste the same prose with different spacing/casing — no substring slicing.
+        """
+        seen: set[str] = set()
+        out: list[str] = []
+        for raw in strings:
+            if not isinstance(raw, str):
+                continue
+            s = raw.strip()
+            if not s:
+                continue
+            key = " ".join(s.split()).casefold()
+            if key in seen:
+                continue
+            seen.add(key)
+            out.append(s)
+        return out
+
+    @staticmethod
+    def _compose_style_suffix(
+        style_notes: list[str],
+        must_avoid: list[str],
+        *,
+        include_visual_style: bool,
+    ) -> str:
+        """Build trailing prompt chunk. L2 edit omits ``Visual style:`` to avoid duplicating summaries."""
         parts: list[str] = []
-        if style_notes:
+        if include_visual_style and style_notes:
             parts.append("Visual style: " + "; ".join(style_notes) + ".")
         if must_avoid:
             parts.append("Do NOT use: " + "; ".join(must_avoid) + ".")
+        if not parts:
+            return ""
         return "\n" + " ".join(parts)
 
     # ------------------------------------------------------------------
@@ -416,6 +572,7 @@ class KeyframeMaterializer(BaseMaterializer):
         img_asset["asset_id"] = sys_id
         if not prompt:
             return None
+        kf_dict["image_generation_prompt"] = prompt
         try:
             img_bytes = await self.image_svc.generate_image(prompt)
             ext = img_asset.get("format", "png")
@@ -436,13 +593,14 @@ class KeyframeMaterializer(BaseMaterializer):
         prompt: str,
         sys_id: str,
         *,
-        layer_tag: str = "L2/3",
+        layer_tag: str = "L2",
     ) -> bytes | None:
         """Edit reference image(s) with prompt (Gemini), return bytes."""
         img_asset = kf_dict.get("image_asset", {})
         img_asset["asset_id"] = sys_id
         if not prompt:
             return None
+        kf_dict["image_generation_prompt"] = prompt
         try:
             img_bytes = await self.image_svc.edit_image(reference, prompt)
             ext = img_asset.get("format", "png")
@@ -455,35 +613,6 @@ class KeyframeMaterializer(BaseMaterializer):
         except Exception as exc:
             logger.error("[%s] Edit failed for %s: %s", layer_tag, sys_id, exc)
             return None
-
-    @staticmethod
-    def _collect_shot_references(
-        shot: dict[str, Any],
-        scene_images: dict[str, bytes],
-        stab: dict[str, Any],
-    ) -> list[bytes]:
-        """Collect scene-anchor images relevant to a shot for Layer 3 edit."""
-        refs: list[bytes] = []
-        seen: set[str] = set()
-
-        all_char_ids: list[str] = []
-        for kf in shot.get("keyframes", []):
-            constraints = kf.get("constraints_applied", {})
-            all_char_ids.extend(constraints.get("characters_in_frame", []))
-
-        for char_id in all_char_ids:
-            if char_id in scene_images and char_id not in seen:
-                refs.append(scene_images[char_id])
-                seen.add(char_id)
-
-        for loc_kf in stab.get("locations", []):
-            loc_id = loc_kf.get("entity_id", "")
-            if loc_id in scene_images and loc_id not in seen:
-                refs.append(scene_images[loc_id])
-                seen.add(loc_id)
-                break
-
-        return refs
 
     def _inject_reference_images(
         self,
@@ -597,6 +726,10 @@ class KeyframeMaterializer(BaseMaterializer):
             kf_dict = entity_lookup[matched_eid][0]
             img_asset = kf_dict.get("image_asset", {})
             img_asset["asset_id"] = sys_id
+            kf_dict["image_generation_prompt"] = (
+                "[user_reference_image] Injected from resolved_inputs.reference_images; "
+                "no text-to-image API call."
+            )
 
             ext = img_asset.get("format", "png")
             self._pending.append(MediaAsset(

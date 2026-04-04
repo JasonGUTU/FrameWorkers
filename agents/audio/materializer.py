@@ -7,6 +7,7 @@ file I/O; persistence is handled exclusively by Assistant.
 
 from __future__ import annotations
 
+import json
 import logging
 import os
 from typing import Any
@@ -116,6 +117,18 @@ class AudioMaterializer(BaseMaterializer):
                 if text:
                     try:
                         voice = self._speaker_to_voice(speaker)
+                        tts_model = getattr(
+                            self.audio_svc, "tts_model", "tts-1"
+                        )
+                        seg["audio_generation_prompt"] = json.dumps(
+                            {
+                                "kind": "tts",
+                                "model": tts_model,
+                                "voice": voice,
+                                "text": text,
+                            },
+                            ensure_ascii=False,
+                        )
                         audio_bytes = await self.audio_svc.generate_speech(
                             text, voice=voice
                         )
@@ -137,9 +150,19 @@ class AudioMaterializer(BaseMaterializer):
             music_bytes: bytes | None = None
             if music_cue:
                 try:
+                    m_dur = music_cue.get("end_sec", 0) - music_cue.get("start_sec", 0)
+                    music_cue["audio_generation_prompt"] = json.dumps(
+                        {
+                            "kind": "music",
+                            "mood": music_cue.get("mood", "neutral"),
+                            "duration_sec": m_dur,
+                            "scene_id": scene_id,
+                        },
+                        ensure_ascii=False,
+                    )
                     music_bytes = await self.audio_svc.generate_music(
                         mood=music_cue.get("mood", "neutral"),
-                        duration_sec=music_cue.get("end_sec", 0) - music_cue.get("start_sec", 0),
+                        duration_sec=m_dur,
                         scene_id=scene_id,
                     )
                     pending.append(MediaAsset(
@@ -157,9 +180,19 @@ class AudioMaterializer(BaseMaterializer):
             ambience_bytes: bytes | None = None
             if ambience:
                 try:
+                    a_dur = ambience.get("end_sec", 0) - ambience.get("start_sec", 0)
+                    ambience["audio_generation_prompt"] = json.dumps(
+                        {
+                            "kind": "ambience",
+                            "description": ambience.get("description", ""),
+                            "duration_sec": a_dur,
+                            "scene_id": scene_id,
+                        },
+                        ensure_ascii=False,
+                    )
                     ambience_bytes = await self.audio_svc.generate_ambience(
                         description=ambience.get("description", ""),
-                        duration_sec=ambience.get("end_sec", 0) - ambience.get("start_sec", 0),
+                        duration_sec=a_dur,
                         scene_id=scene_id,
                     )
                     pending.append(MediaAsset(

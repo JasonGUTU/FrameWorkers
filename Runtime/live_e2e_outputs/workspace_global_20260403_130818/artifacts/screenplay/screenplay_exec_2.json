@@ -1,0 +1,203 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-03T13:08:37.150999+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "Midnight Tick",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Arthur's Workshop/Home",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "In the tense, final ten seconds before midnight, Arthur Finch, a grieving retired watchmaker, battles trembling hands and overwhelming emotion to repair his late wife's cherished pocket watch. With each resounding chime of the grandfather clock, he races against time to secure a crucial, microscopic component, seeking a moment of peace and connection as the new year begins.",
+        "estimated_duration": {
+          "seconds": 10.0,
+          "confidence": 0.7
+        },
+        "continuity": {
+          "props_present": [
+            "Delicate pocket watch",
+            "Watchmaker's loupe",
+            "Fine-tipped tweezers",
+            "Tiny gears and components",
+            "Magnifying lamp",
+            "Grandfather clock"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A simple, well-worn dark button-up shirt, a practical tweed waistcoat, and a jeweler's apron tied loosely around his waist. His sleeves are rolled up, revealing thin, aged forearms.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "The scene must take place in the final 10 seconds before midnight.",
+            "Arthur must successfully repair the watch by midnight.",
+            "The grandfather clock's chimes must emphasize the countdown."
+          ]
+        },
+        "blocks": [
+          {
+            "block_id": "b_001",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "INT. ARTHUR'S WORKSHOP - NIGHT (MOMENTS TO MIDNIGHT)\n\nAn elderly hand, lined with age and tremor, hovers over a workbench. ARTHUR FINCH (70s), a profound sorrow etched on his face, peers through a watchmaker's LOUPE. Before him, the delicate, open mechanism of his late wife's POCKET WATCH.",
+            "continuity_refs": {
+              "props": [
+                "Watchmaker's loupe",
+                "Delicate pocket watch"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_002",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A majestic GRANDFATHER CLOCK dominates the background. Its ornate face clearly shows the time: TEN SECONDS TO MIDNIGHT. A low, resonant HUM begins to emanate from it.",
+            "continuity_refs": {
+              "props": [
+                "Grandfather clock"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_003",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Arthur holds a minuscule gear with fine-tipped TWEEZERS. His hand shakes, not just from age, but from the immense pressure, the emotional weight of this final, desperate act.",
+            "continuity_refs": {
+              "props": [
+                "Fine-tipped tweezers",
+                "Tiny gears and components"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_004",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The GRANDFATHER CLOCK CHIMES, deep and sonorous, signaling the first second. Arthur flinches, a bead of sweat tracing a path down his temple. EIGHT SECONDS.",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_005",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He pushes the tiny component. It slips. His jaw tightens. SEVEN SECONDS. He takes a ragged breath, refocusing, his eyes burning with fierce determination.",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_006",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "With a final, painstaking effort, his hand steadies. The gear drops perfectly into place. SIX SECONDS. A silent, desperate triumph.",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_007",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He quickly, but carefully, closes the watch's delicate casing, snapping it shut with a barely audible CLICK. FIVE SECONDS. He holds the watch to his ear, listening.",
+            "continuity_refs": {
+              "props": [
+                "Delicate pocket watch"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_008",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Silence. The chimes of the grandfather clock crescendo. FOUR... THREE... TWO... ONE...",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_009",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The final, deafening STRIKE of MIDNIGHT echoes through the room. A beat of profound, agonizing silence.",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_010",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Then, a faint, rhythmic TICK-TOCK... TICK-TOCK... from the pocket watch. Soft, steady, perfect. Arthur's eyes, wide with disbelief and relief, well up.",
+            "continuity_refs": {
+              "props": [
+                "Delicate pocket watch"
+              ],
+              "wardrobe_character_ids": []
+            }
+          },
+          {
+            "block_id": "b_011",
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A small, peaceful smile spreads across his face, pushing away the years of sorrow. He closes his eyes, pressing the watch to his heart. The New Year has arrived, bringing with it a quiet, longed-for peace.",
+            "continuity_refs": {
+              "props": [
+                "Delicate pocket watch"
+              ],
+              "wardrobe_character_ids": []
+            }
+          }
+        ],
+        "scene_end": {
+          "turn": "The watch ticks to life precisely as the grandfather clock strikes midnight, synchronizing with the New Year's arrival.",
+          "emotional_shift": "Arthur transitions from intense tension, grief, and desperation to a profound sense of quiet accomplishment, serene emotional release, and a hopeful, connected peace with his late wife's memory."
+        }
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "estimated_total_duration_sec": 10.0,
+    "sum_scene_duration_sec": 10.0,
+    "scene_count": 1,
+    "dialogue_block_count": 0,
+    "action_block_count": 11
+  }
+}

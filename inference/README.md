@@ -80,6 +80,8 @@ inference/
 - **视频生成模块**: 可扩展视频生成器注册系统，支持文本/图像/视频到视频
 - **音频生成模块**: 可扩展音频生成器注册系统，支持文本到语音、音频后处理、以及最终音视频 mux
 - **fal.ai 生成后端**: 支持通过 `FAL_API_KEY` 调用 fal.ai 图像/视频/语音生成器；`generation/fal_helpers.py` 集中实现 `fal_client.subscribe` 的 `FAL_KEY` 环境与 `httpx` 下载，供 `FalImageService` / `FalVideoService` / `FalAudioService` 复用
+- **WaveSpeed.ai 视频后端（UniVA 工具对齐 / Layer A）**: `generation/wavespeed_predict.py` 提供异步提交与轮询；`video_generators/service.py` 中的 `WavespeedVideoService` 实现与 `FalVideoService` 相同的 `VideoService.generate_clip` 契约。管线 **VideoAgent** 通过 `FW_VIDEO_BACKEND=wavespeed` 选用 WaveSpeed，默认仍为 `fal`。实现独立于仓库内 `univa/` 包（`inference` 不 import 其他顶层包），与 UniVA MCP 工具共享同一 WaveSpeed HTTP API 形态。
+- **UniVA 整合分层（与侧车 / MCP）**: **Layer A**（本仓库已落地）：把 WaveSpeed T2V/I2V 接进 `inference` + VideoAgent。**Layer B**：保留 UniVA `univa_server.py` 为独立 FastAPI 侧车，由 Director/脚本 HTTP 调用。**Layer C**：在 FrameWorkers 内起 MCP 客户端对接 `univa.mcp_tools.*`（需单独编排层；易与现有多 agent 流水线重复）。Agno PlanAct 与主链路 strict JSON 契约不同，不建议第一步并入 Assistant 同进程。
 - **fal 视频严格多锚点策略**: 多 keyframe 输入时仅传 `image_urls`，不自动回退到 `image_url`
 - **fal 视频结构化一致性透传**: 可通过 `FAL_VIDEO_STRUCTURED_CONSTRAINTS_FIELD` 把 `consistency_constraints` 作为独立参数传给支持该字段的模型
 - **视频拼接语义修复**: `VideoService.assemble_scene/assemble_final` 默认使用 `ffmpeg concat` 合成，避免二进制直接拼接导致最终时长错误
@@ -129,6 +131,7 @@ inference/
 ├── generation/                 # 生成模块
 │   ├── __init__.py
 │   ├── fal_helpers.py           # fal.ai subscribe + HTTP 下载（Fal*Service 共享）
+│   ├── wavespeed_predict.py     # WaveSpeed 预测 API（异步轮询 + 下载，WavespeedVideoService）
 │   ├── base_generator.py        # 生成器基类
 │   ├── base_registry.py         # 注册表基类（共享发现/加载逻辑）
 │   ├── image_generators/             # 图像生成域
@@ -138,7 +141,7 @@ inference/
 │   │       └── openrouter_image_generator/  # 具体实现（OpenRouter 图像后端）
 │   ├── video_generators/             # 视频生成域
 │   │   ├── registry.py               # 视频生成器注册表
-│   │   ├── service.py                # 视频服务（VideoService/MockVideoService）
+│   │   ├── service.py                # 视频服务（VideoService / Mock / Fal / WaveSpeed）
 │   │   └── generators/
 │   │       └── mock_video_generator/       # 具体实现（Mock 视频后端）
 │   ├── audio_generators/             # 音频生成域
@@ -496,6 +499,7 @@ export ANTHROPIC_API_KEY="your-key"
 export OLLAMA_BASE_URL="http://localhost:11434"
 export FAL_API_KEY="your-fal-api-key"
 export FAL_IMAGE_MODEL="fal-ai/nano-banana-2"
+export FAL_T2V_MODEL="fal-ai/kling-video/v2.6/pro/text-to-video"
 export FAL_VIDEO_MODEL="fal-ai/kling-video/v2.6/pro/image-to-video"
 export FAL_TTS_MODEL="fal-ai/minimax/speech-02-turbo"
 ```
@@ -504,7 +508,15 @@ export FAL_TTS_MODEL="fal-ai/minimax/speech-02-turbo"
 
 **Fal 图像/视频模型**：`FalImageService` / `FalVideoService` 在构造时会通过 `generation/fal_helpers.py` 合并**仓库根目录**的 `.env` 与 `.env.example`（仅写入尚未设置的键），然后读取 **`FAL_IMAGE_MODEL`** / **`FAL_VIDEO_MODEL`**；若仍为空则抛错。不在 Python 里写死默认端点 ID——改模型只需编辑 `.env`（或复制 `.env.example` 再改）。
 
-**离线从 storyboard 到成片（KeyFrame + Video fal）**：**`scripts/run_storyboard_to_video.py`** — 进程内 `descriptor.build_equipped_agent` + `run()`，不经过 Task Stack / `POST /api/assistant/execute`。输出目录下 `keyframes/`（PNG + `keyframes_package.json`）与 `video/`（`clip_*.mp4`、`video_package.json` 等）。VideoAgent 仍为骨架生成计划（无 LLM），与线上一致。`--no-video-materialize` 只跑到 keyframes；`--no-keyframe-materialize` 须配合 `--no-video-materialize`（仅 LLM+L1/L2、无 fal 图）。
+**fal 纯文生视频自检（扣费）**：**`scripts/fal_text_to_video_smoke.py`** — 仅用 `FAL_API_KEY` + **`FAL_T2V_MODEL`**（默认 `fal-ai/kling-video/v2.6/pro/text-to-video`，见根目录 `.env.example`）调用 `FalVideoService.generate_clip(..., keyframe_images=[])`，验证密钥与额度是否足够生成一段短 mp4；输出默认 **`Runtime/fal_t2v_smoke_<timestamp>.mp4`**。与管线里的 **`FAL_VIDEO_MODEL`（多为 image-to-video）** 相互独立。
+
+**fal 图生视频自检（扣费）**：**`scripts/fal_image_to_video_smoke.py`** — 使用 **`FAL_VIDEO_MODEL`**（与 VideoAgent 相同）+ 本地一张 PNG（默认指向某次 e2e 的 `img_sh_001_kf_001.png`，可用 `-i` 覆盖），验证 **image-to-video** 是否与管线一致可通；输出 **`Runtime/fal_i2v_smoke_<timestamp>.mp4`**。
+
+**WaveSpeed 纯文生视频自检（扣费）**：**`scripts/wavespeed_text_to_video_smoke.py`** — 需要 **`WAVESPEED_API_KEY`**；可选 **`WAVESPEED_VIDEO_PROVIDER`**（默认 `bytedance`）、**`WAVESPEED_VIDEO_T2V_MODEL`**（默认 `seedance-v1-pro-t2v-480p`）。直接调用 `WavespeedVideoService.generate_clip(..., keyframe_images=[])`；输出默认 **`Runtime/wavespeed_t2v_smoke_<timestamp>.mp4`**。与 fal 自检脚本并行，用于验证 WaveSpeed 额度与端点。
+
+**管线切换视频供应商**：根目录 `.env` 设置 **`FW_VIDEO_BACKEND=wavespeed`** 时，VideoAgent materializer 使用 **`WavespeedVideoService`**（仍需 **`WAVESPEED_API_KEY`** 等）；省略或 **`FW_VIDEO_BACKEND=fal`** 时行为与原先一致（**`FAL_VIDEO_MODEL`** 等）。
+
+**离线从统一 screenplay 到成片（KeyFrame + Video fal）**：**`scripts/run_storyboard_to_video.py`** — 传入 **`--screenplay`**（或别名 **`--storyboard`**）指向 screenplayagent 类 JSON；进程内 `descriptor.build_equipped_agent` + `run()`，不经过 Task Stack / `POST /api/assistant/execute`。`keyframes/` 下含 **L1/L2/L3** PNG（L3 为每 shot 一张 `img_sh_*_kf_*.png`）；Video 只消费 **L3** 可读文件。另含 `keyframes_package.json` 与 `video/`（`clip_*.mp4`、`video_package.json` 等）。`--no-video-materialize` 只跑到 keyframes；`--no-keyframe-materialize` 须配合 `--no-video-materialize`（仅 LLM、无 fal 图）。
 
 媒体生成器会自动发现 fal.ai 插件：
 - `fal_image_generator`

@@ -207,6 +207,9 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
+# Nested git repo kept locally; not part of this project
+univa/
+
 .DS_Store
 Thumbs.db
 .yaml

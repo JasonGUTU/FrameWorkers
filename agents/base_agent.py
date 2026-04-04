@@ -154,7 +154,7 @@ class BaseAgent(Generic[InputT, OutputT]):
         """Build the user prompt from structured input.
 
         Only needed by agents that use legacy mode (StoryAgent) or
-        structuring mode (ScreenplayAgent, StoryboardAgent).
+        structuring mode (ScreenplayAgent).
         """
         raise NotImplementedError(f"{self.agent_name}.build_user_prompt()")
 

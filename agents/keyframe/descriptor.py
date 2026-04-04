@@ -27,7 +27,7 @@ def build_input(
         else {}
     )
     return KeyFrameAgentInput(
-        storyboard=resolved.get("storyboard", {}),
+        screenplay=resolved.get("screenplay", {}),
     )
 
 
@@ -37,9 +37,10 @@ def materializer_factory(services: dict[str, Any]) -> KeyframeMaterializer:
 
 CATALOG_ENTRY = (
     "KeyFrameAgent\n"
-    "  - Input: storyboard\n"
-    "  - Output: keyframes_package (3-layer prompts: global anchors -> scene anchors -> shot keyframes)\n"
-    "  - Purpose: Plan keyframe image prompts for visual consistency."
+    "  - Input: screenplay (unified shots + consistency packs)\n"
+    "  - Output: keyframes_package (L1 global + L2 scene stability + L3 one still per shot); "
+    "each L3 row has prompt_summary (image API) + video_motion_hint (I2V text only)\n"
+    "  - Purpose: Anchor consistency, per-shot stills, and decoupled motion hints for video."
 )
 
 DESCRIPTOR = SubAgentDescriptor(

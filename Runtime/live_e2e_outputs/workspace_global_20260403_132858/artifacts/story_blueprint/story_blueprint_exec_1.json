@@ -1,0 +1,121 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-03T13:29:11.078443+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A retired watchmaker races against the final ten seconds before midnight to repair his late wife's cherished pocket watch, hoping to find a moment of peace and connection as the new year begins.",
+    "estimated_duration": {
+      "seconds": 10.0,
+      "confidence": 0.9
+    },
+    "style": {
+      "genre": [
+        "Drama",
+        "Short Film"
+      ],
+      "tone_keywords": [
+        "poignant",
+        "hopeful",
+        "urgent",
+        "intimate",
+        "nostalgic"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Elias",
+        "role": "protagonist",
+        "profile": "A venerable, retired watchmaker, his hands now tremble slightly with age and grief. He carries the quiet weight of his late wife's memory, seeking solace in her cherished possessions.",
+        "motivation": "To honor his late wife's memory by repairing her cherished pocket watch, finding a moment of connection and peace at the turn of the new year.",
+        "flaw": "His lingering grief and the emotional significance of the task make his hands less steady, adding to the pressure of the moment."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Elias's Workshop/Study",
+        "description": "A dimly lit, cozy space filled with antique tools, gears, and the faint scent of oil and old wood. A grand grandfather clock dominates one corner, its ticking a constant reminder of time's passage."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Elias is frantically working on a delicate pocket watch, a grandfather clock showing precious few seconds left before midnight.",
+        "conflict": "The intricate repair of the watch against the rapidly ticking clock, amplified by the emotional weight of his late wife's memory.",
+        "turning_point": "The realization that this is the absolute last chance, as the countdown becomes critical."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "climax",
+        "summary": "With a final, trembling adjustment, Elias places the last piece, holding his breath as he listens for the watch to tick.",
+        "conflict": "The tension of uncertainty – will the repair hold? Will he achieve his symbolic goal? The potential for profound disappointment.",
+        "turning_point": "A faint, but distinct, tick is heard from the watch, signaling success."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "resolution",
+        "summary": "The watch ticks steadily as midnight chimes. Elias looks at the repaired watch, then to a faded photograph of his wife, a small, knowing smile gracing his lips.",
+        "conflict": "His internal struggle with grief and urgency gives way to a fleeting moment of acceptance and connection.",
+        "turning_point": "A sense of peaceful closure and hopeful connection washes over him as the new year begins."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To make the final, critical repair to the pocket watch before midnight.",
+        "conflict": "Extreme time pressure and the delicate nature of the work, exacerbated by trembling hands.",
+        "turn": "Elias successfully places the final tiny gear or component, holding his breath."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To confirm the watch is working and acknowledge his success.",
+        "conflict": "The anxious wait for the watch's first tick, fearing failure after all his effort.",
+        "turn": "A quiet but distinct tick is heard, bringing a wave of relief over Elias."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To find a moment of peace and connection with his late wife at the turn of the new year.",
+        "conflict": "The lingering shadow of grief contrasted with the hope of a new beginning.",
+        "turn": "Elias shares a quiet, understanding smile with a photograph of his wife, finding solace as the grandfather clock chimes midnight."
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "character_count": 1,
+    "location_count": 1,
+    "scene_count": 3
+  }
+}
