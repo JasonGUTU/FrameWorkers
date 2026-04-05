@@ -162,11 +162,11 @@ def test_global_memory_md_created_empty_then_sections_after_entry(tmp_path):
     mm.add_memory_entry(content="hello", task_id=tid)
     assert path.exists()
     md_text = path.read_text(encoding="utf-8")
-    assert "## File tree" in md_text
+    assert "## File tree" not in md_text
     assert "## Entries" in md_text
     assert "```json" in md_text
-    assert "<!-- FW_FILE_TREE_BEGIN -->" in md_text
-    assert "human-readable snapshot" in md_text.lower() or "not authoritative" in md_text.lower()
+    assert "intentionally omits" in md_text.lower()
+    assert "get_workspace_root_file_tree_text" in md_text
     listed = mm.list_memory_entries(limit=10)
     assert len(listed) == 1
     assert listed[0]["content"] == "hello"

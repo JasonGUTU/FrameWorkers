@@ -294,7 +294,7 @@ Agent 核心框架已迁移至项目根目录 `agents/`。`service.py` 和 `rout
 - 异常告警统一通过 `logging` 输出（替代 `print`）
 
 **memory_manager.py**：
-- 全局记忆按 workspace 单文件落盘为 **`Runtime/{workspace_id}/global_memory.md`**（内嵌 JSON 条目数组：`content` / `task_id` / `agent_id` / `created_at` / `execution_result` / 可选 **`artifact_locations`** + 自动刷新的 **File tree**）
+- 全局记忆按 workspace 单文件落盘为 **`Runtime/{workspace_id}/global_memory.md`**（内嵌 JSON 条目数组：`content` / `task_id` / `agent_id` / `created_at` / `execution_result` / 可选 **`artifact_locations`**；**不**内嵌 File tree）
 - `get_memory_brief`：返回极薄 `global_memory` 行（仅 `task_id` / `agent_id` / `created_at` / `execution_result`；**无** `content` / **`artifact_locations`**；`created_at` 降序）；**Director** 与 **`GET /memory/brief`** 使用。`build_execution_inputs` 使用 **`list_memory_entries`**（含 `content` 与 **`artifact_locations`**）。新条目在 `process_results` 由 Assistant 写入：**LLM #3（global_memory 摘要）为严格模式**（失败或非法 JSON 则整次执行失败并返回 **500**，无空 `{}` 或确定性文案回退），并与确定性路径做 **`artifact_locations` 合并**。`build_execution_inputs` 可运行 **LLM #1（输入打包）**（按 role 回填输入；冷启动无 artifact 时跳过）。HTTP **`execute_fields`** 若含已废弃键 **`_memory_brief`**，会被静默忽略（不进入 `execute_fields`）。
 
 ---

@@ -14,9 +14,6 @@ logger = logging.getLogger(__name__)
 
 GLOBAL_MEMORY_FILENAME = "global_memory.md"
 
-FILE_TREE_BEGIN = "<!-- FW_FILE_TREE_BEGIN -->"
-FILE_TREE_END = "<!-- FW_FILE_TREE_END -->"
-
 ENTRIES_HEADER = "## Entries"
 JSON_FENCE_OPEN = "```json"
 JSON_FENCE_CLOSE = "```"
@@ -40,12 +37,11 @@ class MemoryManager:
     Each **entry** in the JSON array has:
 
     ``content``, ``agent_id``, ``created_at`` (ISO8601 UTC), ``execution_result`` (JSON object,
-    execution summary; may be empty ``{}``), and optional ``artifact_locations`` (list of
+    execution summary; may be empty ``{}``), and     optional ``artifact_locations`` (list of
     ``{"role", "path", ...}`` rows for durable artifact paths).
 
-    The markdown file may include a **File tree** snapshot for **human reading** only.
-    Automation must use **live** ``get_workspace_root_file_tree_text`` and
-    ``artifact_locations`` — the embedded tree is not authoritative.
+    This file does **not** embed a workspace file-tree dump (too noisy for large runs).
+    Use **live** ``get_workspace_root_file_tree_text`` and per-entry ``artifact_locations``.
     """
 
     MAX_ENTRY_COUNT = 2000
@@ -187,44 +183,25 @@ class MemoryManager:
             lines.append(f"... ({len(all_files) - max_lines} more files truncated)")
         return "\n".join(lines) if lines else "(no files yet)"
 
-    def _compose_global_memory_document(
-        self,
-        entries: List[Dict[str, Any]],
-        *,
-        file_tree_root: Path,
-    ) -> str:
-        tree = self._build_file_tree_text(file_tree_root)
+    def _compose_global_memory_document(self, entries: List[Dict[str, Any]]) -> str:
         json_body = json.dumps(entries, ensure_ascii=False, indent=2)
         scope = f"workspace `{self.workspace_id}`"
         return (
             f"# Global memory\n\n"
             f"Global memory for {scope}. "
             f"The **Entries** section is the canonical JSON array. "
-            f"The **File tree** below is a **human-readable snapshot** at write time (may be truncated); "
-            f"for **automation** (persist paths, input packaging, Director), use **live** workspace "
-            f"file-tree APIs and ``artifact_locations`` — the snapshot is not authoritative.\n\n"
-            f"## File tree\n\n"
-            f"{FILE_TREE_BEGIN}\n"
-            f"```\n{tree}\n```\n"
-            f"{FILE_TREE_END}\n\n"
+            f"For the current directory layout, call **live** "
+            f"``Workspace.get_workspace_root_file_tree_text()``; for durable paths, use each entry's "
+            f"``artifact_locations`` (this file intentionally omits an embedded file tree).\n\n"
             f"{ENTRIES_HEADER}\n\n"
             f"{JSON_FENCE_OPEN}\n{json_body}\n{JSON_FENCE_CLOSE}\n"
         )
 
-    def _write_global_memory_file(
-        self,
-        path: Path,
-        entries: List[Dict[str, Any]],
-        *,
-        file_tree_root: Path,
-    ) -> None:
+    def _write_global_memory_file(self, path: Path, entries: List[Dict[str, Any]]) -> None:
         try:
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(
-                self._compose_global_memory_document(
-                    entries,
-                    file_tree_root=file_tree_root,
-                ),
+                self._compose_global_memory_document(entries),
                 encoding="utf-8",
             )
         except Exception as exc:
@@ -232,14 +209,10 @@ class MemoryManager:
             raise
 
     def refresh_file_tree(self) -> None:
-        """Rewrite ``global_memory.md`` so the human-readable File tree matches disk."""
+        """Rewrite ``global_memory.md`` from disk entries (e.g. after file store/delete)."""
         path = self._global_memory_path()
         entries = self._read_entries_from_file(path)
-        self._write_global_memory_file(
-            path,
-            entries,
-            file_tree_root=self.workspace_runtime_path,
-        )
+        self._write_global_memory_file(path, entries)
 
     def add_memory_entry(
         self,
@@ -272,11 +245,7 @@ class MemoryManager:
         entries.append(entry)
         if len(entries) > self.MAX_ENTRY_COUNT:
             entries = entries[-self.MAX_ENTRY_COUNT :]
-        self._write_global_memory_file(
-            path,
-            entries,
-            file_tree_root=self.workspace_runtime_path,
-        )
+        self._write_global_memory_file(path, entries)
         return entry
 
     def list_memory_entries(
