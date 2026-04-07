@@ -12,7 +12,7 @@ Composition (one instance per workspace directory):
   * ``ArtifactRegistry`` — natural-language caption index per file
   * ``AssetManager``     — execution-aware persistence (wired with
                             callbacks into the four managers above)
-  * ``InputResolver``    — built lazily inside
+  * ``InputResolver``    — built per-call inside
                             ``resolve_inputs_for_agent`` from the
                             registry + file_manager + an LLM client
 
@@ -35,7 +35,7 @@ from .log_manager import LogManager
 from .asset_manager import AssetManager
 from .artifact_registry import ArtifactRegistry
 from .input_resolver import InputResolver
-from .models import ArtifactRegistryEntry, FileMetadata, LogEntry
+from .models import FileMetadata, LogEntry
 
 
 class Workspace:
@@ -74,9 +74,6 @@ class Workspace:
             register_artifacts=self._register_artifacts_callback,
             prune_artifact_registry=self._prune_artifact_registry_by_producer,
         )
-
-        # InputResolver — wired lazily (needs llm_client at resolve time)
-        self._input_resolver: Optional[InputResolver] = None
 
         # Log workspace creation
         self.log_manager.add_log(
@@ -204,7 +201,6 @@ class Workspace:
                 "size_bytes": file_metadata.size_bytes,
             },
         )
-        self.memory_manager.refresh_file_tree()
         self._touch()
         return file_metadata
 
@@ -328,7 +324,6 @@ class Workspace:
                     event="file.deleted",
                     details={"filename": file_meta.filename},
                 )
-                self.memory_manager.refresh_file_tree()
                 self._touch()
             return success
         return False
@@ -416,7 +411,6 @@ class Workspace:
         task_id: str,
         input_needs_description: str,
         llm_client: Any,
-        source_text: str = "",
         model: Optional[str] = None,
     ) -> Dict[str, Any]:
         """LLM-based per-artifact semantic input resolution.
@@ -431,7 +425,6 @@ class Workspace:
             agent_id=agent_id,
             task_id=task_id,
             input_needs_description=input_needs_description,
-            source_text=source_text,
             model=model,
         )
 

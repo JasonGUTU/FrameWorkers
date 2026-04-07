@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-07T01:07:55.689538+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "text": "30-second cinematic short about Elias, an elderly watchmaker, racing on New Year's Eve to repair his late wife's pocket watch. Warm intimate workshop, golden lamplight.",
+    "summary": ""
+  },
+  "metrics": {
+    "char_count": 168
+  },
+  "artifact_caption": {
+    "semantic_type": "",
+    "what": "natural-language brief from the user: \"30-second cinematic short about Elias, an elderly watchmaker, racing on New Year's Eve to repair his late wife's pocket\" (stated intent: creative brief for the project)",
+    "why": "creative brief for the project",
+    "scope": "global"
+  }
+}

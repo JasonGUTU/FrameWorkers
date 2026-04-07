@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-07T01:08:08.390392+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "visual_description": "An elderly, bearded man in a plaid shirt and apron meticulously works on a wooden mechanism with gears at a cluttered workbench. Warm light from a window on the left illuminates his focused face and hands, creating an industrious and calm mood.",
+    "image_asset": {
+      "asset_id": "",
+      "uri": "/home/zhendong_li/FrameWorkers/Runtime/intake_e2e_outputs/workspace_e2e_text_with_image_20260407_010751/inputs/20260407_010751_318544_img_char_001_global.png",
+      "width": 1024,
+      "height": 576,
+      "format": "png"
+    }
+  },
+  "artifact_caption": {
+    "semantic_type": "",
+    "what": "image showing An elderly, bearded man in a plaid shirt and apron meticulously works on a wooden mechanism with gears at a cluttered workbench. Warm light from a window on the left illuminates his focused face and hands, creating an industrious and calm mood.",
+    "why": "this is the protagonist Elias — use as character reference",
+    "scope": "global"
+  }
+}

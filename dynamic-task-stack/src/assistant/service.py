@@ -295,7 +295,6 @@ class AssistantService:
             task_id=task_id,
             input_needs_description=input_needs,
             llm_client=self.pipeline_llm_client,
-            source_text="",
             model=self.input_package_model,
         )
         return resolved
@@ -387,23 +386,15 @@ class AssistantService:
             execution.error = str(e)
             execution.completed_at = datetime.now()
             self.storage.update_execution(execution)
-            self._sync_global_memory_after_execution(
-                self.workspace,
-                execution,
-                persisted_media_paths=None,
-                extra_artifact_locations=None,
-            )
+            self._sync_global_memory_after_execution(self.workspace, execution)
             raise e
-        
+
         return execution
 
     def _sync_global_memory_after_execution(
         self,
         workspace: Workspace,
         execution: AgentExecution,
-        *,
-        persisted_media_paths: Optional[Dict[str, str]] = None,
-        extra_artifact_locations: Optional[List[Dict[str, Any]]] = None,
     ) -> None:
         """Append one semantic entry to global_memory using agent-generated caption."""
         if execution.status not in (ExecutionStatus.COMPLETED, ExecutionStatus.FAILED):
@@ -688,12 +679,7 @@ class AssistantService:
             execution.results["_asset_index"] = asset_index
         if persisted_paths or asset_index:
             self.storage.update_execution(execution)
-        self._sync_global_memory_after_execution(
-            workspace,
-            execution,
-            persisted_media_paths=persisted_paths or None,
-            extra_artifact_locations=extra_locs or None,
-        )
+        self._sync_global_memory_after_execution(workspace, execution)
         memory_brief = workspace.get_memory_brief(task_id=execution.task_id)
         return {
             "task_id": execution.task_id,

@@ -107,7 +107,6 @@ class InputResolver:
         agent_id: str,
         task_id: str,
         input_needs_description: str,
-        source_text: str = "",
         model: Optional[str] = None,
     ) -> Dict[str, Any]:
         """Return resolved_artifacts ready for InputBundleV2.context.

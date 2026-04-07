@@ -3,8 +3,6 @@
 Responsibilities:
   * Store semantic decisions and project context — the "why" behind agent
     work — as structured JSON entries embedded in ``global_memory.md``.
-  * Maintain ``global_memory_index.md`` (one-line summary per entry) for
-    fast LLM scanning without parsing the full document.
   * Render a workspace file tree text representation for LLM prompts.
 
 What it does NOT do:
@@ -32,7 +30,6 @@ from typing import Any, Dict, List, Optional
 logger = logging.getLogger(__name__)
 
 GLOBAL_MEMORY_FILENAME = "global_memory.md"
-GLOBAL_MEMORY_INDEX_FILENAME = "global_memory_index.md"
 
 ENTRIES_HEADER = "## Entries"
 JSON_FENCE_OPEN = "```json"
@@ -71,10 +68,6 @@ class MemoryManager:
           "created_at": "<ISO8601 UTC>",
           "supersedes": null   // entry_id of superseded entry, or null
         }
-
-    A companion ``global_memory_index.md`` stores one line per entry so that
-    an LLM can scan the whole project history cheaply before deciding which
-    full entries to read.
     """
 
     MAX_ENTRY_COUNT = 2000
@@ -91,9 +84,6 @@ class MemoryManager:
 
     def _global_memory_path(self) -> Path:
         return self.workspace_runtime_path / GLOBAL_MEMORY_FILENAME
-
-    def _global_memory_index_path(self) -> Path:
-        return self.workspace_runtime_path / GLOBAL_MEMORY_INDEX_FILENAME
 
     # ------------------------------------------------------------------
     # Validation helpers
@@ -130,16 +120,7 @@ class MemoryManager:
         return {"what": text, "why": "", "context_note": ""}
 
     @staticmethod
-    def _normalize_entry(raw: Any) -> Dict[str, Any]:
-        if not isinstance(raw, dict):
-            return {
-                "content": {"what": "", "why": "", "context_note": ""},
-                "agent_id": "",
-                "task_id": "",
-                "execution_id": "",
-                "created_at": "",
-                "supersedes": None,
-            }
+    def _normalize_entry(raw: Dict[str, Any]) -> Dict[str, Any]:
         return {
             "content": MemoryManager._normalize_content(raw.get("content")),
             "agent_id": MemoryManager._sanitize_text(raw.get("agent_id")),
@@ -204,22 +185,6 @@ class MemoryManager:
             f"{JSON_FENCE_OPEN}\n{json_body}\n{JSON_FENCE_CLOSE}\n"
         )
 
-    def _compose_index_document(self, entries: List[Dict[str, Any]]) -> str:
-        """One-line summary per entry for fast LLM scanning."""
-        lines = ["# Global Memory Index\n",
-                 "One line per entry. Read global_memory.md for full details.\n"]
-        for e in entries:
-            agent = e.get("agent_id") or "?"
-            ts = (e.get("created_at") or "")[:10]
-            exec_id = e.get("execution_id") or ""
-            content = e.get("content") or {}
-            what = content.get("what") or "" if isinstance(content, dict) else str(content)
-            short = what[:120].replace("\n", " ")
-            supersedes = e.get("supersedes")
-            sup_note = f" [supersedes {supersedes}]" if supersedes else ""
-            lines.append(f"- [{ts}] {agent} ({exec_id}){sup_note}: {short}")
-        return "\n".join(lines) + "\n"
-
     # ------------------------------------------------------------------
     # File writes
     # ------------------------------------------------------------------
@@ -228,18 +193,9 @@ class MemoryManager:
         try:
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(self._compose_global_memory_document(entries), encoding="utf-8")
-            # Always regenerate the index alongside
-            index_path = self._global_memory_index_path()
-            index_path.write_text(self._compose_index_document(entries), encoding="utf-8")
         except Exception as exc:
             logger.warning("Failed to write global_memory.md at %s: %s", path, exc)
             raise
-
-    def refresh_file_tree(self) -> None:
-        """Rewrite global_memory.md from disk entries (e.g. after file store/delete)."""
-        path = self._global_memory_path()
-        entries = self._read_entries_from_file(path)
-        self._write_global_memory_file(path, entries)
 
     # ------------------------------------------------------------------
     # Public write API

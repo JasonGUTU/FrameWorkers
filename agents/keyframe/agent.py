@@ -60,12 +60,8 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self._prop_name_to_id: dict[str, str] = {}
-        # Unified switch first, then legacy switch for backward compatibility.
         # Default off for faster low-latency runs.
-        raw = os.getenv(
-            "FW_ENABLE_PROP_PIPELINE",
-            os.getenv("FW_ENABLE_PROP_KEYFRAMES", "0"),
-        ).strip().lower()
+        raw = os.getenv("FW_ENABLE_PROP_PIPELINE", "0").strip().lower()
         self._enable_prop_keyframes = raw in {"1", "true", "yes", "on"}
 
     # ------------------------------------------------------------------

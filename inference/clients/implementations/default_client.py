@@ -317,9 +317,60 @@ class LLMClient(BaseLLMClient):
         config: Optional[ModelConfig] = None,
         **kwargs,
     ) -> Dict[str, Any]:
-        self._ensure_litellm()
-        resolved_model = self._canonicalize_model(model or self.default_model)
+        """Async raw chat completion that honors provider routing.
+
+        Mirrors ``chat_json``'s two-branch dispatch:
+          * If the resolved provider routes to ``openai_sdk`` / ``gpt5_sdk``,
+            call ``AsyncOpenAI.chat.completions.create`` directly so that
+            multimodal messages and ``response_format`` flow through the
+            real OpenAI SDK (and provider-side gateways like cf_aig that
+            speak the OpenAI wire format).
+          * Otherwise fall back to litellm.
+
+        Without this branch, ``acall`` always required litellm AND would
+        hand provider-prefixed model names like
+        ``google-ai-studio/gemini-2.5-flash`` to ``litellm.acompletion``
+        which doesn't recognize them — breaking ``IntakeImageAgent``'s
+        vision call when the configured default model isn't a literal
+        OpenAI model id.
+        """
+        resolved_model, provider, client_type = self._resolve_model_and_client(model)
         formatted_messages = self._format_messages(messages)
+
+        if client_type in {"openai_sdk", "gpt5_sdk"}:
+            openai_client = self._get_openai_client(provider)
+            # Translate optional config + kwargs into OpenAI-SDK-shaped
+            # request kwargs. ``_build_openai_chat_kwargs`` already
+            # handles the gpt-5 max_completion_tokens vs max_tokens split
+            # and reasoning_effort. Anything else (response_format, tools,
+            # etc.) flows through via the kwargs catch-all below.
+            local_kwargs = dict(kwargs)
+            max_tokens_resolved: Optional[int] = local_kwargs.pop(
+                "max_tokens", None
+            )
+            reasoning_effort_resolved: Optional[str] = local_kwargs.pop(
+                "reasoning_effort", None
+            )
+            if config is not None:
+                if max_tokens_resolved is None:
+                    max_tokens_resolved = config.max_tokens
+            request_kwargs = self._build_openai_chat_kwargs(
+                model=resolved_model,
+                messages=formatted_messages,
+                max_tokens=max_tokens_resolved,
+                reasoning_effort=reasoning_effort_resolved,
+                # ``acall`` does NOT force JSON mode — callers (e.g.
+                # IntakeImageAgent) may pass ``response_format`` themselves
+                # via the kwargs catch-all.
+                json_mode=False,
+                client_type=client_type,
+            )
+            request_kwargs.update(local_kwargs)
+            response = await openai_client.chat.completions.create(**request_kwargs)
+            return self._format_response(response)
+
+        # Non-OpenAI-SDK providers — fall back to litellm.
+        self._ensure_litellm()
         call_params = self._build_call_params(resolved_model, config, **kwargs)
         response = await litellm.acompletion(
             model=resolved_model, messages=formatted_messages, **call_params

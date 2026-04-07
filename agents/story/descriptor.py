@@ -23,21 +23,17 @@ def build_input(
     The creative brief is selected by InputResolver via the
     ``[creative_brief]`` label and arrives as a caption-rich artifact
     (a JSON file produced by IntakeTextAgent). The verbatim user text
-    lives at ``payload.content.text``; older paths placed it at the
-    top-level ``payload.text``; both are supported as fallbacks.
+    lives at ``payload.content.text``; if absent we fall back to the
+    artifact caption's ``why`` (the user_intent string).
     """
     resolved = input_bundle_v2.resolved_artifacts
     brief_entry = resolved.get(INPUT_LABEL_CREATIVE_BRIEF, {})
     payload = brief_entry.get("payload", {}) if isinstance(brief_entry, dict) else {}
     creative_brief = ""
     if isinstance(payload, dict):
-        # New shape: IntakeTextAgent JSON output → payload.content.text
         content = payload.get("content")
         if isinstance(content, dict):
             creative_brief = str(content.get("text") or "")
-        # Legacy shape: top-level payload.text
-        if not creative_brief:
-            creative_brief = str(payload.get("text", "") or "")
     if not creative_brief and isinstance(brief_entry, dict):
         # Final fallback: caption.why (the user_intent string).
         creative_brief = str(brief_entry.get("why", "") or "")

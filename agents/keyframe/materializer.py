@@ -9,7 +9,7 @@
   Layer 3 — One still per shot: edit from scene **location** L2 (or text-only fallback) so the
             PNG matches the shot ``prompt_summary``; VideoAgent consumes **only** this URI.
 
-*Props are included when KeyFrameAgent emitted prop anchors (``FW_ENABLE_PROP_KEYFRAMES``).
+*Props are included when KeyFrameAgent emitted prop anchors (``FW_ENABLE_PROP_PIPELINE``).
 
 Text descriptions (prompt_summary) are always included.  **L2/L3 edit** paths
 use the same suffix: filtered ``must_avoid`` only (no ``Visual style:`` block),

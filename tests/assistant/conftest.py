@@ -114,7 +114,7 @@ def stub_input_package_llm(monkeypatch, request):
     if _live_e2e_enabled():
         return  # let real InputResolver run
 
-    def _stub(self, agent_id, task_id, workspace, packaged_data):
+    def _stub(self, agent_id, task_id, workspace):
         """Test stub: deterministically group registered artifacts by the
         producing file's ``asset_key`` metadata and present them under the
         same label name (consumer is expected to declare matching labels in

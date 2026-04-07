@@ -9,12 +9,8 @@ from __future__ import annotations
 
 import json
 import logging
-import math
 import os
-from io import BytesIO
 from typing import Any
-
-from PIL import Image
 
 from typing import TYPE_CHECKING
 
@@ -37,12 +33,8 @@ class VideoMaterializer(BaseMaterializer):
 
     def __init__(self, video_service: VideoService) -> None:
         self.video_svc = video_service
-        # Unified switch first, then legacy switch for backward compatibility.
         # Default off for faster testing.
-        raw = os.getenv(
-            "FW_ENABLE_PROP_PIPELINE",
-            os.getenv("FW_VIDEO_ENABLE_PROP_CONSISTENCY", "0"),
-        ).strip().lower()
+        raw = os.getenv("FW_ENABLE_PROP_PIPELINE", "0").strip().lower()
         self._enable_prop_consistency = raw in {"1", "true", "yes", "on"}
 
     @staticmethod
@@ -70,84 +62,6 @@ class VideoMaterializer(BaseMaterializer):
         if uri.startswith("file://"):
             return uri[7:]
         return uri
-
-    @staticmethod
-    def _merge_keyframe_images_for_video_api(
-        images: list[bytes],
-        prompt_summaries: list[str],
-    ) -> tuple[list[bytes], list[str], str]:
-        """Stitch multiple PNGs into one horizontal strip (tests / tooling only).
-
-        **Production video** uses a single Layer-3 shot PNG per ``VideoMaterializer``
-        call; this helper remains for ``tests/inference`` merge smoke tests.
-
-        Returns:
-            (``[merged_png]``, ``[summary_for_constraints]``, layout_tag)
-        """
-        n = len(images)
-        if n <= 1:
-            return images, prompt_summaries, "unchanged_single_or_empty"
-
-        panels = [Image.open(BytesIO(b)).convert("RGB") for b in images]
-        h = max(p.height for p in panels)
-        scaled: list[Image.Image] = []
-        for p in panels:
-            nw = max(1, int(round(p.width * h / p.height)))
-            scaled.append(p.resize((nw, h), Image.Resampling.LANCZOS))
-        total_w = sum(p.width for p in scaled)
-        canvas = Image.new("RGB", (total_w, h))
-        x = 0
-        for p in scaled:
-            canvas.paste(p, (x, 0))
-            x += p.width
-
-        # fal Kling image-to-video rejects conditioning images outside 0.4 <= w/h <= 2.5
-        # (wide horizontal merges exceed the max unless letterboxed).
-        tw, th = canvas.size
-        ar = tw / max(th, 1)
-        _KLING_AR_MIN, _KLING_AR_MAX = 0.4, 2.5
-        pad_color = (16, 16, 16)
-        if ar > _KLING_AR_MAX:
-            new_h = max(1, int(math.ceil(tw / _KLING_AR_MAX)))
-            bg = Image.new("RGB", (tw, new_h), pad_color)
-            y0 = max(0, (new_h - th) // 2)
-            bg.paste(canvas, (0, y0))
-            canvas = bg
-        elif ar < _KLING_AR_MIN:
-            new_w = max(1, int(math.ceil(th * _KLING_AR_MIN)))
-            bg = Image.new("RGB", (new_w, th), pad_color)
-            x0 = max(0, (new_w - tw) // 2)
-            bg.paste(canvas, (x0, 0))
-            canvas = bg
-
-        out = BytesIO()
-        canvas.save(out, format="PNG")
-        merged = out.getvalue()
-
-        if n == 2:
-            summary = (
-                "Reference: single horizontal composite PNG (two equal-height panels "
-                "left-to-right). Left panel = first reference; right panel = second. "
-                "Use this one image as the sole visual conditioning input."
-            )
-            if len(prompt_summaries) >= 2:
-                summary += (
-                    " | Panel text notes (left then right): "
-                    + prompt_summaries[0]
-                    + " || "
-                    + prompt_summaries[1]
-                )
-            elif prompt_summaries:
-                summary += " | Notes: " + " | ".join(prompt_summaries)
-        else:
-            summary = (
-                f"Reference: single horizontal composite of {n} panels "
-                "(left-to-right, equalized height). Sole conditioning image."
-            )
-            if prompt_summaries:
-                summary += " | Notes: " + " || ".join(prompt_summaries)
-
-        return [merged], [summary], f"horizontal_merge_{n}_panels"
 
     def _build_shot_keyframe_inputs_index(
         self, typed_input: "VideoAgentInput"

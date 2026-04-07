@@ -94,11 +94,7 @@ def assistant_http_client_real_agents(tmp_path, monkeypatch):
     monkeypatch.setattr(routes_module, "assistant_state_store", storage)
 
     # Default on for this suite: prop L1/L2 keyframes + video prop constraints.
-    # Set FW_ENABLE_PROP_KEYFRAMES / FW_ENABLE_PROP_PIPELINE in the shell to override.
-    monkeypatch.setenv(
-        "FW_ENABLE_PROP_KEYFRAMES",
-        os.getenv("FW_ENABLE_PROP_KEYFRAMES", "1"),
-    )
+    # Set FW_ENABLE_PROP_PIPELINE in the shell to override.
     monkeypatch.setenv(
         "FW_ENABLE_PROP_PIPELINE",
         os.getenv("FW_ENABLE_PROP_PIPELINE", "1"),
