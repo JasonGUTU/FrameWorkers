@@ -16,9 +16,14 @@ from typing import Any
 
 from PIL import Image
 
+from typing import TYPE_CHECKING
+
 from ..descriptor import BaseMaterializer, MediaAsset
-from ..contracts.input_bundle_v2 import InputBundleV2
 from inference.generation.video_generators.service import VideoService
+
+if TYPE_CHECKING:
+    from ..base_agent import MaterializeContext
+    from .schema import VideoAgentInput
 
 logger = logging.getLogger(__name__)
 
@@ -57,12 +62,6 @@ class VideoMaterializer(BaseMaterializer):
                 }
             ],
         }
-
-    @staticmethod
-    def _resolved_inputs(input_bundle_v2: InputBundleV2) -> dict[str, Any]:
-        ctx = getattr(input_bundle_v2, "context", {})
-        resolved = ctx.get("resolved_inputs") if isinstance(ctx, dict) else None
-        return resolved if isinstance(resolved, dict) else {}
 
     @staticmethod
     def _normalize_local_path(uri: str) -> str:
@@ -151,16 +150,32 @@ class VideoMaterializer(BaseMaterializer):
         return [merged], [summary], f"horizontal_merge_{n}_panels"
 
     def _build_shot_keyframe_inputs_index(
-        self, input_bundle_v2: InputBundleV2
+        self, typed_input: "VideoAgentInput"
     ) -> dict[str, list[dict[str, str]]]:
         """Map shot_id → at most one loadable L3 keyframe row.
 
-        Row keys: ``uri``, ``prompt_summary`` (image / constraints), optional
-        ``video_motion_hint`` (I2V text prefix only; no substitute for empty).
+        Image URIs are sourced from ``typed_input.shot_stills``;
+        ``prompt_summary`` and ``video_motion_hint`` come from
+        ``typed_input.keyframes_metadata``.
+
+        Row keys: ``uri``, ``prompt_summary``, optional ``video_motion_hint``.
         """
         index: dict[str, list[dict[str, str]]] = {}
-        keyframes = self._resolved_inputs(input_bundle_v2).get("keyframes", {})
-        content = keyframes.get("content", {}) if isinstance(keyframes, dict) else {}
+
+        # ── shot_id → image path, from typed_input.shot_stills ──
+        shot_image_paths: dict[str, str] = {}
+        for img in typed_input.shot_stills:
+            scope = img.scope or ""
+            if scope.startswith("shot:"):
+                shot_id = scope[5:]
+                if shot_id and shot_id not in shot_image_paths:
+                    path = self._normalize_local_path(img.path)
+                    if path:
+                        shot_image_paths[shot_id] = path
+
+        # ── Read prompt_summary / video_motion_hint from typed_input.keyframes_metadata ──
+        kf_payload = typed_input.keyframes_metadata or {}
+        content = kf_payload.get("content", {}) if isinstance(kf_payload, dict) else {}
 
         for scene in content.get("scenes", []):
             for shot in scene.get("shots", []):
@@ -168,8 +183,7 @@ class VideoMaterializer(BaseMaterializer):
                 if not shot_id:
                     continue
                 for kf in shot.get("keyframes", []):
-                    image_asset = kf.get("image_asset", {})
-                    uri = self._normalize_local_path(image_asset.get("uri", ""))
+                    uri = shot_image_paths.get(shot_id, "")
                     prompt_summary = str(kf.get("prompt_summary", "")).strip()
                     video_motion_hint = str(kf.get("video_motion_hint", "") or "").strip()
                     if not uri and not prompt_summary:
@@ -185,11 +199,11 @@ class VideoMaterializer(BaseMaterializer):
 
         return index
 
-    def _build_screenplay_shot_index(self, input_bundle_v2: InputBundleV2) -> dict[str, dict[str, Any]]:
+    def _build_screenplay_shot_index(self, typed_input: "VideoAgentInput") -> dict[str, dict[str, Any]]:
         """Build shot_id -> screenplay shot metadata used for clip prompting."""
         index: dict[str, dict[str, Any]] = {}
-        screenplay = self._resolved_inputs(input_bundle_v2).get("screenplay", {})
-        content = screenplay.get("content", {}) if isinstance(screenplay, dict) else {}
+        sp_payload = typed_input.screenplay or {}
+        content = sp_payload.get("content", {}) if isinstance(sp_payload, dict) else {}
         for scene in content.get("scenes", []):
             consistency_pack = (
                 scene.get("scene_consistency_pack", {})
@@ -398,9 +412,8 @@ class VideoMaterializer(BaseMaterializer):
 
     async def materialize(
         self,
-        task_id: str,
+        ctx: "MaterializeContext",
         asset_dict: dict[str, Any],
-        input_bundle_v2: InputBundleV2,
     ) -> list[MediaAsset]:
         """Generate actual video clips for all shots.
 
@@ -412,11 +425,13 @@ class VideoMaterializer(BaseMaterializer):
         Returns:
             List of ``MediaAsset`` objects for Assistant to persist.
         """
+        typed_input = ctx.typed_input  # type: VideoAgentInput
+        task_id = ctx.task_id
         pending: list[MediaAsset] = []
         content = asset_dict.get("content", {})
         scene_bytes_list: list[bytes] = []
-        shot_keyframe_inputs = self._build_shot_keyframe_inputs_index(input_bundle_v2)
-        screenplay_shot_index = self._build_screenplay_shot_index(input_bundle_v2)
+        shot_keyframe_inputs = self._build_shot_keyframe_inputs_index(typed_input)
+        screenplay_shot_index = self._build_screenplay_shot_index(typed_input)
 
         for scene in content.get("scenes", []):
             scene_id = scene.get("scene_id", "")
@@ -472,7 +487,6 @@ class VideoMaterializer(BaseMaterializer):
                         shot_id=shot_id,
                         keyframe_images=keyframe_images,
                         prompt=clip_prompt,
-                        duration_sec=seg.get("estimated_duration_sec", 3.0),
                         consistency_constraints=structured_constraints,
                     )
                     ext = video_asset.get("format", "mp4")

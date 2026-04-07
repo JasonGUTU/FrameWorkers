@@ -27,10 +27,9 @@ from dataclasses import dataclass, field
 from typing import Any, Callable, TYPE_CHECKING
 
 from pydantic import BaseModel
-from .contracts.input_bundle_v2 import InputBundleV2
 
 if TYPE_CHECKING:
-    from .base_agent import BaseAgent
+    from .base_agent import BaseAgent, MaterializeContext
     from .base_evaluator import BaseEvaluator
     from inference.clients import LLMClient
 
@@ -64,6 +63,45 @@ class MediaAsset:
 
 
 # ---------------------------------------------------------------------------
+# OutputManifestSpec — declarative side-output manifest declaration
+# ---------------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class OutputManifestSpec:
+    """Declarative spec for an extra JSON manifest produced from agent results.
+
+    A manifest is a flat index file (e.g. ordered keyframe rows) derived from
+    the agent's structured ``results`` after media URIs have been rewritten to
+    real workspace paths.  Agents declare their manifests in
+    ``SubAgentDescriptor.output_manifests``; the assistant layer iterates this
+    list generically and writes each manifest as a JSON file under
+    ``relative_path`` — without ever knowing the agent's name or schema.
+
+    The ``extract_items`` callable runs **after** URI rewrite, so the items it
+    returns already point at the persisted file paths.  ``kind`` is an opaque
+    string used as the manifest registry key when threading callables from
+    service.py through asset_manager.
+
+    Attributes:
+        kind:           Manifest registry key, e.g. ``"keyframes_manifest"``.
+        relative_path:  Workspace-relative target path
+                        (must start with ``artifacts/``).
+        filename:       Output filename written by AssetManager.
+        schema_version: Embedded in the manifest JSON document.
+        extract_items:  ``(results_dict) -> list[dict]`` — flattens the
+                        rewritten results into manifest rows.
+    """
+
+    kind: str
+    relative_path: str
+    filename: str
+    schema_version: str = "1.0"
+    extract_items: Callable[[dict[str, Any]], list[dict[str, Any]]] = field(
+        repr=False, default=lambda r: [],
+    )
+
+
+# ---------------------------------------------------------------------------
 # BaseMaterializer — abstract post-LLM media generation
 # ---------------------------------------------------------------------------
 
@@ -77,14 +115,20 @@ class BaseMaterializer(ABC):
     services and return ``list[MediaAsset]``.  They never hold an
     ``AssetManager`` or perform file I/O.  Persistence is Assistant's
     sole responsibility.
+
+    Single-input contract: a materializer receives only the
+    ``MaterializeContext`` (which carries ``typed_input``, ``task_id``,
+    and the ``persist_binary`` callback) plus the ``asset_dict`` produced
+    by the LLM pipeline.  It does NOT receive any second ``input_bundle_v2``
+    channel.  Whatever data the materializer needs must already be
+    expressed as a field on the agent's typed input.
     """
 
     @abstractmethod
     async def materialize(
         self,
-        task_id: str,
+        ctx: "MaterializeContext",
         asset_dict: dict[str, Any],
-        input_bundle_v2: InputBundleV2,
     ) -> list[MediaAsset]:
         """Generate binary assets and return them for persistence.
 
@@ -93,10 +137,11 @@ class BaseMaterializer(ABC):
         fills it after saving.
 
         Args:
-            task_id: Current task identifier.
-            asset_dict: The agent's output dict (``asset_id`` fields are
-                written in-place; ``uri`` fields are left for Assistant).
-            input_bundle_v2: Mutable deep copy of v2 generic input bundle.
+            ctx: ``MaterializeContext`` carrying ``task_id``,
+                 ``typed_input`` (the same Pydantic input the LLM pipeline
+                 received), and the ``persist_binary`` callback.
+            asset_dict: The agent's LLM output dict (``asset_id`` fields are
+                 written in-place; ``uri`` fields are left for Assistant).
 
         Returns:
             List of ``MediaAsset`` objects to be persisted by Assistant.
@@ -140,7 +185,7 @@ class SubAgentDescriptor:
             the Task Stack ``task_id``; agents that do not need it may name the
             parameter ``_task_id`` and omit it from the returned Pydantic model.
             Duration, language, and other creative intent must be **inferred by the
-            sub-agent LLM** from ``hints`` / ``context["resolved_inputs"]`` (e.g.
+            sub-agent LLM** from ``hints`` / ``resolved_artifacts`` (e.g.
             ``source_text``, prior JSON assets) — not from a separate orchestrator
             ``config`` object or deterministic keyword parsing in Python.
         service_factories:
@@ -152,11 +197,6 @@ class SubAgentDescriptor:
         materializer_factory:
             Optional ``(services_dict) -> BaseMaterializer``.
             ``None`` for agents with no binary output.
-        user_text_key:
-            Optional asset key for user-provided text that bypasses
-            earlier agents (e.g. ``"user_story_outline"`` for StoryAgent,
-            ``"user_screenplay"`` for ScreenplayAgent).  Empty string if
-            the agent does not accept user text.
     """
 
     agent_id: str
@@ -176,7 +216,12 @@ class SubAgentDescriptor:
     materializer_factory: Callable[..., BaseMaterializer] | None = field(
         repr=False, default=None,
     )
-    user_text_key: str = ""
+    input_needs_description: str = (
+        "Needs any relevant prior artifacts from the workspace as context."
+    )
+    output_manifests: tuple[OutputManifestSpec, ...] = field(
+        repr=False, default=(),
+    )
 
     # ------------------------------------------------------------------
     # Fully-equipped agent factory

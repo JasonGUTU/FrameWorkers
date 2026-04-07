@@ -1,0 +1,541 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-06T10:04:40.528624+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "The Final Tick",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_001"
+        },
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Arthur's Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Arthur, a retired watchmaker, is engrossed in the delicate repair of his late wife's pocket watch, acutely aware that midnight approaches and his time is running out.",
+        "estimated_duration": {
+          "seconds": 3.0,
+          "confidence": 0.7
+        },
+        "continuity": {
+          "props_present": [
+            "Wife's Pocket Watch (open, disassembled)",
+            "Watchmaker's Loupe",
+            "Tiny Screwdrivers",
+            "Tweezers",
+            "Assorted Watch Parts",
+            "Workbench Light",
+            "Desk Clock"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A practical, well-worn tweed vest over a long-sleeved shirt, sleeves rolled up, with simple trousers.",
+              "must_keep": [
+                "Practical, comfortable workshop attire.",
+                "Evokes a sense of an artisan and elder."
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Arthur is attempting to repair a pocket watch.",
+            "The watch belongs to his late wife.",
+            "It is late at night, close to midnight."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "Arthur's workshop is small, cozy, and slightly cluttered with tools, gears, and half-finished projects. Warm, focused lighting illuminates his workbench, while the rest of the room is in soft shadow, emphasizing the late hour and his solitary focus. The air feels still, save for the faint sounds of his work."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Arthur is elderly, with weathered hands that are remarkably steady and precise. His face shows years of concentration, lines etched around his eyes. He carries a quiet sadness, but also deep determination."
+              ],
+              "wardrobe_notes": [
+                "His clothing should reflect his trade and age: practical, comfortable, a bit old-fashioned, but well-maintained."
+              ],
+              "must_keep": [
+                "Arthur's hands are central to his character and the visual storytelling.",
+                "His demeanor is one of quiet intensity and reverence for his task."
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Wife's Pocket Watch",
+              "must_keep": [
+                "Must appear old, intricate, and dearly cherished.",
+                "Its state of disrepair is key to the initial conflict.",
+                "It is silver or gold, with delicate engravings."
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "Watchmaker's Tools",
+              "must_keep": [
+                "Tools are specialized, tiny, and well-organized, reflecting Arthur's precision.",
+                "Include a loupe, various tweezers, tiny screwdrivers."
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Maintain a poignant and intimate tone, reflecting Arthur's personal journey. Use soft, warm lighting to create a sense of melancholy and hope. Emphasize quiet, delicate sounds (ticking, clinking tools). Framing should often be tight, focusing on details and Arthur's expressions."
+            ],
+            "must_avoid": [
+              "Fast-paced editing that disrupts the reflective mood.",
+              "Harsh, artificial lighting.",
+              "Any overt 'action' that detracts from the internal emotional struggle."
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "Arthur's awareness of the dwindling time intensifies his focus, moving from meticulous work to a race against the clock.",
+          "emotional_shift": "Increased urgency and pressure."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The soft glow of a desk lamp illuminates ARTHUR'S aged, steady hands. He wears a watchmaker's loupe, his eye peering into the intricate mechanics of an open, silver pocket watch. His delicate tweezers attempt to position a minuscule gear. A grandfather clock in the distance softly CHIMES, indicating the late hour.",
+            "continuity_refs": {
+              "props": [
+                "Wife's Pocket Watch",
+                "Watchmaker's Loupe",
+                "Tweezers"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "estimated_duration_sec": 1.5,
+            "shot_type": "extreme_close_up",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "static",
+              "framing_notes": "Focus tightly on Arthur's hands and the watch mechanism, emphasizing the intricate work and his precision. Shallow depth of field to blur the background slightly."
+            },
+            "visual_goal": "Convey the meticulousness of Arthur's work and the delicacy of the watch. Establish his intense focus.",
+            "action_focus": "Arthur's hands working on the watch.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "Watchmaker's Loupe",
+              "Tweezers",
+              "Assorted Watch Parts"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "ARTHUR'S face, illuminated by the lamp. His brow is furrowed in concentration, a slight sheen of sweat. He adjusts the loupe, exhaling slowly. The desk clock next to him shows five minutes to midnight. He glances at it, a flicker of urgency in his eyes, then returns to the watch.",
+            "continuity_refs": {
+              "props": [
+                "Desk Clock"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "estimated_duration_sec": 1.5,
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Frame Arthur's face, capturing his concentration and the subtle emotional cues. Include the desk clock in the background to show the time pressure."
+            },
+            "visual_goal": "Show Arthur's emotional state – determination mixed with subtle anxiety about the time. Emphasize the race against the clock.",
+            "action_focus": "Arthur's expression and his awareness of the time.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "Desk Clock",
+              "Watchmaker's Loupe"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_002",
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_002"
+        },
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Arthur's Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Arthur, with one final, painstaking effort, successfully places the last crucial component into the pocket watch just as the New Year's countdown reaches its final moments.",
+        "estimated_duration": {
+          "seconds": 4.0,
+          "confidence": 0.7
+        },
+        "continuity": {
+          "props_present": [
+            "Wife's Pocket Watch (partially reassembled)",
+            "Tiny Screwdrivers",
+            "Tweezers",
+            "Small Gear/Spring"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Same practical workshop attire, perhaps a slight disarray from intense concentration.",
+              "must_keep": [
+                "Continuity of workshop attire."
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Arthur is nearing completion of the repair.",
+            "The countdown to midnight is happening simultaneously."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "The workshop setting remains, but the focus is even tighter on the workbench. Ambient sounds of distant New Year's Eve celebrations begin to subtly intrude, creating a sense of external pressure."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "His movements are precise but show a hint of strain. His breathing is shallow as he holds his breath for the critical maneuver."
+              ],
+              "wardrobe_notes": [
+                "Continuity."
+              ],
+              "must_keep": [
+                "Arthur's unwavering concentration and delicate touch."
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Wife's Pocket Watch",
+              "must_keep": [
+                "It is almost fully assembled, just needing one last critical part."
+              ]
+            },
+            {
+              "prop_id": "prop_003",
+              "prop_name": "Small Gear/Spring",
+              "must_keep": [
+                "This is the final, most delicate piece to be placed."
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Maintain intense focus, building suspense. Use shallow depth of field to isolate the critical action. Introduce subtle sounds of the countdown to heighten tension. Visuals should be clean, focused on the act of repair."
+            ],
+            "must_avoid": [
+              "Distractions in the frame.",
+              "Any dialogue, as the action speaks for itself."
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "Arthur successfully completes the repair, but the watch's functionality remains unconfirmed as the New Year begins.",
+          "emotional_shift": "From intense pressure to a cautious, hopeful relief."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_003",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A close-up of Arthur's tweezers, trembling ever so slightly, as he holds a tiny, almost microscopic gear. His eye, magnified by the loupe, guides the gear towards its housing within the watch. The faint, muffled SOUND of a crowd COUNTING DOWN (10… 9…) begins to be heard from outside.",
+            "continuity_refs": {
+              "props": [
+                "Wife's Pocket Watch",
+                "Tweezers",
+                "Small Gear/Spring",
+                "Watchmaker's Loupe"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "estimated_duration_sec": 1.5,
+            "shot_type": "extreme_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Hyper-focused on the tiny gear and tweezers. Very shallow depth of field, almost abstract."
+            },
+            "visual_goal": "Emphasize the precision, fragility, and high stakes of the final repair. Convey the countdown as an external pressure.",
+            "action_focus": "The placement of the tiny gear.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "Tweezers",
+              "prop_003",
+              "Watchmaker's Loupe"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Arthur holds his breath. With a barely audible CLICK, the gear seats perfectly into place. A profound sense of relief washes over his face, mixed with exhaustion. He carefully closes the back of the pocket watch. The countdown continues (5… 4… 3…).",
+            "continuity_refs": {
+              "props": [
+                "Wife's Pocket Watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "estimated_duration_sec": 2.5,
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Frame Arthur's face and hands, capturing the moment of success and relief. Include the closing of the watch."
+            },
+            "visual_goal": "Show the culmination of Arthur's effort and the immediate emotional release. Build anticipation for the watch's function.",
+            "action_focus": "The successful seating of the gear and the closing of the watch.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_003",
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_003"
+        },
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Arthur's Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "The newly repaired pocket watch begins to tick, bringing Arthur a profound sense of peace and connection to his late wife as the new year officially begins.",
+        "estimated_duration": {
+          "seconds": 3.0,
+          "confidence": 0.7
+        },
+        "continuity": {
+          "props_present": [
+            "Wife's Pocket Watch (closed)"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Same workshop attire.",
+              "must_keep": [
+                "Continuity."
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "The watch is now fully assembled.",
+            "The New Year is commencing."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "The workshop feels less tense, bathed in the same warm light. The external sounds of celebration swell then begin to fade, leaving a quiet, intimate space."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "His expression should shift from hopeful anticipation to deep, quiet contentment and peace. There's a profound connection evident in his gaze."
+              ],
+              "wardrobe_notes": [
+                "Continuity."
+              ],
+              "must_keep": [
+                "Arthur's emotional journey culminates in this scene, showing peace and connection."
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Wife's Pocket Watch",
+              "must_keep": [
+                "It is now a symbol of success, connection, and peace.",
+                "Its ticking sound is paramount."
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Shift to a hopeful and serene tone. Focus on Arthur's emotional reaction and the symbolic ticking of the watch. Use natural, soft lighting. The sound design should emphasize the watch's ticking over external sounds."
+            ],
+            "must_avoid": [
+              "Any abrupt or jarring camera movements or cuts.",
+              "Overly dramatic expressions; keep it subtle and heartfelt."
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "The watch ticks, signifying not just a successful repair, but a moment of profound personal healing and connection for Arthur.",
+          "emotional_shift": "From hopeful anticipation to peaceful resolution and quiet joy."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "ARTHUR raises the newly closed pocket watch to his ear, holding his breath. The muffled COUNTDOWN outside reaches its climax: \"...2! ...1! HAPPY NEW YEAR!\" Then, a moment of silence. Arthur's eyes are wide with anticipation.",
+            "continuity_refs": {
+              "props": [
+                "Wife's Pocket Watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Frame Arthur's ear and the watch, capturing the intimacy of the moment and his hopeful anticipation. His face should be clearly visible."
+            },
+            "visual_goal": "Build tension and anticipation for the watch's first tick. Show Arthur's direct physical interaction with the object.",
+            "action_focus": "Arthur listening intently to the watch.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A crystal-clear, resonant TICK... TOCK... TICK... begins to emanate from the watch. It is strong, steady, and alive. Arthur's eyes well up slightly, a soft, profound smile spreading across his face as he holds the watch gently. He clutches it to his chest.",
+            "continuity_refs": {
+              "props": [
+                "Wife's Pocket Watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "estimated_duration_sec": 2.0,
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "static",
+              "framing_notes": "Focus on Arthur's face, capturing the nuanced emotional shift from anticipation to deep peace and connection. His hands gently holding the watch should be prominent."
+            },
+            "visual_goal": "Convey the emotional climax and resolution: the watch works, bringing Arthur peace and connection. Emphasize the symbolic nature of the ticking.",
+            "action_focus": "Arthur's emotional reaction to the ticking watch.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "estimated_total_duration_sec": 10.0,
+    "sum_scene_duration_sec": 10.0,
+    "scene_count": 3,
+    "shot_count_total": 6,
+    "sum_shot_duration_sec": 10.0,
+    "avg_shots_per_scene": 2.0,
+    "dialogue_block_count": 0,
+    "action_block_count": 6
+  },
+  "artifact_caption": {
+    "semantic_type": "",
+    "what": "The Final Tick, 3 scenes, 8 shots, Poignant Intimate Realism",
+    "why": "The creative decisions prioritize an intimate, poignant tone to match the story's emotional core. Pacing is deliberate, building tension through Arthur's meticulous work, then resolving into peaceful reflection. Visually, the approach focuses on close-ups of hands, tools, and the watch to emphasize the intricate craft and Arthur's emotional connection, using warm, soft lighting to create an intimate atmosphere befitting the 'slice of life' drama.",
+    "scope": "global"
+  }
+}

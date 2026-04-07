@@ -1,59 +1,50 @@
-"""Input bundle v2 contracts for fully decoupled artifact selection."""
+"""Input bundle v2 contract — single source of input for sub-agents.
+
+The bundle has two slots:
+
+  * ``task_id`` — current task identifier.
+
+  * ``context['resolved_artifacts']`` — pre-indexed dict produced by
+    ``InputResolver``.  Keyed by **consumer-declared label names**.
+    JSON entries: single dict ``{"payload": ..., "path": ..., "scope": ...,
+    "mime": ..., "what": ..., "why": ...}``.
+    Media entries: list of dicts (same shape, ``payload`` typically absent).
+
+Sub-agents have **only one input mechanism**: the InputResolver-selected
+``resolved_artifacts``.  There is no ``hints`` slot, no direct hint reads,
+no special user-text channel.  Any user-supplied raw input is persisted
+into the workspace as an artifact (via an Intake agent) before any
+content-generating sub-agent runs, so it always arrives through the
+caption-driven InputResolver path like everything else.
+
+Producers and consumers communicate purely through natural-language
+captions interpreted by the InputResolver LLM.
+"""
 
 from __future__ import annotations
 
-from collections.abc import Iterator, MutableMapping
 from dataclasses import dataclass, field
 from typing import Any
 
 
-@dataclass(frozen=True)
-class ArtifactRefV2:
-    """One artifact candidate in assistant-provided catalog."""
-
-    artifact_id: str
-    semantic_type: str
-    schema_ref: str = ""
-    mime: str = "application/json"
-    payload: Any = None
-    uri: str = ""
-    provenance: dict[str, Any] = field(default_factory=dict)
-    tags: list[str] = field(default_factory=list)
-
-
 @dataclass
-class InputBundleV2(MutableMapping[str, Any]):
+class InputBundleV2:
     """Generic artifact bundle passed to sub-agent descriptor/builders."""
 
     task_id: str
-    artifacts: list[ArtifactRefV2] = field(default_factory=list)
     context: dict[str, Any] = field(default_factory=dict)
-    hints: dict[str, Any] = field(default_factory=dict)
 
-    def _as_mapping(self) -> dict[str, Any]:
-        out: dict[str, Any] = {}
-        for art in self.artifacts:
-            out[art.semantic_type] = art.payload
-        out.update(self.context)
-        out.update(self.hints)
-        return out
+    @property
+    def resolved_artifacts(self) -> dict[str, Any]:
+        """Pre-indexed dict of artifacts placed by InputResolver.
 
-    def __getitem__(self, key: str) -> Any:
-        return self._as_mapping()[key]
+        Keyed by **consumer-declared label name** (from the consuming agent's
+        ``input_needs_description`` ``[label]`` headers).
 
-    def __setitem__(self, key: str, value: Any) -> None:
-        # Keep user/runtime overlays in hints for mutability compatibility.
-        self.hints[key] = value
-
-    def __delitem__(self, key: str) -> None:
-        if key in self.hints:
-            del self.hints[key]
-            return
-        raise KeyError(key)
-
-    def __iter__(self) -> Iterator[str]:
-        return iter(self._as_mapping())
-
-    def __len__(self) -> int:
-        return len(self._as_mapping())
-
+        Each value is either a single artifact entry (for ``(single)`` labels)
+        or a list of artifact entries (for ``(collection)`` labels).
+        Each entry has keys: ``what, why, scope, path, mime`` and optionally
+        ``payload`` (the loaded JSON for JSON artifacts).
+        """
+        val = self.context.get("resolved_artifacts")
+        return val if isinstance(val, dict) else {}

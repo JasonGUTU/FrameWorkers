@@ -49,35 +49,31 @@ def test_memory_manager_structured_entries_and_brief(tmp_path):
         content="Last run failed on noisy vocals; lower music bed.",
         task_id="task_1",
         agent_id="AudioAgent",
-        execution_result={
-            "status": "FAILED",
-            "execution_id": "ex_1",
-            "error": "boom",
-        },
+        execution_id="ex_1",
     )
 
     entries = mm.list_memory_entries(task_id="task_1", limit=5)
     assert len(entries) == 1
-    assert {"content", "agent_id", "created_at", "execution_result"}.issubset(entries[0].keys())
-    assert entries[0]["execution_result"]["status"] == "FAILED"
+    assert {"content", "agent_id", "created_at", "execution_id"}.issubset(entries[0].keys())
+    assert entries[0]["execution_id"] == "ex_1"
+    assert entries[0]["content"]["what"] == "Last run failed on noisy vocals; lower music bed."
 
     brief = mm.get_memory_brief(task_id="task_1")
     assert len(brief["global_memory"]) >= 1
     ex0 = brief["global_memory"][0]
     assert "content" not in ex0
     assert ex0["agent_id"] == "AudioAgent"
-    assert ex0["execution_result"]["status"] == "FAILED"
-    assert ex0["execution_result"]["error"] == "boom"
+    assert ex0["execution_id"] == "ex_1"
 
 def test_memory_brief_slim_all_entries(tmp_path):
-    """Brief returns slim rows (no content / artifact_locations); default cap is recent N (env default)."""
+    """Brief returns slim rows (no content); default cap is recent N (env default)."""
     mm = MemoryManager("ws_1", tmp_path)
     for i in range(5):
         mm.add_memory_entry(
             content=f"note {i}",
             task_id="task_many",
             agent_id="StoryAgent",
-            execution_result={"status": "COMPLETED", "execution_id": f"ex_{i}"},
+            execution_id=f"ex_{i}",
         )
     full_slim = mm.get_memory_brief(task_id="task_many")
     assert len(full_slim["global_memory"]) == 5
@@ -93,11 +89,11 @@ def test_memory_brief_default_caps_at_twenty_newest(tmp_path):
             content=f"note {i}",
             task_id="task_many_brief",
             agent_id="StoryAgent",
-            execution_result={"status": "COMPLETED", "execution_id": f"ex_{i}"},
+            execution_id=f"ex_{i}",
         )
     brief = mm.get_memory_brief(task_id="task_many_brief")
     assert len(brief["global_memory"]) == 20
-    ids = {e["execution_result"]["execution_id"] for e in brief["global_memory"]}
+    ids = {e["execution_id"] for e in brief["global_memory"]}
     assert len(ids) == 20
     assert ids <= {f"ex_{j}" for j in range(25)}
 
@@ -124,7 +120,7 @@ def test_memory_brief_task_id_unique_no_or_with_agent_id(tmp_path):
     assert brief["global_memory"][0]["agent_id"] == "StoryAgent"
     full = mm.list_memory_entries(task_id="task_alpha", limit=10)
     assert len(full) == 1
-    assert full[0]["content"] == "Story step done"
+    assert full[0]["content"]["what"] == "Story step done"
 
 
 def test_memory_manager_requires_task_id(tmp_path):
@@ -133,23 +129,22 @@ def test_memory_manager_requires_task_id(tmp_path):
         mm.add_memory_entry(content="hello")
 
 
-def test_memory_manager_artifact_locations_roundtrip(tmp_path):
+def test_memory_manager_entry_keys_and_brief_slim(tmp_path):
+    """Entries have expected keys; brief rows omit content."""
     mm = MemoryManager("ws_1", tmp_path)
     mm.add_memory_entry(
-        content="done",
+        content={"what": "story blueprint generated", "why": "first pass"},
         task_id="task_art",
         agent_id="StoryAgent",
-        artifact_locations=[
-            {"role": "story_blueprint", "path": "/tmp/x.json"},
-        ],
+        execution_id="ex_art_1",
     )
     rows = mm.list_memory_entries(task_id="task_art", limit=5)
-    assert rows[0].get("artifact_locations")
-    assert rows[0]["artifact_locations"][0]["path"] == "/tmp/x.json"
+    assert rows[0]["content"]["what"] == "story blueprint generated"
+    assert rows[0]["execution_id"] == "ex_art_1"
     brief = mm.get_memory_brief(task_id="task_art")
     row0 = brief["global_memory"][0]
-    assert "artifact_locations" not in row0
-    assert set(row0.keys()) <= {"task_id", "agent_id", "created_at", "execution_result"}
+    assert "content" not in row0
+    assert set(row0.keys()) <= {"task_id", "agent_id", "created_at", "execution_id", "supersedes", "what"}
 
 
 def test_global_memory_md_created_empty_then_sections_after_entry(tmp_path):
@@ -165,11 +160,10 @@ def test_global_memory_md_created_empty_then_sections_after_entry(tmp_path):
     assert "## File tree" not in md_text
     assert "## Entries" in md_text
     assert "```json" in md_text
-    assert "intentionally omits" in md_text.lower()
-    assert "get_workspace_root_file_tree_text" in md_text
+    assert "artifact_registry" in md_text.lower()
     listed = mm.list_memory_entries(limit=10)
     assert len(listed) == 1
-    assert listed[0]["content"] == "hello"
+    assert listed[0]["content"]["what"] == "hello"
 
 
 def test_log_manager_filter(tmp_path):
@@ -208,7 +202,7 @@ def test_asset_manager_hydrate_and_persist_index(tmp_path):
             {
                 "kind": "json_snapshot",
                 "source_key": "",
-                "role": "agent_asset",
+                "asset_key": "agent_asset",
                 "relative_path": "artifacts/agent_asset/agent_asset_exec_1.json",
             }
         ],
@@ -277,7 +271,7 @@ def test_asset_manager_persist_rewrites_uris_before_json_snapshot(tmp_path):
             {
                 "kind": "json_snapshot",
                 "source_key": "",
-                "role": "keyframes",
+                "asset_key": "keyframes",
                 "relative_path": "artifacts/keyframes/keyframes_exec_7.json",
             },
         ],

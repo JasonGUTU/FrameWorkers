@@ -1,0 +1,658 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-06T09:58:27.536090+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "The Midnight Watchmaker",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_001"
+        },
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "John's Dusty Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "John, with focused intensity, begins the delicate repair of his late wife's broken pocket watch. The relentless ticking of a large wall clock in the background emphasizes the dwindling time before midnight.",
+        "estimated_duration": {
+          "seconds": 3.5,
+          "confidence": 0.7
+        },
+        "continuity": {
+          "props_present": [
+            "Pocket watch (disassembled)",
+            "Watchmaker's tools (magnifying loupe, tweezers, small screwdrivers)",
+            "Workbench lamp",
+            "Large ornate wall clock",
+            "Assorted watch components",
+            "Leather-bound journal"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A worn but clean tweed vest over a practical long-sleeved shirt, sleeves rolled up. Simple trousers.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "John is intensely focused on the watch.",
+            "The wall clock is a prominent reminder of time passing.",
+            "The watch is his late wife's."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "John's workshop is a haven of antiquity, filled with tools, gears, and half-finished projects. Dust motes dance in the light from a single workbench lamp. The space feels lived-in, warm, and slightly melancholic.",
+              "Large, ornate grandfather or wall clock prominently placed, its ticking a constant presence."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "John Thorne, a man in his late 60s, with a weathered face that tells tales of a life lived. His eyes, though tired, hold a sharp, focused intensity when engaged in his craft.",
+                "Moves with precision and care, typical of a master craftsman."
+              ],
+              "wardrobe_notes": [
+                "Practical, comfortable, slightly old-fashioned attire suitable for a watchmaker at work.",
+                "His hands show signs of age but are steady and deft."
+              ],
+              "must_keep": [
+                "John's deep emotional connection to the watch and the task."
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Pocket watch",
+              "must_keep": [
+                "Gold casing, intricate engravings, visibly old and cherished. Currently broken.",
+                "Represents John's late wife and their connection."
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "Large ornate wall clock",
+              "must_keep": [
+                "Dominant presence in the workshop. Its ticking should be audible, emphasizing time pressure.",
+                "Its hands should clearly show time approaching midnight."
+              ]
+            },
+            {
+              "prop_id": "prop_003",
+              "prop_name": "Watchmaker's tools",
+              "must_keep": [
+                "Precise, delicate tools (magnifying loupe, tweezers) that are well-used and cared for."
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Use a warm, low-key lighting setup to create an intimate and slightly nostalgic atmosphere.",
+              "Emphasize close-ups on hands, faces, and intricate watch parts to draw the viewer into John's world and his delicate task.",
+              "Pacing should be slow and deliberate, mirroring John's methodical work, with moments of pause to convey reflection.",
+              "Sound design should highlight the ticking of the wall clock and the subtle mechanical sounds of watch repair."
+            ],
+            "must_avoid": [
+              "Bright, harsh lighting.",
+              "Fast-paced editing that distracts from the delicate nature of the work.",
+              "Overly dramatic music that overshadows the subtle emotional beats."
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "The scene ends with John fully immersed in his task, but the looming deadline is subtly established.",
+          "emotional_shift": "From quiet reflection to focused determination mixed with a hint of underlying urgency."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "INT. JOHN'S DUSTY WORKSHOP - NIGHT\nA single, warm lamp casts a soft glow over JOHN THORNE (60s), hunched over a cluttered workbench. He wears a magnifying loupe, his brow furrowed in concentration. The insistent TICK-TOCK of a large, ornate wall clock fills the silence, its hands nearing midnight.",
+            "continuity_refs": {
+              "props": [
+                "Workbench lamp",
+                "Magnifying loupe",
+                "Large ornate wall clock"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "estimated_duration_sec": 1.5,
+            "shot_type": "medium_wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Establishes John in his environment; wall clock visible in background, indicating time."
+            },
+            "visual_goal": "Introduce John in his element, establish the setting and the impending deadline.",
+            "action_focus": "John's posture and the general atmosphere of the workshop.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "Workbench",
+              "Workbench lamp",
+              "prop_002",
+              "prop_003"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "John's calloused fingers, surprisingly nimble, delicately place a tiny gear into the intricate mechanism of a disassembled pocket watch. He works with surgical precision, breathing slowly.",
+            "continuity_refs": {
+              "props": [
+                "Pocket watch (disassembled)",
+                "Watchmaker's tools (tweezers)"
+              ],
+              "wardrobe_character_ids": []
+            },
+            "estimated_duration_sec": 1.0,
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on the delicate work, highlighting the intricacy of the watch and John's skill."
+            },
+            "visual_goal": "Showcase the detailed, meticulous nature of John's work and the fragility of the watch.",
+            "action_focus": "John's hands and the watch mechanism.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "Pocket watch (disassembled)",
+              "Watchmaker's tools (tweezers)",
+              "Workbench"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A tighter shot of the wall clock, the minute hand visibly jerking closer to the twelve. The ticking becomes slightly more pronounced.",
+            "continuity_refs": {
+              "props": [
+                "Large ornate wall clock"
+              ],
+              "wardrobe_character_ids": []
+            },
+            "estimated_duration_sec": 1.0,
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Emphasize the passage of time and build subtle tension."
+            },
+            "visual_goal": "Reinforce the time constraint and impending deadline.",
+            "action_focus": "The movement of the clock hands.",
+            "characters_in_frame": [],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_002",
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_002"
+        },
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "John's Dusty Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Time ticks precariously closer to midnight as John encounters a stubborn, tiny component. This causes a moment of frustration and doubt, his movements becoming slightly more frantic.",
+        "estimated_duration": {
+          "seconds": 3.5,
+          "confidence": 0.7
+        },
+        "continuity": {
+          "props_present": [
+            "Pocket watch (partially assembled)",
+            "Watchmaker's tools (fine tweezers, magnifying loupe)",
+            "Large ornate wall clock"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A worn but clean tweed vest over a practical long-sleeved shirt, sleeves rolled up. Simple trousers.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "John struggles with a specific, tiny watch component.",
+            "Frustration and doubt momentarily break his concentration.",
+            "The wall clock continues to tick, adding pressure."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "The workshop remains dimly lit, save for the workbench lamp, casting long shadows. The atmosphere is now tinged with a slight tension."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "John's hands might tremble slightly with effort or frustration.",
+                "His facial expression shifts from calm focus to a fleeting grimace of irritation."
+              ],
+              "wardrobe_notes": [
+                "The same attire, perhaps a slight sheen of sweat on his brow."
+              ],
+              "must_keep": [
+                "John's internal struggle and the difficulty of the task."
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_004",
+              "prop_name": "Pocket watch (partially assembled)",
+              "must_keep": [
+                "Still broken, specifically with a difficult, tiny component that resists placement."
+              ]
+            },
+            {
+              "prop_id": "prop_005",
+              "prop_name": "Fine tweezers",
+              "must_keep": [
+                "Used to manipulate the stubborn component, highlighting the precision required."
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "Large ornate wall clock",
+              "must_keep": [
+                "Now showing the time even closer to midnight, perhaps five minutes to."
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Maintain close-ups, but now with a slight sense of urgency. Handheld camera work could introduce subtle instability.",
+              "Use shallow focus to isolate the stubborn component, emphasizing its difficulty.",
+              "Sound design should heighten the ticking of the clock and add subtle sounds of John's strained effort (e.g., a faint sigh, a slight scrape of metal)."
+            ],
+            "must_avoid": [
+              "Overly dramatic music that could undermine the intimacy of John's struggle.",
+              "Fast cuts that don't allow the viewer to feel the frustration."
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "John faces a moment of near defeat, his hope wavering as time runs out.",
+          "emotional_shift": "From determined focus to frustration and a creeping sense of desperation."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_004",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "John's fine tweezers attempt to coax a minuscule, almost invisible component into place. It slips, just barely, bouncing off the mechanism. A soft GRUNT of frustration escapes him.",
+            "continuity_refs": {
+              "props": [
+                "Pocket watch (partially assembled)",
+                "Fine tweezers"
+              ],
+              "wardrobe_character_ids": []
+            },
+            "estimated_duration_sec": 1.5,
+            "shot_type": "extreme_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus entirely on the tiny component and John's struggling tools. Shallow depth of field."
+            },
+            "visual_goal": "Convey the difficulty and precision of the task, highlighting the 'stubborn' nature of the component.",
+            "action_focus": "The miniature struggle between the tweezers and the watch part.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_004",
+              "prop_005",
+              "Workbench"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "John pulls back slightly, removing the loupe. His eyes, now without magnification, squint with a mix of frustration and doubt. A thin bead of sweat gleams on his temple. He takes a shaky breath.",
+            "continuity_refs": {
+              "props": [
+                "Magnifying loupe"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Captures John's emotional response and the physical toll of his concentration."
+            },
+            "visual_goal": "Show John's internal struggle and mounting frustration.",
+            "action_focus": "John's facial expression and his strained breathing.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "Magnifying loupe"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The wall clock face. It is now only a minute or two from midnight. The ticking feels faster, heavier.",
+            "continuity_refs": {
+              "props": [
+                "Large ornate wall clock"
+              ],
+              "wardrobe_character_ids": []
+            },
+            "estimated_duration_sec": 1.0,
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Intensifies the sense of time running out. The hands are almost touching the twelve."
+            },
+            "visual_goal": "Increase the urgency and pressure of the deadline.",
+            "action_focus": "The clock hands' proximity to midnight.",
+            "characters_in_frame": [],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_003",
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_003"
+        },
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "John's Dusty Workshop",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "With a final, delicate touch, John successfully repairs the watch just as the wall clock chimes midnight. A serene, tear-filled smile graces his face as the new year begins.",
+        "estimated_duration": {
+          "seconds": 3.0,
+          "confidence": 0.7
+        },
+        "continuity": {
+          "props_present": [
+            "Repaired pocket watch",
+            "Watchmaker's tools (tweezers, screwdrivers)",
+            "Large ornate wall clock"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A worn but clean tweed vest over a practical long-sleeved shirt, sleeves rolled up. Simple trousers.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "John successfully fixes the watch.",
+            "The wall clock chimes midnight immediately after.",
+            "John experiences profound relief and peace."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "The workshop feels quieter, even with the clock chiming. The lamplight seems to soften, bathing John in a gentle glow."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "John's face relaxes, revealing a profound sense of peace and a tearful smile. His hands, though tired, are now still."
+              ],
+              "wardrobe_notes": [
+                "The same attire, now slightly dishevelled from intense work, but forgotten in his relief."
+              ],
+              "must_keep": [
+                "John's genuine emotional release and connection to his late wife through the repaired watch."
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_006",
+              "prop_name": "Repaired pocket watch",
+              "must_keep": [
+                "Its mechanism is now visibly working, perhaps a faint ticking audible. It signifies completion and connection."
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "Large ornate wall clock",
+              "must_keep": [
+                "It chimes twelve times, marking the new year and the success of John's task."
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "The lighting should shift to be slightly softer, perhaps with a subtle bloom, reflecting the emotional release.",
+              "Pacing becomes serene and reflective after the tension breaks. Hold shots to allow the emotion to sink in.",
+              "Sound design emphasizes the chime of the clock and the quiet ticking of the newly repaired watch, with minimal or no background music initially, allowing the natural sounds and John's emotion to carry the moment."
+            ],
+            "must_avoid": [
+              "Anything that detracts from John's quiet moment of triumph and grief.",
+              "Abrupt cuts or jarring movements."
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "John successfully repairs the watch, bringing a poignant closure to his task just as the new year begins.",
+          "emotional_shift": "From mounting frustration and doubt to profound serenity, relief, and a bittersweet sense of hope."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_007",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "With one final, feather-light touch, John nudges the stubborn component into place. The watch gears click, then a soft, rhythmic TICK-TOCK begins from within the watch itself. John's hand hovers over it, almost in disbelief.",
+            "continuity_refs": {
+              "props": [
+                "Repaired pocket watch"
+              ],
+              "wardrobe_character_ids": []
+            },
+            "estimated_duration_sec": 1.0,
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "static",
+              "framing_notes": "Highlights the successful repair and the watch's renewed life. Emphasizes the delicacy of the moment."
+            },
+            "visual_goal": "Show the successful repair of the watch, the culmination of John's effort.",
+            "action_focus": "The internal mechanism of the watch beginning to tick.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_006",
+              "Workbench"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_008",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Immediately, the wall clock begins to CHIME, a rich, resonant tone counting out twelve strokes. John slowly looks up, his eyes glassy, holding the working pocket watch gently in his hand.",
+            "continuity_refs": {
+              "props": [
+                "Large ornate wall clock",
+                "Repaired pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "slow_push_in",
+              "framing_notes": "Connects the moment of repair with the chime of midnight. Captures John's initial reaction."
+            },
+            "visual_goal": "Symbolize the new year and the completion of his task, capturing John's immediate emotional response.",
+            "action_focus": "The wall clock chiming and John's slow reaction.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_002",
+              "prop_006"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A tear traces a path down John's cheek, reflecting the lamplight, but it's accompanied by a serene, soft smile. He holds the watch to his ear, listening to its steady tick, a final connection to his late wife as the chimes fade.",
+            "continuity_refs": {
+              "props": [
+                "Repaired pocket watch"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "estimated_duration_sec": 1.0,
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus entirely on John's face, capturing the nuanced emotion of grief and quiet triumph."
+            },
+            "visual_goal": "Convey John's profound emotional release and the solace he finds.",
+            "action_focus": "John's tear-filled smile and his tender interaction with the watch.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_006"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "estimated_total_duration_sec": 10.0,
+    "sum_scene_duration_sec": 10.0,
+    "scene_count": 3,
+    "shot_count_total": 9,
+    "sum_shot_duration_sec": 10.0,
+    "avg_shots_per_scene": 3.0,
+    "dialogue_block_count": 0,
+    "action_block_count": 9
+  },
+  "artifact_caption": {
+    "semantic_type": "",
+    "what": "The Midnight Watchmaker, 3 scenes, 9 shots, intimate close-ups and soft, warm lighting.",
+    "why": "The creative decisions prioritize an intimate and reflective tone, utilizing close-up shots to convey John's focused intensity and the delicate nature of his task. Pacing is deliberate, slowly building subtle tension towards the crisis point, then resolving with a peaceful, poignant emotional release. The visual approach emphasizes warm, low-key lighting to enhance the reflective atmosphere and highlight the antique details of the workshop and the cherished pocket watch.",
+    "scope": "global"
+  }
+}

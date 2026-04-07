@@ -1,31 +1,10 @@
-"""Generation modules - image/video/audio generation with plugin system."""
+"""Generation modules - image/video/audio service classes."""
 
-from .base_generator import (
-    BaseAudioGenerator,
-    BaseImageGenerator,
-    BaseVideoGenerator,
-    GeneratorMetadata,
-)
-from .base_registry import BaseGeneratorRegistry
-from .image_generators.registry import ImageGeneratorRegistry, get_image_generator_registry
-from .video_generators.registry import VideoGeneratorRegistry, get_video_generator_registry
-from .audio_generators.registry import AudioGeneratorRegistry, get_audio_generator_registry
 from .image_generators.service import FalImageService, ImageService, MockImageService
 from .video_generators.service import FalVideoService, MockVideoService, VideoService, WavespeedVideoService
 from .audio_generators.service import AudioService, FalAudioService, MockAudioService
 
 __all__ = [
-    "BaseAudioGenerator",
-    "BaseImageGenerator",
-    "BaseVideoGenerator",
-    "BaseGeneratorRegistry",
-    "GeneratorMetadata",
-    "AudioGeneratorRegistry",
-    "ImageGeneratorRegistry",
-    "VideoGeneratorRegistry",
-    "get_audio_generator_registry",
-    "get_image_generator_registry",
-    "get_video_generator_registry",
     "FalImageService",
     "ImageService",
     "MockImageService",

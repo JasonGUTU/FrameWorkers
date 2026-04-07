@@ -41,20 +41,10 @@ function hydrateIndexedAssets(assets) {
 }
 
 /* ── demo data ── */
-const DESCRIPTOR_MAP = {
-  StoryAgent: "story_blueprint",
-  ScreenplayAgent: "screenplay",
-  KeyFrameAgent: "keyframes",
-  VideoAgent: "video_package",
-  AudioAgent: "audio_package",
-};
-
 const EXECUTE_EXAMPLE = {
   agent_id: "StoryAgent",
   task_id: "task_demo_001",
-  execute_fields: {
-    text: "Create a cinematic short: a watchmaker fixes a broken watch before midnight.",
-  },
+  execute_fields: null,
 };
 
 /* ── builders ── */
@@ -101,50 +91,23 @@ function phaseArrow() {
 }
 
 /* ── render ── */
-/* ── test section builders ── */
-function testItem(label, desc) {
-  return `
-    <div class="test-item">
-      <span class="test-dot">✓</span>
-      <div class="test-content">
-        <span class="test-label">${escapeHtml(label)}</span>
-        <span class="test-desc">${escapeHtml(desc)}</span>
-      </div>
-    </div>`;
-}
-
-function testGroup(badge, badgeClass, title, itemsHtml) {
-  return `
-    <div class="test-group">
-      <div class="test-group-header">
-        <span class="io-badge ${badgeClass}">${escapeHtml(badge)}</span>
-        <span class="test-group-title">${escapeHtml(title)}</span>
-      </div>
-      <div class="test-group-items">${itemsHtml}</div>
-    </div>`;
-}
-
-function testRunCmd(cmd) {
-  return `<pre class="test-run-cmd">${escapeHtml(cmd)}</pre>`;
-}
-
-/* ── render ── */
 function render() {
-  const flowEl     = document.getElementById("flowViz");
-  const directorEl = document.getElementById("directorViz");
-  const httpEl     = document.getElementById("httpViz");
-  const phasesEl   = document.getElementById("phasesViz");
-  const subagentEl = document.getElementById("subagentViz");
-  const workspaceEl= document.getElementById("workspaceViz");
-  const testAgentsEl          = document.getElementById("testAgentsViz");
-  const testAssistantServiceEl = document.getElementById("testAssistantServiceViz");
-  const testWorkspaceEl       = document.getElementById("testWorkspaceViz");
-  const testSerializersEl     = document.getElementById("testSerializersViz");
-  const testAssistantHttpEl   = document.getElementById("testAssistantHttpViz");
-  const taskStackEl           = document.getElementById("taskStackViz");
-  const testDirectorNostackEl = document.getElementById("testDirectorNostackViz");
-  const testDtsEl             = document.getElementById("testDtsViz");
-  const roadmapEl             = document.getElementById("roadmapViz");
+  const _noop = { set innerHTML(_v) {}, set outerHTML(_v) {} };
+  const $g = (id) => document.getElementById(id) || _noop;
+  const flowEl     = $g("flowViz");
+  const directorEl = $g("directorViz");
+  const httpEl     = $g("httpViz");
+  const phasesEl   = $g("phasesViz");
+  const subagentEl = $g("subagentViz");
+  const workspaceEl= $g("workspaceViz");
+  const testAgentsEl          = $g("testAgentsViz");
+  const testAssistantServiceEl = $g("testAssistantServiceViz");
+  const testWorkspaceEl       = $g("testWorkspaceViz");
+  const testSerializersEl     = $g("testSerializersViz");
+  const testAssistantHttpEl   = $g("testAssistantHttpViz");
+  const taskStackEl           = $g("taskStackViz");
+  const testDirectorNostackEl = $g("testDirectorNostackViz");
+  const testDtsEl             = $g("testDtsViz");
 
   const { agent_id: agentId, task_id: taskId, execute_fields: ef } = EXECUTE_EXAMPLE;
   const executeFields = (ef && typeof ef === "object" && !Array.isArray(ef)) ? { ...ef } : {};
@@ -369,8 +332,13 @@ function render() {
         {
           task_id: taskId,
           agent_id: agentId,
-          created_at: "2026-03-29T12:00:00Z",
-          execution_result: { status: "COMPLETED", execution_id: "exec_demo_placeholder" },
+          created_at: "2026-04-07T12:00:00Z",
+          execution_id: "exec_demo_placeholder",
+          content: {
+            what: "Story blueprint generated for watchmaker short",
+            why: "User requested a 10s cinematic clip with single-character arc",
+            context_note: "scope=task",
+          },
         },
       ],
     },
@@ -405,8 +373,13 @@ function render() {
     "card-blue", "🌐",
     `HTTP &nbsp;<code>POST /api/assistant/execute</code>`,
     "Director ↔ Assistant",
-    `<div class="http-pair">
-      ${ioBlock("Director → Assistant", "REQUEST", "badge-request", null, httpRequest)}
+    `<div style="margin-bottom:14px;padding:10px 14px;background:rgba(126,179,255,0.06);border-left:3px solid rgba(126,179,255,0.4);border-radius:4px;font-size:0.84em;color:#bbb;line-height:1.6">
+      <strong style="color:#7eb3ff">输入通道已统一：</strong>
+      <code>execute_fields.text / image / video / audio</code> 已不再被 Phase 1 读取，仅作不透明 overlay 保留。
+      原始用户文本 / 媒体必须先经 <code>intake_user_text()</code> → <code>IntakeTextAgent</code>，或 <code>POST /api/workspace/upload</code> 落成 artifact，再由下游 agent 通过 <code>artifact_registry caption index</code> 召回。
+    </div>
+    <div class="http-pair">
+      ${ioBlock("Director → Assistant", "REQUEST", "badge-request", "execute_fields=null：text 已通过 IntakeTextAgent 提前落盘", httpRequest)}
       <div class="arrow-col"><div class="arrow-shaft"></div><div class="arrow-tip"></div></div>
       ${ioBlock("Assistant → Director", "RESPONSE", "badge-response",
         "task_id · execution_id · status · error · error_reasoning · workspace_id · global_memory_brief …", httpResponse)}
@@ -430,63 +403,38 @@ function render() {
   }
 
   const phase1Html =
-    stepCard("package_data(text_seed)", [
-      ["text_seed", executeFields.text, "param"],
-      ["produces", "input_bundle_v2 种子: { source_text: '...' }（随后 merge 进完整 bundle）", "returns"],
+    stepCard("① 空 bundle 种子", [
+      ["package_data(agent_id, task_id)", "返回 { task_id, input_bundle_v2: {} } —— 不再吃 text_seed / 不再注入 execute_fields 媒体", "note"],
+    ], "input-channel 统一后，sub-agent 只有一个输入源：InputResolver 选出来的 artifact") +
+    stepCard("② LLM #1 选历史 artifact", [
+      ["调用", "_resolve_inputs_for_agent_with_llm(agent_id, task_id, workspace)", "note"],
+      ["委托", "workspace.resolve_inputs_for_agent(input_needs_description, llm_client, source_text=\"\", model=input_package_model)", "note"],
+      ["输入源", "agent.input_needs_description + artifact_registry caption index（无 source_text / 无 hints）", "note"],
+      ["输出", "{ resolved_artifacts, selected_artifact_paths, rationale }", "returns"],
+    ], "原始用户文本/媒体必须先经 IntakeTextAgent 或 POST /api/workspace/upload 落成 artifact，才能被 caption 召回") +
+    stepCard("③ 写回 bundle", [
+      ["_apply_resolved_inputs", "bundle._resolved_artifacts = resolved_artifacts；bundle.input_package = { rationale, selected_artifact_paths }", "note"],
     ]) +
-    stepCard("workspace.list_memory_entries(task_id, limit)", [
-      ["task_id", taskId, "param"],
-      ["returns", "{ global_memory: [MemoryEntry 含 content / artifact_locations] }", "returns"],
-    ], "注入 packaged_data.global_memory；get_memory_brief 仅薄行，供 Director") +
-    stepCard("_resolve_inputs_for_agent_with_llm(…)", [
-      ["① 读取上下文", "catalog_entry（全文）+ global_memory + workspace_file_tree（workspace 根，含 artifacts/）", "note"],
-      ["②", "与 LLM #2 共用同一全根树；单 workspace 单 task 场景下不再单独传 task 子目录树", "note"],
-      ["③ LLM #1", "chat_json → selected_roles / required_roles / …", "param"],
-      ["④ role 键名", "来自历史条目的 artifact_locations.role（与 descriptor asset_key、落盘 role 约定一致）；**不是** HTTP 随意字段", "note"],
-      ["⑤ 谁勾选", "LLM #1 只在 available_roles（从 memory 扫出）里选子集，**不得自造**新键名", "note"],
-      ["→ returns", "{ required_roles, selected_roles, append_to_source_text, rationale }", "returns"],
-    ]) +
-    stepCard("_apply_input_package_merge", [
-      ["作用", "按 selected_roles 从 memory 路径读 .json → bundle[role]；写 _resolved_inputs / input_package 元信息", "note"],
-    ]);
+    stepCard("④ 合成最终 inputs", [
+      ["_merge_execution_inputs", "{ task_id, input_bundle_v2, execute_fields(opaque) } → 交给 execute_agent", "note"],
+    ], "execute_fields 仅作为不透明 overlay 保留（如未来的 overwrite hook），text/image/video/audio 已不再读");
 
   const phase2Html =
     stepCard("dict → InputBundleV2 → sub-agent", [
-      ["①", "_map_pipeline_inputs(inputs)：bundle dict + execute_fields → 初装映射", "note"],
-      ["②", "hydrate_indexed_assets + 再映射 → InputBundleV2（artifacts / context.resolved_inputs / hints）", "note"],
-      ["③", "descriptor.build_input(task_id, bundle) → TypedInput (Pydantic)", "note"],
-      ["④", "agent.run(typed_input, input_bundle_v2, materialize_ctx, max_retries=3) → ExecutionResult", "note"],
-    ], "inputs.global_memory 仅在 execute 的 inputs 顶层，不 merge 进 bundle；run 内 evaluator 含 L1/L2/L3 重试") +
-    stepCard("await agent.run(…)", [
-      ["materialize_ctx",  "MaterializeContext | null", "param"],
-      ["→ returns",        "ExecutionResult（output / asset_dict / eval_result / attempts …）", "returns"],
-    ], "async");
+      ["①", "hydrate_indexed_assets + 映射 → InputBundleV2", "note"],
+      ["②", "descriptor.build_input(task_id, bundle) → TypedInput", "note"],
+      ["③", "await agent.run(typed_input, bundle, ctx) → ExecutionResult", "note"],
+    ], "Assistant 不关心 sub-agent 内部，只负责把 bundle 喂进去");
 
   const phase3Html =
-    stepCard("_deterministic_output_persist_plan(execution, asset_key)", [
-      ["purpose", "先生成确定性 base_plan，作为 LLM 的起点", "note"],
-      ["→ returns", "base_plan: List[{ kind, source_key, relative_path, role }]", "returns"],
-    ]) +
-    stepCard("_refine_output_persist_plan_with_llm(workspace, execution, descriptor, base_plan)", [
-      ["① 读取上下文", "catalog_entry（全文）+ workspace_file_tree（全库根，含 artifacts/）+ _naming_specs + naming_policy", "note"],
-      ["② system prompt", '"Adjust relative_path to avoid collisions and align with artifacts/media/<Agent>/<kind>/ layout. Keep same number of entries, kind/source_key unchanged. Every path must start with artifacts/."', "param"],
-      ["③ user prompt", '{ target_agent_id, task_id, descriptor_hint, proposed_assignments: base_plan, naming_specs, naming_policy, workspace_file_tree }', "param"],
-      ["④ LLM call", "pipeline_llm_client.chat_json(max_tokens 16384→65536 重试, reasoning_effort='low') — 编排 LLM #2 持久化路径", "param"],
-      ["⑤ merge", "_merge_persist_assignments：按 (kind, source_key) 对齐；**主覆写 relative_path**；json_snapshot 须 LLM 给出 **role**（可校正/补全）", "note"],
-      ["→ returns", 'assignments: [{ kind: "binary|media|json_snapshot|keyframes_manifest", source_key, relative_path: "artifacts/...", role }]', "returns"],
-    ]) +
-    stepCard("workspace.persist_execution_from_plan(execution, assignments, overwrite=True)", [
-      ["execution",         "AgentExecution",          "param"],
-      ["assignments",       "List[PersistAssignment]", "param"],
-      ["overwrite_existing","True",                    "param"],
-    ]) +
-    stepCard("workspace.log_execution_result(execution)", [
-      ["execution", "AgentExecution (status=COMPLETED|FAILED)", "param"],
-    ]) +
-    stepCard("LLM #3 → workspace.add_memory_entry", [
-      ["①", "_sync_global_memory_after_execution：_extract_global_memory_summary_with_llm（strict）+ 与落盘路径合并 artifact_locations", "note"],
-      ["②", "add_memory_entry(…, artifact_locations: List[{ role, path }], …)", "note"],
-    ], "编排 LLM #3；落盘完成后写 global_memory.md");
+    stepCard("process_results(execution, workspace, overwrite_existing_assets)", [
+      ["①", "log_execution_result(execution) → execution event 日志（含 retry_attempts / eval_summary）", "note"],
+      ["②", "_deterministic_output_persist_plan(execution, descriptor, asset_key) → base_plan", "note"],
+      ["③", "_refine_output_persist_plan_with_llm → LLM #2 调整 relative_path（避免冲突 / 对齐 naming_policy）", "note"],
+      ["④", "persist_execution_from_plan(plan, manifest_extractors, overwrite) → (paths, asset_index, extra_locs)；落盘后回调 _register_artifacts_callback 把 ArtifactRef 追加到 artifact_registry.jsonl", "note"],
+      ["⑤", "_sync_global_memory_after_execution → 直接读 execution.results.artifact_caption（agent 自产的 {what, why, scope}）→ add_memory_entry，无额外 LLM 调用", "note"],
+      ["⑥", "返回 { task_id, execution_id, status, error, workspace_id, global_memory_brief }", "returns"],
+    ], "_persist_plan_meta（policy version + plan digest）写入 execution.results；artifact_registry 同步后下一轮 Phase 1 的 caption index 就能召回");
 
   phasesEl.outerHTML = sectionCard(
     "card-orange", "⚡",
@@ -517,7 +465,7 @@ function render() {
           <div class="phase-num">3</div>
           <div>
             <h3>Persist Results</h3>
-            <p style="margin:4px 0 0;font-size:0.78em;color:#94a3b8;font-weight:400;line-height:1.35">LLM #2 路径 · 落盘 · LLM #3 memory</p>
+            <p style="margin:4px 0 0;font-size:0.78em;color:#94a3b8;font-weight:400;line-height:1.35">LLM #2 路径 · 落盘 · agent caption → memory</p>
           </div>
         </div>
         <div class="phase-body">${phase3Html}</div>
@@ -532,10 +480,10 @@ function render() {
       typed_input_preview: {
         task_id: mapped.task_id,
         assets: hydratedAssets,
-        note: "无独立 config；hints（如 source_text）+ resolved_inputs；时长/语言等由各 sub-agent 的 LLM 从正文推断",
+        note: "hints（如 source_text）+ artifacts + context；时长/语言等由各 sub-agent 的 LLM 从正文推断",
       },
     },
-    "input_bundle_v2": "InputBundleV2 — resolved_inputs 的键 = memory 里出现过的 role；LLM #1 只勾选子集",
+    "input_bundle_v2": "InputBundleV2 — bundle.artifacts 包含 HTTP 直传媒体；bundle._resolved_artifacts + bundle.input_package 由 LLM #1 通过 artifact_registry caption index 选出（按路径，不再有 role 概念）",
   };
 
   const subagentOut = {
@@ -560,41 +508,52 @@ function render() {
 
   /* ── Workspace section ── */
   const wsRead = {
-    "get_memory_brief(task_id)": {
-      returns:
-        "{ global_memory: [...] }  — 每行仅四键：task_id · agent_id · created_at · execution_result；无 content、无 artifact_locations 等长字段",
-      note:
-        "GET /api/assistant/workspace/memory/brief；Director 轮询/规划用。execute 装配用 list_memory_entries（全字段），不走 brief。",
-    },
-    "hydrate_indexed_assets(assets)": {
-      params: "assets: Dict[str, Any]",
-      note: "将含 _asset_index.json_uri 的项展开为 sub-agent 可消费形态",
-    },
-    "list_files()": {
-      params: "无参数",
-      returns: "List[FileMetadata]  — 返回工作区所有文件",
+    "get_memory_brief(task_id, agent_id, limit)": {
+      returns: "{ global_memory: [...] }  — 语义决策的薄行视图",
+      note: "Director 轮询/规划用；execute 装配用 list_memory_entries（全字段）",
     },
     "list_memory_entries(task_id, agent_id, limit)": {
-      returns: "List[MemoryEntry]  — 含 content",
-      note: "build_execution_inputs 内调用，注入 packaged_data.global_memory，供输入打包 LLM（选 selected_roles）使用",
+      returns: "List[MemoryEntry]  — 含 content { what, why, context_note }",
+      note: "纯语义决策，不再含 artifact_locations；文件路径在 artifact_registry",
+    },
+    "resolve_inputs_for_agent(agent_id, task_id, input_needs_description, llm_client, source_text, model)": {
+      returns: "{ resolved_artifacts:[{what,why,scope,path,mime,payload}], selected_artifact_paths, rationale }",
+      note: "Phase 1 LLM #1 入口；委托 InputResolver 读 artifact_registry.get_captions_index",
     },
     "get_workspace_root_file_tree_text()": {
       returns: "str  — workspace 根下完整树（含 artifacts/）",
-      note: "LLM #1 / LLM #2 编排均用 workspace 根下全树（含 artifacts/）",
+      note: "LLM #2 路径编排时使用",
     },
-    "get_logs(operation_type, resource_type, agent_id, task_id, limit)": {
+    "list_files() / get_file(file_id)": {
+      returns: "List[FileMetadata] / FileMetadata",
+    },
+    "hydrate_indexed_assets(assets)": {
+      note: "委托 AssetManager 把 _asset_index.json_uri 展开为可消费 payload",
+    },
+    "collect_materialized_files(media_assets)": {
+      note: "汇总 sub-agent 已物化的 MediaAsset，准备进入持久化计划",
+    },
+    "get_logs(operation_type, resource_type, agent_id, task_id, limit, level, event, execution_id)": {
       returns: "List[LogEntry]",
     },
   };
 
   const wsWrite = {
-    "log_execution_started(execution)": "写入执行开始日志",
-    "log_execution_result(execution)": "写入完成日志 + metrics",
-    "persist_execution_from_plan(execution, assignments, overwrite_existing)": {
-      note: "LLM 生成 assignments 后调用，按计划落盘产出文件",
+    "store_file_at_relative_path(relative_path, file_content, filename, description, created_by, tags, metadata)": {
+      note: "写到 Runtime/<workspace_id>/<relative_path>，自动 log + refresh_file_tree",
     },
-    "add_memory_entry(content, task_id, agent_id, execution_result, artifact_locations)": {
-      note: "执行成功后写入长期记忆",
+    "persist_execution_from_plan(execution, assignments, overwrite_existing)": {
+      returns: "(persisted_paths, asset_index, extra_locs)",
+      note: "Phase 3 主入口；落盘后回调 _register_artifacts_callback → artifact_registry.jsonl",
+    },
+    "log_execution_started(execution) / log_execution_result(execution)": {
+      note: "execution event 日志；自动抽 retry_attempts + eval_summary",
+    },
+    "add_memory_entry(content={what,why,context_note}, task_id, agent_id, execution_id, supersedes)": {
+      note: "追加一条语义决策；不再带 artifact_locations",
+    },
+    "delete_file(file_id)": {
+      note: "overwrite 模式下清掉旧版本，自动写 delete log",
     },
   };
 
@@ -773,82 +732,6 @@ function render() {
     ])
   );
 
-  /* ── Roadmap ── */
-  const roadmapItems = [
-    {
-      index: "01",
-      title: "集成 Task Stack 到 Director 中",
-      items: [
-        "将现有 DirectorNoStack 的编排逻辑迁移至基于 Dynamic Task Stack 的架构",
-        "利用 Task Stack 提供的任务状态追踪、中断恢复与并发调度能力",
-        "统一 Director 与 Assistant 的任务上下文管理，减少重复状态维护",
-      ],
-    },
-    {
-      index: "02",
-      title: "多模态输入 → Desktop 自适应",
-      items: [
-        "支持图片、音频、视频等多模态输入，作为 pipeline 的创作素材或风格参考",
-        "在 Desktop 端实现自适应接入：拖拽上传、剪贴板粘贴、文件选择等交互方式",
-        "输入内容自动解析并注入对应 agent 的 input bundle（如图片作为 KeyFrame anchor、音频作为音乐参考）",
-      ],
-    },
-    {
-      index: "03",
-      title: "优化 Sub-agent",
-      items: [
-        "提升各 sub-agent（Story / Screenplay / KeyFrame / Video / Audio）输出质量与一致性",
-        "优化 agent 间上下文传递，减少信息丢失",
-        "引入更细粒度的 eval 指标，量化每个 agent 的产出质量",
-      ],
-    },
-    {
-      index: "04",
-      title: "选用更稳定的 API",
-      items: [
-        "评估现有 LLM / 媒体生成 API 的稳定性与成本",
-        "建立 provider fallback 机制，避免单点故障影响 pipeline",
-        "对关键节点（image gen、video gen）引入重试与质量校验",
-      ],
-    },
-    {
-      index: "05",
-      title: "构建合理的测试体系",
-      items: [
-        "<strong>Sub-agent 单元测试：</strong>针对每个 agent 的输入输出结构、边界条件、格式合规性",
-        "<strong>端到端集成测试：</strong>从 user prompt → pipeline 完整运行 → 产出文件的全链路验证",
-        "建立基准数据集，支持回归对比与质量趋势追踪",
-      ],
-    },
-    {
-      index: "06",
-      title: "自进化提升系统上限",
-      items: [
-        "若测试体系（05）持续暴露质量瓶颈，探索自进化路径",
-        "收集高质量产出作为 few-shot 示例，持续优化 prompt",
-        "引入自动评估 → 反馈 → prompt/参数调整的闭环机制，逐步提高系统上限",
-      ],
-      note: "前提：05 的测试体系需先建立，提供可信的质量信号",
-    },
-  ];
-
-  roadmapEl.outerHTML = sectionCard(
-    "card-blue", "🗺", "Roadmap", "下一步计划",
-    `<div style="display:flex;flex-direction:column;gap:16px">
-      ${roadmapItems.map(r => `
-        <div style="display:flex;gap:16px;align-items:flex-start">
-          <div style="font-size:1.6em;font-weight:700;color:rgba(255,255,255,0.15);line-height:1;min-width:32px;padding-top:2px">${r.index}</div>
-          <div style="flex:1">
-            <div style="font-weight:600;color:#e0e0e0;margin-bottom:6px">${r.title}</div>
-            <ul style="margin:0;padding-left:18px;color:#aaa;font-size:0.88em;line-height:1.8">
-              ${r.items.map(i => `<li>${i}</li>`).join("")}
-            </ul>
-            ${r.note ? `<div style="margin-top:8px;font-size:0.82em;color:#888;font-style:italic">※ ${r.note}</div>` : ""}
-          </div>
-        </div>
-      `).join("")}
-    </div>`
-  );
 
 }
 

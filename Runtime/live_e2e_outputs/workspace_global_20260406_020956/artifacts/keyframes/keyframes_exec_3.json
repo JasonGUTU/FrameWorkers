@@ -1,0 +1,408 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_type": "character",
+          "entity_id": "char_001",
+          "keyframe_id": "kf_global_char_001",
+          "image_asset": {
+            "asset_id": "img_char_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_020956/artifacts/media/KeyFrameAgent/image/img_char_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "An older man, a retired watchmaker, with hands skilled and marked by a lifetime of delicate work. His expression conveys quiet determination mixed with sorrow or longing. He wears lived-in, comfortable clothing, reflecting his deep dedication to his craft.",
+          "image_generation_prompt": "An older man, a retired watchmaker, with hands skilled and marked by a lifetime of delicate work. His expression conveys quiet determination mixed with sorrow or longing. He wears lived-in, comfortable clothing, reflecting his deep dedication to his craft.\nVisual style: Maintain a poignant and intimate tone, focusing on Elias's internal journey.; Visuals should emphasize the delicacy of the work and the passage of time.; Lighting should be warm and directional, creating a sense of focus and introspection.; Maintain a hopeful and intimate tone, transitioning to peace and resolution.; Visuals should emphasize the completion of the task and the emotional release.; Lighting remains warm but might feel slightly softer, less urgent.. Do NOT use: Rushed cuts or frantic camera movements.; Overly bright or sterile lighting that diminishes intimacy.; Anything that detracts from Elias's quiet concentration.; An abrupt or unearned sense of triumph.; Any visual or auditory elements that break the poignant, reflective mood.."
+        }
+      ],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_020956/artifacts/media/KeyFrameAgent/image/img_loc_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "A cozy, cluttered study filled with stacks of books, various old watchmaker's tools, and a sense of accumulated history. A warm, focused light from a desk lamp illuminates a workbench, creating intimate shadows throughout the rest of the room. A tall, imposing grandfather clock stands prominently in the corner, a silent witness to time.",
+          "image_generation_prompt": "A cozy, cluttered study filled with stacks of books, various old watchmaker's tools, and a sense of accumulated history. A warm, focused light from a desk lamp illuminates a workbench, creating intimate shadows throughout the rest of the room. A tall, imposing grandfather clock stands prominently in the corner, a silent witness to time.\nVisual style: Maintain a poignant and intimate tone, focusing on Elias's internal journey.; Visuals should emphasize the delicacy of the work and the passage of time.; Lighting should be warm and directional, creating a sense of focus and introspection.; Maintain a hopeful and intimate tone, transitioning to peace and resolution.; Visuals should emphasize the completion of the task and the emotional release.; Lighting remains warm but might feel slightly softer, less urgent.. Do NOT use: Rushed cuts or frantic camera movements.; Overly bright or sterile lighting that diminishes intimacy.; Anything that detracts from Elias's quiet concentration.; An abrupt or unearned sense of triumph.; Any visual or auditory elements that break the poignant, reflective mood.."
+        }
+      ],
+      "props": [
+        {
+          "entity_type": "prop",
+          "entity_id": "prop_001",
+          "keyframe_id": "kf_global_prop_001",
+          "image_asset": {
+            "asset_id": "img_prop_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_020956/artifacts/media/KeyFrameAgent/image/img_prop_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "An intricately designed pocket watch, possibly with delicate engravings on its casing. It appears old and well-loved, showing signs of wear from frequent handling. The watch is currently non-functional, its mechanism still.",
+          "image_generation_prompt": "An intricately designed pocket watch, possibly with delicate engravings on its casing. It appears old and well-loved, showing signs of wear from frequent handling. The watch is currently non-functional, its mechanism still.\nVisual style: Maintain a poignant and intimate tone, focusing on Elias's internal journey.; Visuals should emphasize the delicacy of the work and the passage of time.; Lighting should be warm and directional, creating a sense of focus and introspection.; Maintain a hopeful and intimate tone, transitioning to peace and resolution.; Visuals should emphasize the completion of the task and the emotional release.; Lighting remains warm but might feel slightly softer, less urgent.. Do NOT use: Rushed cuts or frantic camera movements.; Overly bright or sterile lighting that diminishes intimacy.; Anything that detracts from Elias's quiet concentration.; An abrupt or unearned sense of triumph.; Any visual or auditory elements that break the poignant, reflective mood.."
+        },
+        {
+          "entity_type": "prop",
+          "entity_id": "prop_002",
+          "keyframe_id": "kf_global_prop_002",
+          "image_asset": {
+            "asset_id": "img_prop_002_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_020956/artifacts/media/KeyFrameAgent/image/img_prop_002_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "A collection of specialized, small, precise watchmaker's tools, meticulously arranged. Each tool is finely crafted, showing wear from years of delicate work and expert use.",
+          "image_generation_prompt": "A collection of specialized, small, precise watchmaker's tools, meticulously arranged. Each tool is finely crafted, showing wear from years of delicate work and expert use.\nVisual style: Maintain a poignant and intimate tone, focusing on Elias's internal journey.; Visuals should emphasize the delicacy of the work and the passage of time.; Lighting should be warm and directional, creating a sense of focus and introspection.; Maintain a hopeful and intimate tone, transitioning to peace and resolution.; Visuals should emphasize the completion of the task and the emotional release.; Lighting remains warm but might feel slightly softer, less urgent.. Do NOT use: Rushed cuts or frantic camera movements.; Overly bright or sterile lighting that diminishes intimacy.; Anything that detracts from Elias's quiet concentration.; An abrupt or unearned sense of triumph.; Any visual or auditory elements that break the poignant, reflective mood.."
+        },
+        {
+          "entity_type": "prop",
+          "entity_id": "prop_003",
+          "keyframe_id": "kf_global_prop_003",
+          "image_asset": {
+            "asset_id": "img_prop_003_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_020956/artifacts/media/KeyFrameAgent/image/img_prop_003_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "An ornate and traditional large grandfather clock, standing tall and grand. Its prominent, constant ticking sound subtly fills the quiet room. The clock's design reflects a classic, timeless elegance.",
+          "image_generation_prompt": "An ornate and traditional large grandfather clock, standing tall and grand. Its prominent, constant ticking sound subtly fills the quiet room. The clock's design reflects a classic, timeless elegance.\nVisual style: Maintain a poignant and intimate tone, focusing on Elias's internal journey.; Visuals should emphasize the delicacy of the work and the passage of time.; Lighting should be warm and directional, creating a sense of focus and introspection.; Maintain a hopeful and intimate tone, transitioning to peace and resolution.; Visuals should emphasize the completion of the task and the emotional release.; Lighting remains warm but might feel slightly softer, less urgent.. Do NOT use: Rushed cuts or frantic camera movements.; Overly bright or sterile lighting that diminishes intimacy.; Anything that detracts from Elias's quiet concentration.; An abrupt or unearned sense of triumph.; Any visual or auditory elements that break the poignant, reflective mood.."
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "keyframe_id": "kf_char_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_020956/artifacts/media/KeyFrameAgent/image/img_char_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Show Elias, an older retired watchmaker, with skilled, delicate hands. His expression carries a weight of quiet determination and longing. He wears lived-in, comfortable clothing, reflecting a lifetime dedicated to his craft, focusing with precision.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nShow Elias, an older retired watchmaker, with skilled, delicate hands. His expression carries a weight of quiet determination and longing. He wears lived-in, comfortable clothing, reflecting a lifetime dedicated to his craft, focusing with precision.\nDo NOT use: Rushed cuts or frantic camera movements.; Overly bright or sterile lighting that diminishes intimacy.; Anything that detracts from Elias's quiet concentration.; An abrupt or unearned sense of triumph.; Any visual or auditory elements that break the poignant, reflective mood.."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_020956/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Frame Elias's study as a cozy, cluttered room filled with books and old tools. Warm, directional light from a desk lamp illuminates a workbench. Shadows create intimacy in the rest of the room, with an ornate grandfather clock standing tall.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nFrame Elias's study as a cozy, cluttered room filled with books and old tools. Warm, directional light from a desk lamp illuminates a workbench. Shadows create intimacy in the rest of the room, with an ornate grandfather clock standing tall.\nDo NOT use: Rushed cuts or frantic camera movements.; Overly bright or sterile lighting that diminishes intimacy.; Anything that detracts from Elias's quiet concentration.; An abrupt or unearned sense of triumph.; Any visual or auditory elements that break the poignant, reflective mood.."
+            }
+          ],
+          "props": [
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_001",
+              "keyframe_id": "kf_prop_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_prop_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_020956/artifacts/media/KeyFrameAgent/image/img_prop_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Feature an intricately designed watch, perhaps with engravings. It appears old and well-loved but is currently non-functional, awaiting repair.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nFeature an intricately designed watch, perhaps with engravings. It appears old and well-loved but is currently non-functional, awaiting repair.\nDo NOT use: Rushed cuts or frantic camera movements.; Overly bright or sterile lighting that diminishes intimacy.; Anything that detracts from Elias's quiet concentration.; An abrupt or unearned sense of triumph.; Any visual or auditory elements that break the poignant, reflective mood.."
+            },
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_002",
+              "keyframe_id": "kf_prop_002_sc_001",
+              "image_asset": {
+                "asset_id": "img_prop_002_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_020956/artifacts/media/KeyFrameAgent/image/img_prop_002_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Show a collection of specialized, small, and precise watchmaking tools. They are used with great care and expertise, reflecting their delicate purpose.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nShow a collection of specialized, small, and precise watchmaking tools. They are used with great care and expertise, reflecting their delicate purpose.\nDo NOT use: Rushed cuts or frantic camera movements.; Overly bright or sterile lighting that diminishes intimacy.; Anything that detracts from Elias's quiet concentration.; An abrupt or unearned sense of triumph.; Any visual or auditory elements that break the poignant, reflective mood.."
+            },
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_003",
+              "keyframe_id": "kf_prop_003_sc_001",
+              "image_asset": {
+                "asset_id": "img_prop_003_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_020956/artifacts/media/KeyFrameAgent/image/img_prop_003_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Center on an ornate and traditional grandfather clock. Its design is classic, and its prominent ticking sound fills the quiet study.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nCenter on an ornate and traditional grandfather clock. Its design is classic, and its prominent ticking sound fills the quiet study.\nDo NOT use: Rushed cuts or frantic camera movements.; Overly bright or sterile lighting that diminishes intimacy.; Anything that detracts from Elias's quiet concentration.; An abrupt or unearned sense of triumph.; Any visual or auditory elements that break the poignant, reflective mood.."
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "source_shot_id": "sh_001"
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_001",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_020956/artifacts/media/KeyFrameAgent/image/img_sh_001_kf_001.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "An extreme close-up on Elias's experienced hands, delicately manipulating tiny watch parts with specialized tools. Warm, focused light from a desk lamp highlights the intricate, non-functional watch, emphasizing its fragility and the precision required.",
+                "video_motion_hint": "Show a subtle tremor in Elias's hand as he carefully positions a minuscule gear, or the soft glint of light moving across the polished watch casing.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nAn extreme close-up on Elias's experienced hands, delicately manipulating tiny watch parts with specialized tools. Warm, focused light from a desk lamp highlights the intricate, non-functional watch, emphasizing its fragility and the precision required.\nDo NOT use: Rushed cuts or frantic camera movements.; Overly bright or sterile lighting that diminishes intimacy.; Anything that detracts from Elias's quiet concentration.; An abrupt or unearned sense of triumph.; Any visual or auditory elements that break the poignant, reflective mood.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "source_shot_id": "sh_002"
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_002",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_002",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_020956/artifacts/media/KeyFrameAgent/image/img_sh_002_kf_002.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A medium close-up on the ornate face of the grandfather clock, its elegant second hand steadily sweeping. The traditional design and imposing presence of the clock are visible.",
+                "video_motion_hint": "The second hand glides smoothly and continuously across the clock face, highlighting the relentless passage of time.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA medium close-up on the ornate face of the grandfather clock, its elegant second hand steadily sweeping. The traditional design and imposing presence of the clock are visible.\nDo NOT use: Rushed cuts or frantic camera movements.; Overly bright or sterile lighting that diminishes intimacy.; Anything that detracts from Elias's quiet concentration.; An abrupt or unearned sense of triumph.; Any visual or auditory elements that break the poignant, reflective mood.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "source": {
+              "source_shot_id": "sh_003"
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_003",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_003",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_020956/artifacts/media/KeyFrameAgent/image/img_sh_003_kf_003.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A close-up on Elias's face, his expression one of intense concentration and quiet determination, illuminated by the warm desk lamp. He meticulously tightens a tiny screw on the watch with a precise tool.",
+                "video_motion_hint": "Observe a subtle tightening of Elias's jaw as he applies gentle pressure to the screw, or a slight shift in his gaze, maintaining focus.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA close-up on Elias's face, his expression one of intense concentration and quiet determination, illuminated by the warm desk lamp. He meticulously tightens a tiny screw on the watch with a precise tool.\nDo NOT use: Rushed cuts or frantic camera movements.; Overly bright or sterile lighting that diminishes intimacy.; Anything that detracts from Elias's quiet concentration.; An abrupt or unearned sense of triumph.; Any visual or auditory elements that break the poignant, reflective mood.."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_002"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "keyframe_id": "kf_char_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_002",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_020956/artifacts/media/KeyFrameAgent/image/img_char_001_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Show Elias's demeanor shifting from intense focus to quiet relief and profound peace. Frame his expression to convey closure, gentle remembrance, and satisfaction, tenderly holding the watch.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nShow Elias's demeanor shifting from intense focus to quiet relief and profound peace. Frame his expression to convey closure, gentle remembrance, and satisfaction, tenderly holding the watch.\nDo NOT use: Rushed cuts or frantic camera movements.; Overly bright or sterile lighting that diminishes intimacy.; Anything that detracts from Elias's quiet concentration.; An abrupt or unearned sense of triumph.; Any visual or auditory elements that break the poignant, reflective mood.."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "keyframe_id": "kf_loc_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_002",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_020956/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Frame the study with a subtle shift in light quality, suggesting the dawn of a new moment or a sense of calm.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nFrame the study with a subtle shift in light quality, suggesting the dawn of a new moment or a sense of calm.\nDo NOT use: Rushed cuts or frantic camera movements.; Overly bright or sterile lighting that diminishes intimacy.; Anything that detracts from Elias's quiet concentration.; An abrupt or unearned sense of triumph.; Any visual or auditory elements that break the poignant, reflective mood.."
+            }
+          ],
+          "props": [
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_001",
+              "keyframe_id": "kf_prop_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_prop_001_sc_002",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_020956/artifacts/media/KeyFrameAgent/image/img_prop_001_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Show the watch closed and held gently, almost reverently, now audibly ticking.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nShow the watch closed and held gently, almost reverently, now audibly ticking.\nDo NOT use: Rushed cuts or frantic camera movements.; Overly bright or sterile lighting that diminishes intimacy.; Anything that detracts from Elias's quiet concentration.; An abrupt or unearned sense of triumph.; Any visual or auditory elements that break the poignant, reflective mood.."
+            },
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_003",
+              "keyframe_id": "kf_prop_003_sc_002",
+              "image_asset": {
+                "asset_id": "img_prop_003_sc_002",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_020956/artifacts/media/KeyFrameAgent/image/img_prop_003_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Show the grandfather clock resonating with chimes through the room, marking midnight.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nShow the grandfather clock resonating with chimes through the room, marking midnight.\nDo NOT use: Rushed cuts or frantic camera movements.; Overly bright or sterile lighting that diminishes intimacy.; Anything that detracts from Elias's quiet concentration.; An abrupt or unearned sense of triumph.; Any visual or auditory elements that break the poignant, reflective mood.."
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_004",
+            "order": 1,
+            "source": {
+              "source_shot_id": "sh_004"
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_004",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_004",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_020956/artifacts/media/KeyFrameAgent/image/img_sh_004_kf_004.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Extreme close-up on Elias's hands gently closing the intricate watch. The watch is now sealed, with Elias's ear tilted slightly, listening intently to its first tick. A soft, warm light highlights the watch's surface.",
+                "video_motion_hint": "Elias's fingers carefully complete the final seal on the watch. His head slowly inclines as he listens to the faint ticking.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nExtreme close-up on Elias's hands gently closing the intricate watch. The watch is now sealed, with Elias's ear tilted slightly, listening intently to its first tick. A soft, warm light highlights the watch's surface.\nDo NOT use: Rushed cuts or frantic camera movements.; Overly bright or sterile lighting that diminishes intimacy.; Anything that detracts from Elias's quiet concentration.; An abrupt or unearned sense of triumph.; Any visual or auditory elements that break the poignant, reflective mood.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 2,
+            "source": {
+              "source_shot_id": "sh_005"
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_005",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_005",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_020956/artifacts/media/KeyFrameAgent/image/img_sh_005_kf_005.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Medium shot showing Elias in the mid-ground, gently looking up with a peaceful expression. In the background, the tall grandfather clock stands, its pendulum visible, bathed in a soft, warm glow. The scene suggests a quiet passage of time.",
+                "video_motion_hint": "Elias slowly raises his head, his gaze shifting towards the resonating grandfather clock. The pendulum swings subtly in the background.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nMedium shot showing Elias in the mid-ground, gently looking up with a peaceful expression. In the background, the tall grandfather clock stands, its pendulum visible, bathed in a soft, warm glow. The scene suggests a quiet passage of time.\nDo NOT use: Rushed cuts or frantic camera movements.; Overly bright or sterile lighting that diminishes intimacy.; Anything that detracts from Elias's quiet concentration.; An abrupt or unearned sense of triumph.; Any visual or auditory elements that break the poignant, reflective mood.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 3,
+            "source": {
+              "source_shot_id": "sh_006"
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_006",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_006",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_020956/artifacts/media/KeyFrameAgent/image/img_sh_006_kf_006.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Close-up on Elias's face from a high angle, his expression one of profound peace and gentle remembrance. He holds the closed watch tenderly in his hand, looking down at it with a soft, content gaze. Warm, soft light defines his features.",
+                "video_motion_hint": "Elias gently cradles the watch, his head slightly bowed in a moment of quiet contemplation. A subtle smile graces his lips.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nClose-up on Elias's face from a high angle, his expression one of profound peace and gentle remembrance. He holds the closed watch tenderly in his hand, looking down at it with a soft, content gaze. Warm, soft light defines his features.\nDo NOT use: Rushed cuts or frantic camera movements.; Overly bright or sterile lighting that diminishes intimacy.; Anything that detracts from Elias's quiet concentration.; An abrupt or unearned sense of triumph.; Any visual or auditory elements that break the poignant, reflective mood.."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 2,
+    "shot_count": 6,
+    "keyframe_count_total": 6,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 3,
+    "stability_character_keyframe_count": 2,
+    "stability_location_keyframe_count": 2,
+    "stability_prop_keyframe_count": 5
+  },
+  "artifact_caption": {
+    "semantic_type": "",
+    "what": "2 scenes, 6 shots, 6 shot keyframe stills; 1 character, 1 location, 3 props; defines foundational visual anchors; poignant and intimate visual style.",
+    "why": "Establishes canonical visual identity for all core entities to ensure consistent appearance across future scenes and shots. Key decisions include emphasizing Elias's skilled hands and worn appearance, the rich, cluttered detail of his study, and the intricate craftsmanship of timepieces, all under warm, focused lighting.",
+    "scope": "global"
+  }
+}

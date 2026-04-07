@@ -349,23 +349,10 @@ export default {
   background-color: #e8f5e9;
 }
 
-.task-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 4px;
-}
-
 .task-id {
   font-size: 13px;
   font-weight: 600;
   color: #333;
-}
-
-.task-status {
-  font-size: 12px;
-  color: #666;
-  text-transform: uppercase;
 }
 
 .task-description {

@@ -67,27 +67,29 @@ class DummyRegistry:
         return self._descriptors.get(agent_id)
 
 
-@pytest.fixture(autouse=True)
-def stub_global_memory_summary_llm(monkeypatch):
-    """Avoid real LLM calls when persisting global_memory after each test execution."""
-
-    def _stub(self, execution, deterministic_artifacts=None):
-        return {
-            "content": "global_memory test summary",
-            "artifact_locations": list(deterministic_artifacts or []),
-            "artifact_briefs": [],
-        }
-
-    monkeypatch.setattr(
-        service_module.AssistantService,
-        "_extract_global_memory_summary_with_llm",
-        _stub,
+def _live_e2e_enabled() -> bool:
+    """Whether the current process is running a live end-to-end test
+    that needs the real Assistant LLM helper paths (no stubs)."""
+    import os
+    return any(
+        os.getenv(name) == "1"
+        for name in (
+            "FW_ENABLE_FULL_PIPELINE_E2E",
+            "FW_ENABLE_INTAKE_E2E",
+            "FW_ENABLE_UNIVA_PIPELINE_E2E",
+        )
     )
 
 
 @pytest.fixture(autouse=True)
 def stub_output_persist_plan_llm(monkeypatch):
-    """Skip output path LLM; use deterministic persist plan in tests."""
+    """Skip output path LLM; use deterministic persist plan in tests.
+
+    Bypassed for live e2e runs so the real LLM-refined persist plan path
+    is exercised.
+    """
+    if _live_e2e_enabled():
+        return
 
     def _stub(self, workspace, execution, descriptor, base_plan):
         return base_plan
@@ -100,35 +102,84 @@ def stub_output_persist_plan_llm(monkeypatch):
 
 
 @pytest.fixture(autouse=True)
-def stub_input_package_llm(monkeypatch):
-    """Avoid real LLM calls for per-execution input packaging."""
+def stub_input_package_llm(monkeypatch, request):
+    """Avoid real LLM calls for per-execution input packaging.
+
+    Returns the new InputResolver format: {resolved_artifacts, selected_artifact_paths, rationale}.
+    Loads JSON payloads from the artifact_registry for the given task_id.
+
+    Skipped for any live e2e flag so the real InputResolver LLM path is
+    exercised end-to-end.
+    """
+    if _live_e2e_enabled():
+        return  # let real InputResolver run
 
     def _stub(self, agent_id, task_id, workspace, packaged_data):
-        mem = packaged_data.get("global_memory") or []
-        roles: list[str] = []
-        for entry in mem:
-            if not isinstance(entry, dict):
-                continue
-            for loc in entry.get("artifact_locations") or []:
-                if not isinstance(loc, dict):
+        """Test stub: deterministically group registered artifacts by the
+        producing file's ``asset_key`` metadata and present them under the
+        same label name (consumer is expected to declare matching labels in
+        its input_needs_description).
+        """
+        import json
+        grouped: dict[str, object] = {}
+        selected_artifact_paths: list[str] = []
+
+        # Build path → file metadata index so we can look up asset_key per path
+        path_to_meta: dict[str, dict] = {}
+        try:
+            for file_item in workspace.list_files() or []:
+                meta = getattr(file_item, "metadata", {}) or {}
+                if not isinstance(meta, dict):
                     continue
-                role = loc.get("role")
-                path = loc.get("path")
-                if not (isinstance(role, str) and role.strip()):
+                fp = str(getattr(file_item, "file_path", "") or "")
+                if fp:
+                    path_to_meta[fp] = meta
+        except Exception:
+            pass
+
+        try:
+            entries = workspace.artifact_registry.list_all()
+            for entry in entries:
+                if entry.task_id and entry.task_id != task_id:
                     continue
-                # For tests, only select JSON roles; binary roles (e.g. media sys_id)
-                # are not loadable via JSON hydration.
-                if isinstance(path, str) and path.strip().lower().endswith(".json"):
-                    roles.append(role.strip())
-        # Stable order + de-dupe
-        roles = list(dict.fromkeys(roles))
-        if not roles:
-            return {}
+                for artifact in entry.artifacts:
+                    path = str(getattr(artifact, "path", "") or "").strip()
+                    mime = str(getattr(artifact, "mime", "") or "").strip()
+                    what = str(getattr(artifact, "what", "") or "")
+                    why = str(getattr(artifact, "why", "") or "")
+                    scope = str(getattr(artifact, "scope", "global") or "global")
+                    if not path:
+                        continue
+                    meta = path_to_meta.get(path, {})
+                    label = str(meta.get("asset_key") or "").strip()
+                    if not label:
+                        continue
+                    entry_dict: dict[str, object] = {
+                        "what": what, "why": why, "scope": scope,
+                        "path": path,
+                        "mime": mime or ("application/json" if path.lower().endswith(".json") else ""),
+                    }
+                    if mime == "application/json" or path.lower().endswith(".json"):
+                        try:
+                            raw = workspace.file_manager.read_binary_from_uri(path)
+                            if raw:
+                                data = json.loads(raw.decode("utf-8"))
+                                if isinstance(data, dict):
+                                    entry_dict["payload"] = data
+                        except Exception:
+                            pass
+                        grouped.setdefault(label, entry_dict)
+                    else:
+                        grouped.setdefault(label, [])
+                        if isinstance(grouped[label], list):
+                            grouped[label].append(entry_dict)
+                    selected_artifact_paths.append(path)
+        except Exception:
+            pass
         return {
-            "rationale": "test stub: select all available roles",
-            "required_roles": roles,
-            "selected_roles": roles,
-            "append_to_source_text": "",
+            "resolved_artifacts": grouped,
+            "selected_artifact_paths": list(dict.fromkeys(selected_artifact_paths)),
+            "rationale": "test stub: group all registered artifacts by producer asset_key",
         }
 
     monkeypatch.setattr(

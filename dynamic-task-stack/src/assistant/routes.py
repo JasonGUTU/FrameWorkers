@@ -1,5 +1,7 @@
 # API routes for Assistant System
 
+import base64
+import binascii
 from typing import Any, Dict, Optional, Tuple
 
 from flask import Blueprint, request, jsonify
@@ -8,7 +10,6 @@ from ..common_http import bad_request, json_body_or_error
 from .service import (
     AssistantService,
     AssistantBadExecuteFieldsError,
-    AssistantGlobalMemorySyncError,
 )
 from .state_store import assistant_state_store
 from .response_serializers import (
@@ -130,8 +131,6 @@ def create_assistant_blueprint():
             return jsonify(serialize_response_value(results)), 200
         except AssistantBadExecuteFieldsError as e:
             return _execute_error_response(str(e), 400)
-        except AssistantGlobalMemorySyncError as e:
-            return _execute_error_response(str(e), 500)
         except ValueError as e:
             return _execute_error_response(str(e), 404)
         except Exception as e:
@@ -143,6 +142,81 @@ def create_assistant_blueprint():
         executions = assistant_state_store.get_executions_by_task(task_id)
         return jsonify([serialize_response_value(e) for e in executions])
     
+    # Workspace upload route (B2 strict separation: raw uploads go through here,
+    # then an Intake agent converts them into caption-rich workspace artifacts)
+    @bp.route('/api/workspace/upload', methods=['POST'])
+    def upload_user_file():
+        """Persist a raw user upload as a workspace artifact + placeholder caption.
+
+        JSON body fields:
+          - mime: required string, e.g. "text/plain", "image/png", "video/mp4".
+          - user_intent: required free-form string describing what the upload is for.
+          - For text uploads: ``text`` (a string).
+          - For binary uploads (image/video/audio): ``data_b64`` (base64-encoded bytes).
+          - filename: optional original filename hint.
+
+        Returns: ``{"file_id": "...", "path": "...", "filename": "...",
+                    "mime": "...", "caption": {what, why, scope}}``.
+        Caller (or director) is then expected to invoke the appropriate
+        IntakeXxxAgent so the placeholder is upgraded to a caption-rich
+        artifact that downstream content agents can find via their labels.
+        """
+        workspace, error = _get_workspace_or_404()
+        if error:
+            return error
+
+        data, error = json_body_or_error()
+        if error:
+            return error
+
+        mime = str(data.get("mime") or "").strip()
+        user_intent = str(data.get("user_intent") or "").strip()
+        if not mime:
+            return _execute_error_response("Missing required field: mime", 400)
+        if not user_intent:
+            return _execute_error_response(
+                "Missing required field: user_intent (free-text describing what this upload is for)",
+                400,
+            )
+
+        # Resolve the byte payload from either ``text`` or ``data_b64``.
+        text_value = data.get("text")
+        data_b64 = data.get("data_b64")
+        file_bytes: bytes
+        if text_value is not None:
+            if not isinstance(text_value, str):
+                return _execute_error_response("text must be a string", 400)
+            file_bytes = text_value.encode("utf-8")
+        elif data_b64 is not None:
+            if not isinstance(data_b64, str):
+                return _execute_error_response("data_b64 must be a base64 string", 400)
+            try:
+                file_bytes = base64.b64decode(data_b64, validate=True)
+            except (binascii.Error, ValueError) as exc:
+                return _execute_error_response(f"data_b64 invalid base64: {exc}", 400)
+        else:
+            return _execute_error_response(
+                "Missing payload: provide either `text` (string) or `data_b64` (base64 string)",
+                400,
+            )
+
+        if not file_bytes:
+            return _execute_error_response("Upload payload is empty", 400)
+
+        original_filename = str(data.get("filename") or "").strip()
+        try:
+            result = workspace.persist_raw_upload(
+                file_content=file_bytes,
+                mime=mime,
+                user_intent=user_intent,
+                original_filename=original_filename,
+            )
+        except Exception as exc:
+            return _execute_error_response(
+                f"Failed to persist upload: {exc}", 500,
+            )
+        return jsonify(result), 201
+
     # Workspace routes
     @bp.route('/api/assistant/workspace/files', methods=['GET'])
     def list_workspace_files():
@@ -207,8 +281,8 @@ def create_assistant_blueprint():
                 content=content,
                 task_id=data.get('task_id'),
                 agent_id=data.get('agent_id'),
-                execution_result=data.get('execution_result'),
-                artifact_locations=data.get('artifact_locations'),
+                execution_id=data.get('execution_id'),
+                supersedes=data.get('supersedes'),
             )
         except ValueError as exc:
             return jsonify({'error': str(exc)}), 400

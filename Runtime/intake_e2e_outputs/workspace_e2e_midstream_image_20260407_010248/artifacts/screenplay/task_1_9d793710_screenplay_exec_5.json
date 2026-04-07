@@ -1,0 +1,300 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-07T01:04:36.308111+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "Phoenix Neon Rise",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_001"
+        },
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Rain-soaked Alleyway",
+          "interior_exterior": "EXT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Mei battles the challenging elements of a rain-soaked, neon-lit alley at midnight, pushing through the cold and physical strain to bring her vibrant phoenix mural to life on the wall.",
+        "continuity": {
+          "props_present": [
+            "Spray paint cans",
+            "Paint brushes",
+            "Portable work light",
+            "Small ladder",
+            "Bucket with water (for cleaning)"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Dark, practical, weather-resistant clothing (hoodie/jacket), paint-splattered jeans/trousers, sturdy boots. Possibly a beanie or hood pulled up.",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "It's night in a rain-soaked alleyway.",
+            "Mei is painting a large phoenix mural.",
+            "The city's neon lights are a prominent visual element."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "A grimy, rain-slicked alleyway in a cyberpunk city.",
+              "Flickering neon signs cast colorful reflections on wet surfaces.",
+              "The air is cold and damp, a fine mist rises from the puddles."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "A determined and focused street artist, weathered by her environment but driven by passion."
+              ],
+              "wardrobe_notes": [
+                "Her clothing should show signs of artistic work – paint splatters, wear and tear."
+              ],
+              "must_keep": [
+                "Her resilience and artistic skill."
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Phoenix mural (in progress)",
+              "must_keep": [
+                "The central artistic creation, initially a sketch, gradually becoming a vibrant, glowing phoenix."
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "Spray paint cans & brushes",
+              "must_keep": [
+                "Mei's primary tools for her art."
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Cyberpunk aesthetic with strong emphasis on high-contrast lighting (neon vs. shadows), rain-slicked surfaces, and a gritty, urban texture. The vibrant colors of the mural should pop against the muted, dark background."
+            ],
+            "must_avoid": [
+              "Bright, natural daylight; pristine environments; overly clean or sterile visuals."
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "Despite the relentless rain and urban isolation, Mei's phoenix mural nears completion, radiating its vibrant energy.",
+          "emotional_shift": "From enduring struggle to quiet, determined triumph and the satisfaction of creation."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "RAIN lashes down, reflecting the NEON GLOW of a cyberpunk city. In a grimy alley, MEI (30s) works diligently on a massive wall mural. She’s on a small ladder, spray paint cans and brushes scattered around her. A faint outline of a PHOENIX begins to emerge from the wet, dark brick. The rain soaks her clothes, but her focus is unwavering.",
+            "continuity_refs": {
+              "props": [
+                "Spray paint cans",
+                "Paint brushes",
+                "Small ladder"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "slow_push_in",
+              "framing_notes": "Emphasize Mei's small figure against the vast, wet alley wall; neon reflections on the ground."
+            },
+            "visual_goal": "Establish the harsh, atmospheric environment and Mei's determined struggle within it.",
+            "action_focus": "Mei beginning her work, the rain and neon atmosphere.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "Spray paint cans",
+              "Paint brushes",
+              "Small ladder",
+              "Phoenix mural (initial outline)"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "Mei",
+            "text": "Close on Mei’s hands, agile and precise, even as RAIN streaks across her gloves and the wall. She applies a vibrant, fiery orange paint, bringing the phoenix's wing to life against the dark, wet surface. The paint contrasts sharply, a beacon of color in the gloom.",
+            "continuity_refs": {
+              "props": [
+                "Spray paint cans",
+                "Paint brushes"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus tightly on Mei's hands and the section of the mural she's working on, showing the texture of paint and rain."
+            },
+            "visual_goal": "Highlight the delicate, focused artistry amidst the brutal weather conditions, and the immediate vibrancy of the paint.",
+            "action_focus": "Mei's hands skillfully applying paint; the paint itself.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "Paint brushes",
+              "Spray paint cans (partially visible)",
+              "Phoenix mural (wing section)"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The phoenix mural has taken significant shape. Its head and powerful body are now clearly visible, glowing with shades of red, orange, and gold, reflecting the distant neon. Mei steps back from her ladder, wiping rain from her brow, assessing her progress. The vibrant artwork seems to radiate heat against the cold, wet alley.",
+            "continuity_refs": {
+              "props": [
+                "Small ladder",
+                "Phoenix mural"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "slight_track_out",
+              "framing_notes": "Frame Mei and a substantial portion of the emerging phoenix, showing its scale and impact."
+            },
+            "visual_goal": "Show the mural's progress and its powerful visual contrast with the environment.",
+            "action_focus": "Mei's observation of her work; the phoenix's form.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "Small ladder",
+              "Phoenix mural (partially complete)"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "Mei",
+            "text": "A tight close-up on Mei’s face. Raindrops cling to her eyelashes and the brim of her hood. Her expression is a mix of exhaustion and fierce determination, eyes sharp and focused. She takes a deep, ragged breath, then her lips press into a thin line of resolve.",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Fill the frame with Mei's face, emphasizing her eyes and the rain's effect."
+            },
+            "visual_goal": "Convey Mei's internal struggle and unwavering resolve despite the physical challenges.",
+            "action_focus": "Mei's facial expression, her determination.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 5,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Mei returns to her work, adding final, meticulous details to the phoenix's fiery tail. The mural, now nearly complete, glows with an ethereal light against the dark, rainy night. It dominates the alley, a powerful symbol of rebirth and resilience, momentarily eclipsing the city's harsh neon. Mei steps back, a quiet sense of triumph on her face.",
+            "continuity_refs": {
+              "props": [
+                "Phoenix mural",
+                "Small ladder",
+                "Paint brushes"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium_wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "slow_pull_back",
+              "framing_notes": "Show Mei and the finished/near-finished mural, allowing the phoenix to be the dominant visual."
+            },
+            "visual_goal": "Show the powerful, almost complete phoenix mural and Mei's sense of accomplishment.",
+            "action_focus": "The vibrant phoenix mural; Mei's final touches and a moment of quiet triumph.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "Phoenix mural (nearly complete)",
+              "Small ladder"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_count_total": 5,
+    "avg_shots_per_scene": 5.0,
+    "dialogue_block_count": 0,
+    "action_block_count": 5
+  },
+  "artifact_caption": {
+    "semantic_type": "",
+    "what": "Phoenix Neon Rise; 1 scene, 5 shots; Cyberpunk, Gritty, Vibrant Visual Style",
+    "why": "This screenplay aims for a gritty, atmospheric, yet ultimately triumphant tone. Pacing is deliberate, allowing the viewer to feel Mei's struggle against the elements and her determined focus on the art. The visual approach contrasts the harsh, rain-soaked cyberpunk alley with the vibrant, almost mystical glow of the emerging phoenix mural, emphasizing themes of resilience and creativity in a challenging world.",
+    "scope": "global"
+  }
+}

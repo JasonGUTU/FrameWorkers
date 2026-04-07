@@ -25,8 +25,7 @@ import logging
 import os
 from typing import Any
 
-from ..base_agent import BaseAgent, ExecutionResult
-from ..contracts.input_bundle_v2 import InputBundleV2
+from ..base_agent import BaseAgent
 from ..common_schema import ImageAsset
 from .schema import (
     KeyFrameAgentInput,
@@ -78,12 +77,18 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
             "You are KeyFrameAgent: three layers of STATIC image prompts only.\n"
             "L1 global_anchors: standalone t2i — canonical look per entity; simple bg unless "
             "the entity is a place; avoid pasting global style paragraphs (backend adds style).\n"
+            "STRICT: location prompts must describe ONLY the environment/place — "
+            "never include characters, people, or figures in a location prompt.\n"
             "L2 stability_keyframes: short edit deltas vs global — light/environment/pose only.\n"
             "L3 per shot: prompt_summary = one frozen frame (no sound/edit/dialogue/music meta); "
             "video_motion_hint = 1–3 sentences of subtle I2V motion only, not a copy of the still.\n"
             "L1 standalone wording; L2/L3 may use edit phrasing ('Show…', 'Frame…'). English; "
             "2–6 short sentences per prompt_summary. JSON only; empty string not null; "
-            "every prompt_summary non-empty."
+            "every prompt_summary non-empty.\n\n"
+            "artifact_caption: fill all three fields to describe what you produced:\n"
+            "  what — entity count (characters, locations, props), scene count, shot keyframe count, visual style.\n"
+            "  why  — style consistency approach, key visual decisions.\n"
+            "  scope — always \"global\"."
         )
 
     # ------------------------------------------------------------------
@@ -104,7 +109,11 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
         sp_content = sp.get("content", {})
         sp_scenes = sp_content.get("scenes", [])
         sp_asset_id = sp.get("meta", {}).get("asset_id", "")
-        img_fmt = input_data.constraints.image_format
+        # The legacy ``KeyFrameAgentInput.constraints`` slot was deleted in
+        # the Phase A schema slim-down — there is no per-execution image
+        # format override anymore. Default to PNG, which matches
+        # ``ImageAsset.format`` defaults across the rest of the schema.
+        img_fmt = "png"
 
         if not sp_scenes:
             return None  # fall back to legacy mode
@@ -261,9 +270,6 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
                         shot_id=shot_id,
                         order=shot_order,
                         source=ShotKeyframeSource(source_shot_id=shot_id),
-                        estimated_duration_sec=sp_shot.get(
-                            "estimated_duration_sec", 3.0
-                        ),
                         keyframes=keyframes,
                     )
                 )
@@ -345,7 +351,13 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
             for p in ga.props
         ]
         template = (
-            '{\n  "characters": [\n' + ",\n".join(ga_chars) + "\n  ],\n"
+            '{\n'
+            '  "artifact_caption": {\n'
+            '    "what": "<entity count, scene count, keyframe count, visual style>",\n'
+            '    "why": "<consistency approach, key visual decisions>",\n'
+            '    "scope": "global"\n'
+            '  },\n'
+            '  "characters": [\n' + ",\n".join(ga_chars) + "\n  ],\n"
             '  "locations": [\n' + ",\n".join(ga_locs) + "\n  ],\n"
             '  "props": [\n' + ",\n".join(ga_props) + "\n  ]\n}"
         )
@@ -353,7 +365,9 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
         entity_context = self._gather_entity_context(sp_content)
         style = self._extract_style_section(sp_content)
         return (
-            "Layer 1: standalone t2i prompt per entity — canonical physical look.\n\n"
+            "Layer 1: standalone t2i prompt per entity — canonical physical look.\n"
+            "Location prompts: environment/scenery ONLY — do NOT place any characters or people in them.\n"
+            "Also fill artifact_caption describing the full keyframes package.\n\n"
             f"{style}"
             f"=== ENTITIES ===\n{entity_context}\n\n"
             "Replace each <FILL> with a full image prompt.\n"
@@ -600,7 +614,17 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
     def _fill_global(
         skeleton: KeyFrameAgentOutput, creative: dict
     ) -> None:
-        """Merge global_anchors prompt_summary from LLM into skeleton."""
+        """Merge global_anchors prompt_summary and artifact_caption from LLM into skeleton."""
+        # artifact_caption
+        cap = creative.get("artifact_caption")
+        if isinstance(cap, dict):
+            from ..common_schema import ArtifactCaption as _AC
+            skeleton.artifact_caption = _AC(
+                what=str(cap.get("what") or ""),
+                why=str(cap.get("why") or ""),
+                scope=str(cap.get("scope") or "global"),
+            )
+        # global anchors
         char_prompts = {
             c.get("entity_id", ""): c.get("prompt_summary", "")
             for c in creative.get("characters", [])
@@ -699,6 +723,140 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
         output.metrics.stability_prop_keyframe_count = sum(
             len(s.stability_keyframes.props) for s in c.scenes
         )
+
+        # Enrich the JSON-snapshot caption with a self-describing nature
+        # statement so downstream agents (via the InputResolver LLM) understand
+        # what this document is for, not just what it contains.
+        cap = output.artifact_caption
+        nature = (
+            f"A keyframe planning document covering {scene_count} scenes and "
+            f"{shot_count} shots. For each shot in the screenplay it provides a "
+            f"textual description of the planned starting frame and a separate "
+            f"motion hint describing how that frame should move when animated. "
+            f"It also catalogs the visual identity references (characters, "
+            f"locations, props) used to keep imagery consistent. Used by the "
+            f"video step to fetch the prompt and motion intent for each shot."
+        )
+        if cap.what:
+            cap.what = nature + " " + cap.what
+        else:
+            cap.what = nature
+
+        # Build per_artifact_captions: sys_id → {what, why, scope}
+        # Captions are pure natural language describing each artifact's nature,
+        # how it was produced, and what role it plays. No type tags, no
+        # keyword hints — downstream resolution is handled entirely by LLM
+        # semantic interpretation of these captions.
+        pac: dict = {}
+        # L1 global entity references — visual identity sheets used internally
+        # by the keyframe step itself to keep later renderings consistent.
+        # They are not tied to any particular shot in the screenplay timeline.
+        for anchors, entity_kind in [
+            (c.global_anchors.characters, "character"),
+            (c.global_anchors.locations, "location"),
+            (c.global_anchors.props, "prop"),
+        ]:
+            for anchor in anchors:
+                eid = getattr(anchor, "entity_id", "") or ""
+                if not eid:
+                    continue
+                desc = (getattr(anchor, "prompt_summary", "") or "").strip()
+                sys_id = f"img_{eid}_global"
+                pac[sys_id] = {
+                    "what": (
+                        f"A standalone visual identity reference of the {entity_kind} "
+                        f"'{eid}', generated to fix its canonical appearance. "
+                        f"It depicts the {entity_kind} in isolation, not in any "
+                        f"specific scene or shot from the screenplay timeline. "
+                        f"Description: {desc}" if desc else
+                        f"A standalone visual identity reference of the {entity_kind} "
+                        f"'{eid}'. It depicts the {entity_kind} in isolation, not in "
+                        f"any specific scene or shot from the screenplay timeline."
+                    ),
+                    "why": (
+                        f"Used internally by the keyframe planning step as a "
+                        f"consistency anchor when rendering scene- and shot-level "
+                        f"images of this {entity_kind}. It is not itself a frame "
+                        f"of the final video — it is a reference sheet."
+                    ),
+                    "scope": "global",
+                }
+        # L2 scene-level adaptations + L3 per-shot stills
+        for scene in c.scenes:
+            scene_id = scene.scene_id or ""
+            # L2 scene adaptations — entity appearance adapted to a particular
+            # scene's lighting/mood. Still not the actual moving frames of the
+            # final video, just intermediate consistency renderings.
+            for anchors, entity_kind in [
+                (scene.stability_keyframes.characters, "character"),
+                (scene.stability_keyframes.locations, "location"),
+                (scene.stability_keyframes.props, "prop"),
+            ]:
+                for anchor in anchors:
+                    eid = getattr(anchor, "entity_id", "") or ""
+                    if not eid or not scene_id:
+                        continue
+                    desc = (getattr(anchor, "prompt_summary", "") or "").strip()
+                    sys_id = f"img_{eid}_{scene_id}"
+                    pac[sys_id] = {
+                        "what": (
+                            f"A scene-level adaptation of the {entity_kind} '{eid}' "
+                            f"as it appears in scene {scene_id} (lighting, mood, "
+                            f"environment). Still a reference rendering, not the "
+                            f"actual frame of any specific shot. "
+                            f"Description: {desc}" if desc else
+                            f"A scene-level adaptation of the {entity_kind} '{eid}' "
+                            f"as it appears in scene {scene_id}."
+                        ),
+                        "why": (
+                            f"Used internally by the keyframe planning step to "
+                            f"keep this {entity_kind} visually coherent across all "
+                            f"shots within scene {scene_id}. It is an intermediate "
+                            f"reference, not a frame in the final video timeline."
+                        ),
+                        "scope": f"scene:{scene_id}",
+                    }
+            # L3 per-shot stills — the actual rendered starting frame of each
+            # planned shot in the screenplay timeline. These are intended to be
+            # animated by an image-to-video model into the final video clips.
+            for shot in scene.shots:
+                shot_id = shot.shot_id or ""
+                if not shot_id:
+                    continue
+                for kf in shot.keyframes:
+                    kid = kf.keyframe_id or ""
+                    if not kid:
+                        continue
+                    sys_id = f"img_{shot_id}_{kid}"
+                    desc = (kf.prompt_summary or "").strip()
+                    motion = (kf.video_motion_hint or "").strip()
+                    pac[sys_id] = {
+                        "what": (
+                            f"A single rendered frame depicting shot {shot_id} of "
+                            f"the screenplay timeline (in scene {scene_id}). It is "
+                            f"the planned starting visual of this exact shot, "
+                            f"intended to be animated into a moving video clip. "
+                            f"Frame description: {desc}" if desc else
+                            f"A single rendered frame depicting shot {shot_id} of "
+                            f"the screenplay timeline (in scene {scene_id}). It is "
+                            f"the planned starting visual of this exact shot, "
+                            f"intended to be animated into a moving video clip."
+                        ),
+                        "why": (
+                            f"Produced as the visual starting point for the video "
+                            f"clip of shot {shot_id}. Exactly one such frame exists "
+                            f"per shot in the screenplay; together they form the "
+                            f"complete set of frames to be animated into the final "
+                            f"video. Motion intent: {motion}" if motion else
+                            f"Produced as the visual starting point for the video "
+                            f"clip of shot {shot_id}. Exactly one such frame exists "
+                            f"per shot in the screenplay; together they form the "
+                            f"complete set of frames to be animated into the final "
+                            f"video."
+                        ),
+                        "scope": f"shot:{shot_id}",
+                    }
+        output.per_artifact_captions = pac
 
     # Quality evaluation has been moved to KeyframeEvaluator
     # (see evaluator.py in this package).

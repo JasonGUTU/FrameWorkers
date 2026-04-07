@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frameworkers — Director</title>
+  <link rel="icon" type="image/svg+xml" href="./logo.svg" />
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .back { display:inline-block; margin-bottom:18px; color:#fbbf24; text-decoration:none; font-size:0.9em; }
+    .back:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <a class="back" href="./index.html">← 返回总览</a>
+      <div class="logo-row">
+        <img class="logo-mark" src="./logo.svg" alt="Frameworkers logo" />
+        <div class="logo-text">
+          <span class="logo-name">Frameworkers</span>
+          <span class="logo-tagline">Director</span>
+        </div>
+      </div>
+      <div class="header-divider"></div>
+      <div class="header-badge">🎬 Director</div>
+      <h1>Director 编排层</h1>
+      <p>DirectorNoStack 编排循环、Dynamic Task Stack 集成计划、消息驱动 Pipeline 测试。</p>
+    </header>
+
+    <section id="directorViz"></section>
+    <section id="taskStackViz"></section>
+    <section id="testDirectorNostackViz"></section>
+
+  </main>
+  <script src="./app.js?v=13"></script>
+</body>
+</html>

@@ -1,4 +1,22 @@
-# File Manager - Manages all file resources in the workspace
+"""File manager — low-level binary file persistence with metadata index.
+
+Responsibilities:
+  * Write raw bytes to a workspace-relative path; reject path escapes.
+  * Maintain ``.file_metadata.json`` index keyed by file_id, recording
+    each file's filename, type, size, tags, and arbitrary metadata.
+  * Read bytes back from absolute path URIs.
+  * List / get / delete files by file_id.
+
+What it does NOT do:
+  * Understand executions, agents, or artifacts.
+  * Build captions or register anything in the artifact registry.
+  * Apply naming conventions or asset_key semantics.
+
+Used by:
+  * ``Workspace`` exposes its methods directly + wires them as callbacks
+    into ``AssetManager``.
+  * ``InputResolver._load_json`` reads JSON files via ``read_binary_from_uri``.
+"""
 
 from pathlib import Path
 from typing import Dict, Any, List, Optional
@@ -6,7 +24,6 @@ from datetime import datetime
 import uuid
 import json
 import logging
-import re
 
 from .models import FileMetadata
 
@@ -153,13 +170,12 @@ class FileManager:
     def _get_file_extension(self, filename: str) -> str:
         """Extract file extension from filename"""
         return Path(filename).suffix.lower()
-    
+
     def _determine_file_type(self, extension: str) -> str:
         """Determine file type from extension"""
         image_extensions = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.svg'}
         video_extensions = {'.mp4', '.avi', '.mov', '.mkv', '.webm', '.flv'}
         text_extensions = {'.txt', '.md', '.json', '.xml', '.csv'}
-        
         if extension in image_extensions:
             return 'image'
         elif extension in video_extensions:
@@ -168,7 +184,7 @@ class FileManager:
             return 'text'
         else:
             return 'other'
-    
+
     def store_file_at_relative_path(
         self,
         relative_path: str,

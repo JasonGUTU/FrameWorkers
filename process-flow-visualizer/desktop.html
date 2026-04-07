@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frameworkers — Desktop / Workspace</title>
+  <link rel="icon" type="image/svg+xml" href="./logo.svg" />
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .back { display:inline-block; margin-bottom:18px; color:#2dd4bf; text-decoration:none; font-size:0.9em; }
+    .back:hover { text-decoration:underline; }
+
+    .ws-section {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 22px 26px;
+      margin-bottom: 24px;
+    }
+    .ws-section h2 { margin:0 0 4px; font-size:1.12em; color:#e0e0e0; }
+    .ws-section .ws-sub { color:#888; font-size:0.85em; margin-bottom:18px; }
+
+    .tree {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+      font-size: 0.85em;
+      line-height: 1.7;
+      color: #cbd5e1;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 6px;
+      padding: 16px 20px;
+      white-space: pre;
+      overflow-x: auto;
+    }
+    .tree .dir  { color: #7eb3ff; font-weight: 600; }
+    .tree .file { color: #e8c97a; }
+    .tree .note { color: #64748b; font-style: italic; }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    @media (max-width: 760px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    .panel {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .panel.read  { border-left: 3px solid #2dd4bf; }
+    .panel.write { border-left: 3px solid #f97316; }
+    .panel h3 {
+      margin:0 0 12px; font-size:0.78em; letter-spacing:.08em;
+      text-transform:uppercase; color:#888; font-weight:600;
+    }
+    .panel ul { margin:0; padding-left:0; list-style:none; display:flex; flex-direction:column; gap:10px; }
+    .panel li { font-size:0.86em; color:#bbb; line-height:1.55; }
+    .panel li code {
+      display:inline-block; color:#a7e3d4; background:rgba(45,212,191,0.08);
+      padding:1px 6px; border-radius:4px; font-size:0.92em;
+    }
+    .panel.write li code { color:#f5b07a; background:rgba(249,115,22,0.08); }
+    .panel li .desc { display:block; color:#888; margin-top:2px; font-size:0.92em; }
+
+    .mgr-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .mgr {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-left: 3px solid #4f8ef7;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .mgr h4 { margin:0 0 4px; color:#e0e0e0; font-size:0.95em; }
+    .mgr .file-ref { font-size:0.75em; color:#64748b; font-family:ui-monospace, monospace; }
+    .mgr p { margin:8px 0 0; font-size:0.83em; color:#aaa; line-height:1.55; }
+
+    .flow-row {
+      display: flex; align-items: center; justify-content: center; gap: 14px;
+      flex-wrap: wrap; margin-top: 6px;
+    }
+    .flow-node {
+      padding: 10px 16px; border-radius: 8px; font-size:0.88em; font-weight:600;
+      border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04);
+    }
+    .flow-node.assistant { color:#7eb3ff; border-color:rgba(126,179,255,0.4); }
+    .flow-node.workspace { color:#2dd4bf; border-color:rgba(45,212,191,0.4); }
+    .flow-node.fs        { color:#94a3b8; }
+    .flow-arrow { color:#64748b; font-size:1.1em; }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <a class="back" href="./index.html">← 返回总览</a>
+      <div class="logo-row">
+        <img class="logo-mark" src="./logo.svg" alt="Frameworkers logo" />
+        <div class="logo-text">
+          <span class="logo-name">Frameworkers</span>
+          <span class="logo-tagline">Desktop / Workspace</span>
+        </div>
+      </div>
+      <div class="header-divider"></div>
+      <div class="header-badge">💾 Desktop</div>
+      <h1>Workspace 存储与读写</h1>
+      <p>Workspace 是 Assistant 的本地运行时存储。职责按 "what / why / when" 切分：<strong>artifact_registry</strong> 是 "what"（caption + 路径），<strong>global_memory</strong> 是 "why"（语义决策），<strong>logs</strong> 是 "when"（操作流），文件本身落在工作目录里。</p>
+    </header>
+
+    <!-- 1. 目录结构 -->
+    <section class="ws-section">
+      <h2>① 目录结构</h2>
+      <div class="ws-sub">runtime_base_path / &lt;workspace_id&gt; /</div>
+<div class="tree"><span class="dir">workspace_global/</span>
+├── <span class="dir">artifacts/</span>                            <span class="note"># 产物文件落盘根（路径由 LLM #2 编排）</span>
+│   └── <span class="dir">media/</span>
+│       ├── <span class="dir">StoryAgent/</span>     <span class="dir">json/</span>   <span class="file">story_blueprint.json</span>
+│       ├── <span class="dir">ScreenplayAgent/</span><span class="dir">json/</span>   <span class="file">screenplay.json</span>
+│       ├── <span class="dir">KeyFrameAgent/</span>  <span class="dir">image/</span>  <span class="file">scene_01_shot_01.png …</span>
+│       │                  <span class="dir">json/</span>   <span class="file">keyframes_manifest.json</span>
+│       ├── <span class="dir">VideoAgent/</span>     <span class="dir">video/</span>  <span class="file">scene_01.mp4 …</span>
+│       └── <span class="dir">AudioAgent/</span>     <span class="dir">audio/</span>  <span class="file">final_delivery.mp4</span>
+│
+├── <span class="file">global_memory.md</span>                       <span class="note"># 语义决策（"why"）—— what / why / context_note</span>
+├── <span class="file">global_memory_index.md</span>                 <span class="note"># memory 的聚合索引</span>
+├── <span class="file">artifact_registry.jsonl</span>                <span class="note"># caption 索引（"what"）—— 每行一个 ArtifactRegistryEntry</span>
+└── <span class="file">logs.jsonl</span>                             <span class="note"># 操作流（"when"）—— LogEntry per event</span>
+</div>
+      <div style="margin-top:14px;font-size:0.82em;color:#888;line-height:1.6">
+        关键变化：memory 不再持有 <code>artifact_locations</code>。文件路径由 <code>artifact_registry.jsonl</code> 持有，每条 ArtifactRef 自带自然语言 caption（<code>what / why / scope / path / mime</code>），由 InputResolver 在 Phase 1 用来挑选。
+      </div>
+    </section>
+
+    <!-- 2. 内部模块 -->
+    <section class="ws-section">
+      <h2>② Workspace 内部模块</h2>
+      <div class="ws-sub"><code>dynamic-task-stack/src/assistant/workspace/</code> · 由 <code>Workspace.__init__</code> 装配</div>
+      <div class="mgr-grid">
+        <div class="mgr">
+          <h4>FileManager</h4>
+          <div class="file-ref">file_manager.py</div>
+          <p><code>store_file_at_relative_path</code> / <code>list_files</code> / <code>get_file</code> / <code>delete_file</code> / <code>read_binary_from_uri</code>。统一管理 <code>Runtime/&lt;workspace_id&gt;/...</code> 下所有文件读写。</p>
+        </div>
+        <div class="mgr">
+          <h4>MemoryManager</h4>
+          <div class="file-ref">memory_manager.py</div>
+          <p><code>add_memory_entry</code>（content = <code>{what, why, context_note}</code>，可 supersedes 旧条目）/ <code>list_memory_entries</code> / <code>get_memory_brief</code>。<strong>纯语义决策，不存路径。</strong></p>
+        </div>
+        <div class="mgr">
+          <h4>ArtifactRegistry</h4>
+          <div class="file-ref">artifact_registry.py</div>
+          <p>append-only：<code>register(execution_id, agent_id, task_id, artifacts=[ArtifactRef])</code> 写一行到 <code>artifact_registry.jsonl</code>。提供 <code>get_captions_index</code> / <code>get_by_paths</code> 给 InputResolver。</p>
+        </div>
+        <div class="mgr">
+          <h4>LogManager</h4>
+          <div class="file-ref">log_manager.py</div>
+          <p><code>add_log</code> / <code>get_logs</code>。Workspace 把所有 file / memory / execution 操作通过 <code>_add_log</code> 收敛过来，按 operation_type · resource_type · agent_id · task_id · event · execution_id 多维过滤。</p>
+        </div>
+        <div class="mgr">
+          <h4>AssetManager</h4>
+          <div class="file-ref">asset_manager.py</div>
+          <p>由 Workspace 注入 5 个回调（<code>store_file</code> / <code>add_log</code> / <code>read_binary</code> / <code>list_files</code> / <code>delete_file</code>）+ <code>register_artifacts</code>。负责 <code>persist_execution_from_plan</code>、<code>hydrate_indexed_assets</code>、<code>collect_materialized_files</code>，落盘后通过 <code>register_artifacts</code> 回写 ArtifactRegistry。</p>
+        </div>
+        <div class="mgr">
+          <h4>InputResolver</h4>
+          <div class="file-ref">input_resolver.py</div>
+          <p>懒加载：<code>resolve_inputs_for_agent</code> 调用时构造。读 <code>artifact_registry.get_captions_index</code> + 拼 <code>input_needs_description</code> → LLM #1 → <code>{ resolved_artifacts, selected_artifact_paths, rationale }</code>。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. 读写边界 -->
+    <section class="ws-section">
+      <h2>③ Assistant ↔ Workspace 读写边界</h2>
+      <div class="ws-sub">Workspace 是 Assistant 唯一对外的 facade（service.py 不直接 touch 任何 manager）</div>
+      <div class="flow-row">
+        <div class="flow-node assistant">Assistant (service.py)</div>
+        <span class="flow-arrow">⇄</span>
+        <div class="flow-node workspace">Workspace facade</div>
+        <span class="flow-arrow">⇄</span>
+        <div class="flow-node fs">Runtime / &lt;workspace_id&gt; /</div>
+      </div>
+      <div class="grid-2" style="margin-top:18px">
+        <div class="panel read">
+          <h3>READ — Workspace → Assistant</h3>
+          <ul>
+            <li>
+              <code>get_memory_brief(task_id, agent_id, limit)</code>
+              <span class="desc">Director 轮询用：语义决策的薄行视图。</span>
+            </li>
+            <li>
+              <code>list_memory_entries(task_id, agent_id, limit)</code>
+              <span class="desc">完整 memory entry（含 what / why / context_note），Phase 1 注入。</span>
+            </li>
+            <li>
+              <code>resolve_inputs_for_agent(agent_id, task_id, input_needs_description, llm_client, source_text, model)</code>
+              <span class="desc">委托 InputResolver → LLM #1 → <code>{ resolved_artifacts: [{what,why,scope,path,mime,payload}], selected_artifact_paths, rationale }</code>。</span>
+            </li>
+            <li>
+              <code>get_workspace_root_file_tree_text()</code>
+              <span class="desc">LLM #2 编排路径时用的全库目录树。</span>
+            </li>
+            <li>
+              <code>list_files()</code> / <code>get_file(file_id)</code>
+              <span class="desc">FileManager 列举与按 id 读取。</span>
+            </li>
+            <li>
+              <code>get_logs(operation_type, resource_type, agent_id, task_id, limit, level, event, execution_id)</code>
+              <span class="desc">多维过滤操作流。</span>
+            </li>
+            <li>
+              <code>hydrate_indexed_assets(assets)</code>
+              <span class="desc">委托 AssetManager 把 <code>_asset_index.json_uri</code> 展开为可消费 payload。</span>
+            </li>
+            <li>
+              <code>collect_materialized_files(media_assets)</code>
+              <span class="desc">汇总 sub-agent 已物化的 MediaAsset，准备进入持久化计划。</span>
+            </li>
+          </ul>
+        </div>
+        <div class="panel write">
+          <h3>WRITE — Assistant → Workspace</h3>
+          <ul>
+            <li>
+              <code>store_file_at_relative_path(relative_path, file_content, filename, description, created_by, tags, metadata)</code>
+              <span class="desc">写到 <code>Runtime/&lt;workspace_id&gt;/&lt;relative_path&gt;</code>，自动 log + refresh_file_tree + touch。</span>
+            </li>
+            <li>
+              <code>persist_execution_from_plan(execution, assignments, overwrite_existing)</code>
+              <span class="desc">Phase 3 主入口。委托 AssetManager 按 LLM #2 计划批量落盘；返回 <code>(persisted_paths, asset_index, extra_locs)</code>；内部回调 <code>_register_artifacts_callback</code> 把 ArtifactRef 追加到 artifact_registry。</span>
+            </li>
+            <li>
+              <code>log_execution_started(execution)</code> / <code>log_execution_result(execution)</code>
+              <span class="desc">写一条 execution event 日志，自动抽 <code>retry_attempts</code> + <code>eval_summary</code>。</span>
+            </li>
+            <li>
+              <code>add_memory_entry(content={what,why,context_note}, task_id, agent_id, execution_id, supersedes)</code>
+              <span class="desc">追加一条语义决策。<strong>不再带 artifact_locations</strong>—— 文件路径由 artifact_registry 持有。</span>
+            </li>
+            <li>
+              <code>delete_file(file_id)</code>
+              <span class="desc">overwrite 模式下清掉旧版本，自动写 delete log。</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>

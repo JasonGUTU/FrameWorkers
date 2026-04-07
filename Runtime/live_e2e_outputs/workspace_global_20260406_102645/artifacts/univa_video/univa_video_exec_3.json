@@ -1,0 +1,154 @@
+{
+  "content": {
+    "shot_videos": [
+      {
+        "shot_id": 1,
+        "video_prompt": "A cozy, dimly lit watchmaker's workshop on New Year's Eve. Clocks of various sizes line the walls, and a large grandfather clock in the corner chimes softly. A single desk lamp casts a warm, focused glow on a cluttered workbench. Snow gently falls outside a frosted window. This retired watchmaker sits hunched over his workbench, lost in thought, the cherished pocket watch open before him. This retired watchmaker sits at his wooden desk, wearing a magnifying loupe, his hands resting on either side of the open pocket watch; tools are scattered around it; the large grandfather clock is visible in the background, its pendulum swinging slowly. medium shot, eye-level, wide-angle lens",
+        "duration_sec": 5.0,
+        "video_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_xnimepvg/clip_shot_1.mp4",
+          "format": "mp4",
+          "duration_sec": 0.0
+        }
+      },
+      {
+        "shot_id": 2,
+        "video_prompt": "The same workbench, now with a tighter focus. The light from the desk lamp emphasizes the intricate details of the watch's mechanism and the watchmaker's tired hands. The ambient light outside the focus of the lamp is very dim. This retired watchmaker picks up a delicate tool, his brow furrowed with concentration as he examines the pocket watch's movement. This retired watchmaker's hands are positioned carefully over the open pocket watch, a small pair of tweezers held between his fingers, poised to touch a tiny gear; the watch's mechanism is exposed and glinting under the lamp. close-up, eye-level, ",
+        "duration_sec": 5.0,
+        "video_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_xnimepvg/clip_shot_2.mp4",
+          "format": "mp4",
+          "duration_sec": 0.0
+        }
+      },
+      {
+        "shot_id": 3,
+        "video_prompt": "The workshop, with the grandfather clock prominently in view. The warm light from the workbench contrasts with the cooler, darker tones of the rest of the room. The atmosphere is tense with the passage of time. A close-up of the grandfather clock shows the time inching towards midnight, creating a sense of urgency. The face of the antique grandfather clock, its hands showing approximately 11:45; the brass pendulum swings steadily behind the glass; reflections of the workshop's dim lights can be seen on the clock's polished wood. close-up, eye-level, ",
+        "duration_sec": 5.0,
+        "video_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_xnimepvg/clip_shot_3.mp4",
+          "format": "mp4",
+          "duration_sec": 0.0
+        }
+      },
+      {
+        "shot_id": 4,
+        "video_prompt": "Back at the workbench, the light is still warm, but the watchmaker's expression shows growing frustration. The tools around him seem to mock his efforts. This retired watchmaker sighs, momentarily leaning back from the watch as a wave of melancholy washes over him. This retired watchmaker sits back in his chair, his hands clasped, gaze fixed on the pocket watch; his shoulders are slumped, and a wistful expression is on his face; the watch glints innocently on the stand. medium shot, low angle (looking up), ",
+        "duration_sec": 5.0,
+        "video_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_xnimepvg/clip_shot_4.mp4",
+          "format": "mp4",
+          "duration_sec": 0.0
+        }
+      },
+      {
+        "shot_id": 5,
+        "video_prompt": "The light from the desk lamp creates long shadows on the workbench. The intricate parts of the watch seem to glow slightly, almost inviting him to continue. The atmosphere shifts slightly, hinting at a memory. This retired watchmaker gently touches a specific engraving on the watch casing, a fond memory clearly sparking in his eyes. This retired watchmaker's finger is gently tracing the delicate floral engraving on the pocket watch's silver casing; his eyes are soft and slightly watery, reflecting the desk lamp's light; the open watch mechanism is still visible. close-up, eye-level, ",
+        "duration_sec": 5.0,
+        "video_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_xnimepvg/clip_shot_5.mp4",
+          "format": "mp4",
+          "duration_sec": 0.0
+        }
+      },
+      {
+        "shot_id": 6,
+        "video_prompt": "The workshop is quiet save for the ticking. The desk lamp highlights his hands with precision. The air is focused and charged with renewed determination. With renewed focus, this retired watchmaker makes a tiny, precise adjustment to a minuscule gear within the pocket watch. This retired watchmaker's hands are steady, one holding a magnifying glass, the other manipulating a tiny screwdriver to adjust a gear inside the pocket watch; his tongue is slightly out in concentration; a bead of sweat glistens on his temple. close-up, high angle (looking down), ",
+        "duration_sec": 5.0,
+        "video_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_xnimepvg/clip_shot_6.mp4",
+          "format": "mp4",
+          "duration_sec": 0.0
+        }
+      },
+      {
+        "shot_id": 7,
+        "video_prompt": "The workshop. The grandfather clock chimes the quarter-hour, emphasizing the dwindling time. The overall light feels slightly colder, highlighting the pressure. The grandfather clock's pendulum swings faster, showing the time is almost gone, mirroring the watchmaker's rising tension. The full face of the grandfather clock shows the time at 11:55; the pendulum is visibly swinging with a heightened speed; the glass reflects a distorted view of the workshop and the watchmaker's silhouette in the distance. medium shot, low angle (looking up), ",
+        "duration_sec": 5.0,
+        "video_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_xnimepvg/clip_shot_7.mp4",
+          "format": "mp4",
+          "duration_sec": 0.0
+        }
+      },
+      {
+        "shot_id": 8,
+        "video_prompt": "Back at the workbench, the light seems to intensify on the watchmaker's face, reflecting his urgency. His breath is held, making the atmosphere taut. This retired watchmaker holds the pocket watch to his ear, listening intently, his eyes wide with anticipation. This retired watchmaker holds the pocket watch close to his right ear, his eyes closed in concentration; his face is etched with a mix of hope and anxiety; the lamp's light illuminates the side of his face. close-up, eye-level, ",
+        "duration_sec": 5.0,
+        "video_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_xnimepvg/clip_shot_8.mp4",
+          "format": "mp4",
+          "duration_sec": 0.0
+        }
+      },
+      {
+        "shot_id": 9,
+        "video_prompt": "The workbench. The light seems to brighten slightly as if hope has entered the room. The watch's inner workings are now clear and vibrant. The pocket watch's hands visibly begin to move, marking the successful repair. A very close-up shot of the pocket watch's face; the delicate minute and second hands are now moving smoothly, indicating the correct time, slightly out of sync with the previous grandfather clock time (e.g., 11:58); the intricate engravings on the silver casing are sharp. close-up, eye-level, macro lens",
+        "duration_sec": 5.0,
+        "video_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_xnimepvg/clip_shot_9.mp4",
+          "format": "mp4",
+          "duration_sec": 0.0
+        }
+      },
+      {
+        "shot_id": 10,
+        "video_prompt": "The entire workshop, now bathed in the brief, bright flashes of distant fireworks seen through the window. The grandfather clock is poised at midnight. A celebratory atmosphere begins to break through. The grandfather clock begins to chime midnight as the watchmaker looks up, a profound sense of relief on his face. This retired watchmaker looks up from the pocket watch in his hand, a gentle smile spreading across his face; the grandfather clock in the background shows exactly 12:00, with a faint glow from its face; a distant burst of fireworks lights the frosted window. medium shot, eye-level, ",
+        "duration_sec": 5.0,
+        "video_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_xnimepvg/clip_shot_10.mp4",
+          "format": "mp4",
+          "duration_sec": 0.0
+        }
+      },
+      {
+        "shot_id": 11,
+        "video_prompt": "A close view of the watchmaker, the subtle glow of the working pocket watch reflecting in his eyes. The light is warm and soft, creating an intimate, peaceful moment. This retired watchmaker closes the pocket watch, holding it gently to his chest, a single tear of peace and connection rolling down his cheek. This retired watchmaker holds the closed pocket watch against his heart, his eyes closed, a faint smile on his lips; a single tear trickles down his cheek, catching the light; the soft glow of the working watch is almost visible through his cardigan. close-up, eye-level, ",
+        "duration_sec": 5.0,
+        "video_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_xnimepvg/clip_shot_11.mp4",
+          "format": "mp4",
+          "duration_sec": 0.0
+        }
+      },
+      {
+        "shot_id": 12,
+        "video_prompt": "The workshop, now bathed in the soft, lingering glow of distant fireworks. The initial tension is replaced by a serene, hopeful quiet. The air feels lighter. This retired watchmaker gazes out the window at the distant celebration, the cherished pocket watch held securely in his hand, as a new year begins. This retired watchmaker stands by the frosted window, holding the closed pocket watch in his hand, looking out at the faint lights of the city; his posture is relaxed, shoulders no longer hunched; a peaceful, contented expression is on his face. wide shot, eye-level, wide-angle lens",
+        "duration_sec": 5.0,
+        "video_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_xnimepvg/clip_shot_12.mp4",
+          "format": "mp4",
+          "duration_sec": 0.0
+        }
+      }
+    ],
+    "final_video_asset": {
+      "asset_id": "",
+      "uri": "/tmp/fw_media_xnimepvg/clip_final.mp4",
+      "format": "mp4",
+      "duration_sec": 0.0
+    }
+  },
+  "metrics": {
+    "shot_count": 12,
+    "total_duration_sec": 60.0
+  },
+  "artifact_caption": {
+    "semantic_type": "",
+    "what": "A manifest of the assembled UniVA video for the whole story: 12 shot clip(s), 60.0 seconds total runtime. It catalogs the per-shot animated clips and the single complete final video file. It is the document describing the finished UniVA video — there is exactly one such document per pipeline run. Video plan: 12 shots, 60s total",
+    "why": "Per-shot I2V clips merged into final video",
+    "scope": "global"
+  }
+}

@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frameworkers — 结果对比</title>
+  <link rel="icon" type="image/svg+xml" href="./logo.svg" />
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .cmp-back {
+      display: inline-block;
+      margin-bottom: 18px;
+      color: #7eb3ff;
+      text-decoration: none;
+      font-size: 0.9em;
+    }
+    .cmp-back:hover { text-decoration: underline; }
+
+    .cmp-section {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 22px 26px;
+      margin-bottom: 26px;
+    }
+    .cmp-section h2 {
+      margin: 0 0 6px;
+      font-size: 1.15em;
+      color: #e0e0e0;
+    }
+    .cmp-section .cmp-sub {
+      color: #888;
+      font-size: 0.85em;
+      margin-bottom: 18px;
+    }
+    .cmp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    .cmp-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .cmp-card.before { border-left: 3px solid #c0503a; }
+    .cmp-card.after  { border-left: 3px solid #5a8a6a; }
+    .cmp-card.univa  { border-left: 3px solid #d4a84b; }
+    .cmp-card.fw     { border-left: 3px solid #7eb3ff; }
+    .cmp-tag {
+      display: inline-block;
+      font-size: 0.72em;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #888;
+      font-weight: 600;
+    }
+    .cmp-title {
+      font-size: 0.96em;
+      font-weight: 600;
+      color: #e0e0e0;
+    }
+    .cmp-desc {
+      font-size: 0.85em;
+      color: #aaa;
+      line-height: 1.6;
+    }
+    .cmp-video-slot {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: rgba(0,0,0,0.35);
+      border: 1px dashed rgba(255,255,255,0.15);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #555;
+      font-size: 0.82em;
+      font-style: italic;
+    }
+    .cmp-prompt {
+      font-size: 0.82em;
+      color: #ccc;
+      font-style: italic;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.04);
+      border-left: 2px solid rgba(255,255,255,0.15);
+      border-radius: 3px;
+    }
+    @media (max-width: 760px) {
+      .cmp-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+
+    <header class="header">
+      <a class="cmp-back" href="./index.html">← 返回总览</a>
+      <div class="logo-row">
+        <img class="logo-mark" src="./logo.svg" alt="Frameworkers logo" />
+        <div class="logo-text">
+          <span class="logo-name">Frameworkers</span>
+          <span class="logo-tagline">Sub-agent Comparison</span>
+        </div>
+      </div>
+      <div class="header-divider"></div>
+      <div class="header-badge">📊 结果对比</div>
+      <h1>结果对比</h1>
+      <p>横向对比两组结果：自实现 sub-agent 优化前后、Univa 原生 vs Univa 接入本框架。</p>
+    </header>
+
+    <!-- Section 1: 自实现 sub-agent 优化前后 -->
+    <section class="cmp-section">
+      <h2>① 自实现 Sub-agent — 优化前 vs 优化后</h2>
+      <div class="cmp-sub">本框架内 Story / Screenplay / KeyFrame / Video / Audio agent 的迭代效果对比</div>
+      <div class="cmp-grid">
+        <div class="cmp-card before">
+          <span class="cmp-tag">BEFORE</span>
+          <div class="cmp-title">优化前</div>
+          <div class="cmp-desc">基础 prompt、单层 anchor、无 evaluator 重试；跨镜头一致性弱，路径与产物管理依赖硬编码。</div>
+          <video controls style="width:100%;border-radius:6px" src="./demo.mp4"></video>
+        </div>
+        <div class="cmp-card after">
+          <span class="cmp-tag">AFTER</span>
+          <div class="cmp-title">优化后</div>
+          <div class="cmp-desc">分层 anchor（global / scene / shot）、L1–L3 evaluator 重试、LLM #1 输入选择 + LLM #2 路径编排 + LLM #3 memory 摘要；产物落盘可追踪。</div>
+          <video controls style="width:100%;border-radius:6px" src="./cmp_selfimpl_after.mp4"></video>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Univa 整合到本框架 -->
+    <section class="cmp-section">
+      <h2>② Univa 原生 vs Univa 接入 Frameworkers</h2>
+      <div class="cmp-sub">把 Univa 包装为本框架的 sub-agent 后，复用 input bundle / workspace / memory / evaluator 的对比效果</div>
+      <div class="cmp-grid">
+        <div class="cmp-card univa">
+          <span class="cmp-tag">UNIVA · RAW</span>
+          <div class="cmp-title">Univa 原生输出</div>
+          <video controls style="width:100%;border-radius:6px" src="./cmp_univa_raw.mp4"></video>
+        </div>
+        <div class="cmp-card fw">
+          <span class="cmp-tag">UNIVA × FRAMEWORKERS</span>
+          <div class="cmp-title">Univa 接入本框架</div>
+          <video controls style="width:100%;border-radius:6px" src="./cmp_univa_framework.mp4"></video>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>

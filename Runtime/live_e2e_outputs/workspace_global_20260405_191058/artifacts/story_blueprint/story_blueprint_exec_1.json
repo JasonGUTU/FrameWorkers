@@ -1,0 +1,126 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-05T19:11:08.280881+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A retired watchmaker battles time and his own grief to repair his late wife's pocket watch before the new year, seeking a final moment of connection and peace.",
+    "estimated_duration": {
+      "seconds": 10.0,
+      "confidence": 0.7
+    },
+    "style": {
+      "genre": [
+        "Drama",
+        "Slice of Life"
+      ],
+      "tone_keywords": [
+        "Poignant",
+        "Serene",
+        "Hopeful",
+        "Nostalgic",
+        "Urgent"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Arthur",
+        "role": "protagonist",
+        "profile": "A man in his late 60s, a retired watchmaker with skilled, steady hands. He carries the quiet weight of recent loss but possesses a deep dedication to his craft and the memories of his wife.",
+        "motivation": "To honor his late wife's memory by repairing her cherished pocket watch, finding a sense of connection and closure as the new year begins.",
+        "flaw": "His grief can sometimes overwhelm him, making him intensely focused to the exclusion of all else."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Arthur's Workshop",
+        "description": "A cluttered yet organized home workshop, filled with intricate tools, spare parts, and half-finished projects. Warm, dim lighting, with a prominent grandfather clock showing the time."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Arthur is intensely focused on repairing the delicate pocket watch, the only sound being the loud ticking of a grandfather clock.",
+        "conflict": "Internal struggle with the precision required, and the emotional weight of the task.",
+        "turning_point": "The visible approach of midnight on the clock."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "crisis",
+        "summary": "Time is running out; Arthur makes a final, crucial adjustment with desperate precision as midnight looms.",
+        "conflict": "The race against the clock, fear of failure, and the emotional desire for connection.",
+        "turning_point": "The watch springs back to life, ticking."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "resolution",
+        "summary": "The watch is repaired just as midnight strikes, bringing Arthur a moment of serene peace and connection.",
+        "conflict": "The lingering sadness of loss, now momentarily calmed.",
+        "turning_point": "A quiet smile, a sense of completion."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Establish Arthur's task and the ticking clock.",
+        "conflict": "The intricate nature of the repair, the pressure of the impending deadline.",
+        "turn": "Arthur looks up, momentarily distracted by the loud ticking."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Show Arthur's intense focus and the critical moment of the repair.",
+        "conflict": "The delicate nature of the final adjustment against the rapidly approaching midnight.",
+        "turn": "The pocket watch begins to tick, just as the grandfather clock prepares to chime."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Conclude with a moment of peace and symbolic connection.",
+        "conflict": "The lingering echoes of grief, now softened by success.",
+        "turn": "Arthur holds the ticking watch, a quiet smile of solace on his face as the new year begins."
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "character_count": 1,
+    "location_count": 1,
+    "scene_count": 3
+  },
+  "artifact_caption": {
+    "what": "This is a poignant micro-drama about Arthur, a retired watchmaker, who races against the clock on New Year's Eve to repair his late wife's cherished pocket watch. The story unfolds across three brief scenes, focusing on his delicate work and emotional connection.",
+    "why": "The creative choices emphasize a tone of quiet urgency and profound nostalgia, using a minimalist structure to convey deep emotion within a very short duration. The focus is on the character's internal journey and the symbolic act of repair.",
+    "scope": "global"
+  }
+}

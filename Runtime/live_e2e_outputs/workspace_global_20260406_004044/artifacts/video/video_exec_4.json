@@ -1,0 +1,81 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "estimated_duration_sec": 5.0,
+            "actual_duration_sec": 5.0,
+            "video_asset": {
+              "asset_id": "clip_sh_001",
+              "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_004044/artifacts/media/VideoAgent/video/clip_sh_001.mp4",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 5.0,
+              "fps": 24
+            },
+            "video_generation_prompt": "Subtle atmospheric haze slowly drifts through the clearing. Individual leaves on the ground gently rustle in an imperceptible breeze. | Shot sh_001 | Ref: one L3 still for look; motion from text prefix + below. | Type: wide | Visual goal: Establish empty space | Action focus: Lack of activity | Scene context: location_id=loc_001, time_of_day=DAY | Camera: angle=eye_level, movement=static | Anchor images: 1",
+            "video_generation_constraints_json": "{\"shot_id\": \"sh_001\", \"consistency_type\": \"entity_anchor_constraints\", \"keyframe_role\": \"shot_still_l3_only\", \"characters_in_frame\": [], \"scene_context\": {\"scene_id\": \"sc_001\", \"location_id\": \"loc_001\", \"time_of_day\": \"DAY\", \"environment_notes\": [], \"style_notes\": [], \"must_avoid\": []}, \"visual_goal\": \"Establish empty space\", \"action_focus\": \"Lack of activity\", \"camera\": {\"angle\": \"eye_level\", \"movement\": \"static\", \"framing_notes\": \"\"}, \"storyboard_keyframe_notes\": [], \"keyframe_prompt_summaries\": [\"A wide, eye-level shot captures a clearing within an ancient, sun-dappled forest. The frame is devoid of any figures, emphasizing the quiet solitude of the natural space. Tall, majestic trees with thick, textured bark stand sentinel around the edges of the open area. Soft, diffused daylight filters through the high canopy, illuminating patches of moss and fallen leaves on the forest floor, creating a serene, empty expanse.\"], \"keyframe_video_motion_hints\": [\"Subtle atmospheric haze slowly drifts through the clearing. Individual leaves on the ground gently rustle in an imperceptible breeze.\"]}"
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "estimated_duration_sec": 5.0,
+            "actual_duration_sec": 5.0,
+            "video_asset": {
+              "asset_id": "clip_sh_002",
+              "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_004044/artifacts/media/VideoAgent/video/clip_sh_002.mp4",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 5.0,
+              "fps": 24
+            },
+            "video_generation_prompt": "A gentle, almost imperceptible shift of shadows on the moss indicates the slow passage of time. A single dewdrop slowly falls from a fern leaf. | Shot sh_002 | Ref: one L3 still for look; motion from text prefix + below. | Type: medium | Visual goal: Convey quietness | Action focus: Empty frame | Scene context: location_id=loc_001, time_of_day=DAY | Camera: angle=eye_level, movement=static | Anchor images: 1",
+            "video_generation_constraints_json": "{\"shot_id\": \"sh_002\", \"consistency_type\": \"entity_anchor_constraints\", \"keyframe_role\": \"shot_still_l3_only\", \"characters_in_frame\": [], \"scene_context\": {\"scene_id\": \"sc_001\", \"location_id\": \"loc_001\", \"time_of_day\": \"DAY\", \"environment_notes\": [], \"style_notes\": [], \"must_avoid\": []}, \"visual_goal\": \"Convey quietness\", \"action_focus\": \"Empty frame\", \"camera\": {\"angle\": \"eye_level\", \"movement\": \"static\", \"framing_notes\": \"\"}, \"storyboard_keyframe_notes\": [], \"keyframe_prompt_summaries\": [\"A medium, eye-level shot focuses on a quiet, undisturbed section of the ancient forest. The frame is entirely empty of activity, conveying profound stillness. Close-up details show the texture of a moss-covered ancient tree trunk and the delicate arrangement of ferns at its base. Soft light dapples through the leaves above, highlighting the intricate patterns of nature's untouched tapestry.\"], \"keyframe_video_motion_hints\": [\"A gentle, almost imperceptible shift of shadows on the moss indicates the slow passage of time. A single dewdrop slowly falls from a fern leaf.\"]}"
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut",
+            "duration_sec": 0.0
+          }
+        ],
+        "scene_clip_asset": {
+          "asset_id": "clip_sc_001",
+          "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_004044/artifacts/media/VideoAgent/video/clip_sc_001.mp4",
+          "scene_duration_sec": 10.0,
+          "format": "mp4"
+        }
+      }
+    ],
+    "final_video_asset": {
+      "asset_id": "clip_final",
+      "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_004044/artifacts/media/VideoAgent/video/clip_final.mp4",
+      "width": 1024,
+      "height": 576,
+      "format": "mp4",
+      "duration_sec": 10.0,
+      "fps": 24
+    }
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_segment_count": 2,
+    "total_duration_sec": 10.0,
+    "avg_shot_duration_sec": 5.0
+  },
+  "artifact_caption": {
+    "semantic_type": "",
+    "what": "Video package: 1 scene(s), 2 shot clip(s), 10.0s total. Includes per-shot clips, scene assemblies, and final clip.",
+    "why": "Deterministic assembly from screenplay shot structure; no creative LLM decisions.",
+    "scope": "global"
+  }
+}

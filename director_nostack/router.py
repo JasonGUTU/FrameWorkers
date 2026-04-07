@@ -8,8 +8,6 @@ import os
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 
-from inference.clients.json_parse_diag import describe_json_decode_error, preview_text_for_log
-
 from .config import DIRECTOR_MEMORY_MODEL, DIRECTOR_ROUTING_MODEL
 from . import prompts
 
@@ -69,26 +67,6 @@ def _agents_catalog_for_prompt(agents: List[Dict[str, Any]]) -> List[Dict[str, A
 
 def _allowed_ids(agents: List[Dict[str, Any]]) -> List[str]:
     return [x["id"] for x in _agents_catalog_for_prompt(agents)]
-
-
-def _parse_router_json(raw: str) -> Dict[str, Any]:
-    """Strict parse: one JSON object, whole response body — no markdown fence recovery."""
-    text = (raw or "").strip()
-    if not text:
-        raise ValueError("empty router LLM response")
-    try:
-        obj = json.loads(text)
-    except json.JSONDecodeError as exc:
-        diag = describe_json_decode_error(text, exc)
-        logger.error(
-            "router JSON parse failed: %s | preview=%s",
-            diag,
-            preview_text_for_log(text),
-        )
-        raise ValueError(f"router JSON invalid: {exc}; {diag}") from exc
-    if not isinstance(obj, dict):
-        raise ValueError("router JSON root must be an object")
-    return obj
 
 
 def _session_has_prior_context(

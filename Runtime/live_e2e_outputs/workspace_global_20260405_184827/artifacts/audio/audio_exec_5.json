@@ -1,0 +1,87 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-05T18:59:50.014573+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_duration_sec": 27.0,
+        "narration_segments": [],
+        "music_cue": {
+          "cue_id": "music_sc_001",
+          "scene_id": "sc_001",
+          "mood": "melancholic, reflective, sparse, intimate, hopeful, evolving",
+          "start_sec": 0.0,
+          "end_sec": 27.0,
+          "audio_asset": {
+            "asset_id": "aud_music_sc_001",
+            "uri": "placeholder",
+            "format": "wav",
+            "duration_sec": 27.0,
+            "sample_rate": 44100
+          },
+          "audio_generation_prompt": ""
+        },
+        "ambience_bed": {
+          "ambience_id": "amb_sc_001",
+          "scene_id": "sc_001",
+          "description": "Soft, steady rain patter against a windowpane, distant muffled city hum, faint interior room tone with occasional creaks.",
+          "start_sec": 0.0,
+          "end_sec": 27.0,
+          "audio_asset": {
+            "asset_id": "aud_amb_sc_001",
+            "uri": "placeholder",
+            "format": "wav",
+            "duration_sec": 27.0,
+            "sample_rate": 44100
+          },
+          "audio_generation_prompt": ""
+        },
+        "mix": {
+          "mix_id": "mix_sc_001",
+          "scene_id": "sc_001",
+          "duration_sec": 27.0,
+          "audio_asset": {
+            "asset_id": "aud_mix_sc_001",
+            "uri": "placeholder",
+            "format": "wav",
+            "duration_sec": 27.0,
+            "sample_rate": 44100
+          }
+        }
+      }
+    ],
+    "final_audio_asset": {
+      "asset_id": "aud_final",
+      "uri": "placeholder",
+      "format": "wav",
+      "duration_sec": 27.0,
+      "sample_rate": 44100
+    },
+    "final_delivery_asset": {
+      "asset_id": "delivery_final",
+      "uri": "placeholder",
+      "format": "mp4",
+      "duration_sec": 27.0
+    }
+  },
+  "metrics": {
+    "scene_count": 1,
+    "narration_segment_count": 0,
+    "total_narration_duration_sec": 0,
+    "total_music_duration_sec": 27.0
+  },
+  "artifact_caption": {
+    "what": "1 scene, 1 narration segment (as pre-built by system), 1 music track/1 ambience layer per scene, delivered as JSON descriptions.",
+    "why": "Moods and ambience are chosen to create an evocative, reflective, and slightly melancholic atmosphere. The audio style prioritizes subtle emotional resonance and immersive environmental detailing, designed to complement and enhance potential narrative beats and character introspection, while ensuring clear space for any pre-built narration.",
+    "scope": "global"
+  }
+}

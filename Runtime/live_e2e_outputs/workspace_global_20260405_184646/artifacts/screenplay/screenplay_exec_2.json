@@ -1,0 +1,162 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-05T18:47:17.411582+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "Placeholder Screenplay",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": ""
+        },
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "EMPTY ROOM",
+          "interior_exterior": "INT",
+          "time_of_day": "DAY"
+        },
+        "summary": "A character enters an empty room, looks around, and speaks a single line.",
+        "estimated_duration": {
+          "seconds": 10.0,
+          "confidence": 0.7
+        },
+        "continuity": {
+          "props_present": [],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "simple attire",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": []
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "An stark, unfurnished room with neutral walls and a single door."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "A generic person with no specific distinguishing features."
+              ],
+              "wardrobe_notes": [
+                "Casual, unassuming clothing."
+              ],
+              "must_keep": []
+            }
+          ],
+          "props_lock": [],
+          "style_lock": {
+            "global_style_notes": [
+              "Very basic, minimalist, and functional."
+            ],
+            "must_avoid": [
+              "complex camera work",
+              "dramatic lighting"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "The character acknowledges the room's state.",
+          "emotional_shift": "Neutral to slight realization."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A PERSON (CHAR_001) walks into the room, looking around. The room is bare.",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "estimated_duration_sec": 5.0,
+            "shot_type": "wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Room and character clearly visible"
+            },
+            "visual_goal": "Establish the emptiness of the room and the character's presence.",
+            "action_focus": "The character entering and observing the room.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "PERSON",
+            "text": "It's empty.",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "estimated_duration_sec": 5.0,
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on the character's face"
+            },
+            "visual_goal": "Capture the character's reaction and spoken line.",
+            "action_focus": "The character speaking.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "estimated_total_duration_sec": 10.0,
+    "sum_scene_duration_sec": 10.0,
+    "scene_count": 1,
+    "shot_count_total": 2,
+    "sum_shot_duration_sec": 10.0,
+    "avg_shots_per_scene": 2.0,
+    "dialogue_block_count": 1,
+    "action_block_count": 1
+  },
+  "artifact_caption": {
+    "what": "Placeholder Screenplay, 1 scene, 2 shots, Minimalist",
+    "why": "To demonstrate structure and adhere to template requirements; neutral tone, steady pacing, simple visuals to illustrate an empty scene.",
+    "scope": "global"
+  }
+}

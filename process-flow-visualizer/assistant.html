@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frameworkers — Assistant</title>
+  <link rel="icon" type="image/svg+xml" href="./logo.svg" />
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .back { display:inline-block; margin-bottom:18px; color:#7eb3ff; text-decoration:none; font-size:0.9em; }
+    .back:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <a class="back" href="./index.html">← 返回总览</a>
+      <div class="logo-row">
+        <img class="logo-mark" src="./logo.svg" alt="Frameworkers logo" />
+        <div class="logo-text">
+          <span class="logo-name">Frameworkers</span>
+          <span class="logo-tagline">Assistant</span>
+        </div>
+      </div>
+      <div class="header-divider"></div>
+      <div class="header-badge">⚙️ Assistant</div>
+      <h1>Assistant 执行层</h1>
+      <p><code>execute_agent_for_task()</code> 三阶段：组织 inputs → 调用 sub-agent → 落盘 + 写 memory。</p>
+    </header>
+
+    <section id="phasesViz"></section>
+
+  </main>
+  <script src="./app.js?v=13"></script>
+</body>
+</html>

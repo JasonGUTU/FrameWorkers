@@ -1,0 +1,92 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-05T15:00:03.800362+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A retired watchmaker battles time and grief, frantically mending his late wife's pocket watch in the final moments before midnight, seeking solace and connection as the new year dawns.",
+    "estimated_duration": {
+      "seconds": 10.0,
+      "confidence": 0.7
+    },
+    "style": {
+      "genre": [
+        "Drama",
+        "Slice of Life"
+      ],
+      "tone_keywords": [
+        "Poignant",
+        "Hopeful",
+        "Urgent",
+        "Intimate"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Elias Vance",
+        "role": "protagonist",
+        "profile": "An aging, skilled, but visibly grieving watchmaker. His hands, though experienced, tremble slightly with urgency and emotion.",
+        "motivation": "To honor the memory of his late wife by restoring her most cherished possession, finding a moment of peace and renewed connection.",
+        "flaw": "Burdened by grief, he often loses himself in the past, making the present task both a challenge and an escape."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "The Chronos Workshop",
+        "description": "Elias's small, cluttered workshop filled with intricate tools, ticking clocks, and the soft glow of a single task lamp. It feels timeless, yet shows signs of recent disuse and a subtle melancholic atmosphere."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "crisis",
+        "summary": "Elias races against the rapidly ticking clock towards midnight, meticulously working on the delicate mechanism of his late wife's broken pocket watch.",
+        "conflict": "Internal: His grief and the pressure of time versus the precision required for the repair. External: The approaching midnight hour.",
+        "turning_point": "He makes the final, crucial adjustment just as the clock outside begins its last countdown."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "resolution",
+        "summary": "The watch springs to life, chiming just as midnight strikes, bringing a moment of profound peace and connection for Elias as the new year begins.",
+        "conflict": "Will the watch work? Will he find the peace he seeks?",
+        "turning_point": "The watch chimes perfectly, synchronized with the New Year's bell, and Elias's face softens."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To successfully repair the pocket watch before midnight.",
+        "conflict": "The delicate nature of the repair, the relentless march of time, and Elias's emotional state.",
+        "turn": "The watch's mechanism clicks into place, beginning to tick just as the New Year's chimes begin outside."
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "character_count": 1,
+    "location_count": 1,
+    "scene_count": 1
+  },
+  "artifact_caption": {
+    "what": "A poignant drama about a retired watchmaker, Elias Vance, racing against the clock to repair his late wife's cherished pocket watch as the new year begins, all within a single, intimate scene.",
+    "why": "The tone is poignant and hopeful, emphasizing a character's internal struggle and connection to memory through a race against time. A single, focused scene is used to heighten urgency and intimacy, creating a powerful emotional impact in a very short duration.",
+    "scope": "global",
+    "usable_by": "ScreenplayAgent"
+  }
+}

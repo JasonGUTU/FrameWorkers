@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
-from ..common_schema import Meta, ImageAsset
+from ..common_schema import ArtifactCaption, ImageAsset, ImageReferenceEntry, Meta
 
 
 # ---------------------------------------------------------------------------
@@ -54,7 +54,6 @@ class ShotKeyframes(BaseModel):
     shot_id: str = ""
     order: int = 0
     source: ShotKeyframeSource = Field(default_factory=ShotKeyframeSource)
-    estimated_duration_sec: float = 3.0
     keyframes: list[Keyframe] = Field(default_factory=list)
 
 
@@ -127,21 +126,22 @@ class KeyframesPackage(BaseModel):
     meta: Meta = Field(default_factory=Meta)
     content: KeyframesContent = Field(default_factory=KeyframesContent)
     metrics: KeyframesMetrics = Field(default_factory=KeyframesMetrics)
+    artifact_caption: ArtifactCaption = Field(default_factory=ArtifactCaption)
+    # Per-media-artifact captions keyed by sys_id (e.g. "img_char_001_global").
+    # Populated by recompute_metrics(); read by asset_manager to build ArtifactRef entries.
+    # Excluded from JSON snapshot to keep persisted files clean.
+    per_artifact_captions: dict = Field(default_factory=dict, exclude=True)
 
 
 # --- Input types ---
-
-class KeyframeConstraints(BaseModel):
-    image_resolution: str = "1024x576"
-    image_format: str = "png"
-    style_policy: str = "consistent_with_scene"
-
 
 class KeyFrameAgentInput(BaseModel):
     """Input payload for KeyFrameAgent."""
 
     screenplay: dict = Field(default_factory=dict)
-    constraints: KeyframeConstraints = Field(default_factory=KeyframeConstraints)
+    character_references: list[ImageReferenceEntry] = Field(default_factory=list)
+    location_references: list[ImageReferenceEntry] = Field(default_factory=list)
+    style_references: list[ImageReferenceEntry] = Field(default_factory=list)
 
 
 class KeyFrameAgentOutput(KeyframesPackage):

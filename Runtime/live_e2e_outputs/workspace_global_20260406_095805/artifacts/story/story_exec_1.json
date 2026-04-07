@@ -1,0 +1,126 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-06T09:58:20.238682+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A reclusive retired watchmaker races against time to mend his late wife's cherished pocket watch before the new year, hoping to find solace and a final connection.",
+    "estimated_duration": {
+      "seconds": 10.0,
+      "confidence": 0.7
+    },
+    "style": {
+      "genre": [
+        "Drama",
+        "Slice of Life"
+      ],
+      "tone_keywords": [
+        "Reflective",
+        "Poignant",
+        "Hopeful",
+        "Intimate"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "John Thorne",
+        "role": "protagonist",
+        "profile": "A gentle, elderly man whose hands are gnarled but precise. His eyes hold a deep sorrow tempered by quiet resolve. He lives with the ghosts of his past, finding solace in the meticulous order of his workshop.",
+        "motivation": "To honor his late wife's memory and find a moment of peace and connection with her as the new year begins, symbolizing a continuation of their eternal bond.",
+        "flaw": "He is emotionally isolated and struggles to let go of the past, often retreating into his work as a coping mechanism, sometimes neglecting his present."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "John's Dusty Workshop",
+        "description": "A cluttered, dimly lit room filled with intricate tools, magnifying glasses, and countless ticking clocks and watch parts. Dust motes dance in the faint light filtering from a single window, creating a sense of timelessness and solitude. A prominent, ornate wall clock dominates one wall."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "John, with focused intensity, begins the delicate repair of his late wife's broken pocket watch, the relentless ticking of a large wall clock emphasizing the dwindling time before midnight.",
+        "conflict": "Internal struggle: John's grief and the pressure of the deadline against the watch's intricate mechanics and his own aging dexterity.",
+        "turning_point": "The decision to attempt this significant repair, despite the late hour and the emotional weight attached to the object."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "crisis",
+        "summary": "Time ticks precariously closer to midnight as John encounters a stubborn, tiny component, causing a moment of frustration and doubt, his movements becoming slightly more frantic.",
+        "conflict": "External: The relentless march of time, symbolized by the rapidly approaching midnight on the wall clock. Internal: Fear of failure, of not achieving this final connection or letting down his wife's memory.",
+        "turning_point": "He redoubles his efforts, spurred by a renewed surge of determination and love, pushing past his momentary despair."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "resolution",
+        "summary": "With a final, delicate touch, John successfully repairs the watch just as the wall clock chimes midnight, a serene, tear-filled smile gracing his face as the new year begins.",
+        "conflict": "The successful completion of the repair against the lingering grief and the uncertainty of the future.",
+        "turning_point": "The moment the pocket watch ticks back to life, signifying not just a mechanical fix, but an emotional release and a renewed sense of peace and connection."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Establish John, his task of repairing the watch, his motivation, and the urgent ticking of time towards midnight.",
+        "conflict": "The delicate nature of the intricate watch mechanics vs. John's aging hands and the rapidly diminishing time before midnight.",
+        "turn": "John settles fully into his work, his focus unwavering despite the odds."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Show John's struggle and the rapidly approaching deadline, increasing the emotional tension.",
+        "conflict": "A tiny, stubborn component proves exceptionally difficult, while the hands of the wall clock draw perilously close to the twelve.",
+        "turn": "John, on the verge of giving up, finds a sudden burst of resolve, pushing through his frustration with renewed determination."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Achieve the successful repair of the watch and depict John's resultant moment of peace and connection as the new year begins.",
+        "conflict": "The final tension of whether the watch will truly work and what its successful operation will mean for John's emotional state.",
+        "turn": "The watch ticks back to life, filling the silence just as the midnight bells chime, bringing a profound sense of solace and closure to John."
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "character_count": 1,
+    "location_count": 1,
+    "scene_count": 3
+  },
+  "artifact_caption": {
+    "semantic_type": "",
+    "what": "A poignant drama about a retired watchmaker, John, attempting to repair his late wife's cherished pocket watch before the new year. It unfolds across three intimate scenes, focusing on his race against time and search for connection.",
+    "why": "The tone is reflective and hopeful, emphasizing the emotional connection to objects and the passage of time. The structure is linear, building subtle tension towards a quiet, personal resolution. The style aims for a close, intimate portrayal of John's internal world.",
+    "scope": "global"
+  }
+}

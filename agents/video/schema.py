@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
-from ..common_schema import Meta
+from ..common_schema import ArtifactCaption, ImageReferenceEntry, Meta
 
 
 # ---------------------------------------------------------------------------
@@ -19,7 +19,6 @@ class VideoAsset(BaseModel):
     width: int = 1024
     height: int = 576
     format: str = "mp4"
-    duration_sec: float = 0.0
     fps: int = 24
 
 
@@ -28,8 +27,6 @@ class ShotSegment(BaseModel):
 
     shot_id: str = ""
     order: int = 0
-    estimated_duration_sec: float = 3.0
-    actual_duration_sec: float = 0.0
     video_asset: VideoAsset = Field(default_factory=VideoAsset)
     # Filled by VideoMaterializer: main prompt and JSON-serialized consistency_constraints.
     video_generation_prompt: str = ""
@@ -40,7 +37,6 @@ class TransitionPlan(BaseModel):
     from_shot_id: str = ""
     to_shot_id: str = ""
     transition_type: str = "cut"  # cut | dissolve | fade | soft
-    duration_sec: float = 0.0
 
 
 class SceneClipAsset(BaseModel):
@@ -48,7 +44,6 @@ class SceneClipAsset(BaseModel):
 
     asset_id: str = ""
     uri: str = ""
-    scene_duration_sec: float = 0.0
     format: str = "mp4"
 
 
@@ -72,8 +67,6 @@ class VideoContent(BaseModel):
 class VideoMetrics(BaseModel):
     scene_count: int = 0
     shot_segment_count: int = 0
-    total_duration_sec: float = 0.0
-    avg_shot_duration_sec: float = 0.0
 
 
 # ---------------------------------------------------------------------------
@@ -86,23 +79,36 @@ class VideoPackage(BaseModel):
     meta: Meta = Field(default_factory=Meta)
     content: VideoContent = Field(default_factory=VideoContent)
     metrics: VideoMetrics = Field(default_factory=VideoMetrics)
+    artifact_caption: ArtifactCaption = Field(default_factory=ArtifactCaption)
+    # Per-clip captions keyed by sys_id (e.g. "clip_sh_001", "clip_final").
+    # Populated by recompute_metrics(); read by asset_manager for per-artifact registry entries.
+    # Excluded from JSON snapshot to keep persisted files clean.
+    per_artifact_captions: dict = Field(default_factory=dict, exclude=True)
 
 
 # --- Input types ---
 
-class VideoConstraints(BaseModel):
-    fps: int = 24
-    output_resolution: str = "1024x576"
-    shot_motion_policy: str = "moderate"  # minimal | moderate | cinematic
-    transition_policy: str = "cut"  # cut | soft
-
-
 class VideoAgentInput(BaseModel):
-    """Input payload for VideoAgent."""
+    """Input payload for VideoAgent.
+
+    Carries everything VideoAgent (LLM-free skeleton-builder) and the
+    VideoMaterializer need:
+
+    - ``screenplay``: the structured screenplay payload (selected via the
+      ``[screenplay]`` label).
+    - ``keyframes_metadata``: the keyframes_package payload from the
+      keyframe step (selected via the ``[keyframes_metadata]`` label).
+      Materializer reads ``prompt_summary`` and ``video_motion_hint`` from
+      it for each shot.
+    - ``shot_stills``: the rendered L3 starting-frame images for each shot
+      (selected via the ``[shot_stills]`` collection label). Each entry
+      carries a ``path`` and a ``scope`` like ``"shot:sh_001"`` so the
+      materializer can pair an image with the right shot.
+    """
 
     screenplay: dict = Field(default_factory=dict)
-    keyframes: dict = Field(default_factory=dict)
-    constraints: VideoConstraints = Field(default_factory=VideoConstraints)
+    keyframes_metadata: dict = Field(default_factory=dict)
+    shot_stills: list[ImageReferenceEntry] = Field(default_factory=list)
 
 
 class VideoAgentOutput(VideoPackage):

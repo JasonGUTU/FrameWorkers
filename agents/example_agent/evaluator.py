@@ -1,16 +1,12 @@
-"""Evaluator for ExamplePipelineAgent output.
+"""Evaluator for ExamplePipelineAgent output (output-internal only).
 
-Demonstrates the evaluator pattern:
-  - check_structure() -- L1 rule-based checks (fast, free, deterministic)
-  - creative_dimensions -- L2 LLM-based creative assessment dimensions
-  - _build_creative_context() -- context string for the L2 LLM prompt
-
-No L3 (asset evaluation) since this agent produces no binary assets.
+NOTE: example_agent is no longer registered in AGENT_REGISTRY (it is kept
+only as a development template). Its evaluator follows the same rules as
+all other evaluators: only check the agent's own output, never read any
+upstream artifact.
 """
 
 from __future__ import annotations
-
-from typing import Any, Mapping
 
 from ..base_evaluator import BaseEvaluator
 from .schema import ExamplePipelineOutput
@@ -19,23 +15,15 @@ from .schema import ExamplePipelineOutput
 class ExamplePipelineEvaluator(BaseEvaluator[ExamplePipelineOutput]):
 
     creative_dimensions = [
-        ("accuracy", "Does the summary accurately reflect the source text?"),
+        ("accuracy", "Is the summary internally well-formed (clear title, coherent summary)?"),
         ("conciseness", "Is the summary concise without losing key information?"),
     ]
-
-    def _build_creative_context(self, output, input_bundle_v2):
-        source_text = (input_bundle_v2 or {}).get("source_text", "")
-        return f"Source text: {source_text[:500]}"
 
     # ------------------------------------------------------------------
     # Layer 1 -- Rule-based structural validation
     # ------------------------------------------------------------------
 
-    def check_structure(
-        self,
-        output: ExamplePipelineOutput,
-        input_bundle_v2: Mapping[str, Any] | None = None,
-    ) -> list[str]:
+    def check_structure(self, output: ExamplePipelineOutput) -> list[str]:
         errors: list[str] = []
         c = output.content
 

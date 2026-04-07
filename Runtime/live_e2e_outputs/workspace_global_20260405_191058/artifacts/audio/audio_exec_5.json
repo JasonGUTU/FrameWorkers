@@ -1,0 +1,183 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-05T19:23:54.383408+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_duration_sec": 3.0,
+        "narration_segments": [],
+        "music_cue": {
+          "cue_id": "music_sc_001",
+          "scene_id": "sc_001",
+          "mood": "determined, somber, intricate, subtle tension, pensive",
+          "start_sec": 0.0,
+          "end_sec": 3.0,
+          "audio_asset": {
+            "asset_id": "aud_music_sc_001",
+            "uri": "placeholder",
+            "format": "wav",
+            "duration_sec": 3.0,
+            "sample_rate": 44100
+          },
+          "audio_generation_prompt": ""
+        },
+        "ambience_bed": {
+          "ambience_id": "amb_sc_001",
+          "scene_id": "sc_001",
+          "description": "Loud, steady grandfather clock ticking, subtle sounds of a meticulous watchmaker at work.",
+          "start_sec": 0.0,
+          "end_sec": 3.0,
+          "audio_asset": {
+            "asset_id": "aud_amb_sc_001",
+            "uri": "placeholder",
+            "format": "wav",
+            "duration_sec": 3.0,
+            "sample_rate": 44100
+          },
+          "audio_generation_prompt": ""
+        },
+        "mix": {
+          "mix_id": "mix_sc_001",
+          "scene_id": "sc_001",
+          "duration_sec": 3.0,
+          "audio_asset": {
+            "asset_id": "aud_mix_sc_001",
+            "uri": "placeholder",
+            "format": "wav",
+            "duration_sec": 3.0,
+            "sample_rate": 44100
+          }
+        }
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_duration_sec": 3.5,
+        "narration_segments": [],
+        "music_cue": {
+          "cue_id": "music_sc_002",
+          "scene_id": "sc_002",
+          "mood": "escalating tension, urgent, desperate, accelerating, suspenseful",
+          "start_sec": 0.0,
+          "end_sec": 3.5,
+          "audio_asset": {
+            "asset_id": "aud_music_sc_002",
+            "uri": "placeholder",
+            "format": "wav",
+            "duration_sec": 3.5,
+            "sample_rate": 44100
+          },
+          "audio_generation_prompt": ""
+        },
+        "ambience_bed": {
+          "ambience_id": "amb_sc_002",
+          "scene_id": "sc_002",
+          "description": "Intensified grandfather clock ticking, Arthur’s labored breathing, precise, anxious mechanical sounds.",
+          "start_sec": 0.0,
+          "end_sec": 3.5,
+          "audio_asset": {
+            "asset_id": "aud_amb_sc_002",
+            "uri": "placeholder",
+            "format": "wav",
+            "duration_sec": 3.5,
+            "sample_rate": 44100
+          },
+          "audio_generation_prompt": ""
+        },
+        "mix": {
+          "mix_id": "mix_sc_002",
+          "scene_id": "sc_002",
+          "duration_sec": 3.5,
+          "audio_asset": {
+            "asset_id": "aud_mix_sc_002",
+            "uri": "placeholder",
+            "format": "wav",
+            "duration_sec": 3.5,
+            "sample_rate": 44100
+          }
+        }
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "scene_duration_sec": 3.5,
+        "narration_segments": [],
+        "music_cue": {
+          "cue_id": "music_sc_003",
+          "scene_id": "sc_003",
+          "mood": "agonizing suspense, profound relief, serene, hopeful, melancholic peace",
+          "start_sec": 0.0,
+          "end_sec": 3.5,
+          "audio_asset": {
+            "asset_id": "aud_music_sc_003",
+            "uri": "placeholder",
+            "format": "wav",
+            "duration_sec": 3.5,
+            "sample_rate": 44100
+          },
+          "audio_generation_prompt": ""
+        },
+        "ambience_bed": {
+          "ambience_id": "amb_sc_003",
+          "scene_id": "sc_003",
+          "description": "Grandfather clock chiming midnight, held silence, then the delicate tick of a pocket watch, gentle room tone.",
+          "start_sec": 0.0,
+          "end_sec": 3.5,
+          "audio_asset": {
+            "asset_id": "aud_amb_sc_003",
+            "uri": "placeholder",
+            "format": "wav",
+            "duration_sec": 3.5,
+            "sample_rate": 44100
+          },
+          "audio_generation_prompt": ""
+        },
+        "mix": {
+          "mix_id": "mix_sc_003",
+          "scene_id": "sc_003",
+          "duration_sec": 3.5,
+          "audio_asset": {
+            "asset_id": "aud_mix_sc_003",
+            "uri": "placeholder",
+            "format": "wav",
+            "duration_sec": 3.5,
+            "sample_rate": 44100
+          }
+        }
+      }
+    ],
+    "final_audio_asset": {
+      "asset_id": "aud_final",
+      "uri": "placeholder",
+      "format": "wav",
+      "duration_sec": 10.0,
+      "sample_rate": 44100
+    },
+    "final_delivery_asset": {
+      "asset_id": "delivery_final",
+      "uri": "placeholder",
+      "format": "mp4",
+      "duration_sec": 10.0
+    }
+  },
+  "metrics": {
+    "scene_count": 3,
+    "narration_segment_count": 0,
+    "total_narration_duration_sec": 0,
+    "total_music_duration_sec": 10.0
+  },
+  "artifact_caption": {
+    "what": "3 scenes, no narration segments, distinct music and ambience cues for each scene, delivered as a cohesive audio package.",
+    "why": "Music and ambience are designed to follow Arthur's emotional arc: from focused determination and subtle tension, through escalating urgency and desperate hope, to agonizing suspense, culminating in profound serenity and hopeful closure, using the grandfather clock's presence as a recurring motif for time and pressure.",
+    "scope": "global"
+  }
+}

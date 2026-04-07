@@ -1,0 +1,137 @@
+{
+  "counter": 7,
+  "files": {
+    "file_000001_c4580343": {
+      "id": "file_000001_c4580343",
+      "filename": "upload_20260407_010248_177514.txt",
+      "description": "Raw user upload (mime=text/plain)",
+      "file_type": "text",
+      "file_extension": ".txt",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/intake_e2e_outputs/workspace_e2e_midstream_image_20260407_010248/inputs/upload_20260407_010248_177514.txt",
+      "size_bytes": 274,
+      "created_at": "2026-04-07T01:02:48.180603",
+      "created_by": "user",
+      "tags": [
+        "user_upload",
+        "raw_pending"
+      ],
+      "metadata": {
+        "mime": "text/plain",
+        "user_intent": "initial creative brief — young female street muralist",
+        "raw_pending": true
+      }
+    },
+    "file_000002_8bb9efd4": {
+      "id": "file_000002_8bb9efd4",
+      "filename": "user_text_exec_1.json",
+      "description": "Structured JSON snapshot for IntakeTextAgent (exec_1_8bb5b992)",
+      "file_type": "text",
+      "file_extension": ".json",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/intake_e2e_outputs/workspace_e2e_midstream_image_20260407_010248/artifacts/user_text/task_1_9d793710_user_text_exec_1.json",
+      "size_bytes": 980,
+      "created_at": "2026-04-07T01:02:56.692869",
+      "created_by": "IntakeTextAgent",
+      "tags": [
+        "IntakeTextAgent",
+        "task_1_9d793710",
+        "asset_json"
+      ],
+      "metadata": {
+        "execution_id": "exec_1_8bb5b992",
+        "task_id": "task_1_9d793710",
+        "producer_agent_id": "IntakeTextAgent",
+        "asset_key": "user_text",
+        "asset_variant": "json_snapshot"
+      }
+    },
+    "file_000003_121af0d2": {
+      "id": "file_000003_121af0d2",
+      "filename": "story_exec_2.json",
+      "description": "Structured JSON snapshot for StoryAgent (exec_2_172ac80f)",
+      "file_type": "text",
+      "file_extension": ".json",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/intake_e2e_outputs/workspace_e2e_midstream_image_20260407_010248/artifacts/story/task_1_9d793710_story_exec_2.json",
+      "size_bytes": 4071,
+      "created_at": "2026-04-07T01:03:27.987558",
+      "created_by": "StoryAgent",
+      "tags": [
+        "StoryAgent",
+        "task_1_9d793710",
+        "asset_json"
+      ],
+      "metadata": {
+        "execution_id": "exec_2_172ac80f",
+        "task_id": "task_1_9d793710",
+        "producer_agent_id": "StoryAgent",
+        "asset_key": "story",
+        "asset_variant": "json_snapshot"
+      }
+    },
+    "file_000005_3aaab023": {
+      "id": "file_000005_3aaab023",
+      "filename": "20260407_010413_774491_img_char_001_global.png",
+      "description": "Raw user upload (mime=image/png)",
+      "file_type": "image",
+      "file_extension": ".png",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/intake_e2e_outputs/workspace_e2e_midstream_image_20260407_010248/inputs/20260407_010413_774491_img_char_001_global.png",
+      "size_bytes": 1865546,
+      "created_at": "2026-04-07T01:04:13.777478",
+      "created_by": "user",
+      "tags": [
+        "user_upload",
+        "raw_pending"
+      ],
+      "metadata": {
+        "mime": "image/png",
+        "user_intent": "finally adding the protagonist reference",
+        "raw_pending": true
+      }
+    },
+    "file_000006_25ce3347": {
+      "id": "file_000006_25ce3347",
+      "filename": "user_image_exec_4.json",
+      "description": "Structured JSON snapshot for IntakeImageAgent (exec_4_15ad17e4)",
+      "file_type": "text",
+      "file_extension": ".json",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/intake_e2e_outputs/workspace_e2e_midstream_image_20260407_010248/artifacts/IntakeImageAgent/task_1_9d793710_user_image_metadata_exec_4.json",
+      "size_bytes": 739,
+      "created_at": "2026-04-07T01:04:28.025170",
+      "created_by": "IntakeImageAgent",
+      "tags": [
+        "IntakeImageAgent",
+        "task_1_9d793710",
+        "asset_json"
+      ],
+      "metadata": {
+        "execution_id": "exec_4_15ad17e4",
+        "task_id": "task_1_9d793710",
+        "producer_agent_id": "IntakeImageAgent",
+        "asset_key": "user_image",
+        "asset_variant": "json_snapshot"
+      }
+    },
+    "file_000007_f3e778f6": {
+      "id": "file_000007_f3e778f6",
+      "filename": "screenplay_exec_5.json",
+      "description": "Structured JSON snapshot for ScreenplayAgent (exec_5_5202fd3d)",
+      "file_type": "text",
+      "file_extension": ".json",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/intake_e2e_outputs/workspace_e2e_midstream_image_20260407_010248/artifacts/screenplay/task_1_9d793710_screenplay_exec_5.json",
+      "size_bytes": 12600,
+      "created_at": "2026-04-07T01:05:06.486129",
+      "created_by": "ScreenplayAgent",
+      "tags": [
+        "ScreenplayAgent",
+        "task_1_9d793710",
+        "asset_json"
+      ],
+      "metadata": {
+        "execution_id": "exec_5_5202fd3d",
+        "task_id": "task_1_9d793710",
+        "producer_agent_id": "ScreenplayAgent",
+        "asset_key": "screenplay",
+        "asset_variant": "json_snapshot"
+      }
+    }
+  }
+}

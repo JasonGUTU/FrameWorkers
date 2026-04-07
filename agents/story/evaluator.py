@@ -2,21 +2,21 @@
 
 Layers 1+2 only (no binary assets to evaluate).
 
-Layer 1 — structural checks:
+Layer 1 — structural checks (output-internal only):
   - ID referential integrity (scene -> location, character, arc step)
   - Metrics consistency (character_count, location_count, scene_count)
   - Order continuity (story_arc, scene_outline)
   - Required content (logline, cast, scene_outline, story_arc)
 
-Layer 2 — creative assessment:
-  - alignment: blueprint faithfully expands the draft idea
+Layer 2 — creative assessment (output-internal only):
   - dramatic: clear conflict, stakes, turning points, satisfying arc
   - coherence: characters, locations, scenes internally consistent
+
+Evaluators do NOT cross-validate against upstream artifacts. Each layer
+checks only the agent's own output for self-consistency.
 """
 
 from __future__ import annotations
-
-from typing import Any, Mapping
 
 from ..base_evaluator import BaseEvaluator
 from .schema import StoryAgentOutput
@@ -25,24 +25,15 @@ from .schema import StoryAgentOutput
 class StoryEvaluator(BaseEvaluator[StoryAgentOutput]):
 
     creative_dimensions = [
-        ("alignment", "Does the blueprint faithfully expand the draft idea?"),
         ("dramatic", "Clear conflict, stakes, turning points, satisfying arc?"),
         ("coherence", "Characters, locations, scenes internally consistent and well-connected?"),
     ]
-
-    def _build_creative_context(self, output, input_bundle_v2):
-        source_text = (input_bundle_v2 or {}).get("source_text", "")
-        return f"Source text: {source_text}"
 
     # ------------------------------------------------------------------
     # Layer 1 — Rule-based structural validation
     # ------------------------------------------------------------------
 
-    def check_structure(
-        self,
-        output: StoryAgentOutput,
-        input_bundle_v2: Mapping[str, Any] | None = None,
-    ) -> list[str]:
+    def check_structure(self, output: StoryAgentOutput) -> list[str]:
         """Rule-based structural validation for Story Blueprint."""
         errors: list[str] = []
         c = output.content
@@ -89,29 +80,5 @@ class StoryEvaluator(BaseEvaluator[StoryAgentOutput]):
         if not c.story_arc:
             errors.append("story_arc is empty")
 
-        # --- Duration compliance against requested constraints ---
-        self._check_duration_compliance(errors, output, input_bundle_v2)
-
         return errors
-
-    def _check_duration_compliance(
-        self,
-        errors: list[str],
-        output: StoryAgentOutput,
-        input_bundle_v2: Mapping[str, Any] | None = None,
-    ) -> None:
-        target = float(getattr(output.metrics, "target_duration_sec", 0.0) or 0.0)
-        if target <= 0:
-            return
-
-        actual = float(output.content.estimated_duration.seconds or 0.0)
-        tolerance = max(2.0, target * 0.2)
-        lower = target - tolerance
-        upper = target + tolerance
-        if actual < lower or actual > upper:
-            errors.append(
-                "estimated_duration.seconds out of target range: "
-                f"actual={actual:.1f}s target={target:.1f}s "
-                f"allowed=[{lower:.1f},{upper:.1f}]"
-            )
 

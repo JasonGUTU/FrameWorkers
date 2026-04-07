@@ -1,11 +1,11 @@
 """Evaluator for KeyFrameAgent output (Keyframes Package).
 
-All three layers:
+All three layers (output-internal only — no cross-validation against
+upstream artifacts):
 
 Layer 1 -- structural checks:
   - Global anchor completeness
   - Scene stability_keyframes reference global anchors
-  - Upstream cross-check (scene/shot IDs match screenplay)
   - Every shot has at least 1 keyframe
   - Every prompt_summary is non-empty (anchors + L3)
   - Every L3 keyframe has non-empty video_motion_hint
@@ -25,8 +25,7 @@ Layer 3 -- post-materialization asset checks:
 
 from __future__ import annotations
 
-import json
-from typing import Any, Mapping
+from typing import Any
 
 from ..base_evaluator import BaseEvaluator, check_uri
 from .schema import KeyFrameAgentOutput
@@ -39,21 +38,11 @@ class KeyframeEvaluator(BaseEvaluator[KeyFrameAgentOutput]):
         ("overall_visual_quality", "Are the prompt descriptions specific enough to generate good images? Do they include composition, lighting, mood, and action details?"),
     ]
 
-    def _build_creative_context(self, output, input_bundle_v2):
-        sp_data = (input_bundle_v2 or {}).get("screenplay", {})
-        if sp_data:
-            return f"Screenplay:\n{json.dumps(sp_data, ensure_ascii=False, indent=2)}"
-        return ""
-
     # ------------------------------------------------------------------
     # Layer 1 -- Rule-based structural validation
     # ------------------------------------------------------------------
 
-    def check_structure(
-        self,
-        output: KeyFrameAgentOutput,
-        input_bundle_v2: Mapping[str, Any] | None = None,
-    ) -> list[str]:
+    def check_structure(self, output: KeyFrameAgentOutput) -> list[str]:
         """Rule-based structural validation for Keyframes Package."""
         errors: list[str] = []
         c = output.content
@@ -90,30 +79,6 @@ class KeyframeEvaluator(BaseEvaluator[KeyFrameAgentOutput]):
                         f"scene {scene.scene_id} stability_keyframes references "
                         f"prop '{p.entity_id}' not in global_anchors"
                     )
-
-        # --- Upstream cross-check: scene/shot IDs must match screenplay ---
-        if input_bundle_v2 and "screenplay" in input_bundle_v2:
-            sp_content = input_bundle_v2["screenplay"].get("content", {})
-            sp_scene_ids = {
-                s.get("scene_id", "") for s in sp_content.get("scenes", [])
-            }
-            kf_scene_ids = {s.scene_id for s in c.scenes}
-            self._check_id_coverage(
-                errors, "keyframes vs screenplay scenes",
-                sp_scene_ids, kf_scene_ids,
-            )
-
-            sp_shot_ids: set[str] = set()
-            for sp_scene in sp_content.get("scenes", []):
-                for shot in sp_scene.get("shots", []):
-                    sp_shot_ids.add(shot.get("shot_id", ""))
-            kf_shot_ids = {
-                shot.shot_id for scene in c.scenes for shot in scene.shots
-            }
-            self._check_id_coverage(
-                errors, "keyframes vs screenplay shots",
-                sp_shot_ids, kf_shot_ids,
-            )
 
         # --- Every shot must have at least 1 keyframe ---
         for scene in c.scenes:
@@ -171,7 +136,6 @@ class KeyframeEvaluator(BaseEvaluator[KeyFrameAgentOutput]):
     async def evaluate_asset(
         self,
         asset_data: dict[str, Any],
-        input_bundle_v2: Mapping[str, Any] | None = None,
     ) -> dict[str, Any]:
         """Check L1/L2 anchors and L3 per-shot stills exist on disk."""
         content = asset_data.get("content", {})

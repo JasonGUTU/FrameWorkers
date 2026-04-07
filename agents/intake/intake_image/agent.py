@@ -1,0 +1,201 @@
+"""IntakeImageAgent — runs a vision LLM on a raw user image upload.
+
+Output: caption-rich workspace artifact pointing at the same image bytes,
+ready for downstream content agents to discover via their image labels.
+
+Implementation note
+-------------------
+The vision LLM call cannot go through ``LLMClient.chat_json`` (text-only
+JSON helper). This agent overrides ``_generate`` to build a multimodal
+message via ``InputUtils.create_multimodal_message`` and dispatches it
+through ``LLMClient.acall``, which forwards the OpenAI-style multimodal
+content array to the underlying provider.
+"""
+
+from __future__ import annotations
+
+import json
+import logging
+from typing import Any, Dict
+
+from inference.input_processing.message_utils import InputUtils
+
+from ...base_agent import BaseAgent
+from ...common_schema import ArtifactCaption, ImageAsset
+from .schema import IntakeImageContent, IntakeImageInput, IntakeImageOutput
+
+logger = logging.getLogger(__name__)
+
+
+class IntakeImageAgent(BaseAgent[IntakeImageInput, IntakeImageOutput]):
+
+    def system_prompt(self) -> str:
+        return (
+            "You are IntakeImageAgent. Look at a user-uploaded image and "
+            "produce a single concise objective description (one or two "
+            "sentences, <= 240 chars) of what is visible: subject, "
+            "approximate composition, lighting, mood. Do NOT speculate "
+            "about meaning or intent — describe only the surface visual "
+            "content.\n\n"
+            "Return strict JSON of the shape "
+            "{\"visual_description\": \"...\"}."
+        )
+
+    def build_user_prompt(self, input_data: IntakeImageInput) -> str:
+        """Text portion of the multimodal user message.
+
+        The image is attached separately as a multimodal content item;
+        only the text portion is constructed here.
+        """
+        intent = (input_data.user_intent or "").strip()
+        return (
+            "Look at the attached image and describe what is visible "
+            "(subject, approximate composition, lighting, mood). Do not "
+            "speculate about purpose; describe only the surface visual "
+            "content.\n\n"
+            f"User-stated intent (do not echo this in the description): "
+            f"{intent[:200] or '(none)'}\n\n"
+            "Return strict JSON: {\"visual_description\": \"...\"}"
+        )
+
+    async def _generate(
+        self,
+        input_data: IntakeImageInput,
+        *,
+        rework_notes: str = "",
+    ) -> IntakeImageOutput:
+        """Build a multimodal message, run the vision LLM, emit the artifact.
+
+        Steps:
+          1. Build the structural skeleton (image_asset.uri pre-set).
+          2. Build a multimodal message containing the system prompt, the
+             user-text portion, and the image bytes (read from
+             ``raw_image_path`` and base64-encoded by ``InputUtils``).
+          3. Dispatch via ``LLMClient.acall`` (passes the OpenAI-style
+             multimodal content array to litellm/openai-sdk underneath).
+          4. Parse the assistant text as JSON and pull
+             ``visual_description``; fall back to the raw text if JSON
+             parsing fails (some vision models do not honor JSON mode).
+          5. Synthesize the final ``ArtifactCaption``.
+        """
+        skeleton = self._build_skeleton(input_data)
+        intent = (input_data.user_intent or "").strip()
+        image_path = (input_data.raw_image_path or "").strip()
+
+        if not image_path:
+            skeleton.content.visual_description = ""
+            skeleton.artifact_caption = ArtifactCaption(
+                what="image (no image path provided)",
+                why=intent or "(no user intent provided)",
+                scope="global",
+            )
+            return skeleton
+
+        user_text = self.build_user_prompt(input_data)
+        if rework_notes:
+            user_text += (
+                "\n\n--- REWORK INSTRUCTIONS (from quality review) ---\n"
+                f"{rework_notes}\n"
+                "--- END REWORK INSTRUCTIONS ---"
+            )
+
+        try:
+            multimodal_msg = InputUtils.create_multimodal_message(
+                text=user_text,
+                image_path=image_path,
+                role="user",
+            )
+        except FileNotFoundError as exc:
+            logger.warning(
+                "[%s] image file missing at %s: %s",
+                self.agent_name, image_path, exc,
+            )
+            skeleton.content.visual_description = ""
+            skeleton.artifact_caption = ArtifactCaption(
+                what=f"image (file missing on disk: {image_path})",
+                why=intent or "(no user intent provided)",
+                scope="global",
+            )
+            return skeleton
+
+        messages = [
+            {"role": "system", "content": self.system_prompt()},
+            multimodal_msg,
+        ]
+
+        visual = ""
+        try:
+            response = await self.llm.acall(
+                messages,
+                response_format={"type": "json_object"},
+            )
+            visual = self._parse_visual_description(response)
+        except Exception as exc:
+            logger.warning(
+                "[%s] vision LLM call failed: %s — emitting fallback caption",
+                self.agent_name, exc,
+            )
+
+        skeleton.content.visual_description = visual
+        skeleton.artifact_caption = ArtifactCaption(
+            what=(
+                f"image showing {visual}"
+                if visual
+                else "image (vision LLM returned no description)"
+            ),
+            why=intent or "(no user intent provided)",
+            scope="global",
+        )
+        return skeleton
+
+    # ------------------------------------------------------------------
+    # Internals
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _build_skeleton(input_data: IntakeImageInput) -> IntakeImageOutput:
+        skeleton = IntakeImageOutput()
+        skeleton.content = IntakeImageContent(
+            visual_description="",
+            image_asset=ImageAsset(
+                uri=(input_data.raw_image_path or ""),
+                asset_id="",
+            ),
+        )
+        return skeleton
+
+    @staticmethod
+    def _parse_visual_description(response: Dict[str, Any]) -> str:
+        """Extract ``visual_description`` from a vision LLM response.
+
+        Tries strict JSON parsing first; if the model returned plain text
+        (some providers ignore ``response_format`` for vision endpoints),
+        falls back to using the trimmed raw text as the description.
+        """
+        text = IntakeImageAgent._extract_assistant_text(response)
+        if not text:
+            return ""
+        try:
+            parsed = json.loads(text)
+        except json.JSONDecodeError:
+            return text.strip()
+        if isinstance(parsed, dict):
+            return str(parsed.get("visual_description") or "").strip()
+        return ""
+
+    @staticmethod
+    def _extract_assistant_text(response: Dict[str, Any]) -> str:
+        choices = response.get("choices") or []
+        if not choices:
+            return ""
+        message = choices[0].get("message") or {}
+        content = message.get("content", "")
+        if isinstance(content, str):
+            return content
+        if isinstance(content, list):
+            parts = []
+            for item in content:
+                if isinstance(item, dict) and item.get("type") == "text":
+                    parts.append(item.get("text", ""))
+            return "".join(parts)
+        return ""

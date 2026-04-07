@@ -1,11 +1,14 @@
-"""StoryAgent — expands source text into a Story Blueprint.
+"""StoryAgent — expands a natural-language creative brief into a Story Blueprint.
 
-Input:  StoryAgentInput  (draft_idea, constraints, user_provided_text)
+Input:  StoryAgentInput  (creative_brief)
 Output: StoryAgentOutput (Story Blueprint with logline, cast, locations,
         story_arc, scene_outline, metrics)
 
-Coupling: receives canonical `source_text` from orchestrator (mapped to
-`StoryAgentInput.draft_idea` in descriptor); output feeds ScreenplayAgent.
+Single unified input path: ``creative_brief`` arrives via the
+InputResolver-selected ``[creative_brief]`` label.  The LLM
+autonomously decides whether the input is a short prompt to expand
+creatively or a detailed outline to structure faithfully — both cases
+use the same prompt.
 """
 
 from __future__ import annotations
@@ -16,9 +19,13 @@ from ..base_agent import BaseAgent
 from .schema import StoryAgentInput, StoryAgentOutput
 
 STORY_OUTPUT_TEMPLATE = """{
+  "artifact_caption": {
+    "what": "<1-2 sentences: genre, characters, scene count>",
+    "why": "<key creative choices: tone, style, structure>",
+    "scope": "global"
+  },
   "content": {
     "logline": "<one-sentence story hook>",
-    "estimated_duration": { "seconds": 10.0, "confidence": 0.7 },
     "style": {
       "genre": ["<genre1>", "<genre2>"],
       "tone_keywords": ["<tone1>", "<tone2>"]
@@ -70,7 +77,6 @@ STORY_OUTPUT_TEMPLATE = """{
 class StoryAgent(BaseAgent[StoryAgentInput, StoryAgentOutput]):
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
-        self._target_duration_sec: float = 10.0
 
     # ------------------------------------------------------------------
     # Prompts
@@ -78,57 +84,56 @@ class StoryAgent(BaseAgent[StoryAgentInput, StoryAgentOutput]):
 
     def system_prompt(self) -> str:
         return (
-            "You are StoryAgent: produce a Story Blueprint (top-level key `content` only).\n"
+            "You are StoryAgent: produce a Story Blueprint (top-level keys `content` and `artifact_caption`).\n"
             "No dialogue/screenplay prose, shots, camera, keyframes, audio, or editing.\n"
             "IDs: char_001, loc_001, arc_001, sc_001, … — JSON only per user template; "
-            "use empty string/list for unknowns, not null; no meta/metrics; "
-            "include content.estimated_duration."
+            "use empty string/list for unknowns, not null; no meta/metrics.\n\n"
+            "Length budget: this pipeline produces SHORT cinematic videos (typically "
+            "30 seconds, never longer than ~60 seconds). Stay tightly within that budget:\n"
+            "  * scene_outline: 1 scene by default; use 2 only when the story genuinely needs a setting change.\n"
+            "  * Never exceed 2 scenes total.\n"
+            "  * Use the scene's `goal / conflict / turn` fields to carry beats — do NOT manufacture\n"
+            "    extra scenes just to subdivide the action.\n"
+            "  * cast: 1-2 characters; locations: 1-2; story_arc: 3-5 steps.\n\n"
+            "artifact_caption: fill all three fields to describe what you produced:\n"
+            "  what — 1-2 sentences on the story (genre, characters, scenes).\n"
+            "  why  — key creative choices (tone, style, structure decisions).\n"
+            "  scope — always \"global\" for StoryAgent."
         )
 
     def build_user_prompt(self, input_data: StoryAgentInput) -> str:
-        if input_data.user_provided_text:
-            return self._build_structuring_prompt(input_data)
-        return self._build_generate_prompt(input_data)
+        """Single unified prompt — handles both brief prompts and detailed outlines.
 
-    def _build_generate_prompt(self, input_data: StoryAgentInput) -> str:
-        """User prompt for generation mode (brief draft idea → blueprint)."""
-        self._target_duration_sec = 10.0
+        The LLM reads the user's instruction and autonomously decides:
+          * If brief / vague → expand creatively into a full blueprint.
+          * If a detailed outline (with named characters, scenes, beats) →
+            preserve the user's specific elements verbatim and fill in
+            structural fields (motivation, flaw, conflict, turning_point)
+            without rewriting.
+        """
         return (
-            f"Draft idea (raw): {input_data.draft_idea}\n\n"
-            "Infer length and language from the draft only; if unspecified use ~10s and English. "
-            "Scale cast, arc, and scene count to that length. "
-            "Set content.estimated_duration.seconds to your total-runtime estimate.\n\n"
+            "Creative brief (may be a brief idea or a detailed outline):\n"
+            "=== CREATIVE BRIEF ===\n"
+            f"{input_data.creative_brief}\n"
+            "=== END ===\n\n"
+            "Read the brief carefully:\n"
+            "- If it is a SHORT or VAGUE prompt (e.g. 'make a 30s film about a "
+            "cat chasing a butterfly'), expand it creatively into a full "
+            "blueprint with cast, locations, arc, and scene outline.\n"
+            "- If it is a DETAILED OUTLINE with specific characters, locations, "
+            "or plot beats, PRESERVE those elements verbatim. Map the beats "
+            "into story_arc (setup/inciting/turn/crisis/climax/resolution). "
+            "Fill in any missing structural fields (motivation, flaw, conflict, "
+            "turning_point, scene goal/conflict/turn) WITHOUT rewriting what "
+            "the brief already specified.\n\n"
+            "Infer language from the brief; default to English if unspecified. "
+            "Cast size, arc, and scene count must fit the SHORT-video budget defined "
+            "in the system prompt: prefer 1 scene, never more than 2.\n\n"
             f"Output JSON exactly like this template (replace placeholders):\n"
             f"{STORY_OUTPUT_TEMPLATE}\n\n"
-            "Verify: scene_outline location_ids ⊆ locations; referenced character_ids ⊆ cast; "
-            "story_arc and scene_outline orders start at 1 and are contiguous; estimated_duration > 0.\n"
-            "Return JSON only."
-        )
-
-    def _build_structuring_prompt(self, input_data: StoryAgentInput) -> str:
-        """User prompt for structuring mode (detailed outline → blueprint).
-
-        The LLM maps the user's existing characters, locations, and plot
-        points into the Story Blueprint schema while preserving them
-        verbatim.  It fills in any missing structural fields (motivation,
-        flaw, conflict, turning_point) but does NOT rewrite what the user
-        already provided.
-        """
-        self._target_duration_sec = 10.0
-        return (
-            "STRUCTURING MODE: map the user's outline into the Story Blueprint JSON — "
-            "preserve names, locations, and plot beats verbatim; do not rewrite the story.\n"
-            "Map beats → story_arc (setup/inciting/turn/crisis/climax/resolution); "
-            "scenes from the user or one per major beat if missing.\n"
-            "Infer missing fields (logline, style, cast profile/motivation/flaw, "
-            "location descriptions, arc conflict/turning_point, scene goal/conflict/turn). "
-            "IDs: char_001, loc_001, arc_001, sc_001. Length/language from outline; else ~10s, English. "
-            f"estimated_duration within ~±20% of {input_data.constraints.target_duration_sec}s.\n\n"
-            "=== USER OUTLINE ===\n"
-            f"{input_data.user_provided_text}\n"
-            "=== END ===\n\n"
-            f"Output JSON:\n{STORY_OUTPUT_TEMPLATE}\n\n"
-            "Verify: IDs consistent; names preserved; orders from 1; estimated_duration in range.\n"
+            "Verify: scene_outline location_ids ⊆ locations; referenced character_ids "
+            "⊆ cast; story_arc and scene_outline orders start at 1 and are contiguous. "
+            "IDs: char_001, loc_001, arc_001, sc_001.\n"
             "Return JSON only."
         )
 
@@ -136,17 +141,6 @@ class StoryAgent(BaseAgent[StoryAgentInput, StoryAgentOutput]):
         c = output.content
         self._normalize_order(c.story_arc)
         self._normalize_order(c.scene_outline)
-        est = getattr(c, "estimated_duration", None)
-        if est is not None:
-            sec = getattr(est, "seconds", None)
-            if sec is not None:
-                try:
-                    s = float(sec)
-                    if s > 0:
-                        self._target_duration_sec = s
-                except (TypeError, ValueError):
-                    pass
-        output.metrics.target_duration_sec = self._target_duration_sec
         output.metrics.character_count = len(c.cast)
         output.metrics.location_count = len(c.locations)
         output.metrics.scene_count = len(c.scene_outline)

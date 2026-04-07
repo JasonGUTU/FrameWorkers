@@ -1,0 +1,150 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "estimated_duration_sec": 2.5,
+            "actual_duration_sec": 2.5,
+            "video_asset": {
+              "asset_id": "clip_sh_001",
+              "uri": "placeholder",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 2.5,
+              "fps": 24
+            },
+            "video_generation_prompt": "",
+            "video_generation_constraints_json": ""
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "estimated_duration_sec": 2.0,
+            "actual_duration_sec": 2.0,
+            "video_asset": {
+              "asset_id": "clip_sh_002",
+              "uri": "placeholder",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 2.0,
+              "fps": 24
+            },
+            "video_generation_prompt": "",
+            "video_generation_constraints_json": ""
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "estimated_duration_sec": 1.5,
+            "actual_duration_sec": 1.5,
+            "video_asset": {
+              "asset_id": "clip_sh_003",
+              "uri": "placeholder",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 1.5,
+              "fps": 24
+            },
+            "video_generation_prompt": "",
+            "video_generation_constraints_json": ""
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "estimated_duration_sec": 2.0,
+            "actual_duration_sec": 2.0,
+            "video_asset": {
+              "asset_id": "clip_sh_004",
+              "uri": "placeholder",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 2.0,
+              "fps": 24
+            },
+            "video_generation_prompt": "",
+            "video_generation_constraints_json": ""
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 5,
+            "estimated_duration_sec": 2.0,
+            "actual_duration_sec": 2.0,
+            "video_asset": {
+              "asset_id": "clip_sh_005",
+              "uri": "placeholder",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 2.0,
+              "fps": 24
+            },
+            "video_generation_prompt": "",
+            "video_generation_constraints_json": ""
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut",
+            "duration_sec": 0.0
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut",
+            "duration_sec": 0.0
+          },
+          {
+            "from_shot_id": "sh_003",
+            "to_shot_id": "sh_004",
+            "transition_type": "cut",
+            "duration_sec": 0.0
+          },
+          {
+            "from_shot_id": "sh_004",
+            "to_shot_id": "sh_005",
+            "transition_type": "cut",
+            "duration_sec": 0.0
+          }
+        ],
+        "scene_clip_asset": {
+          "asset_id": "clip_sc_001",
+          "uri": "placeholder",
+          "scene_duration_sec": 10.0,
+          "format": "mp4"
+        }
+      }
+    ],
+    "final_video_asset": {
+      "asset_id": "clip_final",
+      "uri": "placeholder",
+      "width": 1024,
+      "height": 576,
+      "format": "mp4",
+      "duration_sec": 10.0,
+      "fps": 24
+    }
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_segment_count": 5,
+    "total_duration_sec": 10.0,
+    "avg_shot_duration_sec": 2.0
+  },
+  "artifact_caption": {
+    "semantic_type": "",
+    "what": "Video package: 1 scene(s), 5 shot clip(s), 10.0s total. Includes per-shot clips, scene assemblies, and final clip.",
+    "why": "Deterministic assembly from screenplay shot structure; no creative LLM decisions.",
+    "scope": "global"
+  }
+}

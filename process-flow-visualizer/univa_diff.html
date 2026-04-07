@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frameworkers — Univa 迁移效果差异</title>
+  <link rel="icon" type="image/svg+xml" href="./logo.svg" />
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .cmp-back {
+      display: inline-block;
+      margin-bottom: 18px;
+      color: #7eb3ff;
+      text-decoration: none;
+      font-size: 0.9em;
+    }
+    .cmp-back:hover { text-decoration: underline; }
+
+    .lead {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 26px;
+      color: #b7c0d0;
+      font-size: 0.92em;
+      line-height: 1.7;
+    }
+    .lead strong { color: #e0e0e0; }
+
+    .diff-section {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 22px 26px;
+      margin-bottom: 26px;
+    }
+    .diff-section h2 {
+      margin: 0 0 4px;
+      font-size: 1.12em;
+      color: #e0e0e0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .diff-section h2 .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(167,139,250,0.18);
+      color: #a78bfa;
+      font-size: 0.85em;
+      font-weight: 700;
+    }
+    .diff-section .sub {
+      color: #888;
+      font-size: 0.85em;
+      margin-bottom: 18px;
+    }
+    .diff-section .effect-tag {
+      display: inline-block;
+      font-size: 0.72em;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      padding: 3px 9px;
+      border-radius: 10px;
+      font-weight: 600;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+    .effect-tag.gain   { background: rgba(74,222,128,0.12); color: #4ade80; border:1px solid rgba(74,222,128,0.3); }
+    .effect-tag.loss   { background: rgba(192,80,58,0.18);  color: #ef8770; border:1px solid rgba(192,80,58,0.4); }
+    .effect-tag.neutral{ background: rgba(167,139,250,0.12);color: #a78bfa; border:1px solid rgba(167,139,250,0.3); }
+    .effect-tag.depends{ background: rgba(251,191,36,0.12); color: #fbbf24; border:1px solid rgba(251,191,36,0.3); }
+
+    .pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .col {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .col.univa { border-left: 3px solid #d4a84b; }
+    .col.fw    { border-left: 3px solid #7eb3ff; }
+    .col-tag {
+      font-size: 0.72em;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #888;
+      font-weight: 600;
+    }
+    .col-title {
+      font-size: 0.95em;
+      font-weight: 600;
+      color: #e0e0e0;
+    }
+    .col p {
+      font-size: 0.86em;
+      color: #aaa;
+      line-height: 1.65;
+    }
+    .col code, .lead code, .effect-line code {
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-size: 0.85em;
+      color: #d4d4d4;
+    }
+    .col ul {
+      margin: 4px 0 0 18px;
+      padding: 0;
+      font-size: 0.85em;
+      color: #aaa;
+      line-height: 1.7;
+    }
+    .col ul li { margin-bottom: 2px; }
+
+    .effect-line {
+      margin-top: 14px;
+      padding: 11px 14px;
+      background: rgba(167,139,250,0.06);
+      border-left: 3px solid #a78bfa;
+      border-radius: 4px;
+      font-size: 0.86em;
+      color: #c9d4e8;
+      line-height: 1.7;
+    }
+    .effect-line strong { color: #e0e0e0; }
+
+    .matrix {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 6px;
+      font-size: 0.86em;
+    }
+    .matrix th, .matrix td {
+      text-align: left;
+      padding: 9px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      vertical-align: top;
+    }
+    .matrix th {
+      color: #888;
+      font-weight: 600;
+      font-size: 0.78em;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .matrix td.dim { color: #888; }
+    .matrix td.hit { color: #4ade80; }
+    .matrix td.miss { color: #ef8770; }
+    .matrix td.diff { color: #fbbf24; }
+
+    /* List-based diff layout */
+    .diff-list {
+      list-style: none;
+      counter-reset: diffitem;
+      padding: 0;
+      margin: 6px 0 0;
+    }
+    .diff-list > li {
+      counter-increment: diffitem;
+      position: relative;
+      padding: 16px 18px 14px 56px;
+      margin-bottom: 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      border-left: 3px solid #a78bfa;
+    }
+    .diff-list > li::before {
+      content: counter(diffitem);
+      position: absolute;
+      left: 16px;
+      top: 17px;
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(167,139,250,0.18);
+      color: #a78bfa;
+      font-weight: 700;
+      font-size: 0.92em;
+    }
+    .li-head {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .li-title {
+      font-size: 0.98em;
+      font-weight: 600;
+      color: #e0e0e0;
+    }
+    .li-body {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .li-body > li {
+      font-size: 0.86em;
+      color: #b7c0d0;
+      line-height: 1.7;
+      padding: 8px 12px;
+      background: rgba(0,0,0,0.18);
+      border-radius: 4px;
+      border-left: 2px solid rgba(255,255,255,0.1);
+    }
+    .li-body > li.univa  { border-left-color: #d4a84b; }
+    .li-body > li.fw     { border-left-color: #7eb3ff; }
+    .li-body > li.impact { border-left-color: #a78bfa; background: rgba(167,139,250,0.07); }
+    .li-body strong { color: #e0e0e0; }
+
+    @media (max-width: 760px) {
+      .pair { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+
+    <header class="header">
+      <a class="cmp-back" href="./index.html">← 返回总览</a>
+      <div class="logo-row">
+        <img class="logo-mark" src="./logo.svg" alt="Frameworkers logo" />
+        <div class="logo-text">
+          <span class="logo-name">Frameworkers</span>
+          <span class="logo-tagline">Univa Migration Diff</span>
+        </div>
+      </div>
+      <div class="header-divider"></div>
+      <div class="header-badge">🔍 Univa 原版 vs 接入 Frameworkers</div>
+      <h1>Univa 迁移效果差异</h1>
+      <p>聚焦"哪些差异会改变最终生成产物的样子",而不是架构层面的工程改造。架构差异请看 <a href="./comparison.html" style="color:#7eb3ff">结果对比</a> 页。</p>
+    </header>
+
+    <div class="lead">
+      只关注一种场景:<strong>左右两边都成功跑完同一段 user prompt 的标准 storyvideo 流水线(storyboard → 角色图 → 关键帧 → I2V → 拼接)</strong>,最终拼出来的那条视频会有哪些可观察的差异。FW 没迁移的能力(音频、entity2video、video extension、video understanding 等)不在本页范围。
+    </div>
+
+    <!-- 主流水线对照表(三方) -->
+    <section class="diff-section">
+      <h2><span class="num">✓</span>主流水线逐步对照(三方)</h2>
+      <div class="sub">两边都成功跑完同一段 user prompt 时,storyvideo 主流水线每一步的对应关系。<br>
+        <strong>左两列(UniVA 原版 vs FW univa 迁移版)</strong>:已经全部对齐 ✓ —— 行为完全等价,只剩底层 T2I/I2V 模型(wavespeed vs fal)和 retry 机制是不可消除的差异(详见下方"差异点")。<br>
+        <strong>右一列(FW 自家原生实现)</strong>:跟 upstream UniVA 比较 —— 状态列只对 FW 自家实现而言。✓ 行为等价 / ⚠ 步骤存在但实现思路不同。
+      </div>
+
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th style="width:4%">#</th>
+            <th style="width:18%">流水线步骤</th>
+            <th style="width:23%">UniVA 原版(<code>univa/</code>)</th>
+            <th style="width:23%">FW univa 迁移版(<code>agents/univa_*</code>)</th>
+            <th style="width:23%">FW 自家原生实现(<code>StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent</code>)</th>
+            <th style="width:9%">native vs upstream</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Storyboard 生成 LLM</td>
+            <td><code>storyboard_gen.txt</code> → 解析 JSON 出 <code>characters</code> / <code>shots</code> / <code>style</code></td>
+            <td><code>univa_storyboard</code> 用同一份 <code>storyboard_gen.txt</code> ✓</td>
+            <td><strong>拆成两步</strong>:<code>StoryAgent</code> 先出 narrative blueprint(<code>cast/locations/story_arc/scene_outline</code>);<code>ScreenplayAgent</code> 再把 scene 展开成 shots,带 camera/framing/continuity_pack,粒度比 upstream 细一档</td>
+            <td class="diff">⚠ 拆步</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>角色描述 LLM refine(每角色一次)</td>
+            <td><code>refine_gen_prompt(media_type="character")</code> + <code>character_prompt_refine.txt</code></td>
+            <td><code>univa_keyframe._refine_one_character</code> + 同一份 prompt 文件,每角色并行 ✓</td>
+            <td><strong>没有"refine 已有描述"这一独立步骤</strong>。角色 prompt 由 <code>KeyFrameAgent</code> L1 global_anchors 阶段从 0 生成 <code>prompt_summary</code>(skeleton-first 模式,1 global LLM call 涵盖 character/location/prop)</td>
+            <td class="diff">⚠ 思路不同</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>角色参考图 T2I(每角色一次)</td>
+            <td><code>text_to_image_generate(refined_char_description)</code></td>
+            <td>materializer Phase 1 → <code>ImageService.generate_image</code> ✓</td>
+            <td><code>KeyFrameAgent.materializer</code> Layer 1 对每个 global anchor(character/location/prop)调 <code>ImageService.generate_image</code>,并行 + 重试至多 10 轮</td>
+            <td class="hit">✓</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>每镜关键帧 prompt(确定性 vs LLM)</td>
+            <td><code>f"{setting} {plot} {static} {distance}, {angle}, {lens}"</code> 确定性拼接</td>
+            <td><code>_compose_keyframe_prompt</code> 用同一公式 ✓</td>
+            <td><strong>不是确定性</strong>。<code>KeyFrameAgent</code> 用 LLM 给每镜生成 <code>prompt_summary</code> —— skeleton-first 模式,1 个 global call + N 个 per-scene call 并行</td>
+            <td class="diff">⚠ LLM 生成</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>关键帧 T2I(空镜,无角色出场)</td>
+            <td><code>text_to_image_generate(keyframe_prompt)</code></td>
+            <td>materializer Phase 2 → <code>ImageService.generate_image</code> ✓</td>
+            <td><code>KeyFrameAgent.materializer</code> L3 阶段无 reference 时走 <code>ImageService.generate_image</code> 纯 T2I 分支</td>
+            <td class="hit">✓</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>关键帧 I2I(带 reference)</td>
+            <td><code>image_to_image_generate(keyframe_prompt, <strong>char_refs</strong>)</code> —— 用角色图当 reference</td>
+            <td>materializer Phase 2 → <code>ImageService.edit_image(<strong>char_refs</strong>, prompt)</code> ✓</td>
+            <td><strong>reference 策略不同</strong>:<code>KeyFrameAgent.materializer</code> L3 默认走 <em>edit-from-scene-loc</em> —— 用<strong>场景 location anchor</strong> 当 reference 做 I2I,<strong>不</strong>用 character refs。可选 <code>FW_ENABLE_PROP_PIPELINE</code> 加 prop refs</td>
+            <td class="diff">⚠ ref 不同</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>每镜 I2V prompt(谁产生)</td>
+            <td>原样复用关键帧 prompt(等同步骤 4 的结果)</td>
+            <td><code>univa_video._compose_video_prompt</code> 与步骤 4 同公式 ✓</td>
+            <td><strong>不在 video 阶段产生</strong>。<code>KeyFrameAgent</code> LLM 在生成 keyframe prompt_summary 的同一次 LLM 调用里,顺手为每 shot 生成 <code>video_motion_hint</code>(1-3 句 subtle motion);<code>VideoAgent</code> 自身完全 LLM-free,只读这个字段</td>
+            <td class="diff">⚠ 由上游 LLM 产生</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>每镜 I2V 视频生成(以关键帧为首帧)</td>
+            <td><code>image_to_video_generate(keyframe, prompt)</code></td>
+            <td>materializer → <code>VideoService.generate_clip(keyframe, prompt)</code> ✓</td>
+            <td><code>VideoAgent.materializer</code> 读 L3 keyframe + <code>video_motion_hint</code> → <code>VideoService.generate_clip</code></td>
+            <td class="hit">✓</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>合成最终视频(concat)</td>
+            <td><code>merge_videos(video_segment_list)</code> 直接 ffmpeg concat 一锅出</td>
+            <td><code>_merge_clips_ffmpeg</code> 同样用 ffmpeg concat demuxer ✓</td>
+            <td><strong>分两层</strong>:先 <code>VideoService.assemble_scene</code> 把 shot clips 拼成 per-scene clip,再 <code>VideoService.assemble_final</code> 把 scene clips 拼成 final;合并算法下沉到 inference 层(底层仍然 ffmpeg 系)</td>
+            <td class="hit">✓</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="diff-section">
+      <h2><span class="num">⚡</span>影响最终视频的差异点(共 2 项)</h2>
+      <div class="sub">每条都包含 ① UniVA 原版怎么做 ② FW 迁移版怎么做 ③ 对最终产物的具体影响。<br>设计目标:让 FW 迁移版本在主流水线行为上和 upstream 完全对齐,只剩"框架原本就有的横向能力"和"底层模型"两类无法消除的差异,方便 A/B 归因。</div>
+
+      <ol class="diff-list">
+        <li>
+          <div class="li-head">
+            <span class="li-title">质量门槛与失败处理</span>
+            <span class="effect-tag gain">FW 输出下限更高</span>
+          </div>
+          <ul class="li-body">
+            <li class="univa"><strong>UniVA 原版:</strong>storyvideo_gen 是顺序 for 循环,某 shot keyframe 失败 → <code>logger.warning</code> + skip;某 shot I2V 失败 → 同样跳过。没有"输出本身好不好"的判定,API 返回成功就采用,产物地板完全取决于模型当次发挥。</li>
+            <li class="fw"><strong>FW 迁移版:</strong><code>BaseAgent.run()</code> 走 L1 结构校验(<code>shot_videos</code> 非空、<code>video_prompt</code> 非空)→ L3 资产 URI 校验,失败则 rework 重试最多 3 次。注:univa_video 的 L2 创意打分维度已置空(<code>creative_dimensions = []</code>),因为生成过程已经无 LLM,没有创意内容可评。</li>
+            <li class="impact"><strong>对效果的影响:</strong>FW 输出最差产物的下限被抬高 —— shot 数对不上 storyboard、缺帧、video URI 落空 这类问题会自动触发重试;UniVA 一次过就采用,bad output 照单全收。代价是 FW 极端情况下消耗更多 token + 更长延迟。这是 FW 框架在 sub-agent 之外提供的"横向能力",不是 univa 主流水线本身的差别。</li>
+          </ul>
+        </li>
+
+        <li>
+          <div class="li-head">
+            <span class="li-title">底层 T2I / I2V 模型本身</span>
+            <span class="effect-tag depends">视觉风格直接差异</span>
+          </div>
+          <ul class="li-body">
+            <li class="univa"><strong>UniVA 原版:</strong>走 <code>utils/wavespeed_api.py</code> → wavespeed seedream-v4 / flux-kontext(T2I)、<code>seedream_v4_edit</code>(I2I)、<code>seedance</code> 等(I2V);模型档位由 <code>config/mcp_tools_config/config.yaml</code> 控制。</li>
+            <li class="fw"><strong>FW 迁移版:</strong>走 <code>inference/generation/{image,video}_generators</code> → fal.ai 系列;模型选择由 <code>inference_runtime.yaml</code> 管,univa_keyframe / univa_video 不知道也不关心后端是谁,可热切换。</li>
+            <li class="impact"><strong>对效果的影响:</strong>这是两版输出最直观的差异来源。即便完全相同的 prompt,wavespeed 和 fal 出来的画面风格、细节质感、动作流畅度都不同。<strong>做盲测时必须先固定底层模型才能归因</strong>,否则唯一剩下的差异(质量门槛 retry)效果会被画面风格差异盖住。</li>
+          </ul>
+        </li>
+      </ol>
+    </section>
+
+  </main>
+</body>
+</html>

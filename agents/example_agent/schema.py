@@ -14,7 +14,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
-from ..common_schema import Meta
+from ..common_schema import ArtifactCaption, Meta
 
 
 # ---------------------------------------------------------------------------
@@ -51,3 +51,4 @@ class ExamplePipelineOutput(BaseModel):
 
     meta: Meta = Field(default_factory=Meta)
     content: SummaryContent = Field(default_factory=SummaryContent)
+    artifact_caption: ArtifactCaption = Field(default_factory=ArtifactCaption)

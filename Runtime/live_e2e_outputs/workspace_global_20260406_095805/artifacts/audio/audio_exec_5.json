@@ -1,0 +1,175 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_duration_sec": 3.5,
+        "narration_segments": [],
+        "music_cue": {
+          "cue_id": "music_sc_001",
+          "scene_id": "sc_001",
+          "mood": "reflective, determined, subtle tension, somber, delicate",
+          "start_sec": 0.0,
+          "end_sec": 3.5,
+          "audio_asset": {
+            "asset_id": "aud_music_sc_001",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/AudioAgent/audio/aud_music_sc_001.wav",
+            "format": "wav",
+            "duration_sec": 3.5,
+            "sample_rate": 44100
+          },
+          "audio_generation_prompt": "{\"kind\": \"music\", \"mood\": \"reflective, determined, subtle tension, somber, delicate\", \"duration_sec\": 3.5, \"scene_id\": \"sc_001\"}"
+        },
+        "ambience_bed": {
+          "ambience_id": "amb_sc_001",
+          "scene_id": "sc_001",
+          "description": "Prominent, rhythmic ticking of a large wall clock, delicate sounds of small tools at work (clicks, faint metallic scrapes), quiet room ambience.",
+          "start_sec": 0.0,
+          "end_sec": 3.5,
+          "audio_asset": {
+            "asset_id": "aud_amb_sc_001",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/AudioAgent/audio/aud_amb_sc_001.wav",
+            "format": "wav",
+            "duration_sec": 3.5,
+            "sample_rate": 44100
+          },
+          "audio_generation_prompt": "{\"kind\": \"ambience\", \"description\": \"Prominent, rhythmic ticking of a large wall clock, delicate sounds of small tools at work (clicks, faint metallic scrapes), quiet room ambience.\", \"duration_sec\": 3.5, \"scene_id\": \"sc_001\"}"
+        },
+        "mix": {
+          "mix_id": "mix_sc_001",
+          "scene_id": "sc_001",
+          "duration_sec": 3.5,
+          "audio_asset": {
+            "asset_id": "aud_mix_sc_001",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/AudioAgent/audio/aud_mix_sc_001.wav",
+            "format": "wav",
+            "duration_sec": 3.5,
+            "sample_rate": 44100
+          }
+        }
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_duration_sec": 3.5,
+        "narration_segments": [],
+        "music_cue": {
+          "cue_id": "music_sc_002",
+          "scene_id": "sc_002",
+          "mood": "mounting tension, frantic, dissonant undertones, desperate, melancholic",
+          "start_sec": 0.0,
+          "end_sec": 3.5,
+          "audio_asset": {
+            "asset_id": "aud_music_sc_002",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/AudioAgent/audio/aud_music_sc_002.wav",
+            "format": "wav",
+            "duration_sec": 3.5,
+            "sample_rate": 44100
+          },
+          "audio_generation_prompt": "{\"kind\": \"music\", \"mood\": \"mounting tension, frantic, dissonant undertones, desperate, melancholic\", \"duration_sec\": 3.5, \"scene_id\": \"sc_002\"}"
+        },
+        "ambience_bed": {
+          "ambience_id": "amb_sc_002",
+          "scene_id": "sc_002",
+          "description": "More insistent, slightly faster wall clock ticking, sounds of fumbling with tiny components, John's strained breathing, subtle creaks of the workshop.",
+          "start_sec": 0.0,
+          "end_sec": 3.5,
+          "audio_asset": {
+            "asset_id": "aud_amb_sc_002",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/AudioAgent/audio/aud_amb_sc_002.wav",
+            "format": "wav",
+            "duration_sec": 3.5,
+            "sample_rate": 44100
+          },
+          "audio_generation_prompt": "{\"kind\": \"ambience\", \"description\": \"More insistent, slightly faster wall clock ticking, sounds of fumbling with tiny components, John's strained breathing, subtle creaks of the workshop.\", \"duration_sec\": 3.5, \"scene_id\": \"sc_002\"}"
+        },
+        "mix": {
+          "mix_id": "mix_sc_002",
+          "scene_id": "sc_002",
+          "duration_sec": 3.5,
+          "audio_asset": {
+            "asset_id": "aud_mix_sc_002",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/AudioAgent/audio/aud_mix_sc_002.wav",
+            "format": "wav",
+            "duration_sec": 3.5,
+            "sample_rate": 44100
+          }
+        }
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "scene_duration_sec": 3.0,
+        "narration_segments": [],
+        "music_cue": {
+          "cue_id": "music_sc_003",
+          "scene_id": "sc_003",
+          "mood": "serene, hopeful, bittersweet, resolved, poignant, gentle",
+          "start_sec": 0.0,
+          "end_sec": 3.0,
+          "audio_asset": {
+            "asset_id": "aud_music_sc_003",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/AudioAgent/audio/aud_music_sc_003.wav",
+            "format": "wav",
+            "duration_sec": 3.0,
+            "sample_rate": 44100
+          },
+          "audio_generation_prompt": "{\"kind\": \"music\", \"mood\": \"serene, hopeful, bittersweet, resolved, poignant, gentle\", \"duration_sec\": 3.0, \"scene_id\": \"sc_003\"}"
+        },
+        "ambience_bed": {
+          "ambience_id": "amb_sc_003",
+          "scene_id": "sc_003",
+          "description": "Wall clock chimes midnight, soft, precise click of the repaired watch, John's gentle sigh of relief, quiet, peaceful room ambience.",
+          "start_sec": 0.0,
+          "end_sec": 3.0,
+          "audio_asset": {
+            "asset_id": "aud_amb_sc_003",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/AudioAgent/audio/aud_amb_sc_003.wav",
+            "format": "wav",
+            "duration_sec": 3.0,
+            "sample_rate": 44100
+          },
+          "audio_generation_prompt": "{\"kind\": \"ambience\", \"description\": \"Wall clock chimes midnight, soft, precise click of the repaired watch, John's gentle sigh of relief, quiet, peaceful room ambience.\", \"duration_sec\": 3.0, \"scene_id\": \"sc_003\"}"
+        },
+        "mix": {
+          "mix_id": "mix_sc_003",
+          "scene_id": "sc_003",
+          "duration_sec": 3.0,
+          "audio_asset": {
+            "asset_id": "aud_mix_sc_003",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/AudioAgent/audio/aud_mix_sc_003.wav",
+            "format": "wav",
+            "duration_sec": 3.0,
+            "sample_rate": 44100
+          }
+        }
+      }
+    ],
+    "final_audio_asset": {
+      "asset_id": "aud_final",
+      "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/AudioAgent/audio/aud_final.wav",
+      "format": "wav",
+      "duration_sec": 10.0,
+      "sample_rate": 44100
+    },
+    "final_delivery_asset": {
+      "asset_id": "delivery_final",
+      "uri": "placeholder",
+      "format": "mp4",
+      "duration_sec": 10.0
+    }
+  },
+  "metrics": {
+    "scene_count": 3,
+    "narration_segment_count": 0,
+    "total_narration_duration_sec": 0,
+    "total_music_duration_sec": 10.0
+  },
+  "artifact_caption": {
+    "semantic_type": "",
+    "what": "3 scenes, 0 narration segments, dedicated music and layered ambience per scene, delivered as mixed stereo audio files.",
+    "why": "Music is composed to follow the protagonist's emotional journey: starting with quiet determination and subtle melancholy, building tension and frustration, and resolving into a poignant sense of peace and bittersweet hope. Ambience reinforces the setting's solitude and the relentless passage of time, with the wall clock's ticking acting as a central motif driving the narrative urgency and eventual resolution.",
+    "scope": "global"
+  }
+}

@@ -17,7 +17,6 @@ from agents.screenplay.agent import ScreenplayAgent
 def test_embed_drops_whole_long_fields_not_slices():
     content = {
         "logline": "A test.",
-        "estimated_duration": {"seconds": 12.0, "confidence": 0.8},
         "style": {"genre": ["drama"], "tone_keywords": ["t1", "t2"]},
         "cast": [
             {

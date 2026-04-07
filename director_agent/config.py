@@ -14,7 +14,7 @@ DIRECTOR_AGENT_DESCRIPTION = os.getenv(
     'DIRECTOR_AGENT_DESCRIPTION',
     'Director Agent responsible for reasoning, planning, and task orchestration'
 )
-# Legacy alias: `AssistantService` reads `ASSISTANT_MEMORY_MODEL` first for global_memory summary LLM.
+# Used by `director_agent.reasoning` as a router-model fallback.
 DIRECTOR_MEMORY_MODEL = os.getenv(
     'DIRECTOR_MEMORY_MODEL',
     os.getenv('INFERENCE_DEFAULT_MODEL', 'google-ai-studio/gemini-2.5-flash')

@@ -25,17 +25,22 @@ def build_input(
     _task_id: str,
     input_bundle_v2: InputBundleV2,
 ) -> BaseModel:
-    """Construct typed input from the pipeline bundle."""
-    resolved = (
-        input_bundle_v2.context.get("resolved_inputs", {})
-        if isinstance(getattr(input_bundle_v2, "context", None), dict)
-        else {}
-    )
-    hints = getattr(input_bundle_v2, "hints", {}) or {}
-    raw = resolved.get("source_text") or hints.get("source_text", "")
-    return ExamplePipelineInput(
-        source_text=raw if isinstance(raw, str) else str(raw),
-    )
+    """Construct typed input from the pipeline bundle.
+
+    NOTE: example_agent is no longer registered in AGENT_REGISTRY (it is kept
+    only as a development template). It still illustrates the canonical
+    label-based input pattern: read from ``resolved_artifacts[label]`` only,
+    never from any hint slot.
+    """
+    resolved = input_bundle_v2.resolved_artifacts
+    entry = resolved.get("creative_brief", {})
+    payload = entry.get("payload", {}) if isinstance(entry, dict) else {}
+    raw = ""
+    if isinstance(payload, dict):
+        raw = str(payload.get("text", "") or "")
+    if not raw and isinstance(entry, dict):
+        raw = str(entry.get("why", "") or "")
+    return ExamplePipelineInput(source_text=raw)
 
 
 CATALOG_ENTRY = (
@@ -53,4 +58,8 @@ DESCRIPTOR = SubAgentDescriptor(
     evaluator_factory=ExamplePipelineEvaluator,
     build_input=build_input,
     materializer_factory=None,
+    input_needs_description=(
+        "Only needs the user-provided source_text to summarize. "
+        "No prior workspace artifacts are required."
+    ),
 )

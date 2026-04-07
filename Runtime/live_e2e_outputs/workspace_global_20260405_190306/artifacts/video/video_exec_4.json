@@ -1,0 +1,80 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "estimated_duration_sec": 3.0,
+            "actual_duration_sec": 3.0,
+            "video_asset": {
+              "asset_id": "clip_sh_001",
+              "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_190306/artifacts/media/VideoAgent/video/clip_sh_001.mp4",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 3.0,
+              "fps": 24
+            },
+            "video_generation_prompt": "The camera executes a slow, subtle push-in, gradually narrowing the view of the room without significant perspective change. | Shot sh_001 | Ref: one L3 still for look; motion from text prefix + below. | Type: establishing | Visual goal: Establish the setting. | Action focus: The room itself. | Scene context: location_id=loc_001, time_of_day=DAY | Camera: angle=eye_level, movement=static | Framing notes: Wide shot of the room. | Anchor images: 1",
+            "video_generation_constraints_json": "{\"shot_id\": \"sh_001\", \"consistency_type\": \"entity_anchor_constraints\", \"keyframe_role\": \"shot_still_l3_only\", \"characters_in_frame\": [], \"scene_context\": {\"scene_id\": \"sc_001\", \"location_id\": \"loc_001\", \"time_of_day\": \"DAY\", \"environment_notes\": [\"Default indoor setting for placeholder content.\"], \"style_notes\": [\"A neutral and functional visual style.\"], \"must_avoid\": [\"Overly dramatic or highly stylized visuals for this placeholder.\"]}, \"visual_goal\": \"Establish the setting.\", \"action_focus\": \"The room itself.\", \"camera\": {\"angle\": \"eye_level\", \"movement\": \"static\", \"framing_notes\": \"Wide shot of the room.\"}, \"storyboard_keyframe_notes\": [\"Empty room view.\"], \"keyframe_prompt_summaries\": [\"Frame a wide, eye-level shot establishing a generic indoor room. The space is functional, with neutral lighting and minimal decor. Show a default setting without strong stylistic elements.\"], \"keyframe_video_motion_hints\": [\"The camera executes a slow, subtle push-in, gradually narrowing the view of the room without significant perspective change.\"]}"
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "estimated_duration_sec": 3.0,
+            "actual_duration_sec": 3.0,
+            "video_asset": {
+              "asset_id": "clip_sh_002",
+              "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_190306/artifacts/media/VideoAgent/video/clip_sh_002.mp4",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 3.0,
+              "fps": 24
+            },
+            "video_generation_prompt": "char_001's head makes a very slight, natural tilt, accompanied by a subtle shift in their facial muscles, indicating active speech. | Shot sh_002 | Ref: one L3 still for look; motion from text prefix + below. | Type: medium | Visual goal: Show character delivering a line. | Action focus: Character's expression. | Characters in frame: char_001 | Scene context: location_id=loc_001, time_of_day=DAY | Camera: angle=eye_level, movement=static | Framing notes: Close-up on character's face. | Anchor images: 1",
+            "video_generation_constraints_json": "{\"shot_id\": \"sh_002\", \"consistency_type\": \"entity_anchor_constraints\", \"keyframe_role\": \"shot_still_l3_only\", \"characters_in_frame\": [\"char_001\"], \"scene_context\": {\"scene_id\": \"sc_001\", \"location_id\": \"loc_001\", \"time_of_day\": \"DAY\", \"environment_notes\": [\"Default indoor setting for placeholder content.\"], \"style_notes\": [\"A neutral and functional visual style.\"], \"must_avoid\": [\"Overly dramatic or highly stylized visuals for this placeholder.\"]}, \"visual_goal\": \"Show character delivering a line.\", \"action_focus\": \"Character's expression.\", \"camera\": {\"angle\": \"eye_level\", \"movement\": \"static\", \"framing_notes\": \"Close-up on character's face.\"}, \"storyboard_keyframe_notes\": [\"Character speaking.\"], \"keyframe_prompt_summaries\": [\"Show a close-up, eye-level shot of char_001's face. The character has a neutral, yet engaged expression, suitable for delivering a line. Lighting is soft and even, highlighting their features directly.\"], \"keyframe_video_motion_hints\": [\"char_001's head makes a very slight, natural tilt, accompanied by a subtle shift in their facial muscles, indicating active speech.\"]}"
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut",
+            "duration_sec": 0.0
+          }
+        ],
+        "scene_clip_asset": {
+          "asset_id": "clip_sc_001",
+          "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_190306/artifacts/media/VideoAgent/video/clip_sc_001.mp4",
+          "scene_duration_sec": 6.0,
+          "format": "mp4"
+        }
+      }
+    ],
+    "final_video_asset": {
+      "asset_id": "clip_final",
+      "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_190306/artifacts/media/VideoAgent/video/clip_final.mp4",
+      "width": 1024,
+      "height": 576,
+      "format": "mp4",
+      "duration_sec": 6.0,
+      "fps": 24
+    }
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_segment_count": 2,
+    "total_duration_sec": 6.0,
+    "avg_shot_duration_sec": 3.0
+  },
+  "artifact_caption": {
+    "what": "Video package: 1 scene(s), 2 shot clip(s), 6.0s total. Includes per-shot clips, scene assemblies, and final clip.",
+    "why": "Deterministic assembly from screenplay shot structure; no creative LLM decisions.",
+    "scope": "global"
+  }
+}

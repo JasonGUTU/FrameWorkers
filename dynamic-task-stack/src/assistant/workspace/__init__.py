@@ -12,5 +12,10 @@ from .file_manager import FileManager
 from .memory_manager import MemoryManager
 from .log_manager import LogManager
 from .asset_manager import AssetManager
+from .artifact_registry import ArtifactRegistry
+from .input_resolver import InputResolver
 
-__all__ = ['Workspace', 'FileManager', 'MemoryManager', 'LogManager', 'AssetManager']
+__all__ = [
+    'Workspace', 'FileManager', 'MemoryManager', 'LogManager',
+    'AssetManager', 'ArtifactRegistry', 'InputResolver',
+]

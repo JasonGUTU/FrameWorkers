@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
-from ..common_schema import Meta
+from ..common_schema import ArtifactCaption, Meta
 
 
 # ---------------------------------------------------------------------------
@@ -17,7 +17,6 @@ class AudioAsset(BaseModel):
     asset_id: str = ""
     uri: str = ""
     format: str = "wav"  # wav | mp3 | aac
-    duration_sec: float = 0.0
     sample_rate: int = 44100
 
 
@@ -28,8 +27,6 @@ class NarrationSegment(BaseModel):
     linked_shot_id: str = ""
     speaker: str = ""
     text: str = Field("", json_schema_extra={"creative": True})
-    start_sec: float = 0.0
-    end_sec: float = 0.0
     audio_asset: AudioAsset = Field(default_factory=AudioAsset)
     audio_generation_prompt: str = ""
 
@@ -40,8 +37,6 @@ class MusicCue(BaseModel):
     cue_id: str = ""
     scene_id: str = ""
     mood: str = Field("", json_schema_extra={"creative": True})
-    start_sec: float = 0.0
-    end_sec: float = 0.0
     audio_asset: AudioAsset = Field(default_factory=AudioAsset)
     audio_generation_prompt: str = ""
 
@@ -52,8 +47,6 @@ class AmbienceBed(BaseModel):
     ambience_id: str = ""
     scene_id: str = ""
     description: str = Field("", json_schema_extra={"creative": True})
-    start_sec: float = 0.0
-    end_sec: float = 0.0
     audio_asset: AudioAsset = Field(default_factory=AudioAsset)
     audio_generation_prompt: str = ""
 
@@ -63,7 +56,6 @@ class AudioMix(BaseModel):
 
     mix_id: str = ""
     scene_id: str = ""
-    duration_sec: float = 0.0
     audio_asset: AudioAsset = Field(default_factory=AudioAsset)
 
 
@@ -73,13 +65,11 @@ class DeliveryVideoAsset(BaseModel):
     asset_id: str = ""
     uri: str = ""
     format: str = "mp4"
-    duration_sec: float = 0.0
 
 
 class AudioScene(BaseModel):
     scene_id: str = ""
     order: int = 0
-    scene_duration_sec: float = 0.0
     narration_segments: list[NarrationSegment] = Field(default_factory=list)
     music_cue: MusicCue = Field(default_factory=MusicCue)
     ambience_bed: AmbienceBed = Field(default_factory=AmbienceBed)
@@ -99,8 +89,6 @@ class AudioContent(BaseModel):
 class AudioMetrics(BaseModel):
     scene_count: int = 0
     narration_segment_count: int = 0
-    total_narration_duration_sec: float = 0.0
-    total_music_duration_sec: float = 0.0
 
 
 # ---------------------------------------------------------------------------
@@ -113,20 +101,28 @@ class AudioPackage(BaseModel):
     meta: Meta = Field(default_factory=Meta)
     content: AudioContent = Field(default_factory=AudioContent)
     metrics: AudioMetrics = Field(default_factory=AudioMetrics)
+    artifact_caption: ArtifactCaption = Field(default_factory=ArtifactCaption)
+    # Per-media-artifact captions keyed by sys_id (e.g. "aud_narr_sc_001_01").
+    # Populated by recompute_metrics(); read by asset_manager to build ArtifactRef entries.
+    # Excluded from JSON snapshot to keep persisted files clean.
+    per_artifact_captions: dict = Field(default_factory=dict, exclude=True)
 
 
 class AudioAgentInput(BaseModel):
     """Input payload for AudioAgent.
 
-    Audio alignment rules:
-      1. Semantic source: unified screenplay shots (dialogue/narration text)
-      2. Timing: shot duration from screenplay + video scene bounds
-      3. Hard boundary: scene (from Video) — max duration
+    Carries everything AudioAgent (LLM pipeline) and AudioMaterializer need:
+
+    - ``screenplay``: the structured screenplay payload (dialogue, scenes,
+      shots) — read by the LLM pipeline to write narration / music.
+    - ``final_video``: the video_package payload from the video step,
+      consulted by the materializer when muxing the final delivery
+      (mp4 with audio). The materializer reads
+      ``content.final_video_asset.uri`` from it to load video bytes.
     """
 
     screenplay: dict = Field(default_factory=dict)
-    video: dict = Field(default_factory=dict)
-    constraints: dict = Field(default_factory=dict)
+    final_video: dict = Field(default_factory=dict)
 
 
 class AudioAgentOutput(AudioPackage):

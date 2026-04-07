@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frameworkers — 多模态输入结果</title>
+  <link rel="icon" type="image/svg+xml" href="./logo.svg" />
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .back { display:inline-block; margin-bottom:18px; color:#a78bfa; text-decoration:none; font-size:0.9em; }
+    .back:hover { text-decoration:underline; }
+
+    .mm-section {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 22px 26px;
+      margin-bottom: 24px;
+    }
+    .mm-section h2 { margin:0 0 6px; font-size:1.15em; color:#e0e0e0; }
+    .mm-section .mm-sub { color:#888; font-size:0.85em; margin-bottom:18px; }
+
+    .mm-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    @media (max-width: 760px) { .mm-grid { grid-template-columns: 1fr; } }
+
+    .mm-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .mm-card.image { border-left: 3px solid #2dd4bf; }
+    .mm-card.audio { border-left: 3px solid #fbbf24; }
+    .mm-card.video { border-left: 3px solid #f97316; }
+    .mm-card.text  { border-left: 3px solid #7eb3ff; }
+
+    .mm-tag {
+      display: inline-block;
+      font-size: 0.72em;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #888;
+      font-weight: 600;
+    }
+    .mm-title { font-size: 0.96em; font-weight: 600; color: #e0e0e0; }
+    .mm-desc  { font-size: 0.85em; color: #aaa; line-height: 1.6; }
+
+    .mm-input-slot {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: rgba(0,0,0,0.35);
+      border: 1px dashed rgba(255,255,255,0.15);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #555;
+      font-size: 0.82em;
+      font-style: italic;
+    }
+    .mm-output-slot {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: rgba(0,0,0,0.35);
+      border: 1px dashed rgba(255,255,255,0.15);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #555;
+      font-size: 0.82em;
+      font-style: italic;
+    }
+    .mm-prompt {
+      font-size: 0.82em;
+      color: #ccc;
+      font-style: italic;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.04);
+      border-left: 2px solid rgba(255,255,255,0.15);
+      border-radius: 3px;
+    }
+    .mm-arrow {
+      text-align: center;
+      color: #64748b;
+      font-size: 1.2em;
+      margin: -2px 0;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+
+    <header class="header">
+      <a class="back" href="./index.html">← 返回总览</a>
+      <div class="logo-row">
+        <img class="logo-mark" src="./logo.svg" alt="Frameworkers logo" />
+        <div class="logo-text">
+          <span class="logo-name">Frameworkers</span>
+          <span class="logo-tagline">Multimodal Input</span>
+        </div>
+      </div>
+      <div class="header-divider"></div>
+      <div class="header-badge">🎨 多模态输入</div>
+      <h1>多模态输入结果展示</h1>
+      <p>把图片 / 音频 / 视频 / 文本作为创作素材或风格参考输入 pipeline，对应产出展示。输入与输出链接待补充。</p>
+    </header>
+
+    <!-- 图片输入 -->
+    <section class="mm-section">
+      <h2>① 图片输入 → KeyFrame anchor</h2>
+      <div class="mm-sub">用户上传的图片作为人物 / 场景 anchor，注入 KeyFrameAgent，跨镜头保持视觉一致性</div>
+      <div class="mm-grid">
+        <div class="mm-card image">
+          <span class="mm-tag">INPUT</span>
+          <div class="mm-title">参考图</div>
+          <div class="mm-desc">用户拖拽上传的角色 / 场景参考，执行时进入 bundle.artifacts，跳过 LLM #1 选择。</div>
+          <div class="mm-input-slot">图片待补充</div>
+        </div>
+        <div class="mm-card video">
+          <span class="mm-tag">OUTPUT</span>
+          <div class="mm-title">生成视频</div>
+          <div class="mm-desc">KeyFrame → Video pipeline 产出，验证人物 / 场景延续到最终成片。</div>
+          <div class="mm-output-slot">video 链接待补充</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 音频输入 -->
+    <section class="mm-section">
+      <h2>② 音频输入 → 音乐 / 配音参考</h2>
+      <div class="mm-sub">用户上传的音频作为 AudioAgent 的风格参考或配乐素材</div>
+      <div class="mm-grid">
+        <div class="mm-card audio">
+          <span class="mm-tag">INPUT</span>
+          <div class="mm-title">参考音频</div>
+          <div class="mm-desc">用作背景音乐风格参考、或直接作为成片配乐素材输入。</div>
+          <div class="mm-input-slot">音频待补充</div>
+        </div>
+        <div class="mm-card video">
+          <span class="mm-tag">OUTPUT</span>
+          <div class="mm-title">成片</div>
+          <div class="mm-desc">含音频整合的最终视频。</div>
+          <div class="mm-output-slot">video 链接待补充</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 视频输入 -->
+    <section class="mm-section">
+      <h2>③ 视频输入 → 风格 / 镜头参考</h2>
+      <div class="mm-sub">用户上传的视频作为镜头语言 / 节奏 / 色彩风格参考</div>
+      <div class="mm-grid">
+        <div class="mm-card video">
+          <span class="mm-tag">INPUT</span>
+          <div class="mm-title">参考视频</div>
+          <div class="mm-desc">作为风格参考输入，影响 ScreenplayAgent 的镜头描述与 VideoAgent 的生成 prompt。</div>
+          <div class="mm-input-slot">video 链接待补充</div>
+        </div>
+        <div class="mm-card video">
+          <span class="mm-tag">OUTPUT</span>
+          <div class="mm-title">风格化产出</div>
+          <div class="mm-desc">复刻参考风格后的成片。</div>
+          <div class="mm-output-slot">video 链接待补充</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 混合输入 -->
+    <section class="mm-section">
+      <h2>④ 混合多模态输入</h2>
+      <div class="mm-sub">同时提供文本 + 图片 + 音频，验证 Assistant 在 Phase 1 同时整合多种素材</div>
+      <div class="mm-grid">
+        <div class="mm-card text">
+          <span class="mm-tag">TEXT</span>
+          <div class="mm-title">文本 prompt</div>
+          <div class="mm-prompt">prompt 待补充</div>
+        </div>
+        <div class="mm-card image">
+          <span class="mm-tag">IMAGE</span>
+          <div class="mm-title">参考图</div>
+          <div class="mm-input-slot">图片待补充</div>
+        </div>
+        <div class="mm-card audio">
+          <span class="mm-tag">AUDIO</span>
+          <div class="mm-title">参考音频</div>
+          <div class="mm-input-slot">音频待补充</div>
+        </div>
+        <div class="mm-card video">
+          <span class="mm-tag">OUTPUT</span>
+          <div class="mm-title">综合产出</div>
+          <div class="mm-output-slot">video 链接待补充</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>

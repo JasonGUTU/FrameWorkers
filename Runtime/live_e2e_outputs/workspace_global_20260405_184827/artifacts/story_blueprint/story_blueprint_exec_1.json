@@ -1,0 +1,84 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-05T18:48:39.014438+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A retired watchmaker races against the final moments before midnight on New Year's Eve to mend his late wife's cherished pocket watch, seeking solace and connection as the new year dawns.",
+    "estimated_duration": {
+      "seconds": 10.0,
+      "confidence": 0.7
+    },
+    "style": {
+      "genre": [
+        "Drama",
+        "Melancholy",
+        "Slice of Life"
+      ],
+      "tone_keywords": [
+        "Reflective",
+        "Hopeful",
+        "Poignant",
+        "Intimate"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Elias",
+        "role": "protagonist",
+        "profile": "An elderly, skilled watchmaker, now retired, whose life is steeped in memories and the quiet precision of his craft. He carries the recent grief of losing his beloved wife.",
+        "motivation": "To honor his late wife's memory by repairing her cherished watch, finding a moment of peace, and feeling a renewed connection to her as a new year begins.",
+        "flaw": "His grief occasionally clouds his focus and creates a deep-seated longing for the past, making it difficult to fully move forward."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Elias's Home Workshop",
+        "description": "A cozy, cluttered space filled with antique tools, magnifying glasses, and the faint scent of oil and old wood. A window shows the dark, winter night, and a prominent wall clock ticks steadily towards midnight."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "climax",
+        "summary": "Elias, with trembling hands, races against the final seconds of the year to complete the delicate repair on his wife's pocket watch. Just as the wall clock strikes midnight and fireworks begin, he makes the final adjustment, and the watch ticks to life, bringing him a bittersweet moment of connection and resolution.",
+        "conflict": "The intense external pressure of time running out for a delicate task clashes with Elias's internal battle against grief and the emotional significance of the watch. Will he succeed before the year ends, or will the moment of connection be lost?",
+        "turning_point": "The very moment the pocket watch starts ticking, perfectly coinciding with the strike of midnight, signifying both a successful repair and a poignant emotional release."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Elias's goal is to successfully repair the pocket watch before the new year begins, achieving a sense of closure and connection.",
+        "conflict": "The primary conflict is the race against the clock and the intricate, delicate nature of the repair, compounded by Elias's emotional state and the profound sentimental value of the watch.",
+        "turn": "The watch begins to tick precisely as the wall clock chimes midnight, marking the successful completion of his task and the beginning of a new, albeit bittersweet, year."
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 10.0,
+    "character_count": 1,
+    "location_count": 1,
+    "scene_count": 1
+  },
+  "artifact_caption": {
+    "what": "A poignant drama about a retired watchmaker racing against time on New Year's Eve to fix his late wife's cherished pocket watch. It features one main character and unfolds within a single, intimate scene.",
+    "why": "The narrative aims for a reflective and hopeful tone, focusing on the character's internal struggle and connection to memory. The short duration dictates a highly concentrated, single-scene structure to maximize emotional impact.",
+    "scope": "global"
+  }
+}

@@ -6,6 +6,21 @@
   <title>Frameworkers — Pipeline I/O</title>
   <link rel="icon" type="image/svg+xml" href="./logo.svg" />
   <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .nav-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+    .nav-btn {
+      display:inline-block; padding:8px 18px; color:#fff; text-decoration:none;
+      border-radius:6px; font-size:0.92em; font-weight:600;
+    }
+    .nav-btn.director   { background:linear-gradient(135deg,#fbbf24,#f97316); }
+    .nav-btn.assistant  { background:linear-gradient(135deg,#4f8ef7,#a78bfa); }
+    .nav-btn.desktop    { background:linear-gradient(135deg,#2dd4bf,#7eb3ff); }
+    .nav-btn.multimodal { background:linear-gradient(135deg,#a78bfa,#f97316); }
+    .nav-btn.tests      { background:linear-gradient(135deg,#5a8a6a,#2dd4bf); }
+    .nav-btn.compare    { background:linear-gradient(135deg,#a78bfa,#4f8ef7); }
+    .nav-btn.univa      { background:linear-gradient(135deg,#d4a84b,#7eb3ff); }
+    .nav-btn.roadmap    { background:linear-gradient(135deg,#2dd4bf,#4f8ef7); }
+  </style>
 </head>
 <body>
   <main class="page">
@@ -20,39 +35,28 @@
       </div>
       <div class="header-divider"></div>
       <div class="header-badge">⚡ Pipeline I/O Visualizer</div>
-      <h1>Pipeline 接口输入输出</h1>
-      <p>静态示意：<code>POST /api/assistant/execute</code> 的请求/响应，以及 Assistant 内部三个执行阶段与 Sub-agent、Workspace 的真实读写边界。</p>
+      <h1>Pipeline 总览</h1>
+      <p>整体结构示意 + HTTP 接口 + Sub-agent / Workspace 边界。input-channel 已统一为 artifact-only：所有原始用户输入先落成 artifact，再经 artifact_registry caption index 召回。Director、Assistant、Desktop、测试与对比分别在各自子页。</p>
+      <div class="nav-row">
+        <a class="nav-btn director"   href="./director.html">🎬 Director</a>
+        <a class="nav-btn assistant"  href="./assistant.html">⚙️ Assistant</a>
+        <a class="nav-btn desktop"    href="./desktop.html">💾 Desktop</a>
+        <a class="nav-btn multimodal" href="./multimodal.html">🎨 多模态输入</a>
+        <a class="nav-btn tests"      href="./tests.html">🧪 Tests</a>
+        <a class="nav-btn compare"    href="./comparison.html">📊 结果对比</a>
+        <a class="nav-btn univa"      href="./univa_diff.html">🔍 Univa 迁移差异</a>
+        <a class="nav-btn roadmap"    href="./roadmap.html">🗺 Roadmap</a>
+      </div>
     </header>
 
     <div id="flowViz"></div>
-    <section id="directorViz"></section>
-    <section id="taskStackViz"></section>
     <section id="httpViz"></section>
-    <section id="phasesViz"></section>
     <section class="two-col-boundaries">
       <div id="subagentViz"></div>
       <div id="workspaceViz"></div>
     </section>
 
-    <!-- Director tests -->
-    <section id="testDirectorNostackViz"></section>
-    <section id="testDtsViz"></section>
-    <!-- Assistant tests -->
-    <section id="testAssistantHttpViz"></section>
-    <section class="two-col-boundaries">
-      <div id="testAssistantServiceViz"></div>
-      <div id="testSerializersViz"></div>
-    </section>
-    <!-- Sub-agents & Workspace -->
-    <section class="two-col-boundaries">
-      <div id="testAgentsViz"></div>
-      <div id="testWorkspaceViz"></div>
-    </section>
-
-    <!-- Roadmap -->
-    <section id="roadmapViz"></section>
-
   </main>
-  <script src="./app.js?v=3"></script>
+  <script src="./app.js?v=13"></script>
 </body>
 </html>

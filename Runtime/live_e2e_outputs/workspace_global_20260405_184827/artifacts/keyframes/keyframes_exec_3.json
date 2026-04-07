@@ -1,0 +1,299 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_type": "character",
+          "entity_id": "char_001",
+          "keyframe_id": "kf_global_char_001",
+          "image_asset": {
+            "asset_id": "img_char_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_184827/artifacts/media/KeyFrameAgent/image/img_char_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "A driven archaeologist in dusty, practical attire, illuminated by the focused beam of her headlamp. Strong shadows obscure much of her face and the simple, dark background, conveying a sense of mystery.",
+          "image_generation_prompt": "A driven archaeologist in dusty, practical attire, illuminated by the focused beam of her headlamp. Strong shadows obscure much of her face and the simple, dark background, conveying a sense of mystery."
+        },
+        {
+          "entity_type": "character",
+          "entity_id": "char_002",
+          "keyframe_id": "kf_global_char_002",
+          "image_asset": {
+            "asset_id": "img_char_002_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_184827/artifacts/media/KeyFrameAgent/image/img_char_002_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "A pragmatic expedition leader, wearing clean, professional gear. Dramatic side lighting casts deep shadows across his face, highlighting his cautious and authoritative expression against a simple, muted background.",
+          "image_generation_prompt": "A pragmatic expedition leader, wearing clean, professional gear. Dramatic side lighting casts deep shadows across his face, highlighting his cautious and authoritative expression against a simple, muted background."
+        }
+      ],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_184827/artifacts/media/KeyFrameAgent/image/img_loc_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "An ancient, crumbling stone chamber featuring eroded architecture. Sparse, flickering torchlight casts long, dancing shadows across the textured walls and floor, creating a deep, mysterious atmosphere.",
+          "image_generation_prompt": "An ancient, crumbling stone chamber featuring eroded architecture. Sparse, flickering torchlight casts long, dancing shadows across the textured walls and floor, creating a deep, mysterious atmosphere."
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "keyframe_id": "kf_char_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_184827/artifacts/media/KeyFrameAgent/image/img_char_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Show her focused, illuminated by a headlamp and flickering torchlight. Frame her with a pose of intense concentration amidst crumbling stone.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nShow her focused, illuminated by a headlamp and flickering torchlight. Frame her with a pose of intense concentration amidst crumbling stone."
+            },
+            {
+              "entity_type": "character",
+              "entity_id": "char_002",
+              "keyframe_id": "kf_char_002_sc_001",
+              "image_asset": {
+                "asset_id": "img_char_002_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_184827/artifacts/media/KeyFrameAgent/image/img_char_002_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Frame him standing alert, inspecting the scene with a cautious demeanor. His posture conveys authority under the dim, mysterious light.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nFrame him standing alert, inspecting the scene with a cautious demeanor. His posture conveys authority under the dim, mysterious light."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_184827/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Highlight the ancient, crumbling stone architecture of the cavern. Emphasize sparse, flickering torchlight creating long, shifting shadows across the dusty environment.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nHighlight the ancient, crumbling stone architecture of the cavern. Emphasize sparse, flickering torchlight creating long, shifting shadows across the dusty environment."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "source_shot_id": "sh_001"
+            },
+            "estimated_duration_sec": 4.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_001",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_184827/artifacts/media/KeyFrameAgent/image/img_sh_001_kf_001.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A medium shot captures Elara intently excavating. Her hands delicately use an archaeological pickaxe on crumbling stone. Her headlamp casts a focused beam, highlighting dust particles in the sparse torchlight. The ancient environment surrounds her, filled with long, shifting shadows.",
+                "video_motion_hint": "Elara's pickaxe makes tiny, careful chipping motions against the stone. Dust motes slowly swirl and catch the light from her headlamp.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA medium shot captures Elara intently excavating. Her hands delicately use an archaeological pickaxe on crumbling stone. Her headlamp casts a focused beam, highlighting dust particles in the sparse torchlight. The ancient environment surrounds her, filled with long, shifting shadows."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "source_shot_id": "sh_002"
+            },
+            "estimated_duration_sec": 3.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_002",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_002",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_184827/artifacts/media/KeyFrameAgent/image/img_sh_002_kf_002.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "An extreme close-up, low-angle shot features a mysterious relic. It emits a soft, pulsing light from its partially obscured form. Intricate, unknown symbols glow faintly on its surface, creating a profound sense of wonder and intrigue.",
+                "video_motion_hint": "The relic's soft light gently pulsates, causing the surrounding air to shimmer subtly. The glowing symbols on its surface appear to slowly shift and deepen in intensity.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nAn extreme close-up, low-angle shot features a mysterious relic. It emits a soft, pulsing light from its partially obscured form. Intricate, unknown symbols glow faintly on its surface, creating a profound sense of wonder and intrigue."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "source": {
+              "source_shot_id": "sh_003"
+            },
+            "estimated_duration_sec": 3.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_003",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_003",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_184827/artifacts/media/KeyFrameAgent/image/img_sh_003_kf_003.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A medium close-up of Elara's face is bathed in the soft, pulsing glow of the relic. Her expression is stunned, a mix of awe and disbelief. Shadows play across her features, emphasizing the dramatic moment of discovery.",
+                "video_motion_hint": "The camera slowly pushes in towards Elara's face. The relic's pulsing light causes subtle shifts in the illumination on her features.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA medium close-up of Elara's face is bathed in the soft, pulsing glow of the relic. Her expression is stunned, a mix of awe and disbelief. Shadows play across her features, emphasizing the dramatic moment of discovery."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "source": {
+              "source_shot_id": "sh_004"
+            },
+            "estimated_duration_sec": 3.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_004",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_004",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_184827/artifacts/media/KeyFrameAgent/image/img_sh_004_kf_004.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A close-up on Elara's face shows her eyes wide with astonishment. Her lips are slightly parted, as if she is about to whisper. The relic's ethereal glow softly illuminates her features, highlighting her profound reaction.",
+                "video_motion_hint": "Elara's lips form a subtle, hushed whisper. Her eyes subtly dart between the relic and the ancient walls.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA close-up on Elara's face shows her eyes wide with astonishment. Her lips are slightly parted, as if she is about to whisper. The relic's ethereal glow softly illuminates her features, highlighting her profound reaction."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 5,
+            "source": {
+              "source_shot_id": "sh_005"
+            },
+            "estimated_duration_sec": 5.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_005",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_005",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_184827/artifacts/media/KeyFrameAgent/image/img_sh_005_kf_005.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A medium-wide shot shows Kai entering the ancient chamber, his figure partially silhouetted against the dim torchlight. He observes Elara in the background, who is mesmerized by the glowing relic. Kai's professional gear contrasts with the crumbling ruins as he assesses the mysterious situation with caution.",
+                "video_motion_hint": "Kai slowly tracks into the frame from the side, his gaze sweeping across the scene. He takes a cautious step forward, then pauses to observe.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA medium-wide shot shows Kai entering the ancient chamber, his figure partially silhouetted against the dim torchlight. He observes Elara in the background, who is mesmerized by the glowing relic. Kai's professional gear contrasts with the crumbling ruins as he assesses the mysterious situation with caution."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 6,
+            "source": {
+              "source_shot_id": "sh_006"
+            },
+            "estimated_duration_sec": 4.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_006",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_006",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_184827/artifacts/media/KeyFrameAgent/image/img_sh_006_kf_006.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A medium shot of Kai, his face etched with concern and skepticism. The relic's soft glow partially illuminates him, casting an unnatural light on his features. He holds a cautious, questioning expression, his eyes fixed on the mysterious object.",
+                "video_motion_hint": "Kai subtly shifts his weight, his eyes narrowing slightly as he considers the relic. He might make a small, hesitant gesture with his hand.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA medium shot of Kai, his face etched with concern and skepticism. The relic's soft glow partially illuminates him, casting an unnatural light on his features. He holds a cautious, questioning expression, his eyes fixed on the mysterious object."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 7,
+            "source": {
+              "source_shot_id": "sh_007"
+            },
+            "estimated_duration_sec": 5.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_007",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_007_kf_007",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_184827/artifacts/media/KeyFrameAgent/image/img_sh_007_kf_007.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A medium close-up of Elara shows her face now conveying a mix of excitement and uncertainty. She looks towards Kai, then her gaze is drawn back to the glowing relic with conviction. The relic's light reflects in her awestruck eyes.",
+                "video_motion_hint": "Elara's head turns from Kai to the glowing relic, her eyes lingering on it. A subtle smile of wonder plays on her lips as she focuses on the object.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA medium close-up of Elara shows her face now conveying a mix of excitement and uncertainty. She looks towards Kai, then her gaze is drawn back to the glowing relic with conviction. The relic's light reflects in her awestruck eyes."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_count": 7,
+    "keyframe_count_total": 7,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 2,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 2,
+    "stability_location_keyframe_count": 1,
+    "stability_prop_keyframe_count": 0
+  },
+  "artifact_caption": {
+    "what": "3 entities (2 characters, 1 location), 3 canonical views, 3 keyframes, Mysterious, suspenseful visual style with heavy contrast.",
+    "why": "Consistency is achieved by applying a core lighting and mood directive across all entity prompts. Key decisions include emphasizing high contrast, deep shadows, and specific atmospheric light sources like flickering torchlight to convey mystery and wonder. Character attire is detailed and practical, location textures are ancient and crumbling.",
+    "scope": "global"
+  }
+}

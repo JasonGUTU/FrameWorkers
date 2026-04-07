@@ -1,0 +1,242 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "estimated_duration_sec": 2.0,
+            "actual_duration_sec": 2.0,
+            "video_asset": {
+              "asset_id": "clip_sh_001",
+              "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_145954/artifacts/media/VideoAgent/video/clip_sh_001.mp4",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 2.0,
+              "fps": 24
+            },
+            "video_generation_prompt": "Elias's shoulders subtly shift with his concentration. The gentle swing of a grandfather clock pendulum is visible in the background. | Shot sh_001 | Ref: one L3 still for look; motion from text prefix + below. | Type: medium | Visual goal: Establish the setting, Elias's meticulous work, and the pervasive sense of time. | Action focus: Elias's concentration and the cluttered, atmospheric workshop. | Characters in frame: char_001 | Scene context: location_id=loc_001, time_of_day=CUSTOM | Camera: angle=eye_level, movement=static | Framing notes: A slightly wide medium shot establishing Elias at his intricate workspace, highlighting the surrounding clocks and the warm light on him. | Anchor images: 1",
+            "video_generation_constraints_json": "{\"shot_id\": \"sh_001\", \"consistency_type\": \"entity_anchor_constraints\", \"keyframe_role\": \"shot_still_l3_only\", \"characters_in_frame\": [\"char_001\"], \"scene_context\": {\"scene_id\": \"sc_001\", \"location_id\": \"loc_001\", \"time_of_day\": \"CUSTOM\", \"environment_notes\": [\"The Chronos Workshop is a dimly lit, cozy space, filled with the nostalgic clutter of a lifetime of watchmaking. Warm, focused lamplight illuminates a small area of the workbench, leaving the rest of the room in soft shadows. The steady, rhythmic ticking of numerous clocks fills the air, subtly increasing in intensity as midnight approaches.\"], \"style_notes\": [\"The visual style should be intimate and atmospheric, using warm, soft practical lighting (like from the lamp) to create a sense of nostalgia and solemnity. Close-ups on Elias's hands and the watch mechanics are crucial for conveying both skill and urgency. A shallow depth of field will keep focus on key actions and Elias's emotional state. The color palette should be rich but muted, with highlights of warm gold and bronze from the clockwork and lamplight.\"], \"must_avoid\": [\"Bright, harsh, or sterile lighting.\", \"Fast-paced editing that distracts from the emotional core or the intricate work.\", \"Overly modern or impersonal aesthetics.\"]}, \"visual_goal\": \"Establish the setting, Elias's meticulous work, and the pervasive sense of time.\", \"action_focus\": \"Elias's concentration and the cluttered, atmospheric workshop.\", \"camera\": {\"angle\": \"eye_level\", \"movement\": \"static\", \"framing_notes\": \"A slightly wide medium shot establishing Elias at his intricate workspace, highlighting the surrounding clocks and the warm light on him.\"}, \"storyboard_keyframe_notes\": [], \"keyframe_prompt_summaries\": [\"A slightly wide medium shot shows Elias Vance seated at his workbench, deeply concentrated on a broken pocket watch. Warm lamplight illuminates his hands and the immediate work area, casting the cluttered workshop into soft, atmospheric shadows. Several clocks are visible in the background, subtly emphasizing the passage of time.\"], \"keyframe_video_motion_hints\": [\"Elias's shoulders subtly shift with his concentration. The gentle swing of a grandfather clock pendulum is visible in the background.\"]}"
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "estimated_duration_sec": 1.5,
+            "actual_duration_sec": 1.5,
+            "video_asset": {
+              "asset_id": "clip_sh_002",
+              "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_145954/artifacts/media/VideoAgent/video/clip_sh_002.mp4",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 1.5,
+              "fps": 24
+            },
+            "video_generation_prompt": "Elias's fingers make minute, precise adjustments to the watch components. The tips of the tweezers quiver slightly with focused effort. | Shot sh_002 | Ref: one L3 still for look; motion from text prefix + below. | Type: close_up | Visual goal: Convey the extreme precision required and Elias's mounting pressure. | Action focus: The intricate watch repair and Elias's hand movements. | Scene context: location_id=loc_001, time_of_day=CUSTOM | Camera: angle=high_angle, movement=static | Framing notes: Tight on Elias's hands and the watch, emphasizing the delicate work and his urgency. | Anchor images: 1",
+            "video_generation_constraints_json": "{\"shot_id\": \"sh_002\", \"consistency_type\": \"entity_anchor_constraints\", \"keyframe_role\": \"shot_still_l3_only\", \"characters_in_frame\": [], \"scene_context\": {\"scene_id\": \"sc_001\", \"location_id\": \"loc_001\", \"time_of_day\": \"CUSTOM\", \"environment_notes\": [\"The Chronos Workshop is a dimly lit, cozy space, filled with the nostalgic clutter of a lifetime of watchmaking. Warm, focused lamplight illuminates a small area of the workbench, leaving the rest of the room in soft shadows. The steady, rhythmic ticking of numerous clocks fills the air, subtly increasing in intensity as midnight approaches.\"], \"style_notes\": [\"The visual style should be intimate and atmospheric, using warm, soft practical lighting (like from the lamp) to create a sense of nostalgia and solemnity. Close-ups on Elias's hands and the watch mechanics are crucial for conveying both skill and urgency. A shallow depth of field will keep focus on key actions and Elias's emotional state. The color palette should be rich but muted, with highlights of warm gold and bronze from the clockwork and lamplight.\"], \"must_avoid\": [\"Bright, harsh, or sterile lighting.\", \"Fast-paced editing that distracts from the emotional core or the intricate work.\", \"Overly modern or impersonal aesthetics.\"]}, \"visual_goal\": \"Convey the extreme precision required and Elias's mounting pressure.\", \"action_focus\": \"The intricate watch repair and Elias's hand movements.\", \"camera\": {\"angle\": \"high_angle\", \"movement\": \"static\", \"framing_notes\": \"Tight on Elias's hands and the watch, emphasizing the delicate work and his urgency.\"}, \"storyboard_keyframe_notes\": [], \"keyframe_prompt_summaries\": [\"A high-angle close-up focuses tightly on Elias's skilled hands, delicately manipulating tiny gears within the pocket watch using fine tweezers. The warm lamplight highlights the intricate mechanics and the subtle tension in his urgent movements. A shallow depth of field keeps the background workbench softly blurred.\"], \"keyframe_video_motion_hints\": [\"Elias's fingers make minute, precise adjustments to the watch components. The tips of the tweezers quiver slightly with focused effort.\"]}"
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "estimated_duration_sec": 1.0,
+            "actual_duration_sec": 1.0,
+            "video_asset": {
+              "asset_id": "clip_sh_003",
+              "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_145954/artifacts/media/VideoAgent/video/clip_sh_003.mp4",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 1.0,
+              "fps": 24
+            },
+            "video_generation_prompt": "A single, tiny gear, disengaged from the others, trembles almost imperceptibly as if attempting to find its connection point. | Shot sh_003 | Ref: one L3 still for look; motion from text prefix + below. | Type: extreme_close_up | Visual goal: Show the complexity and current failure of the watch, highlighting the immediate obstacle. | Action focus: The static, non-meshing gears of the watch. | Scene context: location_id=loc_001, time_of_day=CUSTOM | Camera: angle=eye_level, movement=static | Framing notes: Abstract, almost microscopic view of the watch's inner workings. | Anchor images: 1",
+            "video_generation_constraints_json": "{\"shot_id\": \"sh_003\", \"consistency_type\": \"entity_anchor_constraints\", \"keyframe_role\": \"shot_still_l3_only\", \"characters_in_frame\": [], \"scene_context\": {\"scene_id\": \"sc_001\", \"location_id\": \"loc_001\", \"time_of_day\": \"CUSTOM\", \"environment_notes\": [\"The Chronos Workshop is a dimly lit, cozy space, filled with the nostalgic clutter of a lifetime of watchmaking. Warm, focused lamplight illuminates a small area of the workbench, leaving the rest of the room in soft shadows. The steady, rhythmic ticking of numerous clocks fills the air, subtly increasing in intensity as midnight approaches.\"], \"style_notes\": [\"The visual style should be intimate and atmospheric, using warm, soft practical lighting (like from the lamp) to create a sense of nostalgia and solemnity. Close-ups on Elias's hands and the watch mechanics are crucial for conveying both skill and urgency. A shallow depth of field will keep focus on key actions and Elias's emotional state. The color palette should be rich but muted, with highlights of warm gold and bronze from the clockwork and lamplight.\"], \"must_avoid\": [\"Bright, harsh, or sterile lighting.\", \"Fast-paced editing that distracts from the emotional core or the intricate work.\", \"Overly modern or impersonal aesthetics.\"]}, \"visual_goal\": \"Show the complexity and current failure of the watch, highlighting the immediate obstacle.\", \"action_focus\": \"The static, non-meshing gears of the watch.\", \"camera\": {\"angle\": \"eye_level\", \"movement\": \"static\", \"framing_notes\": \"Abstract, almost microscopic view of the watch's inner workings.\"}, \"storyboard_keyframe_notes\": [], \"keyframe_prompt_summaries\": [\"An extreme close-up provides an almost microscopic view of the pocket watch's inner workings. Tiny, golden and bronze gears are visible, some static and misaligned, illustrating the immediate problem. The metal surfaces reflect the warm lamplight, emphasizing the intricate yet currently broken mechanism.\"], \"keyframe_video_motion_hints\": [\"A single, tiny gear, disengaged from the others, trembles almost imperceptibly as if attempting to find its connection point.\"]}"
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "estimated_duration_sec": 1.0,
+            "actual_duration_sec": 1.0,
+            "video_asset": {
+              "asset_id": "clip_sh_004",
+              "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_145954/artifacts/media/VideoAgent/video/clip_sh_004.mp4",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 1.0,
+              "fps": 24
+            },
+            "video_generation_prompt": "The minute hand of the grandfather clock glides forward with a nearly imperceptible, continuous motion, inching closer to midnight. | Shot sh_004 | Ref: one L3 still for look; motion from text prefix + below. | Type: close_up | Visual goal: Reinforce the urgency and the impending deadline of midnight. | Action focus: The movement of the minute hand towards midnight. | Scene context: location_id=loc_001, time_of_day=CUSTOM | Camera: angle=eye_level, movement=static | Framing notes: Emphasize the time-critical nature of the scene. | Anchor images: 1",
+            "video_generation_constraints_json": "{\"shot_id\": \"sh_004\", \"consistency_type\": \"entity_anchor_constraints\", \"keyframe_role\": \"shot_still_l3_only\", \"characters_in_frame\": [], \"scene_context\": {\"scene_id\": \"sc_001\", \"location_id\": \"loc_001\", \"time_of_day\": \"CUSTOM\", \"environment_notes\": [\"The Chronos Workshop is a dimly lit, cozy space, filled with the nostalgic clutter of a lifetime of watchmaking. Warm, focused lamplight illuminates a small area of the workbench, leaving the rest of the room in soft shadows. The steady, rhythmic ticking of numerous clocks fills the air, subtly increasing in intensity as midnight approaches.\"], \"style_notes\": [\"The visual style should be intimate and atmospheric, using warm, soft practical lighting (like from the lamp) to create a sense of nostalgia and solemnity. Close-ups on Elias's hands and the watch mechanics are crucial for conveying both skill and urgency. A shallow depth of field will keep focus on key actions and Elias's emotional state. The color palette should be rich but muted, with highlights of warm gold and bronze from the clockwork and lamplight.\"], \"must_avoid\": [\"Bright, harsh, or sterile lighting.\", \"Fast-paced editing that distracts from the emotional core or the intricate work.\", \"Overly modern or impersonal aesthetics.\"]}, \"visual_goal\": \"Reinforce the urgency and the impending deadline of midnight.\", \"action_focus\": \"The movement of the minute hand towards midnight.\", \"camera\": {\"angle\": \"eye_level\", \"movement\": \"static\", \"framing_notes\": \"Emphasize the time-critical nature of the scene.\"}, \"storyboard_keyframe_notes\": [], \"keyframe_prompt_summaries\": [\"A close-up captures the face of a stately grandfather clock, its ornate hands positioned just moments before midnight. The minute hand is poised on the cusp of the hour. A soft, warm glow from the workshop's lighting accentuates the clock's elegant details and the impending deadline.\"], \"keyframe_video_motion_hints\": [\"The minute hand of the grandfather clock glides forward with a nearly imperceptible, continuous motion, inching closer to midnight.\"]}"
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 5,
+            "estimated_duration_sec": 1.0,
+            "actual_duration_sec": 1.0,
+            "video_asset": {
+              "asset_id": "clip_sh_005",
+              "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_145954/artifacts/media/VideoAgent/video/clip_sh_005.mp4",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 1.0,
+              "fps": 24
+            },
+            "video_generation_prompt": "A subtle furrowing of Elias's brow and a slight clenching of his jaw hint at the internal pressure he feels. | Shot sh_005 | Ref: one L3 still for look; motion from text prefix + below. | Type: medium_close_up | Visual goal: Show Elias's internal struggle and unwavering resolve. | Action focus: Elias's facial expressions and emotional intensity. | Characters in frame: char_001 | Scene context: location_id=loc_001, time_of_day=CUSTOM | Camera: angle=eye_level, movement=static | Framing notes: Intimate shot on Elias's emotional state and determination. | Anchor images: 1",
+            "video_generation_constraints_json": "{\"shot_id\": \"sh_005\", \"consistency_type\": \"entity_anchor_constraints\", \"keyframe_role\": \"shot_still_l3_only\", \"characters_in_frame\": [\"char_001\"], \"scene_context\": {\"scene_id\": \"sc_001\", \"location_id\": \"loc_001\", \"time_of_day\": \"CUSTOM\", \"environment_notes\": [\"The Chronos Workshop is a dimly lit, cozy space, filled with the nostalgic clutter of a lifetime of watchmaking. Warm, focused lamplight illuminates a small area of the workbench, leaving the rest of the room in soft shadows. The steady, rhythmic ticking of numerous clocks fills the air, subtly increasing in intensity as midnight approaches.\"], \"style_notes\": [\"The visual style should be intimate and atmospheric, using warm, soft practical lighting (like from the lamp) to create a sense of nostalgia and solemnity. Close-ups on Elias's hands and the watch mechanics are crucial for conveying both skill and urgency. A shallow depth of field will keep focus on key actions and Elias's emotional state. The color palette should be rich but muted, with highlights of warm gold and bronze from the clockwork and lamplight.\"], \"must_avoid\": [\"Bright, harsh, or sterile lighting.\", \"Fast-paced editing that distracts from the emotional core or the intricate work.\", \"Overly modern or impersonal aesthetics.\"]}, \"visual_goal\": \"Show Elias's internal struggle and unwavering resolve.\", \"action_focus\": \"Elias's facial expressions and emotional intensity.\", \"camera\": {\"angle\": \"eye_level\", \"movement\": \"static\", \"framing_notes\": \"Intimate shot on Elias's emotional state and determination.\"}, \"storyboard_keyframe_notes\": [], \"keyframe_prompt_summaries\": [\"A medium close-up intimately frames Elias's face, illuminated by the soft lamplight. His weathered features convey a deep mix of intense concentration, lingering grief, and unwavering determination. His eyes, fixed on his work, reflect the immense emotional investment in the task at hand.\"], \"keyframe_video_motion_hints\": [\"A subtle furrowing of Elias's brow and a slight clenching of his jaw hint at the internal pressure he feels.\"]}"
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 6,
+            "estimated_duration_sec": 1.0,
+            "actual_duration_sec": 1.0,
+            "video_asset": {
+              "asset_id": "clip_sh_006",
+              "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_145954/artifacts/media/VideoAgent/video/clip_sh_006.mp4",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 1.0,
+              "fps": 24
+            },
+            "video_generation_prompt": "The screwdriver makes a final, decisive quarter-turn. Immediately, a small gear inside the watch visibly clicks into its correct position and twitches once. | Shot sh_006 | Ref: one L3 still for look; motion from text prefix + below. | Type: close_up | Visual goal: Highlight the moment of successful repair and the intricate mechanics. | Action focus: The click of the gears and the successful adjustment. | Scene context: location_id=loc_001, time_of_day=CUSTOM | Camera: angle=high_angle, movement=static | Framing notes: Focus on the successful mechanical connection. | Anchor images: 1",
+            "video_generation_constraints_json": "{\"shot_id\": \"sh_006\", \"consistency_type\": \"entity_anchor_constraints\", \"keyframe_role\": \"shot_still_l3_only\", \"characters_in_frame\": [], \"scene_context\": {\"scene_id\": \"sc_001\", \"location_id\": \"loc_001\", \"time_of_day\": \"CUSTOM\", \"environment_notes\": [\"The Chronos Workshop is a dimly lit, cozy space, filled with the nostalgic clutter of a lifetime of watchmaking. Warm, focused lamplight illuminates a small area of the workbench, leaving the rest of the room in soft shadows. The steady, rhythmic ticking of numerous clocks fills the air, subtly increasing in intensity as midnight approaches.\"], \"style_notes\": [\"The visual style should be intimate and atmospheric, using warm, soft practical lighting (like from the lamp) to create a sense of nostalgia and solemnity. Close-ups on Elias's hands and the watch mechanics are crucial for conveying both skill and urgency. A shallow depth of field will keep focus on key actions and Elias's emotional state. The color palette should be rich but muted, with highlights of warm gold and bronze from the clockwork and lamplight.\"], \"must_avoid\": [\"Bright, harsh, or sterile lighting.\", \"Fast-paced editing that distracts from the emotional core or the intricate work.\", \"Overly modern or impersonal aesthetics.\"]}, \"visual_goal\": \"Highlight the moment of successful repair and the intricate mechanics.\", \"action_focus\": \"The click of the gears and the successful adjustment.\", \"camera\": {\"angle\": \"high_angle\", \"movement\": \"static\", \"framing_notes\": \"Focus on the successful mechanical connection.\"}, \"storyboard_keyframe_notes\": [], \"keyframe_prompt_summaries\": [\"A high-angle close-up returns to Elias's hands and the pocket watch. A small screwdriver completes a delicate, final adjustment. Inside the watch, tiny gears click into perfect alignment, catching glints of warm light. The golden and bronze tones glow with the success of the repair.\"], \"keyframe_video_motion_hints\": [\"The screwdriver makes a final, decisive quarter-turn. Immediately, a small gear inside the watch visibly clicks into its correct position and twitches once.\"]}"
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 7,
+            "estimated_duration_sec": 1.5,
+            "actual_duration_sec": 1.5,
+            "video_asset": {
+              "asset_id": "clip_sh_007",
+              "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_145954/artifacts/media/VideoAgent/video/clip_sh_007.mp4",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 1.5,
+              "fps": 24
+            },
+            "video_generation_prompt": "Elias slowly lifts his head, his eyes moving from the pocket watch in his hands to the grandfather clock, a slight tilt of his head indicating his listening. | Shot sh_007 | Ref: one L3 still for look; motion from text prefix + below. | Type: medium | Visual goal: Build suspense as Elias waits for the watch to chime and midnight to strike. | Action focus: Elias's hopeful listening and the grandfather clock's final ticks. | Characters in frame: char_001 | Scene context: location_id=loc_001, time_of_day=CUSTOM | Camera: angle=eye_level, movement=static | Framing notes: Capture Elias's anticipation and the looming presence of the grandfather clock. | Anchor images: 1",
+            "video_generation_constraints_json": "{\"shot_id\": \"sh_007\", \"consistency_type\": \"entity_anchor_constraints\", \"keyframe_role\": \"shot_still_l3_only\", \"characters_in_frame\": [\"char_001\"], \"scene_context\": {\"scene_id\": \"sc_001\", \"location_id\": \"loc_001\", \"time_of_day\": \"CUSTOM\", \"environment_notes\": [\"The Chronos Workshop is a dimly lit, cozy space, filled with the nostalgic clutter of a lifetime of watchmaking. Warm, focused lamplight illuminates a small area of the workbench, leaving the rest of the room in soft shadows. The steady, rhythmic ticking of numerous clocks fills the air, subtly increasing in intensity as midnight approaches.\"], \"style_notes\": [\"The visual style should be intimate and atmospheric, using warm, soft practical lighting (like from the lamp) to create a sense of nostalgia and solemnity. Close-ups on Elias's hands and the watch mechanics are crucial for conveying both skill and urgency. A shallow depth of field will keep focus on key actions and Elias's emotional state. The color palette should be rich but muted, with highlights of warm gold and bronze from the clockwork and lamplight.\"], \"must_avoid\": [\"Bright, harsh, or sterile lighting.\", \"Fast-paced editing that distracts from the emotional core or the intricate work.\", \"Overly modern or impersonal aesthetics.\"]}, \"visual_goal\": \"Build suspense as Elias waits for the watch to chime and midnight to strike.\", \"action_focus\": \"Elias's hopeful listening and the grandfather clock's final ticks.\", \"camera\": {\"angle\": \"eye_level\", \"movement\": \"static\", \"framing_notes\": \"Capture Elias's anticipation and the looming presence of the grandfather clock.\"}, \"storyboard_keyframe_notes\": [], \"keyframe_prompt_summaries\": [\"A medium shot shows Elias looking up from the newly repaired pocket watch, which he holds delicately in his hands. His gaze is directed expectantly towards the grandfather clock in the softly shadowed background. Anticipation is etched clearly on his face as he waits.\"], \"keyframe_video_motion_hints\": [\"Elias slowly lifts his head, his eyes moving from the pocket watch in his hands to the grandfather clock, a slight tilt of his head indicating his listening.\"]}"
+          },
+          {
+            "shot_id": "sh_008",
+            "order": 8,
+            "estimated_duration_sec": 1.0,
+            "actual_duration_sec": 1.0,
+            "video_asset": {
+              "asset_id": "clip_sh_008",
+              "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_145954/artifacts/media/VideoAgent/video/clip_sh_008.mp4",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 1.0,
+              "fps": 24
+            },
+            "video_generation_prompt": "The tiny hammer inside the pocket watch swings decisively, strikes a bell, and then gently retracts, producing a delicate chime. | Shot sh_008 | Ref: one L3 still for look; motion from text prefix + below. | Type: close_up | Visual goal: Visually and audibly mark the successful repair and the arrival of the new year. | Action focus: The chiming of both clocks. | Scene context: location_id=loc_001, time_of_day=CUSTOM | Camera: angle=eye_level, movement=static | Framing notes: Emphasize the synchronicity of the two chimes, the restored life of the watch. | Anchor images: 1",
+            "video_generation_constraints_json": "{\"shot_id\": \"sh_008\", \"consistency_type\": \"entity_anchor_constraints\", \"keyframe_role\": \"shot_still_l3_only\", \"characters_in_frame\": [], \"scene_context\": {\"scene_id\": \"sc_001\", \"location_id\": \"loc_001\", \"time_of_day\": \"CUSTOM\", \"environment_notes\": [\"The Chronos Workshop is a dimly lit, cozy space, filled with the nostalgic clutter of a lifetime of watchmaking. Warm, focused lamplight illuminates a small area of the workbench, leaving the rest of the room in soft shadows. The steady, rhythmic ticking of numerous clocks fills the air, subtly increasing in intensity as midnight approaches.\"], \"style_notes\": [\"The visual style should be intimate and atmospheric, using warm, soft practical lighting (like from the lamp) to create a sense of nostalgia and solemnity. Close-ups on Elias's hands and the watch mechanics are crucial for conveying both skill and urgency. A shallow depth of field will keep focus on key actions and Elias's emotional state. The color palette should be rich but muted, with highlights of warm gold and bronze from the clockwork and lamplight.\"], \"must_avoid\": [\"Bright, harsh, or sterile lighting.\", \"Fast-paced editing that distracts from the emotional core or the intricate work.\", \"Overly modern or impersonal aesthetics.\"]}, \"visual_goal\": \"Visually and audibly mark the successful repair and the arrival of the new year.\", \"action_focus\": \"The chiming of both clocks.\", \"camera\": {\"angle\": \"eye_level\", \"movement\": \"static\", \"framing_notes\": \"Emphasize the synchronicity of the two chimes, the restored life of the watch.\"}, \"storyboard_keyframe_notes\": [], \"keyframe_prompt_summaries\": [\"A close-up highlights the pocket watch, its restored mechanism now fully visible and operational. A tiny hammer is poised to strike the chime inside. Golden light reflects brightly from its polished surfaces, signaling the success. The background blurs softly, emphasizing the watch.\"], \"keyframe_video_motion_hints\": [\"The tiny hammer inside the pocket watch swings decisively, strikes a bell, and then gently retracts, producing a delicate chime.\"]}"
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 9,
+            "estimated_duration_sec": 1.0,
+            "actual_duration_sec": 1.0,
+            "video_asset": {
+              "asset_id": "clip_sh_009",
+              "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_145954/artifacts/media/VideoAgent/video/clip_sh_009.mp4",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 1.0,
+              "fps": 24
+            },
+            "video_generation_prompt": "A slow, deep, relieved breath causes Elias's chest to rise and fall subtly. A single, glistening tear slowly traces a path down his cheek. | Shot sh_009 | Ref: one L3 still for look; motion from text prefix + below. | Type: medium_close_up | Visual goal: Show the emotional resolution and Elias finding peace. | Action focus: Elias's quiet smile and tearful eyes. | Characters in frame: char_001 | Scene context: location_id=loc_001, time_of_day=CUSTOM | Camera: angle=eye_level, movement=static | Framing notes: Focus on Elias's emotional release and peace. | Anchor images: 1",
+            "video_generation_constraints_json": "{\"shot_id\": \"sh_009\", \"consistency_type\": \"entity_anchor_constraints\", \"keyframe_role\": \"shot_still_l3_only\", \"characters_in_frame\": [\"char_001\"], \"scene_context\": {\"scene_id\": \"sc_001\", \"location_id\": \"loc_001\", \"time_of_day\": \"CUSTOM\", \"environment_notes\": [\"The Chronos Workshop is a dimly lit, cozy space, filled with the nostalgic clutter of a lifetime of watchmaking. Warm, focused lamplight illuminates a small area of the workbench, leaving the rest of the room in soft shadows. The steady, rhythmic ticking of numerous clocks fills the air, subtly increasing in intensity as midnight approaches.\"], \"style_notes\": [\"The visual style should be intimate and atmospheric, using warm, soft practical lighting (like from the lamp) to create a sense of nostalgia and solemnity. Close-ups on Elias's hands and the watch mechanics are crucial for conveying both skill and urgency. A shallow depth of field will keep focus on key actions and Elias's emotional state. The color palette should be rich but muted, with highlights of warm gold and bronze from the clockwork and lamplight.\"], \"must_avoid\": [\"Bright, harsh, or sterile lighting.\", \"Fast-paced editing that distracts from the emotional core or the intricate work.\", \"Overly modern or impersonal aesthetics.\"]}, \"visual_goal\": \"Show the emotional resolution and Elias finding peace.\", \"action_focus\": \"Elias's quiet smile and tearful eyes.\", \"camera\": {\"angle\": \"eye_level\", \"movement\": \"static\", \"framing_notes\": \"Focus on Elias's emotional release and peace.\"}, \"storyboard_keyframe_notes\": [], \"keyframe_prompt_summaries\": [\"A medium close-up focuses on Elias's face, now softened by a quiet, gentle smile. His eyes, glistening with unshed tears, convey a profound sense of peace and emotional release. He holds the now-chiming pocket watch close to his chest, cradling it gently.\"], \"keyframe_video_motion_hints\": [\"A slow, deep, relieved breath causes Elias's chest to rise and fall subtly. A single, glistening tear slowly traces a path down his cheek.\"]}"
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut",
+            "duration_sec": 0.0
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut",
+            "duration_sec": 0.0
+          },
+          {
+            "from_shot_id": "sh_003",
+            "to_shot_id": "sh_004",
+            "transition_type": "cut",
+            "duration_sec": 0.0
+          },
+          {
+            "from_shot_id": "sh_004",
+            "to_shot_id": "sh_005",
+            "transition_type": "cut",
+            "duration_sec": 0.0
+          },
+          {
+            "from_shot_id": "sh_005",
+            "to_shot_id": "sh_006",
+            "transition_type": "cut",
+            "duration_sec": 0.0
+          },
+          {
+            "from_shot_id": "sh_006",
+            "to_shot_id": "sh_007",
+            "transition_type": "cut",
+            "duration_sec": 0.0
+          },
+          {
+            "from_shot_id": "sh_007",
+            "to_shot_id": "sh_008",
+            "transition_type": "cut",
+            "duration_sec": 0.0
+          },
+          {
+            "from_shot_id": "sh_008",
+            "to_shot_id": "sh_009",
+            "transition_type": "cut",
+            "duration_sec": 0.0
+          }
+        ],
+        "scene_clip_asset": {
+          "asset_id": "clip_sc_001",
+          "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_145954/artifacts/media/VideoAgent/video/clip_sc_001.mp4",
+          "scene_duration_sec": 11.0,
+          "format": "mp4"
+        }
+      }
+    ],
+    "final_video_asset": {
+      "asset_id": "clip_final",
+      "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_145954/artifacts/media/VideoAgent/video/clip_final.mp4",
+      "width": 1024,
+      "height": 576,
+      "format": "mp4",
+      "duration_sec": 11.0,
+      "fps": 24
+    }
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_segment_count": 9,
+    "total_duration_sec": 11.0,
+    "avg_shot_duration_sec": 1.2222222222222223
+  },
+  "artifact_caption": {
+    "what": "Video package: 1 scene(s), 9 shot clip(s), 11.0s total. Includes per-shot clips, scene assemblies, and final clip.",
+    "why": "Deterministic assembly from screenplay shot structure; no creative LLM decisions.",
+    "scope": "global",
+    "usable_by": "AudioAgent"
+  }
+}

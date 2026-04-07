@@ -1,0 +1,51 @@
+{
+  "counter": 2,
+  "files": {
+    "file_000001_135c672e": {
+      "id": "file_000001_135c672e",
+      "filename": "story_exec_1.json",
+      "description": "Structured JSON snapshot for StoryAgent (exec_1_f1bcd0d9)",
+      "file_type": "text",
+      "file_extension": ".json",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_003705/artifacts/story/story_exec_1.json",
+      "size_bytes": 5523,
+      "created_at": "2026-04-06T00:37:22.565945",
+      "created_by": "StoryAgent",
+      "tags": [
+        "StoryAgent",
+        "task_1_90f15e8e",
+        "asset_json"
+      ],
+      "metadata": {
+        "execution_id": "exec_1_f1bcd0d9",
+        "task_id": "task_1_90f15e8e",
+        "producer_agent_id": "StoryAgent",
+        "asset_key": "story",
+        "asset_variant": "json_snapshot"
+      }
+    },
+    "file_000002_45732743": {
+      "id": "file_000002_45732743",
+      "filename": "screenplay_exec_2.json",
+      "description": "Structured JSON snapshot for ScreenplayAgent (exec_2_d9f4c4b7)",
+      "file_type": "text",
+      "file_extension": ".json",
+      "file_path": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_003705/artifacts/screenplay/screenplay_exec_2.json",
+      "size_bytes": 19769,
+      "created_at": "2026-04-06T00:37:53.950649",
+      "created_by": "ScreenplayAgent",
+      "tags": [
+        "ScreenplayAgent",
+        "task_1_90f15e8e",
+        "asset_json"
+      ],
+      "metadata": {
+        "execution_id": "exec_2_d9f4c4b7",
+        "task_id": "task_1_90f15e8e",
+        "producer_agent_id": "ScreenplayAgent",
+        "asset_key": "screenplay",
+        "asset_variant": "json_snapshot"
+      }
+    }
+  }
+}

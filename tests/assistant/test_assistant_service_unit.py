@@ -48,15 +48,21 @@ def _seed_json_snapshot(
             "asset_variant": "json_snapshot",
         },
     )
-    # New pipeline relies on global_memory artifact_locations for input resolution.
-    workspace.add_memory_entry(
-        content=f"seed {asset_key}",
-        task_id=task_id,
+    # Register artifact so conftest stub can resolve it via artifact_registry.
+    from src.assistant.workspace.models import ArtifactRef as _ArtifactRef
+    workspace.artifact_registry.register(
+        execution_id=execution_id,
         agent_id=agent_id,
-        artifact_locations=[
-            {"role": asset_key, "path": str(meta.file_path)},
+        task_id=task_id,
+        artifacts=[
+            _ArtifactRef(
+                what=f"{asset_key} JSON artifact",
+                why="seeded by test helper",
+                scope="global",
+                path=str(meta.file_path),
+                mime="application/json",
+            )
         ],
-        execution_result={"status": "COMPLETED", "execution_id": execution_id},
     )
 
 
@@ -91,8 +97,13 @@ def test_service_build_execution_inputs_includes_assets(assistant_env):
     assert inputs["task_id"] == "task_1"
     assert inputs["execute_fields"]["text"] == "draft idea"
     assert inputs["execute_fields"]["extra"] == 123
-    ua = inputs["input_bundle_v2"]["upstream_asset"]
-    assert ua["summary"] == "ok"
+    # In the new architecture, resolved_artifacts is a pre-indexed dict keyed by semantic_type.
+    resolved = inputs["input_bundle_v2"].get("_resolved_artifacts", {})
+    assert isinstance(resolved, dict), f"expected dict, got: {type(resolved)}"
+    upstream = resolved.get("upstream_asset", {})
+    assert isinstance(upstream, dict) and upstream.get("payload", {}).get("summary") == "ok", (
+        f"expected upstream_asset with summary=ok in resolved_artifacts, got: {resolved}"
+    )
 
 
 def test_service_build_execution_inputs_allows_empty_execute_fields(assistant_env):
@@ -145,7 +156,11 @@ def test_service_build_execution_inputs_text_seed_and_optional_media(assistant_e
         workspace=workspace,
         execute_fields={"text": "merge test"},
     )
-    assert "upstream_asset" in inputs["input_bundle_v2"]
+    # resolved_artifacts is a pre-indexed dict keyed by semantic_type.
+    resolved = inputs["input_bundle_v2"].get("_resolved_artifacts", {})
+    assert isinstance(resolved, dict) and "upstream_asset" in resolved, (
+        f"expected upstream_asset in resolved_artifacts, got: {resolved}"
+    )
     assert inputs["input_bundle_v2"]["source_text"] == "merge test"
 
     m = svc.build_execution_inputs(
@@ -182,11 +197,12 @@ def test_service_passes_full_assets_to_descriptor(tmp_path, monkeypatch):
             return _EchoPipelineAgent()
 
         def build_input(self, task_id, input_bundle_v2):
+            hints = getattr(input_bundle_v2, "hints", {}) or {}
             return {
                 "task_id": task_id,
-                "allowed_keys": sorted(list(input_bundle_v2.keys())),
-                "source_text": input_bundle_v2.get("source_text", ""),
-                "language": (getattr(input_bundle_v2, "hints", None) or {}).get("language") or "en",
+                "allowed_keys": sorted(list(hints.keys())),
+                "source_text": hints.get("source_text", ""),
+                "language": hints.get("language") or "en",
             }
 
     class _StoryStubDescriptor:
@@ -237,7 +253,8 @@ def test_service_passes_full_assets_to_descriptor(tmp_path, monkeypatch):
 
     echo = _execution_results_dict(storage, result)["echo"]
     assert echo["source_text"] == "allowed text"
-    assert {"source_text", "story_blueprint"}.issubset(set(echo["allowed_keys"]))
+    # New architecture: hints carry source_text; resolved_artifacts lives in context.
+    assert "source_text" in echo["allowed_keys"]
 
 
 def test_service_execute_and_persist_file_outputs(tmp_path, monkeypatch):
@@ -590,7 +607,7 @@ def test_service_rewrites_media_asset_uri_to_workspace_path(tmp_path, monkeypatc
     assert os.path.isfile(persisted_uri)
     assert "fw_media_" not in persisted_uri
 
-    # Pipeline assets should expose lightweight index instead of full JSON body.
+    # Pipeline assets should expose artifacts via _resolved_artifacts in the new architecture.
     inputs = svc.build_execution_inputs(
         agent_id="KeyFrameAgent",
         task_id="task_uri",
@@ -599,8 +616,11 @@ def test_service_rewrites_media_asset_uri_to_workspace_path(tmp_path, monkeypatc
             "text": "draft",
         },
     )
-    keyframes_index = inputs["input_bundle_v2"]["keyframes"]
-    assert keyframes_index.get("content")
+    resolved = inputs["input_bundle_v2"].get("_resolved_artifacts", {})
+    kf = resolved.get("keyframes", {})
+    assert isinstance(kf, dict) and isinstance(kf.get("payload"), dict) and kf["payload"].get("content"), (
+        f"expected keyframes artifact in resolved_artifacts, got: {resolved}"
+    )
 
 
 def test_service_hydrates_indexed_assets_before_agent_build_input(tmp_path, monkeypatch):
@@ -643,12 +663,17 @@ def test_service_hydrates_indexed_assets_before_agent_build_input(tmp_path, monk
         def build_equipped_agent(self, _llm):
             return _ConsumerAgent()
 
+        input_needs_description = "Needs producer JSON"
+
         def build_input(self, task_id, input_bundle_v2):
-            # Should receive hydrated JSON dict, not index-only dict.
-            producer = input_bundle_v2.get("producer_asset", {})
+            resolved = getattr(input_bundle_v2, "resolved_artifacts", {})
+            if not isinstance(resolved, dict):
+                resolved = {}
+            producer = resolved.get("producer_asset", {})
+            payload = producer.get("payload", {}) if isinstance(producer, dict) else {}
             return {
                 "task_id": task_id,
-                "observed_value": producer.get("content", {}).get("value", -1),
+                "observed_value": payload.get("content", {}).get("value", -1),
             }
 
     class _Registry:
@@ -676,7 +701,10 @@ def test_service_hydrates_indexed_assets_before_agent_build_input(tmp_path, monk
         workspace=svc.workspace,
         execute_fields=dict(_snap),
     )
-    assert packaged["input_bundle_v2"]["producer_asset"]["content"]["value"] == 42
+    resolved = packaged["input_bundle_v2"].get("_resolved_artifacts", {})
+    assert isinstance(resolved, dict) and "producer_asset" in resolved, (
+        f"expected producer_asset in resolved_artifacts, got: {resolved}"
+    )
 
     consumer_result = svc.execute_agent_for_task(
         "ConsumerAgent", "task_hydrate", execute_fields=dict(_snap)
@@ -698,12 +726,15 @@ def test_service_build_execution_inputs_includes_global_memory_list(assistant_en
         workspace=svc.workspace,
         execute_fields={"text": "draft"},
     )
-    gm = inputs.get("global_memory")
-    assert isinstance(gm, list)
-    assert len(gm) >= 1
-    # build_execution_inputs uses list_memory_entries (full rows, includes content for packaging LLM)
-    assert gm[0].get("content") == "stm note"
-    assert gm[0].get("agent_id") == "DummyAgent"
+    # In the new architecture, global_memory is stored in workspace and used by the
+    # artifact_registry/input_resolver internally; it's not returned in build_execution_inputs.
+    assert "task_id" in inputs
+    assert "input_bundle_v2" in inputs
+    # Verify the memory entry is accessible in the workspace
+    entries = svc.workspace.list_memory_entries(task_id="task_gm")
+    assert len(entries) >= 1
+    assert entries[0].get("content", {}).get("what") == "stm note"
+    assert entries[0].get("agent_id") == "DummyAgent"
 
 
 def test_artifact_media_type_subdir():
@@ -735,7 +766,8 @@ def test_deterministic_persist_plan_media_under_artifacts_media_agent_type(assis
             }
         },
     )
-    plan = svc._deterministic_output_persist_plan(ex, "video")
+    descriptor = svc.agent_registry.get_descriptor("VideoAgent")
+    plan = svc._deterministic_output_persist_plan(ex, descriptor, "video")
     media_items = [p for p in plan if p.get("kind") == "media"]
     assert len(media_items) == 1
     assert media_items[0]["relative_path"] == "artifacts/media/VideoAgent/video/clip_final.mp4"

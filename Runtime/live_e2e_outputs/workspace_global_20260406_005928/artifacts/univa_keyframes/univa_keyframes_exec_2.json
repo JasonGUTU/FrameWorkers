@@ -1,0 +1,197 @@
+{
+  "content": {
+    "character_images": [
+      {
+        "char_id": "char_1",
+        "char_name": "retired watchmaker",
+        "original_description": "This retired watchmaker is a man in his late 60s, with a kind, weathered face, gentle eyes, and thinning grey hair combed neatly to the side. He wears a simple tweed vest over a white collared shirt, and his hands, though aged, are steady and precise.",
+        "refined_prompt": "A close-up portrait of a retired watchmaker in his late 60s, exuding a profound sense of kindness and wisdom. His weathered face is a tapestry of life experiences, with gentle lines fanning out from his eyes and a contemplative, serene expression. His deep-set eyes are a warm, gentle brown, sparkling with intelligence and a lifetime of focused precision, framed by soft, expressive wrinkles. His nose is straight and defined, leading to lips that curve into a subtle, warm smile, hinting at a quiet contentment. His skin, though marked by age, is healthy and shows a naturally glowing texture, with faint sun-kissed areas adding character. His thinning grey hair is meticulously combed to the left side, each strand precisely in place, reflecting his orderly nature. A glimpse of a simple tweed vest over a crisp white collared shirt is visible around his neck and shoulders. The background is pure white, ensuring all attention is drawn to his intricately detailed facial features. The art style is hyper-realistic digital painting, rendered in stunning 8K, emphasizing every minute detail from the texture of his skin to the subtle shine in his eyes, illuminated by soft, even studio lighting.",
+        "image_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_ty7yb0st/img_char_1_character.png",
+          "width": 1024,
+          "height": 576,
+          "format": "png"
+        }
+      }
+    ],
+    "shot_keyframes": [
+      {
+        "shot_id": 1,
+        "keyframe_prompt": "A cozy, cluttered watchmaker's workshop in an old building. Dust motes dance in the warm glow of a single task lamp. Various clocks line the shelves, and intricate tools are neatly arranged on a worn wooden workbench. It is late evening, almost night. This retired watchmaker sits at his workbench, looking at an ornate, old pocket watch placed before him. This retired watchmaker is seated, head bowed slightly, his hands resting on the workbench beside an open, antique pocket watch. The watch has intricate carvings and a slightly tarnished silver chain. The workbench is covered with tiny gears and springs. medium shot, eye-level, ",
+        "onstage_char_ids": [
+          "char_1"
+        ],
+        "image_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_ty7yb0st/img_shot_1_keyframe.png",
+          "width": 1024,
+          "height": 576,
+          "format": "png"
+        }
+      },
+      {
+        "shot_id": 2,
+        "keyframe_prompt": "The same workshop, but the focus shifts to a large, ornate grandfather clock in the corner. Its pendulum swings steadily, and the face shows the time nearing midnight on New Year's Eve. The grandfather clock's hands move visibly, indicating the rapidly approaching midnight. The face of a tall, dark wooden grandfather clock fills the frame, its brass hands poised at 11:50. The pendulum is blurred slightly from motion, and reflections of the workshop lights glimmer on the glass. close-up, eye-level, ",
+        "onstage_char_ids": [],
+        "image_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_ty7yb0st/img_shot_2_keyframe.png",
+          "width": 1024,
+          "height": 576,
+          "format": "png"
+        }
+      },
+      {
+        "shot_id": 3,
+        "keyframe_prompt": "Back at the workbench, bathed in the focused glow of the lamp. The air is still, and the only sounds are the watchmaker's movements. This retired watchmaker carefully opens the back of the pocket watch and selects a tiny screwdriver. This retired watchmaker's aged but steady hands are at the center of the frame, holding the pocket watch. The ornate back is hinged open, revealing tiny gears. His other hand reaches for a delicate screwdriver from a leather roll of tools. close-up, high angle (looking down), ",
+        "onstage_char_ids": [
+          "char_1"
+        ],
+        "image_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_ty7yb0st/img_shot_3_keyframe.png",
+          "width": 1024,
+          "height": 576,
+          "format": "png"
+        }
+      },
+      {
+        "shot_id": 4,
+        "keyframe_prompt": "The immediate area around the pocket watch, under intense magnification. Tiny components gleam under the lamp. This retired watchmaker, peering through a loupe, meticulously begins to work on the watch's delicate mechanism. This retired watchmaker's eye is visible through a jeweler's loupe, intensely focused. Below it, the intricate brass gears and springs of the pocket watch's movement are magnified, catching the light. A tiny pair of tweezers hovers over a minuscule part. close-up, eye-level, ",
+        "onstage_char_ids": [
+          "char_1"
+        ],
+        "image_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_ty7yb0st/img_shot_4_keyframe.png",
+          "width": 1024,
+          "height": 576,
+          "format": "png"
+        }
+      },
+      {
+        "shot_id": 5,
+        "keyframe_prompt": "The task lamp casts long shadows in the quiet workshop, creating an atmosphere of intense concentration mixed with subtle anxiety. This retired watchmaker encounters a stubborn, misaligned gear, causing him a moment of frustration. This retired watchmaker's brow is furrowed in concentration, a slight frown on his lips. His hand, holding a slender tool, is poised over a tiny gear that won't quite fit into place. The gear itself appears slightly askew, resisting his efforts. close-up, eye-level, ",
+        "onstage_char_ids": [
+          "char_1"
+        ],
+        "image_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_ty7yb0st/img_shot_5_keyframe.png",
+          "width": 1024,
+          "height": 576,
+          "format": "png"
+        }
+      },
+      {
+        "shot_id": 6,
+        "keyframe_prompt": "The warm, slightly faded environment of the workshop. A small, framed photograph sits on the bench beside the tools, catching a soft glow. This retired watchmaker pauses, glancing at a faded photograph of his late wife, drawing strength from the memory. This retired watchmaker's hand gently touches a small, oval-framed photograph of a smiling woman. His gaze is tender and melancholic, momentarily lifted from the watch. The watch mechanism remains partially disassembled in the foreground, slightly out of focus. medium shot, eye-level, ",
+        "onstage_char_ids": [
+          "char_1"
+        ],
+        "image_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_ty7yb0st/img_shot_6_keyframe.png",
+          "width": 1024,
+          "height": 576,
+          "format": "png"
+        }
+      },
+      {
+        "shot_id": 7,
+        "keyframe_prompt": "The workbench, still brightly lit, but with a renewed sense of purpose in the atmosphere. The tools seem to await his command. With newfound resolve, this retired watchmaker carefully adjusts the problematic gear into its correct position. This retired watchmaker's hand is now perfectly steady, guiding the tiny gear with precision. The gear smoothly slides into its slot, perfectly aligned. His expression is one of calm focus and quiet triumph. close-up, high angle (looking down), ",
+        "onstage_char_ids": [
+          "char_1"
+        ],
+        "image_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_ty7yb0st/img_shot_7_keyframe.png",
+          "width": 1024,
+          "height": 576,
+          "format": "png"
+        }
+      },
+      {
+        "shot_id": 8,
+        "keyframe_prompt": "The workshop is dimly lit, except for the bright lamp over the workbench. Shadows deepen, emphasizing the late hour. This retired watchmaker rapidly reassembles the remaining components, keenly aware of the dwindling time as the grandfather clock shows 11:58. This retired watchmaker's nimble fingers move quickly but with care, placing back tiny screws and plates. In the background, slightly out of focus, the grandfather clock's face clearly displays the time: 11:58. His movements are a blur of efficiency. medium shot, eye-level, ",
+        "onstage_char_ids": [
+          "char_1"
+        ],
+        "image_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_ty7yb0st/img_shot_8_keyframe.png",
+          "width": 1024,
+          "height": 576,
+          "format": "png"
+        }
+      },
+      {
+        "shot_id": 9,
+        "keyframe_prompt": "The close-up view of the pocket watch, shimmering under the lamp. The atmosphere is tense, expectant. This retired watchmaker gently snaps the back of the pocket watch closed, just as the grandfather clock begins to chime. This retired watchmaker's thumb and forefinger are shown closing the ornate back cover of the pocket watch. The polished silver reflects the lamp's light. The face of the watch shows 11:59, almost midnight. close-up, eye-level, ",
+        "onstage_char_ids": [
+          "char_1"
+        ],
+        "image_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_ty7yb0st/img_shot_9_keyframe.png",
+          "width": 1024,
+          "height": 576,
+          "format": "png"
+        }
+      },
+      {
+        "shot_id": 10,
+        "keyframe_prompt": "The quiet workshop, now filled with the resonant sound of the chimes. The air feels charged with significance. The newly repaired pocket watch begins to tick, perfectly synchronized with the final chimes of midnight. This retired watchmaker holds the pocket watch in his open palm, its small seconds hand visibly beginning to sweep. The watch face now clearly displays 12:00. The light catches the subtle movement of its tiny gears through the glass. close-up, low angle (looking up at the watch), ",
+        "onstage_char_ids": [
+          "char_1"
+        ],
+        "image_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_ty7yb0st/img_shot_10_keyframe.png",
+          "width": 1024,
+          "height": 576,
+          "format": "png"
+        }
+      },
+      {
+        "shot_id": 11,
+        "keyframe_prompt": "The workshop, now bathed in a soft, ethereal glow, as if the new year brings a gentle peace. Distant sounds of celebration faintly filter in. This retired watchmaker looks at the ticking watch, a serene and contented smile gracing his face. This retired watchmaker holds the ticking pocket watch close to his chest with both hands. His face is illuminated by a soft, internal glow, and a peaceful, knowing smile touches his lips. His eyes are closed gently, lost in thought. medium shot, eye-level, ",
+        "onstage_char_ids": [
+          "char_1"
+        ],
+        "image_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_ty7yb0st/img_shot_11_keyframe.png",
+          "width": 1024,
+          "height": 576,
+          "format": "png"
+        }
+      },
+      {
+        "shot_id": 12,
+        "keyframe_prompt": "A tranquil, intimate moment in the now-quiet workshop. The new year feels fresh and full of promise, even amidst the old tools. This retired watchmaker gently presses the ticking watch to his ear, a gesture of deep connection and solace. This retired watchmaker, with eyes closed and a tender expression, holds the pocket watch pressed against his ear, listening intently to its steady heartbeat. His hands cup the watch gently, as if holding a precious memory. close-up, eye-level, ",
+        "onstage_char_ids": [
+          "char_1"
+        ],
+        "image_asset": {
+          "asset_id": "",
+          "uri": "/tmp/fw_media_ty7yb0st/img_shot_12_keyframe.png",
+          "width": 1024,
+          "height": 576,
+          "format": "png"
+        }
+      }
+    ]
+  },
+  "metrics": {
+    "character_image_count": 1,
+    "shot_keyframe_count": 12
+  },
+  "artifact_caption": {
+    "semantic_type": "",
+    "what": "Keyframe plan: 1 characters, 12 shots",
+    "why": "Character reference images and per-shot keyframes for video generation",
+    "scope": "global"
+  }
+}

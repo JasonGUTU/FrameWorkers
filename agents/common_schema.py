@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from datetime import datetime, timezone
-from typing import Any, Optional
 
 from pydantic import BaseModel, Field
 
@@ -46,15 +45,48 @@ class Meta(BaseModel):
     language: str = "en"
 
 
-class AssetRef(BaseModel):
-    """Lightweight reference to a versioned asset."""
+class ArtifactCaption(BaseModel):
+    """Structured caption written by the producing sub-agent at generation time.
 
-    asset_id: Optional[str] = ""
-    schema_version: str = "0.3"
+    The agent fills this block to describe what it produced and why.
+    AssistantService reads it to populate the artifact_registry so that
+    downstream agents can discover artifacts via semantic search.
+
+    Fields
+    ------
+    semantic_type : Machine-readable artifact type for exact matching
+                    (e.g. "story_blueprint", "screenplay", "keyframe_l3_shot").
+    what  : One or two sentences describing the artifact content.
+    why   : Key creative or technical decisions made during generation.
+    scope : Granularity tag — "global", "scene:<id>", "shot:<id>", etc.
+    """
+
+    semantic_type: str = Field("", description="Machine-readable type tag for exact matching (e.g. story_blueprint, screenplay, keyframe_l3_shot)")
+    what: str = Field("", description="What this artifact contains (1-2 sentences)")
+    why: str = Field("", description="Key decisions / why it was generated this way")
+    scope: str = Field("global", description='Scope tag: "global" | "scene:sc_001" | "shot:sh_001"')
 
 
-class DurationEstimate(BaseModel):
-    """Duration estimate with confidence."""
+class ImageReferenceEntry(BaseModel):
+    """A single image reference that flows from the workspace into a sub-agent's
+    typed input.
 
-    seconds: float = 0.0
-    confidence: float = 0.0
+    Used by any agent that needs to receive image artifacts (character /
+    location / style references for KeyFrameAgent, shot stills for
+    VideoAgent, shot keyframes for UnivaVideoAgent, etc.) — the schema is
+    deliberately generic so the same type works for all label categories.
+
+    The shape mirrors the InputResolver-resolved entry: ``path`` is always
+    populated with the workspace file path; the caption fields preserve
+    the producer's natural-language description so the consuming agent's
+    LLM can decide how to use each entry. ``scope`` is sometimes used by
+    materializers to disambiguate per-shot images (e.g. ``"shot:sh_001"``).
+    """
+
+    path: str = ""
+    caption_what: str = ""
+    caption_why: str = ""
+    mime: str = ""
+    scope: str = ""
+
+

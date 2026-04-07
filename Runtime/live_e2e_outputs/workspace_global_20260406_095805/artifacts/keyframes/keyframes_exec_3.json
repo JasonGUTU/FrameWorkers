@@ -1,0 +1,610 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_type": "character",
+          "entity_id": "char_001",
+          "keyframe_id": "kf_global_char_001",
+          "image_asset": {
+            "asset_id": "img_char_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_char_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "A man in his late 60s, John Thorne, with a weathered face and tired eyes that show sharp focus. He wears practical, slightly old-fashioned watchmaker's attire. His hands are aged but appear steady and deft.",
+          "image_generation_prompt": "A man in his late 60s, John Thorne, with a weathered face and tired eyes that show sharp focus. He wears practical, slightly old-fashioned watchmaker's attire. His hands are aged but appear steady and deft.\nVisual style: Use a warm, low-key lighting setup to create an intimate and slightly nostalgic atmosphere.; Emphasize close-ups on hands, faces, and intricate watch parts to draw the viewer into John's world and his delicate task.; Pacing should be slow and deliberate, mirroring John's methodical work, with moments of pause to convey reflection.; Sound design should highlight the ticking of the wall clock and the subtle mechanical sounds of watch repair.; Maintain close-ups, but now with a slight sense of urgency. Handheld camera work could introduce subtle instability.; Use shallow focus to isolate the stubborn component, emphasizing its difficulty.; Sound design should heighten the ticking of the clock and add subtle sounds of John's strained effort (e.g., a faint sigh, a slight scrape of metal).; The lighting should shift to be slightly softer, perhaps with a subtle bloom, reflecting the emotional release.; Pacing becomes serene and reflective after the tension breaks. Hold shots to allow the emotion to sink in.; Sound design emphasizes the chime of the clock and the quiet ticking of the newly repaired watch, with minimal or no background music initially, allowing the natural sounds and John's emotion to carry the moment.. Do NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+        }
+      ],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_loc_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "An antique watchmaker's workshop, filled with numerous tools, intricate gears, and various half-finished projects. Dust motes float in the beam of a single workbench lamp, creating a warm, melancholic atmosphere. A large, ornate wall clock is prominently displayed.",
+          "image_generation_prompt": "An antique watchmaker's workshop, filled with numerous tools, intricate gears, and various half-finished projects. Dust motes float in the beam of a single workbench lamp, creating a warm, melancholic atmosphere. A large, ornate wall clock is prominently displayed.\nVisual style: Use a warm, low-key lighting setup to create an intimate and slightly nostalgic atmosphere.; Emphasize close-ups on hands, faces, and intricate watch parts to draw the viewer into John's world and his delicate task.; Pacing should be slow and deliberate, mirroring John's methodical work, with moments of pause to convey reflection.; Sound design should highlight the ticking of the wall clock and the subtle mechanical sounds of watch repair.; Maintain close-ups, but now with a slight sense of urgency. Handheld camera work could introduce subtle instability.; Use shallow focus to isolate the stubborn component, emphasizing its difficulty.; Sound design should heighten the ticking of the clock and add subtle sounds of John's strained effort (e.g., a faint sigh, a slight scrape of metal).; The lighting should shift to be slightly softer, perhaps with a subtle bloom, reflecting the emotional release.; Pacing becomes serene and reflective after the tension breaks. Hold shots to allow the emotion to sink in.; Sound design emphasizes the chime of the clock and the quiet ticking of the newly repaired watch, with minimal or no background music initially, allowing the natural sounds and John's emotion to carry the moment.. Do NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+        }
+      ],
+      "props": [
+        {
+          "entity_type": "prop",
+          "entity_id": "prop_001",
+          "keyframe_id": "kf_global_prop_001",
+          "image_asset": {
+            "asset_id": "img_prop_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_prop_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "An old, cherished pocket watch with a gold casing and intricate engravings, currently appearing broken.",
+          "image_generation_prompt": "An old, cherished pocket watch with a gold casing and intricate engravings, currently appearing broken.\nVisual style: Use a warm, low-key lighting setup to create an intimate and slightly nostalgic atmosphere.; Emphasize close-ups on hands, faces, and intricate watch parts to draw the viewer into John's world and his delicate task.; Pacing should be slow and deliberate, mirroring John's methodical work, with moments of pause to convey reflection.; Sound design should highlight the ticking of the wall clock and the subtle mechanical sounds of watch repair.; Maintain close-ups, but now with a slight sense of urgency. Handheld camera work could introduce subtle instability.; Use shallow focus to isolate the stubborn component, emphasizing its difficulty.; Sound design should heighten the ticking of the clock and add subtle sounds of John's strained effort (e.g., a faint sigh, a slight scrape of metal).; The lighting should shift to be slightly softer, perhaps with a subtle bloom, reflecting the emotional release.; Pacing becomes serene and reflective after the tension breaks. Hold shots to allow the emotion to sink in.; Sound design emphasizes the chime of the clock and the quiet ticking of the newly repaired watch, with minimal or no background music initially, allowing the natural sounds and John's emotion to carry the moment.. Do NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+        },
+        {
+          "entity_type": "prop",
+          "entity_id": "prop_002",
+          "keyframe_id": "kf_global_prop_002",
+          "image_asset": {
+            "asset_id": "img_prop_002_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_prop_002_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "A large, ornate wall clock, an imposing presence, with a classic design and visible hands.",
+          "image_generation_prompt": "A large, ornate wall clock, an imposing presence, with a classic design and visible hands.\nVisual style: Use a warm, low-key lighting setup to create an intimate and slightly nostalgic atmosphere.; Emphasize close-ups on hands, faces, and intricate watch parts to draw the viewer into John's world and his delicate task.; Pacing should be slow and deliberate, mirroring John's methodical work, with moments of pause to convey reflection.; Sound design should highlight the ticking of the wall clock and the subtle mechanical sounds of watch repair.; Maintain close-ups, but now with a slight sense of urgency. Handheld camera work could introduce subtle instability.; Use shallow focus to isolate the stubborn component, emphasizing its difficulty.; Sound design should heighten the ticking of the clock and add subtle sounds of John's strained effort (e.g., a faint sigh, a slight scrape of metal).; The lighting should shift to be slightly softer, perhaps with a subtle bloom, reflecting the emotional release.; Pacing becomes serene and reflective after the tension breaks. Hold shots to allow the emotion to sink in.; Sound design emphasizes the chime of the clock and the quiet ticking of the newly repaired watch, with minimal or no background music initially, allowing the natural sounds and John's emotion to carry the moment.. Do NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+        },
+        {
+          "entity_type": "prop",
+          "entity_id": "prop_003",
+          "keyframe_id": "kf_global_prop_003",
+          "image_asset": {
+            "asset_id": "img_prop_003_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_prop_003_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "A collection of precise, delicate watchmaker's tools, including a magnifying loupe and fine tweezers, showing signs of frequent, careful use.",
+          "image_generation_prompt": "A collection of precise, delicate watchmaker's tools, including a magnifying loupe and fine tweezers, showing signs of frequent, careful use.\nVisual style: Use a warm, low-key lighting setup to create an intimate and slightly nostalgic atmosphere.; Emphasize close-ups on hands, faces, and intricate watch parts to draw the viewer into John's world and his delicate task.; Pacing should be slow and deliberate, mirroring John's methodical work, with moments of pause to convey reflection.; Sound design should highlight the ticking of the wall clock and the subtle mechanical sounds of watch repair.; Maintain close-ups, but now with a slight sense of urgency. Handheld camera work could introduce subtle instability.; Use shallow focus to isolate the stubborn component, emphasizing its difficulty.; Sound design should heighten the ticking of the clock and add subtle sounds of John's strained effort (e.g., a faint sigh, a slight scrape of metal).; The lighting should shift to be slightly softer, perhaps with a subtle bloom, reflecting the emotional release.; Pacing becomes serene and reflective after the tension breaks. Hold shots to allow the emotion to sink in.; Sound design emphasizes the chime of the clock and the quiet ticking of the newly repaired watch, with minimal or no background music initially, allowing the natural sounds and John's emotion to carry the moment.. Do NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+        },
+        {
+          "entity_type": "prop",
+          "entity_id": "prop_004",
+          "keyframe_id": "kf_global_prop_004",
+          "image_asset": {
+            "asset_id": "img_prop_004_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_prop_004_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "A partially assembled pocket watch with a gold casing, its intricate internal mechanism exposed, with one tiny component visibly out of place.",
+          "image_generation_prompt": "A partially assembled pocket watch with a gold casing, its intricate internal mechanism exposed, with one tiny component visibly out of place.\nVisual style: Use a warm, low-key lighting setup to create an intimate and slightly nostalgic atmosphere.; Emphasize close-ups on hands, faces, and intricate watch parts to draw the viewer into John's world and his delicate task.; Pacing should be slow and deliberate, mirroring John's methodical work, with moments of pause to convey reflection.; Sound design should highlight the ticking of the wall clock and the subtle mechanical sounds of watch repair.; Maintain close-ups, but now with a slight sense of urgency. Handheld camera work could introduce subtle instability.; Use shallow focus to isolate the stubborn component, emphasizing its difficulty.; Sound design should heighten the ticking of the clock and add subtle sounds of John's strained effort (e.g., a faint sigh, a slight scrape of metal).; The lighting should shift to be slightly softer, perhaps with a subtle bloom, reflecting the emotional release.; Pacing becomes serene and reflective after the tension breaks. Hold shots to allow the emotion to sink in.; Sound design emphasizes the chime of the clock and the quiet ticking of the newly repaired watch, with minimal or no background music initially, allowing the natural sounds and John's emotion to carry the moment.. Do NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+        },
+        {
+          "entity_type": "prop",
+          "entity_id": "prop_005",
+          "keyframe_id": "kf_global_prop_005",
+          "image_asset": {
+            "asset_id": "img_prop_005_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_prop_005_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "A pair of slender, metallic fine tweezers, designed for delicate manipulation, with a sharp, pointed tip.",
+          "image_generation_prompt": "A pair of slender, metallic fine tweezers, designed for delicate manipulation, with a sharp, pointed tip.\nVisual style: Use a warm, low-key lighting setup to create an intimate and slightly nostalgic atmosphere.; Emphasize close-ups on hands, faces, and intricate watch parts to draw the viewer into John's world and his delicate task.; Pacing should be slow and deliberate, mirroring John's methodical work, with moments of pause to convey reflection.; Sound design should highlight the ticking of the wall clock and the subtle mechanical sounds of watch repair.; Maintain close-ups, but now with a slight sense of urgency. Handheld camera work could introduce subtle instability.; Use shallow focus to isolate the stubborn component, emphasizing its difficulty.; Sound design should heighten the ticking of the clock and add subtle sounds of John's strained effort (e.g., a faint sigh, a slight scrape of metal).; The lighting should shift to be slightly softer, perhaps with a subtle bloom, reflecting the emotional release.; Pacing becomes serene and reflective after the tension breaks. Hold shots to allow the emotion to sink in.; Sound design emphasizes the chime of the clock and the quiet ticking of the newly repaired watch, with minimal or no background music initially, allowing the natural sounds and John's emotion to carry the moment.. Do NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+        },
+        {
+          "entity_type": "prop",
+          "entity_id": "prop_006",
+          "keyframe_id": "kf_global_prop_006",
+          "image_asset": {
+            "asset_id": "img_prop_006_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_prop_006_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "A repaired, old pocket watch with a gleaming gold casing and intricate engravings, its internal mechanism visibly intact and perfectly aligned.",
+          "image_generation_prompt": "A repaired, old pocket watch with a gleaming gold casing and intricate engravings, its internal mechanism visibly intact and perfectly aligned.\nVisual style: Use a warm, low-key lighting setup to create an intimate and slightly nostalgic atmosphere.; Emphasize close-ups on hands, faces, and intricate watch parts to draw the viewer into John's world and his delicate task.; Pacing should be slow and deliberate, mirroring John's methodical work, with moments of pause to convey reflection.; Sound design should highlight the ticking of the wall clock and the subtle mechanical sounds of watch repair.; Maintain close-ups, but now with a slight sense of urgency. Handheld camera work could introduce subtle instability.; Use shallow focus to isolate the stubborn component, emphasizing its difficulty.; Sound design should heighten the ticking of the clock and add subtle sounds of John's strained effort (e.g., a faint sigh, a slight scrape of metal).; The lighting should shift to be slightly softer, perhaps with a subtle bloom, reflecting the emotional release.; Pacing becomes serene and reflective after the tension breaks. Hold shots to allow the emotion to sink in.; Sound design emphasizes the chime of the clock and the quiet ticking of the newly repaired watch, with minimal or no background music initially, allowing the natural sounds and John's emotion to carry the moment.. Do NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "keyframe_id": "kf_char_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_char_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "John Thorne, a man in his late 60s, is a master craftsman. His weathered face shows a lifetime of experience; his tired eyes hold focused intensity. He wears practical, old-fashioned attire, and his aged hands are steady and deft at his craft.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nJohn Thorne, a man in his late 60s, is a master craftsman. His weathered face shows a lifetime of experience; his tired eyes hold focused intensity. He wears practical, old-fashioned attire, and his aged hands are steady and deft at his craft.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "John's workshop is an antique haven, filled with tools, gears, and half-finished projects. Dust motes dance in the light from a single workbench lamp. A large, ornate wall clock is prominently placed in this lived-in, warm, and melancholic space.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nJohn's workshop is an antique haven, filled with tools, gears, and half-finished projects. Dust motes dance in the light from a single workbench lamp. A large, ornate wall clock is prominently placed in this lived-in, warm, and melancholic space.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+            }
+          ],
+          "props": [
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_001",
+              "keyframe_id": "kf_prop_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_prop_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_prop_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "A visibly old and cherished pocket watch with a gold casing and intricate engravings. It is currently broken.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA visibly old and cherished pocket watch with a gold casing and intricate engravings. It is currently broken.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+            },
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_002",
+              "keyframe_id": "kf_prop_002_sc_001",
+              "image_asset": {
+                "asset_id": "img_prop_002_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_prop_002_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "A large, ornate wall clock, prominently placed. Its hands clearly show the time approaching midnight.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA large, ornate wall clock, prominently placed. Its hands clearly show the time approaching midnight.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+            },
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_003",
+              "keyframe_id": "kf_prop_003_sc_001",
+              "image_asset": {
+                "asset_id": "img_prop_003_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_prop_003_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "A collection of precise, delicate watchmaker's tools, including a magnifying loupe and tweezers. These tools are well-used and meticulously cared for.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA collection of precise, delicate watchmaker's tools, including a magnifying loupe and tweezers. These tools are well-used and meticulously cared for.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "source_shot_id": "sh_001"
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_001",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_sh_001_kf_001.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Frame John in his workshop, bathed in warm, low-key light from a single workbench lamp. He is focused on his task, with the large wall clock visible in the background, its hands nearing midnight. The room feels intimate and slightly nostalgic.",
+                "video_motion_hint": "A subtle, slow camera drift from the workshop's wider details, subtly tightening its focus on John as he works.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nFrame John in his workshop, bathed in warm, low-key light from a single workbench lamp. He is focused on his task, with the large wall clock visible in the background, its hands nearing midnight. The room feels intimate and slightly nostalgic.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "source_shot_id": "sh_002"
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_002",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_002",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_sh_002_kf_002.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Show a close-up of John's aged, skillful hands delicately manipulating tiny parts of the disassembled pocket watch mechanism. He uses fine tweezers with immense precision. The shallow focus draws attention to the intricate details of the watch.",
+                "video_motion_hint": "A slight, almost imperceptible zoom into the intricate watch mechanism, emphasizing the delicate nature of John's work.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nShow a close-up of John's aged, skillful hands delicately manipulating tiny parts of the disassembled pocket watch mechanism. He uses fine tweezers with immense precision. The shallow focus draws attention to the intricate details of the watch.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "source": {
+              "source_shot_id": "sh_003"
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_003",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_003",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_sh_003_kf_003.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Frame a close-up of the ornate wall clock's face. The clock's hands are positioned very close to midnight, emphasizing the impending deadline. The antique details of the clock face are clearly visible under the warm, low-key lighting.",
+                "video_motion_hint": "A static shot where subtle dust motes catch and shimmer in the ambient light, hinting at the passage of time in the workshop.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nFrame a close-up of the ornate wall clock's face. The clock's hands are positioned very close to midnight, emphasizing the impending deadline. The antique details of the clock face are clearly visible under the warm, low-key lighting.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_002"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "keyframe_id": "kf_char_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_002",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_char_001_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Show John with hands trembling slightly from effort or frustration. His face displays a fleeting grimace of irritation, and there is a slight sheen of sweat on his brow. He is focused intently on his work.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nShow John with hands trembling slightly from effort or frustration. His face displays a fleeting grimace of irritation, and there is a slight sheen of sweat on his brow. He is focused intently on his work.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "keyframe_id": "kf_loc_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_002",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "The workshop remains dimly lit, with the workbench lamp casting long, dramatic shadows. The overall atmosphere is tinged with a palpable sense of tension and pressure.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nThe workshop remains dimly lit, with the workbench lamp casting long, dramatic shadows. The overall atmosphere is tinged with a palpable sense of tension and pressure.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+            }
+          ],
+          "props": [
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_004",
+              "keyframe_id": "kf_prop_004_sc_002",
+              "image_asset": {
+                "asset_id": "img_prop_004_sc_002",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_prop_004_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "The watch is still broken, specifically with a difficult, tiny component that stubbornly resists proper placement. The delicate mechanism is highlighted by the light.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nThe watch is still broken, specifically with a difficult, tiny component that stubbornly resists proper placement. The delicate mechanism is highlighted by the light.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+            },
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_005",
+              "keyframe_id": "kf_prop_005_sc_002",
+              "image_asset": {
+                "asset_id": "img_prop_005_sc_002",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_prop_005_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Close-up on the specialized tweezers, used to meticulously manipulate the stubborn watch component. The precision required for the delicate task is emphasized.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nClose-up on the specialized tweezers, used to meticulously manipulate the stubborn watch component. The precision required for the delicate task is emphasized.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+            },
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_002",
+              "keyframe_id": "kf_prop_002_sc_002",
+              "image_asset": {
+                "asset_id": "img_prop_002_sc_002",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_prop_002_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "The wall clock is now shown even closer to midnight, with its hands indicating approximately five minutes before the hour. The urgency of the time is heightened.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nThe wall clock is now shown even closer to midnight, with its hands indicating approximately five minutes before the hour. The urgency of the time is heightened.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_004",
+            "order": 1,
+            "source": {
+              "source_shot_id": "sh_004"
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_004",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_004",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_sh_004_kf_004.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "An extreme close-up of John's skilled hands, holding tweezers, attempting to place a tiny, stubborn watch component. Shallow depth of field isolates the difficult part against the blurred watch mechanism.",
+                "video_motion_hint": "The tweezers make minute, frustrated adjustments, barely moving the tiny component, reflecting John's persistent struggle to secure it.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nAn extreme close-up of John's skilled hands, holding tweezers, attempting to place a tiny, stubborn watch component. Shallow depth of field isolates the difficult part against the blurred watch mechanism.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 2,
+            "source": {
+              "source_shot_id": "sh_005"
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_005",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_005",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_sh_005_kf_005.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A medium close-up on John's face, partially obscured by a magnifying loupe, revealing a fleeting grimace of irritation and strained concentration. Subtle sweat beads are visible on his brow under the low light.",
+                "video_motion_hint": "John's subtle facial muscles tense and relax as he exhales slowly, showcasing his mounting frustration and intense focus on the intricate work.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA medium close-up on John's face, partially obscured by a magnifying loupe, revealing a fleeting grimace of irritation and strained concentration. Subtle sweat beads are visible on his brow under the low light.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 3,
+            "source": {
+              "source_shot_id": "sh_006"
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_006",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_006",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_sh_006_kf_006.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A close-up of the antique wall clock, its ornate hands positioned just before midnight, emphasizing the rapidly approaching deadline. The clock face fills the frame, intensifying the pressure.",
+                "video_motion_hint": "The clock's minute hand subtly trembles at its resting point, emphasizing the impending passage of time without actual movement, creating a sense of held breath.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA close-up of the antique wall clock, its ornate hands positioned just before midnight, emphasizing the rapidly approaching deadline. The clock face fills the frame, intensifying the pressure.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_003"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "keyframe_id": "kf_char_001_sc_003",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_003",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_char_001_sc_003.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "John's face is now relaxed, displaying a tearful smile and profound peace. His posture is still, reflecting emotional release. His attire is slightly disheveled, but he remains oblivious to it in his relief.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nJohn's face is now relaxed, displaying a tearful smile and profound peace. His posture is still, reflecting emotional release. His attire is slightly disheveled, but he remains oblivious to it in his relief.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "keyframe_id": "kf_loc_001_sc_003",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_003",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_003.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "The workshop environment appears quieter, bathed in a softened lamplight that casts a gentle, intimate glow.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nThe workshop environment appears quieter, bathed in a softened lamplight that casts a gentle, intimate glow.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+            }
+          ],
+          "props": [
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_006",
+              "keyframe_id": "kf_prop_006_sc_003",
+              "image_asset": {
+                "asset_id": "img_prop_006_sc_003",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_prop_006_sc_003.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "The pocket watch mechanism is visibly functioning, emitting a faint ticking sound, symbolizing completion and connection.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nThe pocket watch mechanism is visibly functioning, emitting a faint ticking sound, symbolizing completion and connection.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+            },
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_002",
+              "keyframe_id": "kf_prop_002_sc_003",
+              "image_asset": {
+                "asset_id": "img_prop_002_sc_003",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_prop_002_sc_003.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "The wall clock chimes twelve times, marking the new year and signaling the successful completion of John's task.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nThe wall clock chimes twelve times, marking the new year and signaling the successful completion of John's task.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_007",
+            "order": 1,
+            "source": {
+              "source_shot_id": "sh_007"
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_007",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_007_kf_007",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_sh_007_kf_007.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A low-angle close-up reveals the intricately repaired internal mechanism of the pocket watch on the workbench. Soft lamplight illuminates its delicate gears, now visibly ticking. John's weary, still hands gently cradle the watch, affirming its successful restoration.",
+                "video_motion_hint": "A very subtle, almost imperceptible shift of focus from the watch's casing to the newly active, minutely ticking gears within its mechanism.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA low-angle close-up reveals the intricately repaired internal mechanism of the pocket watch on the workbench. Soft lamplight illuminates its delicate gears, now visibly ticking. John's weary, still hands gently cradle the watch, affirming its successful restoration.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_008",
+            "order": 2,
+            "source": {
+              "source_shot_id": "sh_008"
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_008",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_008_kf_008",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_sh_008_kf_008.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A medium shot captures John at his workbench, his gaze slowly lifting towards the ornate wall clock as it chimes. The repaired pocket watch rests open in his hands, reflecting the softened lamplight. John's expression transitions from concentration to dawning realization and quiet relief.",
+                "video_motion_hint": "The camera executes a slow, deliberate push-in, subtly tightening on John as his head slowly turns from the chiming clock to the watch in his hands.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA medium shot captures John at his workbench, his gaze slowly lifting towards the ornate wall clock as it chimes. The repaired pocket watch rests open in his hands, reflecting the softened lamplight. John's expression transitions from concentration to dawning realization and quiet relief.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 3,
+            "source": {
+              "source_shot_id": "sh_009"
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_009",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_009_kf_009",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095805/artifacts/media/KeyFrameAgent/image/img_sh_009_kf_009.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "An eye-level close-up of John's face, gently lit by the warm lamplight, reveals a profound, tear-filled smile and a deep sense of peace. His eyes are fixed tenderly on the repaired pocket watch, held carefully in his still hands. The shot conveys quiet triumph intertwined with solace.",
+                "video_motion_hint": "John's tearful smile subtly deepens, his gaze unwavering on the watch, as a single tear gently traces a path down his cheek.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nAn eye-level close-up of John's face, gently lit by the warm lamplight, reveals a profound, tear-filled smile and a deep sense of peace. His eyes are fixed tenderly on the repaired pocket watch, held carefully in his still hands. The shot conveys quiet triumph intertwined with solace.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing that distracts from the delicate nature of the work.; Overly dramatic music that overshadows the subtle emotional beats.; Overly dramatic music that could undermine the intimacy of John's struggle.; Fast cuts that don't allow the viewer to feel the frustration.; Anything that detracts from John's quiet moment of triumph and grief.."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 9,
+    "keyframe_count_total": 9,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 6,
+    "stability_character_keyframe_count": 3,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 8
+  },
+  "artifact_caption": {
+    "semantic_type": "",
+    "what": "3 scenes, 9 shots, 9 shot keyframe stills; 1 character, 1 location, 6 props, detailed canonical look visual style.",
+    "why": "Ensures foundational visual consistency by providing precise physical descriptions for each entity, emphasizing key details like age, material, and inherent state (e.g., broken, repaired).",
+    "scope": "global"
+  }
+}

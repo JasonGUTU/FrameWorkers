@@ -35,6 +35,24 @@ _MOCK_WAV = (
 )
 
 
+def _is_mock_wav(data: bytes | None) -> bool:
+    """True if ``data`` is the silent ``_MOCK_WAV`` placeholder (or so short
+    it can't possibly carry real audio).
+
+    Used by ``mix_scene_audio`` and ``assemble_final`` to drop placeholder
+    music / ambience inputs before handing the rest to ffmpeg, so the mix
+    is built only from real audio (TTS narration, real generated music,
+    etc.) and the placeholders never end up corrupting the output stream.
+    """
+    if not data:
+        return True
+    if data == _MOCK_WAV:
+        return True
+    # Anything shorter than 200 bytes can't possibly contain real audio
+    # samples — a usable WAV body needs at least a few hundred bytes.
+    return len(data) < 200
+
+
 class AudioService:
     """Audio generation service backed by OpenAI TTS + pluggable music/SFX."""
 
@@ -96,15 +114,14 @@ class AudioService:
         self,
         *,
         mood: str,
-        duration_sec: float,
+        duration_sec: float = 0.0,
         scene_id: str = "",
         **kwargs: Any,
     ) -> bytes:
         logger.info(
-            "[MockMusic] Placeholder music for scene %s (mood=%s, %.1fs)",
+            "[MockMusic] Placeholder music for scene %s (mood=%s)",
             scene_id,
             mood,
-            duration_sec,
         )
         return _MOCK_WAV
 
@@ -112,14 +129,13 @@ class AudioService:
         self,
         *,
         description: str,
-        duration_sec: float,
+        duration_sec: float = 0.0,
         scene_id: str = "",
         **kwargs: Any,
     ) -> bytes:
         logger.info(
-            "[MockAmbience] Placeholder ambience for scene %s (%.1fs): %.80s...",
+            "[MockAmbience] Placeholder ambience for scene %s: %.80s...",
             scene_id,
-            duration_sec,
             description,
         )
         return _MOCK_WAV
@@ -133,30 +149,157 @@ class AudioService:
         scene_id: str = "",
         duration_sec: float = 0.0,
     ) -> bytes:
-        logger.info(
-            "[Mix] Concatenating audio segments for scene %s (%.1fs)",
-            scene_id,
-            duration_sec,
-        )
-        parts: list[bytes] = []
-        parts.extend(narration_bytes_list)
-        if music_bytes:
-            parts.append(music_bytes)
-        if ambience_bytes:
-            parts.append(ambience_bytes)
-        if not parts:
+        """Mix narration / music / ambience for a single scene via ffmpeg.
+
+        Real audio mixing — silent placeholder bytes (the 44-byte
+        ``_MOCK_WAV``) are filtered out so they don't pollute the mix
+        with unreadable empty WAV chunks. Falls back to the longest
+        non-mock input on ffmpeg failure (so the pipeline still
+        completes with at least some real audio).
+        """
+        inputs: list[bytes] = []
+        inputs.extend(b for b in narration_bytes_list if not _is_mock_wav(b))
+        if music_bytes and not _is_mock_wav(music_bytes):
+            inputs.append(music_bytes)
+        if ambience_bytes and not _is_mock_wav(ambience_bytes):
+            inputs.append(ambience_bytes)
+
+        if not inputs:
+            logger.info(
+                "[Mix] No real audio for scene %s — emitting silent placeholder",
+                scene_id,
+            )
             return _MOCK_WAV
-        return b"".join(parts)
+        if len(inputs) == 1:
+            logger.info(
+                "[Mix] Single real input for scene %s — passing through, no mix needed",
+                scene_id,
+            )
+            return inputs[0]
+
+        logger.info(
+            "[Mix] amix %d real inputs for scene %s via ffmpeg",
+            len(inputs), scene_id,
+        )
+        mixed = self._ffmpeg_amix(inputs)
+        if mixed:
+            return mixed
+        # ffmpeg unavailable / failed — return the longest real input as a
+        # crude fallback rather than producing a corrupt byte concat.
+        logger.warning(
+            "[Mix] ffmpeg amix failed for scene %s — falling back to longest input",
+            scene_id,
+        )
+        return max(inputs, key=len)
 
     async def assemble_final(
         self,
         *,
         scene_mix_bytes_list: list[bytes],
     ) -> bytes:
-        logger.info("[FinalAssembly] Concatenating %d scene mixes", len(scene_mix_bytes_list))
-        if not scene_mix_bytes_list:
+        """Concatenate scene mixes into a single final track via ffmpeg.
+
+        Same mock-filtering + fallback logic as ``mix_scene_audio``.
+        """
+        real = [b for b in scene_mix_bytes_list if not _is_mock_wav(b)]
+        if not real:
+            logger.info("[FinalAssembly] No real scene mixes — emitting silent placeholder")
             return _MOCK_WAV
-        return b"".join(scene_mix_bytes_list)
+        if len(real) == 1:
+            logger.info("[FinalAssembly] Single real scene mix — passing through")
+            return real[0]
+
+        logger.info("[FinalAssembly] concat %d real scene mixes via ffmpeg", len(real))
+        joined = self._ffmpeg_concat(real)
+        if joined:
+            return joined
+        logger.warning(
+            "[FinalAssembly] ffmpeg concat failed — falling back to longest scene mix"
+        )
+        return max(real, key=len)
+
+    # ------------------------------------------------------------------
+    # ffmpeg helpers
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _ffmpeg_amix(inputs: list[bytes]) -> bytes | None:
+        """Run ``ffmpeg -filter_complex amix`` over the given WAV byte blobs.
+
+        Returns the mixed WAV bytes, or ``None`` on any failure (caller
+        falls back to a sensible default). All temp files are cleaned up.
+        """
+        return AudioService._ffmpeg_run(
+            inputs,
+            filter_complex=(
+                "".join(f"[{i}:a]" for i in range(len(inputs)))
+                + f"amix=inputs={len(inputs)}:duration=longest:dropout_transition=0[out]"
+            ),
+        )
+
+    @staticmethod
+    def _ffmpeg_concat(inputs: list[bytes]) -> bytes | None:
+        """Run ``ffmpeg -filter_complex concat`` over the given WAV byte blobs."""
+        return AudioService._ffmpeg_run(
+            inputs,
+            filter_complex=(
+                "".join(f"[{i}:a]" for i in range(len(inputs)))
+                + f"concat=n={len(inputs)}:v=0:a=1[out]"
+            ),
+        )
+
+    @staticmethod
+    def _ffmpeg_run(inputs: list[bytes], *, filter_complex: str) -> bytes | None:
+        """Shared ffmpeg runner: write inputs → run filter → read output → cleanup."""
+        temp_dir = tempfile.mkdtemp(prefix="fw_audio_")
+        in_paths = [os.path.join(temp_dir, f"in_{i}.wav") for i in range(len(inputs))]
+        out_path = os.path.join(temp_dir, "out.wav")
+        try:
+            for path, blob in zip(in_paths, inputs):
+                with open(path, "wb") as fh:
+                    fh.write(blob)
+            cmd: list[str] = ["ffmpeg", "-y"]
+            for p in in_paths:
+                cmd += ["-f", "wav", "-i", p]
+            cmd += [
+                "-filter_complex", filter_complex,
+                "-map", "[out]",
+                "-c:a", "pcm_s16le",
+                out_path,
+            ]
+            proc = subprocess.run(
+                cmd,
+                capture_output=True,
+                check=False,
+                text=True,
+                timeout=120,
+            )
+            if proc.returncode != 0 or not os.path.exists(out_path):
+                logger.warning(
+                    "ffmpeg audio op failed (code=%s): %s",
+                    proc.returncode,
+                    (proc.stderr or "").strip()[:300],
+                )
+                return None
+            with open(out_path, "rb") as fh:
+                return fh.read()
+        except FileNotFoundError:
+            logger.warning("ffmpeg not found, audio op cannot proceed")
+            return None
+        except Exception as exc:
+            logger.warning("ffmpeg audio op error: %s", exc)
+            return None
+        finally:
+            for p in in_paths + [out_path]:
+                if os.path.exists(p):
+                    try:
+                        os.remove(p)
+                    except OSError:
+                        pass
+            try:
+                os.rmdir(temp_dir)
+            except OSError:
+                pass
 
     async def mux_audio_with_video(
         self,

@@ -120,12 +120,6 @@ class TestCommonSchema:
         assert img.height == 576
         assert img.format == "png"
 
-    def test_duration_estimate(self):
-        from agents.common_schema import DurationEstimate
-
-        de = DurationEstimate(seconds=5.0, confidence=0.9)
-        assert de.seconds == 5.0
-
     def test_quality_score_bounds(self):
         from agents.common_schema import QualityScore
 

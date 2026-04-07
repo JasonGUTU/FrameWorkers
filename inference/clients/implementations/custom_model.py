@@ -2,13 +2,9 @@
 
 from __future__ import annotations
 
-import json
 import os
-from typing import Any, Dict, Iterator, List, Optional, Union
+from typing import Optional
 
-import requests
-
-from ..base.base_client import Message, ModelConfig
 from .default_client import LLMClient
 
 
@@ -63,84 +59,3 @@ class CustomModelClient(LLMClient):
         )
         self.model_registry.register_model(model_info)
 
-    def call_ollama(
-        self,
-        messages: List[Union[Message, Dict[str, Any]]],
-        model: Optional[str] = None,
-        config: Optional[ModelConfig] = None,
-        **kwargs,
-    ) -> Dict[str, Any]:
-        resolved_model = model or self.default_model
-        payload: Dict[str, Any] = {
-            "model": resolved_model,
-            "messages": self._format_messages(messages),
-            "stream": False,
-        }
-        if config:
-            if config.temperature is not None:
-                payload.setdefault("options", {})["temperature"] = config.temperature
-            if config.max_tokens:
-                payload.setdefault("options", {})["num_predict"] = config.max_tokens
-        payload.update(kwargs)
-        response = requests.post(
-            f"{self.base_url}/api/chat",
-            json=payload,
-            timeout=config.timeout if config else 60.0,
-        )
-        response.raise_for_status()
-        return response.json()
-
-    def stream_ollama(
-        self,
-        messages: List[Union[Message, Dict[str, Any]]],
-        model: Optional[str] = None,
-        config: Optional[ModelConfig] = None,
-        **kwargs,
-    ) -> Iterator[Dict[str, Any]]:
-        resolved_model = model or self.default_model
-        payload: Dict[str, Any] = {
-            "model": resolved_model,
-            "messages": self._format_messages(messages),
-            "stream": True,
-        }
-        if config:
-            if config.temperature is not None:
-                payload.setdefault("options", {})["temperature"] = config.temperature
-            if config.max_tokens:
-                payload.setdefault("options", {})["num_predict"] = config.max_tokens
-        payload.update(kwargs)
-        response = requests.post(
-            f"{self.base_url}/api/chat",
-            json=payload,
-            stream=True,
-            timeout=config.timeout if config else 60.0,
-        )
-        response.raise_for_status()
-        for line in response.iter_lines():
-            if not line:
-                continue
-            try:
-                yield json.loads(line.decode("utf-8"))
-            except json.JSONDecodeError:
-                continue
-
-    def list_ollama_models(self) -> List[str]:
-        try:
-            response = requests.get(f"{self.base_url}/api/tags", timeout=10.0)
-            response.raise_for_status()
-            data = response.json()
-            return [model["name"] for model in data.get("models", [])]
-        except Exception:
-            return []
-
-    def pull_ollama_model(self, model_name: str) -> bool:
-        try:
-            response = requests.post(
-                f"{self.base_url}/api/pull",
-                json={"name": model_name},
-                timeout=300.0,
-            )
-            response.raise_for_status()
-            return True
-        except Exception:
-            return False

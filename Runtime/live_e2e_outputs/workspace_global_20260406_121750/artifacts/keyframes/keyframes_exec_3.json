@@ -1,0 +1,500 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_type": "character",
+          "entity_id": "char_001",
+          "keyframe_id": "kf_global_char_001",
+          "image_asset": {
+            "asset_id": "img_char_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_121750/artifacts/media/KeyFrameAgent/image/img_char_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "An aging man, Arthur, with a reclusive demeanor and intense focus. He wears practical, well-worn clothes. His face, etched with quiet melancholy and profound determination, is illuminated by warm, atmospheric light, casting deep shadows.",
+          "image_generation_prompt": "An aging man, Arthur, with a reclusive demeanor and intense focus. He wears practical, well-worn clothes. His face, etched with quiet melancholy and profound determination, is illuminated by warm, atmospheric light, casting deep shadows.\nVisual style: The overall tone should be melancholic yet hopeful, emphasizing precision and the passage of time.; Visuals should be intimate, with a focus on details and close-ups.; Lighting should be warm and atmospheric, with deep shadows.; The visual style should maintain intimacy but introduce a sense of quiet triumph and emotional warmth.; Close-ups remain crucial for showing the delicate work and the watch coming to life.. Do NOT use: Harsh, bright lighting that breaks the intimate mood.; Overtly cheerful or comedic elements.; Any sense of failure or continued struggle once the watch is repaired.; Overly dramatic or exaggerated celebrations; the moment is internal and poignant.."
+        }
+      ],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_121750/artifacts/media/KeyFrameAgent/image/img_loc_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "Arthur's Old Workshop, a cozy and cluttered space filled with intricate timepieces and various watchmaking tools. A single desk lamp casts a warm, atmospheric glow, highlighting dust motes dancing in the light, creating deep shadows and an intimate, aged ambiance.",
+          "image_generation_prompt": "Arthur's Old Workshop, a cozy and cluttered space filled with intricate timepieces and various watchmaking tools. A single desk lamp casts a warm, atmospheric glow, highlighting dust motes dancing in the light, creating deep shadows and an intimate, aged ambiance.\nVisual style: The overall tone should be melancholic yet hopeful, emphasizing precision and the passage of time.; Visuals should be intimate, with a focus on details and close-ups.; Lighting should be warm and atmospheric, with deep shadows.; The visual style should maintain intimacy but introduce a sense of quiet triumph and emotional warmth.; Close-ups remain crucial for showing the delicate work and the watch coming to life.. Do NOT use: Harsh, bright lighting that breaks the intimate mood.; Overtly cheerful or comedic elements.; Any sense of failure or continued struggle once the watch is repaired.; Overly dramatic or exaggerated celebrations; the moment is internal and poignant.."
+        }
+      ],
+      "props": [
+        {
+          "entity_type": "prop",
+          "entity_id": "prop_001",
+          "keyframe_id": "kf_global_prop_001",
+          "image_asset": {
+            "asset_id": "img_prop_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_121750/artifacts/media/KeyFrameAgent/image/img_prop_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "A close-up of an intricate and delicate vintage pocket watch, crafted from polished silver and fine engravings. Its surface subtly reflects warm, atmospheric light, emphasizing its sentimental value and detailed craftsmanship.",
+          "image_generation_prompt": "A close-up of an intricate and delicate vintage pocket watch, crafted from polished silver and fine engravings. Its surface subtly reflects warm, atmospheric light, emphasizing its sentimental value and detailed craftsmanship.\nVisual style: The overall tone should be melancholic yet hopeful, emphasizing precision and the passage of time.; Visuals should be intimate, with a focus on details and close-ups.; Lighting should be warm and atmospheric, with deep shadows.; The visual style should maintain intimacy but introduce a sense of quiet triumph and emotional warmth.; Close-ups remain crucial for showing the delicate work and the watch coming to life.. Do NOT use: Harsh, bright lighting that breaks the intimate mood.; Overtly cheerful or comedic elements.; Any sense of failure or continued struggle once the watch is repaired.; Overly dramatic or exaggerated celebrations; the moment is internal and poignant.."
+        },
+        {
+          "entity_type": "prop",
+          "entity_id": "prop_002",
+          "keyframe_id": "kf_global_prop_002",
+          "image_asset": {
+            "asset_id": "img_prop_002_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_121750/artifacts/media/KeyFrameAgent/image/img_prop_002_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "A grand, antique grandfather clock, made of dark, polished wood, standing tall in a dimly lit room. Its ornate face is clearly visible, with hands nearing the midnight hour. Warm, soft light catches its brass elements, highlighting its imposing, timeless presence.",
+          "image_generation_prompt": "A grand, antique grandfather clock, made of dark, polished wood, standing tall in a dimly lit room. Its ornate face is clearly visible, with hands nearing the midnight hour. Warm, soft light catches its brass elements, highlighting its imposing, timeless presence.\nVisual style: The overall tone should be melancholic yet hopeful, emphasizing precision and the passage of time.; Visuals should be intimate, with a focus on details and close-ups.; Lighting should be warm and atmospheric, with deep shadows.; The visual style should maintain intimacy but introduce a sense of quiet triumph and emotional warmth.; Close-ups remain crucial for showing the delicate work and the watch coming to life.. Do NOT use: Harsh, bright lighting that breaks the intimate mood.; Overtly cheerful or comedic elements.; Any sense of failure or continued struggle once the watch is repaired.; Overly dramatic or exaggerated celebrations; the moment is internal and poignant.."
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "keyframe_id": "kf_char_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_121750/artifacts/media/KeyFrameAgent/image/img_char_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Arthur is an aging man with a reclusive demeanor, deeply focused and meticulous in his craft. He carries a quiet melancholy but possesses unwavering determination, his practical attire well-worn yet cared for.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nArthur is an aging man with a reclusive demeanor, deeply focused and meticulous in his craft. He carries a quiet melancholy but possesses unwavering determination, his practical attire well-worn yet cared for.\nDo NOT use: Harsh, bright lighting that breaks the intimate mood.; Overtly cheerful or comedic elements.; Any sense of failure or continued struggle once the watch is repaired.; Overly dramatic or exaggerated celebrations; the moment is internal and poignant.."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_121750/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Arthur's Old Workshop is a cozy, cluttered space, densely packed with various timepieces and tools. Dust motes dance in the ambient light, giving the aged environment a lived-in feel.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nArthur's Old Workshop is a cozy, cluttered space, densely packed with various timepieces and tools. Dust motes dance in the ambient light, giving the aged environment a lived-in feel.\nDo NOT use: Harsh, bright lighting that breaks the intimate mood.; Overtly cheerful or comedic elements.; Any sense of failure or continued struggle once the watch is repaired.; Overly dramatic or exaggerated celebrations; the moment is internal and poignant.."
+            }
+          ],
+          "props": [
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_001",
+              "keyframe_id": "kf_prop_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_prop_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_121750/artifacts/media/KeyFrameAgent/image/img_prop_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "The watch is intricate and delicate, a cherished pocket watch symbolizing a deep, shared past. Its design is complex, requiring precise manipulation.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nThe watch is intricate and delicate, a cherished pocket watch symbolizing a deep, shared past. Its design is complex, requiring precise manipulation.\nDo NOT use: Harsh, bright lighting that breaks the intimate mood.; Overtly cheerful or comedic elements.; Any sense of failure or continued struggle once the watch is repaired.; Overly dramatic or exaggerated celebrations; the moment is internal and poignant.."
+            },
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_002",
+              "keyframe_id": "kf_prop_002_sc_001",
+              "image_asset": {
+                "asset_id": "img_prop_002_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_121750/artifacts/media/KeyFrameAgent/image/img_prop_002_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "A tall grandfather clock stands as a constant reminder of passing time. Its ornate face is clearly visible, with its hands moving toward midnight.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA tall grandfather clock stands as a constant reminder of passing time. Its ornate face is clearly visible, with its hands moving toward midnight.\nDo NOT use: Harsh, bright lighting that breaks the intimate mood.; Overtly cheerful or comedic elements.; Any sense of failure or continued struggle once the watch is repaired.; Overly dramatic or exaggerated celebrations; the moment is internal and poignant.."
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "source_shot_id": "sh_001"
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_001",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_121750/artifacts/media/KeyFrameAgent/image/img_sh_001_kf_001.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Arthur, an aging man, is deeply focused at his cluttered workbench, illuminated by a single desk lamp. A large grandfather clock stands prominently in the cozy, dust-filled workshop, its face showing time nearing midnight.",
+                "video_motion_hint": "Dust motes gently drift in the lamplight, and the pendulum of the grandfather clock slowly swings back and forth.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nArthur, an aging man, is deeply focused at his cluttered workbench, illuminated by a single desk lamp. A large grandfather clock stands prominently in the cozy, dust-filled workshop, its face showing time nearing midnight.\nDo NOT use: Harsh, bright lighting that breaks the intimate mood.; Overtly cheerful or comedic elements.; Any sense of failure or continued struggle once the watch is repaired.; Overly dramatic or exaggerated celebrations; the moment is internal and poignant.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "source_shot_id": "sh_002"
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_002",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_002",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_121750/artifacts/media/KeyFrameAgent/image/img_sh_002_kf_002.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Arthur's face is shown in a medium close-up, his brow furrowed in intense concentration. One eye is pressed against a magnifying loupe, deeply engrossed in his delicate work.",
+                "video_motion_hint": "Arthur's eye subtly shifts its focus as he examines tiny components through the loupe.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nArthur's face is shown in a medium close-up, his brow furrowed in intense concentration. One eye is pressed against a magnifying loupe, deeply engrossed in his delicate work.\nDo NOT use: Harsh, bright lighting that breaks the intimate mood.; Overtly cheerful or comedic elements.; Any sense of failure or continued struggle once the watch is repaired.; Overly dramatic or exaggerated celebrations; the moment is internal and poignant.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "source": {
+              "source_shot_id": "sh_003"
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_003",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_003",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_121750/artifacts/media/KeyFrameAgent/image/img_sh_003_kf_003.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "An extreme close-up from a high angle shows Arthur's careful, aged hands meticulously manipulating intricate, disassembled parts of a delicate pocket watch with fine watchmaker's tools.",
+                "video_motion_hint": "Arthur's fingers subtly adjust a tiny gear, making a minute, precise movement with a tool.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nAn extreme close-up from a high angle shows Arthur's careful, aged hands meticulously manipulating intricate, disassembled parts of a delicate pocket watch with fine watchmaker's tools.\nDo NOT use: Harsh, bright lighting that breaks the intimate mood.; Overtly cheerful or comedic elements.; Any sense of failure or continued struggle once the watch is repaired.; Overly dramatic or exaggerated celebrations; the moment is internal and poignant.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "source": {
+              "source_shot_id": "sh_004"
+            },
+            "estimated_duration_sec": 0.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_004",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_004",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_121750/artifacts/media/KeyFrameAgent/image/img_sh_004_kf_004.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A close-up frames the ornate face of a grandfather clock, its minute hand shown approaching the twelve o'clock position, indicating time is nearing midnight.",
+                "video_motion_hint": "The minute hand of the grandfather clock visibly, but slowly, ticks closer to the midnight mark.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA close-up frames the ornate face of a grandfather clock, its minute hand shown approaching the twelve o'clock position, indicating time is nearing midnight.\nDo NOT use: Harsh, bright lighting that breaks the intimate mood.; Overtly cheerful or comedic elements.; Any sense of failure or continued struggle once the watch is repaired.; Overly dramatic or exaggerated celebrations; the moment is internal and poignant.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 5,
+            "source": {
+              "source_shot_id": "sh_005"
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_005",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_005",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_121750/artifacts/media/KeyFrameAgent/image/img_sh_005_kf_005.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Arthur is framed from the upper body, his expression momentarily conveying quiet frustration. He pauses, then his gaze hardens with renewed resolve, returning his focus to the workbench and tools.",
+                "video_motion_hint": "Arthur lets out a soft sigh, then takes a deep, steadying breath before leaning back towards his work with determined posture.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nArthur is framed from the upper body, his expression momentarily conveying quiet frustration. He pauses, then his gaze hardens with renewed resolve, returning his focus to the workbench and tools.\nDo NOT use: Harsh, bright lighting that breaks the intimate mood.; Overtly cheerful or comedic elements.; Any sense of failure or continued struggle once the watch is repaired.; Overly dramatic or exaggerated celebrations; the moment is internal and poignant.."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_002"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "keyframe_id": "kf_char_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_002",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_121750/artifacts/media/KeyFrameAgent/image/img_char_001_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Arthur displays intense focus, then a profound shift to peaceful contentment. His hands are steady and precise, his face serene. He wears his familiar clothing.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nArthur displays intense focus, then a profound shift to peaceful contentment. His hands are steady and precise, his face serene. He wears his familiar clothing.\nDo NOT use: Harsh, bright lighting that breaks the intimate mood.; Overtly cheerful or comedic elements.; Any sense of failure or continued struggle once the watch is repaired.; Overly dramatic or exaggerated celebrations; the moment is internal and poignant.."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "keyframe_id": "kf_loc_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_002",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_121750/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "The intimate workshop ambiance persists, with a desk lamp casting warm light on the workspace. The grandfather clock stands majestically in the background.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nThe intimate workshop ambiance persists, with a desk lamp casting warm light on the workspace. The grandfather clock stands majestically in the background.\nDo NOT use: Harsh, bright lighting that breaks the intimate mood.; Overtly cheerful or comedic elements.; Any sense of failure or continued struggle once the watch is repaired.; Overly dramatic or exaggerated celebrations; the moment is internal and poignant.."
+            }
+          ],
+          "props": [
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_001",
+              "keyframe_id": "kf_prop_001_sc_002",
+              "image_asset": {
+                "asset_id": "img_prop_001_sc_002",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_121750/artifacts/media/KeyFrameAgent/image/img_prop_001_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "The pocket watch is fully assembled and visibly ticking, embodying successful restoration. Its intricate details are now perfectly aligned and functional.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nThe pocket watch is fully assembled and visibly ticking, embodying successful restoration. Its intricate details are now perfectly aligned and functional.\nDo NOT use: Harsh, bright lighting that breaks the intimate mood.; Overtly cheerful or comedic elements.; Any sense of failure or continued struggle once the watch is repaired.; Overly dramatic or exaggerated celebrations; the moment is internal and poignant.."
+            },
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_002",
+              "keyframe_id": "kf_prop_002_sc_002",
+              "image_asset": {
+                "asset_id": "img_prop_002_sc_002",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_121750/artifacts/media/KeyFrameAgent/image/img_prop_002_sc_002.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "The antique grandfather clock strikes midnight, its powerful chimes echoing through the workshop. Its polished wooden frame and pendulum are prominent.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nThe antique grandfather clock strikes midnight, its powerful chimes echoing through the workshop. Its polished wooden frame and pendulum are prominent.\nDo NOT use: Harsh, bright lighting that breaks the intimate mood.; Overtly cheerful or comedic elements.; Any sense of failure or continued struggle once the watch is repaired.; Overly dramatic or exaggerated celebrations; the moment is internal and poignant.."
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_006",
+            "order": 1,
+            "source": {
+              "source_shot_id": "sh_006"
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_006",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_006",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_121750/artifacts/media/KeyFrameAgent/image/img_sh_006_kf_006.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "An extreme close-up, high-angle view of Arthur's steady hands meticulously placing the final tiny gear into the pocket watch mechanism. Warm, intimate light highlights the delicate components and the tools. Deep shadows frame the precise operation, conveying intense focus.",
+                "video_motion_hint": "A subtle tremor in Arthur's hand as the gear is lowered, then a smooth, precise click as it settles into place.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nAn extreme close-up, high-angle view of Arthur's steady hands meticulously placing the final tiny gear into the pocket watch mechanism. Warm, intimate light highlights the delicate components and the tools. Deep shadows frame the precise operation, conveying intense focus.\nDo NOT use: Harsh, bright lighting that breaks the intimate mood.; Overtly cheerful or comedic elements.; Any sense of failure or continued struggle once the watch is repaired.; Overly dramatic or exaggerated celebrations; the moment is internal and poignant.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 2,
+            "source": {
+              "source_shot_id": "sh_007"
+            },
+            "estimated_duration_sec": 0.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_007",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_007_kf_007",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_121750/artifacts/media/KeyFrameAgent/image/img_sh_007_kf_007.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A close-up, eye-level shot focuses entirely on the fully assembled pocket watch. Its internal gears visibly move, and the balance wheel oscillates rhythmically. Warm light catches the polished surfaces as the watch begins to tick with quiet triumph.",
+                "video_motion_hint": "The intricate gears smoothly rotating and the balance wheel oscillating with newly restored life.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA close-up, eye-level shot focuses entirely on the fully assembled pocket watch. Its internal gears visibly move, and the balance wheel oscillates rhythmically. Warm light catches the polished surfaces as the watch begins to tick with quiet triumph.\nDo NOT use: Harsh, bright lighting that breaks the intimate mood.; Overtly cheerful or comedic elements.; Any sense of failure or continued struggle once the watch is repaired.; Overly dramatic or exaggerated celebrations; the moment is internal and poignant.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_008",
+            "order": 3,
+            "source": {
+              "source_shot_id": "sh_008"
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_008",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_008_kf_008",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_121750/artifacts/media/KeyFrameAgent/image/img_sh_008_kf_008.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A medium close-up, eye-level shot of Arthur's face. His expression transitions from strained concentration to profound relief and peaceful contentment. The soft glow of the desk lamp illuminates his features as the grandfather clock chimes loudly in the background.",
+                "video_motion_hint": "Arthur's tense facial muscles subtly relax, a gentle smile forming as the resonant chimes of the clock finish.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA medium close-up, eye-level shot of Arthur's face. His expression transitions from strained concentration to profound relief and peaceful contentment. The soft glow of the desk lamp illuminates his features as the grandfather clock chimes loudly in the background.\nDo NOT use: Harsh, bright lighting that breaks the intimate mood.; Overtly cheerful or comedic elements.; Any sense of failure or continued struggle once the watch is repaired.; Overly dramatic or exaggerated celebrations; the moment is internal and poignant.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 4,
+            "source": {
+              "source_shot_id": "sh_009"
+            },
+            "estimated_duration_sec": 0.7,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_009",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_009_kf_009",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_121750/artifacts/media/KeyFrameAgent/image/img_sh_009_kf_009.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A close-up, eye-level view of the restored pocket watch, now ticking steadily. Warm light casts gentle reflections off its polished case and crystal, emphasizing its renewed beauty and symbolic importance. The delicate ticking is almost palpable.",
+                "video_motion_hint": "Subtle glints of light shift across the watch's polished surface as its internal mechanism keeps time.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA close-up, eye-level view of the restored pocket watch, now ticking steadily. Warm light casts gentle reflections off its polished case and crystal, emphasizing its renewed beauty and symbolic importance. The delicate ticking is almost palpable.\nDo NOT use: Harsh, bright lighting that breaks the intimate mood.; Overtly cheerful or comedic elements.; Any sense of failure or continued struggle once the watch is repaired.; Overly dramatic or exaggerated celebrations; the moment is internal and poignant.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 5,
+            "source": {
+              "source_shot_id": "sh_010"
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_010",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_010_kf_010",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_121750/artifacts/media/KeyFrameAgent/image/img_sh_010_kf_010.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A medium, eye-level shot of Arthur, sitting peacefully in his workshop. He holds the ticking pocket watch gently in his hands, gazing at it with a quiet, content smile. Warm, soft light envelops him, conveying solace and emotional release.",
+                "video_motion_hint": "Arthur gently cradles the watch, his thumb subtly tracing its smooth case, a deep breath visible.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA medium, eye-level shot of Arthur, sitting peacefully in his workshop. He holds the ticking pocket watch gently in his hands, gazing at it with a quiet, content smile. Warm, soft light envelops him, conveying solace and emotional release.\nDo NOT use: Harsh, bright lighting that breaks the intimate mood.; Overtly cheerful or comedic elements.; Any sense of failure or continued struggle once the watch is repaired.; Overly dramatic or exaggerated celebrations; the moment is internal and poignant.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_011",
+            "order": 6,
+            "source": {
+              "source_shot_id": "sh_011"
+            },
+            "estimated_duration_sec": 0.8,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_011",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_011_kf_011",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_121750/artifacts/media/KeyFrameAgent/image/img_sh_011_kf_011.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A wide, eye-level shot frames Arthur in his workshop, still holding the ticking watch, his face illuminated by a profound sense of hopeful closure. Outside the window, distant fireworks light up the night sky, subtly marking the New Year. Warm, atmospheric lighting fills the intimate space.",
+                "video_motion_hint": "Arthur slowly lifts his gaze from the watch to the window, where distant fireworks softly bloom and fade in the night sky.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA wide, eye-level shot frames Arthur in his workshop, still holding the ticking watch, his face illuminated by a profound sense of hopeful closure. Outside the window, distant fireworks light up the night sky, subtly marking the New Year. Warm, atmospheric lighting fills the intimate space.\nDo NOT use: Harsh, bright lighting that breaks the intimate mood.; Overtly cheerful or comedic elements.; Any sense of failure or continued struggle once the watch is repaired.; Overly dramatic or exaggerated celebrations; the moment is internal and poignant.."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 2,
+    "shot_count": 11,
+    "keyframe_count_total": 11,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 2,
+    "stability_character_keyframe_count": 2,
+    "stability_location_keyframe_count": 2,
+    "stability_prop_keyframe_count": 4
+  },
+  "artifact_caption": {
+    "semantic_type": "",
+    "what": "A keyframe planning document covering 2 scenes and 11 shots. For each shot in the screenplay it provides a textual description of the planned starting frame and a separate motion hint describing how that frame should move when animated. It also catalogs the visual identity references (characters, locations, props) used to keep imagery consistent. Used by the video step to fetch the prompt and motion intent for each shot. 4 entities (1 character, 1 location, 2 props), canonical look defined, melancholic yet hopeful visual style.",
+    "why": "Maintaining a consistent visual identity across all elements; focusing on Arthur's internal state, a detailed and aged workshop, and symbolic props, all unified by warm, intimate, and melancholic lighting with deep shadows.",
+    "scope": "global"
+  }
+}

@@ -1,0 +1,310 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_type": "character",
+          "entity_id": "char_001",
+          "keyframe_id": "kf_global_char_001",
+          "image_asset": {
+            "asset_id": "img_char_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095132/artifacts/media/KeyFrameAgent/image/img_char_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "An elderly man with a face deeply etched with life experience, showing quiet determination and underlying grief. His aged hands are remarkably dextrous and precise, with a subtle tremor. He wears practical, understated clothing.",
+          "image_generation_prompt": "An elderly man with a face deeply etched with life experience, showing quiet determination and underlying grief. His aged hands are remarkably dextrous and precise, with a subtle tremor. He wears practical, understated clothing.\nVisual style: Moody, warm, and intimate lighting.; Heavy use of close-ups to emphasize detail, emotion, and the intricate work.; Slow, deliberate camera movements to maintain a reflective, internal pacing.; Focus on texture and the worn quality of the workshop.. Do NOT use: Bright, harsh lighting.; Fast-paced editing or quick cuts.; Overly dramatic or grand gestures; keep it understated and personal.."
+        }
+      ],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095132/artifacts/media/KeyFrameAgent/image/img_loc_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "A cozy, cluttered workshop, meticulously organized in its own way. Warm, soft light emanates from a single table lamp, casting intimate shadows across the space. An imposing, antique clock stands prominently in the background.",
+          "image_generation_prompt": "A cozy, cluttered workshop, meticulously organized in its own way. Warm, soft light emanates from a single table lamp, casting intimate shadows across the space. An imposing, antique clock stands prominently in the background.\nVisual style: Moody, warm, and intimate lighting.; Heavy use of close-ups to emphasize detail, emotion, and the intricate work.; Slow, deliberate camera movements to maintain a reflective, internal pacing.; Focus on texture and the worn quality of the workshop.. Do NOT use: Bright, harsh lighting.; Fast-paced editing or quick cuts.; Overly dramatic or grand gestures; keep it understated and personal.."
+        }
+      ],
+      "props": [
+        {
+          "entity_type": "prop",
+          "entity_id": "prop_001",
+          "keyframe_id": "kf_global_prop_001",
+          "image_asset": {
+            "asset_id": "img_prop_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095132/artifacts/media/KeyFrameAgent/image/img_prop_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "An antique, intricate pocket watch, its delicate gears and ornate casing clearly visible. The watch is visibly broken, with a stopped hand.",
+          "image_generation_prompt": "An antique, intricate pocket watch, its delicate gears and ornate casing clearly visible. The watch is visibly broken, with a stopped hand.\nVisual style: Moody, warm, and intimate lighting.; Heavy use of close-ups to emphasize detail, emotion, and the intricate work.; Slow, deliberate camera movements to maintain a reflective, internal pacing.; Focus on texture and the worn quality of the workshop.. Do NOT use: Bright, harsh lighting.; Fast-paced editing or quick cuts.; Overly dramatic or grand gestures; keep it understated and personal.."
+        },
+        {
+          "entity_type": "prop",
+          "entity_id": "prop_002",
+          "keyframe_id": "kf_global_prop_002",
+          "image_asset": {
+            "asset_id": "img_prop_002_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095132/artifacts/media/KeyFrameAgent/image/img_prop_002_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "An imposing, antique grandfather clock, its face clearly displaying the time nearing midnight. The clock's dark wood and brass details are prominent.",
+          "image_generation_prompt": "An imposing, antique grandfather clock, its face clearly displaying the time nearing midnight. The clock's dark wood and brass details are prominent.\nVisual style: Moody, warm, and intimate lighting.; Heavy use of close-ups to emphasize detail, emotion, and the intricate work.; Slow, deliberate camera movements to maintain a reflective, internal pacing.; Focus on texture and the worn quality of the workshop.. Do NOT use: Bright, harsh lighting.; Fast-paced editing or quick cuts.; Overly dramatic or grand gestures; keep it understated and personal.."
+        },
+        {
+          "entity_type": "prop",
+          "entity_id": "prop_003",
+          "keyframe_id": "kf_global_prop_003",
+          "image_asset": {
+            "asset_id": "img_prop_003_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095132/artifacts/media/KeyFrameAgent/image/img_prop_003_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "An array of authentic, finely crafted watchmaking tools, including tiny screwdrivers, tweezers, and loupes, meticulously arranged on a workbench.",
+          "image_generation_prompt": "An array of authentic, finely crafted watchmaking tools, including tiny screwdrivers, tweezers, and loupes, meticulously arranged on a workbench.\nVisual style: Moody, warm, and intimate lighting.; Heavy use of close-ups to emphasize detail, emotion, and the intricate work.; Slow, deliberate camera movements to maintain a reflective, internal pacing.; Focus on texture and the worn quality of the workshop.. Do NOT use: Bright, harsh lighting.; Fast-paced editing or quick cuts.; Overly dramatic or grand gestures; keep it understated and personal.."
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "keyframe_id": "kf_char_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095132/artifacts/media/KeyFrameAgent/image/img_char_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Arthur is an elderly man with a face etched by life, conveying quiet determination and underlying grief. His hands are incredibly dexterous but show a slight tremor. He wears practical, understated clothing.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nArthur is an elderly man with a face etched by life, conveying quiet determination and underlying grief. His hands are incredibly dexterous but show a slight tremor. He wears practical, understated clothing.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing or quick cuts.; Overly dramatic or grand gestures; keep it understated and personal.."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095132/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "An intimate, cozy workshop, meticulously cluttered with tools and parts, bathed in warm, soft light from a single table lamp. The air is still, casting deep, inviting shadows. An imposing antique clock is a prominent feature in the background.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nAn intimate, cozy workshop, meticulously cluttered with tools and parts, bathed in warm, soft light from a single table lamp. The air is still, casting deep, inviting shadows. An imposing antique clock is a prominent feature in the background.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing or quick cuts.; Overly dramatic or grand gestures; keep it understated and personal.."
+            }
+          ],
+          "props": [
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_001",
+              "keyframe_id": "kf_prop_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_prop_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095132/artifacts/media/KeyFrameAgent/image/img_prop_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "An intricate, antique watch, clearly broken at the scene's start. Its delicate mechanism becomes visibly ticking by the end, signifying repair.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nAn intricate, antique watch, clearly broken at the scene's start. Its delicate mechanism becomes visibly ticking by the end, signifying repair.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing or quick cuts.; Overly dramatic or grand gestures; keep it understated and personal.."
+            },
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_002",
+              "keyframe_id": "kf_prop_002_sc_001",
+              "image_asset": {
+                "asset_id": "img_prop_002_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095132/artifacts/media/KeyFrameAgent/image/img_prop_002_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "An imposing old clock whose hands conspicuously near midnight, heightening the sense of urgency and the passage of time.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nAn imposing old clock whose hands conspicuously near midnight, heightening the sense of urgency and the passage of time.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing or quick cuts.; Overly dramatic or grand gestures; keep it understated and personal.."
+            },
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_003",
+              "keyframe_id": "kf_prop_003_sc_001",
+              "image_asset": {
+                "asset_id": "img_prop_003_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095132/artifacts/media/KeyFrameAgent/image/img_prop_003_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "Authentic, precise watchmaking tools, worn from use, handled with dexterity by Arthur during the repair process.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nAuthentic, precise watchmaking tools, worn from use, handled with dexterity by Arthur during the repair process.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing or quick cuts.; Overly dramatic or grand gestures; keep it understated and personal.."
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "source_shot_id": "sh_001"
+            },
+            "estimated_duration_sec": 2.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_001",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095132/artifacts/media/KeyFrameAgent/image/img_sh_001_kf_001.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "An extreme close-up on Arthur's aged, trembling hands meticulously working on an intricate, broken antique watch. Tiny gears and springs are visible under the warm, intimate lamplight. The focus on his precise but slightly shaking grip conveys his intense effort and underlying emotional strain.",
+                "video_motion_hint": "A subtle shift in the focus plane as Arthur's hand trembles slightly while manipulating a tiny component.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nAn extreme close-up on Arthur's aged, trembling hands meticulously working on an intricate, broken antique watch. Tiny gears and springs are visible under the warm, intimate lamplight. The focus on his precise but slightly shaking grip conveys his intense effort and underlying emotional strain.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing or quick cuts.; Overly dramatic or grand gestures; keep it understated and personal.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "source_shot_id": "sh_002"
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_002",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_002",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095132/artifacts/media/KeyFrameAgent/image/img_sh_002_kf_002.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A medium close-up of Arthur's face, his eyes etched with deep concentration and a hint of sadness, reflecting the warm glow of his lamp. His gaze is intense, his brow slightly furrowed in deep thought. An imposing antique clock, nearing midnight, is visible in the background, out of focus.",
+                "video_motion_hint": "The camera slowly pans from Arthur's focused, emotional face to reveal the large clock in the background.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA medium close-up of Arthur's face, his eyes etched with deep concentration and a hint of sadness, reflecting the warm glow of his lamp. His gaze is intense, his brow slightly furrowed in deep thought. An imposing antique clock, nearing midnight, is visible in the background, out of focus.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing or quick cuts.; Overly dramatic or grand gestures; keep it understated and personal.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "source": {
+              "source_shot_id": "sh_003"
+            },
+            "estimated_duration_sec": 1.5,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_003",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_003",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095132/artifacts/media/KeyFrameAgent/image/img_sh_003_kf_003.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A close-up on the aged, ornate face of an imposing antique clock, its hands nearing the midnight hour. The texture of its worn brass and wood is prominent under the moody lighting. The second hand is frozen, emphasizing the ticking urgency.",
+                "video_motion_hint": "The second hand of the clock begins a slow, deliberate sweep towards midnight, emphasizing the passage of time.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA close-up on the aged, ornate face of an imposing antique clock, its hands nearing the midnight hour. The texture of its worn brass and wood is prominent under the moody lighting. The second hand is frozen, emphasizing the ticking urgency.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing or quick cuts.; Overly dramatic or grand gestures; keep it understated and personal.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "source": {
+              "source_shot_id": "sh_004"
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_004",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_004",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095132/artifacts/media/KeyFrameAgent/image/img_sh_004_kf_004.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "An extreme close-up on the intricate internal mechanism of the antique watch, its tiny gears and springs. The warm light highlights the metallic textures. A precise tool is seen retracting as a key component clicks into place.",
+                "video_motion_hint": "A tiny gear visibly turns, initiating the subtle, rhythmic motion of the watch's internal mechanism as it starts ticking.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nAn extreme close-up on the intricate internal mechanism of the antique watch, its tiny gears and springs. The warm light highlights the metallic textures. A precise tool is seen retracting as a key component clicks into place.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing or quick cuts.; Overly dramatic or grand gestures; keep it understated and personal.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 5,
+            "source": {
+              "source_shot_id": "sh_005"
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_005",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_005",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_095132/artifacts/media/KeyFrameAgent/image/img_sh_005_kf_005.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A medium close-up of Arthur, his face showing a mix of profound relief, bittersweet remembrance, and a glimmer of hope. He holds the now ticking antique watch delicately in his aged hands, listening intently to its soft rhythm. The warm lamplight softens the lines on his face.",
+                "video_motion_hint": "Arthur slowly raises the ticking watch closer to his ear, a faint smile emerging on his lips as he listens.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA medium close-up of Arthur, his face showing a mix of profound relief, bittersweet remembrance, and a glimmer of hope. He holds the now ticking antique watch delicately in his aged hands, listening intently to its soft rhythm. The warm lamplight softens the lines on his face.\nDo NOT use: Bright, harsh lighting.; Fast-paced editing or quick cuts.; Overly dramatic or grand gestures; keep it understated and personal.."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_count": 5,
+    "keyframe_count_total": 5,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 3,
+    "stability_character_keyframe_count": 1,
+    "stability_location_keyframe_count": 1,
+    "stability_prop_keyframe_count": 3
+  },
+  "artifact_caption": {
+    "semantic_type": "",
+    "what": "1 scenes, 5 shots, 5 shot keyframe stills; 1 character, 1 location, 3 props; 0 shot keyframes at L1; Visual style: Moody, warm, intimate, detailed, and reflective.",
+    "why": "Style consistency is achieved by anchoring descriptions in 'Moody, warm, and intimate lighting' and 'focus on texture and worn quality.' Key visual decisions emphasize aged details, the precision of craftsmanship, and the emotional resonance of light and shadows.",
+    "scope": "global"
+  }
+}

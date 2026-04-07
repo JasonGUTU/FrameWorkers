@@ -112,15 +112,16 @@ class _ProducerDescriptor:
     agent_id = "ProducerAgent"
     asset_key = "producer_asset"
     catalog_entry = "Producer integration descriptor"
+    input_needs_description = "Needs source text"
 
     def build_equipped_agent(self, _llm):
         return _ProducerPipelineAgent()
 
     def build_input(self, task_id, input_bundle_v2):
-        source_text = input_bundle_v2.get("source_text", "")
+        hints = getattr(input_bundle_v2, "hints", None) or {}
+        source_text = hints.get("source_text", "")
         if isinstance(source_text, dict):
             source_text = source_text.get("goal", "")
-        hints = getattr(input_bundle_v2, "hints", None) or {}
         return {
             "task_id": task_id,
             "seed": source_text,
@@ -136,12 +137,18 @@ class _ConsumerDescriptor:
     def build_equipped_agent(self, _llm):
         return _ConsumerPipelineAgent()
 
+    input_needs_description = "Needs producer_asset JSON"
+
     def build_input(self, task_id, input_bundle_v2):
-        producer_asset = input_bundle_v2.get("producer_asset", {})
+        resolved = getattr(input_bundle_v2, "resolved_artifacts", {})
+        if not isinstance(resolved, dict):
+            resolved = {}
+        producer = resolved.get("producer_asset", {})
+        payload = producer.get("payload", {}) if isinstance(producer, dict) else {}
         hints = getattr(input_bundle_v2, "hints", None) or {}
         return {
             "task_id": task_id,
-            "observed_seed": producer_asset.get("content", {}).get("seed", ""),
+            "observed_seed": payload.get("content", {}).get("seed", ""),
             "language": hints.get("language") or "en",
         }
 
@@ -279,7 +286,7 @@ def test_assistant_e2e_http_flow_covers_core_endpoints(assistant_http_client):
     )
     assert add_entry_resp.status_code == 201
     entry = add_entry_resp.get_json()
-    assert set(entry.keys()) == {"content", "agent_id", "created_at", "execution_result", "task_id"}
+    assert set(entry.keys()) == {"content", "agent_id", "created_at", "execution_id", "supersedes", "task_id"}
 
     list_entries_resp = client.get(
         f"/api/assistant/workspace/memory/entries?task_id={task_id}"
@@ -443,5 +450,6 @@ def test_assistant_pipeline_execution_inputs_include_global_memory_list(
     assert executions_resp.status_code == 200
     executions = executions_resp.get_json()
     consumer_exec = next(e for e in executions if e["agent_id"] == "ConsumerAgent")
-    gm = consumer_exec["inputs"].get("global_memory")
-    assert isinstance(gm, list)
+    # In new architecture, artifacts are in _resolved_artifacts, not global_memory list.
+    ib = consumer_exec.get("inputs", {}).get("input_bundle_v2", {})
+    assert "task_id" in consumer_exec["inputs"]

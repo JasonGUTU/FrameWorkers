@@ -1,0 +1,236 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-06T00:59:49.211075+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "characters": [
+      {
+        "id": "char_1",
+        "name": "retired watchmaker",
+        "description": "This retired watchmaker is a man in his late 60s, with a kind, weathered face, gentle eyes, and thinning grey hair combed neatly to the side. He wears a simple tweed vest over a white collared shirt, and his hands, though aged, are steady and precise."
+      }
+    ],
+    "shots": [
+      {
+        "id": 1,
+        "duration": 5,
+        "setting_description": "A cozy, cluttered watchmaker's workshop in an old building. Dust motes dance in the warm glow of a single task lamp. Various clocks line the shelves, and intricate tools are neatly arranged on a worn wooden workbench. It is late evening, almost night.",
+        "plot_correspondence": "This retired watchmaker sits at his workbench, looking at an ornate, old pocket watch placed before him.",
+        "onstage_characters": [
+          "char_1"
+        ],
+        "static_shot_description": "This retired watchmaker is seated, head bowed slightly, his hands resting on the workbench beside an open, antique pocket watch. The watch has intricate carvings and a slightly tarnished silver chain. The workbench is covered with tiny gears and springs.",
+        "shot_perspective_design": {
+          "distance": "medium shot",
+          "angle": "eye-level",
+          "lens": ""
+        },
+        "audio_description": "The gentle, rhythmic ticking of multiple clocks in the workshop, a soft, melancholic underscore.",
+        "video_type": "text2video"
+      },
+      {
+        "id": 2,
+        "duration": 5,
+        "setting_description": "The same workshop, but the focus shifts to a large, ornate grandfather clock in the corner. Its pendulum swings steadily, and the face shows the time nearing midnight on New Year's Eve.",
+        "plot_correspondence": "The grandfather clock's hands move visibly, indicating the rapidly approaching midnight.",
+        "onstage_characters": [],
+        "static_shot_description": "The face of a tall, dark wooden grandfather clock fills the frame, its brass hands poised at 11:50. The pendulum is blurred slightly from motion, and reflections of the workshop lights glimmer on the glass.",
+        "shot_perspective_design": {
+          "distance": "close-up",
+          "angle": "eye-level",
+          "lens": ""
+        },
+        "audio_description": "The amplified, urgent 'tick-tock' of the grandfather clock, with a faint, distant murmur of city sounds.",
+        "video_type": "text2video"
+      },
+      {
+        "id": 3,
+        "duration": 5,
+        "setting_description": "Back at the workbench, bathed in the focused glow of the lamp. The air is still, and the only sounds are the watchmaker's movements.",
+        "plot_correspondence": "This retired watchmaker carefully opens the back of the pocket watch and selects a tiny screwdriver.",
+        "onstage_characters": [
+          "char_1"
+        ],
+        "static_shot_description": "This retired watchmaker's aged but steady hands are at the center of the frame, holding the pocket watch. The ornate back is hinged open, revealing tiny gears. His other hand reaches for a delicate screwdriver from a leather roll of tools.",
+        "shot_perspective_design": {
+          "distance": "close-up",
+          "angle": "high angle (looking down)",
+          "lens": ""
+        },
+        "audio_description": "Delicate metallic clicks and soft scraping sounds as the watch is opened and tools are selected.",
+        "video_type": "text2video"
+      },
+      {
+        "id": 4,
+        "duration": 5,
+        "setting_description": "The immediate area around the pocket watch, under intense magnification. Tiny components gleam under the lamp.",
+        "plot_correspondence": "This retired watchmaker, peering through a loupe, meticulously begins to work on the watch's delicate mechanism.",
+        "onstage_characters": [
+          "char_1"
+        ],
+        "static_shot_description": "This retired watchmaker's eye is visible through a jeweler's loupe, intensely focused. Below it, the intricate brass gears and springs of the pocket watch's movement are magnified, catching the light. A tiny pair of tweezers hovers over a minuscule part.",
+        "shot_perspective_design": {
+          "distance": "close-up",
+          "angle": "eye-level",
+          "lens": ""
+        },
+        "audio_description": "The faint, almost inaudible whirring of tiny gears, replaced by the soft, focused breathing of the watchmaker.",
+        "video_type": "text2video"
+      },
+      {
+        "id": 5,
+        "duration": 5,
+        "setting_description": "The task lamp casts long shadows in the quiet workshop, creating an atmosphere of intense concentration mixed with subtle anxiety.",
+        "plot_correspondence": "This retired watchmaker encounters a stubborn, misaligned gear, causing him a moment of frustration.",
+        "onstage_characters": [
+          "char_1"
+        ],
+        "static_shot_description": "This retired watchmaker's brow is furrowed in concentration, a slight frown on his lips. His hand, holding a slender tool, is poised over a tiny gear that won't quite fit into place. The gear itself appears slightly askew, resisting his efforts.",
+        "shot_perspective_design": {
+          "distance": "close-up",
+          "angle": "eye-level",
+          "lens": ""
+        },
+        "audio_description": "A soft, exasperated sigh from the watchmaker, followed by the faint, frustrated scrape of metal against metal.",
+        "video_type": "text2video"
+      },
+      {
+        "id": 6,
+        "duration": 5,
+        "setting_description": "The warm, slightly faded environment of the workshop. A small, framed photograph sits on the bench beside the tools, catching a soft glow.",
+        "plot_correspondence": "This retired watchmaker pauses, glancing at a faded photograph of his late wife, drawing strength from the memory.",
+        "onstage_characters": [
+          "char_1"
+        ],
+        "static_shot_description": "This retired watchmaker's hand gently touches a small, oval-framed photograph of a smiling woman. His gaze is tender and melancholic, momentarily lifted from the watch. The watch mechanism remains partially disassembled in the foreground, slightly out of focus.",
+        "shot_perspective_design": {
+          "distance": "medium shot",
+          "angle": "eye-level",
+          "lens": ""
+        },
+        "audio_description": "Soft, reflective piano music plays briefly, then fades as the watchmaker's breathing becomes more determined.",
+        "video_type": "text2video"
+      },
+      {
+        "id": 7,
+        "duration": 5,
+        "setting_description": "The workbench, still brightly lit, but with a renewed sense of purpose in the atmosphere. The tools seem to await his command.",
+        "plot_correspondence": "With newfound resolve, this retired watchmaker carefully adjusts the problematic gear into its correct position.",
+        "onstage_characters": [
+          "char_1"
+        ],
+        "static_shot_description": "This retired watchmaker's hand is now perfectly steady, guiding the tiny gear with precision. The gear smoothly slides into its slot, perfectly aligned. His expression is one of calm focus and quiet triumph.",
+        "shot_perspective_design": {
+          "distance": "close-up",
+          "angle": "high angle (looking down)",
+          "lens": ""
+        },
+        "audio_description": "A subtle, satisfying 'click' as the gear engages, followed by a soft, relieved exhale from the watchmaker.",
+        "video_type": "text2video"
+      },
+      {
+        "id": 8,
+        "duration": 5,
+        "setting_description": "The workshop is dimly lit, except for the bright lamp over the workbench. Shadows deepen, emphasizing the late hour.",
+        "plot_correspondence": "This retired watchmaker rapidly reassembles the remaining components, keenly aware of the dwindling time as the grandfather clock shows 11:58.",
+        "onstage_characters": [
+          "char_1"
+        ],
+        "static_shot_description": "This retired watchmaker's nimble fingers move quickly but with care, placing back tiny screws and plates. In the background, slightly out of focus, the grandfather clock's face clearly displays the time: 11:58. His movements are a blur of efficiency.",
+        "shot_perspective_design": {
+          "distance": "medium shot",
+          "angle": "eye-level",
+          "lens": ""
+        },
+        "audio_description": "The ticking of the grandfather clock grows faster and more pronounced, mixing with hurried, precise metallic sounds.",
+        "video_type": "text2video"
+      },
+      {
+        "id": 9,
+        "duration": 5,
+        "setting_description": "The close-up view of the pocket watch, shimmering under the lamp. The atmosphere is tense, expectant.",
+        "plot_correspondence": "This retired watchmaker gently snaps the back of the pocket watch closed, just as the grandfather clock begins to chime.",
+        "onstage_characters": [
+          "char_1"
+        ],
+        "static_shot_description": "This retired watchmaker's thumb and forefinger are shown closing the ornate back cover of the pocket watch. The polished silver reflects the lamp's light. The face of the watch shows 11:59, almost midnight.",
+        "shot_perspective_design": {
+          "distance": "close-up",
+          "angle": "eye-level",
+          "lens": ""
+        },
+        "audio_description": "A decisive, crisp 'click' as the watch case closes, immediately followed by the first, deep chime of the distant grandfather clock.",
+        "video_type": "text2video"
+      },
+      {
+        "id": 10,
+        "duration": 5,
+        "setting_description": "The quiet workshop, now filled with the resonant sound of the chimes. The air feels charged with significance.",
+        "plot_correspondence": "The newly repaired pocket watch begins to tick, perfectly synchronized with the final chimes of midnight.",
+        "onstage_characters": [
+          "char_1"
+        ],
+        "static_shot_description": "This retired watchmaker holds the pocket watch in his open palm, its small seconds hand visibly beginning to sweep. The watch face now clearly displays 12:00. The light catches the subtle movement of its tiny gears through the glass.",
+        "shot_perspective_design": {
+          "distance": "close-up",
+          "angle": "low angle (looking up at the watch)",
+          "lens": ""
+        },
+        "audio_description": "The final, echoing chimes of midnight fade, replaced by the clear, delicate, and rhythmic 'tick-tock' of the pocket watch.",
+        "video_type": "text2video"
+      },
+      {
+        "id": 11,
+        "duration": 5,
+        "setting_description": "The workshop, now bathed in a soft, ethereal glow, as if the new year brings a gentle peace. Distant sounds of celebration faintly filter in.",
+        "plot_correspondence": "This retired watchmaker looks at the ticking watch, a serene and contented smile gracing his face.",
+        "onstage_characters": [
+          "char_1"
+        ],
+        "static_shot_description": "This retired watchmaker holds the ticking pocket watch close to his chest with both hands. His face is illuminated by a soft, internal glow, and a peaceful, knowing smile touches his lips. His eyes are closed gently, lost in thought.",
+        "shot_perspective_design": {
+          "distance": "medium shot",
+          "angle": "eye-level",
+          "lens": ""
+        },
+        "audio_description": "The steady 'tick-tock' of the pocket watch, accompanied by soft, hopeful orchestral music and faint, muffled sounds of New Year's fireworks from outside.",
+        "video_type": "text2video"
+      },
+      {
+        "id": 12,
+        "duration": 5,
+        "setting_description": "A tranquil, intimate moment in the now-quiet workshop. The new year feels fresh and full of promise, even amidst the old tools.",
+        "plot_correspondence": "This retired watchmaker gently presses the ticking watch to his ear, a gesture of deep connection and solace.",
+        "onstage_characters": [
+          "char_1"
+        ],
+        "static_shot_description": "This retired watchmaker, with eyes closed and a tender expression, holds the pocket watch pressed against his ear, listening intently to its steady heartbeat. His hands cup the watch gently, as if holding a precious memory.",
+        "shot_perspective_design": {
+          "distance": "close-up",
+          "angle": "eye-level",
+          "lens": ""
+        },
+        "audio_description": "An exaggerated, comforting 'tick-tock' from the watch fills the soundscape, followed by a final, soft, warm orchestral flourish that slowly fades out.",
+        "video_type": "text2video"
+      }
+    ],
+    "style": "Warm, realistic, and slightly nostalgic cinematic style with a focus on detailed textures and intimate, soft lighting, evoking a sense of timeless elegance."
+  },
+  "metrics": {
+    "character_count": 1,
+    "shot_count": 12,
+    "total_duration_sec": 60.0
+  },
+  "artifact_caption": {
+    "semantic_type": "",
+    "what": "A storyboard depicting a retired watchmaker's race against midnight to repair his late wife's pocket watch for the New Year.",
+    "why": "This storyboard covers the watchmaker's urgent task, his emotional connection to the watch, the challenges of repair, and the final moments of peace and connection as the new year begins, fulfilling the user's storyline.",
+    "scope": "global"
+  }
+}

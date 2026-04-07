@@ -47,7 +47,7 @@ if str(_project_root) not in sys.path:
 
 
 from agents.audio.materializer import AudioMaterializer
-from agents.contracts import ArtifactRefV2, InputBundleV2
+from agents.contracts import InputBundleV2
 from agents.keyframe.materializer import (
     KeyframeMaterializer,
     _filter_still_image_must_avoid,
@@ -68,7 +68,7 @@ class _CaptureVideoService:
         shot_id: str,
         keyframe_images: list[bytes],
         prompt: str,
-        duration_sec: float,
+        duration_sec: float = 0.0,
         fps: int = 24,
         width: int = 1024,
         height: int = 576,
@@ -104,14 +104,14 @@ class _CaptureAudioService:
     async def generate_speech(self, text: str, *, voice: str | None = None) -> bytes:
         return b"speech"
 
-    async def generate_music(self, *, mood: str, duration_sec: float, scene_id: str = "", **kwargs) -> bytes:
+    async def generate_music(self, *, mood: str, duration_sec: float = 0.0, scene_id: str = "", **kwargs) -> bytes:
         return b"music"
 
     async def generate_ambience(
         self,
         *,
         description: str,
-        duration_sec: float,
+        duration_sec: float = 0.0,
         scene_id: str = "",
         **kwargs,
     ) -> bytes:
@@ -164,19 +164,42 @@ class _FalVideoServiceSpy(FalVideoService):
         return f"video:{url}".encode("utf-8")
 
 
-def _bundle_from_assets(task_id: str, assets: dict[str, object]) -> InputBundleV2:
-    artifacts = [
-        ArtifactRefV2(
-            artifact_id=f"art_{semantic_type}",
-            semantic_type=semantic_type,
-            payload=payload,
-        )
-        for semantic_type, payload in assets.items()
-    ]
+_WHAT_DESCRIPTIONS: dict[str, str] = {
+    "screenplay": "Screenplay with scenes and shots",
+    "keyframes_metadata": "Keyframes package with consistency anchors",
+    "shot_stills": "Per-shot still images",
+    "story": "Story with logline and cast",
+    "final_video": "Final assembled video manifest",
+}
+
+
+def _bundle_from_assets(
+    task_id: str,
+    assets: dict[str, object],
+    *,
+    media: dict[str, list[dict[str, str]]] | None = None,
+) -> InputBundleV2:
+    """Build InputBundleV2 with a pre-indexed resolved_artifacts dict.
+
+    ``assets``: consumer label → JSON payload (single value per label).
+    ``media``: consumer label → list of {"scope": ..., "path": ..., "mime": ...}.
+    """
+    resolved: dict[str, object] = {}
+    for label, payload in assets.items():
+        resolved[label] = {
+            "what": _WHAT_DESCRIPTIONS.get(label, label),
+            "why": "",
+            "scope": "global",
+            "path": "",
+            "mime": "application/json",
+            "payload": payload,
+        }
+    if media:
+        for label, entries in media.items():
+            resolved[label] = entries
     return InputBundleV2(
         task_id=task_id,
-        artifacts=artifacts,
-        context={"resolved_inputs": dict(assets)},
+        context={"resolved_artifacts": resolved},
     )
 
 
@@ -198,7 +221,6 @@ def test_video_materializer_uses_keyframe_images_for_clip_generation(monkeypatch
                         "shot_segments": [
                             {
                                 "shot_id": "sh_001",
-                                "estimated_duration_sec": 2.0,
                                 "video_asset": {"format": "mp4"},
                             }
                         ],
@@ -256,7 +278,7 @@ def test_video_materializer_uses_keyframe_images_for_clip_generation(monkeypatch
                     ]
                 }
             },
-            "keyframes": {
+            "keyframes_metadata": {
                 "content": {
                     "scenes": [
                         {
@@ -283,7 +305,12 @@ def test_video_materializer_uses_keyframe_images_for_clip_generation(monkeypatch
             },
         }
 
-        input_bundle_v2 = _bundle_from_assets("task_1", assets)
+        input_bundle_v2 = _bundle_from_assets(
+            "task_1", assets,
+            media={"shot_stills": [
+                {"scope": "shot:sh_001", "path": str(kf1), "mime": "image/png"},
+            ]},
+        )
         asyncio.run(materializer.materialize("task_1", asset_dict, input_bundle_v2))
 
     assert len(video_service.generate_calls) == 1
@@ -339,7 +366,6 @@ def test_video_materializer_empty_motion_hint_no_prefix_keeps_scene_tone(monkeyp
                         "shot_segments": [
                             {
                                 "shot_id": "sh_001",
-                                "estimated_duration_sec": 2.0,
                                 "video_asset": {"format": "mp4"},
                             }
                         ],
@@ -381,7 +407,7 @@ def test_video_materializer_empty_motion_hint_no_prefix_keeps_scene_tone(monkeyp
                     ]
                 }
             },
-            "keyframes": {
+            "keyframes_metadata": {
                 "content": {
                     "scenes": [
                         {
@@ -404,7 +430,12 @@ def test_video_materializer_empty_motion_hint_no_prefix_keeps_scene_tone(monkeyp
             },
         }
 
-        input_bundle_v2 = _bundle_from_assets("task_vmh_empty", assets)
+        input_bundle_v2 = _bundle_from_assets(
+            "task_vmh_empty", assets,
+            media={"shot_stills": [
+                {"scope": "shot:sh_001", "path": str(kf1), "mime": "image/png"},
+            ]},
+        )
         asyncio.run(materializer.materialize("task_vmh_empty", asset_dict, input_bundle_v2))
 
     assert len(video_service.generate_calls) == 1
@@ -440,7 +471,6 @@ def test_video_materializer_skips_shot_when_no_l3_keyframe_file(monkeypatch):
                         "shot_segments": [
                             {
                                 "shot_id": "sh_001",
-                                "estimated_duration_sec": 2.0,
                                 "video_asset": {"format": "mp4"},
                             }
                         ],
@@ -474,7 +504,7 @@ def test_video_materializer_skips_shot_when_no_l3_keyframe_file(monkeypatch):
                     ]
                 }
             },
-            "keyframes": {
+            "keyframes_metadata": {
                 "content": {
                     "scenes": [
                         {
@@ -646,7 +676,6 @@ def test_audio_materializer_mixes_final_delivery_video():
                 "scenes": [
                     {
                         "scene_id": "sc_001",
-                        "scene_duration_sec": 3.0,
                         "narration_segments": [
                             {
                                 "segment_id": "narr_001",
@@ -675,7 +704,7 @@ def test_audio_materializer_mixes_final_delivery_video():
             }
         }
         assets = {
-            "video": {
+            "final_video": {
                 "content": {
                     "final_video_asset": {
                         "uri": str(final_video_path),

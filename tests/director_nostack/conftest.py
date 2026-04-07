@@ -118,46 +118,51 @@ def _stub_assistant_llm_hooks_for_nostack_e2e(monkeypatch):
         # This enables true input packaging, persist planning, and memory summarization.
         return
 
-    def _stub_memory(self, execution, deterministic_artifacts=None):
-        return {
-            "content": "nostack e2e global_memory summary",
-            "artifact_locations": list(deterministic_artifacts or []),
-            "artifact_briefs": [],
-        }
-
     def _stub_persist(self, workspace, execution, descriptor, base_plan):
         return base_plan
 
     def _stub_inputs(self, agent_id, task_id, workspace, packaged_data):
-        mem = packaged_data.get("global_memory") or []
-        roles: list[str] = []
-        for entry in mem:
-            if not isinstance(entry, dict):
-                continue
-            for loc in entry.get("artifact_locations") or []:
-                if not isinstance(loc, dict):
+        import json as _json
+        resolved_artifacts: list[dict] = []
+        selected_artifact_paths: list[str] = []
+        try:
+            entries = workspace.artifact_registry.list_all()
+            for entry in entries:
+                if entry.task_id and entry.task_id != task_id:
                     continue
-                role = loc.get("role")
-                path = loc.get("path")
-                if not (isinstance(role, str) and role.strip()):
-                    continue
-                if isinstance(path, str) and path.strip().lower().endswith(".json"):
-                    roles.append(role.strip())
-        roles = list(dict.fromkeys(roles))
-        if not roles:
-            return {}
+                for artifact in entry.artifacts:
+                    path = str(getattr(artifact, "path", "") or "").strip()
+                    mime = str(getattr(artifact, "mime", "") or "").strip()
+                    what = str(getattr(artifact, "what", "") or "")
+                    why = str(getattr(artifact, "why", "") or "")
+                    scope = str(getattr(artifact, "scope", "global") or "global")
+                    if not path:
+                        continue
+                    payload = None
+                    if mime == "application/json" or path.lower().endswith(".json"):
+                        try:
+                            raw = workspace.file_manager.read_binary_from_uri(path)
+                            if raw:
+                                data = _json.loads(raw.decode("utf-8"))
+                                if isinstance(data, dict):
+                                    payload = data
+                        except Exception:
+                            pass
+                    resolved_artifacts.append({
+                        "what": what, "why": why, "scope": scope,
+                        "path": path,
+                        "mime": mime or ("application/json" if path.lower().endswith(".json") else ""),
+                        "payload": payload,
+                    })
+                    selected_artifact_paths.append(path)
+        except Exception:
+            pass
         return {
-            "rationale": "nostack e2e stub",
-            "required_roles": roles,
-            "selected_roles": roles,
-            "append_to_source_text": "",
+            "resolved_artifacts": resolved_artifacts,
+            "selected_artifact_paths": list(dict.fromkeys(selected_artifact_paths)),
+            "rationale": "nostack e2e stub: select all registered artifacts",
         }
 
-    monkeypatch.setattr(
-        service_module.AssistantService,
-        "_extract_global_memory_summary_with_llm",
-        _stub_memory,
-    )
     monkeypatch.setattr(
         service_module.AssistantService,
         "_refine_output_persist_plan_with_llm",

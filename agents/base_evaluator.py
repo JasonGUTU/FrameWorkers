@@ -14,6 +14,12 @@ three evaluation layers:
 Layers 1+2 are invoked via ``evaluate()`` before materialization.
 Layer 3 is invoked via ``evaluate_asset()`` after materialization.
 
+**Output-only**: every evaluator method receives ONLY the agent's own
+output (or asset_dict).  Evaluators do NOT cross-validate against
+upstream artifacts — that violates sub-agent decoupling.  The
+``input_bundle_v2`` parameter is intentionally absent from every method
+signature in this base class.
+
 Each evaluation method returns (or contributes to) the standard result::
 
     {
@@ -32,7 +38,6 @@ from typing import Any, Generic, TypeVar
 from pydantic import BaseModel
 
 from inference.clients import LLMClient
-from .contracts.input_bundle_v2 import InputBundleV2
 
 logger = logging.getLogger(__name__)
 
@@ -97,19 +102,15 @@ class BaseEvaluator(Generic[OutputT]):
     # Layer 1 — Rule-based structural checks
     # ------------------------------------------------------------------
 
-    def check_structure(
-        self,
-        output: OutputT,
-        input_bundle_v2: InputBundleV2 | None = None,
-    ) -> list[str]:
+    def check_structure(self, output: OutputT) -> list[str]:
         """Rule-based structural checks.  Override per evaluator.
 
-        Checks deterministic properties: ID referential integrity,
-        metrics consistency, required fields, cross-asset alignment.
+        Checks deterministic properties of the agent's own output:
+        ID referential integrity within the output, metrics consistency,
+        required fields.  Does NOT compare against any upstream artifact.
 
         Args:
             output: The parsed agent output (Pydantic model).
-            input_bundle_v2: Optional shared input bundle for cross-check.
 
         Returns:
             List of error strings.  Empty list means all checks passed.
@@ -133,25 +134,16 @@ class BaseEvaluator(Generic[OutputT]):
     Leave empty (default) to skip creative evaluation entirely.
     """
 
-    def _build_creative_context(
-        self,
-        output: OutputT,
-        input_bundle_v2: InputBundleV2 | None,
-    ) -> str:
-        """Return shared-asset context string for the creative evaluation prompt.
+    def _build_creative_context(self, output: OutputT) -> str:
+        """Return additional context string for the creative evaluation prompt.
 
-        Override in evaluators that have creative dimensions.  The returned
-        string is inserted into the user prompt above the creative content.
-
-        Default returns empty string.
+        Default returns empty string. Subclasses MAY override to inject
+        additional summarization derived from the agent's own output.
+        Subclasses MUST NOT read upstream artifacts here.
         """
         return ""
 
-    async def evaluate_creative(
-        self,
-        output: OutputT,
-        input_bundle_v2: InputBundleV2 | None = None,
-    ) -> dict[str, Any]:
+    async def evaluate_creative(self, output: OutputT) -> dict[str, Any]:
         """LLM-based creative quality evaluation (template method).
 
         If ``creative_dimensions`` is empty, returns an auto-pass.
@@ -160,7 +152,8 @@ class BaseEvaluator(Generic[OutputT]):
         the pass threshold.
 
         Subclasses should NOT override this method.  Instead, declare
-        ``creative_dimensions`` and override ``_build_creative_context()``.
+        ``creative_dimensions`` and (optionally) override
+        ``_build_creative_context()``.
         """
         if not self.creative_dimensions:
             return {
@@ -190,7 +183,7 @@ class BaseEvaluator(Generic[OutputT]):
         )
 
         # --- Build user prompt ---
-        context = self._build_creative_context(output, input_bundle_v2)
+        context = self._build_creative_context(output)
         creative_content = self.extract_creative_fields(output.content)
         content_json = json.dumps(creative_content, ensure_ascii=False, indent=2)
         user = (
@@ -216,11 +209,7 @@ class BaseEvaluator(Generic[OutputT]):
     # Combined L1+L2 entry point
     # ------------------------------------------------------------------
 
-    async def evaluate(
-        self,
-        output: OutputT,
-        input_bundle_v2: InputBundleV2 | None = None,
-    ) -> dict[str, Any]:
+    async def evaluate(self, output: OutputT) -> dict[str, Any]:
         """Full evaluation: structural rules first, then LLM creative.
 
         This is the method that Assistant calls before materialization.
@@ -231,7 +220,7 @@ class BaseEvaluator(Generic[OutputT]):
             ``overall_pass``, and ``summary``.
         """
         # Layer 1: rule-based (fast, free, deterministic)
-        structural_errors = self.check_structure(output, input_bundle_v2)
+        structural_errors = self.check_structure(output)
         if structural_errors:
             logger.warning(
                 "[%s] Structural validation failed: %s",
@@ -250,7 +239,7 @@ class BaseEvaluator(Generic[OutputT]):
             }
 
         # Layer 2: LLM creative evaluation
-        creative_result = await self.evaluate_creative(output, input_bundle_v2)
+        creative_result = await self.evaluate_creative(output)
         creative_result["structural_errors"] = []
         return creative_result
 
@@ -258,11 +247,7 @@ class BaseEvaluator(Generic[OutputT]):
     # Layer 3 — Post-materialization asset evaluation (optional)
     # ------------------------------------------------------------------
 
-    async def evaluate_asset(
-        self,
-        asset_data: dict[str, Any],
-        input_bundle_v2: InputBundleV2 | None = None,
-    ) -> dict[str, Any]:
+    async def evaluate_asset(self, asset_data: dict[str, Any]) -> dict[str, Any]:
         """Evaluate materialized binary assets.  Override for media agents.
 
         Called by Assistant after media services produce files.
@@ -271,7 +256,6 @@ class BaseEvaluator(Generic[OutputT]):
 
         Args:
             asset_data: The complete asset dict with materialized URIs.
-            input_bundle_v2: Optional shared input bundle for context.
 
         Returns:
             Evaluation result dict with ``dimensions``, ``overall_pass``,
@@ -309,21 +293,6 @@ class BaseEvaluator(Generic[OutputT]):
         """Append an error if ``orders`` is not [1, 2, ..., N]."""
         if orders and orders != list(range(1, len(orders) + 1)):
             errors.append(f"{name} order not continuous from 1: {orders}")
-
-    @staticmethod
-    def _check_id_coverage(
-        errors: list[str],
-        label: str,
-        expected_ids: set[str],
-        actual_ids: set[str],
-    ) -> None:
-        """Append errors for missing / extra IDs between two sets."""
-        missing = expected_ids - actual_ids
-        extra = actual_ids - expected_ids
-        if missing:
-            errors.append(f"{label} missing: {sorted(missing)}")
-        if extra:
-            errors.append(f"{label} extra: {sorted(extra)}")
 
     # ------------------------------------------------------------------
     # Other helpers

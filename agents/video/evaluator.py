@@ -1,31 +1,29 @@
 """Evaluator for VideoAgent output (Video Package).
 
-All three layers:
+All three layers (output-internal only — no cross-validation against
+upstream artifacts):
 
 Layer 1 -- structural checks:
-  - Upstream cross-check (scene/shot IDs match screenplay)
   - Transition plan from/to shot_ids exist in scene
   - Metrics consistency (scene_count, shot_segment_count)
   - Shot order continuity per scene
-  - Temporal/transition validation (type, duration)
-  - Shot duration sanity (positive actual_duration_sec)
+  - Temporal/transition validation (type)
   - Required content (non-empty scenes and shot_segments)
 
 Layer 2 -- creative assessment:
   Not applicable. VideoAgent output is entirely structural (IDs,
-  durations, asset pointers, transition types). All quality dimensions
-  that matter are checked in Layer 1 (structural) or Layer 3 (asset).
+  asset pointers, transition types). All quality dimensions that
+  matter are checked in Layer 1 (structural) or Layer 3 (asset).
 
 Layer 3 -- post-materialization asset checks:
   - clip_generation_success: shot-level clip success rate
   - assembly_completeness: scene clips + final video
-  - duration_compliance: (TODO) probe actual file durations
   - motion_quality: (TODO) video analysis model
 """
 
 from __future__ import annotations
 
-from typing import Any, Mapping
+from typing import Any
 
 from ..base_evaluator import BaseEvaluator, check_uri
 from .schema import VideoAgentOutput
@@ -37,39 +35,10 @@ class VideoEvaluator(BaseEvaluator[VideoAgentOutput]):
     # Layer 1 -- Rule-based structural validation
     # ------------------------------------------------------------------
 
-    def check_structure(
-        self,
-        output: VideoAgentOutput,
-        input_bundle_v2: Mapping[str, Any] | None = None,
-    ) -> list[str]:
+    def check_structure(self, output: VideoAgentOutput) -> list[str]:
         """Rule-based structural validation for Video Package."""
         errors: list[str] = []
         c = output.content
-
-        # --- Upstream cross-check: scene/shot IDs must match screenplay ---
-        if input_bundle_v2 and "screenplay" in input_bundle_v2:
-            sp_content = input_bundle_v2["screenplay"].get("content", {})
-            sp_scene_ids = {
-                s.get("scene_id", "") for s in sp_content.get("scenes", [])
-            }
-            vid_scene_ids = {s.scene_id for s in c.scenes}
-            self._check_id_coverage(
-                errors, "video vs screenplay scenes",
-                sp_scene_ids, vid_scene_ids,
-            )
-
-            sp_shot_ids: set[str] = set()
-            for sp_scene in sp_content.get("scenes", []):
-                for shot in sp_scene.get("shots", []):
-                    sp_shot_ids.add(shot.get("shot_id", ""))
-            vid_shot_ids = {
-                seg.shot_id for scene in c.scenes
-                for seg in scene.shot_segments
-            }
-            self._check_id_coverage(
-                errors, "video vs screenplay shots",
-                sp_shot_ids, vid_shot_ids,
-            )
 
         # --- Transition plan: from/to shot_ids must exist in the scene ---
         for scene in c.scenes:
@@ -109,25 +78,6 @@ class VideoEvaluator(BaseEvaluator[VideoAgentOutput]):
                         f"scene {scene.scene_id} transition has unknown type "
                         f"'{tr.transition_type}'"
                     )
-                if tr.transition_type == "cut" and tr.duration_sec != 0.0:
-                    errors.append(
-                        f"scene {scene.scene_id} cut transition should have "
-                        f"duration_sec=0, got {tr.duration_sec}"
-                    )
-                if tr.transition_type in ("dissolve", "fade", "soft") and tr.duration_sec <= 0:
-                    errors.append(
-                        f"scene {scene.scene_id} {tr.transition_type} transition "
-                        f"should have positive duration_sec, got {tr.duration_sec}"
-                    )
-
-        # --- Shot duration sanity ---
-        for scene in c.scenes:
-            for seg in scene.shot_segments:
-                if seg.actual_duration_sec <= 0:
-                    errors.append(
-                        f"shot {seg.shot_id} has non-positive "
-                        f"actual_duration_sec ({seg.actual_duration_sec})"
-                    )
 
         # --- Required content ---
         if not c.scenes:
@@ -141,9 +91,9 @@ class VideoEvaluator(BaseEvaluator[VideoAgentOutput]):
         return errors
 
     # Note: evaluate_creative is intentionally NOT overridden.
-    # VideoAgent output is entirely structural (IDs, durations, asset
-    # pointers, transition types).  All quality dimensions that matter
-    # are checked in Layer 1 (structural) or Layer 3 (asset).
+    # VideoAgent output is entirely structural (IDs, asset pointers,
+    # transition types).  All quality dimensions that matter are checked
+    # in Layer 1 (structural) or Layer 3 (asset).
 
     # ------------------------------------------------------------------
     # Layer 3 -- Post-materialization asset evaluation
@@ -152,7 +102,6 @@ class VideoEvaluator(BaseEvaluator[VideoAgentOutput]):
     async def evaluate_asset(
         self,
         asset_data: dict[str, Any],
-        input_bundle_v2: Mapping[str, Any] | None = None,
     ) -> dict[str, Any]:
         """Check that shot clips, scene clips, and final video were generated."""
         content = asset_data.get("content", {})
@@ -220,10 +169,6 @@ class VideoEvaluator(BaseEvaluator[VideoAgentOutput]):
                     f"{scene_clips_success}/{scene_clips_planned} scene clips assembled",
                     f"final video: {'OK' if final_ok else 'MISSING'}",
                 ],
-            },
-            "duration_compliance": {
-                "score": 1.0,
-                "notes": ["duration compliance check not yet implemented"],
             },
             "motion_quality": {
                 "score": 1.0,

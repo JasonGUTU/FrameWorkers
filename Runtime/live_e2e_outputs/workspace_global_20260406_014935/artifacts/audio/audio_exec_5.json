@@ -1,0 +1,184 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-06T02:03:37.041703+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_duration_sec": 3.5,
+        "narration_segments": [],
+        "music_cue": {
+          "cue_id": "music_sc_001",
+          "scene_id": "sc_001",
+          "mood": "meticulous, quiet tension, melancholic, building anxiety, determined",
+          "start_sec": 0.0,
+          "end_sec": 3.5,
+          "audio_asset": {
+            "asset_id": "aud_music_sc_001",
+            "uri": "placeholder",
+            "format": "wav",
+            "duration_sec": 3.5,
+            "sample_rate": 44100
+          },
+          "audio_generation_prompt": ""
+        },
+        "ambience_bed": {
+          "ambience_id": "amb_sc_001",
+          "scene_id": "sc_001",
+          "description": "Subtle hum of workshop machinery, delicate tool sounds, distant quiet night city drone.",
+          "start_sec": 0.0,
+          "end_sec": 3.5,
+          "audio_asset": {
+            "asset_id": "aud_amb_sc_001",
+            "uri": "placeholder",
+            "format": "wav",
+            "duration_sec": 3.5,
+            "sample_rate": 44100
+          },
+          "audio_generation_prompt": ""
+        },
+        "mix": {
+          "mix_id": "mix_sc_001",
+          "scene_id": "sc_001",
+          "duration_sec": 3.5,
+          "audio_asset": {
+            "asset_id": "aud_mix_sc_001",
+            "uri": "placeholder",
+            "format": "wav",
+            "duration_sec": 3.5,
+            "sample_rate": 44100
+          }
+        }
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_duration_sec": 3.5,
+        "narration_segments": [],
+        "music_cue": {
+          "cue_id": "music_sc_002",
+          "scene_id": "sc_002",
+          "mood": "urgent, frantic, ticking rhythm, tense, precarious hope, suspended",
+          "start_sec": 0.0,
+          "end_sec": 3.5,
+          "audio_asset": {
+            "asset_id": "aud_music_sc_002",
+            "uri": "placeholder",
+            "format": "wav",
+            "duration_sec": 3.5,
+            "sample_rate": 44100
+          },
+          "audio_generation_prompt": ""
+        },
+        "ambience_bed": {
+          "ambience_id": "amb_sc_002",
+          "scene_id": "sc_002",
+          "description": "Heightened sounds of Arthur's accelerated, delicate work; subtle, rapid breathing; prominent, tense ticking.",
+          "start_sec": 0.0,
+          "end_sec": 3.5,
+          "audio_asset": {
+            "asset_id": "aud_amb_sc_002",
+            "uri": "placeholder",
+            "format": "wav",
+            "duration_sec": 3.5,
+            "sample_rate": 44100
+          },
+          "audio_generation_prompt": ""
+        },
+        "mix": {
+          "mix_id": "mix_sc_002",
+          "scene_id": "sc_002",
+          "duration_sec": 3.5,
+          "audio_asset": {
+            "asset_id": "aud_mix_sc_002",
+            "uri": "placeholder",
+            "format": "wav",
+            "duration_sec": 3.5,
+            "sample_rate": 44100
+          }
+        }
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "scene_duration_sec": 3.0,
+        "narration_segments": [],
+        "music_cue": {
+          "cue_id": "music_sc_003",
+          "scene_id": "sc_003",
+          "mood": "serene, wistful, peaceful, bittersweet, hopeful, warm",
+          "start_sec": 0.0,
+          "end_sec": 3.0,
+          "audio_asset": {
+            "asset_id": "aud_music_sc_003",
+            "uri": "placeholder",
+            "format": "wav",
+            "duration_sec": 3.0,
+            "sample_rate": 44100
+          },
+          "audio_generation_prompt": ""
+        },
+        "ambience_bed": {
+          "ambience_id": "amb_sc_003",
+          "scene_id": "sc_003",
+          "description": "Gentle, steady ticking of the repaired watch; distant, muted New Year's celebrations (fireworks, sparse cheers); comforting room tone.",
+          "start_sec": 0.0,
+          "end_sec": 3.0,
+          "audio_asset": {
+            "asset_id": "aud_amb_sc_003",
+            "uri": "placeholder",
+            "format": "wav",
+            "duration_sec": 3.0,
+            "sample_rate": 44100
+          },
+          "audio_generation_prompt": ""
+        },
+        "mix": {
+          "mix_id": "mix_sc_003",
+          "scene_id": "sc_003",
+          "duration_sec": 3.0,
+          "audio_asset": {
+            "asset_id": "aud_mix_sc_003",
+            "uri": "placeholder",
+            "format": "wav",
+            "duration_sec": 3.0,
+            "sample_rate": 44100
+          }
+        }
+      }
+    ],
+    "final_audio_asset": {
+      "asset_id": "aud_final",
+      "uri": "placeholder",
+      "format": "wav",
+      "duration_sec": 10.0,
+      "sample_rate": 44100
+    },
+    "final_delivery_asset": {
+      "asset_id": "delivery_final",
+      "uri": "placeholder",
+      "format": "mp4",
+      "duration_sec": 10.0
+    }
+  },
+  "metrics": {
+    "scene_count": 3,
+    "narration_segment_count": 0,
+    "total_narration_duration_sec": 0,
+    "total_music_duration_sec": 10.0
+  },
+  "artifact_caption": {
+    "semantic_type": "",
+    "what": "3 scenes, 0 narration segments, music and ambience provided for each of the 3 scenes, delivered in JSON format.",
+    "why": "Music mood choices track Arthur's emotional arc from focused determination and increasing anxiety, through urgent desperation and precarious hope, to a serene and bittersweet resolution. Ambience is designed to subtly underscore the intimate workshop setting and the passage of time, enhancing Arthur's internal state.",
+    "scope": "global"
+  }
+}

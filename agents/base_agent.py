@@ -33,7 +33,6 @@ from typing import TYPE_CHECKING, Any, Callable, Generic, TypeVar, get_args
 from pydantic import BaseModel
 
 from inference.clients import LLMClient
-from .contracts.input_bundle_v2 import InputBundleV2
 
 if TYPE_CHECKING:
     from .base_evaluator import BaseEvaluator
@@ -60,13 +59,19 @@ class MaterializeContext:
 
     Attributes:
         task_id:           Current task identifier (same scope as Task Stack ``task_id``).
-        input_bundle_v2:   Mutable deep copy of v2 generic inputs for materializer.
+        typed_input:       The same Pydantic typed input that the LLM pipeline
+                           received. Materializers read whatever fields they
+                           need from it (e.g. ``typed_input.screenplay``,
+                           ``typed_input.shot_stills``). The materializer
+                           never reads ``InputBundleV2`` directly — every
+                           data dependency must already be expressed as a
+                           field on the agent's typed input.
         persist_binary:    Callback that saves a ``MediaAsset`` to disk and
                            returns the URI string of the saved file.
     """
 
     task_id: str
-    input_bundle_v2: InputBundleV2
+    typed_input: BaseModel
     persist_binary: Callable[[MediaAsset], str]
 
 
@@ -257,7 +262,6 @@ class BaseAgent(Generic[InputT, OutputT]):
         self,
         input_data: InputT,
         *,
-        input_bundle_v2: InputBundleV2 | None = None,
         rework_notes: str = "",
         max_retries: int = 3,
         materialize_ctx: MaterializeContext | None = None,
@@ -277,13 +281,18 @@ class BaseAgent(Generic[InputT, OutputT]):
           5. On any failure: feed eval summary as rework_notes and retry
 
         Args:
-            input_data:      Typed agent input payload.
-            input_bundle_v2: Shared v2 input bundle for evaluator cross-checks.
+            input_data:      Typed agent input payload — the SINGLE source
+                             of input for the agent. There is no second
+                             "wide bundle" channel; everything the LLM
+                             pipeline and the materializer need must be
+                             expressed as fields on ``input_data``.
             rework_notes:    Initial rework instructions (e.g. from the
                              Director when action is ``"regenerate"``).
             max_retries:     Total attempts before giving up.
             materialize_ctx: External infrastructure for binary persistence.
-                             ``None`` skips materialization and L3.
+                             ``None`` skips materialization and L3. The
+                             materializer reads ``ctx.typed_input`` to get
+                             the same input the LLM pipeline received.
         """
         logger.info(
             "[%s] Starting run (max_retries=%d) …",
@@ -308,7 +317,7 @@ class BaseAgent(Generic[InputT, OutputT]):
             # --- Step 2: L1+L2 evaluation (structural + creative) ---
             if self.evaluator is not None:
                 try:
-                    eval_result = await self.evaluator.evaluate(output, input_bundle_v2)
+                    eval_result = await self.evaluator.evaluate(output)
                 except Exception as exc:
                     logger.error(
                         "[%s] Evaluation error on attempt %d: %s",
@@ -341,11 +350,15 @@ class BaseAgent(Generic[InputT, OutputT]):
             # --- Step 3: Materialize (if applicable) ---
             if self.materializer is not None and materialize_ctx is not None:
                 asset_dict = output.model_dump(exclude={"meta"})
+                # Inject per_artifact_captions if the output model has it (excluded from
+                # model_dump to keep JSON snapshots clean, but asset_manager needs it).
+                pac = getattr(output, "per_artifact_captions", None)
+                if isinstance(pac, dict) and pac:
+                    asset_dict["_per_artifact_captions"] = pac
                 try:
                     raw_media = await self.materializer.materialize(
-                        materialize_ctx.task_id,
+                        materialize_ctx,
                         asset_dict,
-                        materialize_ctx.input_bundle_v2,
                     )
                     for media in raw_media:
                         uri = materialize_ctx.persist_binary(media)
@@ -372,9 +385,7 @@ class BaseAgent(Generic[InputT, OutputT]):
                 # --- Step 4: L3 evaluation (post-materialization) ---
                 if self.evaluator is not None:
                     try:
-                        asset_eval = await self.evaluator.evaluate_asset(
-                            asset_dict, input_bundle_v2,
-                        )
+                        asset_eval = await self.evaluator.evaluate_asset(asset_dict)
                     except Exception as exc:
                         logger.error(
                             "[%s] Asset evaluation error: %s",

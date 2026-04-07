@@ -51,7 +51,7 @@ async def _run_keyframe_agent_local(
 
     bundle = InputBundleV2(
         task_id=task_id,
-        context={"resolved_inputs": {"screenplay": screenplay}},
+        context={"resolved_artifacts": {"screenplay": {"payload": screenplay, "path": "", "scope": "global", "mime": "application/json"}}},
     )
 
     registry = get_agent_registry()
@@ -141,9 +141,9 @@ async def _run_video_agent_local(
     bundle = InputBundleV2(
         task_id=task_id,
         context={
-            "resolved_inputs": {
-                "screenplay": screenplay,
-                "keyframes": keyframes,
+            "resolved_artifacts": {
+                "screenplay": {"payload": screenplay, "path": "", "scope": "global", "mime": "application/json"},
+                "keyframes": {"payload": keyframes, "path": "", "scope": "global", "mime": "application/json"},
             }
         },
     )

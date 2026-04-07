@@ -1,17 +1,24 @@
 """ScreenplayAgent — unified screenplay + shot planning.
 
-Input:  ScreenplayAgentInput (story_blueprint, constraints, user_provided_text)
+Input:  ScreenplayAgentInput (story)
 Output: ScreenplayAgentOutput (scenes → shots: narrative + visual per take)
 
-Blueprint path: skeleton-first from story; LLM fills shots and consistency packs.
-User-text path: LLM structures raw text into the same unified schema.
+Skeleton-first: build_skeleton constructs scene/shot scaffolding from
+``input_data.story`` (the structured story_blueprint payload selected by
+InputResolver via the ``[story]`` label); the LLM fills shots and
+consistency packs in build_creative_prompt.
+
+ScreenplayAgent has only ONE input label: ``[story]``. It does NOT
+accept free-text user directives. Any user-level intent flows in through
+the upstream re-run pattern (Director re-runs StoryAgent with the new
+brief; the updated story_blueprint reaches ScreenplayAgent via the same
+``[story]`` label).
 
 Coupling: output feeds KeyFrameAgent (and downstream) as the sole ``screenplay`` artifact.
 
 Blueprint creative-fill embeds only a **field-selected** story dict in the LLM user message
 (see ``_story_content_embed_for_creative_llm``): the creative model does not need the same
-long bios the Story asset stores. ``build_skeleton`` still reads the **full**
-``story_blueprint`` from ``resolved_inputs``. Whole-field omission only — no slicing.
+long bios the Story asset stores. Whole-field omission only — no slicing.
 """
 
 from __future__ import annotations
@@ -20,7 +27,6 @@ import json
 from typing import Any
 
 from ..base_agent import BaseAgent
-from ..common_schema import DurationEstimate
 from .schema import (
     Camera,
     CharacterLock,
@@ -43,6 +49,11 @@ from .schema import (
 )
 
 SCREENPLAY_OUTPUT_TEMPLATE = """{
+  "artifact_caption": {
+    "what": "<title, scene count, total shots, key visual style>",
+    "why": "<creative decisions: tone, pacing, visual approach>",
+    "scope": "global"
+  },
   "content": {
     "title": "<screenplay title>",
     "scenes": [
@@ -57,7 +68,6 @@ SCREENPLAY_OUTPUT_TEMPLATE = """{
           "time_of_day": "DAY|NIGHT"
         },
         "summary": "<what happens in this scene>",
-        "estimated_duration": { "seconds": 20, "confidence": 0.7 },
         "continuity": {
           "props_present": [],
           "character_wardrobe_notes": [
@@ -87,7 +97,6 @@ SCREENPLAY_OUTPUT_TEMPLATE = """{
             "character_name": "",
             "text": "<visible action, no camera jargon>",
             "continuity_refs": { "props": [], "wardrobe_character_ids": [] },
-            "estimated_duration_sec": 3.0,
             "shot_type": "medium",
             "camera": { "angle": "eye_level", "movement": "static", "framing_notes": "<FILL>" },
             "visual_goal": "<FILL>",
@@ -102,7 +111,6 @@ SCREENPLAY_OUTPUT_TEMPLATE = """{
             "character_name": "<name>",
             "text": "<line>",
             "continuity_refs": { "props": [], "wardrobe_character_ids": ["char_001"] },
-            "estimated_duration_sec": 3.0,
             "shot_type": "medium",
             "camera": { "angle": "eye_level", "movement": "static", "framing_notes": "" },
             "visual_goal": "<FILL>",
@@ -122,7 +130,6 @@ SCREENPLAY_OUTPUT_TEMPLATE = """{
 class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
-        self._target_duration_sec: float = 10.0
 
     @staticmethod
     def _story_content_embed_for_creative_llm(content: Any) -> dict[str, Any]:
@@ -133,7 +140,7 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
         blocks, per-scene goal/conflict/turn). Skeleton uses the full blueprint separately.
 
         This is not token slicing — excluded fields are absent from the embedded object,
-        not truncated. Persisted ``story_blueprint`` JSON is unchanged.
+        not truncated. Persisted ``story`` JSON is unchanged.
         """
         if not isinstance(content, dict):
             return {}
@@ -141,13 +148,6 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
         out: dict[str, Any] = {}
 
         out["logline"] = str(content.get("logline", "") or "")
-
-        ed = content.get("estimated_duration")
-        if isinstance(ed, dict):
-            out["estimated_duration"] = {
-                "seconds": ed.get("seconds", 0),
-                "confidence": ed.get("confidence", 0.7),
-            }
 
         style = content.get("style")
         if isinstance(style, dict):
@@ -217,22 +217,9 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
     def build_skeleton(
         self, input_data: ScreenplayAgentInput
     ) -> ScreenplayAgentOutput | None:
-        if input_data.user_provided_text:
-            return None
-
-        bp = input_data.story_blueprint
+        bp = input_data.story
         if not bp:
             return None
-
-        self._target_duration_sec = 10.0
-        ed = bp.get("estimated_duration", {}) if isinstance(bp, dict) else {}
-        if isinstance(ed, dict):
-            try:
-                sec = float(ed.get("seconds") or 0)
-                if sec > 0:
-                    self._target_duration_sec = sec
-            except (TypeError, ValueError):
-                pass
 
         locations = {
             loc.get("location_id", ""): loc
@@ -281,7 +268,6 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
 
         output = ScreenplayAgentOutput()
         output.content = ScreenplayContent(scenes=scenes)
-        output.metrics.target_duration_sec = self._target_duration_sec
         return output
 
     def build_creative_prompt(
@@ -289,10 +275,13 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
         input_data: ScreenplayAgentInput,
         skeleton: ScreenplayAgentOutput,
     ) -> str:
-        bp = input_data.story_blueprint
+        bp = input_data.story
         bp_embed = self._story_content_embed_for_creative_llm(bp)
         bp_json = json.dumps(bp_embed, ensure_ascii=False, indent=2)
-        max_shots = input_data.constraints.max_shots_per_scene
+        # Hard per-scene cap. Combined with the system-prompt total cap (4-8
+        # shots across the whole screenplay), this keeps short-video runtime
+        # and cost bounded. Each shot ≈ 1 keyframe + 1 video clip downstream.
+        max_shots = 5
 
         scene_entries: list[str] = []
         for scene in skeleton.content.scenes:
@@ -316,7 +305,6 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
                 f'      "scene_id": "{scene.scene_id}",\n'
                 f'      "interior_exterior": "<FILL: INT or EXT>",\n'
                 f'      "summary": "<FILL>",\n'
-                f'      "estimated_duration": {{"seconds": 0, "confidence": 0.7}},\n'
                 f'      "props_present": [],\n'
                 f'      "must_keep_scene_facts": [],\n'
                 f'      "wardrobe": [\n{wardrobe_block}\n      ],\n'
@@ -336,7 +324,6 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
                 f'          "character_name": "",\n'
                 f'          "text": "<FILL>",\n'
                 f'          "continuity_refs": {{"props": [], "wardrobe_character_ids": []}},\n'
-                f'          "estimated_duration_sec": 3.0,\n'
                 f'          "shot_type": "medium",\n'
                 f'          "camera": {{"angle": "eye_level", "movement": "static", '
                 f'"framing_notes": "<FILL>"}},\n'
@@ -353,6 +340,11 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
 
         template = (
             '{\n'
+            '  "artifact_caption": {\n'
+            '    "what": "<title, scene count, total shots, key visual style>",\n'
+            '    "why": "<tone, pacing, visual approach decisions>",\n'
+            '    "scope": "global"\n'
+            '  },\n'
             '  "title": "<FILL>",\n'
             '  "scenes": [\n'
             + ",\n".join(scene_entries)
@@ -361,7 +353,7 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
 
         return (
             "Scene shells are fixed (ids, heading, location/character lock ids). "
-            "Fill: title; per scene interior_exterior, summary, estimated_duration, wardrobe, "
+            "Fill: title; per scene interior_exterior, summary, wardrobe, "
             "props_present, must_keep_scene_facts, scene_end; "
             "environment_notes, character_locks, props_lock, style_lock; "
             "shots[] — one row per continuous take (script fields + camera/visual_goal/action_focus/"
@@ -373,14 +365,27 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
             "arc conflict/turning_point, scene goal/conflict/turn — infer dialogue and packs "
             "from logline, arc summaries, and outline grid.)\n\n"
             f"=== OUTPUT ===\n{template}\n\n"
-            f"Max shots/scene: {max_shots}. Template shows one shot example per scene — output ALL shots. "
-            "Natural dialogue. Scene durations ~±20% of blueprint target.\n"
+            f"HARD CAP — Max shots per scene: {max_shots}. "
+            f"HARD CAP — Total shots across the whole screenplay: 4-6 (never exceed 8). "
+            "This is a SHORT video; each shot is ~5 seconds and becomes one keyframe + "
+            "one generated video clip downstream. Pick the few most cinematic beats and "
+            "skip everything else. Template shows one shot example per scene — output "
+            "ALL shots within the cap. Natural dialogue.\n"
             "Return JSON only."
         )
 
     def fill_creative(
         self, skeleton: ScreenplayAgentOutput, creative: dict
     ) -> ScreenplayAgentOutput:
+        # Populate artifact_caption if the LLM returned it
+        cap = creative.get("artifact_caption")
+        if isinstance(cap, dict):
+            from ..common_schema import ArtifactCaption as _AC
+            skeleton.artifact_caption = _AC(
+                what=str(cap.get("what") or ""),
+                why=str(cap.get("why") or ""),
+                scope=str(cap.get("scope") or "global"),
+            )
         skeleton.content.title = creative.get("title", "")
         scene_map = {s.get("scene_id", ""): s for s in creative.get("scenes", [])}
         shot_counter = 1
@@ -394,13 +399,6 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
                 scene.heading.interior_exterior = ie
 
             scene.summary = sc_data.get("summary", "")
-
-            est_dur = sc_data.get("estimated_duration", {})
-            if isinstance(est_dur, dict):
-                scene.estimated_duration = DurationEstimate(
-                    seconds=est_dur.get("seconds", 0),
-                    confidence=est_dur.get("confidence", 0.7),
-                )
 
             se_data = sc_data.get("scene_end", {})
             scene.scene_end = SceneEnd(
@@ -473,7 +471,6 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
                             props=cr.get("props", []),
                             wardrobe_character_ids=cr.get("wardrobe_character_ids", []),
                         ),
-                        estimated_duration_sec=float(sh_data.get("estimated_duration_sec", 3.0)),
                         shot_type=sh_data.get("shot_type", "medium"),
                         camera=Camera(
                             angle=cam_data.get("angle", "eye_level"),
@@ -499,24 +496,34 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
         return (
             "You are ScreenplayAgent: screenplay + shot planning. "
             "JSON only; no markdown; use empty string/list for unknowns, not null; "
-            "match the user message template exactly."
+            "match the user message template exactly.\n\n"
+            "Length budget: this pipeline produces SHORT cinematic videos "
+            "(typically 30 seconds, never longer than ~60 seconds). Each shot "
+            "becomes one keyframe + one generated video clip downstream, so "
+            "shot count directly drives runtime and cost. HARD CAPS:\n"
+            "  * No more than 5 shots per scene.\n"
+            "  * Aim for 4-6 TOTAL shots across the whole screenplay (one scene\n"
+            "    × 4-6 shots is ideal). Never exceed 8 total.\n"
+            "  * Each shot should feel like a distinct visual beat — do NOT\n"
+            "    split a single continuous action into multiple shots just\n"
+            "    to add coverage.\n\n"
+            "artifact_caption: fill all three fields to describe what you produced:\n"
+            "  what — title, scene count, total shots, key visual style.\n"
+            "  why  — creative decisions: tone, pacing, visual approach.\n"
+            "  scope — always \"global\"."
         )
 
     def build_user_prompt(self, input_data: ScreenplayAgentInput) -> str:
-        return self._build_structuring_prompt(input_data)
-
-    def _build_structuring_prompt(self, input_data: ScreenplayAgentInput) -> str:
-        self._target_duration_sec = 10.0
+        # ScreenplayAgent always runs in skeleton-first mode now: build_skeleton
+        # constructs the structural scaffold from input_data.story, and
+        # build_creative_prompt fills it. This method is the legacy entry point
+        # for the BaseAgent framework when no skeleton is built (e.g. story is
+        # missing). In that degenerate case, we surface a minimal directive
+        # so the framework still emits a valid JSON.
         return (
-            "Structure the user's screenplay into JSON; preserve dialogue and action.\n\n"
-            "--- USER TEXT ---\n"
-            f"{input_data.user_provided_text}\n"
-            "--- END ---\n\n"
-            "Infer language/runtime from text. IDs: sc_001, char_001, loc_001. "
-            "Omit shot_id (system assigns sh_001…). "
-            "Each shot = one take: block_type, text, shot_type, camera, visual_goal, action_focus, "
-            "keyframe_plan with keyframe_count=1.\n\n"
-            f"{SCREENPLAY_OUTPUT_TEMPLATE}\n\n"
+            "No structured story blueprint is available in your input. "
+            f"Produce an empty screenplay shell matching this template:\n"
+            f"{SCREENPLAY_OUTPUT_TEMPLATE}\n"
             "Return JSON only."
         )
 
@@ -533,16 +540,9 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
                 sh.shot_id = f"sh_{g:03d}"
                 sh.order = i
                 g += 1
-        sum_dur = sum(s.estimated_duration.seconds for s in c.scenes)
-        if sum_dur > 0:
-            self._target_duration_sec = float(sum_dur)
-        output.metrics.target_duration_sec = self._target_duration_sec
         output.metrics.scene_count = len(c.scenes)
         shot_total = sum(len(s.shots) for s in c.scenes)
         output.metrics.shot_count_total = shot_total
-        output.metrics.sum_shot_duration_sec = sum(
-            sh.estimated_duration_sec for s in c.scenes for sh in s.shots
-        )
         output.metrics.avg_shots_per_scene = (
             shot_total / len(c.scenes) if c.scenes else 0.0
         )
@@ -551,10 +551,4 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
         )
         output.metrics.action_block_count = sum(
             1 for s in c.scenes for sh in s.shots if sh.block_type == "action"
-        )
-        output.metrics.sum_scene_duration_sec = sum(
-            s.estimated_duration.seconds for s in c.scenes
-        )
-        output.metrics.estimated_total_duration_sec = (
-            output.metrics.sum_scene_duration_sec
         )

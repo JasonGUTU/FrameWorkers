@@ -7,39 +7,40 @@ from pydantic import BaseModel
 from ..descriptor import SubAgentDescriptor
 from ..contracts import InputBundleV2
 from .agent import ScreenplayAgent
-from .schema import (
-    ScreenplayAgentInput,
-    ScreenplayConstraints,
-)
+from .schema import ScreenplayAgentInput
 from .evaluator import ScreenplayEvaluator
 
+from .labels import INPUT_LABEL_STORY
+
 OUTPUT_ASSET_KEY = "screenplay"
-USER_TEXT_KEY = "user_screenplay"
 
 
 def build_input(
     _task_id: str,
     input_bundle_v2: InputBundleV2,
 ) -> BaseModel:
-    resolved = (
-        input_bundle_v2.context.get("resolved_inputs", {})
-        if isinstance(getattr(input_bundle_v2, "context", None), dict)
-        else {}
-    )
-    story_dict = resolved.get("story_blueprint", {}) if isinstance(resolved, dict) else {}
-    content = story_dict.get("content", {}) if isinstance(story_dict, dict) else {}
-    return ScreenplayAgentInput(
-        story_blueprint=content,
-        constraints=ScreenplayConstraints(),
-        user_provided_text=(resolved.get(USER_TEXT_KEY, "") if isinstance(resolved, dict) else ""),
-    )
+    """Construct typed input from the unified workspace bundle.
+
+    Single input: the upstream story_blueprint, selected by InputResolver
+    via the ``[story]`` label. ScreenplayAgent has no concept of free-text
+    user directives — any such directive flows in through the upstream
+    re-run pattern (Director re-runs StoryAgent with the new brief, the
+    updated story_blueprint reaches ScreenplayAgent through this same
+    ``[story]`` label).
+    """
+    resolved = input_bundle_v2.resolved_artifacts
+    story = resolved.get(INPUT_LABEL_STORY, {})
+    story_payload = story.get("payload", {}) if isinstance(story, dict) else {}
+    # ScreenplayAgent expects content dict directly (has cast, scene_outline, etc.)
+    content = story_payload.get("content", {}) if isinstance(story_payload, dict) else {}
+    return ScreenplayAgentInput(story=content)
 
 
 CATALOG_ENTRY = (
     "ScreenplayAgent\n"
-    "  - Input: story_blueprint OR user_screenplay (raw screenplay text)\n"
+    "  - Input: story_blueprint (cast, locations, scene_outline)\n"
     "  - Output: screenplay (scenes -> shots: script + visual plan + consistency packs)\n"
-    "  - Purpose: Unified screenplay; feeds KeyFrameAgent (no separate storyboard artifact)."
+    "  - Purpose: Unified screenplay; feeds downstream visual and audio agents."
 )
 
 DESCRIPTOR = SubAgentDescriptor(
@@ -50,5 +51,16 @@ DESCRIPTOR = SubAgentDescriptor(
     evaluator_factory=ScreenplayEvaluator,
     build_input=build_input,
     materializer_factory=None,
-    user_text_key=USER_TEXT_KEY,
+    input_needs_description=(
+        "I take a high-level story plan and turn it into a full unified screenplay "
+        "(scenes broken into shots, with visual direction, dialogue, and consistency "
+        "packs).\n\n"
+        f"[{INPUT_LABEL_STORY}] (single)\n"
+        "The high-level narrative plan for the whole video — written before any "
+        "scene breakdown exists. It defines the logline, the cast of characters, "
+        "the locations, the overall story arc, and a coarse scene-level outline. "
+        "It does NOT yet contain a per-shot breakdown, dialogue, or camera "
+        "direction; that is exactly what I will produce. Choose at most one such "
+        "document for this story."
+    ),
 )

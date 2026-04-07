@@ -1,4 +1,23 @@
-# Memory Manager — global memory as one workspace-level markdown file.
+"""Memory manager — workspace-level semantic memory in markdown.
+
+Responsibilities:
+  * Store semantic decisions and project context — the "why" behind agent
+    work — as structured JSON entries embedded in ``global_memory.md``.
+  * Maintain ``global_memory_index.md`` (one-line summary per entry) for
+    fast LLM scanning without parsing the full document.
+  * Render a workspace file tree text representation for LLM prompts.
+
+What it does NOT do:
+  * Store artifact paths or per-file metadata — those live in
+    ``artifact_registry.jsonl`` (managed by ``ArtifactRegistry``).
+  * Decide what to remember — callers (Workspace, AssetManager) choose.
+
+Used by:
+  * ``Workspace.add_memory_entry`` / ``list_memory_entries`` /
+    ``get_memory_brief`` / ``get_workspace_root_file_tree_text``.
+  * ``service.AssistantService`` calls these via the Workspace facade
+    after each execution to record the agent's contribution.
+"""
 
 from __future__ import annotations
 
@@ -13,6 +32,7 @@ from typing import Any, Dict, List, Optional
 logger = logging.getLogger(__name__)
 
 GLOBAL_MEMORY_FILENAME = "global_memory.md"
+GLOBAL_MEMORY_INDEX_FILENAME = "global_memory_index.md"
 
 ENTRIES_HEADER = "## Entries"
 JSON_FENCE_OPEN = "```json"
@@ -20,7 +40,6 @@ JSON_FENCE_CLOSE = "```"
 
 
 def _assistant_global_memory_row_limit_default() -> int:
-    """Same default as ``AssistantService`` packaging: recent N rows (default 20)."""
     try:
         n = int(os.getenv("ASSISTANT_GLOBAL_MEMORY_CONTEXT_ENTRIES_MAX", "20").strip())
         return max(1, min(n, 500))
@@ -34,23 +53,51 @@ class MemoryManager:
 
     ``Runtime/{workspace_id}/global_memory.md``
 
-    Each **entry** in the JSON array has:
+    Each **entry** records semantic decisions and project context — the "why"
+    behind agent outputs.  Artifact paths live in ``artifact_registry.jsonl``;
+    do not store them here.
 
-    ``content``, ``agent_id``, ``created_at`` (ISO8601 UTC), ``execution_result`` (JSON object,
-    execution summary; may be empty ``{}``), and     optional ``artifact_locations`` (list of
-    ``{"role", "path", ...}`` rows for durable artifact paths).
+    Entry shape::
 
-    This file does **not** embed a workspace file-tree dump (too noisy for large runs).
-    Use **live** ``get_workspace_root_file_tree_text`` and per-entry ``artifact_locations``.
+        {
+          "content": {
+            "what": "one-sentence description of what was done",
+            "why": "key decision rationale",
+            "context_note": "optional extra context for future agents"
+          },
+          "agent_id": "ScreenplayAgent",
+          "task_id": "task_1_xxx",
+          "execution_id": "exec_2_xxx",
+          "created_at": "<ISO8601 UTC>",
+          "supersedes": null   // entry_id of superseded entry, or null
+        }
+
+    A companion ``global_memory_index.md`` stores one line per entry so that
+    an LLM can scan the whole project history cheaply before deciding which
+    full entries to read.
     """
 
     MAX_ENTRY_COUNT = 2000
 
-    def __init__(self, workspace_id: str, runtime_base_path: Path):
+    def __init__(self, workspace_id: str, runtime_base_path: Path) -> None:
         self.workspace_id = workspace_id
         self.runtime_base_path = Path(runtime_base_path)
         self.workspace_runtime_path = self.runtime_base_path / workspace_id
         self.workspace_runtime_path.mkdir(parents=True, exist_ok=True)
+
+    # ------------------------------------------------------------------
+    # Path helpers
+    # ------------------------------------------------------------------
+
+    def _global_memory_path(self) -> Path:
+        return self.workspace_runtime_path / GLOBAL_MEMORY_FILENAME
+
+    def _global_memory_index_path(self) -> Path:
+        return self.workspace_runtime_path / GLOBAL_MEMORY_INDEX_FILENAME
+
+    # ------------------------------------------------------------------
+    # Validation helpers
+    # ------------------------------------------------------------------
 
     @staticmethod
     def _require_task_id(task_id: Optional[str]) -> str:
@@ -61,81 +108,63 @@ class MemoryManager:
             raise ValueError("task_id contains invalid path characters")
         return tid
 
-    def _global_memory_path(self) -> Path:
-        return self.workspace_runtime_path / GLOBAL_MEMORY_FILENAME
-
     @staticmethod
     def _sanitize_text(value: Any) -> str:
         return str(value or "").strip()
 
-    @staticmethod
-    def _normalize_artifact_locations(raw: Any) -> List[Dict[str, Any]]:
-        if not isinstance(raw, list):
-            return []
-        out: List[Dict[str, Any]] = []
-        for item in raw:
-            if not isinstance(item, dict):
-                continue
-            path = str(item.get("path") or item.get("uri") or "").strip()
-            if not path:
-                continue
-            role = str(item.get("role") or item.get("kind") or "asset").strip() or "asset"
-            row: Dict[str, Any] = {"role": role, "path": path}
-            ak = item.get("asset_key")
-            if isinstance(ak, str) and ak.strip():
-                row["asset_key"] = ak.strip()
-            desc = item.get("description")
-            if isinstance(desc, str) and desc.strip():
-                row["description"] = desc.strip()
-            out.append(row)
-        return out
+    # ------------------------------------------------------------------
+    # Content normalisation
+    # ------------------------------------------------------------------
 
     @staticmethod
-    def _normalize_execution_result(raw: Any) -> Dict[str, Any]:
+    def _normalize_content(raw: Any) -> Dict[str, str]:
+        """Accept either a structured dict or a plain string (legacy)."""
         if isinstance(raw, dict):
-            return dict(raw)
-        if isinstance(raw, str) and raw.strip():
-            try:
-                parsed = json.loads(raw)
-                if isinstance(parsed, dict):
-                    return dict(parsed)
-            except json.JSONDecodeError:
-                return {"summary": raw.strip()}
-        return {}
+            return {
+                "what": str(raw.get("what") or ""),
+                "why": str(raw.get("why") or ""),
+                "context_note": str(raw.get("context_note") or ""),
+            }
+        # Legacy plain-string content — promote to structured form
+        text = str(raw or "").strip()
+        return {"what": text, "why": "", "context_note": ""}
 
     @staticmethod
     def _normalize_entry(raw: Any) -> Dict[str, Any]:
         if not isinstance(raw, dict):
             return {
-                "content": "",
+                "content": {"what": "", "why": "", "context_note": ""},
                 "agent_id": "",
+                "task_id": "",
+                "execution_id": "",
                 "created_at": "",
-                "execution_result": {},
+                "supersedes": None,
             }
-        base: Dict[str, Any] = {
-            "content": MemoryManager._sanitize_text(raw.get("content")),
+        return {
+            "content": MemoryManager._normalize_content(raw.get("content")),
             "agent_id": MemoryManager._sanitize_text(raw.get("agent_id")),
             "task_id": MemoryManager._sanitize_text(raw.get("task_id")),
+            "execution_id": MemoryManager._sanitize_text(raw.get("execution_id")),
             "created_at": MemoryManager._sanitize_text(raw.get("created_at")),
-            "execution_result": MemoryManager._normalize_execution_result(
-                raw.get("execution_result")
-            ),
+            "supersedes": raw.get("supersedes"),  # None or entry reference string
         }
-        al = MemoryManager._normalize_artifact_locations(raw.get("artifact_locations"))
-        if al:
-            base["artifact_locations"] = al
-        return base
+
+    def _entry_has_content(self, entry: Dict[str, Any]) -> bool:
+        c = entry.get("content")
+        if isinstance(c, dict):
+            return bool(c.get("what") or c.get("why") or c.get("context_note"))
+        return bool(c)
+
+    # ------------------------------------------------------------------
+    # JSON parsing from markdown
+    # ------------------------------------------------------------------
 
     def _parse_entries_json_from_markdown(self, text: str) -> Optional[List[Dict[str, Any]]]:
         if not text.strip():
             return None
         idx = text.find(ENTRIES_HEADER)
         segment = text[idx:] if idx >= 0 else text
-        match = re.search(
-            r"```json\s*\n([\s\S]*?)\n```",
-            segment,
-            re.MULTILINE,
-        )
+        match = re.search(r"```json\s*\n([\s\S]*?)\n```", segment, re.MULTILINE)
         if not match:
             return None
         try:
@@ -152,36 +181,16 @@ class MemoryManager:
         raw = path.read_text(encoding="utf-8")
         parsed = self._parse_entries_json_from_markdown(raw)
         if parsed is not None:
-            return [e for e in parsed if e.get("content")]
+            return [e for e in parsed if self._entry_has_content(e)]
         logger.warning("global_memory.md present but JSON entries block missing or invalid: %s", path)
         return []
 
     def _read_entries_aggregate(self) -> List[Dict[str, Any]]:
         return self._read_entries_from_file(self._global_memory_path())
 
-    def _build_file_tree_text(self, root: Path) -> str:
-        lines: List[str] = []
-        max_lines = 800
-        try:
-            root = root.resolve()
-            all_files = sorted(
-                (p for p in root.rglob("*") if p.is_file()),
-                key=lambda p: str(p.relative_to(root)).replace("\\", "/"),
-            )
-        except OSError as exc:
-            return f"(unable to list files: {exc})"
-
-        for p in all_files[:max_lines]:
-            try:
-                rel = p.relative_to(root)
-            except ValueError:
-                continue
-            depth = len(rel.parts)
-            indent = "  " * max(0, depth - 1)
-            lines.append(f"{indent}{rel.parts[-1]}")
-        if len(all_files) > max_lines:
-            lines.append(f"... ({len(all_files) - max_lines} more files truncated)")
-        return "\n".join(lines) if lines else "(no files yet)"
+    # ------------------------------------------------------------------
+    # Document composition
+    # ------------------------------------------------------------------
 
     def _compose_global_memory_document(self, entries: List[Dict[str, Any]]) -> str:
         json_body = json.dumps(entries, ensure_ascii=False, indent=2)
@@ -189,64 +198,96 @@ class MemoryManager:
         return (
             f"# Global memory\n\n"
             f"Global memory for {scope}. "
-            f"The **Entries** section is the canonical JSON array. "
-            f"For the current directory layout, call **live** "
-            f"``Workspace.get_workspace_root_file_tree_text()``; for durable paths, use each entry's "
-            f"``artifact_locations`` (this file intentionally omits an embedded file tree).\n\n"
+            f"Records semantic decisions and project context — the 'why' behind agent outputs.\n"
+            f"Artifact paths are in ``artifact_registry.jsonl`` (not here).\n\n"
             f"{ENTRIES_HEADER}\n\n"
             f"{JSON_FENCE_OPEN}\n{json_body}\n{JSON_FENCE_CLOSE}\n"
         )
 
+    def _compose_index_document(self, entries: List[Dict[str, Any]]) -> str:
+        """One-line summary per entry for fast LLM scanning."""
+        lines = ["# Global Memory Index\n",
+                 "One line per entry. Read global_memory.md for full details.\n"]
+        for e in entries:
+            agent = e.get("agent_id") or "?"
+            ts = (e.get("created_at") or "")[:10]
+            exec_id = e.get("execution_id") or ""
+            content = e.get("content") or {}
+            what = content.get("what") or "" if isinstance(content, dict) else str(content)
+            short = what[:120].replace("\n", " ")
+            supersedes = e.get("supersedes")
+            sup_note = f" [supersedes {supersedes}]" if supersedes else ""
+            lines.append(f"- [{ts}] {agent} ({exec_id}){sup_note}: {short}")
+        return "\n".join(lines) + "\n"
+
+    # ------------------------------------------------------------------
+    # File writes
+    # ------------------------------------------------------------------
+
     def _write_global_memory_file(self, path: Path, entries: List[Dict[str, Any]]) -> None:
         try:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(
-                self._compose_global_memory_document(entries),
-                encoding="utf-8",
-            )
+            path.write_text(self._compose_global_memory_document(entries), encoding="utf-8")
+            # Always regenerate the index alongside
+            index_path = self._global_memory_index_path()
+            index_path.write_text(self._compose_index_document(entries), encoding="utf-8")
         except Exception as exc:
             logger.warning("Failed to write global_memory.md at %s: %s", path, exc)
             raise
 
     def refresh_file_tree(self) -> None:
-        """Rewrite ``global_memory.md`` from disk entries (e.g. after file store/delete)."""
+        """Rewrite global_memory.md from disk entries (e.g. after file store/delete)."""
         path = self._global_memory_path()
         entries = self._read_entries_from_file(path)
         self._write_global_memory_file(path, entries)
 
+    # ------------------------------------------------------------------
+    # Public write API
+    # ------------------------------------------------------------------
+
     def add_memory_entry(
         self,
         *,
-        content: str,
+        content: Any,
         task_id: Optional[str] = None,
         agent_id: Optional[str] = None,
-        execution_result: Optional[Any] = None,
-        artifact_locations: Optional[Any] = None,
+        execution_id: Optional[str] = None,
+        supersedes: Optional[str] = None,
     ) -> Dict[str, Any]:
-        text = self._sanitize_text(content)
-        if not text:
-            raise ValueError("content must be non-empty")
+        """Append one entry to global_memory.md.
+
+        ``content`` may be:
+          - a dict with keys ``what``, ``why``, ``context_note``  (preferred)
+          - a plain string (promoted to ``{"what": text, ...}``)
+
+        ``supersedes`` should be the ``execution_id`` of the entry being
+        replaced (e.g. on re-runs), allowing readers to identify stale entries.
+        """
+        normalized_content = self._normalize_content(content)
+        if not any(normalized_content.values()):
+            raise ValueError("content must be non-empty (at least one of what/why/context_note)")
 
         tid = self._require_task_id(task_id)
-        er = self._normalize_execution_result(execution_result)
         entry: Dict[str, Any] = {
-            "content": text,
+            "content": normalized_content,
             "agent_id": self._sanitize_text(agent_id),
             "task_id": tid,
+            "execution_id": self._sanitize_text(execution_id),
             "created_at": datetime.now(UTC).isoformat(),
-            "execution_result": er,
+            "supersedes": supersedes,
         }
-        al = self._normalize_artifact_locations(artifact_locations)
-        if al:
-            entry["artifact_locations"] = al
 
         path = self._global_memory_path()
         entries = self._read_entries_from_file(path) if path.exists() else []
         entries.append(entry)
         if len(entries) > self.MAX_ENTRY_COUNT:
-            entries = entries[-self.MAX_ENTRY_COUNT :]
+            entries = entries[-self.MAX_ENTRY_COUNT:]
         self._write_global_memory_file(path, entries)
         return entry
+
+    # ------------------------------------------------------------------
+    # Public read API
+    # ------------------------------------------------------------------
 
     def list_memory_entries(
         self,
@@ -278,18 +319,22 @@ class MemoryManager:
     _BRIEF_ROW_KEYS: tuple[str, ...] = (
         "task_id",
         "agent_id",
+        "execution_id",
         "created_at",
-        "execution_result",
     )
 
     @classmethod
     def _brief_memory_rows(cls, entries: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Director / HTTP brief: only identity + timing + execution snapshot (no paths, no content)."""
         out: List[Dict[str, Any]] = []
         for e in entries:
             if not isinstance(e, dict):
                 continue
-            out.append({k: e[k] for k in cls._BRIEF_ROW_KEYS if k in e})
+            row = {k: e[k] for k in cls._BRIEF_ROW_KEYS if k in e}
+            # Include the 'what' summary for quick context
+            content = e.get("content")
+            if isinstance(content, dict) and content.get("what"):
+                row["what"] = content["what"]
+            out.append(row)
         return out
 
     def _collect_candidates(
@@ -297,9 +342,7 @@ class MemoryManager:
         task_id: Optional[str],
         agent_id: Optional[str],
     ) -> List[Dict[str, Any]]:
-        candidates = [
-            x for x in self._read_entries_aggregate() if isinstance(x, dict)
-        ]
+        candidates = [x for x in self._read_entries_aggregate() if isinstance(x, dict)]
         if task_id:
             want = self._require_task_id(task_id)
             candidates = [x for x in candidates if x.get("task_id") == want]
@@ -315,12 +358,7 @@ class MemoryManager:
         agent_id: Optional[str] = None,
         limit: Optional[int] = None,
     ) -> Dict[str, Any]:
-        """``{"global_memory": [...]}`` — each row only ``task_id``, ``agent_id``, ``created_at``, ``execution_result``.
-
-        Rows are **newest first** (same order as internal routing). By default returns at most
-        **N** rows (``ASSISTANT_GLOBAL_MEMORY_CONTEXT_ENTRIES_MAX``, default **20**) — i.e. recent
-        sub-agent executions as reflected in memory. Pass ``limit=0`` for no cap (all matching rows).
-        """
+        """``{"global_memory": [...]}`` — brief rows for director/HTTP responses."""
         candidates = self._collect_candidates(task_id, agent_id)
         if limit is None:
             candidates = candidates[: _assistant_global_memory_row_limit_default()]
@@ -331,5 +369,29 @@ class MemoryManager:
         return {"global_memory": self._brief_memory_rows(candidates)}
 
     def workspace_root_file_tree_text(self) -> str:
-        """Human-readable tree of all files under the workspace runtime root (includes ``artifacts/``)."""
+        """Human-readable tree of all files under the workspace runtime root."""
         return self._build_file_tree_text(self.workspace_runtime_path)
+
+    def _build_file_tree_text(self, root: Path) -> str:
+        lines: List[str] = []
+        max_lines = 800
+        try:
+            root = root.resolve()
+            all_files = sorted(
+                (p for p in root.rglob("*") if p.is_file()),
+                key=lambda p: str(p.relative_to(root)).replace("\\", "/"),
+            )
+        except OSError as exc:
+            return f"(unable to list files: {exc})"
+
+        for p in all_files[:max_lines]:
+            try:
+                rel = p.relative_to(root)
+            except ValueError:
+                continue
+            depth = len(rel.parts)
+            indent = "  " * max(0, depth - 1)
+            lines.append(f"{indent}{rel.parts[-1]}")
+        if len(all_files) > max_lines:
+            lines.append(f"... ({len(all_files) - max_lines} more files truncated)")
+        return "\n".join(lines) if lines else "(no files yet)"

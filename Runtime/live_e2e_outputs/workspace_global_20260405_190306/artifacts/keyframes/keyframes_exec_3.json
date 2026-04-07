@@ -1,0 +1,151 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_type": "character",
+          "entity_id": "char_001",
+          "keyframe_id": "kf_global_char_001",
+          "image_asset": {
+            "asset_id": "img_char_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_190306/artifacts/media/KeyFrameAgent/image/img_char_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "A generic adult character stands casually. They wear simple, everyday clothing consisting of a t-shirt and jeans. The background is a plain, neutral wall. Even, natural light illuminates the scene, emphasizing realistic fabric textures and a functional aesthetic.",
+          "image_generation_prompt": "A generic adult character stands casually. They wear simple, everyday clothing consisting of a t-shirt and jeans. The background is a plain, neutral wall. Even, natural light illuminates the scene, emphasizing realistic fabric textures and a functional aesthetic.\nVisual style: A neutral and functional visual style.. Do NOT use: Overly dramatic or highly stylized visuals for this placeholder.."
+        }
+      ],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_190306/artifacts/media/KeyFrameAgent/image/img_loc_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "An interior shot of a default, unassuming room. Walls are painted a soft, neutral tone, and a basic window allows diffused daylight to enter. The space contains simple, functional furniture like a desk and a chair, made of common wood and fabric. Lighting is clear and even, highlighting practical materials.",
+          "image_generation_prompt": "An interior shot of a default, unassuming room. Walls are painted a soft, neutral tone, and a basic window allows diffused daylight to enter. The space contains simple, functional furniture like a desk and a chair, made of common wood and fabric. Lighting is clear and even, highlighting practical materials.\nVisual style: A neutral and functional visual style.. Do NOT use: Overly dramatic or highly stylized visuals for this placeholder.."
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "keyframe_id": "kf_char_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_190306/artifacts/media/KeyFrameAgent/image/img_char_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "A generic character for demonstration, wearing simple, everyday clothing. The look is neutral and functional.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA generic character for demonstration, wearing simple, everyday clothing. The look is neutral and functional.\nDo NOT use: Overly dramatic or highly stylized visuals for this placeholder.."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_190306/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "A default indoor setting with a neutral color palette and functional furnishings. The environment appears clean and unobtrusive.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA default indoor setting with a neutral color palette and functional furnishings. The environment appears clean and unobtrusive.\nDo NOT use: Overly dramatic or highly stylized visuals for this placeholder.."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "source_shot_id": "sh_001"
+            },
+            "estimated_duration_sec": 3.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_001",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_190306/artifacts/media/KeyFrameAgent/image/img_sh_001_kf_001.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Frame a wide, eye-level shot establishing a generic indoor room. The space is functional, with neutral lighting and minimal decor. Show a default setting without strong stylistic elements.",
+                "video_motion_hint": "The camera executes a slow, subtle push-in, gradually narrowing the view of the room without significant perspective change.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nFrame a wide, eye-level shot establishing a generic indoor room. The space is functional, with neutral lighting and minimal decor. Show a default setting without strong stylistic elements.\nDo NOT use: Overly dramatic or highly stylized visuals for this placeholder.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "source_shot_id": "sh_002"
+            },
+            "estimated_duration_sec": 3.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_002",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_002",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_190306/artifacts/media/KeyFrameAgent/image/img_sh_002_kf_002.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Show a close-up, eye-level shot of char_001's face. The character has a neutral, yet engaged expression, suitable for delivering a line. Lighting is soft and even, highlighting their features directly.",
+                "video_motion_hint": "char_001's head makes a very slight, natural tilt, accompanied by a subtle shift in their facial muscles, indicating active speech.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nShow a close-up, eye-level shot of char_001's face. The character has a neutral, yet engaged expression, suitable for delivering a line. Lighting is soft and even, highlighting their features directly.\nDo NOT use: Overly dramatic or highly stylized visuals for this placeholder.."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_count": 2,
+    "keyframe_count_total": 2,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 1,
+    "stability_location_keyframe_count": 1,
+    "stability_prop_keyframe_count": 0
+  },
+  "artifact_caption": {
+    "what": "1 character, 1 location, 0 props, 2 keyframes, neutral and functional visual style.",
+    "why": "Layer 1 defines canonical looks for each entity, establishing a consistent foundational appearance. These anchors will be built upon by subsequent layers for specific scene contexts. Key visual decisions prioritize concrete light and material depiction, avoiding overly dramatic or highly stylized visuals.",
+    "scope": "global"
+  }
+}

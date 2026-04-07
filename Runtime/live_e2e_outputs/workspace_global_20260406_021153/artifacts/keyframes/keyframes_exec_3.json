@@ -1,0 +1,306 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_type": "character",
+          "entity_id": "char_001",
+          "keyframe_id": "kf_global_char_001",
+          "image_asset": {
+            "asset_id": "img_char_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_021153/artifacts/media/KeyFrameAgent/image/img_char_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "An elderly man whose hands are deeply etched, reflecting years of precise, delicate craftsmanship. His face is a canvas of quiet grief, intense concentration, and a fragile glimmer of hope. His movements are deliberate and measured, yet carry a subtle, underlying tremor of urgency.",
+          "image_generation_prompt": "An elderly man whose hands are deeply etched, reflecting years of precise, delicate craftsmanship. His face is a canvas of quiet grief, intense concentration, and a fragile glimmer of hope. His movements are deliberate and measured, yet carry a subtle, underlying tremor of urgency.\nVisual style: Maintain a poignant and reflective tone, with moments of high tension.; Visuals should emphasize intricate details (hands, watch mechanisms) and Elias's subtle emotional shifts.; Utilize a muted color palette with warm practical lighting for intimacy.; Sound design is crucial for the ticking clock and watch chimes.. Do NOT use: Overly dramatic or melodramatic expressions or reactions.; Fast-paced, action-driven editing that detracts from the reflective and delicate nature of the task.."
+        }
+      ],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_021153/artifacts/media/KeyFrameAgent/image/img_loc_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "A watchmaker's workshop, presenting a cozy and somewhat cluttered yet distinctly organized atmosphere. Warm, focused practical lighting illuminates a central workbench, while the rest of the room recedes into softer shadows. A prominent, tall grandfather clock stands against a wall, a visual anchor within the space.",
+          "image_generation_prompt": "A watchmaker's workshop, presenting a cozy and somewhat cluttered yet distinctly organized atmosphere. Warm, focused practical lighting illuminates a central workbench, while the rest of the room recedes into softer shadows. A prominent, tall grandfather clock stands against a wall, a visual anchor within the space.\nVisual style: Maintain a poignant and reflective tone, with moments of high tension.; Visuals should emphasize intricate details (hands, watch mechanisms) and Elias's subtle emotional shifts.; Utilize a muted color palette with warm practical lighting for intimacy.; Sound design is crucial for the ticking clock and watch chimes.. Do NOT use: Overly dramatic or melodramatic expressions or reactions.; Fast-paced, action-driven editing that detracts from the reflective and delicate nature of the task.."
+        }
+      ],
+      "props": [
+        {
+          "entity_type": "prop",
+          "entity_id": "prop_001",
+          "keyframe_id": "kf_global_prop_001",
+          "image_asset": {
+            "asset_id": "img_prop_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_021153/artifacts/media/KeyFrameAgent/image/img_prop_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "An ornate, antique pocket watch featuring intricate engravings on its metal casing. The timepiece appears initially broken, with delicate internal mechanisms visible, then repaired and now softly ticking with a gentle chime. Its design evokes deep sentimental value.",
+          "image_generation_prompt": "An ornate, antique pocket watch featuring intricate engravings on its metal casing. The timepiece appears initially broken, with delicate internal mechanisms visible, then repaired and now softly ticking with a gentle chime. Its design evokes deep sentimental value.\nVisual style: Maintain a poignant and reflective tone, with moments of high tension.; Visuals should emphasize intricate details (hands, watch mechanisms) and Elias's subtle emotional shifts.; Utilize a muted color palette with warm practical lighting for intimacy.; Sound design is crucial for the ticking clock and watch chimes.. Do NOT use: Overly dramatic or melodramatic expressions or reactions.; Fast-paced, action-driven editing that detracts from the reflective and delicate nature of the task.."
+        },
+        {
+          "entity_type": "prop",
+          "entity_id": "prop_002",
+          "keyframe_id": "kf_global_prop_002",
+          "image_asset": {
+            "asset_id": "img_prop_002_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_021153/artifacts/media/KeyFrameAgent/image/img_prop_002_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "A grand, imposing grandfather clock, crafted from dark, polished wood with a decorative brass pendulum. Its tall, slender form and classic white face with Roman numerals make it a prominent, eye-catching feature within any room. The clock possesses a commanding visual presence.",
+          "image_generation_prompt": "A grand, imposing grandfather clock, crafted from dark, polished wood with a decorative brass pendulum. Its tall, slender form and classic white face with Roman numerals make it a prominent, eye-catching feature within any room. The clock possesses a commanding visual presence.\nVisual style: Maintain a poignant and reflective tone, with moments of high tension.; Visuals should emphasize intricate details (hands, watch mechanisms) and Elias's subtle emotional shifts.; Utilize a muted color palette with warm practical lighting for intimacy.; Sound design is crucial for the ticking clock and watch chimes.. Do NOT use: Overly dramatic or melodramatic expressions or reactions.; Fast-paced, action-driven editing that detracts from the reflective and delicate nature of the task.."
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_type": "character",
+              "entity_id": "char_001",
+              "keyframe_id": "kf_char_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_char_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_021153/artifacts/media/KeyFrameAgent/image/img_char_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "An elderly watchmaker, Elias, deeply focused on his delicate work. His hands, showing years of precise effort, carry a subtle tremor. His face is etched with a mix of grief, intense concentration, and underlying hope.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nAn elderly watchmaker, Elias, deeply focused on his delicate work. His hands, showing years of precise effort, carry a subtle tremor. His face is etched with a mix of grief, intense concentration, and underlying hope.\nDo NOT use: Overly dramatic or melodramatic expressions or reactions.; Fast-paced, action-driven editing that detracts from the reflective and delicate nature of the task.."
+            }
+          ],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_021153/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "A cozy, somewhat cluttered, yet organized watchmaker's workshop. Warm, focused practical lighting illuminates a workbench. Deep shadows recede into the corners of the room, suggesting a nocturnal setting.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA cozy, somewhat cluttered, yet organized watchmaker's workshop. Warm, focused practical lighting illuminates a workbench. Deep shadows recede into the corners of the room, suggesting a nocturnal setting.\nDo NOT use: Overly dramatic or melodramatic expressions or reactions.; Fast-paced, action-driven editing that detracts from the reflective and delicate nature of the task.."
+            }
+          ],
+          "props": [
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_001",
+              "keyframe_id": "kf_prop_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_prop_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_021153/artifacts/media/KeyFrameAgent/image/img_prop_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "An ornate, antique pocket timepiece with deep sentimental value. Its delicate mechanism is initially broken. Later, the repaired watch is seen ticking softly and chiming with gentle clarity.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nAn ornate, antique pocket timepiece with deep sentimental value. Its delicate mechanism is initially broken. Later, the repaired watch is seen ticking softly and chiming with gentle clarity.\nDo NOT use: Overly dramatic or melodramatic expressions or reactions.; Fast-paced, action-driven editing that detracts from the reflective and delicate nature of the task.."
+            },
+            {
+              "entity_type": "prop",
+              "entity_id": "prop_002",
+              "keyframe_id": "kf_prop_002_sc_001",
+              "image_asset": {
+                "asset_id": "img_prop_002_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_021153/artifacts/media/KeyFrameAgent/image/img_prop_002_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "A tall, imposing grandfather clock stands prominently within the workshop. Its polished wood gleams faintly in the low light. The clock's mechanism generates a consistent ticking sound, and its chimes mark the arrival of midnight.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA tall, imposing grandfather clock stands prominently within the workshop. Its polished wood gleams faintly in the low light. The clock's mechanism generates a consistent ticking sound, and its chimes mark the arrival of midnight.\nDo NOT use: Overly dramatic or melodramatic expressions or reactions.; Fast-paced, action-driven editing that detracts from the reflective and delicate nature of the task.."
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "source_shot_id": "sh_001"
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_001",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_021153/artifacts/media/KeyFrameAgent/image/img_sh_001_kf_001.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Elias, an elderly watchmaker, is hunched over his workbench, illuminated by a focused task light. He meticulously works on a small mechanism with aged, delicate hands. In the background, a large grandfather clock stands sentinel, its presence marking the passage of time in the cozy, cluttered workshop.",
+                "video_motion_hint": "Subtle shifts in Elias's posture as he leans closer to his work, his breath held in concentration. A faint shimmer on the clock's polished surface as light subtly changes with the ambient glow.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nElias, an elderly watchmaker, is hunched over his workbench, illuminated by a focused task light. He meticulously works on a small mechanism with aged, delicate hands. In the background, a large grandfather clock stands sentinel, its presence marking the passage of time in the cozy, cluttered workshop.\nDo NOT use: Overly dramatic or melodramatic expressions or reactions.; Fast-paced, action-driven editing that detracts from the reflective and delicate nature of the task.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "source_shot_id": "sh_002"
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_002",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_002",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_021153/artifacts/media/KeyFrameAgent/image/img_sh_002_kf_002.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Show Elias's aged hands, etched with fine lines, meticulously manipulating tiny components of the pocket watch. A magnifying loupe sits over his eye, enhancing the intricate details of the broken mechanism. Delicate tools are precisely placed around the watch on the workbench.",
+                "video_motion_hint": "Elias's thumb and forefinger delicately adjust a tiny gear within the watch. A minute tremor in his hand is visible, highlighting the precision required under pressure.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nShow Elias's aged hands, etched with fine lines, meticulously manipulating tiny components of the pocket watch. A magnifying loupe sits over his eye, enhancing the intricate details of the broken mechanism. Delicate tools are precisely placed around the watch on the workbench.\nDo NOT use: Overly dramatic or melodramatic expressions or reactions.; Fast-paced, action-driven editing that detracts from the reflective and delicate nature of the task.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "source": {
+              "source_shot_id": "sh_003"
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_003",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_003_kf_003",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_021153/artifacts/media/KeyFrameAgent/image/img_sh_003_kf_003.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Frame the ornate face of the grandfather clock. The hour hand is nearing the XII, with the minute hand steadily approaching the top. The brass numbers glow softly in the dim light, emphasizing the dwindling time before midnight.",
+                "video_motion_hint": "The minute hand of the grandfather clock visibly moves forward with a slow, deliberate sweep. A subtle reflection shifts across the polished brass surface of the clock face.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nFrame the ornate face of the grandfather clock. The hour hand is nearing the XII, with the minute hand steadily approaching the top. The brass numbers glow softly in the dim light, emphasizing the dwindling time before midnight.\nDo NOT use: Overly dramatic or melodramatic expressions or reactions.; Fast-paced, action-driven editing that detracts from the reflective and delicate nature of the task.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "source": {
+              "source_shot_id": "sh_004"
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_004",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_004_kf_004",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_021153/artifacts/media/KeyFrameAgent/image/img_sh_004_kf_004.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Elias gently closes the pocket watch casing, his expression a mix of apprehension and profound hope. He holds the watch to his ear, listening intently. A soft, steady ticking sound emanates from the now-repaired timepiece, a moment of fragile success.",
+                "video_motion_hint": "Elias's head subtly cocks as he listens to the watch, confirming its function. A slight upward curl of his lips, almost imperceptible, appears as he registers the steady ticking.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nElias gently closes the pocket watch casing, his expression a mix of apprehension and profound hope. He holds the watch to his ear, listening intently. A soft, steady ticking sound emanates from the now-repaired timepiece, a moment of fragile success.\nDo NOT use: Overly dramatic or melodramatic expressions or reactions.; Fast-paced, action-driven editing that detracts from the reflective and delicate nature of the task.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 5,
+            "source": {
+              "source_shot_id": "sh_005"
+            },
+            "estimated_duration_sec": 2.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_005",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_005_kf_005",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_021153/artifacts/media/KeyFrameAgent/image/img_sh_005_kf_005.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Focus tight on the antique pocket watch, now ticking rhythmically and chiming softly. The polished silver surface reflects a warm glow. Rack focus to Elias's face, revealing a subtle shift from intense focus to a profound sense of relief and gentle peace.",
+                "video_motion_hint": "The camera smoothly racks focus from the detailed, gently chiming pocket watch to Elias's softening facial features. His eyes show a quiet, internal release of tension, a burden lifted.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nFocus tight on the antique pocket watch, now ticking rhythmically and chiming softly. The polished silver surface reflects a warm glow. Rack focus to Elias's face, revealing a subtle shift from intense focus to a profound sense of relief and gentle peace.\nDo NOT use: Overly dramatic or melodramatic expressions or reactions.; Fast-paced, action-driven editing that detracts from the reflective and delicate nature of the task.."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 6,
+            "source": {
+              "source_shot_id": "sh_006"
+            },
+            "estimated_duration_sec": 1.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_006",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_006_kf_006",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_021153/artifacts/media/KeyFrameAgent/image/img_sh_006_kf_006.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "Elias stands in his workshop, looking up and outwards, holding the repaired pocket watch gently in his hand. The grandfather clock, now marking midnight, stands tall and silent. His face holds a serene, almost hopeful expression, bathed in the soft, ambient light of the late hour.",
+                "video_motion_hint": "Elias slowly lifts his gaze towards the ceiling or a distant point in the room. A gentle sigh escapes him as his shoulders relax, concluding the intense, emotional task.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nElias stands in his workshop, looking up and outwards, holding the repaired pocket watch gently in his hand. The grandfather clock, now marking midnight, stands tall and silent. His face holds a serene, almost hopeful expression, bathed in the soft, ambient light of the late hour.\nDo NOT use: Overly dramatic or melodramatic expressions or reactions.; Fast-paced, action-driven editing that detracts from the reflective and delicate nature of the task.."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_count": 6,
+    "keyframe_count_total": 6,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 2,
+    "stability_character_keyframe_count": 1,
+    "stability_location_keyframe_count": 1,
+    "stability_prop_keyframe_count": 2
+  },
+  "artifact_caption": {
+    "semantic_type": "",
+    "what": "1 scenes, 6 shots, 6 shot keyframe stills; 4 entities (1 character, 1 location, 2 props), 1 scene, 4 keyframes, a poignant, reflective visual style with muted colors and warm practical lighting.",
+    "why": "Each L1 prompt establishes the canonical physical appearance and inherent qualities of its entity. Key visual decisions focus on intricate details, the interplay of light and shadow, and conveying the core essence of each element to support a consistent poignant and reflective tone.",
+    "scope": "global"
+  }
+}

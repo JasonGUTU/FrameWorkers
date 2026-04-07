@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frameworkers — Tests</title>
+  <link rel="icon" type="image/svg+xml" href="./logo.svg" />
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .back { display:inline-block; margin-bottom:18px; color:#5a8a6a; text-decoration:none; font-size:0.9em; }
+    .back:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <a class="back" href="./index.html">← 返回总览</a>
+      <div class="logo-row">
+        <img class="logo-mark" src="./logo.svg" alt="Frameworkers logo" />
+        <div class="logo-text">
+          <span class="logo-name">Frameworkers</span>
+          <span class="logo-tagline">Tests</span>
+        </div>
+      </div>
+      <div class="header-divider"></div>
+      <div class="header-badge">🧪 Tests</div>
+      <h1>测试体系</h1>
+      <p>按组件划分：Dynamic Task Stack、Assistant HTTP / Service / Serializers、Sub-agents、Workspace。</p>
+      <p style="margin-top:6px;color:#888;font-size:0.85em">注：Director 消息驱动 Pipeline 测试见 <a href="./director.html" style="color:#fbbf24">Director 子页</a>。</p>
+    </header>
+
+    <section id="testDtsViz"></section>
+    <section id="testAssistantHttpViz"></section>
+    <section class="two-col-boundaries">
+      <div id="testAssistantServiceViz"></div>
+      <div id="testSerializersViz"></div>
+    </section>
+    <section class="two-col-boundaries">
+      <div id="testAgentsViz"></div>
+      <div id="testWorkspaceViz"></div>
+    </section>
+
+  </main>
+  <script src="./app.js?v=13"></script>
+</body>
+</html>

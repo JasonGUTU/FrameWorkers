@@ -1,0 +1,79 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_duration_sec": 10.0,
+        "narration_segments": [],
+        "music_cue": {
+          "cue_id": "music_sc_001",
+          "scene_id": "sc_001",
+          "mood": "melancholic, determined, ticking, evolving, hopeful, intimate",
+          "start_sec": 0.0,
+          "end_sec": 10.0,
+          "audio_asset": {
+            "asset_id": "aud_music_sc_001",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_010526/artifacts/media/AudioAgent/audio/aud_music_sc_001.wav",
+            "format": "wav",
+            "duration_sec": 10.0,
+            "sample_rate": 44100
+          },
+          "audio_generation_prompt": "{\"kind\": \"music\", \"mood\": \"melancholic, determined, ticking, evolving, hopeful, intimate\", \"duration_sec\": 10.0, \"scene_id\": \"sc_001\"}"
+        },
+        "ambience_bed": {
+          "ambience_id": "amb_sc_001",
+          "scene_id": "sc_001",
+          "description": "Intimate workshop sounds, delicate mechanical movements, prominent amplified grandfather clock ticking, subtle room tone.",
+          "start_sec": 0.0,
+          "end_sec": 10.0,
+          "audio_asset": {
+            "asset_id": "aud_amb_sc_001",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_010526/artifacts/media/AudioAgent/audio/aud_amb_sc_001.wav",
+            "format": "wav",
+            "duration_sec": 10.0,
+            "sample_rate": 44100
+          },
+          "audio_generation_prompt": "{\"kind\": \"ambience\", \"description\": \"Intimate workshop sounds, delicate mechanical movements, prominent amplified grandfather clock ticking, subtle room tone.\", \"duration_sec\": 10.0, \"scene_id\": \"sc_001\"}"
+        },
+        "mix": {
+          "mix_id": "mix_sc_001",
+          "scene_id": "sc_001",
+          "duration_sec": 10.0,
+          "audio_asset": {
+            "asset_id": "aud_mix_sc_001",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_010526/artifacts/media/AudioAgent/audio/aud_mix_sc_001.wav",
+            "format": "wav",
+            "duration_sec": 10.0,
+            "sample_rate": 44100
+          }
+        }
+      }
+    ],
+    "final_audio_asset": {
+      "asset_id": "aud_final",
+      "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_010526/artifacts/media/AudioAgent/audio/aud_final.wav",
+      "format": "wav",
+      "duration_sec": 10.0,
+      "sample_rate": 44100
+    },
+    "final_delivery_asset": {
+      "asset_id": "delivery_final",
+      "uri": "placeholder",
+      "format": "mp4",
+      "duration_sec": 10.0
+    }
+  },
+  "metrics": {
+    "scene_count": 1,
+    "narration_segment_count": 0,
+    "total_narration_duration_sec": 0,
+    "total_music_duration_sec": 10.0
+  },
+  "artifact_caption": {
+    "semantic_type": "",
+    "what": "1 scene, 0 narration segments, 1 music track and 1 ambience track per scene, delivered as an integrated stereo mix.",
+    "why": "Music choices evoke initial tension, determination, and poignant nostalgia, evolving into peace and accomplishment. Ambience emphasizes the intricate mechanical world and the relentless passage of time, enhancing the protagonist's focused internal struggle and eventual resolution.",
+    "scope": "global"
+  }
+}

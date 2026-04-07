@@ -1,4 +1,20 @@
-# Log Manager - Manages logs and records
+"""Log manager — append-only operation log in JSON Lines format.
+
+Responsibilities:
+  * Append one ``LogEntry`` per recorded event to ``logs.jsonl``.
+  * Support both legacy fields (``operation_type``/``resource_type``) and
+    namespaced events (``event``, ``level``, ``execution_id``, ``duration_ms``).
+  * Filter logs by any of these fields when serving queries.
+
+What it does NOT do:
+  * Decide what to log — callers (Workspace methods, AssetManager
+    callback) are responsible for choosing event names and details.
+  * Aggregate or summarize — read-side filtering only.
+
+Used by:
+  * ``Workspace`` exposes ``add_log`` (via ``_add_log``) and ``get_logs``.
+  * ``routes.py`` exposes ``get_logs`` over HTTP.
+"""
 
 import json
 from pathlib import Path
@@ -14,52 +30,54 @@ logger = logging.getLogger(__name__)
 
 class LogManager:
     """
-    Manages logs and records in JSON format
-    
-    Responsibilities:
-    - Store log entries as JSON
-    - Record read/write/create/delete operations
-    - Provide log query and retrieval interfaces
+    Manages logs and records in JSON Lines format.
+
+    Each log entry supports both the legacy ``operation_type`` + ``resource_type``
+    pair and the newer namespaced ``event`` field (e.g. ``execution.completed``,
+    ``artifact.persisted``).  Callers may use either; both are written to disk.
+
+    New recommended fields
+    ----------------------
+    event        : namespaced event string, e.g. ``"execution.completed"``
+    level        : ``"INFO"`` | ``"WARN"`` | ``"ERROR"``  (default ``"INFO"``)
+    execution_id : the execution that triggered this log entry
+    duration_ms  : elapsed time for the operation, when known
     """
-    
+
     def __init__(self, workspace_id: str, runtime_base_path: Path):
-        """
-        Initialize log manager
-        
-        Args:
-            workspace_id: ID of the workspace
-            runtime_base_path: Base path to Runtime directory
-        """
         self.workspace_id = workspace_id
         self.runtime_base_path = Path(runtime_base_path)
         self.workspace_runtime_path = self.runtime_base_path / workspace_id
-        self.log_file_path = self.workspace_runtime_path / "logs.jsonl"  # JSON Lines format
-        
-        # In-memory log cache
+        self.log_file_path = self.workspace_runtime_path / "logs.jsonl"
+
         self._logs: List[LogEntry] = []
-        
-        # Ensure workspace directory exists
         self.workspace_runtime_path.mkdir(parents=True, exist_ok=True)
-        
-        # Load existing logs
         self._load_logs()
 
     # ------------------------------------------------------------------
-    # Internal boundary helpers
+    # Serialisation helpers
     # ------------------------------------------------------------------
 
     @staticmethod
     def _log_to_json_dict(log_entry: LogEntry) -> Dict[str, Any]:
-        return {
-            'id': log_entry.id,
-            'timestamp': log_entry.timestamp.isoformat(),
-            'operation_type': log_entry.operation_type,
-            'resource_type': log_entry.resource_type,
-            'resource_id': log_entry.resource_id,
-            'details': log_entry.details,
-            'agent_id': log_entry.agent_id,
-            'task_id': log_entry.task_id
+        d: Dict[str, Any] = {
+            "id": log_entry.id,
+            "timestamp": log_entry.timestamp.isoformat(),
+            "operation_type": log_entry.operation_type,
+            "resource_type": log_entry.resource_type,
+            "resource_id": log_entry.resource_id,
+            "details": log_entry.details,
+            "agent_id": log_entry.agent_id,
+            "task_id": log_entry.task_id,
+            "level": log_entry.level,
         }
+        if log_entry.event is not None:
+            d["event"] = log_entry.event
+        if log_entry.execution_id is not None:
+            d["execution_id"] = log_entry.execution_id
+        if log_entry.duration_ms is not None:
+            d["duration_ms"] = log_entry.duration_ms
+        return d
 
     @staticmethod
     def _parse_log_line(line: str) -> Optional[LogEntry]:
@@ -67,7 +85,12 @@ class LogManager:
         if not line:
             return None
         data = json.loads(line)
-        data['timestamp'] = datetime.fromisoformat(data['timestamp'])
+        data["timestamp"] = datetime.fromisoformat(data["timestamp"])
+        # Provide defaults for new fields so old log lines parse cleanly
+        data.setdefault("level", "INFO")
+        data.setdefault("event", None)
+        data.setdefault("execution_id", None)
+        data.setdefault("duration_ms", None)
         return LogEntry(**data)
 
     @staticmethod
@@ -78,6 +101,9 @@ class LogManager:
         resource_type: Optional[str] = None,
         agent_id: Optional[str] = None,
         task_id: Optional[str] = None,
+        level: Optional[str] = None,
+        event: Optional[str] = None,
+        execution_id: Optional[str] = None,
     ) -> bool:
         if operation_type and log_entry.operation_type != operation_type:
             return False
@@ -87,6 +113,12 @@ class LogManager:
             return False
         if task_id and log_entry.task_id != task_id:
             return False
+        if level and log_entry.level != level:
+            return False
+        if event and log_entry.event != event:
+            return False
+        if execution_id and log_entry.execution_id != execution_id:
+            return False
         return True
 
     @staticmethod
@@ -94,12 +126,10 @@ class LogManager:
         return sorted(logs, key=lambda x: x.timestamp, reverse=True)
 
     def _load_logs(self):
-        """Load logs from disk"""
         if not self.log_file_path.exists():
             return
-        
         try:
-            with open(self.log_file_path, 'r', encoding='utf-8') as f:
+            with open(self.log_file_path, "r", encoding="utf-8") as f:
                 for line in f:
                     try:
                         log_entry = self._parse_log_line(line)
@@ -109,15 +139,18 @@ class LogManager:
                         logger.warning("Failed to parse log entry: %s", e)
         except Exception as e:
             logger.warning("Failed to load logs: %s", e)
-    
+
     def _append_log_to_file(self, log_entry: LogEntry):
-        """Append a log entry to the log file"""
         try:
-            with open(self.log_file_path, 'a', encoding='utf-8') as f:
-                f.write(json.dumps(self._log_to_json_dict(log_entry), ensure_ascii=False) + '\n')
+            with open(self.log_file_path, "a", encoding="utf-8") as f:
+                f.write(json.dumps(self._log_to_json_dict(log_entry), ensure_ascii=False) + "\n")
         except Exception as e:
             logger.warning("Failed to write log entry: %s", e)
-    
+
+    # ------------------------------------------------------------------
+    # Public API
+    # ------------------------------------------------------------------
+
     def add_log(
         self,
         operation_type: str,
@@ -125,21 +158,18 @@ class LogManager:
         resource_id: Optional[str] = None,
         details: Optional[Dict[str, Any]] = None,
         agent_id: Optional[str] = None,
-        task_id: Optional[str] = None
+        task_id: Optional[str] = None,
+        # New recommended fields
+        event: Optional[str] = None,
+        level: str = "INFO",
+        execution_id: Optional[str] = None,
+        duration_ms: Optional[int] = None,
     ) -> LogEntry:
-        """
-        Add a log entry
-        
-        Args:
-            operation_type: Type of operation ('read', 'write', 'create', 'delete', etc.)
-            resource_type: Type of resource ('file', 'memory', 'log')
-            resource_id: ID of the resource (optional)
-            details: Additional details dictionary (optional)
-            agent_id: Agent ID who performed the operation (optional)
-            task_id: Task ID associated with the operation (optional)
-        
-        Returns:
-            Created LogEntry instance
+        """Add a log entry.
+
+        Legacy callers pass ``operation_type`` + ``resource_type``.
+        New callers should also pass ``event`` (namespaced string) and
+        optionally ``level``, ``execution_id``, ``duration_ms``.
         """
         log_entry = LogEntry(
             id=f"log_{uuid.uuid4().hex[:12]}",
@@ -149,38 +179,28 @@ class LogManager:
             resource_id=resource_id,
             details=details or {},
             agent_id=agent_id,
-            task_id=task_id
+            task_id=task_id,
+            event=event,
+            level=level,
+            execution_id=execution_id,
+            duration_ms=duration_ms,
         )
-        
-        # Add to in-memory cache
         self._logs.append(log_entry)
-        
-        # Append to file
         self._append_log_to_file(log_entry)
-        
         return log_entry
-    
+
     def get_logs(
         self,
         operation_type: Optional[str] = None,
         resource_type: Optional[str] = None,
         agent_id: Optional[str] = None,
         task_id: Optional[str] = None,
-        limit: Optional[int] = None
+        limit: Optional[int] = None,
+        level: Optional[str] = None,
+        event: Optional[str] = None,
+        execution_id: Optional[str] = None,
     ) -> List[LogEntry]:
-        """
-        Get logs with optional filters
-        
-        Args:
-            operation_type: Filter by operation type
-            resource_type: Filter by resource type
-            agent_id: Filter by agent ID
-            task_id: Filter by task ID
-            limit: Maximum number of results
-        
-        Returns:
-            List of LogEntry instances
-        """
+        """Get logs with optional filters."""
         results = [
             log_entry
             for log_entry in self._logs
@@ -190,15 +210,12 @@ class LogManager:
                 resource_type=resource_type,
                 agent_id=agent_id,
                 task_id=task_id,
+                level=level,
+                event=event,
+                execution_id=execution_id,
             )
         ]
-
-        # Sort by timestamp (newest first)
         results = self._sort_newest_first(results)
-        
-        # Apply limit
         if limit:
             results = results[:limit]
-        
         return results
-    

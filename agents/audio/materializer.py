@@ -12,9 +12,14 @@ import logging
 import os
 from typing import Any
 
+from typing import TYPE_CHECKING
+
 from ..descriptor import BaseMaterializer, MediaAsset
-from ..contracts.input_bundle_v2 import InputBundleV2
 from inference.generation.audio_generators.service import AudioService
+
+if TYPE_CHECKING:
+    from ..base_agent import MaterializeContext
+    from .schema import AudioAgentInput
 
 logger = logging.getLogger(__name__)
 
@@ -48,12 +53,6 @@ class AudioMaterializer(BaseMaterializer):
         }
 
     @staticmethod
-    def _resolved_inputs(input_bundle_v2: InputBundleV2) -> dict[str, Any]:
-        ctx = getattr(input_bundle_v2, "context", {})
-        resolved = ctx.get("resolved_inputs") if isinstance(ctx, dict) else None
-        return resolved if isinstance(resolved, dict) else {}
-
-    @staticmethod
     def _normalize_local_path(uri: str) -> str:
         if not uri:
             return ""
@@ -62,11 +61,15 @@ class AudioMaterializer(BaseMaterializer):
         return uri
 
     @classmethod
-    def _load_video_bytes_from_bundle(cls, input_bundle_v2: InputBundleV2) -> bytes | None:
-        """Load final video bytes from shared `video` asset uri if available."""
-        video = cls._resolved_inputs(input_bundle_v2).get("video", {})
-        content = video.get("content", {}) if isinstance(video, dict) else {}
-        final_video = content.get("final_video_asset", {})
+    def _load_video_bytes_from_typed_input(
+        cls, typed_input: "AudioAgentInput"
+    ) -> bytes | None:
+        """Load final video bytes from ``typed_input.final_video``."""
+        video_payload = typed_input.final_video or {}
+        if not isinstance(video_payload, dict):
+            return None
+        content = video_payload.get("content", {})
+        final_video = content.get("final_video_asset", {}) if isinstance(content, dict) else {}
         video_uri = cls._normalize_local_path(final_video.get("uri", ""))
         if not video_uri or not os.path.isfile(video_uri):
             return None
@@ -78,9 +81,8 @@ class AudioMaterializer(BaseMaterializer):
 
     async def materialize(
         self,
-        task_id: str,
+        ctx: "MaterializeContext",
         asset_dict: dict[str, Any],
-        input_bundle_v2: InputBundleV2,
     ) -> list[MediaAsset]:
         """Generate actual audio tracks for all scenes.
 
@@ -94,6 +96,8 @@ class AudioMaterializer(BaseMaterializer):
         Returns:
             List of ``MediaAsset`` objects for Assistant to persist.
         """
+        typed_input = ctx.typed_input  # type: AudioAgentInput
+        task_id = ctx.task_id
         pending: list[MediaAsset] = []
         content = asset_dict.get("content", {})
         scene_mix_bytes_list: list[bytes] = []
@@ -137,7 +141,6 @@ class AudioMaterializer(BaseMaterializer):
                             sys_id=sys_seg_id, data=audio_bytes,
                             extension=ext, uri_holder=audio_asset,
                         ))
-                        audio_asset["duration_sec"] = len(audio_bytes) / (44100 * 2)
                         narration_bytes_list.append(audio_bytes)
                     except Exception as exc:
                         logger.error("TTS failed for segment %s: %s", sys_seg_id, exc)
@@ -150,19 +153,16 @@ class AudioMaterializer(BaseMaterializer):
             music_bytes: bytes | None = None
             if music_cue:
                 try:
-                    m_dur = music_cue.get("end_sec", 0) - music_cue.get("start_sec", 0)
                     music_cue["audio_generation_prompt"] = json.dumps(
                         {
                             "kind": "music",
                             "mood": music_cue.get("mood", "neutral"),
-                            "duration_sec": m_dur,
                             "scene_id": scene_id,
                         },
                         ensure_ascii=False,
                     )
                     music_bytes = await self.audio_svc.generate_music(
                         mood=music_cue.get("mood", "neutral"),
-                        duration_sec=m_dur,
                         scene_id=scene_id,
                     )
                     pending.append(MediaAsset(
@@ -180,19 +180,16 @@ class AudioMaterializer(BaseMaterializer):
             ambience_bytes: bytes | None = None
             if ambience:
                 try:
-                    a_dur = ambience.get("end_sec", 0) - ambience.get("start_sec", 0)
                     ambience["audio_generation_prompt"] = json.dumps(
                         {
                             "kind": "ambience",
                             "description": ambience.get("description", ""),
-                            "duration_sec": a_dur,
                             "scene_id": scene_id,
                         },
                         ensure_ascii=False,
                     )
                     ambience_bytes = await self.audio_svc.generate_ambience(
                         description=ambience.get("description", ""),
-                        duration_sec=a_dur,
                         scene_id=scene_id,
                     )
                     pending.append(MediaAsset(
@@ -214,7 +211,6 @@ class AudioMaterializer(BaseMaterializer):
                         music_bytes=music_bytes,
                         ambience_bytes=ambience_bytes,
                         scene_id=scene_id,
-                        duration_sec=scene.get("scene_duration_sec", 0),
                     )
                     pending.append(MediaAsset(
                         sys_id=sys_mix_id, data=mix_bytes,
@@ -243,7 +239,7 @@ class AudioMaterializer(BaseMaterializer):
         final_delivery = content.setdefault("final_delivery_asset", {})
         final_delivery["asset_id"] = "delivery_final"
         if final_bytes:
-            video_bytes = self._load_video_bytes_from_bundle(input_bundle_v2)
+            video_bytes = self._load_video_bytes_from_typed_input(typed_input)
             if video_bytes:
                 try:
                     muxed_video_bytes = await self.audio_svc.mux_audio_with_video(

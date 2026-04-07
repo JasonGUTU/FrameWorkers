@@ -1,0 +1,24 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-07T01:02:52.601468+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "text": "30-second cinematic short about Mei, a young female street muralist in her late twenties, painting a giant mural of a phoenix on a rain-soaked alley wall at midnight under neon-lit signs. Cool wet pavement, cyberpunk teal-and-magenta palette, breath visible in the cold air.",
+    "summary": ""
+  },
+  "metrics": {
+    "char_count": 274
+  },
+  "artifact_caption": {
+    "semantic_type": "",
+    "what": "natural-language brief from the user: \"30-second cinematic short about Mei, a young female street muralist in her late twenties, painting a giant mural of a ph\" (stated intent: initial creative brief — young female street muralist)",
+    "why": "initial creative brief — young female street muralist",
+    "scope": "global"
+  }
+}

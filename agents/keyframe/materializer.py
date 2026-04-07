@@ -1,6 +1,10 @@
 """Keyframe image materializer — global + scene + shot anchor chain.
 
-  Layer 1 — Global anchors: text -> ``generate_image()`` (characters, locations, props*)
+  Layer 1 — Global anchors: text -> ``generate_image()`` (characters, locations, props*).
+            **Pre-check**: if the agent's LLM output already wrote a real
+            file path into an entity's ``image_asset.uri`` field (because a
+            user-uploaded reference was selected for that entity), we skip
+            t2i for that entity and read the file bytes directly.
   Layer 2 — Scene anchors: default global ref + prompt -> ``edit_image()``; or ``t2i`` mode.
   Layer 3 — One still per shot: edit from scene **location** L2 (or text-only fallback) so the
             PNG matches the shot ``prompt_summary``; VideoAgent consumes **only** this URI.
@@ -27,9 +31,14 @@ import os
 import re
 from typing import Any
 
-from ..contracts.input_bundle_v2 import InputBundleV2
+from typing import TYPE_CHECKING
+
 from ..descriptor import BaseMaterializer, MediaAsset
 from inference.generation.image_generators.service import ImageService
+
+if TYPE_CHECKING:
+    from ..base_agent import MaterializeContext
+    from .schema import KeyFrameAgentInput
 
 logger = logging.getLogger(__name__)
 
@@ -72,14 +81,6 @@ def _filter_still_image_must_avoid(items: list[str]) -> list[str]:
 
 
 class KeyframeMaterializer(BaseMaterializer):
-    @staticmethod
-    def _resolved_inputs(input_bundle_v2: InputBundleV2 | None) -> dict[str, Any]:
-        if not input_bundle_v2:
-            return {}
-        ctx = getattr(input_bundle_v2, "context", {})
-        resolved = ctx.get("resolved_inputs") if isinstance(ctx, dict) else None
-        return resolved if isinstance(resolved, dict) else {}
-
     """L1/L2/L3 keyframe image materializer.
 
     Constructor:
@@ -121,9 +122,8 @@ class KeyframeMaterializer(BaseMaterializer):
 
     async def materialize(
         self,
-        task_id: str,
+        ctx: "MaterializeContext",
         asset_dict: dict[str, Any],
-        input_bundle_v2: InputBundleV2,
     ) -> list[MediaAsset]:
         """Generate L1 global, L2 scene, and L3 per-shot stills.
 
@@ -143,10 +143,16 @@ class KeyframeMaterializer(BaseMaterializer):
         """
         self._pending: list[MediaAsset] = []
 
+        # The materializer reads its input data from ctx.typed_input only.
+        # No InputBundleV2 / resolved_artifacts access — every required field
+        # must already be expressed on KeyFrameAgentInput.
+        typed_input = ctx.typed_input  # type: KeyFrameAgentInput
+        task_id = ctx.task_id
+
         content = asset_dict.get("content", {})
         scenes = content.get("scenes", [])
 
-        style_notes, must_avoid = self._extract_style_lock_lists(input_bundle_v2)
+        style_notes, must_avoid = self._extract_style_lock_lists(typed_input)
         must_avoid = _filter_still_image_must_avoid(must_avoid)
         l1_style_suffix = self._compose_style_suffix(style_notes, must_avoid, include_visual_style=True)
         l2_edit_suffix = self._compose_style_suffix(style_notes, must_avoid, include_visual_style=False)
@@ -157,22 +163,54 @@ class KeyframeMaterializer(BaseMaterializer):
 
         MAX_LAYER_RETRIES = 10
 
-        # ══════════════════════════════════════════════════════════════
-        # Layer 0: Inject user-provided reference images as global anchors
-        # ══════════════════════════════════════════════════════════════
         global_anchors = content.get("global_anchors", {})
         global_image_bytes: dict[str, bytes] = {}
 
-        ref_images: list[dict[str, Any]] = (
-            self._resolved_inputs(input_bundle_v2).get("reference_images", [])
-            if input_bundle_v2
-            else []
-        )
-        if ref_images:
-            self._inject_reference_images(
-                ref_images, global_anchors, global_image_bytes,
-                input_bundle_v2=input_bundle_v2,
-            )
+        # ══════════════════════════════════════════════════════════════
+        # Layer 1 pre-check: pick up LLM-assigned reference image paths
+        # ══════════════════════════════════════════════════════════════
+        # The KeyFrameAgent LLM may have written a real file path into an
+        # entity's image_asset.uri (because [character_reference] /
+        # [location_reference] / [style_reference] entries were resolved
+        # for that entity).  When we see one, skip t2i and read the bytes
+        # directly — no fuzzy matching, no entity inference, the LLM
+        # already decided.
+        for entity_list_name in ("characters", "locations", "props"):
+            for kf in global_anchors.get(entity_list_name, []) or []:
+                if not isinstance(kf, dict):
+                    continue
+                eid = str(kf.get("entity_id", "") or "").strip()
+                img_asset = kf.get("image_asset", {})
+                if not isinstance(img_asset, dict):
+                    continue
+                uri = str(img_asset.get("uri", "") or "").strip()
+                if not eid or not uri:
+                    continue
+                if uri in {"placeholder", ""} or uri.startswith("error:"):
+                    continue
+                if not os.path.isfile(uri):
+                    continue
+                try:
+                    with open(uri, "rb") as fh:
+                        ref_bytes = fh.read()
+                except OSError as exc:
+                    logger.warning(
+                        "[L1-prefill] Failed to read reference image %s for %s: %s",
+                        uri, eid, exc,
+                    )
+                    continue
+                global_image_bytes[eid] = ref_bytes
+                ext = img_asset.get("format", "png")
+                self._pending.append(MediaAsset(
+                    sys_id=f"img_{eid}_global",
+                    data=ref_bytes,
+                    extension=ext,
+                    uri_holder=img_asset,
+                ))
+                logger.info(
+                    "[L1-prefill] Used LLM-assigned reference image for %s: %s",
+                    eid, uri,
+                )
 
         # ══════════════════════════════════════════════════════════════
         # Layer 1: Global Anchors — text -> Gemini generate, retry
@@ -488,13 +526,13 @@ class KeyframeMaterializer(BaseMaterializer):
 
     @staticmethod
     def _extract_style_lock_lists(
-        input_bundle_v2: InputBundleV2 | None,
+        typed_input: "KeyFrameAgentInput",
     ) -> tuple[list[str], list[str]]:
         """Return deduped ``global_style_notes`` and raw ``must_avoid`` from screenplay."""
-        if not input_bundle_v2:
+        sp_payload = getattr(typed_input, "screenplay", {}) or {}
+        if not isinstance(sp_payload, dict):
             return [], []
-        sb = KeyframeMaterializer._resolved_inputs(input_bundle_v2).get("screenplay", {})
-        sb_content = sb.get("content", {}) if isinstance(sb, dict) else {}
+        sb_content = sp_payload.get("content", {}) if isinstance(sp_payload, dict) else {}
 
         style_notes: list[str] = []
         must_avoid: list[str] = []
@@ -613,139 +651,3 @@ class KeyframeMaterializer(BaseMaterializer):
         except Exception as exc:
             logger.error("[%s] Edit failed for %s: %s", layer_tag, sys_id, exc)
             return None
-
-    def _inject_reference_images(
-        self,
-        ref_images: list[dict[str, Any]],
-        global_anchors: dict[str, Any],
-        global_image_bytes: dict[str, bytes],
-        *,
-        input_bundle_v2: InputBundleV2 | None = None,
-    ) -> None:
-        """Match user-provided reference images to global anchor entities."""
-        blueprint_text: dict[str, str] = {}
-        blueprint = KeyframeMaterializer._resolved_inputs(input_bundle_v2).get("story_blueprint", {})
-        bp_content = blueprint.get("content", {}) if isinstance(blueprint, dict) else {}
-
-        for char in bp_content.get("cast", []):
-            cid = char.get("character_id", "")
-            if cid:
-                blueprint_text[cid] = " ".join([
-                    char.get("name", ""),
-                    char.get("role", ""),
-                    char.get("profile", ""),
-                    char.get("motivation", ""),
-                    char.get("flaw", ""),
-                ]).lower()
-
-        for loc in bp_content.get("locations", []):
-            lid = loc.get("location_id", "")
-            if lid:
-                blueprint_text[lid] = " ".join([
-                    loc.get("name", ""),
-                    loc.get("description", ""),
-                ]).lower()
-
-        entity_lookup: dict[str, tuple[dict[str, Any], str]] = {}
-        for entity_list in ("characters", "locations"):
-            for kf in global_anchors.get(entity_list, []):
-                eid = kf.get("entity_id", "")
-                if eid:
-                    entity_lookup[eid] = (kf, entity_list)
-
-        _TYPE_TO_CATEGORY = {
-            "character": "characters",
-            "location": "locations",
-        }
-
-        matched_count = 0
-        already_matched_eids: set[str] = set()
-
-        for ref in ref_images:
-            raw_label = ref.get("label", "")
-            img_bytes: bytes = ref.get("image_bytes", b"")
-            entity_type: str = ref.get("entity_type", "")
-            if not raw_label or not img_bytes:
-                continue
-
-            label = raw_label.replace("_", " ").strip().lower()
-            target_category = _TYPE_TO_CATEGORY.get(entity_type, "")
-
-            matched_eid: str | None = None
-            for eid, (kf, cat) in entity_lookup.items():
-                if eid in already_matched_eids:
-                    continue
-                if target_category and cat != target_category:
-                    continue
-
-                searchable = " ".join([
-                    eid.lower(),
-                    kf.get("prompt_summary", "").lower(),
-                    kf.get("name", "").lower(),
-                    kf.get("description", "").lower(),
-                    blueprint_text.get(eid, ""),
-                ])
-                if label in searchable:
-                    matched_eid = eid
-                    logger.info(
-                        "[L0-Ref] Keyword matched label '%s' -> %s",
-                        label, eid,
-                    )
-                    break
-
-            if matched_eid is None and target_category:
-                candidates = [
-                    eid for eid, (_, cat) in entity_lookup.items()
-                    if cat == target_category and eid not in already_matched_eids
-                ]
-                if len(candidates) == 1:
-                    matched_eid = candidates[0]
-                    logger.info(
-                        "[L0-Ref] Singleton fallback: label '%s' -> %s "
-                        "(only %s in %s)",
-                        label, matched_eid, matched_eid, target_category,
-                    )
-
-            if matched_eid is None:
-                logger.warning(
-                    "[L0-Ref] No global anchor match for reference image "
-                    "label '%s' (entity_type=%s) -- will be ignored",
-                    raw_label, entity_type,
-                )
-                continue
-
-            if matched_eid in global_image_bytes:
-                logger.info(
-                    "[L0-Ref] Entity %s already has an image, skipping "
-                    "reference '%s'",
-                    matched_eid, raw_label,
-                )
-                continue
-
-            sys_id = f"img_{matched_eid}_global"
-            kf_dict = entity_lookup[matched_eid][0]
-            img_asset = kf_dict.get("image_asset", {})
-            img_asset["asset_id"] = sys_id
-            kf_dict["image_generation_prompt"] = (
-                "[user_reference_image] Injected from resolved_inputs.reference_images; "
-                "no text-to-image API call."
-            )
-
-            ext = img_asset.get("format", "png")
-            self._pending.append(MediaAsset(
-                sys_id=sys_id, data=img_bytes, extension=ext,
-                uri_holder=img_asset,
-            ))
-            global_image_bytes[matched_eid] = img_bytes
-            already_matched_eids.add(matched_eid)
-            matched_count += 1
-            logger.info(
-                "[L0-Ref] Injected reference image '%s' -> entity %s",
-                raw_label, matched_eid,
-            )
-
-        logger.info(
-            "[L0-Ref] Reference image injection complete: %d/%d matched",
-            matched_count, len(ref_images),
-        )
-

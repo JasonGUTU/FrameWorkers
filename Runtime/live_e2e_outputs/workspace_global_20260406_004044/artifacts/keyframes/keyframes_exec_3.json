@@ -1,0 +1,122 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [],
+      "locations": [
+        {
+          "entity_type": "location",
+          "entity_id": "loc_001",
+          "keyframe_id": "kf_global_loc_001",
+          "image_asset": {
+            "asset_id": "img_loc_001_global",
+            "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_004044/artifacts/media/KeyFrameAgent/image/img_loc_001_global.png",
+            "width": 1024,
+            "height": 576,
+            "format": "png"
+          },
+          "prompt_summary": "An ancient, primeval forest. Towering, gnarled trees with thick moss-covered trunks reach high into a dappled canopy. Sunlight filters through the dense foliage, creating dramatic shafts of light on the forest floor. The ground is covered with fallen leaves, ferns, and decaying logs, suggesting immense age and untouched nature. A faint mist hangs low, adding to the mystical atmosphere.",
+          "image_generation_prompt": "An ancient, primeval forest. Towering, gnarled trees with thick moss-covered trunks reach high into a dappled canopy. Sunlight filters through the dense foliage, creating dramatic shafts of light on the forest floor. The ground is covered with fallen leaves, ferns, and decaying logs, suggesting immense age and untouched nature. A faint mist hangs low, adding to the mystical atmosphere."
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": "sc_001"
+        },
+        "stability_keyframes": {
+          "characters": [],
+          "locations": [
+            {
+              "entity_type": "location",
+              "entity_id": "loc_001",
+              "keyframe_id": "kf_loc_001_sc_001",
+              "image_asset": {
+                "asset_id": "img_loc_001_sc_001",
+                "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_004044/artifacts/media/KeyFrameAgent/image/img_loc_001_sc_001.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              },
+              "prompt_summary": "A vast, ancient forest at daybreak. Towering, gnarled trees with thick, moss-covered trunks reach towards a diffused, ethereal light filtering through the canopy. The forest floor is a rich tapestry of fallen leaves, ferns, and decaying logs, hinting at centuries of undisturbed growth. A mist gently rises from the damp earth, creating a sense of timelessness and mystery.",
+              "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA vast, ancient forest at daybreak. Towering, gnarled trees with thick, moss-covered trunks reach towards a diffused, ethereal light filtering through the canopy. The forest floor is a rich tapestry of fallen leaves, ferns, and decaying logs, hinting at centuries of undisturbed growth. A mist gently rises from the damp earth, creating a sense of timelessness and mystery."
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "source": {
+              "source_shot_id": "sh_001"
+            },
+            "estimated_duration_sec": 5.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_001",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_001_kf_001",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_004044/artifacts/media/KeyFrameAgent/image/img_sh_001_kf_001.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A wide, eye-level shot captures a clearing within an ancient, sun-dappled forest. The frame is devoid of any figures, emphasizing the quiet solitude of the natural space. Tall, majestic trees with thick, textured bark stand sentinel around the edges of the open area. Soft, diffused daylight filters through the high canopy, illuminating patches of moss and fallen leaves on the forest floor, creating a serene, empty expanse.",
+                "video_motion_hint": "Subtle atmospheric haze slowly drifts through the clearing. Individual leaves on the ground gently rustle in an imperceptible breeze.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA wide, eye-level shot captures a clearing within an ancient, sun-dappled forest. The frame is devoid of any figures, emphasizing the quiet solitude of the natural space. Tall, majestic trees with thick, textured bark stand sentinel around the edges of the open area. Soft, diffused daylight filters through the high canopy, illuminating patches of moss and fallen leaves on the forest floor, creating a serene, empty expanse."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "source": {
+              "source_shot_id": "sh_002"
+            },
+            "estimated_duration_sec": 5.0,
+            "keyframes": [
+              {
+                "keyframe_id": "kf_002",
+                "order": 1,
+                "image_asset": {
+                  "asset_id": "img_sh_002_kf_002",
+                  "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_004044/artifacts/media/KeyFrameAgent/image/img_sh_002_kf_002.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                },
+                "prompt_summary": "A medium, eye-level shot focuses on a quiet, undisturbed section of the ancient forest. The frame is entirely empty of activity, conveying profound stillness. Close-up details show the texture of a moss-covered ancient tree trunk and the delicate arrangement of ferns at its base. Soft light dapples through the leaves above, highlighting the intricate patterns of nature's untouched tapestry.",
+                "video_motion_hint": "A gentle, almost imperceptible shift of shadows on the moss indicates the slow passage of time. A single dewdrop slowly falls from a fern leaf.",
+                "image_generation_prompt": "Edit the attached reference to match the text below; keep subject identity recognizable; apply lighting, framing, pose, and environment as described.\n\nA medium, eye-level shot focuses on a quiet, undisturbed section of the ancient forest. The frame is entirely empty of activity, conveying profound stillness. Close-up details show the texture of a moss-covered ancient tree trunk and the delicate arrangement of ferns at its base. Soft light dapples through the leaves above, highlighting the intricate patterns of nature's untouched tapestry."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_count": 2,
+    "keyframe_count_total": 2,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 0,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 0,
+    "stability_location_keyframe_count": 1,
+    "stability_prop_keyframe_count": 0
+  },
+  "artifact_caption": {
+    "semantic_type": "",
+    "what": "1 location, 1 scene, 1 keyframe, realistic and atmospheric.",
+    "why": "Layer 1 prompt establishes a canonical visual identity for the location (ancient forest), ensuring visual consistency across all subsequent layers. Key decision is to focus on natural elements and a sense of age.",
+    "scope": "global"
+  }
+}

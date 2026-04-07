@@ -157,27 +157,6 @@ class ImageUtils:
         }
 
     @staticmethod
-    def create_multimodal_message(
-        text: str,
-        image_path: Optional[Union[str, Path]] = None,
-        image_base64: Optional[str] = None,
-        role: str = "user",
-    ) -> dict:
-        """
-        Backward-compatible wrapper for message construction.
-
-        Prefer using InputUtils.create_multimodal_message from message_utils.
-        """
-        from .message_utils import InputUtils
-
-        return InputUtils.create_multimodal_message(
-            text=text,
-            image_path=image_path,
-            image_base64=image_base64,
-            role=role,
-        )
-
-    @staticmethod
     def _get_mime_type(format: str) -> str:
         """Get MIME type for image format"""
         mime_types = {

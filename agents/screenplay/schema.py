@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
-from ..common_schema import Meta, DurationEstimate
+from ..common_schema import ArtifactCaption, Meta
 
 
 # ---------------------------------------------------------------------------
@@ -107,7 +107,6 @@ class ScriptShot(BaseModel):
     character_name: str = ""
     text: str = Field("", json_schema_extra={"creative": True})
     continuity_refs: ContinuityRefs = Field(default_factory=ContinuityRefs)
-    estimated_duration_sec: float = 3.0
     shot_type: str = "medium"
     camera: Camera = Field(default_factory=Camera)
     visual_goal: str = Field("", json_schema_extra={"creative": True})
@@ -129,7 +128,6 @@ class ScreenplayScene(BaseModel):
     source: ScreenplaySceneSource = Field(default_factory=ScreenplaySceneSource)
     heading: SceneHeading = Field(default_factory=SceneHeading)
     summary: str = Field("", json_schema_extra={"creative": True})
-    estimated_duration: DurationEstimate = Field(default_factory=DurationEstimate)
     continuity: SceneContinuity = Field(default_factory=SceneContinuity)
     scene_consistency_pack: SceneConsistencyPack = Field(default_factory=SceneConsistencyPack)
     scene_end: SceneEnd = Field(default_factory=SceneEnd)
@@ -147,12 +145,8 @@ class ScreenplayContent(BaseModel):
 
 
 class ScreenplayMetrics(BaseModel):
-    target_duration_sec: float = 0.0
-    estimated_total_duration_sec: float = 0.0
-    sum_scene_duration_sec: float = 0.0
     scene_count: int = 0
     shot_count_total: int = 0
-    sum_shot_duration_sec: float = 0.0
     avg_shots_per_scene: float = 0.0
     dialogue_block_count: int = 0  # shots with block_type dialogue (name kept for metrics compat)
     action_block_count: int = 0  # shots with block_type action
@@ -167,26 +161,21 @@ class Screenplay(BaseModel):
     meta: Meta = Field(default_factory=Meta)
     content: ScreenplayContent = Field(default_factory=ScreenplayContent)
     metrics: ScreenplayMetrics = Field(default_factory=ScreenplayMetrics)
-
-
-class ScreenplayConstraints(BaseModel):
-    target_duration_sec: float = 10.0
-    max_shots_per_scene: int = 12
-    language: str = "en"
+    artifact_caption: ArtifactCaption = Field(default_factory=ArtifactCaption)
 
 
 class ScreenplayAgentInput(BaseModel):
-    """Input payload for ScreenplayAgent."""
+    """Input payload for ScreenplayAgent.
 
-    story_blueprint: dict = Field(default_factory=dict)
-    constraints: ScreenplayConstraints = Field(default_factory=ScreenplayConstraints)
-    user_provided_text: str = Field(
-        default="",
-        description=(
-            "Raw screenplay text. When non-empty the agent structures this text "
-            "into ScreenplayAgentOutput instead of generating from story_blueprint."
-        ),
-    )
+    Single unified input: ``story`` is the upstream story_blueprint payload
+    (selected by InputResolver via the ``[story]`` label). ScreenplayAgent
+    has NO directive label — any user-level intent flows through the
+    upstream re-run mechanism (Director re-runs StoryAgent with the new
+    brief; the updated story_blueprint then reaches us via the same
+    ``[story]`` label).
+    """
+
+    story: dict = Field(default_factory=dict)
 
 
 class ScreenplayAgentOutput(Screenplay):

@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-07T01:04:20.450578+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "visual_description": "",
+    "image_asset": {
+      "asset_id": "",
+      "uri": "/home/zhendong_li/FrameWorkers/Runtime/intake_e2e_outputs/workspace_e2e_midstream_image_20260407_010248/inputs/20260407_010413_774491_img_char_001_global.png",
+      "width": 1024,
+      "height": 576,
+      "format": "png"
+    }
+  },
+  "artifact_caption": {
+    "semantic_type": "",
+    "what": "image (vision LLM returned no description)",
+    "why": "finally adding the protagonist reference",
+    "scope": "global"
+  }
+}

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
-from ..common_schema import DurationEstimate, Meta
+from ..common_schema import ArtifactCaption, Meta
 
 
 # ---------------------------------------------------------------------------
@@ -58,7 +58,6 @@ class SceneOutlineItem(BaseModel):
 
 class StoryBlueprintContent(BaseModel):
     logline: str = Field("", json_schema_extra={"creative": True})
-    estimated_duration: DurationEstimate = Field(default_factory=DurationEstimate)
     style: StyleInfo = Field(default_factory=StyleInfo)
     cast: list[CastMember] = Field(default_factory=list)
     locations: list[Location] = Field(default_factory=list)
@@ -67,15 +66,9 @@ class StoryBlueprintContent(BaseModel):
 
 
 class StoryMetrics(BaseModel):
-    target_duration_sec: float = 0.0
     character_count: int = 0
     location_count: int = 0
     scene_count: int = 0
-
-
-class StoryConstraints(BaseModel):
-    target_duration_sec: float = 10.0
-    language: str = "en"
 
 
 # ---------------------------------------------------------------------------
@@ -88,29 +81,20 @@ class StoryBlueprint(BaseModel):
     meta: Meta = Field(default_factory=Meta)
     content: StoryBlueprintContent = Field(default_factory=StoryBlueprintContent)
     metrics: StoryMetrics = Field(default_factory=StoryMetrics)
+    artifact_caption: ArtifactCaption = Field(default_factory=ArtifactCaption)
 
 
 class StoryAgentInput(BaseModel):
     """Input payload for StoryAgent.
 
-    When ``user_provided_text`` is non-empty the agent operates in
-    **structuring mode**: it converts a detailed story outline into
-    the Story Blueprint JSON schema while preserving the user's
-    characters, locations, and plot points.  ``draft_idea`` may be
-    empty in this case.
+    Single unified input: ``creative_brief`` is the natural-language
+    description of what story / video to produce (selected by
+    InputResolver via the ``[creative_brief]`` label).  StoryAgent
+    autonomously decides whether the brief is a short prompt to expand
+    or a longer outline to structure.
     """
 
-    draft_idea: str = ""
-    constraints: StoryConstraints = Field(default_factory=StoryConstraints)
-    user_provided_text: str = Field(
-        default="",
-        description=(
-            "When non-empty, StoryAgent enters structuring mode: "
-            "the text is treated as a detailed story outline to be "
-            "structured into a Story Blueprint, preserving the user's "
-            "original characters, locations, and plot points verbatim."
-        ),
-    )
+    creative_brief: str = ""
 
 
 class StoryAgentOutput(StoryBlueprint):

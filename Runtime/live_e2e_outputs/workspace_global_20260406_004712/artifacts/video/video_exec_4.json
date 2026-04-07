@@ -1,0 +1,104 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "estimated_duration_sec": 3.5,
+            "actual_duration_sec": 3.5,
+            "video_asset": {
+              "asset_id": "clip_sh_001",
+              "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_004712/artifacts/media/VideoAgent/video/clip_sh_001.mp4",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 3.5,
+              "fps": 24
+            },
+            "video_generation_prompt": "Arthur's hands make a minute adjustment to the watch mechanism. A subtle sway of the grandfather clock's pendulum is visible in the background. | Shot sh_001 | Ref: one L3 still for look; motion from text prefix + below. | Type: medium_close_up | Visual goal: Establish Arthur's intense concentration and the intricate nature of his work. Convey the pressure of time. | Action focus: Arthur's precise hand movements on the watch, the ticking clock in soft focus. | Characters in frame: char_001 | Scene context: location_id=loc_001, time_of_day=NIGHT | Camera: angle=low_angle, movement=static | Framing notes: Framing Arthur's upper body and the workbench, slightly from behind his shoulder to show his focused gaze on the watch. | Anchor images: 1",
+            "video_generation_constraints_json": "{\"shot_id\": \"sh_001\", \"consistency_type\": \"entity_anchor_constraints\", \"keyframe_role\": \"shot_still_l3_only\", \"characters_in_frame\": [\"char_001\"], \"scene_context\": {\"scene_id\": \"sc_001\", \"location_id\": \"loc_001\", \"time_of_day\": \"NIGHT\", \"environment_notes\": [\"Arthur's workshop is a warm, slightly cluttered space. A single, focused desk lamp illuminates his work area. Shelves filled with tools, parts, and other watches line the walls. The ambiance is one of quiet dedication, with a hint of melancholic nostalgia.\"], \"style_notes\": [\"Intimate and poignant, with a focus on close-ups and shallow depth of field to isolate Arthur and the watch. Warm, soft lighting emanates from the desk lamp, creating a cozy yet somber atmosphere. Slow, deliberate camera movements (or static shots) to emphasize the gravity of the moment. Muted color palette with emphasis on warm tones.\"], \"must_avoid\": [\"Fast cuts\", \"Bright, harsh lighting\", \"Distracting background elements\", \"Lack of emotional intensity.\"]}, \"visual_goal\": \"Establish Arthur's intense concentration and the intricate nature of his work. Convey the pressure of time.\", \"action_focus\": \"Arthur's precise hand movements on the watch, the ticking clock in soft focus.\", \"camera\": {\"angle\": \"low_angle\", \"movement\": \"static\", \"framing_notes\": \"Framing Arthur's upper body and the workbench, slightly from behind his shoulder to show his focused gaze on the watch.\"}, \"storyboard_keyframe_notes\": [\"Arthur's hands hovering over the open watch, magnifier in place, intense focus.\"], \"keyframe_prompt_summaries\": [\"A low-angle medium close-up from behind Arthur's shoulder shows his focused gaze. His precise hands delicately work on an open antique pocket watch using tiny tools. A warm desk lamp casts soft light, while a grandfather clock is softly out of focus in the background.\"], \"keyframe_video_motion_hints\": [\"Arthur's hands make a minute adjustment to the watch mechanism. A subtle sway of the grandfather clock's pendulum is visible in the background.\"]}"
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "estimated_duration_sec": 3.5,
+            "actual_duration_sec": 3.5,
+            "video_asset": {
+              "asset_id": "clip_sh_002",
+              "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_004712/artifacts/media/VideoAgent/video/clip_sh_002.mp4",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 3.5,
+              "fps": 24
+            },
+            "video_generation_prompt": "A tiny balance wheel in the watch's mechanism begins to oscillate rhythmically after the final adjustment. The gears subtly engage and rotate, signaling the watch's activation. | Shot sh_002 | Ref: one L3 still for look; motion from text prefix + below. | Type: extreme_close_up | Visual goal: Highlight the intricate success of the repair and the immediate start of the watch's function. Synchronize with the strike of midnight. | Action focus: The internal gears and balance wheel of the watch, Arthur's final, delicate action to secure the mechanism. | Characters in frame: char_001 | Scene context: location_id=loc_001, time_of_day=NIGHT | Camera: angle=eye_level, movement=static | Framing notes: Tight on the internal mechanism of the pocket watch, then subtly shifting focus to the balance wheel as it starts moving. | Anchor images: 1",
+            "video_generation_constraints_json": "{\"shot_id\": \"sh_002\", \"consistency_type\": \"entity_anchor_constraints\", \"keyframe_role\": \"shot_still_l3_only\", \"characters_in_frame\": [\"char_001\"], \"scene_context\": {\"scene_id\": \"sc_001\", \"location_id\": \"loc_001\", \"time_of_day\": \"NIGHT\", \"environment_notes\": [\"Arthur's workshop is a warm, slightly cluttered space. A single, focused desk lamp illuminates his work area. Shelves filled with tools, parts, and other watches line the walls. The ambiance is one of quiet dedication, with a hint of melancholic nostalgia.\"], \"style_notes\": [\"Intimate and poignant, with a focus on close-ups and shallow depth of field to isolate Arthur and the watch. Warm, soft lighting emanates from the desk lamp, creating a cozy yet somber atmosphere. Slow, deliberate camera movements (or static shots) to emphasize the gravity of the moment. Muted color palette with emphasis on warm tones.\"], \"must_avoid\": [\"Fast cuts\", \"Bright, harsh lighting\", \"Distracting background elements\", \"Lack of emotional intensity.\"]}, \"visual_goal\": \"Highlight the intricate success of the repair and the immediate start of the watch's function. Synchronize with the strike of midnight.\", \"action_focus\": \"The internal gears and balance wheel of the watch, Arthur's final, delicate action to secure the mechanism.\", \"camera\": {\"angle\": \"eye_level\", \"movement\": \"static\", \"framing_notes\": \"Tight on the internal mechanism of the pocket watch, then subtly shifting focus to the balance wheel as it starts moving.\"}, \"storyboard_keyframe_notes\": [\"The watch's balance wheel visibly beginning to oscillate, Arthur's fingertip still near it.\"], \"keyframe_prompt_summaries\": [\"An extreme close-up on the intricate, open mechanism of an antique pocket watch. Arthur's delicate tweezers are visible, making a final, minute adjustment. The gears are poised, awaiting activation.\"], \"keyframe_video_motion_hints\": [\"A tiny balance wheel in the watch's mechanism begins to oscillate rhythmically after the final adjustment. The gears subtly engage and rotate, signaling the watch's activation.\"]}"
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "estimated_duration_sec": 3.0,
+            "actual_duration_sec": 3.0,
+            "video_asset": {
+              "asset_id": "clip_sh_003",
+              "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_004712/artifacts/media/VideoAgent/video/clip_sh_003.mp4",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "duration_sec": 3.0,
+              "fps": 24
+            },
+            "video_generation_prompt": "The camera slowly pushes in from Arthur's hands holding the watch to reveal his face. A subtle, serene smile gradually spreads across his features, reflecting relief and peace. | Shot sh_003 | Ref: one L3 still for look; motion from text prefix + below. | Type: medium_close_up | Visual goal: Convey Arthur's emotional relief, connection to his wife, and the dawn of a hopeful new year. Show the watch as a symbol of completed love and renewed peace. | Action focus: Arthur's subtle smile, the quiet ticking of the watch, the way he holds it. | Characters in frame: char_001 | Scene context: location_id=loc_001, time_of_day=NIGHT | Camera: angle=eye_level, movement=slow_push_in | Framing notes: Starts on Arthur's hands holding the closed watch, slowly pushes in to his face as he smiles, capturing his emotional shift. | Anchor images: 1",
+            "video_generation_constraints_json": "{\"shot_id\": \"sh_003\", \"consistency_type\": \"entity_anchor_constraints\", \"keyframe_role\": \"shot_still_l3_only\", \"characters_in_frame\": [\"char_001\"], \"scene_context\": {\"scene_id\": \"sc_001\", \"location_id\": \"loc_001\", \"time_of_day\": \"NIGHT\", \"environment_notes\": [\"Arthur's workshop is a warm, slightly cluttered space. A single, focused desk lamp illuminates his work area. Shelves filled with tools, parts, and other watches line the walls. The ambiance is one of quiet dedication, with a hint of melancholic nostalgia.\"], \"style_notes\": [\"Intimate and poignant, with a focus on close-ups and shallow depth of field to isolate Arthur and the watch. Warm, soft lighting emanates from the desk lamp, creating a cozy yet somber atmosphere. Slow, deliberate camera movements (or static shots) to emphasize the gravity of the moment. Muted color palette with emphasis on warm tones.\"], \"must_avoid\": [\"Fast cuts\", \"Bright, harsh lighting\", \"Distracting background elements\", \"Lack of emotional intensity.\"]}, \"visual_goal\": \"Convey Arthur's emotional relief, connection to his wife, and the dawn of a hopeful new year. Show the watch as a symbol of completed love and renewed peace.\", \"action_focus\": \"Arthur's subtle smile, the quiet ticking of the watch, the way he holds it.\", \"camera\": {\"angle\": \"eye_level\", \"movement\": \"slow_push_in\", \"framing_notes\": \"Starts on Arthur's hands holding the closed watch, slowly pushes in to his face as he smiles, capturing his emotional shift.\"}, \"storyboard_keyframe_notes\": [\"Arthur holding the working watch, a gentle, melancholic smile on his face, eyes conveying peace.\"], \"keyframe_prompt_summaries\": [\"A medium close-up of Arthur's aged hands gently holding the newly repaired, closed pocket watch. A soft, warm light illuminates his content expression.\"], \"keyframe_video_motion_hints\": [\"The camera slowly pushes in from Arthur's hands holding the watch to reveal his face. A subtle, serene smile gradually spreads across his features, reflecting relief and peace.\"]}"
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut",
+            "duration_sec": 0.0
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut",
+            "duration_sec": 0.0
+          }
+        ],
+        "scene_clip_asset": {
+          "asset_id": "clip_sc_001",
+          "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_004712/artifacts/media/VideoAgent/video/clip_sc_001.mp4",
+          "scene_duration_sec": 10.0,
+          "format": "mp4"
+        }
+      }
+    ],
+    "final_video_asset": {
+      "asset_id": "clip_final",
+      "uri": "/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260406_004712/artifacts/media/VideoAgent/video/clip_final.mp4",
+      "width": 1024,
+      "height": 576,
+      "format": "mp4",
+      "duration_sec": 10.0,
+      "fps": 24
+    }
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_segment_count": 3,
+    "total_duration_sec": 10.0,
+    "avg_shot_duration_sec": 3.3333333333333335
+  },
+  "artifact_caption": {
+    "semantic_type": "",
+    "what": "Video package: 1 scene(s), 3 shot clip(s), 10.0s total. Includes per-shot clips, scene assemblies, and final clip.",
+    "why": "Deterministic assembly from screenplay shot structure; no creative LLM decisions.",
+    "scope": "global"
+  }
+}

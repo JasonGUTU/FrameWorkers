@@ -170,14 +170,47 @@ class LLMClient(BaseLLMClient):
         }
 
     @staticmethod
+    def _strip_markdown_fences(text: str) -> str:
+        """Strip a single outer ```...``` markdown fence if present.
+
+        Some providers ignore ``response_format={"type":"json_object"}`` for
+        long completions and wrap the JSON in a ```json ... ``` block. The
+        rest of the helper still expects exactly one JSON object, so we
+        only handle the canonical fence pattern (one open + one close,
+        optional language tag) and leave anything else alone — anomalous
+        output still surfaces with the strict parse error below.
+        """
+        s = text
+        # Leading fence
+        if s.startswith("```"):
+            # Drop the first line (``` or ```json or ```JSON ...)
+            nl = s.find("\n")
+            if nl != -1:
+                s = s[nl + 1:]
+        # Trailing fence
+        s_stripped = s.rstrip()
+        if s_stripped.endswith("```"):
+            s = s_stripped[:-3]
+        return s.strip()
+
+    @staticmethod
     def _parse_json_object_strict(raw: str) -> dict[str, Any]:
         """
-        Parse **chat_json** responses: one JSON object only, no fence-stripping or substring recovery.
-        Call sites must use provider JSON mode (``response_format`` / OpenAI json_mode); failures surface here.
+        Parse **chat_json** responses: one JSON object only.
+        Call sites must use provider JSON mode (``response_format`` / OpenAI json_mode);
+        a single outer markdown fence is tolerated as a defensive workaround
+        for providers that occasionally ignore json_object mode.
         """
         text = (raw or "").strip()
         if not text:
             raise ValueError("chat_json: empty model content (expected a JSON object)")
+        # Defensive: strip a single outer ```...``` fence if present.
+        if text.startswith("```") or text.endswith("```"):
+            text = LLMClient._strip_markdown_fences(text)
+            if not text:
+                raise ValueError(
+                    "chat_json: empty model content after markdown-fence strip"
+                )
         try:
             obj = json.loads(text)
         except json.JSONDecodeError as exc:

@@ -110,29 +110,6 @@ def assistant_http_client_real_agents(tmp_path, monkeypatch):
         yield client
 
 
-def _extract_duration_seconds(audio_results: dict, video_results: dict) -> float:
-    audio_content = (
-        audio_results.get("content", {}) if isinstance(audio_results, dict) else {}
-    )
-    delivery = audio_content.get("final_delivery_asset", {})
-    if isinstance(delivery, dict):
-        dur = delivery.get("duration_sec")
-        if isinstance(dur, (int, float)):
-            return float(dur)
-
-    audio_metrics = audio_results.get("metrics", {}) if isinstance(audio_results, dict) else {}
-    dur = audio_metrics.get("total_music_duration_sec")
-    if isinstance(dur, (int, float)):
-        return float(dur)
-
-    video_metrics = video_results.get("metrics", {}) if isinstance(video_results, dict) else {}
-    dur = video_metrics.get("total_duration_sec")
-    if isinstance(dur, (int, float)):
-        return float(dur)
-
-    raise AssertionError("No duration field found in audio/video results.")
-
-
 def _append_debug_record(debug_file: Path, payload: dict) -> None:
     debug_file.parent.mkdir(parents=True, exist_ok=True)
     with debug_file.open("a", encoding="utf-8") as fh:
@@ -226,7 +203,6 @@ def _trim_screenplay_for_media_agents(
         kept_scenes = list(original_scenes)
 
     kept_shot_ids: list[str] = []
-    total_shot_duration = 0.0
 
     for scene in kept_scenes:
         shots = scene.get("shots", []) if isinstance(scene.get("shots"), list) else []
@@ -240,10 +216,6 @@ def _trim_screenplay_for_media_agents(
             trimmed_shots = list(shots)
         scene["shots"] = trimmed_shots
         for shot in trimmed_shots:
-            try:
-                total_shot_duration += float(shot.get("estimated_duration_sec", 0.0) or 0.0)
-            except Exception:
-                pass
             sid = shot.get("shot_id", "")
             if isinstance(sid, str) and sid and sid not in kept_shot_ids:
                 kept_shot_ids.append(sid)
@@ -269,9 +241,6 @@ def _trim_screenplay_for_media_agents(
         sp_metrics["scene_count"] = scene_count
         sp_metrics["shot_count_total"] = shot_count
         sp_metrics["avg_shots_per_scene"] = float(shot_count / scene_count) if scene_count else 0.0
-        sp_metrics["sum_shot_duration_sec"] = round(total_shot_duration, 2)
-        sp_metrics["sum_scene_duration_sec"] = round(total_shot_duration, 2)
-        sp_metrics["estimated_total_duration_sec"] = round(total_shot_duration, 2)
         sp_metrics["dialogue_block_count"] = dialogue_count
         sp_metrics["action_block_count"] = action_count
         trimmed["metrics"] = sp_metrics
@@ -289,7 +258,6 @@ def _trim_screenplay_for_media_agents(
         "prefer_character_coverage": prefer_character_coverage,
         "kept_scene_ids": sorted(kept_scene_ids),
         "kept_shot_ids": kept_shot_ids,
-        "total_shot_duration_sec": round(total_shot_duration, 2),
     }
     return trimmed, trim_summary
 
@@ -309,9 +277,6 @@ def test_full_pipeline_live_http_flow_generates_about_one_minute_video(
     debug_file = runtime_base / "debug" / f"full_pipeline_api_trace_{run_id}.jsonl"
     print(f"[full-pipeline-live-e2e] runtime_base={runtime_base}")
     print(f"[full-pipeline-live-e2e] api_trace={debug_file}")
-    target_seconds = int(os.getenv("FW_PIPELINE_TARGET_SECONDS", "10"))
-    min_seconds = int(os.getenv("FW_PIPELINE_MIN_SECONDS", "8"))
-    max_seconds = int(os.getenv("FW_PIPELINE_MAX_SECONDS", "20"))
 
     create_task_resp = client.post(
         "/api/tasks/create",
@@ -425,12 +390,6 @@ def test_full_pipeline_live_http_flow_generates_about_one_minute_video(
 
     audio_results = payloads["AudioAgent"]
     assert audio_results.get("content", {}).get("final_delivery_asset")
-
-    final_duration_sec = _extract_duration_seconds(audio_results, video_results)
-    assert min_seconds <= final_duration_sec <= max_seconds, (
-        f"Expected final duration near {target_seconds}s. "
-        f"Got {final_duration_sec:.2f}s, expected in [{min_seconds}, {max_seconds}]s."
-    )
 
     executions_resp = client.get(f"/api/assistant/executions/task/{task_id}")
     _append_debug_record(

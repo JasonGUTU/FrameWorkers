@@ -12,55 +12,18 @@ from datetime import datetime
 from pathlib import Path
 
 from .models import AgentExecution, ExecutionStatus
-from .keyframes_manifest import build_keyframes_manifest_items
 from .workspace import Workspace
 from .workspace.asset_manager import AssetManager
 from agents import get_agent_registry
-from agents.contracts import ArtifactRefV2, InputBundleV2
+from agents.contracts import InputBundleV2
 from agents.base_agent import MaterializeContext
 from inference.clients import LLMClient as PipelineLLMClient
 
 logger = logging.getLogger(__name__)
 
 
-def _parse_positive_int_list(env_name: str, default: tuple[int, ...]) -> tuple[int, ...]:
-    """Comma-separated positive ints, e.g. ``4096,8192,16384`` for chat_json retry caps."""
-    raw = os.getenv(env_name, "").strip()
-    if not raw:
-        return default
-    out: list[int] = []
-    for part in raw.split(","):
-        p = part.strip()
-        if not p:
-            continue
-        try:
-            n = int(p)
-        except ValueError:
-            continue
-        if n > 0:
-            out.append(n)
-    return tuple(out) if out else default
-
-
-def _env_int(name: str, default: int, *, lo: int, hi: int) -> int:
-    try:
-        n = int(os.getenv(name, str(default)).strip())
-        return max(lo, min(n, hi))
-    except ValueError:
-        return default
-
-
-def _global_memory_context_entries_limit() -> int:
-    """Recent N memory rows for packaging LLMs (default 20). Full history stays on disk."""
-    return _env_int("ASSISTANT_GLOBAL_MEMORY_CONTEXT_ENTRIES_MAX", 20, lo=1, hi=500)
-
-
 class AssistantBadExecuteFieldsError(Exception):
     """``execute_fields`` violated a strict wire rule (e.g. ``text`` must be a string)."""
-
-
-class AssistantGlobalMemorySyncError(Exception):
-    """global_memory summary LLM failed or returned invalid JSON (strict mode; no silent fallback)."""
 
 
 class AssistantService:
@@ -81,19 +44,15 @@ class AssistantService:
         self.storage = assistant_state_store
         self.agent_registry = get_agent_registry()
         self.pipeline_llm_client = PipelineLLMClient()
-        self.global_memory_summary_model = (
-            os.getenv("ASSISTANT_MEMORY_MODEL", "").strip()
-            or os.getenv("DIRECTOR_MEMORY_MODEL", "").strip()
-            or os.getenv("INFERENCE_DEFAULT_MODEL", "google-ai-studio/gemini-2.5-flash")
+        _default_model = os.getenv(
+            "INFERENCE_DEFAULT_MODEL", "google-ai-studio/gemini-2.5-flash"
         ).strip()
         self.input_package_model = (
-            os.getenv("ASSISTANT_INPUT_PACKAGE_MODEL", "").strip()
-            or self.global_memory_summary_model
-        ).strip()
+            os.getenv("ASSISTANT_INPUT_PACKAGE_MODEL", "").strip() or _default_model
+        )
         self.output_persist_model = (
-            os.getenv("ASSISTANT_OUTPUT_PERSIST_MODEL", "").strip()
-            or self.global_memory_summary_model
-        ).strip()
+            os.getenv("ASSISTANT_OUTPUT_PERSIST_MODEL", "").strip() or _default_model
+        )
         # Get or create the global workspace
         self.workspace = self._get_global_workspace()
 
@@ -120,17 +79,6 @@ class AssistantService:
         )
 
     @staticmethod
-    def _json_preview(value: Any, *, max_chars: int = 14_000) -> Any:
-        """Shrink large dicts for LLM prompts (avoid token blow-up)."""
-        try:
-            raw = json.dumps(value, ensure_ascii=False)
-        except (TypeError, ValueError):
-            return str(value)[:max_chars]
-        if len(raw) <= max_chars:
-            return json.loads(raw) if raw.startswith("{") or raw.startswith("[") else raw
-        return raw[:max_chars] + "\n…(truncated)"
-
-    @staticmethod
     def _naming_policy_path() -> Path:
         return Path(__file__).resolve().parent / "persist_naming_policy.json"
 
@@ -145,62 +93,6 @@ class AssistantService:
             return {"version": "default-1", "allowed_extensions": []}
 
     @staticmethod
-    def _deterministic_artifact_bundle(
-        execution: AgentExecution,
-        persisted_media_paths: Optional[Dict[str, str]] = None,
-    ) -> List[Dict[str, Any]]:
-        """Paths produced by workspace persistence (authoritative)."""
-        out: List[Dict[str, Any]] = []
-        results = execution.results if isinstance(execution.results, dict) else {}
-        idx = results.get("_asset_index")
-        if isinstance(idx, dict) and str(idx.get("json_uri") or "").strip():
-            role = str(idx.get("asset_key") or "json_snapshot").strip() or "json_snapshot"
-            out.append(
-                {
-                    "role": role,
-                    "path": str(idx.get("json_uri") or ""),
-                }
-            )
-        for key, path in (persisted_media_paths or {}).items():
-            p = str(path or "").strip()
-            if not p:
-                continue
-            out.append(
-                {
-                    "role": str(key),
-                    "path": p,
-                }
-            )
-        return out
-
-    @staticmethod
-    def _merge_artifact_locations(
-        deterministic: List[Dict[str, Any]],
-        llm_locs: List[Dict[str, Any]],
-    ) -> List[Dict[str, Any]]:
-        seen_paths = {str(x.get("path") or "") for x in deterministic if x.get("path")}
-        merged = list(deterministic)
-        for row in llm_locs:
-            if not isinstance(row, dict):
-                continue
-            p = str(row.get("path") or row.get("uri") or "").strip()
-            if not p or p in seen_paths:
-                continue
-            seen_paths.add(p)
-            merged.append(
-                {
-                    "role": str(row.get("role") or "note").strip() or "note",
-                    "path": p,
-                    **(
-                        {"description": str(row["description"]).strip()}
-                        if isinstance(row.get("description"), str) and row.get("description")
-                        else {}
-                    ),
-                }
-            )
-        return merged
-
-    @staticmethod
     def _run_async(coro):
         loop = asyncio.new_event_loop()
         try:
@@ -210,49 +102,32 @@ class AssistantService:
 
     @staticmethod
     def _mapping_to_input_bundle_v2(task_id: str, data: Dict[str, Any]) -> InputBundleV2:
-        artifacts: List[ArtifactRefV2] = []
+        """Build an ``InputBundleV2`` from the per-execution input mapping.
+
+        Single recognized key:
+          * ``resolved_artifacts`` / ``_resolved_artifacts`` (dict, keyed by
+            consumer label name) → ``context["resolved_artifacts"]``
+
+        Any other key is silently ignored. Sub-agent inputs flow ONLY through
+        the InputResolver-selected ``resolved_artifacts``.  There is no
+        ``hints`` slot.  Any user-supplied raw input (text/image/video/audio)
+        must already have been persisted into the workspace as an artifact
+        (typically by an Intake agent) before this method is called.
+        """
         context: Dict[str, Any] = {}
-        hints: Dict[str, Any] = {}
         for key, value in data.items():
-            if key in {"source_text", "image", "video", "audio", "input_package"}:
-                hints[key] = value
-                continue
-            if key in ("_resolved_inputs", "resolved_inputs") and isinstance(value, dict):
-                context["resolved_inputs"] = value
-                continue
-            if isinstance(value, dict) and "json_uri" in value and "asset_key" in value:
-                # keep indexed entry; hydration happens before conversion in call sites.
-                hints[key] = value
-                continue
-            artifacts.append(
-                ArtifactRefV2(
-                    artifact_id=f"{task_id}:{key}",
-                    semantic_type=key,
-                    schema_ref=f"{key}.v1",
-                    payload=value,
-                    tags=[task_id],
-                )
-            )
-        return InputBundleV2(task_id=task_id, artifacts=artifacts, context=context, hints=hints)
+            if key in ("_resolved_artifacts", "resolved_artifacts") and isinstance(value, (list, dict)):
+                context["resolved_artifacts"] = value
+        return InputBundleV2(task_id=task_id, context=context)
 
     @staticmethod
     def _map_pipeline_inputs(
         inputs: Dict[str, Any],
     ) -> tuple[str, InputBundleV2]:
         task_id = inputs.get("task_id") or ""
-
         raw = inputs.get("input_bundle_v2")
-        if isinstance(raw, InputBundleV2):
-            hydrated = dict(raw)
-        elif isinstance(raw, dict):
-            hydrated = dict(raw)
-        else:
-            hydrated = {}
-        ef = inputs.get("execute_fields")
-        text = ef.get("text") if isinstance(ef, dict) else None
-        if text and "source_text" not in hydrated:
-            hydrated["source_text"] = AssistantService._text_for_source_text(text)
-        return task_id, AssistantService._mapping_to_input_bundle_v2(task_id, hydrated)
+        flat: Dict[str, Any] = dict(raw) if isinstance(raw, dict) else {}
+        return task_id, AssistantService._mapping_to_input_bundle_v2(task_id, flat)
 
     @staticmethod
     def _merge_execution_inputs(
@@ -269,37 +144,6 @@ class AssistantService:
         return merged
 
     @staticmethod
-    def _text_for_source_text(text: Any) -> str:
-        """Map ``execute_fields[\"text\"]`` → ``input_bundle_v2[\"source_text\"]`` (must be a string)."""
-        if text is None or text == "":
-            return ""
-        if not isinstance(text, str):
-            raise AssistantBadExecuteFieldsError("execute_fields.text must be a string")
-        return text.strip()
-
-    @staticmethod
-    def _normalize_media_uri(raw: str, *, kind: str) -> str:
-        """Light normalization for optional ``image`` / ``video`` strings (e.g. data URIs)."""
-        if kind == "image" and raw and not raw.startswith("data:"):
-            return f"data:image/png;base64,{raw}"
-        return raw
-
-    def _inject_execute_media_into_bundle(
-        self,
-        bundle: Dict[str, Any],
-        execute_fields: Dict[str, Any],
-    ) -> None:
-        """Copy optional ``image`` / ``video`` (and ``audio``) into input bundle mapping."""
-        for key in ("image", "video", "audio"):
-            val = execute_fields.get(key)
-            if val is None or val == "":
-                continue
-            if isinstance(val, str):
-                bundle[key] = self._normalize_media_uri(val, kind=key if key == "image" else "video")
-            else:
-                bundle[key] = val
-
-    @staticmethod
     def _build_descriptor_input(
         descriptor: Any,
         task_id: str,
@@ -309,15 +153,10 @@ class AssistantService:
 
     def _execute_pipeline_descriptor(self, descriptor: Any, inputs: Dict[str, Any]) -> Dict[str, Any]:
         task_id, ib_mapped = self._map_pipeline_inputs(inputs)
-        hydrated = self.workspace.hydrate_indexed_assets(dict(ib_mapped))
-        ib_after = self._mapping_to_input_bundle_v2(task_id, hydrated)
-        # Preserve Assistant-filled context (e.g. resolved_inputs); hydrate only expands json_uri indexes into payloads.
-        input_bundle_v2 = InputBundleV2(
-            task_id=task_id,
-            artifacts=ib_after.artifacts,
-            context=dict(ib_mapped.context),
-            hints=ib_after.hints,
-        )
+        # Hydrate any indexed asset entries within resolved_artifacts.
+        # The bundle now only carries resolved_artifacts (no hints slot).
+        hydrated = self.workspace.hydrate_indexed_assets(ib_mapped.context)
+        input_bundle_v2 = self._mapping_to_input_bundle_v2(task_id, hydrated)
 
         agent = descriptor.build_equipped_agent(self.pipeline_llm_client)
         typed_input = self._build_descriptor_input(
@@ -339,7 +178,7 @@ class AssistantService:
 
             materialize_ctx = MaterializeContext(
                 task_id=task_id,
-                input_bundle_v2=input_bundle_v2,
+                typed_input=typed_input,
                 persist_binary=_persist,
             )
 
@@ -347,7 +186,6 @@ class AssistantService:
             result = self._run_async(
                 agent.run(
                     typed_input,
-                    input_bundle_v2=input_bundle_v2,
                     materialize_ctx=materialize_ctx,
                 )
             )
@@ -405,22 +243,21 @@ class AssistantService:
         self,
         agent_id: str,
         task_id: str,
-        *,
-        text_seed: Any,
     ) -> Dict[str, Any]:
-        """
-        Package relevant resources for agent execution.
+        """Package the empty execution bundle for an agent.
 
-        Seed bundle only carries request-time hints (e.g. ``source_text``).
-        Artifact payload selection is delegated to the role-selection LLM pass.
+        After the input-channel unification, sub-agents have only one input
+        source: ``InputResolver``-selected ``resolved_artifacts``. ``package_data``
+        no longer accepts a text seed; the user's text instruction (if any)
+        is persisted as an artifact by IntakeTextAgent and reaches the agent
+        via the normal label-matching path.
 
         Args:
             agent_id: ID of the agent to execute
             task_id: ID of the task
-            text_seed: ``execute_fields[\"text\"]`` (optional; str or structured dict)
 
         Returns:
-            ``task_id`` plus ``input_bundle_v2`` seed mapping for downstream execution input assembly
+            ``task_id`` plus an empty ``input_bundle_v2`` seed mapping.
 
         Raises:
             ValueError: If agent not found in registry
@@ -429,211 +266,55 @@ class AssistantService:
         if not self._is_executable_pipeline_descriptor(descriptor):
             raise ValueError(f"Agent {agent_id} not found in registry")
 
-        bundle: Dict[str, Any] = {}
-        if text_seed:
-            bundle["source_text"] = self._text_for_source_text(text_seed)
-
         return {
             "task_id": task_id,
-            "input_bundle_v2": bundle,
+            "input_bundle_v2": {},
         }
-
-    @staticmethod
-    def _available_roles_from_memory(memory_entries: List[Dict[str, Any]]) -> List[str]:
-        roles: List[str] = []
-        seen: set[str] = set()
-        for entry in memory_entries:
-            if not isinstance(entry, dict):
-                continue
-            for loc in entry.get("artifact_locations") or []:
-                if not isinstance(loc, dict):
-                    continue
-                role = str(loc.get("role") or "").strip()
-                if not role or role in seen:
-                    continue
-                seen.add(role)
-                roles.append(role)
-        return roles
 
     def _resolve_inputs_for_agent_with_llm(
         self,
         agent_id: str,
         task_id: str,
         workspace: Workspace,
-        packaged_data: Dict[str, Any],
     ) -> Dict[str, Any]:
-        """LLM pass: pick semantic roles from global_memory artifact_locations + file tree."""
+        """Semantic input resolution via artifact_registry caption index.
+
+        Uses the agent's ``input_needs_description`` and the artifact_registry
+        caption index to let an LLM select which artifacts the agent needs.
+        Provides only the agent_id and task_id; no text seed or hint data.
+        """
         try:
             descriptor = self.agent_registry.get_descriptor(agent_id)
         except Exception:
             raise AssistantBadExecuteFieldsError(f"unknown agent_id: {agent_id}")
-        desc_text = getattr(descriptor, "catalog_entry", "") or ""
-        gm = packaged_data.get("global_memory") or []
-        if not isinstance(gm, list):
-            gm = []
-        available_roles = self._available_roles_from_memory(gm)
-        if not available_roles:
-            # Cold start: no prior artifacts for this task_id. Most agents can run from source_text
-            # alone, so skip the role-selection LLM pass entirely.
-            return {
-                "required_roles": [],
-                "selected_roles": [],
-                "append_to_source_text": "",
-                "rationale": "no available_roles in global_memory (cold start)",
-            }
-        blob = {
-            "target_agent_id": agent_id,
-            "descriptor_hint": desc_text,
-            "available_roles": available_roles,
-            "global_memory": gm,
-            "workspace_file_tree": workspace.get_workspace_root_file_tree_text(),
-        }
-        system_prompt = (
-            "You select which semantic artifacts this sub-agent needs next. "
-            "Use only role values from available_roles. "
-            "Use global_memory entries: read each entry's content (planning summary) to understand "
-            "what was produced and why, and use artifact_locations (role+path) to find the file paths. "
-            "Use workspace_file_tree as on-disk ground truth (includes artifacts/). "
-            "You MUST infer required_roles from descriptor_hint and include every required_roles value in selected_roles. "
-            "Return strict JSON only."
+
+        input_needs = getattr(descriptor, "input_needs_description", "") or ""
+
+        resolved = workspace.resolve_inputs_for_agent(
+            agent_id=agent_id,
+            task_id=task_id,
+            input_needs_description=input_needs,
+            llm_client=self.pipeline_llm_client,
+            source_text="",
+            model=self.input_package_model,
         )
-        user_prompt = (
-            "Context (JSON):\n"
-            f"{json.dumps(blob, ensure_ascii=False)}\n\n"
-            "Return JSON:\n"
-            "{\n"
-            '  "required_roles": ["subset of available_roles"],\n'
-            '  "selected_roles": ["subset of available_roles"],\n'
-            '  "append_to_source_text": "optional short prefix merged before existing source_text",\n'
-            '  "rationale": "one short sentence"\n'
-            "}\n"
-        )
-        parsed: Dict[str, Any] | None = None
-        last_exc: Exception | None = None
-        for max_tok in (16384, 32768, 65536):
-            try:
-                parsed = self._run_async(
-                    self.pipeline_llm_client.chat_json(
-                        system_prompt=system_prompt,
-                        user_prompt=user_prompt,
-                        max_tokens=max_tok,
-                        reasoning_effort="low",
-                        model=self.input_package_model,
-                    )
-                )
-                break
-            except Exception as exc:
-                last_exc = exc
-                continue
-        if parsed is None:
-            raise AssistantBadExecuteFieldsError(
-                f"input package LLM failed: {last_exc}"
-            ) from last_exc
-        if not isinstance(parsed, dict):
-            raise AssistantBadExecuteFieldsError("input package LLM returned non-object JSON")
-        rr = parsed.get("required_roles")
-        if not isinstance(rr, list):
-            raise AssistantBadExecuteFieldsError("input package LLM must return required_roles list")
-        picked = parsed.get("selected_roles")
-        if not isinstance(picked, list):
-            raise AssistantBadExecuteFieldsError("input package LLM must return selected_roles list")
-        picked_set = {str(x).strip() for x in picked if str(x).strip()}
-        required_set = {str(x).strip() for x in rr if str(x).strip()}
-        missing = [r for r in sorted(required_set) if r and r not in picked_set]
-        if missing:
-            raise AssistantBadExecuteFieldsError(
-                f"input package LLM missing required roles in selected_roles: {', '.join(missing)}"
-            )
-        return parsed
+        return resolved
 
-    @staticmethod
-    def _read_json_file_uri(workspace: Workspace, path: str) -> Optional[Dict[str, Any]]:
-        raw = workspace.file_manager.read_binary_from_uri(path)
-        if raw is None:
-            return None
-        try:
-            data = json.loads(raw.decode("utf-8"))
-            return data if isinstance(data, dict) else None
-        except Exception:
-            return None
-
-    @staticmethod
-    def _find_latest_artifact_path_for_role(
-        memory_entries: List[Dict[str, Any]],
-        role: str,
-    ) -> Optional[str]:
-        want = str(role or "").strip()
-        if not want:
-            return None
-        for entry in memory_entries:
-            if not isinstance(entry, dict):
-                continue
-            for loc in entry.get("artifact_locations") or []:
-                if not isinstance(loc, dict):
-                    continue
-                if str(loc.get("role") or "").strip() != want:
-                    continue
-                p = str(loc.get("path") or "").strip()
-                if p:
-                    return p
-        return None
-
-    def _apply_input_package_merge(
+    def _apply_resolved_inputs(
         self,
         packaged_data: Dict[str, Any],
-        pkg: Dict[str, Any],
-        workspace: Workspace,
-        *,
-        required_roles: Optional[List[str]] = None,
+        resolved: Dict[str, Any],
     ) -> None:
-        """Apply LLM-selected artifacts: load JSON from memory paths into input bundle mapping."""
+        """Write InputResolver output into the input_bundle_v2 mapping."""
         bundle = packaged_data.get("input_bundle_v2")
-        if not isinstance(bundle, dict) or not pkg:
+        if not isinstance(bundle, dict):
             return
-        roles = pkg.get("selected_roles")
-        if not isinstance(roles, list):
-            raise AssistantBadExecuteFieldsError("input package selected_roles must be a list")
-        if not roles:
-            # Nothing to merge for cold-start or agents that don't need prior artifacts.
-            return
-
-        mem = packaged_data.get("global_memory") or []
-        if not isinstance(mem, list):
-            mem = []
-        for role in roles:
-            r = str(role).strip()
-            if not r or r == "source_text":
-                continue
-            path = self._find_latest_artifact_path_for_role(mem, r)
-            if not path:
-                continue
-            if path.lower().endswith(".json"):
-                loaded = self._read_json_file_uri(workspace, path)
-                if loaded is not None:
-                    bundle[r] = loaded
-        # Create agent-scoped resolved inputs view.
-        resolved_inputs: Dict[str, Any] = {}
-        for r in roles:
-            if isinstance(r, str) and r.strip() and r.strip() in bundle:
-                resolved_inputs[r.strip()] = bundle.get(r.strip())
-        if resolved_inputs:
-            bundle["_resolved_inputs"] = resolved_inputs
-        must = [x for x in (required_roles or []) if isinstance(x, str) and x.strip()]
-        if must:
-            missing_loaded = [r for r in must if r not in bundle or not isinstance(bundle.get(r), dict)]
-            if missing_loaded:
-                raise AssistantBadExecuteFieldsError(
-                    f"required roles not loaded from artifact_locations: {', '.join(missing_loaded)}"
-                )
-        extra = pkg.get("append_to_source_text")
-        if isinstance(extra, str) and extra.strip():
-            st = bundle.get("source_text", "")
-            if isinstance(st, str):
-                bundle["source_text"] = (extra.strip() + "\n\n" + st).strip()
+        resolved_artifacts = resolved.get("resolved_artifacts")
+        if isinstance(resolved_artifacts, (list, dict)) and resolved_artifacts:
+            bundle["_resolved_artifacts"] = resolved_artifacts
         bundle["input_package"] = {
-            "rationale": pkg.get("rationale"),
-            "selected_roles": pkg.get("selected_roles"),
-            "append_to_source_text": pkg.get("append_to_source_text"),
+            "rationale": resolved.get("rationale"),
+            "selected_artifact_paths": resolved.get("selected_artifact_paths"),
         }
 
     def _has_existing_assets(self, *, task_id: str, agent_id: str) -> bool:
@@ -716,124 +397,6 @@ class AssistantService:
         
         return execution
 
-    @staticmethod
-    def _global_memory_execution_snapshot(execution: AgentExecution) -> Dict[str, Any]:
-        snap: Dict[str, Any] = {
-            "status": execution.status.value,
-            "execution_id": execution.id,
-        }
-        if isinstance(execution.results, dict):
-            meta = execution.results.get("_persist_plan_meta")
-            if isinstance(meta, dict):
-                snap["persist_plan_meta"] = dict(meta)
-        if execution.error and str(execution.error).strip():
-            snap["error"] = execution.error
-        return snap
-
-    def _extract_global_memory_summary_with_llm(
-        self,
-        execution: AgentExecution,
-        deterministic_artifacts: List[Dict[str, Any]],
-    ) -> Dict[str, Any]:
-        payload = {
-            "task_id": execution.task_id,
-            "execution_id": execution.id,
-            "status": execution.status.value,
-            "agent_id": execution.agent_id,
-            "error": execution.error,
-            "results": self._json_preview(execution.results),
-            "deterministic_artifact_paths": deterministic_artifacts,
-            "naming_specs": (
-                execution.results.get("_naming_specs", [])
-                if isinstance(execution.results, dict)
-                else []
-            ),
-        }
-        system_prompt = (
-            "You convert one agent execution record into a global_memory planning row. "
-            "Deterministic artifact paths are merged server-side — do NOT echo long path strings "
-            "unless you add an optional extra location; prefer \"artifact_locations\": []. "
-            "Return strict JSON only."
-        )
-        user_prompt = (
-            "Execution payload (JSON):\n"
-            f"{json.dumps(payload, ensure_ascii=False)}\n\n"
-            "Return JSON with shape:\n"
-            "{\n"
-            '  "content": "one concise planning summary sentence",\n'
-            '  "artifact_locations": [],\n'
-            '  "artifact_briefs": [{"path": "short basename or relative", "brief": "what this file is"}]\n'
-            "}\n"
-            "Use artifact_locations [] unless you must add a path not already in deterministic_artifact_paths; "
-            "never paste full workspace paths to save tokens."
-        )
-        parsed: Dict[str, Any] | None = None
-        last_exc: Exception | None = None
-        # ``max_tokens`` = completion budget (provider-dependent; reasoning models also consume it).
-        # Retry with larger caps when JSON is truncated. Override:
-        # ``ASSISTANT_GLOBAL_MEMORY_MAX_TOKENS_RETRIES=4096,8192,16384,32768``
-        mem_retries = _parse_positive_int_list(
-            "ASSISTANT_GLOBAL_MEMORY_MAX_TOKENS_RETRIES",
-            (32768, 65536),
-        )
-        for max_tok in mem_retries:
-            try:
-                parsed = self._run_async(
-                    self.pipeline_llm_client.chat_json(
-                        system_prompt=system_prompt,
-                        user_prompt=user_prompt,
-                        max_tokens=max_tok,
-                        reasoning_effort="medium",
-                        model=self.global_memory_summary_model,
-                    )
-                )
-                break
-            except Exception as exc:
-                last_exc = exc
-                continue
-        if parsed is None:
-            raise AssistantGlobalMemorySyncError(
-                f"global_memory summary LLM failed: {last_exc}"
-            ) from last_exc
-        if not isinstance(parsed, dict):
-            raise AssistantGlobalMemorySyncError(
-                "global_memory summary LLM returned non-object JSON"
-            )
-        content = str(parsed.get("content", "") or "").strip()
-        if not content:
-            raise AssistantGlobalMemorySyncError(
-                "global_memory summary LLM must return non-empty content"
-            )
-        raw_locs = parsed.get("artifact_locations")
-        if raw_locs is not None and not isinstance(raw_locs, list):
-            raise AssistantGlobalMemorySyncError(
-                "global_memory summary LLM artifact_locations must be a list or omitted"
-            )
-        raw_briefs = parsed.get("artifact_briefs")
-        if raw_briefs is not None and not isinstance(raw_briefs, list):
-            raise AssistantGlobalMemorySyncError(
-                "global_memory summary LLM artifact_briefs must be a list or omitted"
-            )
-        llm_locs: List[Dict[str, Any]] = raw_locs if isinstance(raw_locs, list) else []
-        llm_briefs: List[Dict[str, Any]] = raw_briefs if isinstance(raw_briefs, list) else []
-        merged = self._merge_artifact_locations(deterministic_artifacts, llm_locs)
-        det_paths = {
-            str(x.get("path") or "").strip()
-            for x in deterministic_artifacts
-            if isinstance(x, dict) and str(x.get("path") or "").strip()
-        }
-        merged_paths = {
-            str(x.get("path") or "").strip()
-            for x in merged
-            if isinstance(x, dict) and str(x.get("path") or "").strip()
-        }
-        missing = det_paths - merged_paths
-        if missing:
-            raise AssistantGlobalMemorySyncError(
-                f"global_memory summary LLM merged artifact_locations missing paths: {sorted(missing)}"
-            )
-        return {"content": content, "artifact_locations": merged, "artifact_briefs": llm_briefs}
-
     def _sync_global_memory_after_execution(
         self,
         workspace: Workspace,
@@ -842,30 +405,50 @@ class AssistantService:
         persisted_media_paths: Optional[Dict[str, str]] = None,
         extra_artifact_locations: Optional[List[Dict[str, Any]]] = None,
     ) -> None:
-        """Append one entry to workspace ``global_memory.md`` (LLM summary + execution snapshot)."""
+        """Append one semantic entry to global_memory using agent-generated caption."""
         if execution.status not in (ExecutionStatus.COMPLETED, ExecutionStatus.FAILED):
             return
-        det = self._deterministic_artifact_bundle(execution, persisted_media_paths)
-        if extra_artifact_locations:
-            det = list(det) + list(extra_artifact_locations)
-        extracted = self._extract_global_memory_summary_with_llm(execution, det)
-        summary = str(extracted["content"]).strip()
-        artifact_locations = extracted["artifact_locations"]
-        artifact_briefs = extracted.get("artifact_briefs")
-        execution_result = self._global_memory_execution_snapshot(execution)
-        if isinstance(artifact_briefs, list) and artifact_briefs:
-            execution_result["artifact_briefs"] = artifact_briefs
+        results = execution.results if isinstance(execution.results, dict) else {}
+        caption_raw = results.get("artifact_caption")
+
+        if execution.status == ExecutionStatus.COMPLETED and isinstance(caption_raw, dict):
+            what = str(caption_raw.get("what") or "").strip()
+            why = str(caption_raw.get("why") or "").strip()
+            scope = str(caption_raw.get("scope") or "global").strip()
+            content: Dict[str, Any] = {
+                "what": what or f"{execution.agent_id} execution completed",
+                "why": why,
+                "context_note": f"scope={scope}",
+            }
+        elif execution.status == ExecutionStatus.FAILED:
+            content = {
+                "what": f"{execution.agent_id} execution failed",
+                "why": str(execution.error or "unknown error"),
+                "context_note": "",
+            }
+        else:
+            content = {
+                "what": f"{execution.agent_id} execution completed (no caption)",
+                "why": "",
+                "context_note": "",
+            }
+
         workspace.add_memory_entry(
-            content=summary,
+            content=content,
             task_id=execution.task_id,
             agent_id=execution.agent_id or None,
-            execution_result=execution_result,
-            artifact_locations=artifact_locations,
+            execution_id=execution.id,
         )
 
     @staticmethod
-    def _persist_assignment_key(item: Dict[str, Any]) -> tuple[str, str]:
-        return (str(item.get("kind") or ""), str(item.get("source_key") or ""))
+    def _persist_assignment_key(item: Dict[str, Any]) -> tuple[str, str, str]:
+        # ``manifest_kind`` disambiguates multiple manifest entries on the same
+        # agent (empty for non-manifest kinds, so other kinds are unaffected).
+        return (
+            str(item.get("kind") or ""),
+            str(item.get("source_key") or ""),
+            str(item.get("manifest_kind") or ""),
+        )
 
     @staticmethod
     def _artifact_media_type_subdir(filename: str) -> str:
@@ -882,6 +465,7 @@ class AssistantService:
     def _deterministic_output_persist_plan(
         self,
         execution: AgentExecution,
+        descriptor: Any,
         asset_key: str,
     ) -> List[Dict[str, Any]]:
         """Default relative paths under workspace ``artifacts/``."""
@@ -911,22 +495,16 @@ class AssistantService:
                     rel = f"artifacts/media/{producer}/{sub}/{fn}"
                     assignments.append({"kind": "media", "source_key": key, "relative_path": rel})
 
-        if execution.agent_id == "KeyFrameAgent" and execution.status == ExecutionStatus.COMPLETED:
-            items = build_keyframes_manifest_items(results)
-            if items:
-                payload = {
-                    "schema_version": "1.0",
-                    "role": "keyframes_manifest",
-                    "task_id": execution.task_id,
-                    "execution_id": execution.id,
-                    "items": items,
-                }
+        # Generic side-output manifests declared by the descriptor (no agent
+        # name knowledge here — keyframes manifest is just one such spec).
+        if execution.status == ExecutionStatus.COMPLETED:
+            for spec in getattr(descriptor, "output_manifests", ()) or ():
                 assignments.append(
                     {
-                        "kind": "keyframes_manifest",
+                        "kind": "manifest",
                         "source_key": "",
-                        "relative_path": "artifacts/keyframes/keyframes_manifest.json",
-                        "manifest_document": payload,
+                        "manifest_kind": spec.kind,
+                        "relative_path": spec.relative_path,
                     }
                 )
 
@@ -938,7 +516,7 @@ class AssistantService:
                 {
                     "kind": "json_snapshot",
                     "source_key": "",
-                    "role": asset_key,
+                    "asset_key": asset_key,
                     "relative_path": rel,
                 }
             )
@@ -965,15 +543,18 @@ class AssistantService:
                 if AssetManager.is_safe_artifacts_relative_path(rel):
                     merged = dict(b)
                     merged["relative_path"] = rel
-                    role = o.get("role")
+                    # asset_key is the producer's OUTPUT_ASSET_KEY (e.g. "screenplay").
+                    # Required for json_snapshot so the file gets a stable filename
+                    # and is queryable by metadata.asset_key downstream.
+                    ak = o.get("asset_key")
                     if str(merged.get("kind") or "") == "json_snapshot":
-                        if not (isinstance(role, str) and role.strip()):
+                        if not (isinstance(ak, str) and ak.strip()):
                             raise AssistantBadExecuteFieldsError(
-                                "output persist plan must provide non-empty role for json_snapshot"
+                                "output persist plan must provide non-empty asset_key for json_snapshot"
                             )
-                        merged["role"] = role.strip()
-                    elif isinstance(role, str) and role.strip():
-                        merged["role"] = role.strip()
+                        merged["asset_key"] = ak.strip()
+                    elif isinstance(ak, str) and ak.strip():
+                        merged["asset_key"] = ak.strip()
                     out.append(merged)
                     continue
             out.append(dict(b))
@@ -1019,9 +600,9 @@ class AssistantService:
             f"{json.dumps(blob, ensure_ascii=False)}\n\n"
             "Return JSON:\n"
             '{"assignments": [\n'
-            '  {"kind": "binary|media|json_snapshot|keyframes_manifest", '
+            '  {"kind": "binary|media|json_snapshot|manifest", '
             '"source_key": "match proposed (empty string if none)", '
-            '"relative_path": "artifacts/...", "role": "required for json_snapshot"}\n'
+            '"relative_path": "artifacts/...", "asset_key": "required for json_snapshot"}\n'
             "]}\n"
         )
         parsed: Dict[str, Any] | None = None
@@ -1080,10 +661,14 @@ class AssistantService:
         workspace.log_execution_result(execution)
         descriptor = self.agent_registry.get_descriptor(execution.agent_id)
         asset_key = getattr(descriptor, "asset_key", execution.agent_id)
-        base_plan = self._deterministic_output_persist_plan(execution, asset_key)
+        base_plan = self._deterministic_output_persist_plan(execution, descriptor, asset_key)
         plan = self._refine_output_persist_plan_with_llm(
             workspace, execution, descriptor, base_plan
         )
+        manifest_extractors = {
+            spec.kind: spec.extract_items
+            for spec in (getattr(descriptor, "output_manifests", ()) or ())
+        }
         policy = self._load_persist_naming_policy()
         plan_digest = hashlib.sha256(
             json.dumps(plan, ensure_ascii=False, sort_keys=True).encode("utf-8")
@@ -1097,6 +682,7 @@ class AssistantService:
             execution,
             plan,
             overwrite_existing=overwrite_existing_assets,
+            manifest_extractors=manifest_extractors,
         )
         if asset_index and isinstance(execution.results, dict):
             execution.results["_asset_index"] = asset_index
@@ -1128,38 +714,74 @@ class AssistantService:
     ) -> Dict[str, Any]:
         """Boundary 1: build final execution inputs for a sub-agent.
 
-        *execute_fields* is the JSON object from ``POST ... {"execute_fields": {...}}``:
-        optional keys ``text``, ``image``, ``video``, ``audio``, etc.
+        After the input-channel unification, this method only:
+          1. Constructs an empty input bundle.
+          2. Runs ``InputResolver`` to semantically select artifacts from
+             the artifact_registry caption index based on the agent's
+             ``input_needs_description``.
+          3. Writes the resolved selection into the bundle.
 
-        Loads persisted global memory via ``list_memory_entries`` (includes ``content``)
-        so that ``_resolve_inputs_for_agent_with_llm`` can use the planning summaries
-        alongside ``artifact_locations`` when selecting artifact roles.
-
+        ``execute_fields`` is retained as an opaque overlay for any future
+        per-call hooks (e.g. ``overwrite``), but its ``text`` / ``image`` /
+        ``video`` / ``audio`` keys are NO LONGER read here.  Any raw user
+        input must be persisted into the workspace as an artifact (via an
+        Intake agent or ``POST /api/workspace/upload``) BEFORE the target
+        sub-agent runs, so that InputResolver can find it through the
+        normal caption-driven label match.
         """
         runtime = dict(execute_fields or {})
         runtime.pop("_memory_brief", None)
-        text_seed = runtime.get("text")
         packaged_data = self.package_data(
             agent_id=agent_id,
             task_id=task_id,
-            text_seed=text_seed,
         )
-        packaged_data["global_memory"] = workspace.list_memory_entries(
-            task_id=task_id,
-            limit=_global_memory_context_entries_limit(),
+        resolved = self._resolve_inputs_for_agent_with_llm(
+            agent_id, task_id, workspace,
         )
-        self._inject_execute_media_into_bundle(packaged_data["input_bundle_v2"], runtime)
-        pkg = self._resolve_inputs_for_agent_with_llm(
-            agent_id, task_id, workspace, packaged_data
-        )
-        required_roles = pkg.get("required_roles") if isinstance(pkg, dict) else None
-        self._apply_input_package_merge(
-            packaged_data,
-            pkg,
-            workspace,
-            required_roles=required_roles,
-        )
+        self._apply_resolved_inputs(packaged_data, resolved)
         return self._merge_execution_inputs(packaged_data, {"execute_fields": runtime})
+
+    def intake_user_text(
+        self,
+        *,
+        task_id: str,
+        text: str,
+        user_intent: str = "",
+    ) -> Dict[str, Any]:
+        """Persist a raw user text + run IntakeTextAgent over it.
+
+        This is the canonical Phase D path: callers (the director loop, the
+        chat-message handler, or any other ingestion point) hand the user's
+        natural-language input to this method, and the result is a
+        caption-rich workspace artifact that downstream content agents will
+        find via their ``[creative_brief]`` (or similar) labels.
+
+        The method does two things:
+          1. ``workspace.persist_raw_upload`` registers the raw text with a
+             placeholder caption (``scope=raw_pending``).
+          2. ``execute_agent_for_task("IntakeTextAgent", ...)`` runs the
+             intake agent against the placeholder, producing the
+             caption-rich follow-up artifact.
+
+        Returns the standard execution-summary dict from
+        ``execute_agent_for_task``.
+        """
+        if not isinstance(text, str) or not text.strip():
+            raise AssistantBadExecuteFieldsError("text must be a non-empty string")
+        # Persist as raw upload first; the resulting artifact has a
+        # placeholder caption that IntakeTextAgent's [raw_text_upload]
+        # label will match in the next step.
+        self.workspace.persist_raw_upload(
+            file_content=text.encode("utf-8"),
+            mime="text/plain",
+            user_intent=user_intent or "user-provided text input",
+        )
+        # Run IntakeTextAgent over the placeholder.
+        return self.execute_agent_for_task(
+            agent_id="IntakeTextAgent",
+            task_id=task_id,
+            execute_fields=None,
+        )
 
     def execute_agent_for_task(
         self,

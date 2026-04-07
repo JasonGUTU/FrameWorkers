@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frameworkers — Roadmap</title>
+  <link rel="icon" type="image/svg+xml" href="./logo.svg" />
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .rm-back {
+      display: inline-block;
+      margin-bottom: 18px;
+      color: #7eb3ff;
+      text-decoration: none;
+      font-size: 0.9em;
+    }
+    .rm-back:hover { text-decoration: underline; }
+    .rm-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .rm-item {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-left: 3px solid #4f8ef7;
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+    .rm-index {
+      font-size: 1.8em;
+      font-weight: 700;
+      color: rgba(255,255,255,0.18);
+      line-height: 1;
+      min-width: 38px;
+      padding-top: 2px;
+    }
+    .rm-title {
+      font-weight: 600;
+      color: #e6e6e6;
+      margin-bottom: 8px;
+      font-size: 1.02em;
+    }
+    .rm-ul {
+      margin: 0;
+      padding-left: 18px;
+      color: #aaa;
+      font-size: 0.9em;
+      line-height: 1.75;
+    }
+    .rm-note {
+      margin-top: 10px;
+      font-size: 0.82em;
+      color: #888;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <a class="rm-back" href="./index.html">← 返回总览</a>
+      <div class="logo-row">
+        <img class="logo-mark" src="./logo.svg" alt="Frameworkers logo" />
+        <div class="logo-text">
+          <span class="logo-name">Frameworkers</span>
+          <span class="logo-tagline">Roadmap</span>
+        </div>
+      </div>
+      <div class="header-divider"></div>
+      <div class="header-badge">🗺 Roadmap</div>
+      <h1>Future Plan</h1>
+      <p>下一阶段聚焦：Director 编排升级 + 测试体系搭建。</p>
+    </header>
+
+    <section class="rm-list" id="rmList"></section>
+  </main>
+
+  <script>
+    const ROADMAP = [
+      {
+        index: "01",
+        title: "集成 Task Stack 到 Director 中",
+        items: [
+          "将现有 DirectorNoStack 的编排逻辑迁移至基于 Dynamic Task Stack 的架构",
+          "利用 Task Stack 提供的任务状态追踪、中断恢复与并发调度能力",
+          "统一 Director 与 Assistant 的任务上下文管理，减少重复状态维护",
+        ],
+      },
+      {
+        index: "02",
+        title: "构建合理的测试体系",
+        items: [
+          "<strong>Sub-agent 单元测试：</strong>针对每个 agent 的输入输出结构、边界条件、格式合规性",
+          "<strong>端到端集成测试：</strong>从 user prompt → pipeline 完整运行 → 产出文件的全链路验证",
+          "建立基准数据集，支持回归对比与质量趋势追踪",
+        ],
+      },
+    ];
+
+    document.getElementById("rmList").innerHTML = ROADMAP.map(r => `
+      <div class="rm-item">
+        <div class="rm-index">${r.index}</div>
+        <div style="flex:1">
+          <div class="rm-title">${r.title}</div>
+          <ul class="rm-ul">${r.items.map(i => `<li>${i}</li>`).join("")}</ul>
+          ${r.note ? `<div class="rm-note">※ ${r.note}</div>` : ""}
+        </div>
+      </div>
+    `).join("");
+  </script>
+</body>
+</html>

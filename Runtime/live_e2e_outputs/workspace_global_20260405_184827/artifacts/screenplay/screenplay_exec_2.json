@@ -1,0 +1,386 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-05T18:49:22.542760+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "The Whispering Relic",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": ""
+        },
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Ancient Temple - Main Chamber",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Archaeologist Elara unearths a mysterious, glowing relic in a hidden chamber of an ancient temple, drawing the attention of her skeptical expedition leader, Kai.",
+        "estimated_duration": {
+          "seconds": 45.0,
+          "confidence": 0.8
+        },
+        "continuity": {
+          "props_present": [
+            "Mysterious Relic (glowing)",
+            "Archaeological Pickaxe",
+            "Dust and Debris"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Dusty expedition gear, headlamp",
+              "must_keep": [
+                "Headlamp"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "Practical expedition jacket, sturdy boots",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Relic glows with internal light",
+            "Temple is ancient and dimly lit"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "Ancient, crumbling stone architecture",
+              "Sparse, flickering torchlight creating long shadows"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Driven, intelligent, awestruck by discovery"
+              ],
+              "wardrobe_notes": [
+                "Dusty, practical archaeologist attire with headlamp"
+              ],
+              "must_keep": [
+                "Headlamp on"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "Pragmatic, cautious, authoritative expedition leader"
+              ],
+              "wardrobe_notes": [
+                "Clean, professional expedition gear"
+              ],
+              "must_keep": []
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "",
+              "prop_name": "Mysterious Relic",
+              "must_keep": [
+                "Must emit a soft, pulsing light",
+                "Covered in intricate, unknown symbols"
+              ]
+            },
+            {
+              "prop_id": "",
+              "prop_name": "Archaeological Pickaxe",
+              "must_keep": [
+                "Used for delicate excavation"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Mysterious, suspenseful, sense of wonder",
+              "Heavy use of shadows and light contrast"
+            ],
+            "must_avoid": [
+              "Bright, mundane lighting",
+              "Fast, action-movie cuts early on"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "The discovery of a sentient-like relic and the introduction of a cautious counter-perspective (Kai).",
+          "emotional_shift": "From solitary tension and awe to shared wonder mixed with apprehension."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "ELARA carefully scrapes away centuries of dust from an ancient stone block, her headlamp beam cutting through the gloom.",
+            "continuity_refs": {
+              "props": [
+                "Archaeological Pickaxe"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "estimated_duration_sec": 4.0,
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Elara's hands and face as she works"
+            },
+            "visual_goal": "Establish Elara's dedication and the ancient, dusty environment.",
+            "action_focus": "Elara's meticulous excavation.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "Archaeological Pickaxe"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A soft, ethereal glow emanates from beneath the final layer of dust. The light pulses gently, revealing intricate symbols on a small, obsidian-like object.",
+            "continuity_refs": {
+              "props": [
+                "Mysterious Relic (glowing)"
+              ],
+              "wardrobe_character_ids": []
+            },
+            "estimated_duration_sec": 3.0,
+            "shot_type": "extreme_close_up",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "static",
+              "framing_notes": "Center the glowing relic, obscuring its full shape for mystery"
+            },
+            "visual_goal": "Create a sense of wonder and intrigue, highlighting the relic's supernatural quality.",
+            "action_focus": "The relic's magical glow and symbols.",
+            "characters_in_frame": [],
+            "props_in_frame": [
+              "Mysterious Relic (glowing)"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "ELARA gasps, pulling her hand back sharply, her eyes wide with a mixture of fear and awe. The flickering light from the relic paints her face.",
+            "continuity_refs": {
+              "props": [
+                "Mysterious Relic (glowing)"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "estimated_duration_sec": 3.0,
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "push_in",
+              "framing_notes": "Focus on Elara's stunned expression"
+            },
+            "visual_goal": "Emphasize Elara's emotional response to the discovery.",
+            "action_focus": "Elara's reaction and the relic's light on her face.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "Mysterious Relic (glowing)"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "ELARA",
+            "text": "Incredible... It's... alive.",
+            "continuity_refs": {
+              "props": [
+                "Mysterious Relic (glowing)"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "estimated_duration_sec": 3.0,
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Tight on Elara's face, focusing on her mouth as she whispers"
+            },
+            "visual_goal": "Convey Elara's hushed astonishment and the profound nature of her discovery.",
+            "action_focus": "Elara's whispered dialogue and expression.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "Mysterious Relic (glowing)"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 5,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A rustle of fabric. KAI, grim-faced, enters the chamber, drawn by the pulsing light. His eyes dart between Elara and the glowing relic.",
+            "continuity_refs": {
+              "props": [
+                "Mysterious Relic (glowing)"
+              ],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "estimated_duration_sec": 5.0,
+            "shot_type": "medium_wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "track_in",
+              "framing_notes": "Show Kai entering and surveying the scene, with Elara and relic in background"
+            },
+            "visual_goal": "Introduce Kai and his cautious, observant presence, contrasting with Elara's awe.",
+            "action_focus": "Kai's arrival and assessment of the situation.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "Mysterious Relic (glowing)"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 6,
+            "block_type": "dialogue",
+            "character_id": "char_002",
+            "character_name": "KAI",
+            "text": "Elara, what is that? Are you certain it's safe?",
+            "continuity_refs": {
+              "props": [
+                "Mysterious Relic (glowing)"
+              ],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "estimated_duration_sec": 4.0,
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Kai's concerned and questioning expression"
+            },
+            "visual_goal": "Highlight Kai's skepticism and concern for safety, establishing conflict.",
+            "action_focus": "Kai's dialogue and cautious demeanor.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "Mysterious Relic (glowing)"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 7,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "ELARA",
+            "text": "Safe? I don't know... but it's unlike anything we've ever found. It's radiating energy, Kai.",
+            "continuity_refs": {
+              "props": [
+                "Mysterious Relic (glowing)"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "estimated_duration_sec": 5.0,
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Elara looking at Kai, then back at the relic, conveying excitement and uncertainty"
+            },
+            "visual_goal": "Show Elara's conviction and the immediate impact of the relic.",
+            "action_focus": "Elara's explanation and her focus on the relic.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "Mysterious Relic (glowing)"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "target_duration_sec": 45.0,
+    "estimated_total_duration_sec": 45.0,
+    "sum_scene_duration_sec": 45.0,
+    "scene_count": 1,
+    "shot_count_total": 7,
+    "sum_shot_duration_sec": 27.0,
+    "avg_shots_per_scene": 7.0,
+    "dialogue_block_count": 3,
+    "action_block_count": 4
+  },
+  "artifact_caption": {
+    "what": "The Whispering Relic, 1 scene, 7 shots, mystical archaeological thriller style.",
+    "why": "To establish a sense of mystery and discovery. Pacing starts slow and tense, builds to a reveal, then shifts to cautious excitement. Visuals focus on close-ups of ancient details and the relic's glowing effect to enhance mysticism.",
+    "scope": "global"
+  }
+}

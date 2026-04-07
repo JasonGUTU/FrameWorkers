@@ -33,8 +33,12 @@ class ExamplePipelineAgent(BaseAgent[ExamplePipelineInput, ExamplePipelineOutput
             "- Count the words in your summary and set word_count\n\n"
             "Output Rules:\n"
             "- Return JSON only, no markdown, no code fences.\n"
-            "- The output MUST have a single top-level key: content.\n"
-            "- Do NOT include a 'meta' block -- it is injected by the system.\n"
+            "- The output MUST have top-level keys: content, artifact_caption.\n"
+            "- Do NOT include a 'meta' block -- it is injected by the system.\n\n"
+            "artifact_caption: fill all three fields:\n"
+            "  what — what text was summarized and the summary title.\n"
+            "  why  — key points extracted.\n"
+            "  scope — always \"global\"."
         )
 
     def build_user_prompt(self, input_data: ExamplePipelineInput) -> str:
@@ -43,6 +47,11 @@ class ExamplePipelineAgent(BaseAgent[ExamplePipelineInput, ExamplePipelineOutput
             f"{input_data.source_text}\n\n"
             "Return JSON matching this structure:\n"
             "{\n"
+            '  "artifact_caption": {\n'
+            '    "what": "<what text was summarized and the title>",\n'
+            '    "why": "<key points extracted>",\n'
+            '    "scope": "global"\n'
+            '  },\n'
             '  "content": {\n'
             '    "title": "<short title>",\n'
             '    "summary": "<2-4 sentence summary>",\n'
