@@ -1,7 +1,6 @@
 # Assistant Service - Core business logic for agent orchestration
 
 import asyncio
-import hashlib
 import json
 import logging
 import os
@@ -9,7 +8,6 @@ import shutil
 import tempfile
 from typing import Any, Dict, List, Optional
 from datetime import datetime
-from pathlib import Path
 
 from .models import AgentExecution, ExecutionStatus
 from .workspace import Workspace
@@ -102,9 +100,6 @@ class AssistantService:
         self.input_package_model = (
             os.getenv("ASSISTANT_INPUT_PACKAGE_MODEL", "").strip() or _default_model
         )
-        self.output_persist_model = (
-            os.getenv("ASSISTANT_OUTPUT_PERSIST_MODEL", "").strip() or _default_model
-        )
         # Get or create the global workspace
         self.workspace = self._get_global_workspace()
 
@@ -129,20 +124,6 @@ class AssistantService:
             and hasattr(descriptor, "build_equipped_agent")
             and hasattr(descriptor, "build_input")
         )
-
-    @staticmethod
-    def _naming_policy_path() -> Path:
-        return Path(__file__).resolve().parent / "persist_naming_policy.json"
-
-    def _load_persist_naming_policy(self) -> Dict[str, Any]:
-        path = self._naming_policy_path()
-        if not path.exists():
-            return {"version": "default-1", "allowed_extensions": []}
-        try:
-            data = json.loads(path.read_text(encoding="utf-8"))
-            return data if isinstance(data, dict) else {"version": "default-1", "allowed_extensions": []}
-        except Exception:
-            return {"version": "default-1", "allowed_extensions": []}
 
     @staticmethod
     def _run_async(coro):
@@ -262,14 +243,6 @@ class AssistantService:
 
             if media_assets:
                 output["_media_files"] = self.workspace.collect_materialized_files(media_assets)
-            materializer = getattr(agent, "materializer", None)
-            if materializer is not None and hasattr(materializer, "naming_spec_v2"):
-                try:
-                    spec = materializer.naming_spec_v2()
-                    if isinstance(spec, dict):
-                        output["_naming_specs"] = [spec]
-                except Exception:
-                    logger.debug("materializer naming spec unavailable", exc_info=True)
             debug_payload: Dict[str, Any] = {}
             if isinstance(attempts, int):
                 debug_payload["attempts"] = attempts
@@ -444,13 +417,6 @@ class AssistantService:
         return execution
 
     @staticmethod
-    def _persist_assignment_key(item: Dict[str, Any]) -> tuple[str, str]:
-        return (
-            str(item.get("kind") or ""),
-            str(item.get("source_key") or ""),
-        )
-
-    @staticmethod
     def _artifact_media_type_subdir(filename: str) -> str:
         """Subfolder under ``artifacts/media/<agent>/`` from file extension (video/audio/image/other)."""
         fn = (filename or "").lower().strip()
@@ -469,16 +435,24 @@ class AssistantService:
     ) -> List[Dict[str, Any]]:
         """Default relative paths under workspace ``artifacts/``.
 
-        Binary/media files land under ``artifacts/media/<agent_id>/<type>/``.
-        JSON snapshots land under ``artifacts/<agent_id>/<agent_id>_exec_<n>.json``
-        — the producer ``agent_id`` is the slug for both the directory and the
-        filename, replacing the previous ``descriptor.asset_key`` scheme.
+        Binary/media files land under
+        ``artifacts/media/<agent_id>/<type>/<task_id>_<base_filename>``.
+        JSON snapshots land under
+        ``artifacts/<agent_id>/<task_id>_<agent_id_lower>_exec_<n>.json``
+        — the producer ``agent_id`` is the slug for both the directory and
+        (lowercased) the filename. Every filename gets a ``<task_id>_``
+        prefix so multi-task workspaces can never collide.
         """
         assignments: List[Dict[str, Any]] = []
         results = execution.results
         if not isinstance(results, dict):
             return assignments
         producer = execution.agent_id or "agent"
+        task_id = (execution.task_id or "").strip()
+
+        def _prefix(fn: str) -> str:
+            """Bake the task_id into the filename so multi-task workspaces are collision-free."""
+            return f"{task_id}_{fn}" if task_id else fn
 
         for key, value in results.items():
             if key.startswith("_"):
@@ -486,7 +460,7 @@ class AssistantService:
             if isinstance(value, dict) and "file_content" in value:
                 fn = value.get("filename") or f"{key}.bin"
                 sub = self._artifact_media_type_subdir(fn)
-                rel = f"artifacts/media/{producer}/{sub}/{fn}"
+                rel = f"artifacts/media/{producer}/{sub}/{_prefix(fn)}"
                 assignments.append({"kind": "binary", "source_key": key, "relative_path": rel})
 
         media = results.get("_media_files")
@@ -495,13 +469,13 @@ class AssistantService:
                 if isinstance(value, dict) and "file_content" in value:
                     fn = value.get("filename") or f"{key}.bin"
                     sub = self._artifact_media_type_subdir(fn)
-                    rel = f"artifacts/media/{producer}/{sub}/{fn}"
+                    rel = f"artifacts/media/{producer}/{sub}/{_prefix(fn)}"
                     assignments.append({"kind": "media", "source_key": key, "relative_path": rel})
 
         snap_payload = ArtifactWriter._build_json_snapshot_payload(results)
         if snap_payload:
             filename = ArtifactWriter.snapshot_filename(producer, execution.id)
-            rel = f"artifacts/{producer}/{filename}"
+            rel = f"artifacts/{producer}/{_prefix(filename)}"
             assignments.append(
                 {
                     "kind": "json_snapshot",
@@ -510,107 +484,6 @@ class AssistantService:
                 }
             )
         return assignments
-
-    def _merge_persist_assignments(
-        self,
-        base: List[Dict[str, Any]],
-        overrides: List[Dict[str, Any]],
-    ) -> List[Dict[str, Any]]:
-        idx: Dict[tuple[str, str, str], Dict[str, Any]] = {}
-        for o in overrides:
-            if not isinstance(o, dict):
-                continue
-            idx[self._persist_assignment_key(o)] = o
-        out: List[Dict[str, Any]] = []
-        for b in base:
-            if not isinstance(b, dict):
-                continue
-            key = self._persist_assignment_key(b)
-            o = idx.get(key)
-            if o:
-                rel = str(o.get("relative_path") or "").strip().replace("\\", "/")
-                if ArtifactWriter.is_safe_artifacts_relative_path(rel):
-                    merged = dict(b)
-                    merged["relative_path"] = rel
-                    out.append(merged)
-                    continue
-            out.append(dict(b))
-        return out
-
-    def _refine_output_persist_plan_with_llm(
-        self,
-        workspace: Workspace,
-        execution: AgentExecution,
-        descriptor: Any,
-        base_plan: List[Dict[str, Any]],
-    ) -> List[Dict[str, Any]]:
-        if not base_plan:
-            return []
-        desc_text = getattr(descriptor, "catalog_entry", "") or ""
-        blob = {
-            "target_agent_id": execution.agent_id,
-            "task_id": execution.task_id,
-            "descriptor_hint": desc_text,
-            "proposed_assignments": base_plan,
-            "naming_specs": (
-                execution.results.get("_naming_specs", [])
-                if isinstance(execution.results, dict)
-                else []
-            ),
-            "naming_policy": self._load_persist_naming_policy(),
-            # Ground truth for layout: full workspace runtime tree (includes artifacts/).
-            "workspace_file_tree": workspace.get_workspace_root_file_tree_text(),
-        }
-        system_prompt = (
-            "You orchestrate workspace-relative output paths for ONE agent execution. "
-            "Use workspace_file_tree as ground truth: see what "
-            "already exists under artifacts/, avoid name collisions, and align new paths with "
-            "the current layout (e.g. artifacts/media/<Agent>/<video|audio|image|other>/). "
-            "proposed_assignments is the deterministic starting point—adjust relative_path when "
-            "the tree or naming_policy suggests a better fit; keep the same number of entries "
-            "and each kind/source_key unchanged. "
-            "Every relative_path must start with artifacts/ and must not use '..'. "
-            "Return strict JSON only."
-        )
-        user_prompt = (
-            "Orchestrate paths using workspace_file_tree above. Context:\n"
-            f"{json.dumps(blob, ensure_ascii=False)}\n\n"
-            "Return JSON:\n"
-            '{"assignments": [\n'
-            '  {"kind": "binary|media|json_snapshot|manifest", '
-            '"source_key": "match proposed (empty string if none)", '
-            '"relative_path": "artifacts/..."}\n'
-            "]}\n"
-        )
-        parsed: Dict[str, Any] | None = None
-        last_exc: Exception | None = None
-        for max_tok in (16384, 32768, 65536):
-            try:
-                parsed = self._run_async(
-                    self.pipeline_llm_client.chat_json(
-                        system_prompt=system_prompt,
-                        user_prompt=user_prompt,
-                        max_tokens=max_tok,
-                        reasoning_effort="low",
-                        model=self.output_persist_model,
-                    )
-                )
-                break
-            except Exception as exc:
-                last_exc = exc
-                continue
-        if parsed is None:
-            raise AssistantBadExecuteFieldsError(
-                f"output persist plan LLM failed: {last_exc}"
-            ) from last_exc
-        if not isinstance(parsed, dict):
-            raise AssistantBadExecuteFieldsError("output persist plan LLM returned non-object JSON")
-        ov = parsed.get("assignments")
-        if not isinstance(ov, list):
-            raise AssistantBadExecuteFieldsError(
-                "output persist plan LLM response missing assignments list"
-            )
-        return self._merge_persist_assignments(base_plan, ov)
 
     def process_results(
         self,
@@ -640,21 +513,15 @@ class AssistantService:
         workspace.log_execution_result(execution)
         descriptor = self.agent_registry.get_descriptor(execution.agent_id)
         base_plan = self._deterministic_output_persist_plan(execution, descriptor)
-        plan = self._refine_output_persist_plan_with_llm(
-            workspace, execution, descriptor, base_plan
-        )
-        policy = self._load_persist_naming_policy()
-        plan_digest = hashlib.sha256(
-            json.dumps(plan, ensure_ascii=False, sort_keys=True).encode("utf-8")
-        ).hexdigest()
-        if isinstance(execution.results, dict):
-            execution.results["_persist_plan_meta"] = {
-                "naming_policy_version": str(policy.get("version") or "default-1"),
-                "persist_plan_digest": plan_digest,
-            }
+        # Persist plan is fully deterministic — no LLM rewrite, no
+        # naming policy file, no plan digest meta. The base plan from
+        # _deterministic_output_persist_plan already produces the final
+        # paths (artifacts/<Agent>/<task_id>_<lowercase>_exec_n.json
+        # for snapshots; artifacts/media/<Agent>/<type>/<task_id>_<base>
+        # for binaries).
         persisted_paths, asset_index = workspace.persist_execution_from_plan(
             execution,
-            plan,
+            base_plan,
             overwrite_existing=overwrite_existing_assets,
         )
         if asset_index and isinstance(execution.results, dict):

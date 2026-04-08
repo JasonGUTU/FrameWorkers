@@ -82,26 +82,6 @@ def _live_e2e_enabled() -> bool:
 
 
 @pytest.fixture(autouse=True)
-def stub_output_persist_plan_llm(monkeypatch):
-    """Skip output path LLM; use deterministic persist plan in tests.
-
-    Bypassed for live e2e runs so the real LLM-refined persist plan path
-    is exercised.
-    """
-    if _live_e2e_enabled():
-        return
-
-    def _stub(self, workspace, execution, descriptor, base_plan):
-        return base_plan
-
-    monkeypatch.setattr(
-        service_module.AssistantService,
-        "_refine_output_persist_plan_with_llm",
-        _stub,
-    )
-
-
-@pytest.fixture(autouse=True)
 def stub_input_package_llm(monkeypatch, request):
     """Avoid real LLM calls for per-execution input packaging.
 

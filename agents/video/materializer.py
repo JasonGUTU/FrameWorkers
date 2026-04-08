@@ -38,24 +38,6 @@ class VideoMaterializer(BaseMaterializer):
         self._enable_prop_consistency = raw in {"1", "true", "yes", "on"}
 
     @staticmethod
-    def naming_spec_v2() -> dict[str, Any]:
-        return {
-            "agent_id": "VideoAgent",
-            "spec_version": "1.0",
-            "rules": [
-                {
-                    "artifact_family": "video_clip",
-                    "semantic_meaning": "shot/scene/final video clips",
-                    "recommended_name_pattern": "clip_{shot_or_scene_or_final}.mp4",
-                    "id_source": "screenplay shot_id and scene_id",
-                    "ordering_rules": "shot clips follow scene shot order",
-                    "examples": ["clip_sh_001.mp4", "clip_sc_001.mp4", "clip_final.mp4"],
-                    "rename_hints": {"stable_parts": "clip prefix and id token", "mutable_parts": "optional readability infix"},
-                }
-            ],
-        }
-
-    @staticmethod
     def _normalize_local_path(uri: str) -> str:
         if not uri:
             return ""

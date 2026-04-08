@@ -192,7 +192,8 @@ def test_service_execute_and_persist_file_outputs(tmp_path, monkeypatch):
     assert rdict["_execution_debug"]["overall_pass"] is True
     # The dummy agent only emits one binary (`report.txt`); its results have
     # no structured top-level keys, so no JSON snapshot is written.
-    binary = [a for a in artifacts if a["filename"] == "report.txt"]
+    # task_id prefix is now baked into the filename: task_file_report.txt.
+    binary = [a for a in artifacts if a["filename"] == "task_file_report.txt"]
     assert len(binary) == 1
     latest_execution_id = storage.get_executions_by_task("task_file")[-1].id
     assert binary[0]["execution_id"] == latest_execution_id
@@ -260,12 +261,13 @@ def test_service_overwrite_mode_replaces_previous_asset_files(tmp_path, monkeypa
 
     workspace = storage.get_global_workspace()
     all_artifacts = workspace.list_workspace_artifacts()
-    binary_assets = [a for a in all_artifacts if a["filename"] == "report.txt"]
-    # JSON snapshot filenames are now derived from the producer agent_id
-    # (lowercased + sanitized), e.g. "dummyagent_exec_N.json".
+    # task_id prefix is baked into the filename: task_overwrite_report.txt.
+    binary_assets = [a for a in all_artifacts if a["filename"] == "task_overwrite_report.txt"]
+    # JSON snapshot filenames are now <task_id>_<agent_id_lower>_exec_<n>.json,
+    # e.g. "task_overwrite_dummyagent_exec_N.json".
     json_assets = [
         a for a in all_artifacts
-        if a["mime"] == "application/json" and a["filename"].startswith("dummyagent_")
+        if a["mime"] == "application/json" and a["filename"].startswith("task_overwrite_dummyagent_")
     ]
 
     assert first["status"] == "COMPLETED"
@@ -660,4 +662,4 @@ def test_deterministic_persist_plan_media_under_artifacts_media_agent_type(assis
     plan = svc._deterministic_output_persist_plan(ex, descriptor)
     media_items = [p for p in plan if p.get("kind") == "media"]
     assert len(media_items) == 1
-    assert media_items[0]["relative_path"] == "artifacts/media/VideoAgent/video/clip_final.mp4"
+    assert media_items[0]["relative_path"] == "artifacts/media/VideoAgent/video/task_1_clip_final.mp4"

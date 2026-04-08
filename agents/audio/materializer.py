@@ -35,24 +35,6 @@ class AudioMaterializer(BaseMaterializer):
         self.audio_svc = audio_service
 
     @staticmethod
-    def naming_spec_v2() -> dict[str, Any]:
-        return {
-            "agent_id": "AudioAgent",
-            "spec_version": "1.0",
-            "rules": [
-                {
-                    "artifact_family": "audio_track",
-                    "semantic_meaning": "narration/music/ambience/mix/final audio artifacts",
-                    "recommended_name_pattern": "aud_{type}_{scene_or_final}_{seq}.wav",
-                    "id_source": "screenplay scene_id and segment order",
-                    "ordering_rules": "narration sequence follows segment timing",
-                    "examples": ["aud_narr_sc_001_01.wav", "aud_music_sc_001.wav", "aud_final.wav"],
-                    "rename_hints": {"stable_parts": "aud prefix and type token", "mutable_parts": "separator style"},
-                }
-            ],
-        }
-
-    @staticmethod
     def _normalize_local_path(uri: str) -> str:
         if not uri:
             return ""

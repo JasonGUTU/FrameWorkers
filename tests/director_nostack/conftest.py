@@ -113,11 +113,8 @@ def _stub_assistant_llm_hooks_for_nostack_e2e(monkeypatch):
     """Keep ``POST /api/assistant/execute`` deterministic in this package's tests."""
     if os.getenv("FW_ENABLE_NOSTACK_REAL_AGENTS") == "1":
         # Real-agent mode: do not stub Assistant's internal LLM hooks.
-        # This enables true input packaging, persist planning, and memory summarization.
+        # This enables true input packaging and memory summarization.
         return
-
-    def _stub_persist(self, workspace, execution, descriptor, base_plan):
-        return base_plan
 
     def _stub_inputs(self, agent_id, task_id, workspace):
         import json as _json
@@ -161,11 +158,6 @@ def _stub_assistant_llm_hooks_for_nostack_e2e(monkeypatch):
             "rationale": "nostack e2e stub: select all registered artifacts",
         }
 
-    monkeypatch.setattr(
-        service_module.AssistantService,
-        "_refine_output_persist_plan_with_llm",
-        _stub_persist,
-    )
     monkeypatch.setattr(
         service_module.AssistantService,
         "_resolve_inputs_for_agent_with_llm",

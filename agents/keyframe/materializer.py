@@ -98,24 +98,6 @@ class KeyframeMaterializer(BaseMaterializer):
             return "t2i"
         return "edit"
 
-    @staticmethod
-    def naming_spec_v2() -> dict[str, Any]:
-        return {
-            "agent_id": "KeyFrameAgent",
-            "spec_version": "1.0",
-            "rules": [
-                {
-                    "artifact_family": "keyframe_image",
-                    "semantic_meaning": "generated keyframe images for global/scene/shot anchors",
-                    "recommended_name_pattern": "img_{entity_or_shot_id}_{scope_or_seq}.png",
-                    "id_source": "screenplay/keyframe IDs",
-                    "ordering_rules": "for shot keyframes, preserve screenplay shot order",
-                    "examples": ["img_char_001_global.png", "img_loc_001_sc_001.png"],
-                    "rename_hints": {"stable_parts": "img prefix and id tokens", "mutable_parts": "suffix formatting"},
-                }
-            ],
-        }
-
     # ------------------------------------------------------------------
     # Main entry point (called by Assistant)
     # ------------------------------------------------------------------
