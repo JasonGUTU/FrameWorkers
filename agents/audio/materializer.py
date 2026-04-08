@@ -126,6 +126,12 @@ class AudioMaterializer(BaseMaterializer):
                         narration_bytes_list.append(audio_bytes)
                     except Exception as exc:
                         logger.error("TTS failed for segment %s: %s", sys_seg_id, exc)
+                        if ctx.report_failure is not None:
+                            ctx.report_failure(
+                                kind="audio_tts",
+                                sys_id=sys_seg_id,
+                                error=f"{type(exc).__name__}: {exc}",
+                            )
 
             # --- Music cue ---
             music_cue = scene.get("music_cue", {})
@@ -153,6 +159,12 @@ class AudioMaterializer(BaseMaterializer):
                     ))
                 except Exception as exc:
                     logger.error("Music generation failed for %s: %s", sys_music_id, exc)
+                    if ctx.report_failure is not None:
+                        ctx.report_failure(
+                            kind="audio_music",
+                            sys_id=sys_music_id,
+                            error=f"{type(exc).__name__}: {exc}",
+                        )
 
             # --- Ambience bed ---
             ambience = scene.get("ambience_bed", {})
@@ -180,6 +192,12 @@ class AudioMaterializer(BaseMaterializer):
                     ))
                 except Exception as exc:
                     logger.error("Ambience generation failed for %s: %s", sys_amb_id, exc)
+                    if ctx.report_failure is not None:
+                        ctx.report_failure(
+                            kind="audio_ambience",
+                            sys_id=sys_amb_id,
+                            error=f"{type(exc).__name__}: {exc}",
+                        )
 
             # --- Scene mix ---
             mix_info = scene.get("mix", {})
@@ -201,6 +219,12 @@ class AudioMaterializer(BaseMaterializer):
                     scene_mix_bytes_list.append(mix_bytes)
                 except Exception as exc:
                     logger.error("Scene mix failed for %s: %s", sys_mix_id, exc)
+                    if ctx.report_failure is not None:
+                        ctx.report_failure(
+                            kind="audio_scene_mix",
+                            sys_id=sys_mix_id,
+                            error=f"{type(exc).__name__}: {exc}",
+                        )
 
         # --- Final audio assembly ---
         final = content.get("final_audio_asset", {})
@@ -216,6 +240,12 @@ class AudioMaterializer(BaseMaterializer):
                 ))
             except Exception as exc:
                 logger.error("Final audio assembly failed: %s", exc)
+                if ctx.report_failure is not None:
+                    ctx.report_failure(
+                        kind="audio_final_assembly",
+                        sys_id="aud_final",
+                        error=f"{type(exc).__name__}: {exc}",
+                    )
 
         # --- Final delivery mux (video + final audio) ---
         final_delivery = content.setdefault("final_delivery_asset", {})
@@ -236,6 +266,12 @@ class AudioMaterializer(BaseMaterializer):
                     ))
                 except Exception as exc:
                     logger.error("Final delivery mux failed: %s", exc)
+                    if ctx.report_failure is not None:
+                        ctx.report_failure(
+                            kind="audio_final_delivery_mux",
+                            sys_id="delivery_final",
+                            error=f"{type(exc).__name__}: {exc}",
+                        )
             else:
                 logger.info(
                     "Skipping final delivery mux: missing shared final video or final audio"

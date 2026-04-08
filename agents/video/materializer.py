@@ -393,6 +393,12 @@ class VideoMaterializer(BaseMaterializer):
                     clip_bytes_list.append(clip_bytes)
                 except Exception as exc:
                     logger.error("Video clip generation failed for %s: %s", shot_id, exc)
+                    if ctx.report_failure is not None:
+                        ctx.report_failure(
+                            kind="video_clip",
+                            sys_id=sys_vid_id,
+                            error=f"{type(exc).__name__}: {exc}",
+                        )
 
             scene_clip = scene.get("scene_clip_asset", {})
             sys_scene_clip_id = f"clip_{scene_id}"
@@ -411,6 +417,12 @@ class VideoMaterializer(BaseMaterializer):
                     scene_bytes_list.append(scene_bytes)
                 except Exception as exc:
                     logger.error("Scene assembly failed for %s: %s", scene_id, exc)
+                    if ctx.report_failure is not None:
+                        ctx.report_failure(
+                            kind="video_scene_assembly",
+                            sys_id=sys_scene_clip_id,
+                            error=f"{type(exc).__name__}: {exc}",
+                        )
 
         final = content.get("final_video_asset", {})
         final["asset_id"] = "clip_final"
@@ -425,6 +437,12 @@ class VideoMaterializer(BaseMaterializer):
                 ))
             except Exception as exc:
                 logger.error("Final video assembly failed: %s", exc)
+                if ctx.report_failure is not None:
+                    ctx.report_failure(
+                        kind="video_final_assembly",
+                        sys_id="clip_final",
+                        error=f"{type(exc).__name__}: {exc}",
+                    )
 
         logger.info("All video clips materialized for %s", task_id)
         return pending

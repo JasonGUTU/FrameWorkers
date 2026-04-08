@@ -124,6 +124,10 @@ class KeyframeMaterializer(BaseMaterializer):
             ``MediaAsset`` list for Assistant persistence.
         """
         self._pending: list[MediaAsset] = []
+        # Stash ctx so the per-image _generate / _edit helpers can call
+        # ctx.report_failure() without getting it threaded through every
+        # callsite. Reset on each materialize() call.
+        self._ctx: "MaterializeContext" = ctx
 
         # The materializer reads its input data from ctx.typed_input only.
         # No InputBundleV2 / resolved_artifacts access — every required field
@@ -604,6 +608,13 @@ class KeyframeMaterializer(BaseMaterializer):
             return img_bytes
         except Exception as exc:
             logger.error("[%s] Image generation failed for %s: %s", layer_tag, sys_id, exc)
+            ctx = getattr(self, "_ctx", None)
+            if ctx is not None and ctx.report_failure is not None:
+                ctx.report_failure(
+                    kind=f"keyframe_image_gen_{layer_tag.lower()}",
+                    sys_id=sys_id,
+                    error=f"{type(exc).__name__}: {exc}",
+                )
             return None
 
     async def _edit(
@@ -632,4 +643,11 @@ class KeyframeMaterializer(BaseMaterializer):
             return img_bytes
         except Exception as exc:
             logger.error("[%s] Edit failed for %s: %s", layer_tag, sys_id, exc)
+            ctx = getattr(self, "_ctx", None)
+            if ctx is not None and ctx.report_failure is not None:
+                ctx.report_failure(
+                    kind=f"keyframe_image_edit_{layer_tag.lower()}",
+                    sys_id=sys_id,
+                    error=f"{type(exc).__name__}: {exc}",
+                )
             return None

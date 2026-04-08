@@ -416,6 +416,39 @@ class Workspace:
             },
         )
 
+    def log_artifact_materialize_failure(
+        self,
+        *,
+        agent_id: str,
+        task_id: str,
+        execution_id: str,
+        kind: str,
+        sys_id: str,
+        error: str,
+    ) -> None:
+        """Record a per-call materializer failure as a structured event.
+
+        Materializers' inner ``except Exception`` blocks call this via
+        ``MaterializeContext.report_failure`` so swallowed gen errors
+        (image / video / audio) become findable in ``logs.jsonl`` for
+        post-hoc analysis. Without this hook the only trace was a
+        Python ``logger.error`` line that pytest captures and discards
+        on test pass.
+        """
+        self._add_log(
+            event="artifact.materialize_failed",
+            resource_id=sys_id or "",
+            agent_id=agent_id,
+            task_id=task_id,
+            execution_id=execution_id,
+            level="ERROR",
+            details={
+                "kind": kind,
+                "sys_id": sys_id,
+                "error": error,
+            },
+        )
+
     def log_execution_result(self, execution: Any) -> None:
         status = str(getattr(execution.status, "value", execution.status))
         event = "execution.completed" if status == "COMPLETED" else "execution.failed"

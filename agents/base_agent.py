@@ -28,7 +28,7 @@ from __future__ import annotations
 import json
 import logging
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Any, Callable, Generic, TypeVar, get_args
+from typing import TYPE_CHECKING, Any, Callable, Generic, Optional, TypeVar, get_args
 
 from pydantic import BaseModel
 
@@ -68,11 +68,21 @@ class MaterializeContext:
                            field on the agent's typed input.
         persist_binary:    Callback that saves a ``MediaAsset`` to disk and
                            returns the URI string of the saved file.
+        report_failure:    Optional callback that records a per-call
+                           materialize failure to the workspace event log
+                           (``logs.jsonl``). Materializers call it from
+                           inside their ``except`` blocks so silent
+                           swallowed errors become findable in post-hoc
+                           analysis. Signature:
+                           ``report_failure(*, kind: str, sys_id: str, error: str)``.
+                           When ``None``, materializers fall back to
+                           Python's ``logger.error`` only.
     """
 
     task_id: str
     typed_input: BaseModel
     persist_binary: Callable[[MediaAsset], str]
+    report_failure: Optional[Callable[..., None]] = None
 
 
 @dataclass

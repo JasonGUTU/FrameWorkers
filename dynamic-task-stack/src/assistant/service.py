@@ -184,7 +184,12 @@ class AssistantService:
     ) -> Any:
         return descriptor.build_input(task_id, readonly_bundle)
 
-    def _execute_pipeline_descriptor(self, descriptor: Any, inputs: Dict[str, Any]) -> Dict[str, Any]:
+    def _execute_pipeline_descriptor(
+        self,
+        descriptor: Any,
+        inputs: Dict[str, Any],
+        execution: Optional[AgentExecution] = None,
+    ) -> Dict[str, Any]:
         task_id, ib_mapped = self._map_pipeline_inputs(inputs)
         # Hydrate any indexed asset entries within resolved_artifacts.
         # The bundle now only carries resolved_artifacts (no hints slot).
@@ -216,10 +221,34 @@ class AssistantService:
                     fh.write(media_asset.data)
                 return path
 
+            def _report_failure(*, kind: str, sys_id: str, error: str) -> None:
+                """Surface a per-call materializer failure into logs.jsonl.
+
+                Each materializer's inner ``except Exception`` calls this so
+                the swallow-and-continue policy still leaves a structured
+                trace. Closes over ``execution`` so the log entry carries
+                the agent_id / task_id / execution_id triple.
+                """
+                if execution is None:
+                    return
+                try:
+                    self.workspace.log_artifact_materialize_failure(
+                        agent_id=execution.agent_id,
+                        task_id=execution.task_id,
+                        execution_id=execution.id,
+                        kind=kind,
+                        sys_id=sys_id,
+                        error=error,
+                    )
+                except Exception:
+                    # Never let failure logging crash the materializer.
+                    pass
+
             materialize_ctx = MaterializeContext(
                 task_id=task_id,
                 typed_input=typed_input,
                 persist_binary=_persist,
+                report_failure=_report_failure,
             )
 
         try:
@@ -405,7 +434,7 @@ class AssistantService:
             self.workspace.log_execution_started(execution)
 
             # Execute selected descriptor-based pipeline agent.
-            results = self._execute_pipeline_descriptor(descriptor, inputs)
+            results = self._execute_pipeline_descriptor(descriptor, inputs, execution)
 
             # Translate the agent's quality-gate verdict into execution
             # status. base_agent.run() returns ExecutionResult.passed=False
