@@ -225,3 +225,5 @@ huobao-drama/
 
 # Project runtime outputs (sub-agent workspaces, e2e debug, generated artifacts)
 Runtime/
+# Symlink that exposes ../Runtime to the visualizer dev server
+process-flow-visualizer/Runtime
