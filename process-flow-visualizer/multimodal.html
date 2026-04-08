@@ -422,12 +422,12 @@
           <div class="mm-meta">user_intent: <strong>"REPLACE THE PROTAGONIST. ... every keyframe and every video shot should depict THIS woman doing the action — same character_id (char_001), but a totally different visual identity. Override the text description with this image."</strong></div>
         </div>
         <div class="mm-card video">
-          <span class="mm-tag">OUTPUT · PHASE 2 VIDEO (clip_final, 无音轨)</span>
+          <span class="mm-tag">OUTPUT · PHASE 2 VIDEO (历史快照，路径已不复现)</span>
           <div class="mm-title">第二次 pipeline 成片（文本 + 中段图）</div>
           <video class="mm-output-video" controls preload="metadata"
                  src="Runtime/intake_e2e_outputs/workspace_e2e_midstream_image_20260407_094310/artifacts/task_1_ae09dde6-keyframes_manifest.json/task_1_ae09dde6-clip_final.mp4"></video>
-          <div class="mm-meta">workspace_e2e_midstream_image_20260407_094310/artifacts/<strong style="color:#fde68a">task_1_ae09dde6-keyframes_manifest.json/</strong>task_1_ae09dde6-clip_final.mp4</div>
-          <div class="mm-meta">⚠ 路径里那段 <code>...keyframes_manifest.json/</code> 是个 <strong>目录</strong>（不是文件）—— 见下方 Bug ① 说明</div>
+          <div class="mm-meta">原始路径：workspace_e2e_midstream_image_20260407_094310/artifacts/<strong style="color:#fde68a">task_1_ae09dde6-keyframes_manifest.json/</strong>task_1_ae09dde6-clip_final.mp4</div>
+          <div class="mm-meta">⚠ 这条路径是 Bug ① 留下的怪产物（详见下方）。<strong>Bug ① 现已修复</strong> —— manifest 机制 + LLM path planner 都被删了，新的 file tree 是 deterministic 的 <code>artifacts/&lt;Agent&gt;/&lt;task_id&gt;_&lt;lower&gt;_exec_n.json</code>，不会再出现这种把文件名当目录的怪路径。</div>
         </div>
       </div>
       <div class="mm-arrow">↓ 直接对比：用户上传的人物图 vs. KeyFrame 实际生成的 char_001 L1 anchor ↓</div>
@@ -452,26 +452,35 @@
       </div>
       <div class="mm-card note" style="margin-top:14px;">
         <div class="mm-desc">
-          <strong>🩺 诊断：四个独立的 bug 让这次 e2e 没有达到设计目的</strong>
+          <strong>🩺 诊断：四个独立 bug —— 三个已修，一个仍然 open</strong>
           <ol style="margin: 8px 0 0 16px; padding: 0; line-height: 1.7;">
             <li>
-              <strong>Bug ① VideoAgent media 路径错位（LLM persist plan refinement bug）</strong>：
-              视频 clips 的 deterministic plan 本来是 <code>artifacts/media/VideoAgent/video/clip_*.mp4</code>，但
-              <code>service.py:_refine_output_persist_plan_with_llm</code> 让 LLM 重写路径时，LLM 看到 workspace 里已经存在
-              <code>artifacts/keyframes/task_1_ae09dde6-keyframes_manifest.json</code> 文件，幻觉地把视频 clips 写成
-              <code>artifacts/task_1_ae09dde6-keyframes_manifest.json/clip_*.mp4</code>（把一个文件名当目录用）。
-              <code>asset_manager._validate_relative_path</code> 只校验前缀和扩展名，放行了这个怪路径。
-              <strong>视频文件其实存在</strong>，就是上面那个奇怪路径，所以播放器还是能放出来。
+              <strong>Bug ① VideoAgent media 路径错位（LLM persist plan refinement bug）</strong>
+              <span style="background:#16a34a;color:white;padding:2px 8px;border-radius:4px;font-size:0.85em;margin-left:6px;">✅ FIXED</span>
+              <div style="margin:4px 0 0 0;color:#a0a0a0;">
+                视频 clips 的 deterministic plan 本来是 <code>artifacts/media/VideoAgent/video/clip_*.mp4</code>，但
+                <code>service.py:_refine_output_persist_plan_with_llm</code> 让 LLM 重写路径时，LLM 看到 workspace 里已经存在
+                <code>artifacts/keyframes/task_1_ae09dde6-keyframes_manifest.json</code> 文件，幻觉地把视频 clips 写成
+                <code>artifacts/task_1_ae09dde6-keyframes_manifest.json/clip_*.mp4</code>（把一个文件名当目录用）。
+                <strong>修复</strong>：commit <code>4d00f39</code> 删了 manifest 机制（这个文件不再存在）+ commit <code>ef10648</code>
+                删了 LLM path planner 整套（task_id 前缀 bake 进 deterministic plan，不再有 LLM 重写步骤）。
+              </div>
             </li>
             <li>
-              <strong>Bug ② AudioAgent 完全没产 audio 文件</strong>：
-              <code>artifacts/task_1_ae09dde6-audio_exec_12.json</code> 里所有 <code>audio_asset.uri</code> 都还是
-              <code>"placeholder"</code>，artifact_registry 第 9 行只有 JSON snapshot 没有任何 mp3/wav。也没有 muxed delivery_final，
-              所以这次成片只有视频没有声音。怀疑 audio materializer 抛了静默异常或 persist plan 被 LLM 写到了不存在的位置，
-              workspace 的 logs.jsonl 没记录 materializer 的异常。
+              <strong>Bug ② AudioAgent 完全没产 audio 文件 + logs.jsonl 不留痕</strong>
+              <span style="background:#16a34a;color:white;padding:2px 8px;border-radius:4px;font-size:0.85em;margin-left:6px;">✅ FIXED</span>
+              <div style="margin:4px 0 0 0;color:#a0a0a0;">
+                所有 <code>audio_asset.uri</code> 都还是 <code>"placeholder"</code>，没有任何 .wav 落盘。怀疑是 materializer 静默吞了异常，但
+                workspace 的 logs.jsonl 没有 materializer 异常的痕迹。<strong>修复</strong>：commit <code>9283d06</code> 把媒体生成默认 mock 化（不再依赖 fal.ai）+
+                commit <code>7f28366</code> 给 12 处 materializer <code>except Exception</code> 加 <code>ctx.report_failure</code>，写
+                <code>event=artifact.materialize_failed</code> 到 logs.jsonl + commit <code>e7d05e0</code> 让 quality gate
+                <code>passed=False</code> 翻成 <code>execution.status=FAILED</code>（不再"COMPLETED 但 0 个产物"）+
+                commit <code>e639393</code> 加 e2e 严格断言（<code>uri != "placeholder"</code> + 文件存在 + 字节非零）。
+              </div>
             </li>
             <li>
-              <strong>Bug ③ <span style="color:#fca5a5">主角替换 override 根本传不到 Story / Screenplay / KeyFrame —— 架构层面的缺陷</span></strong>：
+              <strong>Bug ③ <span style="color:#fca5a5">主角替换 override 根本传不到 Story / Screenplay / KeyFrame —— 架构层面的缺陷</span></strong>
+              <span style="background:#dc2626;color:white;padding:2px 8px;border-radius:4px;font-size:0.85em;margin-left:6px;">⚠ STILL OPEN</span>
               <ul style="margin: 4px 0 0 16px; padding: 0;">
                 <li><code>StoryAgent.descriptor</code> 只声明 <code>[creative_brief] (single)</code>，没有 override / supplementary 之类的 slot；
                   InputResolver 给它的只有原始 IntakeText brief，IntakeImage 的"REPLACE THE PROTAGONIST"指令<strong>它根本看不到</strong>。
@@ -490,15 +499,21 @@
               </ul>
             </li>
             <li>
-              <strong>Bug ④ <code>_refine_output_persist_plan_with_llm</code> 整体太自由</strong>：
-              即使没有 ① 这次的具体表现，让 LLM 重写 persist plan 路径本身就是隐患 —— deterministic plan 是对的，被 LLM 自由改写后随时可能落到怪地方。
-              建议要么去掉这一步，要么严格约束 LLM "只能在 deterministic plan 给出的 relative_dir 里调整 filename，不能新建目录路径"。
+              <strong>Bug ④ <code>_refine_output_persist_plan_with_llm</code> 整体太自由</strong>
+              <span style="background:#16a34a;color:white;padding:2px 8px;border-radius:4px;font-size:0.85em;margin-left:6px;">✅ FIXED</span>
+              <div style="margin:4px 0 0 0;color:#a0a0a0;">
+                即使没有 ① 这次的具体表现，让 LLM 重写 persist plan 路径本身就是隐患 —— deterministic plan 是对的，被 LLM 自由改写后随时可能落到怪地方。
+                <strong>修复</strong>：commit <code>ef10648</code> 把整个 LLM path planner 机制（<code>_refine_output_persist_plan_with_llm</code> +
+                <code>_merge_persist_assignments</code> + <code>naming_spec_v2</code> + <code>persist_naming_policy.json</code>）一次性删了，
+                file tree 现在 100% 由 deterministic plan 决定，<code>task_id</code> 前缀直接 bake 进 filename，不再走 LLM。
+              </div>
             </li>
           </ol>
           <div style="margin-top:10px;">
-            <strong>当前展示的视频 = 第二次 pipeline 重跑的 final clip</strong>，但请把它当成"反面教材"看 —— 视觉上和 phase 1 完全没有区别，
-            没有任何中年女性元素。这次 e2e 暴露的不是 prompt 调教问题，而是上面 Bug ③ 的架构缺口：
-            <strong>跨 agent 的 override 语义没有传递通道</strong>。
+            <strong>当前展示的视频 = 第二次 pipeline 重跑的 final clip</strong>，请把它当成"反面教材"看 —— 视觉上和 phase 1 完全没有区别，
+            没有任何中年女性元素。这次 e2e 暴露的核心问题不是 prompt 调教，而是上面 <strong>Bug ③ 的架构缺口</strong>：
+            <strong>跨 agent 的 override 语义没有传递通道</strong>。Bug ① / ② / ④ 都已经修了，
+            <strong>Bug ③ 是这个 demo 留下来的唯一开放问题</strong>，需要设计一个跨 agent 的 override channel 来彻底解决。
           </div>
         </div>
       </div>
