@@ -79,7 +79,20 @@ class AudioAgent(BaseAgent[AudioAgentInput, AudioAgentOutput]):
         vid_scenes = vid_content.get("scenes", [])
 
         if not vid_scenes:
-            return None
+            # Same reasoning as the missing-screenplay-or-video raise
+            # above: AudioAgent has no legacy fallback. The earlier
+            # commit af341e8 raised on the missing-upstream check but
+            # missed this empty-vid_scenes path. Make it loud too so
+            # the director sees a real error instead of a confusing
+            # NotImplementedError on the fall-through to
+            # ``build_user_prompt``.
+            raise ValueError(
+                "AudioAgent.build_skeleton: upstream final_video has "
+                "zero scenes. Check that VideoAgent's last execution "
+                "actually produced content (status COMPLETED, non-empty "
+                "content.scenes) and that InputResolver matched the "
+                "[final_video] label to it."
+            )
 
         sp_scene_map = {
             s.get("scene_id", ""): s

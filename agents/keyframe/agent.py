@@ -112,7 +112,21 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
         img_fmt = "png"
 
         if not sp_scenes:
-            return None  # fall back to legacy mode
+            # KeyFrameAgent has no legacy/full-LLM fallback path — without
+            # a non-empty screenplay there is nothing to plan. Returning
+            # None here would make BaseAgent fall through to
+            # ``_run_legacy_mode`` → ``build_user_prompt`` which is not
+            # implemented for this agent and would crash with a confusing
+            # NotImplementedError. Raise a clear error so the caller (and
+            # the director) sees exactly what went wrong and can re-
+            # dispatch ScreenplayAgent.
+            raise ValueError(
+                "KeyFrameAgent.build_skeleton: upstream screenplay has "
+                "zero scenes. Check that ScreenplayAgent's last execution "
+                "actually produced content (status COMPLETED, non-empty "
+                "content.scenes) and that InputResolver matched the "
+                "[screenplay] label to it."
+            )
 
         # --- Collect all unique entities across scenes ---
         all_char_ids: dict[str, bool] = {}  # ordered set
