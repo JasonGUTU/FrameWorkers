@@ -141,7 +141,6 @@ def _agents_catalog_for_prompt(agents: List[Dict[str, Any]]) -> List[Dict[str, A
             {
                 "id": aid,
                 "description": str(a.get("description") or "")[:500],
-                "asset_key": str(a.get("asset_key") or ""),
                 "capabilities": a.get("capabilities") if isinstance(a.get("capabilities"), list) else [],
             }
         )
@@ -266,7 +265,7 @@ class LlmSubAgentPlanner:
         if not allowed:
             return None
         catalog = _agents_catalog_for_prompt(available_agents)
-        mem_rows = global_memory[:_MAX_MEMORY_ROWS] if global_memory else []
+        mem_rows = global_memory[-_MAX_MEMORY_ROWS:] if global_memory else []
         summary_blob = (
             json.dumps(execution_summary, ensure_ascii=False, default=str)[:8000]
             if execution_summary
@@ -278,7 +277,7 @@ class LlmSubAgentPlanner:
 
         system = (
             "You are the Director router. The user is continuing an existing task. "
-            "Use global_memory (newest first; slim rows: task_id, agent_id, created_at, execution_result only) "
+            "Use global_memory (chronological order, oldest first → newest last; slim rows: task_id, agent_id, created_at, execution_result only) "
             "and the latest execution summary "
             "to decide the single best next pipeline agent. "
             "Respond with JSON only, no markdown: "
@@ -293,7 +292,7 @@ class LlmSubAgentPlanner:
             + (task_intent_text or "").strip()[:12000]
             + "\n\nLatest execution summary (may be null):\n"
             + summary_blob
-            + "\n\nglobal_memory (newest first):\n"
+            + "\n\nglobal_memory (chronological, oldest → newest):\n"
             + mem_blob
             + "\n\nUser follow-up message:\n"
             + (message_content or "").strip()[:12000]

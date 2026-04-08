@@ -56,7 +56,6 @@ def _agents_catalog_for_prompt(agents: List[Dict[str, Any]]) -> List[Dict[str, A
             {
                 "id": aid,
                 "description": str(a.get("description") or "")[:500],
-                "asset_key": str(a.get("asset_key") or ""),
                 "capabilities": a.get("capabilities")
                 if isinstance(a.get("capabilities"), list)
                 else [],
@@ -84,7 +83,7 @@ def _memory_and_execution_blobs(
     global_memory: List[Dict[str, Any]],
     execution_summary: Optional[Dict[str, Any]],
 ) -> tuple[str, str]:
-    mem_rows = global_memory[:_MAX_MEMORY_ROWS] if global_memory else []
+    mem_rows = global_memory[-_MAX_MEMORY_ROWS:] if global_memory else []
     mem_blob = json.dumps(mem_rows, ensure_ascii=False, default=str)
     if len(mem_blob) > _MAX_JSON_CHARS:
         mem_blob = mem_blob[:_MAX_JSON_CHARS] + "\n…(truncated)"

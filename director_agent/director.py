@@ -127,7 +127,7 @@ class DirectorAgent:
         target_task_id = self._extract_target_task_id(latest_message) if latest_message else None
         task_summary = self._get_latest_task_execution_summary(target_task_id) if target_task_id else None
         memory_brief = self._get_memory_brief_for_task(target_task_id)
-        global_memory = memory_brief.get("global_memory", []) if isinstance(memory_brief, dict) else []
+        global_memory = memory_brief.get("global_memory_brief", []) if isinstance(memory_brief, dict) else []
 
         # Step 4: Perform reasoning and planning
         planning_result = self.reasoning_engine.reason_and_plan(
@@ -413,7 +413,7 @@ class DirectorAgent:
             task_intent = _task_stack_description_to_assistant_text(task.get("description"))
             if routing_mode == "followup":
                 brief = self._get_memory_brief_for_task(task_id)
-                gm = brief.get("global_memory") if isinstance(brief, dict) else []
+                gm = brief.get("global_memory_brief") if isinstance(brief, dict) else []
                 if not isinstance(gm, list):
                     gm = []
                 summary = self._get_latest_task_execution_summary(task_id)
@@ -557,14 +557,14 @@ class DirectorAgent:
         task_id: Optional[str],
     ) -> Dict[str, Any]:
         if not task_id:
-            return {"global_memory": []}
+            return {"global_memory_brief": []}
         try:
             return self.api_client.get_workspace_memory_brief(
                 task_id=task_id,
             )
         except Exception as exc:
             logger.warning("Failed to fetch workspace memory brief for task %s: %s", task_id, exc)
-            return {"global_memory": []}
+            return {"global_memory_brief": []}
 
     def _handle_reflection_summary(self, reflection_summary: Dict[str, Any]):
         """

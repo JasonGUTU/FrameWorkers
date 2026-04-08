@@ -230,7 +230,7 @@ class BackendAPIClient:
 
         On success, the JSON includes ``task_id``, ``execution_id``, ``status``, ``error``,
         ``error_reasoning`` (reserved, often null), ``workspace_id``, ``global_memory_brief``
-        (memory rows without ``content``). Sub-agent ``results`` are not in this response; use
+        (chronological list of slim memory rows). Sub-agent ``results`` are not in this response; use
         ``get_executions_by_task`` for full payloads.
         """
         data: Dict[str, Any] = {
@@ -265,7 +265,7 @@ class BackendAPIClient:
         agent_id: Optional[str] = None,
         limit: Optional[int] = None,
     ) -> Dict[str, Any]:
-        """Fetch ``global_memory`` brief (slim rows; newest first). Omit ``limit`` for server default (20)."""
+        """Fetch ``global_memory`` brief (slim rows; chronological, oldest → newest). Omit ``limit`` for server default (20)."""
         params: Dict[str, Any] = {}
         if task_id:
             params["task_id"] = task_id

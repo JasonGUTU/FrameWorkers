@@ -111,8 +111,9 @@ class NoStackAPIClient:
         """
         ``POST /api/assistant/execute`` — on **HTTP 200**, the body is ``process_results`` output:
         ``task_id``, ``execution_id``, ``status``, ``error``, ``error_reasoning`` (reserved, often
-        ``null``), ``workspace_id``, ``global_memory_brief`` (``{"global_memory": [...]}`` rows
-        **without** ``content`` / ``artifact_locations``, same as ``GET .../memory/brief``). Sub-agent output is **not**
+        ``null``), ``workspace_id``, ``global_memory_brief`` (a chronological list of slim rows
+        ``[{execution_id, agent_id, task_id, status, created_at}, ...]`` — same shape as the
+        ``global_memory_brief`` field returned by ``GET .../memory/brief``). Sub-agent output is **not**
         inlined; use ``GET /api/assistant/executions/task/{task_id}`` and read the latest row's
         ``results``.
 
@@ -152,7 +153,7 @@ class NoStackAPIClient:
         agent_id: Optional[str] = None,
         limit: Optional[int] = None,
     ) -> Dict[str, Any]:
-        """``global_memory`` slim rows (newest first). Omit ``limit`` to use server default (20)."""
+        """``global_memory`` slim rows (chronological, oldest → newest). Omit ``limit`` to use server default (20)."""
         params: Dict[str, Any] = {}
         if task_id:
             params["task_id"] = task_id

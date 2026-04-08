@@ -107,7 +107,7 @@ def build_merge_user_prompt(
         + latest_line[:12000]
         + "\n\nLatest execution summary (may be null):\n"
         + summary_blob
-        + "\n\nglobal_memory (newest first; slim rows: task_id, agent_id, created_at, execution_result only):\n"
+        + "\n\nglobal_memory (chronological, oldest → newest; slim rows: execution_id, agent_id, task_id, status, created_at):\n"
         + mem_blob
         + "\n\nProduce merged_goal JSON only."
     )
@@ -136,6 +136,6 @@ def build_routing_user_prompt(
         + continuation_note
         + "\n\nLatest execution summary (may be null):\n"
         + summary_blob
-        + "\n\nglobal_memory (newest first; slim rows: task_id, agent_id, created_at, execution_result only):\n"
+        + "\n\nglobal_memory (chronological, oldest → newest; slim rows: execution_id, agent_id, task_id, status, created_at):\n"
         + mem_blob
     )

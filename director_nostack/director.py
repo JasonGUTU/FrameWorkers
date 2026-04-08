@@ -54,7 +54,7 @@ def _post_director_quiet(client: NoStackAPIClient, content: str) -> None:
 
 
 def _global_memory_rows(brief: Dict[str, Any]) -> List[Dict[str, Any]]:
-    gm = brief.get("global_memory") if isinstance(brief, dict) else []
+    gm = brief.get("global_memory_brief") if isinstance(brief, dict) else []
     return gm if isinstance(gm, list) else []
 
 
@@ -125,20 +125,18 @@ def _short_chat_reply(payload: Dict[str, Any], max_chars: int = 6000) -> str:
     ]
     if err:
         lines.append(f"error: {err}")
-    brief = payload.get("global_memory_brief")
-    if isinstance(brief, dict):
-        gm = brief.get("global_memory")
-        if isinstance(gm, list) and gm:
-            rows_out: List[Dict[str, Any]] = []
-            for row in gm[:40]:
-                if isinstance(row, dict):
-                    rows_out.append(dict(row))
-            blob = json.dumps(rows_out, ensure_ascii=False, default=str)
-            if len(blob) > max_chars:
-                blob = blob[: max_chars - 20] + "\n…(truncated)"
-            lines.append(
-                f"global_memory_brief ({len(gm)} slim rows):\n" + blob
-            )
+    gm = payload.get("global_memory_brief")
+    if isinstance(gm, list) and gm:
+        rows_out: List[Dict[str, Any]] = []
+        for row in gm[:40]:
+            if isinstance(row, dict):
+                rows_out.append(dict(row))
+        blob = json.dumps(rows_out, ensure_ascii=False, default=str)
+        if len(blob) > max_chars:
+            blob = blob[: max_chars - 20] + "\n…(truncated)"
+        lines.append(
+            f"global_memory_brief ({len(gm)} slim rows):\n" + blob
+        )
     body = "\n".join(lines)
     if len(body) > 12000:
         return body[:12000] + "\n…(truncated)"
