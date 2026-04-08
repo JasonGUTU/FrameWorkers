@@ -18,12 +18,64 @@ from agents import get_agent_registry
 from agents.contracts import InputBundleV2
 from agents.base_agent import MaterializeContext
 from inference.clients import LLMClient as PipelineLLMClient
+from inference.generation.image_generators.service import MockImageService
+from inference.generation.video_generators.service import MockVideoService
+from inference.generation.audio_generators.service import MockAudioService
 
 logger = logging.getLogger(__name__)
 
 
 class AssistantBadExecuteFieldsError(Exception):
     """``execute_fields`` violated a strict wire rule (e.g. ``text`` must be a string)."""
+
+
+# Media generation services (fal.ai-backed image/video/audio) are mocked by
+# default so the pipeline can run end-to-end without burning credits. The
+# LLM-driven planning inside KeyFrame / Video / Audio agents still runs for
+# real — only the final generate_* / assemble_* calls that produce bytes
+# are replaced with placeholder PNG / MP4 / WAV headers. Set
+# ``FW_USE_REAL_MEDIA_GEN=1`` to restore real providers.
+_MOCK_MEDIA_SERVICE_BY_KEY: Dict[str, type] = {
+    "image_service": MockImageService,
+    "video_service": MockVideoService,
+    "audio_service": MockAudioService,
+}
+
+
+def _build_media_services_override(descriptor: Any) -> Optional[Dict[str, Any]]:
+    """Build a ``services_override`` dict for ``build_equipped_agent`` that
+    replaces fal.ai-backed media services with ``Mock*`` placeholders.
+
+    Default behaviour is mocks-on (returns a dict mapping every known
+    media service key to a fresh ``Mock*`` instance). Setting the env var
+    ``FW_USE_REAL_MEDIA_GEN=1`` restores real providers by returning
+    ``None`` (no override). Descriptors that declare no media service
+    factories also get ``None``.
+    """
+    raw = os.getenv("FW_USE_REAL_MEDIA_GEN", "").strip().lower()
+    if raw in {"1", "true", "yes", "on"}:
+        return None
+
+    # Shim descriptors used in unit tests may not declare service_factories;
+    # fall through with no override in that case.
+    service_factories = getattr(descriptor, "service_factories", None)
+    if not service_factories:
+        return None
+
+    override: Dict[str, Any] = {}
+    for svc_key in service_factories.keys():
+        mock_cls = _MOCK_MEDIA_SERVICE_BY_KEY.get(svc_key)
+        if mock_cls is not None:
+            override[svc_key] = mock_cls()
+
+    if override:
+        agent_id = getattr(descriptor, "agent_id", "?")
+        logger.info(
+            "Mocking media services %s for %s; set FW_USE_REAL_MEDIA_GEN=1 to use real providers",
+            sorted(override.keys()),
+            agent_id,
+        )
+    return override or None
 
 
 class AssistantService:
@@ -158,7 +210,14 @@ class AssistantService:
         hydrated = self.workspace.hydrate_indexed_assets(ib_mapped.context)
         input_bundle_v2 = self._mapping_to_input_bundle_v2(task_id, hydrated)
 
-        agent = descriptor.build_equipped_agent(self.pipeline_llm_client)
+        services_override = _build_media_services_override(descriptor)
+        if services_override is not None:
+            agent = descriptor.build_equipped_agent(
+                self.pipeline_llm_client,
+                services_override=services_override,
+            )
+        else:
+            agent = descriptor.build_equipped_agent(self.pipeline_llm_client)
         typed_input = self._build_descriptor_input(
             descriptor,
             task_id,
