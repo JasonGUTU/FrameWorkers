@@ -138,15 +138,18 @@ class VideoEvaluator(BaseEvaluator[VideoAgentOutput]):
         final_ok = check_uri(final.get("uri", "")) == "success"
 
         # --- Compute scores ---
+        # Vacuous case: empty plan → 1.0 (nothing to fail). A real "no
+        # shots were planned" failure should be caught upstream by the
+        # structural L1 check, not here.
         clip_success_rate = (
             total_clips_success / total_clips_planned
             if total_clips_planned
-            else 0.0
+            else 1.0
         )
         scene_assembly_rate = (
             scene_clips_success / scene_clips_planned
             if scene_clips_planned
-            else 0.0
+            else 1.0
         )
 
         dimensions = {
@@ -176,7 +179,14 @@ class VideoEvaluator(BaseEvaluator[VideoAgentOutput]):
             },
         }
 
-        overall_pass = clip_success_rate >= self.ASSET_PASS_THRESHOLD
+        # final_ok is now load-bearing on overall_pass — previously it was
+        # only mentioned in the summary string, so a run could miss the
+        # final assembled video and still report overall_pass=True (which
+        # let "0/N shot clips, final=MISSING" silently pass as COMPLETED).
+        overall_pass = (
+            clip_success_rate >= self.ASSET_PASS_THRESHOLD
+            and final_ok
+        )
         summary = (
             f"Video asset eval: {total_clips_success}/{total_clips_planned} "
             f"shot clips ({clip_success_rate:.0%}), "

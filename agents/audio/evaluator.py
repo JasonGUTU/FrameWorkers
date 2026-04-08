@@ -145,9 +145,13 @@ class AudioEvaluator(BaseEvaluator[AudioAgentOutput]):
         delivery_expected = bool(delivery.get("uri"))
 
         # --- Compute scores ---
-        narr_rate = narr_success / narr_planned if narr_planned else 0.0
-        music_rate = music_success / music_planned if music_planned else 0.0
-        mix_rate = mix_success / mix_planned if mix_planned else 0.0
+        # Vacuous case: when nothing is planned (e.g. a purely visual short
+        # with no dialogue → 0 narration segments) the dimension is
+        # vacuously satisfied. The previous default of 0.0 turned an
+        # intentional silence into a hard failure.
+        narr_rate = narr_success / narr_planned if narr_planned else 1.0
+        music_rate = music_success / music_planned if music_planned else 1.0
+        mix_rate = mix_success / mix_planned if mix_planned else 1.0
 
         dimensions = {
             "tts_generation_success": {
@@ -188,7 +192,15 @@ class AudioEvaluator(BaseEvaluator[AudioAgentOutput]):
             },
         }
 
-        overall_pass = narr_rate >= self.ASSET_PASS_THRESHOLD and music_rate >= 0.5
+        # final_ok and delivery_ok are now load-bearing on overall_pass —
+        # previously they were only in the summary string, so a run could
+        # produce no final mix at all and still report overall_pass=True.
+        overall_pass = (
+            narr_rate >= self.ASSET_PASS_THRESHOLD
+            and music_rate >= 0.5
+        )
+        if scenes:
+            overall_pass = overall_pass and final_ok
         if delivery_expected:
             overall_pass = overall_pass and delivery_ok
         summary = (

@@ -191,7 +191,10 @@ class KeyframeEvaluator(BaseEvaluator[KeyFrameAgentOutput]):
                         total_error += 1
 
         # --- Compute scores ---
-        success_rate = total_success / total_planned if total_planned else 0.0
+        # Vacuous case: empty plan → 1.0 (nothing to fail). A real "no
+        # keyframes were planned" failure should be caught upstream by
+        # the structural L1 check, not here.
+        success_rate = total_success / total_planned if total_planned else 1.0
 
         dimensions = {
             "image_generation_success": {

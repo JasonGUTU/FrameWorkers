@@ -235,6 +235,14 @@ class AssistantService:
             media_assets = getattr(result, "media_assets", [])
             attempts = getattr(result, "attempts", None)
             eval_result = getattr(result, "eval_result", None)
+            # ``passed`` is the agent's quality-gate verdict from
+            # base_agent.run() — False when L1/L2/L3 evaluation failed
+            # all retries OR materialization raised. The previous code
+            # silently dropped this and let execute_agent stamp
+            # status=COMPLETED, producing the "0/5 shot clips, status
+            # COMPLETED" silent-failure pattern. Surface it via the
+            # output dict so execute_agent can translate False → FAILED.
+            passed = bool(getattr(result, "passed", True))
 
             if asset_dict is not None:
                 output = asset_dict
@@ -255,6 +263,7 @@ class AssistantService:
                         debug_payload["eval_summary"] = summary
             if debug_payload:
                 output["_execution_debug"] = debug_payload
+            output["_quality_gate_passed"] = passed
             return output
         finally:
             if temp_dir:
@@ -398,10 +407,27 @@ class AssistantService:
             # Execute selected descriptor-based pipeline agent.
             results = self._execute_pipeline_descriptor(descriptor, inputs)
 
-            # Update execution with results
-            execution.status = ExecutionStatus.COMPLETED
+            # Translate the agent's quality-gate verdict into execution
+            # status. base_agent.run() returns ExecutionResult.passed=False
+            # when L1/L2/L3 evaluation failed every retry; surfacing it
+            # here turns the previously-silent "0/N clips, status COMPLETED"
+            # case into an honest FAILED. Partial results (any media that
+            # did materialize) are still attached, so process_results can
+            # persist whatever survived.
+            quality_gate_passed = bool(results.pop("_quality_gate_passed", True))
             execution.results = results
             execution.completed_at = datetime.now()
+            if quality_gate_passed:
+                execution.status = ExecutionStatus.COMPLETED
+            else:
+                execution.status = ExecutionStatus.FAILED
+                debug = results.get("_execution_debug", {}) if isinstance(results, dict) else {}
+                summary = (
+                    debug.get("eval_summary")
+                    if isinstance(debug, dict)
+                    else ""
+                ) or "agent quality gate failed (no eval summary)"
+                execution.error = f"quality gate failed: {summary}"
             self.storage.update_execution(execution)
         except Exception as e:
             execution.status = ExecutionStatus.FAILED
