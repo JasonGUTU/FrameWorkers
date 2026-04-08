@@ -2,13 +2,15 @@
 
 Responsibilities:
   * Append one ``LogEntry`` per recorded event to ``logs.jsonl``.
-  * Support both legacy fields (``operation_type``/``resource_type``) and
-    namespaced events (``event``, ``level``, ``execution_id``, ``duration_ms``).
-  * Filter logs by any of these fields when serving queries.
+  * Categorize every entry by its namespaced ``event`` string
+    (e.g. ``execution.completed``, ``artifact.persisted``,
+    ``memory.written``).
+  * Filter logs by ``event`` / ``agent_id`` / ``task_id`` / ``level`` /
+    ``execution_id`` when serving queries.
 
 What it does NOT do:
-  * Decide what to log — callers (Workspace methods, AssetManager
-    callback) are responsible for choosing event names and details.
+  * Decide what to log — callers (Workspace methods, ArtifactWriter
+    callbacks) are responsible for choosing event names and details.
   * Aggregate or summarize — read-side filtering only.
 
 Used by:
@@ -29,19 +31,15 @@ logger = logging.getLogger(__name__)
 
 
 class LogManager:
-    """
-    Manages logs and records in JSON Lines format.
+    """Append-only ``logs.jsonl`` writer / reader for one workspace.
 
-    Each log entry supports both the legacy ``operation_type`` + ``resource_type``
-    pair and the newer namespaced ``event`` field (e.g. ``execution.completed``,
-    ``artifact.persisted``).  Callers may use either; both are written to disk.
+    Every entry carries a namespaced ``event`` string. Recommended namespaces:
 
-    New recommended fields
-    ----------------------
-    event        : namespaced event string, e.g. ``"execution.completed"``
-    level        : ``"INFO"`` | ``"WARN"`` | ``"ERROR"``  (default ``"INFO"``)
-    execution_id : the execution that triggered this log entry
-    duration_ms  : elapsed time for the operation, when known
+    * ``workspace.*`` — workspace lifecycle (e.g. ``workspace.created``)
+    * ``user.*`` — caller-driven events (e.g. ``user.upload``)
+    * ``execution.*`` — agent execution lifecycle
+    * ``artifact.*`` — file persistence events emitted by ArtifactWriter
+    * ``memory.*`` — global memory writes
     """
 
     def __init__(self, workspace_id: str, runtime_base_path: Path):
@@ -63,20 +61,15 @@ class LogManager:
         d: Dict[str, Any] = {
             "id": log_entry.id,
             "timestamp": log_entry.timestamp.isoformat(),
-            "operation_type": log_entry.operation_type,
-            "resource_type": log_entry.resource_type,
+            "event": log_entry.event,
             "resource_id": log_entry.resource_id,
             "details": log_entry.details,
             "agent_id": log_entry.agent_id,
             "task_id": log_entry.task_id,
             "level": log_entry.level,
         }
-        if log_entry.event is not None:
-            d["event"] = log_entry.event
         if log_entry.execution_id is not None:
             d["execution_id"] = log_entry.execution_id
-        if log_entry.duration_ms is not None:
-            d["duration_ms"] = log_entry.duration_ms
         return d
 
     @staticmethod
@@ -86,36 +79,40 @@ class LogManager:
             return None
         data = json.loads(line)
         data["timestamp"] = datetime.fromisoformat(data["timestamp"])
-        # Provide defaults for new fields so old log lines parse cleanly
+        # Drop any historical fields that no longer live on LogEntry so
+        # legacy logs.jsonl files written before the schema cleanup still
+        # parse cleanly.
+        for legacy in ("operation_type", "resource_type"):
+            data.pop(legacy, None)
+        # Old jsonl rows lacked a top-level event — historically the
+        # categorisation lived in details.event_type. Promote it so the
+        # row can still be filtered by event after parsing.
+        if not data.get("event"):
+            details = data.get("details") or {}
+            event_type = details.get("event_type") if isinstance(details, dict) else None
+            data["event"] = str(event_type or "")
         data.setdefault("level", "INFO")
-        data.setdefault("event", None)
         data.setdefault("execution_id", None)
-        data.setdefault("duration_ms", None)
+        data.pop("duration_ms", None)
         return LogEntry(**data)
 
     @staticmethod
     def _matches_filters(
         log_entry: LogEntry,
         *,
-        operation_type: Optional[str] = None,
-        resource_type: Optional[str] = None,
+        event: Optional[str] = None,
         agent_id: Optional[str] = None,
         task_id: Optional[str] = None,
         level: Optional[str] = None,
-        event: Optional[str] = None,
         execution_id: Optional[str] = None,
     ) -> bool:
-        if operation_type and log_entry.operation_type != operation_type:
-            return False
-        if resource_type and log_entry.resource_type != resource_type:
+        if event and log_entry.event != event:
             return False
         if agent_id and log_entry.agent_id != agent_id:
             return False
         if task_id and log_entry.task_id != task_id:
             return False
         if level and log_entry.level != level:
-            return False
-        if event and log_entry.event != event:
             return False
         if execution_id and log_entry.execution_id != execution_id:
             return False
@@ -153,37 +150,30 @@ class LogManager:
 
     def add_log(
         self,
-        operation_type: str,
-        resource_type: str,
+        *,
+        event: str,
         resource_id: Optional[str] = None,
         details: Optional[Dict[str, Any]] = None,
         agent_id: Optional[str] = None,
         task_id: Optional[str] = None,
-        # New recommended fields
-        event: Optional[str] = None,
         level: str = "INFO",
         execution_id: Optional[str] = None,
-        duration_ms: Optional[int] = None,
     ) -> LogEntry:
-        """Add a log entry.
-
-        Legacy callers pass ``operation_type`` + ``resource_type``.
-        New callers should also pass ``event`` (namespaced string) and
-        optionally ``level``, ``execution_id``, ``duration_ms``.
+        """Append a log entry. ``event`` is required and must be a
+        non-empty namespaced string (e.g. ``"artifact.persisted"``).
         """
+        if not event:
+            raise ValueError("LogManager.add_log requires a non-empty event")
         log_entry = LogEntry(
             id=f"log_{uuid.uuid4().hex[:12]}",
             timestamp=datetime.now(),
-            operation_type=operation_type,
-            resource_type=resource_type,
+            event=event,
             resource_id=resource_id,
             details=details or {},
             agent_id=agent_id,
             task_id=task_id,
-            event=event,
             level=level,
             execution_id=execution_id,
-            duration_ms=duration_ms,
         )
         self._logs.append(log_entry)
         self._append_log_to_file(log_entry)
@@ -191,13 +181,12 @@ class LogManager:
 
     def get_logs(
         self,
-        operation_type: Optional[str] = None,
-        resource_type: Optional[str] = None,
+        *,
+        event: Optional[str] = None,
         agent_id: Optional[str] = None,
         task_id: Optional[str] = None,
         limit: Optional[int] = None,
         level: Optional[str] = None,
-        event: Optional[str] = None,
         execution_id: Optional[str] = None,
     ) -> List[LogEntry]:
         """Get logs with optional filters."""
@@ -206,12 +195,10 @@ class LogManager:
             for log_entry in self._logs
             if self._matches_filters(
                 log_entry,
-                operation_type=operation_type,
-                resource_type=resource_type,
+                event=event,
                 agent_id=agent_id,
                 task_id=task_id,
                 level=level,
-                event=event,
                 execution_id=execution_id,
             )
         ]

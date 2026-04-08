@@ -43,9 +43,9 @@ class _DummyPipelineAgent:
 
 
 class DummyDescriptor:
-    def __init__(self, asset_key: str):
-        self.asset_key = asset_key
+    def __init__(self, input_needs_description: str = ""):
         self.catalog_entry = "dummy descriptor"
+        self.input_needs_description = input_needs_description
 
     def build_equipped_agent(self, _llm):
         return _DummyPipelineAgent()
@@ -106,7 +106,7 @@ def stub_input_package_llm(monkeypatch, request):
     """Avoid real LLM calls for per-execution input packaging.
 
     Returns the new InputResolver format: {resolved_artifacts, selected_artifact_paths, rationale}.
-    Loads JSON payloads from the artifact_registry for the given task_id.
+    Loads JSON payloads from global_memory for the given task_id.
 
     Skipped for any live e2e flag so the real InputResolver LLM path is
     exercised end-to-end.
@@ -115,71 +115,104 @@ def stub_input_package_llm(monkeypatch, request):
         return  # let real InputResolver run
 
     def _stub(self, agent_id, task_id, workspace):
-        """Test stub: deterministically group registered artifacts by the
-        producing file's ``asset_key`` metadata and present them under the
-        same label name (consumer is expected to declare matching labels in
-        its input_needs_description).
+        """Test stub for InputResolver — caption substring match against [label] headers.
+
+        Mirrors production semantics: parses the consumer agent's
+        ``input_needs_description`` for ``[label] (single|collection)`` headers,
+        then assigns each registered artifact (JSON snapshots only) to the
+        first label whose name appears (case-insensitive) in the artifact's
+        ``what``/``why`` caption text. ``single`` labels keep the first match;
+        ``collection`` labels accumulate all matches.
+
+        This is a deliberate simplification of the real LLM-driven resolver:
+        tests that need resolution to fire must seed artifact captions whose
+        text contains the consumer's label name as a substring.
         """
         import json
+        import re
+
         grouped: dict[str, object] = {}
         selected_artifact_paths: list[str] = []
 
-        # Build path → file metadata index so we can look up asset_key per path
-        path_to_meta: dict[str, dict] = {}
+        # 1) Parse consumer's [label] (single|collection) headers.
         try:
-            for file_item in workspace.list_files() or []:
-                meta = getattr(file_item, "metadata", {}) or {}
-                if not isinstance(meta, dict):
-                    continue
-                fp = str(getattr(file_item, "file_path", "") or "")
-                if fp:
-                    path_to_meta[fp] = meta
+            descriptor = self.agent_registry.get_descriptor(agent_id)
         except Exception:
-            pass
+            descriptor = None
+        needs = str(getattr(descriptor, "input_needs_description", "") or "")
+        label_re = re.compile(
+            r"^\s*\[(?P<label>[a-zA-Z_][a-zA-Z0-9_]*)\]\s*\((?P<card>single|collection)\)\s*$",
+            re.MULTILINE,
+        )
+        cardinality: dict[str, str] = {
+            m.group("label"): m.group("card").lower()
+            for m in label_re.finditer(needs)
+        }
+        if not cardinality:
+            return {
+                "resolved_artifacts": {},
+                "selected_artifact_paths": [],
+                "rationale": "test stub: no [label] headers in input_needs_description",
+            }
 
+        # 2) Walk global memory entries scoped to this task; assign artifacts
+        #    to the first label whose name occurs in the artifact's caption.
         try:
-            entries = workspace.artifact_registry.list_all()
+            entries = workspace.global_memory.list_all()
             for entry in entries:
                 if entry.task_id and entry.task_id != task_id:
                     continue
                 for artifact in entry.artifacts:
                     path = str(getattr(artifact, "path", "") or "").strip()
                     mime = str(getattr(artifact, "mime", "") or "").strip()
-                    what = str(getattr(artifact, "what", "") or "")
-                    why = str(getattr(artifact, "why", "") or "")
-                    scope = str(getattr(artifact, "scope", "global") or "global")
                     if not path:
                         continue
-                    meta = path_to_meta.get(path, {})
-                    label = str(meta.get("asset_key") or "").strip()
-                    if not label:
+                    # Only JSON snapshots become resolved labels in the stub.
+                    if not (mime == "application/json" or path.lower().endswith(".json")):
                         continue
+                    what = str(getattr(artifact, "what", "") or "")
+                    why = str(getattr(artifact, "why", "") or "")
+                    caption_text = f"{what} {why}".lower()
+
+                    matched_label: str | None = None
+                    for label in cardinality.keys():
+                        if label.lower() in caption_text:
+                            matched_label = label
+                            break
+                    if matched_label is None:
+                        continue
+
                     entry_dict: dict[str, object] = {
-                        "what": what, "why": why, "scope": scope,
+                        "what": what,
+                        "why": why,
+                        "scope": str(getattr(artifact, "scope", "global") or "global"),
                         "path": path,
-                        "mime": mime or ("application/json" if path.lower().endswith(".json") else ""),
+                        "mime": mime or "application/json",
                     }
-                    if mime == "application/json" or path.lower().endswith(".json"):
-                        try:
-                            raw = workspace.file_manager.read_binary_from_uri(path)
-                            if raw:
-                                data = json.loads(raw.decode("utf-8"))
-                                if isinstance(data, dict):
-                                    entry_dict["payload"] = data
-                        except Exception:
-                            pass
-                        grouped.setdefault(label, entry_dict)
+                    try:
+                        raw = workspace.file_manager.read_binary_from_uri(path)
+                        if raw:
+                            data = json.loads(raw.decode("utf-8"))
+                            if isinstance(data, dict):
+                                entry_dict["payload"] = data
+                    except Exception:
+                        pass
+
+                    if cardinality[matched_label] == "single":
+                        if matched_label in grouped:
+                            continue  # keep first match for singletons
+                        grouped[matched_label] = entry_dict
                     else:
-                        grouped.setdefault(label, [])
-                        if isinstance(grouped[label], list):
-                            grouped[label].append(entry_dict)
+                        bucket = grouped.setdefault(matched_label, [])
+                        if isinstance(bucket, list):
+                            bucket.append(entry_dict)
                     selected_artifact_paths.append(path)
         except Exception:
             pass
         return {
             "resolved_artifacts": grouped,
             "selected_artifact_paths": list(dict.fromkeys(selected_artifact_paths)),
-            "rationale": "test stub: group all registered artifacts by producer asset_key",
+            "rationale": "test stub: caption substring match against [label] headers",
         }
 
     monkeypatch.setattr(
@@ -194,8 +227,17 @@ def assistant_env(tmp_path, monkeypatch):
     storage = AssistantStateStore(runtime_base_path=tmp_path / "Runtime")
     registry = DummyRegistry(
         descriptors={
-            "UpstreamAgent": DummyDescriptor(asset_key="upstream_asset"),
-            "DummyAgent": DummyDescriptor(asset_key="dummy_asset"),
+            # Producer: emits artifacts; no input needs to declare.
+            "UpstreamAgent": DummyDescriptor(),
+            # Consumer: declares one [upstream_asset] (single) label so the
+            # InputResolver stub can pick the producer's snapshot whose
+            # caption text contains "upstream_asset".
+            "DummyAgent": DummyDescriptor(
+                input_needs_description=(
+                    "[upstream_asset] (single)\n"
+                    "The JSON document produced by UpstreamAgent."
+                ),
+            ),
         },
     )
 

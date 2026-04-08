@@ -43,9 +43,8 @@ class _DummyPipelineAgent:
 class E2eDummyDescriptor:
     """Minimal pipeline descriptor for director_nostack HTTP e2e (matches assistant e2e style)."""
 
-    def __init__(self, name: str, asset_key: str):
+    def __init__(self, name: str):
         self.agent_id = name
-        self.asset_key = asset_key
         self.catalog_entry = (
             f"{name}: test pipeline agent for creative briefs (e.g. ~10s video mood pieces); "
             "returns a stub structured result for integration smoke."
@@ -74,7 +73,7 @@ class E2eDummyRegistry:
         agents = []
         capabilities: set[str] = set()
         for name, desc in self._descriptors.items():
-            caps = ["pipeline_agent", desc.asset_key]
+            caps = ["pipeline_agent"]
             capabilities.update(caps)
             agents.append(
                 {
@@ -83,7 +82,6 @@ class E2eDummyRegistry:
                     "description": (desc.catalog_entry or "")[:200],
                     "agent_type": "pipeline",
                     "capabilities": list(caps),
-                    "asset_key": desc.asset_key,
                 }
             )
         return {
@@ -121,12 +119,12 @@ def _stub_assistant_llm_hooks_for_nostack_e2e(monkeypatch):
     def _stub_persist(self, workspace, execution, descriptor, base_plan):
         return base_plan
 
-    def _stub_inputs(self, agent_id, task_id, workspace, packaged_data):
+    def _stub_inputs(self, agent_id, task_id, workspace):
         import json as _json
         resolved_artifacts: list[dict] = []
         selected_artifact_paths: list[str] = []
         try:
-            entries = workspace.artifact_registry.list_all()
+            entries = workspace.global_memory.list_all()
             for entry in entries:
                 if entry.task_id and entry.task_id != task_id:
                     continue
@@ -179,10 +177,7 @@ def _stub_assistant_llm_hooks_for_nostack_e2e(monkeypatch):
 def director_nostack_registry() -> E2eDummyRegistry:
     return E2eDummyRegistry(
         descriptors={
-            "NostackE2eAgent": E2eDummyDescriptor(
-                name="NostackE2eAgent",
-                asset_key="nostack_e2e_asset",
-            )
+            "NostackE2eAgent": E2eDummyDescriptor(name="NostackE2eAgent"),
         }
     )
 

@@ -128,7 +128,7 @@ class KeyframesPackage(BaseModel):
     metrics: KeyframesMetrics = Field(default_factory=KeyframesMetrics)
     artifact_caption: ArtifactCaption = Field(default_factory=ArtifactCaption)
     # Per-media-artifact captions keyed by sys_id (e.g. "img_char_001_global").
-    # Populated by recompute_metrics(); read by asset_manager to build ArtifactRef entries.
+    # Populated by recompute_metrics(); read by ArtifactWriter to build ArtifactRef entries.
     # Excluded from JSON snapshot to keep persisted files clean.
     per_artifact_captions: dict = Field(default_factory=dict, exclude=True)
 

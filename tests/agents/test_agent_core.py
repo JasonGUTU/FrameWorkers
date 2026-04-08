@@ -31,9 +31,8 @@ from agents.agent_registry import AgentRegistry
 
 
 class _DummyDescriptor:
-    def __init__(self, name: str, asset_key: str = "asset", catalog_entry: str = "desc"):
+    def __init__(self, name: str, catalog_entry: str = "desc"):
         self.agent_id = name
-        self.asset_key = asset_key
         self.catalog_entry = catalog_entry
 
     def build_equipped_agent(self, llm_client):
@@ -47,8 +46,8 @@ class TestAgentRegistryDescriptorModel:
     def test_register_and_list_pipeline_descriptors(self):
         registry = AgentRegistry()
         descriptors = {
-            "StoryAgent": _DummyDescriptor("StoryAgent", asset_key="story_blueprint"),
-            "AudioAgent": _DummyDescriptor("AudioAgent", asset_key="audio_package"),
+            "StoryAgent": _DummyDescriptor("StoryAgent"),
+            "AudioAgent": _DummyDescriptor("AudioAgent"),
         }
         registry.register_pipeline_agents(descriptors)
 
@@ -56,23 +55,22 @@ class TestAgentRegistryDescriptorModel:
             "AudioAgent",
             "StoryAgent",
         ]
-        assert registry.get_descriptor("StoryAgent").asset_key == "story_blueprint"
+        assert registry.get_descriptor("StoryAgent").agent_id == "StoryAgent"
         assert registry.get_descriptor("AudioAgent") is not None
         assert registry.get_descriptor("UnknownAgent") is None
 
     def test_gather_agents_info_returns_descriptor_metadata(self):
         registry = AgentRegistry()
         registry.register_pipeline_agents(
-            {"StoryAgent": _DummyDescriptor("StoryAgent", asset_key="story_blueprint")}
+            {"StoryAgent": _DummyDescriptor("StoryAgent")}
         )
 
         gathered = registry.gather_agents_info()
         assert gathered["total_agents"] == 1
         assert gathered["agent_ids"] == ["StoryAgent"]
         assert "pipeline_agent" in gathered["all_capabilities"]
-        assert "story_blueprint" in gathered["all_capabilities"]
-        assert gathered["agents"][0]["asset_key"] == "story_blueprint"
-        assert "asset_type" not in gathered["agents"][0]
+        assert gathered["agents"][0]["id"] == "StoryAgent"
+        assert "asset_key" not in gathered["agents"][0]
 
     def test_reload_clears_descriptors(self):
         registry = AgentRegistry()
@@ -133,8 +131,6 @@ class TestSubAgentDescriptor:
 
         desc = SubAgentDescriptor(
             agent_id="TestAgent",
-            asset_key="test",
         )
         assert desc.agent_id == "TestAgent"
-        assert desc.asset_key == "test"
         assert desc.materializer_factory is None

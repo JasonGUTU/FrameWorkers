@@ -18,7 +18,7 @@ What it does NOT do:
   * Maintain any machine-readable type system — producers and consumers
     communicate purely through natural language captions; the LLM is
     the only translator between them.
-  * Decide what to write into the registry — that's ``AssetManager``.
+  * Decide what to write into the registry — that's ``ArtifactWriter``.
   * Read raw bytes for media files — only loads JSON payloads on demand.
 
 Used by:
@@ -35,7 +35,7 @@ import re
 from typing import Any, Dict, List, Optional, TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from .artifact_registry import ArtifactRegistry
+    from .global_memory import GlobalMemory
     from .file_manager import FileManager
 
 logger = logging.getLogger(__name__)
@@ -68,7 +68,7 @@ class InputResolver:
 
     Usage
     -----
-    resolver = InputResolver(artifact_registry, file_manager, llm_client)
+    resolver = InputResolver(global_memory, file_manager, llm_client)
     resolved = resolver.resolve(
         agent_id="VideoAgent",
         task_id="task_1_xxx",
@@ -89,11 +89,11 @@ class InputResolver:
 
     def __init__(
         self,
-        artifact_registry: "ArtifactRegistry",
+        global_memory: "GlobalMemory",
         file_manager: "FileManager",
         llm_client: Any,
     ) -> None:
-        self._registry = artifact_registry
+        self._memory = global_memory
         self._file_manager = file_manager
         self._llm = llm_client
 
@@ -122,7 +122,7 @@ class InputResolver:
               "rationale": "...",
             }
         """
-        captions_index = self._registry.get_captions_index(task_id=task_id)
+        captions_index = self._memory.get_captions_index(task_id=task_id)
 
         if captions_index == "(no artifacts registered yet)":
             logger.info(
@@ -283,7 +283,7 @@ class InputResolver:
             }
 
         # Resolve all selected paths to ArtifactRef objects in one registry pass
-        refs = self._registry.get_by_paths(all_paths)
+        refs = self._memory.get_by_paths(all_paths)
         path_to_ref = {r.path: r for r in refs}
 
         # Build final dict keyed by consumer label

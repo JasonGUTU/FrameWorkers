@@ -17,7 +17,7 @@ invariants from regressing. The principles being guarded are:
       ``typed_input``, never a second ``input_bundle_v2`` channel.
 
   4.  Assistant layer is agent-agnostic — no ``if execution.agent_id ==
-      "<AgentName>"`` hard-codes in ``service.py`` / ``asset_manager.py``.
+      "<AgentName>"`` hard-codes in ``service.py`` / ``artifact_writer.py``.
       Agent-specific behavior must live in the agent's own descriptor /
       manifest.
 
@@ -237,7 +237,7 @@ def test_assistant_layer_has_no_agent_id_hardcodes():
     assistant_files = (
         _REPO / "dynamic-task-stack" / "src" / "assistant" / "service.py",
         _REPO / "dynamic-task-stack" / "src" / "assistant" / "routes.py",
-        _REPO / "dynamic-task-stack" / "src" / "assistant" / "workspace" / "asset_manager.py",
+        _REPO / "dynamic-task-stack" / "src" / "assistant" / "workspace" / "artifact_writer.py",
         _REPO / "dynamic-task-stack" / "src" / "assistant" / "workspace" / "workspace.py",
     )
     pattern = re.compile(

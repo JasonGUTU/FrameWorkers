@@ -330,15 +330,11 @@ function render() {
     global_memory_brief: {
       global_memory: [
         {
-          task_id: taskId,
-          agent_id: agentId,
-          created_at: "2026-04-07T12:00:00Z",
           execution_id: "exec_demo_placeholder",
-          content: {
-            what: "Story blueprint generated for watchmaker short",
-            why: "User requested a 10s cinematic clip with single-character arc",
-            context_note: "scope=task",
-          },
+          agent_id: agentId,
+          task_id: taskId,
+          status: "COMPLETED",
+          created_at: "2026-04-07T12:00:00Z",
         },
       ],
     },
@@ -408,8 +404,8 @@ function render() {
     ], "input-channel 统一后，sub-agent 只有一个输入源：InputResolver 选出来的 artifact") +
     stepCard("② LLM #1 选历史 artifact", [
       ["调用", "_resolve_inputs_for_agent_with_llm(agent_id, task_id, workspace)", "note"],
-      ["委托", "workspace.resolve_inputs_for_agent(input_needs_description, llm_client, source_text=\"\", model=input_package_model)", "note"],
-      ["输入源", "agent.input_needs_description + artifact_registry caption index（无 source_text / 无 hints）", "note"],
+      ["委托", "workspace.resolve_inputs_for_agent(agent_id, task_id, input_needs_description, llm_client, model=input_package_model)", "note"],
+      ["输入源", "agent.input_needs_description + artifact_registry caption index（不再有 source_text / hints 通道）", "note"],
       ["输出", "{ resolved_artifacts, selected_artifact_paths, rationale }", "returns"],
     ], "原始用户文本/媒体必须先经 IntakeTextAgent 或 POST /api/workspace/upload 落成 artifact，才能被 caption 召回") +
     stepCard("③ 写回 bundle", [
@@ -420,11 +416,13 @@ function render() {
     ], "execute_fields 仅作为不透明 overlay 保留（如未来的 overwrite hook），text/image/video/audio 已不再读");
 
   const phase2Html =
-    stepCard("dict → InputBundleV2 → sub-agent", [
-      ["①", "hydrate_indexed_assets + 映射 → InputBundleV2", "note"],
-      ["②", "descriptor.build_input(task_id, bundle) → TypedInput", "note"],
-      ["③", "await agent.run(typed_input, bundle, ctx) → ExecutionResult", "note"],
-    ], "Assistant 不关心 sub-agent 内部，只负责把 bundle 喂进去");
+    stepCard("_execute_pipeline_descriptor", [
+      ["①", "_map_pipeline_inputs → workspace.hydrate_indexed_assets(context) → _mapping_to_input_bundle_v2 → InputBundleV2", "note"],
+      ["②", "descriptor.build_equipped_agent(pipeline_llm_client) → agent", "note"],
+      ["③", "descriptor.build_input(task_id, input_bundle_v2) → typed_input", "note"],
+      ["④", "若 agent.materializer 非空：mkdtemp + 构造 MaterializeContext(task_id, typed_input, persist_binary)", "note"],
+      ["⑤", "await agent.run(typed_input, materialize_ctx=...) → ExecutionResult", "note"],
+    ], "Assistant 不关心 sub-agent 内部；agent.run 签名只有 typed_input + materialize_ctx，没有 bundle/ctx");
 
   const phase3Html =
     stepCard("process_results(execution, workspace, overwrite_existing_assets)", [
@@ -432,9 +430,9 @@ function render() {
       ["②", "_deterministic_output_persist_plan(execution, descriptor, asset_key) → base_plan", "note"],
       ["③", "_refine_output_persist_plan_with_llm → LLM #2 调整 relative_path（避免冲突 / 对齐 naming_policy）", "note"],
       ["④", "persist_execution_from_plan(plan, manifest_extractors, overwrite) → (paths, asset_index, extra_locs)；落盘后回调 _register_artifacts_callback 把 ArtifactRef 追加到 artifact_registry.jsonl", "note"],
-      ["⑤", "_sync_global_memory_after_execution → 直接读 execution.results.artifact_caption（agent 自产的 {what, why, scope}）→ add_memory_entry，无额外 LLM 调用", "note"],
-      ["⑥", "返回 { task_id, execution_id, status, error, workspace_id, global_memory_brief }", "returns"],
-    ], "_persist_plan_meta（policy version + plan digest）写入 execution.results；artifact_registry 同步后下一轮 Phase 1 的 caption index 就能召回");
+      ["⑤", "get_memory_brief(task_id) → memory_brief：用第 ④ 步刚回调登记进 global_memory 的 ArtifactRef 拼最终响应", "note"],
+      ["⑥", "返回 { task_id, execution_id, status, error, error_reasoning, workspace_id, global_memory_brief }", "returns"],
+    ], "global_memory 是唯一记录层（既是语义记录又是 artifact ledger），在第 ④ 步内部回调 _register_artifacts_callback → global_memory.register 时一次性写入；不再有独立的 _sync_global_memory_after_execution / add_memory_entry / artifact_caption 路径");
 
   phasesEl.outerHTML = sectionCard(
     "card-orange", "⚡",
@@ -475,15 +473,16 @@ function render() {
 
   /* ── Sub-agent section ── */
   const subagentIn = {
-    "descriptor.build_input": {
-      signature: "(task_id, input_bundle_v2: InputBundleV2) → TypedInput (Pydantic)",
-      typed_input_preview: {
-        task_id: mapped.task_id,
-        assets: hydratedAssets,
-        note: "hints（如 source_text）+ artifacts + context；时长/语言等由各 sub-agent 的 LLM 从正文推断",
-      },
+    "InputBundleV2 (dataclass)": {
+      fields: "task_id: str  ·  context: dict[str, Any]",
+      "context['resolved_artifacts']": "{ <label_name>: entry | [entry,...] }  —— key 是 consumer 在 input_needs_description 的 [label] 头里声明的名字；(single) → dict，(collection) → list",
+      "entry shape": "{ what, why, scope, path, mime, payload? }  —— payload 仅 JSON artifact 才有，已 load 好",
+      note: "唯一输入通道；没有 hints / source_text / 用户原始媒体直传槽。原始输入必须先经 IntakeAgent 落成 artifact，再由 LLM #1 通过 caption index 召回",
     },
-    "input_bundle_v2": "InputBundleV2 — bundle.artifacts 包含 HTTP 直传媒体；bundle._resolved_artifacts + bundle.input_package 由 LLM #1 通过 artifact_registry caption index 选出（按路径，不再有 role 概念）",
+    "descriptor.build_input": {
+      signature: "(task_id, input_bundle_v2: InputBundleV2) → TypedInput (Pydantic BaseModel)",
+      note: "descriptor 从 resolved_artifacts 按自己声明的 label 取出条目，组成强类型输入。Sub-agent 看不到 bundle / workspace / artifact_registry",
+    },
   };
 
   const subagentOut = {
@@ -508,52 +507,48 @@ function render() {
 
   /* ── Workspace section ── */
   const wsRead = {
-    "get_memory_brief(task_id, agent_id, limit)": {
-      returns: "{ global_memory: [...] }  — 语义决策的薄行视图",
-      note: "Director 轮询/规划用；execute 装配用 list_memory_entries（全字段）",
+    "get_global_memory_brief(task_id?, agent_id?, limit?)": {
+      returns: "{ global_memory: [{ task_id, agent_id, execution_id, created_at, artifacts:[{what,why,scope,path,mime}] }] }",
+      note: "global_memory 是唯一的语义记录层，同时也是 artifact ledger（不再分 memory / artifact_registry 两层）",
     },
-    "list_memory_entries(task_id, agent_id, limit)": {
-      returns: "List[MemoryEntry]  — 含 content { what, why, context_note }",
-      note: "纯语义决策，不再含 artifact_locations；文件路径在 artifact_registry",
+    "list_workspace_artifacts()": {
+      returns: "List[{ path, filename, mime, what, why, scope, agent_id, task_id, execution_id, created_at }]",
+      note: "扁平化 global_memory 视图；HTTP listing + 测试自省用",
     },
-    "resolve_inputs_for_agent(agent_id, task_id, input_needs_description, llm_client, source_text, model)": {
-      returns: "{ resolved_artifacts:[{what,why,scope,path,mime,payload}], selected_artifact_paths, rationale }",
-      note: "Phase 1 LLM #1 入口；委托 InputResolver 读 artifact_registry.get_captions_index",
+    "resolve_inputs_for_agent(*, agent_id, task_id, input_needs_description, llm_client, model)": {
+      returns: "{ resolved_artifacts:{<label>:entry|[entry,...]}, selected_artifact_paths, rationale }",
+      note: "Phase 1 LLM #1 入口；委托 InputResolver(global_memory, file_manager, llm) 走 caption index 召回",
     },
     "get_workspace_root_file_tree_text()": {
       returns: "str  — workspace 根下完整树（含 artifacts/）",
-      note: "LLM #2 路径编排时使用",
-    },
-    "list_files() / get_file(file_id)": {
-      returns: "List[FileMetadata] / FileMetadata",
+      note: "Phase 3 LLM #2 编排相对路径时作为 ground truth",
     },
     "hydrate_indexed_assets(assets)": {
-      note: "委托 AssetManager 把 _asset_index.json_uri 展开为可消费 payload",
+      note: "把含 _asset_index.json_uri 的占位条目展开成完整 payload",
     },
     "collect_materialized_files(media_assets)": {
-      note: "汇总 sub-agent 已物化的 MediaAsset，准备进入持久化计划",
+      note: "把 sub-agent 已物化的 MediaAsset 列表收成 _media_files dict 喂给持久化计划",
     },
-    "get_logs(operation_type, resource_type, agent_id, task_id, limit, level, event, execution_id)": {
+    "get_logs(*, operation_type?, resource_type?, agent_id?, task_id?, limit?, level?, event?, execution_id?)": {
       returns: "List[LogEntry]",
     },
   };
 
   const wsWrite = {
-    "store_file_at_relative_path(relative_path, file_content, filename, description, created_by, tags, metadata)": {
-      note: "写到 Runtime/<workspace_id>/<relative_path>，自动 log + refresh_file_tree",
+    "store_file_at_relative_path(relative_path, file_content, filename='')": {
+      returns: "StoredFile (path/filename/size)",
+      note: "纯写字节，不登记 artifact、不写 artifact 事件日志；登记由上层 ArtifactWriter 完成",
     },
-    "persist_execution_from_plan(execution, assignments, overwrite_existing)": {
+    "persist_raw_upload(*, file_content, mime, user_intent, original_filename='')": {
+      returns: "{ path, filename, mime, caption:{what,why,scope='raw_pending'} }",
+      note: "用户原始上传入口：写到 inputs/<ts>_<filename> + 直接 global_memory.register 一条 raw_pending artifact，等待对应 IntakeAgent 通过 [raw_*_upload] label 接手",
+    },
+    "persist_execution_from_plan(execution, assignments, *, overwrite_existing=False, manifest_extractors=None)": {
       returns: "(persisted_paths, asset_index, extra_locs)",
-      note: "Phase 3 主入口；落盘后回调 _register_artifacts_callback → artifact_registry.jsonl",
+      note: "Phase 3 落盘主入口；内部回调 _register_artifacts_callback → global_memory.register(execution_id, agent_id, task_id, artifacts=[ArtifactRef])",
     },
     "log_execution_started(execution) / log_execution_result(execution)": {
-      note: "execution event 日志；自动抽 retry_attempts + eval_summary",
-    },
-    "add_memory_entry(content={what,why,context_note}, task_id, agent_id, execution_id, supersedes)": {
-      note: "追加一条语义决策；不再带 artifact_locations",
-    },
-    "delete_file(file_id)": {
-      note: "overwrite 模式下清掉旧版本，自动写 delete log",
+      note: "execution event 日志；result 自动抽 retry_attempts + eval_summary",
     },
   };
 

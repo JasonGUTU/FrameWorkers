@@ -1,4 +1,4 @@
-"""Asset manager — execution-aware persistence of agent outputs.
+"""Artifact writer — execution-aware persistence of agent outputs.
 
 Responsibilities:
   * Take an execution's results dict + a deterministic "persist plan"
@@ -8,17 +8,25 @@ Responsibilities:
   * Collect materialized media (binary asset list) into workspace files.
   * After persistence, register every persisted file in the artifact
     registry with its natural-language caption.
+  * Emit one ``artifact.*`` log entry per logical persistence operation.
+
+Naming:
+  The word "asset" is reserved for agent-internal types (``MediaAsset``,
+  ``asset_dict``). Anything written into the workspace and registered
+  with a caption is an "artifact". This module is the single semantic
+  layer that turns agent outputs into workspace artifacts — hence
+  ``ArtifactWriter``.
 
 What it does NOT do:
   * Raw file I/O — delegated to ``FileManager`` via callback.
-  * Logging — delegated to ``LogManager`` via callback.
+  * Low-level log writing — delegated to ``LogManager`` via callback.
   * Caption authoring — captions come from the agent's
     ``per_artifact_captions`` dict and ``artifact_caption`` field.
   * Artifact selection / resolution — that is ``InputResolver``'s job
     on the read side, not the write side.
 
 Used by:
-  * ``Workspace`` (the facade) wires this manager with callbacks at init.
+  * ``Workspace`` (the facade) wires this writer with callbacks at init.
   * ``service.AssistantService`` calls it indirectly via Workspace methods.
 """
 
@@ -30,36 +38,45 @@ from typing import Any, Callable, Dict, Optional, List
 
 logger = logging.getLogger(__name__)
 
-from .models import FileMetadata
+from .models import StoredFile
 
 
-class AssetManager:
-    """Manage asset persistence, indexing, and hydration inside a workspace."""
+class ArtifactWriter:
+    """Persist agent outputs into the workspace as registered artifacts.
+
+    Dedup model: in overwrite mode, before writing anything new,
+    ArtifactWriter asks the artifact registry for every ref this producer
+    has on this task, unlinks each physical file, and prunes the
+    registry rows. The new run then writes its outputs normally. This is
+    a coarse "wipe + redo" by ``(task, agent)`` — no per-slot logic. The
+    registry is the only source of truth for "what's already here".
+    """
 
     def __init__(
         self,
-        store_file_at_relative_path: Callable[..., FileMetadata],
+        store_file_at_relative_path: Callable[..., StoredFile],
         add_log: Callable[..., None],
         read_binary_from_uri: Callable[[str], Optional[bytes]],
-        list_files: Callable[..., List[FileMetadata]],
-        delete_file: Callable[[str], bool],
         *,
         on_change: Optional[Callable[[], None]] = None,
         register_artifacts: Optional[Callable[..., None]] = None,
-        prune_artifact_registry: Optional[Callable[..., int]] = None,
+        find_artifact_refs_for_producer: Optional[Callable[..., List[Any]]] = None,
+        delete_file_at_path: Optional[Callable[[str], bool]] = None,
+        prune_global_memory_by_paths: Optional[Callable[[List[str]], int]] = None,
     ):
         self._store_file_at_relative_path = store_file_at_relative_path
         self._add_log = add_log
         self._read_binary_from_uri = read_binary_from_uri
-        self._list_files = list_files
-        self._delete_file = delete_file
         self._on_change = on_change
-        # Optional callback: register_artifacts(execution, artifacts_list, caption_dict)
+        # register_artifacts(execution, artifact_refs) — called after persistence
         self._register_artifacts = register_artifacts
-        # Optional callback: prune_artifact_registry(task_id=, agent_id=) -> int
-        # Called once before overwrite mode persistence to drop stale registry
-        # entries left over by a previous run of the same agent on this task.
-        self._prune_artifact_registry = prune_artifact_registry
+        # find_artifact_refs_for_producer(task_id, agent_id) → list[ArtifactRef]
+        # of every prior file this producer wrote on this task.
+        self._find_artifact_refs_for_producer = find_artifact_refs_for_producer
+        # delete_file_at_path(absolute_path) → bool. Used to unlink old files.
+        self._delete_file_at_path = delete_file_at_path
+        # prune_global_memory_by_paths(list[str]) → int removed.
+        self._prune_global_memory_by_paths = prune_global_memory_by_paths
 
     def _touch(self) -> None:
         if self._on_change is not None:
@@ -136,7 +153,7 @@ class AssetManager:
             ch.lower() if ch.isalnum() or ch in {"_", "-"} else "_"
             for ch in str(role or "snapshot")
         ).strip("_") or "snapshot"
-        return f"{safe_role}_{AssetManager._short_execution_label(execution_id)}.json"
+        return f"{safe_role}_{ArtifactWriter._short_execution_label(execution_id)}.json"
 
     @staticmethod
     def _rewrite_asset_uris_with_persisted_paths(node: Any, persisted_media_paths: Dict[str, str]) -> None:
@@ -145,72 +162,74 @@ class AssetManager:
             if isinstance(asset_id, str) and asset_id in persisted_media_paths:
                 node["uri"] = persisted_media_paths[asset_id]
             for value in node.values():
-                AssetManager._rewrite_asset_uris_with_persisted_paths(value, persisted_media_paths)
+                ArtifactWriter._rewrite_asset_uris_with_persisted_paths(value, persisted_media_paths)
             return
 
         if isinstance(node, list):
             for item in node:
-                AssetManager._rewrite_asset_uris_with_persisted_paths(item, persisted_media_paths)
+                ArtifactWriter._rewrite_asset_uris_with_persisted_paths(item, persisted_media_paths)
 
-    def _matches_asset_metadata(
-        self,
-        file_meta: FileMetadata,
-        *,
-        execution: Any,
-        asset_key: str,
-        asset_variant: str,
-    ) -> bool:
-        metadata = file_meta.metadata if isinstance(file_meta.metadata, dict) else {}
-        if metadata.get("task_id") != execution.task_id:
-            return False
-        if metadata.get("producer_agent_id") != execution.agent_id:
-            return False
-        if metadata.get("asset_key") != asset_key:
-            return False
-        variant = metadata.get("asset_variant")
-        if variant:
-            return variant == asset_variant
-        # Legacy records: binary assets have no explicit variant.
-        return asset_variant == "binary"
+    def _purge_all_for_producer(self, execution: Any) -> None:
+        """Wipe every prior file + registry row for this ``(task, agent)``.
 
-    def _purge_existing_asset_files(
-        self,
-        *,
-        execution: Any,
-        asset_key: str,
-        asset_variant: str,
-    ) -> None:
-        files = self._list_files()
-        deleted_file_ids: List[str] = []
-        deleted_filenames: List[str] = []
-        for file_meta in files:
-            if not self._matches_asset_metadata(
-                file_meta,
-                execution=execution,
-                asset_key=asset_key,
-                asset_variant=asset_variant,
-            ):
-                continue
-            if self._delete_file(file_meta.id):
-                deleted_file_ids.append(file_meta.id)
-                deleted_filenames.append(file_meta.filename)
-
-        if deleted_file_ids:
-            self._add_log(
-                operation_type="write",
-                resource_type="asset",
-                resource_id=execution.id,
-                agent_id=execution.agent_id,
+        Called once at the top of ``persist_execution_from_plan`` when
+        ``overwrite_existing`` is true. Coarse on purpose: this is the only
+        way to also catch "orphan" files from previous runs whose slots
+        the new run no longer produces. The new run then writes its
+        outputs normally; ``Path.write_bytes`` would naturally overwrite
+        any survivors, but with this wipe-first model there are none.
+        """
+        if (
+            self._find_artifact_refs_for_producer is None
+            or self._delete_file_at_path is None
+            or self._prune_global_memory_by_paths is None
+        ):
+            return
+        try:
+            matches = self._find_artifact_refs_for_producer(
                 task_id=execution.task_id,
-                details={
-                    "event_type": "asset_overwritten",
-                    "asset_key": asset_key,
-                    "asset_variant": asset_variant,
-                    "deleted_file_ids": deleted_file_ids,
-                    "deleted_filenames": deleted_filenames,
-                },
+                agent_id=execution.agent_id,
             )
-            self._touch()
+        except Exception as exc:
+            logger.warning("ArtifactWriter: find_artifact_refs_for_producer failed: %s", exc)
+            return
+        if not matches:
+            return
+
+        deleted_paths: List[str] = []
+        for ref in matches:
+            path = str(getattr(ref, "path", "") or "").strip()
+            if not path:
+                continue
+            try:
+                if self._delete_file_at_path(path):
+                    deleted_paths.append(path)
+            except Exception as exc:
+                logger.warning("ArtifactWriter: failed to delete %s: %s", path, exc)
+
+        if not deleted_paths:
+            return
+
+        try:
+            self._prune_global_memory_by_paths(deleted_paths)
+        except Exception as exc:
+            logger.warning(
+                "ArtifactWriter: prune_global_memory_by_paths failed: %s", exc,
+            )
+
+        import os as _os
+        self._add_log(
+            event="artifact.purged_for_producer",
+            resource_id=execution.id,
+            agent_id=execution.agent_id,
+            task_id=execution.task_id,
+            execution_id=execution.id,
+            details={
+                "deleted_paths": deleted_paths,
+                "deleted_filenames": [_os.path.basename(p) for p in deleted_paths],
+            },
+        )
+        self._touch()
 
     @staticmethod
     def is_safe_artifacts_relative_path(rel_path: str) -> bool:
@@ -245,13 +264,16 @@ class AssetManager:
         Each assignment is a dict with:
           - ``kind``: ``binary`` | ``media`` | ``json_snapshot`` | ``manifest``
           - ``relative_path``: must start with ``artifacts/``
-          - ``source_key``: for ``binary`` / ``media``
-          - ``asset_key``: for ``json_snapshot``
+          - ``source_key``: for ``binary`` / ``media`` — the per-file sys_id
+            in the agent's ``results`` dict (e.g. ``"img_char_001_global"``)
           - ``manifest_kind``: for ``manifest`` (key into ``manifest_extractors``)
+
+        ``json_snapshot`` assignments need only ``relative_path`` — the snapshot
+        filename is derived from ``execution.agent_id``.
 
         ``manifest_extractors`` is a generic registry of ``kind -> extractor_callable``
         provided by the caller (typically built from ``descriptor.output_manifests``).
-        AssetManager calls each extractor on the rewritten ``results`` and writes the
+        ArtifactWriter calls each extractor on the rewritten ``results`` and writes the
         returned items as a JSON document — it has zero knowledge of which agent the
         manifest belongs to.
 
@@ -271,37 +293,16 @@ class AssetManager:
         results: Dict[str, Any] = execution.results
         persisted_media_paths: Dict[str, str] = {}
         asset_index: Optional[Dict[str, Any]] = None
-        extra_locs: List[Dict[str, str]] = []
+        extra_locs: List[Dict[str, Any]] = []
         deferred_json_snapshots: List[Dict[str, Any]] = []
         deferred_manifests: List[Dict[str, Any]] = []
 
-        # ── Pass 0: prune stale artifact_registry entries from a previous run ──
-        # When an agent is re-running with overwrite_existing=True, the old
-        # files have already been (or will be) deleted by _purge_existing_asset_files.
-        # We must also remove the matching ArtifactRegistry entries so the
-        # caption index doesn't keep dangling paths.
-        if overwrite_existing and self._prune_artifact_registry is not None:
-            try:
-                removed = self._prune_artifact_registry(
-                    task_id=execution.task_id,
-                    agent_id=execution.agent_id,
-                )
-                if removed:
-                    self._add_log(
-                        operation_type="delete",
-                        resource_type="artifact",
-                        resource_id=execution.id,
-                        agent_id=execution.agent_id,
-                        task_id=execution.task_id,
-                        details={
-                            "event_type": "artifact_registry_pruned",
-                            "removed_entries": removed,
-                        },
-                    )
-            except Exception as exc:
-                logger.warning(
-                    "AssetManager: artifact_registry prune failed: %s", exc,
-                )
+        # ── Pass 0: in overwrite mode, wipe every prior file from this
+        # producer (task, agent) so the new run starts from a clean slate.
+        # This catches orphans (slots the old run had but the new run
+        # doesn't) that per-slot dedup would miss.
+        if overwrite_existing:
+            self._purge_all_for_producer(execution)
 
         # ── Pass 1: split assignments and persist binary/media in order ──
         for raw in assignments:
@@ -317,9 +318,9 @@ class AssetManager:
             if not self._validate_relative_path(raw):
                 continue
             if kind == "binary":
-                self._persist_binary(execution, raw, results, overwrite_existing)
+                self._persist_binary(execution, raw, results, persisted_media_paths)
             elif kind == "media":
-                self._persist_media(execution, raw, results, persisted_media_paths, overwrite_existing)
+                self._persist_media(execution, raw, results, persisted_media_paths)
 
         # ── Pass 2: rewrite URIs so deferred kinds see real workspace paths ──
         if persisted_media_paths:
@@ -330,14 +331,14 @@ class AssetManager:
             if not self._validate_relative_path(raw):
                 continue
             self._persist_manifest(
-                execution, raw, results, extra_locs, overwrite_existing,
+                execution, raw, results, extra_locs,
                 extractors=manifest_extractors or {},
             )
 
         for raw in deferred_json_snapshots:
             if not self._validate_relative_path(raw):
                 continue
-            new_index = self._persist_json_snapshot(execution, raw, results, overwrite_existing)
+            new_index = self._persist_json_snapshot(execution, raw, results)
             if new_index is not None:
                 asset_index = new_index
 
@@ -368,7 +369,7 @@ class AssetManager:
         execution: Any,
         raw: Dict[str, Any],
         results: Dict[str, Any],
-        overwrite_existing: bool,
+        persisted_media_paths: Dict[str, str],
     ) -> None:
         """Write a non-media binary file (e.g. text, generic blob)."""
         sk = str(raw.get("source_key") or "").strip()
@@ -377,40 +378,27 @@ class AssetManager:
         val = results.get(sk)
         if not isinstance(val, dict) or "file_content" not in val:
             return
-        if overwrite_existing:
-            self._purge_existing_asset_files(
-                execution=execution, asset_key=sk, asset_variant="binary",
-            )
         rel = str(raw.get("relative_path") or "").strip().replace("\\", "/")
         fn = val.get("filename") or f"{sk}.bin"
-        file_meta = self._store_file_at_relative_path(
+        stored = self._store_file_at_relative_path(
             rel,
             file_content=val["file_content"],
             filename=fn,
-            description=val.get("description", f"File from execution {execution.id}"),
-            created_by=execution.agent_id,
-            tags=[execution.agent_id, execution.task_id],
-            metadata={
-                "execution_id": execution.id,
-                "task_id": execution.task_id,
-                "producer_agent_id": execution.agent_id,
-                "asset_key": sk,
-                "asset_variant": "binary",
-            },
         )
+        # Track this file so the registration step picks it up. Without this
+        # entry the file would never appear in global_memory — and the
+        # next overwrite-mode run could not find it for dedup.
+        persisted_media_paths[sk] = stored.path
         self._add_log(
-            operation_type="write",
-            resource_type="asset",
-            resource_id=file_meta.id,
+            event="artifact.persisted",
+            resource_id=stored.path,
             agent_id=execution.agent_id,
             task_id=execution.task_id,
+            execution_id=execution.id,
             details={
-                "event_type": "asset_persisted",
-                "asset_key": sk,
-                "asset_status": "ready",
-                "file_type": file_meta.file_type,
-                "filename": file_meta.filename,
-                "persist_plan": True,
+                "kind": "binary",
+                "source_key": sk,
+                "filename": stored.filename,
             },
         )
         self._touch()
@@ -421,7 +409,6 @@ class AssetManager:
         raw: Dict[str, Any],
         results: Dict[str, Any],
         persisted_media_paths: Dict[str, str],
-        overwrite_existing: bool,
     ) -> None:
         """Write a materialized media file (image / video / audio)."""
         sk = str(raw.get("source_key") or "").strip()
@@ -433,38 +420,24 @@ class AssetManager:
         val = media.get(sk)
         if not isinstance(val, dict) or "file_content" not in val:
             return
-        if overwrite_existing:
-            self._purge_existing_asset_files(
-                execution=execution, asset_key=sk, asset_variant="binary",
-            )
         rel = str(raw.get("relative_path") or "").strip().replace("\\", "/")
         fn = val.get("filename") or f"{sk}.bin"
-        file_meta = self._store_file_at_relative_path(
+        stored = self._store_file_at_relative_path(
             rel,
             file_content=val["file_content"],
             filename=fn,
-            description=val.get("description", f"Media asset {sk}"),
-            created_by=execution.agent_id,
-            tags=[execution.agent_id, execution.task_id],
-            metadata={
-                "execution_id": execution.id,
-                "task_id": execution.task_id,
-                "producer_agent_id": execution.agent_id,
-                "asset_key": sk,
-                "asset_variant": "binary",
-            },
         )
-        persisted_media_paths[sk] = file_meta.file_path
+        persisted_media_paths[sk] = stored.path
         self._add_log(
-            operation_type="write",
-            resource_type="asset",
-            resource_id=file_meta.id,
+            event="artifact.persisted",
+            resource_id=stored.path,
             agent_id=execution.agent_id,
             task_id=execution.task_id,
+            execution_id=execution.id,
             details={
-                "event_type": "asset_persisted",
-                "asset_key": sk,
-                "persist_plan": True,
+                "kind": "media",
+                "source_key": sk,
+                "filename": stored.filename,
             },
         )
         self._touch()
@@ -474,8 +447,7 @@ class AssetManager:
         execution: Any,
         raw: Dict[str, Any],
         results: Dict[str, Any],
-        extra_locs: List[Dict[str, str]],
-        overwrite_existing: bool,
+        extra_locs: List[Dict[str, Any]],
         *,
         extractors: Dict[str, Callable[[Dict[str, Any]], List[Dict[str, Any]]]],
     ) -> None:
@@ -483,7 +455,7 @@ class AssetManager:
 
         Generic over manifest kinds: ``manifest_kind`` selects which extractor in
         ``extractors`` to call, and the resulting items are wrapped in a JSON
-        document and written to ``relative_path``. AssetManager has no knowledge
+        document and written to ``relative_path``. ArtifactWriter has no knowledge
         of which agent owns the manifest or what its schema looks like.
         """
         manifest_kind = str(raw.get("manifest_kind") or "").strip()
@@ -510,65 +482,46 @@ class AssetManager:
             body = json.dumps(doc, ensure_ascii=False, indent=2).encode("utf-8")
         except (TypeError, ValueError):
             return
-        if overwrite_existing:
-            self._purge_existing_asset_files(
-                execution=execution,
-                asset_key=manifest_kind,
-                asset_variant="manifest",
-            )
         rel = str(raw.get("relative_path") or "").strip().replace("\\", "/")
         import os as _os
         filename = _os.path.basename(rel) or f"{manifest_kind}.json"
-        file_meta = self._store_file_at_relative_path(
+        stored = self._store_file_at_relative_path(
             rel,
             file_content=body,
             filename=filename,
-            description=f"{manifest_kind} ({execution.task_id})",
-            created_by=execution.agent_id,
-            tags=[execution.task_id, execution.agent_id, manifest_kind],
-            metadata={
-                "task_id": execution.task_id,
-                "execution_id": execution.id,
-                "producer_agent_id": execution.agent_id,
-                "asset_variant": "manifest",
-                "document_type": manifest_kind,
-            },
         )
         self._add_log(
-            operation_type="write",
-            resource_type="asset",
-            resource_id=file_meta.id,
+            event="artifact.manifest_persisted",
+            resource_id=stored.path,
             agent_id=execution.agent_id,
             task_id=execution.task_id,
+            execution_id=execution.id,
             details={
-                "event_type": "manifest_persisted",
                 "manifest_kind": manifest_kind,
-                "persist_plan": True,
+                "filename": filename,
             },
         )
         self._touch()
-        extra_locs.append({"path": file_meta.file_path})
+        extra_locs.append({"path": stored.path})
 
     def _persist_json_snapshot(
         self,
         execution: Any,
         raw: Dict[str, Any],
         results: Dict[str, Any],
-        overwrite_existing: bool,
     ) -> Optional[Dict[str, Any]]:
         """Build and write the agent's top-level JSON snapshot.
 
-        ``raw['asset_key']`` is required (producer's OUTPUT_ASSET_KEY,
-        e.g. ``"screenplay"``).  It controls:
-          * the snapshot filename (``screenplay_exec_2.json``)
-          * the file metadata's ``asset_key`` field (used for dedup /
-            overwrite and for downstream queries)
-          * the asset_index returned to the caller
+        The snapshot filename is derived from ``execution.agent_id``
+        (e.g. ``screenplayagent_exec_2.json``). The returned ``asset_index``
+        carries the producer ``agent_id`` so downstream consumers (and
+        ``hydrate_indexed_assets``) can identify it. Dedup is by
+        ``(task, agent)`` at the registry level — no per-snapshot key.
 
         Returns the asset_index dict for this execution, or ``None`` if
         nothing was persisted.
         """
-        asset_key = str(raw.get("asset_key") or execution.agent_id or "json_snapshot").strip()
+        agent_id = str(execution.agent_id or "json_snapshot").strip()
         payload = self._build_json_snapshot_payload(results)
         if not payload:
             return None
@@ -576,44 +529,28 @@ class AssetManager:
             json_bytes = json.dumps(payload, ensure_ascii=False, indent=2).encode("utf-8")
         except (TypeError, ValueError):
             return None
-        if overwrite_existing:
-            self._purge_existing_asset_files(
-                execution=execution, asset_key=asset_key, asset_variant="json_snapshot",
-            )
         rel = str(raw.get("relative_path") or "").strip().replace("\\", "/")
-        filename = self.snapshot_filename(asset_key, execution.id)
-        file_meta = self._store_file_at_relative_path(
+        filename = self.snapshot_filename(agent_id, execution.id)
+        stored = self._store_file_at_relative_path(
             rel,
             file_content=json_bytes,
             filename=filename,
-            description=f"Structured JSON snapshot for {execution.agent_id} ({execution.id})",
-            created_by=execution.agent_id,
-            tags=[execution.agent_id, execution.task_id, "asset_json"],
-            metadata={
-                "execution_id": execution.id,
-                "task_id": execution.task_id,
-                "producer_agent_id": execution.agent_id,
-                "asset_key": asset_key,
-                "asset_variant": "json_snapshot",
-            },
         )
         self._add_log(
-            operation_type="write",
-            resource_type="asset",
-            resource_id=file_meta.id,
+            event="artifact.snapshot_persisted",
+            resource_id=stored.path,
             agent_id=execution.agent_id,
             task_id=execution.task_id,
+            execution_id=execution.id,
             details={
-                "event_type": "asset_json_snapshot_persisted",
-                "asset_key": asset_key,
-                "persist_plan": True,
+                "agent_id": agent_id,
+                "filename": filename,
             },
         )
         self._touch()
         return {
-            "asset_key": asset_key,
-            "json_uri": file_meta.file_path,
-            "file_id": file_meta.id,
+            "agent_id": agent_id,
+            "json_uri": stored.path,
             "execution_id": execution.id,
         }
 
@@ -622,7 +559,7 @@ class AssetManager:
         execution: Any,
         persisted_media_paths: Dict[str, str],
         asset_index: Optional[Dict[str, Any]],
-        extra_locs: List[Dict[str, str]],
+        extra_locs: List[Dict[str, Any]],
     ) -> None:
         """Build ArtifactRef list and register everything in the artifact registry."""
         if self._register_artifacts is None:
@@ -661,9 +598,9 @@ class AssetManager:
 
         if asset_index and isinstance(asset_index, dict):
             json_uri = str(asset_index.get("json_uri") or "").strip()
-            asset_key = str(asset_index.get("asset_key") or "json_snapshot").strip()
+            sys_id = str(asset_index.get("agent_id") or "json_snapshot").strip()
             if json_uri:
-                all_artifact_refs.append(_make_ref(json_uri, asset_key, "application/json"))
+                all_artifact_refs.append(_make_ref(json_uri, sys_id, "application/json"))
 
         for loc in extra_locs:
             p = str(loc.get("path") or "").strip()
@@ -680,7 +617,7 @@ class AssetManager:
                 artifact_refs=all_artifact_refs,
             )
         except Exception as exc:
-            logger.warning("AssetManager: artifact_registry registration failed: %s", exc)
+            logger.warning("ArtifactWriter: global_memory registration failed: %s", exc)
 
 
 def _mime_from_path(path: str) -> str:

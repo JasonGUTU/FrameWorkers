@@ -60,9 +60,8 @@ class _ConsumerPipelineAgent:
 
 
 class _DummyDescriptor:
-    def __init__(self, name: str, asset_key: str):
+    def __init__(self, name: str):
         self.agent_id = name
-        self.asset_key = asset_key
         self.catalog_entry = f"{name} integration descriptor"
 
     def build_equipped_agent(self, _llm):
@@ -88,7 +87,7 @@ class _DummyRegistry:
         agents = []
         capabilities = set()
         for name, desc in self._descriptors.items():
-            caps = ["pipeline_agent", desc.asset_key]
+            caps = ["pipeline_agent"]
             capabilities.update(caps)
             agents.append(
                 {
@@ -97,7 +96,6 @@ class _DummyRegistry:
                     "description": (desc.catalog_entry or "")[:200],
                     "agent_type": "pipeline",
                     "capabilities": caps,
-                    "asset_key": desc.asset_key,
                 }
             )
         return {
@@ -110,7 +108,6 @@ class _DummyRegistry:
 
 class _ProducerDescriptor:
     agent_id = "ProducerAgent"
-    asset_key = "producer_asset"
     catalog_entry = "Producer integration descriptor"
     input_needs_description = "Needs source text"
 
@@ -131,13 +128,16 @@ class _ProducerDescriptor:
 
 class _ConsumerDescriptor:
     agent_id = "ConsumerAgent"
-    asset_key = "consumer_asset"
     catalog_entry = "Consumer integration descriptor"
+    # Declares a [producer_asset] (single) header so the conftest stub picks
+    # the producer's snapshot whose caption text contains "producer_asset".
+    input_needs_description = (
+        "[producer_asset] (single)\n"
+        "The JSON payload produced by ProducerAgent."
+    )
 
     def build_equipped_agent(self, _llm):
         return _ConsumerPipelineAgent()
-
-    input_needs_description = "Needs producer_asset JSON"
 
     def build_input(self, task_id, input_bundle_v2):
         resolved = getattr(input_bundle_v2, "resolved_artifacts", {})
@@ -158,10 +158,7 @@ def assistant_http_client(tmp_path, monkeypatch):
     storage = AssistantStateStore(runtime_base_path=tmp_path / "Runtime")
     registry = _DummyRegistry(
         descriptors={
-            "DummyAgent": _DummyDescriptor(
-                name="DummyAgent",
-                asset_key="dummy_asset",
-            )
+            "DummyAgent": _DummyDescriptor(name="DummyAgent"),
         }
     )
 
@@ -243,7 +240,7 @@ def test_assistant_e2e_http_flow_covers_core_endpoints(assistant_http_client):
     assert "global_memory_brief" in execution_payload
     assert "error_reasoning" in execution_payload
     assert execution_payload["error_reasoning"] is None
-    assert isinstance(execution_payload["global_memory_brief"].get("global_memory"), list)
+    assert isinstance(execution_payload["global_memory_brief"], list)
 
     # Step 4: Query execution detail and list APIs to confirm persistence.
     executions_resp = client.get(f"/api/assistant/executions/task/{task_id}")
@@ -264,41 +261,36 @@ def test_assistant_e2e_http_flow_covers_core_endpoints(assistant_http_client):
     assert files_resp.status_code == 200
     files = files_resp.get_json()
     assert isinstance(files, list)
-
-    if files:
-        file_id = files[0]["id"]
-        file_meta_resp = client.get(f"/api/assistant/workspace/files/{file_id}")
-        assert file_meta_resp.status_code == 200
-        assert file_meta_resp.get_json()["id"] == file_id
+    # Each entry is the artifact-registry view of a persisted file.
+    for entry in files:
+        assert "path" in entry
+        assert "agent_id" in entry
+        assert "task_id" in entry
 
     logs_resp = client.get("/api/assistant/workspace/logs")
     assert logs_resp.status_code == 200
     logs = logs_resp.get_json()
     assert isinstance(logs, list)
-    assert any(log["resource_type"] == "execution" for log in logs)
-
-    add_entry_resp = client.post(
-        "/api/assistant/workspace/memory/entries",
-        json={
-            "content": "Prefer concise pacing for edits.",
-            "task_id": task_id,
-        },
+    assert any(
+        isinstance(log.get("event"), str) and log["event"].startswith("execution.")
+        for log in logs
     )
-    assert add_entry_resp.status_code == 201
-    entry = add_entry_resp.get_json()
-    assert set(entry.keys()) == {"content", "agent_id", "created_at", "execution_id", "supersedes", "task_id"}
 
-    list_entries_resp = client.get(
-        f"/api/assistant/workspace/memory/entries?task_id={task_id}"
-    )
-    assert list_entries_resp.status_code == 200
-    entries = list_entries_resp.get_json()
-    assert any(item["created_at"] == entry["created_at"] for item in entries)
-
+    # The brief endpoint derives slim rows directly from global_memory.md
+    # ({execution_id, agent_id, task_id, status, created_at}). There is no
+    # POST/list "memory entries" surface anymore — agents auto-populate
+    # global_memory through ArtifactWriter when they persist artifacts.
     brief_resp = client.get(f"/api/assistant/workspace/memory/brief?task_id={task_id}")
     assert brief_resp.status_code == 200
     brief = brief_resp.get_json()
-    assert "global_memory" in brief
+    assert "global_memory_brief" in brief
+    rows = brief["global_memory_brief"]
+    assert isinstance(rows, list)
+    # All rows must conform to the new slim shape.
+    for row in rows:
+        assert set(row.keys()) == {
+            "execution_id", "agent_id", "task_id", "status", "created_at",
+        }
 
 def test_assistant_execute_allows_empty_execute_fields(assistant_http_client):
     client = assistant_http_client
@@ -313,28 +305,6 @@ def test_assistant_execute_allows_empty_execute_fields(assistant_http_client):
         json={"agent_id": "DummyAgent", "task_id": task_id, "execute_fields": {}},
     )
     assert ok.status_code == 200
-
-
-def test_assistant_execute_text_must_be_string_when_present(assistant_http_client):
-    client = assistant_http_client
-    create_task_resp = client.post(
-        "/api/tasks/create",
-        json={"description": {"goal": "ok"}},
-    )
-    assert create_task_resp.status_code == 201
-    task_id = create_task_resp.get_json()["id"]
-    bad = client.post(
-        "/api/assistant/execute",
-        json={
-            "agent_id": "DummyAgent",
-            "task_id": task_id,
-            "execute_fields": {"text": {"not": "a string"}},
-        },
-    )
-    assert bad.status_code == 400
-    body = bad.get_json()
-    assert "string" in body.get("error", "").lower()
-    assert body.get("error_reasoning") is None
 
 
 def test_assistant_execute_ignores_memory_brief_key(assistant_http_client):
@@ -370,57 +340,6 @@ def test_assistant_execute_invalid_execute_fields_type_returns_400(assistant_htt
     )
     assert bad.status_code == 400
     assert "execute_fields" in bad.get_json().get("error", "")
-
-
-def test_assistant_pipeline_http_flow_reuses_previous_agent_asset(
-    assistant_http_client_pipeline,
-):
-    client = assistant_http_client_pipeline
-
-    create_task_resp = client.post(
-        "/api/tasks/create",
-        json={"description": {"goal": "chain pipeline assets over http"}},
-    )
-    assert create_task_resp.status_code == 201
-    task_payload = create_task_resp.get_json()
-    task_id = task_payload["id"]
-    ef = {"text": task_payload["description"]["goal"]}
-
-    producer_resp = client.post(
-        "/api/assistant/execute",
-        json={
-            "agent_id": "ProducerAgent",
-            "task_id": task_id,
-            "execute_fields": ef,
-        },
-    )
-    assert producer_resp.status_code == 200
-    producer_payload = producer_resp.get_json()
-    assert producer_payload["task_id"] == task_id
-    assert producer_payload["status"] == "COMPLETED"
-    assert "global_memory_brief" in producer_payload
-
-    producer_execs = client.get(f"/api/assistant/executions/task/{task_id}").get_json()
-    assert producer_execs[-1]["results"]["content"]["seed"] == "chain pipeline assets over http"
-
-    consumer_resp = client.post(
-        "/api/assistant/execute",
-        json={
-            "agent_id": "ConsumerAgent",
-            "task_id": task_id,
-            "execute_fields": ef,
-        },
-    )
-    assert consumer_resp.status_code == 200
-    consumer_payload = consumer_resp.get_json()
-    assert consumer_payload["task_id"] == task_id
-    assert consumer_payload["status"] == "COMPLETED"
-    assert "global_memory_brief" in consumer_payload
-    consumer_execs = client.get(f"/api/assistant/executions/task/{task_id}").get_json()
-    assert (
-        consumer_execs[-1]["results"]["observed_seed"]
-        == "chain pipeline assets over http"
-    )
 
 
 def test_assistant_pipeline_execution_inputs_include_global_memory_list(

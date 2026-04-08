@@ -176,5 +176,5 @@ def test_e2e_run_nostack_pipeline_embed_hook_same_stack(
     assert exec_calls[0]["agent_id"] == "NostackE2eAgent"
     brief = fc.get(f"/api/assistant/workspace/memory/brief?task_id={task_id}")
     assert brief.status_code == 200
-    gm = brief.get_json().get("global_memory") or []
+    gm = brief.get_json().get("global_memory_brief") or []
     assert len(gm) >= 1

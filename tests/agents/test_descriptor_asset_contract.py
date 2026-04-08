@@ -56,6 +56,4 @@ def test_descriptor_build_input_uses_literal_asset_keys():
 def test_descriptor_identity_fields_are_present():
     for agent_id, descriptor in AGENT_REGISTRY.items():
         assert getattr(descriptor, "agent_id", "") == agent_id
-        assert isinstance(getattr(descriptor, "asset_key", ""), str)
-        assert getattr(descriptor, "asset_key", "")
 

@@ -168,7 +168,7 @@ class VideoAgent(BaseAgent[VideoAgentInput, VideoAgentOutput]):
             scope="global",
         )
         # Build per_artifact_captions for individual video clip files (sys_id → caption dict).
-        # asset_manager uses this to register each clip with its own ArtifactRef.
+        # ArtifactWriter uses this to register each clip with its own ArtifactRef.
         pac: dict = {}
         for scene in c.scenes:
             scene_id = scene.scene_id or ""

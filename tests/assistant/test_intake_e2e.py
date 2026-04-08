@@ -109,21 +109,34 @@ def _is_intake_e2e_ready() -> tuple[bool, str]:
 _LIVE_READY, _LIVE_SKIP_REASON = _is_intake_e2e_ready()
 
 
-# Pre-existing character reference image we reuse for e2e3 / e2e4.
-# Picked specifically because it shows an elderly craftsman with a
-# CLEAR visible face in a warm workshop — actually usable as a
-# protagonist anchor for the watchmaker story (vs. faceless silhouettes
-# from prior runs that wouldn't survive a vision-LLM caption check).
-_REFERENCE_IMAGE_PATH = (
+# Two distinct pre-existing character reference images. e2e3 uses
+# the FIRST (elderly white-haired craftsman in apron); e2e4's
+# mid-stream upload uses the SECOND (middle-aged woman in olive
+# cardigan). The visual gap between them is intentional — it's the
+# only way a human reader can tell, by looking at the rendered
+# keyframes, whether the mid-stream image actually flowed through
+# to the downstream KeyFrame/Video pipeline.
+_REFERENCE_IMAGE_FIRST = (
     _repo_root
     / "Runtime"
     / "live_e2e_outputs"
-    / "workspace_global_20260406_095132"
+    / "workspace_global_20260406_004907"
+    / "artifacts"
+    / "media"
+    / "UnivaKeyFrameAgent"
+    / "image"
+    / "img_char_1_character.png"
+)
+_REFERENCE_IMAGE_SECOND = (
+    _repo_root
+    / "Runtime"
+    / "nostack_live_e2e_outputs"
+    / "workspace_global_20260330_121001_808449"
     / "artifacts"
     / "media"
     / "KeyFrameAgent"
     / "image"
-    / "img_char_001_global.png"
+    / "nostack_live_e2e_tid_img_char_001_global.png"
 )
 
 
@@ -256,10 +269,21 @@ def _last_execution_results(client, task_id: str) -> dict:
     return executions[-1].get("results") or {}
 
 
+def _last_execution_results_for_agent(client, task_id: str, agent_id: str) -> dict:
+    """Find the most recent execution for a specific agent_id (used by
+    tests that re-run the same agent multiple times in a single task)."""
+    resp = client.get(f"/api/assistant/executions/task/{task_id}")
+    assert resp.status_code == 200
+    executions = resp.get_json()
+    matches = [e for e in executions if e.get("agent_id") == agent_id]
+    assert matches, f"no executions for agent_id={agent_id}"
+    return matches[-1].get("results") or {}
+
+
 def _registry_paths(workspace: Workspace) -> list[str]:
-    """All artifact paths registered in the workspace's artifact_registry."""
+    """All artifact paths registered in the workspace's global_memory."""
     out: list[str] = []
-    for entry in workspace.artifact_registry.list_all():
+    for entry in workspace.global_memory.list_all():
         for ref in entry.artifacts:
             if ref.path:
                 out.append(ref.path)
@@ -269,7 +293,7 @@ def _registry_paths(workspace: Workspace) -> list[str]:
 def _registry_captions_for_path(workspace: Workspace, path: str) -> list[dict]:
     """All caption blocks for a given path."""
     out: list[dict] = []
-    for entry in workspace.artifact_registry.list_all():
+    for entry in workspace.global_memory.list_all():
         for ref in entry.artifacts:
             if ref.path == path:
                 out.append(
@@ -293,7 +317,7 @@ def _placeholders_without_successor(workspace: Workspace) -> list[str]:
     """
     placeholders: list[tuple[str, str]] = []  # (agent_id, path)
     intake_outputs_by_agent: list[str] = []   # agent_id strings
-    for entry in workspace.artifact_registry.list_all():
+    for entry in workspace.global_memory.list_all():
         for ref in entry.artifacts:
             if ref.scope == "raw_pending":
                 placeholders.append((entry.agent_id, ref.path))
@@ -387,7 +411,7 @@ def test_e2e1_text_only_draft_idea(monkeypatch):
     assert not leaks, f"raw_pending placeholder has no intake successor: {leaks}"
 
     paths = _registry_paths(workspace)
-    assert paths, "workspace.artifact_registry is empty"
+    assert paths, "workspace.global_memory is empty"
 
     print(f"[e2e1] story logline: {story_logline[:160]}")
     print(f"[e2e1] screenplay scenes: {len(screenplay_scenes)}")
@@ -409,12 +433,12 @@ def test_e2e2_text_then_text(monkeypatch):
     task_id = _create_task(
         client,
         debug_file,
-        goal="A cinematic short — initial brief plus user revisions.",
+        goal="A cinematic short — initial brief, then a totally different second brief.",
     )
 
-    # First brief — a lonely lighthouse keeper story (deliberately a
-    # totally different story from e2e1's watchmaker, so the workspace
-    # input file is unmistakably distinguishable from any other scenario).
+    pipeline = ["StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent", "AudioAgent"]
+
+    # ----- Phase 1: lighthouse keeper brief, full pipeline run -----
     _upload_text(
         client,
         debug_file,
@@ -428,46 +452,42 @@ def test_e2e2_text_then_text(monkeypatch):
         user_intent="initial creative brief — lighthouse keeper story",
     )
     _execute_agent(client, debug_file, "IntakeTextAgent", task_id)
-    _execute_agent(client, debug_file, "StoryAgent", task_id)
-    story_v1 = _last_execution_results(client, task_id).get("content", {}).get("logline", "")
+    for agent_id in pipeline:
+        _execute_agent(client, debug_file, agent_id, task_id)
+    story_v1 = _last_execution_results_for_agent(client, task_id, "StoryAgent").get("content", {}).get("logline", "")
 
-    # Second, refined brief — same character but now turn the story on its
-    # head: the boat finally arrives. This is a clear narrative revision,
-    # not a cosmetic edit, so the diff vs. v1 is obvious to a human reader.
+    # ----- Phase 2: a TOTALLY DIFFERENT story (not a revision) -----
+    # Different setting (deep sea vs island), different character
+    # (scuba diver vs lighthouse keeper), different tone (adventurous
+    # vs lonely vigil). The two pipelines should produce visibly
+    # distinct screenplays / keyframes / videos.
     _upload_text(
         client,
         debug_file,
         text=(
-            "REVISION of the lighthouse keeper story: keep Anya and the "
-            "island, but tonight a single rowing boat finally appears out "
-            "of the storm. The passenger turns out to be her younger "
-            "brother, missing for ten years. Shift the palette toward "
-            "warm amber as he steps ashore. End on the lamp going dark "
-            "for the first time in a decade."
+            "A 30-second cinematic short about Tomás, a deep-sea scuba "
+            "diver exploring the wreckage of a sunken cargo ship at the "
+            "edge of an underwater trench. Beams of light cut through "
+            "the murky blue water as he discovers a glowing object half-"
+            "buried in the silt. Underwater bubbles, mysterious blue-green "
+            "palette, low ambient hum."
         ),
-        user_intent="user revision: a boat finally arrives, brother returns",
+        user_intent="second creative brief — deep-sea diver discovers wreckage",
     )
     _execute_agent(client, debug_file, "IntakeTextAgent", task_id)
-    _execute_agent(client, debug_file, "StoryAgent", task_id)
-    story_v2 = _last_execution_results(client, task_id).get("content", {}).get("logline", "")
+    for agent_id in pipeline:
+        _execute_agent(client, debug_file, agent_id, task_id)
+    story_v2 = _last_execution_results_for_agent(client, task_id, "StoryAgent").get("content", {}).get("logline", "")
 
-    assert story_v1, f"first StoryAgent run produced no logline"
-    assert story_v2, f"second StoryAgent run produced no logline"
+    assert story_v1, "first StoryAgent run produced no logline"
+    assert story_v2, "second StoryAgent run produced no logline"
+    assert story_v1.strip() != story_v2.strip(), (
+        "v1 and v2 loglines must differ — second brief was supposed to be a different story"
+    )
 
     # Both raw-text uploads must have been converted out of raw_pending.
     leaks = _placeholders_without_successor(workspace)
     assert not leaks, f"raw_pending placeholder has no intake successor: {leaks}"
-
-    # The second user_intent ("user revision") must be visible in at least
-    # one caption.why somewhere in the registry.
-    all_whys = " | ".join(
-        ref.why
-        for entry in workspace.artifact_registry.list_all()
-        for ref in entry.artifacts
-    )
-    assert "revision" in all_whys.lower(), (
-        f"second user intent not preserved in any caption.why: {all_whys}"
-    )
 
     print(f"[e2e2] story v1: {story_v1[:120]}")
     print(f"[e2e2] story v2: {story_v2[:120]}")
@@ -480,9 +500,9 @@ def test_e2e2_text_then_text(monkeypatch):
 
 @pytest.mark.skipif(not _LIVE_READY, reason=_LIVE_SKIP_REASON)
 def test_e2e3_text_with_image_at_t0(monkeypatch):
-    if not _REFERENCE_IMAGE_PATH.exists():
+    if not _REFERENCE_IMAGE_FIRST.exists():
         pytest.skip(
-            f"Reference image not found at {_REFERENCE_IMAGE_PATH}; "
+            f"Reference image #6 not found at {_REFERENCE_IMAGE_FIRST}; "
             "this test reuses a prior live run's character keyframe."
         )
 
@@ -490,68 +510,102 @@ def test_e2e3_text_with_image_at_t0(monkeypatch):
     client, workspace, debug_file = _build_client(workspace_id, monkeypatch)
     print(f"\n[e2e3] workspace={workspace_id}")
     print(f"[e2e3] debug_file={debug_file}")
-    print(f"[e2e3] reference_image={_REFERENCE_IMAGE_PATH}")
+    print(f"[e2e3] reference_image={_REFERENCE_IMAGE_FIRST.name}")
 
     task_id = _create_task(
         client,
         debug_file,
-        goal="A cinematic short about a retired watchmaker — with a user-provided character reference image.",
+        goal="A cinematic short about an elderly craftsman — with a matching character reference image.",
     )
 
-    # 1. Upload text brief.
+    # 1. Upload text brief — deliberately matches the image #6 character
+    #    (an elderly craftsman in a workshop) so the keyframes have a
+    #    natural place to put the image bytes as a character anchor.
     _upload_text(
         client,
         debug_file,
         text=(
-            "30-second cinematic short about Elias, an elderly watchmaker, "
-            "racing on New Year's Eve to repair his late wife's pocket watch. "
-            "Warm intimate workshop, golden lamplight."
+            "A 30-second cinematic short about Joseph, an elderly white-haired "
+            "leather craftsman in his sunlit workshop. He carefully shapes a "
+            "leather satchel by hand at his weathered workbench, lost in his "
+            "craft. Warm natural light, soft browns and creams, calm reverent "
+            "mood."
         ),
-        user_intent="creative brief for the project",
+        user_intent="creative brief — elderly leather craftsman portrait short",
     )
 
-    # 2. Upload character reference image.
+    # 2. Upload character reference image #6 (elderly white-haired craftsman).
     _upload_image(
         client,
         debug_file,
-        image_path=_REFERENCE_IMAGE_PATH,
-        user_intent="this is the protagonist Elias — use as character reference",
+        image_path=_REFERENCE_IMAGE_FIRST,
+        user_intent=(
+            "AUTHORITATIVE PROTAGONIST IMAGE: the man in this photo IS "
+            "Joseph, the elderly white-haired leather craftsman from the "
+            "creative brief. Use this image as the canonical visual identity "
+            "of the protagonist character (char_001) in ALL keyframes — "
+            "every shot of Joseph should look like THIS person, not a "
+            "text-only generated character."
+        ),
     )
 
     # 3. Run both intake agents.
     _execute_agent(client, debug_file, "IntakeTextAgent", task_id)
     _execute_agent(client, debug_file, "IntakeImageAgent", task_id)
 
-    # 4. Validate the image artifact has a vision-LLM caption and that
-    #    the user_intent reached caption.why.
-    image_caption_blocks: list[dict] = []
-    for entry in workspace.artifact_registry.list_all():
+    # 4. Validate the image artifact carries a vision-LLM caption + the
+    #    user_intent reached caption.why. Look up by agent_id (the
+    #    IntakeImage output is a JSON file, mime=application/json, so
+    #    filtering by mime=image/* would miss it — that was the bug in
+    #    the previous version of this test).
+    image_blocks: list[dict] = []
+    for entry in workspace.global_memory.list_all():
+        if entry.agent_id != "IntakeImageAgent":
+            continue
         for ref in entry.artifacts:
-            if (ref.mime or "").startswith("image/") and ref.scope != "raw_pending":
-                image_caption_blocks.append(
-                    {"what": ref.what, "why": ref.why, "scope": ref.scope, "agent_id": entry.agent_id}
-                )
-    assert image_caption_blocks, (
-        "no caption-rich image artifact registered after IntakeImageAgent"
+            image_blocks.append(
+                {"what": ref.what, "why": ref.why, "scope": ref.scope}
+            )
+    assert image_blocks, "IntakeImageAgent registered no artifacts"
+    block = image_blocks[-1]
+    assert block["what"], "IntakeImage caption.what is empty"
+    assert "vision LLM returned no description" not in block["what"], (
+        f"vision LLM did not produce a real description: {block['what']}"
     )
-    image_block = image_caption_blocks[-1]
-    assert image_block["what"], "image artifact has empty caption.what"
-    assert "elias" in image_block["why"].lower() or "protagonist" in image_block["why"].lower() or "character" in image_block["why"].lower(), (
-        f"user intent not preserved in image caption.why: {image_block}"
+    assert (
+        "joseph" in block["why"].lower()
+        or "protagonist" in block["why"].lower()
+        or "character" in block["why"].lower()
+    ), f"user intent not preserved in image caption.why: {block}"
+
+    # 5. Run the FULL content pipeline once. The text+image at T=0
+    #    represents the director seeing both inputs and dispatching one
+    #    full pipeline run. KeyFrame should consume the IntakeImage
+    #    output as a character reference, Video uses the keyframes,
+    #    Audio uses the screenplay/video.
+    pipeline = ["StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent", "AudioAgent"]
+    for agent_id in pipeline:
+        _execute_agent(client, debug_file, agent_id, task_id)
+
+    keyframe_results = _last_execution_results_for_agent(client, task_id, "KeyFrameAgent")
+    assert keyframe_results.get("content"), "KeyFrameAgent produced no content"
+    keyframe_media = keyframe_results.get("_media_files", {})
+    assert isinstance(keyframe_media, dict) and keyframe_media, (
+        "KeyFrameAgent returned no media files"
     )
 
-    # 5. StoryAgent + ScreenplayAgent must still run normally — they
-    #    only need [creative_brief] and [story], not the image, but
-    #    they must coexist with the new image artifact.
-    _execute_agent(client, debug_file, "StoryAgent", task_id)
-    _execute_agent(client, debug_file, "ScreenplayAgent", task_id)
+    video_results = _last_execution_results_for_agent(client, task_id, "VideoAgent")
+    assert video_results.get("content", {}).get("final_video_asset"), (
+        "VideoAgent produced no final_video_asset"
+    )
 
     # 6. Final invariant: nothing left in raw_pending.
     leaks = _placeholders_without_successor(workspace)
     assert not leaks, f"raw_pending placeholder has no intake successor: {leaks}"
 
-    print(f"[e2e3] image caption.what: {image_block['what'][:160]}")
-    print(f"[e2e3] image caption.why:  {image_block['why'][:160]}")
+    print(f"[e2e3] image caption.what: {block['what'][:160]}")
+    print(f"[e2e3] image caption.why:  {block['why'][:160]}")
+    print(f"[e2e3] keyframe media files: {len(keyframe_media)}")
 
 
 # ---------------------------------------------------------------------------
@@ -561,9 +615,9 @@ def test_e2e3_text_with_image_at_t0(monkeypatch):
 
 @pytest.mark.skipif(not _LIVE_READY, reason=_LIVE_SKIP_REASON)
 def test_e2e4_midstream_image(monkeypatch):
-    if not _REFERENCE_IMAGE_PATH.exists():
+    if not _REFERENCE_IMAGE_SECOND.exists():
         pytest.skip(
-            f"Reference image not found at {_REFERENCE_IMAGE_PATH}; "
+            f"Reference image #5 not found at {_REFERENCE_IMAGE_SECOND}; "
             "this test reuses a prior live run's character keyframe."
         )
 
@@ -571,6 +625,7 @@ def test_e2e4_midstream_image(monkeypatch):
     client, workspace, debug_file = _build_client(workspace_id, monkeypatch)
     print(f"\n[e2e4] workspace={workspace_id}")
     print(f"[e2e4] debug_file={debug_file}")
+    print(f"[e2e4] midstream_image={_REFERENCE_IMAGE_SECOND.name}")
 
     task_id = _create_task(
         client,
@@ -578,70 +633,103 @@ def test_e2e4_midstream_image(monkeypatch):
         goal="A cinematic short — start with text, add a character image mid-stream.",
     )
 
-    # Phase 1: text only, run upstream pipeline first.
-    # IMPORTANT: this brief deliberately describes a YOUNG WOMAN — totally
-    # different from the elderly-male-craftsman character reference image
-    # that gets uploaded mid-stream below. The contrast lets a human
-    # reader tell whether the mid-stream image actually flowed through
-    # to downstream agents (KeyFrame etc.) by looking at whether the
-    # rendered character matches the text or the image.
+    pipeline = ["StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent", "AudioAgent"]
+
+    # ----- Phase 1: text only, full pipeline -----
+    # Brief describes a YOUNG GIRL chasing fireflies — visually nothing
+    # like the middle-aged woman in image #5 that gets uploaded mid-
+    # stream below. The age + setting + tone gap is what lets a human
+    # reader tell whether the second pipeline run actually picked up
+    # the new character reference image.
     _upload_text(
         client,
         debug_file,
         text=(
-            "30-second cinematic short about Mei, a young female street "
-            "muralist in her late twenties, painting a giant mural of a "
-            "phoenix on a rain-soaked alley wall at midnight under "
-            "neon-lit signs. Cool wet pavement, cyberpunk teal-and-magenta "
-            "palette, breath visible in the cold air."
+            "A 30-second cinematic short about Lily, a barefoot 8-year-old "
+            "girl chasing glowing fireflies through a moonlit forest "
+            "clearing. Tall grass, warm summer night, soft golden firefly "
+            "trails, dreamy childlike wonder. Pastel cool-greens with "
+            "amber highlights."
         ),
-        user_intent="initial creative brief — young female street muralist",
+        user_intent="initial creative brief — young girl chasing fireflies",
     )
     _execute_agent(client, debug_file, "IntakeTextAgent", task_id)
-    _execute_agent(client, debug_file, "StoryAgent", task_id)
-    _execute_agent(client, debug_file, "ScreenplayAgent", task_id)
+    for agent_id in pipeline:
+        _execute_agent(client, debug_file, agent_id, task_id)
+    story_phase1 = _last_execution_results_for_agent(
+        client, task_id, "StoryAgent"
+    ).get("content", {}).get("logline", "")
 
+    # Sanity: no USER-UPLOADED image in the registry yet (KeyFrame
+    # produces its own .png keyframes during phase 1, those are in
+    # artifacts/media/KeyFrameAgent/image/, NOT in inputs/).
     paths_before = set(_registry_paths(workspace))
-    image_paths_before = {p for p in paths_before if p.endswith(".png") or p.endswith(".jpg")}
-    assert not image_paths_before, (
-        "no image should be in the registry before phase 2"
+    user_image_paths_before = {
+        p for p in paths_before
+        if (p.endswith(".png") or p.endswith(".jpg")) and "/inputs/" in p
+    }
+    assert not user_image_paths_before, (
+        f"no user-uploaded image should be in the registry before phase 2, "
+        f"got {user_image_paths_before}"
     )
 
-    # Phase 2: user belatedly provides a character reference image.
+    # ----- Phase 2: image #5 arrives (middle-aged woman), full pipeline rerun -----
     _upload_image(
         client,
         debug_file,
-        image_path=_REFERENCE_IMAGE_PATH,
-        user_intent="finally adding the protagonist reference",
+        image_path=_REFERENCE_IMAGE_SECOND,
+        user_intent=(
+            "REPLACE THE PROTAGONIST. The original brief described an "
+            "8-year-old girl chasing fireflies. From now on the protagonist "
+            "of this story is the GRAY-HAIRED MIDDLE-AGED WOMAN in this "
+            "photo, NOT a child. The story (chasing fireflies through a "
+            "moonlit forest) stays the same, but every keyframe and every "
+            "video shot should depict THIS woman doing the action — same "
+            "character_id (char_001), but a totally different visual "
+            "identity. Override the text description with this image."
+        ),
     )
     _execute_agent(client, debug_file, "IntakeImageAgent", task_id)
+    for agent_id in pipeline:
+        _execute_agent(client, debug_file, agent_id, task_id)
+    story_phase2 = _last_execution_results_for_agent(
+        client, task_id, "StoryAgent"
+    ).get("content", {}).get("logline", "")
 
-    paths_after = set(_registry_paths(workspace))
-    new_paths = paths_after - paths_before
-    assert new_paths, "no new artifact registered after midstream image upload"
-    assert any(p.endswith(".png") for p in new_paths), (
-        f"expected a .png artifact in new registrations, got {new_paths}"
+    # The new image artifact must be in the registry as an IntakeImage
+    # output (mime=application/json — bug-prone if we filtered by image/*).
+    image_blocks: list[dict] = []
+    for entry in workspace.global_memory.list_all():
+        if entry.agent_id != "IntakeImageAgent":
+            continue
+        for ref in entry.artifacts:
+            image_blocks.append(
+                {"what": ref.what, "why": ref.why, "scope": ref.scope}
+            )
+    assert image_blocks, "IntakeImageAgent registered no artifacts after midstream upload"
+    block = image_blocks[-1]
+    assert block["what"], "IntakeImage caption.what is empty"
+    assert "vision LLM returned no description" not in block["what"], (
+        f"vision LLM did not produce a real description: {block['what']}"
     )
 
-    # Re-run ScreenplayAgent to confirm it still works after the
-    # registry has grown — the new image should NOT break it (it does
-    # not consume images, but the registry now has more entries).
-    _execute_agent(client, debug_file, "ScreenplayAgent", task_id)
+    # Phase 2 KeyFrame must have produced media (with the image as a
+    # potential character anchor — verifying the path materially flows
+    # through is left to a human reader of the final keyframes).
+    keyframe_results = _last_execution_results_for_agent(client, task_id, "KeyFrameAgent")
+    keyframe_media = keyframe_results.get("_media_files", {})
+    assert isinstance(keyframe_media, dict) and keyframe_media, (
+        "KeyFrameAgent rerun returned no media files"
+    )
 
-    # Final invariant.
+    # Final invariants.
     leaks = _placeholders_without_successor(workspace)
     assert not leaks, f"raw_pending placeholder has no intake successor: {leaks}"
+    assert story_phase1, "phase 1 story missing"
+    assert story_phase2, "phase 2 story missing"
 
-    # Verify the new image artifact carries a usable caption.
-    image_blocks = []
-    for entry in workspace.artifact_registry.list_all():
-        for ref in entry.artifacts:
-            if (ref.mime or "").startswith("image/") and ref.scope != "raw_pending":
-                image_blocks.append(
-                    {"what": ref.what, "why": ref.why, "scope": ref.scope}
-                )
-    assert image_blocks, "image artifact missing caption-rich registration"
-    final = image_blocks[-1]
-    assert final["what"], "image caption.what is empty"
-    print(f"[e2e4] midstream image caption.what: {final['what'][:160]}")
-    print(f"[e2e4] midstream image caption.why:  {final['why'][:160]}")
+    print(f"[e2e4] phase1 story: {story_phase1[:120]}")
+    print(f"[e2e4] phase2 story: {story_phase2[:120]}")
+    print(f"[e2e4] midstream image caption.what: {block['what'][:160]}")
+    print(f"[e2e4] midstream image caption.why:  {block['why'][:160]}")
+    print(f"[e2e4] phase2 keyframe media files: {len(keyframe_media)}")

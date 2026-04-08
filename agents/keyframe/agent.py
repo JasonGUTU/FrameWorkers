@@ -296,7 +296,85 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
             ),
             scenes=scenes,
         )
+
+        # Wire user-uploaded reference images into the global anchors so the
+        # materializer's L1 pre-fill loop picks them up. Without this, the
+        # ``character_references`` / ``location_references`` / ``style_references``
+        # fields on KeyFrameAgentInput are dead — descriptor.build_input
+        # populates them but nothing downstream reads them.
+        self._prefill_reference_images(output, input_data)
+
         return output
+
+    @staticmethod
+    def _prefill_reference_images(
+        output: KeyFrameAgentOutput,
+        input_data: KeyFrameAgentInput,
+    ) -> None:
+        """Pre-fill global-anchor entities' image_asset.uri from user uploads.
+
+        Position-based assignment: the i-th user reference goes to the i-th
+        entity of the same kind. This works for the typical case (one
+        protagonist + one user-uploaded character reference). When the user
+        uploads more references than the screenplay has entities, extras are
+        ignored. When fewer, leftover entities fall back to t2i generation.
+
+        Why this is correct: the materializer's L1 pre-fill loop
+        (KeyframeMaterializer.materialize, ``L1-prefill`` block) reads
+        ``entity.image_asset.uri`` and, if it points to a real file on disk,
+        skips text-to-image and uses those bytes verbatim as the L1 anchor.
+        So the only thing we need to do here is write the user reference's
+        path into that field BEFORE the LLM creative-fill step (which only
+        rewrites ``prompt_summary``, never touches ``image_asset.uri``).
+
+        Honors the user's intent — if a user uploaded a character reference,
+        the user already said "use this for the protagonist" via the upload
+        ``user_intent`` (which lands in caption.why). The InputResolver
+        already matched the upload to ``[character_reference]``, so reaching
+        this point means the user's intent is already validated semantically.
+        Position-based assignment is the simplest correct continuation.
+        """
+        char_refs = input_data.character_references or []
+        loc_refs = input_data.location_references or []
+        style_refs = input_data.style_references or []
+
+        chars = output.content.global_anchors.characters
+        locs = output.content.global_anchors.locations
+        props = output.content.global_anchors.props
+
+        for i, ref in enumerate(char_refs):
+            if i >= len(chars):
+                break
+            path = (ref.path or "").strip()
+            if not path:
+                continue
+            chars[i].image_asset.uri = path
+            logger.info(
+                "[KeyFrameAgent] L1 pre-fill: character[%d] (%s) ← user reference %s",
+                i, chars[i].entity_id, path,
+            )
+
+        for i, ref in enumerate(loc_refs):
+            if i >= len(locs):
+                break
+            path = (ref.path or "").strip()
+            if not path:
+                continue
+            locs[i].image_asset.uri = path
+            logger.info(
+                "[KeyFrameAgent] L1 pre-fill: location[%d] (%s) ← user reference %s",
+                i, locs[i].entity_id, path,
+            )
+
+        # Style references are unusual (they typically guide style_lock, not
+        # propify entities). For now leave them un-bound; the consumer agent
+        # can read input_data.style_references directly if it cares.
+        if style_refs:
+            logger.info(
+                "[KeyFrameAgent] %d style references received but not pre-filled "
+                "(no global style entity to attach them to)",
+                len(style_refs),
+            )
 
     # ------------------------------------------------------------------
     # Style extraction helper

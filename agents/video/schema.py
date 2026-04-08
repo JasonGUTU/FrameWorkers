@@ -81,7 +81,7 @@ class VideoPackage(BaseModel):
     metrics: VideoMetrics = Field(default_factory=VideoMetrics)
     artifact_caption: ArtifactCaption = Field(default_factory=ArtifactCaption)
     # Per-clip captions keyed by sys_id (e.g. "clip_sh_001", "clip_final").
-    # Populated by recompute_metrics(); read by asset_manager for per-artifact registry entries.
+    # Populated by recompute_metrics(); read by ArtifactWriter for per-artifact registry entries.
     # Excluded from JSON snapshot to keep persisted files clean.
     per_artifact_captions: dict = Field(default_factory=dict, exclude=True)
 

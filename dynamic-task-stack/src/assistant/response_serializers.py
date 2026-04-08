@@ -11,7 +11,7 @@ from datetime import datetime
 from enum import Enum
 from typing import Any
 
-from .workspace.models import FileMetadata, LogEntry
+from .workspace.models import LogEntry
 
 
 def serialize_response_value(obj: Any) -> Any:
@@ -38,37 +38,16 @@ def serialize_response_value(obj: Any) -> Any:
     return obj
 
 
-def _file_core_fields(file_meta: FileMetadata) -> dict[str, Any]:
-    return {
-        "id": file_meta.id,
-        "filename": file_meta.filename,
-        "description": file_meta.description,
-        "file_type": file_meta.file_type,
-        "file_path": file_meta.file_path,
-    }
-
-
-def file_metadata_to_dict(file_meta: FileMetadata) -> dict[str, Any]:
-    return {
-        **_file_core_fields(file_meta),
-        "file_extension": file_meta.file_extension,
-        "size_bytes": file_meta.size_bytes,
-        "created_at": file_meta.created_at.isoformat(),
-        "created_by": file_meta.created_by,
-        "tags": file_meta.tags,
-        "metadata": file_meta.metadata,
-    }
-
-
 def log_entry_to_dict(log: LogEntry) -> dict[str, Any]:
     return {
         "id": log.id,
         "timestamp": log.timestamp.isoformat(),
-        "operation_type": log.operation_type,
-        "resource_type": log.resource_type,
+        "event": log.event,
+        "level": log.level,
         "resource_id": log.resource_id,
         "details": log.details,
         "agent_id": log.agent_id,
         "task_id": log.task_id,
+        "execution_id": log.execution_id,
     }
 

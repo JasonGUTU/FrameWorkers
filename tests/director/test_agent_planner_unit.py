@@ -47,8 +47,8 @@ def test_choose_for_stack_task_uses_mock_llm():
             }
 
     agents = [
-        {"id": "StoryAgent", "description": "story", "asset_key": "sb"},
-        {"id": "VideoAgent", "description": "video", "asset_key": "v"},
+        {"id": "StoryAgent", "description": "story"},
+        {"id": "VideoAgent", "description": "video"},
     ]
     planner = LlmSubAgentPlanner(model="test-model", llm_client=_FakeClient())
     picked = planner.choose_for_stack_task(
@@ -77,8 +77,8 @@ def test_choose_for_followup_uses_mock_llm():
             }
 
     agents = [
-        {"id": "StoryAgent", "description": "story", "asset_key": "sb"},
-        {"id": "VideoAgent", "description": "video", "asset_key": "v"},
+        {"id": "StoryAgent", "description": "story"},
+        {"id": "VideoAgent", "description": "video"},
     ]
     planner = LlmSubAgentPlanner(model="test-model", llm_client=_FakeClient())
     picked = planner.choose_for_followup(
@@ -108,7 +108,7 @@ def test_choose_returns_none_when_id_not_in_catalog():
     assert (
         planner.choose_for_stack_task(
             task_intent_text="x",
-            available_agents=[{"id": "StoryAgent", "description": "", "asset_key": ""}],
+            available_agents=[{"id": "StoryAgent", "description": ""}],
         )
         is None
     )

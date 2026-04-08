@@ -92,6 +92,249 @@
     .flow-node.workspace { color:#2dd4bf; border-color:rgba(45,212,191,0.4); }
     .flow-node.fs        { color:#94a3b8; }
     .flow-arrow { color:#64748b; font-size:1.1em; }
+
+    /* global_memory_brief — director-facing table view */
+    .brief-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.83em;
+      font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .brief-table th, .brief-table td {
+      padding: 9px 14px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      vertical-align: middle;
+    }
+    .brief-table th {
+      background: rgba(255,255,255,0.04);
+      color: #64748b;
+      font-weight: 600;
+      font-size: 0.75em;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .brief-table tbody tr:last-child td { border-bottom: none; }
+    .brief-table tbody tr:hover         { background: rgba(255,255,255,0.02); }
+    .brief-table .col-step  { color: #475569; width: 36px; text-align: right; }
+    .brief-table .col-time  { color: #94a3b8; white-space: nowrap; }
+    .brief-table .col-agent { color: #e0e0e0; font-weight: 600; }
+    .brief-table .col-exec  { color: #7eb3ff; }
+    .brief-table .col-task  { color: #64748b; }
+    .brief-table .col-status { text-align: center; }
+    .brief-table .row-user .col-agent { color: #f5b07a; }
+    .brief-table .pill {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 0.78em;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .brief-table .pill.completed {
+      color: #2dd4bf;
+      background: rgba(45,212,191,0.10);
+      border: 1px solid rgba(45,212,191,0.35);
+    }
+    .brief-table .pill.failed {
+      color: #f87171;
+      background: rgba(248,113,113,0.10);
+      border: 1px solid rgba(248,113,113,0.35);
+    }
+    .brief-caption {
+      font-size: 0.78em;
+      color: #64748b;
+      margin-top: 10px;
+      line-height: 1.55;
+    }
+
+    /* global_memory entry cards */
+    .gm-card-list { display: flex; flex-direction: column; gap: 14px; }
+    .gm-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-left: 3px solid #2dd4bf;
+      border-radius: 8px;
+      padding: 14px 18px;
+    }
+    .gm-card.user { border-left-color: #f5b07a; }
+    .gm-card-header {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 12px;
+      font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+      font-size: 0.82em;
+    }
+    .agent-badge {
+      display: inline-block;
+      padding: 3px 11px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.85em;
+      letter-spacing: 0.02em;
+      color: #2dd4bf;
+      background: rgba(45,212,191,0.10);
+      border: 1px solid rgba(45,212,191,0.35);
+    }
+    .agent-badge.user {
+      color: #f5b07a;
+      background: rgba(249,115,22,0.10);
+      border-color: rgba(249,115,22,0.40);
+    }
+    .gm-card-header .exec-id { color: #7eb3ff; }
+    .gm-card-header .task-id { color: #64748b; }
+    .gm-card-header .ts      { color: #94a3b8; margin-left: auto; }
+    .gm-card-header .count   { color: #a7e3d4; }
+
+    .gm-artifact { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px dashed rgba(255,255,255,0.05); }
+    .gm-artifact:last-child { border-bottom: none; }
+    .gm-mime {
+      flex: 0 0 auto;
+      width: 28px; height: 28px;
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.05em;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .gm-mime.json  { color: #fbbf24; }
+    .gm-mime.image { color: #c084fc; }
+    .gm-mime.video { color: #60a5fa; }
+    .gm-mime.audio { color: #34d399; }
+    .gm-mime.text  { color: #94a3b8; }
+    .gm-art-body { flex: 1 1 auto; min-width: 0; font-size: 0.82em; line-height: 1.5; }
+    .gm-art-name {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+      color: #e0e0e0;
+      font-weight: 600;
+      word-break: break-all;
+    }
+    .gm-art-name .scope-pill {
+      display: inline-block;
+      padding: 1px 8px;
+      border-radius: 999px;
+      font-size: 0.78em;
+      font-weight: 500;
+      color: #94a3b8;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+      margin-left: 8px;
+    }
+    .gm-art-name .scope-pill.global       { color: #7eb3ff; border-color: rgba(126,179,255,0.30); }
+    .gm-art-name .scope-pill.scene        { color: #c084fc; border-color: rgba(192,132,252,0.30); }
+    .gm-art-name .scope-pill.shot         { color: #34d399; border-color: rgba(52,211,153,0.30); }
+    .gm-art-name .scope-pill.raw_pending  { color: #f5b07a; border-color: rgba(249,115,22,0.30); }
+    .gm-art-cap { color: #94a3b8; margin-top: 3px; }
+    .gm-art-cap .cap-key { color: #64748b; }
+
+    /* logs.jsonl timeline */
+    .timeline {
+      font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+      font-size: 0.8em;
+      background: rgba(0,0,0,0.30);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 10px 0;
+      max-height: 460px;
+      overflow-y: auto;
+    }
+    .tl-row {
+      display: grid;
+      grid-template-columns: 110px 200px 140px 1fr;
+      gap: 12px;
+      align-items: center;
+      padding: 5px 16px;
+    }
+    .tl-row:hover { background: rgba(255,255,255,0.02); }
+    .tl-row.divider { padding: 0 16px; }
+    .tl-row.divider hr {
+      grid-column: 1 / -1;
+      border: none;
+      border-top: 1px dashed rgba(255,255,255,0.08);
+      margin: 4px 0;
+    }
+    .tl-time  { color: #475569; font-size: 0.92em; white-space: nowrap; }
+    .tl-event {
+      padding: 2px 9px;
+      border-radius: 4px;
+      font-size: 0.8em;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .tl-event.workspace { color: #94a3b8; background: rgba(148,163,184,0.10); border: 1px solid rgba(148,163,184,0.30); }
+    .tl-event.user      { color: #f5b07a; background: rgba(249,115,22,0.10);  border: 1px solid rgba(249,115,22,0.35); }
+    .tl-event.exec-start{ color: #7eb3ff; background: rgba(126,179,255,0.10); border: 1px solid rgba(126,179,255,0.35); }
+    .tl-event.exec-done { color: #2dd4bf; background: rgba(45,212,191,0.10);  border: 1px solid rgba(45,212,191,0.35); }
+    .tl-event.exec-fail { color: #f87171; background: rgba(248,113,113,0.10); border: 1px solid rgba(248,113,113,0.35); }
+    .tl-event.art-persist  { color: #34d399; background: rgba(52,211,153,0.08);  border: 1px solid rgba(52,211,153,0.30); }
+    .tl-event.art-snap     { color: #fbbf24; background: rgba(251,191,36,0.08);  border: 1px solid rgba(251,191,36,0.30); }
+    .tl-event.art-manifest { color: #c084fc; background: rgba(192,132,252,0.08); border: 1px solid rgba(192,132,252,0.30); }
+    .tl-event.art-purge    { color: #f87171; background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.30); }
+    .tl-agent { color: #e0e0e0; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .tl-agent.placeholder { color: #475569; font-weight: 400; }
+    .tl-detail { color: #64748b; font-size: 0.92em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .tl-legend {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      margin-top: 12px;
+      font-size: 0.74em;
+      color: #64748b;
+    }
+    .tl-legend .tl-event { padding: 1px 7px; font-size: 0.92em; }
+
+    /* workspace data-flow diagram */
+    .ws-flow {
+      background: rgba(0,0,0,0.30);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 22px 18px;
+      margin-bottom: 18px;
+      display: grid;
+      grid-template-columns: 1fr auto 1.2fr auto 1fr;
+      gap: 16px 12px;
+      align-items: center;
+      font-size: 0.8em;
+      font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+    }
+    @media (max-width: 880px) {
+      .ws-flow { grid-template-columns: 1fr; }
+      .ws-flow .ws-arrow { display: none; }
+    }
+    .ws-flow-box {
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.10);
+      text-align: center;
+      line-height: 1.55;
+    }
+    .ws-flow-box .ws-flow-title { display:block; color:#e0e0e0; font-weight:600; font-size:0.96em; }
+    .ws-flow-box .ws-flow-sub   { display:block; color:#64748b; font-size:0.86em; margin-top:3px; font-family: -apple-system, system-ui, sans-serif; }
+    .ws-flow-box.input  { border-left: 3px solid #f5b07a; }
+    .ws-flow-box.module { border-left: 3px solid #7eb3ff; }
+    .ws-flow-box.store  { border-left: 3px solid #2dd4bf; }
+    .ws-flow-box.fs     { border-left: 3px solid #94a3b8; }
+    .ws-arrow {
+      color: #475569;
+      font-size: 1.4em;
+      text-align: center;
+      font-family: -apple-system, system-ui, sans-serif;
+    }
+    .ws-arrow .lbl {
+      display: block;
+      font-size: 0.62em;
+      color: #64748b;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
   </style>
 </head>
 <body>
@@ -108,74 +351,438 @@
       <div class="header-divider"></div>
       <div class="header-badge">💾 Desktop</div>
       <h1>Workspace 存储与读写</h1>
-      <p>Workspace 是 Assistant 的本地运行时存储。职责按 "what / why / when" 切分：<strong>artifact_registry</strong> 是 "what"（caption + 路径），<strong>global_memory</strong> 是 "why"（语义决策），<strong>logs</strong> 是 "when"（操作流），文件本身落在工作目录里。</p>
+      <p>Workspace 是 Assistant 的本地运行时存储。新架构里只剩两份"事实文件"：<strong>global_memory.md</strong> 是 per-execution 的产物 ledger（每次 agent 跑出来的所有文件都在这里登记，附带 <code>what / why / scope</code>），<strong>logs.jsonl</strong> 是 namespaced <code>event</code> 时间流（<code>execution.*</code> / <code>artifact.*</code> / <code>workspace.*</code>）。文件本身落在 <code>artifacts/</code> 子树下，由 <strong>ArtifactWriter</strong> 一次性写入并自动注册到 global_memory。</p>
     </header>
 
-    <!-- 1. 目录结构 -->
+    <!-- 1. 数据流总览 -->
     <section class="ws-section">
-      <h2>① 目录结构</h2>
-      <div class="ws-sub">runtime_base_path / &lt;workspace_id&gt; /</div>
-<div class="tree"><span class="dir">workspace_global/</span>
-├── <span class="dir">artifacts/</span>                            <span class="note"># 产物文件落盘根（路径由 LLM #2 编排）</span>
-│   └── <span class="dir">media/</span>
-│       ├── <span class="dir">StoryAgent/</span>     <span class="dir">json/</span>   <span class="file">story_blueprint.json</span>
-│       ├── <span class="dir">ScreenplayAgent/</span><span class="dir">json/</span>   <span class="file">screenplay.json</span>
-│       ├── <span class="dir">KeyFrameAgent/</span>  <span class="dir">image/</span>  <span class="file">scene_01_shot_01.png …</span>
-│       │                  <span class="dir">json/</span>   <span class="file">keyframes_manifest.json</span>
-│       ├── <span class="dir">VideoAgent/</span>     <span class="dir">video/</span>  <span class="file">scene_01.mp4 …</span>
-│       └── <span class="dir">AudioAgent/</span>     <span class="dir">audio/</span>  <span class="file">final_delivery.mp4</span>
+      <h2>① 数据流总览</h2>
+      <div class="ws-sub">用户 upload → ArtifactWriter 持久化 → GlobalMemory 注册 → 下游 agent 通过 InputResolver 拉数据 → 写 logs 留痕</div>
+      <div class="ws-flow">
+        <div class="ws-flow-box input">
+          <span class="ws-flow-title">user upload</span>
+          <span class="ws-flow-sub">text / image / audio / video bytes</span>
+        </div>
+        <div class="ws-arrow">→<span class="lbl">persist_raw_upload</span></div>
+        <div class="ws-flow-box module">
+          <span class="ws-flow-title">ArtifactWriter</span>
+          <span class="ws-flow-sub">persist_execution_from_plan<br>artifact.* events</span>
+        </div>
+        <div class="ws-arrow">→<span class="lbl">register</span></div>
+        <div class="ws-flow-box store">
+          <span class="ws-flow-title">global_memory.md</span>
+          <span class="ws-flow-sub">per-execution ledger<br>+ per-file caption</span>
+        </div>
+
+        <div class="ws-flow-box fs" style="grid-column:1">
+          <span class="ws-flow-title">artifacts/...</span>
+          <span class="ws-flow-sub">JSON · PNG · MP4 · WAV</span>
+        </div>
+        <div class="ws-arrow">↑<span class="lbl">paths</span></div>
+        <div class="ws-flow-box module">
+          <span class="ws-flow-title">InputResolver (LLM)</span>
+          <span class="ws-flow-sub">match captions against<br>consumer's [label] slots</span>
+        </div>
+        <div class="ws-arrow">←<span class="lbl">get_captions_index</span></div>
+        <div class="ws-flow-box store" style="background:rgba(45,212,191,0.04)">
+          <span class="ws-flow-title">global_memory.md</span>
+          <span class="ws-flow-sub">read side</span>
+        </div>
+      </div>
+      <div class="brief-caption">
+        Workspace 内一切产物都先经过 <strong>ArtifactWriter</strong>，落盘后由 <strong>GlobalMemory</strong> 注册带 <code>what / why / scope</code> 的 caption；下游 agent 启动时 <strong>InputResolver</strong> 把这些 caption 当成"自描述索引"喂给 LLM，让 LLM 决定哪些产物对应当前 agent 的哪个 <code>[label]</code> 槽。<strong>没有任何 agent 在 InputResolver 之外直接读 workspace 文件</strong>——这就是 caption-driven 的含义。
+      </div>
+    </section>
+
+    <!-- 2. 目录结构 -->
+    <section class="ws-section">
+      <h2>② 目录结构</h2>
+      <div class="ws-sub">runtime_base_path / &lt;workspace_id&gt; /  ·  示例 workspace：<code>workspace_e2e_text_only_20260407_111717</code>（2026-04-07 11:17 e2e 跑出的真 workspace）</div>
+<div class="tree"><span class="dir">workspace_e2e_text_only_20260407_111717/</span>
+├── <span class="dir">inputs/</span>                                          <span class="note"># 用户原始 upload</span>
+│   └── <span class="file">upload_20260407_111717_487322.txt</span>
 │
-├── <span class="file">global_memory.md</span>                       <span class="note"># 语义决策（"why"）—— what / why / context_note</span>
-├── <span class="file">global_memory_index.md</span>                 <span class="note"># memory 的聚合索引</span>
-├── <span class="file">artifact_registry.jsonl</span>                <span class="note"># caption 索引（"what"）—— 每行一个 ArtifactRegistryEntry</span>
-└── <span class="file">logs.jsonl</span>                             <span class="note"># 操作流（"when"）—— LogEntry per event</span>
+├── <span class="dir">artifacts/</span>                                       <span class="note"># 产物文件落盘根（路径由 service.process_results 的 LLM 编排）</span>
+│   ├── <span class="file">task_1_f9eb85bb_user_text_exec_1.json</span>           <span class="note"># IntakeTextAgent</span>
+│   ├── <span class="dir">story/</span>      <span class="file">task_1_f9eb85bb_story_exec_2.json</span>
+│   ├── <span class="dir">screenplay/</span> <span class="file">task_1_f9eb85bb_screenplay_exec_3.json</span>
+│   ├── <span class="dir">keyframes/</span>  <span class="file">task_1_f9eb85bb_keyframes_exec_4.json · _manifest.json</span>
+│   ├── <span class="dir">video/</span>      <span class="file">task_1_f9eb85bb_video_exec_5.json</span>
+│   ├── <span class="dir">audio/</span>      <span class="file">task_1_f9eb85bb_audio_exec_6.json</span>
+│   └── <span class="dir">media/</span>
+│       ├── <span class="dir">KeyFrameAgent/image/</span>   <span class="file">img_char_001_global.png · …8 PNG…</span>
+│       ├── <span class="dir">VideoAgent/video/</span>     <span class="file">clip_sh_001..004.mp4 · clip_sc_001.mp4 · clip_final.mp4</span>
+│       └── <span class="dir">AudioAgent/audio/</span>     <span class="file">aud_amb_sc_001.wav · aud_music_sc_001.wav · aud_mix_sc_001.wav · aud_final.wav · delivery_final.mp4</span>
+│
+├── <span class="file">global_memory.md</span>                                  <span class="note"># 唯一的 semantic record —— 每个 execution 一条，每条带 ArtifactRef[]</span>
+└── <span class="file">logs.jsonl</span>                                        <span class="note"># 操作流 —— 一行一个 namespaced event（execution.* / artifact.* / workspace.*）</span>
 </div>
-      <div style="margin-top:14px;font-size:0.82em;color:#888;line-height:1.6">
-        关键变化：memory 不再持有 <code>artifact_locations</code>。文件路径由 <code>artifact_registry.jsonl</code> 持有，每条 ArtifactRef 自带自然语言 caption（<code>what / why / scope / path / mime</code>），由 InputResolver 在 Phase 1 用来挑选。
+      <div class="brief-caption">
+        关键变化（重构后）：原 <code>artifact_registry.jsonl</code> 已重命名为 <strong><code>global_memory.md</code></strong>，并改用 markdown wrapper + 内嵌 JSON entries 块；旧的 MemoryManager 输出已彻底删除——semantic record 不再分两份，<strong>只有一个 global_memory.md</strong>。Director 通过 <code>get_global_memory_brief()</code> 拿到的 slim view 是 <em>computed on read</em> 的，磁盘上没有 brief 文件。这个 workspace 是用 e2e 测试跑了 <strong>9 分 49 秒</strong>、调用 Gemini 2.5 Flash + FAL.ai 生成 8 张 PNG / 6 段 MP4 / 5 段 WAV 出来的。
+      </div>
+    </section>
+
+    <!-- 2.1.1 字段解释：单条 entry walkthrough -->
+    <section class="ws-section">
+      <h2>② · A' · entry 字段解释</h2>
+      <div class="ws-sub">取上面那份原文里的第 1 条（IntakeTextAgent）作为锚点，把每一项的含义、来源和消费方都标注出来。</div>
+<div class="tree">{
+  <span style="color:#7eb3ff">"content"</span>: {                                                              <span style="color:#64748b">// ← 这条 entry 的语义负载（content block，agent 在 generation 时填）</span>
+    <span style="color:#7eb3ff">"what"</span>: "natural-language brief from the user: \"A 30-second…\"",     <span style="color:#64748b">// ← agent 用一句话总结自己产出了什么；下游 agent 看 caption 就靠它</span>
+    <span style="color:#7eb3ff">"why"</span>:  "creative brief — elderly leather craftsman portrait short" <span style="color:#64748b">// ← 这次产出的动机 / 创作理由；这里直接复用了用户 upload 时填的 user_intent</span>
+  },
+  <span style="color:#7eb3ff">"agent_id"</span>:     "IntakeTextAgent",                                       <span style="color:#64748b">// ← 哪个 sub-agent 产出了这条 entry；新架构下也是 artifacts/&lt;agent_id&gt;/ 目录的 slug</span>
+  <span style="color:#7eb3ff">"task_id"</span>:      "task_1_c6f46a7c",                                       <span style="color:#64748b">// ← 这条 entry 归属的 task（task stack 的 task ID）；upload 类 entry 的 task_id 为空</span>
+  <span style="color:#7eb3ff">"execution_id"</span>: "exec_1_43fc0eee",                                       <span style="color:#64748b">// ← 本次 execution 的全局唯一 ID；同 task 的 (task_id, agent_id) 唯一对应一次跑</span>
+  <span style="color:#7eb3ff">"created_at"</span>:   "2026-04-07T09:37:58.337659+00:00"                        <span style="color:#64748b">// ← UTC ISO 写入时间；director-facing brief 用它倒序排</span>
+}
+</div>
+
+      <table class="brief-table" style="margin-top:18px">
+        <thead>
+          <tr>
+            <th class="col-step">字段</th>
+            <th>类型</th>
+            <th>由谁写</th>
+            <th>由谁读 / 消费方</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-agent">content.what</td>
+            <td class="col-task">str</td>
+            <td class="col-task">producing sub-agent (在 ArtifactCaption 里填)</td>
+            <td class="col-task">InputResolver 的 LLM —— 用它做 caption-driven 的 [label] 匹配</td>
+          </tr>
+          <tr>
+            <td class="col-agent">content.why</td>
+            <td class="col-task">str</td>
+            <td class="col-task">producing sub-agent</td>
+            <td class="col-task">InputResolver 的 LLM；human 调试时也直接读</td>
+          </tr>
+          <tr>
+            <td class="col-agent">agent_id</td>
+            <td class="col-task">str</td>
+            <td class="col-task">ArtifactWriter._register_artifacts_callback（从 execution.agent_id 拿）</td>
+            <td class="col-task">find_by_producer / has_producer_run / get_global_memory_brief</td>
+          </tr>
+          <tr>
+            <td class="col-agent">task_id</td>
+            <td class="col-task">str</td>
+            <td class="col-task">ArtifactWriter（从 execution.task_id 拿；upload 类为空）</td>
+            <td class="col-task">get_captions_index 按 task_id 过滤；find_by_producer 用它做 dedup key</td>
+          </tr>
+          <tr>
+            <td class="col-agent">execution_id</td>
+            <td class="col-task">str</td>
+            <td class="col-task">storage.create_execution 生成（单调递增 + uuid suffix）</td>
+            <td class="col-task">global_memory_brief 行 ID；logs.jsonl 通过 execution_id join</td>
+          </tr>
+          <tr>
+            <td class="col-agent">created_at</td>
+            <td class="col-task">datetime (UTC ISO)</td>
+            <td class="col-task">GlobalMemory.register（datetime.now(UTC)）</td>
+            <td class="col-task">brief 倒序排序的 key</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="brief-caption">
+        几个值得注意的点：
+        <ul style="margin:8px 0 0 18px;padding:0;line-height:1.7">
+          <li><code>content.what</code> 和 <code>content.why</code> 是 sub-agent <em>自己</em> 在 generation pass 末尾写的（不是 service 后处理）—— 即"我刚才产出的东西可以一句话概括为 X，理由是 Y"。这是 caption-driven 架构的关键：agent 必须自描述。</li>
+          <li><code>execution_id</code> 是这条 entry 唯一的 join key —— <code>logs.jsonl</code> 里同 <code>execution_id</code> 的事件都对应这一次 run。Director 想看一次 execution 的完整时间线就 grep 这个。</li>
+          <li><code>task_id</code> 对 upload 类 entry 是空字符串（upload 在 task 创建之前发生），其他都填实际 task ID。这导致 <code>get_captions_index(task_id=...)</code> 必须显式包含 <code>task_id == ""</code> 的行，否则会漏掉 raw upload。</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 2.1 真实样本：global_memory.md 原文 -->
+    <section class="ws-section">
+      <h2>② · A · 真实样本：<code>global_memory.md</code></h2>
+      <div class="ws-sub">逐字来自 <code>Runtime/intake_e2e_outputs/workspace_e2e_text_with_image_20260407_093744/global_memory.md</code></div>
+<div class="tree"># Global memory
+
+Global memory for workspace `workspace_e2e_text_with_image_20260407_093744`. Records semantic decisions and project context — the &#x27;why&#x27; behind agent outputs.
+Artifact paths are in ``artifact_registry.jsonl`` (not here).
+
+## Entries
+
+```json
+[
+  {
+    &quot;content&quot;: {
+      &quot;what&quot;: &quot;natural-language brief from the user: \&quot;A 30-second cinematic short about Joseph, an elderly white-haired leather craftsman in his sunlit workshop. He carefully\&quot; (stated intent: creative brief — elderly leather craftsman portrait short)&quot;,
+      &quot;why&quot;: &quot;creative brief — elderly leather craftsman portrait short&quot;
+    },
+    &quot;agent_id&quot;: &quot;IntakeTextAgent&quot;,
+    &quot;task_id&quot;: &quot;task_1_c6f46a7c&quot;,
+    &quot;execution_id&quot;: &quot;exec_1_43fc0eee&quot;,
+    &quot;created_at&quot;: &quot;2026-04-07T09:37:58.337659+00:00&quot;
+  },
+  {
+    &quot;content&quot;: {
+      &quot;what&quot;: &quot;image showing An elderly man with white hair, blue eyes, and a blue shirt wears a leather apron, looking calmly off-camera against a bright white background.&quot;,
+      &quot;why&quot;: &quot;AUTHORITATIVE PROTAGONIST IMAGE: the man in this photo IS Joseph, the elderly white-haired leather craftsman from the creative brief. Use this image as the canonical visual identity of the protagonist character (char_001) in ALL keyframes — every shot of Joseph should look like THIS person, not a text-only generated character.&quot;
+    },
+    &quot;agent_id&quot;: &quot;IntakeImageAgent&quot;,
+    &quot;task_id&quot;: &quot;task_1_c6f46a7c&quot;,
+    &quot;execution_id&quot;: &quot;exec_2_698829d4&quot;,
+    &quot;created_at&quot;: &quot;2026-04-07T09:38:16.717141+00:00&quot;
+  },
+  {
+    &quot;content&quot;: {
+      &quot;what&quot;: &quot;This is a serene character study about Joseph, an elderly leather craftsman, deeply immersed in his art in a single, beautifully lit workshop scene.&quot;,
+      &quot;why&quot;: &quot;The creative choices focus on capturing a calm, reverent tone through visual descriptions of warm light and intricate craftsmanship, mirroring the brief&#x27;s request for a &#x27;calm reverent mood&#x27;. The narrative structure is simple, emphasizing the process and Joseph&#x27;s dedication rather than external conflict, fitting a short cinematic format.&quot;
+    },
+    &quot;agent_id&quot;: &quot;StoryAgent&quot;,
+    &quot;task_id&quot;: &quot;task_1_c6f46a7c&quot;,
+    &quot;execution_id&quot;: &quot;exec_3_28845126&quot;,
+    &quot;created_at&quot;: &quot;2026-04-07T09:38:55.524603+00:00&quot;
+  },
+  {
+    &quot;content&quot;: {
+      &quot;what&quot;: &quot;The Artisan&#x27;s Legacy, 1 scene, 4 shots, Warm, contemplative visual style.&quot;,
+      &quot;why&quot;: &quot;To evoke a sense of calm reverence for craftsmanship. Pacing is slow and deliberate, focusing on the meticulous actions and the serene environment. Visuals emphasize warm, natural light and close-ups on textured materials and skilled hands, reflecting the tone keywords.&quot;
+    },
+    &quot;agent_id&quot;: &quot;ScreenplayAgent&quot;,
+    &quot;task_id&quot;: &quot;task_1_c6f46a7c&quot;,
+    &quot;execution_id&quot;: &quot;exec_4_29a3516c&quot;,
+    &quot;created_at&quot;: &quot;2026-04-07T09:39:43.589502+00:00&quot;
+  },
+  {
+    &quot;content&quot;: {
+      &quot;what&quot;: &quot;A keyframe planning document covering 1 scenes and 4 shots. For each shot in the screenplay it provides a textual description of the planned starting frame and a separate motion hint describing how that frame should move when animated. It also catalogs the visual identity references (characters, locations, props) used to keep imagery consistent. Used by the video step to fetch the prompt and motion intent for each shot. 4 entities (1 character, 1 location, 2 props), 1 scene context, 4 keyframes, naturalistic slice-of-life visual style.&quot;,
+      &quot;why&quot;: &quot;Style consistency is achieved by anchoring each entity&#x27;s description in warm, soft lighting, emphasizing natural textures like wood and leather. Key visual decisions focus on establishing a canonical, inviting, and practical aesthetic, reflecting a handcrafted, timeless mood for all elements.&quot;
+    },
+    &quot;agent_id&quot;: &quot;KeyFrameAgent&quot;,
+    &quot;task_id&quot;: &quot;task_1_c6f46a7c&quot;,
+    &quot;execution_id&quot;: &quot;exec_5_2ea2c605&quot;,
+    &quot;created_at&quot;: &quot;2026-04-07T09:43:15.672788+00:00&quot;
+  },
+  {
+    &quot;content&quot;: {
+      &quot;what&quot;: &quot;A manifest of the assembled video for the whole story: 1 scene(s), 4 shot clip(s). It catalogs the per-shot clips, the per-scene cuts, and the single complete final video file. It is the document describing the finished video; downstream audio mixing reads it to mux audio against the final video file.&quot;,
+      &quot;why&quot;: &quot;Deterministic assembly from screenplay shot structure; no creative LLM decisions.&quot;
+    },
+    &quot;agent_id&quot;: &quot;VideoAgent&quot;,
+    &quot;task_id&quot;: &quot;task_1_c6f46a7c&quot;,
+    &quot;execution_id&quot;: &quot;exec_6_3235f9bb&quot;,
+    &quot;created_at&quot;: &quot;2026-04-07T09:47:43.787892+00:00&quot;
+  },
+  {
+    &quot;content&quot;: {
+      &quot;what&quot;: &quot;1 scene, 0 narration segments, dedicated music and ambience per scene, delivered as JSON.&quot;,
+      &quot;why&quot;: &quot;To evoke a sense of peaceful dedication, quiet craftsmanship, and serene accomplishment, aligning with Joseph&#x27;s meticulous work and the sunlit workshop atmosphere. The audio style focuses on subtle, natural sounds that enhance the realism of the crafting process and a warm, reflective musical underscore to highlight the emotional depth of the character.&quot;
+    },
+    &quot;agent_id&quot;: &quot;AudioAgent&quot;,
+    &quot;task_id&quot;: &quot;task_1_c6f46a7c&quot;,
+    &quot;execution_id&quot;: &quot;exec_7_4bdd4e59&quot;,
+    &quot;created_at&quot;: &quot;2026-04-07T09:48:31.755187+00:00&quot;
+  }
+]
+```
+</div>
+    </section>
+
+    <!-- 1.2 真实样本：global_memory_brief（director 视角） -->
+    <section class="ws-section">
+      <h2>② · B · 真实样本：<code>global_memory_brief</code>（director 视角）</h2>
+      <div class="ws-sub">由 <code>Workspace.get_global_memory_brief()</code> 派生 —— 磁盘上没有这个文件，每次调用现算。HTTP 端点 <code>GET /api/assistant/workspace/memory/brief</code>。</div>
+
+      <table class="brief-table">
+        <thead>
+          <tr>
+            <th class="col-step">#</th>
+            <th class="col-time">created_at</th>
+            <th class="col-agent">agent_id</th>
+            <th class="col-exec">execution_id</th>
+            <th class="col-task">task_id</th>
+            <th class="col-status">status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-step">1</td>
+            <td class="col-time">2026-04-07T11:27:06Z</td>
+            <td class="col-agent">AudioAgent</td>
+            <td class="col-exec">exec_6_16de918c</td>
+            <td class="col-task">task_1_f9eb85bb</td>
+            <td class="col-status"><span class="pill completed">COMPLETED</span></td>
+          </tr>
+          <tr>
+            <td class="col-step">2</td>
+            <td class="col-time">2026-04-07T11:26:17Z</td>
+            <td class="col-agent">VideoAgent</td>
+            <td class="col-exec">exec_5_b0314fbd</td>
+            <td class="col-task">task_1_f9eb85bb</td>
+            <td class="col-status"><span class="pill completed">COMPLETED</span></td>
+          </tr>
+          <tr>
+            <td class="col-step">3</td>
+            <td class="col-time">2026-04-07T11:21:01Z</td>
+            <td class="col-agent">KeyFrameAgent</td>
+            <td class="col-exec">exec_4_2066185b</td>
+            <td class="col-task">task_1_f9eb85bb</td>
+            <td class="col-status"><span class="pill completed">COMPLETED</span></td>
+          </tr>
+          <tr>
+            <td class="col-step">4</td>
+            <td class="col-time">2026-04-07T11:18:36Z</td>
+            <td class="col-agent">ScreenplayAgent</td>
+            <td class="col-exec">exec_3_7b330b5c</td>
+            <td class="col-task">task_1_f9eb85bb</td>
+            <td class="col-status"><span class="pill completed">COMPLETED</span></td>
+          </tr>
+          <tr>
+            <td class="col-step">5</td>
+            <td class="col-time">2026-04-07T11:17:56Z</td>
+            <td class="col-agent">StoryAgent</td>
+            <td class="col-exec">exec_2_e0bc4598</td>
+            <td class="col-task">task_1_f9eb85bb</td>
+            <td class="col-status"><span class="pill completed">COMPLETED</span></td>
+          </tr>
+          <tr>
+            <td class="col-step">6</td>
+            <td class="col-time">2026-04-07T11:17:30Z</td>
+            <td class="col-agent">IntakeTextAgent</td>
+            <td class="col-exec">exec_1_d08ffdf1</td>
+            <td class="col-task">task_1_f9eb85bb</td>
+            <td class="col-status"><span class="pill completed">COMPLETED</span></td>
+          </tr>
+          <tr class="row-user">
+            <td class="col-step">7</td>
+            <td class="col-time">2026-04-07T11:17:17Z</td>
+            <td class="col-agent">user</td>
+            <td class="col-exec">upload_20260407_111717_487322</td>
+            <td class="col-task">—</td>
+            <td class="col-status"><span class="pill completed">COMPLETED</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="brief-caption">
+        每行 5 个字段：<code>execution_id · agent_id · task_id · status · created_at</code>。按 <code>created_at</code> 倒序（最新的在最上面）。Director 看这份就能判断"做过什么 / 谁做的 / 什么时候做的 / 是否成功"，再决定下一步派哪个 agent。<strong>失败的 execution 不会出现在这里</strong>（它们没有产物）—— 想看失败请查 <code>GET /api/assistant/workspace/logs?event=execution.failed</code>。最后一行 <code>agent_id=user</code> 是 raw upload，它的 <code>task_id</code> 为空（upload 在创建 task 之前就已经发生）。
+      </div>
+
+      <details style="margin-top:18px">
+        <summary style="cursor:pointer;color:#64748b;font-size:0.8em;letter-spacing:0.04em;text-transform:uppercase">原始 JSON 响应（点开查看）</summary>
+<div class="tree" style="margin-top:10px">{
+  "global_memory": [
+    {
+      "execution_id": "exec_6_16de918c",
+      "agent_id":     "AudioAgent",
+      "task_id":      "task_1_f9eb85bb",
+      "status":       "COMPLETED",
+      "created_at":   "2026-04-07T11:27:06.123456+00:00"
+    },
+    …7 行同样 schema…
+    {
+      "execution_id": "upload_20260407_111717_487322",
+      "agent_id":     "user",
+      "task_id":      "",
+      "status":       "COMPLETED",
+      "created_at":   "2026-04-07T11:17:17.489942+00:00"
+    }
+  ]
+}
+</div>
+      </details>
+    </section>
+
+    <!-- 2.3 真实样本：logs.jsonl 时间轴 -->
+    <section class="ws-section">
+      <h2>② · C · 真实样本：<code>logs.jsonl</code> 时间轴</h2>
+      <div class="ws-sub">全部 41 条 events 来自 <code>workspace_e2e_text_only_20260407_111717/logs.jsonl</code>。每条统一 schema：<code>id · timestamp · event · resource_id · details · agent_id · task_id · level · execution_id</code>。命名空间：<span class="tl-event workspace">workspace.*</span> · <span class="tl-event user">user.*</span> · <span class="tl-event exec-start">execution.started</span> · <span class="tl-event exec-done">execution.completed</span> · <span class="tl-event art-snap">artifact.snapshot_persisted</span> · <span class="tl-event art-persist">artifact.persisted</span> · <span class="tl-event art-manifest">artifact.manifest_persisted</span></div>
+
+      <div class="timeline">
+        <div class="tl-row"><span class="tl-time">11:17:17.475</span><span class="tl-event workspace">workspace.created</span><span class="tl-agent placeholder">—</span><span class="tl-detail">workspace_id=workspace_e2e_text_only_20260407_111717</span></div>
+        <div class="tl-row"><span class="tl-time">11:17:17.491</span><span class="tl-event user">user.upload</span><span class="tl-agent">user</span><span class="tl-detail">filename=upload_20260407_111717_487322.txt · mime=text/plain · user_intent=creative brief for the project · scope=raw_pending</span></div>
+        <div class="tl-row"><span class="tl-time">11:17:21.919</span><span class="tl-event exec-start">execution.started</span><span class="tl-agent">IntakeTextAgent</span><span class="tl-detail">status=IN_PROGRESS</span></div>
+        <div class="tl-row"><span class="tl-time">11:17:21.920</span><span class="tl-event exec-done">execution.completed</span><span class="tl-agent">IntakeTextAgent</span><span class="tl-detail">status=COMPLETED · retry_attempts=1 · eval_summary=&quot;No creative evaluation defined for IntakeTextEvaluator.&quot;</span></div>
+        <div class="tl-row"><span class="tl-time">11:17:30.399</span><span class="tl-event art-snap">artifact.snapshot_persisted</span><span class="tl-agent">IntakeTextAgent</span><span class="tl-detail">filename=user_text_exec_1.json · asset_key=user_text</span></div>
+        <div class="tl-row"><span class="tl-time">11:17:34.968</span><span class="tl-event exec-start">execution.started</span><span class="tl-agent">StoryAgent</span><span class="tl-detail">status=IN_PROGRESS</span></div>
+        <div class="tl-row"><span class="tl-time">11:17:50.703</span><span class="tl-event exec-done">execution.completed</span><span class="tl-agent">StoryAgent</span><span class="tl-detail">status=COMPLETED · retry_attempts=1 · eval_summary=&quot;This content presents a compelling and emotionally resonant story. The dramatic …&quot;</span></div>
+        <div class="tl-row"><span class="tl-time">11:17:56.218</span><span class="tl-event art-snap">artifact.snapshot_persisted</span><span class="tl-agent">StoryAgent</span><span class="tl-detail">filename=story_exec_2.json · asset_key=story</span></div>
+        <div class="tl-row"><span class="tl-time">11:18:01.784</span><span class="tl-event exec-start">execution.started</span><span class="tl-agent">ScreenplayAgent</span><span class="tl-detail">status=IN_PROGRESS</span></div>
+        <div class="tl-row"><span class="tl-time">11:18:29.094</span><span class="tl-event exec-done">execution.completed</span><span class="tl-agent">ScreenplayAgent</span><span class="tl-detail">status=COMPLETED · retry_attempts=1 · eval_summary=&quot;This scene effectively establishes Elias&#x27;s character, his meticulous craft, and …&quot;</span></div>
+        <div class="tl-row"><span class="tl-time">11:18:36.773</span><span class="tl-event art-snap">artifact.snapshot_persisted</span><span class="tl-agent">ScreenplayAgent</span><span class="tl-detail">filename=screenplay_exec_3.json · asset_key=screenplay</span></div>
+        <div class="tl-row"><span class="tl-time">11:18:44.099</span><span class="tl-event exec-start">execution.started</span><span class="tl-agent">KeyFrameAgent</span><span class="tl-detail">status=IN_PROGRESS</span></div>
+        <div class="tl-row"><span class="tl-time">11:20:50.425</span><span class="tl-event exec-done">execution.completed</span><span class="tl-agent">KeyFrameAgent</span><span class="tl-detail">status=COMPLETED · retry_attempts=1 · eval_summary=&quot;The content demonstrates excellent consistency across all prompt layers, with ch…&quot;</span></div>
+        <div class="tl-row"><span class="tl-time">11:21:01.358</span><span class="tl-event art-persist">artifact.persisted</span><span class="tl-agent">KeyFrameAgent</span><span class="tl-detail">filename=img_loc_001_global.png · source_key=img_loc_001_global · kind=media</span></div>
+        <div class="tl-row"><span class="tl-time">11:21:01.361</span><span class="tl-event art-persist">artifact.persisted</span><span class="tl-agent">KeyFrameAgent</span><span class="tl-detail">filename=img_char_001_global.png · source_key=img_char_001_global · kind=media</span></div>
+        <div class="tl-row"><span class="tl-time">11:21:01.363</span><span class="tl-event art-persist">artifact.persisted</span><span class="tl-agent">KeyFrameAgent</span><span class="tl-detail">filename=img_char_001_sc_001.png · source_key=img_char_001_sc_001 · kind=media</span></div>
+        <div class="tl-row"><span class="tl-time">11:21:01.365</span><span class="tl-event art-persist">artifact.persisted</span><span class="tl-agent">KeyFrameAgent</span><span class="tl-detail">filename=img_loc_001_sc_001.png · source_key=img_loc_001_sc_001 · kind=media</span></div>
+        <div class="tl-row"><span class="tl-time">11:21:01.366</span><span class="tl-event art-persist">artifact.persisted</span><span class="tl-agent">KeyFrameAgent</span><span class="tl-detail">filename=img_sh_002_kf_002.png · source_key=img_sh_002_kf_002 · kind=media</span></div>
+        <div class="tl-row"><span class="tl-time">11:21:01.368</span><span class="tl-event art-persist">artifact.persisted</span><span class="tl-agent">KeyFrameAgent</span><span class="tl-detail">filename=img_sh_001_kf_001.png · source_key=img_sh_001_kf_001 · kind=media</span></div>
+        <div class="tl-row"><span class="tl-time">11:21:01.369</span><span class="tl-event art-persist">artifact.persisted</span><span class="tl-agent">KeyFrameAgent</span><span class="tl-detail">filename=img_sh_003_kf_003.png · source_key=img_sh_003_kf_003 · kind=media</span></div>
+        <div class="tl-row"><span class="tl-time">11:21:01.371</span><span class="tl-event art-persist">artifact.persisted</span><span class="tl-agent">KeyFrameAgent</span><span class="tl-detail">filename=img_sh_004_kf_004.png · source_key=img_sh_004_kf_004 · kind=media</span></div>
+        <div class="tl-row"><span class="tl-time">11:21:01.373</span><span class="tl-event art-manifest">artifact.manifest_persisted</span><span class="tl-agent">KeyFrameAgent</span><span class="tl-detail">filename=task_1_f9eb85bb_keyframes_manifest.json · manifest_kind=keyframes_manifest</span></div>
+        <div class="tl-row"><span class="tl-time">11:21:01.374</span><span class="tl-event art-snap">artifact.snapshot_persisted</span><span class="tl-agent">KeyFrameAgent</span><span class="tl-detail">filename=keyframes_exec_4.json · asset_key=keyframes</span></div>
+        <div class="tl-row"><span class="tl-time">11:21:21.031</span><span class="tl-event exec-start">execution.started</span><span class="tl-agent">VideoAgent</span><span class="tl-detail">status=IN_PROGRESS</span></div>
+        <div class="tl-row"><span class="tl-time">11:26:06.240</span><span class="tl-event exec-done">execution.completed</span><span class="tl-agent">VideoAgent</span><span class="tl-detail">status=COMPLETED · retry_attempts=1 · eval_summary=&quot;No creative evaluation defined for VideoEvaluator.&quot;</span></div>
+        <div class="tl-row"><span class="tl-time">11:26:17.033</span><span class="tl-event art-persist">artifact.persisted</span><span class="tl-agent">VideoAgent</span><span class="tl-detail">filename=clip_sh_001.mp4 · source_key=clip_sh_001 · kind=media</span></div>
+        <div class="tl-row"><span class="tl-time">11:26:17.044</span><span class="tl-event art-persist">artifact.persisted</span><span class="tl-agent">VideoAgent</span><span class="tl-detail">filename=clip_sh_002.mp4 · source_key=clip_sh_002 · kind=media</span></div>
+        <div class="tl-row"><span class="tl-time">11:26:17.054</span><span class="tl-event art-persist">artifact.persisted</span><span class="tl-agent">VideoAgent</span><span class="tl-detail">filename=clip_sh_003.mp4 · source_key=clip_sh_003 · kind=media</span></div>
+        <div class="tl-row"><span class="tl-time">11:26:17.066</span><span class="tl-event art-persist">artifact.persisted</span><span class="tl-agent">VideoAgent</span><span class="tl-detail">filename=clip_sh_004.mp4 · source_key=clip_sh_004 · kind=media</span></div>
+        <div class="tl-row"><span class="tl-time">11:26:17.080</span><span class="tl-event art-persist">artifact.persisted</span><span class="tl-agent">VideoAgent</span><span class="tl-detail">filename=clip_sc_001.mp4 · source_key=clip_sc_001 · kind=media</span></div>
+        <div class="tl-row"><span class="tl-time">11:26:17.093</span><span class="tl-event art-persist">artifact.persisted</span><span class="tl-agent">VideoAgent</span><span class="tl-detail">filename=clip_final.mp4 · source_key=clip_final · kind=media</span></div>
+        <div class="tl-row"><span class="tl-time">11:26:17.097</span><span class="tl-event art-snap">artifact.snapshot_persisted</span><span class="tl-agent">VideoAgent</span><span class="tl-detail">filename=video_exec_5.json · asset_key=video</span></div>
+        <div class="tl-row"><span class="tl-time">11:26:25.846</span><span class="tl-event exec-start">execution.started</span><span class="tl-agent">AudioAgent</span><span class="tl-detail">status=IN_PROGRESS</span></div>
+        <div class="tl-row"><span class="tl-time">11:26:55.469</span><span class="tl-event exec-done">execution.completed</span><span class="tl-agent">AudioAgent</span><span class="tl-detail">status=COMPLETED · retry_attempts=3 · eval_summary=&quot;Audio asset eval: TTS 0/0 (0%), music 1/1, mixes 1/1, final_audio=OK, final_deli…&quot;</span></div>
+        <div class="tl-row"><span class="tl-time">11:27:06.683</span><span class="tl-event art-persist">artifact.persisted</span><span class="tl-agent">AudioAgent</span><span class="tl-detail">filename=aud_music_sc_001.wav · source_key=aud_music_sc_001 · kind=media</span></div>
+        <div class="tl-row"><span class="tl-time">11:27:06.685</span><span class="tl-event art-persist">artifact.persisted</span><span class="tl-agent">AudioAgent</span><span class="tl-detail">filename=aud_amb_sc_001.wav · source_key=aud_amb_sc_001 · kind=media</span></div>
+        <div class="tl-row"><span class="tl-time">11:27:06.686</span><span class="tl-event art-persist">artifact.persisted</span><span class="tl-agent">AudioAgent</span><span class="tl-detail">filename=aud_mix_sc_001.wav · source_key=aud_mix_sc_001 · kind=media</span></div>
+        <div class="tl-row"><span class="tl-time">11:27:06.688</span><span class="tl-event art-persist">artifact.persisted</span><span class="tl-agent">AudioAgent</span><span class="tl-detail">filename=aud_final.wav · source_key=aud_final · kind=media</span></div>
+        <div class="tl-row"><span class="tl-time">11:27:06.706</span><span class="tl-event art-persist">artifact.persisted</span><span class="tl-agent">AudioAgent</span><span class="tl-detail">filename=delivery_final.mp4 · source_key=delivery_final · kind=media</span></div>
+        <div class="tl-row"><span class="tl-time">11:27:06.710</span><span class="tl-event art-snap">artifact.snapshot_persisted</span><span class="tl-agent">AudioAgent</span><span class="tl-detail">filename=audio_exec_6.json · asset_key=audio</span></div>
+        <div class="tl-row"><span class="tl-time">11:27:27.704</span><span class="tl-event workspace">workspace.created</span><span class="tl-agent placeholder">—</span><span class="tl-detail">workspace_id=workspace_e2e_text_only_20260407_111717</span></div>
+      </div>
+
+      <div class="brief-caption">
+        全部 <strong>41 行</strong>逐字来自 <code>workspace_e2e_text_only_20260407_111717/logs.jsonl</code>，无任何裁剪或抽样。重构后每次 artifact 落盘只产生 <strong>一行</strong> 日志（之前 FileManager 层 + ArtifactWriter 层会各写一行），都用 top-level <code>event</code> 字段。注意 KeyFrameAgent 完成后 11 个 artifact 在 ~13 ms 内连写完，因为持久化是 plan-driven 的批量操作；最后那条多出来的 <code>workspace.created</code>（11:27:27）是 e2e 测试 teardown 阶段的副作用——测试结束后 storage fixture 重新触发了一次 workspace.__init__。
       </div>
     </section>
 
     <!-- 2. 内部模块 -->
     <section class="ws-section">
-      <h2>② Workspace 内部模块</h2>
+      <h2>③ Workspace 内部模块</h2>
       <div class="ws-sub"><code>dynamic-task-stack/src/assistant/workspace/</code> · 由 <code>Workspace.__init__</code> 装配</div>
       <div class="mgr-grid">
         <div class="mgr">
           <h4>FileManager</h4>
           <div class="file-ref">file_manager.py</div>
-          <p><code>store_file_at_relative_path</code> / <code>list_files</code> / <code>get_file</code> / <code>delete_file</code> / <code>read_binary_from_uri</code>。统一管理 <code>Runtime/&lt;workspace_id&gt;/...</code> 下所有文件读写。</p>
+          <p>无状态字节读写：<code>store_file_at_relative_path</code> / <code>read_binary_from_uri</code>。<strong>不打日志、不维护索引</strong>——拒绝路径越权，仅此而已。Workspace 在它之上做 <code>_touch</code>。</p>
         </div>
         <div class="mgr">
-          <h4>MemoryManager</h4>
-          <div class="file-ref">memory_manager.py</div>
-          <p><code>add_memory_entry</code>（content = <code>{what, why, context_note}</code>，可 supersedes 旧条目）/ <code>list_memory_entries</code> / <code>get_memory_brief</code>。<strong>纯语义决策，不存路径。</strong></p>
-        </div>
-        <div class="mgr">
-          <h4>ArtifactRegistry</h4>
-          <div class="file-ref">artifact_registry.py</div>
-          <p>append-only：<code>register(execution_id, agent_id, task_id, artifacts=[ArtifactRef])</code> 写一行到 <code>artifact_registry.jsonl</code>。提供 <code>get_captions_index</code> / <code>get_by_paths</code> 给 InputResolver。</p>
+          <h4>GlobalMemory</h4>
+          <div class="file-ref">global_memory.py</div>
+          <p><strong>唯一的 semantic record</strong>：<code>register / list_all / get_captions_index / get_by_paths / find_by_producer / has_producer_run / prune_by_paths</code>。落盘到 <code>global_memory.md</code>（markdown 包 JSON entries 块），保留对老 <code>artifact_registry.jsonl</code> 的 backward-compat 读取。</p>
         </div>
         <div class="mgr">
           <h4>LogManager</h4>
           <div class="file-ref">log_manager.py</div>
-          <p><code>add_log</code> / <code>get_logs</code>。Workspace 把所有 file / memory / execution 操作通过 <code>_add_log</code> 收敛过来，按 operation_type · resource_type · agent_id · task_id · event · execution_id 多维过滤。</p>
+          <p>append-only <code>logs.jsonl</code>。<code>add_log(*, event, ...)</code>——<strong><code>event</code> 必填且只剩这一个分类轴</strong>。filter 按 <code>event / agent_id / task_id / level / execution_id</code>。老的 <code>operation_type / resource_type / details.event_type</code> 全部下线（仅在 _parse_log_line 里做了向前兼容）。</p>
         </div>
         <div class="mgr">
-          <h4>AssetManager</h4>
-          <div class="file-ref">asset_manager.py</div>
-          <p>由 Workspace 注入 5 个回调（<code>store_file</code> / <code>add_log</code> / <code>read_binary</code> / <code>list_files</code> / <code>delete_file</code>）+ <code>register_artifacts</code>。负责 <code>persist_execution_from_plan</code>、<code>hydrate_indexed_assets</code>、<code>collect_materialized_files</code>，落盘后通过 <code>register_artifacts</code> 回写 ArtifactRegistry。</p>
+          <h4>ArtifactWriter</h4>
+          <div class="file-ref">artifact_writer.py</div>
+          <p>由 Workspace 注入回调（<code>store_file</code> / <code>add_log</code> / <code>read_binary</code> / <code>register_artifacts</code> / <code>find_artifact_refs_for_producer</code> / <code>prune_global_memory_by_paths</code> / <code>delete_file_at_path</code>）。负责 <code>persist_execution_from_plan</code>、<code>hydrate_indexed_assets</code>、<code>collect_materialized_files</code>，落盘后通过 <code>register_artifacts</code> 回写 GlobalMemory，并发出 <code>artifact.persisted</code> / <code>artifact.snapshot_persisted</code> / <code>artifact.manifest_persisted</code> / <code>artifact.purged_for_producer</code> 事件。<strong>由原 AssetManager 重命名而来</strong>——"asset" 一词留给 agent 内部的 <code>MediaAsset</code> / <code>asset_dict</code>。</p>
         </div>
         <div class="mgr">
           <h4>InputResolver</h4>
           <div class="file-ref">input_resolver.py</div>
-          <p>懒加载：<code>resolve_inputs_for_agent</code> 调用时构造。读 <code>artifact_registry.get_captions_index</code> + 拼 <code>input_needs_description</code> → LLM #1 → <code>{ resolved_artifacts, selected_artifact_paths, rationale }</code>。</p>
+          <p>懒加载：<code>resolve_inputs_for_agent</code> 调用时构造。读 <code>global_memory.get_captions_index(task_id)</code> + 拼 <code>input_needs_description</code> 里的 <code>[label] (single|collection)</code> 头 → LLM → <code>{ resolved_artifacts, selected_artifact_paths, rationale }</code>。</p>
         </div>
+      </div>
+      <div style="margin-top:14px;font-size:0.82em;color:#888;line-height:1.6">
+        与重构前的差异：① 旧的 <strong>MemoryManager</strong> 已删除（语义记录与 caption 不再分两份）；② 旧的 <strong>ArtifactRegistry</strong> 重命名为 <strong>GlobalMemory</strong>，并把 jsonl 换成 markdown 包 JSON 的格式；③ 旧的 <strong>AssetManager</strong> 重命名为 <strong>ArtifactWriter</strong>，所有 log 调用迁到 <code>event=artifact.*</code> 命名空间。
       </div>
     </section>
 
     <!-- 3. 读写边界 -->
     <section class="ws-section">
-      <h2>③ Assistant ↔ Workspace 读写边界</h2>
+      <h2>④ Assistant ↔ Workspace 读写边界</h2>
       <div class="ws-sub">Workspace 是 Assistant 唯一对外的 facade（service.py 不直接 touch 任何 manager）</div>
       <div class="flow-row">
         <div class="flow-node assistant">Assistant (service.py)</div>
@@ -189,32 +796,28 @@
           <h3>READ — Workspace → Assistant</h3>
           <ul>
             <li>
-              <code>get_memory_brief(task_id, agent_id, limit)</code>
-              <span class="desc">Director 轮询用：语义决策的薄行视图。</span>
+              <code>get_global_memory_brief(task_id, agent_id, limit)</code>
+              <span class="desc">Director 轮询用：从 <code>global_memory.md</code> 投影出 <code>{execution_id, agent_id, task_id, status, created_at}</code> 的 slim view。HTTP 端点 <code>GET /api/assistant/workspace/memory/brief</code>。</span>
             </li>
             <li>
-              <code>list_memory_entries(task_id, agent_id, limit)</code>
-              <span class="desc">完整 memory entry（含 what / why / context_note），Phase 1 注入。</span>
-            </li>
-            <li>
-              <code>resolve_inputs_for_agent(agent_id, task_id, input_needs_description, llm_client, source_text, model)</code>
-              <span class="desc">委托 InputResolver → LLM #1 → <code>{ resolved_artifacts: [{what,why,scope,path,mime,payload}], selected_artifact_paths, rationale }</code>。</span>
+              <code>resolve_inputs_for_agent(agent_id, task_id, input_needs_description, llm_client, model)</code>
+              <span class="desc">委托 InputResolver → LLM → <code>{ resolved_artifacts: [{what,why,scope,path,mime,payload}], selected_artifact_paths, rationale }</code>。</span>
             </li>
             <li>
               <code>get_workspace_root_file_tree_text()</code>
-              <span class="desc">LLM #2 编排路径时用的全库目录树。</span>
+              <span class="desc">workspace 全文件树（扁平视图），喂给 output persist plan LLM。</span>
             </li>
             <li>
-              <code>list_files()</code> / <code>get_file(file_id)</code>
-              <span class="desc">FileManager 列举与按 id 读取。</span>
+              <code>list_workspace_artifacts()</code>
+              <span class="desc">展平 global_memory 为 <code>[{path, filename, mime, what, why, scope, agent_id, task_id, execution_id, created_at}]</code>。HTTP 端点 <code>GET /api/assistant/workspace/files</code>。</span>
             </li>
             <li>
-              <code>get_logs(operation_type, resource_type, agent_id, task_id, limit, level, event, execution_id)</code>
-              <span class="desc">多维过滤操作流。</span>
+              <code>get_logs(*, event, agent_id, task_id, level, execution_id, limit)</code>
+              <span class="desc">多维过滤操作流。<strong>仅 keyword args；event 是唯一的分类轴</strong>。</span>
             </li>
             <li>
               <code>hydrate_indexed_assets(assets)</code>
-              <span class="desc">委托 AssetManager 把 <code>_asset_index.json_uri</code> 展开为可消费 payload。</span>
+              <span class="desc">委托 ArtifactWriter 把 <code>_asset_index.json_uri</code> 展开为可消费 payload。</span>
             </li>
             <li>
               <code>collect_materialized_files(media_assets)</code>
@@ -226,26 +829,25 @@
           <h3>WRITE — Assistant → Workspace</h3>
           <ul>
             <li>
-              <code>store_file_at_relative_path(relative_path, file_content, filename, description, created_by, tags, metadata)</code>
-              <span class="desc">写到 <code>Runtime/&lt;workspace_id&gt;/&lt;relative_path&gt;</code>，自动 log + refresh_file_tree + touch。</span>
+              <code>persist_raw_upload(file_content, mime, user_intent, original_filename)</code>
+              <span class="desc">用户原始 upload 入口：写到 <code>inputs/</code>，登记到 <code>global_memory.md</code>（agent_id="user", task_id="", scope="raw_pending"），打 <code>event=user.upload</code>。</span>
             </li>
             <li>
-              <code>persist_execution_from_plan(execution, assignments, overwrite_existing)</code>
-              <span class="desc">Phase 3 主入口。委托 AssetManager 按 LLM #2 计划批量落盘；返回 <code>(persisted_paths, asset_index, extra_locs)</code>；内部回调 <code>_register_artifacts_callback</code> 把 ArtifactRef 追加到 artifact_registry。</span>
+              <code>persist_execution_from_plan(execution, assignments, overwrite_existing, manifest_extractors)</code>
+              <span class="desc">主落盘入口。委托 ArtifactWriter 按 LLM 编排的 plan 批量落盘；overwrite 模式下先 <code>_purge_all_for_producer</code> 把同 <code>(task, agent)</code> 的旧文件 + 旧 ref 全部 wipe。返回 <code>(persisted_paths, asset_index, extra_locs)</code>。每次落盘自动通过 <code>_register_artifacts_callback</code> 把 ArtifactRef 追加到 GlobalMemory，并打 <code>event=artifact.*</code> 日志。</span>
             </li>
             <li>
               <code>log_execution_started(execution)</code> / <code>log_execution_result(execution)</code>
-              <span class="desc">写一条 execution event 日志，自动抽 <code>retry_attempts</code> + <code>eval_summary</code>。</span>
+              <span class="desc">写一条 <code>event=execution.started/.completed/.failed</code> 日志，自动抽 <code>retry_attempts</code> + <code>eval_summary</code>。</span>
             </li>
             <li>
-              <code>add_memory_entry(content={what,why,context_note}, task_id, agent_id, execution_id, supersedes)</code>
-              <span class="desc">追加一条语义决策。<strong>不再带 artifact_locations</strong>—— 文件路径由 artifact_registry 持有。</span>
-            </li>
-            <li>
-              <code>delete_file(file_id)</code>
-              <span class="desc">overwrite 模式下清掉旧版本，自动写 delete log。</span>
+              <code>store_file_at_relative_path(relative_path, file_content, filename)</code>
+              <span class="desc">底层字节落盘（FileManager wrapper）。<strong>不打日志</strong>——AssetWriter 在语义层一次性记录 <code>artifact.*</code>，避免双写。</span>
             </li>
           </ul>
+          <div style="margin-top:14px;font-size:0.78em;color:#888;line-height:1.55">
+            <strong>重构后没有的写口</strong>：<code>add_memory_entry</code> / <code>list_memory_entries</code> / <code>get_memory_brief</code>（→ <code>get_global_memory_brief</code>）/ <code>delete_file</code> / 任何 <code>memory/entries</code> POST 路由 —— global_memory 的内容只能由 ArtifactWriter 在 persist 时自动注册，外部不能手写"语义条目"。
+          </div>
         </div>
       </div>
     </section>

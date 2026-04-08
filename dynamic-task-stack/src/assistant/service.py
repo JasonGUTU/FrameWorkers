@@ -13,7 +13,7 @@ from pathlib import Path
 
 from .models import AgentExecution, ExecutionStatus
 from .workspace import Workspace
-from .workspace.asset_manager import AssetManager
+from .workspace.artifact_writer import ArtifactWriter
 from agents import get_agent_registry
 from agents.contracts import InputBundleV2
 from agents.base_agent import MaterializeContext
@@ -277,9 +277,9 @@ class AssistantService:
         task_id: str,
         workspace: Workspace,
     ) -> Dict[str, Any]:
-        """Semantic input resolution via artifact_registry caption index.
+        """Semantic input resolution via the global_memory caption index.
 
-        Uses the agent's ``input_needs_description`` and the artifact_registry
+        Uses the agent's ``input_needs_description`` and the global_memory
         caption index to let an LLM select which artifacts the agent needs.
         Provides only the agent_id and task_id; no text seed or hint data.
         """
@@ -317,20 +317,10 @@ class AssistantService:
         }
 
     def _has_existing_assets(self, *, task_id: str, agent_id: str) -> bool:
-        files = self.workspace.list_files()
-        if not files:
-            return False
-        for file_item in files:
-            metadata = file_item.metadata if hasattr(file_item, "metadata") else {}
-            if not isinstance(metadata, dict):
-                continue
-            if metadata.get("task_id") != task_id:
-                continue
-            if metadata.get("producer_agent_id") != agent_id:
-                continue
-            if metadata.get("asset_key"):
-                return True
-        return False
+        """True if this agent has already produced any artifact for the task."""
+        return self.workspace.global_memory.has_producer_run(
+            task_id=task_id, agent_id=agent_id,
+        )
     
     def execute_agent(
         self,
@@ -372,10 +362,10 @@ class AssistantService:
             execution.started_at = datetime.now()
             self.storage.update_execution(execution)
             self.workspace.log_execution_started(execution)
-            
+
             # Execute selected descriptor-based pipeline agent.
             results = self._execute_pipeline_descriptor(descriptor, inputs)
-            
+
             # Update execution with results
             execution.status = ExecutionStatus.COMPLETED
             execution.results = results
@@ -386,50 +376,13 @@ class AssistantService:
             execution.error = str(e)
             execution.completed_at = datetime.now()
             self.storage.update_execution(execution)
-            self._sync_global_memory_after_execution(self.workspace, execution)
+            # Failure shows up in logs.jsonl as event=execution.failed via
+            # log_execution_result during process_results; nothing else to
+            # mirror — global_memory is auto-populated by ArtifactWriter
+            # when (and only when) artifacts actually hit disk.
             raise e
 
         return execution
-
-    def _sync_global_memory_after_execution(
-        self,
-        workspace: Workspace,
-        execution: AgentExecution,
-    ) -> None:
-        """Append one semantic entry to global_memory using agent-generated caption."""
-        if execution.status not in (ExecutionStatus.COMPLETED, ExecutionStatus.FAILED):
-            return
-        results = execution.results if isinstance(execution.results, dict) else {}
-        caption_raw = results.get("artifact_caption")
-
-        if execution.status == ExecutionStatus.COMPLETED and isinstance(caption_raw, dict):
-            what = str(caption_raw.get("what") or "").strip()
-            why = str(caption_raw.get("why") or "").strip()
-            scope = str(caption_raw.get("scope") or "global").strip()
-            content: Dict[str, Any] = {
-                "what": what or f"{execution.agent_id} execution completed",
-                "why": why,
-                "context_note": f"scope={scope}",
-            }
-        elif execution.status == ExecutionStatus.FAILED:
-            content = {
-                "what": f"{execution.agent_id} execution failed",
-                "why": str(execution.error or "unknown error"),
-                "context_note": "",
-            }
-        else:
-            content = {
-                "what": f"{execution.agent_id} execution completed (no caption)",
-                "why": "",
-                "context_note": "",
-            }
-
-        workspace.add_memory_entry(
-            content=content,
-            task_id=execution.task_id,
-            agent_id=execution.agent_id or None,
-            execution_id=execution.id,
-        )
 
     @staticmethod
     def _persist_assignment_key(item: Dict[str, Any]) -> tuple[str, str, str]:
@@ -457,15 +410,18 @@ class AssistantService:
         self,
         execution: AgentExecution,
         descriptor: Any,
-        asset_key: str,
     ) -> List[Dict[str, Any]]:
-        """Default relative paths under workspace ``artifacts/``."""
+        """Default relative paths under workspace ``artifacts/``.
+
+        Binary/media files land under ``artifacts/media/<agent_id>/<type>/``.
+        JSON snapshots land under ``artifacts/<agent_id>/<agent_id>_exec_<n>.json``
+        — the producer ``agent_id`` is the slug for both the directory and the
+        filename, replacing the previous ``descriptor.asset_key`` scheme.
+        """
         assignments: List[Dict[str, Any]] = []
         results = execution.results
         if not isinstance(results, dict):
             return assignments
-        # Binary/media: artifacts/media/<sub_agent_id>/<video|audio|image|other>/<filename>
-        # JSON snapshots stay under artifacts/<asset_key>/ (see json_snapshot below).
         producer = execution.agent_id or "agent"
 
         for key, value in results.items():
@@ -499,15 +455,14 @@ class AssistantService:
                     }
                 )
 
-        snap_payload = AssetManager._build_json_snapshot_payload(results)
+        snap_payload = ArtifactWriter._build_json_snapshot_payload(results)
         if snap_payload:
-            filename = AssetManager.snapshot_filename(asset_key, execution.id)
-            rel = f"artifacts/{asset_key}/{filename}"
+            filename = ArtifactWriter.snapshot_filename(producer, execution.id)
+            rel = f"artifacts/{producer}/{filename}"
             assignments.append(
                 {
                     "kind": "json_snapshot",
                     "source_key": "",
-                    "asset_key": asset_key,
                     "relative_path": rel,
                 }
             )
@@ -518,7 +473,7 @@ class AssistantService:
         base: List[Dict[str, Any]],
         overrides: List[Dict[str, Any]],
     ) -> List[Dict[str, Any]]:
-        idx: Dict[tuple[str, str], Dict[str, Any]] = {}
+        idx: Dict[tuple[str, str, str], Dict[str, Any]] = {}
         for o in overrides:
             if not isinstance(o, dict):
                 continue
@@ -531,21 +486,9 @@ class AssistantService:
             o = idx.get(key)
             if o:
                 rel = str(o.get("relative_path") or "").strip().replace("\\", "/")
-                if AssetManager.is_safe_artifacts_relative_path(rel):
+                if ArtifactWriter.is_safe_artifacts_relative_path(rel):
                     merged = dict(b)
                     merged["relative_path"] = rel
-                    # asset_key is the producer's OUTPUT_ASSET_KEY (e.g. "screenplay").
-                    # Required for json_snapshot so the file gets a stable filename
-                    # and is queryable by metadata.asset_key downstream.
-                    ak = o.get("asset_key")
-                    if str(merged.get("kind") or "") == "json_snapshot":
-                        if not (isinstance(ak, str) and ak.strip()):
-                            raise AssistantBadExecuteFieldsError(
-                                "output persist plan must provide non-empty asset_key for json_snapshot"
-                            )
-                        merged["asset_key"] = ak.strip()
-                    elif isinstance(ak, str) and ak.strip():
-                        merged["asset_key"] = ak.strip()
                     out.append(merged)
                     continue
             out.append(dict(b))
@@ -593,7 +536,7 @@ class AssistantService:
             '{"assignments": [\n'
             '  {"kind": "binary|media|json_snapshot|manifest", '
             '"source_key": "match proposed (empty string if none)", '
-            '"relative_path": "artifacts/...", "asset_key": "required for json_snapshot"}\n'
+            '"relative_path": "artifacts/..."}\n'
             "]}\n"
         )
         parsed: Dict[str, Any] | None = None
@@ -643,16 +586,17 @@ class AssistantService:
         Returns:
             Dictionary with ``task_id``, ``execution_id``, ``status``,
             ``error``, ``error_reasoning`` (reserved for richer failure context; often ``null``),
-            ``workspace_id``, and ``global_memory_brief`` (same shape as
-            ``GET /api/assistant/workspace/memory/brief`` — ``{"global_memory": [...]}`` without
-            ``content`` keys). Full sub-agent payload remains on the stored
+            ``workspace_id``, and ``global_memory_brief`` (a list of slim
+            rows ``[{execution_id, agent_id, task_id, status, created_at}, ...]``
+            in chronological order; same shape as the ``global_memory_brief``
+            field returned by ``GET /api/assistant/workspace/memory/brief``).
+            Full sub-agent payload remains on the stored
             ``AgentExecution.results``; clients fetch it via
             ``GET /api/assistant/executions/task/{task_id}`` when needed.
         """
         workspace.log_execution_result(execution)
         descriptor = self.agent_registry.get_descriptor(execution.agent_id)
-        asset_key = getattr(descriptor, "asset_key", execution.agent_id)
-        base_plan = self._deterministic_output_persist_plan(execution, descriptor, asset_key)
+        base_plan = self._deterministic_output_persist_plan(execution, descriptor)
         plan = self._refine_output_persist_plan_with_llm(
             workspace, execution, descriptor, base_plan
         )
@@ -679,8 +623,10 @@ class AssistantService:
             execution.results["_asset_index"] = asset_index
         if persisted_paths or asset_index:
             self.storage.update_execution(execution)
-        self._sync_global_memory_after_execution(workspace, execution)
-        memory_brief = workspace.get_memory_brief(task_id=execution.task_id)
+        # global_memory is auto-populated by ArtifactWriter via the
+        # workspace's _register_artifacts_callback during the persist
+        # call above; the brief here is just a derived view.
+        global_memory_brief = workspace.get_global_memory_brief(task_id=execution.task_id)
         return {
             "task_id": execution.task_id,
             "execution_id": execution.id,
@@ -688,7 +634,7 @@ class AssistantService:
             "error": execution.error,
             "error_reasoning": None,
             "workspace_id": workspace.id,
-            "global_memory_brief": memory_brief,
+            "global_memory_brief": global_memory_brief,
         }
 
     def build_execution_inputs(
@@ -703,7 +649,7 @@ class AssistantService:
         After the input-channel unification, this method only:
           1. Constructs an empty input bundle.
           2. Runs ``InputResolver`` to semantically select artifacts from
-             the artifact_registry caption index based on the agent's
+             the global_memory caption index based on the agent's
              ``input_needs_description``.
           3. Writes the resolved selection into the bundle.
 

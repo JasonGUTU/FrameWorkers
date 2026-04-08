@@ -14,7 +14,6 @@ from .service import (
 from .state_store import assistant_state_store
 from .response_serializers import (
     serialize_response_value,
-    file_metadata_to_dict,
     log_entry_to_dict,
 )
 from agents import get_agent_registry
@@ -220,79 +219,35 @@ def create_assistant_blueprint():
     # Workspace routes
     @bp.route('/api/assistant/workspace/files', methods=['GET'])
     def list_workspace_files():
-        """List files in workspace"""
+        """List artifacts registered in this workspace.
+
+        Each entry is the artifact registry view of one file: caption,
+        path, mime, and the producing execution's metadata
+        (agent_id/task_id/execution_id/created_at). There is no separate
+        file index; the registry is the single source of truth.
+        """
         workspace, error = _get_workspace_or_404()
         if error:
             return error
-        files = workspace.list_files()
-        
-        return jsonify([file_metadata_to_dict(f) for f in files])
+        return jsonify(workspace.list_workspace_artifacts())
     
-    @bp.route('/api/assistant/workspace/files/<file_id>', methods=['GET'])
-    def get_workspace_file(file_id: str):
-        """Get file metadata by ID"""
-        workspace, error = _get_workspace_or_404()
-        if error:
-            return error
-        
-        file_meta = workspace.get_file(file_id)
-        if file_meta is None:
-            return jsonify({'error': 'File not found'}), 404
-        
-        return jsonify(file_metadata_to_dict(file_meta))
-    
-    @bp.route('/api/assistant/workspace/memory/entries', methods=['GET'])
-    def list_workspace_memory_entries():
-        """List global memory entries."""
-        workspace, error = _get_workspace_or_404()
-        if error:
-            return error
-
-        task_id = request.args.get('task_id')
-        agent_id = request.args.get('agent_id')
-        limit = request.args.get('limit', type=int, default=20)
-        if limit <= 0:
-            return bad_request('limit must be a positive integer')
-
-        entries = workspace.list_memory_entries(
-            task_id=task_id,
-            agent_id=agent_id,
-            limit=limit,
-        )
-        return jsonify(entries)
-
-    @bp.route('/api/assistant/workspace/memory/entries', methods=['POST'])
-    def add_workspace_memory_entry():
-        """Add one structured memory entry."""
-        workspace, error = _get_workspace_or_404()
-        if error:
-            return error
-
-        data, error = json_body_or_error()
-        if error:
-            return error
-
-        content = data.get('content')
-        if content is None:
-            return jsonify({'error': 'Missing required field: content'}), 400
-
-        try:
-            entry = workspace.add_memory_entry(
-                content=content,
-                task_id=data.get('task_id'),
-                agent_id=data.get('agent_id'),
-                execution_id=data.get('execution_id'),
-                supersedes=data.get('supersedes'),
-            )
-        except ValueError as exc:
-            return jsonify({'error': str(exc)}), 400
-        return jsonify(entry), 201
-
     @bp.route('/api/assistant/workspace/memory/brief', methods=['GET'])
-    def get_workspace_memory_brief():
-        """Memory brief: ``{"global_memory": [...]}`` (rows: ``task_id``, ``agent_id``, ``created_at``, ``execution_result`` only; newest first).
+    def get_workspace_global_memory_brief():
+        """Director-facing brief over the workspace's ``global_memory.md``.
 
-        Query: ``limit`` omitted → use default (``ASSISTANT_GLOBAL_MEMORY_CONTEXT_ENTRIES_MAX``, default **20** recent rows). ``limit=0`` → all matching rows.
+        Returns ``{"global_memory_brief": [{execution_id, agent_id, task_id, status,
+        created_at}, ...]}`` — chronological, oldest → newest. Each row is one execution that
+        successfully wrote artifacts; failed executions don't appear here
+        (query ``GET /api/assistant/workspace/logs?event=execution.failed``
+        for those).
+
+        Query params: ``task_id`` / ``agent_id`` / ``limit`` (omit → use
+        ``ASSISTANT_GLOBAL_MEMORY_CONTEXT_ENTRIES_MAX``, default 20 rows;
+        ``limit=0`` → all matching rows).
+
+        URL kept for director-client backward compatibility — the endpoint
+        no longer touches a separate "memory" file, it derives the brief
+        directly from ``global_memory.md``.
         """
         workspace, error = _get_workspace_or_404()
         if error:
@@ -309,34 +264,38 @@ def create_assistant_blueprint():
         else:
             limit = limit_raw
 
-        brief = workspace.get_memory_brief(
+        rows = workspace.get_global_memory_brief(
             task_id=task_id,
             agent_id=agent_id,
             limit=limit,
         )
-        return jsonify(brief)
+        return jsonify({"global_memory_brief": rows})
     
     @bp.route('/api/assistant/workspace/logs', methods=['GET'])
     def get_workspace_logs():
-        """Get logs from workspace"""
+        """Get logs from workspace, filtered by namespaced ``event`` (and
+        optionally ``agent_id`` / ``task_id`` / ``execution_id`` / ``level``).
+        """
         workspace, error = _get_workspace_or_404()
         if error:
             return error
-        
-        operation_type = request.args.get('operation_type')
-        resource_type = request.args.get('resource_type')
+
+        event = request.args.get('event')
         agent_id = request.args.get('agent_id')
         task_id = request.args.get('task_id')
+        execution_id = request.args.get('execution_id')
+        level = request.args.get('level')
         limit = request.args.get('limit', type=int)
-        
+
         logs = workspace.get_logs(
-            operation_type=operation_type,
-            resource_type=resource_type,
+            event=event,
             agent_id=agent_id,
             task_id=task_id,
-            limit=limit
+            execution_id=execution_id,
+            level=level,
+            limit=limit,
         )
-        
+
         return jsonify([log_entry_to_dict(log) for log in logs])
 
     return bp

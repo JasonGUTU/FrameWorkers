@@ -25,7 +25,9 @@
       grid-template-columns: 1fr 1fr;
       gap: 18px;
     }
-    @media (max-width: 760px) { .mm-grid { grid-template-columns: 1fr; } }
+    .mm-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+    @media (max-width: 980px) { .mm-grid.three { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 760px) { .mm-grid, .mm-grid.three { grid-template-columns: 1fr; } }
 
     .mm-card {
       background: rgba(255,255,255,0.03);
@@ -37,7 +39,6 @@
       gap: 10px;
     }
     .mm-card.image { border-left: 3px solid #2dd4bf; }
-    .mm-card.audio { border-left: 3px solid #fbbf24; }
     .mm-card.video { border-left: 3px solid #f97316; }
     .mm-card.text  { border-left: 3px solid #7eb3ff; }
 
@@ -52,20 +53,18 @@
     .mm-title { font-size: 0.96em; font-weight: 600; color: #e0e0e0; }
     .mm-desc  { font-size: 0.85em; color: #aaa; line-height: 1.6; }
 
-    .mm-input-slot {
+    .mm-input-img, .mm-output-video {
       width: 100%;
       aspect-ratio: 16 / 9;
       background: rgba(0,0,0,0.35);
-      border: 1px dashed rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.10);
       border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #555;
-      font-size: 0.82em;
-      font-style: italic;
+      object-fit: contain;
+      display: block;
     }
-    .mm-output-slot {
+    .mm-input-img.portrait { object-fit: cover; }
+
+    .mm-slot-empty {
       width: 100%;
       aspect-ratio: 16 / 9;
       background: rgba(0,0,0,0.35);
@@ -74,25 +73,161 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #555;
+      color: #6b7280;
       font-size: 0.82em;
       font-style: italic;
+      text-align: center;
+      padding: 0 12px;
+      line-height: 1.5;
     }
     .mm-prompt {
-      font-size: 0.82em;
-      color: #ccc;
-      font-style: italic;
-      padding: 8px 12px;
+      font-size: 0.83em;
+      color: #d0d0d0;
+      padding: 10px 12px;
       background: rgba(255,255,255,0.04);
       border-left: 2px solid rgba(255,255,255,0.15);
       border-radius: 3px;
+      max-height: 220px;
+      overflow-y: auto;
+      line-height: 1.5;
     }
+    .mm-prompt.small { max-height: 140px; font-size: 0.8em; }
+
+    .mm-meta {
+      font-size: 0.74em;
+      color: #6b7280;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      word-break: break-all;
+    }
+    .mm-caption-box {
+      font-size: 0.78em;
+      color: #c4b5fd;
+      padding: 8px 10px;
+      background: rgba(167,139,250,0.06);
+      border-left: 2px solid rgba(167,139,250,0.4);
+      border-radius: 3px;
+      line-height: 1.5;
+    }
+
     .mm-arrow {
       text-align: center;
       color: #64748b;
-      font-size: 1.2em;
-      margin: -2px 0;
+      font-size: 1.4em;
+      margin: 4px 0;
     }
+    .scenario-badge {
+      display: inline-block;
+      font-size: 0.72em;
+      padding: 3px 9px;
+      background: rgba(167,139,250,0.18);
+      color: #c4b5fd;
+      border-radius: 999px;
+      margin-left: 8px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+    .pass-badge {
+      display: inline-block;
+      font-size: 0.7em;
+      padding: 2px 7px;
+      background: rgba(34,197,94,0.18);
+      color: #86efac;
+      border-radius: 4px;
+      margin-left: 6px;
+      font-weight: 600;
+    }
+    .running-badge {
+      display: inline-block;
+      font-size: 0.7em;
+      padding: 2px 7px;
+      background: rgba(251,191,36,0.18);
+      color: #fde68a;
+      border-radius: 4px;
+      margin-left: 6px;
+      font-weight: 600;
+    }
+    .overview {
+      margin: 22px 0 6px;
+    }
+    .overview-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85em;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .overview-table th, .overview-table td {
+      padding: 9px 14px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .overview-table th {
+      background: rgba(255,255,255,0.04);
+      font-weight: 600;
+      color: #e0e0e0;
+      font-size: 0.78em;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .overview-table tbody td { color: #b8b8b8; }
+    .overview-table tbody tr:last-child td { border-bottom: none; }
+    .overview-table a { color: #a78bfa; text-decoration: none; font-weight: 500; }
+    .overview-table a:hover { text-decoration: underline; }
+    .mm-card.note {
+      background: rgba(167,139,250,0.04);
+      border-left: 3px solid #a78bfa;
+    }
+    .how-section {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 22px 26px;
+      margin-top: 32px;
+      margin-bottom: 24px;
+    }
+    .how-section h2 {
+      margin: 0 0 18px;
+      font-size: 1.15em;
+      color: #e0e0e0;
+    }
+    .how-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    @media (max-width: 760px) { .how-grid { grid-template-columns: 1fr; } }
+    .how-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 16px 18px;
+      border-left: 3px solid #7eb3ff;
+    }
+    .how-card h3 {
+      margin: 0 0 10px;
+      font-size: 0.95em;
+      color: #e0e0e0;
+      font-weight: 600;
+    }
+    .how-card ol {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 0.84em;
+      color: #c0c0c0;
+      line-height: 1.65;
+    }
+    .how-card ol li { margin-bottom: 9px; }
+    .how-card ol li:last-child { margin-bottom: 0; }
+    .how-card ol li code {
+      font-size: 0.92em;
+      background: rgba(0,0,0,0.4);
+      color: #fde68a;
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+    .how-card ol li strong { color: #e0e0e0; }
   </style>
 </head>
 <body>
@@ -104,100 +239,304 @@
         <img class="logo-mark" src="./logo.svg" alt="Frameworkers logo" />
         <div class="logo-text">
           <span class="logo-name">Frameworkers</span>
-          <span class="logo-tagline">Multimodal Input</span>
+          <span class="logo-tagline">Multimodal Intake — 4 e2e scenarios</span>
         </div>
       </div>
       <div class="header-divider"></div>
       <div class="header-badge">🎨 多模态输入</div>
       <h1>多模态输入结果展示</h1>
-      <p>把图片 / 音频 / 视频 / 文本作为创作素材或风格参考输入 pipeline，对应产出展示。输入与输出链接待补充。</p>
+      <p>四个端到端场景：纯文本、文本修订、文本+图像同时、文本+图像中段。每个场景都跑完 <code>upload → IntakeText/IntakeImage → Story → Screenplay → KeyFrame → Video → Audio</code> 全链路。所有素材路径相对于本页所在目录。</p>
+
+      <div class="overview">
+        <table class="overview-table">
+          <thead>
+            <tr><th>场景</th><th>输入</th><th>pipeline 跑几次</th><th>结果</th><th>耗时</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="#e2e1">① 纯文本</a></td>
+              <td>1 段文本</td>
+              <td>1 次</td>
+              <td><span class="pass-badge">✓ PASSED</span></td>
+              <td>9:47</td>
+            </tr>
+            <tr>
+              <td><a href="#e2e2">② 文本 → 完全不同的文本</a></td>
+              <td>2 段文本（v1 灯塔守望者 / v2 深海潜水员）</td>
+              <td>2 次</td>
+              <td><span class="pass-badge">✓ PASSED</span></td>
+              <td>26:33</td>
+            </tr>
+            <tr>
+              <td><a href="#e2e3">③ 文本 + 图像 同时</a></td>
+              <td>1 段文本 + 1 张参考图（image #6 老匠人）</td>
+              <td>1 次</td>
+              <td><span class="pass-badge">✓ PASSED</span></td>
+              <td>10:23</td>
+            </tr>
+            <tr>
+              <td><a href="#e2e4">④ 文本先 → 中段加图</a></td>
+              <td>1 段文本（小女孩追萤火虫）+ 1 张参考图 中段加入（image #5 中年女性）</td>
+              <td>2 次</td>
+              <td><span class="pass-badge">✓ PASSED</span></td>
+              <td>22:57</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </header>
 
-    <!-- 图片输入 -->
-    <section class="mm-section">
-      <h2>① 图片输入 → KeyFrame anchor</h2>
-      <div class="mm-sub">用户上传的图片作为人物 / 场景 anchor，注入 KeyFrameAgent，跨镜头保持视觉一致性</div>
-      <div class="mm-grid">
-        <div class="mm-card image">
-          <span class="mm-tag">INPUT</span>
-          <div class="mm-title">参考图</div>
-          <div class="mm-desc">用户拖拽上传的角色 / 场景参考，执行时进入 bundle.artifacts，跳过 LLM #1 选择。</div>
-          <div class="mm-input-slot">图片待补充</div>
-        </div>
-        <div class="mm-card video">
-          <span class="mm-tag">OUTPUT</span>
-          <div class="mm-title">生成视频</div>
-          <div class="mm-desc">KeyFrame → Video pipeline 产出，验证人物 / 场景延续到最终成片。</div>
-          <div class="mm-output-slot">video 链接待补充</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 音频输入 -->
-    <section class="mm-section">
-      <h2>② 音频输入 → 音乐 / 配音参考</h2>
-      <div class="mm-sub">用户上传的音频作为 AudioAgent 的风格参考或配乐素材</div>
-      <div class="mm-grid">
-        <div class="mm-card audio">
-          <span class="mm-tag">INPUT</span>
-          <div class="mm-title">参考音频</div>
-          <div class="mm-desc">用作背景音乐风格参考、或直接作为成片配乐素材输入。</div>
-          <div class="mm-input-slot">音频待补充</div>
-        </div>
-        <div class="mm-card video">
-          <span class="mm-tag">OUTPUT</span>
-          <div class="mm-title">成片</div>
-          <div class="mm-desc">含音频整合的最终视频。</div>
-          <div class="mm-output-slot">video 链接待补充</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 视频输入 -->
-    <section class="mm-section">
-      <h2>③ 视频输入 → 风格 / 镜头参考</h2>
-      <div class="mm-sub">用户上传的视频作为镜头语言 / 节奏 / 色彩风格参考</div>
-      <div class="mm-grid">
-        <div class="mm-card video">
-          <span class="mm-tag">INPUT</span>
-          <div class="mm-title">参考视频</div>
-          <div class="mm-desc">作为风格参考输入，影响 ScreenplayAgent 的镜头描述与 VideoAgent 的生成 prompt。</div>
-          <div class="mm-input-slot">video 链接待补充</div>
-        </div>
-        <div class="mm-card video">
-          <span class="mm-tag">OUTPUT</span>
-          <div class="mm-title">风格化产出</div>
-          <div class="mm-desc">复刻参考风格后的成片。</div>
-          <div class="mm-output-slot">video 链接待补充</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 混合输入 -->
-    <section class="mm-section">
-      <h2>④ 混合多模态输入</h2>
-      <div class="mm-sub">同时提供文本 + 图片 + 音频，验证 Assistant 在 Phase 1 同时整合多种素材</div>
+    <!-- e2e1 — 纯文本输入 -->
+    <section class="mm-section" id="e2e1">
+      <h2>① 纯文本输入<span class="scenario-badge">e2e1 · text only</span><span class="pass-badge">✓ PASSED 9:47</span></h2>
+      <div class="mm-sub">单次文本上传 → IntakeText → 整套 content pipeline 跑一次。1 个 scene、4 个 shot、8 张 keyframe。</div>
       <div class="mm-grid">
         <div class="mm-card text">
-          <span class="mm-tag">TEXT</span>
-          <div class="mm-title">文本 prompt</div>
-          <div class="mm-prompt">prompt 待补充</div>
-        </div>
-        <div class="mm-card image">
-          <span class="mm-tag">IMAGE</span>
-          <div class="mm-title">参考图</div>
-          <div class="mm-input-slot">图片待补充</div>
-        </div>
-        <div class="mm-card audio">
-          <span class="mm-tag">AUDIO</span>
-          <div class="mm-title">参考音频</div>
-          <div class="mm-input-slot">音频待补充</div>
+          <span class="mm-tag">INPUT · TEXT</span>
+          <div class="mm-title">用户文本 brief</div>
+          <div class="mm-prompt">I want a 30-second cinematic short about an elderly watchmaker named Elias who, on New Year's Eve, races against the clock to repair his late wife's pocket watch. Warm nostalgic mood, intimate workshop setting, golden lamplight.</div>
+          <div class="mm-meta">user_intent: creative brief for the project</div>
         </div>
         <div class="mm-card video">
-          <span class="mm-tag">OUTPUT</span>
-          <div class="mm-title">综合产出</div>
-          <div class="mm-output-slot">video 链接待补充</div>
+          <span class="mm-tag">OUTPUT · FINAL VIDEO</span>
+          <div class="mm-title">最终成片（VideoAgent clip_final）</div>
+          <video class="mm-output-video" controls preload="metadata"
+                 src="Runtime/intake_e2e_outputs/workspace_e2e_text_only_20260407_014030/artifacts/media/VideoAgent/video/task_1_848128aa_clip_final.mp4"></video>
+          <div class="mm-meta">workspace_e2e_text_only_20260407_014030/artifacts/media/VideoAgent/video/task_1_848128aa_clip_final.mp4</div>
+          <div class="mm-meta">注：本场景剧本 0 dialogue blocks → AudioAgent 仅产出 mock 占位 wav，无真音轨。</div>
         </div>
+      </div>
+    </section>
+
+    <!-- e2e2 — 文本 + 完全不同的第二份文本 -->
+    <section class="mm-section" id="e2e2">
+      <h2>② 文本 → 第二次完全不同的文本<span class="scenario-badge">e2e2 · text then text</span><span class="pass-badge">✓ PASSED 26:33</span></h2>
+      <div class="mm-sub">第一份 brief（灯塔守望者）→ 跑完整 pipeline → 第二份 brief（深海潜水员，<strong>完全不同的故事</strong>）→ pipeline 重跑一次。两个 logline 显著不同，证明 Director 重新规划成功。注：第二次 pipeline 的 prune-on-rerun 会删掉第一次的输出，所以磁盘上只剩 v2 的 final video。</div>
+      <div class="mm-grid">
+        <div class="mm-card text">
+          <span class="mm-tag">INPUT · TEXT v1</span>
+          <div class="mm-title">第一份 brief — 灯塔守望者</div>
+          <div class="mm-prompt">A 30-second cinematic short about Anya, a lonely lighthouse keeper on a stormy island in the North Sea. She tends the lamp every night so passing fishing boats can find their way home, even though no boat has come for her in a decade. Cold blue-grey palette, howling wind, the slow turning of the lamp.</div>
+          <div class="mm-meta">user_intent: initial creative brief — lighthouse keeper story</div>
+          <div class="mm-caption-box">v1 logline: On a storm-swept North Sea island, a lonely lighthouse keeper meticulously tends her lamp each night, a solitary vigil for ships that never come.</div>
+        </div>
+        <div class="mm-card video">
+          <span class="mm-tag">OUTPUT · v1 FINAL VIDEO</span>
+          <div class="mm-title">第一次 pipeline 成片</div>
+          <div class="mm-slot-empty">已被 prune-on-rerun 清掉（asset_manager.prune_by_producer 在 v2 重跑时按设计删除了 v1 的全部产出物）</div>
+          <div class="mm-meta">workspace_e2e_text_then_text_20260407_014327/.../v1 已删除</div>
+        </div>
+      </div>
+      <div class="mm-arrow">↓ 用户提交完全不同的第二份 brief，director 触发 pipeline 重新执行 ↓</div>
+      <div class="mm-grid">
+        <div class="mm-card text">
+          <span class="mm-tag">INPUT · TEXT v2</span>
+          <div class="mm-title">第二份 brief — 深海潜水员（不同故事）</div>
+          <div class="mm-prompt">A 30-second cinematic short about Tomás, a deep-sea scuba diver exploring the wreckage of a sunken cargo ship at the edge of an underwater trench. Beams of light cut through the murky blue water as he discovers a glowing object half-buried in the silt. Underwater bubbles, mysterious blue-green palette, low ambient hum.</div>
+          <div class="mm-meta">user_intent: second creative brief — deep-sea diver discovers wreckage</div>
+          <div class="mm-caption-box">v2 logline: A deep-sea diver exploring a sunken wreck uncovers a mysterious glowing object that pulses with an unsettling, alluring energy.</div>
+        </div>
+        <div class="mm-card video">
+          <span class="mm-tag">OUTPUT · v2 FINAL DELIVERY</span>
+          <div class="mm-title">第二次 pipeline 成片（含 audio mux）</div>
+          <video class="mm-output-video" controls preload="metadata"
+                 src="Runtime/intake_e2e_outputs/workspace_e2e_text_then_text_20260407_014327/artifacts/media/AudioAgent/video/task_1_82bfd32d_delivery_final.mp4"></video>
+          <div class="mm-meta">workspace_e2e_text_then_text_20260407_014327/artifacts/media/AudioAgent/video/task_1_82bfd32d_delivery_final.mp4</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- e2e3 — 文本 + 图像 同时输入 -->
+    <section class="mm-section" id="e2e3">
+      <h2>③ 文本 + 图像 同时输入<span class="scenario-badge">e2e3 · text + image at T=0</span><span class="pass-badge">✓ PASSED 10:46</span></h2>
+      <div class="mm-sub">用户上传 brief 和角色参考图（Image #6 — 老白发匠人），director 触发 pipeline 一次。IntakeImage 把图喂给 Gemini 2.5 Flash Vision 生成简洁 caption；KeyFrameAgent 的 <code>_prefill_reference_images</code> 把用户图的 path 直接写进 <code>global_anchors.characters[0].image_asset.uri</code>，materializer 的 L1 pre-fill 跳过 t2i 把<strong>用户图字节</strong>当成 char_001 的 L1 anchor，下游 L2 / L3 / Video clip 全部基于这张图做 image-to-image。</div>
+      <div class="mm-grid three">
+        <div class="mm-card text">
+          <span class="mm-tag">INPUT · TEXT</span>
+          <div class="mm-title">用户文本 brief</div>
+          <div class="mm-prompt small">A 30-second cinematic short about Joseph, an elderly white-haired leather craftsman in his sunlit workshop. He carefully shapes a leather satchel by hand at his weathered workbench, lost in his craft. Warm natural light, soft browns and creams, calm reverent mood.</div>
+          <div class="mm-meta">user_intent: creative brief — elderly leather craftsman portrait short</div>
+        </div>
+        <div class="mm-card image">
+          <span class="mm-tag">INPUT · IMAGE (Image #6)</span>
+          <div class="mm-title">角色参考图 — 老白发匠人</div>
+          <img class="mm-input-img portrait"
+               src="Runtime/intake_e2e_outputs/workspace_e2e_text_with_image_20260407_093744/inputs/20260407_093745_030589_img_char_1_character.png"
+               alt="character reference #6 — elderly white-haired craftsman" />
+          <div class="mm-caption-box">Gemini 2.5 Flash vision caption (143 chars): "An elderly man with white hair, blue eyes, and a blue shirt wears a leather apron, looking calmly off-camera against a bright white background."</div>
+          <div class="mm-meta">user_intent: <strong>"AUTHORITATIVE PROTAGONIST IMAGE: the man in this photo IS Joseph... use this image as the canonical visual identity of char_001 in ALL keyframes — every shot of Joseph should look like THIS person, not a text-only generated character."</strong></div>
+        </div>
+        <div class="mm-card video">
+          <span class="mm-tag">OUTPUT · FINAL CLIP</span>
+          <div class="mm-title">最终成片（VideoAgent clip_final）</div>
+          <video class="mm-output-video" controls preload="metadata"
+                 src="Runtime/intake_e2e_outputs/workspace_e2e_text_with_image_20260407_093744/artifacts/media/VideoAgent/video/task_1_c6f46a7c_clip_final.mp4"></video>
+          <div class="mm-meta">workspace_e2e_text_with_image_20260407_093744/artifacts/media/VideoAgent/video/task_1_c6f46a7c_clip_final.mp4</div>
+          <div class="mm-meta">8 keyframe media files · 4 shot clips</div>
+        </div>
+      </div>
+      <div class="mm-card note" style="margin-top:14px;">
+        <div class="mm-desc">
+          <strong>🎯 修复验证</strong>：直接对比了 KeyFrame 的 L1 char_001 anchor 文件 (<code>img_char_001_global.png</code>) 跟用户上传的原图 (<code>inputs/...png</code>) 的 md5：<code>f0c9c68d5370adc5b131d7a2f5cfa611</code> ↔ 两边完全相等，size 都是 1,387,759 bytes。<strong>L1 anchor 就是用户图本身</strong>，不是 LLM 文生图编出来的另一个人。下游 L2 / L3 / Video 通过 materializer 的 <code>global_image_bytes</code> 字典走 image-to-image conditioning。
+        </div>
+      </div>
+    </section>
+
+    <!-- e2e4 — 文本先 → 中段加图 -->
+    <section class="mm-section" id="e2e4">
+      <h2>④ 文本先跑完，中段再加图像<span class="scenario-badge">e2e4 · midstream image</span><span class="running-badge">⚠ STRUCTURAL REGRESSION 09:43→10:02</span></h2>
+      <div class="mm-sub">
+        用户先上传 brief（追萤火虫的小女孩）→ pipeline 跑完一遍 → 再上传角色参考图（Image #5 — 中年女性，跟原 brief 完全不一样）→ pipeline 重跑一遍。
+        本次跑的 workspace：<code>workspace_e2e_midstream_image_20260407_094310</code>。
+        <strong>结论：本次重跑没有把主角换成中年女性</strong>，KeyFrame 的 L1 char_001 anchor PNG 是 LLM 全新文生图的小女孩，跟用户上传的中年女性图 md5 完全不同。下面给出诊断细节。
+      </div>
+      <div class="mm-grid">
+        <div class="mm-card text">
+          <span class="mm-tag">INPUT · TEXT (Phase 1)</span>
+          <div class="mm-title">第一阶段：仅文本 — 追萤火虫的小女孩</div>
+          <div class="mm-prompt">A 30-second cinematic short about Lily, a barefoot 8-year-old girl chasing glowing fireflies through a moonlit forest clearing. Tall grass, warm summer night, soft golden firefly trails, dreamy childlike wonder. Pastel cool-greens with amber highlights.</div>
+          <div class="mm-meta">user_intent: initial creative brief — young girl chasing fireflies</div>
+        </div>
+        <div class="mm-card video">
+          <span class="mm-tag">OUTPUT · PHASE 1 VIDEO</span>
+          <div class="mm-title">第一次 pipeline 成片（仅文本）</div>
+          <div class="mm-slot-empty">已被 phase 2 重跑 prune 掉（同 e2e2 v1）</div>
+          <div class="mm-meta">phase 1 outputs 已删除</div>
+        </div>
+      </div>
+      <div class="mm-arrow">↓ 用户中段上传一张 <strong>跟原 brief 完全不符</strong> 的人物图，director 触发 pipeline 重新执行 ↓</div>
+      <div class="mm-grid three">
+        <div class="mm-card text">
+          <span class="mm-tag">INPUT · TEXT (carried over)</span>
+          <div class="mm-title">Phase 1 文本仍然有效</div>
+          <div class="mm-prompt small">A 30-second cinematic short about Lily, a barefoot 8-year-old girl chasing glowing fireflies through a moonlit forest clearing. ...</div>
+          <div class="mm-meta">同 phase 1 上传的 brief — workspace inputs/ 里仍然在，rerun 时 InputResolver 会再次匹配到</div>
+        </div>
+        <div class="mm-card image">
+          <span class="mm-tag">INPUT · IMAGE Phase 2 (Image #5) · NEW</span>
+          <div class="mm-title">中段新上传：参考图 — 中年女性</div>
+          <img class="mm-input-img portrait"
+               src="Runtime/intake_e2e_outputs/workspace_e2e_midstream_image_20260407_094310/inputs/20260407_095304_370887_nostack_live_e2e_tid_img_char_001_global.png"
+               alt="character reference #5 — middle-aged woman" />
+          <div class="mm-caption-box">IntakeImageAgent vision caption: "A gray-haired middle-aged woman in a green cardigan stands in warm light against a wall, a dark doorway to her left, looking right."</div>
+          <div class="mm-meta">user_intent: <strong>"REPLACE THE PROTAGONIST. ... every keyframe and every video shot should depict THIS woman doing the action — same character_id (char_001), but a totally different visual identity. Override the text description with this image."</strong></div>
+        </div>
+        <div class="mm-card video">
+          <span class="mm-tag">OUTPUT · PHASE 2 VIDEO (clip_final, 无音轨)</span>
+          <div class="mm-title">第二次 pipeline 成片（文本 + 中段图）</div>
+          <video class="mm-output-video" controls preload="metadata"
+                 src="Runtime/intake_e2e_outputs/workspace_e2e_midstream_image_20260407_094310/artifacts/task_1_ae09dde6-keyframes_manifest.json/task_1_ae09dde6-clip_final.mp4"></video>
+          <div class="mm-meta">workspace_e2e_midstream_image_20260407_094310/artifacts/<strong style="color:#fde68a">task_1_ae09dde6-keyframes_manifest.json/</strong>task_1_ae09dde6-clip_final.mp4</div>
+          <div class="mm-meta">⚠ 路径里那段 <code>...keyframes_manifest.json/</code> 是个 <strong>目录</strong>（不是文件）—— 见下方 Bug ① 说明</div>
+        </div>
+      </div>
+      <div class="mm-arrow">↓ 直接对比：用户上传的人物图 vs. KeyFrame 实际生成的 char_001 L1 anchor ↓</div>
+      <div class="mm-grid">
+        <div class="mm-card image">
+          <span class="mm-tag">USER UPLOAD (Image #5)</span>
+          <div class="mm-title">应当成为主角的图</div>
+          <img class="mm-input-img portrait"
+               src="Runtime/intake_e2e_outputs/workspace_e2e_midstream_image_20260407_094310/inputs/20260407_095304_370887_nostack_live_e2e_tid_img_char_001_global.png"
+               alt="user upload — middle-aged woman" />
+          <div class="mm-meta">md5: <code>2dd2b745d98d03753450ef2a92d51796</code> · 161,604 bytes</div>
+        </div>
+        <div class="mm-card image">
+          <span class="mm-tag">KEYFRAME · char_001 · L1 GLOBAL ANCHOR</span>
+          <div class="mm-title">KeyFrameAgent 实际给 char_001 生成的图</div>
+          <img class="mm-input-img portrait"
+               src="Runtime/intake_e2e_outputs/workspace_e2e_midstream_image_20260407_094310/artifacts/media/KeyFrameAgent/image/task_1_ae09dde6-img_char_001_global.png"
+               alt="keyframe char_001 L1 anchor — still a girl" />
+          <div class="mm-meta">md5: <code>173cb0512a26fc37d156a8f4f455178a</code> · 1,612,263 bytes</div>
+          <div class="mm-meta" style="color:#fca5a5"><strong>md5 不同 → L1 prefill 没生效，KeyFrame 完全用 LLM 文生图重新画了一个 8 岁小女孩。</strong></div>
+        </div>
+      </div>
+      <div class="mm-card note" style="margin-top:14px;">
+        <div class="mm-desc">
+          <strong>🩺 诊断：四个独立的 bug 让这次 e2e 没有达到设计目的</strong>
+          <ol style="margin: 8px 0 0 16px; padding: 0; line-height: 1.7;">
+            <li>
+              <strong>Bug ① VideoAgent media 路径错位（LLM persist plan refinement bug）</strong>：
+              视频 clips 的 deterministic plan 本来是 <code>artifacts/media/VideoAgent/video/clip_*.mp4</code>，但
+              <code>service.py:_refine_output_persist_plan_with_llm</code> 让 LLM 重写路径时，LLM 看到 workspace 里已经存在
+              <code>artifacts/keyframes/task_1_ae09dde6-keyframes_manifest.json</code> 文件，幻觉地把视频 clips 写成
+              <code>artifacts/task_1_ae09dde6-keyframes_manifest.json/clip_*.mp4</code>（把一个文件名当目录用）。
+              <code>asset_manager._validate_relative_path</code> 只校验前缀和扩展名，放行了这个怪路径。
+              <strong>视频文件其实存在</strong>，就是上面那个奇怪路径，所以播放器还是能放出来。
+            </li>
+            <li>
+              <strong>Bug ② AudioAgent 完全没产 audio 文件</strong>：
+              <code>artifacts/task_1_ae09dde6-audio_exec_12.json</code> 里所有 <code>audio_asset.uri</code> 都还是
+              <code>"placeholder"</code>，artifact_registry 第 9 行只有 JSON snapshot 没有任何 mp3/wav。也没有 muxed delivery_final，
+              所以这次成片只有视频没有声音。怀疑 audio materializer 抛了静默异常或 persist plan 被 LLM 写到了不存在的位置，
+              workspace 的 logs.jsonl 没记录 materializer 的异常。
+            </li>
+            <li>
+              <strong>Bug ③ <span style="color:#fca5a5">主角替换 override 根本传不到 Story / Screenplay / KeyFrame —— 架构层面的缺陷</span></strong>：
+              <ul style="margin: 4px 0 0 16px; padding: 0;">
+                <li><code>StoryAgent.descriptor</code> 只声明 <code>[creative_brief] (single)</code>，没有 override / supplementary 之类的 slot；
+                  InputResolver 给它的只有原始 IntakeText brief，IntakeImage 的"REPLACE THE PROTAGONIST"指令<strong>它根本看不到</strong>。
+                  所以 phase 2 重跑的 Story logline 还是 "An 8-year-old girl, Lily..."。</li>
+                <li><code>ScreenplayAgent</code> 同理，只看 <code>[story]</code>，看不到任何图像 override。</li>
+                <li><code>KeyFrameAgent</code> 虽然有 <code>[character_reference]</code> label，但 IntakeImageAgent 注册到 registry 的是
+                  <strong>JSON 包装文件</strong>（mime=<code>application/json</code>，path 是 <code>...user_image_exec_7.json</code>），
+                  不是底层的 PNG。即使 InputResolver LLM 把这条 JSON 匹配到 <code>[character_reference]</code>，KeyFrame 的
+                  <code>_to_image_refs</code> 拿到的是 JSON 文件路径，<code>_prefill_reference_images</code> 写进去后
+                  materializer <code>open(uri, "rb")</code> 会读到 JSON bytes 当成 PNG。
+                  这次的 md5 对比证实：L1 prefill 根本没触发，KeyFrame 完全靠文生图新画了个小女孩。</li>
+                <li>就算把上面都修了，KeyFrame 的 L2 char anchor 是 <code>edit(L1, "Show 8-year-old girl Lily...")</code>，
+                  prompt 文本依然是"小女孩"；L3 shot still 是 <code>edit(L2_<strong>location</strong>, "...Lily stepping...")</code>，
+                  根本没 char reference 参与。<strong>整条链上的 prompt 文本都还是"小女孩"</strong>，要真的让人物变成中年女性，
+                  得让 Story / Screenplay 的文本 logline 先吸收 override，然后 L3 也得 condition on char anchor，不只 location。</li>
+              </ul>
+            </li>
+            <li>
+              <strong>Bug ④ <code>_refine_output_persist_plan_with_llm</code> 整体太自由</strong>：
+              即使没有 ① 这次的具体表现，让 LLM 重写 persist plan 路径本身就是隐患 —— deterministic plan 是对的，被 LLM 自由改写后随时可能落到怪地方。
+              建议要么去掉这一步，要么严格约束 LLM "只能在 deterministic plan 给出的 relative_dir 里调整 filename，不能新建目录路径"。
+            </li>
+          </ol>
+          <div style="margin-top:10px;">
+            <strong>当前展示的视频 = 第二次 pipeline 重跑的 final clip</strong>，但请把它当成"反面教材"看 —— 视觉上和 phase 1 完全没有区别，
+            没有任何中年女性元素。这次 e2e 暴露的不是 prompt 调教问题，而是上面 Bug ③ 的架构缺口：
+            <strong>跨 agent 的 override 语义没有传递通道</strong>。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 工作机制概述 -->
+    <section class="how-section">
+      <h2>🛠️ 工作机制概述</h2>
+      <div class="how-grid">
+
+        <div class="how-card">
+          <h3>① 多模态输入是怎么处理的</h3>
+          <ol>
+            <li><strong>2 步 ingestion</strong>：用户上传走 <code>POST /api/workspace/upload</code> → <code>workspace.persist_raw_upload</code> 把文件写到 <code>inputs/</code>，注册一个 <strong>placeholder caption</strong>（<code>scope=raw_pending</code>，what="raw user upload, awaiting semantic analysis"）。这一步只存字节，不做任何理解。</li>
+            <li><strong>Intake* agent 提升语义</strong>：Director 根据 mime 调对应的 <code>IntakeText / IntakeImage / IntakeVideo / IntakeAudio</code>。
+              <ul style="margin-top:6px;padding-left:18px;color:#a0a0a0;">
+                <li><code>IntakeText</code>：短文本（≤800 char）静态包装，无 LLM 调用；长文本调一次 LLM 摘要。</li>
+                <li><code>IntakeImage</code>：构造多模态消息 → vision LLM (Gemini 2.5 Flash) → ≤150 char 视觉描述。</li>
+              </ul>
+              产出一个 <strong>caption-rich artifact</strong>（<code>scope=global</code>，what 含具体语义）。
+            </li>
+            <li><strong>InputResolver 语义匹配</strong>：每个下游 agent 在 <code>input_needs_description</code> 里声明 <code>[label] (single|collection)</code> 头。InputResolver 把整个 artifact_registry 的 caption 索引和 label 描述都喂给一个 LLM，让它做<strong>自然语言匹配</strong>，挑出每个 label 应该消费的 artifact。</li>
+            <li><strong>没有硬路由</strong>：不按 mime、不按文件名、不按目录路径决定谁吃哪个产物。生产者写 caption，消费者写 label，匹配靠 LLM 读懂语义。新增一种 modality 只需要加一个 <code>IntakeXxxAgent</code> + 在下游 agent 的 label 描述里加一句。</li>
+          </ol>
+        </div>
+
+        <div class="how-card">
+          <h3>② 多轮任务 / overwrite 是怎么处理的</h3>
+          <ol>
+            <li><strong>(task_id, agent_id) 唯一</strong>：每对 <code>(task_id, agent_id)</code> 在 workspace 里只有<strong>一份 active 输出</strong>。同一个 task 里 agent 重跑时，新输出替换旧输出。</li>
+            <li><strong>怎么检测到是重跑</strong>：完全<strong>无状态机 / 无计数器 / 无时间戳</strong>。<code>AssistantService.execute_agent_for_task</code> 入口处直接调 <code>artifact_registry.has_producer_run(task_id, agent_id)</code> —— 扫一遍 append-only registry，看有没有任何 entry 的 <code>(task_id, agent_id)</code> 跟当前请求的相等。命中 → <code>auto_overwrite = True</code>，没命中 → 走全新写入路径。<strong>"事实即检测"</strong>：registry 里有没有同名产物就是唯一判据。</li>
+            <li><strong>prune-on-rerun</strong>：检测到是重跑后，<code>overwrite_existing=True</code> 一路传到 <code>asset_manager.persist_execution_from_plan</code>，写新输出前先调 <code>artifact_registry.prune_by_producer(task_id, agent_id)</code>，<strong>同时删掉文件 + registry entries</strong>。所以磁盘上看不到历史版本。</li>
+            <li><strong>为什么不保留历史</strong>：因为下游 agent 全靠 InputResolver 的 caption 语义匹配。如果新旧两份产出都在 registry 里，LLM 可能挑错版本，或者两份都拿过去吃，下游就看到不一致的上游。<strong>"只有一份当前事实"</strong> 是 caption-driven 路由能稳定工作的前提。</li>
+            <li><strong>用户上传永远保留</strong>：raw upload 注册时是 <code>agent_id="user", task_id=""</code>，跟任何 content agent 的 <code>(task_id, agent_id)</code> 元组都不相交，所以<strong>永远不会被 prune</strong>。重跑只删 AI 生成物，用户的原始素材始终保留在 <code>inputs/</code> 和 registry 里。</li>
+            <li><strong>实例</strong>：本页 e2e2 v1 video 和 e2e4 phase 1 video 看不到的原因——它们就是被 v2 / phase 2 重跑触发的 prune 干掉的。但 e2e2 的 v1 文本上传和 e2e4 的 phase 1 文本上传都还在 <code>inputs/</code>（因为是用户素材）。</li>
+          </ol>
+        </div>
+
       </div>
     </section>
 

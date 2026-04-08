@@ -79,7 +79,7 @@ class _ApiIdle:
         return {
             "task_id": task_id,
             "agent_id": agent_id,
-            "global_memory": [
+            "global_memory_brief": [
                 {
                     "agent_id": "VideoAgent",
                     "created_at": "2026-01-01T00:00:00+00:00",

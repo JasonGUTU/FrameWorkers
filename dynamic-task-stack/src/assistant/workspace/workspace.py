@@ -6,15 +6,14 @@ exchange data through callbacks rather than direct cross-references.
 
 Composition (one instance per workspace directory):
 
-  * ``FileManager``      — raw file persistence + ``.file_metadata.json``
-  * ``MemoryManager``    — semantic decisions + index
-  * ``LogManager``       — append-only operation log
-  * ``ArtifactRegistry`` — natural-language caption index per file
-  * ``AssetManager``     — execution-aware persistence (wired with
-                            callbacks into the four managers above)
-  * ``InputResolver``    — built per-call inside
-                            ``resolve_inputs_for_agent`` from the
-                            registry + file_manager + an LLM client
+  * ``FileManager``    — stateless byte read/write under the runtime path
+  * ``LogManager``     — append-only operation log (``logs.jsonl``)
+  * ``GlobalMemory``   — per-execution artifact ledger (``global_memory.md``)
+  * ``ArtifactWriter`` — execution-aware persistence (wired with callbacks
+                          into the three managers above)
+  * ``InputResolver``  — built per-call inside
+                          ``resolve_inputs_for_agent`` from the
+                          memory + file_manager + an LLM client
 
 What it does NOT do:
   * Run agents — that is ``service.AssistantService``.
@@ -30,25 +29,25 @@ from typing import Dict, Any, List, Optional
 from datetime import datetime
 
 from .file_manager import FileManager
-from .memory_manager import MemoryManager
 from .log_manager import LogManager
-from .asset_manager import AssetManager
-from .artifact_registry import ArtifactRegistry
+from .artifact_writer import ArtifactWriter
+from .global_memory import GlobalMemory
 from .input_resolver import InputResolver
-from .models import FileMetadata, LogEntry
+from .models import LogEntry, StoredFile
 
 
 class Workspace:
-    """
-    Workspace - Manages file system, global memory, artifact registry, and logs.
+    """Per-workspace facade composing the three storage managers.
 
-    The workspace provides a unified interface for:
-    - File management (images, videos, documents, etc.)
-    - Global memory (semantic decisions — the "why")
-    - Artifact registry (artifact index with captions — the "what")
-    - Logs and records (operation stream — the "when")
+    Each workspace has its own directory under
+    ``Runtime/{workspace_id}/`` containing:
 
-    Each workspace has its own directory in Runtime/{workspace_id}/
+    * ``global_memory.md`` — per-execution artifact ledger (the only
+      semantic record; written/read by ``GlobalMemory``)
+    * ``logs.jsonl``       — namespaced ``event`` lifecycle log
+    * ``artifacts/...``    — agent output files (organised by
+      ``ArtifactWriter`` from a ``persist_execution_from_plan`` call)
+    * ``inputs/...``       — raw user uploads
     """
 
     def __init__(self, workspace_id: str, runtime_base_path: Path):
@@ -59,28 +58,25 @@ class Workspace:
 
         # Core managers
         self.file_manager = FileManager(workspace_id, runtime_base_path)
-        self.memory_manager = MemoryManager(workspace_id, runtime_base_path)
         self.log_manager = LogManager(workspace_id, runtime_base_path)
-        self.artifact_registry = ArtifactRegistry(workspace_id, runtime_base_path)
+        self.global_memory = GlobalMemory(workspace_id, runtime_base_path)
 
-        # AssetManager wired with artifact_registry callback
-        self.asset_manager = AssetManager(
+        # ArtifactWriter wired with global_memory callbacks
+        self.artifact_writer = ArtifactWriter(
             self.store_file_at_relative_path,
             self._add_log,
             self.file_manager.read_binary_from_uri,
-            self.list_files,
-            self.delete_file,
             on_change=self._touch,
             register_artifacts=self._register_artifacts_callback,
-            prune_artifact_registry=self._prune_artifact_registry_by_producer,
+            find_artifact_refs_for_producer=self.global_memory.find_by_producer,
+            delete_file_at_path=self._delete_file_at_path,
+            prune_global_memory_by_paths=self.global_memory.prune_by_paths,
         )
 
         # Log workspace creation
         self.log_manager.add_log(
-            operation_type="create",
-            resource_type="workspace",
-            resource_id=workspace_id,
             event="workspace.created",
+            resource_id=workspace_id,
             details={"workspace_id": workspace_id},
         )
 
@@ -94,45 +90,38 @@ class Workspace:
     def _add_log(
         self,
         *,
-        operation_type: str,
-        resource_type: str,
+        event: str,
         resource_id: Optional[str] = None,
         agent_id: Optional[str] = None,
         task_id: Optional[str] = None,
         details: Optional[Dict[str, Any]] = None,
-        event: Optional[str] = None,
         level: str = "INFO",
         execution_id: Optional[str] = None,
-        duration_ms: Optional[int] = None,
     ) -> None:
         self.log_manager.add_log(
-            operation_type=operation_type,
-            resource_type=resource_type,
+            event=event,
             resource_id=resource_id,
             agent_id=agent_id,
             task_id=task_id,
             details=details or {},
-            event=event,
             level=level,
             execution_id=execution_id,
-            duration_ms=duration_ms,
         )
 
-    def _prune_artifact_registry_by_producer(
-        self,
-        *,
-        task_id: str,
-        agent_id: str,
-    ) -> int:
-        """Forward to ArtifactRegistry.prune_by_producer.
-
-        Called by AssetManager when an agent re-runs in overwrite mode, so
-        that stale registry entries (pointing at just-deleted files) don't
-        leak into InputResolver's caption index.
-        """
-        return self.artifact_registry.prune_by_producer(
-            task_id=task_id, agent_id=agent_id,
-        )
+    def _delete_file_at_path(self, path: str) -> bool:
+        """Unlink a workspace file by absolute path. Used by ArtifactWriter dedup."""
+        try:
+            from pathlib import Path as _Path
+            p = _Path(path)
+            if p.exists() and p.is_file():
+                p.unlink()
+                return True
+        except OSError as exc:
+            import logging as _logging
+            _logging.getLogger(__name__).warning(
+                "Workspace: failed to delete file at %s: %s", path, exc,
+            )
+        return False
 
     def _register_artifacts_callback(
         self,
@@ -140,10 +129,10 @@ class Workspace:
         execution: Any,
         artifact_refs: List[Dict[str, Any]],
     ) -> None:
-        """Called by AssetManager after persisting artifacts.
+        """Called by ArtifactWriter after persisting artifacts.
 
-        ``artifact_refs`` is a list of dicts with keys: what, why, scope, path, mime.
-        Each dict maps to one ArtifactRef in the registry.
+        ``artifact_refs`` is a list of dicts with keys: what, why, scope,
+        path, mime. Each dict maps to one ArtifactRef in the registry.
         """
         from .models import ArtifactRef as _ArtifactRef
         refs = [
@@ -157,7 +146,7 @@ class Workspace:
             for r in artifact_refs
             if isinstance(r, dict)
         ]
-        self.artifact_registry.register(
+        self.global_memory.register(
             execution_id=str(execution.id or ""),
             agent_id=str(execution.agent_id or ""),
             task_id=str(execution.task_id or ""),
@@ -172,37 +161,29 @@ class Workspace:
         self,
         relative_path: str,
         file_content: bytes,
-        filename: str,
-        description: str,
-        created_by: Optional[str] = None,
-        tags: Optional[List[str]] = None,
-        metadata: Optional[Dict[str, Any]] = None,
-    ) -> FileMetadata:
-        """Write under ``Runtime/{workspace_id}/<relative_path>``."""
-        file_metadata = self.file_manager.store_file_at_relative_path(
+        filename: str = "",
+    ) -> StoredFile:
+        """Write bytes under ``Runtime/{workspace_id}/<relative_path>``.
+
+        This method is a thin wrapper around ``FileManager`` that does NOT
+        emit any log entry on its own. Bytes hitting disk is a low-level
+        side effect; the meaningful event ("an artifact has been
+        persisted by an agent") is recorded one layer up in
+        ``ArtifactWriter`` with an ``artifact.*`` event so log readers
+        see exactly one entry per logical persistence.
+
+        Returns a transient ``StoredFile`` (path/filename/size). The file
+        becomes "discoverable" only after the caller registers it in the
+        artifact registry — usually via ``ArtifactWriter`` doing that
+        automatically as part of ``persist_execution_from_plan``.
+        """
+        stored = self.file_manager.store_file_at_relative_path(
             relative_path,
             file_content=file_content,
             filename=filename,
-            description=description,
-            created_by=created_by,
-            tags=tags,
-            metadata=metadata,
-        )
-        self._add_log(
-            operation_type="create",
-            resource_type="file",
-            resource_id=file_metadata.id,
-            agent_id=created_by,
-            event="file.created",
-            details={
-                "filename": filename,
-                "description": description,
-                "file_type": file_metadata.file_type,
-                "size_bytes": file_metadata.size_bytes,
-            },
         )
         self._touch()
-        return file_metadata
+        return stored
 
     def persist_raw_upload(
         self,
@@ -214,15 +195,15 @@ class Workspace:
     ) -> Dict[str, Any]:
         """Persist a raw user upload as a workspace artifact with a placeholder caption.
 
-        This is the entry point for the new B2 ``POST /api/workspace/upload``
-        protocol. It writes the bytes to disk under ``inputs/<timestamp>_<filename>``
-        and registers an ``ArtifactRef`` with a generic placeholder caption that
-        signals "raw user upload, awaiting semantic analysis". A subsequent
-        invocation of an Intake agent (text/image/video/audio) will pick this
-        artifact up via its ``[raw_<kind>_upload]`` label and produce a
-        caption-rich follow-up artifact for downstream content agents.
+        Writes the bytes under ``inputs/<timestamp>_<filename>`` and
+        registers an ``ArtifactRef`` with a generic placeholder caption
+        (``scope=raw_pending``). A subsequent invocation of the matching
+        Intake agent picks this artifact up via its
+        ``[raw_<kind>_upload]`` label and produces a caption-rich
+        follow-up artifact for downstream content agents.
 
-        Returns a dict describing the persisted artifact (id, path, caption).
+        Returns a dict describing the persisted artifact: ``path``,
+        ``filename``, ``mime``, ``caption``.
         """
         from datetime import datetime, UTC
         import os as _os
@@ -248,18 +229,10 @@ class Workspace:
         filename = f"upload_{ts}{ext}" if not original_filename else f"{ts}_{original_filename}"
         relative_path = f"inputs/{filename}"
 
-        file_meta = self.store_file_at_relative_path(
+        stored = self.store_file_at_relative_path(
             relative_path,
             file_content=file_content,
             filename=filename,
-            description=f"Raw user upload (mime={mime or 'unknown'})",
-            created_by="user",
-            tags=["user_upload", "raw_pending"],
-            metadata={
-                "mime": mime,
-                "user_intent": user_intent,
-                "raw_pending": True,
-            },
         )
 
         placeholder_what = (
@@ -272,21 +245,19 @@ class Workspace:
             what=placeholder_what,
             why=placeholder_why,
             scope="raw_pending",
-            path=file_meta.file_path,
+            path=stored.path,
             mime=mime,
         )
-        self.artifact_registry.register(
+        self.global_memory.register(
             execution_id=f"upload_{ts}",
             agent_id="user",
             task_id="",  # uploads are not bound to a task at the moment of upload
             artifacts=[ref],
         )
         self._add_log(
-            operation_type="create",
-            resource_type="artifact",
-            resource_id=file_meta.id,
-            agent_id="user",
             event="user.upload",
+            resource_id=stored.path,
+            agent_id="user",
             details={
                 "filename": filename,
                 "mime": mime,
@@ -295,8 +266,7 @@ class Workspace:
             },
         )
         return {
-            "file_id": file_meta.id,
-            "path": file_meta.file_path,
+            "path": stored.path,
             "filename": filename,
             "mime": mime,
             "caption": {
@@ -306,99 +276,82 @@ class Workspace:
             },
         }
 
-    def get_file(self, file_id: str) -> Optional[FileMetadata]:
-        return self.file_manager.get_file(file_id)
+    def list_workspace_artifacts(self) -> List[Dict[str, Any]]:
+        """Return a flat list of all registered artifacts in this workspace.
 
-    def list_files(self) -> List[FileMetadata]:
-        return self.file_manager.list_files()
-
-    def delete_file(self, file_id: str) -> bool:
-        file_meta = self.file_manager.get_file(file_id)
-        if file_meta:
-            success = self.file_manager.delete_file(file_id)
-            if success:
-                self._add_log(
-                    operation_type="delete",
-                    resource_type="file",
-                    resource_id=file_id,
-                    event="file.deleted",
-                    details={"filename": file_meta.filename},
-                )
-                self._touch()
-            return success
-        return False
-
-    # ------------------------------------------------------------------
-    # Memory (semantic decisions — the "why")
-    # ------------------------------------------------------------------
-
-    def add_memory_entry(
-        self,
-        *,
-        content: Any,
-        task_id: Optional[str] = None,
-        agent_id: Optional[str] = None,
-        execution_id: Optional[str] = None,
-        supersedes: Optional[str] = None,
-    ) -> Dict[str, Any]:
-        """Append one semantic memory entry.
-
-        ``content`` should be a dict with keys ``what``, ``why``, ``context_note``
-        (or a plain string which is promoted to ``{"what": text}``).
-        Artifact paths belong in artifact_registry, not here.
+        Each entry has the artifact's caption (what/why/scope), absolute
+        path, mime, and the producing execution's
+        agent_id/task_id/execution_id/created_at. Used by the HTTP
+        listing endpoint and by tests that want to introspect the
+        workspace state without going through the LLM caption-index
+        renderer.
         """
-        entry = self.memory_manager.add_memory_entry(
-            content=content,
-            task_id=task_id,
-            agent_id=agent_id,
-            execution_id=execution_id,
-            supersedes=supersedes,
-        )
-        self._add_log(
-            operation_type="write",
-            resource_type="memory",
-            resource_id=entry.get("created_at"),
-            agent_id=agent_id,
-            task_id=task_id,
-            event="memory.written",
-            execution_id=execution_id,
-            details={"event_type": "memory_entry_added"},
-        )
-        self._touch()
-        return entry
+        rows: List[Dict[str, Any]] = []
+        for entry in self.global_memory.list_all():
+            for ref in entry.artifacts:
+                rows.append({
+                    "path": ref.path,
+                    "filename": Path(ref.path).name if ref.path else "",
+                    "mime": ref.mime,
+                    "what": ref.what,
+                    "why": ref.why,
+                    "scope": ref.scope,
+                    "agent_id": entry.agent_id,
+                    "task_id": entry.task_id,
+                    "execution_id": entry.execution_id,
+                    "created_at": entry.created_at.isoformat() if entry.created_at else "",
+                })
+        return rows
 
-    def list_memory_entries(
-        self,
-        *,
-        task_id: Optional[str] = None,
-        agent_id: Optional[str] = None,
-        limit: int = 20,
-    ) -> List[Dict[str, Any]]:
-        return self.memory_manager.list_memory_entries(
-            task_id=task_id,
-            agent_id=agent_id,
-            limit=limit,
-        )
+    # ------------------------------------------------------------------
+    # Global memory (semantic record — the only memory layer)
+    # ------------------------------------------------------------------
 
-    def get_memory_brief(
+    def get_global_memory_brief(
         self,
         *,
         task_id: Optional[str] = None,
         agent_id: Optional[str] = None,
         limit: Optional[int] = None,
-    ) -> Dict[str, Any]:
-        return self.memory_manager.get_memory_brief(
-            task_id=task_id,
-            agent_id=agent_id,
-            limit=limit,
+    ) -> List[Dict[str, Any]]:
+        """Return the director-facing rollup of ``global_memory``.
+
+        Each row is one execution that successfully produced artifacts,
+        projected down to ``{execution_id, agent_id, task_id, status,
+        created_at}``, in chronological order (oldest → newest). Director
+        uses this to plan next steps.
+
+        Failed executions do not appear here (they leave no artifacts);
+        if a director needs to see failures it should query
+        ``GET /api/assistant/workspace/logs?event=execution.failed``.
+        """
+        entries = self.global_memory.list_all()
+        if task_id:
+            entries = [e for e in entries if e.task_id == task_id or not e.task_id]
+        if agent_id:
+            entries = [e for e in entries if e.agent_id == agent_id]
+        entries.sort(
+            key=lambda e: e.created_at.isoformat() if e.created_at else "",
         )
+        if limit is None:
+            entries = entries[-_global_memory_brief_default_limit():]
+        elif limit > 0:
+            entries = entries[-int(limit):]
+        rows = [
+            {
+                "execution_id": e.execution_id,
+                "agent_id": e.agent_id,
+                "task_id": e.task_id,
+                "status": "COMPLETED",
+                "created_at": e.created_at.isoformat() if e.created_at else "",
+            }
+            for e in entries
+        ]
+        return rows
 
     def get_workspace_root_file_tree_text(self) -> str:
-        return self.memory_manager.workspace_root_file_tree_text()
-
-    # ------------------------------------------------------------------
-    # Artifact Registry
-    # ------------------------------------------------------------------
+        """Human-readable tree of every file under the workspace runtime root."""
+        return _build_file_tree_text(self.runtime_base_path / self.id)
 
     # ------------------------------------------------------------------
     # Input Resolution
@@ -420,7 +373,7 @@ class Workspace:
           selected_artifact_paths   : list[str]
           rationale                 : str
         """
-        resolver = InputResolver(self.artifact_registry, self.file_manager, llm_client)
+        resolver = InputResolver(self.global_memory, self.file_manager, llm_client)
         return resolver.resolve(
             agent_id=agent_id,
             task_id=task_id,
@@ -434,37 +387,31 @@ class Workspace:
 
     def get_logs(
         self,
-        operation_type: Optional[str] = None,
-        resource_type: Optional[str] = None,
+        *,
+        event: Optional[str] = None,
         agent_id: Optional[str] = None,
         task_id: Optional[str] = None,
         limit: Optional[int] = None,
         level: Optional[str] = None,
-        event: Optional[str] = None,
         execution_id: Optional[str] = None,
     ) -> List[LogEntry]:
         return self.log_manager.get_logs(
-            operation_type=operation_type,
-            resource_type=resource_type,
+            event=event,
             agent_id=agent_id,
             task_id=task_id,
             limit=limit,
             level=level,
-            event=event,
             execution_id=execution_id,
         )
 
     def log_execution_started(self, execution: Any) -> None:
         self._add_log(
-            operation_type="write",
-            resource_type="execution",
+            event="execution.started",
             resource_id=execution.id,
             agent_id=execution.agent_id,
             task_id=execution.task_id,
-            event="execution.started",
             execution_id=execution.id,
             details={
-                "event_type": "execution_started",
                 "status": str(getattr(execution.status, "value", execution.status)),
             },
         )
@@ -485,16 +432,13 @@ class Workspace:
                 if isinstance(summary, str) and summary:
                     eval_summary = summary
         self._add_log(
-            operation_type="write",
-            resource_type="execution",
+            event=event,
             resource_id=execution.id,
             agent_id=execution.agent_id,
             task_id=execution.task_id,
-            event=event,
             execution_id=execution.id,
             level="INFO" if status == "COMPLETED" else "ERROR",
             details={
-                "event_type": "execution_completed" if status == "COMPLETED" else "execution_failed",
                 "status": status,
                 "error": getattr(execution, "error", None),
                 "has_results": getattr(execution, "results", None) is not None,
@@ -504,14 +448,14 @@ class Workspace:
         )
 
     # ------------------------------------------------------------------
-    # Asset Methods
+    # Artifact Methods
     # ------------------------------------------------------------------
 
     def hydrate_indexed_assets(self, assets: Dict[str, Any]) -> Dict[str, Any]:
-        return self.asset_manager.hydrate_indexed_assets(assets)
+        return self.artifact_writer.hydrate_indexed_assets(assets)
 
     def collect_materialized_files(self, media_assets: list[Any]) -> Dict[str, Any]:
-        return self.asset_manager.collect_materialized_files(media_assets)
+        return self.artifact_writer.collect_materialized_files(media_assets)
 
     def persist_execution_from_plan(
         self,
@@ -521,9 +465,55 @@ class Workspace:
         overwrite_existing: bool = False,
         manifest_extractors: Optional[Dict[str, Any]] = None,
     ) -> tuple[Dict[str, str], Optional[Dict[str, Any]], List[Dict[str, str]]]:
-        return self.asset_manager.persist_execution_from_plan(
+        return self.artifact_writer.persist_execution_from_plan(
             execution,
             assignments,
             overwrite_existing=overwrite_existing,
             manifest_extractors=manifest_extractors,
         )
+
+
+# ----------------------------------------------------------------------
+# Module-level helpers
+# ----------------------------------------------------------------------
+
+
+def _global_memory_brief_default_limit() -> int:
+    """Default cap on rows returned by ``get_global_memory_brief``.
+
+    Reads ``ASSISTANT_GLOBAL_MEMORY_CONTEXT_ENTRIES_MAX`` (kept for
+    backward compatibility with the previous brief implementation) and
+    clamps to ``[1, 500]``.
+    """
+    import os as _os
+    try:
+        n = int(_os.getenv("ASSISTANT_GLOBAL_MEMORY_CONTEXT_ENTRIES_MAX", "20").strip())
+        return max(1, min(n, 500))
+    except ValueError:
+        return 20
+
+
+def _build_file_tree_text(root: Path) -> str:
+    """Render a workspace runtime root as a flat indented file tree."""
+    lines: List[str] = []
+    max_lines = 800
+    try:
+        root = root.resolve()
+        all_files = sorted(
+            (p for p in root.rglob("*") if p.is_file()),
+            key=lambda p: str(p.relative_to(root)).replace("\\", "/"),
+        )
+    except OSError as exc:
+        return f"(unable to list files: {exc})"
+
+    for p in all_files[:max_lines]:
+        try:
+            rel = p.relative_to(root)
+        except ValueError:
+            continue
+        depth = len(rel.parts)
+        indent = "  " * max(0, depth - 1)
+        lines.append(f"{indent}{rel.parts[-1]}")
+    if len(all_files) > max_lines:
+        lines.append(f"... ({len(all_files) - max_lines} more files truncated)")
+    return "\n".join(lines) if lines else "(no files yet)"

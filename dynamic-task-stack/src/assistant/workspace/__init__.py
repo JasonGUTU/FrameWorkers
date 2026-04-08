@@ -1,21 +1,21 @@
 """Workspace module boundary.
 
 `Workspace` is the facade; managers encapsulate their own storage concerns:
-- `FileManager`: file bytes + metadata persistence
-- `MemoryManager`: per-workspace ``global_memory.md`` (structured JSON entries only)
-- `LogManager`: append-only operation logs
-- `AssetManager`: asset persistence, snapshot index, hydration
+- `FileManager`: stateless byte read/write under the workspace runtime path
+- `LogManager`: append-only operation logs (one ``event``-typed line per call)
+- `GlobalMemory`: per-execution artifact ledger (``global_memory.md``)
+- `ArtifactWriter`: execution-aware persistence, snapshot index, hydration
+- `InputResolver`: built per-call to match captions against agent ``[label]`` slots
 """
 
 from .workspace import Workspace
 from .file_manager import FileManager
-from .memory_manager import MemoryManager
 from .log_manager import LogManager
-from .asset_manager import AssetManager
-from .artifact_registry import ArtifactRegistry
+from .artifact_writer import ArtifactWriter
+from .global_memory import GlobalMemory
 from .input_resolver import InputResolver
 
 __all__ = [
-    'Workspace', 'FileManager', 'MemoryManager', 'LogManager',
-    'AssetManager', 'ArtifactRegistry', 'InputResolver',
+    'Workspace', 'FileManager', 'LogManager',
+    'ArtifactWriter', 'GlobalMemory', 'InputResolver',
 ]

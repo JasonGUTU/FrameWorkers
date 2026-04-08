@@ -24,22 +24,20 @@ def mock_client() -> MagicMock:
         {"id": "StoryAgent", "description": "story"},
         {"id": "ScreenplayAgent", "description": "screenplay"},
     ]
-    c.get_workspace_memory_brief.return_value = {"global_memory": []}
+    c.get_workspace_memory_brief.return_value = {"global_memory_brief": []}
     c.get_executions_by_task.return_value = []
     c.execute_agent.return_value = {
         "status": "COMPLETED",
         "error": None,
         "error_reasoning": None,
-        "global_memory_brief": {
-            "global_memory": [
-                {
-                    "task_id": "standalone_chat",
-                    "agent_id": "StoryAgent",
-                    "created_at": "2026-01-01T00:00:00",
-                    "execution_result": {"status": "COMPLETED"},
-                }
-            ]
-        },
+        "global_memory_brief": [
+            {
+                "task_id": "standalone_chat",
+                "agent_id": "StoryAgent",
+                "created_at": "2026-01-01T00:00:00",
+                "execution_result": {"status": "COMPLETED"},
+            }
+        ],
     }
     return c
 

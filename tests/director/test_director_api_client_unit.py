@@ -51,13 +51,13 @@ def test_workspace_memory_brief_returns_expected_shape(monkeypatch):
 
     def _fake_request(method, endpoint, data=None, params=None):
         if endpoint == "/api/assistant/workspace/memory/brief":
-            return {"global_memory": []}
+            return {"global_memory_brief": []}
         raise AssertionError(f"Unexpected endpoint: {endpoint}")
 
     monkeypatch.setattr(client, "_request", _fake_request)
 
     brief = client.get_workspace_memory_brief(task_id="task_1")
-    assert "global_memory" in brief
+    assert "global_memory_brief" in brief
 
 
 def test_request_raises_backend_error_for_non_json_response(monkeypatch):

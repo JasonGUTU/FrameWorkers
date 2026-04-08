@@ -99,6 +99,15 @@
           "建立基准数据集，支持回归对比与质量趋势追踪",
         ],
       },
+      {
+        index: "03",
+        title: "完善多模态的输入机制",
+        items: [
+          "支持文本、图像、音频、视频等多模态输入的统一接入与预处理",
+          "扩展 IntakeAgent 家族，覆盖更多 mime 类型与语义解析路径",
+          "打通多模态输入到下游 sub-agent 的标准化通道，保证无差别消费",
+        ],
+      },
     ];
 
     document.getElementById("rmList").innerHTML = ROADMAP.map(r => `

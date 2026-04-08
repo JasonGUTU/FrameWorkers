@@ -351,7 +351,7 @@ class BaseAgent(Generic[InputT, OutputT]):
             if self.materializer is not None and materialize_ctx is not None:
                 asset_dict = output.model_dump(exclude={"meta"})
                 # Inject per_artifact_captions if the output model has it (excluded from
-                # model_dump to keep JSON snapshots clean, but asset_manager needs it).
+                # model_dump to keep JSON snapshots clean, but ArtifactWriter needs it).
                 pac = getattr(output, "per_artifact_captions", None)
                 if isinstance(pac, dict) and pac:
                     asset_dict["_per_artifact_captions"] = pac
