@@ -36,6 +36,42 @@ class AudioEvaluator(BaseEvaluator[AudioAgentOutput]):
         ("music_mood_fit", "Do the music cue moods cohere with each scene's described tone? Does the ambience description fit?"),
     ]
 
+    async def evaluate_creative(self, output: AudioAgentOutput) -> dict[str, Any]:
+        """Drop ``narration_clarity`` from the dimensions when the audio
+        package has no narration at all.
+
+        Without this override the L2 LLM is asked to grade narration
+        clarity on a purely visual short (e.g. e2e1's watchmaker brief,
+        which intentionally has zero dialogue), looks at an empty
+        ``narration_segments`` list, and *non-deterministically* either
+        scores it 0 / declares ``overall_pass=false`` ("I can't grade
+        what isn't there") or vacuously passes — flaking the e2e tests
+        ~50% of the time. Empty narration is a valid creative choice,
+        so we just don't ask the LLM about it in that case.
+        """
+        has_narration = any(
+            scene.narration_segments for scene in output.content.scenes
+        )
+        if has_narration:
+            return await super().evaluate_creative(output)
+
+        # Vacuous case: shadow the class attribute with an instance attr
+        # that omits narration_clarity, then restore in finally so the
+        # next call (e.g. on a different output with real narration)
+        # falls back to the full class-level list.
+        self.creative_dimensions = [
+            (name, desc)
+            for (name, desc) in type(self).creative_dimensions
+            if name != "narration_clarity"
+        ]
+        try:
+            return await super().evaluate_creative(output)
+        finally:
+            try:
+                del self.creative_dimensions
+            except AttributeError:
+                pass
+
     # ------------------------------------------------------------------
     # Layer 1 -- Rule-based structural validation
     # ------------------------------------------------------------------
