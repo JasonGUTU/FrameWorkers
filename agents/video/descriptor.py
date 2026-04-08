@@ -21,8 +21,6 @@ from .evaluator import VideoEvaluator
 from .materializer import VideoMaterializer
 from inference.generation.video_generators.service import FalVideoService, WavespeedVideoService
 
-OUTPUT_ASSET_KEY = "video"
-
 
 def build_input(
     _task_id: str,
@@ -88,7 +86,6 @@ CATALOG_ENTRY = (
 
 DESCRIPTOR = SubAgentDescriptor(
     agent_id="VideoAgent",
-    asset_key=OUTPUT_ASSET_KEY,
     catalog_entry=CATALOG_ENTRY,
     agent_factory=lambda llm: VideoAgent(llm_client=llm),
     evaluator_factory=VideoEvaluator,

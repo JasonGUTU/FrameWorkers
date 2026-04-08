@@ -11,8 +11,6 @@ from .labels import INPUT_LABEL_RAW_IMAGE_UPLOAD
 from .schema import IntakeImageInput
 from .evaluator import IntakeImageEvaluator
 
-OUTPUT_ASSET_KEY = "user_image"
-
 
 def build_input(
     _task_id: str,
@@ -42,7 +40,6 @@ CATALOG_ENTRY = (
 
 DESCRIPTOR = SubAgentDescriptor(
     agent_id="IntakeImageAgent",
-    asset_key=OUTPUT_ASSET_KEY,
     catalog_entry=CATALOG_ENTRY,
     agent_factory=lambda llm: IntakeImageAgent(llm_client=llm),
     evaluator_factory=IntakeImageEvaluator,

@@ -11,8 +11,6 @@ from .labels import INPUT_LABEL_RAW_TEXT_UPLOAD
 from .schema import IntakeTextInput
 from .evaluator import IntakeTextEvaluator
 
-OUTPUT_ASSET_KEY = "user_text"
-
 
 def build_input(
     _task_id: str,
@@ -49,7 +47,6 @@ CATALOG_ENTRY = (
 
 DESCRIPTOR = SubAgentDescriptor(
     agent_id="IntakeTextAgent",
-    asset_key=OUTPUT_ASSET_KEY,
     catalog_entry=CATALOG_ENTRY,
     agent_factory=lambda llm: IntakeTextAgent(llm_client=llm),
     evaluator_factory=IntakeTextEvaluator,

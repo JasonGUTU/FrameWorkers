@@ -20,8 +20,7 @@ class AgentRegistry:
                 "name": agent_id,
                 "description": (descriptor.catalog_entry or "")[:200],
                 "agent_type": "pipeline",
-                "capabilities": ["pipeline_agent", descriptor.asset_key],
-                "asset_key": descriptor.asset_key,
+                "capabilities": ["pipeline_agent"],
             })
 
         return infos

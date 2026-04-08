@@ -11,8 +11,6 @@ from .labels import INPUT_LABEL_CREATIVE_BRIEF
 from .schema import UnivaStoryboardInput
 from .evaluator import UnivaStoryboardEvaluator
 
-OUTPUT_ASSET_KEY = "univa_storyboard"
-
 
 def build_input(
     _task_id: str,
@@ -44,7 +42,6 @@ CATALOG_ENTRY = (
 
 DESCRIPTOR = SubAgentDescriptor(
     agent_id="UnivaStoryboardAgent",
-    asset_key=OUTPUT_ASSET_KEY,
     catalog_entry=CATALOG_ENTRY,
     agent_factory=lambda llm: UnivaStoryboardAgent(llm_client=llm),
     evaluator_factory=UnivaStoryboardEvaluator,

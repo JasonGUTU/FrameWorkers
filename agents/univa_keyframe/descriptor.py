@@ -15,8 +15,6 @@ from .evaluator import UnivaKeyFrameEvaluator
 from .materializer import UnivaKeyFrameMaterializer
 from inference.generation.image_generators.service import FalImageService
 
-OUTPUT_ASSET_KEY = "univa_keyframes"
-
 
 def build_input(
     _task_id: str,
@@ -44,7 +42,6 @@ CATALOG_ENTRY = (
 
 DESCRIPTOR = SubAgentDescriptor(
     agent_id="UnivaKeyFrameAgent",
-    asset_key=OUTPUT_ASSET_KEY,
     catalog_entry=CATALOG_ENTRY,
     agent_factory=lambda llm: UnivaKeyFrameAgent(llm_client=llm),
     evaluator_factory=UnivaKeyFrameEvaluator,

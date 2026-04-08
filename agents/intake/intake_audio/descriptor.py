@@ -11,8 +11,6 @@ from .labels import INPUT_LABEL_RAW_AUDIO_UPLOAD
 from .schema import IntakeAudioInput
 from .evaluator import IntakeAudioEvaluator
 
-OUTPUT_ASSET_KEY = "user_audio"
-
 
 def build_input(
     _task_id: str,
@@ -39,7 +37,6 @@ CATALOG_ENTRY = (
 
 DESCRIPTOR = SubAgentDescriptor(
     agent_id="IntakeAudioAgent",
-    asset_key=OUTPUT_ASSET_KEY,
     catalog_entry=CATALOG_ENTRY,
     agent_factory=lambda llm: IntakeAudioAgent(llm_client=llm),
     evaluator_factory=IntakeAudioEvaluator,

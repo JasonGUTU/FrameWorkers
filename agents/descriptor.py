@@ -45,8 +45,8 @@ class MediaAsset:
     """A single binary asset produced by a materializer.
 
     Assistant iterates the list returned by ``materialize()``, saves
-    each one via ``AssetManager.save_binary()``, and writes the resulting
-    path into ``uri_holder["uri"]``.
+    each one via ``ArtifactWriter`` (in the workspace layer), and writes
+    the resulting path into ``uri_holder["uri"]``.
 
     Attributes:
         sys_id:     System-generated asset ID, e.g. ``"img_char_001_global"``.
@@ -80,13 +80,13 @@ class OutputManifestSpec:
     The ``extract_items`` callable runs **after** URI rewrite, so the items it
     returns already point at the persisted file paths.  ``kind`` is an opaque
     string used as the manifest registry key when threading callables from
-    service.py through asset_manager.
+    service.py through ArtifactWriter.
 
     Attributes:
         kind:           Manifest registry key, e.g. ``"keyframes_manifest"``.
         relative_path:  Workspace-relative target path
                         (must start with ``artifacts/``).
-        filename:       Output filename written by AssetManager.
+        filename:       Output filename written by ArtifactWriter.
         schema_version: Embedded in the manifest JSON document.
         extract_items:  ``(results_dict) -> list[dict]`` — flattens the
                         rewritten results into manifest rows.
@@ -113,7 +113,7 @@ class BaseMaterializer(ABC):
 
     Materializers are **pure generators** — they call external media
     services and return ``list[MediaAsset]``.  They never hold an
-    ``AssetManager`` or perform file I/O.  Persistence is Assistant's
+    ``ArtifactWriter`` or perform file I/O.  Persistence is Assistant's
     sole responsibility.
 
     Single-input contract: a materializer receives only the
@@ -163,11 +163,9 @@ class SubAgentDescriptor:
     Attributes:
         agent_id:
             Unique agent identifier, e.g. ``"AudioAgent"``.  Used as the
-            lookup key in the registry and in ``RoutingStep.agent_id``.
-        asset_key:
-            Registry-facing artifact id, e.g. ``"story_blueprint"``. The
-            agent's JSON snapshot is tagged with this key in workspace
-            metadata.
+            lookup key in the registry, in ``RoutingStep.agent_id``, and as
+            the slug for the JSON snapshot file written under
+            ``artifacts/<agent_id>/<agent_id>_exec_<n>.json``.
         catalog_entry:
             Human-readable text describing this agent's purpose, inputs,
             outputs, and dependencies.  Fed to DirectorAgent's planning
@@ -200,7 +198,6 @@ class SubAgentDescriptor:
     """
 
     agent_id: str
-    asset_key: str
     catalog_entry: str = ""
 
     agent_factory: Callable[..., Any] = field(repr=False, default=lambda llm: None)

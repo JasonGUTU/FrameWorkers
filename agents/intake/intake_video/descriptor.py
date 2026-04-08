@@ -11,8 +11,6 @@ from .labels import INPUT_LABEL_RAW_VIDEO_UPLOAD
 from .schema import IntakeVideoInput
 from .evaluator import IntakeVideoEvaluator
 
-OUTPUT_ASSET_KEY = "user_video"
-
 
 def build_input(
     _task_id: str,
@@ -39,7 +37,6 @@ CATALOG_ENTRY = (
 
 DESCRIPTOR = SubAgentDescriptor(
     agent_id="IntakeVideoAgent",
-    asset_key=OUTPUT_ASSET_KEY,
     catalog_entry=CATALOG_ENTRY,
     agent_factory=lambda llm: IntakeVideoAgent(llm_client=llm),
     evaluator_factory=IntakeVideoEvaluator,

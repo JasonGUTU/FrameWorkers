@@ -15,8 +15,6 @@ from .evaluator import AudioEvaluator
 from .materializer import AudioMaterializer
 from inference.generation.audio_generators.service import FalAudioService
 
-OUTPUT_ASSET_KEY = "audio"
-
 
 def build_input(
     _task_id: str,
@@ -49,7 +47,6 @@ CATALOG_ENTRY = (
 
 DESCRIPTOR = SubAgentDescriptor(
     agent_id="AudioAgent",
-    asset_key=OUTPUT_ASSET_KEY,
     catalog_entry=CATALOG_ENTRY,
     agent_factory=lambda llm: AudioAgent(llm_client=llm),
     evaluator_factory=AudioEvaluator,

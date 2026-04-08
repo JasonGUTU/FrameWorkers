@@ -17,8 +17,6 @@ from .evaluator import UnivaVideoEvaluator
 from .materializer import UnivaVideoMaterializer
 from inference.generation.video_generators.service import FalVideoService
 
-OUTPUT_ASSET_KEY = "univa_video"
-
 
 def build_input(
     _task_id: str,
@@ -78,7 +76,6 @@ CATALOG_ENTRY = (
 
 DESCRIPTOR = SubAgentDescriptor(
     agent_id="UnivaVideoAgent",
-    asset_key=OUTPUT_ASSET_KEY,
     catalog_entry=CATALOG_ENTRY,
     agent_factory=lambda llm: UnivaVideoAgent(llm_client=llm),
     evaluator_factory=UnivaVideoEvaluator,

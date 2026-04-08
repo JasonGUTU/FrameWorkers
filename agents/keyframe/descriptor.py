@@ -22,8 +22,6 @@ from .evaluator import KeyframeEvaluator
 from .materializer import KeyframeMaterializer
 from inference.generation.image_generators.service import FalImageService
 
-OUTPUT_ASSET_KEY = "keyframes"
-
 
 def _to_image_refs(resolved: dict, label: str) -> list[ImageReferenceEntry]:
     items = resolved.get(label, [])
@@ -78,7 +76,6 @@ CATALOG_ENTRY = (
 
 DESCRIPTOR = SubAgentDescriptor(
     agent_id="KeyFrameAgent",
-    asset_key=OUTPUT_ASSET_KEY,
     catalog_entry=CATALOG_ENTRY,
     agent_factory=lambda llm: KeyFrameAgent(llm_client=llm),
     evaluator_factory=KeyframeEvaluator,

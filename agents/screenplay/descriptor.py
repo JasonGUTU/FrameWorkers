@@ -12,8 +12,6 @@ from .evaluator import ScreenplayEvaluator
 
 from .labels import INPUT_LABEL_STORY
 
-OUTPUT_ASSET_KEY = "screenplay"
-
 
 def build_input(
     _task_id: str,
@@ -45,7 +43,6 @@ CATALOG_ENTRY = (
 
 DESCRIPTOR = SubAgentDescriptor(
     agent_id="ScreenplayAgent",
-    asset_key=OUTPUT_ASSET_KEY,
     catalog_entry=CATALOG_ENTRY,
     agent_factory=lambda llm: ScreenplayAgent(llm_client=llm),
     evaluator_factory=ScreenplayEvaluator,

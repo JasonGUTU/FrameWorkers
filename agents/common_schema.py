@@ -49,8 +49,8 @@ class ArtifactCaption(BaseModel):
     """Structured caption written by the producing sub-agent at generation time.
 
     The agent fills this block to describe what it produced and why.
-    AssistantService reads it to populate the artifact_registry so that
-    downstream agents can discover artifacts via semantic search.
+    ArtifactWriter reads it to populate global_memory so that downstream
+    agents can discover artifacts via semantic search.
 
     Fields
     ------
