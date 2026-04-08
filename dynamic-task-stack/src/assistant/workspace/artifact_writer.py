@@ -502,7 +502,18 @@ class ArtifactWriter:
             },
         )
         self._touch()
-        extra_locs.append({"path": stored.path})
+        # Intentionally NOT registering the manifest in global_memory.
+        # A manifest is an internal flat-index helper written alongside the
+        # agent's main JSON output; both files would otherwise share the
+        # same fallback caption (via entry_caption_raw) because
+        # per_artifact_captions has no entry for the manifest's sys_id.
+        # That left InputResolver's LLM with two indistinguishable JSON
+        # candidates and it could nondeterministically pick the manifest
+        # (whose schema is {items: [...]}, not {content: {scenes: [...]}})
+        # for e.g. VideoAgent's [keyframes_metadata] slot, silently
+        # producing 0 clips. Tools that need the manifest can load it by
+        # its deterministic path directly.
+        # (Intentionally leaving extra_locs alone here.)
 
     def _persist_json_snapshot(
         self,
