@@ -307,6 +307,72 @@ def _registry_captions_for_path(workspace: Workspace, path: str) -> list[dict]:
     return out
 
 
+def _assert_real_media_uri(uri: str, label: str) -> None:
+    """Fail loudly if a media uri never resolved to a real on-disk file.
+
+    Catches the historical "silent COMPLETED with placeholder URI" bug where
+    materializer per-call try/except swallowed gen failures and the agent
+    happily reported success with the literal string ``"placeholder"`` still
+    sitting in every ``video_asset.uri`` slot. The truthy ``assert dict``
+    check we used to have lets that through; this enforces all three:
+    non-empty, not the placeholder string, and a real non-zero file on disk.
+    """
+    assert uri, f"{label}: empty uri"
+    assert uri != "placeholder", (
+        f"{label}: uri is the literal 'placeholder' string — "
+        f"materializer never produced bytes for this asset"
+    )
+    p = Path(uri)
+    assert p.is_file(), f"{label}: uri does not point to a real file: {uri}"
+    assert p.stat().st_size > 0, f"{label}: uri points to a 0-byte file: {uri}"
+
+
+def _assert_video_output_real(video_results: dict, label_prefix: str) -> None:
+    """Verify VideoAgent's final + every shot/scene clip resolved to a real file."""
+    content = video_results.get("content", {})
+    final_video = content.get("final_video_asset", {})
+    assert isinstance(final_video, dict), f"{label_prefix} final_video_asset missing/not-dict"
+    _assert_real_media_uri(str(final_video.get("uri", "")), f"{label_prefix} final_video_asset")
+    for scene in content.get("scenes", []):
+        if not isinstance(scene, dict):
+            continue
+        scene_id = scene.get("scene_id", "?")
+        scene_clip = scene.get("scene_clip_asset", {})
+        if isinstance(scene_clip, dict) and scene_clip.get("uri"):
+            _assert_real_media_uri(
+                str(scene_clip.get("uri", "")),
+                f"{label_prefix} scenes[{scene_id}].scene_clip_asset",
+            )
+        for seg in scene.get("shot_segments", []):
+            if not isinstance(seg, dict):
+                continue
+            shot_id = seg.get("shot_id", "?")
+            video_asset = seg.get("video_asset", {})
+            if not isinstance(video_asset, dict):
+                continue
+            _assert_real_media_uri(
+                str(video_asset.get("uri", "")),
+                f"{label_prefix} shot_segments[{shot_id}].video_asset",
+            )
+
+
+def _assert_audio_output_real(audio_results: dict, label_prefix: str) -> None:
+    """Verify AudioAgent's final delivery + final audio mix resolved to a real file."""
+    content = audio_results.get("content", {})
+    final_delivery = content.get("final_delivery_asset", {})
+    assert isinstance(final_delivery, dict), f"{label_prefix} final_delivery_asset missing/not-dict"
+    _assert_real_media_uri(
+        str(final_delivery.get("uri", "")),
+        f"{label_prefix} final_delivery_asset",
+    )
+    final_audio = content.get("final_audio_asset", {})
+    if isinstance(final_audio, dict) and final_audio.get("uri"):
+        _assert_real_media_uri(
+            str(final_audio.get("uri", "")),
+            f"{label_prefix} final_audio_asset",
+        )
+
+
 def _placeholders_without_successor(workspace: Workspace) -> list[str]:
     """The artifact_registry is append-only, so a ``raw_pending``
     placeholder will always remain in history even after an intake
@@ -397,14 +463,10 @@ def test_e2e1_text_only_draft_idea(monkeypatch):
     )
 
     video_results = pipeline_results["VideoAgent"]
-    assert video_results.get("content", {}).get("final_video_asset"), (
-        "VideoAgent produced no final_video_asset"
-    )
+    _assert_video_output_real(video_results, "[e2e1]")
 
     audio_results = pipeline_results["AudioAgent"]
-    assert audio_results.get("content", {}).get("final_delivery_asset"), (
-        "AudioAgent produced no final_delivery_asset"
-    )
+    _assert_audio_output_real(audio_results, "[e2e1]")
 
     # 4. Workspace invariants.
     leaks = _placeholders_without_successor(workspace)
@@ -484,6 +546,14 @@ def test_e2e2_text_then_text(monkeypatch):
     assert story_v1.strip() != story_v2.strip(), (
         "v1 and v2 loglines must differ — second brief was supposed to be a different story"
     )
+
+    # Phase 2 must have produced real video + audio files (catches the
+    # silent failure where placeholder URIs survive into the final assets).
+    video_results_v2 = _last_execution_results_for_agent(client, task_id, "VideoAgent")
+    _assert_video_output_real(video_results_v2, "[e2e2 v2]")
+
+    audio_results_v2 = _last_execution_results_for_agent(client, task_id, "AudioAgent")
+    _assert_audio_output_real(audio_results_v2, "[e2e2 v2]")
 
     # Both raw-text uploads must have been converted out of raw_pending.
     leaks = _placeholders_without_successor(workspace)
@@ -595,9 +665,10 @@ def test_e2e3_text_with_image_at_t0(monkeypatch):
     )
 
     video_results = _last_execution_results_for_agent(client, task_id, "VideoAgent")
-    assert video_results.get("content", {}).get("final_video_asset"), (
-        "VideoAgent produced no final_video_asset"
-    )
+    _assert_video_output_real(video_results, "[e2e3]")
+
+    audio_results = _last_execution_results_for_agent(client, task_id, "AudioAgent")
+    _assert_audio_output_real(audio_results, "[e2e3]")
 
     # 6. Final invariant: nothing left in raw_pending.
     leaks = _placeholders_without_successor(workspace)
@@ -721,6 +792,14 @@ def test_e2e4_midstream_image(monkeypatch):
     assert isinstance(keyframe_media, dict) and keyframe_media, (
         "KeyFrameAgent rerun returned no media files"
     )
+
+    # Phase 2 Video + Audio must produce real files on disk (not placeholder
+    # URIs). The rerun should fully re-materialize after the midstream image.
+    video_results_p2 = _last_execution_results_for_agent(client, task_id, "VideoAgent")
+    _assert_video_output_real(video_results_p2, "[e2e4 phase2]")
+
+    audio_results_p2 = _last_execution_results_for_agent(client, task_id, "AudioAgent")
+    _assert_audio_output_real(audio_results_p2, "[e2e4 phase2]")
 
     # Final invariants.
     leaks = _placeholders_without_successor(workspace)
