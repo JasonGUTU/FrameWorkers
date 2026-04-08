@@ -438,8 +438,32 @@ class LLMClient(BaseLLMClient):
                 json_mode=True,
                 client_type=client_type,
             )
-            response = await openai_client.chat.completions.create(**request_kwargs)
-            raw = response.choices[0].message.content or ""
+            # Transient provider hiccups (rate-limit backoff, gateway
+            # flap, content filter) sometimes cause the model to return
+            # an empty ``message.content`` or no ``choices`` at all.
+            # Retry up to 2 extra times before giving up — the second
+            # call usually succeeds because the upstream backend has
+            # cleared whatever transient issue caused the first miss.
+            raw = ""
+            last_err: str = ""
+            for attempt in range(3):
+                response = await openai_client.chat.completions.create(**request_kwargs)
+                choices = getattr(response, "choices", None) or []
+                if not choices:
+                    last_err = "model returned empty choices"
+                    continue
+                msg = getattr(choices[0], "message", None)
+                if msg is None:
+                    last_err = "model returned empty message"
+                    continue
+                raw = (getattr(msg, "content", None) or "").strip()
+                if raw:
+                    break
+                last_err = "model returned empty content"
+            if not raw:
+                raise ValueError(
+                    f"chat_json: {last_err} (after 3 attempts)"
+                )
             return self._parse_json_object_strict(raw)
 
         # Provider routes configured to LiteLLM — require JSON mode; no silent fallback without it.

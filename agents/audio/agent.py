@@ -55,7 +55,24 @@ class AudioAgent(BaseAgent[AudioAgentInput, AudioAgentOutput]):
         vid = input_data.final_video
 
         if not sp or not vid:
-            return None
+            # AudioAgent has no legacy/full-LLM fallback path — without
+            # the upstream screenplay AND video packages there is nothing
+            # to build. Raise a clear error rather than returning None,
+            # because returning None makes BaseAgent fall through to
+            # ``_run_legacy_mode`` → ``build_user_prompt`` which is not
+            # implemented for this agent and would crash with a
+            # confusing NotImplementedError.
+            missing = []
+            if not sp:
+                missing.append("screenplay")
+            if not vid:
+                missing.append("final_video")
+            raise ValueError(
+                "AudioAgent.build_skeleton: required upstream artifacts "
+                f"missing from input: {missing}. Check that InputResolver "
+                f"matched the [screenplay] / [final_video] labels for this "
+                f"task and that those artifacts exist in the workspace."
+            )
 
         sp_content = sp.get("content", {})
         vid_content = vid.get("content", {})

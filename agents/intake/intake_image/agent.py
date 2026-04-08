@@ -32,11 +32,11 @@ class IntakeImageAgent(BaseAgent[IntakeImageInput, IntakeImageOutput]):
     def system_prompt(self) -> str:
         return (
             "You are IntakeImageAgent. Look at a user-uploaded image and "
-            "produce a single concise objective description (one or two "
-            "sentences, <= 240 chars) of what is visible: subject, "
-            "approximate composition, lighting, mood. Do NOT speculate "
-            "about meaning or intent — describe only the surface visual "
-            "content.\n\n"
+            "produce a single short objective description (one sentence, "
+            "STRICTLY <= 150 chars) of what is visible: subject, key "
+            "visible attributes, lighting/mood. Be terse — drop adverbs "
+            "and filler. Do NOT speculate about meaning or intent — "
+            "describe only the surface visual content.\n\n"
             "Return strict JSON of the shape "
             "{\"visual_description\": \"...\"}."
         )
@@ -49,10 +49,10 @@ class IntakeImageAgent(BaseAgent[IntakeImageInput, IntakeImageOutput]):
         """
         intent = (input_data.user_intent or "").strip()
         return (
-            "Look at the attached image and describe what is visible "
-            "(subject, approximate composition, lighting, mood). Do not "
-            "speculate about purpose; describe only the surface visual "
-            "content.\n\n"
+            "Describe the attached image in ONE short sentence "
+            "(STRICTLY <= 150 characters): subject, key visible attributes, "
+            "lighting/mood. Drop adverbs and filler. Do not speculate "
+            "about purpose.\n\n"
             f"User-stated intent (do not echo this in the description): "
             f"{intent[:200] or '(none)'}\n\n"
             "Return strict JSON: {\"visual_description\": \"...\"}"
