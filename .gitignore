@@ -222,3 +222,6 @@ Thumbs.db
 *.mp4
 *.wav
 huobao-drama/
+
+# Project runtime outputs (sub-agent workspaces, e2e debug, generated artifacts)
+Runtime/
