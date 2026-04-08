@@ -323,7 +323,7 @@
         <div class="mm-card video">
           <span class="mm-tag">OUTPUT · v1 FINAL VIDEO</span>
           <div class="mm-title">第一次 pipeline 成片</div>
-          <div class="mm-slot-empty">已被 prune-on-rerun 清掉（asset_manager.prune_by_producer 在 v2 重跑时按设计删除了 v1 的全部产出物）</div>
+          <div class="mm-slot-empty">已被 prune-on-rerun 清掉（artifact_writer._purge_all_for_producer 在 v2 重跑时按设计删除了 v1 的全部产出物）</div>
           <div class="mm-meta">workspace_e2e_text_then_text_20260407_014327/.../v1 已删除</div>
         </div>
       </div>
@@ -544,10 +544,10 @@
           <h3>② 多轮任务 / overwrite 是怎么处理的</h3>
           <ol>
             <li><strong>(task_id, agent_id) 唯一</strong>：每对 <code>(task_id, agent_id)</code> 在 workspace 里只有<strong>一份 active 输出</strong>。同一个 task 里 agent 重跑时，新输出替换旧输出。</li>
-            <li><strong>怎么检测到是重跑</strong>：完全<strong>无状态机 / 无计数器 / 无时间戳</strong>。<code>AssistantService.execute_agent_for_task</code> 入口处直接调 <code>artifact_registry.has_producer_run(task_id, agent_id)</code> —— 扫一遍 append-only registry，看有没有任何 entry 的 <code>(task_id, agent_id)</code> 跟当前请求的相等。命中 → <code>auto_overwrite = True</code>，没命中 → 走全新写入路径。<strong>"事实即检测"</strong>：registry 里有没有同名产物就是唯一判据。</li>
-            <li><strong>prune-on-rerun</strong>：检测到是重跑后，<code>overwrite_existing=True</code> 一路传到 <code>asset_manager.persist_execution_from_plan</code>，写新输出前先调 <code>artifact_registry.prune_by_producer(task_id, agent_id)</code>，<strong>同时删掉文件 + registry entries</strong>。所以磁盘上看不到历史版本。</li>
-            <li><strong>为什么不保留历史</strong>：因为下游 agent 全靠 InputResolver 的 caption 语义匹配。如果新旧两份产出都在 registry 里，LLM 可能挑错版本，或者两份都拿过去吃，下游就看到不一致的上游。<strong>"只有一份当前事实"</strong> 是 caption-driven 路由能稳定工作的前提。</li>
-            <li><strong>用户上传永远保留</strong>：raw upload 注册时是 <code>agent_id="user", task_id=""</code>，跟任何 content agent 的 <code>(task_id, agent_id)</code> 元组都不相交，所以<strong>永远不会被 prune</strong>。重跑只删 AI 生成物，用户的原始素材始终保留在 <code>inputs/</code> 和 registry 里。</li>
+            <li><strong>怎么检测到是重跑</strong>：完全<strong>无状态机 / 无计数器 / 无时间戳</strong>。<code>AssistantService.execute_agent_for_task</code> 入口处直接调 <code>global_memory.has_producer_run(task_id, agent_id)</code> —— 扫一遍 append-only global_memory entries，看有没有任何 entry 的 <code>(task_id, agent_id)</code> 跟当前请求的相等。命中 → <code>auto_overwrite = True</code>，没命中 → 走全新写入路径。<strong>"事实即检测"</strong>：global_memory 里有没有同名产物就是唯一判据。</li>
+            <li><strong>prune-on-rerun</strong>：检测到是重跑后，<code>overwrite_existing=True</code> 一路传到 <code>artifact_writer.persist_execution_from_plan</code>，写新输出前先调 <code>artifact_writer._purge_all_for_producer(execution)</code>，内部用 <code>global_memory.find_by_producer(task_id, agent_id)</code> 找路径，再用 <code>delete_file_at_path</code> 删文件 + <code>global_memory.prune_by_paths(paths)</code> 清 entries —— <strong>同时删掉文件 + global_memory entries</strong>。所以磁盘上看不到历史版本。</li>
+            <li><strong>为什么不保留历史</strong>：因为下游 agent 全靠 InputResolver 的 caption 语义匹配。如果新旧两份产出都在 global_memory 里，LLM 可能挑错版本，或者两份都拿过去吃，下游就看到不一致的上游。<strong>"只有一份当前事实"</strong> 是 caption-driven 路由能稳定工作的前提。</li>
+            <li><strong>用户上传永远保留</strong>：raw upload 注册时是 <code>agent_id="user", task_id=""</code>，跟任何 content agent 的 <code>(task_id, agent_id)</code> 元组都不相交，所以<strong>永远不会被 prune</strong>。重跑只删 AI 生成物，用户的原始素材始终保留在 <code>inputs/</code> 和 global_memory 里。</li>
             <li><strong>实例</strong>：本页 e2e2 v1 video 和 e2e4 phase 1 video 看不到的原因——它们就是被 v2 / phase 2 重跑触发的 prune 干掉的。但 e2e2 的 v1 文本上传和 e2e4 的 phase 1 文本上传都还在 <code>inputs/</code>（因为是用户素材）。</li>
           </ol>
         </div>
