@@ -444,13 +444,10 @@ class AssistantService:
         return execution
 
     @staticmethod
-    def _persist_assignment_key(item: Dict[str, Any]) -> tuple[str, str, str]:
-        # ``manifest_kind`` disambiguates multiple manifest entries on the same
-        # agent (empty for non-manifest kinds, so other kinds are unaffected).
+    def _persist_assignment_key(item: Dict[str, Any]) -> tuple[str, str]:
         return (
             str(item.get("kind") or ""),
             str(item.get("source_key") or ""),
-            str(item.get("manifest_kind") or ""),
         )
 
     @staticmethod
@@ -500,19 +497,6 @@ class AssistantService:
                     sub = self._artifact_media_type_subdir(fn)
                     rel = f"artifacts/media/{producer}/{sub}/{fn}"
                     assignments.append({"kind": "media", "source_key": key, "relative_path": rel})
-
-        # Generic side-output manifests declared by the descriptor (no agent
-        # name knowledge here — keyframes manifest is just one such spec).
-        if execution.status == ExecutionStatus.COMPLETED:
-            for spec in getattr(descriptor, "output_manifests", ()) or ():
-                assignments.append(
-                    {
-                        "kind": "manifest",
-                        "source_key": "",
-                        "manifest_kind": spec.kind,
-                        "relative_path": spec.relative_path,
-                    }
-                )
 
         snap_payload = ArtifactWriter._build_json_snapshot_payload(results)
         if snap_payload:
@@ -659,10 +643,6 @@ class AssistantService:
         plan = self._refine_output_persist_plan_with_llm(
             workspace, execution, descriptor, base_plan
         )
-        manifest_extractors = {
-            spec.kind: spec.extract_items
-            for spec in (getattr(descriptor, "output_manifests", ()) or ())
-        }
         policy = self._load_persist_naming_policy()
         plan_digest = hashlib.sha256(
             json.dumps(plan, ensure_ascii=False, sort_keys=True).encode("utf-8")
@@ -672,11 +652,10 @@ class AssistantService:
                 "naming_policy_version": str(policy.get("version") or "default-1"),
                 "persist_plan_digest": plan_digest,
             }
-        persisted_paths, asset_index, extra_locs = workspace.persist_execution_from_plan(
+        persisted_paths, asset_index = workspace.persist_execution_from_plan(
             execution,
             plan,
             overwrite_existing=overwrite_existing_assets,
-            manifest_extractors=manifest_extractors,
         )
         if asset_index and isinstance(execution.results, dict):
             execution.results["_asset_index"] = asset_index

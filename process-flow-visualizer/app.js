@@ -429,7 +429,7 @@ function render() {
       ["①", "log_execution_result(execution) → execution event 日志（含 retry_attempts / eval_summary）", "note"],
       ["②", "_deterministic_output_persist_plan(execution, descriptor, asset_key) → base_plan", "note"],
       ["③", "_refine_output_persist_plan_with_llm → LLM #2 调整 relative_path（避免冲突 / 对齐 naming_policy）", "note"],
-      ["④", "persist_execution_from_plan(plan, manifest_extractors, overwrite) → (paths, asset_index, extra_locs)；落盘后回调 _register_artifacts_callback 把 ArtifactRef 追加到 artifact_registry.jsonl", "note"],
+      ["④", "persist_execution_from_plan(plan, overwrite) → (paths, asset_index)；落盘后回调 _register_artifacts_callback 把 ArtifactRef 追加到 global_memory.md", "note"],
       ["⑤", "get_memory_brief(task_id) → memory_brief：用第 ④ 步刚回调登记进 global_memory 的 ArtifactRef 拼最终响应", "note"],
       ["⑥", "返回 { task_id, execution_id, status, error, error_reasoning, workspace_id, global_memory_brief }", "returns"],
     ], "global_memory 是唯一记录层（既是语义记录又是 artifact ledger），在第 ④ 步内部回调 _register_artifacts_callback → global_memory.register 时一次性写入；不再有独立的 _sync_global_memory_after_execution / add_memory_entry / artifact_caption 路径");
@@ -543,8 +543,8 @@ function render() {
       returns: "{ path, filename, mime, caption:{what,why,scope='raw_pending'} }",
       note: "用户原始上传入口：写到 inputs/<ts>_<filename> + 直接 global_memory.register 一条 raw_pending artifact，等待对应 IntakeAgent 通过 [raw_*_upload] label 接手",
     },
-    "persist_execution_from_plan(execution, assignments, *, overwrite_existing=False, manifest_extractors=None)": {
-      returns: "(persisted_paths, asset_index, extra_locs)",
+    "persist_execution_from_plan(execution, assignments, *, overwrite_existing=False)": {
+      returns: "(persisted_paths, asset_index)",
       note: "Phase 3 落盘主入口；内部回调 _register_artifacts_callback → global_memory.register(execution_id, agent_id, task_id, artifacts=[ArtifactRef])",
     },
     "log_execution_started(execution) / log_execution_result(execution)": {

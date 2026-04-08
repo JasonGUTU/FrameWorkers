@@ -257,45 +257,34 @@ class ArtifactWriter:
         assignments: List[Dict[str, Any]],
         *,
         overwrite_existing: bool = False,
-        manifest_extractors: Optional[Dict[str, Callable[[Dict[str, Any]], List[Dict[str, Any]]]]] = None,
-    ) -> tuple[Dict[str, str], Optional[Dict[str, Any]], List[Dict[str, str]]]:
+    ) -> tuple[Dict[str, str], Optional[Dict[str, Any]]]:
         """Write execution outputs using an explicit path plan.
 
         Each assignment is a dict with:
-          - ``kind``: ``binary`` | ``media`` | ``json_snapshot`` | ``manifest``
+          - ``kind``: ``binary`` | ``media`` | ``json_snapshot``
           - ``relative_path``: must start with ``artifacts/``
           - ``source_key``: for ``binary`` / ``media`` — the per-file sys_id
             in the agent's ``results`` dict (e.g. ``"img_char_001_global"``)
-          - ``manifest_kind``: for ``manifest`` (key into ``manifest_extractors``)
 
         ``json_snapshot`` assignments need only ``relative_path`` — the snapshot
         filename is derived from ``execution.agent_id``.
 
-        ``manifest_extractors`` is a generic registry of ``kind -> extractor_callable``
-        provided by the caller (typically built from ``descriptor.output_manifests``).
-        ArtifactWriter calls each extractor on the rewritten ``results`` and writes the
-        returned items as a JSON document — it has zero knowledge of which agent the
-        manifest belongs to.
-
         Order of operations:
           1. Persist all binary + media assignments first (in plan order).
           2. Rewrite asset URIs in the results tree to point at workspace files.
-          3. Persist deferred manifests (need rewritten URIs).
-          4. Persist deferred json_snapshot (needs rewritten URIs).
-          5. Register every persisted file in the artifact registry.
+          3. Persist deferred json_snapshot (needs rewritten URIs).
+          4. Register every persisted file in the artifact registry.
 
         Returns:
-            ``(persisted_media_paths, asset_index, extra_artifact_locations)``
+            ``(persisted_media_paths, asset_index)``
         """
         if not execution.results or not isinstance(execution.results, dict):
-            return {}, None, []
+            return {}, None
 
         results: Dict[str, Any] = execution.results
         persisted_media_paths: Dict[str, str] = {}
         asset_index: Optional[Dict[str, Any]] = None
-        extra_locs: List[Dict[str, Any]] = []
         deferred_json_snapshots: List[Dict[str, Any]] = []
-        deferred_manifests: List[Dict[str, Any]] = []
 
         # ── Pass 0: in overwrite mode, wipe every prior file from this
         # producer (task, agent) so the new run starts from a clean slate.
@@ -312,9 +301,6 @@ class ArtifactWriter:
             if kind == "json_snapshot":
                 deferred_json_snapshots.append(raw)
                 continue
-            if kind == "manifest":
-                deferred_manifests.append(raw)
-                continue
             if not self._validate_relative_path(raw):
                 continue
             if kind == "binary":
@@ -326,15 +312,7 @@ class ArtifactWriter:
         if persisted_media_paths:
             self._rewrite_asset_uris_with_persisted_paths(results, persisted_media_paths)
 
-        # ── Pass 3: deferred kinds (need rewritten URIs) ──
-        for raw in deferred_manifests:
-            if not self._validate_relative_path(raw):
-                continue
-            self._persist_manifest(
-                execution, raw, results, extra_locs,
-                extractors=manifest_extractors or {},
-            )
-
+        # ── Pass 3: deferred json_snapshot (needs rewritten URIs) ──
         for raw in deferred_json_snapshots:
             if not self._validate_relative_path(raw):
                 continue
@@ -344,10 +322,10 @@ class ArtifactWriter:
 
         # ── Pass 4: register every persisted file in the artifact registry ──
         self._register_persisted_artifacts(
-            execution, persisted_media_paths, asset_index, extra_locs,
+            execution, persisted_media_paths, asset_index,
         )
 
-        return persisted_media_paths, asset_index, extra_locs
+        return persisted_media_paths, asset_index
 
     # ------------------------------------------------------------------
     # Per-kind handlers
@@ -442,79 +420,6 @@ class ArtifactWriter:
         )
         self._touch()
 
-    def _persist_manifest(
-        self,
-        execution: Any,
-        raw: Dict[str, Any],
-        results: Dict[str, Any],
-        extra_locs: List[Dict[str, Any]],
-        *,
-        extractors: Dict[str, Callable[[Dict[str, Any]], List[Dict[str, Any]]]],
-    ) -> None:
-        """Build and write a side-output manifest JSON file (after URI rewrites).
-
-        Generic over manifest kinds: ``manifest_kind`` selects which extractor in
-        ``extractors`` to call, and the resulting items are wrapped in a JSON
-        document and written to ``relative_path``. ArtifactWriter has no knowledge
-        of which agent owns the manifest or what its schema looks like.
-        """
-        manifest_kind = str(raw.get("manifest_kind") or "").strip()
-        extractor = extractors.get(manifest_kind) if manifest_kind else None
-        if extractor is None:
-            return
-        try:
-            items = extractor(results)
-        except Exception as exc:
-            logger.warning(
-                "manifest extractor for %s raised: %s", manifest_kind, exc,
-            )
-            return
-        if not items:
-            return
-        doc = {
-            "schema_version": "1.0",
-            "document_type": manifest_kind,
-            "task_id": execution.task_id,
-            "execution_id": execution.id,
-            "items": items,
-        }
-        try:
-            body = json.dumps(doc, ensure_ascii=False, indent=2).encode("utf-8")
-        except (TypeError, ValueError):
-            return
-        rel = str(raw.get("relative_path") or "").strip().replace("\\", "/")
-        import os as _os
-        filename = _os.path.basename(rel) or f"{manifest_kind}.json"
-        stored = self._store_file_at_relative_path(
-            rel,
-            file_content=body,
-            filename=filename,
-        )
-        self._add_log(
-            event="artifact.manifest_persisted",
-            resource_id=stored.path,
-            agent_id=execution.agent_id,
-            task_id=execution.task_id,
-            execution_id=execution.id,
-            details={
-                "manifest_kind": manifest_kind,
-                "filename": filename,
-            },
-        )
-        self._touch()
-        # Intentionally NOT registering the manifest in global_memory.
-        # A manifest is an internal flat-index helper written alongside the
-        # agent's main JSON output; both files would otherwise share the
-        # same fallback caption (via entry_caption_raw) because
-        # per_artifact_captions has no entry for the manifest's sys_id.
-        # That left InputResolver's LLM with two indistinguishable JSON
-        # candidates and it could nondeterministically pick the manifest
-        # (whose schema is {items: [...]}, not {content: {scenes: [...]}})
-        # for e.g. VideoAgent's [keyframes_metadata] slot, silently
-        # producing 0 clips. Tools that need the manifest can load it by
-        # its deterministic path directly.
-        # (Intentionally leaving extra_locs alone here.)
-
     def _persist_json_snapshot(
         self,
         execution: Any,
@@ -570,7 +475,6 @@ class ArtifactWriter:
         execution: Any,
         persisted_media_paths: Dict[str, str],
         asset_index: Optional[Dict[str, Any]],
-        extra_locs: List[Dict[str, Any]],
     ) -> None:
         """Build ArtifactRef list and register everything in the artifact registry."""
         if self._register_artifacts is None:
@@ -612,13 +516,6 @@ class ArtifactWriter:
             sys_id = str(asset_index.get("agent_id") or "json_snapshot").strip()
             if json_uri:
                 all_artifact_refs.append(_make_ref(json_uri, sys_id, "application/json"))
-
-        for loc in extra_locs:
-            p = str(loc.get("path") or "").strip()
-            if p and not any(a["path"] == p for a in all_artifact_refs):
-                import os as _os
-                sys_id_guess = _os.path.splitext(_os.path.basename(p))[0]
-                all_artifact_refs.append(_make_ref(p, sys_id_guess, _mime_from_path(p)))
 
         if not all_artifact_refs:
             return

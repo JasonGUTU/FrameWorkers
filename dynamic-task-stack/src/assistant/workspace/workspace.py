@@ -463,13 +463,11 @@ class Workspace:
         assignments: List[Dict[str, Any]],
         *,
         overwrite_existing: bool = False,
-        manifest_extractors: Optional[Dict[str, Any]] = None,
-    ) -> tuple[Dict[str, str], Optional[Dict[str, Any]], List[Dict[str, str]]]:
+    ) -> tuple[Dict[str, str], Optional[Dict[str, Any]]]:
         return self.artifact_writer.persist_execution_from_plan(
             execution,
             assignments,
             overwrite_existing=overwrite_existing,
-            manifest_extractors=manifest_extractors,
         )
 
 

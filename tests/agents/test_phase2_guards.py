@@ -388,31 +388,6 @@ def test_only_entry_point_agents_declare_creative_brief():
     )
 
 
-def test_keyframes_manifest_lives_under_agents_keyframe():
-    """The keyframes manifest builder was moved out of the assistant
-    layer into ``agents/keyframe/manifest.py`` so that the assistant
-    layer stays generic. Make sure nothing imports it from the old
-    location anymore."""
-    targets = _all_python_files(
-        _REPO / "agents",
-        _REPO / "dynamic-task-stack" / "src",
-        _REPO / "scripts",
-    )
-    bad_re = re.compile(
-        r"from\s+(?:\.\.|\.|src\.assistant)\.keyframes_manifest\s+import"
-    )
-    offenders: list[Path] = []
-    for path in targets:
-        if bad_re.search(_read(path)):
-            offenders.append(path)
-    assert not offenders, (
-        "Stale import of dynamic-task-stack/.../keyframes_manifest:\n  "
-        + "\n  ".join(str(p.relative_to(_REPO)) for p in offenders)
-    )
-    # The new home must exist.
-    assert (_REPO / "agents" / "keyframe" / "manifest.py").exists()
-
-
 # ---------------------------------------------------------------------------
 # 8. example_agent is no longer in AGENT_REGISTRY
 # ---------------------------------------------------------------------------

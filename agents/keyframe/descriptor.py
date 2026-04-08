@@ -6,7 +6,7 @@ from typing import Any
 
 from pydantic import BaseModel
 
-from ..descriptor import OutputManifestSpec, SubAgentDescriptor
+from ..descriptor import SubAgentDescriptor
 from ..contracts import InputBundleV2
 from .agent import KeyFrameAgent
 from .labels import (
@@ -15,7 +15,6 @@ from .labels import (
     INPUT_LABEL_SCREENPLAY,
     INPUT_LABEL_STYLE_REFERENCE,
 )
-from .manifest import build_keyframes_manifest_items
 from ..common_schema import ImageReferenceEntry
 from .schema import KeyFrameAgentInput
 from .evaluator import KeyframeEvaluator
@@ -84,14 +83,6 @@ DESCRIPTOR = SubAgentDescriptor(
         "image_service": lambda ctx: FalImageService(),
     },
     materializer_factory=materializer_factory,
-    output_manifests=(
-        OutputManifestSpec(
-            kind="keyframes_manifest",
-            relative_path="artifacts/keyframes/keyframes_manifest.json",
-            filename="keyframes_manifest.json",
-            extract_items=build_keyframes_manifest_items,
-        ),
-    ),
     input_needs_description=(
         "I plan and render the visual reference images for a video: identity sheets "
         "for each character/location/prop, scene-level adaptations, and one starting "

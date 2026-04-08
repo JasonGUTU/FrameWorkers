@@ -63,45 +63,6 @@ class MediaAsset:
 
 
 # ---------------------------------------------------------------------------
-# OutputManifestSpec — declarative side-output manifest declaration
-# ---------------------------------------------------------------------------
-
-@dataclass(frozen=True)
-class OutputManifestSpec:
-    """Declarative spec for an extra JSON manifest produced from agent results.
-
-    A manifest is a flat index file (e.g. ordered keyframe rows) derived from
-    the agent's structured ``results`` after media URIs have been rewritten to
-    real workspace paths.  Agents declare their manifests in
-    ``SubAgentDescriptor.output_manifests``; the assistant layer iterates this
-    list generically and writes each manifest as a JSON file under
-    ``relative_path`` — without ever knowing the agent's name or schema.
-
-    The ``extract_items`` callable runs **after** URI rewrite, so the items it
-    returns already point at the persisted file paths.  ``kind`` is an opaque
-    string used as the manifest registry key when threading callables from
-    service.py through ArtifactWriter.
-
-    Attributes:
-        kind:           Manifest registry key, e.g. ``"keyframes_manifest"``.
-        relative_path:  Workspace-relative target path
-                        (must start with ``artifacts/``).
-        filename:       Output filename written by ArtifactWriter.
-        schema_version: Embedded in the manifest JSON document.
-        extract_items:  ``(results_dict) -> list[dict]`` — flattens the
-                        rewritten results into manifest rows.
-    """
-
-    kind: str
-    relative_path: str
-    filename: str
-    schema_version: str = "1.0"
-    extract_items: Callable[[dict[str, Any]], list[dict[str, Any]]] = field(
-        repr=False, default=lambda r: [],
-    )
-
-
-# ---------------------------------------------------------------------------
 # BaseMaterializer — abstract post-LLM media generation
 # ---------------------------------------------------------------------------
 
@@ -215,9 +176,6 @@ class SubAgentDescriptor:
     )
     input_needs_description: str = (
         "Needs any relevant prior artifacts from the workspace as context."
-    )
-    output_manifests: tuple[OutputManifestSpec, ...] = field(
-        repr=False, default=(),
     )
 
     # ------------------------------------------------------------------

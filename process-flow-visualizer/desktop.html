@@ -717,7 +717,6 @@ Artifact paths are in ``artifact_registry.jsonl`` (not here).
         <div class="tl-row"><span class="tl-time">11:21:01.368</span><span class="tl-event art-persist">artifact.persisted</span><span class="tl-agent">KeyFrameAgent</span><span class="tl-detail">filename=img_sh_001_kf_001.png · source_key=img_sh_001_kf_001 · kind=media</span></div>
         <div class="tl-row"><span class="tl-time">11:21:01.369</span><span class="tl-event art-persist">artifact.persisted</span><span class="tl-agent">KeyFrameAgent</span><span class="tl-detail">filename=img_sh_003_kf_003.png · source_key=img_sh_003_kf_003 · kind=media</span></div>
         <div class="tl-row"><span class="tl-time">11:21:01.371</span><span class="tl-event art-persist">artifact.persisted</span><span class="tl-agent">KeyFrameAgent</span><span class="tl-detail">filename=img_sh_004_kf_004.png · source_key=img_sh_004_kf_004 · kind=media</span></div>
-        <div class="tl-row"><span class="tl-time">11:21:01.373</span><span class="tl-event art-manifest">artifact.manifest_persisted</span><span class="tl-agent">KeyFrameAgent</span><span class="tl-detail">filename=task_1_f9eb85bb_keyframes_manifest.json · manifest_kind=keyframes_manifest</span></div>
         <div class="tl-row"><span class="tl-time">11:21:01.374</span><span class="tl-event art-snap">artifact.snapshot_persisted</span><span class="tl-agent">KeyFrameAgent</span><span class="tl-detail">filename=keyframes_exec_4.json · asset_key=keyframes</span></div>
         <div class="tl-row"><span class="tl-time">11:21:21.031</span><span class="tl-event exec-start">execution.started</span><span class="tl-agent">VideoAgent</span><span class="tl-detail">status=IN_PROGRESS</span></div>
         <div class="tl-row"><span class="tl-time">11:26:06.240</span><span class="tl-event exec-done">execution.completed</span><span class="tl-agent">VideoAgent</span><span class="tl-detail">status=COMPLETED · retry_attempts=1 · eval_summary=&quot;No creative evaluation defined for VideoEvaluator.&quot;</span></div>
@@ -767,7 +766,7 @@ Artifact paths are in ``artifact_registry.jsonl`` (not here).
         <div class="mgr">
           <h4>ArtifactWriter</h4>
           <div class="file-ref">artifact_writer.py</div>
-          <p>由 Workspace 注入回调（<code>store_file</code> / <code>add_log</code> / <code>read_binary</code> / <code>register_artifacts</code> / <code>find_artifact_refs_for_producer</code> / <code>prune_global_memory_by_paths</code> / <code>delete_file_at_path</code>）。负责 <code>persist_execution_from_plan</code>、<code>hydrate_indexed_assets</code>、<code>collect_materialized_files</code>，落盘后通过 <code>register_artifacts</code> 回写 GlobalMemory，并发出 <code>artifact.persisted</code> / <code>artifact.snapshot_persisted</code> / <code>artifact.manifest_persisted</code> / <code>artifact.purged_for_producer</code> 事件。<strong>由原 AssetManager 重命名而来</strong>——"asset" 一词留给 agent 内部的 <code>MediaAsset</code> / <code>asset_dict</code>。</p>
+          <p>由 Workspace 注入回调（<code>store_file</code> / <code>add_log</code> / <code>read_binary</code> / <code>register_artifacts</code> / <code>find_artifact_refs_for_producer</code> / <code>prune_global_memory_by_paths</code> / <code>delete_file_at_path</code>）。负责 <code>persist_execution_from_plan</code>、<code>hydrate_indexed_assets</code>、<code>collect_materialized_files</code>，落盘后通过 <code>register_artifacts</code> 回写 GlobalMemory，并发出 <code>artifact.persisted</code> / <code>artifact.snapshot_persisted</code> / <code>artifact.purged_for_producer</code> 事件。<strong>由原 AssetManager 重命名而来</strong>——"asset" 一词留给 agent 内部的 <code>MediaAsset</code> / <code>asset_dict</code>。</p>
         </div>
         <div class="mgr">
           <h4>InputResolver</h4>
@@ -833,8 +832,8 @@ Artifact paths are in ``artifact_registry.jsonl`` (not here).
               <span class="desc">用户原始 upload 入口：写到 <code>inputs/</code>，登记到 <code>global_memory.md</code>（agent_id="user", task_id="", scope="raw_pending"），打 <code>event=user.upload</code>。</span>
             </li>
             <li>
-              <code>persist_execution_from_plan(execution, assignments, overwrite_existing, manifest_extractors)</code>
-              <span class="desc">主落盘入口。委托 ArtifactWriter 按 LLM 编排的 plan 批量落盘；overwrite 模式下先 <code>_purge_all_for_producer</code> 把同 <code>(task, agent)</code> 的旧文件 + 旧 ref 全部 wipe。返回 <code>(persisted_paths, asset_index, extra_locs)</code>。每次落盘自动通过 <code>_register_artifacts_callback</code> 把 ArtifactRef 追加到 GlobalMemory，并打 <code>event=artifact.*</code> 日志。</span>
+              <code>persist_execution_from_plan(execution, assignments, overwrite_existing)</code>
+              <span class="desc">主落盘入口。委托 ArtifactWriter 按 LLM 编排的 plan 批量落盘；overwrite 模式下先 <code>_purge_all_for_producer</code> 把同 <code>(task, agent)</code> 的旧文件 + 旧 ref 全部 wipe。返回 <code>(persisted_paths, asset_index)</code>。每次落盘自动通过 <code>_register_artifacts_callback</code> 把 ArtifactRef 追加到 GlobalMemory，并打 <code>event=artifact.*</code> 日志。</span>
             </li>
             <li>
               <code>log_execution_started(execution)</code> / <code>log_execution_result(execution)</code>

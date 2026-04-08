@@ -221,7 +221,7 @@ def test_artifact_writer_hydrate_and_persist_index(tmp_path):
         },
     )
 
-    persisted_paths, index, extra_locs = am.persist_execution_from_plan(
+    persisted_paths, index = am.persist_execution_from_plan(
         execution,
         assignments=[
             {
@@ -232,7 +232,6 @@ def test_artifact_writer_hydrate_and_persist_index(tmp_path):
         ],
     )
     assert persisted_paths == {}
-    assert extra_locs == []
     assert index is not None
     # Snapshot index now keys producers by agent_id (no asset_key field).
     assert index["agent_id"] == "AgentA"
