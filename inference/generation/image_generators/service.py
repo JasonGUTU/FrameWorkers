@@ -10,7 +10,14 @@ from typing import Any
 
 import httpx
 
-from ..fal_helpers import fal_subscribe, http_download_bytes, require_fal_model_var
+from .._mock_data import MOCK_PNG
+from ..fal_helpers import (
+    LazyHttpxClientMixin,
+    extract_fal_media_url,
+    fal_subscribe,
+    http_download_bytes,
+    require_fal_model_var,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +25,7 @@ _DEFAULT_IMAGE_MODEL = "google/gemini-2.5-flash-image"
 _DEFAULT_OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 
 
-class ImageService:
+class ImageService(LazyHttpxClientMixin):
     """Image generation + editing service backed by OpenRouter."""
 
     def __init__(
@@ -37,16 +44,6 @@ class ImageService:
         self.retry_base_delay = retry_base_delay
         self.retry_max_delay = retry_max_delay
         self._http: httpx.AsyncClient | None = None
-
-    @property
-    def http(self) -> httpx.AsyncClient:
-        if self._http is None or self._http.is_closed:
-            self._http = httpx.AsyncClient(timeout=self.timeout)
-        return self._http
-
-    async def close(self) -> None:
-        if self._http and not self._http.is_closed:
-            await self._http.aclose()
 
     async def generate_image(self, prompt: str) -> bytes:
         logger.info("[Layer1] Generating image: %.100s...", prompt)
@@ -122,21 +119,12 @@ class ImageService:
                 await asyncio.sleep(delay)
 
 
-_MOCK_PNG = (
-    b"\x89PNG\r\n\x1a\n"
-    b"\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01"
-    b"\x08\x06\x00\x00\x00\x1f\x15\xc4\x89"
-    b"\x00\x00\x00\nIDATx\x9cc\x00\x01\x00\x00\x05\x00\x01"
-    b"\r\n\xb4\x00\x00\x00\x00IEND\xaeB`\x82"
-)
-
-
 class MockImageService(ImageService):
     """Mock image service that returns a tiny placeholder PNG."""
 
     async def generate_image(self, prompt: str) -> bytes:
         logger.info("[MockImageService] Placeholder for: %.80s...", prompt)
-        return _MOCK_PNG
+        return MOCK_PNG
 
     async def edit_image(
         self,
@@ -144,7 +132,7 @@ class MockImageService(ImageService):
         prompt: str,
     ) -> bytes:
         logger.info("[MockImageService] Placeholder edit for: %.80s...", prompt)
-        return _MOCK_PNG
+        return MOCK_PNG
 
 
 class FalImageService(ImageService):
@@ -161,21 +149,11 @@ class FalImageService(ImageService):
         self.timeout = timeout
         self._http: httpx.AsyncClient | None = None
 
-    @property
-    def http(self) -> httpx.AsyncClient:
-        if self._http is None or self._http.is_closed:
-            self._http = httpx.AsyncClient(timeout=self.timeout)
-        return self._http
-
-    async def close(self) -> None:
-        if self._http and not self._http.is_closed:
-            await self._http.aclose()
-
     async def generate_image(self, prompt: str) -> bytes:
         logger.info("[fal.ai] Generating image with model=%s", self.model)
-        result = await self._submit({"prompt": prompt})
-        image_url = self._extract_image_url(result)
-        return await self._download_binary(image_url)
+        result = await fal_subscribe(self._api_key, self.model, {"prompt": prompt})
+        image_url = extract_fal_media_url(result, media_type="image")
+        return await http_download_bytes(self.http, image_url)
 
     async def edit_image(
         self,
@@ -193,44 +171,17 @@ class FalImageService(ImageService):
             ]
             edit_model = "fal-ai/nano-banana-2/edit"
             logger.info("[fal.ai] Editing image with model=%s", edit_model)
-            result = await self._submit_model(edit_model, {"prompt": prompt, "image_urls": image_urls})
+            result = await fal_subscribe(
+                self._api_key, edit_model, {"prompt": prompt, "image_urls": image_urls}
+            )
         else:
             image_url = f"data:image/png;base64,{base64.b64encode(refs[0]).decode('utf-8')}"
-            result = await self._submit_model(self.model, {"prompt": prompt, "image_url": image_url})
-        out_url = self._extract_image_url(result)
-        return await self._download_binary(out_url)
+            result = await fal_subscribe(
+                self._api_key, self.model, {"prompt": prompt, "image_url": image_url}
+            )
+        out_url = extract_fal_media_url(result, media_type="image")
+        return await http_download_bytes(self.http, out_url)
 
     @staticmethod
     def _is_nano_banana2_base_model(model: str) -> bool:
         return model.rstrip("/") == "fal-ai/nano-banana-2"
-
-    async def _submit(self, arguments: dict[str, Any]) -> dict[str, Any]:
-        return await self._submit_model(self.model, arguments)
-
-    async def _submit_model(self, model_id: str, arguments: dict[str, Any]) -> dict[str, Any]:
-        return await fal_subscribe(self._api_key, model_id, arguments)
-
-    async def _download_binary(self, url: str) -> bytes:
-        return await http_download_bytes(self.http, url)
-
-    @staticmethod
-    def _extract_image_url(result: dict[str, Any]) -> str:
-        images = result.get("images")
-        if isinstance(images, list) and images:
-            first = images[0]
-            if isinstance(first, dict):
-                url = first.get("url")
-                if isinstance(url, str) and url:
-                    return url
-
-        image_obj = result.get("image")
-        if isinstance(image_obj, dict):
-            url = image_obj.get("url")
-            if isinstance(url, str) and url:
-                return url
-
-        direct_url = result.get("image_url")
-        if isinstance(direct_url, str) and direct_url:
-            return direct_url
-
-        raise RuntimeError(f"No image URL found in fal.ai response keys={list(result.keys())}")

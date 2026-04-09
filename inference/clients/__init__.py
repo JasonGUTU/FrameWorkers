@@ -1,7 +1,7 @@
 """Canonical client namespace for inference LLM clients."""
 
 from .base import BaseLLMClient, Message, MessageRole, ModelConfig
-from .implementations import CustomModelClient, GPT5ChatClient, LLMClient
+from .implementations import LLMClient
 
 __all__ = [
     "BaseLLMClient",
@@ -9,6 +9,4 @@ __all__ = [
     "MessageRole",
     "ModelConfig",
     "LLMClient",
-    "GPT5ChatClient",
-    "CustomModelClient",
 ]

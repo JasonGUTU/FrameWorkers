@@ -11,32 +11,22 @@ from typing import Any
 import httpx
 from openai import AsyncOpenAI
 
-from ..fal_helpers import fal_subscribe, http_download_bytes
+from .._mock_data import MOCK_WAV
+from ..fal_helpers import (
+    LazyHttpxClientMixin,
+    extract_fal_media_url,
+    fal_subscribe,
+    http_download_bytes,
+)
 
 logger = logging.getLogger(__name__)
 
 _TTS_VOICES = {"alloy", "echo", "fable", "onyx", "nova", "shimmer"}
 _DEFAULT_VOICE = "alloy"
 
-_MOCK_WAV = (
-    b"RIFF"
-    b"\x24\x00\x00\x00"
-    b"WAVE"
-    b"fmt "
-    b"\x10\x00\x00\x00"
-    b"\x01\x00"
-    b"\x01\x00"
-    b"\x44\xac\x00\x00"
-    b"\x88\x58\x01\x00"
-    b"\x02\x00"
-    b"\x10\x00"
-    b"data"
-    b"\x00\x00\x00\x00"
-)
-
 
 def _is_mock_wav(data: bytes | None) -> bool:
-    """True if ``data`` is the silent ``_MOCK_WAV`` placeholder (or so short
+    """True if ``data`` is the silent ``MOCK_WAV`` placeholder (or so short
     it can't possibly carry real audio).
 
     Used by ``mix_scene_audio`` and ``assemble_final`` to drop placeholder
@@ -46,7 +36,7 @@ def _is_mock_wav(data: bytes | None) -> bool:
     """
     if not data:
         return True
-    if data == _MOCK_WAV:
+    if data == MOCK_WAV:
         return True
     # Anything shorter than 200 bytes can't possibly contain real audio
     # samples — a usable WAV body needs at least a few hundred bytes.
@@ -123,7 +113,7 @@ class AudioService:
             scene_id,
             mood,
         )
-        return _MOCK_WAV
+        return MOCK_WAV
 
     async def generate_ambience(
         self,
@@ -138,7 +128,7 @@ class AudioService:
             scene_id,
             description,
         )
-        return _MOCK_WAV
+        return MOCK_WAV
 
     async def mix_scene_audio(
         self,
@@ -152,7 +142,7 @@ class AudioService:
         """Mix narration / music / ambience for a single scene via ffmpeg.
 
         Real audio mixing — silent placeholder bytes (the 44-byte
-        ``_MOCK_WAV``) are filtered out so they don't pollute the mix
+        ``MOCK_WAV``) are filtered out so they don't pollute the mix
         with unreadable empty WAV chunks. Falls back to the longest
         non-mock input on ffmpeg failure (so the pipeline still
         completes with at least some real audio).
@@ -169,7 +159,7 @@ class AudioService:
                 "[Mix] No real audio for scene %s — emitting silent placeholder",
                 scene_id,
             )
-            return _MOCK_WAV
+            return MOCK_WAV
         if len(inputs) == 1:
             logger.info(
                 "[Mix] Single real input for scene %s — passing through, no mix needed",
@@ -204,7 +194,7 @@ class AudioService:
         real = [b for b in scene_mix_bytes_list if not _is_mock_wav(b)]
         if not real:
             logger.info("[FinalAssembly] No real scene mixes — emitting silent placeholder")
-            return _MOCK_WAV
+            return MOCK_WAV
         if len(real) == 1:
             logger.info("[FinalAssembly] Single real scene mix — passing through")
             return real[0]
@@ -403,7 +393,7 @@ class MockAudioService(AudioService):
         response_format: str = "wav",
     ) -> bytes:
         logger.info("[MockAudioService] Placeholder TTS for: %.80s...", text)
-        return _MOCK_WAV
+        return MOCK_WAV
 
     async def mux_audio_with_video(
         self,
@@ -415,7 +405,7 @@ class MockAudioService(AudioService):
         return video_bytes
 
 
-class FalAudioService(AudioService):
+class FalAudioService(AudioService, LazyHttpxClientMixin):
     """Audio generation service backed by fal.ai."""
 
     def __init__(
@@ -434,12 +424,6 @@ class FalAudioService(AudioService):
         self._http: httpx.AsyncClient | None = None
         self._client = None
 
-    @property
-    def http(self) -> httpx.AsyncClient:
-        if self._http is None or self._http.is_closed:
-            self._http = httpx.AsyncClient(timeout=self.timeout)
-        return self._http
-
     async def generate_speech(
         self,
         text: str,
@@ -456,42 +440,8 @@ class FalAudioService(AudioService):
             arguments["format"] = response_format
 
         logger.info("[fal.ai] Generating speech with model=%s", model_id)
-        result = await self._submit(model_id=model_id, arguments=arguments)
-        audio_url = self._extract_audio_url(result)
-        audio_bytes = await self._download_binary(audio_url)
+        result = await fal_subscribe(self._api_key, model_id, arguments)
+        audio_url = extract_fal_media_url(result, media_type="audio")
+        audio_bytes = await http_download_bytes(self.http, audio_url)
         logger.info("[fal.ai] TTS generated (%d bytes)", len(audio_bytes))
         return audio_bytes
-
-    async def _submit(self, *, model_id: str, arguments: dict[str, Any]) -> dict[str, Any]:
-        return await fal_subscribe(self._api_key, model_id, arguments)
-
-    async def _download_binary(self, url: str) -> bytes:
-        return await http_download_bytes(self.http, url)
-
-    @staticmethod
-    def _extract_audio_url(result: dict[str, Any]) -> str:
-        audio_obj = result.get("audio")
-        if isinstance(audio_obj, dict):
-            url = audio_obj.get("url")
-            if isinstance(url, str) and url:
-                return url
-
-        audios = result.get("audios")
-        if isinstance(audios, list) and audios:
-            first = audios[0]
-            if isinstance(first, dict):
-                url = first.get("url")
-                if isinstance(url, str) and url:
-                    return url
-
-        audio_file = result.get("audio_file")
-        if isinstance(audio_file, dict):
-            url = audio_file.get("url")
-            if isinstance(url, str) and url:
-                return url
-
-        direct_url = result.get("audio_url") or result.get("url")
-        if isinstance(direct_url, str) and direct_url:
-            return direct_url
-
-        raise RuntimeError(f"No audio URL found in fal.ai response keys={list(result.keys())}")

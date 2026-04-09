@@ -14,8 +14,11 @@ from typing import Any
 
 import httpx
 
+from .._mock_data import MOCK_MP4_HEADER
 from ..fal_helpers import (
+    LazyHttpxClientMixin,
     ensure_fal_runtime_env_loaded,
+    extract_fal_media_url,
     fal_subscribe,
     http_download_bytes,
     require_fal_model_var,
@@ -28,14 +31,6 @@ from ..wavespeed_predict import (
 )
 
 logger = logging.getLogger(__name__)
-
-_MOCK_MP4_HEADER = (
-    b"\x00\x00\x00\x1c"
-    b"ftyp"
-    b"isom"
-    b"\x00\x00\x02\x00"
-    b"isomiso2mp41"
-)
 
 
 class VideoService:
@@ -177,7 +172,7 @@ class MockVideoService(VideoService):
             shot_id,
             duration_sec,
         )
-        return _MOCK_MP4_HEADER
+        return MOCK_MP4_HEADER
 
     async def assemble_scene(
         self,
@@ -187,7 +182,7 @@ class MockVideoService(VideoService):
         transitions: list[dict[str, Any]] | None = None,
     ) -> bytes:
         logger.info("[MockVideoService] Assembling scene %s", scene_id)
-        return _MOCK_MP4_HEADER
+        return MOCK_MP4_HEADER
 
     async def assemble_final(
         self,
@@ -195,10 +190,10 @@ class MockVideoService(VideoService):
         scene_bytes_list: list[bytes],
     ) -> bytes:
         logger.info("[MockVideoService] Assembling final video")
-        return _MOCK_MP4_HEADER
+        return MOCK_MP4_HEADER
 
 
-class FalVideoService(VideoService):
+class FalVideoService(VideoService, LazyHttpxClientMixin):
     """Video generation service backed by fal.ai."""
 
     def __init__(
@@ -218,19 +213,68 @@ class FalVideoService(VideoService):
         )
         self._http: httpx.AsyncClient | None = None
 
-    @property
-    def http(self) -> httpx.AsyncClient:
-        if self._http is None or self._http.is_closed:
-            self._http = httpx.AsyncClient(timeout=self.timeout)
-        return self._http
-
-    async def close(self) -> None:
-        if self._http and not self._http.is_closed:
-            await self._http.aclose()
-
     @staticmethod
     def _is_fal_kling_model(model: str) -> bool:
         return "kling-video" in model
+
+    async def generate_clip(
+        self,
+        *,
+        shot_id: str,
+        keyframe_images: list[bytes],
+        prompt: str,
+        duration_sec: float = 0.0,
+        fps: int = 24,
+        width: int = 1024,
+        height: int = 576,
+        **kwargs: Any,
+    ) -> bytes:
+        logger.info("[fal.ai] Generating video shot=%s model=%s", shot_id, self.model)
+
+        image_data_urls: list[str] = [
+            f"data:image/png;base64,{base64.b64encode(img).decode('utf-8')}"
+            for img in (keyframe_images or [])
+        ]
+
+        if self._is_fal_kling_model(self.model):
+            arguments = self._build_kling_arguments(
+                prompt=prompt,
+                shot_id=shot_id,
+                image_data_urls=image_data_urls,
+                duration_sec=duration_sec,
+                kwargs=kwargs,
+            )
+        else:
+            arguments = self._build_default_arguments(
+                prompt=prompt,
+                shot_id=shot_id,
+                image_data_urls=image_data_urls,
+                duration_sec=duration_sec,
+                fps=fps,
+                width=width,
+                height=height,
+                kwargs=kwargs,
+            )
+
+        result = await self._submit(arguments)
+        video_url = extract_fal_media_url(result, media_type="video")
+        return await self._download_binary(video_url)
+
+    # Test seams: tests/agents/test_media_materializers.py overrides these
+    # to capture submitted arguments and stub network I/O without monkey-
+    # patching module globals. Keep them as 1-line wrappers.
+
+    async def _submit(self, arguments: dict[str, Any]) -> dict[str, Any]:
+        return await fal_subscribe(self._api_key, self.model, arguments)
+
+    async def _download_binary(self, url: str) -> bytes:
+        return await http_download_bytes(self.http, url)
+
+    # ------------------------------------------------------------------
+    # Argument builders (split per model family so generate_clip stays
+    # readable; a future provider-specific subclass can override one of
+    # these without touching the rest of the pipeline).
+    # ------------------------------------------------------------------
 
     @staticmethod
     def _kling_uses_start_end_frame_fields(model: str) -> bool:
@@ -247,27 +291,74 @@ class FalVideoService(VideoService):
         """Many Kling endpoints only allow 5s or 10s (string enum)."""
         return "10" if float(duration_sec) > 5.5 else "5"
 
-    async def generate_clip(
+    def _build_kling_arguments(
         self,
         *,
-        shot_id: str,
-        keyframe_images: list[bytes],
         prompt: str,
-        duration_sec: float = 0.0,
-        fps: int = 24,
-        width: int = 1024,
-        height: int = 576,
-        **kwargs: Any,
-    ) -> bytes:
-        logger.info("[fal.ai] Generating video shot=%s model=%s", shot_id, self.model)
+        shot_id: str,
+        image_data_urls: list[str],
+        duration_sec: float,
+        kwargs: dict[str, Any],
+    ) -> dict[str, Any]:
         arguments: dict[str, Any] = {"prompt": prompt}
 
-        image_data_urls: list[str] = []
-        if keyframe_images:
-            image_data_urls = [
-                f"data:image/png;base64,{base64.b64encode(img).decode('utf-8')}"
-                for img in keyframe_images
-            ]
+        source_video_url = kwargs.get("source_video_url")
+        if isinstance(source_video_url, str) and source_video_url:
+            arguments["video_url"] = source_video_url
+
+        arguments["duration"] = self._kling_duration_enum(
+            duration_sec if duration_sec > 0 else 5.0
+        )
+
+        kling_dual_anchor = False
+        if len(image_data_urls) >= 2 and self._kling_uses_start_end_frame_fields(self.model):
+            arguments["start_image_url"] = image_data_urls[0]
+            arguments["end_image_url"] = image_data_urls[-1]
+            kling_dual_anchor = True
+            logger.info(
+                "[fal.ai] Kling start/end frames for shot=%s (%d anchors -> 2)",
+                shot_id,
+                len(image_data_urls),
+            )
+        elif len(image_data_urls) >= 2:
+            arguments["image_url"] = image_data_urls[0]
+            arguments["tail_image_url"] = image_data_urls[-1]
+            kling_dual_anchor = True
+            logger.info(
+                "[fal.ai] Kling image_url/tail for shot=%s (%d anchors -> 2)",
+                shot_id,
+                len(image_data_urls),
+            )
+        elif len(image_data_urls) == 1:
+            if self._kling_uses_start_end_frame_fields(self.model):
+                arguments["start_image_url"] = image_data_urls[0]
+            else:
+                arguments["image_url"] = image_data_urls[0]
+
+        # Kling rejects end_image_url when default generate_audio is on; dual-anchor
+        # calls default to silent video unless caller passes generate_audio explicitly.
+        if kling_dual_anchor:
+            arguments["generate_audio"] = (
+                bool(kwargs["generate_audio"])
+                if "generate_audio" in kwargs
+                else False
+            )
+
+        return arguments
+
+    def _build_default_arguments(
+        self,
+        *,
+        prompt: str,
+        shot_id: str,
+        image_data_urls: list[str],
+        duration_sec: float,
+        fps: int,
+        width: int,
+        height: int,
+        kwargs: dict[str, Any],
+    ) -> dict[str, Any]:
+        arguments: dict[str, Any] = {"prompt": prompt}
 
         source_video_url = kwargs.get("source_video_url")
         if isinstance(source_video_url, str) and source_video_url:
@@ -280,112 +371,35 @@ class FalVideoService(VideoService):
             self.structured_constraints_field
             and isinstance(constraints, dict)
             and constraints
-            and not self._is_fal_kling_model(self.model)
         ):
             arguments[self.structured_constraints_field] = constraints
 
-        result: dict[str, Any]
-        if self._is_fal_kling_model(self.model):
-            arguments["duration"] = self._kling_duration_enum(
-                duration_sec if duration_sec > 0 else 5.0
-            )
-            kling_dual_anchor = False
-            if len(image_data_urls) >= 2 and self._kling_uses_start_end_frame_fields(self.model):
-                arguments["start_image_url"] = image_data_urls[0]
-                arguments["end_image_url"] = image_data_urls[-1]
-                kling_dual_anchor = True
-                logger.info(
-                    "[fal.ai] Kling start/end frames for shot=%s (%d anchors -> 2)",
-                    shot_id,
-                    len(image_data_urls),
-                )
-            elif len(image_data_urls) >= 2:
-                arguments["image_url"] = image_data_urls[0]
-                arguments["tail_image_url"] = image_data_urls[-1]
-                kling_dual_anchor = True
-                logger.info(
-                    "[fal.ai] Kling image_url/tail for shot=%s (%d anchors -> 2)",
-                    shot_id,
-                    len(image_data_urls),
-                )
-            elif len(image_data_urls) == 1:
-                if self._kling_uses_start_end_frame_fields(self.model):
-                    arguments["start_image_url"] = image_data_urls[0]
-                else:
-                    arguments["image_url"] = image_data_urls[0]
-            # Kling rejects end_image_url when default generate_audio is on; dual-anchor
-            # calls default to silent video unless caller passes generate_audio explicitly.
-            if kling_dual_anchor:
-                arguments["generate_audio"] = (
-                    bool(kwargs["generate_audio"])
-                    if "generate_audio" in kwargs
-                    else False
-                )
-            result = await self._submit(arguments)
-        else:
-            # Keep common generation knobs optional to maximize model compatibility.
-            if duration_sec > 0:
-                arguments["duration"] = int(round(duration_sec))
-            if fps > 0:
-                arguments["fps"] = int(fps)
-            if width > 0 and height > 0:
-                # ltx-video-v095 accepts preset labels instead of WxH.
-                if "ltx-video-v095" in self.model:
-                    arguments["resolution"] = "480p" if int(height) <= 480 else "720p"
-                else:
-                    arguments["resolution"] = f"{int(width)}x{int(height)}"
-
-            if len(image_data_urls) > 1:
-                logger.info(
-                    "[fal.ai] Using multi-keyframe conditioning for shot=%s (%d anchors)",
-                    shot_id,
-                    len(image_data_urls),
-                )
-                arguments["image_urls"] = image_data_urls
-                result = await self._submit(arguments)
+        # Keep common generation knobs optional to maximize model compatibility.
+        if duration_sec > 0:
+            arguments["duration"] = int(round(duration_sec))
+        if fps > 0:
+            arguments["fps"] = int(fps)
+        if width > 0 and height > 0:
+            # ltx-video-v095 accepts preset labels instead of WxH.
+            if "ltx-video-v095" in self.model:
+                arguments["resolution"] = "480p" if int(height) <= 480 else "720p"
             else:
-                if image_data_urls:
-                    arguments["image_url"] = image_data_urls[0]
-                result = await self._submit(arguments)
+                arguments["resolution"] = f"{int(width)}x{int(height)}"
 
-        video_url = self._extract_video_url(result)
-        return await self._download_binary(video_url)
+        if len(image_data_urls) > 1:
+            logger.info(
+                "[fal.ai] Using multi-keyframe conditioning for shot=%s (%d anchors)",
+                shot_id,
+                len(image_data_urls),
+            )
+            arguments["image_urls"] = image_data_urls
+        elif image_data_urls:
+            arguments["image_url"] = image_data_urls[0]
 
-    async def _submit(self, arguments: dict[str, Any]) -> dict[str, Any]:
-        return await fal_subscribe(self._api_key, self.model, arguments)
-
-    async def _download_binary(self, url: str) -> bytes:
-        return await http_download_bytes(self.http, url)
-
-    @staticmethod
-    def _extract_video_url(result: dict[str, Any]) -> str:
-        video_obj = result.get("video")
-        if isinstance(video_obj, dict):
-            url = video_obj.get("url")
-            if isinstance(url, str) and url:
-                return url
-
-        videos = result.get("videos")
-        if isinstance(videos, list) and videos:
-            first = videos[0]
-            if isinstance(first, dict):
-                url = first.get("url")
-                if isinstance(url, str) and url:
-                    return url
-
-        direct_url = result.get("video_url") or result.get("url")
-        if isinstance(direct_url, str) and direct_url:
-            return direct_url
-
-        raise RuntimeError(f"No video URL found in fal.ai response keys={list(result.keys())}")
+        return arguments
 
 
-def _wavespeed_duration_int(duration_sec: float) -> int:
-    """Many Seedance-style endpoints accept 5 or 10 second clips."""
-    return 10 if float(duration_sec) > 5.5 else 5
-
-
-class WavespeedVideoService(VideoService):
+class WavespeedVideoService(VideoService, LazyHttpxClientMixin):
     """Video generation via WaveSpeed.ai (UniVA-compatible T2V / I2V endpoints)."""
 
     def __init__(
@@ -420,15 +434,10 @@ class WavespeedVideoService(VideoService):
         self.poll_interval_sec = poll_interval_sec
         self._http: httpx.AsyncClient | None = None
 
-    @property
-    def http(self) -> httpx.AsyncClient:
-        if self._http is None or self._http.is_closed:
-            self._http = httpx.AsyncClient(timeout=self.timeout)
-        return self._http
-
-    async def close(self) -> None:
-        if self._http and not self._http.is_closed:
-            await self._http.aclose()
+    @staticmethod
+    def _duration_int(duration_sec: float) -> int:
+        """Many Seedance-style endpoints accept 5 or 10 second clips."""
+        return 10 if float(duration_sec) > 5.5 else 5
 
     async def generate_clip(
         self,
@@ -443,7 +452,7 @@ class WavespeedVideoService(VideoService):
         **kwargs: Any,
     ) -> bytes:
         del fps, width, height  # WaveSpeed payload uses fixed profile per model
-        dur = _wavespeed_duration_int(duration_sec if duration_sec > 0 else 5.0)
+        dur = self._duration_int(duration_sec if duration_sec > 0 else 5.0)
         logger.info(
             "[wavespeed] Generating video shot=%s provider=%s t2v=%s i2v=%s",
             shot_id,

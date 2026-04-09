@@ -1,13 +1,38 @@
-"""Shared helpers for fal.ai-backed media services (subscribe + HTTP download)."""
+"""Shared helpers for fal.ai-backed media services (subscribe + HTTP download).
+
+Also hosts a small ``LazyHttpxClientMixin`` that media services use to share
+the same lazy-init / re-open / close lifecycle for an ``httpx.AsyncClient``.
+"""
 
 from __future__ import annotations
 
 import asyncio
 import os
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional
 
 import httpx
+
+
+class LazyHttpxClientMixin:
+    """Mixin providing a lazily-created ``httpx.AsyncClient``.
+
+    Hosts must set ``self.timeout: float`` and initialise
+    ``self._http: httpx.AsyncClient | None = None`` in ``__init__``.
+    """
+
+    timeout: float
+    _http: Optional[httpx.AsyncClient]
+
+    @property
+    def http(self) -> httpx.AsyncClient:
+        if self._http is None or self._http.is_closed:
+            self._http = httpx.AsyncClient(timeout=self.timeout)
+        return self._http
+
+    async def close(self) -> None:
+        if self._http is not None and not self._http.is_closed:
+            await self._http.aclose()
 
 _FAL_ENV_MERGED = False
 
@@ -77,3 +102,49 @@ async def http_download_bytes(client: httpx.AsyncClient, url: str) -> bytes:
     resp = await client.get(url)
     resp.raise_for_status()
     return resp.content
+
+
+def extract_fal_media_url(result: dict[str, Any], *, media_type: str) -> str:
+    """Extract a media URL from a fal.ai response.
+
+    fal.ai endpoints expose the generated artifact under a few different
+    shapes depending on model and modality. Tries them in this order:
+
+    1. ``result["<media>s"]``: list of dicts with ``url`` (plural form
+       used by multi-output image/video endpoints)
+    2. ``result["<media>"]``: single dict with ``url`` (most video/audio
+       endpoints)
+    3. ``result["<media>_file"]``: dict with ``url`` (used by some fal
+       TTS endpoints — only meaningful for audio, harmless otherwise)
+    4. ``result["<media>_url"]`` or ``result["url"]``: bare string URL
+
+    Raises ``RuntimeError`` listing the response keys if nothing matches.
+    """
+    plural = f"{media_type}s"
+    items = result.get(plural)
+    if isinstance(items, list) and items:
+        first = items[0]
+        if isinstance(first, dict):
+            url = first.get("url")
+            if isinstance(url, str) and url:
+                return url
+
+    obj = result.get(media_type)
+    if isinstance(obj, dict):
+        url = obj.get("url")
+        if isinstance(url, str) and url:
+            return url
+
+    file_obj = result.get(f"{media_type}_file")
+    if isinstance(file_obj, dict):
+        url = file_obj.get("url")
+        if isinstance(url, str) and url:
+            return url
+
+    direct_url = result.get(f"{media_type}_url") or result.get("url")
+    if isinstance(direct_url, str) and direct_url:
+        return direct_url
+
+    raise RuntimeError(
+        f"No {media_type} URL found in fal.ai response keys={list(result.keys())}"
+    )

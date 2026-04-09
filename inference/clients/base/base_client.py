@@ -89,7 +89,6 @@ class BaseLLMClient(ABC):
         self._api_key = api_key
         self._base_url = base_url
         self.model_registry = ModelRegistry()
-        self.config_path = config_path
         if config_path:
             self._load_config(config_path)
 

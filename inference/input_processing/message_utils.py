@@ -206,8 +206,3 @@ class InputUtils:
         image_tokens = len(images) * 170
 
         return text_tokens + image_tokens
-
-
-# Backward-compatible aliases kept for existing imports/usages.
-MessageUtils = InputUtils
-MultimodalUtils = InputUtils

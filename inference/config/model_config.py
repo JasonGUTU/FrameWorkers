@@ -269,42 +269,6 @@ class ModelRegistry:
                 if info.provider == provider
             ]
         return list(self._models.keys())
-    
-    def list_models_by_provider(self) -> Dict[str, List[str]]:
-        """
-        List all models grouped by provider
-        
-        Returns:
-            Dictionary mapping provider to list of model IDs
-        """
-        result: Dict[str, List[str]] = {}
-        for model_id, info in self._models.items():
-            if info.provider not in result:
-                result[info.provider] = []
-            result[info.provider].append(model_id)
-        return result
-    
-    def get_all_models_info(self) -> Dict[str, Dict[str, Any]]:
-        """
-        Get information about all registered models
-        
-        Returns:
-            Dictionary mapping model_id to model information
-        """
-        return {
-            model_id: {
-                "name": info.name,
-                "provider": info.provider,
-                "model_id": info.model_id,
-                "supports_streaming": info.supports_streaming,
-                "supports_multimodal": info.supports_multimodal,
-                "max_tokens": info.max_tokens,
-                "context_window": info.context_window,
-                "description": info.description,
-                "custom_config": info.custom_config,
-            }
-            for model_id, info in self._models.items()
-        }
 
 
 # Global registry instance

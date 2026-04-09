@@ -51,7 +51,7 @@ FrameWorkers/
 ├── director_nostack/        # 备选 director：无 task stack，merge_session_goal 合并消息+memory+execution 选 sub-agent
 ├── inference/               # LLM 客户端 + 多模态生成（独立库）
 │   ├── clients/             # base/ + implementations/（default / gpt5 / custom_model）
-│   ├── input_processing/    # ImageUtils / MessageUtils（含 MultimodalUtils 别名）
+│   ├── input_processing/    # ImageUtils / InputUtils（多模态消息构造）
 │   ├── generation/          # image / video / audio 注册表与 Service；fal_helpers 共享 fal.ai 后端
 │   └── MODELS.md            # 可用模型清单（保留，给人查）
 ├── interface/               # Vue 3 + Vite 前端（聊天 / 任务栈监控）
