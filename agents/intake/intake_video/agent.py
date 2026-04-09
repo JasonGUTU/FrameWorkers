@@ -31,7 +31,7 @@ class IntakeVideoAgent(BaseAgent[IntakeVideoInput, IntakeVideoOutput]):
         skeleton.content.visual_summary = summary
         return skeleton
 
-    def build_skeleton(self, input_data: IntakeVideoInput) -> IntakeVideoOutput | None:
+    def build_skeleton(self, input_data: IntakeVideoInput) -> IntakeVideoOutput:
         skeleton = IntakeVideoOutput()
         skeleton.content = IntakeVideoContent(
             visual_summary="",
@@ -44,3 +44,21 @@ class IntakeVideoAgent(BaseAgent[IntakeVideoInput, IntakeVideoOutput]):
             scope="global",
         )
         return skeleton
+
+    async def generate(
+        self,
+        input_data: IntakeVideoInput,
+        *,
+        rework_notes: str = "",
+    ) -> IntakeVideoOutput:
+        """Build the skeleton, ask the LLM to fill ``visual_summary`` via
+        a one-shot multimodal call. NOTE: stub — relies on a multimodal
+        video LLM endpoint that may not be wired up.
+        """
+        skeleton = self.build_skeleton(input_data)
+        system = self.system_prompt()
+        user = self.build_user_prompt(input_data)
+        if rework_notes:
+            user += self._rework_section(rework_notes)
+        creative = await self.llm.chat_json(system, user)
+        return self.fill_creative(skeleton, creative)

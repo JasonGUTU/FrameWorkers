@@ -13,7 +13,7 @@ from .labels import INPUT_LABEL_STORYBOARD
 from .schema import UnivaKeyFrameInput
 from .evaluator import UnivaKeyFrameEvaluator
 from .materializer import UnivaKeyFrameMaterializer
-from inference.generation.image_generators.service import FalImageService
+from inference.generation import select_image_service
 
 
 def build_input(
@@ -47,7 +47,7 @@ DESCRIPTOR = SubAgentDescriptor(
     evaluator_factory=UnivaKeyFrameEvaluator,
     build_input=build_input,
     service_factories={
-        "image_service": lambda ctx: FalImageService(),
+        "image_service": lambda ctx: select_image_service(),
     },
     materializer_factory=materializer_factory,
     input_needs_description=(

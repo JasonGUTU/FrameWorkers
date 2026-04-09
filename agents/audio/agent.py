@@ -42,9 +42,24 @@ class AudioAgent(BaseAgent[AudioAgentInput, AudioAgentOutput]):
     # Skeleton-first mode
     # ------------------------------------------------------------------
 
+    async def generate(
+        self,
+        input_data: AudioAgentInput,
+        *,
+        rework_notes: str = "",
+    ) -> AudioAgentOutput:
+        """Build the deterministic skeleton from screenplay + final video,
+        then ask the LLM to fill the music_mood / ambience_description
+        creative fields per scene.
+        """
+        skeleton = self.build_skeleton(input_data)
+        output = await self._llm_fill_creative(input_data, skeleton, rework_notes)
+        self.recompute_metrics(output)
+        return output
+
     def build_skeleton(
         self, input_data: AudioAgentInput
-    ) -> AudioAgentOutput | None:
+    ) -> AudioAgentOutput:
         """Pre-build the audio package from screenplay + video.
 
         Narration text and speaker are copied from screenplay shots whose

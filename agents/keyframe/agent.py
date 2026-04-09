@@ -625,17 +625,21 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
     # Parallel skeleton mode (override base class single-call approach)
     # ------------------------------------------------------------------
 
-    async def _run_skeleton_mode(
+    async def generate(
         self,
         input_data: KeyFrameAgentInput,
-        skeleton: KeyFrameAgentOutput,
-        rework_notes: str,
+        *,
+        rework_notes: str = "",
     ) -> KeyFrameAgentOutput:
-        """Fill creative fields via parallel LLM calls (1 global + N scenes).
+        """Build the skeleton from the screenplay, then fill creative fields
+        via PARALLEL LLM calls (1 for global anchors + 1 per scene).
 
-        Overrides ``BaseAgent._run_skeleton_mode`` to avoid a single massive
-        LLM call that would time out.
+        Custom flow because the default ``_llm_fill_creative`` helper does
+        a single batched LLM call, which would either time out or produce
+        a worse global+per-scene mix when both layers are jammed into one
+        prompt.
         """
+        skeleton = self.build_skeleton(input_data)
         sp_content = input_data.screenplay.get("content", {})
         sp_scenes = sp_content.get("scenes", [])
         system = self.system_prompt()
@@ -692,6 +696,7 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
         for skel_scene, sc_creative in zip(skeleton.content.scenes, scene_creatives):
             self._fill_scene(skel_scene, sc_creative)
 
+        self.recompute_metrics(skeleton)
         return skeleton
 
     # ------------------------------------------------------------------

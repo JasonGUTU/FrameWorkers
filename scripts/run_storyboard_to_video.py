@@ -23,9 +23,17 @@ import argparse
 import asyncio
 import json
 import logging
+import os
 import sys
 from pathlib import Path
 from typing import Any
+
+# This is an explicit "produce a real video" entry point — opt into real
+# fal.ai backends before any descriptor's service_factories run. The
+# default for the assistant pipeline is mocks-on (see
+# ``inference.generation.select_*_service``); this script's whole purpose
+# is the opposite, so we flip the env var unless the caller already set it.
+os.environ.setdefault("FW_USE_REAL_MEDIA_GEN", "1")
 
 _FRAME_ROOT = Path(__file__).resolve().parents[1]
 if str(_FRAME_ROOT) not in sys.path:

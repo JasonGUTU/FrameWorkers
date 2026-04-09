@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import os
 from typing import Any
 
 from pydantic import BaseModel
@@ -19,7 +18,7 @@ from .labels import (
 from .schema import VideoAgentInput
 from .evaluator import VideoEvaluator
 from .materializer import VideoMaterializer
-from inference.generation.video_generators.service import FalVideoService, WavespeedVideoService
+from inference.generation import select_video_service
 
 
 def build_input(
@@ -65,18 +64,6 @@ def materializer_factory(services: dict[str, Any]) -> VideoMaterializer:
     return VideoMaterializer(video_service=services["video_service"])
 
 
-def _video_service_factory(_ctx: dict[str, Any] | None = None) -> FalVideoService | WavespeedVideoService:
-    """Select pipeline video backend.
-
-    - ``FW_VIDEO_BACKEND=fal`` (default): ``FalVideoService``
-    - ``FW_VIDEO_BACKEND=wavespeed``: ``WavespeedVideoService``
-    """
-    backend = os.getenv("FW_VIDEO_BACKEND", "fal").strip().lower()
-    if backend in ("wavespeed", "wave_speed", "ws"):
-        return WavespeedVideoService()
-    return FalVideoService()
-
-
 CATALOG_ENTRY = (
     "VideoAgent\n"
     "  - Input: screenplay + per-shot keyframe images\n"
@@ -91,7 +78,7 @@ DESCRIPTOR = SubAgentDescriptor(
     evaluator_factory=VideoEvaluator,
     build_input=build_input,
     service_factories={
-        "video_service": lambda ctx: _video_service_factory(ctx),
+        "video_service": lambda ctx: select_video_service(),
     },
     materializer_factory=materializer_factory,
     input_needs_description=(

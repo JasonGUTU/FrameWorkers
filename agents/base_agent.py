@@ -25,7 +25,6 @@ Skeleton-first mode (opt-in per agent):
 
 from __future__ import annotations
 
-import json
 import logging
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, Callable, Generic, Optional, TypeVar, get_args
@@ -123,7 +122,9 @@ class BaseAgent(Generic[InputT, OutputT]):
 
     Each agent is a **self-contained execution unit**.  ``run()`` orchestrates:
 
-      1. Generation (LLM call via skeleton or legacy mode)
+      1. ``generate()`` — agent-owned generation flow (zero, one, or many
+         LLM calls; skeleton building; creative merging — entirely up to
+         the subclass).
       2. L1+L2 evaluation (structural + creative) via ``self.evaluator``
       3. Materialization via ``self.materializer`` (media agents only)
       4. L3 asset evaluation (post-materialization, media agents only)
@@ -135,8 +136,21 @@ class BaseAgent(Generic[InputT, OutputT]):
     lightweight environments without quality infrastructure.
 
     Subclasses must implement:
-      - system_prompt(): returns the system prompt string
-      - build_user_prompt(input_data): returns the user prompt string
+      - generate(input_data, *, rework_notes=""): produce the typed output.
+        Each subclass owns its generation logic — there is NO framework-
+        level dispatch between "skeleton mode" and "legacy mode" anymore.
+        Subclasses are free to call zero LLM calls (LLM-free deterministic
+        skeleton), one LLM call (full generation or creative-only fill),
+        or compose helpers in any other way.
+
+    Optional helpers (subclasses may use them from generate()):
+      - ``_llm_fill_full(input_data, rework_notes)``: full-output LLM call.
+        Requires the subclass to also implement ``build_user_prompt`` and
+        ``system_prompt``.
+      - ``_llm_fill_creative(input_data, skeleton, rework_notes)``: LLM
+        fills only creative fields, merged into a pre-built skeleton.
+        Requires the subclass to also implement ``build_creative_prompt``,
+        ``fill_creative``, and ``system_prompt``.
 
     Optional overrides:
       - parse_output(raw_json): default uses OutputT.model_validate()
@@ -158,20 +172,13 @@ class BaseAgent(Generic[InputT, OutputT]):
         return type(self).__name__
 
     def system_prompt(self) -> str:
-        """Return the full system prompt for this agent.
+        """Return the full system prompt for any LLM calls this agent makes.
 
-        Override in agents that use legacy mode or whose skeleton mode
-        needs a specific system prompt for the creative-fill LLM call.
+        Required only when ``generate()`` calls ``_llm_fill_full`` or
+        ``_llm_fill_creative``. LLM-free agents (e.g. VideoAgent) don't
+        need to override this.
         """
         raise NotImplementedError(f"{self.agent_name}.system_prompt()")
-
-    def build_user_prompt(self, input_data: InputT) -> str:
-        """Build the user prompt from structured input.
-
-        Only needed by agents that use legacy mode (StoryAgent) or
-        structuring mode (ScreenplayAgent).
-        """
-        raise NotImplementedError(f"{self.agent_name}.build_user_prompt()")
 
     def parse_output(self, raw: dict[str, Any]) -> OutputT:
         """Validate raw JSON dict and return typed output model.
@@ -197,71 +204,109 @@ class BaseAgent(Generic[InputT, OutputT]):
         # default: no recomputation (agents without metrics can skip)
 
     # ------------------------------------------------------------------
-    # Skeleton-first mode (opt-in per agent)
+    # Generation contract — subclasses MUST implement generate()
     # ------------------------------------------------------------------
 
-    @property
-    def skeleton_is_complete(self) -> bool:
-        """If True, ``build_skeleton`` returns a fully complete output.
+    async def generate(
+        self,
+        input_data: InputT,
+        *,
+        rework_notes: str = "",
+    ) -> OutputT:
+        """Produce the agent's typed output.
 
-        When True the agent skips the LLM call entirely — no creative
-        prompt is built and no ``fill_creative`` merge is needed.  Use
-        this for agents whose output contains zero creative fields
-        (e.g. VideoAgent).
-
-        Default is ``False``; override in LLM-free agents.
-        """
-        return False
-
-    def build_skeleton(self, input_data: InputT) -> OutputT | None:
-        """Pre-build structural output from shared assets.
-
-        Override in agents where the output structure (IDs, order, source
-        refs, placeholders) is fully deterministic from shared assets.  The
-        returned skeleton has all structural fields filled and creative
-        fields left as empty strings.
-
-        Returns ``None`` (default) to use legacy full-JSON mode.
-        """
-        return None
-
-    def build_creative_prompt(
-        self, input_data: InputT, skeleton: OutputT
-    ) -> str:
-        """Build a prompt asking the LLM to fill ONLY creative fields.
-
-        Called only when ``build_skeleton()`` returns non-None.
-        Must be overridden by agents that use skeleton mode.
+        Each subclass owns its generation flow. There is no framework-
+        level dispatch between "skeleton mode" / "legacy mode" anymore;
+        subclasses pick how to generate and may call any of the helpers
+        below or do something custom.
 
         Args:
-            input_data: The agent's typed input (for shared-asset context).
-            skeleton: The pre-built structural skeleton.
+            input_data: The agent's typed input.
+            rework_notes: Optional retry hint from a failed evaluation
+                          attempt; subclasses may incorporate it into the
+                          LLM prompt to address feedback.
 
         Returns:
-            A user-prompt string instructing the LLM to return a compact
-            JSON containing only IDs (for matching) and creative values.
+            A fully populated typed output. Subclasses that have metrics
+            fields should call ``self.recompute_metrics(output)`` before
+            returning so derived counts stay consistent.
         """
-        raise NotImplementedError(
-            f"{self.agent_name} uses skeleton mode but does not implement "
-            f"build_creative_prompt()"
+        raise NotImplementedError(f"{self.agent_name}.generate()")
+
+    # ------------------------------------------------------------------
+    # Optional generation helpers — subclasses may use these from generate()
+    # ------------------------------------------------------------------
+
+    async def _llm_fill_full(
+        self,
+        input_data: InputT,
+        rework_notes: str = "",
+    ) -> OutputT:
+        """Helper: ask the LLM to generate the entire output JSON.
+
+        Subclasses that use this must also implement
+        ``system_prompt()`` and ``build_user_prompt(input_data)``.
+        Returned output is parsed via ``parse_output()`` but
+        ``recompute_metrics`` is NOT called — the caller (``generate()``)
+        decides when (and whether) to recompute.
+        """
+        system = self.system_prompt()
+        user = self.build_user_prompt(input_data)
+        if rework_notes:
+            user += self._rework_section(rework_notes)
+            logger.info(
+                "[%s] Rework notes injected (%d chars)",
+                self.agent_name,
+                len(rework_notes),
+            )
+        logger.debug("[%s] System prompt length: %d", self.agent_name, len(system))
+        logger.debug("[%s] User prompt length: %d", self.agent_name, len(user))
+        raw_json = await self.llm.chat_json(system, user)
+        logger.info("[%s] Received LLM response, parsing …", self.agent_name)
+        # Strip metrics before parsing — LLM may echo "<SYSTEM_COMPUTED>"
+        # placeholders which fail Pydantic type validation.  Defaults (0/0.0)
+        # are safe because subclasses call recompute_metrics afterwards.
+        if "metrics" in raw_json:
+            raw_json["metrics"] = {}
+        return self.parse_output(raw_json)
+
+    async def _llm_fill_creative(
+        self,
+        input_data: InputT,
+        skeleton: OutputT,
+        rework_notes: str = "",
+    ) -> OutputT:
+        """Helper: ask the LLM to fill only creative fields, merge into skeleton.
+
+        Subclasses that use this must also implement ``system_prompt()``,
+        ``build_creative_prompt(input_data, skeleton)``, and
+        ``fill_creative(skeleton, creative_dict)``.
+        """
+        system = self.system_prompt()
+        user = self.build_creative_prompt(input_data, skeleton)
+        if rework_notes:
+            user += self._rework_section(rework_notes)
+            logger.info(
+                "[%s] Rework notes injected (%d chars)",
+                self.agent_name,
+                len(rework_notes),
+            )
+        logger.debug("[%s] System prompt length: %d", self.agent_name, len(system))
+        logger.debug("[%s] User prompt length: %d", self.agent_name, len(user))
+        creative_json = await self.llm.chat_json(system, user)
+        logger.info(
+            "[%s] Received creative-only LLM response, merging …",
+            self.agent_name,
         )
+        return self.fill_creative(skeleton, creative_json)
 
-    def fill_creative(self, skeleton: OutputT, creative: dict) -> OutputT:
-        """Merge LLM creative output into the pre-built skeleton.
-
-        Called only when ``build_skeleton()`` returns non-None.
-        Must be overridden by agents that use skeleton mode.
-
-        Args:
-            skeleton: The pre-built structural skeleton (mutated in-place).
-            creative: The compact creative JSON returned by the LLM.
-
-        Returns:
-            The skeleton with creative fields populated.
-        """
-        raise NotImplementedError(
-            f"{self.agent_name} uses skeleton mode but does not implement "
-            f"fill_creative()"
+    @staticmethod
+    def _rework_section(rework_notes: str) -> str:
+        return (
+            "\n\n--- REWORK INSTRUCTIONS (from quality review) ---\n"
+            f"{rework_notes}\n"
+            "--- END REWORK INSTRUCTIONS ---\n"
+            "Apply the above fixes while preserving everything else."
         )
 
     # ------------------------------------------------------------------
@@ -283,7 +328,8 @@ class BaseAgent(Generic[InputT, OutputT]):
         ``ExecutionResult``.
 
         Quality gate flow per attempt:
-          1. ``_generate()`` — LLM call (skeleton / legacy mode)
+          1. ``self.generate()`` — subclass-owned generation (any mix
+             of LLM calls, deterministic skeleton building, etc.)
           2. ``evaluator.evaluate()`` — L1 structural + L2 creative
           3. ``materializer.materialize()`` — binary asset generation
              (only if materializer is set and ``materialize_ctx`` provided)
@@ -321,8 +367,8 @@ class BaseAgent(Generic[InputT, OutputT]):
             media_assets = []
             asset_dict = None
 
-            # --- Step 1: Generate (LLM call) ---
-            output = await self._generate(input_data, rework_notes=rework_notes)
+            # --- Step 1: Generate (subclass-owned flow) ---
+            output = await self.generate(input_data, rework_notes=rework_notes)
 
             # --- Step 2: L1+L2 evaluation (structural + creative) ---
             if self.evaluator is not None:
@@ -439,128 +485,6 @@ class BaseAgent(Generic[InputT, OutputT]):
             passed=False, attempts=max_retries,
             media_assets=media_assets, asset_dict=asset_dict,
         )
-
-    # ------------------------------------------------------------------
-    # Generation (internal — the old run() logic)
-    # ------------------------------------------------------------------
-
-    async def _generate(
-        self,
-        input_data: InputT,
-        *,
-        rework_notes: str = "",
-    ) -> OutputT:
-        """Generate output: build prompts, call LLM, parse and return.
-
-        This is the pure generation step (no evaluation or retry).
-        Supports three modes:
-          - **LLM-free mode** (skeleton + ``skeleton_is_complete``):
-            No LLM call — skeleton IS the final output.
-          - **Skeleton mode** (skeleton, not complete):
-            LLM fills only creative fields.
-          - **Legacy mode** (default): LLM generates full JSON.
-        """
-        logger.info("[%s] Generating …", self.agent_name)
-
-        skeleton = self.build_skeleton(input_data)
-
-        if skeleton is not None and self.skeleton_is_complete:
-            logger.info(
-                "[%s] Using LLM-free skeleton mode (no creative fields)",
-                self.agent_name,
-            )
-            output = skeleton
-        elif skeleton is not None:
-            logger.info("[%s] Using skeleton mode", self.agent_name)
-            output = await self._run_skeleton_mode(
-                input_data, skeleton, rework_notes
-            )
-        else:
-            output = await self._run_legacy_mode(input_data, rework_notes)
-
-        self.recompute_metrics(output)
-        logger.info("[%s] Generation complete.", self.agent_name)
-        return output
-
-    async def _run_skeleton_mode(
-        self,
-        input_data: InputT,
-        skeleton: OutputT,
-        rework_notes: str,
-    ) -> OutputT:
-        """Skeleton-first execution: LLM fills only creative fields."""
-        system = self.system_prompt()
-        user = self.build_creative_prompt(input_data, skeleton)
-
-        if rework_notes:
-            user += (
-                "\n\n--- REWORK INSTRUCTIONS (from quality review) ---\n"
-                f"{rework_notes}\n"
-                "--- END REWORK INSTRUCTIONS ---\n"
-                "Apply the above fixes while preserving everything else."
-            )
-            logger.info(
-                "[%s] Rework notes injected (%d chars)",
-                self.agent_name,
-                len(rework_notes),
-            )
-
-        logger.debug("[%s] System prompt length: %d", self.agent_name, len(system))
-        logger.debug("[%s] User prompt length: %d", self.agent_name, len(user))
-
-        creative_json = await self.llm.chat_json(system, user)
-        logger.info(
-            "[%s] Received creative-only LLM response, merging …",
-            self.agent_name,
-        )
-
-        output = self.fill_creative(skeleton, creative_json)
-        return output
-
-    async def _run_legacy_mode(
-        self,
-        input_data: InputT,
-        rework_notes: str,
-    ) -> OutputT:
-        """Legacy execution: LLM generates the full JSON."""
-        system = self.system_prompt()
-        user = self.build_user_prompt(input_data)
-
-        if rework_notes:
-            user += (
-                "\n\n--- REWORK INSTRUCTIONS (from quality review) ---\n"
-                f"{rework_notes}\n"
-                "--- END REWORK INSTRUCTIONS ---\n"
-                "Apply the above fixes while preserving everything else."
-            )
-            logger.info(
-                "[%s] Rework notes injected (%d chars)",
-                self.agent_name,
-                len(rework_notes),
-            )
-
-        logger.debug("[%s] System prompt length: %d", self.agent_name, len(system))
-        logger.debug("[%s] User prompt length: %d", self.agent_name, len(user))
-
-        raw_json = await self.llm.chat_json(system, user)
-        logger.info("[%s] Received LLM response, parsing …", self.agent_name)
-        logger.debug(
-            "[%s] Raw JSON keys: %s", self.agent_name, list(raw_json.keys())
-        )
-        logger.debug(
-            "[%s] Raw JSON (first 1500): %s",
-            self.agent_name,
-            json.dumps(raw_json, ensure_ascii=False)[:1500],
-        )
-
-        # Strip metrics before parsing — LLM may echo "<SYSTEM_COMPUTED>"
-        # placeholders which fail Pydantic type validation.  Defaults (0/0.0)
-        # are safe because recompute_metrics overwrites immediately after.
-        if "metrics" in raw_json:
-            raw_json["metrics"] = {}
-
-        output = self.parse_output(raw_json)
-        return output
 
     # ------------------------------------------------------------------
     # Helpers

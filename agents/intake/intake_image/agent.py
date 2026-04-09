@@ -6,10 +6,10 @@ ready for downstream content agents to discover via their image labels.
 Implementation note
 -------------------
 The vision LLM call cannot go through ``LLMClient.chat_json`` (text-only
-JSON helper). This agent overrides ``_generate`` to build a multimodal
-message via ``InputUtils.create_multimodal_message`` and dispatches it
-through ``LLMClient.acall``, which forwards the OpenAI-style multimodal
-content array to the underlying provider.
+JSON helper). This agent implements ``generate`` directly to build a
+multimodal message via ``InputUtils.create_multimodal_message`` and
+dispatch it through ``LLMClient.acall``, which forwards the OpenAI-style
+multimodal content array to the underlying provider.
 """
 
 from __future__ import annotations
@@ -58,7 +58,7 @@ class IntakeImageAgent(BaseAgent[IntakeImageInput, IntakeImageOutput]):
             "Return strict JSON: {\"visual_description\": \"...\"}"
         )
 
-    async def _generate(
+    async def generate(
         self,
         input_data: IntakeImageInput,
         *,

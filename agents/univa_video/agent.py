@@ -45,9 +45,16 @@ def _compose_video_prompt(shot: dict) -> str:
 class UnivaVideoAgent(BaseAgent[UnivaVideoInput, UnivaVideoOutput]):
     """LLM-free skeleton agent: deterministic per-shot prompts, no refinement."""
 
-    @property
-    def skeleton_is_complete(self) -> bool:
-        return True
+    async def generate(
+        self,
+        input_data: UnivaVideoInput,
+        *,
+        rework_notes: str = "",
+    ) -> UnivaVideoOutput:
+        """LLM-free: deterministic per-shot prompts from the storyboard."""
+        output = self.build_skeleton(input_data)
+        self.recompute_metrics(output)
+        return output
 
     def build_skeleton(self, input_data: UnivaVideoInput) -> UnivaVideoOutput:
         shots = input_data.storyboard.get("shots", [])

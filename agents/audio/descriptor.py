@@ -13,7 +13,7 @@ from .labels import INPUT_LABEL_FINAL_VIDEO, INPUT_LABEL_SCREENPLAY
 from .schema import AudioAgentInput
 from .evaluator import AudioEvaluator
 from .materializer import AudioMaterializer
-from inference.generation.audio_generators.service import FalAudioService
+from inference.generation import select_audio_service
 
 
 def build_input(
@@ -52,7 +52,7 @@ DESCRIPTOR = SubAgentDescriptor(
     evaluator_factory=AudioEvaluator,
     build_input=build_input,
     service_factories={
-        "audio_service": lambda ctx: FalAudioService(),
+        "audio_service": lambda ctx: select_audio_service(),
     },
     materializer_factory=materializer_factory,
     input_needs_description=(

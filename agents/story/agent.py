@@ -137,6 +137,17 @@ class StoryAgent(BaseAgent[StoryAgentInput, StoryAgentOutput]):
             "Return JSON only."
         )
 
+    async def generate(
+        self,
+        input_data: StoryAgentInput,
+        *,
+        rework_notes: str = "",
+    ) -> StoryAgentOutput:
+        """One LLM call generates the full story blueprint from the brief."""
+        output = await self._llm_fill_full(input_data, rework_notes)
+        self.recompute_metrics(output)
+        return output
+
     def recompute_metrics(self, output: StoryAgentOutput) -> None:
         c = output.content
         self._normalize_order(c.story_arc)

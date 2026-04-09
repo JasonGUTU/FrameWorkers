@@ -6,11 +6,11 @@ artifact, so downstream agents see no difference.
 
 Implementation note
 -------------------
-The two modes do not fit cleanly into the BaseAgent skeleton/legacy split,
-so this agent overrides ``_generate`` directly. Short text returns a
-fully-formed output and skips the LLM entirely; long text issues one
-``chat_json`` call to produce a one-sentence summary, then synthesizes
-the final caption.
+This agent implements ``generate`` directly (rather than composing the
+BaseAgent helpers) because the short / long branches do not fit a single
+skeleton-or-LLM pattern. Short text returns a fully-formed output and
+skips the LLM entirely; long text issues one ``chat_json`` call to
+produce a one-sentence summary, then synthesizes the final caption.
 """
 
 from __future__ import annotations
@@ -52,7 +52,7 @@ class IntakeTextAgent(BaseAgent[IntakeTextInput, IntakeTextOutput]):
     def build_user_prompt(self, input_data: IntakeTextInput) -> str:
         """Build the long-text summarization prompt.
 
-        Only used in the long-text branch of ``_generate``. Reads the file
+        Only used in the long-text branch of ``generate``. Reads the file
         contents from disk so that the LLM sees the verbatim user text.
         """
         text = self._read_text_file(input_data.raw_text_path)
@@ -65,7 +65,7 @@ class IntakeTextAgent(BaseAgent[IntakeTextInput, IntakeTextOutput]):
             "Return strict JSON: {\"summary\": \"...\"}"
         )
 
-    async def _generate(
+    async def generate(
         self,
         input_data: IntakeTextInput,
         *,

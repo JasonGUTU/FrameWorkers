@@ -44,6 +44,17 @@ class UnivaStoryboardAgent(BaseAgent[UnivaStoryboardInput, UnivaStoryboardOutput
     def build_user_prompt(self, input_data: UnivaStoryboardInput) -> str:
         return input_data.user_prompt
 
+    async def generate(
+        self,
+        input_data: UnivaStoryboardInput,
+        *,
+        rework_notes: str = "",
+    ) -> UnivaStoryboardOutput:
+        """One LLM call generates the full storyboard from the user prompt."""
+        output = await self._llm_fill_full(input_data, rework_notes)
+        self.recompute_metrics(output)
+        return output
+
     def recompute_metrics(self, output: UnivaStoryboardOutput) -> None:
         c = output.content
         output.metrics.character_count = len(c.characters)

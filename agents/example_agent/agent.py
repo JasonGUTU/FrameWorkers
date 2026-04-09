@@ -65,3 +65,14 @@ class ExamplePipelineAgent(BaseAgent[ExamplePipelineInput, ExamplePipelineOutput
         """Fix word_count if the LLM got it wrong."""
         if output.content.summary:
             output.content.word_count = len(output.content.summary.split())
+
+    async def generate(
+        self,
+        input_data: ExamplePipelineInput,
+        *,
+        rework_notes: str = "",
+    ) -> ExamplePipelineOutput:
+        """One LLM call generates the full structured summary."""
+        output = await self._llm_fill_full(input_data, rework_notes)
+        self.recompute_metrics(output)
+        return output

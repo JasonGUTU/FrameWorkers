@@ -33,9 +33,21 @@ from .schema import (
 
 class VideoAgent(BaseAgent[VideoAgentInput, VideoAgentOutput]):
 
-    @property
-    def skeleton_is_complete(self) -> bool:
-        return True
+    async def generate(
+        self,
+        input_data: VideoAgentInput,
+        *,
+        rework_notes: str = "",
+    ) -> VideoAgentOutput:
+        """LLM-free: deterministic skeleton from screenplay is the final output.
+
+        VideoAgent's output has zero creative fields — every value is
+        derived from the screenplay structure. ``rework_notes`` are
+        ignored because there is no LLM to give them to.
+        """
+        output = self.build_skeleton(input_data)
+        self.recompute_metrics(output)
+        return output
 
     # ------------------------------------------------------------------
     # Skeleton-first mode (LLM-free — all fields are structural)
@@ -43,7 +55,7 @@ class VideoAgent(BaseAgent[VideoAgentInput, VideoAgentOutput]):
 
     def build_skeleton(
         self, input_data: VideoAgentInput
-    ) -> VideoAgentOutput | None:
+    ) -> VideoAgentOutput:
         """Build the complete video package deterministically from screenplay.
 
         VideoAgent's output has zero creative fields — everything (scene IDs,

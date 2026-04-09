@@ -8,7 +8,8 @@ Stage 3 (per-shot keyframe planning).  Skeleton-first mode:
     matches the original behaviour where each character gets a dedicated,
     full-attention pass through ``character_prompt_refine.txt`` rather than
     being batched.
-  - Materializer: FalImageService generates character images + shot keyframes.
+  - Materializer: image_service (selected by ``select_image_service()``)
+    generates character images + shot keyframes.
 """
 
 from __future__ import annotations
@@ -154,16 +155,17 @@ class UnivaKeyFrameAgent(BaseAgent[UnivaKeyFrameInput, UnivaKeyFrameOutput]):
             )
             return original_description
 
-    async def _generate(
+    async def generate(
         self,
         input_data: UnivaKeyFrameInput,
+        *,
         rework_notes: str = "",
     ) -> UnivaKeyFrameOutput:
-        """Override BaseAgent._generate: build skeleton then per-character LLM refine.
-
-        Custom path because the refinement is one LLM call per character —
-        the default ``build_creative_prompt`` / ``fill_creative`` flow
-        assumes a single batched LLM call.
+        """Build skeleton then refine each character's prompt via a parallel
+        per-character LLM call. Custom flow because UniVA's prompt
+        refinement is one LLM call per character, not a single batched
+        call (which is what the default ``_llm_fill_creative`` helper
+        would do).
         """
         skeleton = self.build_skeleton(input_data)
         if skeleton is None:

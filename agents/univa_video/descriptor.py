@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import os
 from typing import Any
 
 from pydantic import BaseModel
@@ -15,7 +14,7 @@ from .labels import INPUT_LABEL_SHOT_KEYFRAMES, INPUT_LABEL_STORYBOARD
 from .schema import UnivaVideoInput
 from .evaluator import UnivaVideoEvaluator
 from .materializer import UnivaVideoMaterializer
-from inference.generation.video_generators.service import FalVideoService
+from inference.generation import select_video_service
 
 
 def build_input(
@@ -58,14 +57,6 @@ def materializer_factory(services: dict[str, Any]) -> UnivaVideoMaterializer:
     return UnivaVideoMaterializer(video_service=services["video_service"])
 
 
-def _video_service_factory(ctx: Any) -> FalVideoService:
-    backend = os.getenv("FW_VIDEO_BACKEND", "fal").strip().lower()
-    if backend == "fal":
-        return FalVideoService()
-    # Extensible: add other backends here
-    return FalVideoService()
-
-
 CATALOG_ENTRY = (
     "UnivaVideoAgent\n"
     "  - Input: univa_storyboard (shot metadata) + univa_keyframes (per-shot images)\n"
@@ -81,7 +72,7 @@ DESCRIPTOR = SubAgentDescriptor(
     evaluator_factory=UnivaVideoEvaluator,
     build_input=build_input,
     service_factories={
-        "video_service": _video_service_factory,
+        "video_service": lambda ctx: select_video_service(),
     },
     materializer_factory=materializer_factory,
     input_needs_description=(

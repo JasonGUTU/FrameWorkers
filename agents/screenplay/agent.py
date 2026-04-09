@@ -214,6 +214,23 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
 
         return out
 
+    async def generate(
+        self,
+        input_data: ScreenplayAgentInput,
+        *,
+        rework_notes: str = "",
+    ) -> ScreenplayAgentOutput:
+        """True dual mode: skeleton-then-creative-fill if the upstream
+        story has enough structure, otherwise full LLM generation.
+        """
+        skeleton = self.build_skeleton(input_data)
+        if skeleton is not None:
+            output = await self._llm_fill_creative(input_data, skeleton, rework_notes)
+        else:
+            output = await self._llm_fill_full(input_data, rework_notes)
+        self.recompute_metrics(output)
+        return output
+
     def build_skeleton(
         self, input_data: ScreenplayAgentInput
     ) -> ScreenplayAgentOutput | None:

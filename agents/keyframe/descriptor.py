@@ -19,7 +19,7 @@ from ..common_schema import ImageReferenceEntry
 from .schema import KeyFrameAgentInput
 from .evaluator import KeyframeEvaluator
 from .materializer import KeyframeMaterializer
-from inference.generation.image_generators.service import FalImageService
+from inference.generation import select_image_service
 
 
 def _to_image_refs(resolved: dict, label: str) -> list[ImageReferenceEntry]:
@@ -80,7 +80,7 @@ DESCRIPTOR = SubAgentDescriptor(
     evaluator_factory=KeyframeEvaluator,
     build_input=build_input,
     service_factories={
-        "image_service": lambda ctx: FalImageService(),
+        "image_service": lambda ctx: select_image_service(),
     },
     materializer_factory=materializer_factory,
     input_needs_description=(

@@ -182,11 +182,7 @@ class SubAgentDescriptor:
     # Fully-equipped agent factory
     # ------------------------------------------------------------------
 
-    def build_equipped_agent(
-        self,
-        llm: LLMClient,
-        services_override: dict[str, Any] | None = None,
-    ) -> BaseAgent:
+    def build_equipped_agent(self, llm: LLMClient) -> BaseAgent:
         """Create an agent with its evaluator and materializer wired in.
 
         This is the single entry point for constructing a ready-to-run
@@ -194,13 +190,13 @@ class SubAgentDescriptor:
         injected evaluator for quality gate checks and the materializer
         for binary asset generation.
 
+        The descriptor's ``service_factories`` are the single source of
+        truth for which media backend an agent uses; mock-vs-real
+        selection lives inside those factories (see
+        ``inference.generation.select_*_service``), not here.
+
         Args:
-            llm:               Shared LLM client instance.
-            services_override: Optional dict mapping service keys to
-                               pre-created service instances (e.g. for
-                               testing with mock services).  Keys not
-                               present fall back to the descriptor's
-                               ``service_factories``.
+            llm: Shared LLM client instance.
 
         Returns:
             A ``BaseAgent`` subclass instance with ``evaluator`` and
@@ -211,12 +207,10 @@ class SubAgentDescriptor:
 
         if self.materializer_factory is not None:
             ctx: dict[str, Any] = {"llm_client": llm}
-            services: dict[str, Any] = {}
-            for svc_key, svc_factory in self.service_factories.items():
-                if services_override and svc_key in services_override:
-                    services[svc_key] = services_override[svc_key]
-                else:
-                    services[svc_key] = svc_factory(ctx)
+            services: dict[str, Any] = {
+                svc_key: svc_factory(ctx)
+                for svc_key, svc_factory in self.service_factories.items()
+            }
             agent.materializer = self.materializer_factory(services)
 
         return agent
