@@ -3,6 +3,16 @@
 This materializer is a **pure generator** — it calls AudioService to
 produce audio bytes and returns ``list[MediaAsset]``.  It never performs
 file I/O; persistence is handled exclusively by Assistant.
+
+Responsibility boundary
+-----------------------
+The materializer passes semantic fields (``speaker_id``, ``text``,
+``mood``, ``description``) to ``AudioService`` and reads the returned
+``AudioGenerationResult`` for both the clip bytes and the audit
+``resolved_payload`` that goes into each asset's
+``audio_generation_prompt`` slot. The concrete speaker-identifier →
+voice-name mapping and the TTS model string live entirely in the
+service — the materializer never touches model-specific vocabulary.
 """
 
 from __future__ import annotations
@@ -102,28 +112,18 @@ class AudioMaterializer(BaseMaterializer):
 
                 if text:
                     try:
-                        voice = self._speaker_to_voice(speaker)
-                        tts_model = getattr(
-                            self.audio_svc, "tts_model", "tts-1"
+                        result = await self.audio_svc.generate_speech(
+                            text, speaker_id=speaker,
                         )
                         seg["audio_generation_prompt"] = json.dumps(
-                            {
-                                "kind": "tts",
-                                "model": tts_model,
-                                "voice": voice,
-                                "text": text,
-                            },
-                            ensure_ascii=False,
-                        )
-                        audio_bytes = await self.audio_svc.generate_speech(
-                            text, voice=voice
+                            result.resolved_payload, ensure_ascii=False,
                         )
                         ext = audio_asset.get("format", "wav")
                         pending.append(MediaAsset(
-                            sys_id=sys_seg_id, data=audio_bytes,
+                            sys_id=sys_seg_id, data=result.bytes,
                             extension=ext, uri_holder=audio_asset,
                         ))
-                        narration_bytes_list.append(audio_bytes)
+                        narration_bytes_list.append(result.bytes)
                     except Exception as exc:
                         logger.error("TTS failed for segment %s: %s", sys_seg_id, exc)
                         if ctx.report_failure is not None:
@@ -141,18 +141,14 @@ class AudioMaterializer(BaseMaterializer):
             music_bytes: bytes | None = None
             if music_cue:
                 try:
-                    music_cue["audio_generation_prompt"] = json.dumps(
-                        {
-                            "kind": "music",
-                            "mood": music_cue.get("mood", "neutral"),
-                            "scene_id": scene_id,
-                        },
-                        ensure_ascii=False,
-                    )
-                    music_bytes = await self.audio_svc.generate_music(
+                    music_result = await self.audio_svc.generate_music(
                         mood=music_cue.get("mood", "neutral"),
                         scene_id=scene_id,
                     )
+                    music_cue["audio_generation_prompt"] = json.dumps(
+                        music_result.resolved_payload, ensure_ascii=False,
+                    )
+                    music_bytes = music_result.bytes
                     pending.append(MediaAsset(
                         sys_id=sys_music_id, data=music_bytes,
                         extension="wav", uri_holder=music_asset,
@@ -174,18 +170,14 @@ class AudioMaterializer(BaseMaterializer):
             ambience_bytes: bytes | None = None
             if ambience:
                 try:
-                    ambience["audio_generation_prompt"] = json.dumps(
-                        {
-                            "kind": "ambience",
-                            "description": ambience.get("description", ""),
-                            "scene_id": scene_id,
-                        },
-                        ensure_ascii=False,
-                    )
-                    ambience_bytes = await self.audio_svc.generate_ambience(
+                    amb_result = await self.audio_svc.generate_ambience(
                         description=ambience.get("description", ""),
                         scene_id=scene_id,
                     )
+                    ambience["audio_generation_prompt"] = json.dumps(
+                        amb_result.resolved_payload, ensure_ascii=False,
+                    )
+                    ambience_bytes = amb_result.bytes
                     pending.append(MediaAsset(
                         sys_id=sys_amb_id, data=ambience_bytes,
                         extension="wav", uri_holder=amb_asset,
@@ -279,16 +271,3 @@ class AudioMaterializer(BaseMaterializer):
 
         logger.info("All audio tracks materialized for %s", task_id)
         return pending
-
-    @staticmethod
-    def _speaker_to_voice(speaker: str) -> str:
-        """Map a character/speaker name to an OpenAI TTS voice.
-
-        Uses a simple hash-based assignment for consistency — the same
-        speaker always gets the same voice within a pipeline run.
-        """
-        voices = ["alloy", "echo", "fable", "onyx", "nova", "shimmer"]
-        if not speaker:
-            return "alloy"
-        idx = hash(speaker) % len(voices)
-        return voices[idx]

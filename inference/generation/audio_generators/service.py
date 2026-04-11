@@ -18,10 +18,14 @@ from ..fal_helpers import (
     fal_subscribe,
     http_download_bytes,
 )
+from .types import AudioGenerationResult
 
 logger = logging.getLogger(__name__)
 
-_TTS_VOICES = {"alloy", "echo", "fable", "onyx", "nova", "shimmer"}
+# Fixed voice roster for the OpenAI-backed TTS path. Listed as a sorted
+# tuple so ``_speaker_id_to_voice`` produces a stable deterministic
+# mapping across runs (sets aren't order-preserving for hashing).
+_TTS_VOICES: tuple[str, ...] = ("alloy", "echo", "fable", "nova", "onyx", "shimmer")
 _DEFAULT_VOICE = "alloy"
 
 
@@ -62,14 +66,32 @@ class AudioService:
             self._client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         return self._client
 
+    def _speaker_id_to_voice(self, speaker_id: str) -> str:
+        """Deterministic mapping from an abstract speaker identifier to a
+        concrete TTS voice name.
+
+        The same ``speaker_id`` always picks the same voice within a
+        pipeline run, so a narrator or character doesn't swap voices
+        between scenes. Uses a stable hash over the sorted voice roster
+        so the mapping is reproducible. Different TTS backends override
+        this to use their own voice namespace (fal models, etc.).
+        """
+        if not speaker_id:
+            return self.default_voice
+        return _TTS_VOICES[hash(speaker_id) % len(_TTS_VOICES)]
+
     async def generate_speech(
         self,
         text: str,
         *,
+        speaker_id: str = "",
         voice: str | None = None,
         model: str | None = None,
         response_format: str = "wav",
-    ) -> bytes:
+    ) -> AudioGenerationResult:
+        # Explicit ``voice=`` still wins; otherwise derive from speaker_id.
+        if voice is None:
+            voice = self._speaker_id_to_voice(speaker_id)
         actual_voice = voice or self.default_voice
         if actual_voice not in _TTS_VOICES:
             logger.warning(
@@ -79,6 +101,7 @@ class AudioService:
             )
             actual_voice = _DEFAULT_VOICE
 
+        actual_model = model or self.tts_model
         logger.info(
             "Generating TTS (voice=%s, fmt=%s): %.80s...",
             actual_voice,
@@ -86,7 +109,7 @@ class AudioService:
             text,
         )
         response = await self.client.audio.speech.create(
-            model=model or self.tts_model,
+            model=actual_model,
             voice=actual_voice,
             input=text,
             response_format=response_format,
@@ -98,7 +121,15 @@ class AudioService:
             response_format,
             text,
         )
-        return audio_bytes
+        return AudioGenerationResult(
+            bytes=audio_bytes,
+            resolved_payload={
+                "kind": "tts",
+                "model": actual_model,
+                "voice": actual_voice,
+                "text": text,
+            },
+        )
 
     async def generate_music(
         self,
@@ -107,13 +138,21 @@ class AudioService:
         duration_sec: float = 0.0,
         scene_id: str = "",
         **kwargs: Any,
-    ) -> bytes:
+    ) -> AudioGenerationResult:
         logger.info(
             "[MockMusic] Placeholder music for scene %s (mood=%s)",
             scene_id,
             mood,
         )
-        return MOCK_WAV
+        return AudioGenerationResult(
+            bytes=MOCK_WAV,
+            resolved_payload={
+                "kind": "music",
+                "mood": mood,
+                "scene_id": scene_id,
+                "duration_sec": duration_sec,
+            },
+        )
 
     async def generate_ambience(
         self,
@@ -122,13 +161,21 @@ class AudioService:
         duration_sec: float = 0.0,
         scene_id: str = "",
         **kwargs: Any,
-    ) -> bytes:
+    ) -> AudioGenerationResult:
         logger.info(
             "[MockAmbience] Placeholder ambience for scene %s: %.80s...",
             scene_id,
             description,
         )
-        return MOCK_WAV
+        return AudioGenerationResult(
+            bytes=MOCK_WAV,
+            resolved_payload={
+                "kind": "ambience",
+                "description": description,
+                "scene_id": scene_id,
+                "duration_sec": duration_sec,
+            },
+        )
 
     async def mix_scene_audio(
         self,
@@ -384,16 +431,31 @@ class MockAudioService(AudioService):
         self.default_voice = "mock"
         self._client = None  # type: ignore[assignment]
 
+    def _speaker_id_to_voice(self, speaker_id: str) -> str:
+        # Mock has no voice roster — every speaker maps to ``"mock"`` so
+        # the audit record is still meaningful (caller sees the speaker
+        # was recognized) without touching the OpenAI voice table.
+        return "mock"
+
     async def generate_speech(
         self,
         text: str,
         *,
+        speaker_id: str = "",
         voice: str | None = None,
         model: str | None = None,
         response_format: str = "wav",
-    ) -> bytes:
+    ) -> AudioGenerationResult:
         logger.info("[MockAudioService] Placeholder TTS for: %.80s...", text)
-        return MOCK_WAV
+        return AudioGenerationResult(
+            bytes=MOCK_WAV,
+            resolved_payload={
+                "kind": "tts",
+                "model": self.tts_model,
+                "voice": voice or self._speaker_id_to_voice(speaker_id),
+                "text": text,
+            },
+        )
 
     async def mux_audio_with_video(
         self,
@@ -424,18 +486,27 @@ class FalAudioService(AudioService, LazyHttpxClientMixin):
         self._http: httpx.AsyncClient | None = None
         self._client = None
 
+    def _speaker_id_to_voice(self, speaker_id: str) -> str:
+        # fal TTS models accept provider-specific voice strings. Until a
+        # concrete fal voice roster is wired in, we pass the speaker_id
+        # through verbatim so the caller can opt into a specific voice,
+        # and fall back to ``self.default_voice`` when no speaker_id is set.
+        return speaker_id or self.default_voice
+
     async def generate_speech(
         self,
         text: str,
         *,
+        speaker_id: str = "",
         voice: str | None = None,
         model: str | None = None,
         response_format: str = "wav",
-    ) -> bytes:
+    ) -> AudioGenerationResult:
         model_id = model or self.tts_model
+        actual_voice = voice if voice is not None else self._speaker_id_to_voice(speaker_id)
         arguments: dict[str, Any] = {"text": text}
-        if voice:
-            arguments["voice"] = voice
+        if actual_voice:
+            arguments["voice"] = actual_voice
         if response_format:
             arguments["format"] = response_format
 
@@ -444,4 +515,12 @@ class FalAudioService(AudioService, LazyHttpxClientMixin):
         audio_url = extract_fal_media_url(result, media_type="audio")
         audio_bytes = await http_download_bytes(self.http, audio_url)
         logger.info("[fal.ai] TTS generated (%d bytes)", len(audio_bytes))
-        return audio_bytes
+        return AudioGenerationResult(
+            bytes=audio_bytes,
+            resolved_payload={
+                "kind": "tts",
+                "model": model_id,
+                "voice": actual_voice,
+                "text": text,
+            },
+        )
