@@ -106,7 +106,6 @@ class NoStackAPIClient:
         self,
         agent_id: str,
         task_id: str,
-        execute_fields: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
         """
         ``POST /api/assistant/execute`` — on **HTTP 200**, the body is ``process_results`` output:
@@ -117,6 +116,10 @@ class NoStackAPIClient:
         inlined; use ``GET /api/assistant/executions/task/{task_id}`` and read the latest row's
         ``results``.
 
+        Body is ``agent_id`` + ``task_id`` only — any user-provided input
+        must already live in the workspace as a caption-rich artifact
+        (typically produced by an Intake agent before this call).
+
         On **4xx/5xx**, ``requests`` raises; body is ``{"error": "...", "error_reasoning": ...}``
         (``error_reasoning`` often ``null`` until populated server-side).
 
@@ -126,7 +129,6 @@ class NoStackAPIClient:
         data: Dict[str, Any] = {
             "agent_id": agent_id,
             "task_id": task_id,
-            "execute_fields": dict(execute_fields) if execute_fields else {},
         }
         return self._request("POST", "/api/assistant/execute", data=data)
 

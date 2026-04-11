@@ -29,7 +29,7 @@ from .schema import (
 logger = logging.getLogger(__name__)
 
 # Threshold (in characters) below which we skip the LLM call entirely.
-# Short user prompts ("make a 30s film about a cat") never need a summary —
+# Short user prompts ("a film about a cat") never need a summary —
 # the verbatim text IS the brief.
 SHORT_TEXT_THRESHOLD = 800
 
@@ -81,7 +81,6 @@ class IntakeTextAgent(BaseAgent[IntakeTextInput, IntakeTextOutput]):
             artifact's ``what`` field.
         """
         text = self._read_text_file(input_data.raw_text_path).strip()
-        intent = (input_data.user_intent or "").strip()
 
         output = IntakeTextOutput()
         output.content = IntakeTextContent(text=text, summary="")

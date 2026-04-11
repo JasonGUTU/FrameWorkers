@@ -27,9 +27,9 @@ def test_create_app_registers_core_routes():
         health_resp = client.get("/health")
         assert health_resp.status_code == 200
 
-        assistant_resp = client.get("/api/assistant")
-        assert assistant_resp.status_code == 200
-        assert assistant_resp.get_json()["id"] == "assistant_global"
+        sub_agents_resp = client.get("/api/assistant/sub-agents")
+        assert sub_agents_resp.status_code == 200
+        assert "agent_ids" in sub_agents_resp.get_json()
 
 
 def test_create_app_accepts_runtime_config_override():

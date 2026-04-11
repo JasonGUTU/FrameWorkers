@@ -20,13 +20,6 @@ class IntakeImageInput(BaseModel):
     """Input payload for IntakeImageAgent."""
 
     raw_image_path: str = ""
-    user_intent: str = Field(
-        default="",
-        description=(
-            "Free-form description from the user of what this image is for "
-            "(e.g. 'protagonist reference', 'lab interior style guide')."
-        ),
-    )
 
 
 class IntakeImageOutput(BaseModel):

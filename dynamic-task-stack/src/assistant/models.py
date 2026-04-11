@@ -7,7 +7,7 @@ retrieval/orchestration logic.
 from enum import Enum
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Optional, Dict, Any, List
+from typing import Optional, Dict, Any
 
 
 class ExecutionStatus(Enum):
@@ -19,26 +19,9 @@ class ExecutionStatus(Enum):
 
 
 @dataclass
-class Assistant:
-    """
-    Global Assistant instance that manages all sub-agents
-    
-    There should be only one assistant instance that manages all sub-agents.
-    All agents share a single workspace (file system).
-    """
-    id: str
-    name: str
-    description: str
-    agent_ids: List[str]  # List of agent IDs managed by this assistant
-    created_at: datetime = field(default_factory=datetime.now)
-    updated_at: datetime = field(default_factory=datetime.now)
-
-
-@dataclass
 class AgentExecution:
     """Tracks an agent execution instance"""
     id: str
-    assistant_id: str
     agent_id: str
     task_id: str
     status: ExecutionStatus

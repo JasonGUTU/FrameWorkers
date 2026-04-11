@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from datetime import datetime, timezone
+from typing import Any
 
 from pydantic import BaseModel, Field
 
@@ -45,6 +46,76 @@ class Meta(BaseModel):
     language: str = "en"
 
 
+# ---------------------------------------------------------------------------
+# Resolver I/O: the single typed shape every InputResolver entry takes
+# ---------------------------------------------------------------------------
+
+class ResolvedArtifactEntry(BaseModel):
+    """A single artifact entry as produced by ``InputResolver._build_entry``
+    and consumed by every descriptor's ``build_input``.
+
+    This is the canonical shape for the cross-agent data channel: each
+    resolved label maps to either one of these (for ``(single)`` labels)
+    or a list of these (for ``(collection)`` labels). Every field except
+    ``payload`` is always populated by the resolver; ``payload`` is only
+    loaded for JSON artifacts (``mime == "application/json"`` or
+    ``.json`` path). Producers and consumers therefore communicate
+    through the same four descriptive fields (``caption / scope / path /
+    mime``) plus an optional structured JSON body.
+
+    Use ``ResolvedArtifactEntry.coerce(value)`` in descriptors rather
+    than constructing by hand — it accepts a raw dict (legacy tests/
+    scripts still pass these), a real ``ResolvedArtifactEntry`` (current
+    InputResolver output), or ``None`` (missing label), and always
+    returns a well-formed entry so downstream code can read fields
+    without defensive ``isinstance`` checks.
+    """
+
+    caption: str = ""
+    scope: str = ""
+    path: str = ""
+    mime: str = ""
+    payload: dict | None = None
+
+    @classmethod
+    def coerce(cls, value: Any) -> "ResolvedArtifactEntry":
+        """Normalise any value into a ``ResolvedArtifactEntry``.
+
+        Accepts:
+          * an existing ``ResolvedArtifactEntry`` — returned unchanged
+          * a raw ``dict`` — fields copied by name, missing fields
+            default to empty strings, payload only kept if dict-typed
+          * anything else (including ``None``) — returns an empty entry
+
+        This is the one-stop converter descriptors use at the top of
+        ``build_input`` so the rest of the function can assume a typed
+        entry.
+        """
+        if isinstance(value, cls):
+            return value
+        if isinstance(value, dict):
+            raw_payload = value.get("payload")
+            return cls(
+                caption=str(value.get("caption", "") or ""),
+                scope=str(value.get("scope", "") or ""),
+                path=str(value.get("path", "") or ""),
+                mime=str(value.get("mime", "") or ""),
+                payload=raw_payload if isinstance(raw_payload, dict) else None,
+            )
+        return cls()
+
+    @classmethod
+    def coerce_list(cls, value: Any) -> list["ResolvedArtifactEntry"]:
+        """Normalise a ``(collection)`` label value to a list of entries.
+
+        Accepts a list of mixed dicts / entries / garbage and returns
+        only the well-formed entries. Non-list inputs (including
+        ``None``) yield an empty list.
+        """
+        if not isinstance(value, list):
+            return []
+        return [cls.coerce(v) for v in value]
+
 
 class ImageReferenceEntry(BaseModel):
     """A single image reference that flows from the workspace into a sub-agent's
@@ -66,5 +137,44 @@ class ImageReferenceEntry(BaseModel):
     caption: str = ""
     mime: str = ""
     scope: str = ""
+
+    @classmethod
+    def from_artifact_entry(
+        cls, entry: ResolvedArtifactEntry
+    ) -> "ImageReferenceEntry | None":
+        """Build a typed image reference from a resolved entry, or ``None``
+        if the entry has no usable path.
+
+        Keeping the "has a path?" check here means every media consumer
+        (KeyFrameAgent / VideoAgent / UnivaVideoAgent) gets the same
+        filter — previously each re-implemented the same
+        ``str(it.get("path", "") or "").strip()`` guard inline.
+        """
+        path = entry.path.strip()
+        if not path:
+            return None
+        return cls(
+            path=path,
+            caption=entry.caption,
+            mime=entry.mime,
+            scope=entry.scope,
+        )
+
+    @classmethod
+    def list_from_resolved(cls, value: Any) -> list["ImageReferenceEntry"]:
+        """Extract typed image refs from a ``(collection)`` label value.
+
+        Combines ``ResolvedArtifactEntry.coerce_list`` with
+        ``from_artifact_entry`` so media-consumer descriptors can
+        dispatch a single call per label instead of writing the
+        ``for entry in coerce_list(...)`` loop inline.
+        """
+        entries = ResolvedArtifactEntry.coerce_list(value)
+        out: list[ImageReferenceEntry] = []
+        for entry in entries:
+            ref = cls.from_artifact_entry(entry)
+            if ref is not None:
+                out.append(ref)
+        return out
 
 

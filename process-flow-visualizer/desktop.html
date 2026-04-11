@@ -351,7 +351,7 @@
       <div class="header-divider"></div>
       <div class="header-badge">💾 Desktop</div>
       <h1>Workspace 存储与读写</h1>
-      <p>Workspace 是 Assistant 的本地运行时存储。新架构里只剩两份"事实文件"：<strong>global_memory.md</strong> 是 per-execution 的产物 ledger（每次 agent 跑出来的所有文件都在这里登记，附带 <code>what / why / scope</code>），<strong>logs.jsonl</strong> 是 namespaced <code>event</code> 时间流（<code>execution.*</code> / <code>artifact.*</code> / <code>workspace.*</code>）。文件本身落在 <code>artifacts/</code> 子树下，由 <strong>ArtifactWriter</strong> 一次性写入并自动注册到 global_memory。</p>
+      <p>Workspace 是 Assistant 的本地运行时存储。新架构里只剩两份"事实文件"：<strong>global_memory.md</strong> 是 per-execution 的产物 ledger（每次 agent 跑出来的所有文件都在这里登记，附带 <code>caption / scope</code>），<strong>logs.jsonl</strong> 是 namespaced <code>event</code> 时间流（<code>execution.*</code> / <code>artifact.*</code> / <code>workspace.*</code>）。文件本身落在 <code>artifacts/</code> 子树下，由 <strong>ArtifactWriter</strong> 一次性写入并自动注册到 global_memory。</p>
     </header>
 
     <!-- 1. 数据流总览 -->
@@ -390,7 +390,7 @@
         </div>
       </div>
       <div class="brief-caption">
-        Workspace 内一切产物都先经过 <strong>ArtifactWriter</strong>，落盘后由 <strong>GlobalMemory</strong> 注册带 <code>what / why / scope</code> 的 caption；下游 agent 启动时 <strong>InputResolver</strong> 把这些 caption 当成"自描述索引"喂给 LLM，让 LLM 决定哪些产物对应当前 agent 的哪个 <code>[label]</code> 槽。<strong>没有任何 agent 在 InputResolver 之外直接读 workspace 文件</strong>——这就是 caption-driven 的含义。
+        Workspace 内一切产物都先经过 <strong>ArtifactWriter</strong>，落盘后由 <strong>GlobalMemory</strong> 注册带 <code>caption / scope</code> 的条目；下游 agent 启动时 <strong>InputResolver</strong> 把这些 caption 当成"自描述索引"喂给 LLM，让 LLM 决定哪些产物对应当前 agent 的哪个 <code>[label]</code> 槽。<strong>没有任何 agent 在 InputResolver 之外直接读 workspace 文件</strong>——这就是 caption-driven 的含义。
       </div>
     </section>
 
@@ -429,7 +429,7 @@
 <div class="tree">{
   <span style="color:#7eb3ff">"content"</span>: {                                                              <span style="color:#64748b">// ← 这条 entry 的语义负载（content block，agent 在 generation 时填）</span>
     <span style="color:#7eb3ff">"what"</span>: "natural-language brief from the user: \"A 30-second…\"",     <span style="color:#64748b">// ← agent 用一句话总结自己产出了什么；下游 agent 看 caption 就靠它</span>
-    <span style="color:#7eb3ff">"why"</span>:  "creative brief — elderly leather craftsman portrait short" <span style="color:#64748b">// ← 这次产出的动机 / 创作理由；这里直接复用了用户 upload 时填的 user_intent</span>
+    <span style="color:#7eb3ff">"why"</span>:  "creative brief — elderly leather craftsman portrait short" <span style="color:#64748b">// ← 这次产出的动机 / 创作理由；intake agent 根据 upload 的内容生成</span>
   },
   <span style="color:#7eb3ff">"agent_id"</span>:     "IntakeTextAgent",                                       <span style="color:#64748b">// ← 哪个 sub-agent 产出了这条 entry；新架构下也是 artifacts/&lt;agent_id&gt;/ 目录的 slug</span>
   <span style="color:#7eb3ff">"task_id"</span>:      "task_1_c6f46a7c",                                       <span style="color:#64748b">// ← 这条 entry 归属的 task（task stack 的 task ID）；upload 类 entry 的 task_id 为空</span>
@@ -490,7 +490,7 @@
       <div class="brief-caption">
         几个值得注意的点：
         <ul style="margin:8px 0 0 18px;padding:0;line-height:1.7">
-          <li><code>content.what</code> 和 <code>content.why</code> 是 sub-agent <em>自己</em> 在 generation pass 末尾写的（不是 service 后处理）—— 即"我刚才产出的东西可以一句话概括为 X，理由是 Y"。这是 caption-driven 架构的关键：agent 必须自描述。</li>
+          <li>每个 agent 的 descriptor 实现一个 <code>build_captions(agent_id, output_dict)</code>，在 agent 跑完之后从它的结构化输出里派生出一段自然语言 caption（比如 StoryAgent 的 "Story blueprint: N scene(s), M character(s), ..."）。这是 caption-driven 架构的关键：每个 agent 自己知道怎么"自我总结"给下游看。</li>
           <li><code>execution_id</code> 是这条 entry 唯一的 join key —— <code>logs.jsonl</code> 里同 <code>execution_id</code> 的事件都对应这一次 run。Director 想看一次 execution 的完整时间线就 grep 这个。</li>
           <li><code>task_id</code> 对 upload 类 entry 是空字符串（upload 在 task 创建之前发生），其他都填实际 task ID。这导致 <code>get_captions_index(task_id=...)</code> 必须显式包含 <code>task_id == ""</code> 的行，否则会漏掉 raw upload。</li>
         </ul>
@@ -697,7 +697,7 @@ Artifact paths are in ``artifact_registry.jsonl`` (not here).
 
       <div class="timeline">
         <div class="tl-row"><span class="tl-time">11:17:17.475</span><span class="tl-event workspace">workspace.created</span><span class="tl-agent placeholder">—</span><span class="tl-detail">workspace_id=workspace_e2e_text_only_20260407_111717</span></div>
-        <div class="tl-row"><span class="tl-time">11:17:17.491</span><span class="tl-event user">user.upload</span><span class="tl-agent">user</span><span class="tl-detail">filename=upload_20260407_111717_487322.txt · mime=text/plain · user_intent=creative brief for the project · scope=raw_pending</span></div>
+        <div class="tl-row"><span class="tl-time">11:17:17.491</span><span class="tl-event user">user.upload</span><span class="tl-agent">user</span><span class="tl-detail">filename=upload_20260407_111717_487322.txt · mime=text/plain · scope=raw_pending</span></div>
         <div class="tl-row"><span class="tl-time">11:17:21.919</span><span class="tl-event exec-start">execution.started</span><span class="tl-agent">IntakeTextAgent</span><span class="tl-detail">status=IN_PROGRESS</span></div>
         <div class="tl-row"><span class="tl-time">11:17:21.920</span><span class="tl-event exec-done">execution.completed</span><span class="tl-agent">IntakeTextAgent</span><span class="tl-detail">status=COMPLETED · retry_attempts=1 · eval_summary=&quot;No creative evaluation defined for IntakeTextEvaluator.&quot;</span></div>
         <div class="tl-row"><span class="tl-time">11:17:30.399</span><span class="tl-event art-snap">artifact.snapshot_persisted</span><span class="tl-agent">IntakeTextAgent</span><span class="tl-detail">filename=user_text_exec_1.json · asset_key=user_text</span></div>
@@ -800,7 +800,7 @@ Artifact paths are in ``artifact_registry.jsonl`` (not here).
             </li>
             <li>
               <code>resolve_inputs_for_agent(agent_id, task_id, input_needs_description, llm_client, model)</code>
-              <span class="desc">委托 InputResolver → LLM → <code>{ resolved_artifacts: [{what,why,scope,path,mime,payload}], selected_artifact_paths, rationale }</code>。</span>
+              <span class="desc">委托 InputResolver → LLM → <code>{ resolved_artifacts: dict[label, ResolvedArtifactEntry | list[ResolvedArtifactEntry]], selected_artifact_paths, rationale }</code>。每个 <code>ResolvedArtifactEntry</code> 字段为 <code>{caption, scope, path, mime, payload?}</code>。</span>
             </li>
             <li>
               <code>get_workspace_root_file_tree_text()</code>
@@ -808,7 +808,7 @@ Artifact paths are in ``artifact_registry.jsonl`` (not here).
             </li>
             <li>
               <code>list_workspace_artifacts()</code>
-              <span class="desc">展平 global_memory 为 <code>[{path, filename, mime, what, why, scope, agent_id, task_id, execution_id, created_at}]</code>。HTTP 端点 <code>GET /api/assistant/workspace/files</code>。</span>
+              <span class="desc">展平 global_memory 为 <code>[{path, filename, mime, caption, scope, agent_id, task_id, execution_id, created_at}]</code>。HTTP 端点 <code>GET /api/assistant/workspace/files</code>。</span>
             </li>
             <li>
               <code>get_logs(*, event, agent_id, task_id, level, execution_id, limit)</code>
@@ -828,7 +828,7 @@ Artifact paths are in ``artifact_registry.jsonl`` (not here).
           <h3>WRITE — Assistant → Workspace</h3>
           <ul>
             <li>
-              <code>persist_raw_upload(file_content, mime, user_intent, original_filename)</code>
+              <code>persist_raw_upload(file_content, mime, original_filename)</code>
               <span class="desc">用户原始 upload 入口：写到 <code>inputs/</code>，登记到 <code>global_memory.md</code>（agent_id="user", task_id="", scope="raw_pending"），打 <code>event=user.upload</code>。</span>
             </li>
             <li>

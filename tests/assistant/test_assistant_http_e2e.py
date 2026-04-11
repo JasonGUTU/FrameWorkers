@@ -15,6 +15,8 @@ if str(_repo_root) not in sys.path:
 if str(_pkg_root) not in sys.path:
     sys.path.insert(0, str(_pkg_root))
 
+from agents.common_schema import ResolvedArtifactEntry  # noqa: E402
+
 
 # `src/__init__.py` imports app.py -> flask_cors.
 if "flask_cors" not in sys.modules:
@@ -36,7 +38,7 @@ class _DummyPipelineResult:
 
 
 class _DummyPipelineAgent:
-    async def run(self, _typed_input, input_bundle_v2=None, materialize_ctx=None):
+    async def run(self, _typed_input, *, materialize_ctx=None):
         return _DummyPipelineResult()
 
 
@@ -48,13 +50,13 @@ class _EchoPipelineResult:
 
 
 class _ProducerPipelineAgent:
-    async def run(self, typed_input, input_bundle_v2=None, materialize_ctx=None):
+    async def run(self, typed_input, *, materialize_ctx=None):
         seed = typed_input.get("seed", "")
         return _EchoPipelineResult({"content": {"seed": seed}})
 
 
 class _ConsumerPipelineAgent:
-    async def run(self, typed_input, input_bundle_v2=None, materialize_ctx=None):
+    async def run(self, typed_input, *, materialize_ctx=None):
         observed = typed_input.get("observed_seed", "")
         return _EchoPipelineResult({"observed_seed": observed})
 
@@ -67,12 +69,11 @@ class _DummyDescriptor:
     def build_equipped_agent(self, _llm):
         return _DummyPipelineAgent()
 
-    def build_input(self, task_id, input_bundle_v2):
-        hints = getattr(input_bundle_v2, "hints", None) or {}
+    def build_input(self, task_id, resolved_artifacts):
         return {
             "task_id": task_id,
-            "input_bundle_v2": input_bundle_v2,
-            "language": hints.get("language") or "en",
+            "resolved_artifacts": resolved_artifacts,
+            "language": "en",
         }
 
 
@@ -114,15 +115,11 @@ class _ProducerDescriptor:
     def build_equipped_agent(self, _llm):
         return _ProducerPipelineAgent()
 
-    def build_input(self, task_id, input_bundle_v2):
-        hints = getattr(input_bundle_v2, "hints", None) or {}
-        source_text = hints.get("source_text", "")
-        if isinstance(source_text, dict):
-            source_text = source_text.get("goal", "")
+    def build_input(self, task_id, resolved_artifacts):
         return {
             "task_id": task_id,
-            "seed": source_text,
-            "language": hints.get("language") or "en",
+            "seed": "",
+            "language": "en",
         }
 
 
@@ -139,17 +136,15 @@ class _ConsumerDescriptor:
     def build_equipped_agent(self, _llm):
         return _ConsumerPipelineAgent()
 
-    def build_input(self, task_id, input_bundle_v2):
-        resolved = getattr(input_bundle_v2, "resolved_artifacts", {})
-        if not isinstance(resolved, dict):
-            resolved = {}
-        producer = resolved.get("producer_asset", {})
-        payload = producer.get("payload", {}) if isinstance(producer, dict) else {}
-        hints = getattr(input_bundle_v2, "hints", None) or {}
+    def build_input(self, task_id, resolved_artifacts):
+        producer = ResolvedArtifactEntry.coerce(
+            resolved_artifacts.get("producer_asset")
+        )
+        payload = producer.payload or {}
         return {
             "task_id": task_id,
             "observed_seed": payload.get("content", {}).get("seed", ""),
-            "language": hints.get("language") or "en",
+            "language": "en",
         }
 
 
@@ -193,13 +188,7 @@ def assistant_http_client_pipeline(tmp_path, monkeypatch):
 def test_assistant_e2e_http_flow_covers_core_endpoints(assistant_http_client):
     client = assistant_http_client
 
-    # Step 1: Discover assistant singleton and available sub-agents.
-    assistant_resp = client.get("/api/assistant")
-    assert assistant_resp.status_code == 200
-    assistant_payload = assistant_resp.get_json()
-    assert assistant_payload["id"] == "assistant_global"
-    assert assistant_payload["name"] == "Global Assistant"
-
+    # Step 1: Discover available sub-agents from the registry.
     sub_agents_resp = client.get("/api/assistant/sub-agents")
     assert sub_agents_resp.status_code == 200
     sub_agents = sub_agents_resp.get_json()
@@ -228,7 +217,6 @@ def test_assistant_e2e_http_flow_covers_core_endpoints(assistant_http_client):
         json={
             "agent_id": "DummyAgent",
             "task_id": task_id,
-            "execute_fields": {"text": task_payload["description"]["goal"]},
         },
     )
     assert execute_resp.status_code == 200
@@ -292,56 +280,6 @@ def test_assistant_e2e_http_flow_covers_core_endpoints(assistant_http_client):
             "execution_id", "agent_id", "task_id", "status", "created_at",
         }
 
-def test_assistant_execute_allows_empty_execute_fields(assistant_http_client):
-    client = assistant_http_client
-    create_task_resp = client.post(
-        "/api/tasks/create",
-        json={"description": {"goal": "missing snapshot"}},
-    )
-    assert create_task_resp.status_code == 201
-    task_id = create_task_resp.get_json()["id"]
-    ok = client.post(
-        "/api/assistant/execute",
-        json={"agent_id": "DummyAgent", "task_id": task_id, "execute_fields": {}},
-    )
-    assert ok.status_code == 200
-
-
-def test_assistant_execute_ignores_memory_brief_key(assistant_http_client):
-    client = assistant_http_client
-    create_task_resp = client.post(
-        "/api/tasks/create",
-        json={"description": {"goal": "ok"}},
-    )
-    assert create_task_resp.status_code == 201
-    task_id = create_task_resp.get_json()["id"]
-    ok = client.post(
-        "/api/assistant/execute",
-        json={
-            "agent_id": "DummyAgent",
-            "task_id": task_id,
-            "execute_fields": {"_memory_brief": "x"},
-        },
-    )
-    assert ok.status_code == 200
-
-
-def test_assistant_execute_invalid_execute_fields_type_returns_400(assistant_http_client):
-    client = assistant_http_client
-    create_task_resp = client.post(
-        "/api/tasks/create",
-        json={"description": {"goal": "x"}},
-    )
-    assert create_task_resp.status_code == 201
-    task_id = create_task_resp.get_json()["id"]
-    bad = client.post(
-        "/api/assistant/execute",
-        json={"agent_id": "DummyAgent", "task_id": task_id, "execute_fields": "nope"},
-    )
-    assert bad.status_code == 400
-    assert "execute_fields" in bad.get_json().get("error", "")
-
-
 def test_assistant_pipeline_execution_inputs_include_global_memory_list(
     assistant_http_client_pipeline,
 ):
@@ -354,21 +292,20 @@ def test_assistant_pipeline_execution_inputs_include_global_memory_list(
     assert create_task_resp.status_code == 201
     task_payload = create_task_resp.get_json()
     task_id = task_payload["id"]
-    ef = {"text": task_payload["description"]["goal"]}
 
     client.post(
         "/api/assistant/execute",
-        json={"agent_id": "ProducerAgent", "task_id": task_id, "execute_fields": ef},
+        json={"agent_id": "ProducerAgent", "task_id": task_id},
     )
     consumer_resp = client.post(
         "/api/assistant/execute",
-        json={"agent_id": "ConsumerAgent", "task_id": task_id, "execute_fields": ef},
+        json={"agent_id": "ConsumerAgent", "task_id": task_id},
     )
     assert consumer_resp.status_code == 200
     executions_resp = client.get(f"/api/assistant/executions/task/{task_id}")
     assert executions_resp.status_code == 200
     executions = executions_resp.get_json()
     consumer_exec = next(e for e in executions if e["agent_id"] == "ConsumerAgent")
-    # In new architecture, artifacts are in _resolved_artifacts, not global_memory list.
-    ib = consumer_exec.get("inputs", {}).get("input_bundle_v2", {})
+    # The execution audit dict carries task_id + resolved_artifacts as siblings.
     assert "task_id" in consumer_exec["inputs"]
+    assert "resolved_artifacts" in consumer_exec["inputs"]

@@ -220,13 +220,15 @@ class BackendAPIClient:
         self,
         agent_id: str,
         task_id: str,
-        execute_fields: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """
         Execute an agent for a task.
 
-        The HTTP body is ``agent_id``, ``task_id``, and nested ``execute_fields``
-        (``text``, ``image``, ``video``, …).
+        The HTTP body is ``agent_id`` and ``task_id``. Any user input must
+        already exist in the workspace as a caption-rich artifact (e.g.
+        produced by an Intake agent or uploaded via
+        ``POST /api/workspace/upload``); ``InputResolver`` picks it up
+        through the consumer agent's ``[label]`` headers.
 
         On success, the JSON includes ``task_id``, ``execution_id``, ``status``, ``error``,
         ``error_reasoning`` (reserved, often null), ``workspace_id``, ``global_memory_brief``
@@ -236,7 +238,6 @@ class BackendAPIClient:
         data: Dict[str, Any] = {
             'agent_id': agent_id,
             'task_id': task_id,
-            'execute_fields': dict(execute_fields) if execute_fields else {},
         }
         return self._request('POST', '/api/assistant/execute', data=data)
     

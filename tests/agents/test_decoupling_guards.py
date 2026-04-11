@@ -12,9 +12,21 @@ def test_service_has_no_legacy_input_fallbacks() -> None:
     assert "_required_roles_for_agent" not in svc
 
 
-def test_descriptors_use_v2_input_name() -> None:
+def test_descriptors_use_resolved_artifacts_param() -> None:
+    """After Phase 2 the agent boundary takes a plain
+    ``resolved_artifacts: dict`` instead of a typed wrapper. Lock that
+    parameter name across every concrete descriptor."""
     root = Path("agents")
     for path in root.rglob("descriptor.py"):
+        if path == root / "descriptor.py":
+            # Skip the base SubAgentDescriptor module — it defines the
+            # field type, not a concrete agent build_input.
+            continue
         text = path.read_text(encoding="utf-8")
-        assert "input_bundle_v2" in text
+        assert "resolved_artifacts" in text, (
+            f"{path}: build_input must take resolved_artifacts"
+        )
+        assert "input_bundle_v2" not in text, (
+            f"{path}: drop the legacy input_bundle_v2 parameter"
+        )
         assert "pipeline_bundle" not in text

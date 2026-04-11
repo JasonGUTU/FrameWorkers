@@ -6,7 +6,7 @@ sub-system promises to handle without crashing or losing data:
   * happy path (LLM call succeeds and returns the expected JSON)
   * fallback when the LLM call fails (network / parse / quota)
   * empty / missing input (no path, empty file, missing file on disk)
-  * provenance preservation (``user_intent`` embedded in caption)
+  * descriptor wiring (build_input pulls path from resolved entry)
 
 The tests use stub LLM clients so they run offline.
 """
@@ -121,7 +121,7 @@ class TestIntakeTextAgent:
         path = _write_text("make a 30s film about a cat in a workshop")
 
         out = asyncio.run(agent.generate(
-            IntakeTextInput(raw_text_path=path, user_intent="creative brief"),
+            IntakeTextInput(raw_text_path=path),
         ))
 
         assert isinstance(out, IntakeTextOutput)
@@ -137,7 +137,7 @@ class TestIntakeTextAgent:
         path = _write_text(long_text)
 
         out = asyncio.run(agent.generate(
-            IntakeTextInput(raw_text_path=path, user_intent="story outline"),
+            IntakeTextInput(raw_text_path=path),
         ))
 
         assert len(stub.calls) == 1, "long text must call chat_json exactly once"
@@ -150,7 +150,7 @@ class TestIntakeTextAgent:
         path = _write_text(long_text)
 
         out = asyncio.run(agent.generate(
-            IntakeTextInput(raw_text_path=path, user_intent="story"),
+            IntakeTextInput(raw_text_path=path),
         ))
 
         # No LLM summary — but the agent must still emit a valid caption
@@ -160,17 +160,14 @@ class TestIntakeTextAgent:
     def test_empty_path_returns_valid_artifact(self):
         agent = IntakeTextAgent(llm_client=_StubTextLLM())
         out = asyncio.run(agent.generate(
-            IntakeTextInput(raw_text_path="", user_intent="nothing"),
+            IntakeTextInput(raw_text_path=""),
         ))
         assert out.metrics.char_count == 0
 
     def test_missing_file_treated_as_empty(self):
         agent = IntakeTextAgent(llm_client=_StubTextLLM())
         out = asyncio.run(agent.generate(
-            IntakeTextInput(
-                raw_text_path="/tmp/no_such_file_xyz.txt",
-                user_intent="ghost",
-            ),
+            IntakeTextInput(raw_text_path="/tmp/no_such_file_xyz.txt"),
         ))
         assert out.metrics.char_count == 0
 
@@ -179,7 +176,7 @@ class TestIntakeTextAgent:
         agent.evaluator = IntakeTextEvaluator()
         path = _write_text("hello world creative brief")
         result = asyncio.run(agent.run(
-            IntakeTextInput(raw_text_path=path, user_intent="brief"),
+            IntakeTextInput(raw_text_path=path),
         ))
         assert result.passed is True
         assert result.attempts == 1
@@ -197,7 +194,7 @@ class TestIntakeImageAgent:
         path = _write_png()
 
         out = asyncio.run(agent.generate(
-            IntakeImageInput(raw_image_path=path, user_intent="character ref"),
+            IntakeImageInput(raw_image_path=path),
         ))
 
         assert isinstance(out, IntakeImageOutput)
@@ -227,37 +224,30 @@ class TestIntakeImageAgent:
         agent = IntakeImageAgent(llm_client=stub)
         path = _write_png()
         out = asyncio.run(agent.generate(
-            IntakeImageInput(raw_image_path=path, user_intent="style ref"),
+            IntakeImageInput(raw_image_path=path),
         ))
-        assert out.content.visual_description == "a wide misty forest at dawn"
         assert out.content.visual_description == "a wide misty forest at dawn"
 
     def test_llm_failure_emits_fallback_caption(self):
         agent = IntakeImageAgent(llm_client=_RaisingVisionLLM())
         path = _write_png()
         out = asyncio.run(agent.generate(
-            IntakeImageInput(raw_image_path=path, user_intent="ref"),
+            IntakeImageInput(raw_image_path=path),
         ))
-        assert out.content.visual_description == ""
         assert out.content.visual_description == ""
 
     def test_empty_path_returns_valid_artifact(self):
         agent = IntakeImageAgent(llm_client=_StubVisionLLM())
         out = asyncio.run(agent.generate(
-            IntakeImageInput(raw_image_path="", user_intent=""),
+            IntakeImageInput(raw_image_path=""),
         ))
-        assert out.content.visual_description == ""
         assert out.content.visual_description == ""
 
     def test_missing_file_emits_fallback_caption(self):
         agent = IntakeImageAgent(llm_client=_StubVisionLLM())
         out = asyncio.run(agent.generate(
-            IntakeImageInput(
-                raw_image_path="/tmp/no_such_image_xyz.png",
-                user_intent="ghost",
-            ),
+            IntakeImageInput(raw_image_path="/tmp/no_such_image_xyz.png"),
         ))
-        assert out.content.visual_description == ""
         assert out.content.visual_description == ""
 
     def test_invalid_json_in_strict_response_falls_back(self):
@@ -267,7 +257,7 @@ class TestIntakeImageAgent:
         agent = IntakeImageAgent(llm_client=stub)
         path = _write_png()
         out = asyncio.run(agent.generate(
-            IntakeImageInput(raw_image_path=path, user_intent="ref"),
+            IntakeImageInput(raw_image_path=path),
         ))
         assert out.content.visual_description == "{not really json"
 
@@ -276,7 +266,7 @@ class TestIntakeImageAgent:
         agent.evaluator = IntakeImageEvaluator()
         path = _write_png()
         result = asyncio.run(agent.run(
-            IntakeImageInput(raw_image_path=path, user_intent="ref"),
+            IntakeImageInput(raw_image_path=path),
         ))
         assert result.passed is True
         assert result.attempts == 1
@@ -293,7 +283,7 @@ def test_intake_text_descriptor_extracts_path_from_resolved_entry():
 
     resolved = {
         INPUT_LABEL_RAW_TEXT_UPLOAD: {
-            "caption": "Raw user upload (mime=text/plain). Pending intake processing. User intent: user wants to make a film about a cat.",
+            "caption": "Raw user upload (mime=text/plain). Pending intake processing — only visible to Intake* agents.",
             "scope": "raw_pending",
             "path": "/tmp/some/upload.txt",
             "mime": "text/plain",
@@ -302,7 +292,6 @@ def test_intake_text_descriptor_extracts_path_from_resolved_entry():
     inp = build_text_input("task_xxx", resolved)
     assert isinstance(inp, IntakeTextInput)
     assert inp.raw_text_path == "/tmp/some/upload.txt"
-    assert inp.user_intent == "user wants to make a film about a cat"
 
 
 def test_intake_image_descriptor_extracts_path_from_resolved_entry():
@@ -311,7 +300,7 @@ def test_intake_image_descriptor_extracts_path_from_resolved_entry():
 
     resolved = {
         INPUT_LABEL_RAW_IMAGE_UPLOAD: {
-            "caption": "Raw user upload (mime=image/png). Pending intake processing. User intent: character reference for the protagonist.",
+            "caption": "Raw user upload (mime=image/png). Pending intake processing — only visible to Intake* agents.",
             "scope": "raw_pending",
             "path": "/tmp/some/character.png",
             "mime": "image/png",
@@ -320,4 +309,3 @@ def test_intake_image_descriptor_extracts_path_from_resolved_entry():
     inp = build_image_input("task_yyy", resolved)
     assert isinstance(inp, IntakeImageInput)
     assert inp.raw_image_path == "/tmp/some/character.png"
-    assert inp.user_intent == "character reference for the protagonist"

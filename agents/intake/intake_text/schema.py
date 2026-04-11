@@ -36,14 +36,6 @@ class IntakeTextInput(BaseModel):
     """
 
     raw_text_path: str = ""
-    user_intent: str = Field(
-        default="",
-        description=(
-            "Free-form description from the user of what this text is for "
-            "(e.g. 'creative brief for the project', 'user_story_outline', "
-            "'screenplay revision request'). Appended to the artifact caption."
-        ),
-    )
 
 
 class IntakeTextOutput(BaseModel):

@@ -15,7 +15,7 @@ Multi-agent stack: Flask backend + Assistant + Director; creative pipeline agent
 - If unsure which envs exist, run **`conda env list`** after the steps above; project work targets the **`frameworkers`** env (not necessarily `base`).
 
 ## Invariants (do not break)
-- `POST /api/assistant/execute`: `agent_id`, `task_id`, nested `execute_fields`. **`global_memory` is top-level on execution inputs**, not inside `execute_fields` / `InputBundleV2`; **`_memory_brief` in execute_fields is ignored.**
+- `POST /api/assistant/execute`: body is exactly `{agent_id, task_id}`. Sub-agents see only the `resolved_artifacts` dict that `descriptor.build_input(task_id, resolved_artifacts)` receives — no typed wrapper, no extra channels. Any user-provided text/image/video/audio must already exist as a workspace artifact (via `POST /api/workspace/upload` + an Intake agent) before this route is called.
 - Post-success global memory summary is **strict** (failure → error response); no silent empty fallback.
 - LLM agent outputs: **JSON only** (no markdown fences); unknown → `""` / `[]`, not `null`; top-level `meta` matches `agents/common_schema.Meta` only (no extra keys such as `project_id`).
 - Asset / content ID conventions and evaluator layers: follow agent package READMEs and existing schemas.

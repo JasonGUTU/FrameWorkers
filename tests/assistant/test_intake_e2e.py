@@ -215,11 +215,11 @@ def _create_task(client, debug_file, goal: str) -> str:
     return body["id"]
 
 
-def _upload_text(client, debug_file, text: str, user_intent: str) -> dict:
+def _upload_text(client, debug_file, text: str) -> dict:
     resp, body = _post(
         client,
         "/api/workspace/upload",
-        {"mime": "text/plain", "user_intent": user_intent, "text": text},
+        {"mime": "text/plain", "text": text},
         debug_file,
         step="upload_text",
     )
@@ -227,14 +227,13 @@ def _upload_text(client, debug_file, text: str, user_intent: str) -> dict:
     return body
 
 
-def _upload_image(client, debug_file, image_path: Path, user_intent: str, mime: str = "image/png") -> dict:
+def _upload_image(client, debug_file, image_path: Path, mime: str = "image/png") -> dict:
     data_b64 = base64.b64encode(image_path.read_bytes()).decode("ascii")
     resp, body = _post(
         client,
         "/api/workspace/upload",
         {
             "mime": mime,
-            "user_intent": user_intent,
             "data_b64": data_b64,
             "filename": image_path.name,
         },
@@ -396,6 +395,162 @@ def _placeholders_without_successor(workspace: Workspace) -> list[str]:
 
 
 # ---------------------------------------------------------------------------
+# e2e0 — minimal Story → Screenplay only (univa-style pass-through smoke)
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.skipif(not _LIVE_READY, reason=_LIVE_SKIP_REASON)
+def test_e2e0_story_to_screenplay_only(monkeypatch):
+    """Targeted live smoke for the univa-style Story → Screenplay refactor.
+
+    Runs ONLY ``IntakeTextAgent → StoryAgent → ScreenplayAgent`` — stops
+    before KeyFrame/Video/Audio so this exercises the new JSON-text
+    pass-through path without paying for image / video / audio
+    generation. Everything else re-uses the same workspace + Flask
+    fixtures as e2e1-e2e4.
+
+    What this pins (that the offline unit tests cannot):
+
+      * ScreenplayAgent's new ``_llm_fill_full`` path actually produces
+        a valid screenplay from a raw story JSON blob embedded in the
+        user prompt — no skeleton pre-build, no field-selected embed.
+      * The LLM reads the story blueprint's character_id / location_id
+        strings out of the JSON text and REUSES them in the screenplay's
+        consistency pack. If build_input were silently passing an empty
+        payload (the failure mode the old ``.get("content")`` path had
+        for non-canonical upstream shapes), the screenplay would
+        hallucinate fresh ids with zero overlap — so the overlap
+        assertion is the load-bearing check.
+      * ``recompute_metrics`` post-processing still enforces the
+        cross-agent invariants KeyFrameAgent relies on: unique sh_NNN
+        ids and keyframe_count == 1 per shot.
+    """
+    workspace_id = _scenario_workspace_id("story_to_screenplay_only")
+    client, workspace, debug_file = _build_client(workspace_id, monkeypatch)
+    print(f"\n[e2e0] workspace={workspace_id}")
+    print(f"[e2e0] debug_file={debug_file}")
+
+    task_id = _create_task(
+        client,
+        debug_file,
+        goal="Minimal Story → Screenplay roundtrip for the univa-style refactor.",
+    )
+
+    # Same watchmaker brief as e2e1 — makes side-by-side comparison with
+    # prior known-good runs easy if this fails.
+    _upload_text(
+        client,
+        debug_file,
+        text=(
+            "I want a 30-second cinematic short about an elderly watchmaker "
+            "named Elias who, on New Year's Eve, races against the clock to "
+            "repair his late wife's pocket watch. Warm nostalgic mood, "
+            "intimate workshop setting, golden lamplight."
+        ),
+    )
+
+    _execute_agent(client, debug_file, "IntakeTextAgent", task_id)
+    _execute_agent(client, debug_file, "StoryAgent", task_id)
+    _execute_agent(client, debug_file, "ScreenplayAgent", task_id)
+
+    story_results = _last_execution_results_for_agent(client, task_id, "StoryAgent")
+    screenplay_results = _last_execution_results_for_agent(
+        client, task_id, "ScreenplayAgent"
+    )
+
+    story_content = story_results.get("content", {}) or {}
+    story_logline = story_content.get("logline", "")
+    assert story_logline, "StoryAgent produced no logline"
+
+    screenplay_content = screenplay_results.get("content", {}) or {}
+    scenes = screenplay_content.get("scenes", []) or []
+    assert scenes, "ScreenplayAgent produced no scenes"
+    total_shots = sum(
+        len(s.get("shots", []) or []) for s in scenes if isinstance(s, dict)
+    )
+    assert total_shots > 0, "ScreenplayAgent scenes have no shots"
+
+    # Load-bearing check: the screenplay must reuse at least one id
+    # (character or location) from the upstream story. Overlap proves the
+    # LLM actually READ the JSON text blob and recognized the entities —
+    # which is the whole point of the univa-style pass-through. If the
+    # refactor silently passed an empty payload (the old failure mode),
+    # the screenplay would invent fresh ids with zero overlap.
+    story_char_ids = {
+        c.get("character_id", "")
+        for c in (story_content.get("cast") or [])
+        if isinstance(c, dict) and c.get("character_id")
+    }
+    story_loc_ids = {
+        loc.get("location_id", "")
+        for loc in (story_content.get("locations") or [])
+        if isinstance(loc, dict) and loc.get("location_id")
+    }
+
+    screenplay_char_ids: set[str] = set()
+    screenplay_loc_ids: set[str] = set()
+    for sc in scenes:
+        if not isinstance(sc, dict):
+            continue
+        heading = sc.get("heading", {}) or {}
+        if isinstance(heading, dict) and heading.get("location_id"):
+            screenplay_loc_ids.add(heading["location_id"])
+        pack = sc.get("scene_consistency_pack", {}) or {}
+        if isinstance(pack, dict):
+            ll = pack.get("location_lock", {}) or {}
+            if isinstance(ll, dict) and ll.get("location_id"):
+                screenplay_loc_ids.add(ll["location_id"])
+            for cl in pack.get("character_locks", []) or []:
+                if isinstance(cl, dict) and cl.get("character_id"):
+                    screenplay_char_ids.add(cl["character_id"])
+        for sh in sc.get("shots", []) or []:
+            if isinstance(sh, dict) and sh.get("character_id"):
+                screenplay_char_ids.add(sh["character_id"])
+
+    if story_char_ids and screenplay_char_ids:
+        assert screenplay_char_ids & story_char_ids, (
+            f"screenplay character_ids {sorted(screenplay_char_ids)} do not "
+            f"overlap with story cast {sorted(story_char_ids)} — LLM may not "
+            f"have read the story_json_text blob"
+        )
+    if story_loc_ids and screenplay_loc_ids:
+        assert screenplay_loc_ids & story_loc_ids, (
+            f"screenplay location_ids {sorted(screenplay_loc_ids)} do not "
+            f"overlap with story locations {sorted(story_loc_ids)} — LLM may "
+            f"not have read the story_json_text blob"
+        )
+
+    # Structural invariants enforced by recompute_metrics — KeyFrameAgent
+    # downstream depends on these being true of every screenplay.
+    all_shot_ids: list[str] = []
+    for sc in scenes:
+        if not isinstance(sc, dict):
+            continue
+        for sh in sc.get("shots", []) or []:
+            if not isinstance(sh, dict):
+                continue
+            shot_id = sh.get("shot_id", "")
+            assert shot_id, f"shot missing shot_id: {sh}"
+            all_shot_ids.append(shot_id)
+            kf = sh.get("keyframe_plan", {}) or {}
+            if isinstance(kf, dict):
+                assert kf.get("keyframe_count") == 1, (
+                    f"shot {shot_id} keyframe_count != 1 "
+                    f"(recompute_metrics should force it)"
+                )
+    assert len(all_shot_ids) == len(set(all_shot_ids)), (
+        f"duplicate shot_ids: {all_shot_ids}"
+    )
+
+    print(f"[e2e0] story logline:     {story_logline[:160]}")
+    print(f"[e2e0] scenes={len(scenes)} shots={total_shots}")
+    print(f"[e2e0] story    char_ids: {sorted(story_char_ids)}")
+    print(f"[e2e0] screenplay char_ids: {sorted(screenplay_char_ids)}")
+    print(f"[e2e0] story    loc_ids:  {sorted(story_loc_ids)}")
+    print(f"[e2e0] screenplay loc_ids:  {sorted(screenplay_loc_ids)}")
+
+
+# ---------------------------------------------------------------------------
 # e2e1 — text only
 # ---------------------------------------------------------------------------
 
@@ -423,7 +578,6 @@ def test_e2e1_text_only_draft_idea(monkeypatch):
             "repair his late wife's pocket watch. Warm nostalgic mood, intimate "
             "workshop setting, golden lamplight."
         ),
-        user_intent="creative brief for the project",
     )
     assert upload["scope"] == "raw_pending"
 
@@ -507,7 +661,6 @@ def test_e2e2_text_then_text(monkeypatch):
             "even though no boat has come for her in a decade. Cold "
             "blue-grey palette, howling wind, the slow turning of the lamp."
         ),
-        user_intent="initial creative brief — lighthouse keeper story",
     )
     _execute_agent(client, debug_file, "IntakeTextAgent", task_id)
     for agent_id in pipeline:
@@ -530,7 +683,6 @@ def test_e2e2_text_then_text(monkeypatch):
             "buried in the silt. Underwater bubbles, mysterious blue-green "
             "palette, low ambient hum."
         ),
-        user_intent="second creative brief — deep-sea diver discovers wreckage",
     )
     _execute_agent(client, debug_file, "IntakeTextAgent", task_id)
     for agent_id in pipeline:
@@ -597,7 +749,6 @@ def test_e2e3_text_with_image_at_t0(monkeypatch):
             "craft. Warm natural light, soft browns and creams, calm reverent "
             "mood."
         ),
-        user_intent="creative brief — elderly leather craftsman portrait short",
     )
 
     # 2. Upload character reference image #6 (elderly white-haired craftsman).
@@ -605,25 +756,16 @@ def test_e2e3_text_with_image_at_t0(monkeypatch):
         client,
         debug_file,
         image_path=_REFERENCE_IMAGE_FIRST,
-        user_intent=(
-            "AUTHORITATIVE PROTAGONIST IMAGE: the man in this photo IS "
-            "Joseph, the elderly white-haired leather craftsman from the "
-            "creative brief. Use this image as the canonical visual identity "
-            "of the protagonist character (char_001) in ALL keyframes — "
-            "every shot of Joseph should look like THIS person, not a "
-            "text-only generated character."
-        ),
     )
 
     # 3. Run both intake agents.
     _execute_agent(client, debug_file, "IntakeTextAgent", task_id)
     _execute_agent(client, debug_file, "IntakeImageAgent", task_id)
 
-    # 4. Validate the image artifact carries a vision-LLM caption + the
-    #    user_intent embedded in caption. Look up by agent_id (the
-    #    IntakeImage output is a JSON file, mime=application/json, so
-    #    filtering by mime=image/* would miss it — that was the bug in
-    #    the previous version of this test).
+    # 4. Validate the image artifact carries a vision-LLM caption. Look
+    #    up by agent_id (the IntakeImage output is a JSON file,
+    #    mime=application/json, so filtering by mime=image/* would miss
+    #    it — that was the bug in the previous version of this test).
     image_blocks: list[dict] = []
     for entry in workspace.global_memory.list_all():
         if entry.agent_id != "IntakeImageAgent":
@@ -635,11 +777,9 @@ def test_e2e3_text_with_image_at_t0(monkeypatch):
     assert image_blocks, "IntakeImageAgent registered no artifacts"
     block = image_blocks[-1]
     assert block["caption"], "IntakeImage caption is empty"
-    assert (
-        "joseph" in block["caption"].lower()
-        or "protagonist" in block["caption"].lower()
-        or "character" in block["caption"].lower()
-    ), f"user intent not preserved in image caption: {block}"
+    assert "Shows:" in block["caption"], (
+        f"IntakeImage caption missing vision-LLM description: {block}"
+    )
 
     # 5. Run the FULL content pipeline once. The text+image at T=0
     #    represents the director seeing both inputs and dispatching one
@@ -714,7 +854,6 @@ def test_e2e4_midstream_image(monkeypatch):
             "trails, dreamy childlike wonder. Pastel cool-greens with "
             "amber highlights."
         ),
-        user_intent="initial creative brief — young girl chasing fireflies",
     )
     _execute_agent(client, debug_file, "IntakeTextAgent", task_id)
     for agent_id in pipeline:
@@ -741,16 +880,6 @@ def test_e2e4_midstream_image(monkeypatch):
         client,
         debug_file,
         image_path=_REFERENCE_IMAGE_SECOND,
-        user_intent=(
-            "REPLACE THE PROTAGONIST. The original brief described an "
-            "8-year-old girl chasing fireflies. From now on the protagonist "
-            "of this story is the GRAY-HAIRED MIDDLE-AGED WOMAN in this "
-            "photo, NOT a child. The story (chasing fireflies through a "
-            "moonlit forest) stays the same, but every keyframe and every "
-            "video shot should depict THIS woman doing the action — same "
-            "character_id (char_001), but a totally different visual "
-            "identity. Override the text description with this image."
-        ),
     )
     _execute_agent(client, debug_file, "IntakeImageAgent", task_id)
     for agent_id in pipeline:

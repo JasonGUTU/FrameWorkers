@@ -6,7 +6,7 @@ from typing import Any
 
 from pydantic import BaseModel
 
-from ..common_schema import ImageReferenceEntry
+from ..common_schema import ImageReferenceEntry, ResolvedArtifactEntry
 from ..descriptor import SubAgentDescriptor
 from .agent import UnivaVideoAgent
 from .labels import INPUT_LABEL_SHOT_KEYFRAMES, INPUT_LABEL_STORYBOARD
@@ -21,32 +21,15 @@ def build_input(
     resolved_artifacts: dict,
 ) -> BaseModel:
     """Construct typed input from the resolved artifact dict."""
-    sb = resolved_artifacts.get(INPUT_LABEL_STORYBOARD, {})
-    payload = sb.get("payload", {}) if isinstance(sb, dict) else {}
-    content = payload.get("content", {}) if isinstance(payload, dict) else {}
-
-    keyframes_raw = resolved_artifacts.get(INPUT_LABEL_SHOT_KEYFRAMES, [])
-    if not isinstance(keyframes_raw, list):
-        keyframes_raw = []
-    shot_keyframes: list[ImageReferenceEntry] = []
-    for it in keyframes_raw:
-        if not isinstance(it, dict):
-            continue
-        path = str(it.get("path", "") or "").strip()
-        if not path:
-            continue
-        shot_keyframes.append(
-            ImageReferenceEntry(
-                path=path,
-                caption=str(it.get("caption", "") or ""),
-                mime=str(it.get("mime", "") or ""),
-                scope=str(it.get("scope", "") or ""),
-            )
-        )
-
+    sb = ResolvedArtifactEntry.coerce(resolved_artifacts.get(INPUT_LABEL_STORYBOARD))
+    content = (sb.payload or {}).get("content", {})
+    if not isinstance(content, dict):
+        content = {}
     return UnivaVideoInput(
         storyboard=content,
-        shot_keyframes=shot_keyframes,
+        shot_keyframes=ImageReferenceEntry.list_from_resolved(
+            resolved_artifacts.get(INPUT_LABEL_SHOT_KEYFRAMES)
+        ),
     )
 
 

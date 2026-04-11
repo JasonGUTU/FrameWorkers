@@ -24,7 +24,6 @@ class IntakeAudioContent(BaseModel):
 
 class IntakeAudioInput(BaseModel):
     raw_audio_path: str = ""
-    user_intent: str = ""
 
 
 class IntakeAudioOutput(BaseModel):

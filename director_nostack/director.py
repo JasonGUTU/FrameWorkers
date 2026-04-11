@@ -212,7 +212,6 @@ def run_nostack_pipeline(
 
         agent_id = decision.agent_id
         assert agent_id is not None
-        execute_fields: Dict[str, Any] = {"text": goal_text}
         logger.info(
             "Pipeline step %s agent_id=%s task_id=%s",
             step + 1,
@@ -220,11 +219,7 @@ def run_nostack_pipeline(
             task_id,
         )
         try:
-            result = client.execute_agent(
-                agent_id,
-                task_id,
-                execute_fields=execute_fields,
-            )
+            result = client.execute_agent(agent_id, task_id)
         except Exception as e:
             logger.error("execute_agent failed: %s", e, exc_info=True)
             _post_director_quiet(

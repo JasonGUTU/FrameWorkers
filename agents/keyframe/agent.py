@@ -338,11 +338,10 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
         path into that field BEFORE the LLM creative-fill step (which only
         rewrites ``prompt_summary``, never touches ``image_asset.uri``).
 
-        Honors the user's intent — if a user uploaded a character reference,
-        the user already said "use this for the protagonist" via the upload
-        ``user_intent`` (embedded in the caption). The InputResolver
-        already matched the upload to ``[character_reference]``, so reaching
-        this point means the user's intent is already validated semantically.
+        Honors the user's intent — the InputResolver already matched the
+        upload to ``[character_reference]`` based on the artifact caption,
+        so reaching this point means the user's intent to use this image
+        as a character anchor is already validated semantically.
         Position-based assignment is the simplest correct continuation.
         """
         char_refs = input_data.character_references or []

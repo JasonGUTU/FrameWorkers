@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel
 
+from ..common_schema import ResolvedArtifactEntry
 from ..descriptor import SubAgentDescriptor
 from .agent import UnivaStoryboardAgent
 from .labels import INPUT_LABEL_CREATIVE_BRIEF
@@ -20,13 +21,14 @@ def build_input(
     The creative brief is selected by InputResolver via the
     ``[creative_brief]`` label.
     """
-    brief_entry = resolved_artifacts.get(INPUT_LABEL_CREATIVE_BRIEF, {})
-    payload = brief_entry.get("payload", {}) if isinstance(brief_entry, dict) else {}
+    brief = ResolvedArtifactEntry.coerce(
+        resolved_artifacts.get(INPUT_LABEL_CREATIVE_BRIEF)
+    )
     user_prompt = ""
-    if isinstance(payload, dict):
-        user_prompt = str(payload.get("text", "") or "")
-    if not user_prompt and isinstance(brief_entry, dict):
-        user_prompt = str(brief_entry.get("caption", "") or "")
+    if brief.payload:
+        user_prompt = str(brief.payload.get("text", "") or "")
+    if not user_prompt:
+        user_prompt = brief.caption
     return UnivaStoryboardInput(user_prompt=user_prompt)
 
 

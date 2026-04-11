@@ -5,10 +5,13 @@ network, no fixtures) and exist solely to keep the architectural
 invariants from regressing. The principles being guarded are:
 
   1.  Sub-agent input boundary: every ``descriptor.build_input`` takes
-      ``(task_id, resolved_artifacts: dict)`` — no typed-wrapper class,
-      no extra channels. Adding a new channel requires editing 13
-      descriptor signatures (visible in PR review), not bumping a
-      dataclass field.
+      ``(task_id, resolved_artifacts: dict)`` — where values are
+      ``ResolvedArtifactEntry`` (or lists thereof). Adding a new FIELD
+      to an entry only edits ``ResolvedArtifactEntry`` in
+      ``agents/common_schema.py`` — one place. Adding a new CHANNEL
+      (a whole new build_input parameter) still requires editing every
+      descriptor signature, keeping that cross-cutting change visible
+      in PR review.
 
   2.  Evaluators do not perform cross-validation — ``check_structure`` /
       ``evaluate_creative`` / ``evaluate`` / ``evaluate_asset`` take only

@@ -209,6 +209,7 @@ __marimo__/
 
 # Nested git repo kept locally; not part of this project
 univa/
+Director/
 
 .DS_Store
 Thumbs.db

@@ -7,29 +7,10 @@ from typing import Any, Dict, Optional, Tuple
 from flask import Blueprint, request, jsonify
 
 from ..common_http import bad_request, json_body_or_error
-from .service import (
-    AssistantService,
-    AssistantBadExecuteFieldsError,
-)
+from ..task_stack.api_serialize import serialize_for_api
+from .service import AssistantService
 from .state_store import assistant_state_store
-from .response_serializers import (
-    serialize_response_value,
-    log_entry_to_dict,
-)
 from agents import get_agent_registry
-
-
-def _execute_fields_from_http_body(data: Dict[str, Any]) -> Dict[str, Any]:
-    """Return the nested ``execute_fields`` object from ``POST /api/assistant/execute``.
-
-    Root JSON must expose ``execute_fields`` as a JSON object (may be empty ``{}``).
-    """
-    raw = data.get("execute_fields")
-    if raw is None:
-        return {}
-    if not isinstance(raw, dict):
-        raise ValueError("execute_fields must be a JSON object")
-    return dict(raw)
 
 
 def _execute_error_response(
@@ -54,18 +35,6 @@ def create_assistant_blueprint():
         if workspace is None:
             return None, (jsonify({'error': 'Workspace not found'}), 404)
         return workspace, None
-    
-    # Global Assistant routes (singleton, pre-defined)
-    @bp.route('/api/assistant', methods=['GET'])
-    def get_assistant():
-        """
-        Get the global assistant instance (singleton, pre-defined)
-        
-        The assistant is a pre-defined singleton that manages all sub-agents.
-        All sub-agents are automatically discovered from the registry.
-        """
-        assistant = assistant_state_store.get_global_assistant()
-        return jsonify(serialize_response_value(assistant))
     
     # Sub-Agent routes (from registry)
     @bp.route('/api/assistant/sub-agents', methods=['GET'])
@@ -95,8 +64,11 @@ def create_assistant_blueprint():
         """
         Execute an agent for a task.
 
-        JSON body: ``agent_id``, ``task_id`` (required), and ``execute_fields`` (object,
-        optional keys ``text``, ``image``, ``video``, ``audio``, …).
+        JSON body: ``agent_id`` and ``task_id`` (both required). Sub-agents
+        only see workspace artifacts selected by ``InputResolver`` —
+        any user input must already be persisted as a workspace artifact
+        (e.g. via an Intake agent or ``POST /api/workspace/upload``)
+        before this route is called.
 
         Success body: ``task_id``, ``execution_id``, ``status``, ``error``, ``error_reasoning``,
         ``workspace_id``, ``global_memory_brief`` (no ``content`` in rows). Sub-agent ``results``
@@ -108,13 +80,9 @@ def create_assistant_blueprint():
         data, error = json_body_or_error()
         if error:
             return error
-        
+
         agent_id = data.get('agent_id')
         task_id = data.get('task_id')
-        try:
-            execute_fields = _execute_fields_from_http_body(data)
-        except ValueError as e:
-            return _execute_error_response(str(e), 400)
 
         if not agent_id or not task_id:
             return _execute_error_response(
@@ -125,11 +93,8 @@ def create_assistant_blueprint():
             results = service.execute_agent_for_task(
                 agent_id=agent_id,
                 task_id=task_id,
-                execute_fields=execute_fields
             )
-            return jsonify(serialize_response_value(results)), 200
-        except AssistantBadExecuteFieldsError as e:
-            return _execute_error_response(str(e), 400)
+            return jsonify(serialize_for_api(results)), 200
         except ValueError as e:
             return _execute_error_response(str(e), 404)
         except Exception as e:
@@ -139,7 +104,7 @@ def create_assistant_blueprint():
     def get_executions_by_task(task_id: str):
         """Get all executions for a task"""
         executions = assistant_state_store.get_executions_by_task(task_id)
-        return jsonify([serialize_response_value(e) for e in executions])
+        return jsonify([serialize_for_api(e) for e in executions])
     
     # Workspace upload route (B2 strict separation: raw uploads go through here,
     # then an Intake agent converts them into caption-rich workspace artifacts)
@@ -149,13 +114,9 @@ def create_assistant_blueprint():
 
         JSON body fields:
           - mime: required string, e.g. "text/plain", "image/png", "video/mp4".
-          - user_intent: required free-form string describing what the upload is for.
           - For text uploads: ``text`` (a string).
           - For binary uploads (image/video/audio): ``data_b64`` (base64-encoded bytes).
           - filename: optional original filename hint.
-
-        Returns: ``{"file_id": "...", "path": "...", "filename": "...",
-                    "mime": "...", "caption": {what, why, scope}}``.
         Caller (or director) is then expected to invoke the appropriate
         IntakeXxxAgent so the placeholder is upgraded to a caption-rich
         artifact that downstream content agents can find via their labels.
@@ -169,14 +130,8 @@ def create_assistant_blueprint():
             return error
 
         mime = str(data.get("mime") or "").strip()
-        user_intent = str(data.get("user_intent") or "").strip()
         if not mime:
             return _execute_error_response("Missing required field: mime", 400)
-        if not user_intent:
-            return _execute_error_response(
-                "Missing required field: user_intent (free-text describing what this upload is for)",
-                400,
-            )
 
         # Resolve the byte payload from either ``text`` or ``data_b64``.
         text_value = data.get("text")
@@ -207,7 +162,6 @@ def create_assistant_blueprint():
             result = workspace.persist_raw_upload(
                 file_content=file_bytes,
                 mime=mime,
-                user_intent=user_intent,
                 original_filename=original_filename,
             )
         except Exception as exc:
@@ -296,6 +250,6 @@ def create_assistant_blueprint():
             limit=limit,
         )
 
-        return jsonify([log_entry_to_dict(log) for log in logs])
+        return jsonify([serialize_for_api(log) for log in logs])
 
     return bp

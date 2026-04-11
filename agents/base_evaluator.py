@@ -17,7 +17,7 @@ Layer 3 is invoked via ``evaluate_asset()`` after materialization.
 **Output-only**: every evaluator method receives ONLY the agent's own
 output (or asset_dict).  Evaluators do NOT cross-validate against
 upstream artifacts — that violates sub-agent decoupling.  The
-``input_bundle_v2`` parameter is intentionally absent from every method
+``resolved_artifacts`` dict is intentionally absent from every method
 signature in this base class.
 
 Each evaluation method returns (or contributes to) the standard result::

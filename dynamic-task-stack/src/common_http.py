@@ -24,13 +24,6 @@ def json_body_or_error(*, allow_empty: bool = False):
     return data, None
 
 
-def required_query_or_error(name: str):
-    value = request.args.get(name, "")
-    if not value:
-        return None, bad_request(f"{name.capitalize()} parameter required")
-    return value, None
-
-
 def parse_enum_or_error(
     enum_cls: type[EnumT],
     raw_value: Optional[str],

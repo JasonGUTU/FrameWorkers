@@ -9,10 +9,12 @@ Responsibilities:
     artifacts whose captions describe the same kind of thing.
   * Pack the LLM's selections into a ``resolved_artifacts`` dict keyed
     by **consumer-declared label name**:
-      - ``(single)`` labels → one entry dict
-      - ``(collection)`` labels → list of entry dicts
-    Each entry: ``caption / scope / path / mime`` (+ ``payload`` for
-    JSON artifacts loaded from disk).
+      - ``(single)`` labels → one ``ResolvedArtifactEntry``
+      - ``(collection)`` labels → list of ``ResolvedArtifactEntry``
+    Each entry carries ``caption / scope / path / mime`` (and
+    ``payload`` for JSON artifacts loaded from disk). The shared
+    ``ResolvedArtifactEntry`` class lives in ``agents.common_schema``
+    and is the single point of truth for the cross-agent entry shape.
 
 What it does NOT do:
   * Maintain any machine-readable type system — producers and consumers
@@ -33,6 +35,8 @@ import json
 import logging
 import re
 from typing import Any, Dict, List, Optional, TYPE_CHECKING
+
+from agents.common_schema import ResolvedArtifactEntry
 
 if TYPE_CHECKING:
     from .global_memory import GlobalMemory
@@ -82,9 +86,12 @@ class InputResolver:
     )
     # resolved["resolved_artifacts"] is a dict keyed by the consumer's labels:
     # {
-    #   "screenplay": {"path": ..., "payload": {...}, "what": ..., ...},   # single -> dict
-    #   "shot_stills": [{"path": ..., "scope": "shot:sh_001", ...}, ...],  # collection -> list
+    #   "screenplay":  ResolvedArtifactEntry(path=..., payload={...}, caption=..., ...),  # single
+    #   "shot_stills": [ResolvedArtifactEntry(path=..., scope="shot:sh_001", ...), ...],  # collection
     # }
+    # ``(single)`` labels with no matching artifact get an empty
+    # ``ResolvedArtifactEntry()`` (all fields blank) so consumers can
+    # read attributes without defensive None checks.
     """
 
     def __init__(
@@ -287,7 +294,7 @@ class InputResolver:
 
         resolved: Dict[str, Any] = {}
         for label, paths in per_label_paths.items():
-            entries: List[Dict[str, Any]] = []
+            entries: List[ResolvedArtifactEntry] = []
             for p in paths:
                 ref = path_to_ref.get(p)
                 if ref is None:
@@ -299,14 +306,23 @@ class InputResolver:
                 entries.append(self._build_entry(ref))
             cardinality = cardinality_map.get(label, "collection")
             if cardinality == "single":
-                resolved[label] = entries[0] if entries else {}
+                # Empty entry for missing singles so descriptors don't
+                # have to branch on None vs dict vs ResolvedArtifactEntry.
+                resolved[label] = entries[0] if entries else ResolvedArtifactEntry()
             else:
                 resolved[label] = entries
 
         logger.info(
             "[InputResolver] %s: resolved labels=%s",
             agent_id,
-            {k: (1 if isinstance(v, dict) else len(v)) for k, v in resolved.items()},
+            # (single) labels map to a ResolvedArtifactEntry (count=1);
+            # (collection) labels map to list[ResolvedArtifactEntry] (count=len).
+            # Previously this branched on ``isinstance(v, dict)`` which was
+            # correct when resolved entries were raw dicts, but broke once the
+            # resolver started producing typed ResolvedArtifactEntry objects
+            # — those are neither dict nor list, so the old fallback ``len(v)``
+            # blew up with "object of type 'ResolvedArtifactEntry' has no len()".
+            {k: (len(v) if isinstance(v, list) else 1) for k, v in resolved.items()},
         )
 
         return {
@@ -319,16 +335,17 @@ class InputResolver:
     # Helpers
     # ------------------------------------------------------------------
 
-    def _build_entry(self, ref: Any) -> Dict[str, Any]:
-        entry: Dict[str, Any] = {
-            "caption": ref.caption,
-            "scope": ref.scope,
-            "path": ref.path,
-            "mime": ref.mime,
-        }
+    def _build_entry(self, ref: Any) -> ResolvedArtifactEntry:
+        payload: Optional[Dict[str, Any]] = None
         if ref.mime == "application/json" or ref.path.lower().endswith(".json"):
-            entry["payload"] = self._load_json(ref.path)
-        return entry
+            payload = self._load_json(ref.path)
+        return ResolvedArtifactEntry(
+            caption=ref.caption,
+            scope=ref.scope,
+            path=ref.path,
+            mime=ref.mime,
+            payload=payload,
+        )
 
     def _load_json(self, path: str) -> Optional[Dict[str, Any]]:
         try:

@@ -88,11 +88,7 @@ def test_pipeline_runs_once_then_router_done(mock_client: MagicMock) -> None:
     second_kw = planner.choose_pipeline_step.call_args_list[1].kwargs
     assert first_kw["after_frontend_user_message"] is True
     assert second_kw["after_frontend_user_message"] is False
-    mock_client.execute_agent.assert_called_once_with(
-        "StoryAgent",
-        d.task_id,
-        execute_fields={"text": "Write a short film idea."},
-    )
+    mock_client.execute_agent.assert_called_once_with("StoryAgent", d.task_id)
     mock_client.update_message_read_status.assert_called_once()
 
 
@@ -171,8 +167,11 @@ def test_merge_session_goal_no_prior_does_not_call_llm() -> None:
     llm.call.assert_not_called()
 
 
-def test_pipeline_execute_uses_merged_goal_string(mock_client: MagicMock) -> None:
-    """When planner.merge_session_goal returns a merged brief, execute_fields.text uses it."""
+def test_pipeline_routing_uses_merged_goal_string(mock_client: MagicMock) -> None:
+    """When planner.merge_session_goal returns a merged brief, the merged
+    text is passed to ``choose_pipeline_step`` as ``original_user_goal``
+    so the routing LLM sees the full context. The merged text does NOT
+    reach the agent itself — that path runs through workspace artifacts."""
     mock_client.get_unread_messages.return_value = [{"id": "m1", "content": "change tone"}]
     planner = MagicMock()
     planner.merge_session_goal.return_value = "MERGED FULL BRIEF"
@@ -202,11 +201,11 @@ def test_pipeline_execute_uses_merged_goal_string(mock_client: MagicMock) -> Non
     d._cycle()
 
     planner.merge_session_goal.assert_called_once()
-    mock_client.execute_agent.assert_called_once_with(
-        "StoryAgent",
-        d.task_id,
-        execute_fields={"text": "MERGED FULL BRIEF"},
-    )
+    # The merged text reaches the routing LLM via choose_pipeline_step.
+    routing_kwargs = planner.choose_pipeline_step.call_args_list[0].kwargs
+    assert routing_kwargs["original_user_goal"] == "MERGED FULL BRIEF"
+    # Backend execute body now carries only agent_id + task_id.
+    mock_client.execute_agent.assert_called_once_with("StoryAgent", d.task_id)
 
 
 def test_latest_execution_summary_shape(mock_client: MagicMock) -> None:

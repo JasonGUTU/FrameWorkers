@@ -6,7 +6,7 @@ from typing import Any
 
 from pydantic import BaseModel
 
-from ..common_schema import ImageReferenceEntry
+from ..common_schema import ImageReferenceEntry, ResolvedArtifactEntry
 from ..descriptor import SubAgentDescriptor
 from .agent import VideoAgent
 from .labels import (
@@ -24,35 +24,14 @@ def build_input(
     _task_id: str,
     resolved_artifacts: dict,
 ) -> BaseModel:
-    sp = resolved_artifacts.get(INPUT_LABEL_SCREENPLAY, {})
-    sp_payload = sp.get("payload", {}) if isinstance(sp, dict) else {}
-
-    kf = resolved_artifacts.get(INPUT_LABEL_KEYFRAMES_METADATA, {})
-    kf_payload = kf.get("payload", {}) if isinstance(kf, dict) else {}
-
-    shot_stills_raw = resolved_artifacts.get(INPUT_LABEL_SHOT_STILLS, [])
-    if not isinstance(shot_stills_raw, list):
-        shot_stills_raw = []
-    shot_stills: list[ImageReferenceEntry] = []
-    for it in shot_stills_raw:
-        if not isinstance(it, dict):
-            continue
-        path = str(it.get("path", "") or "").strip()
-        if not path:
-            continue
-        shot_stills.append(
-            ImageReferenceEntry(
-                path=path,
-                caption=str(it.get("caption", "") or ""),
-                mime=str(it.get("mime", "") or ""),
-                scope=str(it.get("scope", "") or ""),
-            )
-        )
-
+    sp = ResolvedArtifactEntry.coerce(resolved_artifacts.get(INPUT_LABEL_SCREENPLAY))
+    kf = ResolvedArtifactEntry.coerce(resolved_artifacts.get(INPUT_LABEL_KEYFRAMES_METADATA))
     return VideoAgentInput(
-        screenplay=sp_payload,
-        keyframes_metadata=kf_payload,
-        shot_stills=shot_stills,
+        screenplay=sp.payload or {},
+        keyframes_metadata=kf.payload or {},
+        shot_stills=ImageReferenceEntry.list_from_resolved(
+            resolved_artifacts.get(INPUT_LABEL_SHOT_STILLS)
+        ),
     )
 
 

@@ -19,8 +19,7 @@ class IntakeAudioAgent(BaseAgent[IntakeAudioInput, IntakeAudioOutput]):
 
     def build_user_prompt(self, input_data: IntakeAudioInput) -> str:
         return (
-            "Audio is provided as a multimodal attachment.\n"
-            f"User-stated intent (do not echo): {input_data.user_intent[:200] or '(none)'}\n\n"
+            "Audio is provided as a multimodal attachment.\n\n"
             "Return JSON: {\"auditory_summary\": \"...\"}"
         )
 

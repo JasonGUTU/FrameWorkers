@@ -164,17 +164,25 @@ class Screenplay(BaseModel):
 
 
 class ScreenplayAgentInput(BaseModel):
-    """Input payload for ScreenplayAgent.
+    """Input payload for ScreenplayAgent — univa-style JSON-text pass-through.
 
-    Single unified input: ``story`` is the upstream story_blueprint payload
-    (selected by InputResolver via the ``[story]`` label). ScreenplayAgent
+    ``story_json_text`` is the **entire** upstream story_blueprint payload
+    serialized as a raw JSON text blob. ScreenplayAgent's LLM reads this
+    text directly and reasons about whatever shape the upstream happens
+    to produce — there is NO field-name unpacking in ``build_input`` or
+    in the agent. This removes the hidden string-keyed coupling between
+    ``StoryBlueprintContent``'s internal field names and ScreenplayAgent's
+    consumer code: any well-formed JSON object can be consumed, as long
+    as the LLM can read and dramatize it.
+
+    Selected by InputResolver via the ``[story]`` label. ScreenplayAgent
     has NO directive label — any user-level intent flows through the
     upstream re-run mechanism (Director re-runs StoryAgent with the new
-    brief; the updated story_blueprint then reaches us via the same
+    brief; the updated story_blueprint reaches us via the same
     ``[story]`` label).
     """
 
-    story: dict = Field(default_factory=dict)
+    story_json_text: str = ""
 
 
 class ScreenplayAgentOutput(Screenplay):

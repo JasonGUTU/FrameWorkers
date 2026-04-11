@@ -152,11 +152,7 @@ def test_univa_pipeline_live_e2e(assistant_http_client_real_agents):
     task_id = task_body["id"]
     print(f"[univa-e2e] task_id={task_id}")
 
-    common_inputs = {
-        "execute_fields": {
-            "text": _task_stack_description_to_assistant_text(task_body["description"]),
-        },
-    }
+    common_inputs: dict = {}
 
     # -- Define the UniVA pipeline agents in order --------------------------
     univa_agents = [

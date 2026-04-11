@@ -2,26 +2,14 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from src.assistant.models import Assistant, AgentExecution, ExecutionStatus
-from src.assistant.response_serializers import (
-    log_entry_to_dict,
-    serialize_response_value,
-)
+from src.assistant.models import AgentExecution, ExecutionStatus
 from src.assistant.workspace.models import LogEntry
+from src.task_stack.api_serialize import serialize_for_api
 
 
-def test_serializers_handle_assistant_models():
-    assistant = Assistant(
-        id="assistant_global",
-        name="Global Assistant",
-        description="desc",
-        agent_ids=["a1"],
-        created_at=datetime.now(),
-        updated_at=datetime.now(),
-    )
+def test_serializers_handle_agent_execution_model():
     execution = AgentExecution(
         id="exec_1",
-        assistant_id="assistant_global",
         agent_id="a1",
         task_id="t1",
         status=ExecutionStatus.COMPLETED,
@@ -29,14 +17,14 @@ def test_serializers_handle_assistant_models():
         results={"ok": True},
     )
 
-    assistant_dict = serialize_response_value(assistant)
-    execution_dict = serialize_response_value(execution)
+    execution_dict = serialize_for_api(execution)
 
-    assert assistant_dict["id"] == "assistant_global"
     assert execution_dict["status"] == "COMPLETED"
+    assert execution_dict["agent_id"] == "a1"
+    assert execution_dict["results"] == {"ok": True}
 
 
-def test_log_entry_to_dict_helper():
+def test_serialize_for_api_handles_log_entry():
     now = datetime.now()
     log = LogEntry(
         id="l1",
@@ -48,15 +36,16 @@ def test_log_entry_to_dict_helper():
         task_id="t1",
         execution_id="exec_1",
     )
-    log_dict = log_entry_to_dict(log)
+    log_dict = serialize_for_api(log)
     assert log_dict["event"] == "artifact.persisted"
     assert log_dict["details"] == {"x": 1}
     assert log_dict["execution_id"] == "exec_1"
     assert log_dict["level"] == "INFO"
+    assert log_dict["timestamp"] == now.isoformat()
 
 
-def test_serialize_response_value_rewrites_binary_payloads():
+def test_serialize_for_api_rewrites_binary_payloads():
     payload = {"raw": b"\x01\x02", "nested": {"buf": bytearray(b"abc")}}
-    serialized = serialize_response_value(payload)
+    serialized = serialize_for_api(payload)
     assert serialized["raw"] == {"_type": "binary", "size_bytes": 2}
     assert serialized["nested"]["buf"] == {"_type": "binary", "size_bytes": 3}

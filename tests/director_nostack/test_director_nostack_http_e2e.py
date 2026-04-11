@@ -74,11 +74,9 @@ def test_e2e_user_message_triggers_assistant_and_director_chat(
 
     exec_calls: list[dict] = []
 
-    def _trace_execute(agent_id, tid, execute_fields=None):
-        exec_calls.append(
-            {"agent_id": agent_id, "task_id": tid, "execute_fields": dict(execute_fields or {})}
-        )
-        return NoStackAPIClient.execute_agent(http, agent_id, tid, execute_fields=execute_fields)
+    def _trace_execute(agent_id, tid):
+        exec_calls.append({"agent_id": agent_id, "task_id": tid})
+        return NoStackAPIClient.execute_agent(http, agent_id, tid)
 
     http.execute_agent = _trace_execute  # type: ignore[method-assign]
 
@@ -87,10 +85,12 @@ def test_e2e_user_message_triggers_assistant_and_director_chat(
 
     planner.merge_session_goal.assert_called_once()
     assert planner.choose_pipeline_step.call_count == 2
+    # Routing LLM saw the merged user goal from merge_session_goal.
+    routing_kwargs = planner.choose_pipeline_step.call_args_list[0].kwargs
+    assert "10-second" in str(routing_kwargs.get("original_user_goal") or "")
     assert len(exec_calls) == 1
     assert exec_calls[0]["agent_id"] == "NostackE2eAgent"
     assert exec_calls[0]["task_id"] == task_id
-    assert "10-second" in (exec_calls[0]["execute_fields"].get("text") or "")
 
     ex = fc.get(f"/api/assistant/executions/task/{task_id}")
     assert ex.status_code == 200
@@ -154,9 +154,9 @@ def test_e2e_run_nostack_pipeline_embed_hook_same_stack(
 
     exec_calls: list[dict] = []
 
-    def _trace_execute(agent_id, tid, execute_fields=None):
+    def _trace_execute(agent_id, tid):
         exec_calls.append({"agent_id": agent_id, "task_id": tid})
-        return NoStackAPIClient.execute_agent(http, agent_id, tid, execute_fields=execute_fields)
+        return NoStackAPIClient.execute_agent(http, agent_id, tid)
 
     http.execute_agent = _trace_execute  # type: ignore[method-assign]
 

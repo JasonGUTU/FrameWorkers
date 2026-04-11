@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
+import json
+
 from pydantic import BaseModel
 
+from ..common_schema import ResolvedArtifactEntry
 from ..descriptor import SubAgentDescriptor
 from .agent import ScreenplayAgent
 from .schema import ScreenplayAgentInput
@@ -18,6 +21,11 @@ def build_input(
 ) -> BaseModel:
     """Construct typed input from the resolved artifact dict.
 
+    Univa-style pass-through: dump the entire upstream story payload as
+    a raw indented JSON text blob into ``story_json_text``. No ``.content``
+    unwrap, no field enumeration — the whole upstream JSON object (whatever
+    shape it happens to have) is forwarded verbatim for the LLM to read.
+
     Single input: the upstream story_blueprint, selected by InputResolver
     via the ``[story]`` label. ScreenplayAgent has no concept of free-text
     user directives — any such directive flows in through the upstream
@@ -25,11 +33,10 @@ def build_input(
     updated story_blueprint reaches ScreenplayAgent through this same
     ``[story]`` label).
     """
-    story = resolved_artifacts.get(INPUT_LABEL_STORY, {})
-    story_payload = story.get("payload", {}) if isinstance(story, dict) else {}
-    # ScreenplayAgent expects content dict directly (has cast, scene_outline, etc.)
-    content = story_payload.get("content", {}) if isinstance(story_payload, dict) else {}
-    return ScreenplayAgentInput(story=content)
+    story = ResolvedArtifactEntry.coerce(resolved_artifacts.get(INPUT_LABEL_STORY))
+    story_payload = story.payload or {}
+    story_json_text = json.dumps(story_payload, ensure_ascii=False, indent=2)
+    return ScreenplayAgentInput(story_json_text=story_json_text)
 
 
 def build_captions(agent_id: str, output_dict: dict) -> dict:

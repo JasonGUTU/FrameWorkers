@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel
 
+from ...common_schema import ResolvedArtifactEntry
 from ...descriptor import SubAgentDescriptor
 from .agent import IntakeImageAgent
 from .labels import INPUT_LABEL_RAW_IMAGE_UPLOAD
@@ -15,23 +16,11 @@ def build_input(
     _task_id: str,
     resolved_artifacts: dict,
 ) -> BaseModel:
-    entry = resolved_artifacts.get(INPUT_LABEL_RAW_IMAGE_UPLOAD, {})
-    if isinstance(entry, list):
-        entry = entry[0] if entry else {}
-    raw_image_path = ""
-    user_intent = ""
-    if isinstance(entry, dict):
-        raw_image_path = str(entry.get("path", "") or "")
-        user_intent = _extract_user_intent(str(entry.get("caption", "") or ""))
-    return IntakeImageInput(raw_image_path=raw_image_path, user_intent=user_intent)
-
-
-def _extract_user_intent(caption: str) -> str:
-    marker = "User intent: "
-    idx = caption.find(marker)
-    if idx < 0:
-        return ""
-    return caption[idx + len(marker):].rstrip(".")
+    raw = resolved_artifacts.get(INPUT_LABEL_RAW_IMAGE_UPLOAD)
+    if isinstance(raw, list):
+        raw = raw[0] if raw else None
+    entry = ResolvedArtifactEntry.coerce(raw)
+    return IntakeImageInput(raw_image_path=entry.path)
 
 
 def build_captions(agent_id: str, output_dict: dict) -> dict:

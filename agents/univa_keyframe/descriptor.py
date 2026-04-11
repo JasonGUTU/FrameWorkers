@@ -6,6 +6,7 @@ from typing import Any
 
 from pydantic import BaseModel
 
+from ..common_schema import ResolvedArtifactEntry
 from ..descriptor import SubAgentDescriptor
 from .agent import UnivaKeyFrameAgent
 from .labels import INPUT_LABEL_STORYBOARD
@@ -20,9 +21,10 @@ def build_input(
     resolved_artifacts: dict,
 ) -> BaseModel:
     """Construct typed input from the resolved artifact dict."""
-    sb = resolved_artifacts.get(INPUT_LABEL_STORYBOARD, {})
-    payload = sb.get("payload", {}) if isinstance(sb, dict) else {}
-    content = payload.get("content", {}) if isinstance(payload, dict) else {}
+    sb = ResolvedArtifactEntry.coerce(resolved_artifacts.get(INPUT_LABEL_STORYBOARD))
+    content = (sb.payload or {}).get("content", {})
+    if not isinstance(content, dict):
+        content = {}
     return UnivaKeyFrameInput(storyboard=content)
 
 

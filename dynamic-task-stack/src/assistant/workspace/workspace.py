@@ -189,7 +189,6 @@ class Workspace:
         *,
         file_content: bytes,
         mime: str,
-        user_intent: str,
         original_filename: str = "",
     ) -> Dict[str, Any]:
         """Persist a raw user upload as a workspace artifact with a placeholder caption.
@@ -234,13 +233,10 @@ class Workspace:
             filename=filename,
         )
 
-        intent_str = (user_intent or "").strip()
         placeholder_caption = (
             f"Raw user upload (mime={mime or 'unknown'}). "
             "Pending intake processing — only visible to Intake* agents."
         )
-        if intent_str:
-            placeholder_caption += f" User intent: {intent_str}."
 
         ref = _ArtifactRef(
             caption=placeholder_caption,
@@ -261,7 +257,6 @@ class Workspace:
             details={
                 "filename": filename,
                 "mime": mime,
-                "user_intent": user_intent,
                 "scope": "raw_pending",
             },
         )
@@ -361,7 +356,12 @@ class Workspace:
         """LLM-based per-artifact semantic input resolution.
 
         Returns dict with keys:
-          resolved_artifacts        : list[{what, why, scope, path, mime, payload}]
+          resolved_artifacts        : dict[str, ResolvedArtifactEntry | list[ResolvedArtifactEntry]]
+                                      — keyed by consumer-declared label,
+                                      ``(single)`` labels map to one entry,
+                                      ``(collection)`` labels to a list.
+                                      Entry shape lives in
+                                      ``agents.common_schema.ResolvedArtifactEntry``.
           selected_artifact_paths   : list[str]
           rationale                 : str
         """

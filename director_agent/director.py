@@ -16,7 +16,8 @@ logger = logging.getLogger(__name__)
 
 
 def _task_stack_description_to_assistant_text(raw: Any) -> str:
-    """Task Stack 里 ``description`` 当前多为 **dict**；Assistant 的 ``execute_fields.text`` 仅为 **str**。
+    """Task Stack 里 ``description`` 当前多为 **dict**；director 用它喂给 sub-agent 路由 LLM
+    挑选合适的 agent_id。需要把 dict 拍平成纯文本。
 
     仅在此处做一层对齐（不在 Assistant 里做结构化解析）。若已是字符串则原样；
     若为 dict 则优先使用常见的 ``goal`` 字符串；否则退回 JSON 文本以便不丢信息。
@@ -350,22 +351,6 @@ class DirectorAgent:
                 advance_pointer=False,
             )
 
-    def _build_assistant_inputs_for_execution(
-        self,
-        *,
-        task: Dict[str, Any],
-    ) -> Optional[Dict[str, Any]]:
-        """Build ``execute_fields`` for Assistant.
-
-        Director only passes the raw text intent; each sub-agent's descriptor.build_input
-        is responsible for extracting agent-specific config from source_text.
-        Global memory is loaded server-side.
-        """
-        execute_fields: Dict[str, Any] = {
-            "text": _task_stack_description_to_assistant_text(task.get("description")),
-        }
-        return execute_fields
-    
     def _delegate_to_assistant(
         self,
         next_task_info: Dict[str, Any],
@@ -441,15 +426,13 @@ class DirectorAgent:
                 sender='director',
                 message=f"Delegated to assistant agent {agent_id}"
             )
-            assistant_inputs = self._build_assistant_inputs_for_execution(
-                task=task,
-            )
-            
-            # Execute agent (using global assistant)
+
+            # Execute agent. The HTTP body now carries only agent_id +
+            # task_id; any user-side input must already exist as a
+            # workspace artifact (caption-driven retrieval).
             execution_result = self.api_client.execute_agent(
                 agent_id=agent_id,
                 task_id=task_id,
-                execute_fields=assistant_inputs,
             )
 
             try:

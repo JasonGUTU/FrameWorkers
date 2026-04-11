@@ -6,6 +6,7 @@ from typing import Any
 
 from pydantic import BaseModel
 
+from ..common_schema import ResolvedArtifactEntry
 from ..descriptor import SubAgentDescriptor
 from .agent import AudioAgent
 from .labels import INPUT_LABEL_FINAL_VIDEO, INPUT_LABEL_SCREENPLAY
@@ -19,15 +20,11 @@ def build_input(
     _task_id: str,
     resolved_artifacts: dict,
 ) -> BaseModel:
-    sp = resolved_artifacts.get(INPUT_LABEL_SCREENPLAY, {})
-    sp_payload = sp.get("payload", {}) if isinstance(sp, dict) else {}
-
-    fv = resolved_artifacts.get(INPUT_LABEL_FINAL_VIDEO, {})
-    fv_payload = fv.get("payload", {}) if isinstance(fv, dict) else {}
-
+    sp = ResolvedArtifactEntry.coerce(resolved_artifacts.get(INPUT_LABEL_SCREENPLAY))
+    fv = ResolvedArtifactEntry.coerce(resolved_artifacts.get(INPUT_LABEL_FINAL_VIDEO))
     return AudioAgentInput(
-        screenplay=sp_payload,
-        final_video=fv_payload,
+        screenplay=sp.payload or {},
+        final_video=fv.payload or {},
     )
 
 

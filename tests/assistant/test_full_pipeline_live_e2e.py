@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from copy import deepcopy
 import json
 import os
 import sys
@@ -122,144 +121,6 @@ def _contains_raw_bytes(node: object) -> bool:
     return False
 
 
-def _trim_screenplay_for_media_agents(
-    screenplay_asset: dict,
-    *,
-    max_scenes: int,
-    max_shots_per_scene: int,
-) -> tuple[dict, dict]:
-    """Trim unified screenplay before media-heavy agents (optional helper).
-
-    Reduces media workload by shrinking ``content.scenes`` / ``shots[]``.
-    """
-    trimmed = deepcopy(screenplay_asset) if isinstance(screenplay_asset, dict) else {}
-
-    def _scene_has_characters(scene: dict) -> bool:
-        pack = scene.get("scene_consistency_pack", {}) if isinstance(scene, dict) else {}
-        char_locks = pack.get("character_locks", []) if isinstance(pack, dict) else []
-        if isinstance(char_locks, list) and any(
-            isinstance(item, dict) and item.get("character_id", "") for item in char_locks
-        ):
-            return True
-        shots = scene.get("shots", []) if isinstance(scene, dict) else []
-        if isinstance(shots, list):
-            for shot in shots:
-                if not isinstance(shot, dict):
-                    continue
-                chars = shot.get("characters_in_frame", [])
-                if isinstance(chars, list) and any(isinstance(cid, str) and cid for cid in chars):
-                    return True
-        return False
-
-    def _pick_scenes(scenes: list[dict], limit: int, prefer_characters: bool) -> list[dict]:
-        if not prefer_characters:
-            return scenes[: max(1, limit)]
-        with_char = [scene for scene in scenes if _scene_has_characters(scene)]
-        without_char = [scene for scene in scenes if not _scene_has_characters(scene)]
-        selected = (with_char + without_char)[: max(1, limit)]
-        if not selected and scenes:
-            return scenes[:1]
-        return selected
-
-    def _pick_shots(shots: list[dict], limit: int, prefer_characters: bool) -> list[dict]:
-        if not prefer_characters:
-            return shots[: max(1, limit)]
-        with_char = []
-        without_char = []
-        for shot in shots:
-            chars = shot.get("characters_in_frame", []) if isinstance(shot, dict) else []
-            if isinstance(chars, list) and any(isinstance(cid, str) and cid for cid in chars):
-                with_char.append(shot)
-            else:
-                without_char.append(shot)
-        selected = (with_char + without_char)[: max(1, limit)]
-        if not selected and shots:
-            return shots[:1]
-        return selected
-
-    prefer_character_coverage = (
-        os.getenv("FW_MEDIA_TRIM_PREFER_CHARACTER_SHOTS", "1").strip().lower()
-        in {"1", "true", "yes", "on"}
-    )
-
-    sp_content = trimmed.get("content", {}) if isinstance(trimmed.get("content"), dict) else {}
-    original_scenes = sp_content.get("scenes", []) if isinstance(sp_content.get("scenes"), list) else []
-    scene_limit = int(max_scenes) if isinstance(max_scenes, int) else 0
-    shot_limit = int(max_shots_per_scene) if isinstance(max_shots_per_scene, int) else 0
-    trim_scenes_enabled = scene_limit > 0
-    trim_shots_enabled = shot_limit > 0
-
-    if trim_scenes_enabled:
-        kept_scenes = _pick_scenes(
-            original_scenes,
-            scene_limit,
-            prefer_character_coverage,
-        )
-    else:
-        kept_scenes = list(original_scenes)
-
-    kept_shot_ids: list[str] = []
-
-    for scene in kept_scenes:
-        shots = scene.get("shots", []) if isinstance(scene.get("shots"), list) else []
-        if trim_shots_enabled:
-            trimmed_shots = _pick_shots(
-                shots,
-                shot_limit,
-                prefer_character_coverage,
-            )
-        else:
-            trimmed_shots = list(shots)
-        scene["shots"] = trimmed_shots
-        for shot in trimmed_shots:
-            sid = shot.get("shot_id", "")
-            if isinstance(sid, str) and sid and sid not in kept_shot_ids:
-                kept_shot_ids.append(sid)
-
-    sp_content["scenes"] = kept_scenes
-    trimmed["content"] = sp_content
-
-    sp_metrics = trimmed.get("metrics", {})
-    if isinstance(sp_metrics, dict):
-        dialogue_count = sum(
-            1 for s in kept_scenes for sh in s.get("shots", [])
-            if isinstance(sh, dict) and sh.get("block_type") == "dialogue"
-        )
-        action_count = sum(
-            1 for s in kept_scenes for sh in s.get("shots", [])
-            if isinstance(sh, dict) and sh.get("block_type") == "action"
-        )
-        scene_count = len(kept_scenes)
-        shot_count = sum(
-            len(s.get("shots", [])) if isinstance(s.get("shots"), list) else 0
-            for s in kept_scenes
-        )
-        sp_metrics["scene_count"] = scene_count
-        sp_metrics["shot_count_total"] = shot_count
-        sp_metrics["avg_shots_per_scene"] = float(shot_count / scene_count) if scene_count else 0.0
-        sp_metrics["dialogue_block_count"] = dialogue_count
-        sp_metrics["action_block_count"] = action_count
-        trimmed["metrics"] = sp_metrics
-
-    kept_scene_ids = {
-        scene.get("scene_id", "")
-        for scene in kept_scenes
-        if isinstance(scene, dict) and isinstance(scene.get("scene_id", ""), str)
-    }
-    trim_summary = {
-        "max_scenes": max_scenes,
-        "max_shots_per_scene": max_shots_per_scene,
-        "trim_scenes_enabled": trim_scenes_enabled,
-        "trim_shots_enabled": trim_shots_enabled,
-        "prefer_character_coverage": prefer_character_coverage,
-        "kept_scene_ids": sorted(kept_scene_ids),
-        "kept_shot_ids": kept_shot_ids,
-    }
-    return trimmed, trim_summary
-
-
-
-
 @pytest.mark.skipif(
     not _LIVE_READY,
     reason=_LIVE_SKIP_REASON,
@@ -299,9 +160,7 @@ def test_full_pipeline_live_http_flow_generates_about_one_minute_video(
     task_body = create_task_resp.get_json()
     task_id = task_body["id"]
 
-    common_inputs = {
-        "execute_fields": {"text": _task_stack_description_to_assistant_text(task_body["description"])},
-    }
+    common_inputs: dict = {}
     payloads: dict[str, dict] = {}
 
     pre_media_agents = ["StoryAgent", "ScreenplayAgent"]

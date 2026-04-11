@@ -27,15 +27,15 @@ FrameWorkers/
 │   ├── base_agent.py        # LLMBaseAgent（异步 pipeline 执行体）
 │   ├── base_evaluator.py    # 三层评估（结构/创意/资产）+ 重试预算
 │   ├── descriptor.py        # SubAgentDescriptor（build_input / build_equipped_agent / run）
-│   ├── agent_registry.py    # 文件系统扫描 + 注册聚合
-│   ├── common_schema.py
-│   ├── contracts/           # input_bundle_v2 等跨 agent 契约
+│   ├── agent_registry.py    # AgentRegistry 单例 + 从 AGENT_REGISTRY 注册聚合
+│   ├── common_schema.py     # ArtifactCaption / ImageReferenceEntry / Meta / ImageAsset 等共享 Pydantic 类型
 │   ├── story/               # 文本类 agent：agent / schema / evaluator / descriptor
 │   ├── screenplay/          # 同上
 │   ├── example_agent/       # 模板：照它新建 agent
 │   ├── keyframe/            # 媒体类 agent，含 materializer.py
 │   ├── video/               # 同上
 │   ├── audio/               # 同上
+│   ├── intake/              # 4 个 raw upload → caption-rich artifact 的 intake agent（text/image/video/audio）
 │   └── univa_{keyframe,storyboard,video}/  # univa 系列 agent
 ├── dynamic-task-stack/      # Flask 后端：Task Stack + Assistant
 │   ├── run.py               # 入口（默认 5002）
@@ -43,7 +43,7 @@ FrameWorkers/
 │       ├── app.py           # Flask app factory
 │       ├── common_http.py   # task_stack + assistant 共用 HTTP 工具
 │       ├── task_stack/      # 分层任务管理；routes / state_store / execution_flow / batch_mutator / storage
-│       └── assistant/       # 全局 assistant 单例 + descriptor 流水线执行
+│       └── assistant/       # descriptor 流水线执行 + workspace 落盘
 │           ├── service.py   # AssistantService（核心执行入口）
 │           ├── routes.py
 │           └── workspace/   # 文件 / global_memory / 日志 / 资产索引
@@ -51,7 +51,6 @@ FrameWorkers/
 ├── director_nostack/        # 备选 director：无 task stack，merge_session_goal 合并消息+memory+execution 选 sub-agent
 ├── inference/               # LLM 客户端 + 多模态生成（独立库）
 │   ├── clients/             # base/ + implementations/（default / gpt5 / custom_model）
-│   ├── input_processing/    # ImageUtils / InputUtils（多模态消息构造）
 │   ├── generation/          # image / video / audio 注册表与 Service；fal_helpers 共享 fal.ai 后端
 │   └── MODELS.md            # 可用模型清单（保留，给人查）
 ├── interface/               # Vue 3 + Vite 前端（聊天 / 任务栈监控）
@@ -74,20 +73,26 @@ FrameWorkers/
 ## 核心约定（强约束，违反请提醒用户）
 
 1. **Sub-agent 解耦**：每个 agent 自包含（schema / evaluator / descriptor / 可选 materializer），互不依赖。
-2. **统一格式**：跨 agent 数据走 `agents/contracts/input_bundle_v2.py`，不要在 agent 内部自造对外结构。
+2. **统一格式**：跨 agent 数据契约就是 `descriptor.build_input(task_id, resolved_artifacts)` 这一个函数签名 —— `resolved_artifacts` 由 `InputResolver` 输出，类型是 `dict[label_name, ResolvedArtifactEntry | list[ResolvedArtifactEntry]]`。`ResolvedArtifactEntry`（见 `agents/common_schema.py`）字段固定为 `{caption, scope, path, mime, payload?}`，`(single)` label 映射到一个 entry，`(collection)` label 映射到 entry 列表。要给 entry 加字段？只改 `common_schema.py` 的 `ResolvedArtifactEntry` 一处；要加一个 **新 channel**（新的 `build_input` 参数）才需要改 13 处 descriptor 签名——这种 cross-cutting 改动本来就应该在 PR review 里显眼。不要在 agent 内部自造对外结构。
 3. **不在 assistant 层硬编码 agent 逻辑**：assistant 只负责调度与 workspace 落盘；任何 agent 特定的处理必须放在 agent 自己的 descriptor / materializer 里。
 4. **新 agent 注册**：写完后必须在 `agents/__init__.py` 的 `AGENT_REGISTRY` 登记 `DESCRIPTOR`，否则不会被发现。
 5. **HTTP 层**：`task_stack` 和 `assistant` 路由共用 `dynamic-task-stack/src/common_http.py` + `api_serialize.serialize_for_api`，不要在 routes 里重复写校验/序列化。
-6. **Workspace 单例**：所有 sub-agent 共享一个 workspace（文件 / global_memory / 日志 / asset_manager），不要绕开它直写磁盘。
+6. **Workspace 单例**：所有 sub-agent 共享一个 workspace（`file_manager` / `global_memory` / `log_manager` / `artifact_writer` / `input_resolver`），不要绕开它直写磁盘。
+7. **对内严控，对外宽进（Postel's Law at the agent layer）**：每个 agent 对**自己的** output schema 严格维护（Pydantic + evaluator + `recompute_metrics`），这些 schema 服务的是 agent 自己的评估、持久化、materialization。但是**读上游产物时零假设**：`build_input` 默认应把 `resolved_artifacts[label].payload` 作为 **JSON 文本**透传（`json.dumps(payload, ensure_ascii=False, indent=2)` 塞进 typed_input 的某个 `*_json_text: str` 字段），让 agent 自己的 LLM 从 prompt 里读这段文本、理解上游形状并生成自己的输出。**不要**在 `build_input` 或 agent 代码里写 `payload.get("content").get("scene_outline")` 这种字符串 key 访问 —— 它把上游 schema 的内部字段名硬编码进下游，造成 O(N×M) 的隐性耦合，而且上游漂移后只会静默降级为空 list 而不是报错。**跨 agent 的结构约定（例如 `prop_id = prop_NNN`、`keyframe_count == 1`、`shot_id = sh_NNN` 格式）是 producer 的义务**：在 producer 自己的 `recompute_metrics` 里 enforce 这些 invariant，不要在 consumer 侧做 defensive parse。现成参考：`agents/screenplay/descriptor.py` 的 `build_input` + `agents/screenplay/agent.py` 的 `system_prompt` / `recompute_metrics`（univa-style Story → Screenplay 边是这条原则的落地范本）。
 
 ## 核心数据流
 
 ```
 用户消息 → Director（推理） → Task Stack（编排）
-        → Assistant.execute(agent_id, task_id, execute_fields)
-        → descriptor.build_input → build_execution_inputs（global_memory + selected_roles → input_bundle_v2）
+        → Assistant.execute_agent_for_task(agent_id, task_id)
+        → build_execution_inputs（InputResolver 在 global_memory caption index 上语义召回 → resolved_artifacts dict）
+        → descriptor.build_input(task_id, resolved_artifacts) → typed_input
         → LLMBaseAgent pipeline → evaluator → materializer（媒体类）
         → Workspace 落盘 → Director 反思
+
+注意：HTTP body 只有 agent_id + task_id。任何用户原始输入（text/image/video/audio）必须**先**经
+`POST /api/workspace/upload` + 跑对应 IntakeXxxAgent 落成 caption-rich workspace artifact，再由
+InputResolver 通过 caption index 召回。
 ```
 
 ## 给 AI 的工作提示

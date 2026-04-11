@@ -15,7 +15,6 @@ from .base_evaluator import BaseEvaluator as LLMBaseEvaluator
 from .base_evaluator import check_uri
 from inference.clients import LLMClient
 from .descriptor import SubAgentDescriptor, BaseMaterializer, MediaAsset
-from .contracts import InputBundleV2
 from .common_schema import Meta, ImageAsset, QualityScore
 
 # -- Agent classes (convenience re-exports) --------------------------------
@@ -91,7 +90,6 @@ __all__ = [
     "SubAgentDescriptor",
     "BaseMaterializer",
     "MediaAsset",
-    "InputBundleV2",
     # Common schema
     "Meta",
     "ImageAsset",

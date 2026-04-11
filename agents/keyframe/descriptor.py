@@ -6,6 +6,7 @@ from typing import Any
 
 from pydantic import BaseModel
 
+from ..common_schema import ImageReferenceEntry, ResolvedArtifactEntry
 from ..descriptor import SubAgentDescriptor
 from .agent import KeyFrameAgent
 from .labels import (
@@ -14,46 +15,28 @@ from .labels import (
     INPUT_LABEL_SCREENPLAY,
     INPUT_LABEL_STYLE_REFERENCE,
 )
-from ..common_schema import ImageReferenceEntry
 from .schema import KeyFrameAgentInput
 from .evaluator import KeyframeEvaluator
 from .materializer import KeyframeMaterializer
 from inference.generation import select_image_service
 
 
-def _to_image_refs(resolved: dict, label: str) -> list[ImageReferenceEntry]:
-    items = resolved.get(label, [])
-    if not isinstance(items, list):
-        return []
-    out: list[ImageReferenceEntry] = []
-    for it in items:
-        if not isinstance(it, dict):
-            continue
-        path = str(it.get("path", "") or "").strip()
-        if not path:
-            continue
-        out.append(
-            ImageReferenceEntry(
-                path=path,
-                caption=str(it.get("caption", "") or ""),
-                mime=str(it.get("mime", "") or ""),
-            )
-        )
-    return out
-
-
 def build_input(
     _task_id: str,
     resolved_artifacts: dict,
 ) -> BaseModel:
-    sp = resolved_artifacts.get(INPUT_LABEL_SCREENPLAY, {})
-    payload = sp.get("payload", {}) if isinstance(sp, dict) else {}
-
+    sp = ResolvedArtifactEntry.coerce(resolved_artifacts.get(INPUT_LABEL_SCREENPLAY))
     return KeyFrameAgentInput(
-        screenplay=payload,
-        character_references=_to_image_refs(resolved_artifacts, INPUT_LABEL_CHARACTER_REFERENCE),
-        location_references=_to_image_refs(resolved_artifacts, INPUT_LABEL_LOCATION_REFERENCE),
-        style_references=_to_image_refs(resolved_artifacts, INPUT_LABEL_STYLE_REFERENCE),
+        screenplay=sp.payload or {},
+        character_references=ImageReferenceEntry.list_from_resolved(
+            resolved_artifacts.get(INPUT_LABEL_CHARACTER_REFERENCE)
+        ),
+        location_references=ImageReferenceEntry.list_from_resolved(
+            resolved_artifacts.get(INPUT_LABEL_LOCATION_REFERENCE)
+        ),
+        style_references=ImageReferenceEntry.list_from_resolved(
+            resolved_artifacts.get(INPUT_LABEL_STYLE_REFERENCE)
+        ),
     )
 
 

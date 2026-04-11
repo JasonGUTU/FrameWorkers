@@ -44,7 +44,6 @@ function hydrateIndexedAssets(assets) {
 const EXECUTE_EXAMPLE = {
   agent_id: "StoryAgent",
   task_id: "task_demo_001",
-  execute_fields: null,
 };
 
 /* ── builders ── */
@@ -109,11 +108,9 @@ function render() {
   const testDirectorNostackEl = $g("testDirectorNostackViz");
   const testDtsEl             = $g("testDtsViz");
 
-  const { agent_id: agentId, task_id: taskId, execute_fields: ef } = EXECUTE_EXAMPLE;
-  const executeFields = (ef && typeof ef === "object" && !Array.isArray(ef)) ? { ...ef } : {};
+  const { agent_id: agentId, task_id: taskId } = EXECUTE_EXAMPLE;
 
   const packagedAssets = {};
-  if (executeFields.text) packagedAssets.source_text = primaryTextFromValue(executeFields.text);
   const mapped = {
     task_id: taskId,
     assets: packagedAssets,
@@ -259,7 +256,7 @@ function render() {
     stepCard("LLM call  →  merged_goal", [
       ["model", "DIRECTOR_ROUTING_MODEL  (gemini-2.5-flash)", "param"],
       ["→ JSON", '{ "merged_goal": "<全量指令>" }', "returns"],
-    ], "goal_text 固定用于本次 run 全部 step 的 execute_fields.text");
+    ], "goal_text 固定用于本次 run 全部 step 的 routing LLM original_user_goal 输入（不传给 sub-agent）");
 
   // Phase 3: while True 路由→执行循环
   const dirPhase3Html =
@@ -279,7 +276,7 @@ function render() {
     ]) +
     stepCard("client.execute_agent(agent_id, task_id)", [
       ["POST /api/assistant/execute", "→ 见下方 HTTP 卡", "param"],
-      ["execute_fields", '{ "text": goal_text }', "param"],
+      ["body", '{ "agent_id": "...", "task_id": "..." }', "param"],
       ["→ result", "{ status, error, error_reasoning, global_memory_brief, … }", "returns"],
     ], "status==FAILED 或含 error → break，发送错误消息") +
     stepCard("POST /api/messages/create  (每步回复)", [
@@ -319,7 +316,7 @@ function render() {
   );
 
   /* ── HTTP section ── */
-  const httpRequest = { agent_id: agentId, task_id: taskId, execute_fields: executeFields };
+  const httpRequest = { agent_id: agentId, task_id: taskId };
   const httpResponse = {
     task_id: taskId,
     execution_id: "exec_demo_placeholder",
@@ -370,12 +367,11 @@ function render() {
     `HTTP &nbsp;<code>POST /api/assistant/execute</code>`,
     "Director ↔ Assistant",
     `<div style="margin-bottom:14px;padding:10px 14px;background:rgba(126,179,255,0.06);border-left:3px solid rgba(126,179,255,0.4);border-radius:4px;font-size:0.84em;color:#bbb;line-height:1.6">
-      <strong style="color:#7eb3ff">输入通道已统一：</strong>
-      <code>execute_fields.text / image / video / audio</code> 已不再被 Phase 1 读取，仅作不透明 overlay 保留。
-      原始用户文本 / 媒体必须先经 <code>intake_user_text()</code> → <code>IntakeTextAgent</code>，或 <code>POST /api/workspace/upload</code> 落成 artifact，再由下游 agent 通过 <code>artifact_registry caption index</code> 召回。
+      <strong style="color:#7eb3ff">HTTP body 收敛：</strong>
+      只剩 <code>{agent_id, task_id}</code>。原始用户文本 / 媒体必须先经 <code>POST /api/workspace/upload</code> + 调对应 <code>IntakeXxxAgent</code> 落成 artifact，再由下游 agent 通过 <code>artifact_registry caption index</code> 召回。
     </div>
     <div class="http-pair">
-      ${ioBlock("Director → Assistant", "REQUEST", "badge-request", "execute_fields=null：text 已通过 IntakeTextAgent 提前落盘", httpRequest)}
+      ${ioBlock("Director → Assistant", "REQUEST", "badge-request", "body 只携 agent_id + task_id；任何 user 输入需提前落 workspace artifact", httpRequest)}
       <div class="arrow-col"><div class="arrow-shaft"></div><div class="arrow-tip"></div></div>
       ${ioBlock("Assistant → Director", "RESPONSE", "badge-response",
         "task_id · execution_id · status · error · error_reasoning · workspace_id · global_memory_brief …", httpResponse)}
@@ -399,27 +395,24 @@ function render() {
   }
 
   const phase1Html =
-    stepCard("① 空 bundle 种子", [
-      ["package_data(agent_id, task_id)", "返回 { task_id, input_bundle_v2: {} } —— 不再吃 text_seed / 不再注入 execute_fields 媒体", "note"],
+    stepCard("① 校验 + 启动", [
+      ["build_execution_inputs(agent_id, task_id, workspace)", "校验 descriptor 在 registry，准备 inputs dict 骨架", "note"],
     ], "input-channel 统一后，sub-agent 只有一个输入源：InputResolver 选出来的 artifact") +
     stepCard("② LLM #1 选历史 artifact", [
-      ["调用", "_resolve_inputs_for_agent_with_llm(agent_id, task_id, workspace)", "note"],
+      ["调用", "_resolve_inputs_for_agent_with_llm(descriptor, task_id, workspace)", "note"],
       ["委托", "workspace.resolve_inputs_for_agent(agent_id, task_id, input_needs_description, llm_client, model=input_package_model)", "note"],
-      ["输入源", "agent.input_needs_description + artifact_registry caption index（不再有 source_text / hints 通道）", "note"],
+      ["输入源", "descriptor.input_needs_description + artifact_registry caption index（无其他通道）", "note"],
       ["输出", "{ resolved_artifacts, selected_artifact_paths, rationale }", "returns"],
-    ], "原始用户文本/媒体必须先经 IntakeTextAgent 或 POST /api/workspace/upload 落成 artifact，才能被 caption 召回") +
-    stepCard("③ 写回 bundle", [
-      ["_apply_resolved_inputs", "bundle._resolved_artifacts = resolved_artifacts；bundle.input_package = { rationale, selected_artifact_paths }", "note"],
-    ]) +
-    stepCard("④ 合成最终 inputs", [
-      ["_merge_execution_inputs", "{ task_id, input_bundle_v2, execute_fields(opaque) } → 交给 execute_agent", "note"],
-    ], "execute_fields 仅作为不透明 overlay 保留（如未来的 overwrite hook），text/image/video/audio 已不再读");
+    ], "原始用户文本/媒体必须先经 POST /api/workspace/upload + IntakeXxxAgent 落成 artifact，才能被 caption 召回") +
+    stepCard("③ 拼平面 inputs dict", [
+      ["return", "{ task_id, resolved_artifacts }", "returns"],
+    ], "inputs dict 一共 2 个 key，平面无嵌套；resolved_artifacts 是 sub-agent 唯一看得到的输入通道");
 
   const phase2Html =
     stepCard("_execute_pipeline_descriptor", [
-      ["①", "_map_pipeline_inputs → workspace.hydrate_indexed_assets(context) → _mapping_to_input_bundle_v2 → InputBundleV2", "note"],
+      ["①", "inputs.task_id + inputs.resolved_artifacts → 直接传给 descriptor.build_input(task_id, resolved_artifacts: dict)", "note"],
       ["②", "descriptor.build_equipped_agent(pipeline_llm_client) → agent", "note"],
-      ["③", "descriptor.build_input(task_id, input_bundle_v2) → typed_input", "note"],
+      ["③", "descriptor.build_input(task_id, resolved_artifacts) → typed_input", "note"],
       ["④", "若 agent.materializer 非空：mkdtemp + 构造 MaterializeContext(task_id, typed_input, persist_binary)", "note"],
       ["⑤", "await agent.run(typed_input, materialize_ctx=...) → ExecutionResult", "note"],
     ], "Assistant 不关心 sub-agent 内部；agent.run 签名只有 typed_input + materialize_ctx，没有 bundle/ctx");
@@ -451,7 +444,7 @@ function render() {
           <div class="phase-num">2</div>
           <div>
             <h3>Execute Agent</h3>
-            <p style="margin:4px 0 0;font-size:0.78em;color:#94a3b8;font-weight:400;line-height:1.35">hydrate → InputBundleV2 → build_input → run</p>
+            <p style="margin:4px 0 0;font-size:0.78em;color:#94a3b8;font-weight:400;line-height:1.35">resolved_artifacts dict → build_input → run</p>
           </div>
         </div>
         <div class="phase-body">${phase2Html}</div>
@@ -472,15 +465,14 @@ function render() {
 
   /* ── Sub-agent section ── */
   const subagentIn = {
-    "InputBundleV2 (dataclass)": {
-      fields: "task_id: str  ·  context: dict[str, Any]",
-      "context['resolved_artifacts']": "{ <label_name>: entry | [entry,...] }  —— key 是 consumer 在 input_needs_description 的 [label] 头里声明的名字；(single) → dict，(collection) → list",
-      "entry shape": "{ what, why, scope, path, mime, payload? }  —— payload 仅 JSON artifact 才有，已 load 好",
-      note: "唯一输入通道；没有 hints / source_text / 用户原始媒体直传槽。原始输入必须先经 IntakeAgent 落成 artifact，再由 LLM #1 通过 caption index 召回",
+    "resolved_artifacts (dict)": {
+      shape: "dict[label_name, ResolvedArtifactEntry | list[ResolvedArtifactEntry]]  —— key 是 consumer 在 input_needs_description 的 [label] 头里声明的名字；(single) → 单个 entry，(collection) → list",
+      "entry shape": "ResolvedArtifactEntry { caption, scope, path, mime, payload? }  —— pydantic class in agents/common_schema.py; payload 仅 JSON artifact 才有，已 load 好",
+      note: "唯一输入通道；没有 hints / source_text / 用户原始媒体直传槽。原始输入必须先经 IntakeAgent 落成 artifact，再由 InputResolver LLM 通过 caption index 召回。descriptor 在 build_input 顶部调 ResolvedArtifactEntry.coerce(value) 把原始值统一转成 typed entry",
     },
     "descriptor.build_input": {
-      signature: "(task_id, input_bundle_v2: InputBundleV2) → TypedInput (Pydantic BaseModel)",
-      note: "descriptor 从 resolved_artifacts 按自己声明的 label 取出条目，组成强类型输入。Sub-agent 看不到 bundle / workspace / artifact_registry",
+      signature: "(task_id, resolved_artifacts: dict) → TypedInput (Pydantic BaseModel)",
+      note: "descriptor 从 resolved_artifacts 按自己声明的 label 取出条目，组成强类型输入。Sub-agent 看不到 workspace / artifact_registry / 任何包装类",
     },
   };
 
@@ -507,11 +499,11 @@ function render() {
   /* ── Workspace section ── */
   const wsRead = {
     "get_global_memory_brief(task_id?, agent_id?, limit?)": {
-      returns: "{ global_memory: [{ task_id, agent_id, execution_id, created_at, artifacts:[{what,why,scope,path,mime}] }] }",
+      returns: "{ global_memory: [{ task_id, agent_id, execution_id, created_at, artifacts:[{caption,scope,path,mime}] }] }",
       note: "global_memory 是唯一的语义记录层，同时也是 artifact ledger（不再分 memory / artifact_registry 两层）",
     },
     "list_workspace_artifacts()": {
-      returns: "List[{ path, filename, mime, what, why, scope, agent_id, task_id, execution_id, created_at }]",
+      returns: "List[{ path, filename, mime, caption, scope, agent_id, task_id, execution_id, created_at }]",
       note: "扁平化 global_memory 视图；HTTP listing + 测试自省用",
     },
     "resolve_inputs_for_agent(*, agent_id, task_id, input_needs_description, llm_client, model)": {
@@ -538,8 +530,8 @@ function render() {
       returns: "StoredFile (path/filename/size)",
       note: "纯写字节，不登记 artifact、不写 artifact 事件日志；登记由上层 ArtifactWriter 完成",
     },
-    "persist_raw_upload(*, file_content, mime, user_intent, original_filename='')": {
-      returns: "{ path, filename, mime, caption:{what,why,scope='raw_pending'} }",
+    "persist_raw_upload(*, file_content, mime, original_filename='')": {
+      returns: "{ path, filename, mime, caption, scope='raw_pending' }",
       note: "用户原始上传入口：写到 inputs/<ts>_<filename> + 直接 global_memory.register 一条 raw_pending artifact，等待对应 IntakeAgent 通过 [raw_*_upload] label 接手",
     },
     "persist_execution_from_plan(execution, assignments, *, overwrite_existing=False)": {
@@ -590,7 +582,7 @@ function render() {
       ["消息轮询与去重消费",
         "<strong>目的：</strong>验证消息消费幂等性；<strong>结果：</strong>无消息时不触发执行；消息标记已读后不重复消费"],
       ["Pipeline 循环路由与终止",
-        "<strong>目的：</strong>验证 while-True 循环路由与终止；<strong>结果：</strong>单/双 agent run→done 正确退出；after_frontend_user_message 首步为 true；execute_fields.text 使用 merged goal"],
+        "<strong>目的：</strong>验证 while-True 循环路由与终止；<strong>结果：</strong>单/双 agent run→done 正确退出；after_frontend_user_message 首步为 true；merged goal 通过 routing LLM 的 original_user_goal 入参影响 agent 选择"],
       ["会话目标合并",
         "<strong>目的：</strong>验证目标合并的边界条件；<strong>结果：</strong>无 global_memory + 无 prior_lines 时跳过 LLM；prior 消息按 timestamp 排序并排除当前 msg_id；dict 内容完整序列化为 JSON"],
       ["全链路 HTTP 集成",
@@ -636,8 +628,8 @@ function render() {
         "<strong>目的：</strong>验证 REST 端点端到端联通；<strong>结果：</strong>发现 → 创建 task → execute → 查 executions → workspace files/logs/memory/brief 全部返回正确"],
       ["跨 agent 数据流",
         "<strong>目的：</strong>验证前序 agent 产出流入后续 agent；<strong>结果：</strong>ProducerAgent 产出被 ConsumerAgent 在同一 task 读取；global_memory 出现在下游 inputs"],
-      ["输入校验",
-        "<strong>目的：</strong>验证非法 execute_fields 被正确拒绝；<strong>结果：</strong>空/非 dict/text 非字符串 均返回预期状态码"],
+      ["路由 + 兜底校验",
+        "<strong>目的：</strong>验证缺失 agent_id / task_id 时返回 400；非法 agent_id 返回 404"],
       ["完整生成",
         `<strong>目的：</strong>真实 LLM + fal API 驱动完整 pipeline，生成约 1 分钟视频；<strong>结果：</strong>audio_results 包含 final_delivery_asset，产出可播放。
 <div style="margin-top:14px">
@@ -686,7 +678,7 @@ function render() {
     "card-green", "🧪", "Assistant Service 测试", "pytest tests/assistant/test_assistant_service_unit.py -v",
     testTable([
       ["执行输入打包",
-        "<strong>目的：</strong>验证 build_execution_inputs 正确打包上下文；<strong>结果：</strong>历史产物、global_memory、text_seed 均入包；调 build_input 前 hydrate indexed assets；传入 `InputBundleV2`（约定避免原地修改 bundle）"],
+        "<strong>目的：</strong>验证 build_execution_inputs 正确打包上下文；<strong>结果：</strong>InputResolver 选出的 artifact 落进 inputs.resolved_artifacts；descriptor.build_input 收到的就是这个 dict（无包装类）"],
       ["文件持久化",
         "<strong>目的：</strong>验证 agent 产出写入 workspace 的完整路径；<strong>结果：</strong>overwrite 模式替换旧文件；媒体 URI 重写为 workspace 路径；materializer 临时目录执行后清理；路径遵循 artifacts/media/{agent}/ 规范"],
     ])

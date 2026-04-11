@@ -12,6 +12,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel
 
+from ..common_schema import ResolvedArtifactEntry
 from ..descriptor import SubAgentDescriptor
 from .agent import ExamplePipelineAgent
 from .schema import ExamplePipelineInput
@@ -29,13 +30,12 @@ def build_input(
     label-based input pattern: read from ``resolved_artifacts[label]`` only,
     never from any hint slot.
     """
-    entry = resolved_artifacts.get("creative_brief", {})
-    payload = entry.get("payload", {}) if isinstance(entry, dict) else {}
+    entry = ResolvedArtifactEntry.coerce(resolved_artifacts.get("creative_brief"))
     raw = ""
-    if isinstance(payload, dict):
-        raw = str(payload.get("text", "") or "")
-    if not raw and isinstance(entry, dict):
-        raw = str(entry.get("caption", "") or "")
+    if entry.payload:
+        raw = str(entry.payload.get("text", "") or "")
+    if not raw:
+        raw = entry.caption
     return ExamplePipelineInput(source_text=raw)
 
 

@@ -40,7 +40,6 @@ if str(_FRAME_ROOT) not in sys.path:
     sys.path.insert(0, str(_FRAME_ROOT))
 
 from agents.base_agent import MaterializeContext
-from agents.contracts import InputBundleV2
 from agents import get_agent_registry
 from inference.clients import LLMClient
 
@@ -57,10 +56,14 @@ async def _run_keyframe_agent_local(
     """Run KeyFrameAgent; persist PNGs + ``keyframes_package.json`` under ``out_dir``."""
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    bundle = InputBundleV2(
-        task_id=task_id,
-        context={"resolved_artifacts": {"screenplay": {"payload": screenplay, "path": "", "scope": "global", "mime": "application/json"}}},
-    )
+    resolved_artifacts = {
+        "screenplay": {
+            "payload": screenplay,
+            "path": "",
+            "scope": "global",
+            "mime": "application/json",
+        }
+    }
 
     registry = get_agent_registry()
     descriptor = registry.get_descriptor("KeyFrameAgent")
@@ -69,7 +72,7 @@ async def _run_keyframe_agent_local(
 
     llm = LLMClient()
     agent = descriptor.build_equipped_agent(llm)
-    typed_input = descriptor.build_input(task_id, bundle)
+    typed_input = descriptor.build_input(task_id, resolved_artifacts)
 
     materialize_ctx: MaterializeContext | None = None
     if materialize and getattr(agent, "materializer", None) is not None:
@@ -81,14 +84,13 @@ async def _run_keyframe_agent_local(
 
         materialize_ctx = MaterializeContext(
             task_id=task_id,
-            input_bundle_v2=bundle,
+            typed_input=typed_input,
             persist_binary=_persist,
         )
 
     try:
         result = await agent.run(
             typed_input,
-            input_bundle_v2=bundle,
             materialize_ctx=materialize_ctx,
         )
     finally:
@@ -146,15 +148,20 @@ async def _run_video_agent_local(
     """Run VideoAgent (skeleton + optional fal clips); persist under ``out_dir``."""
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    bundle = InputBundleV2(
-        task_id=task_id,
-        context={
-            "resolved_artifacts": {
-                "screenplay": {"payload": screenplay, "path": "", "scope": "global", "mime": "application/json"},
-                "keyframes": {"payload": keyframes, "path": "", "scope": "global", "mime": "application/json"},
-            }
+    resolved_artifacts = {
+        "screenplay": {
+            "payload": screenplay,
+            "path": "",
+            "scope": "global",
+            "mime": "application/json",
         },
-    )
+        "keyframes": {
+            "payload": keyframes,
+            "path": "",
+            "scope": "global",
+            "mime": "application/json",
+        },
+    }
 
     registry = get_agent_registry()
     descriptor = registry.get_descriptor("VideoAgent")
@@ -163,7 +170,7 @@ async def _run_video_agent_local(
 
     llm = LLMClient()
     agent = descriptor.build_equipped_agent(llm)
-    typed_input = descriptor.build_input(task_id, bundle)
+    typed_input = descriptor.build_input(task_id, resolved_artifacts)
 
     materialize_ctx: MaterializeContext | None = None
     if materialize and getattr(agent, "materializer", None) is not None:
@@ -175,14 +182,13 @@ async def _run_video_agent_local(
 
         materialize_ctx = MaterializeContext(
             task_id=task_id,
-            input_bundle_v2=bundle,
+            typed_input=typed_input,
             persist_binary=_persist,
         )
 
     try:
         result = await agent.run(
             typed_input,
-            input_bundle_v2=bundle,
             materialize_ctx=materialize_ctx,
         )
     finally:

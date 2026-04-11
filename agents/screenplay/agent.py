@@ -1,52 +1,65 @@
-"""ScreenplayAgent — unified screenplay + shot planning.
+"""ScreenplayAgent — univa-style full-screenplay generation from a JSON text blob.
 
-Input:  ScreenplayAgentInput (story)
+Input:  ScreenplayAgentInput (``story_json_text`` — the upstream story
+        blueprint payload serialized as raw JSON text, shape-agnostic)
 Output: ScreenplayAgentOutput (scenes → shots: narrative + visual per take)
 
-Skeleton-first: build_skeleton constructs scene/shot scaffolding from
-``input_data.story`` (the structured story_blueprint payload selected by
-InputResolver via the ``[story]`` label); the LLM fills shots and
-consistency packs in build_creative_prompt.
+Generation model: ONE LLM call via ``_llm_fill_full``. The LLM receives the
+upstream story payload as an indented JSON text blob and produces the
+complete ``ScreenplayAgentOutput`` JSON in a single pass. There is no
+skeleton-first split, no deterministic pre-computation of scene shells
+from ``scene_outline``, and no field-selected "story embed" — the LLM
+is the sole consumer of the story shape.
 
-ScreenplayAgent has only ONE input label: ``[story]``. It does NOT
-accept free-text user directives. Any user-level intent flows in through
-the upstream re-run pattern (Director re-runs StoryAgent with the new
-brief; the updated story_blueprint reaches ScreenplayAgent via the same
-``[story]`` label).
+Why this shape: the old skeleton-first path hard-coded 18 specific
+field paths (``content.cast[].character_id``, ``content.locations[].name``,
+``content.scene_outline[].time_of_day_hint``, …) as string ``dict.get``
+calls scattered across ``_story_content_embed_for_creative_llm`` and
+``build_skeleton``. Any upstream StoryAgent variant that deviated from
+those exact field names silently degraded to empty output (zero scenes,
+empty creative embed) without tripping any validator. Univa-style
+pass-through eliminates that hidden coupling: the LLM reads whatever
+shape arrives and reasons about it directly. The contract between
+StoryAgent and ScreenplayAgent is now "a JSON object describing a
+story" — not "a specific 18-field schema matching ``StoryBlueprintContent``".
 
-Coupling: output feeds KeyFrameAgent (and downstream) as the sole ``screenplay`` artifact.
+Coupling: output still feeds KeyFrameAgent (and downstream) as the sole
+``screenplay`` artifact — the ``ScreenplayAgentOutput`` schema is
+unchanged, so every downstream consumer sees the same contract it
+always did. Only the upstream → ScreenplayAgent edge became
+shape-agnostic.
 
-Blueprint creative-fill embeds only a **field-selected** story dict in the LLM user message
-(see ``_story_content_embed_for_creative_llm``): the creative model does not need the same
-long bios the Story asset stores. Whole-field omission only — no slicing.
+Post-processing in ``recompute_metrics``: deliberately minimal. The
+philosophy is "LLM produces correct output from the template + system
+prompt; evaluator catches drift; we do NOT silently patch up LLM
+mistakes in post-processing". Rewrites that remain:
+
+  * ``shot_id`` global re-assignment as ``sh_NNN`` — kept because
+    ``ScreenplayEvaluator`` only checks uniqueness, not the naming
+    format, and downstream agents assume ``sh_NNN``. Candidate for
+    future removal once the evaluator learns to check format.
+  * ``keyframe_count`` forcing to 1 — kept as a belt-and-suspenders
+    alongside the evaluator's existing ``keyframe_count != 1`` check.
+  * ``order`` normalisation via ``_normalize_order``.
+
+Explicitly NOT post-processed (trusted to the LLM + evaluator):
+
+  * ``props_lock[].prop_id`` — the template shows ``"prop_id": "prop_001"``
+    and the system prompt spells out the ``prop_NNN`` convention, so
+    the LLM is expected to write these directly. Earlier revisions of
+    this file auto-assigned prop_ids from prop_name first-occurrence
+    and remapped ``shots.props_in_frame`` from name → id; both were
+    defensive rewrites that contradicted the "trust producer's own
+    output" principle from CLAUDE.md §7 and have been removed.
 """
 
 from __future__ import annotations
 
-import json
 from typing import Any
 
 from ..base_agent import BaseAgent
-from .schema import (
-    Camera,
-    CharacterLock,
-    CharacterWardrobeNote,
-    ContinuityRefs,
-    KeyframePlan,
-    LocationLock,
-    PropLock,
-    SceneConsistencyPack,
-    SceneContinuity,
-    SceneEnd,
-    SceneHeading,
-    ScreenplayAgentInput,
-    ScreenplayAgentOutput,
-    ScreenplayContent,
-    ScreenplayScene,
-    ScreenplaySceneSource,
-    ScriptShot,
-    StyleLock,
-)
+from .schema import ScreenplayAgentInput, ScreenplayAgentOutput
+
 
 SCREENPLAY_OUTPUT_TEMPLATE = """{
   "content": {
@@ -55,16 +68,16 @@ SCREENPLAY_OUTPUT_TEMPLATE = """{
       {
         "scene_id": "sc_001",
         "order": 1,
-        "linked_story_step_id": "arc_001",
+        "linked_story_step_id": "<arc step id from story blueprint, or empty string>",
         "heading": {
           "location_id": "loc_001",
-          "location_name": "<location name>",
+          "location_name": "<location name from story blueprint>",
           "interior_exterior": "INT|EXT",
-          "time_of_day": "DAY|NIGHT"
+          "time_of_day": "DAY|NIGHT|CUSTOM"
         },
-        "summary": "<what happens in this scene>",
+        "summary": "<one or two sentences: what happens in this scene>",
         "continuity": {
-          "props_present": [],
+          "props_present": ["<prop name>"],
           "character_wardrobe_notes": [
             { "character_id": "char_001", "wardrobe": "<description>", "must_keep": ["<item>"] }
           ],
@@ -74,15 +87,15 @@ SCREENPLAY_OUTPUT_TEMPLATE = """{
           "location_lock": {
             "location_id": "loc_001",
             "time_of_day": "DAY",
-            "environment_notes": ["<FILL>"]
+            "environment_notes": ["<note>"]
           },
           "character_locks": [
-            { "character_id": "char_001", "identity_notes": ["<FILL>"], "wardrobe_notes": ["<FILL>"], "must_keep": ["<FILL>"] }
+            { "character_id": "char_001", "identity_notes": ["<note>"], "wardrobe_notes": ["<note>"], "must_keep": ["<note>"] }
           ],
-          "props_lock": [ { "prop_name": "<FILL>", "must_keep": [] } ],
+          "props_lock": [ { "prop_id": "prop_001", "prop_name": "<name>", "must_keep": ["<note>"] } ],
           "style_lock": {
-            "global_style_notes": ["<FILL>"],
-            "must_avoid": ["<FILL>"]
+            "global_style_notes": ["<note>"],
+            "must_avoid": ["<note>"]
           }
         },
         "shots": [
@@ -90,12 +103,12 @@ SCREENPLAY_OUTPUT_TEMPLATE = """{
             "block_type": "action",
             "character_id": "",
             "character_name": "",
-            "text": "<visible action, no camera jargon>",
+            "text": "<visible action line>",
             "continuity_refs": { "props": [], "wardrobe_character_ids": [] },
             "shot_type": "medium",
-            "camera": { "angle": "eye_level", "movement": "static", "framing_notes": "<FILL>" },
-            "visual_goal": "<FILL>",
-            "action_focus": "<FILL>",
+            "camera": { "angle": "eye_level", "movement": "static", "framing_notes": "<note>" },
+            "visual_goal": "<what this shot conveys>",
+            "action_focus": "<what the shot foregrounds>",
             "characters_in_frame": [],
             "props_in_frame": [],
             "keyframe_plan": { "keyframe_count": 1, "keyframe_notes": [] }
@@ -104,12 +117,12 @@ SCREENPLAY_OUTPUT_TEMPLATE = """{
             "block_type": "dialogue",
             "character_id": "char_001",
             "character_name": "<name>",
-            "text": "<line>",
+            "text": "<spoken line>",
             "continuity_refs": { "props": [], "wardrobe_character_ids": ["char_001"] },
             "shot_type": "medium",
             "camera": { "angle": "eye_level", "movement": "static", "framing_notes": "" },
-            "visual_goal": "<FILL>",
-            "action_focus": "<FILL>",
+            "visual_goal": "<note>",
+            "action_focus": "<note>",
             "characters_in_frame": ["char_001"],
             "props_in_frame": [],
             "keyframe_plan": { "keyframe_count": 1, "keyframe_notes": [] }
@@ -126,398 +139,128 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-    @staticmethod
-    def _story_content_embed_for_creative_llm(content: Any) -> dict[str, Any]:
-        """Story ``content`` fields embedded in the blueprint creative user message.
-
-        The LLM only sees this dict. We omit whole keys that duplicate narrative the
-        screenplay pass must still write (profiles, long location prose, arc conflict
-        blocks, per-scene goal/conflict/turn). Skeleton uses the full blueprint separately.
-
-        This is not token slicing — excluded fields are absent from the embedded object,
-        not truncated. Persisted ``story`` JSON is unchanged.
-        """
-        if not isinstance(content, dict):
-            return {}
-
-        out: dict[str, Any] = {}
-
-        out["logline"] = str(content.get("logline", "") or "")
-
-        style = content.get("style")
-        if isinstance(style, dict):
-            genres = list(style.get("genre") or [])
-            tones = list(style.get("tone_keywords") or [])
-            out["style"] = {
-                "genre": [str(x) for x in genres],
-                "tone_keywords": [str(x) for x in tones],
-            }
-
-        out["cast"] = []
-        for m in content.get("cast") or []:
-            if not isinstance(m, dict):
-                continue
-            out["cast"].append(
-                {
-                    "character_id": str(m.get("character_id", "") or ""),
-                    "name": str(m.get("name", "") or ""),
-                    "role": str(m.get("role", "") or ""),
-                }
-            )
-
-        out["locations"] = []
-        for loc in content.get("locations") or []:
-            if not isinstance(loc, dict):
-                continue
-            out["locations"].append(
-                {
-                    "location_id": str(loc.get("location_id", "") or ""),
-                    "name": str(loc.get("name", "") or ""),
-                }
-            )
-
-        out["story_arc"] = []
-        for step in content.get("story_arc") or []:
-            if not isinstance(step, dict):
-                continue
-            out["story_arc"].append(
-                {
-                    "step_id": str(step.get("step_id", "") or ""),
-                    "order": step.get("order", 0),
-                    "step_type": str(step.get("step_type", "") or ""),
-                    "summary": str(step.get("summary", "") or ""),
-                }
-            )
-
-        out["scene_outline"] = []
-        for sc in content.get("scene_outline") or []:
-            if not isinstance(sc, dict):
-                continue
-            chars = sc.get("characters_present")
-            if not isinstance(chars, list):
-                chars = []
-            out["scene_outline"].append(
-                {
-                    "scene_id": str(sc.get("scene_id", "") or ""),
-                    "order": sc.get("order", 0),
-                    "linked_step_id": str(sc.get("linked_step_id", "") or ""),
-                    "location_id": str(sc.get("location_id", "") or ""),
-                    "time_of_day_hint": str(sc.get("time_of_day_hint", "") or "DAY"),
-                    "characters_present": [str(x) for x in chars if str(x).strip()],
-                }
-            )
-
-        return out
-
     async def generate(
         self,
         input_data: ScreenplayAgentInput,
         *,
         rework_notes: str = "",
     ) -> ScreenplayAgentOutput:
-        """Skeleton-first: build structural scaffold from story, fill via LLM."""
-        skeleton = self.build_skeleton(input_data)
-        output = await self._llm_fill_creative(input_data, skeleton, rework_notes)
+        """Single full-output LLM call from the story JSON text blob."""
+        output = await self._llm_fill_full(input_data, rework_notes)
         self.recompute_metrics(output)
         return output
 
-    def build_skeleton(
-        self, input_data: ScreenplayAgentInput
-    ) -> ScreenplayAgentOutput:
-        bp = input_data.story
-
-        locations = {
-            loc.get("location_id", ""): loc
-            for loc in bp.get("locations", [])
-        }
-        scene_outline = bp.get("scene_outline", [])
-
-        scenes: list[ScreenplayScene] = []
-        for so in scene_outline:
-            scene_id = so.get("scene_id", "")
-            loc_id = so.get("location_id", "")
-            loc = locations.get(loc_id, {})
-            chars_present = so.get("characters_present", [])
-
-            scenes.append(
-                ScreenplayScene(
-                    scene_id=scene_id,
-                    order=so.get("order", 0),
-                    linked_story_step_id=so.get("linked_step_id", ""),
-                    source=ScreenplaySceneSource(screenplay_scene_id=scene_id),
-                    heading=SceneHeading(
-                        location_id=loc_id,
-                        location_name=loc.get("name", ""),
-                        time_of_day=so.get("time_of_day_hint", "DAY"),
-                    ),
-                    continuity=SceneContinuity(
-                        character_wardrobe_notes=[
-                            CharacterWardrobeNote(character_id=cid)
-                            for cid in chars_present
-                        ],
-                    ),
-                    scene_consistency_pack=SceneConsistencyPack(
-                        location_lock=LocationLock(
-                            location_id=loc_id,
-                            time_of_day=so.get("time_of_day_hint", "DAY"),
-                        ),
-                        character_locks=[
-                            CharacterLock(character_id=cid)
-                            for cid in chars_present
-                        ],
-                    ),
-                )
-            )
-
-        output = ScreenplayAgentOutput()
-        output.content = ScreenplayContent(scenes=scenes)
-        return output
-
-    def build_creative_prompt(
-        self,
-        input_data: ScreenplayAgentInput,
-        skeleton: ScreenplayAgentOutput,
-    ) -> str:
-        bp = input_data.story
-        bp_embed = self._story_content_embed_for_creative_llm(bp)
-        bp_json = json.dumps(bp_embed, ensure_ascii=False, indent=2)
-        # Hard per-scene cap. Combined with the system-prompt total cap (4-8
-        # shots across the whole screenplay), this keeps short-video runtime
-        # and cost bounded. Each shot ≈ 1 keyframe + 1 video clip downstream.
-        max_shots = 5
-
-        scene_entries: list[str] = []
-        for scene in skeleton.content.scenes:
-            char_entries = [
-                f'            {{"character_id": "{cl.character_id}", '
-                f'"identity_notes": ["<FILL>"], '
-                f'"wardrobe_notes": ["<FILL>"], '
-                f'"must_keep": ["<FILL>"]}}'
-                for cl in scene.scene_consistency_pack.character_locks
-            ]
-            char_block = ",\n".join(char_entries) if char_entries else ""
-            wardrobe_entries = [
-                f'          {{"character_id": "{w.character_id}", '
-                f'"wardrobe": "<FILL>", "must_keep": []}}'
-                for w in scene.continuity.character_wardrobe_notes
-            ]
-            wardrobe_block = ",\n".join(wardrobe_entries) if wardrobe_entries else ""
-
-            scene_entries.append(
-                f'    {{\n'
-                f'      "scene_id": "{scene.scene_id}",\n'
-                f'      "interior_exterior": "<FILL: INT or EXT>",\n'
-                f'      "summary": "<FILL>",\n'
-                f'      "props_present": [],\n'
-                f'      "must_keep_scene_facts": [],\n'
-                f'      "wardrobe": [\n{wardrobe_block}\n      ],\n'
-                f'      "location_lock": {{"environment_notes": ["<FILL>"]}},\n'
-                f'      "character_locks": [\n{char_block}\n      ],\n'
-                f'      "props_lock": [\n'
-                f'        {{"prop_name": "<FILL>", "must_keep": []}}\n'
-                f'      ],\n'
-                f'      "style_lock": {{\n'
-                f'        "global_style_notes": ["<FILL>"],\n'
-                f'        "must_avoid": ["<FILL>"]\n'
-                f'      }},\n'
-                f'      "shots": [\n'
-                f'        {{\n'
-                f'          "block_type": "action",\n'
-                f'          "character_id": "",\n'
-                f'          "character_name": "",\n'
-                f'          "text": "<FILL>",\n'
-                f'          "continuity_refs": {{"props": [], "wardrobe_character_ids": []}},\n'
-                f'          "shot_type": "medium",\n'
-                f'          "camera": {{"angle": "eye_level", "movement": "static", '
-                f'"framing_notes": "<FILL>"}},\n'
-                f'          "visual_goal": "<FILL>",\n'
-                f'          "action_focus": "<FILL>",\n'
-                f'          "characters_in_frame": [],\n'
-                f'          "props_in_frame": [],\n'
-                f'          "keyframe_plan": {{"keyframe_count": 1, "keyframe_notes": []}}\n'
-                f'        }}\n'
-                f'      ],\n'
-                f'      "scene_end": {{"turn": "<FILL>", "emotional_shift": "<FILL>"}}\n'
-                f'    }}'
-            )
-
-        template = (
-            '{\n'
-            '  "title": "<FILL>",\n'
-            '  "scenes": [\n'
-            + ",\n".join(scene_entries)
-            + "\n  ]\n}"
-        )
-
-        return (
-            "Scene shells are fixed (ids, heading, location/character lock ids). "
-            "Fill: title; per scene interior_exterior, summary, wardrobe, "
-            "props_present, must_keep_scene_facts, scene_end; "
-            "environment_notes, character_locks, props_lock, style_lock; "
-            "shots[] — one row per continuous take (script fields + camera/visual_goal/action_focus/"
-            "characters_in_frame/props_in_frame/keyframe_plan). "
-            "No shot_id; keyframe_plan.keyframe_count=1.\n\n"
-            f"=== STORY CONTEXT (embedded subset for this LLM call) ===\n{bp_json}\n"
-            "(Workspace still holds the full story blueprint. This block omits whole fields "
-            "the screenplay pass re-authors: cast profile/motivation/flaw, location descriptions, "
-            "arc conflict/turning_point, scene goal/conflict/turn — infer dialogue and packs "
-            "from logline, arc summaries, and outline grid.)\n\n"
-            f"=== OUTPUT ===\n{template}\n\n"
-            f"HARD CAP — Max shots per scene: {max_shots}. "
-            f"HARD CAP — Total shots across the whole screenplay: 4-6 (never exceed 8). "
-            "This is a SHORT video; each shot is ~5 seconds and becomes one keyframe + "
-            "one generated video clip downstream. Pick the few most cinematic beats and "
-            "skip everything else. Template shows one shot example per scene — output "
-            "ALL shots within the cap. Natural dialogue.\n"
-            "Return JSON only."
-        )
-
-    def fill_creative(
-        self, skeleton: ScreenplayAgentOutput, creative: dict
-    ) -> ScreenplayAgentOutput:
-        skeleton.content.title = creative.get("title", "")
-        scene_map = {s.get("scene_id", ""): s for s in creative.get("scenes", [])}
-        shot_counter = 1
-        prop_id_map: dict[str, str] = {}
-
-        for scene in skeleton.content.scenes:
-            sc_data = scene_map.get(scene.scene_id, {})
-
-            ie = sc_data.get("interior_exterior", "")
-            if ie:
-                scene.heading.interior_exterior = ie
-
-            scene.summary = sc_data.get("summary", "")
-
-            se_data = sc_data.get("scene_end", {})
-            scene.scene_end = SceneEnd(
-                turn=se_data.get("turn", ""),
-                emotional_shift=se_data.get("emotional_shift", ""),
-            )
-
-            scene.continuity.props_present = sc_data.get("props_present", [])
-            scene.continuity.must_keep_scene_facts = sc_data.get(
-                "must_keep_scene_facts", []
-            )
-
-            wardrobe_map = {
-                w.get("character_id", ""): w for w in sc_data.get("wardrobe", [])
-            }
-            for wn in scene.continuity.character_wardrobe_notes:
-                wd = wardrobe_map.get(wn.character_id, {})
-                wn.wardrobe = wd.get("wardrobe", "")
-                wn.must_keep = wd.get("must_keep", [])
-
-            pack = scene.scene_consistency_pack
-            ll = sc_data.get("location_lock", {})
-            if ll:
-                pack.location_lock.environment_notes = ll.get("environment_notes", [])
-
-            char_map = {c.get("character_id", ""): c for c in sc_data.get("character_locks", [])}
-            for cl in pack.character_locks:
-                cd = char_map.get(cl.character_id, {})
-                cl.identity_notes = cd.get("identity_notes", [])
-                cl.wardrobe_notes = cd.get("wardrobe_notes", [])
-                cl.must_keep = cd.get("must_keep", [])
-
-            pack.props_lock = [
-                PropLock(
-                    prop_id=prop_id_map.setdefault(
-                        p.get("prop_name", ""),
-                        f"prop_{len(prop_id_map) + 1:03d}",
-                    ),
-                    prop_name=p.get("prop_name", ""),
-                    must_keep=p.get("must_keep", []),
-                )
-                for p in sc_data.get("props_lock", [])
-            ]
-
-            st = sc_data.get("style_lock", {})
-            pack.style_lock = StyleLock(
-                global_style_notes=st.get("global_style_notes", []),
-                must_avoid=st.get("must_avoid", []),
-            )
-
-            shots: list[ScriptShot] = []
-            for shot_order, sh_data in enumerate(sc_data.get("shots", []), 1):
-                cam_data = sh_data.get("camera", {}) if isinstance(sh_data.get("camera"), dict) else {}
-                kf_data = sh_data.get("keyframe_plan", {}) if isinstance(sh_data.get("keyframe_plan"), dict) else {}
-                cr = sh_data.get("continuity_refs", {})
-                if not isinstance(cr, dict):
-                    cr = {}
-                raw_props = sh_data.get("props_in_frame", [])
-                mapped_props = [prop_id_map.get(p, p) for p in raw_props]
-
-                shots.append(
-                    ScriptShot(
-                        shot_id=f"sh_{shot_counter:03d}",
-                        order=shot_order,
-                        block_type=sh_data.get("block_type", "action"),
-                        character_id=sh_data.get("character_id", ""),
-                        character_name=sh_data.get("character_name", ""),
-                        text=sh_data.get("text", ""),
-                        continuity_refs=ContinuityRefs(
-                            props=cr.get("props", []),
-                            wardrobe_character_ids=cr.get("wardrobe_character_ids", []),
-                        ),
-                        shot_type=sh_data.get("shot_type", "medium"),
-                        camera=Camera(
-                            angle=cam_data.get("angle", "eye_level"),
-                            movement=cam_data.get("movement", "static"),
-                            framing_notes=cam_data.get("framing_notes", ""),
-                        ),
-                        visual_goal=sh_data.get("visual_goal", ""),
-                        action_focus=sh_data.get("action_focus", ""),
-                        characters_in_frame=sh_data.get("characters_in_frame", []),
-                        props_in_frame=mapped_props,
-                        keyframe_plan=KeyframePlan(
-                            keyframe_count=1,
-                            keyframe_notes=kf_data.get("keyframe_notes", []),
-                        ),
-                    )
-                )
-                shot_counter += 1
-            scene.shots = shots
-
-        return skeleton
-
     def system_prompt(self) -> str:
         return (
-            "You are ScreenplayAgent: screenplay + shot planning. "
-            "JSON only; no markdown; use empty string/list for unknowns, not null; "
-            "match the user message template exactly.\n\n"
-            "Length budget: this pipeline produces SHORT cinematic videos "
-            "(typically 30 seconds, never longer than ~60 seconds). Each shot "
-            "becomes one keyframe + one generated video clip downstream, so "
-            "shot count directly drives runtime and cost. HARD CAPS:\n"
-            "  * No more than 5 shots per scene.\n"
-            "  * Aim for 4-6 TOTAL shots across the whole screenplay (one scene\n"
-            "    × 4-6 shots is ideal). Never exceed 8 total.\n"
-            "  * Each shot should feel like a distinct visual beat — do NOT\n"
-            "    split a single continuous action into multiple shots just\n"
-            "    to add coverage.\n\n"
-            "Do NOT include an artifact_caption block — the system generates it automatically."
+            "You are ScreenplayAgent: turn a high-level story blueprint into a "
+            "unified screenplay (scenes broken into shots, with narrative + "
+            "visual direction and consistency packs).\n\n"
+            "=== INPUT FORMAT ===\n"
+            "You will receive the upstream story blueprint as a RAW JSON TEXT BLOB "
+            "inside the user message. Do NOT assume specific field names in "
+            "advance. READ the JSON, understand whatever shape it happens to have, "
+            "and extract the elements you need. Typical fields you may encounter "
+            "include logline/premise, cast/characters, locations/settings, "
+            "story_arc/beats, scene_outline/scenes, style/tone — but the exact "
+            "names and nesting may vary. Reason from the text, not from assumed "
+            "keys.\n\n"
+            "=== OUTPUT FORMAT ===\n"
+            "JSON only; no markdown; match the user-message template exactly. Use "
+            "empty string or empty list for unknowns, never null. Your output will "
+            "be validated against a strict Pydantic schema, so fields with enum "
+            "values (block_type, shot_type, camera.angle, camera.movement, "
+            "interior_exterior, time_of_day) must use valid values shown in the "
+            "template.\n\n"
+            "=== ID CONVENTIONS ===\n"
+            "If the story blueprint provides character/location ids (char_001, "
+            "loc_001 style, or anything else), REUSE those exact ids everywhere "
+            "you reference the same entity: scene_consistency_pack.character_locks"
+            "[].character_id, scene_consistency_pack.location_lock.location_id, "
+            "shots[].character_id, continuity.character_wardrobe_notes[]."
+            "character_id, etc. If the blueprint has no ids, invent stable ones "
+            "(char_001, loc_001, prop_001, …) and reuse them consistently across "
+            "every scene.\n\n"
+            "For props, assign prop_id values of the form prop_001, prop_002, … "
+            "in scene_consistency_pack.props_lock[].prop_id. In shots."
+            "props_in_frame[], reference props by their prop_id (not by name).\n\n"
+            "linked_story_step_id: if the blueprint exposes arc/beat ids (arc_001 "
+            "style), point each scene's linked_story_step_id at the single most "
+            "central beat that scene dramatizes (usually its climax or inciting "
+            "moment, NOT its setup). If no arc ids are exposed, use an empty "
+            "string.\n\n"
+            "=== STRUCTURAL REQUIREMENTS ===\n"
+            "Every shot's keyframe_plan.keyframe_count MUST be 1.\n"
+            "Dialogue shots (block_type=='dialogue'): character_id and text must "
+            "BOTH be non-empty. Action shots (block_type=='action'): leave "
+            "character_id and character_name empty.\n"
+            "scene_consistency_pack: fill EVERY lock (location_lock, "
+            "character_locks, props_lock, style_lock) with concrete notes drawn "
+            "from the blueprint's descriptive text. An empty list means 'nothing "
+            "to lock', not a lazy placeholder.\n\n"
+            "Do NOT include an artifact_caption block — the system generates it "
+            "automatically."
         )
 
     def build_user_prompt(self, input_data: ScreenplayAgentInput) -> str:
-        # Not used — ScreenplayAgent always runs skeleton-first via
-        # build_skeleton + build_creative_prompt. Required by BaseAgent
-        # interface.
-        return ""
+        return (
+            "Read the upstream story blueprint below and produce a complete "
+            "screenplay that dramatizes it.\n\n"
+            "=== STORY BLUEPRINT (raw JSON — read the shape before writing) ===\n"
+            f"{input_data.story_json_text}\n"
+            "=== END STORY BLUEPRINT ===\n\n"
+            "Extract from the blueprint:\n"
+            "  - who the characters are (their ids, names, roles — preserve any\n"
+            "    ids the blueprint provides)\n"
+            "  - where the scenes take place (location ids + names, interior vs\n"
+            "    exterior, time of day)\n"
+            "  - what story beats to cover (from whatever arc / outline / scenes /\n"
+            "    beats field the blueprint exposes)\n"
+            "  - what tone / genre / style to honor (from any style / tone / mood\n"
+            "    fields)\n\n"
+            "Then produce the full screenplay JSON in EXACTLY this shape:\n\n"
+            f"{SCREENPLAY_OUTPUT_TEMPLATE}\n\n"
+            "Per-scene requirements:\n"
+            "  * scene_id: sc_001, sc_002, … in order\n"
+            "  * heading.location_id / character_locks[].character_id: reuse ids\n"
+            "    from the blueprint when present; otherwise invent and reuse\n"
+            "    consistently\n"
+            "  * scene_consistency_pack: fill every lock with concrete notes\n"
+            "    drawn from the blueprint's descriptive fields\n"
+            "  * shots: each a distinct visual beat, keyframe_plan.keyframe_count=1\n"
+            "  * scene_end.turn / emotional_shift: derived from the blueprint's\n"
+            "    beat / arc descriptions\n\n"
+            "Return JSON only."
+        )
 
     def parse_output(self, raw: dict[str, Any]) -> ScreenplayAgentOutput:
         return ScreenplayAgentOutput.model_validate(raw)
 
     def recompute_metrics(self, output: ScreenplayAgentOutput) -> None:
+        """Canonicalize structural fields and recompute derived counts.
+
+        Deliberately minimal — see the module docstring. Only rewrites
+        ``shot_id`` / ``order`` / ``keyframe_count`` remain; ``prop_id``
+        and ``props_in_frame`` are trusted to the LLM so that evaluator
+        rework (or a human read of the output) surfaces LLM drift
+        instead of silently masking it.
+        """
         c = output.content
         self._normalize_order(c.scenes)
-        # Global sequential shot_id + per-scene order (trust structure, not LLM ids)
+
+        # Global sequential shot_id + per-scene order. ``shot_id`` stays
+        # force-assigned because ``ScreenplayEvaluator`` only checks
+        # uniqueness, not ``sh_NNN`` format, and downstream agents
+        # assume that format. ``keyframe_count`` is clamped as a
+        # belt-and-suspenders alongside the evaluator's existing
+        # ``keyframe_count != 1`` check.
         g = 1
         for scene in c.scenes:
             for i, sh in enumerate(scene.shots, 1):
                 sh.shot_id = f"sh_{g:03d}"
                 sh.order = i
+                sh.keyframe_plan.keyframe_count = 1
                 g += 1
+
         output.metrics.scene_count = len(c.scenes)
         shot_total = sum(len(s.shots) for s in c.scenes)
         output.metrics.shot_count_total = shot_total
@@ -530,4 +273,3 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
         output.metrics.action_block_count = sum(
             1 for s in c.scenes for sh in s.shots if sh.block_type == "action"
         )
-

@@ -24,7 +24,6 @@ class IntakeVideoContent(BaseModel):
 
 class IntakeVideoInput(BaseModel):
     raw_video_path: str = ""
-    user_intent: str = ""
 
 
 class IntakeVideoOutput(BaseModel):

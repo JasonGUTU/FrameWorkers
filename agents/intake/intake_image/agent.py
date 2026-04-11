@@ -47,14 +47,11 @@ class IntakeImageAgent(BaseAgent[IntakeImageInput, IntakeImageOutput]):
         The image is attached separately as a multimodal content item;
         only the text portion is constructed here.
         """
-        intent = (input_data.user_intent or "").strip()
         return (
             "Describe the attached image in ONE short sentence "
             "(STRICTLY <= 150 characters): subject, key visible attributes, "
             "lighting/mood. Drop adverbs and filler. Do not speculate "
             "about purpose.\n\n"
-            f"User-stated intent (do not echo this in the description): "
-            f"{intent[:200] or '(none)'}\n\n"
             "Return strict JSON: {\"visual_description\": \"...\"}"
         )
 
@@ -79,7 +76,6 @@ class IntakeImageAgent(BaseAgent[IntakeImageInput, IntakeImageOutput]):
           5. Return the output with visual_description populated.
         """
         skeleton = self._build_skeleton(input_data)
-        intent = (input_data.user_intent or "").strip()
         image_path = (input_data.raw_image_path or "").strip()
 
         if not image_path:

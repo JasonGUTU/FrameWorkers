@@ -121,15 +121,7 @@ def test_director_passes_latest_execution_summary_to_reasoning():
     assert "content" not in reasoning.last_global_memory[0]
 
 
-def test_director_does_not_send_assets_in_execute_inputs():
-    api = _ApiIdle()
-    director = DirectorAgent(api_client=api)
-
-    inputs = director._build_assistant_inputs_for_execution(
-        task={"description": {"goal": "unit"}, "progress": {}},
-    )
-
-    assert inputs is not None
-    assert inputs["text"] == "unit"
-    assert "assets" not in inputs
-    assert "_memory_brief" not in inputs
+# Removed: test_director_does_not_send_assets_in_execute_inputs.
+# After the execute_fields cleanup, the director's HTTP body is exactly
+# {agent_id, task_id} — there is no payload channel to police, so the
+# "no assets injected from director" guard is vacuously true.

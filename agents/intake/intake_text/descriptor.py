@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel
 
+from ...common_schema import ResolvedArtifactEntry
 from ...descriptor import SubAgentDescriptor
 from .agent import IntakeTextAgent
 from .labels import INPUT_LABEL_RAW_TEXT_UPLOAD
@@ -15,31 +16,11 @@ def build_input(
     _task_id: str,
     resolved_artifacts: dict,
 ) -> BaseModel:
-    """Pull the raw text path and user_intent out of the placeholder artifact.
-
-    The placeholder artifact is registered by ``workspace.persist_raw_upload``
-    with ``ArtifactRef.path`` pointing at the on-disk file and user intent
-    embedded in the ``caption`` field (suffix ``User intent: <text>.``).
-    """
-    entry = resolved_artifacts.get(INPUT_LABEL_RAW_TEXT_UPLOAD, {})
-    if isinstance(entry, list):
-        entry = entry[0] if entry else {}
-    raw_text_path = ""
-    user_intent = ""
-    if isinstance(entry, dict):
-        raw_text_path = str(entry.get("path", "") or "")
-        user_intent = _extract_user_intent(str(entry.get("caption", "") or ""))
-    return IntakeTextInput(raw_text_path=raw_text_path, user_intent=user_intent)
-
-
-def _extract_user_intent(caption: str) -> str:
-    """Extract 'User intent: ...' suffix from a raw-upload caption."""
-    marker = "User intent: "
-    idx = caption.find(marker)
-    if idx < 0:
-        return ""
-    tail = caption[idx + len(marker):]
-    return tail.rstrip(".")
+    raw = resolved_artifacts.get(INPUT_LABEL_RAW_TEXT_UPLOAD)
+    if isinstance(raw, list):
+        raw = raw[0] if raw else None
+    entry = ResolvedArtifactEntry.coerce(raw)
+    return IntakeTextInput(raw_text_path=entry.path)
 
 
 def build_captions(agent_id: str, output_dict: dict) -> dict:

@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 import src.assistant.service as service_module
 from src.assistant.models import AgentExecution, ExecutionStatus
 from src.assistant.state_store import AssistantStateStore
+from agents.common_schema import ResolvedArtifactEntry
 
 
 def _execution_results_dict(storage: AssistantStateStore, result: dict) -> dict:
@@ -88,8 +89,11 @@ def test_service_build_execution_inputs_includes_assets(assistant_env):
     # (whose caption contains "upstream_asset") lands under that key.
     resolved = inputs["resolved_artifacts"]
     assert isinstance(resolved, dict), f"expected dict, got: {type(resolved)}"
-    upstream = resolved.get("upstream_asset", {})
-    assert isinstance(upstream, dict) and upstream.get("payload", {}).get("summary") == "ok", (
+    # ``coerce`` normalises whatever the resolver (real or stubbed) put in —
+    # raw dict or ResolvedArtifactEntry — to a typed entry so the assertion
+    # doesn't depend on which path populated the label.
+    upstream = ResolvedArtifactEntry.coerce(resolved.get("upstream_asset"))
+    assert upstream.payload is not None and upstream.payload.get("summary") == "ok", (
         f"expected upstream_asset with summary=ok in resolved_artifacts, got: {resolved}"
     )
 
@@ -472,8 +476,8 @@ def test_service_rewrites_media_asset_uri_to_workspace_path(tmp_path, monkeypatc
         workspace=svc.workspace,
     )
     resolved = inputs["resolved_artifacts"]
-    kf = resolved.get("keyframes", {})
-    assert isinstance(kf, dict) and isinstance(kf.get("payload"), dict) and kf["payload"].get("content"), (
+    kf = ResolvedArtifactEntry.coerce(resolved.get("keyframes"))
+    assert isinstance(kf.payload, dict) and kf.payload.get("content"), (
         f"expected keyframes artifact in resolved_artifacts, got: {resolved}"
     )
 
@@ -534,11 +538,13 @@ def test_service_hydrates_indexed_assets_before_agent_build_input(tmp_path, monk
             return _ConsumerAgent()
 
         def build_input(self, task_id, resolved_artifacts):
-            producer = resolved_artifacts.get("producer_asset", {})
-            payload = producer.get("payload", {}) if isinstance(producer, dict) else {}
+            producer = ResolvedArtifactEntry.coerce(
+                resolved_artifacts.get("producer_asset")
+            )
+            payload = producer.payload or {}
             return {
                 "task_id": task_id,
-                "observed_value": payload.get("content", {}).get("value", -1),
+                "observed_value": (payload.get("content") or {}).get("value", -1),
             }
 
     class _Registry:

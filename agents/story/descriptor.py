@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel
 
+from ..common_schema import ResolvedArtifactEntry
 from ..descriptor import SubAgentDescriptor
 from .agent import StoryAgent
 from .labels import INPUT_LABEL_CREATIVE_BRIEF
@@ -20,49 +21,37 @@ def build_input(
     The creative brief is selected by InputResolver via the
     ``[creative_brief]`` label and MUST arrive as the JSON output of
     IntakeTextAgent — a caption-rich artifact whose
-    ``payload.content.text`` carries the verbatim user brief.
-
-    This used to silently fall back to ``caption.why`` (the user_intent
-    string) when ``payload.content.text`` was missing, which made it
-    impossible to distinguish "InputResolver picked the right artifact
-    but it has no text" from "InputResolver picked the wrong artifact"
-    — the agent would happily run on a 5-word user_intent and
-    hallucinate a story. Each branch below now raises with a specific
-    diagnostic so the orchestration bug surfaces immediately instead
-    of producing plausible-looking garbage.
+    ``payload.content.text`` carries the verbatim user brief. Each
+    branch below raises with a specific diagnostic so an orchestration
+    bug (missing/stale/wrong-type upstream artifact) surfaces
+    immediately instead of producing plausible-looking garbage from a
+    caption fragment.
     """
-    brief_entry = resolved_artifacts.get(INPUT_LABEL_CREATIVE_BRIEF)
-    if not isinstance(brief_entry, dict) or not brief_entry:
-        raise ValueError(
-            "StoryAgent.build_input: InputResolver returned no "
-            f"[{INPUT_LABEL_CREATIVE_BRIEF}] entry. Make sure "
-            "IntakeTextAgent has run on the user's brief upload before "
-            "StoryAgent."
-        )
-    path = brief_entry.get("path")
-    mime = brief_entry.get("mime")
-    payload = brief_entry.get("payload")
-    if not isinstance(payload, dict):
+    brief = ResolvedArtifactEntry.coerce(
+        resolved_artifacts.get(INPUT_LABEL_CREATIVE_BRIEF)
+    )
+    if not brief.payload:
         raise ValueError(
             "StoryAgent.build_input: "
-            f"[{INPUT_LABEL_CREATIVE_BRIEF}] entry has no JSON payload "
-            f"(path={path!r}, mime={mime!r}). Expected an IntakeTextAgent "
-            "output JSON; got something else. InputResolver may have "
-            "picked a stale raw_pending upload or a non-text artifact."
+            f"[{INPUT_LABEL_CREATIVE_BRIEF}] entry missing or has no JSON "
+            f"payload (path={brief.path!r}, mime={brief.mime!r}). Make sure "
+            "IntakeTextAgent has run on the user's brief upload before "
+            "StoryAgent — InputResolver may have picked a stale raw_pending "
+            "upload or a non-text artifact."
         )
-    content = payload.get("content")
+    content = brief.payload.get("content")
     if not isinstance(content, dict):
         raise ValueError(
             "StoryAgent.build_input: "
             f"[{INPUT_LABEL_CREATIVE_BRIEF}] payload has no 'content' dict "
-            f"(path={path!r})."
+            f"(path={brief.path!r})."
         )
     creative_brief = str(content.get("text") or "").strip()
     if not creative_brief:
         raise ValueError(
             "StoryAgent.build_input: "
             f"[{INPUT_LABEL_CREATIVE_BRIEF}] content.text is empty "
-            f"(path={path!r}). InputResolver picked an artifact that "
+            f"(path={brief.path!r}). InputResolver picked an artifact that "
             "doesn't carry actual brief text."
         )
     return StoryAgentInput(creative_brief=creative_brief)
@@ -108,7 +97,7 @@ DESCRIPTOR = SubAgentDescriptor(
         "story blueprint.\n\n"
         f"[{INPUT_LABEL_CREATIVE_BRIEF}] (single)\n"
         "A natural-language brief describing what kind of story / video to "
-        "produce. This may be a short prompt ('make a 30s film about a cat "
+        "produce. This may be a short prompt ('a film about a cat "
         "chasing a butterfly') or a longer detailed outline / draft story "
         "text. The caption describes it as a creative brief / project "
         "intent description. Pick the single most recent / most "

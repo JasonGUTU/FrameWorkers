@@ -18,8 +18,7 @@ class IntakeVideoAgent(BaseAgent[IntakeVideoInput, IntakeVideoOutput]):
 
     def build_user_prompt(self, input_data: IntakeVideoInput) -> str:
         return (
-            "Video is provided as a multimodal attachment.\n"
-            f"User-stated intent (do not echo): {input_data.user_intent[:200] or '(none)'}\n\n"
+            "Video is provided as a multimodal attachment.\n\n"
             "Return JSON: {\"visual_summary\": \"...\"}"
         )
 
