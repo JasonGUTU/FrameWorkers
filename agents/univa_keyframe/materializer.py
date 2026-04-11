@@ -55,9 +55,12 @@ class UnivaKeyFrameMaterializer(BaseMaterializer):
                 return cid, None
             for attempt in range(1, MAX_RETRIES + 1):
                 try:
-                    img = await self.image_svc.generate_image(prompt)
-                    logger.info("[UnivaKF] Character %s generated (%d bytes)", cid, len(img))
-                    return cid, img
+                    result = await self.image_svc.generate_image(prompt)
+                    logger.info(
+                        "[UnivaKF] Character %s generated (%d bytes)",
+                        cid, len(result.bytes),
+                    )
+                    return cid, result.bytes
                 except Exception as e:
                     logger.warning("[UnivaKF] Character %s attempt %d failed: %s", cid, attempt, e)
             return cid, None
@@ -108,12 +111,15 @@ class UnivaKeyFrameMaterializer(BaseMaterializer):
                 try:
                     if ref_images:
                         # I2I with character references (mirrors UniVA's image_to_image_generate)
-                        img = await self.image_svc.edit_image(ref_images, prompt)
+                        result = await self.image_svc.edit_image(ref_images, prompt)
                     else:
                         # T2I for empty-stage shots (mirrors UniVA's text_to_image_generate)
-                        img = await self.image_svc.generate_image(prompt)
-                    logger.info("[UnivaKF] Shot %s keyframe generated (%d bytes)", shot_id, len(img))
-                    return shot_id, img
+                        result = await self.image_svc.generate_image(prompt)
+                    logger.info(
+                        "[UnivaKF] Shot %s keyframe generated (%d bytes)",
+                        shot_id, len(result.bytes),
+                    )
+                    return shot_id, result.bytes
                 except Exception as e:
                     logger.warning("[UnivaKF] Shot %s attempt %d failed: %s", shot_id, attempt, e)
             return shot_id, None
