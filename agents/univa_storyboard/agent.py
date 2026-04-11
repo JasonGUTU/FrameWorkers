@@ -29,14 +29,15 @@ class UnivaStoryboardAgent(BaseAgent[UnivaStoryboardInput, UnivaStoryboardOutput
             "- The output MUST have top-level keys: content, artifact_caption.\n"
             "- Wrap the characters/shots/style inside a \"content\" object.\n"
             "- Do NOT include a 'meta' block -- it is injected by the system.\n\n"
-            "artifact_caption: fill all three fields:\n"
-            "  what -- brief description of the storyboard.\n"
-            "  why  -- key story beats covered.\n"
+            "artifact_caption: fill both fields:\n"
+            "  caption -- one sentence: character count, shot count. "
+            "State this is a storyboard for keyframe and video generation. "
+            "No creative prose.\n"
             "  scope -- always \"global\".\n\n"
             "Example top-level structure:\n"
             "{\n"
             '  "content": { "characters": [...], "shots": [...], "style": "..." },\n'
-            '  "artifact_caption": { "what": "...", "why": "...", "scope": "global" }\n'
+            '  "artifact_caption": { "caption": "Univa storyboard: 2 characters, 5 shots. Input for keyframe and video generation.", "scope": "global" }\n'
             "}\n"
         )
         return text
@@ -59,21 +60,3 @@ class UnivaStoryboardAgent(BaseAgent[UnivaStoryboardInput, UnivaStoryboardOutput
         c = output.content
         output.metrics.character_count = len(c.characters)
         output.metrics.shot_count = len(c.shots)
-
-        # Enrich the JSON-snapshot caption with a self-describing nature
-        # statement so downstream agents (via the InputResolver LLM) understand
-        # what this document IS, not just its raw counts.
-        cap = output.artifact_caption
-        nature = (
-            f"A UniVA-style storyboard document for the whole video. It defines "
-            f"a cast of {len(c.characters)} character(s) with their visual "
-            f"descriptions, and breaks the story into {len(c.shots)} ordered "
-            f"shots — each shot specifying its setting, plot beat, static visual "
-            f"description, and planned camera. It is the upstream creative "
-            f"source used by the keyframe and video steps to render and "
-            f"animate each shot of the story."
-        )
-        if cap.what:
-            cap.what = nature + " " + cap.what
-        else:
-            cap.what = nature

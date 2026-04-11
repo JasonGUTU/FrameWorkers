@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
-from ..common_schema import ArtifactCaption, Meta
+from ..common_schema import Meta
 
 
 # ---------------------------------------------------------------------------
@@ -81,7 +81,6 @@ class StoryBlueprint(BaseModel):
     meta: Meta = Field(default_factory=Meta)
     content: StoryBlueprintContent = Field(default_factory=StoryBlueprintContent)
     metrics: StoryMetrics = Field(default_factory=StoryMetrics)
-    artifact_caption: ArtifactCaption = Field(default_factory=ArtifactCaption)
 
 
 class StoryAgentInput(BaseModel):

@@ -36,7 +36,7 @@ class _DummyPipelineResult:
 
 
 class _DummyPipelineAgent:
-    async def run(self, _typed_input, input_bundle_v2=None, materialize_ctx=None):
+    async def run(self, _typed_input, *, materialize_ctx=None):
         return _DummyPipelineResult()
 
 
@@ -53,12 +53,11 @@ class E2eDummyDescriptor:
     def build_equipped_agent(self, _llm):
         return _DummyPipelineAgent()
 
-    def build_input(self, task_id, input_bundle_v2):
-        hints = getattr(input_bundle_v2, "hints", None) or {}
+    def build_input(self, task_id, resolved_artifacts):
         return {
             "task_id": task_id,
-            "input_bundle_v2": input_bundle_v2,
-            "language": hints.get("language") or "en",
+            "resolved_artifacts": resolved_artifacts,
+            "language": "en",
         }
 
 
@@ -128,8 +127,7 @@ def _stub_assistant_llm_hooks_for_nostack_e2e(monkeypatch):
                 for artifact in entry.artifacts:
                     path = str(getattr(artifact, "path", "") or "").strip()
                     mime = str(getattr(artifact, "mime", "") or "").strip()
-                    what = str(getattr(artifact, "what", "") or "")
-                    why = str(getattr(artifact, "why", "") or "")
+                    caption_val = str(getattr(artifact, "caption", "") or "")
                     scope = str(getattr(artifact, "scope", "global") or "global")
                     if not path:
                         continue
@@ -144,7 +142,7 @@ def _stub_assistant_llm_hooks_for_nostack_e2e(monkeypatch):
                         except Exception:
                             pass
                     resolved_artifacts.append({
-                        "what": what, "why": why, "scope": scope,
+                        "caption": caption_val, "scope": scope,
                         "path": path,
                         "mime": mime or ("application/json" if path.lower().endswith(".json") else ""),
                         "payload": payload,

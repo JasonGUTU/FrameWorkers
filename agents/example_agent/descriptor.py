@@ -13,7 +13,6 @@ from __future__ import annotations
 from pydantic import BaseModel
 
 from ..descriptor import SubAgentDescriptor
-from ..contracts import InputBundleV2
 from .agent import ExamplePipelineAgent
 from .schema import ExamplePipelineInput
 from .evaluator import ExamplePipelineEvaluator
@@ -21,24 +20,32 @@ from .evaluator import ExamplePipelineEvaluator
 
 def build_input(
     _task_id: str,
-    input_bundle_v2: InputBundleV2,
+    resolved_artifacts: dict,
 ) -> BaseModel:
-    """Construct typed input from the pipeline bundle.
+    """Construct typed input from the resolved artifact dict.
 
     NOTE: example_agent is no longer registered in AGENT_REGISTRY (it is kept
     only as a development template). It still illustrates the canonical
     label-based input pattern: read from ``resolved_artifacts[label]`` only,
     never from any hint slot.
     """
-    resolved = input_bundle_v2.resolved_artifacts
-    entry = resolved.get("creative_brief", {})
+    entry = resolved_artifacts.get("creative_brief", {})
     payload = entry.get("payload", {}) if isinstance(entry, dict) else {}
     raw = ""
     if isinstance(payload, dict):
         raw = str(payload.get("text", "") or "")
     if not raw and isinstance(entry, dict):
-        raw = str(entry.get("why", "") or "")
+        raw = str(entry.get("caption", "") or "")
     return ExamplePipelineInput(source_text=raw)
+
+
+def build_captions(agent_id: str, output_dict: dict) -> dict:
+    return {
+        agent_id: {
+            "caption": "Example text summary. Pipeline demo output.",
+            "scope": "global",
+        },
+    }
 
 
 CATALOG_ENTRY = (
@@ -54,6 +61,7 @@ DESCRIPTOR = SubAgentDescriptor(
     agent_factory=lambda llm: ExamplePipelineAgent(llm_client=llm),
     evaluator_factory=ExamplePipelineEvaluator,
     build_input=build_input,
+    build_captions=build_captions,
     materializer_factory=None,
     input_needs_description=(
         "Only needs the user-provided source_text to summarize. "

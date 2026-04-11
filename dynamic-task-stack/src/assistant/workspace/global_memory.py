@@ -3,9 +3,9 @@
 The global memory is a workspace-wide ledger:
 
   * Each entry corresponds to one **agent execution** that produced one or
-    more files. Its ``artifacts`` array carries a natural-language caption
-    (``what`` / ``why`` / ``scope``), absolute ``path`` and ``mime`` for
-    every file that execution wrote.
+    more files. Its ``artifacts`` array carries a natural-language
+    ``caption``, ``scope``, absolute ``path`` and ``mime`` for every file
+    that execution wrote.
   * Stored on disk at ``Runtime/{workspace_id}/global_memory.md`` — a
     markdown wrapper around a JSON ``Entries`` block so the file is both
     human-readable and round-trippable.
@@ -104,8 +104,7 @@ class GlobalMemory:
     @staticmethod
     def _ref_to_dict(ref: ArtifactRef) -> Dict[str, Any]:
         return {
-            "what": ref.what,
-            "why": ref.why,
+            "caption": ref.caption,
             "scope": ref.scope,
             "path": ref.path,
             "mime": ref.mime,
@@ -115,9 +114,14 @@ class GlobalMemory:
     def _ref_from_dict(d: Any) -> ArtifactRef:
         if not isinstance(d, dict):
             return ArtifactRef()
+        # Backward compat: old entries have what+why instead of caption.
+        caption = str(d.get("caption") or "")
+        if not caption:
+            what = str(d.get("what") or "")
+            why = str(d.get("why") or "")
+            caption = f"{what} {why}".strip() if (what or why) else ""
         return ArtifactRef(
-            what=str(d.get("what") or ""),
-            why=str(d.get("why") or ""),
+            caption=caption,
             scope=str(d.get("scope") or "global"),
             path=str(d.get("path") or ""),
             mime=str(d.get("mime") or ""),
@@ -252,6 +256,29 @@ class GlobalMemory:
         except OSError as exc:
             logger.warning("GlobalMemory: failed to write %s: %s", self._memory_path, exc)
             raise
+        self._write_inputresolver_view(entries)
+
+    def _write_inputresolver_view(self, entries: List[GlobalMemoryEntry]) -> None:
+        """Write ``memory_for_inputresolver.md`` — the exact text InputResolver's LLM sees."""
+        try:
+            index_text, paths = self._render_captions_index(entries)
+            out_path = self._memory_path.parent / "memory_for_inputresolver.md"
+            out_path.write_text(
+                f"# InputResolver view — `{self.workspace_id}`\n\n"
+                "This file is auto-generated every time global_memory changes.\n"
+                "It shows exactly what InputResolver's LLM receives as the "
+                "artifact registry. The LLM returns #N ids; the path mapping "
+                "below resolves them.\n\n"
+                "---\n\n"
+                f"{index_text}\n\n"
+                "---\n\n"
+                "## Path mapping\n\n"
+                + "\n".join(f"#{i} → {p}" for i, p in enumerate(paths))
+                + "\n",
+                encoding="utf-8",
+            )
+        except Exception as exc:
+            logger.debug("Failed to write inputresolver view: %s", exc)
 
     # ------------------------------------------------------------------
     # Public API
@@ -344,49 +371,56 @@ class GlobalMemory:
             self._write_all(kept_entries)
         return removed_refs
 
-    def get_captions_index(self, *, task_id: Optional[str] = None) -> str:
-        """Return a compact LLM-readable index of all individual artifacts.
+    def get_captions_index(
+        self, *, task_id: Optional[str] = None,
+    ) -> tuple[str, List[str]]:
+        """Return ``(index_text, path_list)`` for InputResolver.
 
-        Each artifact is rendered as one block with its caption, scope, MIME,
-        and path so that InputResolver's LLM can select individual files by
-        semantic meaning without traversing JSON manifests.
+        ``index_text`` is the LLM-readable caption index with ``#N`` ids.
+        ``path_list`` maps each ``#N`` back to the absolute filesystem path.
 
-        Example output::
+        Example index_text::
 
-            [/path/to/screenplay.json]  scope=global  mime=application/json
-              agent: ScreenplayAgent | exec_2_xxx | 2026-04-05
-              what: 1 scene, 9 shots, intimate workshop drama, warm nostalgic palette
-              why: tight framing and warm lamplight to convey urgency and memory
+            #0  Screenplay: 1 scene, 5 shots. Input for keyframe planning
+            and audio scoring. Produced by ScreenplayAgent on 2026-04-05 13:44.
 
-            [/path/to/img_char_001.png]  scope=global  mime=image/png
-              agent: KeyFrameAgent | exec_3_xxx | 2026-04-05
-              what: Elias Vance full-body reference, warm workshop lighting, age 70
-              why: global character anchor for visual consistency across all shots
+            #1  Character reference image for char_001 (global identity
+            anchor). Produced by KeyFrameAgent on 2026-04-05 13:45.
         """
         entries = self._read_all()
         if task_id:
-            # Include workspace-global entries (task_id="") in every task's
-            # view. Raw user uploads via ``persist_raw_upload`` are
-            # registered with task_id="" because uploads happen before any
-            # task — they belong to the whole workspace and must be visible
-            # to whichever task subsequently runs an intake / content agent.
             entries = [
                 e for e in entries
                 if e.task_id == task_id or not e.task_id
             ]
-        if not entries:
-            return "(no artifacts registered yet)"
+        return self._render_captions_index(entries)
 
+    @staticmethod
+    def _render_captions_index(
+        entries: List[GlobalMemoryEntry],
+    ) -> tuple[str, List[str]]:
+        """Render the LLM-readable index and return (text, path_list).
+
+        Each artifact gets a sequential ``#N`` id. The LLM sees only the
+        id + caption + producer; paths are kept in ``path_list`` so the
+        caller can map ids back to filesystem locations.
+        """
+        if not entries:
+            return "(no artifacts registered yet)", []
         lines: List[str] = []
+        paths: List[str] = []
+        idx = 0
         for e in entries:
-            date_str = e.created_at.strftime("%Y-%m-%d") if e.created_at else "?"
+            date_str = e.created_at.strftime("%Y-%m-%d %H:%M") if e.created_at else "unknown date"
             for ref in e.artifacts:
                 if not ref.path:
                     continue
+                caption = ref.caption or "(no caption)"
                 lines.append(
-                    f"[{ref.path}]  scope={ref.scope}  mime={ref.mime or '?'}\n"
-                    f"  agent: {e.agent_id} | {e.execution_id} | {date_str}\n"
-                    f"  what: {ref.what or '—'}\n"
-                    f"  why: {ref.why or '—'}"
+                    f"#{idx}  {caption} "
+                    f"Produced by {e.agent_id} on {date_str}."
                 )
-        return "\n\n".join(lines) if lines else "(no artifacts registered yet)"
+                paths.append(ref.path)
+                idx += 1
+        text = "\n\n".join(lines) if lines else "(no artifacts registered yet)"
+        return text, paths

@@ -7,7 +7,6 @@ from typing import Any
 from pydantic import BaseModel
 
 from ..descriptor import SubAgentDescriptor
-from ..contracts import InputBundleV2
 from .agent import KeyFrameAgent
 from .labels import (
     INPUT_LABEL_CHARACTER_REFERENCE,
@@ -36,8 +35,7 @@ def _to_image_refs(resolved: dict, label: str) -> list[ImageReferenceEntry]:
         out.append(
             ImageReferenceEntry(
                 path=path,
-                caption_what=str(it.get("what", "") or ""),
-                caption_why=str(it.get("why", "") or ""),
+                caption=str(it.get("caption", "") or ""),
                 mime=str(it.get("mime", "") or ""),
             )
         )
@@ -46,23 +44,78 @@ def _to_image_refs(resolved: dict, label: str) -> list[ImageReferenceEntry]:
 
 def build_input(
     _task_id: str,
-    input_bundle_v2: InputBundleV2,
+    resolved_artifacts: dict,
 ) -> BaseModel:
-    resolved = input_bundle_v2.resolved_artifacts
-
-    sp = resolved.get(INPUT_LABEL_SCREENPLAY, {})
+    sp = resolved_artifacts.get(INPUT_LABEL_SCREENPLAY, {})
     payload = sp.get("payload", {}) if isinstance(sp, dict) else {}
 
     return KeyFrameAgentInput(
         screenplay=payload,
-        character_references=_to_image_refs(resolved, INPUT_LABEL_CHARACTER_REFERENCE),
-        location_references=_to_image_refs(resolved, INPUT_LABEL_LOCATION_REFERENCE),
-        style_references=_to_image_refs(resolved, INPUT_LABEL_STYLE_REFERENCE),
+        character_references=_to_image_refs(resolved_artifacts, INPUT_LABEL_CHARACTER_REFERENCE),
+        location_references=_to_image_refs(resolved_artifacts, INPUT_LABEL_LOCATION_REFERENCE),
+        style_references=_to_image_refs(resolved_artifacts, INPUT_LABEL_STYLE_REFERENCE),
     )
 
 
 def materializer_factory(services: dict[str, Any]) -> KeyframeMaterializer:
     return KeyframeMaterializer(image_service=services["image_service"])
+
+
+def build_captions(agent_id: str, output_dict: dict) -> dict:
+    content = output_dict.get("content", {})
+    ga = content.get("global_anchors", {})
+    scenes = content.get("scenes", [])
+    scene_count = len(scenes)
+    shot_count = sum(
+        len(sc.get("shots", [])) for sc in scenes if isinstance(sc, dict)
+    )
+    caps: dict = {}
+    # JSON snapshot
+    caps[agent_id] = {
+        "caption": (
+            f"Keyframe planning document: {scene_count} scene(s), {shot_count} "
+            f"shot(s), with per-shot frame descriptions and motion hints. "
+            f"Consumed by VideoAgent for image-to-video generation."
+        ),
+        "scope": "global",
+    }
+    # L1 global entity references
+    for kind_key, kind_label in [("characters", "character"), ("locations", "location"), ("props", "prop")]:
+        for anchor in ga.get(kind_key, []):
+            eid = anchor.get("entity_id", "") if isinstance(anchor, dict) else ""
+            if eid:
+                caps[f"img_{eid}_global"] = {
+                    "caption": f"Global {kind_label} reference image for {eid}. Visual identity anchor — not a video frame.",
+                    "scope": "global",
+                }
+    # L2 + L3
+    for sc in scenes:
+        if not isinstance(sc, dict):
+            continue
+        scene_id = sc.get("scene_id", "")
+        sk = sc.get("stability_keyframes", {})
+        for kind_key, kind_label in [("characters", "character"), ("locations", "location"), ("props", "prop")]:
+            for anchor in sk.get(kind_key, []) if isinstance(sk, dict) else []:
+                eid = anchor.get("entity_id", "") if isinstance(anchor, dict) else ""
+                if eid and scene_id:
+                    caps[f"img_{eid}_{scene_id}"] = {
+                        "caption": f"Scene-level {kind_label} reference for {eid} in scene {scene_id}. Intermediate consistency rendering — not a video frame.",
+                        "scope": f"scene:{scene_id}",
+                    }
+        for shot in sc.get("shots", []):
+            if not isinstance(shot, dict):
+                continue
+            shot_id = shot.get("shot_id", "")
+            if not shot_id:
+                continue
+            for kf in shot.get("keyframes", []):
+                kid = kf.get("keyframe_id", "") if isinstance(kf, dict) else ""
+                if kid:
+                    caps[f"img_{shot_id}_{kid}"] = {
+                        "caption": f"Rendered starting frame for shot {shot_id} in scene {scene_id}. To be animated into a video clip by VideoAgent.",
+                        "scope": f"shot:{shot_id}",
+                    }
+    return caps
 
 
 CATALOG_ENTRY = (
@@ -79,6 +132,7 @@ DESCRIPTOR = SubAgentDescriptor(
     agent_factory=lambda llm: KeyFrameAgent(llm_client=llm),
     evaluator_factory=KeyframeEvaluator,
     build_input=build_input,
+    build_captions=build_captions,
     service_factories={
         "image_service": lambda ctx: select_image_service(),
     },

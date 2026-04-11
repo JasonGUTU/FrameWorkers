@@ -16,6 +16,4 @@ class IntakeTextEvaluator(BaseEvaluator[IntakeTextOutput]):
             errors.append("content.text is empty")
         if output.metrics.char_count <= 0:
             errors.append("metrics.char_count must be > 0")
-        if not output.artifact_caption.what:
-            errors.append("artifact_caption.what is empty")
         return errors

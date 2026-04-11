@@ -62,9 +62,9 @@ class MaterializeContext:
                            received. Materializers read whatever fields they
                            need from it (e.g. ``typed_input.screenplay``,
                            ``typed_input.shot_stills``). The materializer
-                           never reads ``InputBundleV2`` directly — every
-                           data dependency must already be expressed as a
-                           field on the agent's typed input.
+                           never reaches back to the resolved-artifacts dict
+                           directly — every data dependency must already be
+                           expressed as a field on the agent's typed input.
         persist_binary:    Callback that saves a ``MediaAsset`` to disk and
                            returns the URI string of the saved file.
         report_failure:    Optional callback that records a per-call
@@ -406,11 +406,6 @@ class BaseAgent(Generic[InputT, OutputT]):
             # --- Step 3: Materialize (if applicable) ---
             if self.materializer is not None and materialize_ctx is not None:
                 asset_dict = output.model_dump(exclude={"meta"})
-                # Inject per_artifact_captions if the output model has it (excluded from
-                # model_dump to keep JSON snapshots clean, but ArtifactWriter needs it).
-                pac = getattr(output, "per_artifact_captions", None)
-                if isinstance(pac, dict) and pac:
-                    asset_dict["_per_artifact_captions"] = pac
                 try:
                     raw_media = await self.materializer.materialize(
                         materialize_ctx,

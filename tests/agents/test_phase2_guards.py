@@ -4,17 +4,19 @@ These tests are pure source-code grep checks. They run fast (no LLM, no
 network, no fixtures) and exist solely to keep the architectural
 invariants from regressing. The principles being guarded are:
 
-  1.  ``input_bundle_v2.hints`` slot is gone — every cross-agent input
-      must travel through caption-driven label matching, not via free-
-      form hints.
+  1.  Sub-agent input boundary: every ``descriptor.build_input`` takes
+      ``(task_id, resolved_artifacts: dict)`` — no typed-wrapper class,
+      no extra channels. Adding a new channel requires editing 13
+      descriptor signatures (visible in PR review), not bumping a
+      dataclass field.
 
   2.  Evaluators do not perform cross-validation — ``check_structure`` /
       ``evaluate_creative`` / ``evaluate`` / ``evaluate_asset`` take only
       the agent's own ``output`` (or ``asset_data`` for L3). They never
-      receive ``input_bundle_v2``.
+      receive the resolved-artifacts dict.
 
   3.  Materializers receive a ``MaterializeContext`` carrying
-      ``typed_input``, never a second ``input_bundle_v2`` channel.
+      ``typed_input``, never a second resolved-artifacts channel.
 
   4.  Assistant layer is agent-agnostic — no ``if execution.agent_id ==
       "<AgentName>"`` hard-codes in ``service.py`` / ``artifact_writer.py``.
@@ -108,55 +110,42 @@ def test_dead_round1_symbols_never_resurface():
 
 
 # ---------------------------------------------------------------------------
-# 2. input_bundle_v2.hints is permanently deleted
+# 2. Sub-agent input boundary: descriptors take only `resolved_artifacts`
 # ---------------------------------------------------------------------------
 
 
-def test_input_bundle_v2_has_no_hints_slot():
-    """``InputBundleV2`` is a dataclass; the ``hints`` field was deleted
-    in Phase A. Grepping the source matches the word inside the
-    docstring, so check the dataclass field set at runtime instead."""
-    from dataclasses import fields
+def test_descriptors_take_only_resolved_artifacts():
+    """``descriptor.build_input`` is the agent boundary. Its signature
+    must be ``(task_id, resolved_artifacts: dict)`` — no extra channels.
+    Adding a new parameter requires intentionally editing every
+    descriptor, which is exactly the kind of change we want to be
+    visible in PR review (not a one-line dataclass field bump on a
+    wrapper)."""
+    import re
 
-    from agents.contracts import InputBundleV2
-
-    field_names = {f.name for f in fields(InputBundleV2)}
-    assert "hints" not in field_names, (
-        f"InputBundleV2 still declares a 'hints' field: {field_names}"
-    )
-    # Allowed fields: task_id + context. Anything else is a regression.
-    assert field_names == {"task_id", "context"}, (
-        f"InputBundleV2 fields drifted: {field_names}"
-    )
-
-
-def test_no_code_reads_input_bundle_v2_hints():
-    targets = _all_python_files(
-        _REPO / "agents",
-        _REPO / "dynamic-task-stack" / "src",
-        _REPO / "director_agent",
-        _REPO / "director_nostack",
-    )
-    bad_patterns = (
-        ".hints",
-        '["hints"]',
-        "['hints']",
+    descriptor_files = list((_REPO / "agents").rglob("descriptor.py"))
+    sig_re = re.compile(
+        r"^\s*def\s+build_input\s*\(([^)]*)\)",
+        re.MULTILINE,
     )
     offenders: list[tuple[Path, str]] = []
-    for path in targets:
+    for path in descriptor_files:
+        # Skip the base SubAgentDescriptor module — it defines the
+        # field type, not a concrete agent build_input.
+        if path.name == "descriptor.py" and path.parent == _REPO / "agents":
+            continue
         text = _read(path)
-        # Skip lines that mention "hints" only inside string literals
-        # whose surrounding context is unrelated (e.g. "hints_for_user").
-        for line in text.splitlines():
-            if "input_bundle_v2" not in line and "InputBundleV2" not in line:
+        for match in sig_re.finditer(text):
+            params = match.group(1)
+            if "input_bundle_v2" in params or "InputBundleV2" in params:
+                offenders.append((path, match.group(0).strip()))
                 continue
-            for pattern in bad_patterns:
-                if pattern in line:
-                    offenders.append((path, line.strip()))
-                    break
+            if "resolved_artifacts" not in params:
+                offenders.append((path, match.group(0).strip()))
     assert not offenders, (
-        "Code is still reading input_bundle_v2.hints:\n  "
-        + "\n  ".join(f"{p.relative_to(_REPO)}: {l}" for p, l in offenders)
+        "descriptor.build_input signature drifted from "
+        "(task_id, resolved_artifacts):\n  "
+        + "\n  ".join(f"{p.relative_to(_REPO)}: {sig}" for p, sig in offenders)
     )
 
 
@@ -251,9 +240,6 @@ def test_assistant_layer_has_no_agent_id_hardcodes():
             for match in pattern.finditer(line):
                 if match.group("name") in _ASSISTANT_HARD_CODE_AGENTS:
                     offenders.append((path, f"L{i}: {line.strip()}"))
-    # IntakeXxxAgent dispatch in service.intake_user_text is allowed —
-    # that's a deliberate ingestion entry point, not an output-shaping
-    # branch — so we only fail on the content-pipeline agent names above.
     assert not offenders, (
         "Assistant layer still hardcodes a content-pipeline agent_id:\n  "
         + "\n  ".join(f"{p.relative_to(_REPO)}: {l}" for p, l in offenders)
@@ -319,9 +305,12 @@ def test_workspace_persist_raw_upload_exists():
         _REPO / "dynamic-task-stack" / "src" / "assistant" / "workspace" / "workspace.py"
     )
     assert "def persist_raw_upload(" in src
-    # The placeholder caption convention must be present.
+    # The placeholder caption convention must be present:
+    #   - scope marker "raw_pending"
+    #   - self-identifying "Raw user upload" prefix + "Pending intake"
     assert "raw_pending" in src
-    assert "awaiting semantic analysis" in src
+    assert "Raw user upload" in src
+    assert "Pending intake" in src
 
 
 # ---------------------------------------------------------------------------

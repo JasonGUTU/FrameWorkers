@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
-from ..common_schema import ArtifactCaption, ImageAsset, Meta
+from ..common_schema import ImageAsset, Meta
 
 
 # ---------------------------------------------------------------------------
@@ -68,8 +68,6 @@ class UnivaKeyFrameOutput(BaseModel):
     meta: Meta = Field(default_factory=Meta)
     content: UnivaKeyFrameContent = Field(default_factory=UnivaKeyFrameContent)
     metrics: UnivaKeyFrameMetrics = Field(default_factory=UnivaKeyFrameMetrics)
-    artifact_caption: ArtifactCaption = Field(default_factory=ArtifactCaption)
     # Per-media-artifact captions keyed by sys_id (e.g. "img_shot_0_keyframe").
     # Populated by recompute_metrics(); read by ArtifactWriter to register
     # each image with its own ArtifactRef.  Excluded from JSON snapshot.
-    per_artifact_captions: dict = Field(default_factory=dict, exclude=True)

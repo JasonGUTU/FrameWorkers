@@ -239,11 +239,6 @@ class AudioAgent(BaseAgent[AudioAgentInput, AudioAgentOutput]):
         ]
         template = (
             '{\n'
-            '  "artifact_caption": {\n'
-            '    "what": "<scene count, narration segments, music/ambience per scene, delivery format>",\n'
-            '    "why": "<mood choices, audio style decisions>",\n'
-            '    "scope": "global"\n'
-            '  },\n'
             '  "scenes": [\n'
             + ",\n".join(scene_entries)
             + "\n  ]\n}"
@@ -251,9 +246,9 @@ class AudioAgent(BaseAgent[AudioAgentInput, AudioAgentOutput]):
 
         return (
             "The system has pre-built all structural fields (IDs, timing, "
-            "narration text/speaker, audio asset placeholders).  Your jobs are:\n"
-            "1. Write music mood and ambience description for each scene.\n"
-            "2. Fill artifact_caption describing the full audio package.\n\n"
+            "narration text/speaker, audio asset placeholders).  Your job is:\n"
+            "Write music mood and ambience description for each scene.\n"
+            "Do NOT include an artifact_caption block — the system generates it.\n\n"
             "=== SCREENPLAY CONTEXT ===\n"
             f"{context}\n\n"
             "=== RULES ===\n"
@@ -274,15 +269,7 @@ class AudioAgent(BaseAgent[AudioAgentInput, AudioAgentOutput]):
     def fill_creative(
         self, skeleton: AudioAgentOutput, creative: dict
     ) -> AudioAgentOutput:
-        """Merge LLM output (mood + ambience_description + artifact_caption) into skeleton."""
-        cap = creative.get("artifact_caption")
-        if isinstance(cap, dict):
-            from ..common_schema import ArtifactCaption as _AC
-            skeleton.artifact_caption = _AC(
-                what=str(cap.get("what") or ""),
-                why=str(cap.get("why") or ""),
-                scope=str(cap.get("scope") or "global"),
-            )
+        """Merge LLM output (mood + ambience_description) into skeleton."""
         scene_map = {
             s.get("scene_id", ""): s
             for s in creative.get("scenes", [])
@@ -300,11 +287,7 @@ class AudioAgent(BaseAgent[AudioAgentInput, AudioAgentOutput]):
     def system_prompt(self) -> str:
         return (
             "You are AudioAgent — an audio design specialist for film.\n"
-            "Follow the instructions in the user message exactly.\n\n"
-            "artifact_caption: fill all three fields to describe what you produced:\n"
-            "  what — scene count, narration segments, music/ambience per scene, delivery format.\n"
-            "  why  — mood choices, audio style decisions.\n"
-            "  scope — always \"global\"."
+            "Follow the instructions in the user message exactly."
         )
 
     def recompute_metrics(self, output: AudioAgentOutput) -> None:
@@ -313,94 +296,6 @@ class AudioAgent(BaseAgent[AudioAgentInput, AudioAgentOutput]):
         narr_count = sum(len(s.narration_segments) for s in c.scenes)
         output.metrics.scene_count = len(c.scenes)
         output.metrics.narration_segment_count = narr_count
-
-        # Build per_artifact_captions: asset_id → {what, why, scope}
-        # Pure natural-language captions describing each audio artifact's
-        # nature, scope, and role.  Downstream resolution is handled entirely
-        # by LLM semantic interpretation.
-        pac: dict = {}
-        for scene in c.scenes:
-            scene_id = scene.scene_id or ""
-            if not scene_id:
-                continue
-            # Narration / dialogue per spoken segment
-            for seg in scene.narration_segments:
-                aid = seg.audio_asset.asset_id
-                if not aid:
-                    continue
-                speaker = seg.speaker or "narrator"
-                pac[aid] = {
-                    "what": (
-                        f"A spoken audio segment performed by {speaker} for "
-                        f"scene {scene_id}. It contains only the voice line "
-                        f"for one beat of dialogue or narration in that scene."
-                    ),
-                    "why": (
-                        f"One of several spoken segments belonging to scene "
-                        f"{scene_id}. Mixed together with music and ambience "
-                        f"to form the scene's full audio bed."
-                    ),
-                    "scope": f"scene:{scene_id}",
-                }
-            mc = scene.music_cue
-            if mc.audio_asset.asset_id:
-                pac[mc.audio_asset.asset_id] = {
-                    "what": (
-                        f"An instrumental music cue scored for scene "
-                        f"{scene_id}, mood: {mc.mood or 'unspecified'}. "
-                        f"Continuous underscore for the whole scene, no "
-                        f"spoken voice."
-                    ),
-                    "why": (
-                        f"The musical layer of scene {scene_id}'s soundtrack. "
-                        f"Combined with ambience and narration in the scene mix."
-                    ),
-                    "scope": f"scene:{scene_id}",
-                }
-            ab = scene.ambience_bed
-            if ab.audio_asset.asset_id:
-                pac[ab.audio_asset.asset_id] = {
-                    "what": (
-                        f"An environmental ambience bed for scene {scene_id}. "
-                        f"Background atmosphere only — no melody, no voice. "
-                        f"Description: {ab.description or 'ambient sound'}."
-                    ),
-                    "why": (
-                        f"The atmospheric layer of scene {scene_id}'s "
-                        f"soundtrack, providing presence and place. Combined "
-                        f"with music and narration in the scene mix."
-                    ),
-                    "scope": f"scene:{scene_id}",
-                }
-            mx = scene.mix
-            if mx.audio_asset.asset_id:
-                pac[mx.audio_asset.asset_id] = {
-                    "what": (
-                        f"A combined audio track for scene {scene_id}, "
-                        f"produced by mixing this scene's narration, music, "
-                        f"and ambience into a single waveform."
-                    ),
-                    "why": (
-                        f"The complete sound for scene {scene_id}, ready to "
-                        f"join the other scenes' mixes when forming the full "
-                        f"audio of the whole story."
-                    ),
-                    "scope": f"scene:{scene_id}",
-                }
-        if c.final_audio_asset.asset_id:
-            pac[c.final_audio_asset.asset_id] = {
-                "what": (
-                    f"The single complete audio track for the whole story, "
-                    f"produced by joining every scene's mix in story order. "
-                    f"There is exactly one of these."
-                ),
-                "why": (
-                    f"The finished audio side of the deliverable. Mixed against "
-                    f"the final video to produce the watchable output."
-                ),
-                "scope": "global",
-            }
-        output.per_artifact_captions = pac
 
     # Quality evaluation has been moved to AudioEvaluator
     # (see evaluator.py in this package).

@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from ...base_agent import BaseAgent
-from ...common_schema import ArtifactCaption
 from .schema import IntakeAudioAsset, IntakeAudioContent, IntakeAudioInput, IntakeAudioOutput
 
 
@@ -37,12 +36,6 @@ class IntakeAudioAgent(BaseAgent[IntakeAudioInput, IntakeAudioOutput]):
         skeleton.content = IntakeAudioContent(
             auditory_summary="",
             audio_asset=IntakeAudioAsset(uri=input_data.raw_audio_path),
-        )
-        intent = (input_data.user_intent or "").strip()
-        skeleton.artifact_caption = ArtifactCaption(
-            what="",
-            why=intent or "(no user intent provided)",
-            scope="global",
         )
         return skeleton
 

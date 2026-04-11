@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
-from ..common_schema import ArtifactCaption, Meta
+from ..common_schema import Meta
 
 
 # ---------------------------------------------------------------------------
@@ -161,7 +161,6 @@ class Screenplay(BaseModel):
     meta: Meta = Field(default_factory=Meta)
     content: ScreenplayContent = Field(default_factory=ScreenplayContent)
     metrics: ScreenplayMetrics = Field(default_factory=ScreenplayMetrics)
-    artifact_caption: ArtifactCaption = Field(default_factory=ArtifactCaption)
 
 
 class ScreenplayAgentInput(BaseModel):

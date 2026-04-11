@@ -80,9 +80,10 @@ class BaseMaterializer(ABC):
     Single-input contract: a materializer receives only the
     ``MaterializeContext`` (which carries ``typed_input``, ``task_id``,
     and the ``persist_binary`` callback) plus the ``asset_dict`` produced
-    by the LLM pipeline.  It does NOT receive any second ``input_bundle_v2``
-    channel.  Whatever data the materializer needs must already be
-    expressed as a field on the agent's typed input.
+    by the LLM pipeline.  It does NOT receive any second
+    ``resolved_artifacts`` channel.  Whatever data the materializer
+    needs must already be expressed as a field on the agent's typed
+    input.
     """
 
     @abstractmethod
@@ -138,15 +139,25 @@ class SubAgentDescriptor:
         evaluator_factory:
             ``() -> BaseEvaluator`` — creates an evaluator instance.
         build_input:
-            ``(task_id, input_bundle_v2) -> BaseModel`` —
-            constructs the agent's typed input from :class:`~agents.contracts.input_bundle_v2.InputBundleV2`.
-            Assistant always passes
-            the Task Stack ``task_id``; agents that do not need it may name the
-            parameter ``_task_id`` and omit it from the returned Pydantic model.
-            Duration, language, and other creative intent must be **inferred by the
-            sub-agent LLM** from ``hints`` / ``resolved_artifacts`` (e.g.
-            ``source_text``, prior JSON assets) — not from a separate orchestrator
-            ``config`` object or deterministic keyword parsing in Python.
+            ``(task_id, resolved_artifacts) -> BaseModel`` —
+            constructs the agent's typed input from the dict of artifacts
+            selected by InputResolver, keyed by the consumer agent's
+            ``[label]`` headers. Assistant always passes the Task Stack
+            ``task_id``; agents that do not need it may name the parameter
+            ``_task_id`` and omit it from the returned Pydantic model.
+            Duration, language, and other creative intent must be
+            **inferred by the sub-agent LLM** from the resolved artifacts
+            (e.g. prior JSON snapshots, source text uploads) — not from a
+            separate orchestrator ``config`` object or deterministic
+            keyword parsing in Python.
+        build_captions:
+            ``(agent_id, output_dict) -> {sys_id: {"caption": str, "scope": str}}``
+            — generates captions for all artifacts produced by this
+            execution.  ``agent_id`` is used as the key for the JSON
+            snapshot caption.  Media artifacts use their ``sys_id``
+            (e.g. ``"img_char_001_global"``, ``"clip_sh_001"``).
+            ArtifactWriter calls this once per execution to populate
+            global_memory.
         service_factories:
             Mapping of ``service_key -> factory(ctx) -> service_instance``.
             ``ctx`` is a dict with at least ``{"llm_client": LLMClient}``.
@@ -166,7 +177,7 @@ class SubAgentDescriptor:
 
     build_input: Callable[..., BaseModel] = field(
         repr=False,
-        default=lambda task_id, input_bundle_v2: None,
+        default=lambda task_id, resolved_artifacts: None,
     )
     service_factories: dict[str, Callable[..., Any]] = field(
         repr=False, default_factory=dict,
@@ -176,6 +187,10 @@ class SubAgentDescriptor:
     )
     input_needs_description: str = (
         "Needs any relevant prior artifacts from the workspace as context."
+    )
+    build_captions: Callable[..., dict[str, dict[str, str]]] = field(
+        repr=False,
+        default=lambda agent_id, output_dict: {},
     )
 
     # ------------------------------------------------------------------

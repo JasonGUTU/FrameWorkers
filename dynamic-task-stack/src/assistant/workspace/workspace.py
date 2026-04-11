@@ -131,14 +131,13 @@ class Workspace:
     ) -> None:
         """Called by ArtifactWriter after persisting artifacts.
 
-        ``artifact_refs`` is a list of dicts with keys: what, why, scope,
+        ``artifact_refs`` is a list of dicts with keys: caption, scope,
         path, mime. Each dict maps to one ArtifactRef in the registry.
         """
         from .models import ArtifactRef as _ArtifactRef
         refs = [
             _ArtifactRef(
-                what=str(r.get("what") or ""),
-                why=str(r.get("why") or ""),
+                caption=str(r.get("caption") or ""),
                 scope=str(r.get("scope") or "global"),
                 path=str(r.get("path") or ""),
                 mime=str(r.get("mime") or ""),
@@ -235,15 +234,16 @@ class Workspace:
             filename=filename,
         )
 
-        placeholder_what = (
-            f"raw user upload, mime={mime or 'unknown'}, "
-            f"awaiting semantic analysis"
+        intent_str = (user_intent or "").strip()
+        placeholder_caption = (
+            f"Raw user upload (mime={mime or 'unknown'}). "
+            "Pending intake processing — only visible to Intake* agents."
         )
-        placeholder_why = (user_intent or "").strip() or "(no user intent provided)"
+        if intent_str:
+            placeholder_caption += f" User intent: {intent_str}."
 
         ref = _ArtifactRef(
-            what=placeholder_what,
-            why=placeholder_why,
+            caption=placeholder_caption,
             scope="raw_pending",
             path=stored.path,
             mime=mime,
@@ -269,22 +269,15 @@ class Workspace:
             "path": stored.path,
             "filename": filename,
             "mime": mime,
-            "caption": {
-                "what": placeholder_what,
-                "why": placeholder_why,
-                "scope": "raw_pending",
-            },
+            "caption": placeholder_caption,
+            "scope": "raw_pending",
         }
 
     def list_workspace_artifacts(self) -> List[Dict[str, Any]]:
         """Return a flat list of all registered artifacts in this workspace.
 
-        Each entry has the artifact's caption (what/why/scope), absolute
-        path, mime, and the producing execution's
-        agent_id/task_id/execution_id/created_at. Used by the HTTP
-        listing endpoint and by tests that want to introspect the
-        workspace state without going through the LLM caption-index
-        renderer.
+        Each entry has the artifact's caption, scope, absolute path, mime,
+        and the producing execution's agent_id/task_id/execution_id/created_at.
         """
         rows: List[Dict[str, Any]] = []
         for entry in self.global_memory.list_all():
@@ -293,8 +286,7 @@ class Workspace:
                     "path": ref.path,
                     "filename": Path(ref.path).name if ref.path else "",
                     "mime": ref.mime,
-                    "what": ref.what,
-                    "why": ref.why,
+                    "caption": ref.caption,
                     "scope": ref.scope,
                     "agent_id": entry.agent_id,
                     "task_id": entry.task_id,
@@ -496,11 +488,13 @@ class Workspace:
         assignments: List[Dict[str, Any]],
         *,
         overwrite_existing: bool = False,
+        captions: Optional[Dict[str, Dict[str, str]]] = None,
     ) -> tuple[Dict[str, str], Optional[Dict[str, Any]]]:
         return self.artifact_writer.persist_execution_from_plan(
             execution,
             assignments,
             overwrite_existing=overwrite_existing,
+            captions=captions,
         )
 
 

@@ -5,7 +5,6 @@ from __future__ import annotations
 from pydantic import BaseModel
 
 from ...descriptor import SubAgentDescriptor
-from ...contracts import InputBundleV2
 from .agent import IntakeVideoAgent
 from .labels import INPUT_LABEL_RAW_VIDEO_UPLOAD
 from .schema import IntakeVideoInput
@@ -14,18 +13,34 @@ from .evaluator import IntakeVideoEvaluator
 
 def build_input(
     _task_id: str,
-    input_bundle_v2: InputBundleV2,
+    resolved_artifacts: dict,
 ) -> BaseModel:
-    resolved = input_bundle_v2.resolved_artifacts
-    entry = resolved.get(INPUT_LABEL_RAW_VIDEO_UPLOAD, {})
+    entry = resolved_artifacts.get(INPUT_LABEL_RAW_VIDEO_UPLOAD, {})
     if isinstance(entry, list):
         entry = entry[0] if entry else {}
     raw_video_path = ""
     user_intent = ""
     if isinstance(entry, dict):
         raw_video_path = str(entry.get("path", "") or "")
-        user_intent = str(entry.get("why", "") or "")
+        user_intent = _extract_user_intent(str(entry.get("caption", "") or ""))
     return IntakeVideoInput(raw_video_path=raw_video_path, user_intent=user_intent)
+
+
+def _extract_user_intent(caption: str) -> str:
+    marker = "User intent: "
+    idx = caption.find(marker)
+    if idx < 0:
+        return ""
+    return caption[idx + len(marker):].rstrip(".")
+
+
+def build_captions(agent_id: str, output_dict: dict) -> dict:
+    return {
+        agent_id: {
+            "caption": "User-uploaded video reference. Available for downstream agents.",
+            "scope": "global",
+        },
+    }
 
 
 CATALOG_ENTRY = (
@@ -41,14 +56,14 @@ DESCRIPTOR = SubAgentDescriptor(
     agent_factory=lambda llm: IntakeVideoAgent(llm_client=llm),
     evaluator_factory=IntakeVideoEvaluator,
     build_input=build_input,
+    build_captions=build_captions,
     materializer_factory=None,
     input_needs_description=(
         "I convert raw user-uploaded video into a caption-rich workspace "
         "artifact.\n\n"
         f"[{INPUT_LABEL_RAW_VIDEO_UPLOAD}] (single)\n"
-        "A raw user-uploaded video that has not yet been semantically "
-        "analyzed. The placeholder caption marks it as 'raw user upload, "
-        "mime=video/*, awaiting semantic analysis'. Pick the single most "
-        "recent such pending video upload."
+        "A raw user-uploaded video whose caption starts with "
+        "'Raw user upload (mime=video/' and has scope 'raw_pending'. "
+        "Pick the single most recent such pending video upload."
     ),
 )

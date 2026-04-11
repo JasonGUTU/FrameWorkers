@@ -5,7 +5,6 @@ from __future__ import annotations
 from pydantic import BaseModel
 
 from ..descriptor import SubAgentDescriptor
-from ..contracts import InputBundleV2
 from .agent import ScreenplayAgent
 from .schema import ScreenplayAgentInput
 from .evaluator import ScreenplayEvaluator
@@ -15,9 +14,9 @@ from .labels import INPUT_LABEL_STORY
 
 def build_input(
     _task_id: str,
-    input_bundle_v2: InputBundleV2,
+    resolved_artifacts: dict,
 ) -> BaseModel:
-    """Construct typed input from the unified workspace bundle.
+    """Construct typed input from the resolved artifact dict.
 
     Single input: the upstream story_blueprint, selected by InputResolver
     via the ``[story]`` label. ScreenplayAgent has no concept of free-text
@@ -26,12 +25,27 @@ def build_input(
     updated story_blueprint reaches ScreenplayAgent through this same
     ``[story]`` label).
     """
-    resolved = input_bundle_v2.resolved_artifacts
-    story = resolved.get(INPUT_LABEL_STORY, {})
+    story = resolved_artifacts.get(INPUT_LABEL_STORY, {})
     story_payload = story.get("payload", {}) if isinstance(story, dict) else {}
     # ScreenplayAgent expects content dict directly (has cast, scene_outline, etc.)
     content = story_payload.get("content", {}) if isinstance(story_payload, dict) else {}
     return ScreenplayAgentInput(story=content)
+
+
+def build_captions(agent_id: str, output_dict: dict) -> dict:
+    content = output_dict.get("content", {})
+    scenes = content.get("scenes", [])
+    scene_count = len(scenes)
+    shot_count = sum(len(s.get("shots", [])) for s in scenes if isinstance(s, dict))
+    return {
+        agent_id: {
+            "caption": (
+                f"Screenplay: {scene_count} scene(s), {shot_count} shot(s). "
+                f"Input for keyframe planning and audio scoring."
+            ),
+            "scope": "global",
+        },
+    }
 
 
 CATALOG_ENTRY = (
@@ -47,6 +61,7 @@ DESCRIPTOR = SubAgentDescriptor(
     agent_factory=lambda llm: ScreenplayAgent(llm_client=llm),
     evaluator_factory=ScreenplayEvaluator,
     build_input=build_input,
+    build_captions=build_captions,
     materializer_factory=None,
     input_needs_description=(
         "I take a high-level story plan and turn it into a full unified screenplay "

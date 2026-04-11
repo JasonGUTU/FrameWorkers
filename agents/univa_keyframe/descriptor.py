@@ -7,7 +7,6 @@ from typing import Any
 from pydantic import BaseModel
 
 from ..descriptor import SubAgentDescriptor
-from ..contracts import InputBundleV2
 from .agent import UnivaKeyFrameAgent
 from .labels import INPUT_LABEL_STORYBOARD
 from .schema import UnivaKeyFrameInput
@@ -18,11 +17,10 @@ from inference.generation import select_image_service
 
 def build_input(
     _task_id: str,
-    input_bundle_v2: InputBundleV2,
+    resolved_artifacts: dict,
 ) -> BaseModel:
-    """Construct typed input from the pipeline bundle."""
-    resolved = input_bundle_v2.resolved_artifacts
-    sb = resolved.get(INPUT_LABEL_STORYBOARD, {})
+    """Construct typed input from the resolved artifact dict."""
+    sb = resolved_artifacts.get(INPUT_LABEL_STORYBOARD, {})
     payload = sb.get("payload", {}) if isinstance(sb, dict) else {}
     content = payload.get("content", {}) if isinstance(payload, dict) else {}
     return UnivaKeyFrameInput(storyboard=content)
@@ -30,6 +28,35 @@ def build_input(
 
 def materializer_factory(services: dict[str, Any]) -> UnivaKeyFrameMaterializer:
     return UnivaKeyFrameMaterializer(image_service=services["image_service"])
+
+
+def build_captions(agent_id: str, output_dict: dict) -> dict:
+    content = output_dict.get("content", {})
+    char_count = len(content.get("character_images", []))
+    shot_count = len(content.get("shot_keyframes", []))
+    caps: dict = {}
+    caps[agent_id] = {
+        "caption": (
+            f"Univa keyframe planning document: {char_count} character(s), "
+            f"{shot_count} shot(s). Consumed by UnivaVideoAgent."
+        ),
+        "scope": "global",
+    }
+    for ci in content.get("character_images", []):
+        cid = ci.get("char_id", "") if isinstance(ci, dict) else ""
+        if cid:
+            caps[f"img_{cid}_character"] = {
+                "caption": f"Character reference image for {cid}. Visual identity anchor — not a video frame.",
+                "scope": "global",
+            }
+    for kf in content.get("shot_keyframes", []):
+        shot_id = kf.get("shot_id") if isinstance(kf, dict) else None
+        if shot_id is not None:
+            caps[f"img_shot_{shot_id}_keyframe"] = {
+                "caption": f"Rendered starting frame for shot {shot_id}. To be animated into a video clip by UnivaVideoAgent.",
+                "scope": f"shot:{shot_id}",
+            }
+    return caps
 
 
 CATALOG_ENTRY = (
@@ -46,6 +73,7 @@ DESCRIPTOR = SubAgentDescriptor(
     agent_factory=lambda llm: UnivaKeyFrameAgent(llm_client=llm),
     evaluator_factory=UnivaKeyFrameEvaluator,
     build_input=build_input,
+    build_captions=build_captions,
     service_factories={
         "image_service": lambda ctx: select_image_service(),
     },

@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
-from ..common_schema import ArtifactCaption, ImageReferenceEntry, Meta
+from ..common_schema import ImageReferenceEntry, Meta
 
 
 # ---------------------------------------------------------------------------
@@ -69,6 +69,4 @@ class UnivaVideoOutput(BaseModel):
     meta: Meta = Field(default_factory=Meta)
     content: UnivaVideoContent = Field(default_factory=UnivaVideoContent)
     metrics: UnivaVideoMetrics = Field(default_factory=UnivaVideoMetrics)
-    artifact_caption: ArtifactCaption = Field(default_factory=ArtifactCaption)
     # Per-media-artifact captions keyed by sys_id (e.g. "clip_shot_0").
-    per_artifact_captions: dict = Field(default_factory=dict, exclude=True)

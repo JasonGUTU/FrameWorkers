@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from ...base_agent import BaseAgent
-from ...common_schema import ArtifactCaption
 from .schema import IntakeVideoAsset, IntakeVideoContent, IntakeVideoInput, IntakeVideoOutput
 
 
@@ -36,12 +35,6 @@ class IntakeVideoAgent(BaseAgent[IntakeVideoInput, IntakeVideoOutput]):
         skeleton.content = IntakeVideoContent(
             visual_summary="",
             video_asset=IntakeVideoAsset(uri=input_data.raw_video_path),
-        )
-        intent = (input_data.user_intent or "").strip()
-        skeleton.artifact_caption = ArtifactCaption(
-            what="",
-            why=intent or "(no user intent provided)",
-            scope="global",
         )
         return skeleton
 

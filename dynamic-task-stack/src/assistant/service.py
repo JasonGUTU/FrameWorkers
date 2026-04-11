@@ -13,15 +13,10 @@ from .models import AgentExecution, ExecutionStatus
 from .workspace import Workspace
 from .workspace.artifact_writer import ArtifactWriter
 from agents import get_agent_registry
-from agents.contracts import InputBundleV2
 from agents.base_agent import MaterializeContext
 from inference.clients import LLMClient as PipelineLLMClient
 
 logger = logging.getLogger(__name__)
-
-
-class AssistantBadExecuteFieldsError(Exception):
-    """``execute_fields`` violated a strict wire rule (e.g. ``text`` must be a string)."""
 
 
 class AssistantService:
@@ -81,75 +76,19 @@ class AssistantService:
         finally:
             loop.close()
 
-    @staticmethod
-    def _mapping_to_input_bundle_v2(task_id: str, data: Dict[str, Any]) -> InputBundleV2:
-        """Build an ``InputBundleV2`` from the per-execution input mapping.
-
-        Single recognized key:
-          * ``resolved_artifacts`` / ``_resolved_artifacts`` (dict, keyed by
-            consumer label name) → ``context["resolved_artifacts"]``
-
-        Any other key is silently ignored. Sub-agent inputs flow ONLY through
-        the InputResolver-selected ``resolved_artifacts``.  There is no
-        ``hints`` slot.  Any user-supplied raw input (text/image/video/audio)
-        must already have been persisted into the workspace as an artifact
-        (typically by an Intake agent) before this method is called.
-        """
-        context: Dict[str, Any] = {}
-        for key, value in data.items():
-            if key in ("_resolved_artifacts", "resolved_artifacts") and isinstance(value, (list, dict)):
-                context["resolved_artifacts"] = value
-        return InputBundleV2(task_id=task_id, context=context)
-
-    @staticmethod
-    def _map_pipeline_inputs(
-        inputs: Dict[str, Any],
-    ) -> tuple[str, InputBundleV2]:
-        task_id = inputs.get("task_id") or ""
-        raw = inputs.get("input_bundle_v2")
-        flat: Dict[str, Any] = dict(raw) if isinstance(raw, dict) else {}
-        return task_id, AssistantService._mapping_to_input_bundle_v2(task_id, flat)
-
-    @staticmethod
-    def _merge_execution_inputs(
-        packaged_data: Dict[str, Any],
-        overlay: Optional[Dict[str, Any]],
-    ) -> Dict[str, Any]:
-        """Overlay extra keys onto packaged execution payload (e.g. ``execute_fields`` wrapper)."""
-        merged = dict(packaged_data)
-        if not overlay:
-            return merged
-
-        for key, value in overlay.items():
-            merged[key] = value
-        return merged
-
-    @staticmethod
-    def _build_descriptor_input(
-        descriptor: Any,
-        task_id: str,
-        readonly_bundle: Any,
-    ) -> Any:
-        return descriptor.build_input(task_id, readonly_bundle)
-
     def _execute_pipeline_descriptor(
         self,
         descriptor: Any,
         inputs: Dict[str, Any],
         execution: Optional[AgentExecution] = None,
     ) -> Dict[str, Any]:
-        task_id, ib_mapped = self._map_pipeline_inputs(inputs)
-        # Hydrate any indexed asset entries within resolved_artifacts.
-        # The bundle now only carries resolved_artifacts (no hints slot).
-        hydrated = self.workspace.hydrate_indexed_assets(ib_mapped.context)
-        input_bundle_v2 = self._mapping_to_input_bundle_v2(task_id, hydrated)
+        task_id = inputs.get("task_id") or ""
+        resolved_artifacts = inputs.get("resolved_artifacts") or {}
+        if not isinstance(resolved_artifacts, dict):
+            resolved_artifacts = {}
 
         agent = descriptor.build_equipped_agent(self.pipeline_llm_client)
-        typed_input = self._build_descriptor_input(
-            descriptor,
-            task_id,
-            input_bundle_v2,
-        )
+        typed_input = descriptor.build_input(task_id, resolved_artifacts)
 
         materialize_ctx = None
         temp_dir: Optional[str] = None
@@ -250,41 +189,9 @@ class AssistantService:
         """
         return self.workspace
 
-    def package_data(
-        self,
-        agent_id: str,
-        task_id: str,
-    ) -> Dict[str, Any]:
-        """Package the empty execution bundle for an agent.
-
-        After the input-channel unification, sub-agents have only one input
-        source: ``InputResolver``-selected ``resolved_artifacts``. ``package_data``
-        no longer accepts a text seed; the user's text instruction (if any)
-        is persisted as an artifact by IntakeTextAgent and reaches the agent
-        via the normal label-matching path.
-
-        Args:
-            agent_id: ID of the agent to execute
-            task_id: ID of the task
-
-        Returns:
-            ``task_id`` plus an empty ``input_bundle_v2`` seed mapping.
-
-        Raises:
-            ValueError: If agent not found in registry
-        """
-        descriptor = self.agent_registry.get_descriptor(agent_id)
-        if not self._is_executable_pipeline_descriptor(descriptor):
-            raise ValueError(f"Agent {agent_id} not found in registry")
-
-        return {
-            "task_id": task_id,
-            "input_bundle_v2": {},
-        }
-
     def _resolve_inputs_for_agent_with_llm(
         self,
-        agent_id: str,
+        descriptor: Any,
         task_id: str,
         workspace: Workspace,
     ) -> Dict[str, Any]:
@@ -292,13 +199,11 @@ class AssistantService:
 
         Uses the agent's ``input_needs_description`` and the global_memory
         caption index to let an LLM select which artifacts the agent needs.
-        Provides only the agent_id and task_id; no text seed or hint data.
+        Caller passes the already-validated descriptor so we don't re-look
+        it up — the only callsite (``build_execution_inputs``) has already
+        validated it via ``_is_executable_pipeline_descriptor``.
         """
-        try:
-            descriptor = self.agent_registry.get_descriptor(agent_id)
-        except Exception:
-            raise AssistantBadExecuteFieldsError(f"unknown agent_id: {agent_id}")
-
+        agent_id = getattr(descriptor, "agent_id", "") or ""
         input_needs = getattr(descriptor, "input_needs_description", "") or ""
 
         resolved = workspace.resolve_inputs_for_agent(
@@ -310,29 +215,12 @@ class AssistantService:
         )
         return resolved
 
-    def _apply_resolved_inputs(
-        self,
-        packaged_data: Dict[str, Any],
-        resolved: Dict[str, Any],
-    ) -> None:
-        """Write InputResolver output into the input_bundle_v2 mapping."""
-        bundle = packaged_data.get("input_bundle_v2")
-        if not isinstance(bundle, dict):
-            return
-        resolved_artifacts = resolved.get("resolved_artifacts")
-        if isinstance(resolved_artifacts, (list, dict)) and resolved_artifacts:
-            bundle["_resolved_artifacts"] = resolved_artifacts
-        bundle["input_package"] = {
-            "rationale": resolved.get("rationale"),
-            "selected_artifact_paths": resolved.get("selected_artifact_paths"),
-        }
-
     def _has_existing_assets(self, *, task_id: str, agent_id: str) -> bool:
         """True if this agent has already produced any artifact for the task."""
         return self.workspace.global_memory.has_producer_run(
             task_id=task_id, agent_id=agent_id,
         )
-    
+
     def execute_agent(
         self,
         agent_id: str,
@@ -353,9 +241,6 @@ class AssistantService:
         Raises:
             ValueError: If agent or task not found
         """
-        # Ensure global assistant singleton exists.
-        self.storage.get_global_assistant()
-
         descriptor = self.agent_registry.get_descriptor(agent_id)
         if not self._is_executable_pipeline_descriptor(descriptor):
             raise ValueError(f"Agent {agent_id} not found in registry")
@@ -515,10 +400,14 @@ class AssistantService:
         # paths (artifacts/<Agent>/<task_id>_<lowercase>_exec_n.json
         # for snapshots; artifacts/media/<Agent>/<type>/<task_id>_<base>
         # for binaries).
+        output_dict = execution.results if isinstance(execution.results, dict) else {}
+        _bc = getattr(descriptor, "build_captions", None)
+        captions = _bc(execution.agent_id, output_dict) if callable(_bc) else {}
         persisted_paths, asset_index = workspace.persist_execution_from_plan(
             execution,
             base_plan,
             overwrite_existing=overwrite_existing_assets,
+            captions=captions,
         )
         if asset_index and isinstance(execution.results, dict):
             execution.results["_asset_index"] = asset_index
@@ -543,90 +432,52 @@ class AssistantService:
         agent_id: str,
         task_id: str,
         workspace: Workspace,
-        execute_fields: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
         """Boundary 1: build final execution inputs for a sub-agent.
 
-        After the input-channel unification, this method only:
-          1. Constructs an empty input bundle.
+        Steps:
+          1. Validates the agent exists in the registry.
           2. Runs ``InputResolver`` to semantically select artifacts from
              the global_memory caption index based on the agent's
              ``input_needs_description``.
-          3. Writes the resolved selection into the bundle.
+          3. Returns a flat ``{task_id, resolved_artifacts}`` dict.
+             ``resolved_artifacts`` is the only channel sub-agents see —
+             ``_execute_pipeline_descriptor`` hands it straight to
+             ``descriptor.build_input``.
 
-        ``execute_fields`` is retained as an opaque overlay for any future
-        per-call hooks (e.g. ``overwrite``), but its ``text`` / ``image`` /
-        ``video`` / ``audio`` keys are NO LONGER read here.  Any raw user
-        input must be persisted into the workspace as an artifact (via an
-        Intake agent or ``POST /api/workspace/upload``) BEFORE the target
-        sub-agent runs, so that InputResolver can find it through the
-        normal caption-driven label match.
+        Any raw user input must be persisted into the workspace as an
+        artifact (via an Intake agent or ``POST /api/workspace/upload``)
+        BEFORE the target sub-agent runs, so that InputResolver can find
+        it through the normal caption-driven label match.
         """
-        runtime = dict(execute_fields or {})
-        runtime.pop("_memory_brief", None)
-        packaged_data = self.package_data(
-            agent_id=agent_id,
-            task_id=task_id,
-        )
+        descriptor = self.agent_registry.get_descriptor(agent_id)
+        if not self._is_executable_pipeline_descriptor(descriptor):
+            raise ValueError(f"Agent {agent_id} not found in registry")
+
         resolved = self._resolve_inputs_for_agent_with_llm(
-            agent_id, task_id, workspace,
+            descriptor, task_id, workspace,
         )
-        self._apply_resolved_inputs(packaged_data, resolved)
-        return self._merge_execution_inputs(packaged_data, {"execute_fields": runtime})
+        resolved_artifacts = resolved.get("resolved_artifacts") or {}
+        if not isinstance(resolved_artifacts, dict):
+            resolved_artifacts = {}
 
-    def intake_user_text(
-        self,
-        *,
-        task_id: str,
-        text: str,
-        user_intent: str = "",
-    ) -> Dict[str, Any]:
-        """Persist a raw user text + run IntakeTextAgent over it.
-
-        This is the canonical Phase D path: callers (the director loop, the
-        chat-message handler, or any other ingestion point) hand the user's
-        natural-language input to this method, and the result is a
-        caption-rich workspace artifact that downstream content agents will
-        find via their ``[creative_brief]`` (or similar) labels.
-
-        The method does two things:
-          1. ``workspace.persist_raw_upload`` registers the raw text with a
-             placeholder caption (``scope=raw_pending``).
-          2. ``execute_agent_for_task("IntakeTextAgent", ...)`` runs the
-             intake agent against the placeholder, producing the
-             caption-rich follow-up artifact.
-
-        Returns the standard execution-summary dict from
-        ``execute_agent_for_task``.
-        """
-        if not isinstance(text, str) or not text.strip():
-            raise AssistantBadExecuteFieldsError("text must be a non-empty string")
-        # Persist as raw upload first; the resulting artifact has a
-        # placeholder caption that IntakeTextAgent's [raw_text_upload]
-        # label will match in the next step.
-        self.workspace.persist_raw_upload(
-            file_content=text.encode("utf-8"),
-            mime="text/plain",
-            user_intent=user_intent or "user-provided text input",
-        )
-        # Run IntakeTextAgent over the placeholder.
-        return self.execute_agent_for_task(
-            agent_id="IntakeTextAgent",
-            task_id=task_id,
-            execute_fields=None,
-        )
+        return {
+            "task_id": task_id,
+            "resolved_artifacts": resolved_artifacts,
+        }
 
     def execute_agent_for_task(
         self,
         agent_id: str,
         task_id: str,
-        execute_fields: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """
         Complete workflow: Execute an agent for a task.
 
-        ``execute_fields`` is the dict from the HTTP body key ``execute_fields``
-        (``text``, ``image``, ``video``, …). Assistant does not read Task Stack storage.
+        The HTTP body has only ``agent_id`` and ``task_id``. Any user-side
+        text / image / video / audio input must already exist in the
+        workspace as a caption-rich artifact (e.g. via Intake agents);
+        InputResolver picks it up by label.
 
         This method orchestrates three boundary responsibilities:
         1. Build execution inputs
@@ -642,13 +493,12 @@ class AssistantService:
         workspace = self.prepare_environment()
         auto_overwrite = self._has_existing_assets(task_id=task_id, agent_id=agent_id)
         overwrite_existing_assets = auto_overwrite
-        
-        # 1) Build inputs (task metadata + input_bundle_v2 + execute_fields overlays)
+
+        # 1) Build inputs (task_id + resolved_artifacts)
         inputs = self.build_execution_inputs(
             agent_id=agent_id,
             task_id=task_id,
             workspace=workspace,
-            execute_fields=execute_fields,
         )
         
         # 2) Run selected agent

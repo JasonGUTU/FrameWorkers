@@ -8,7 +8,6 @@ from pydantic import BaseModel
 
 from ..common_schema import ImageReferenceEntry
 from ..descriptor import SubAgentDescriptor
-from ..contracts import InputBundleV2
 from .agent import UnivaVideoAgent
 from .labels import INPUT_LABEL_SHOT_KEYFRAMES, INPUT_LABEL_STORYBOARD
 from .schema import UnivaVideoInput
@@ -19,15 +18,14 @@ from inference.generation import select_video_service
 
 def build_input(
     _task_id: str,
-    input_bundle_v2: InputBundleV2,
+    resolved_artifacts: dict,
 ) -> BaseModel:
-    """Construct typed input from the pipeline bundle."""
-    resolved = input_bundle_v2.resolved_artifacts
-    sb = resolved.get(INPUT_LABEL_STORYBOARD, {})
+    """Construct typed input from the resolved artifact dict."""
+    sb = resolved_artifacts.get(INPUT_LABEL_STORYBOARD, {})
     payload = sb.get("payload", {}) if isinstance(sb, dict) else {}
     content = payload.get("content", {}) if isinstance(payload, dict) else {}
 
-    keyframes_raw = resolved.get(INPUT_LABEL_SHOT_KEYFRAMES, [])
+    keyframes_raw = resolved_artifacts.get(INPUT_LABEL_SHOT_KEYFRAMES, [])
     if not isinstance(keyframes_raw, list):
         keyframes_raw = []
     shot_keyframes: list[ImageReferenceEntry] = []
@@ -40,8 +38,7 @@ def build_input(
         shot_keyframes.append(
             ImageReferenceEntry(
                 path=path,
-                caption_what=str(it.get("what", "") or ""),
-                caption_why=str(it.get("why", "") or ""),
+                caption=str(it.get("caption", "") or ""),
                 mime=str(it.get("mime", "") or ""),
                 scope=str(it.get("scope", "") or ""),
             )
@@ -55,6 +52,29 @@ def build_input(
 
 def materializer_factory(services: dict[str, Any]) -> UnivaVideoMaterializer:
     return UnivaVideoMaterializer(video_service=services["video_service"])
+
+
+def build_captions(agent_id: str, output_dict: dict) -> dict:
+    content = output_dict.get("content", {})
+    shots = content.get("shot_videos", [])
+    shot_count = len(shots)
+    caps: dict = {}
+    caps[agent_id] = {
+        "caption": f"Univa video assembly manifest: {shot_count} shot(s). Final visual deliverable.",
+        "scope": "global",
+    }
+    for sv in shots:
+        shot_id = sv.get("shot_id") if isinstance(sv, dict) else None
+        if shot_id is not None:
+            caps[f"clip_shot_{shot_id}"] = {
+                "caption": f"Video clip for shot {shot_id}. One segment of the Univa final video.",
+                "scope": f"shot:{shot_id}",
+            }
+    caps["clip_final"] = {
+        "caption": f"Complete assembled Univa video ({shot_count} shots). Final visual deliverable.",
+        "scope": "global",
+    }
+    return caps
 
 
 CATALOG_ENTRY = (
@@ -71,6 +91,7 @@ DESCRIPTOR = SubAgentDescriptor(
     agent_factory=lambda llm: UnivaVideoAgent(llm_client=llm),
     evaluator_factory=UnivaVideoEvaluator,
     build_input=build_input,
+    build_captions=build_captions,
     service_factories={
         "video_service": lambda ctx: select_video_service(),
     },

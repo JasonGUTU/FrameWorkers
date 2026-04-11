@@ -48,8 +48,7 @@ class ExamplePipelineAgent(BaseAgent[ExamplePipelineInput, ExamplePipelineOutput
             "Return JSON matching this structure:\n"
             "{\n"
             '  "artifact_caption": {\n'
-            '    "what": "<what text was summarized and the title>",\n'
-            '    "why": "<key points extracted>",\n'
+            '    "caption": "Text summary: <title>. Example pipeline output.",\n'
             '    "scope": "global"\n'
             '  },\n'
             '  "content": {\n'

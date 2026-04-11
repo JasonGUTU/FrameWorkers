@@ -60,9 +60,9 @@ def test_file_manager_read_binary_from_uri(tmp_path):
     assert fm.read_binary_from_uri(str(tmp_path / "missing.bin")) is None
 
 
-def _make_ref(path: str, what: str = "w", why: str = "y", scope: str = "global", mime: str = "application/json"):
+def _make_ref(path: str, caption: str = "test caption", scope: str = "global", mime: str = "application/json", **_kw):
     from src.assistant.workspace.models import ArtifactRef
-    return ArtifactRef(what=what, why=why, scope=scope, path=path, mime=mime)
+    return ArtifactRef(caption=caption, scope=scope, path=path, mime=mime)
 
 
 def test_global_memory_register_then_list(tmp_path):
@@ -71,12 +71,12 @@ def test_global_memory_register_then_list(tmp_path):
         execution_id="exec_1",
         agent_id="StoryAgent",
         task_id="task_1",
-        artifacts=[_make_ref("/p/story.json", what="story blueprint", why="first pass")],
+        artifacts=[_make_ref("/p/story.json", caption="story blueprint")],
     )
     entries = mem.list_all()
     assert len(entries) == 1
     assert entries[0].agent_id == "StoryAgent"
-    assert entries[0].artifacts[0].what == "story blueprint"
+    assert entries[0].artifacts[0].caption == "story blueprint"
 
 
 def test_global_memory_persists_as_markdown(tmp_path):
@@ -133,7 +133,7 @@ def test_global_memory_legacy_jsonl_fallback(tmp_path):
             "task_id": "task_legacy",
             "created_at": "2026-01-01T00:00:00+00:00",
             "artifacts": [
-                {"what": "old", "why": "old", "scope": "global", "path": "/p/old.json", "mime": "application/json"},
+                {"caption": "old caption", "scope": "global", "path": "/p/old.json", "mime": "application/json"},
             ],
         }) + "\n",
         encoding="utf-8",

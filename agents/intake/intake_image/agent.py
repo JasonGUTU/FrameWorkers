@@ -6,22 +6,22 @@ ready for downstream content agents to discover via their image labels.
 Implementation note
 -------------------
 The vision LLM call cannot go through ``LLMClient.chat_json`` (text-only
-JSON helper). This agent implements ``generate`` directly to build a
-multimodal message via ``InputUtils.create_multimodal_message`` and
-dispatch it through ``LLMClient.acall``, which forwards the OpenAI-style
-multimodal content array to the underlying provider.
+JSON helper). This agent implements ``generate`` directly, inlines the
+OpenAI-style multimodal message construction (text + base64 data-URI
+image), and dispatches through ``LLMClient.acall``, which forwards the
+content array to the underlying provider.
 """
 
 from __future__ import annotations
 
+import base64
 import json
 import logging
+from pathlib import Path
 from typing import Any, Dict
 
-from inference.input_processing.message_utils import InputUtils
-
 from ...base_agent import BaseAgent
-from ...common_schema import ArtifactCaption, ImageAsset
+from ...common_schema import ImageAsset
 from .schema import IntakeImageContent, IntakeImageInput, IntakeImageOutput
 
 logger = logging.getLogger(__name__)
@@ -70,13 +70,13 @@ class IntakeImageAgent(BaseAgent[IntakeImageInput, IntakeImageOutput]):
           1. Build the structural skeleton (image_asset.uri pre-set).
           2. Build a multimodal message containing the system prompt, the
              user-text portion, and the image bytes (read from
-             ``raw_image_path`` and base64-encoded by ``InputUtils``).
+             ``raw_image_path`` and base64-encoded inline as a data URI).
           3. Dispatch via ``LLMClient.acall`` (passes the OpenAI-style
              multimodal content array to litellm/openai-sdk underneath).
           4. Parse the assistant text as JSON and pull
              ``visual_description``; fall back to the raw text if JSON
              parsing fails (some vision models do not honor JSON mode).
-          5. Synthesize the final ``ArtifactCaption``.
+          5. Return the output with visual_description populated.
         """
         skeleton = self._build_skeleton(input_data)
         intent = (input_data.user_intent or "").strip()
@@ -84,11 +84,6 @@ class IntakeImageAgent(BaseAgent[IntakeImageInput, IntakeImageOutput]):
 
         if not image_path:
             skeleton.content.visual_description = ""
-            skeleton.artifact_caption = ArtifactCaption(
-                what="image (no image path provided)",
-                why=intent or "(no user intent provided)",
-                scope="global",
-            )
             return skeleton
 
         user_text = self.build_user_prompt(input_data)
@@ -99,24 +94,32 @@ class IntakeImageAgent(BaseAgent[IntakeImageInput, IntakeImageOutput]):
                 "--- END REWORK INSTRUCTIONS ---"
             )
 
-        try:
-            multimodal_msg = InputUtils.create_multimodal_message(
-                text=user_text,
-                image_path=image_path,
-                role="user",
-            )
-        except FileNotFoundError as exc:
+        image_path_obj = Path(image_path)
+        if not image_path_obj.is_file():
             logger.warning(
-                "[%s] image file missing at %s: %s",
-                self.agent_name, image_path, exc,
+                "[%s] image file missing at %s",
+                self.agent_name, image_path,
             )
             skeleton.content.visual_description = ""
-            skeleton.artifact_caption = ArtifactCaption(
-                what=f"image (file missing on disk: {image_path})",
-                why=intent or "(no user intent provided)",
-                scope="global",
-            )
             return skeleton
+
+        img_bytes = image_path_obj.read_bytes()
+        suffix = image_path_obj.suffix.lower().lstrip(".")
+        mime_subtype = {
+            "png": "png", "jpg": "jpeg", "jpeg": "jpeg",
+            "gif": "gif", "webp": "webp", "bmp": "bmp", "tiff": "tiff",
+        }.get(suffix, "png")
+        data_uri = (
+            f"data:image/{mime_subtype};base64,"
+            + base64.b64encode(img_bytes).decode("utf-8")
+        )
+        multimodal_msg = {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": user_text},
+                {"type": "image_url", "image_url": {"url": data_uri}},
+            ],
+        }
 
         messages = [
             {"role": "system", "content": self.system_prompt()},
@@ -137,15 +140,6 @@ class IntakeImageAgent(BaseAgent[IntakeImageInput, IntakeImageOutput]):
             )
 
         skeleton.content.visual_description = visual
-        skeleton.artifact_caption = ArtifactCaption(
-            what=(
-                f"image showing {visual}"
-                if visual
-                else "image (vision LLM returned no description)"
-            ),
-            why=intent or "(no user intent provided)",
-            scope="global",
-        )
         return skeleton
 
     # ------------------------------------------------------------------

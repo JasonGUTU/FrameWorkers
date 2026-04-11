@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
-from ..common_schema import ArtifactCaption, ImageReferenceEntry, Meta
+from ..common_schema import ImageReferenceEntry, Meta
 
 
 # ---------------------------------------------------------------------------
@@ -79,11 +79,9 @@ class VideoPackage(BaseModel):
     meta: Meta = Field(default_factory=Meta)
     content: VideoContent = Field(default_factory=VideoContent)
     metrics: VideoMetrics = Field(default_factory=VideoMetrics)
-    artifact_caption: ArtifactCaption = Field(default_factory=ArtifactCaption)
     # Per-clip captions keyed by sys_id (e.g. "clip_sh_001", "clip_final").
     # Populated by recompute_metrics(); read by ArtifactWriter for per-artifact registry entries.
     # Excluded from JSON snapshot to keep persisted files clean.
-    per_artifact_captions: dict = Field(default_factory=dict, exclude=True)
 
 
 # --- Input types ---

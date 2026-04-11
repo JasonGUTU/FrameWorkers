@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
-from ..common_schema import ArtifactCaption, Meta
+from ..common_schema import Meta
 
 
 # ---------------------------------------------------------------------------
@@ -101,11 +101,9 @@ class AudioPackage(BaseModel):
     meta: Meta = Field(default_factory=Meta)
     content: AudioContent = Field(default_factory=AudioContent)
     metrics: AudioMetrics = Field(default_factory=AudioMetrics)
-    artifact_caption: ArtifactCaption = Field(default_factory=ArtifactCaption)
     # Per-media-artifact captions keyed by sys_id (e.g. "aud_narr_sc_001_01").
     # Populated by recompute_metrics(); read by ArtifactWriter to build ArtifactRef entries.
     # Excluded from JSON snapshot to keep persisted files clean.
-    per_artifact_captions: dict = Field(default_factory=dict, exclude=True)
 
 
 class AudioAgentInput(BaseModel):

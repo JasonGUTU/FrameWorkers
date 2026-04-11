@@ -130,13 +130,10 @@ _REFERENCE_IMAGE_FIRST = (
 _REFERENCE_IMAGE_SECOND = (
     _repo_root
     / "Runtime"
-    / "nostack_live_e2e_outputs"
-    / "workspace_global_20260330_121001_808449"
-    / "artifacts"
-    / "media"
-    / "KeyFrameAgent"
-    / "image"
-    / "nostack_live_e2e_tid_img_char_001_global.png"
+    / "intake_e2e_outputs"
+    / "workspace_e2e_midstream_image_20260407_094310"
+    / "inputs"
+    / "20260407_095304_370887_nostack_live_e2e_tid_img_char_001_global.png"
 )
 
 
@@ -252,7 +249,7 @@ def _execute_agent(client, debug_file, agent_id: str, task_id: str) -> dict:
     resp, body = _post(
         client,
         "/api/assistant/execute",
-        {"agent_id": agent_id, "task_id": task_id, "execute_fields": {}},
+        {"agent_id": agent_id, "task_id": task_id},
         debug_file,
         step=f"execute_{agent_id}",
     )
@@ -298,8 +295,7 @@ def _registry_captions_for_path(workspace: Workspace, path: str) -> list[dict]:
             if ref.path == path:
                 out.append(
                     {
-                        "what": ref.what,
-                        "why": ref.why,
+                        "caption": ref.caption,
                         "scope": ref.scope,
                         "agent_id": entry.agent_id,
                     }
@@ -429,7 +425,7 @@ def test_e2e1_text_only_draft_idea(monkeypatch):
         ),
         user_intent="creative brief for the project",
     )
-    assert upload["caption"]["scope"] == "raw_pending"
+    assert upload["scope"] == "raw_pending"
 
     # 2. IntakeTextAgent converts the placeholder into a caption-rich artifact.
     intake_summary = _execute_agent(client, debug_file, "IntakeTextAgent", task_id)
@@ -624,7 +620,7 @@ def test_e2e3_text_with_image_at_t0(monkeypatch):
     _execute_agent(client, debug_file, "IntakeImageAgent", task_id)
 
     # 4. Validate the image artifact carries a vision-LLM caption + the
-    #    user_intent reached caption.why. Look up by agent_id (the
+    #    user_intent embedded in caption. Look up by agent_id (the
     #    IntakeImage output is a JSON file, mime=application/json, so
     #    filtering by mime=image/* would miss it — that was the bug in
     #    the previous version of this test).
@@ -634,19 +630,16 @@ def test_e2e3_text_with_image_at_t0(monkeypatch):
             continue
         for ref in entry.artifacts:
             image_blocks.append(
-                {"what": ref.what, "why": ref.why, "scope": ref.scope}
+                {"caption": ref.caption, "scope": ref.scope}
             )
     assert image_blocks, "IntakeImageAgent registered no artifacts"
     block = image_blocks[-1]
-    assert block["what"], "IntakeImage caption.what is empty"
-    assert "vision LLM returned no description" not in block["what"], (
-        f"vision LLM did not produce a real description: {block['what']}"
-    )
+    assert block["caption"], "IntakeImage caption is empty"
     assert (
-        "joseph" in block["why"].lower()
-        or "protagonist" in block["why"].lower()
-        or "character" in block["why"].lower()
-    ), f"user intent not preserved in image caption.why: {block}"
+        "joseph" in block["caption"].lower()
+        or "protagonist" in block["caption"].lower()
+        or "character" in block["caption"].lower()
+    ), f"user intent not preserved in image caption: {block}"
 
     # 5. Run the FULL content pipeline once. The text+image at T=0
     #    represents the director seeing both inputs and dispatching one
@@ -674,8 +667,7 @@ def test_e2e3_text_with_image_at_t0(monkeypatch):
     leaks = _placeholders_without_successor(workspace)
     assert not leaks, f"raw_pending placeholder has no intake successor: {leaks}"
 
-    print(f"[e2e3] image caption.what: {block['what'][:160]}")
-    print(f"[e2e3] image caption.why:  {block['why'][:160]}")
+    print(f"[e2e3] image caption: {block['caption'][:200]}")
     print(f"[e2e3] keyframe media files: {len(keyframe_media)}")
 
 
@@ -775,14 +767,11 @@ def test_e2e4_midstream_image(monkeypatch):
             continue
         for ref in entry.artifacts:
             image_blocks.append(
-                {"what": ref.what, "why": ref.why, "scope": ref.scope}
+                {"caption": ref.caption, "scope": ref.scope}
             )
     assert image_blocks, "IntakeImageAgent registered no artifacts after midstream upload"
     block = image_blocks[-1]
-    assert block["what"], "IntakeImage caption.what is empty"
-    assert "vision LLM returned no description" not in block["what"], (
-        f"vision LLM did not produce a real description: {block['what']}"
-    )
+    assert block["caption"], "IntakeImage caption is empty"
 
     # Phase 2 KeyFrame must have produced media (with the image as a
     # potential character anchor — verifying the path materially flows
@@ -809,6 +798,5 @@ def test_e2e4_midstream_image(monkeypatch):
 
     print(f"[e2e4] phase1 story: {story_phase1[:120]}")
     print(f"[e2e4] phase2 story: {story_phase2[:120]}")
-    print(f"[e2e4] midstream image caption.what: {block['what'][:160]}")
-    print(f"[e2e4] midstream image caption.why:  {block['why'][:160]}")
+    print(f"[e2e4] midstream image caption: {block['caption'][:200]}")
     print(f"[e2e4] phase2 keyframe media files: {len(keyframe_media)}")

@@ -19,7 +19,6 @@ import logging
 from typing import Any
 
 from ...base_agent import BaseAgent
-from ...common_schema import ArtifactCaption
 from .schema import (
     IntakeTextContent,
     IntakeTextInput,
@@ -89,21 +88,9 @@ class IntakeTextAgent(BaseAgent[IntakeTextInput, IntakeTextOutput]):
         output.metrics = IntakeTextMetrics(char_count=len(text))
 
         if not text:
-            # Empty / unreadable upload — still emit a valid artifact so
-            # downstream callers see something.
-            output.artifact_caption = ArtifactCaption(
-                what="empty user text upload",
-                why=intent or "(no user intent provided)",
-                scope="global",
-            )
             return output
 
         if len(text) <= self.SHORT_TEXT_THRESHOLD:
-            output.artifact_caption = ArtifactCaption(
-                what=self._static_what_for_short_text(text, intent),
-                why=intent or "(no user intent provided)",
-                scope="global",
-            )
             return output
 
         # Long text — call the LLM for a one-sentence summary.
@@ -132,11 +119,6 @@ class IntakeTextAgent(BaseAgent[IntakeTextInput, IntakeTextOutput]):
             )
 
         output.content.summary = summary
-        output.artifact_caption = ArtifactCaption(
-            what=self._dynamic_what_for_long_text(summary, text),
-            why=intent or "(no user intent provided)",
-            scope="global",
-        )
         return output
 
     # ------------------------------------------------------------------
@@ -156,26 +138,3 @@ class IntakeTextAgent(BaseAgent[IntakeTextInput, IntakeTextOutput]):
                 path, exc,
             )
             return ""
-
-    @staticmethod
-    def _static_what_for_short_text(text: str, intent: str) -> str:
-        snippet = text[:120].replace("\n", " ").strip()
-        if intent:
-            return (
-                f"natural-language brief from the user: \"{snippet}\" "
-                f"(stated intent: {intent[:120]})"
-            )
-        return f"natural-language brief from the user: \"{snippet}\""
-
-    @staticmethod
-    def _dynamic_what_for_long_text(summary: str, full_text: str) -> str:
-        s = (summary or "").strip()
-        if s:
-            return f"natural-language text uploaded by the user: {s}"
-        # LLM failed; fall back to a snippet of the actual text so the
-        # downstream resolver still has something semantic to match against.
-        snippet = full_text[:160].replace("\n", " ").strip()
-        return (
-            "natural-language text uploaded by the user (no LLM summary "
-            f"available; first 160 chars: \"{snippet}\")"
-        )

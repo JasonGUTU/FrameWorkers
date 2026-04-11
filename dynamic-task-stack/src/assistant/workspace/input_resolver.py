@@ -11,7 +11,7 @@ Responsibilities:
     by **consumer-declared label name**:
       - ``(single)`` labels → one entry dict
       - ``(collection)`` labels → list of entry dicts
-    Each entry: ``what / why / scope / path / mime`` (+ ``payload`` for
+    Each entry: ``caption / scope / path / mime`` (+ ``payload`` for
     JSON artifacts loaded from disk).
 
 What it does NOT do:
@@ -109,7 +109,7 @@ class InputResolver:
         input_needs_description: str,
         model: Optional[str] = None,
     ) -> Dict[str, Any]:
-        """Return resolved_artifacts ready for InputBundleV2.context.
+        """Return the resolved_artifacts dict ready for descriptor.build_input.
 
         Returned dict shape::
 
@@ -122,9 +122,9 @@ class InputResolver:
               "rationale": "...",
             }
         """
-        captions_index = self._memory.get_captions_index(task_id=task_id)
+        captions_index, id_to_path = self._memory.get_captions_index(task_id=task_id)
 
-        if captions_index == "(no artifacts registered yet)":
+        if not id_to_path:
             logger.info(
                 "[InputResolver] No artifacts registered for task %s — cold start",
                 task_id,
@@ -158,14 +158,14 @@ class InputResolver:
             "    [label_name] (collection)    -- zero or more matching artifacts expected\n"
             "followed by a natural-language description of what kind of artifact "
             "that label refers to.\n\n"
-            "The artifact registry lists every persisted artifact with a natural-"
-            "language caption (`what`, `why`, `scope`, `mime`, `path`).\n\n"
+            "The artifact registry lists every persisted artifact with a #N id "
+            "and a natural-language caption describing its type, pipeline role, "
+            "and which agent produced it.\n\n"
             "Your job:\n"
             "  1. Read each [label] block and understand the kind of artifact the "
             "agent is asking for in that slot.\n"
-            "  2. For each registry artifact, read its `what` and `why` fields and "
-            "understand the artifact's nature, role, and purpose. Do NOT match by "
-            "filename, path tokens, or any keyword. Reason about meaning.\n"
+            "  2. For each registry artifact, read its caption and understand the "
+            "artifact's type, role, and purpose. Reason about meaning.\n"
             "  3. For each [label], decide which artifacts in the registry are "
             "instances of the kind described in that block.\n"
             "  4. Be inclusive for (collection) labels: include EVERY matching "
@@ -175,18 +175,18 @@ class InputResolver:
             "  6. Distinguish artifacts that look superficially similar but play "
             "different roles in the pipeline (e.g. a reference image of an entity "
             "in isolation vs. a planned frame of a specific shot of the story). "
-            "Use the captions, especially `why`, to decide.\n"
-            "  7. Do not invent paths. Only return paths that appear verbatim in "
-            "the registry.\n\n"
+            "Use the caption to decide.\n"
+            "  7. Only return #N ids that appear in the registry.\n\n"
             "Return strict JSON only, with this shape:\n"
             "{\n"
             '  "selections": {\n'
-            '    "<label_name>": ["<path_from_registry>", ...],\n'
+            '    "<label_name>": [0, 3, 5],\n'
             "    ...\n"
             "  },\n"
             '  "rationale": "<a short explanation of how you matched each label>"\n'
             "}\n"
-            "Use exactly the label names from the agent's [label] headers as keys."
+            "Use exactly the label names from the agent's [label] headers as keys. "
+            "Values are arrays of integer ids (the #N numbers from the registry)."
         )
         user_prompt = (
             f"agent_id: {agent_id}\n\n"
@@ -236,21 +236,9 @@ class InputResolver:
             "[InputResolver] LLM response for %s: %s",
             agent_id, json.dumps(parsed, ensure_ascii=False)[:500],
         )
-        # Optional full-response dump for debugging (set FW_INPUT_RESOLVER_DEBUG_FILE)
-        try:
-            import os as _os
-            _dbg = _os.environ.get("FW_INPUT_RESOLVER_DEBUG_FILE", "")
-            if _dbg:
-                with open(_dbg, "a") as _fh:
-                    _fh.write(json.dumps({
-                        "agent_id": agent_id,
-                        "task_id": task_id,
-                        "input_needs": input_needs_description,
-                        "captions_index": captions_index,
-                        "llm_response": parsed,
-                    }, ensure_ascii=False) + "\n")
-        except Exception:
-            pass
+        logger.debug(
+            "[InputResolver] full prompt for %s:\n%s", agent_id, user_prompt,
+        )
 
         rationale = str(parsed.get("rationale") or "")
         selections_raw = parsed.get("selections") or {}
@@ -261,19 +249,31 @@ class InputResolver:
                 "rationale": rationale or "LLM returned no selections",
             }
 
-        # Collect all paths the LLM picked across labels (for caching / dedup)
+        # Map #N ids back to paths, then resolve to ArtifactRef objects
         all_paths: List[str] = []
         per_label_paths: Dict[str, List[str]] = {}
-        for label, paths in selections_raw.items():
-            if not isinstance(label, str) or not isinstance(paths, list):
+        for label, ids in selections_raw.items():
+            if not isinstance(label, str) or not isinstance(ids, list):
                 continue
-            cleaned: List[str] = []
+            paths: List[str] = []
+            for raw_id in ids:
+                idx = int(raw_id) if isinstance(raw_id, (int, float)) else None
+                if idx is None:
+                    # Backward compat: LLM might still return a path string
+                    if isinstance(raw_id, str) and raw_id.strip():
+                        paths.append(raw_id.strip())
+                    continue
+                if 0 <= idx < len(id_to_path):
+                    paths.append(id_to_path[idx])
+                else:
+                    logger.warning(
+                        "[InputResolver] %s: id #%d out of range (max %d)",
+                        label, idx, len(id_to_path) - 1,
+                    )
             for p in paths:
-                if isinstance(p, str) and p.strip():
-                    cleaned.append(p.strip())
-                    if p.strip() not in all_paths:
-                        all_paths.append(p.strip())
-            per_label_paths[label] = cleaned
+                if p not in all_paths:
+                    all_paths.append(p)
+            per_label_paths[label] = paths
 
         if not per_label_paths:
             return {
@@ -282,11 +282,9 @@ class InputResolver:
                 "rationale": rationale or "LLM returned no selections",
             }
 
-        # Resolve all selected paths to ArtifactRef objects in one registry pass
         refs = self._memory.get_by_paths(all_paths)
         path_to_ref = {r.path: r for r in refs}
 
-        # Build final dict keyed by consumer label
         resolved: Dict[str, Any] = {}
         for label, paths in per_label_paths.items():
             entries: List[Dict[str, Any]] = []
@@ -323,8 +321,7 @@ class InputResolver:
 
     def _build_entry(self, ref: Any) -> Dict[str, Any]:
         entry: Dict[str, Any] = {
-            "what": ref.what,
-            "why": ref.why,
+            "caption": ref.caption,
             "scope": ref.scope,
             "path": ref.path,
             "mime": ref.mime,
@@ -343,3 +340,4 @@ class InputResolver:
         except Exception as exc:
             logger.warning("[InputResolver] Failed to load JSON from %s: %s", path, exc)
             return None
+

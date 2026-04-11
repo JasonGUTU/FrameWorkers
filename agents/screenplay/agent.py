@@ -49,11 +49,6 @@ from .schema import (
 )
 
 SCREENPLAY_OUTPUT_TEMPLATE = """{
-  "artifact_caption": {
-    "what": "<title, scene count, total shots, key visual style>",
-    "why": "<creative decisions: tone, pacing, visual approach>",
-    "scope": "global"
-  },
   "content": {
     "title": "<screenplay title>",
     "scenes": [
@@ -220,31 +215,22 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
         *,
         rework_notes: str = "",
     ) -> ScreenplayAgentOutput:
-        """True dual mode: skeleton-then-creative-fill if the upstream
-        story has enough structure, otherwise full LLM generation.
-        """
+        """Skeleton-first: build structural scaffold from story, fill via LLM."""
         skeleton = self.build_skeleton(input_data)
-        if skeleton is not None:
-            output = await self._llm_fill_creative(input_data, skeleton, rework_notes)
-        else:
-            output = await self._llm_fill_full(input_data, rework_notes)
+        output = await self._llm_fill_creative(input_data, skeleton, rework_notes)
         self.recompute_metrics(output)
         return output
 
     def build_skeleton(
         self, input_data: ScreenplayAgentInput
-    ) -> ScreenplayAgentOutput | None:
+    ) -> ScreenplayAgentOutput:
         bp = input_data.story
-        if not bp:
-            return None
 
         locations = {
             loc.get("location_id", ""): loc
             for loc in bp.get("locations", [])
         }
         scene_outline = bp.get("scene_outline", [])
-        if not scene_outline:
-            return None
 
         scenes: list[ScreenplayScene] = []
         for so in scene_outline:
@@ -357,11 +343,6 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
 
         template = (
             '{\n'
-            '  "artifact_caption": {\n'
-            '    "what": "<title, scene count, total shots, key visual style>",\n'
-            '    "why": "<tone, pacing, visual approach decisions>",\n'
-            '    "scope": "global"\n'
-            '  },\n'
             '  "title": "<FILL>",\n'
             '  "scenes": [\n'
             + ",\n".join(scene_entries)
@@ -394,15 +375,6 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
     def fill_creative(
         self, skeleton: ScreenplayAgentOutput, creative: dict
     ) -> ScreenplayAgentOutput:
-        # Populate artifact_caption if the LLM returned it
-        cap = creative.get("artifact_caption")
-        if isinstance(cap, dict):
-            from ..common_schema import ArtifactCaption as _AC
-            skeleton.artifact_caption = _AC(
-                what=str(cap.get("what") or ""),
-                why=str(cap.get("why") or ""),
-                scope=str(cap.get("scope") or "global"),
-            )
         skeleton.content.title = creative.get("title", "")
         scene_map = {s.get("scene_id", ""): s for s in creative.get("scenes", [])}
         shot_counter = 1
@@ -524,25 +496,14 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
             "  * Each shot should feel like a distinct visual beat — do NOT\n"
             "    split a single continuous action into multiple shots just\n"
             "    to add coverage.\n\n"
-            "artifact_caption: fill all three fields to describe what you produced:\n"
-            "  what — title, scene count, total shots, key visual style.\n"
-            "  why  — creative decisions: tone, pacing, visual approach.\n"
-            "  scope — always \"global\"."
+            "Do NOT include an artifact_caption block — the system generates it automatically."
         )
 
     def build_user_prompt(self, input_data: ScreenplayAgentInput) -> str:
-        # ScreenplayAgent always runs in skeleton-first mode now: build_skeleton
-        # constructs the structural scaffold from input_data.story, and
-        # build_creative_prompt fills it. This method is the legacy entry point
-        # for the BaseAgent framework when no skeleton is built (e.g. story is
-        # missing). In that degenerate case, we surface a minimal directive
-        # so the framework still emits a valid JSON.
-        return (
-            "No structured story blueprint is available in your input. "
-            f"Produce an empty screenplay shell matching this template:\n"
-            f"{SCREENPLAY_OUTPUT_TEMPLATE}\n"
-            "Return JSON only."
-        )
+        # Not used — ScreenplayAgent always runs skeleton-first via
+        # build_skeleton + build_creative_prompt. Required by BaseAgent
+        # interface.
+        return ""
 
     def parse_output(self, raw: dict[str, Any]) -> ScreenplayAgentOutput:
         return ScreenplayAgentOutput.model_validate(raw)
@@ -569,3 +530,4 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
         output.metrics.action_block_count = sum(
             1 for s in c.scenes for sh in s.shots if sh.block_type == "action"
         )
+

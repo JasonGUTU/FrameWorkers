@@ -257,6 +257,7 @@ class ArtifactWriter:
         assignments: List[Dict[str, Any]],
         *,
         overwrite_existing: bool = False,
+        captions: Optional[Dict[str, Dict[str, str]]] = None,
     ) -> tuple[Dict[str, str], Optional[Dict[str, Any]]]:
         """Write execution outputs using an explicit path plan.
 
@@ -322,7 +323,7 @@ class ArtifactWriter:
 
         # ── Pass 4: register every persisted file in the artifact registry ──
         self._register_persisted_artifacts(
-            execution, persisted_media_paths, asset_index,
+            execution, persisted_media_paths, asset_index, captions,
         )
 
         return persisted_media_paths, asset_index
@@ -475,31 +476,17 @@ class ArtifactWriter:
         execution: Any,
         persisted_media_paths: Dict[str, str],
         asset_index: Optional[Dict[str, Any]],
+        captions: Optional[Dict[str, Dict[str, str]]] = None,
     ) -> None:
         """Build ArtifactRef list and register everything in the artifact registry."""
         if self._register_artifacts is None:
             return
-        results_dict = execution.results if isinstance(execution.results, dict) else {}
-        per_ac: Dict[str, Any] = {}
-        if isinstance(results_dict.get("_per_artifact_captions"), dict):
-            per_ac = results_dict["_per_artifact_captions"]
-        # Entry-level caption used as fallback for the JSON snapshot.
-        entry_caption_raw = results_dict.get("artifact_caption") or {}
+        caps = captions or {}
 
         def _make_ref(path: str, sys_id: str, mime: str) -> Dict[str, Any]:
-            """Build a registry entry from the agent's per-artifact caption.
-
-            Looks up ``per_artifact_captions[sys_id]``; for the JSON snapshot
-            falls back to the top-level ``artifact_caption``.
-            """
-            cap = per_ac.get(sys_id) or {}
-            if not isinstance(cap, dict):
-                cap = {}
-            if not cap and mime == "application/json" and isinstance(entry_caption_raw, dict):
-                cap = entry_caption_raw
+            cap = caps.get(sys_id) or {}
             return {
-                "what": str(cap.get("what") or ""),
-                "why": str(cap.get("why") or ""),
+                "caption": str(cap.get("caption") or ""),
                 "scope": str(cap.get("scope") or "global"),
                 "path": path,
                 "mime": mime,

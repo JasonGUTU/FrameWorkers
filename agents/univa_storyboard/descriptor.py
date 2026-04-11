@@ -5,7 +5,6 @@ from __future__ import annotations
 from pydantic import BaseModel
 
 from ..descriptor import SubAgentDescriptor
-from ..contracts import InputBundleV2
 from .agent import UnivaStoryboardAgent
 from .labels import INPUT_LABEL_CREATIVE_BRIEF
 from .schema import UnivaStoryboardInput
@@ -14,22 +13,36 @@ from .evaluator import UnivaStoryboardEvaluator
 
 def build_input(
     _task_id: str,
-    input_bundle_v2: InputBundleV2,
+    resolved_artifacts: dict,
 ) -> BaseModel:
-    """Construct typed input from the unified workspace bundle.
+    """Construct typed input from the resolved artifact dict.
 
     The creative brief is selected by InputResolver via the
     ``[creative_brief]`` label.
     """
-    resolved = input_bundle_v2.resolved_artifacts
-    brief_entry = resolved.get(INPUT_LABEL_CREATIVE_BRIEF, {})
+    brief_entry = resolved_artifacts.get(INPUT_LABEL_CREATIVE_BRIEF, {})
     payload = brief_entry.get("payload", {}) if isinstance(brief_entry, dict) else {}
     user_prompt = ""
     if isinstance(payload, dict):
         user_prompt = str(payload.get("text", "") or "")
     if not user_prompt and isinstance(brief_entry, dict):
-        user_prompt = str(brief_entry.get("why", "") or "")
+        user_prompt = str(brief_entry.get("caption", "") or "")
     return UnivaStoryboardInput(user_prompt=user_prompt)
+
+
+def build_captions(agent_id: str, output_dict: dict) -> dict:
+    content = output_dict.get("content", {})
+    char_count = len(content.get("characters", []))
+    shot_count = len(content.get("shots", []))
+    return {
+        agent_id: {
+            "caption": (
+                f"Univa storyboard: {char_count} character(s), {shot_count} "
+                f"shot(s). Input for keyframe and video generation."
+            ),
+            "scope": "global",
+        },
+    }
 
 
 CATALOG_ENTRY = (
@@ -46,6 +59,7 @@ DESCRIPTOR = SubAgentDescriptor(
     agent_factory=lambda llm: UnivaStoryboardAgent(llm_client=llm),
     evaluator_factory=UnivaStoryboardEvaluator,
     build_input=build_input,
+    build_captions=build_captions,
     materializer_factory=None,
     input_needs_description=(
         "I am the pipeline entry point for UniVA-style storyboard planning. "

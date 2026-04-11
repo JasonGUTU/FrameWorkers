@@ -45,27 +45,6 @@ class Meta(BaseModel):
     language: str = "en"
 
 
-class ArtifactCaption(BaseModel):
-    """Structured caption written by the producing sub-agent at generation time.
-
-    The agent fills this block to describe what it produced and why.
-    ArtifactWriter reads it to populate global_memory so that downstream
-    agents can discover artifacts via semantic search.
-
-    Fields
-    ------
-    semantic_type : Machine-readable artifact type for exact matching
-                    (e.g. "story_blueprint", "screenplay", "keyframe_l3_shot").
-    what  : One or two sentences describing the artifact content.
-    why   : Key creative or technical decisions made during generation.
-    scope : Granularity tag — "global", "scene:<id>", "shot:<id>", etc.
-    """
-
-    semantic_type: str = Field("", description="Machine-readable type tag for exact matching (e.g. story_blueprint, screenplay, keyframe_l3_shot)")
-    what: str = Field("", description="What this artifact contains (1-2 sentences)")
-    why: str = Field("", description="Key decisions / why it was generated this way")
-    scope: str = Field("global", description='Scope tag: "global" | "scene:sc_001" | "shot:sh_001"')
-
 
 class ImageReferenceEntry(BaseModel):
     """A single image reference that flows from the workspace into a sub-agent's
@@ -84,8 +63,7 @@ class ImageReferenceEntry(BaseModel):
     """
 
     path: str = ""
-    caption_what: str = ""
-    caption_why: str = ""
+    caption: str = ""
     mime: str = ""
     scope: str = ""
 

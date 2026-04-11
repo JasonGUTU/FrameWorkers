@@ -62,17 +62,12 @@ class ArtifactRef:
     Stored inside GlobalMemoryEntry.artifacts. No payload here — global
     memory is an index; content is loaded on demand by InputResolver.
 
-    Captions (``what`` / ``why``) are written by the producing agent in
-    natural language describing the artifact's nature, role, and purpose.
-    Downstream consumers find artifacts purely through LLM semantic
-    interpretation of these captions — no machine-readable type tags.
-    Producer identity (which agent / task / execution wrote this file)
-    lives on the parent ``GlobalMemoryEntry``; dedup happens at the
-    ``(task, agent)`` granularity by walking the entries, so individual
-    refs do not need to carry slot coordinates.
+    ``caption`` is a short functional description of the artifact's type
+    and pipeline role — enough for InputResolver's LLM to match it to a
+    consumer's label slot. Creative content details belong in the payload,
+    not here.
     """
-    what: str = ""           # Self-describing natural-language caption
-    why: str = ""             # Purpose / role / how it relates to the pipeline
+    caption: str = ""         # Artifact type + pipeline role (1-2 sentences)
     scope: str = "global"     # global | scene:sc_001 | shot:sh_001
     path: str = ""            # Absolute filesystem path
     mime: str = ""            # MIME type

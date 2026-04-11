@@ -38,7 +38,7 @@ class _DummyPipelineResult:
 
 
 class _DummyPipelineAgent:
-    async def run(self, _typed_input, input_bundle_v2=None, materialize_ctx=None):
+    async def run(self, _typed_input, *, materialize_ctx=None):
         return _DummyPipelineResult()
 
 
@@ -50,12 +50,11 @@ class DummyDescriptor:
     def build_equipped_agent(self, _llm):
         return _DummyPipelineAgent()
 
-    def build_input(self, task_id, input_bundle_v2):
-        hints = getattr(input_bundle_v2, "hints", None) or {}
+    def build_input(self, task_id, resolved_artifacts):
         return {
             "task_id": task_id,
-            "input_bundle_v2": input_bundle_v2,
-            "language": hints.get("language") or "en",
+            "resolved_artifacts": resolved_artifacts,
+            "language": "en",
         }
 
 
@@ -94,7 +93,7 @@ def stub_input_package_llm(monkeypatch, request):
     if _live_e2e_enabled():
         return  # let real InputResolver run
 
-    def _stub(self, agent_id, task_id, workspace):
+    def _stub(self, descriptor, task_id, workspace):
         """Test stub for InputResolver — caption substring match against [label] headers.
 
         Mirrors production semantics: parses the consumer agent's
@@ -114,11 +113,8 @@ def stub_input_package_llm(monkeypatch, request):
         grouped: dict[str, object] = {}
         selected_artifact_paths: list[str] = []
 
-        # 1) Parse consumer's [label] (single|collection) headers.
-        try:
-            descriptor = self.agent_registry.get_descriptor(agent_id)
-        except Exception:
-            descriptor = None
+        # 1) Parse consumer's [label] (single|collection) headers from the
+        # descriptor passed in by build_execution_inputs.
         needs = str(getattr(descriptor, "input_needs_description", "") or "")
         label_re = re.compile(
             r"^\s*\[(?P<label>[a-zA-Z_][a-zA-Z0-9_]*)\]\s*\((?P<card>single|collection)\)\s*$",
@@ -150,9 +146,7 @@ def stub_input_package_llm(monkeypatch, request):
                     # Only JSON snapshots become resolved labels in the stub.
                     if not (mime == "application/json" or path.lower().endswith(".json")):
                         continue
-                    what = str(getattr(artifact, "what", "") or "")
-                    why = str(getattr(artifact, "why", "") or "")
-                    caption_text = f"{what} {why}".lower()
+                    caption_text = str(getattr(artifact, "caption", "") or "").lower()
 
                     matched_label: str | None = None
                     for label in cardinality.keys():
@@ -163,8 +157,7 @@ def stub_input_package_llm(monkeypatch, request):
                         continue
 
                     entry_dict: dict[str, object] = {
-                        "what": what,
-                        "why": why,
+                        "caption": str(getattr(artifact, "caption", "") or ""),
                         "scope": str(getattr(artifact, "scope", "global") or "global"),
                         "path": path,
                         "mime": mime or "application/json",

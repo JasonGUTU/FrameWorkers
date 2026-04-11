@@ -25,7 +25,6 @@ from .schema import (
     UnivaShotVideo,
     UnivaVideoAsset,
 )
-from ..common_schema import ArtifactCaption
 
 logger = logging.getLogger(__name__)
 
@@ -75,11 +74,6 @@ class UnivaVideoAgent(BaseAgent[UnivaVideoInput, UnivaVideoOutput]):
             metrics=UnivaVideoMetrics(
                 shot_count=len(shot_videos),
             ),
-            artifact_caption=ArtifactCaption(
-                what=f"Video plan: {len(shot_videos)} shots",
-                why="Per-shot I2V clips merged into final video",
-                scope="global",
-            ),
         )
 
     def recompute_metrics(self, output: UnivaVideoOutput) -> None:
@@ -87,50 +81,3 @@ class UnivaVideoAgent(BaseAgent[UnivaVideoInput, UnivaVideoOutput]):
         shots = c.shot_videos
         shot_count = len(shots)
         output.metrics.shot_count = shot_count
-
-        # Enrich the JSON-snapshot caption with a self-describing nature.
-        cap = output.artifact_caption
-        nature = (
-            f"A manifest of the assembled UniVA video for the whole story: "
-            f"{shot_count} shot clip(s). It catalogs the per-shot animated "
-            f"clips and the single complete final video file. It is the "
-            f"document describing the finished UniVA video — there is "
-            f"exactly one such document per pipeline run."
-        )
-        if cap.what:
-            cap.what = nature + " " + cap.what
-        else:
-            cap.what = nature
-
-        # Build per_artifact_captions: sys_id → {what, why, scope}
-        # Matches the sys_ids that UnivaVideoMaterializer creates.
-        pac: dict = {}
-        for sv in shots:
-            shot_id = sv.shot_id
-            if shot_id is None:
-                continue
-            sys_id = f"clip_shot_{shot_id}"
-            pac[sys_id] = {
-                "what": (
-                    f"A moving video clip rendered for shot {shot_id} of the "
-                    f"UniVA storyboard timeline. It is the animated form of "
-                    f"that shot's planned starting frame, covering only this "
-                    f"single shot of the story."
-                ),
-                "why": (
-                    f"One such clip exists per shot in the storyboard. Used "
-                    f"when assembling the final continuous UniVA video."
-                ),
-                "scope": f"shot:{shot_id}",
-            }
-        pac["clip_final"] = {
-            "what": (
-                f"The single complete UniVA video file ({shot_count} shots) "
-                f"produced by concatenating every per-shot clip in storyboard "
-                f"order. This is the finished, watchable video for the whole "
-                f"story — there is exactly one of these."
-            ),
-            "why": "The final visual deliverable of the UniVA pipeline.",
-            "scope": "global",
-        }
-        output.per_artifact_captions = pac

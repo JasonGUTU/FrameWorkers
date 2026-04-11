@@ -8,7 +8,6 @@ from pydantic import BaseModel
 
 from ..common_schema import ImageReferenceEntry
 from ..descriptor import SubAgentDescriptor
-from ..contracts import InputBundleV2
 from .agent import VideoAgent
 from .labels import (
     INPUT_LABEL_KEYFRAMES_METADATA,
@@ -23,17 +22,15 @@ from inference.generation import select_video_service
 
 def build_input(
     _task_id: str,
-    input_bundle_v2: InputBundleV2,
+    resolved_artifacts: dict,
 ) -> BaseModel:
-    resolved = input_bundle_v2.resolved_artifacts
-
-    sp = resolved.get(INPUT_LABEL_SCREENPLAY, {})
+    sp = resolved_artifacts.get(INPUT_LABEL_SCREENPLAY, {})
     sp_payload = sp.get("payload", {}) if isinstance(sp, dict) else {}
 
-    kf = resolved.get(INPUT_LABEL_KEYFRAMES_METADATA, {})
+    kf = resolved_artifacts.get(INPUT_LABEL_KEYFRAMES_METADATA, {})
     kf_payload = kf.get("payload", {}) if isinstance(kf, dict) else {}
 
-    shot_stills_raw = resolved.get(INPUT_LABEL_SHOT_STILLS, [])
+    shot_stills_raw = resolved_artifacts.get(INPUT_LABEL_SHOT_STILLS, [])
     if not isinstance(shot_stills_raw, list):
         shot_stills_raw = []
     shot_stills: list[ImageReferenceEntry] = []
@@ -46,8 +43,7 @@ def build_input(
         shot_stills.append(
             ImageReferenceEntry(
                 path=path,
-                caption_what=str(it.get("what", "") or ""),
-                caption_why=str(it.get("why", "") or ""),
+                caption=str(it.get("caption", "") or ""),
                 mime=str(it.get("mime", "") or ""),
                 scope=str(it.get("scope", "") or ""),
             )
@@ -64,6 +60,43 @@ def materializer_factory(services: dict[str, Any]) -> VideoMaterializer:
     return VideoMaterializer(video_service=services["video_service"])
 
 
+def build_captions(agent_id: str, output_dict: dict) -> dict:
+    content = output_dict.get("content", {})
+    scenes = content.get("scenes", [])
+    shot_count = sum(
+        len(sc.get("shot_segments", [])) for sc in scenes if isinstance(sc, dict)
+    )
+    caps: dict = {}
+    caps[agent_id] = {
+        "caption": (
+            f"Video assembly manifest: {len(scenes)} scene(s), "
+            f"{shot_count} shot clip(s). Consumed by AudioAgent for audio muxing."
+        ),
+        "scope": "global",
+    }
+    for sc in scenes:
+        if not isinstance(sc, dict):
+            continue
+        scene_id = sc.get("scene_id", "")
+        for seg in sc.get("shot_segments", []):
+            shot_id = seg.get("shot_id", "") if isinstance(seg, dict) else ""
+            if shot_id:
+                caps[f"clip_{shot_id}"] = {
+                    "caption": f"Video clip for shot {shot_id}. One segment of the final video.",
+                    "scope": f"shot:{shot_id}",
+                }
+        if scene_id:
+            caps[f"clip_{scene_id}"] = {
+                "caption": f"Scene cut for scene {scene_id} — all shots concatenated. Intermediate assembly, not final.",
+                "scope": f"scene:{scene_id}",
+            }
+    caps["clip_final"] = {
+        "caption": f"Complete assembled video ({shot_count} shots). Final visual deliverable — used by AudioAgent for audio muxing.",
+        "scope": "global",
+    }
+    return caps
+
+
 CATALOG_ENTRY = (
     "VideoAgent\n"
     "  - Input: screenplay + per-shot keyframe images\n"
@@ -77,6 +110,7 @@ DESCRIPTOR = SubAgentDescriptor(
     agent_factory=lambda llm: VideoAgent(llm_client=llm),
     evaluator_factory=VideoEvaluator,
     build_input=build_input,
+    build_captions=build_captions,
     service_factories={
         "video_service": lambda ctx: select_video_service(),
     },

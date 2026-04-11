@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
-from ...common_schema import ArtifactCaption, ImageAsset, Meta
+from ...common_schema import ImageAsset, Meta
 
 
 class IntakeImageContent(BaseModel):
@@ -32,4 +32,3 @@ class IntakeImageInput(BaseModel):
 class IntakeImageOutput(BaseModel):
     meta: Meta = Field(default_factory=Meta)
     content: IntakeImageContent = Field(default_factory=IntakeImageContent)
-    artifact_caption: ArtifactCaption = Field(default_factory=ArtifactCaption)

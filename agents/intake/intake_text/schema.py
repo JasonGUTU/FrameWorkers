@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
-from ...common_schema import ArtifactCaption, Meta
+from ...common_schema import Meta
 
 
 class IntakeTextContent(BaseModel):
@@ -41,8 +41,7 @@ class IntakeTextInput(BaseModel):
         description=(
             "Free-form description from the user of what this text is for "
             "(e.g. 'creative brief for the project', 'user_story_outline', "
-            "'screenplay revision request'). Stored verbatim in the output "
-            "artifact's caption.why field."
+            "'screenplay revision request'). Appended to the artifact caption."
         ),
     )
 
@@ -53,4 +52,3 @@ class IntakeTextOutput(BaseModel):
     meta: Meta = Field(default_factory=Meta)
     content: IntakeTextContent = Field(default_factory=IntakeTextContent)
     metrics: IntakeTextMetrics = Field(default_factory=IntakeTextMetrics)
-    artifact_caption: ArtifactCaption = Field(default_factory=ArtifactCaption)

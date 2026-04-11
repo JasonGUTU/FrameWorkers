@@ -28,7 +28,7 @@ from .schema import (
     UnivaCharacterImage,
     UnivaShotKeyframe,
 )
-from ..common_schema import ArtifactCaption, ImageAsset
+from ..common_schema import ImageAsset
 
 logger = logging.getLogger(__name__)
 
@@ -101,11 +101,6 @@ class UnivaKeyFrameAgent(BaseAgent[UnivaKeyFrameInput, UnivaKeyFrameOutput]):
             metrics=UnivaKeyFrameMetrics(
                 character_image_count=len(char_images),
                 shot_keyframe_count=len(shot_kfs),
-            ),
-            artifact_caption=ArtifactCaption(
-                what=f"Keyframe plan: {len(char_images)} characters, {len(shot_kfs)} shots",
-                why="Character reference images and per-shot keyframes for video generation",
-                scope="global",
             ),
         )
 
@@ -199,69 +194,3 @@ class UnivaKeyFrameAgent(BaseAgent[UnivaKeyFrameInput, UnivaKeyFrameOutput]):
         shot_count = len(c.shot_keyframes)
         output.metrics.character_image_count = char_count
         output.metrics.shot_keyframe_count = shot_count
-
-        # Enrich the JSON-snapshot caption with a self-describing nature
-        # statement.
-        cap = output.artifact_caption
-        nature = (
-            f"A UniVA keyframe planning document covering {char_count} "
-            f"character(s) and {shot_count} shots. For each character it "
-            f"holds a refined image-generation prompt fixing the canonical "
-            f"appearance; for each shot it holds the planned starting frame "
-            f"prompt. Used by the UniVA video step to fetch the prompt for "
-            f"each shot when animating clips."
-        )
-        if cap.what:
-            cap.what = nature + " " + cap.what
-        else:
-            cap.what = nature
-
-        # Build per_artifact_captions: sys_id → {what, why, scope}
-        # Matches the sys_ids that UnivaKeyFrameMaterializer creates.
-        pac: dict = {}
-        # Character reference images — visual identity sheets, not tied to
-        # any specific shot of the storyboard timeline.
-        for ci in c.character_images:
-            cid = ci.char_id or ""
-            cname = ci.char_name or cid
-            if not cid:
-                continue
-            sys_id = f"img_{cid}_character"
-            pac[sys_id] = {
-                "what": (
-                    f"A standalone visual identity reference of the character "
-                    f"'{cname}' (id={cid}). It depicts the character in "
-                    f"isolation to fix their canonical appearance, not in any "
-                    f"particular shot of the storyboard timeline."
-                ),
-                "why": (
-                    f"Used internally by the UniVA keyframe step as a "
-                    f"consistency anchor when rendering shot keyframes that "
-                    f"include this character. Not itself a frame in the final "
-                    f"video — it is a reference sheet."
-                ),
-                "scope": "global",
-            }
-        # Per-shot keyframes — the actual rendered starting frame of each
-        # planned shot in the storyboard, intended to be animated by I2V.
-        for kf in c.shot_keyframes:
-            shot_id = kf.shot_id
-            if shot_id is None:
-                continue
-            sys_id = f"img_shot_{shot_id}_keyframe"
-            pac[sys_id] = {
-                "what": (
-                    f"A single rendered frame depicting shot {shot_id} of the "
-                    f"UniVA storyboard timeline. It is the planned starting "
-                    f"visual of this exact shot, intended to be animated into "
-                    f"a moving video clip."
-                ),
-                "why": (
-                    f"Produced as the visual starting point for the video clip "
-                    f"of shot {shot_id}. Exactly one such frame exists per "
-                    f"shot in the storyboard; together they form the complete "
-                    f"set of frames to be animated into the final UniVA video."
-                ),
-                "scope": f"shot:{shot_id}",
-            }
-        output.per_artifact_captions = pac

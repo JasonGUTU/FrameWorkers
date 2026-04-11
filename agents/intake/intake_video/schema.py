@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
-from ...common_schema import ArtifactCaption, Meta
+from ...common_schema import Meta
 
 
 class IntakeVideoAsset(BaseModel):
@@ -30,4 +30,3 @@ class IntakeVideoInput(BaseModel):
 class IntakeVideoOutput(BaseModel):
     meta: Meta = Field(default_factory=Meta)
     content: IntakeVideoContent = Field(default_factory=IntakeVideoContent)
-    artifact_caption: ArtifactCaption = Field(default_factory=ArtifactCaption)
