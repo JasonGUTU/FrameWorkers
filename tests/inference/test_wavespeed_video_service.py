@@ -43,7 +43,7 @@ def test_wavespeed_t2v_generate_clip_happy_path(monkeypatch: pytest.MonkeyPatch)
     async def _run() -> None:
         svc = WavespeedVideoService()
         try:
-            out = await svc.generate_clip(
+            result = await svc.generate_clip(
                 shot_id="s1",
                 keyframe_images=[],
                 prompt="hello",
@@ -51,7 +51,9 @@ def test_wavespeed_t2v_generate_clip_happy_path(monkeypatch: pytest.MonkeyPatch)
             )
         finally:
             await svc.close()
-        assert out.startswith(b"\x00\x00\x00\x18ftyp")
+        assert result.bytes.startswith(b"\x00\x00\x00\x18ftyp")
+        assert result.resolved_prompt == "hello"
+        assert result.resolved_payload.get("mode") == "t2v"
 
     asyncio.run(_run())
 
@@ -80,7 +82,7 @@ def test_wavespeed_i2v_uses_first_keyframe(monkeypatch: pytest.MonkeyPatch) -> N
     async def _run() -> None:
         svc = WavespeedVideoService()
         try:
-            got = await svc.generate_clip(
+            result = await svc.generate_clip(
                 shot_id="s2",
                 keyframe_images=[png_header, b"ignored"],
                 prompt="move",
@@ -88,7 +90,9 @@ def test_wavespeed_i2v_uses_first_keyframe(monkeypatch: pytest.MonkeyPatch) -> N
             )
         finally:
             await svc.close()
-        assert got == b"mp4bytes"
+        assert result.bytes == b"mp4bytes"
+        assert result.resolved_prompt == "move"
+        assert result.resolved_payload.get("mode") == "i2v"
         submit_i2v.assert_awaited_once()
         call_kw = submit_i2v.await_args[1]
         assert call_kw["image_png_or_jpeg"] == png_header

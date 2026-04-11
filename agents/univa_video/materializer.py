@@ -137,11 +137,12 @@ class UnivaVideoMaterializer(BaseMaterializer):
             clip_data = None
             for attempt in range(1, MAX_RETRIES + 1):
                 try:
-                    clip_data = await self.video_svc.generate_clip(
+                    result = await self.video_svc.generate_clip(
                         shot_id=str(shot_id),
                         keyframe_images=keyframe_images,
                         prompt=prompt,
                     )
+                    clip_data = result.bytes
                     logger.info(
                         "[UnivaVideo] Shot %s clip generated (%d bytes)",
                         shot_id, len(clip_data),

@@ -65,12 +65,13 @@ async def _run(args: argparse.Namespace) -> int:
 
     svc = FalVideoService()
     try:
-        mp4 = await svc.generate_clip(
+        result = await svc.generate_clip(
             shot_id="i2v_smoke",
             keyframe_images=[png],
             prompt=prompt,
             duration_sec=float(args.duration),
         )
+        mp4 = result.bytes
     except Exception as exc:
         print("ERROR:", type(exc).__name__, exc, file=sys.stderr)
         return 3

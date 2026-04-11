@@ -29,25 +29,46 @@ from ..wavespeed_predict import (
     wavespeed_submit_image_to_video,
     wavespeed_submit_text_to_video,
 )
+from .types import ShotSemanticContext, VideoClipResult
 
 logger = logging.getLogger(__name__)
 
+# Keys in the fal API ``arguments`` dict that carry base64 image data URLs.
+# Stripped before recording the submitted payload in ``VideoClipResult.resolved_payload``
+# so audit logs don't balloon with inline image bytes.
+_FAL_IMAGE_PAYLOAD_KEYS: frozenset[str] = frozenset(
+    {"image_url", "image_urls", "start_image_url", "end_image_url", "tail_image_url"}
+)
+
 
 class VideoService:
-    """Abstract video generation service."""
+    """Abstract video generation service.
+
+    Concrete implementations accept either:
+
+    * ``semantic_context``: a ``ShotSemanticContext`` describing the shot
+      in model-neutral language. The service is responsible for turning
+      it into a backend-specific text prompt and structured payload.
+    * ``prompt``: a pre-composed text prompt string (legacy / direct
+      path, used by callers that don't go through ``ShotSemanticContext``
+      — e.g. the UniVA video materializer and the smoke scripts).
+
+    When both are provided, ``semantic_context`` takes precedence.
+    """
 
     async def generate_clip(
         self,
         *,
         shot_id: str,
         keyframe_images: list[bytes],
-        prompt: str,
+        prompt: str = "",
+        semantic_context: ShotSemanticContext | None = None,
         duration_sec: float = 0.0,
         fps: int = 24,
         width: int = 1024,
         height: int = 576,
         **kwargs: Any,
-    ) -> bytes:
+    ) -> VideoClipResult:
         raise NotImplementedError(
             "VideoService.generate_clip() must be overridden by a concrete backend."
         )
@@ -161,18 +182,19 @@ class MockVideoService(VideoService):
         shot_id: str,
         keyframe_images: list[bytes] | None = None,
         prompt: str = "",
+        semantic_context: ShotSemanticContext | None = None,
         duration_sec: float = 0.0,
         fps: int = 24,
         width: int = 1024,
         height: int = 576,
         **kwargs: Any,
-    ) -> bytes:
+    ) -> VideoClipResult:
         logger.info(
             "[MockVideoService] Generating placeholder clip for %s (%.1fs)",
             shot_id,
             duration_sec,
         )
-        return MOCK_MP4_HEADER
+        return VideoClipResult(bytes=MOCK_MP4_HEADER, resolved_prompt=prompt)
 
     async def assemble_scene(
         self,
@@ -222,13 +244,14 @@ class FalVideoService(VideoService, LazyHttpxClientMixin):
         *,
         shot_id: str,
         keyframe_images: list[bytes],
-        prompt: str,
+        prompt: str = "",
+        semantic_context: ShotSemanticContext | None = None,
         duration_sec: float = 0.0,
         fps: int = 24,
         width: int = 1024,
         height: int = 576,
         **kwargs: Any,
-    ) -> bytes:
+    ) -> VideoClipResult:
         logger.info("[fal.ai] Generating video shot=%s model=%s", shot_id, self.model)
 
         image_data_urls: list[str] = [
@@ -236,9 +259,21 @@ class FalVideoService(VideoService, LazyHttpxClientMixin):
             for img in (keyframe_images or [])
         ]
 
+        # Compose the text prompt. ``semantic_context`` wins over ``prompt``
+        # when both are provided; falling back to ``prompt`` keeps the legacy
+        # path working for callers that build prompts themselves (UniVA
+        # video materializer, smoke scripts).
+        if semantic_context is not None:
+            composed_prompt = self._compose_prompt(
+                semantic_context,
+                anchor_image_count=len(image_data_urls),
+            )
+        else:
+            composed_prompt = prompt
+
         if self._is_fal_kling_model(self.model):
             arguments = self._build_kling_arguments(
-                prompt=prompt,
+                prompt=composed_prompt,
                 shot_id=shot_id,
                 image_data_urls=image_data_urls,
                 duration_sec=duration_sec,
@@ -246,7 +281,7 @@ class FalVideoService(VideoService, LazyHttpxClientMixin):
             )
         else:
             arguments = self._build_default_arguments(
-                prompt=prompt,
+                prompt=composed_prompt,
                 shot_id=shot_id,
                 image_data_urls=image_data_urls,
                 duration_sec=duration_sec,
@@ -256,9 +291,29 @@ class FalVideoService(VideoService, LazyHttpxClientMixin):
                 kwargs=kwargs,
             )
 
+        # Pack entity-anchor consistency constraints into the fal payload
+        # when this model endpoint advertises a slot for it. This is the
+        # single place in the codebase that knows fal's literal field names.
+        if semantic_context is not None and self.structured_constraints_field:
+            arguments[self.structured_constraints_field] = self._pack_fal_constraints(
+                semantic_context
+            )
+
         result = await self._submit(arguments)
         video_url = extract_fal_media_url(result, media_type="video")
-        return await self._download_binary(video_url)
+        clip_bytes = await self._download_binary(video_url)
+
+        # Build an audit-friendly view of the submitted payload. Strips
+        # inline base64 image data URLs so the persisted record doesn't
+        # balloon with megabytes of binary.
+        resolved_payload: dict[str, Any] = {
+            k: v for k, v in arguments.items() if k not in _FAL_IMAGE_PAYLOAD_KEYS
+        }
+        return VideoClipResult(
+            bytes=clip_bytes,
+            resolved_prompt=composed_prompt,
+            resolved_payload=resolved_payload,
+        )
 
     # Test seams: tests/agents/test_media_materializers.py overrides these
     # to capture submitted arguments and stub network I/O without monkey-
@@ -364,15 +419,10 @@ class FalVideoService(VideoService, LazyHttpxClientMixin):
         if isinstance(source_video_url, str) and source_video_url:
             arguments["video_url"] = source_video_url
 
-        # Optional: pass structured consistency constraints as a dedicated field
-        # when the target fal model endpoint supports it.
-        constraints = kwargs.get("consistency_constraints")
-        if (
-            self.structured_constraints_field
-            and isinstance(constraints, dict)
-            and constraints
-        ):
-            arguments[self.structured_constraints_field] = constraints
+        # NOTE: structured consistency constraints are injected at the top
+        # of ``generate_clip`` from ``semantic_context`` (via
+        # ``_pack_fal_constraints``) — not here. This keeps fal's literal
+        # field names out of every argument builder.
 
         # Keep common generation knobs optional to maximize model compatibility.
         if duration_sec > 0:
@@ -397,6 +447,131 @@ class FalVideoService(VideoService, LazyHttpxClientMixin):
             arguments["image_url"] = image_data_urls[0]
 
         return arguments
+
+    # ------------------------------------------------------------------
+    # Semantic context → fal prompt / payload
+    #
+    # The two methods below are the *only* places in the repo that know
+    # how to translate a language-neutral ``ShotSemanticContext`` into
+    # this model family's expected inputs — specifically fal's
+    # task-first text prompt templating and the literal
+    # ``entity_anchor_constraints`` payload shape. Nothing in the agents
+    # layer constructs these strings.
+    # ------------------------------------------------------------------
+
+    def _compose_prompt(
+        self,
+        ctx: ShotSemanticContext,
+        *,
+        anchor_image_count: int,
+    ) -> str:
+        """Render a ShotSemanticContext into a fal-flavored I2V text prompt.
+
+        Encodes the prompt templating decisions this model family expects:
+        task-first ordering, ``" | "`` section separators, scene-tone
+        omission when an explicit motion hint prefix is present, and the
+        per-shot ``"Ref:"`` line that signals to the model the attached
+        still is look-consistency-only.
+        """
+        vmh0 = (
+            ctx.video_motion_hints[0].strip()
+            if ctx.video_motion_hints
+            else ""
+        )
+        motion_active = bool(vmh0)
+        omit_scene_tone_blocks = motion_active
+
+        parts: list[str] = [f"Shot {ctx.shot_id}"]
+        if omit_scene_tone_blocks:
+            parts.append(
+                "Ref: one L3 still for look; motion from text prefix + below."
+            )
+        else:
+            parts.append(
+                "Visual reference: a single Layer-3 shot still "
+                "(composition, cast, props); use it for look consistency "
+                "only — motion/timing follow this text prompt."
+            )
+        if ctx.shot_type:
+            parts.append(f"Type: {ctx.shot_type}")
+        if ctx.visual_goal:
+            parts.append(f"Visual goal: {ctx.visual_goal}")
+        if ctx.action_focus:
+            parts.append(f"Action focus: {ctx.action_focus}")
+        if ctx.characters_in_frame:
+            parts.append(
+                "Characters in frame: " + ", ".join(ctx.characters_in_frame)
+            )
+        if ctx.location_id or ctx.time_of_day:
+            scene_bits: list[str] = []
+            if ctx.location_id:
+                scene_bits.append(f"location_id={ctx.location_id}")
+            if ctx.time_of_day:
+                scene_bits.append(f"time_of_day={ctx.time_of_day}")
+            parts.append("Scene context: " + ", ".join(scene_bits))
+        if not omit_scene_tone_blocks and ctx.environment_notes:
+            parts.append(
+                "Scene environment notes: " + " || ".join(ctx.environment_notes)
+            )
+        if not omit_scene_tone_blocks and ctx.style_notes:
+            parts.append("Scene style notes: " + " || ".join(ctx.style_notes))
+        if not omit_scene_tone_blocks and ctx.must_avoid:
+            parts.append("Scene must avoid: " + " || ".join(ctx.must_avoid))
+        if ctx.camera_angle or ctx.camera_movement:
+            camera_bits: list[str] = []
+            if ctx.camera_angle:
+                camera_bits.append(f"angle={ctx.camera_angle}")
+            if ctx.camera_movement:
+                camera_bits.append(f"movement={ctx.camera_movement}")
+            parts.append("Camera: " + ", ".join(camera_bits))
+        if ctx.framing_notes:
+            parts.append(f"Framing notes: {ctx.framing_notes}")
+        parts.append(f"Anchor images: {anchor_image_count}")
+        if ctx.action_focus and not omit_scene_tone_blocks:
+            parts.append(
+                "Task focus: in this scene, complete this shot action: "
+                + ctx.action_focus
+            )
+
+        body = " | ".join(parts)
+        if motion_active:
+            body = vmh0 + " | " + body
+        return body
+
+    def _pack_fal_constraints(
+        self,
+        ctx: ShotSemanticContext,
+    ) -> dict[str, Any]:
+        """Pack a ShotSemanticContext into this fal model's entity-anchor
+        consistency-constraint payload shape.
+
+        This is the single place in the codebase that knows the literal
+        fal field names (``consistency_type`` / ``keyframe_role`` / etc.).
+        """
+        return {
+            "shot_id": ctx.shot_id,
+            "consistency_type": "entity_anchor_constraints",
+            "keyframe_role": "shot_still_l3_only",
+            "characters_in_frame": list(ctx.characters_in_frame),
+            "scene_context": {
+                "scene_id": ctx.scene_id,
+                "location_id": ctx.location_id,
+                "time_of_day": ctx.time_of_day,
+                "environment_notes": list(ctx.environment_notes),
+                "style_notes": list(ctx.style_notes),
+                "must_avoid": list(ctx.must_avoid),
+            },
+            "visual_goal": ctx.visual_goal,
+            "action_focus": ctx.action_focus,
+            "camera": {
+                "angle": ctx.camera_angle,
+                "movement": ctx.camera_movement,
+                "framing_notes": ctx.framing_notes,
+            },
+            "storyboard_keyframe_notes": list(ctx.keyframe_notes),
+            "keyframe_prompt_summaries": list(ctx.keyframe_prompt_summaries),
+            "keyframe_video_motion_hints": list(ctx.video_motion_hints),
+        }
 
 
 class WavespeedVideoService(VideoService, LazyHttpxClientMixin):
@@ -444,14 +619,20 @@ class WavespeedVideoService(VideoService, LazyHttpxClientMixin):
         *,
         shot_id: str,
         keyframe_images: list[bytes],
-        prompt: str,
+        prompt: str = "",
+        semantic_context: ShotSemanticContext | None = None,
         duration_sec: float = 0.0,
         fps: int = 24,
         width: int = 1024,
         height: int = 576,
         **kwargs: Any,
-    ) -> bytes:
+    ) -> VideoClipResult:
         del fps, width, height  # WaveSpeed payload uses fixed profile per model
+        # WaveSpeed's current integration does not yet consume the semantic
+        # context — callers pass a pre-composed ``prompt``. If semantic_context
+        # is supplied alongside an empty prompt, ignore it (until a renderer
+        # is added) rather than crashing, so legacy and new callers both work.
+        del semantic_context
         dur = self._duration_int(duration_sec if duration_sec > 0 else 5.0)
         logger.info(
             "[wavespeed] Generating video shot=%s provider=%s t2v=%s i2v=%s",
@@ -471,6 +652,12 @@ class WavespeedVideoService(VideoService, LazyHttpxClientMixin):
                 image_png_or_jpeg=keyframe_images[0],
                 duration=dur,
             )
+            resolved_payload = {
+                "provider": self.provider,
+                "model": self.i2v_model,
+                "duration": dur,
+                "mode": "i2v",
+            }
         else:
             request_id = await wavespeed_submit_text_to_video(
                 client,
@@ -481,6 +668,13 @@ class WavespeedVideoService(VideoService, LazyHttpxClientMixin):
                 aspect_ratio=self.aspect_ratio,
                 duration=dur,
             )
+            resolved_payload = {
+                "provider": self.provider,
+                "model": self.t2v_model,
+                "duration": dur,
+                "aspect_ratio": self.aspect_ratio,
+                "mode": "t2v",
+            }
         out_url = await wavespeed_poll_until_done(
             client,
             self._api_key,
@@ -488,4 +682,9 @@ class WavespeedVideoService(VideoService, LazyHttpxClientMixin):
             poll_interval_sec=self.poll_interval_sec,
             timeout_sec=self.timeout,
         )
-        return await wavespeed_download_video(client, out_url)
+        clip_bytes = await wavespeed_download_video(client, out_url)
+        return VideoClipResult(
+            bytes=clip_bytes,
+            resolved_prompt=prompt,
+            resolved_payload=resolved_payload,
+        )

@@ -3,6 +3,14 @@
 This materializer is a **pure generator** — it calls VideoService to
 produce video bytes and returns ``list[MediaAsset]``.  It never performs
 file I/O; persistence is handled exclusively by Assistant.
+
+Responsibility boundary
+-----------------------
+The materializer only extracts **semantic** information from the
+upstream screenplay + keyframes_metadata artifacts and packs it into a
+``ShotSemanticContext``. The concrete fal-/wavespeed-/etc-flavored
+prompt templating and any model-specific payload shape live inside
+the ``VideoService`` implementation — not here.
 """
 
 from __future__ import annotations
@@ -16,6 +24,7 @@ from typing import TYPE_CHECKING
 
 from ..descriptor import BaseMaterializer, MediaAsset
 from inference.generation.video_generators.service import VideoService
+from inference.generation.video_generators.types import ShotSemanticContext
 
 if TYPE_CHECKING:
     from ..base_agent import MaterializeContext
@@ -174,111 +183,44 @@ class VideoMaterializer(BaseMaterializer):
         return index
 
     @staticmethod
-    def _build_structured_constraints(
+    def _build_semantic_context(
         shot_id: str,
-        prompt_summaries: list[str],
         storyboard_shot: dict[str, Any],
         *,
-        video_motion_hints: list[str] | None = None,
-    ) -> dict[str, Any]:
-        """Build model-facing structured consistency constraints for one shot."""
-        vmh = list(video_motion_hints) if video_motion_hints else []
-        return {
-            "shot_id": shot_id,
-            "consistency_type": "entity_anchor_constraints",
-            "keyframe_role": "shot_still_l3_only",
-            "characters_in_frame": storyboard_shot.get("characters_in_frame", []),
-            "scene_context": {
-                "scene_id": storyboard_shot.get("scene_id", ""),
-                "location_id": storyboard_shot.get("scene_location_id", ""),
-                "time_of_day": storyboard_shot.get("scene_time_of_day", ""),
-                "environment_notes": storyboard_shot.get("scene_environment_notes", []),
-                "style_notes": storyboard_shot.get("scene_style_notes", []),
-                "must_avoid": storyboard_shot.get("scene_must_avoid", []),
-            },
-            "visual_goal": storyboard_shot.get("visual_goal", ""),
-            "action_focus": storyboard_shot.get("action_focus", ""),
-            "camera": {
-                "angle": storyboard_shot.get("camera_angle", ""),
-                "movement": storyboard_shot.get("camera_movement", ""),
-                "framing_notes": storyboard_shot.get("framing_notes", ""),
-            },
-            "storyboard_keyframe_notes": storyboard_shot.get("keyframe_notes", []),
-            "keyframe_prompt_summaries": prompt_summaries,
-            "keyframe_video_motion_hints": vmh,
-        }
-
-    @staticmethod
-    def _build_clip_prompt(
-        shot_id: str,
         prompt_summaries: list[str],
-        storyboard_shot: dict[str, Any],
-        *,
-        anchor_image_count: int,
-        omit_scene_tone_blocks: bool = False,
-    ) -> str:
-        """Compose a concise, task-first shot prompt for video generation.
+        video_motion_hints: list[str],
+    ) -> ShotSemanticContext:
+        """Project one row of ``_build_screenplay_shot_index`` plus the
+        per-shot keyframe planning fields into a ``ShotSemanticContext``.
 
-        When ``omit_scene_tone_blocks`` is True (used with a non-empty
-        ``video_motion_hint`` prefix), environment/style/must_avoid lines are
-        omitted — they duplicate the L3 still + motion prefix for I2V.
+        This is the single translation point from the agents-layer data
+        model (screenplay + keyframes_metadata dicts) to the inference-layer
+        language-neutral shot description. No model-specific fields appear
+        in either side of this mapping.
         """
-        parts: list[str] = [f"Shot {shot_id}"]
-        if omit_scene_tone_blocks:
-            parts.append(
-                "Ref: one L3 still for look; motion from text prefix + below."
-            )
-        else:
-            parts.append(
-                "Visual reference: a single Layer-3 shot still (composition, cast, props); "
-                "use it for look consistency only — motion/timing follow this text prompt."
-            )
-        shot_type = storyboard_shot.get("shot_type", "")
-        if shot_type:
-            parts.append(f"Type: {shot_type}")
-        visual_goal = storyboard_shot.get("visual_goal", "")
-        if visual_goal:
-            parts.append(f"Visual goal: {visual_goal}")
-        action_focus = storyboard_shot.get("action_focus", "")
-        if action_focus:
-            parts.append(f"Action focus: {action_focus}")
-        characters_in_frame = storyboard_shot.get("characters_in_frame", [])
-        if characters_in_frame:
-            parts.append("Characters in frame: " + ", ".join(characters_in_frame))
-        scene_location_id = storyboard_shot.get("scene_location_id", "")
-        scene_time_of_day = storyboard_shot.get("scene_time_of_day", "")
-        if scene_location_id or scene_time_of_day:
-            scene_context_bits: list[str] = []
-            if scene_location_id:
-                scene_context_bits.append(f"location_id={scene_location_id}")
-            if scene_time_of_day:
-                scene_context_bits.append(f"time_of_day={scene_time_of_day}")
-            parts.append("Scene context: " + ", ".join(scene_context_bits))
-        scene_environment_notes = storyboard_shot.get("scene_environment_notes", [])
-        if not omit_scene_tone_blocks and scene_environment_notes:
-            parts.append("Scene environment notes: " + " || ".join(scene_environment_notes))
-        scene_style_notes = storyboard_shot.get("scene_style_notes", [])
-        if not omit_scene_tone_blocks and scene_style_notes:
-            parts.append("Scene style notes: " + " || ".join(scene_style_notes))
-        scene_must_avoid = storyboard_shot.get("scene_must_avoid", [])
-        if not omit_scene_tone_blocks and scene_must_avoid:
-            parts.append("Scene must avoid: " + " || ".join(scene_must_avoid))
-        camera_angle = storyboard_shot.get("camera_angle", "")
-        camera_movement = storyboard_shot.get("camera_movement", "")
-        if camera_angle or camera_movement:
-            parts.append(
-                "Camera: "
-                + ", ".join(
-                    [x for x in [f"angle={camera_angle}" if camera_angle else "", f"movement={camera_movement}" if camera_movement else ""] if x]
-                )
-            )
-        framing_notes = storyboard_shot.get("framing_notes", "")
-        if framing_notes:
-            parts.append(f"Framing notes: {framing_notes}")
-        parts.append(f"Anchor images: {anchor_image_count}")
-        if action_focus and not omit_scene_tone_blocks:
-            parts.append("Task focus: in this scene, complete this shot action: " + action_focus)
-        return " | ".join(parts)
+        return ShotSemanticContext(
+            shot_id=shot_id,
+            shot_type=storyboard_shot.get("shot_type", ""),
+            visual_goal=storyboard_shot.get("visual_goal", ""),
+            action_focus=storyboard_shot.get("action_focus", ""),
+            characters_in_frame=list(
+                storyboard_shot.get("characters_in_frame", [])
+            ),
+            camera_angle=storyboard_shot.get("camera_angle", ""),
+            camera_movement=storyboard_shot.get("camera_movement", ""),
+            framing_notes=storyboard_shot.get("framing_notes", ""),
+            scene_id=storyboard_shot.get("scene_id", ""),
+            location_id=storyboard_shot.get("scene_location_id", ""),
+            time_of_day=storyboard_shot.get("scene_time_of_day", ""),
+            environment_notes=list(
+                storyboard_shot.get("scene_environment_notes", [])
+            ),
+            style_notes=list(storyboard_shot.get("scene_style_notes", [])),
+            must_avoid=list(storyboard_shot.get("scene_must_avoid", [])),
+            keyframe_notes=list(storyboard_shot.get("keyframe_notes", [])),
+            keyframe_prompt_summaries=list(prompt_summaries),
+            video_motion_hints=list(video_motion_hints),
+        )
 
     @staticmethod
     def _load_keyframe_images_with_prompts(
@@ -352,45 +294,38 @@ class VideoMaterializer(BaseMaterializer):
                     )
                     continue
 
-                vmh0 = str(video_motion_hints[0]).strip() if video_motion_hints else ""
-                motion_active = bool(vmh0)
-                clip_prompt = self._build_clip_prompt(
+                # Pack everything the service needs to know about this shot
+                # into a language-neutral context object. The service (e.g.
+                # FalVideoService) owns how to turn it into a text prompt and
+                # any model-specific structured payload.
+                semantic_context = self._build_semantic_context(
                     shot_id=shot_id,
-                    prompt_summaries=prompt_summaries,
                     storyboard_shot=screenplay_shot_index.get(shot_id, {}),
-                    anchor_image_count=len(keyframe_images),
-                    omit_scene_tone_blocks=motion_active,
-                )
-                if motion_active:
-                    clip_prompt = vmh0 + " | " + clip_prompt
-
-                structured_constraints = self._build_structured_constraints(
-                    shot_id=shot_id,
                     prompt_summaries=prompt_summaries,
-                    storyboard_shot=screenplay_shot_index.get(shot_id, {}),
                     video_motion_hints=video_motion_hints,
                 )
 
-                seg["video_generation_prompt"] = clip_prompt
-                seg["video_generation_constraints_json"] = (
-                    json.dumps(structured_constraints, ensure_ascii=False)
-                    if structured_constraints
-                    else ""
-                )
-
                 try:
-                    clip_bytes = await self.video_svc.generate_clip(
+                    result = await self.video_svc.generate_clip(
                         shot_id=shot_id,
                         keyframe_images=keyframe_images,
-                        prompt=clip_prompt,
-                        consistency_constraints=structured_constraints,
+                        semantic_context=semantic_context,
+                    )
+                    # Record what the service actually sent back to the
+                    # backend. The caller is the only layer that knows
+                    # which schema slot to write into.
+                    seg["video_generation_prompt"] = result.resolved_prompt
+                    seg["video_generation_constraints_json"] = (
+                        json.dumps(result.resolved_payload, ensure_ascii=False)
+                        if result.resolved_payload
+                        else ""
                     )
                     ext = video_asset.get("format", "mp4")
                     pending.append(MediaAsset(
-                        sys_id=sys_vid_id, data=clip_bytes,
+                        sys_id=sys_vid_id, data=result.bytes,
                         extension=ext, uri_holder=video_asset,
                     ))
-                    clip_bytes_list.append(clip_bytes)
+                    clip_bytes_list.append(result.bytes)
                 except Exception as exc:
                     logger.error("Video clip generation failed for %s: %s", shot_id, exc)
                     if ctx.report_failure is not None:

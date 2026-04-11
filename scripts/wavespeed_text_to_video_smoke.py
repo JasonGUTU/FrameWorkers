@@ -68,12 +68,13 @@ async def _run(args: argparse.Namespace) -> int:
 
     svc = WavespeedVideoService()
     try:
-        mp4 = await svc.generate_clip(
+        result = await svc.generate_clip(
             shot_id="ws_t2v_smoke",
             keyframe_images=[],
             prompt=prompt,
             duration_sec=float(args.duration),
         )
+        mp4 = result.bytes
     except Exception as exc:
         print("ERROR: WaveSpeed call failed:", type(exc).__name__, exc, file=sys.stderr)
         return 3
