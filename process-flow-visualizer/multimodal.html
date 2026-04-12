@@ -453,32 +453,28 @@
       </div>
     </section>
 
-    <!-- 工作机制概述 -->
+    <!-- 核心机制 -->
     <section class="how-section">
-      <h2>🛠️ 工作机制概述</h2>
+      <h2>核心机制</h2>
       <div class="how-grid">
 
         <div class="how-card">
-          <h3>① 多模态输入 + Sub-agent 解耦通信</h3>
+          <h3>多模态输入流</h3>
           <ol>
-            <li><strong>2 步 ingestion</strong>：用户上传走 <code>POST /api/workspace/upload</code> → 文件写到 <code>inputs/</code>，注册 <code>scope=raw_pending</code> placeholder。</li>
-            <li><strong>Intake* agent 提升语义</strong>：<code>IntakeText</code>（短文本直包 / 长文本 LLM 摘要）、<code>IntakeImage</code>（vision LLM → 视觉描述，caption 标记为"待分类"，同时注册原始 PNG 文件为独立 artifact entry）。</li>
-            <li><strong>BriefEnricherAgent（有图时）</strong>：读 IntakeText 的 brief + IntakeImage 的视觉描述 → LLM 将图片外貌注入 brief text + 分类图片角色（character / location / prop / style）→ 注册 role-specific caption（如"Global character reference image"）→ enriched brief 替代原始 brief 成为 StoryAgent 的输入。</li>
-            <li><strong>JSON text 透传（CLAUDE.md §7）</strong>：所有 sub-agent 的 schema 输入字段都是 <code>*_json_text: str</code>，<code>build_input</code> 用 <code>json.dumps(payload)</code> 把上游 JSON 整块序列化成文本。Agent 的 LLM 自主理解 JSON 形状，<strong>零 Python 层 <code>.get()</code> 链</strong>。producer 严控自己的 output schema，consumer 对上游零假设。</li>
-            <li><strong>InputResolver 语义匹配</strong>：生产者写 caption（资产属性，不是内容），消费者写 <code>[label]</code> 描述，匹配靠 LLM 读懂语义。新增 modality 只需 <code>IntakeXxxAgent</code> + label 描述。</li>
-            <li><strong>Materializer 零上游耦合</strong>：materializer 只读自家 agent 的 typed output（<code>asset_dict</code>），不读上游 payload。style_notes / must_avoid / semantic_context 等信息由 agent 的 LLM 从 JSON text 提取后写入自家 output，materializer 直接读。</li>
+            <li><strong>文字</strong>：IntakeTextAgent 包装 → 成为 creative brief</li>
+            <li><strong>图片</strong>：IntakeImageAgent vision LLM 理解 → 产出视觉描述</li>
+            <li><strong>融合（有图时）</strong>：BriefEnricherAgent 读用户文字 + 图片描述 → 从文字上下文判断图片角色（character / location / prop / style）→ 把视觉描述注入 brief → enriched brief 替代原始 brief</li>
+            <li><strong>参考图作为 L1 anchor</strong>：BriefEnricherAgent 给图片注册 role-specific caption → InputResolver 匹配到 KeyFrameAgent 的 [character_reference] label → 用户照片跳过文生图，直接成为角色的视觉锚点</li>
           </ol>
         </div>
 
         <div class="how-card">
-          <h3>② 多轮任务 / overwrite 是怎么处理的</h3>
+          <h3>Sub-agent 解耦通信</h3>
           <ol>
-            <li><strong>(task_id, agent_id) 唯一</strong>：每对 <code>(task_id, agent_id)</code> 在 workspace 里只有<strong>一份 active 输出</strong>。同一个 task 里 agent 重跑时，新输出替换旧输出。</li>
-            <li><strong>怎么检测到是重跑</strong>：完全<strong>无状态机 / 无计数器 / 无时间戳</strong>。<code>AssistantService.execute_agent_for_task</code> 入口处直接调 <code>global_memory.has_producer_run(task_id, agent_id)</code> —— 扫一遍 append-only global_memory entries，看有没有任何 entry 的 <code>(task_id, agent_id)</code> 跟当前请求的相等。命中 → <code>auto_overwrite = True</code>，没命中 → 走全新写入路径。<strong>"事实即检测"</strong>：global_memory 里有没有同名产物就是唯一判据。</li>
-            <li><strong>prune-on-rerun</strong>：检测到是重跑后，<code>overwrite_existing=True</code> 一路传到 <code>artifact_writer.persist_execution_from_plan</code>，写新输出前先调 <code>artifact_writer._purge_all_for_producer(execution)</code>，内部用 <code>global_memory.find_by_producer(task_id, agent_id)</code> 找路径，再用 <code>delete_file_at_path</code> 删文件 + <code>global_memory.prune_by_paths(paths)</code> 清 entries —— <strong>同时删掉文件 + global_memory entries</strong>。所以磁盘上看不到历史版本。</li>
-            <li><strong>为什么不保留历史</strong>：因为下游 agent 全靠 InputResolver 的 caption 语义匹配。如果新旧两份产出都在 global_memory 里，LLM 可能挑错版本，或者两份都拿过去吃，下游就看到不一致的上游。<strong>"只有一份当前事实"</strong> 是 caption-driven 路由能稳定工作的前提。</li>
-            <li><strong>用户上传永远保留</strong>：raw upload 注册时是 <code>agent_id="user", task_id=""</code>，跟任何 content agent 的 <code>(task_id, agent_id)</code> 元组都不相交，所以<strong>永远不会被 prune</strong>。重跑只删 AI 生成物，用户的原始素材始终保留在 <code>inputs/</code> 和 global_memory 里。</li>
-            <li><strong>实例</strong>：本页 e2e2 v1 video 和 e2e4 phase 1 video 看不到的原因——它们就是被 v2 / phase 2 重跑触发的 prune 干掉的。但 e2e2 的 v1 文本上传和 e2e4 的 phase 1 文本上传都还在 <code>inputs/</code>（因为是用户素材）。</li>
+            <li><strong>输入</strong>：所有 agent 的输入字段都是 <code>*_json_text: str</code>，上游 JSON 整块序列化成文本传入，consumer 的 LLM 自主理解形状。Python 层零 <code>.get()</code> 链，零跨 agent 耦合</li>
+            <li><strong>输出</strong>：producer 严控自己的 Pydantic schema，evaluator 通过 structural check + rework 保证格式正确</li>
+            <li><strong>路由</strong>：生产者写 caption（资产属性），消费者写 [label] 描述，InputResolver 的 LLM 做自然语言语义匹配。无硬编码路由规则</li>
+            <li><strong>重跑替换</strong>：同一 (task_id, agent_id) 只保留一份输出。重跑时 prune 旧产物 + 写新产物，用户原始上传永不删除</li>
           </ol>
         </div>
 
