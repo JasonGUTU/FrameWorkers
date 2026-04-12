@@ -6,11 +6,15 @@ file I/O; persistence is handled exclusively by Assistant.
 
 Responsibility boundary
 -----------------------
-The materializer only extracts **semantic** information from the
-upstream screenplay + keyframes_metadata artifacts and packs it into a
-``ShotSemanticContext``. The concrete fal-/wavespeed-/etc-flavored
-prompt templating and any model-specific payload shape live inside
-the ``VideoService`` implementation — not here.
+The materializer reads **only the agent's own output** (``asset_dict``)
+and ``typed_input.shot_stills``. It does NOT touch the upstream
+screenplay or keyframes_metadata — those flow to VideoAgent as opaque
+JSON text blobs, are consumed by VideoAgent's LLM, and the relevant
+per-shot semantic information is mirrored into each ShotSegment's
+``semantic_context`` sub-object by the LLM. This removes the old
+string-keyed coupling (``_build_screenplay_shot_index`` and
+``_build_shot_keyframe_inputs_index``) and leaves the materializer as
+a thin shim around ``VideoService``.
 """
 
 from __future__ import annotations
@@ -42,9 +46,6 @@ class VideoMaterializer(BaseMaterializer):
 
     def __init__(self, video_service: VideoService) -> None:
         self.video_svc = video_service
-        # Default off for faster testing.
-        raw = os.getenv("FW_ENABLE_PROP_PIPELINE", "0").strip().lower()
-        self._enable_prop_consistency = raw in {"1", "true", "yes", "on"}
 
     @staticmethod
     def _normalize_local_path(uri: str) -> str:
@@ -54,199 +55,75 @@ class VideoMaterializer(BaseMaterializer):
             return uri[7:]
         return uri
 
-    def _build_shot_keyframe_inputs_index(
+    def _build_shot_still_index(
         self, typed_input: "VideoAgentInput"
-    ) -> dict[str, list[dict[str, str]]]:
-        """Map shot_id → at most one loadable L3 keyframe row.
+    ) -> dict[str, str]:
+        """Map shot_id → starting-frame image path, from ``typed_input.shot_stills``.
 
-        Image URIs are sourced from ``typed_input.shot_stills``;
-        ``prompt_summary`` and ``video_motion_hint`` come from
-        ``typed_input.keyframes_metadata``.
-
-        Row keys: ``uri``, ``prompt_summary``, optional ``video_motion_hint``.
+        Each ``ImageReferenceEntry`` in ``shot_stills`` carries a direct
+        ``path`` + a ``scope`` like ``"shot:sh_001"``. We parse the scope
+        to pair an image with the right shot. No upstream keyframes_metadata
+        JSON unwrap is needed — the Director + InputResolver have already
+        matched the images to the shot_stills label by caption.
         """
-        index: dict[str, list[dict[str, str]]] = {}
-
-        # ── shot_id → image path, from typed_input.shot_stills ──
-        shot_image_paths: dict[str, str] = {}
+        index: dict[str, str] = {}
         for img in typed_input.shot_stills:
             scope = img.scope or ""
-            if scope.startswith("shot:"):
-                shot_id = scope[5:]
-                if shot_id and shot_id not in shot_image_paths:
-                    path = self._normalize_local_path(img.path)
-                    if path:
-                        shot_image_paths[shot_id] = path
-
-        # ── Read prompt_summary / video_motion_hint from typed_input.keyframes_metadata ──
-        kf_payload = typed_input.keyframes_metadata or {}
-        content = kf_payload.get("content", {}) if isinstance(kf_payload, dict) else {}
-
-        for scene in content.get("scenes", []):
-            for shot in scene.get("shots", []):
-                shot_id = shot.get("shot_id", "")
-                if not shot_id:
-                    continue
-                for kf in shot.get("keyframes", []):
-                    uri = shot_image_paths.get(shot_id, "")
-                    prompt_summary = str(kf.get("prompt_summary", "")).strip()
-                    video_motion_hint = str(kf.get("video_motion_hint", "") or "").strip()
-                    if not uri and not prompt_summary:
-                        continue
-                    index[shot_id] = [
-                        {
-                            "uri": uri,
-                            "prompt_summary": prompt_summary,
-                            "video_motion_hint": video_motion_hint,
-                        }
-                    ]
-                    break
-
-        return index
-
-    def _build_screenplay_shot_index(self, typed_input: "VideoAgentInput") -> dict[str, dict[str, Any]]:
-        """Build shot_id -> screenplay shot metadata used for clip prompting."""
-        index: dict[str, dict[str, Any]] = {}
-        sp_payload = typed_input.screenplay or {}
-        content = sp_payload.get("content", {}) if isinstance(sp_payload, dict) else {}
-        for scene in content.get("scenes", []):
-            consistency_pack = (
-                scene.get("scene_consistency_pack", {})
-                if isinstance(scene.get("scene_consistency_pack", {}), dict)
-                else {}
-            )
-            location_lock = (
-                consistency_pack.get("location_lock", {})
-                if isinstance(consistency_pack.get("location_lock", {}), dict)
-                else {}
-            )
-            style_lock = (
-                consistency_pack.get("style_lock", {})
-                if isinstance(consistency_pack.get("style_lock", {}), dict)
-                else {}
-            )
-            for shot in scene.get("shots", []):
-                shot_id = shot.get("shot_id", "")
-                if not shot_id:
-                    continue
-                camera = shot.get("camera", {}) if isinstance(shot.get("camera", {}), dict) else {}
-                keyframe_plan = (
-                    shot.get("keyframe_plan", {})
-                    if isinstance(shot.get("keyframe_plan", {}), dict)
-                    else {}
-                )
-                index[shot_id] = {
-                    "shot_type": str(shot.get("shot_type", "")).strip(),
-                    "visual_goal": str(shot.get("visual_goal", "")).strip(),
-                    "action_focus": str(shot.get("action_focus", "")).strip(),
-                    "characters_in_frame": [
-                        str(cid).strip()
-                        for cid in shot.get("characters_in_frame", [])
-                        if str(cid).strip()
-                    ],
-                    "props_in_frame": (
-                        [
-                            str(pid).strip()
-                            for pid in shot.get("props_in_frame", [])
-                            if str(pid).strip()
-                        ]
-                        if self._enable_prop_consistency
-                        else []
-                    ),
-                    "camera_angle": str(camera.get("angle", "")).strip(),
-                    "camera_movement": str(camera.get("movement", "")).strip(),
-                    "framing_notes": str(camera.get("framing_notes", "")).strip(),
-                    "scene_id": str(scene.get("scene_id", "")).strip(),
-                    "scene_location_id": str(location_lock.get("location_id", "")).strip(),
-                    "scene_time_of_day": str(location_lock.get("time_of_day", "")).strip(),
-                    "scene_environment_notes": [
-                        str(note).strip()
-                        for note in location_lock.get("environment_notes", [])
-                        if str(note).strip()
-                    ],
-                    "scene_style_notes": [
-                        str(note).strip()
-                        for note in style_lock.get("global_style_notes", [])
-                        if str(note).strip()
-                    ],
-                    "scene_must_avoid": [
-                        str(note).strip()
-                        for note in style_lock.get("must_avoid", [])
-                        if str(note).strip()
-                    ],
-                    "keyframe_notes": [
-                        str(note).strip()
-                        for note in keyframe_plan.get("keyframe_notes", [])
-                        if str(note).strip()
-                    ],
-                }
+            if not scope.startswith("shot:"):
+                continue
+            shot_id = scope[5:]
+            if not shot_id or shot_id in index:
+                continue
+            path = self._normalize_local_path(img.path)
+            if path:
+                index[shot_id] = path
         return index
 
     @staticmethod
-    def _build_semantic_context(
-        shot_id: str,
-        storyboard_shot: dict[str, Any],
-        *,
-        prompt_summaries: list[str],
-        video_motion_hints: list[str],
+    def _to_inference_context(
+        shot_id: str, seg_semantic: dict
     ) -> ShotSemanticContext:
-        """Project one row of ``_build_screenplay_shot_index`` plus the
-        per-shot keyframe planning fields into a ``ShotSemanticContext``.
+        """Convert the agent-layer ShotSemanticContext dict into the
+        inference-layer dataclass the VideoService expects.
 
-        This is the single translation point from the agents-layer data
-        model (screenplay + keyframes_metadata dicts) to the inference-layer
-        language-neutral shot description. No model-specific fields appear
-        in either side of this mapping.
+        The two types have the exact same field names by design — see
+        ``agents/video/schema.py:ShotSemanticContext``. This is a
+        one-shot mechanical conversion at the agent / inference layer
+        boundary, NOT a semantic re-interpretation.
         """
         return ShotSemanticContext(
             shot_id=shot_id,
-            shot_type=storyboard_shot.get("shot_type", ""),
-            visual_goal=storyboard_shot.get("visual_goal", ""),
-            action_focus=storyboard_shot.get("action_focus", ""),
-            characters_in_frame=list(
-                storyboard_shot.get("characters_in_frame", [])
+            shot_type=seg_semantic.get("shot_type", "") or "",
+            visual_goal=seg_semantic.get("visual_goal", "") or "",
+            action_focus=seg_semantic.get("action_focus", "") or "",
+            characters_in_frame=list(seg_semantic.get("characters_in_frame", []) or []),
+            camera_angle=seg_semantic.get("camera_angle", "") or "",
+            camera_movement=seg_semantic.get("camera_movement", "") or "",
+            framing_notes=seg_semantic.get("framing_notes", "") or "",
+            scene_id=seg_semantic.get("scene_id", "") or "",
+            location_id=seg_semantic.get("location_id", "") or "",
+            time_of_day=seg_semantic.get("time_of_day", "") or "",
+            environment_notes=list(seg_semantic.get("environment_notes", []) or []),
+            style_notes=list(seg_semantic.get("style_notes", []) or []),
+            must_avoid=list(seg_semantic.get("must_avoid", []) or []),
+            keyframe_notes=list(seg_semantic.get("keyframe_notes", []) or []),
+            keyframe_prompt_summaries=list(
+                seg_semantic.get("keyframe_prompt_summaries", []) or []
             ),
-            camera_angle=storyboard_shot.get("camera_angle", ""),
-            camera_movement=storyboard_shot.get("camera_movement", ""),
-            framing_notes=storyboard_shot.get("framing_notes", ""),
-            scene_id=storyboard_shot.get("scene_id", ""),
-            location_id=storyboard_shot.get("scene_location_id", ""),
-            time_of_day=storyboard_shot.get("scene_time_of_day", ""),
-            environment_notes=list(
-                storyboard_shot.get("scene_environment_notes", [])
+            video_motion_hints=list(
+                seg_semantic.get("video_motion_hints", []) or []
             ),
-            style_notes=list(storyboard_shot.get("scene_style_notes", [])),
-            must_avoid=list(storyboard_shot.get("scene_must_avoid", [])),
-            keyframe_notes=list(storyboard_shot.get("keyframe_notes", [])),
-            keyframe_prompt_summaries=list(prompt_summaries),
-            video_motion_hints=list(video_motion_hints),
         )
 
     @staticmethod
-    def _load_keyframe_images_with_prompts(
-        keyframe_inputs: list[dict[str, str]],
-    ) -> tuple[list[bytes], list[str], list[str]]:
-        """Load L3 PNGs plus parallel ``prompt_summary`` / ``video_motion_hint`` lists."""
-        images: list[bytes] = []
-        prompt_summaries: list[str] = []
-        video_motion_hints: list[str] = []
-        for item in keyframe_inputs:
-            uri = item.get("uri", "")
-            if not uri or not os.path.isfile(uri):
-                continue
-            try:
-                with open(uri, "rb") as fh:
-                    images.append(fh.read())
-                ps = str(item.get("prompt_summary", "") or "")
-                vmh = str(item.get("video_motion_hint", "") or "").strip()
-                if ps.strip():
-                    prompt_summaries.append(ps)
-                else:
-                    prompt_summaries.append("")
-                video_motion_hints.append(vmh)
-            except Exception:
-                continue
-        return images, prompt_summaries, video_motion_hints
+    def _load_image_bytes(path: str) -> bytes | None:
+        if not path or not os.path.isfile(path):
+            return None
+        try:
+            with open(path, "rb") as fh:
+                return fh.read()
+        except Exception:
+            return None
 
     async def materialize(
         self,
@@ -268,8 +145,8 @@ class VideoMaterializer(BaseMaterializer):
         pending: list[MediaAsset] = []
         content = asset_dict.get("content", {})
         scene_bytes_list: list[bytes] = []
-        shot_keyframe_inputs = self._build_shot_keyframe_inputs_index(typed_input)
-        screenplay_shot_index = self._build_screenplay_shot_index(typed_input)
+
+        shot_still_index = self._build_shot_still_index(typed_input)
 
         for scene in content.get("scenes", []):
             scene_id = scene.get("scene_id", "")
@@ -280,40 +157,34 @@ class VideoMaterializer(BaseMaterializer):
                 video_asset = seg.get("video_asset", {})
                 sys_vid_id = f"clip_{shot_id}"
                 video_asset["asset_id"] = sys_vid_id
-                (
-                    keyframe_images,
-                    prompt_summaries,
-                    video_motion_hints,
-                ) = self._load_keyframe_images_with_prompts(
-                    shot_keyframe_inputs.get(shot_id, [])
-                )
-                if not keyframe_images:
+
+                # --- Load the starting-frame image for this shot ---
+                still_path = shot_still_index.get(shot_id, "")
+                image_bytes = self._load_image_bytes(still_path)
+                if image_bytes is None:
                     logger.error(
-                        "Video clip skipped for %s: missing on-disk L3 shot keyframe",
-                        shot_id,
+                        "Video clip skipped for %s: missing on-disk starting "
+                        "frame (shot_stills scope=shot:%s)",
+                        shot_id, shot_id,
                     )
                     continue
 
-                # Pack everything the service needs to know about this shot
-                # into a language-neutral context object. The service (e.g.
-                # FalVideoService) owns how to turn it into a text prompt and
-                # any model-specific structured payload.
-                semantic_context = self._build_semantic_context(
-                    shot_id=shot_id,
-                    storyboard_shot=screenplay_shot_index.get(shot_id, {}),
-                    prompt_summaries=prompt_summaries,
-                    video_motion_hints=video_motion_hints,
+                # --- Build the semantic context from the agent's own
+                #     typed output — the LLM already mirrored the
+                #     upstream screenplay + keyframes fields into
+                #     seg.semantic_context, so we only need a mechanical
+                #     conversion to the inference-layer dataclass here.
+                seg_semantic = seg.get("semantic_context", {}) or {}
+                semantic_context = self._to_inference_context(
+                    shot_id, seg_semantic
                 )
 
                 try:
                     result = await self.video_svc.generate_clip(
                         shot_id=shot_id,
-                        keyframe_images=keyframe_images,
+                        keyframe_images=[image_bytes],
                         semantic_context=semantic_context,
                     )
-                    # Record what the service actually sent back to the
-                    # backend. The caller is the only layer that knows
-                    # which schema slot to write into.
                     seg["video_generation_prompt"] = result.resolved_prompt
                     seg["video_generation_constraints_json"] = (
                         json.dumps(result.resolved_payload, ensure_ascii=False)

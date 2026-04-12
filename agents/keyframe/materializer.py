@@ -13,16 +13,18 @@
 
 Responsibility boundary
 -----------------------
-The materializer owns three things:
+The materializer owns two things:
 
 1. **Layer orchestration** — L1→L2→L3 chaining, retries, backfill,
    reference-image pre-fill, edit vs t2i mode decisions.
-2. **Semantic extraction** — pulling ``prompt_summary`` from each
-   anchor dict, extracting ``style_lock`` lists from the screenplay,
-   and filtering ``must_avoid`` rules down to what applies to still
-   images (dropping film/audio-level directives).
-3. **Packaging** — handing each per-image request to ``ImageService``
+2. **Packaging** — handing each per-image request to ``ImageService``
    as a language-neutral ``ImageSemanticContext``.
+
+It does NOT read the upstream screenplay — ``style_notes`` and
+``must_avoid`` flow as top-level fields on the agent's OWN output
+(mirrored from screenplay by the agent's LLM). The materializer reads
+those directly via dict access on ``asset_dict`` (intra-package,
+allowed per CLAUDE.md §7).
 
 It does **not** own any model-specific prompt templating — no "Edit the
 attached reference..." instruction prefix, no ``Visual style:`` /
@@ -34,7 +36,6 @@ from __future__ import annotations
 import asyncio
 import logging
 import os
-import re
 from typing import Any
 
 from typing import TYPE_CHECKING
@@ -48,37 +49,6 @@ if TYPE_CHECKING:
     from .schema import KeyFrameAgentInput
 
 logger = logging.getLogger(__name__)
-
-
-def _keep_must_avoid_for_still_image(line: str) -> bool:
-    """Drop style_lock must_avoid lines that target film/audio editing, not a single frame."""
-    s = line.strip()
-    if not s:
-        return False
-    low = s.lower()
-    if re.search(
-        r"\b(loud|noise|noises|audio|sound|sounds)\b",
-        low,
-    ):
-        return False
-    if re.search(
-        r"(choppy|jarring|abrupt).{0,80}\bcuts?\b|\bcuts?.{0,80}(choppy|jarring|obscure)",
-        low,
-    ):
-        return False
-    if re.search(r"\b(montage|transitions?|pacing)\b", low):
-        return False
-    if re.search(r"\b(subtitle|subtitles|caption|captions)\b", low):
-        return False
-    return True
-
-
-def _filter_still_image_must_avoid(items: list[str]) -> list[str]:
-    out: list[str] = []
-    for raw in items:
-        if isinstance(raw, str) and _keep_must_avoid_for_still_image(raw):
-            out.append(raw.strip())
-    return list(dict.fromkeys(out))
 
 
 class KeyframeMaterializer(BaseMaterializer):
@@ -139,8 +109,19 @@ class KeyframeMaterializer(BaseMaterializer):
         content = asset_dict.get("content", {})
         scenes = content.get("scenes", [])
 
-        style_notes, must_avoid = self._extract_style_lock_lists(typed_input)
-        must_avoid = _filter_still_image_must_avoid(must_avoid)
+        # style_notes / must_avoid are top-level on the agent's own
+        # output — mirrored from screenplay by KeyFrameAgent's LLM. NO
+        # upstream screenplay traversal here.
+        style_notes = [
+            str(x).strip()
+            for x in content.get("style_notes", []) or []
+            if isinstance(x, str) and str(x).strip()
+        ]
+        must_avoid = [
+            str(x).strip()
+            for x in content.get("must_avoid", []) or []
+            if isinstance(x, str) and str(x).strip()
+        ]
 
         def _make_ctx(prompt_summary: str) -> ImageSemanticContext:
             """Per-call helper: build a semantic context for one image.
@@ -499,62 +480,6 @@ class KeyframeMaterializer(BaseMaterializer):
         )
 
         return self._pending
-
-    # ------------------------------------------------------------------
-    # Style consistency helper
-    # ------------------------------------------------------------------
-
-    @staticmethod
-    def _extract_style_lock_lists(
-        typed_input: "KeyFrameAgentInput",
-    ) -> tuple[list[str], list[str]]:
-        """Return deduped ``global_style_notes`` and raw ``must_avoid`` from screenplay."""
-        sp_payload = getattr(typed_input, "screenplay", {}) or {}
-        if not isinstance(sp_payload, dict):
-            return [], []
-        sb_content = sp_payload.get("content", {}) if isinstance(sp_payload, dict) else {}
-
-        style_notes: list[str] = []
-        must_avoid: list[str] = []
-        for scene in sb_content.get("scenes", []):
-            if not isinstance(scene, dict):
-                continue
-            sl = scene.get("scene_consistency_pack", {}).get("style_lock", {})
-            if not isinstance(sl, dict):
-                continue
-            for x in sl.get("global_style_notes", []) or []:
-                if isinstance(x, str) and x.strip():
-                    style_notes.append(x.strip())
-            for x in sl.get("must_avoid", []) or []:
-                if isinstance(x, str) and x.strip():
-                    must_avoid.append(x.strip())
-
-        return (
-            KeyframeMaterializer._dedupe_preserve_order_normalized(style_notes),
-            KeyframeMaterializer._dedupe_preserve_order_normalized(must_avoid),
-        )
-
-    @staticmethod
-    def _dedupe_preserve_order_normalized(strings: list[str]) -> list[str]:
-        """Drop exact duplicates after whitespace-normalization and casefold.
-
-        Merges repeated ``style_lock`` lines across many scenes when producers
-        paste the same prose with different spacing/casing — no substring slicing.
-        """
-        seen: set[str] = set()
-        out: list[str] = []
-        for raw in strings:
-            if not isinstance(raw, str):
-                continue
-            s = raw.strip()
-            if not s:
-                continue
-            key = " ".join(s.split()).casefold()
-            if key in seen:
-                continue
-            seen.add(key)
-            out.append(s)
-        return out
 
     # ------------------------------------------------------------------
     # Layer helpers (generation only)

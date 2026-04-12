@@ -49,19 +49,17 @@ class UnivaVideoMetrics(BaseModel):
 # ---------------------------------------------------------------------------
 
 class UnivaVideoInput(BaseModel):
-    """Input payload for UnivaVideoAgent.
+    """Input payload for UnivaVideoAgent — univa-style JSON-text pass-through.
 
-    - ``storyboard``: the UniVA storyboard content (selected via the
-      ``[storyboard]`` label).
-    - ``shot_keyframes``: the rendered per-shot keyframe images (selected
-      via the ``[shot_keyframes]`` collection label). Each entry has a
-      ``path`` for the materializer to load the bytes.
+    ``storyboard_json_text`` is the entire upstream UnivaStoryboardAgent
+    payload serialized as a raw JSON text blob. See CLAUDE.md §7.
+
+    ``shot_keyframes`` are typed ``ImageReferenceEntry`` entries (direct
+    file paths + captions) selected by InputResolver via the
+    ``[shot_keyframes]`` collection label.
     """
 
-    storyboard: dict = Field(
-        default_factory=dict,
-        description="Storyboard JSON for shot metadata (prompts, perspective, characters)",
-    )
+    storyboard_json_text: str = Field("", description="Upstream UnivaStoryboardAgent payload as raw JSON text")
     shot_keyframes: list[ImageReferenceEntry] = Field(default_factory=list)
 
 

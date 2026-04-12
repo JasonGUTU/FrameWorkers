@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+
 from pydantic import BaseModel
 
 from ..common_schema import ResolvedArtifactEntry
@@ -16,20 +18,15 @@ def build_input(
     _task_id: str,
     resolved_artifacts: dict,
 ) -> BaseModel:
-    """Construct typed input from the resolved artifact dict.
-
-    The creative brief is selected by InputResolver via the
-    ``[creative_brief]`` label.
-    """
+    """Univa-style pass-through: dump the entire upstream payload as JSON text."""
     brief = ResolvedArtifactEntry.coerce(
         resolved_artifacts.get(INPUT_LABEL_CREATIVE_BRIEF)
     )
-    user_prompt = ""
-    if brief.payload:
-        user_prompt = str(brief.payload.get("text", "") or "")
-    if not user_prompt:
-        user_prompt = brief.caption
-    return UnivaStoryboardInput(user_prompt=user_prompt)
+    return UnivaStoryboardInput(
+        creative_brief_json_text=json.dumps(
+            brief.payload or {}, ensure_ascii=False, indent=2
+        ),
+    )
 
 
 def build_captions(agent_id: str, output_dict: dict) -> dict:

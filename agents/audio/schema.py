@@ -107,20 +107,24 @@ class AudioPackage(BaseModel):
 
 
 class AudioAgentInput(BaseModel):
-    """Input payload for AudioAgent.
+    """Input payload for AudioAgent — univa-style JSON-text pass-through.
 
-    Carries everything AudioAgent (LLM pipeline) and AudioMaterializer need:
+    ``screenplay_json_text`` is the **entire** upstream screenplay payload
+    serialized as a raw JSON text blob. AudioAgent's LLM reads this text
+    directly and reasons about whatever shape the upstream happens to
+    produce — there is NO field-name unpacking in ``build_input`` or in
+    the agent. This removes the hidden string-keyed coupling between
+    ScreenplayAgent's internal field names and AudioAgent's consumer code.
 
-    - ``screenplay``: the structured screenplay payload (dialogue, scenes,
-      shots) — read by the LLM pipeline to write narration / music.
-    - ``final_video``: the video_package payload from the video step,
-      consulted by the materializer when muxing the final delivery
-      (mp4 with audio). The materializer reads
-      ``content.final_video_asset.uri`` from it to load video bytes.
+    ``final_video_path`` is the direct file path to the finished MP4 file,
+    selected by InputResolver via the ``[final_video]`` label against a
+    **video FILE entry** (mime video/mp4), NOT against a JSON manifest.
+    AudioMaterializer loads bytes from this path directly when muxing the
+    final delivery — no payload unwrap, no JSON parsing.
     """
 
-    screenplay: dict = Field(default_factory=dict)
-    final_video: dict = Field(default_factory=dict)
+    screenplay_json_text: str = ""
+    final_video_path: str = ""
 
 
 class AudioAgentOutput(AudioPackage):

@@ -6,51 +6,20 @@ Output: ScreenplayAgentOutput (scenes → shots: narrative + visual per take)
 
 Generation model: ONE LLM call via ``_llm_fill_full``. The LLM receives the
 upstream story payload as an indented JSON text blob and produces the
-complete ``ScreenplayAgentOutput`` JSON in a single pass. There is no
-skeleton-first split, no deterministic pre-computation of scene shells
-from ``scene_outline``, and no field-selected "story embed" — the LLM
-is the sole consumer of the story shape.
+complete ``ScreenplayAgentOutput`` JSON in a single pass — no skeleton-
+first split, no pre-computed scene shells, no field-selected story embed.
+See CLAUDE.md §7 (Postel's Law at the agent layer) for the rationale.
 
-Why this shape: the old skeleton-first path hard-coded 18 specific
-field paths (``content.cast[].character_id``, ``content.locations[].name``,
-``content.scene_outline[].time_of_day_hint``, …) as string ``dict.get``
-calls scattered across ``_story_content_embed_for_creative_llm`` and
-``build_skeleton``. Any upstream StoryAgent variant that deviated from
-those exact field names silently degraded to empty output (zero scenes,
-empty creative embed) without tripping any validator. Univa-style
-pass-through eliminates that hidden coupling: the LLM reads whatever
-shape arrives and reasons about it directly. The contract between
-StoryAgent and ScreenplayAgent is now "a JSON object describing a
-story" — not "a specific 18-field schema matching ``StoryBlueprintContent``".
-
-Coupling: output still feeds KeyFrameAgent (and downstream) as the sole
-``screenplay`` artifact — the ``ScreenplayAgentOutput`` schema is
-unchanged, so every downstream consumer sees the same contract it
-always did. Only the upstream → ScreenplayAgent edge became
-shape-agnostic.
-
-Post-processing in ``recompute_metrics``: deliberately minimal. The
-philosophy is "LLM produces correct output from the template + system
-prompt; evaluator catches drift; we do NOT silently patch up LLM
-mistakes in post-processing". Rewrites that remain:
-
-  * ``shot_id`` global re-assignment as ``sh_NNN`` — kept because
-    ``ScreenplayEvaluator`` only checks uniqueness, not the naming
-    format, and downstream agents assume ``sh_NNN``. Candidate for
-    future removal once the evaluator learns to check format.
-  * ``keyframe_count`` forcing to 1 — kept as a belt-and-suspenders
-    alongside the evaluator's existing ``keyframe_count != 1`` check.
-  * ``order`` normalisation via ``_normalize_order``.
-
-Explicitly NOT post-processed (trusted to the LLM + evaluator):
-
-  * ``props_lock[].prop_id`` — the template shows ``"prop_id": "prop_001"``
-    and the system prompt spells out the ``prop_NNN`` convention, so
-    the LLM is expected to write these directly. Earlier revisions of
-    this file auto-assigned prop_ids from prop_name first-occurrence
-    and remapped ``shots.props_in_frame`` from name → id; both were
-    defensive rewrites that contradicted the "trust producer's own
-    output" principle from CLAUDE.md §7 and have been removed.
+Output contract: all content-level invariants (sh_NNN global-sequential
+shot_id, sc_NNN scene_id, per-scene shot order starting at 1,
+``keyframe_count == 1``, prop_NNN prop_id, character/location id reuse
+from the blueprint) are owned by the LLM via the template + system
+prompt, and enforced by ScreenplayEvaluator. Rework surfaces any drift
+instead of a silent Python-side patch-up. ``recompute_metrics`` does
+NOT rewrite any LLM-authored field — it only derives summary counts
+(scene_count, shot_count_total, avg_shots_per_scene,
+dialogue_block_count, action_block_count), which are never LLM-authored
+because the user-message template hides the ``metrics`` field entirely.
 """
 
 from __future__ import annotations
@@ -100,6 +69,8 @@ SCREENPLAY_OUTPUT_TEMPLATE = """{
         },
         "shots": [
           {
+            "shot_id": "sh_001",
+            "order": 1,
             "block_type": "action",
             "character_id": "",
             "character_name": "",
@@ -114,6 +85,8 @@ SCREENPLAY_OUTPUT_TEMPLATE = """{
             "keyframe_plan": { "keyframe_count": 1, "keyframe_notes": [] }
           },
           {
+            "shot_id": "sh_002",
+            "order": 2,
             "block_type": "dialogue",
             "character_id": "char_001",
             "character_name": "<name>",
@@ -189,6 +162,18 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
             "moment, NOT its setup). If no arc ids are exposed, use an empty "
             "string.\n\n"
             "=== STRUCTURAL REQUIREMENTS ===\n"
+            "scene_id: sc_001, sc_002, sc_003, … in the order the scenes appear. "
+            "scene.order: 1, 2, 3, … matching the scene's position (first scene "
+            "has order=1, second scene has order=2, and so on).\n"
+            "shot_id: sh_001, sh_002, sh_003, … with 3-digit zero-padding. "
+            "shot_ids are GLOBALLY SEQUENTIAL across the entire screenplay — the "
+            "first shot of the first scene is sh_001, the next shot is sh_002 "
+            "whether it is in the same scene or the next scene, and numbering "
+            "NEVER restarts at the scene boundary. If the screenplay has 3 scenes "
+            "with 4 / 3 / 5 shots, the shot_ids run sh_001 … sh_012 straight "
+            "through. No gaps, no duplicates.\n"
+            "shot.order: 1, 2, 3, … RESTARTING at 1 inside each scene (so the "
+            "first shot of every scene has order=1).\n"
             "Every shot's keyframe_plan.keyframe_count MUST be 1.\n"
             "Dialogue shots (block_type=='dialogue'): character_id and text must "
             "BOTH be non-empty. Action shots (block_type=='action'): leave "
@@ -220,13 +205,16 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
             "Then produce the full screenplay JSON in EXACTLY this shape:\n\n"
             f"{SCREENPLAY_OUTPUT_TEMPLATE}\n\n"
             "Per-scene requirements:\n"
-            "  * scene_id: sc_001, sc_002, … in order\n"
+            "  * scene_id: sc_001, sc_002, … in order; scene.order = 1, 2, 3, …\n"
             "  * heading.location_id / character_locks[].character_id: reuse ids\n"
             "    from the blueprint when present; otherwise invent and reuse\n"
             "    consistently\n"
             "  * scene_consistency_pack: fill every lock with concrete notes\n"
             "    drawn from the blueprint's descriptive fields\n"
             "  * shots: each a distinct visual beat, keyframe_plan.keyframe_count=1\n"
+            "  * shot_id: sh_001, sh_002, sh_003, … GLOBALLY sequential across\n"
+            "    the whole screenplay, 3-digit zero-padded, never restarting at\n"
+            "    scene boundaries. shot.order: 1, 2, 3, … restarting per scene.\n"
             "  * scene_end.turn / emotional_shift: derived from the blueprint's\n"
             "    beat / arc descriptions\n\n"
             "Return JSON only."
@@ -236,31 +224,16 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
         return ScreenplayAgentOutput.model_validate(raw)
 
     def recompute_metrics(self, output: ScreenplayAgentOutput) -> None:
-        """Canonicalize structural fields and recompute derived counts.
+        """Derive summary metrics from content — pure derived data, zero rewrites.
 
-        Deliberately minimal — see the module docstring. Only rewrites
-        ``shot_id`` / ``order`` / ``keyframe_count`` remain; ``prop_id``
-        and ``props_in_frame`` are trusted to the LLM so that evaluator
-        rework (or a human read of the output) surfaces LLM drift
-        instead of silently masking it.
+        All LLM-authored fields (shot_id, scene/shot order, keyframe_count,
+        prop_id, …) are left untouched; ScreenplayEvaluator enforces their
+        invariants via structural checks + rework. The ``metrics`` field is
+        hidden from the user-message template, so it is never LLM-authored
+        in the first place — populating it here is derivation, not a
+        silent patch-up of LLM output.
         """
         c = output.content
-        self._normalize_order(c.scenes)
-
-        # Global sequential shot_id + per-scene order. ``shot_id`` stays
-        # force-assigned because ``ScreenplayEvaluator`` only checks
-        # uniqueness, not ``sh_NNN`` format, and downstream agents
-        # assume that format. ``keyframe_count`` is clamped as a
-        # belt-and-suspenders alongside the evaluator's existing
-        # ``keyframe_count != 1`` check.
-        g = 1
-        for scene in c.scenes:
-            for i, sh in enumerate(scene.shots, 1):
-                sh.shot_id = f"sh_{g:03d}"
-                sh.order = i
-                sh.keyframe_plan.keyframe_count = 1
-                g += 1
-
         output.metrics.scene_count = len(c.scenes)
         shot_total = sum(len(s.shots) for s in c.scenes)
         output.metrics.shot_count_total = shot_total

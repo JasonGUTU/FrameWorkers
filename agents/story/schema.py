@@ -84,16 +84,18 @@ class StoryBlueprint(BaseModel):
 
 
 class StoryAgentInput(BaseModel):
-    """Input payload for StoryAgent.
+    """Input payload for StoryAgent — univa-style JSON-text pass-through.
 
-    Single unified input: ``creative_brief`` is the natural-language
-    description of what story / video to produce (selected by
-    InputResolver via the ``[creative_brief]`` label).  StoryAgent
-    autonomously decides whether the brief is a short prompt to expand
-    or a longer outline to structure.
+    ``creative_brief_json_text`` is the **entire** upstream IntakeTextAgent
+    payload serialized as a raw JSON text blob. StoryAgent's LLM reads
+    this text directly and extracts the brief from whatever shape it
+    finds (typically ``content.text``). There is NO field-name unpacking
+    in ``build_input`` or in the agent — this removes the hidden
+    string-keyed coupling between IntakeTextAgent's internal field names
+    and StoryAgent's consumer code.
     """
 
-    creative_brief: str = ""
+    creative_brief_json_text: str = ""
 
 
 class StoryAgentOutput(StoryBlueprint):

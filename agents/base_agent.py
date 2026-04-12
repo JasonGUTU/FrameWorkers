@@ -60,8 +60,8 @@ class MaterializeContext:
         task_id:           Current task identifier (same scope as Task Stack ``task_id``).
         typed_input:       The same Pydantic typed input that the LLM pipeline
                            received. Materializers read whatever fields they
-                           need from it (e.g. ``typed_input.screenplay``,
-                           ``typed_input.shot_stills``). The materializer
+                           need from it (e.g. ``typed_input.shot_stills``,
+                           ``typed_input.final_video_path``). The materializer
                            never reaches back to the resolved-artifacts dict
                            directly — every data dependency must already be
                            expressed as a field on the agent's typed input.

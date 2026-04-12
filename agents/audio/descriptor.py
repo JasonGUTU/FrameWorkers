@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from typing import Any
 
 from pydantic import BaseModel
@@ -23,8 +24,10 @@ def build_input(
     sp = ResolvedArtifactEntry.coerce(resolved_artifacts.get(INPUT_LABEL_SCREENPLAY))
     fv = ResolvedArtifactEntry.coerce(resolved_artifacts.get(INPUT_LABEL_FINAL_VIDEO))
     return AudioAgentInput(
-        screenplay=sp.payload or {},
-        final_video=fv.payload or {},
+        screenplay_json_text=json.dumps(
+            sp.payload or {}, ensure_ascii=False, indent=2
+        ),
+        final_video_path=fv.path,
     )
 
 
@@ -129,11 +132,13 @@ DESCRIPTOR = SubAgentDescriptor(
         "this to know what to say (narration) and what mood to score (music). "
         "Choose at most one.\n\n"
         f"[{INPUT_LABEL_FINAL_VIDEO}] (single)\n"
-        "The single complete finished video file for the whole story (one continuous "
-        "video, not per-shot or per-scene fragments). It is the visual side of the "
-        "deliverable, against which I will mux the final audio. This is a JSON "
-        "manifest describing the assembled video, not the raw video file itself. "
-        "Choose at most one — and only the document describing the complete final "
-        "video, not intermediate per-shot or per-scene assemblies."
+        "The single complete finished video FILE for the whole story (one "
+        "continuous video, not per-shot or per-scene fragments). It is the "
+        "visual side of the deliverable, against which I will mux the final "
+        "audio. Select the actual video FILE entry (mime video/mp4), NOT any "
+        "JSON manifest describing it — I will load bytes directly from the "
+        "entry's file path, not parse a JSON document. Choose at most one — "
+        "and only the entry for the complete final video, not intermediate "
+        "per-shot or per-scene clip assemblies."
     ),
 )

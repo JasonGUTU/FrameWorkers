@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from typing import Any
 
 from pydantic import BaseModel
@@ -12,6 +13,7 @@ from .agent import KeyFrameAgent
 from .labels import (
     INPUT_LABEL_CHARACTER_REFERENCE,
     INPUT_LABEL_LOCATION_REFERENCE,
+    INPUT_LABEL_PROP_REFERENCE,
     INPUT_LABEL_SCREENPLAY,
     INPUT_LABEL_STYLE_REFERENCE,
 )
@@ -27,12 +29,17 @@ def build_input(
 ) -> BaseModel:
     sp = ResolvedArtifactEntry.coerce(resolved_artifacts.get(INPUT_LABEL_SCREENPLAY))
     return KeyFrameAgentInput(
-        screenplay=sp.payload or {},
+        screenplay_json_text=json.dumps(
+            sp.payload or {}, ensure_ascii=False, indent=2
+        ),
         character_references=ImageReferenceEntry.list_from_resolved(
             resolved_artifacts.get(INPUT_LABEL_CHARACTER_REFERENCE)
         ),
         location_references=ImageReferenceEntry.list_from_resolved(
             resolved_artifacts.get(INPUT_LABEL_LOCATION_REFERENCE)
+        ),
+        prop_references=ImageReferenceEntry.list_from_resolved(
+            resolved_artifacts.get(INPUT_LABEL_PROP_REFERENCE)
         ),
         style_references=ImageReferenceEntry.list_from_resolved(
             resolved_artifacts.get(INPUT_LABEL_STYLE_REFERENCE)
@@ -147,6 +154,10 @@ DESCRIPTOR = SubAgentDescriptor(
         "Image artifacts depicting what specific locations or settings in the story "
         "should look like. Same handling as character references — I assign the "
         "path directly to the location entity's image_asset.uri field.\n\n"
+        f"[{INPUT_LABEL_PROP_REFERENCE}] (collection)\n"
+        "Image artifacts depicting what specific props or objects in the story "
+        "should look like. Same handling as character references — I assign the "
+        "path directly to the prop entity's image_asset.uri field.\n\n"
         f"[{INPUT_LABEL_STYLE_REFERENCE}] (collection)\n"
         "Image artifacts conveying overall visual style, mood, palette, or "
         "aesthetic that should inform image generation. Unlike character/location "

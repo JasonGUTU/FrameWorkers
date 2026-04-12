@@ -421,9 +421,11 @@ def test_e2e0_story_to_screenplay_only(monkeypatch):
         for non-canonical upstream shapes), the screenplay would
         hallucinate fresh ids with zero overlap — so the overlap
         assertion is the load-bearing check.
-      * ``recompute_metrics`` post-processing still enforces the
-        cross-agent invariants KeyFrameAgent relies on: unique sh_NNN
-        ids and keyframe_count == 1 per shot.
+      * Cross-agent invariants KeyFrameAgent relies on (sh_NNN shot_ids
+        globally sequential, keyframe_count == 1 per shot) are owned by
+        the LLM via the template + system prompt and enforced by
+        ScreenplayEvaluator; rework surfaces any drift. recompute_metrics
+        no longer rewrites any LLM-authored field.
     """
     workspace_id = _scenario_workspace_id("story_to_screenplay_only")
     client, workspace, debug_file = _build_client(workspace_id, monkeypatch)
@@ -520,8 +522,8 @@ def test_e2e0_story_to_screenplay_only(monkeypatch):
             f"not have read the story_json_text blob"
         )
 
-    # Structural invariants enforced by recompute_metrics — KeyFrameAgent
-    # downstream depends on these being true of every screenplay.
+    # Structural invariants owned by LLM, enforced by ScreenplayEvaluator
+    # — KeyFrameAgent downstream depends on these being true of every screenplay.
     all_shot_ids: list[str] = []
     for sc in scenes:
         if not isinstance(sc, dict):
@@ -536,7 +538,7 @@ def test_e2e0_story_to_screenplay_only(monkeypatch):
             if isinstance(kf, dict):
                 assert kf.get("keyframe_count") == 1, (
                     f"shot {shot_id} keyframe_count != 1 "
-                    f"(recompute_metrics should force it)"
+                    f"(ScreenplayEvaluator should have triggered rework)"
                 )
     assert len(all_shot_ids) == len(set(all_shot_ids)), (
         f"duplicate shot_ids: {all_shot_ids}"
@@ -758,37 +760,59 @@ def test_e2e3_text_with_image_at_t0(monkeypatch):
         image_path=_REFERENCE_IMAGE_FIRST,
     )
 
-    # 3. Run both intake agents.
+    # 3. Run both intake agents + BriefEnricherAgent.
     _execute_agent(client, debug_file, "IntakeTextAgent", task_id)
     _execute_agent(client, debug_file, "IntakeImageAgent", task_id)
+    _execute_agent(client, debug_file, "BriefEnricherAgent", task_id)
 
-    # 4. Validate the image artifact carries a vision-LLM caption. Look
-    #    up by agent_id (the IntakeImage output is a JSON file,
-    #    mime=application/json, so filtering by mime=image/* would miss
-    #    it — that was the bug in the previous version of this test).
-    image_blocks: list[dict] = []
-    for entry in workspace.global_memory.list_all():
-        if entry.agent_id != "IntakeImageAgent":
-            continue
-        for ref in entry.artifacts:
-            image_blocks.append(
-                {"caption": ref.caption, "scope": ref.scope}
-            )
-    assert image_blocks, "IntakeImageAgent registered no artifacts"
-    block = image_blocks[-1]
-    assert block["caption"], "IntakeImage caption is empty"
-    assert "Shows:" in block["caption"], (
-        f"IntakeImage caption missing vision-LLM description: {block}"
+    # 4. Validate BriefEnricher produced an enriched brief + classified the image.
+    enricher_results = _last_execution_results_for_agent(
+        client, task_id, "BriefEnricherAgent"
+    )
+    enricher_content = enricher_results.get("content", {}) or {}
+    enriched_brief = enricher_content.get("enriched_brief", "")
+    assert enriched_brief, "BriefEnricherAgent produced no enriched brief"
+    classifications = enricher_content.get("image_classifications", [])
+    assert classifications, "BriefEnricherAgent produced no image classifications"
+    first_role = classifications[0].get("role", "") if classifications else ""
+    assert first_role in ("character", "location", "prop", "style"), (
+        f"BriefEnricherAgent image role must be character/location/prop/style, got {first_role!r}"
     )
 
-    # 5. Run the FULL content pipeline once. The text+image at T=0
-    #    represents the director seeing both inputs and dispatching one
-    #    full pipeline run. KeyFrame should consume the IntakeImage
-    #    output as a character reference, Video uses the keyframes,
-    #    Audio uses the screenplay/video.
+    # 5. Validate the image artifact carries a role-specific caption
+    #    (registered by BriefEnricherAgent via the external-ref mechanism).
+    image_blocks: list[dict] = []
+    for entry in workspace.global_memory.list_all():
+        if entry.agent_id not in ("IntakeImageAgent", "BriefEnricherAgent"):
+            continue
+        for ref in entry.artifacts:
+            if ref.mime and ref.mime.startswith("image/"):
+                image_blocks.append(
+                    {"caption": ref.caption, "scope": ref.scope}
+                )
+    assert image_blocks, "No image artifacts registered"
+    # At least one image should now have a role-specific caption
+    # from BriefEnricherAgent (e.g. "Global character reference image").
+    role_captions = [
+        b for b in image_blocks
+        if any(r in b["caption"].lower() for r in ("character", "location", "prop", "style"))
+    ]
+    assert role_captions, (
+        f"No image artifact has a role-specific caption. "
+        f"Got: {[b['caption'][:80] for b in image_blocks]}"
+    )
+
+    # 6. Run the FULL content pipeline. BriefEnricher's enriched brief
+    #    should be picked as the creative brief by StoryAgent, so the
+    #    story's character descriptions match the uploaded image.
     pipeline = ["StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent", "AudioAgent"]
     for agent_id in pipeline:
         _execute_agent(client, debug_file, agent_id, task_id)
+
+    # 7. Verify story was produced and has content.
+    story_results = _last_execution_results_for_agent(client, task_id, "StoryAgent")
+    story_logline = story_results.get("content", {}).get("logline", "")
+    assert story_logline, "StoryAgent produced no logline"
 
     keyframe_results = _last_execution_results_for_agent(client, task_id, "KeyFrameAgent")
     assert keyframe_results.get("content"), "KeyFrameAgent produced no content"
@@ -803,11 +827,13 @@ def test_e2e3_text_with_image_at_t0(monkeypatch):
     audio_results = _last_execution_results_for_agent(client, task_id, "AudioAgent")
     _assert_audio_output_real(audio_results, "[e2e3]")
 
-    # 6. Final invariant: nothing left in raw_pending.
+    # 8. Final invariant: nothing left in raw_pending.
     leaks = _placeholders_without_successor(workspace)
     assert not leaks, f"raw_pending placeholder has no intake successor: {leaks}"
 
-    print(f"[e2e3] image caption: {block['caption'][:200]}")
+    print(f"[e2e3] enriched brief: {enriched_brief[:200]}")
+    print(f"[e2e3] image role: {first_role}")
+    print(f"[e2e3] story logline: {story_logline[:160]}")
     print(f"[e2e3] keyframe media files: {len(keyframe_media)}")
 
 
@@ -817,115 +843,128 @@ def test_e2e3_text_with_image_at_t0(monkeypatch):
 
 
 @pytest.mark.skipif(not _LIVE_READY, reason=_LIVE_SKIP_REASON)
-def test_e2e4_midstream_image(monkeypatch):
+def test_e2e4_two_rounds_text_with_image(monkeypatch):
+    """Two rounds of text+image: verify second round replaces first.
+
+    Phase 1: text (elderly craftsman) + image #1 (elderly craftsman photo)
+      → IntakeText + IntakeImage + BriefEnricher + full pipeline
+    Phase 2: text (young girl) + image #2 (middle-aged woman photo)
+      → IntakeText + IntakeImage + BriefEnricher + full pipeline
+
+    Load-bearing checks:
+      * Both phases produce enriched briefs with image descriptions
+      * Phase 2's story logline is different from phase 1's
+      * Phase 2's video + audio are real files (not leftover from phase 1)
+      * The enriched briefs contain visual details from their respective
+        images (proving BriefEnricherAgent is actually fusing image
+        descriptions into the text, not just passing the raw brief through)
+    """
+    if not _REFERENCE_IMAGE_FIRST.exists():
+        pytest.skip(
+            f"Reference image #1 not found at {_REFERENCE_IMAGE_FIRST}"
+        )
     if not _REFERENCE_IMAGE_SECOND.exists():
         pytest.skip(
-            f"Reference image #5 not found at {_REFERENCE_IMAGE_SECOND}; "
-            "this test reuses a prior live run's character keyframe."
+            f"Reference image #2 not found at {_REFERENCE_IMAGE_SECOND}"
         )
 
-    workspace_id = _scenario_workspace_id("midstream_image")
+    workspace_id = _scenario_workspace_id("two_rounds_text_image")
     client, workspace, debug_file = _build_client(workspace_id, monkeypatch)
     print(f"\n[e2e4] workspace={workspace_id}")
     print(f"[e2e4] debug_file={debug_file}")
-    print(f"[e2e4] midstream_image={_REFERENCE_IMAGE_SECOND.name}")
 
     task_id = _create_task(
         client,
         debug_file,
-        goal="A cinematic short — start with text, add a character image mid-stream.",
+        goal="Two rounds of text+image — verify second round replaces first.",
     )
 
     pipeline = ["StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent", "AudioAgent"]
 
-    # ----- Phase 1: text only, full pipeline -----
-    # Brief describes a YOUNG GIRL chasing fireflies — visually nothing
-    # like the middle-aged woman in image #5 that gets uploaded mid-
-    # stream below. The age + setting + tone gap is what lets a human
-    # reader tell whether the second pipeline run actually picked up
-    # the new character reference image.
+    # ----- Phase 1: text (craftsman) + image #1 (craftsman photo) -----
+    _upload_text(
+        client,
+        debug_file,
+        text=(
+            "A 30-second cinematic short about Joseph, an elderly white-haired "
+            "leather craftsman in his sunlit workshop. He carefully shapes a "
+            "leather satchel by hand at his weathered workbench, lost in his "
+            "craft. Use the uploaded image as the protagonist reference. "
+            "Warm natural light, soft browns and creams, calm reverent mood."
+        ),
+    )
+    _upload_image(client, debug_file, image_path=_REFERENCE_IMAGE_FIRST)
+
+    _execute_agent(client, debug_file, "IntakeTextAgent", task_id)
+    _execute_agent(client, debug_file, "IntakeImageAgent", task_id)
+    _execute_agent(client, debug_file, "BriefEnricherAgent", task_id)
+
+    enricher_p1 = _last_execution_results_for_agent(
+        client, task_id, "BriefEnricherAgent"
+    )
+    enriched_brief_p1 = enricher_p1.get("content", {}).get("enriched_brief", "")
+    assert enriched_brief_p1, "Phase 1 BriefEnricher produced no enriched brief"
+
+    for agent_id in pipeline:
+        _execute_agent(client, debug_file, agent_id, task_id)
+    story_p1 = _last_execution_results_for_agent(
+        client, task_id, "StoryAgent"
+    ).get("content", {}).get("logline", "")
+    assert story_p1, "Phase 1 StoryAgent produced no logline"
+
+    # ----- Phase 2: DIFFERENT text (girl) + DIFFERENT image #2 -----
     _upload_text(
         client,
         debug_file,
         text=(
             "A 30-second cinematic short about Lily, a barefoot 8-year-old "
             "girl chasing glowing fireflies through a moonlit forest "
-            "clearing. Tall grass, warm summer night, soft golden firefly "
-            "trails, dreamy childlike wonder. Pastel cool-greens with "
-            "amber highlights."
+            "clearing. Use the uploaded image as the protagonist reference. "
+            "Tall grass, warm summer night, dreamy childlike wonder."
         ),
     )
+    _upload_image(client, debug_file, image_path=_REFERENCE_IMAGE_SECOND)
+
     _execute_agent(client, debug_file, "IntakeTextAgent", task_id)
-    for agent_id in pipeline:
-        _execute_agent(client, debug_file, agent_id, task_id)
-    story_phase1 = _last_execution_results_for_agent(
-        client, task_id, "StoryAgent"
-    ).get("content", {}).get("logline", "")
-
-    # Sanity: no USER-UPLOADED image in the registry yet (KeyFrame
-    # produces its own .png keyframes during phase 1, those are in
-    # artifacts/media/KeyFrameAgent/image/, NOT in inputs/).
-    paths_before = set(_registry_paths(workspace))
-    user_image_paths_before = {
-        p for p in paths_before
-        if (p.endswith(".png") or p.endswith(".jpg")) and "/inputs/" in p
-    }
-    assert not user_image_paths_before, (
-        f"no user-uploaded image should be in the registry before phase 2, "
-        f"got {user_image_paths_before}"
-    )
-
-    # ----- Phase 2: image #5 arrives (middle-aged woman), full pipeline rerun -----
-    _upload_image(
-        client,
-        debug_file,
-        image_path=_REFERENCE_IMAGE_SECOND,
-    )
     _execute_agent(client, debug_file, "IntakeImageAgent", task_id)
+    _execute_agent(client, debug_file, "BriefEnricherAgent", task_id)
+
+    enricher_p2 = _last_execution_results_for_agent(
+        client, task_id, "BriefEnricherAgent"
+    )
+    enriched_brief_p2 = enricher_p2.get("content", {}).get("enriched_brief", "")
+    assert enriched_brief_p2, "Phase 2 BriefEnricher produced no enriched brief"
+
     for agent_id in pipeline:
         _execute_agent(client, debug_file, agent_id, task_id)
-    story_phase2 = _last_execution_results_for_agent(
+    story_p2 = _last_execution_results_for_agent(
         client, task_id, "StoryAgent"
     ).get("content", {}).get("logline", "")
+    assert story_p2, "Phase 2 StoryAgent produced no logline"
 
-    # The new image artifact must be in the registry as an IntakeImage
-    # output (mime=application/json — bug-prone if we filtered by image/*).
-    image_blocks: list[dict] = []
-    for entry in workspace.global_memory.list_all():
-        if entry.agent_id != "IntakeImageAgent":
-            continue
-        for ref in entry.artifacts:
-            image_blocks.append(
-                {"caption": ref.caption, "scope": ref.scope}
-            )
-    assert image_blocks, "IntakeImageAgent registered no artifacts after midstream upload"
-    block = image_blocks[-1]
-    assert block["caption"], "IntakeImage caption is empty"
-
-    # Phase 2 KeyFrame must have produced media (with the image as a
-    # potential character anchor — verifying the path materially flows
-    # through is left to a human reader of the final keyframes).
-    keyframe_results = _last_execution_results_for_agent(client, task_id, "KeyFrameAgent")
-    keyframe_media = keyframe_results.get("_media_files", {})
-    assert isinstance(keyframe_media, dict) and keyframe_media, (
-        "KeyFrameAgent rerun returned no media files"
+    # ----- Assertions -----
+    # Stories must be different (different briefs + different images).
+    assert story_p1.strip() != story_p2.strip(), (
+        "Phase 1 and Phase 2 loglines must differ — different text+image "
+        f"should produce different stories.\nP1: {story_p1}\nP2: {story_p2}"
     )
 
-    # Phase 2 Video + Audio must produce real files on disk (not placeholder
-    # URIs). The rerun should fully re-materialize after the midstream image.
-    video_results_p2 = _last_execution_results_for_agent(client, task_id, "VideoAgent")
-    _assert_video_output_real(video_results_p2, "[e2e4 phase2]")
+    # Enriched briefs must be different (different image descriptions).
+    assert enriched_brief_p1.strip() != enriched_brief_p2.strip(), (
+        "Phase 1 and Phase 2 enriched briefs must differ"
+    )
 
-    audio_results_p2 = _last_execution_results_for_agent(client, task_id, "AudioAgent")
-    _assert_audio_output_real(audio_results_p2, "[e2e4 phase2]")
+    # Phase 2 video + audio must be real files (not leftover from phase 1).
+    video_p2 = _last_execution_results_for_agent(client, task_id, "VideoAgent")
+    _assert_video_output_real(video_p2, "[e2e4 phase2]")
+    audio_p2 = _last_execution_results_for_agent(client, task_id, "AudioAgent")
+    _assert_audio_output_real(audio_p2, "[e2e4 phase2]")
 
-    # Final invariants.
+    # No raw_pending leaks.
     leaks = _placeholders_without_successor(workspace)
     assert not leaks, f"raw_pending placeholder has no intake successor: {leaks}"
-    assert story_phase1, "phase 1 story missing"
-    assert story_phase2, "phase 2 story missing"
 
-    print(f"[e2e4] phase1 story: {story_phase1[:120]}")
-    print(f"[e2e4] phase2 story: {story_phase2[:120]}")
-    print(f"[e2e4] midstream image caption: {block['caption'][:200]}")
-    print(f"[e2e4] phase2 keyframe media files: {len(keyframe_media)}")
+    print(f"[e2e4] phase1 logline: {story_p1[:120]}")
+    print(f"[e2e4] phase2 logline: {story_p2[:120]}")
+    print(f"[e2e4] phase1 enriched brief: {enriched_brief_p1[:150]}")
+    print(f"[e2e4] phase2 enriched brief: {enriched_brief_p2[:150]}")

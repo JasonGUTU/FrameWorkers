@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from typing import Any
 
 from pydantic import BaseModel
@@ -20,13 +21,12 @@ def build_input(
     _task_id: str,
     resolved_artifacts: dict,
 ) -> BaseModel:
-    """Construct typed input from the resolved artifact dict."""
+    """Univa-style pass-through: dump the entire upstream payload as JSON text."""
     sb = ResolvedArtifactEntry.coerce(resolved_artifacts.get(INPUT_LABEL_STORYBOARD))
-    content = (sb.payload or {}).get("content", {})
-    if not isinstance(content, dict):
-        content = {}
     return UnivaVideoInput(
-        storyboard=content,
+        storyboard_json_text=json.dumps(
+            sb.payload or {}, ensure_ascii=False, indent=2
+        ),
         shot_keyframes=ImageReferenceEntry.list_from_resolved(
             resolved_artifacts.get(INPUT_LABEL_SHOT_KEYFRAMES)
         ),

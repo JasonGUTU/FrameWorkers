@@ -1,34 +1,98 @@
-"""VideoAgent — renders keyframes into video clips.
+"""VideoAgent — full video-package generation from a screenplay + keyframes JSON text blob.
 
-Input:  VideoAgentInput (screenplay, keyframes, constraints)
-Output: VideoAgentOutput (VideoPackage with shot_segments, transition_plan,
-        scene_clip_assets, metrics)
+Input:  VideoAgentInput (``screenplay_json_text`` + ``keyframes_metadata_json_text``
+        — both opaque JSON text blobs, shape-agnostic; ``shot_stills`` — typed
+        image reference list)
+Output: VideoAgentOutput (VideoPackage with scenes → shot_segments, each
+        shot carrying a per-shot ``semantic_context`` mirroring the relevant
+        screenplay + keyframe fields, plus transitions and asset placeholders)
 
-Coupling: receives Screenplay + Keyframes from shared assets; output feeds AudioAgent.
+Generation model: ONE LLM call via ``_llm_fill_full``. The LLM receives both
+upstream JSON text blobs and produces the complete VideoAgentOutput in a
+single pass. See CLAUDE.md §7 (Postel's Law at the agent layer) for the
+rationale: no Python-side upstream dict walk, no shape assumption, zero
+string-keyed coupling between this agent and the producer agents' schemas.
 
-Uses **LLM-free skeleton mode**: the entire output is deterministic — scene IDs,
-shot segments, transitions, and asset placeholders are all derived from the
-screenplay (unified shots).  No LLM call is made.  The VideoAgent schema has zero
-creative fields.
-
-Note: Actual video generation requires a backend (Wan2.6, Runway, etc.).
-This agent plans the generation and manages the video assembly pipeline.
-Wan2.6 supports audio-visual sync.
+Output contract: all content-level invariants (scene_id / shot_id reuse from
+upstream, per-shot ``semantic_context`` mirroring, transition plans, asset
+placeholders) are owned by the LLM via the template + system prompt and
+enforced by VideoEvaluator's structural checks. ``recompute_metrics`` does
+NOT rewrite any LLM-authored field — it only derives summary counts.
 """
 
 from __future__ import annotations
 
+from typing import Any
+
 from ..base_agent import BaseAgent
-from .schema import (
-    SceneClipAsset,
-    ShotSegment,
-    TransitionPlan,
-    VideoAgentInput,
-    VideoAgentOutput,
-    VideoAsset,
-    VideoContent,
-    VideoScene,
-)
+from .schema import VideoAgentInput, VideoAgentOutput
+
+
+VIDEO_OUTPUT_TEMPLATE = """{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "video_asset": {
+              "asset_id": "vid_sh_001",
+              "uri": "placeholder",
+              "width": 1024,
+              "height": 576,
+              "format": "mp4",
+              "fps": 24
+            },
+            "semantic_context": {
+              "shot_type": "<copied from screenplay shot.shot_type>",
+              "visual_goal": "<copied from screenplay shot.visual_goal>",
+              "action_focus": "<copied from screenplay shot.action_focus>",
+              "characters_in_frame": ["<character_ids from screenplay shot.characters_in_frame>"],
+              "props_in_frame": ["<prop_ids from screenplay shot.props_in_frame>"],
+              "camera_angle": "<copied from screenplay shot.camera.angle>",
+              "camera_movement": "<copied from screenplay shot.camera.movement>",
+              "framing_notes": "<copied from screenplay shot.camera.framing_notes>",
+              "scene_id": "sc_001",
+              "location_id": "<from screenplay scene.scene_consistency_pack.location_lock.location_id>",
+              "time_of_day": "<from screenplay scene.scene_consistency_pack.location_lock.time_of_day>",
+              "environment_notes": ["<from screenplay scene.scene_consistency_pack.location_lock.environment_notes>"],
+              "style_notes": ["<from screenplay scene.scene_consistency_pack.style_lock.global_style_notes>"],
+              "must_avoid": ["<from screenplay scene.scene_consistency_pack.style_lock.must_avoid>"],
+              "keyframe_notes": ["<from screenplay shot.keyframe_plan.keyframe_notes>"],
+              "keyframe_prompt_summaries": ["<from keyframes_metadata: each keyframe's prompt_summary for this shot>"],
+              "video_motion_hints": ["<from keyframes_metadata: each keyframe's video_motion_hint for this shot>"]
+            },
+            "video_generation_prompt": "",
+            "video_generation_constraints_json": ""
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut"
+          }
+        ],
+        "scene_clip_asset": {
+          "asset_id": "clip_sc_001",
+          "uri": "placeholder",
+          "format": "mp4"
+        }
+      }
+    ],
+    "final_video_asset": {
+      "asset_id": "final_video",
+      "uri": "placeholder",
+      "width": 1024,
+      "height": 576,
+      "format": "mp4",
+      "fps": 24
+    }
+  }
+}"""
 
 
 class VideoAgent(BaseAgent[VideoAgentInput, VideoAgentOutput]):
@@ -39,145 +103,125 @@ class VideoAgent(BaseAgent[VideoAgentInput, VideoAgentOutput]):
         *,
         rework_notes: str = "",
     ) -> VideoAgentOutput:
-        """LLM-free: deterministic skeleton from screenplay is the final output.
-
-        VideoAgent's output has zero creative fields — every value is
-        derived from the screenplay structure. ``rework_notes`` are
-        ignored because there is no LLM to give them to.
-        """
-        output = self.build_skeleton(input_data)
+        """Single full-output LLM call from two JSON text blobs."""
+        output = await self._llm_fill_full(input_data, rework_notes)
         self.recompute_metrics(output)
         return output
 
-    # ------------------------------------------------------------------
-    # Skeleton-first mode (LLM-free — all fields are structural)
-    # ------------------------------------------------------------------
-
-    def build_skeleton(
-        self, input_data: VideoAgentInput
-    ) -> VideoAgentOutput:
-        """Build the complete video package deterministically from screenplay.
-
-        VideoAgent's output has zero creative fields — everything (scene IDs,
-        shot segments, transitions, asset placeholders) is derived from the
-        screenplay.  No LLM call is needed.
-        """
-        sp = input_data.screenplay
-        sp_content = sp.get("content", {})
-        sp_scenes = sp_content.get("scenes", [])
-
-        if not sp_scenes:
-            # VideoAgent has no legacy/full-LLM fallback path — without
-            # a non-empty screenplay there is nothing to assemble.
-            # Returning None here would make BaseAgent fall through to
-            # ``_run_legacy_mode`` → ``build_user_prompt`` which is not
-            # implemented for this agent and would crash with a confusing
-            # NotImplementedError. Raise a clear error so the caller (and
-            # the director) sees exactly what went wrong.
-            raise ValueError(
-                "VideoAgent.build_skeleton: upstream screenplay has "
-                "zero scenes. Check that ScreenplayAgent's last execution "
-                "actually produced content (status COMPLETED, non-empty "
-                "content.scenes) and that InputResolver matched the "
-                "[screenplay] label to it."
-            )
-
-        # The legacy ``VideoAgentInput.constraints`` slot was deleted in
-        # the Phase A schema slim-down. Defaults below match the prior
-        # constants (24 fps, 1024x576, "auto" transitions).
-        fps = 24
-        width = 1024
-        height = 576
-        transition_policy = "auto"
-
-        scenes: list[VideoScene] = []
-
-        for scene_order, sp_scene in enumerate(sp_scenes, 1):
-            scene_id = sp_scene.get("scene_id", f"sc_{scene_order:03d}")
-            sp_shots = sp_scene.get("shots", [])
-
-            # --- Shot segments ---
-            segments: list[ShotSegment] = []
-            for shot_order, sp_shot in enumerate(sp_shots, 1):
-                shot_id = sp_shot.get("shot_id", "")
-                segments.append(
-                    ShotSegment(
-                        shot_id=shot_id,
-                        order=shot_order,
-                        video_asset=VideoAsset(
-                            asset_id=f"vid_{shot_id}",
-                            uri="placeholder",
-                            width=width,
-                            height=height,
-                            format="mp4",
-                            fps=fps,
-                        ),
-                    )
-                )
-
-            # --- Transition plan (between consecutive shots) ---
-            transitions: list[TransitionPlan] = []
-            for i in range(len(segments) - 1):
-                from_id = segments[i].shot_id
-                to_id = segments[i + 1].shot_id
-                if transition_policy == "soft":
-                    transitions.append(
-                        TransitionPlan(
-                            from_shot_id=from_id,
-                            to_shot_id=to_id,
-                            transition_type="dissolve",
-                        )
-                    )
-                else:
-                    transitions.append(
-                        TransitionPlan(
-                            from_shot_id=from_id,
-                            to_shot_id=to_id,
-                            transition_type="cut",
-                        )
-                    )
-
-            scenes.append(
-                VideoScene(
-                    scene_id=scene_id,
-                    order=scene_order,
-                    shot_segments=segments,
-                    transition_plan=transitions,
-                    scene_clip_asset=SceneClipAsset(
-                        asset_id=f"clip_{scene_id}",
-                        uri="placeholder",
-                        format="mp4",
-                    ),
-                )
-            )
-
-        output = VideoAgentOutput()
-        output.content = VideoContent(
-            scenes=scenes,
-            final_video_asset=VideoAsset(
-                asset_id="final_video",
-                uri="placeholder",
-                width=width,
-                height=height,
-                format="mp4",
-                fps=fps,
-            ),
+    def system_prompt(self) -> str:
+        return (
+            "You are VideoAgent: turn a screenplay + a keyframe-planning "
+            "document into a complete video package (scenes → shot "
+            "segments, each carrying the per-shot semantic context that "
+            "the video generation service needs).\n\n"
+            "=== INPUT FORMAT ===\n"
+            "You will receive TWO raw JSON text blobs inside the user "
+            "message: the upstream screenplay and the upstream "
+            "keyframes_metadata (keyframe planning document). Do NOT "
+            "assume specific field names in advance. READ the JSON, "
+            "understand whatever shape it happens to have, and extract "
+            "the elements you need. Typical fields: scenes[] with shots[] "
+            "(shot_id, shot_type, visual_goal, action_focus, camera, "
+            "characters_in_frame, props_in_frame, keyframe_plan), "
+            "scene_consistency_pack (location_lock, style_lock); and in "
+            "keyframes_metadata: content.scenes[].shots[].keyframes[] "
+            "(prompt_summary, video_motion_hint). But the exact names "
+            "and nesting may vary. Reason from the text, not from "
+            "assumed keys.\n\n"
+            "=== OUTPUT FORMAT ===\n"
+            "JSON only; no markdown; match the user-message template "
+            "exactly. Use empty string for unknowns, never null. Your "
+            "output will be validated against a strict Pydantic schema.\n\n"
+            "=== SHOT MIRRORING (CRITICAL) ===\n"
+            "For every shot in the screenplay, produce ONE ShotSegment "
+            "with the same shot_id. Mirror the following into its "
+            "``semantic_context`` sub-object (COPY VERBATIM from the "
+            "corresponding upstream field):\n"
+            "  * shot_type, visual_goal, action_focus — from screenplay "
+            "shot\n"
+            "  * characters_in_frame, props_in_frame — from screenplay "
+            "shot (copy the lists)\n"
+            "  * camera_angle, camera_movement, framing_notes — from "
+            "screenplay shot.camera.{angle, movement, framing_notes}\n"
+            "  * scene_id — from the containing screenplay scene\n"
+            "  * location_id, time_of_day, environment_notes — from "
+            "screenplay scene.scene_consistency_pack.location_lock\n"
+            "  * style_notes, must_avoid — from screenplay "
+            "scene.scene_consistency_pack.style_lock.{global_style_notes, "
+            "must_avoid}\n"
+            "  * keyframe_notes — from screenplay "
+            "shot.keyframe_plan.keyframe_notes\n"
+            "  * keyframe_prompt_summaries, video_motion_hints — from the "
+            "SECOND JSON blob (keyframes_metadata): find the matching "
+            "shot by shot_id in content.scenes[*].shots[], collect each "
+            "of its keyframes' prompt_summary / video_motion_hint into "
+            "the corresponding list.\n\n"
+            "Do NOT summarize, paraphrase, or rewrite these fields. This "
+            "is a MIRROR — the same values must appear verbatim so "
+            "downstream consistency holds.\n\n"
+            "=== ID CONVENTIONS ===\n"
+            "scene_id: reuse the screenplay's scene_id verbatim "
+            "(sc_001 style).\n"
+            "scene.order: 1, 2, 3, … matching the screenplay's scene "
+            "order.\n"
+            "shot_id: reuse the screenplay's shot_id verbatim (sh_NNN, "
+            "globally sequential across the whole video — same as "
+            "screenplay's numbering).\n"
+            "shot_segment.order: 1, 2, 3, … per-scene (restart at 1 in "
+            "each scene), matching the screenplay's shot order inside "
+            "that scene.\n"
+            "video_asset.asset_id: vid_{shot_id} (e.g. vid_sh_001).\n"
+            "scene_clip_asset.asset_id: clip_{scene_id}.\n"
+            "final_video_asset.asset_id: always 'final_video'.\n"
+            "All *_asset.uri: 'placeholder' — the materializer fills it.\n\n"
+            "=== TRANSITIONS ===\n"
+            "For each scene, produce a transition_plan with one entry "
+            "per consecutive shot pair inside that scene. Default "
+            "transition_type is 'cut'. transition_plan is empty when the "
+            "scene has ≤ 1 shot.\n\n"
+            "=== STRUCTURAL REQUIREMENTS ===\n"
+            "Every shot MUST have a semantic_context with shot_id "
+            "(implicit via its parent), visual_goal non-empty. "
+            "video_generation_prompt and video_generation_constraints_json "
+            "MUST be empty strings — the materializer fills them after "
+            "calling the generation service.\n\n"
+            "Do NOT include an artifact_caption block — the system "
+            "generates it automatically."
         )
-        return output
 
-    # ------------------------------------------------------------------
-    # Metrics & validation
-    # ------------------------------------------------------------------
+    def build_user_prompt(self, input_data: VideoAgentInput) -> str:
+        return (
+            "Read the two upstream documents below and produce a complete "
+            "video package.\n\n"
+            "=== SCREENPLAY (raw JSON — read the shape before writing) ===\n"
+            f"{input_data.screenplay_json_text}\n"
+            "=== END SCREENPLAY ===\n\n"
+            "=== KEYFRAMES METADATA (raw JSON) ===\n"
+            f"{input_data.keyframes_metadata_json_text}\n"
+            "=== END KEYFRAMES METADATA ===\n\n"
+            "For every screenplay shot, produce ONE shot_segment with "
+            "its semantic_context mirrored verbatim from the upstream. "
+            "For keyframe_prompt_summaries / video_motion_hints, look "
+            "up the matching shot in the keyframes_metadata JSON.\n\n"
+            "Produce the full video package JSON in EXACTLY this shape:\n\n"
+            f"{VIDEO_OUTPUT_TEMPLATE}\n\n"
+            "Return JSON only."
+        )
+
+    def parse_output(self, raw: dict[str, Any]) -> VideoAgentOutput:
+        return VideoAgentOutput.model_validate(raw)
 
     def recompute_metrics(self, output: VideoAgentOutput) -> None:
-        c = output.content
-        self._normalize_order(c.scenes)
-        for scene in c.scenes:
-            self._normalize_order(scene.shot_segments)
-        scene_count = len(c.scenes)
-        shot_count = sum(len(s.shot_segments) for s in c.scenes)
-        output.metrics.scene_count = scene_count
-        output.metrics.shot_segment_count = shot_count
+        """Derive summary metrics from content — pure derived data, zero rewrites.
 
-    # Quality evaluation has been moved to VideoEvaluator
-    # (see evaluator.py in this package).
+        All LLM-authored fields (scene_id, shot_id, order, semantic_context,
+        transition_plan, …) are left untouched; VideoEvaluator enforces
+        their invariants via structural checks + rework. The ``metrics``
+        field is hidden from the user-message template, so populating it
+        here is derivation, not a silent patch-up of LLM output.
+        """
+        c = output.content
+        output.metrics.scene_count = len(c.scenes)
+        output.metrics.shot_segment_count = sum(
+            len(s.shot_segments) for s in c.scenes
+        )

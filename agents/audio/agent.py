@@ -1,20 +1,25 @@
-"""AudioAgent — generates narration, music, and ambience aligned with video.
+"""AudioAgent — full audio-package generation from a screenplay JSON text blob.
 
-Input:  AudioAgentInput (screenplay, video, constraints)
+Input:  AudioAgentInput (``screenplay_json_text`` — the upstream screenplay
+        payload serialized as raw JSON text, shape-agnostic;
+        ``final_video_path`` — direct file path to the finished MP4 for
+        delivery mux)
 Output: AudioAgentOutput (AudioPackage with narration segments, music cues,
-        ambience beds, per-scene mixes, final muxed delivery, metrics)
+        ambience beds, per-scene mixes, final audio, final delivery, metrics)
 
-Audio sourcing rules:
-  1. Semantic source: screenplay shots (dialogue/narration/monologue text)
-  2. Each scene gets one music cue and one ambience bed.
+Generation model: ONE LLM call via ``_llm_fill_full``. The LLM receives the
+upstream screenplay as an indented JSON text blob and produces the complete
+AudioAgentOutput JSON in a single pass — no skeleton-first split, no
+Python-side screenplay traversal. See CLAUDE.md §7 (Postel's Law at the
+agent layer) for the rationale.
 
-Uses **skeleton-first mode**: most of the output is deterministic —
-narration text/speaker come from screenplay, IDs and asset placeholders
-are system-generated.  The LLM is only asked to fill ``music_cue.mood``
-and ``ambience_bed.description`` per scene.
-
-Coupling: receives unified Screenplay + Video from shared assets; output is
-the final audio layer that gets combined with video.
+Output contract: all content-level invariants (scene_id reuse, sc_NNN /
+narr_NNN / aud_narr_*_NN id formats, verbatim narration text, non-empty
+music_cue.mood + ambience_bed.description, …) are owned by the LLM via the
+template + system prompt and enforced by AudioEvaluator's structural
+checks. Rework surfaces any drift instead of a silent Python-side patch-up.
+``recompute_metrics`` does NOT rewrite any LLM-authored field — it only
+derives summary counts.
 """
 
 from __future__ import annotations
@@ -22,25 +27,79 @@ from __future__ import annotations
 from typing import Any
 
 from ..base_agent import BaseAgent
-from .schema import (
-    AmbienceBed,
-    AudioAgentInput,
-    AudioAgentOutput,
-    AudioAsset,
-    AudioContent,
-    AudioMix,
-    AudioScene,
-    DeliveryVideoAsset,
-    MusicCue,
-    NarrationSegment,
-)
+from .schema import AudioAgentInput, AudioAgentOutput
+
+
+AUDIO_OUTPUT_TEMPLATE = """{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "narration_segments": [
+          {
+            "segment_id": "narr_001",
+            "linked_shot_id": "sh_001",
+            "speaker": "<character_name from the shot, or 'Narrator' for narration blocks>",
+            "text": "<VERBATIM spoken line copied from the screenplay shot's text field>",
+            "audio_asset": {
+              "asset_id": "aud_narr_sc_001_01",
+              "uri": "placeholder",
+              "format": "wav",
+              "sample_rate": 44100
+            }
+          }
+        ],
+        "music_cue": {
+          "cue_id": "music_sc_001",
+          "scene_id": "sc_001",
+          "mood": "<3-6 keywords: musical mood + instrumentation>",
+          "audio_asset": {
+            "asset_id": "aud_music_sc_001",
+            "uri": "placeholder",
+            "format": "wav",
+            "sample_rate": 44100
+          }
+        },
+        "ambience_bed": {
+          "ambience_id": "amb_sc_001",
+          "scene_id": "sc_001",
+          "description": "<short description of ambient sounds>",
+          "audio_asset": {
+            "asset_id": "aud_amb_sc_001",
+            "uri": "placeholder",
+            "format": "wav",
+            "sample_rate": 44100
+          }
+        },
+        "mix": {
+          "mix_id": "mix_sc_001",
+          "scene_id": "sc_001",
+          "audio_asset": {
+            "asset_id": "aud_mix_sc_001",
+            "uri": "placeholder",
+            "format": "wav",
+            "sample_rate": 44100
+          }
+        }
+      }
+    ],
+    "final_audio_asset": {
+      "asset_id": "aud_final",
+      "uri": "placeholder",
+      "format": "wav",
+      "sample_rate": 44100
+    },
+    "final_delivery_asset": {
+      "asset_id": "delivery_final",
+      "uri": "placeholder",
+      "format": "mp4"
+    }
+  }
+}"""
 
 
 class AudioAgent(BaseAgent[AudioAgentInput, AudioAgentOutput]):
-
-    # ------------------------------------------------------------------
-    # Skeleton-first mode
-    # ------------------------------------------------------------------
 
     async def generate(
         self,
@@ -48,254 +107,112 @@ class AudioAgent(BaseAgent[AudioAgentInput, AudioAgentOutput]):
         *,
         rework_notes: str = "",
     ) -> AudioAgentOutput:
-        """Build the deterministic skeleton from screenplay + final video,
-        then ask the LLM to fill the music_mood / ambience_description
-        creative fields per scene.
-        """
-        skeleton = self.build_skeleton(input_data)
-        output = await self._llm_fill_creative(input_data, skeleton, rework_notes)
+        """Single full-output LLM call from the screenplay JSON text blob."""
+        output = await self._llm_fill_full(input_data, rework_notes)
         self.recompute_metrics(output)
         return output
 
-    def build_skeleton(
-        self, input_data: AudioAgentInput
-    ) -> AudioAgentOutput:
-        """Pre-build the audio package from screenplay + video.
-
-        Narration text and speaker are copied from screenplay shots whose
-        block_type is dialogue/narration/monologue.  Only ``music_cue.mood``
-        and ``ambience_bed.description`` are left empty for the LLM.
-        """
-        sp = input_data.screenplay
-        vid = input_data.final_video
-
-        if not sp or not vid:
-            # AudioAgent has no legacy/full-LLM fallback path — without
-            # the upstream screenplay AND video packages there is nothing
-            # to build. Raise a clear error rather than returning None,
-            # because returning None makes BaseAgent fall through to
-            # ``_run_legacy_mode`` → ``build_user_prompt`` which is not
-            # implemented for this agent and would crash with a
-            # confusing NotImplementedError.
-            missing = []
-            if not sp:
-                missing.append("screenplay")
-            if not vid:
-                missing.append("final_video")
-            raise ValueError(
-                "AudioAgent.build_skeleton: required upstream artifacts "
-                f"missing from input: {missing}. Check that InputResolver "
-                f"matched the [screenplay] / [final_video] labels for this "
-                f"task and that those artifacts exist in the workspace."
-            )
-
-        sp_content = sp.get("content", {})
-        vid_content = vid.get("content", {})
-        vid_scenes = vid_content.get("scenes", [])
-
-        if not vid_scenes:
-            # Same reasoning as the missing-screenplay-or-video raise
-            # above: AudioAgent has no legacy fallback. The earlier
-            # commit af341e8 raised on the missing-upstream check but
-            # missed this empty-vid_scenes path. Make it loud too so
-            # the director sees a real error instead of a confusing
-            # NotImplementedError on the fall-through to
-            # ``build_user_prompt``.
-            raise ValueError(
-                "AudioAgent.build_skeleton: upstream final_video has "
-                "zero scenes. Check that VideoAgent's last execution "
-                "actually produced content (status COMPLETED, non-empty "
-                "content.scenes) and that InputResolver matched the "
-                "[final_video] label to it."
-            )
-
-        sp_scene_map = {
-            s.get("scene_id", ""): s
-            for s in sp_content.get("scenes", [])
-        }
-
-        narr_counter = 1
-        scenes: list[AudioScene] = []
-
-        for scene_order, vs in enumerate(vid_scenes, 1):
-            scene_id = vs.get("scene_id", "")
-            sp_scene = sp_scene_map.get(scene_id, {})
-
-            segments: list[NarrationSegment] = []
-            for shot in sp_scene.get("shots", []):
-                block_type = shot.get("block_type", "")
-                if block_type not in ("dialogue", "narration", "monologue"):
-                    continue
-                text = shot.get("text", "")
-                speaker = shot.get("character_name", "")
-                if not speaker and block_type == "narration":
-                    speaker = "Narrator"
-                shot_id = str(shot.get("shot_id", "") or "")
-
-                segments.append(
-                    NarrationSegment(
-                        segment_id=f"narr_{narr_counter:03d}",
-                        linked_shot_id=shot_id,
-                        speaker=speaker,
-                        text=text,
-                        audio_asset=AudioAsset(
-                            asset_id=f"aud_narr_{scene_id}_{narr_counter:02d}",
-                            uri="placeholder",
-                            format="wav",
-                            sample_rate=44100,
-                        ),
-                    )
-                )
-                narr_counter += 1
-
-            scenes.append(
-                AudioScene(
-                    scene_id=scene_id,
-                    order=scene_order,
-                    narration_segments=segments,
-                    music_cue=MusicCue(
-                        cue_id=f"music_{scene_id}",
-                        scene_id=scene_id,
-                        mood="",  # CREATIVE — LLM fills
-                        audio_asset=AudioAsset(
-                            asset_id=f"aud_music_{scene_id}",
-                            uri="placeholder",
-                            format="wav",
-                            sample_rate=44100,
-                        ),
-                    ),
-                    ambience_bed=AmbienceBed(
-                        ambience_id=f"amb_{scene_id}",
-                        scene_id=scene_id,
-                        description="",  # CREATIVE — LLM fills
-                        audio_asset=AudioAsset(
-                            asset_id=f"aud_amb_{scene_id}",
-                            uri="placeholder",
-                            format="wav",
-                            sample_rate=44100,
-                        ),
-                    ),
-                    mix=AudioMix(
-                        mix_id=f"mix_{scene_id}",
-                        scene_id=scene_id,
-                        audio_asset=AudioAsset(
-                            asset_id=f"aud_mix_{scene_id}",
-                            uri="placeholder",
-                            format="wav",
-                            sample_rate=44100,
-                        ),
-                    ),
-                )
-            )
-
-        output = AudioAgentOutput()
-        output.content = AudioContent(
-            scenes=scenes,
-            final_audio_asset=AudioAsset(
-                asset_id="aud_final",
-                uri="placeholder",
-                format="wav",
-                sample_rate=44100,
-            ),
-            final_delivery_asset=DeliveryVideoAsset(
-                asset_id="delivery_final",
-                uri="placeholder",
-                format="mp4",
-            ),
-        )
-        return output
-
-    def build_creative_prompt(
-        self, input_data: AudioAgentInput, skeleton: AudioAgentOutput
-    ) -> str:
-        """Build a compact prompt — LLM only fills mood and ambience description."""
-        sp = input_data.screenplay
-        sp_content = sp.get("content", {})
-
-        # Provide screenplay context for mood / atmosphere
-        context_parts: list[str] = []
-        for sp_scene in sp_content.get("scenes", []):
-            scene_id = sp_scene.get("scene_id", "")
-            summary = sp_scene.get("summary", "")
-            heading = sp_scene.get("heading", {})
-            scene_end = sp_scene.get("scene_end", {})
-            context_parts.append(
-                f"--- {scene_id} ---\n"
-                f"heading: {heading.get('location_name', '')} "
-                f"({heading.get('interior_exterior', '')} / "
-                f"{heading.get('time_of_day', '')})\n"
-                f"summary: {summary}\n"
-                f"scene_end: turn={scene_end.get('turn', '')}, "
-                f"emotional_shift={scene_end.get('emotional_shift', '')}"
-            )
-        context = "\n\n".join(context_parts)
-
-        # Build template — one entry per scene
-        scene_entries = [
-            f'    {{"scene_id": "{scene.scene_id}", '
-            f'"music_mood": "<FILL>", '
-            f'"ambience_description": "<FILL>"}}'
-            for scene in skeleton.content.scenes
-        ]
-        template = (
-            '{\n'
-            '  "scenes": [\n'
-            + ",\n".join(scene_entries)
-            + "\n  ]\n}"
-        )
-
+    def system_prompt(self) -> str:
         return (
-            "The system has pre-built all structural fields (IDs, timing, "
-            "narration text/speaker, audio asset placeholders).  Your job is:\n"
-            "Write music mood and ambience description for each scene.\n"
-            "Do NOT include an artifact_caption block — the system generates it.\n\n"
-            "=== SCREENPLAY CONTEXT ===\n"
-            f"{context}\n\n"
-            "=== RULES ===\n"
-            "- music_mood: 3-6 keywords describing the musical mood / style "
-            "(e.g. 'melancholic, ambient, solo piano').\n"
-            "- ambience_description: Short description of ambient sounds "
-            "(e.g. 'Ocean waves crashing, distant seagulls, wind').\n"
-            "- Output must be STRICT JSON that parses with json.loads.\n"
-            "- Return exactly ONE JSON object and NOTHING else.\n"
-            "- Do NOT add any extra keys or lines (no comments, no markdown, no code fences).\n"
-            "- Do NOT include type annotations or schema hints such as `TypeOf: string`.\n"
-            "- Every scene object MUST contain ONLY: scene_id, music_mood, ambience_description.\n\n"
+            "You are AudioAgent: turn a screenplay into a complete audio "
+            "package (narration, music cues, ambience beds, per-scene "
+            "mixes).\n\n"
+            "=== INPUT FORMAT ===\n"
+            "You will receive the upstream screenplay as a RAW JSON TEXT "
+            "BLOB inside the user message. Do NOT assume specific field "
+            "names in advance. READ the JSON, understand whatever shape it "
+            "happens to have, and extract the elements you need. Typical "
+            "fields you may encounter include content.scenes[] with each "
+            "scene containing shots[] (with block_type, text, character_id, "
+            "character_name), heading, summary, scene_end — but the exact "
+            "names and nesting may vary. Reason from the text, not from "
+            "assumed keys.\n\n"
             "=== OUTPUT FORMAT ===\n"
-            f"{template}\n\n"
+            "JSON only; no markdown; match the user-message template "
+            "exactly. Use empty string for unknowns, never null. Your "
+            "output will be validated against a strict Pydantic schema.\n\n"
+            "=== NARRATION EXTRACTION (CRITICAL) ===\n"
+            "For each scene in the screenplay, walk its shots IN ORDER. "
+            "For each shot whose block_type is 'dialogue', 'narration', or "
+            "'monologue', produce ONE narration_segment. Action shots "
+            "(block_type=='action') produce NO narration segment — skip "
+            "them. For each extracted segment:\n"
+            "  * text: copy the shot's spoken line VERBATIM. Do NOT "
+            "paraphrase, summarize, or translate. The exact same string "
+            "must appear in the audio package as in the upstream "
+            "screenplay.\n"
+            "  * speaker: copy the shot's character_name. For narration "
+            "blocks with empty character_name, use 'Narrator'.\n"
+            "  * linked_shot_id: the shot's shot_id (e.g. 'sh_007').\n"
+            "  * segment_id: narr_001, narr_002, … GLOBALLY sequential "
+            "across the entire audio package (not per-scene), 3-digit "
+            "zero-padded, starting at narr_001.\n"
+            "  * audio_asset.asset_id: aud_narr_{scene_id}_{NN} where NN "
+            "is the per-scene 2-digit index starting at 01 inside each "
+            "scene.\n\n"
+            "Scenes with zero dialogue/narration/monologue shots have an "
+            "empty narration_segments list — that is valid.\n\n"
+            "=== ID CONVENTIONS ===\n"
+            "scene_id: reuse the screenplay's scene_id verbatim "
+            "(sc_001 style).\n"
+            "scene.order: 1, 2, 3, … matching the screenplay's scene order "
+            "exactly.\n"
+            "music_cue.cue_id: music_{scene_id} (e.g. music_sc_001).\n"
+            "music_cue.scene_id: matches the parent scene.\n"
+            "ambience_bed.ambience_id: amb_{scene_id}.\n"
+            "mix.mix_id: mix_{scene_id}.\n"
+            "audio_asset.uri: always 'placeholder' — the materializer "
+            "fills it after calling the generation service.\n\n"
+            "=== CREATIVE FIELDS ===\n"
+            "music_cue.mood: 3-6 keywords describing musical mood and "
+            "instrumentation (e.g. 'melancholic, ambient, solo piano'), "
+            "derived from the scene's tone / summary / scene_end fields in "
+            "the screenplay.\n"
+            "ambience_bed.description: short description of the scene's "
+            "ambient sounds (e.g. 'Ocean waves crashing, distant "
+            "seagulls, wind'), derived from the scene's location / "
+            "heading / environment notes in the screenplay.\n\n"
+            "=== STRUCTURAL REQUIREMENTS ===\n"
+            "Every scene MUST have music_cue, ambience_bed, and mix. "
+            "music_cue.mood and ambience_bed.description MUST be non-empty "
+            "strings. final_audio_asset and final_delivery_asset are "
+            "top-level placeholders; their asset_ids are fixed as "
+            "'aud_final' and 'delivery_final'.\n\n"
+            "Do NOT include an artifact_caption block — the system "
+            "generates it automatically."
+        )
+
+    def build_user_prompt(self, input_data: AudioAgentInput) -> str:
+        return (
+            "Read the upstream screenplay below and produce a complete "
+            "audio package that scores it.\n\n"
+            "=== SCREENPLAY (raw JSON — read the shape before writing) ===\n"
+            f"{input_data.screenplay_json_text}\n"
+            "=== END SCREENPLAY ===\n\n"
+            "Extract narration text VERBATIM from each "
+            "dialogue/narration/monologue shot. Write music mood + "
+            "ambience description per scene. Generate all ids per the "
+            "conventions in the system prompt.\n\n"
+            "Produce the full audio package JSON in EXACTLY this shape:\n\n"
+            f"{AUDIO_OUTPUT_TEMPLATE}\n\n"
             "Return JSON only."
         )
 
-    def fill_creative(
-        self, skeleton: AudioAgentOutput, creative: dict
-    ) -> AudioAgentOutput:
-        """Merge LLM output (mood + ambience_description) into skeleton."""
-        scene_map = {
-            s.get("scene_id", ""): s
-            for s in creative.get("scenes", [])
-        }
-
-        for scene in skeleton.content.scenes:
-            sc_data = scene_map.get(scene.scene_id, {})
-            scene.music_cue.mood = sc_data.get("music_mood", "")
-            scene.ambience_bed.description = sc_data.get(
-                "ambience_description", ""
-            )
-
-        return skeleton
-
-    def system_prompt(self) -> str:
-        return (
-            "You are AudioAgent — an audio design specialist for film.\n"
-            "Follow the instructions in the user message exactly."
-        )
+    def parse_output(self, raw: dict[str, Any]) -> AudioAgentOutput:
+        return AudioAgentOutput.model_validate(raw)
 
     def recompute_metrics(self, output: AudioAgentOutput) -> None:
-        c = output.content
-        self._normalize_order(c.scenes)
-        narr_count = sum(len(s.narration_segments) for s in c.scenes)
-        output.metrics.scene_count = len(c.scenes)
-        output.metrics.narration_segment_count = narr_count
+        """Derive summary metrics from content — pure derived data, zero rewrites.
 
-    # Quality evaluation has been moved to AudioEvaluator
-    # (see evaluator.py in this package).
+        All LLM-authored fields (scene_id, segment_id, asset_id, narration
+        text, mood, description, scene.order, …) are left untouched;
+        AudioEvaluator enforces their invariants via structural checks +
+        rework. The ``metrics`` field is hidden from the user-message
+        template, so populating it here is derivation, not a silent
+        patch-up of LLM output.
+        """
+        c = output.content
+        output.metrics.scene_count = len(c.scenes)
+        output.metrics.narration_segment_count = sum(
+            len(s.narration_segments) for s in c.scenes
+        )

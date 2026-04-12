@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from typing import Any
 
 from pydantic import BaseModel
@@ -27,8 +28,12 @@ def build_input(
     sp = ResolvedArtifactEntry.coerce(resolved_artifacts.get(INPUT_LABEL_SCREENPLAY))
     kf = ResolvedArtifactEntry.coerce(resolved_artifacts.get(INPUT_LABEL_KEYFRAMES_METADATA))
     return VideoAgentInput(
-        screenplay=sp.payload or {},
-        keyframes_metadata=kf.payload or {},
+        screenplay_json_text=json.dumps(
+            sp.payload or {}, ensure_ascii=False, indent=2
+        ),
+        keyframes_metadata_json_text=json.dumps(
+            kf.payload or {}, ensure_ascii=False, indent=2
+        ),
         shot_stills=ImageReferenceEntry.list_from_resolved(
             resolved_artifacts.get(INPUT_LABEL_SHOT_STILLS)
         ),

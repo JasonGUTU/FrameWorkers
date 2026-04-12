@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+
 from pydantic import BaseModel
 
 from ..common_schema import ResolvedArtifactEntry
@@ -18,43 +20,20 @@ def build_input(
 ) -> BaseModel:
     """Construct typed input from the resolved artifact dict.
 
-    The creative brief is selected by InputResolver via the
-    ``[creative_brief]`` label and MUST arrive as the JSON output of
-    IntakeTextAgent — a caption-rich artifact whose
-    ``payload.content.text`` carries the verbatim user brief. Each
-    branch below raises with a specific diagnostic so an orchestration
-    bug (missing/stale/wrong-type upstream artifact) surfaces
-    immediately instead of producing plausible-looking garbage from a
-    caption fragment.
+    Univa-style pass-through: dump the entire upstream IntakeTextAgent
+    payload as a raw indented JSON text blob into
+    ``creative_brief_json_text``. No ``.content.text`` unwrap, no
+    field enumeration — the whole upstream JSON object (whatever shape
+    it happens to have) is forwarded verbatim for the LLM to read.
     """
     brief = ResolvedArtifactEntry.coerce(
         resolved_artifacts.get(INPUT_LABEL_CREATIVE_BRIEF)
     )
-    if not brief.payload:
-        raise ValueError(
-            "StoryAgent.build_input: "
-            f"[{INPUT_LABEL_CREATIVE_BRIEF}] entry missing or has no JSON "
-            f"payload (path={brief.path!r}, mime={brief.mime!r}). Make sure "
-            "IntakeTextAgent has run on the user's brief upload before "
-            "StoryAgent — InputResolver may have picked a stale raw_pending "
-            "upload or a non-text artifact."
-        )
-    content = brief.payload.get("content")
-    if not isinstance(content, dict):
-        raise ValueError(
-            "StoryAgent.build_input: "
-            f"[{INPUT_LABEL_CREATIVE_BRIEF}] payload has no 'content' dict "
-            f"(path={brief.path!r})."
-        )
-    creative_brief = str(content.get("text") or "").strip()
-    if not creative_brief:
-        raise ValueError(
-            "StoryAgent.build_input: "
-            f"[{INPUT_LABEL_CREATIVE_BRIEF}] content.text is empty "
-            f"(path={brief.path!r}). InputResolver picked an artifact that "
-            "doesn't carry actual brief text."
-        )
-    return StoryAgentInput(creative_brief=creative_brief)
+    return StoryAgentInput(
+        creative_brief_json_text=json.dumps(
+            brief.payload or {}, ensure_ascii=False, indent=2
+        ),
+    )
 
 
 def build_captions(agent_id: str, output_dict: dict) -> dict:

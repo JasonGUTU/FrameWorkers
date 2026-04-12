@@ -83,6 +83,13 @@ class StoryAgent(BaseAgent[StoryAgentInput, StoryAgentOutput]):
             "No dialogue/screenplay prose, shots, camera, keyframes, audio, or editing.\n"
             "IDs: char_001, loc_001, arc_001, sc_001, … — JSON only per user template; "
             "use empty string/list for unknowns, not null; no meta/metrics.\n\n"
+            "=== INPUT FORMAT ===\n"
+            "You will receive the upstream creative brief as a RAW JSON TEXT BLOB "
+            "inside the user message. The brief text is typically inside a "
+            "``content.text`` field, but do NOT assume that exact path — READ the "
+            "JSON and find the user's creative intent from whatever shape it has. "
+            "If a ``content.summary`` field exists, it is an LLM-generated summary "
+            "of a longer text; prefer it over the full text for planning.\n\n"
             "scene_outline.linked_step_id rule (CRITICAL — read carefully):\n"
             "  * `linked_step_id` MUST be a SINGLE arc step id (a string like \"arc_001\"),\n"
             "    NEVER a list. The schema only accepts one string per scene.\n"
@@ -105,12 +112,11 @@ class StoryAgent(BaseAgent[StoryAgentInput, StoryAgentOutput]):
             without rewriting.
         """
         return (
-            "Creative brief (may be a brief idea or a detailed outline):\n"
-            "=== CREATIVE BRIEF ===\n"
-            f"{input_data.creative_brief}\n"
-            "=== END ===\n\n"
-            "Read the brief carefully:\n"
-            "- If it is a brief or vague prompt (e.g. 'a film about a cat "
+            "=== CREATIVE BRIEF (raw JSON — read the text from it) ===\n"
+            f"{input_data.creative_brief_json_text}\n"
+            "=== END CREATIVE BRIEF ===\n\n"
+            "Read the brief JSON carefully and find the user's intent:\n"
+            "- If the brief is short or vague (e.g. 'a film about a cat "
             "chasing a butterfly'), expand it creatively into a full "
             "blueprint with cast, locations, arc, and scene outline.\n"
             "- If it is a DETAILED OUTLINE with specific characters, locations, "
@@ -140,9 +146,15 @@ class StoryAgent(BaseAgent[StoryAgentInput, StoryAgentOutput]):
         return output
 
     def recompute_metrics(self, output: StoryAgentOutput) -> None:
+        """Derive summary metrics from content — pure derived data, zero rewrites.
+
+        All LLM-authored fields (story_arc[].order, scene_outline[].order,
+        ids, …) are left untouched; StoryEvaluator enforces their
+        invariants via structural checks + rework. The ``metrics`` field
+        is hidden from the user-message template, so populating it here
+        is derivation, not a silent patch-up of LLM output.
+        """
         c = output.content
-        self._normalize_order(c.story_arc)
-        self._normalize_order(c.scene_outline)
         output.metrics.character_count = len(c.cast)
         output.metrics.location_count = len(c.locations)
         output.metrics.scene_count = len(c.scene_outline)

@@ -23,6 +23,7 @@ from .screenplay.agent import ScreenplayAgent
 from .keyframe.agent import KeyFrameAgent
 from .video.agent import VideoAgent
 from .audio.agent import AudioAgent
+from .brief_enricher.agent import BriefEnricherAgent
 from .univa_storyboard.agent import UnivaStoryboardAgent
 from .univa_keyframe.agent import UnivaKeyFrameAgent
 from .univa_video.agent import UnivaVideoAgent
@@ -37,6 +38,7 @@ from .screenplay.evaluator import ScreenplayEvaluator
 from .keyframe.evaluator import KeyframeEvaluator
 from .video.evaluator import VideoEvaluator
 from .audio.evaluator import AudioEvaluator
+from .brief_enricher.evaluator import BriefEnricherEvaluator
 from .univa_storyboard.evaluator import UnivaStoryboardEvaluator
 from .univa_keyframe.evaluator import UnivaKeyFrameEvaluator
 from .univa_video.evaluator import UnivaVideoEvaluator
@@ -47,6 +49,7 @@ from .screenplay.descriptor import DESCRIPTOR as _screenplay_desc
 from .keyframe.descriptor import DESCRIPTOR as _keyframe_desc
 from .video.descriptor import DESCRIPTOR as _video_desc
 from .audio.descriptor import DESCRIPTOR as _audio_desc
+from .brief_enricher.descriptor import DESCRIPTOR as _brief_enricher_desc
 from .univa_storyboard.descriptor import DESCRIPTOR as _univa_storyboard_desc
 from .univa_keyframe.descriptor import DESCRIPTOR as _univa_keyframe_desc
 from .univa_video.descriptor import DESCRIPTOR as _univa_video_desc
@@ -67,6 +70,7 @@ AGENT_REGISTRY: dict[str, SubAgentDescriptor] = {
         _keyframe_desc,
         _video_desc,
         _audio_desc,
+        _brief_enricher_desc,
         _univa_storyboard_desc,
         _univa_keyframe_desc,
         _univa_video_desc,
@@ -108,6 +112,8 @@ __all__ = [
     "KeyframeEvaluator",
     "VideoEvaluator",
     "AudioEvaluator",
+    "BriefEnricherAgent",
+    "BriefEnricherEvaluator",
     # Univa agents
     "UnivaStoryboardAgent",
     "UnivaKeyFrameAgent",

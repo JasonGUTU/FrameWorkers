@@ -25,14 +25,36 @@ def build_input(
 
 def build_captions(agent_id: str, output_dict: dict) -> dict:
     content = output_dict.get("content", {})
-    visual = content.get("visual_description", "") if isinstance(content, dict) else ""
-    cap_parts = ["User-uploaded image reference."]
-    if visual:
-        cap_parts.append(f"Shows: {visual}.")
-    cap_parts.append("Available for downstream keyframe and video agents.")
-    return {
-        agent_id: {"caption": " ".join(cap_parts), "scope": "global"},
+    image_uri = ""
+    if isinstance(content, dict):
+        asset = content.get("image_asset") or {}
+        if isinstance(asset, dict):
+            image_uri = str(asset.get("uri", "") or "").strip()
+    caps: dict = {
+        agent_id: {
+            "caption": (
+                "User-uploaded reference image. Pending role "
+                "classification by BriefEnricherAgent. Visual "
+                "description available in payload."
+            ),
+            "scope": "global",
+        },
     }
+    # Register the original PNG file as a separate artifact entry so
+    # downstream agents can match it by mime=image/* and get the actual
+    # file path directly via entry.path (no payload unwrap needed).
+    if image_uri:
+        caps[f"{agent_id}_source_image"] = {
+            "caption": (
+                "User-uploaded reference image file. Pending role "
+                "classification. Available as global anchor for "
+                "downstream keyframe generation."
+            ),
+            "scope": "global",
+            "path": image_uri,
+            "mime": "image/png",
+        }
+    return caps
 
 
 CATALOG_ENTRY = (

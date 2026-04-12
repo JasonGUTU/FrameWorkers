@@ -65,7 +65,9 @@ class UnivaStoryboardMetrics(BaseModel):
 # ---------------------------------------------------------------------------
 
 class UnivaStoryboardInput(BaseModel):
-    user_prompt: str = Field("", description="The story/video concept prompt")
+    """Univa-style JSON-text pass-through. See CLAUDE.md §7."""
+
+    creative_brief_json_text: str = Field("", description="Upstream IntakeTextAgent payload as raw JSON text")
 
 
 class UnivaStoryboardOutput(BaseModel):

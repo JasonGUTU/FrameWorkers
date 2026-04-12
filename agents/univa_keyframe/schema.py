@@ -58,10 +58,9 @@ class UnivaKeyFrameMetrics(BaseModel):
 # ---------------------------------------------------------------------------
 
 class UnivaKeyFrameInput(BaseModel):
-    storyboard: dict = Field(
-        default_factory=dict,
-        description="Full storyboard JSON from UnivaStoryboardAgent",
-    )
+    """Univa-style JSON-text pass-through. See CLAUDE.md §7."""
+
+    storyboard_json_text: str = Field("", description="Upstream UnivaStoryboardAgent payload as raw JSON text")
 
 
 class UnivaKeyFrameOutput(BaseModel):

@@ -101,6 +101,11 @@ class KeyframeScene(BaseModel):
 class KeyframesContent(BaseModel):
     global_anchors: StabilityKeyframes = Field(default_factory=StabilityKeyframes)
     scenes: list[KeyframeScene] = Field(default_factory=list)
+    # LLM-authored: mirrored from the upstream screenplay's scene-level
+    # style_lock (aggregated across scenes, deduped). KeyframeMaterializer
+    # reads these directly from the agent's own output.
+    style_notes: list[str] = Field(default_factory=list)
+    must_avoid: list[str] = Field(default_factory=list)
 
 
 class KeyframesMetrics(BaseModel):
@@ -134,11 +139,27 @@ class KeyframesPackage(BaseModel):
 # --- Input types ---
 
 class KeyFrameAgentInput(BaseModel):
-    """Input payload for KeyFrameAgent."""
+    """Input payload for KeyFrameAgent — univa-style JSON-text pass-through.
 
-    screenplay: dict = Field(default_factory=dict)
+    ``screenplay_json_text`` is the **entire** upstream screenplay payload
+    serialized as a raw JSON text blob. KeyFrameAgent's LLM reads this
+    text directly and reasons about whatever shape the upstream happens
+    to produce — there is NO field-name unpacking in ``build_input`` or
+    in the agent code. This removes the string-keyed coupling between
+    ScreenplayAgent's internal field names and KeyFrameAgent's consumer
+    code.
+
+    ``character_references`` / ``location_references`` / ``style_references``
+    are typed image reference lists selected via their respective labels;
+    each entry carries a direct ``path`` so the agent can prefill
+    ``image_asset.uri`` on the matching global anchor before the
+    materializer runs.
+    """
+
+    screenplay_json_text: str = ""
     character_references: list[ImageReferenceEntry] = Field(default_factory=list)
     location_references: list[ImageReferenceEntry] = Field(default_factory=list)
+    prop_references: list[ImageReferenceEntry] = Field(default_factory=list)
     style_references: list[ImageReferenceEntry] = Field(default_factory=list)
 
 

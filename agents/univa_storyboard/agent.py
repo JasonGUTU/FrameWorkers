@@ -43,7 +43,13 @@ class UnivaStoryboardAgent(BaseAgent[UnivaStoryboardInput, UnivaStoryboardOutput
         return text
 
     def build_user_prompt(self, input_data: UnivaStoryboardInput) -> str:
-        return input_data.user_prompt
+        return (
+            "=== CREATIVE BRIEF (raw JSON — read the text from it) ===\n"
+            f"{input_data.creative_brief_json_text}\n"
+            "=== END CREATIVE BRIEF ===\n\n"
+            "Read the JSON above, find the user's creative intent, and "
+            "produce the storyboard."
+        )
 
     async def generate(
         self,

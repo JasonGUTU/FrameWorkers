@@ -4,16 +4,22 @@ All three layers (output-internal only — no cross-validation against
 upstream artifacts):
 
 Layer 1 -- structural checks:
+  - shot_id format ``^sh_\\d{3}$`` and global-sequential numbering
+    (sh_001, sh_002, … across the whole video package, no gaps, no
+    restarts at scene boundaries). These are owned by the LLM via the
+    template + system prompt and enforced here so rework surfaces any
+    drift instead of a silent Python-side patch-up.
   - Transition plan from/to shot_ids exist in scene
   - Metrics consistency (scene_count, shot_segment_count)
-  - Shot order continuity per scene
+  - Shot order continuity per scene (1, 2, 3, … per scene)
   - Temporal/transition validation (type)
   - Required content (non-empty scenes and shot_segments)
 
 Layer 2 -- creative assessment:
   Not applicable. VideoAgent output is entirely structural (IDs,
-  asset pointers, transition types). All quality dimensions that
-  matter are checked in Layer 1 (structural) or Layer 3 (asset).
+  asset pointers, transition types, mirrored semantic_context). All
+  quality dimensions that matter are checked in Layer 1 (structural)
+  or Layer 3 (asset).
 
 Layer 3 -- post-materialization asset checks:
   - clip_generation_success: shot-level clip success rate
@@ -23,10 +29,14 @@ Layer 3 -- post-materialization asset checks:
 
 from __future__ import annotations
 
+import re
 from typing import Any
 
 from ..base_evaluator import BaseEvaluator, check_uri
 from .schema import VideoAgentOutput
+
+
+_SHOT_ID_PATTERN = re.compile(r"^sh_\d{3}$")
 
 
 class VideoEvaluator(BaseEvaluator[VideoAgentOutput]):
@@ -39,6 +49,29 @@ class VideoEvaluator(BaseEvaluator[VideoAgentOutput]):
         """Rule-based structural validation for Video Package."""
         errors: list[str] = []
         c = output.content
+
+        # --- Shot id format + global sequential numbering ---
+        # Mirror of screenplay's contract: sh_001, sh_002, … across the
+        # whole video package, no gaps, no restarts at scene boundaries.
+        all_shot_ids: list[str] = []
+        format_ok = True
+        for scene in c.scenes:
+            for seg in scene.shot_segments:
+                sid = seg.shot_id or ""
+                all_shot_ids.append(sid)
+                if not _SHOT_ID_PATTERN.match(sid):
+                    errors.append(
+                        f"shot_id {sid!r} does not match required format "
+                        f"^sh_NNN$ (e.g. sh_001, sh_002, sh_012)"
+                    )
+                    format_ok = False
+        if format_ok and all_shot_ids:
+            expected = [f"sh_{i:03d}" for i in range(1, len(all_shot_ids) + 1)]
+            if all_shot_ids != expected:
+                errors.append(
+                    "shot_ids must be globally sequential starting at sh_001 "
+                    f"with no gaps or restarts; got {all_shot_ids!r}"
+                )
 
         # --- Transition plan: from/to shot_ids must exist in the scene ---
         for scene in c.scenes:

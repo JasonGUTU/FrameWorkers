@@ -45,28 +45,23 @@ class AudioMaterializer(BaseMaterializer):
         self.audio_svc = audio_service
 
     @staticmethod
-    def _normalize_local_path(uri: str) -> str:
-        if not uri:
-            return ""
-        if uri.startswith("file://"):
-            return uri[7:]
-        return uri
+    def _load_video_bytes(path: str) -> bytes | None:
+        """Load final video bytes directly from a file path.
 
-    @classmethod
-    def _load_video_bytes_from_typed_input(
-        cls, typed_input: "AudioAgentInput"
-    ) -> bytes | None:
-        """Load final video bytes from ``typed_input.final_video``."""
-        video_payload = typed_input.final_video or {}
-        if not isinstance(video_payload, dict):
+        ``path`` comes from ``typed_input.final_video_path`` — InputResolver
+        selects the video FILE entry (mime video/mp4) against the
+        ``[final_video]`` label and hands its ``path`` through directly.
+        No JSON manifest unwrap, no ``content.final_video_asset.uri`` key
+        chain into an upstream payload.
+        """
+        if not path:
             return None
-        content = video_payload.get("content", {})
-        final_video = content.get("final_video_asset", {}) if isinstance(content, dict) else {}
-        video_uri = cls._normalize_local_path(final_video.get("uri", ""))
-        if not video_uri or not os.path.isfile(video_uri):
+        if path.startswith("file://"):
+            path = path[7:]
+        if not os.path.isfile(path):
             return None
         try:
-            with open(video_uri, "rb") as fh:
+            with open(path, "rb") as fh:
                 return fh.read()
         except Exception:
             return None
@@ -243,7 +238,7 @@ class AudioMaterializer(BaseMaterializer):
         final_delivery = content.setdefault("final_delivery_asset", {})
         final_delivery["asset_id"] = "delivery_final"
         if final_bytes:
-            video_bytes = self._load_video_bytes_from_typed_input(typed_input)
+            video_bytes = self._load_video_bytes(typed_input.final_video_path)
             if video_bytes:
                 try:
                     muxed_video_bytes = await self.audio_svc.mux_audio_with_video(

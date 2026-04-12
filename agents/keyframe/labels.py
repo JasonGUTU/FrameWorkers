@@ -9,4 +9,5 @@ the ``resolved_artifacts`` dict that ``descriptor.build_input`` receives.
 INPUT_LABEL_SCREENPLAY = "screenplay"
 INPUT_LABEL_CHARACTER_REFERENCE = "character_reference"
 INPUT_LABEL_LOCATION_REFERENCE = "location_reference"
+INPUT_LABEL_PROP_REFERENCE = "prop_reference"
 INPUT_LABEL_STYLE_REFERENCE = "style_reference"

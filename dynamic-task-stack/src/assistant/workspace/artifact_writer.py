@@ -504,6 +504,22 @@ class ArtifactWriter:
             if json_uri:
                 all_artifact_refs.append(_make_ref(json_uri, sys_id, "application/json"))
 
+        # External refs: caption entries with an explicit ``path`` key
+        # register additional artifact refs for files the agent did NOT
+        # persist itself (e.g. BriefEnricherAgent classifying images that
+        # IntakeImageAgent already persisted — it adds role-specific
+        # captions without duplicating the file bytes).
+        for cap_key, cap_val in caps.items():
+            if isinstance(cap_val, dict) and "path" in cap_val:
+                ext_path = str(cap_val["path"]).strip()
+                if ext_path:
+                    all_artifact_refs.append({
+                        "caption": str(cap_val.get("caption") or ""),
+                        "scope": str(cap_val.get("scope") or "global"),
+                        "path": ext_path,
+                        "mime": str(cap_val.get("mime") or _mime_from_path(ext_path)),
+                    })
+
         if not all_artifact_refs:
             return
         try:

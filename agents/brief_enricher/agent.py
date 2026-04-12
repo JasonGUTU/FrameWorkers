@@ -1,0 +1,126 @@
+"""BriefEnricherAgent — merges image visual descriptions into the creative brief.
+
+Input:  BriefEnricherInput (raw_brief_json_text + image_payloads_json_text
+        + image_paths)
+Output: BriefEnricherOutput (enriched_brief with visual descriptions
+        injected + image_classifications from text context)
+
+Generation model: ONE LLM call via ``_llm_fill_full``. The LLM receives
+the raw brief JSON and the image description JSON array, determines each
+image's role from the TEXT context (not from the image itself), and
+produces an enriched brief that weaves the visual descriptions into the
+narrative so downstream StoryAgent creates characters / locations / props
+that MATCH the uploaded reference images.
+
+Post-LLM pass: ``image_paths`` (runtime file paths the LLM cannot know)
+are copied from input_data into the output so ``build_captions`` can
+register role-specific caption entries pointing at the original files.
+"""
+
+from __future__ import annotations
+
+from typing import Any
+
+from ..base_agent import BaseAgent
+from .schema import BriefEnricherInput, BriefEnricherOutput
+
+
+ENRICHER_OUTPUT_TEMPLATE = """{
+  "content": {
+    "enriched_brief": "<the original user brief rewritten to weave in visual descriptions from the uploaded images>",
+    "image_classifications": [
+      {
+        "image_index": 0,
+        "role": "character",
+        "entity_hint": "the protagonist"
+      }
+    ]
+  }
+}"""
+
+
+class BriefEnricherAgent(BaseAgent[BriefEnricherInput, BriefEnricherOutput]):
+
+    async def generate(
+        self,
+        input_data: BriefEnricherInput,
+        *,
+        rework_notes: str = "",
+    ) -> BriefEnricherOutput:
+        output = await self._llm_fill_full(input_data, rework_notes)
+        # Copy runtime image paths into the output so build_captions
+        # can register role-specific caption entries for each image.
+        output.content.image_paths = list(input_data.image_paths)
+        self.recompute_metrics(output)
+        return output
+
+    def system_prompt(self) -> str:
+        return (
+            "You are BriefEnricherAgent: merge visual descriptions from "
+            "uploaded reference images into the user's creative brief.\n\n"
+            "=== INPUT FORMAT ===\n"
+            "You will receive TWO JSON text blobs:\n"
+            "1. The raw creative brief (from IntakeTextAgent) — contains "
+            "the user's story/video concept.\n"
+            "2. An array of image description payloads (from "
+            "IntakeImageAgent) — each has a ``content.visual_description`` "
+            "describing what the uploaded image shows.\n\n"
+            "=== YOUR JOB ===\n"
+            "1. Read the user's TEXT to understand their intent. The text "
+            "tells you what each image is FOR — e.g. 'with this person as "
+            "the protagonist' means image #0 is a CHARACTER reference; "
+            "'in this setting' means it is a LOCATION reference; 'the old "
+            "pocket watch' means it is a PROP reference; 'in this visual "
+            "style' means it is a STYLE reference.\n\n"
+            "2. For each image, classify its role as one of: character, "
+            "location, prop, style. Write this into "
+            "``image_classifications[i].role``.\n\n"
+            "3. Rewrite the brief to WEAVE IN the visual descriptions. "
+            "The enriched brief should read naturally — not 'image #0 "
+            "shows a red-haired woman' but 'the protagonist is a young "
+            "woman with fiery red hair and a freckled face'. Include "
+            "enough visual detail from the image descriptions that "
+            "downstream StoryAgent will create characters / locations / "
+            "props whose descriptions MATCH the uploaded reference "
+            "images.\n\n"
+            "4. Keep the original creative intent intact — do not invent "
+            "new plot elements, do not remove any part of the user's "
+            "concept. Only ADD the visual details from the images.\n\n"
+            "=== OUTPUT FORMAT ===\n"
+            "JSON only; no markdown; match the template exactly.\n"
+            "``enriched_brief``: one continuous text string (the rewritten "
+            "brief with visual details woven in).\n"
+            "``image_classifications``: one entry per image, in the same "
+            "order as the input array. ``image_index`` is 0-based.\n"
+            "``role``: character | location | prop | style.\n"
+            "``entity_hint``: a short phrase naming what the image "
+            "represents in the story (e.g. 'the protagonist', 'the "
+            "workshop setting', 'the old pocket watch').\n\n"
+            "Do NOT include an artifact_caption block — the system "
+            "generates it automatically."
+        )
+
+    def build_user_prompt(self, input_data: BriefEnricherInput) -> str:
+        return (
+            "=== RAW CREATIVE BRIEF (JSON) ===\n"
+            f"{input_data.raw_brief_json_text}\n"
+            "=== END BRIEF ===\n\n"
+            "=== UPLOADED IMAGE DESCRIPTIONS (JSON array) ===\n"
+            f"{input_data.image_payloads_json_text}\n"
+            "=== END IMAGE DESCRIPTIONS ===\n\n"
+            "Read the user's text to determine each image's role "
+            "(character / location / prop / style). Then rewrite the "
+            "brief to weave in the visual descriptions so the story "
+            "will match the reference images.\n\n"
+            "Output JSON in this shape:\n\n"
+            f"{ENRICHER_OUTPUT_TEMPLATE}\n\n"
+            "Return JSON only."
+        )
+
+    def parse_output(self, raw: dict[str, Any]) -> BriefEnricherOutput:
+        return BriefEnricherOutput.model_validate(raw)
+
+    def recompute_metrics(self, output: BriefEnricherOutput) -> None:
+        c = output.content
+        output.metrics.image_count = len(c.image_paths)
+        output.metrics.classified_count = len(c.image_classifications)
