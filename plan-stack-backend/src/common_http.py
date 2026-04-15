@@ -1,4 +1,4 @@
-"""Shared Flask request/response helpers for Task Stack and Assistant blueprints."""
+"""Shared Flask request/response helpers for Plan Stack and Assistant blueprints."""
 
 from __future__ import annotations
 

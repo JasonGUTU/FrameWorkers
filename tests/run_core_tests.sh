@@ -9,8 +9,8 @@ python3 -m pytest \
   tests/assistant/test_assistant_*.py \
   tests/director/test_director_plan.py \
   tests/director/test_director_backend_integration.py \
-  tests/dynamic_task_stack/test_app_factory_unit.py \
-  tests/dynamic_task_stack/test_plan_stack_http_integration.py \
+  tests/plan_stack_backend/test_app_factory_unit.py \
+  tests/plan_stack_backend/test_plan_stack_http_integration.py \
   tests/agents/test_agent_core.py \
   tests/agents/test_phase2_guards.py \
   -v

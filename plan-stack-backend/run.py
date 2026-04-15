@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Entry point for running the Dynamic Task Stack server
+# Entry point for the Plan Stack + Assistant Flask backend
 
 from src.app import create_app
 

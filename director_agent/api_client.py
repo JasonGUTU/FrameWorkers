@@ -145,13 +145,6 @@ class BackendAPIClient:
             data={"agent_id": agent_id, "step_id": step_id},
         )
 
-    def get_executions_by_step(self, step_id: str) -> List[Dict[str, Any]]:
-        """GET /api/assistant/executions/step/<step_id> — full executions (incl FAILED)."""
-        response = self._request("GET", f"/api/assistant/executions/step/{step_id}")
-        if isinstance(response, list):
-            return response
-        raise BackendAPIError(f"Expected list from /api/assistant/executions/step/{step_id}")
-
     # ------------------------------------------------------------------
     # Plan Stack — reads
     # ------------------------------------------------------------------
@@ -173,15 +166,6 @@ class BackendAPIClient:
     def get_step(self, step_id: str) -> Dict[str, Any]:
         return self._request("GET", f"/api/steps/{step_id}")
 
-    def get_all_steps(self) -> List[Dict[str, Any]]:
-        response = self._request("GET", "/api/steps/list")
-        if isinstance(response, list):
-            return response
-        raise BackendAPIError("Expected list from /api/steps/list")
-
-    def get_layer(self, layer_index: int) -> Dict[str, Any]:
-        return self._request("GET", f"/api/layers/{layer_index}")
-
     def get_execution_pointer(self) -> Optional[Dict[str, Any]]:
         response = self._request("GET", "/api/execution-pointer/get")
         if isinstance(response, dict) and "message" in response and "No execution pointer" in response["message"]:
@@ -192,39 +176,12 @@ class BackendAPIClient:
     # Plan Stack — writes
     # ------------------------------------------------------------------
 
-    def create_step(self, description: Dict[str, Any]) -> Dict[str, Any]:
-        return self._request(
-            "POST",
-            "/api/steps/create",
-            data={"description": description},
-        )
-
     def update_step_status(self, step_id: str, status: str) -> Dict[str, Any]:
         return self._request(
             "PUT",
             f"/api/steps/{step_id}/status",
             data={"status": status},
         )
-
-    def create_layer(
-        self,
-        layer_index: Optional[int] = None,
-    ) -> Dict[str, Any]:
-        data: Dict[str, Any] = {}
-        if layer_index is not None:
-            data["layer_index"] = layer_index
-        return self._request("POST", "/api/layers/create", data=data)
-
-    def add_step_to_layer(
-        self,
-        layer_index: int,
-        step_id: str,
-        insert_index: Optional[int] = None,
-    ) -> Dict[str, Any]:
-        data: Dict[str, Any] = {"step_id": step_id}
-        if insert_index is not None:
-            data["insert_index"] = insert_index
-        return self._request("POST", f"/api/layers/{layer_index}/steps", data=data)
 
     def set_execution_pointer(
         self,

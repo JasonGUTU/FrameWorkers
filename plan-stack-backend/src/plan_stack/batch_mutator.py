@@ -1,4 +1,4 @@
-"""Batch mutation and internal write helpers for Plan Stack (historical alias: "task stack")."""
+"""Batch mutation and internal write helpers for Plan Stack."""
 
 from datetime import datetime
 from typing import Any, Dict, List, Optional

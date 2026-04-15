@@ -1,4 +1,4 @@
-"""In-memory runtime state container for Plan Stack (historical alias: "task stack")."""
+"""In-memory runtime state container for Plan Stack."""
 
 from threading import Lock
 from typing import Dict, List, Optional

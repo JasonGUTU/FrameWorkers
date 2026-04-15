@@ -179,9 +179,15 @@ def agents_catalog():
 
 class TestBackendAPIClientAgainstFlask:
     def test_create_step_and_get_step(self, wired_client):
-        step = wired_client.create_step({"agent_id": "FakeAgent", "intent": "hi"})
-        assert step["id"].startswith("step_")
-        got = wired_client.get_step(step["id"])
+        resp = wired_client.modify_plan_stack([
+            {
+                "type": "create_steps",
+                "params": {"steps": [{"description": {"agent_id": "FakeAgent", "intent": "hi"}}]},
+            },
+        ])
+        step_id = resp["created_step_ids"][0]
+        assert step_id.startswith("step_")
+        got = wired_client.get_step(step_id)
         assert got["description"]["agent_id"] == "FakeAgent"
 
     def test_modify_plan_stack_create_and_layer(self, wired_client):
@@ -250,9 +256,15 @@ class TestBackendAPIClientAgainstFlask:
         assert nxt["step_id"] == sids[1]
 
     def test_update_step_status_roundtrip(self, wired_client):
-        step = wired_client.create_step({"agent_id": "FakeAgent", "intent": "x"})
-        wired_client.update_step_status(step["id"], "COMPLETED")
-        got = wired_client.get_step(step["id"])
+        resp = wired_client.modify_plan_stack([
+            {
+                "type": "create_steps",
+                "params": {"steps": [{"description": {"agent_id": "FakeAgent", "intent": "x"}}]},
+            },
+        ])
+        step_id = resp["created_step_ids"][0]
+        wired_client.update_step_status(step_id, "COMPLETED")
+        got = wired_client.get_step(step_id)
         assert got["status"] == "COMPLETED"
 
 

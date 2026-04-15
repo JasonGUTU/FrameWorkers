@@ -6,7 +6,7 @@ import json
 from typing import Any, Dict, List
 
 # ---------------------------------------------------------------------------
-# merge_session_goal — unchanged intent from Markov era
+# merge_session_goal
 # ---------------------------------------------------------------------------
 
 MERGE_SESSION_GOAL_SYSTEM = (

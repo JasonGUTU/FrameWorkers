@@ -10,11 +10,6 @@ Each user turn:
   5. Loop: ``get_next_step`` → ``execute_agent`` → ``update_step_status`` →
      ``advance_execution_pointer``. On failure the replanner can retry / skip /
      rewrite the remaining tail.
-
-There is **no fixed task_id** anymore — each PlanStep has its own backend id,
-created lazily by step 4. "Session" is an implicit concept owned by the
-director: the slim-memory projection of whatever PENDING/COMPLETED PlanSteps
-currently live on the stack.
 """
 
 from __future__ import annotations
@@ -25,7 +20,6 @@ import time
 from typing import Any, Dict, List, Optional
 
 from .api_client import BackendAPIClient, BackendAPIError
-from . import config as director_config
 from .config import (
     DIRECTOR_AGENT_NAME,
     DIRECTOR_MEMORY_WINDOW,
@@ -178,41 +172,6 @@ def _project_plan_stack_as_memory(
         if isinstance(step, dict):
             slim.append(_slim_stack_row(step))
     return slim
-
-
-def _stack_partition_by_pointer(
-    layers: List[Dict[str, Any]],
-    pointer: Optional[Dict[str, Any]],
-) -> tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
-    """Split flat step list into (completed_before_pointer, pending_from_pointer)."""
-    flat: List[Dict[str, Any]] = []
-    for layer in layers:
-        if not isinstance(layer, dict):
-            continue
-        for entry in layer.get("steps") or []:
-            if isinstance(entry, dict):
-                flat.append({"layer_index": layer.get("layer_index"), **entry})
-
-    if not pointer:
-        return flat, []
-    cur_layer = pointer.get("current_layer_index", 0)
-    cur_step = pointer.get("current_step_index", 0)
-
-    before: List[Dict[str, Any]] = []
-    after: List[Dict[str, Any]] = []
-    for e in flat:
-        li = e.get("layer_index") or 0
-        if li < cur_layer:
-            before.append(e)
-        elif li > cur_layer:
-            after.append(e)
-        else:
-            # same layer — compare by position in layer.tasks list; but flat
-            # already preserves order, so we fall back to checking whether
-            # we've passed the pointer yet.
-            pass
-    # Simpler: since flat is in stack order, slice on step count ≤ cumulative index.
-    return before, after  # caller does not currently depend on this split
 
 
 # ---------------------------------------------------------------------------

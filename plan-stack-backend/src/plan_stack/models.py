@@ -1,8 +1,7 @@
-# Data models for Frameworks Backend
+# Data models for the Plan Stack backend.
 #
 # One ``PlanStep`` corresponds to one planned agent execution (one-to-one with
-# ``AgentExecution``). The historical name was "Task"; we now use "PlanStep"
-# consistently across Python, JSON, and URL surfaces.
+# ``AgentExecution``).
 
 from enum import Enum
 from dataclasses import dataclass, field

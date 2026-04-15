@@ -98,7 +98,7 @@ def create_assistant_blueprint():
     
     @bp.route('/api/assistant/executions/step/<step_id>', methods=['GET'])
     def get_executions_by_step(step_id: str):
-        """Get all executions for a task"""
+        """Get all executions for one PlanStep."""
         executions = assistant_state_store.get_executions_by_step(step_id)
         return jsonify([serialize_for_api(e) for e in executions])
     
