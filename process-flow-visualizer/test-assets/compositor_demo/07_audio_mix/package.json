@@ -1,0 +1,22 @@
+{
+  "content": {
+    "scene_mixes": [
+      {
+        "scene_id": "sc_001",
+        "mix_asset": {
+          "asset_id": "aud_mix_sc_001",
+          "uri": "/home/zhendong_li/FrameWorkers/process-flow-visualizer/test-assets/compositor_demo/07_audio_mix/aud_mix_sc_001.wav",
+          "format": "wav"
+        }
+      }
+    ],
+    "final_audio": {
+      "asset_id": "aud_final",
+      "uri": "/home/zhendong_li/FrameWorkers/process-flow-visualizer/test-assets/compositor_demo/07_audio_mix/aud_final.wav",
+      "format": "wav"
+    }
+  },
+  "metrics": {
+    "scene_count": 1
+  }
+}

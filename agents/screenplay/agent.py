@@ -101,7 +101,8 @@ SCREENPLAY_OUTPUT_TEMPLATE = """{
             "keyframe_plan": { "keyframe_count": 1, "keyframe_notes": [] }
           }
         ],
-        "scene_end": { "turn": "<narrative turn>", "emotional_shift": "<shift>" }
+        "scene_end": { "turn": "<narrative turn>", "emotional_shift": "<shift>" },
+        "estimated_duration_seconds": 12.4
       }
     ]
   }
@@ -182,6 +183,27 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
             "character_locks, props_lock, style_lock) with concrete notes drawn "
             "from the blueprint's descriptive text. An empty list means 'nothing "
             "to lock', not a lazy placeholder.\n\n"
+            "=== SCENE DURATION ESTIMATE (shared source of truth) ===\n"
+            "For every scene, compute estimated_duration_seconds as a "
+            "decimal number of seconds using this exact formula:\n"
+            "  dialogue_words = total word count across all shots whose "
+            "block_type is 'dialogue', 'narration', or 'monologue' in the "
+            "scene (count words in the shot.text string, whitespace-split).\n"
+            "  action_shots   = count of shots in the scene whose "
+            "block_type == 'action'.\n"
+            "  estimated_duration_seconds = (dialogue_words / 2.5) + "
+            "(action_shots * 3.0).\n"
+            "  * 2.5 words/sec approximates 150 wpm TTS rate; the 3s-per-"
+            "action-shot term reserves visual-pacing time for shots with "
+            "no spoken line.\n"
+            "  * Result must be strictly > 0 for any scene that has at "
+            "least one shot (every non-empty scene contributes time). "
+            "Round to one decimal place.\n"
+            "  * This number is the SINGLE SOURCE OF TRUTH for scene "
+            "duration — NarrationAgent / MusicAgent / AmbienceAgent all "
+            "read it verbatim downstream instead of re-deriving it, so "
+            "they stay in sync. Do NOT fold real-world pacing tweaks "
+            "into this field; keep it a pure mechanical estimate.\n\n"
             "Do NOT include an artifact_caption block — the system generates it "
             "automatically."
         )

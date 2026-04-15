@@ -13,7 +13,7 @@ from .evaluator import IntakeVideoEvaluator
 
 
 def build_input(
-    _task_id: str,
+    _step_id: str,
     resolved_artifacts: dict,
 ) -> BaseModel:
     raw = resolved_artifacts.get(INPUT_LABEL_RAW_VIDEO_UPLOAD)
@@ -34,9 +34,15 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
 
 CATALOG_ENTRY = (
     "IntakeVideoAgent\n"
-    "  - Input: raw_video_upload (placeholder caption pointing at a raw video file)\n"
-    "  - Output: a caption-rich video artifact for downstream content agents.\n"
-    "  - Purpose: Run a video-understanding LLM over a freshly-uploaded user video."
+    "  - Input: raw_video_upload (placeholder caption pointing at a raw video file the user "
+    "uploaded).\n"
+    "  - Output: a caption-rich video artifact discoverable by downstream video-consuming "
+    "agents (analysis, style transfer, inpainting, extension, highlight, transcription, "
+    "subtitling on existing video).\n"
+    "  - Purpose: Run a video-understanding LLM over a freshly-uploaded user video. Run me "
+    "whenever the user has uploaded a video file (vlog, footage, documentary, interview "
+    "video, meeting recording, etc.) — always AFTER the user's text instruction has been "
+    "ingested first."
 )
 
 DESCRIPTOR = SubAgentDescriptor(

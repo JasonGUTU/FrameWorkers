@@ -44,13 +44,19 @@ class IntakeVideoAgent(BaseAgent[IntakeVideoInput, IntakeVideoOutput]):
         rework_notes: str = "",
     ) -> IntakeVideoOutput:
         """Build the skeleton, ask the LLM to fill ``visual_summary`` via
-        a one-shot multimodal call. NOTE: stub — relies on a multimodal
-        video LLM endpoint that may not be wired up.
+        a multimodal call with the video file attached.
         """
         skeleton = self.build_skeleton(input_data)
         system = self.system_prompt()
         user = self.build_user_prompt(input_data)
         if rework_notes:
             user += self._rework_section(rework_notes)
-        creative = await self.llm.chat_json(system, user)
+
+        media = []
+        if input_data.raw_video_path:
+            media.append({"type": "video", "path": input_data.raw_video_path})
+
+        creative = await self.llm.chat_json(
+            system, user, media_attachments=media or None,
+        )
         return self.fill_creative(skeleton, creative)

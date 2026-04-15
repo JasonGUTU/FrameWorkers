@@ -5,7 +5,7 @@ Responsibilities:
   * Categorize every entry by its namespaced ``event`` string
     (e.g. ``execution.completed``, ``artifact.persisted``,
     ``memory.written``).
-  * Filter logs by ``event`` / ``agent_id`` / ``task_id`` / ``level`` /
+  * Filter logs by ``event`` / ``agent_id`` / ``step_id`` / ``level`` /
     ``execution_id`` when serving queries.
 
 What it does NOT do:
@@ -65,7 +65,7 @@ class LogManager:
             "resource_id": log_entry.resource_id,
             "details": log_entry.details,
             "agent_id": log_entry.agent_id,
-            "task_id": log_entry.task_id,
+            "step_id": log_entry.step_id,
             "level": log_entry.level,
         }
         if log_entry.execution_id is not None:
@@ -102,7 +102,7 @@ class LogManager:
         *,
         event: Optional[str] = None,
         agent_id: Optional[str] = None,
-        task_id: Optional[str] = None,
+        step_id: Optional[str] = None,
         level: Optional[str] = None,
         execution_id: Optional[str] = None,
     ) -> bool:
@@ -110,7 +110,7 @@ class LogManager:
             return False
         if agent_id and log_entry.agent_id != agent_id:
             return False
-        if task_id and log_entry.task_id != task_id:
+        if step_id and log_entry.step_id != step_id:
             return False
         if level and log_entry.level != level:
             return False
@@ -155,7 +155,7 @@ class LogManager:
         resource_id: Optional[str] = None,
         details: Optional[Dict[str, Any]] = None,
         agent_id: Optional[str] = None,
-        task_id: Optional[str] = None,
+        step_id: Optional[str] = None,
         level: str = "INFO",
         execution_id: Optional[str] = None,
     ) -> LogEntry:
@@ -171,7 +171,7 @@ class LogManager:
             resource_id=resource_id,
             details=details or {},
             agent_id=agent_id,
-            task_id=task_id,
+            step_id=step_id,
             level=level,
             execution_id=execution_id,
         )
@@ -184,7 +184,7 @@ class LogManager:
         *,
         event: Optional[str] = None,
         agent_id: Optional[str] = None,
-        task_id: Optional[str] = None,
+        step_id: Optional[str] = None,
         limit: Optional[int] = None,
         level: Optional[str] = None,
         execution_id: Optional[str] = None,
@@ -197,7 +197,7 @@ class LogManager:
                 log_entry,
                 event=event,
                 agent_id=agent_id,
-                task_id=task_id,
+                step_id=step_id,
                 level=level,
                 execution_id=execution_id,
             )

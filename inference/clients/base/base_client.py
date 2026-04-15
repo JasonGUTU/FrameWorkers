@@ -8,7 +8,7 @@ from enum import Enum
 import os
 from typing import Any, AsyncIterator, Dict, Iterator, List, Optional, Union
 
-from ...config.model_config import ModelRegistry
+from ...config.model_config import lookup_provider
 
 
 class MessageRole(str, Enum):
@@ -88,7 +88,6 @@ class BaseLLMClient(ABC):
         self.reasoning_effort = reasoning_effort
         self._api_key = api_key
         self._base_url = base_url
-        self.model_registry = ModelRegistry()
         if config_path:
             self._load_config(config_path)
 
@@ -129,7 +128,7 @@ class BaseLLMClient(ABC):
         return BaseLLMClient._runtime_routing
 
     def resolve_provider_for_model(self, model: Optional[str]) -> str:
-        """Resolve provider using user routing first, then model registry."""
+        """Resolve provider: runtime routing > built-in table > runtime default > "openai"."""
         resolved_model = model or self.model or self.default_model
         if not resolved_model:
             return "openai"
@@ -143,9 +142,9 @@ class BaseLLMClient(ABC):
             if mapped:
                 return str(mapped)
 
-        model_info = self.model_registry.get_model(resolved_model)
-        if model_info is not None and model_info.provider:
-            return model_info.provider
+        builtin = lookup_provider(resolved_model)
+        if builtin:
+            return builtin
 
         default_provider = (
             routing.get("default_provider") if isinstance(routing, dict) else None
@@ -204,24 +203,6 @@ class BaseLLMClient(ABC):
                 formatted.append(msg)
         return formatted
 
-    def get_available_models(self, provider: Optional[str] = None) -> List[str]:
-        return self.model_registry.list_models(provider=provider)
-
-    def get_model_info(self, model_id: str) -> Optional[Dict[str, Any]]:
-        model_info = self.model_registry.get_model(model_id)
-        if model_info:
-            return {
-                "name": model_info.name,
-                "provider": model_info.provider,
-                "model_id": model_info.model_id,
-                "supports_streaming": model_info.supports_streaming,
-                "supports_multimodal": model_info.supports_multimodal,
-                "max_tokens": model_info.max_tokens,
-                "context_window": model_info.context_window,
-                "description": model_info.description,
-            }
-        return None
-
     @abstractmethod
     def call(
         self,
@@ -271,7 +252,16 @@ class BaseLLMClient(ABC):
         model: Optional[str] = None,
         max_tokens: Optional[int] = None,
         reasoning_effort: Optional[str] = None,
+        media_attachments: Optional[List[Dict[str, str]]] = None,
     ) -> dict[str, Any]:
+        """Generate a JSON response.
+
+        ``media_attachments`` is an optional list of dicts with keys:
+          - ``type``: ``"image"`` | ``"audio"`` | ``"video"``
+          - ``path``: absolute file path
+        When provided, the user message becomes a multimodal content array
+        with the text + inline media (base64-encoded data URLs).
+        """
         pass
 
     @abstractmethod
@@ -283,5 +273,6 @@ class BaseLLMClient(ABC):
         model: Optional[str] = None,
         max_tokens: Optional[int] = None,
         reasoning_effort: Optional[str] = None,
+        media_attachments: Optional[List[Dict[str, str]]] = None,
     ) -> str:
         pass

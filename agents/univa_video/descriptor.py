@@ -18,7 +18,7 @@ from inference.generation import select_video_service
 
 
 def build_input(
-    _task_id: str,
+    _step_id: str,
     resolved_artifacts: dict,
 ) -> BaseModel:
     """Univa-style pass-through: dump the entire upstream payload as JSON text."""

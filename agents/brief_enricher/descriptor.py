@@ -16,7 +16,7 @@ from .evaluator import BriefEnricherEvaluator
 
 
 def build_input(
-    _task_id: str,
+    _step_id: str,
     resolved_artifacts: dict,
 ) -> BaseModel:
     brief = ResolvedArtifactEntry.coerce(
@@ -57,37 +57,39 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
         ),
         "scope": "global",
     }
-    # Role-specific caption entries for each classified image.
-    # The ``path`` key triggers ArtifactWriter's external-ref registration
-    # so the image file gets a NEW artifact entry with a role-specific
-    # caption (e.g. "Global character reference image") that
-    # InputResolver can match precisely to labels like
-    # [character_reference] / [location_reference].
+    # Update existing image captions with role-specific info.
+    # Convention: keys starting with "_update:" tell the persist layer
+    # to call global_memory.update_caption_by_path() instead of
+    # registering a new entry. This ensures one asset = one caption.
     image_paths = content.get("image_paths", [])
     for cls in content.get("image_classifications", []):
         if not isinstance(cls, dict):
             continue
         idx = cls.get("image_index", -1)
         role = cls.get("role", "general")
+        entity = cls.get("entity_hint", "")
         if 0 <= idx < len(image_paths):
-            caps[f"ref_{role}_{idx}"] = {
+            caps[f"_update:ref_{role}_{idx}"] = {
                 "caption": (
-                    f"Global {role} reference image. Visual identity "
-                    f"anchor for downstream keyframe generation."
+                    f"Global {role} reference image ({entity}). "
+                    f"Visual identity anchor for downstream keyframe generation."
                 ),
                 "scope": "global",
                 "path": image_paths[idx],
-                "mime": "image/png",
             }
     return caps
 
 
 CATALOG_ENTRY = (
     "BriefEnricherAgent\n"
-    "  - Input: raw creative brief + uploaded image descriptions\n"
-    "  - Output: enriched brief with visual details woven in + image role classifications\n"
-    "  - Purpose: Merge image visual descriptions into the text brief so downstream\n"
-    "    story/screenplay generation matches the uploaded reference images."
+    "  - Input: a creative brief (text artifact) + one or more uploaded reference image "
+    "artifacts with vision-derived captions.\n"
+    "  - Output: enriched creative brief with the images' visual details woven in + "
+    "per-image role classifications (character / location / style / etc.).\n"
+    "  - Purpose: Merge reference-image visual descriptions into the text brief so the "
+    "downstream creative chain produces output matching the uploaded references. Run me "
+    "ONLY when the user provided BOTH text brief AND reference image(s). Skip entirely "
+    "if no images were uploaded — in that case go directly from text intake to story planning."
 )
 
 DESCRIPTOR = SubAgentDescriptor(

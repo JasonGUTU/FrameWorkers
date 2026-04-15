@@ -20,6 +20,7 @@
     .nav-btn.compare    { background:linear-gradient(135deg,#a78bfa,#4f8ef7); }
     .nav-btn.univa      { background:linear-gradient(135deg,#d4a84b,#7eb3ff); }
     .nav-btn.roadmap    { background:linear-gradient(135deg,#2dd4bf,#4f8ef7); }
+    .nav-btn.agents     { background:linear-gradient(135deg,#4ade80,#2dd4bf); }
   </style>
 </head>
 <body>
@@ -45,16 +46,15 @@
         <a class="nav-btn tests"      href="./tests.html">🧪 Tests</a>
         <a class="nav-btn compare"    href="./comparison.html">📊 结果对比</a>
         <a class="nav-btn univa"      href="./univa_diff.html">🔍 Univa 迁移差异</a>
+        <a class="nav-btn agents"     href="./agents.html">🤖 Sub-Agent Catalog</a>
         <a class="nav-btn roadmap"    href="./roadmap.html">🗺 Roadmap</a>
       </div>
     </header>
 
     <div id="flowViz"></div>
     <section id="httpViz"></section>
-    <section class="two-col-boundaries">
-      <div id="subagentViz"></div>
-      <div id="workspaceViz"></div>
-    </section>
+    <div id="subagentViz"></div>
+    <div id="workspaceViz" style="display:none"></div>
 
   </main>
   <script src="./app.js?v=13"></script>

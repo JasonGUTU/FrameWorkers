@@ -188,14 +188,37 @@ class AudioService:
     ) -> bytes:
         """Mix narration / music / ambience for a single scene via ffmpeg.
 
-        Real audio mixing — silent placeholder bytes (the 44-byte
-        ``MOCK_WAV``) are filtered out so they don't pollute the mix
-        with unreadable empty WAV chunks. Falls back to the longest
-        non-mock input on ffmpeg failure (so the pipeline still
+        Narration segments are **concatenated first** (they're sequential
+        spoken lines within one scene, not simultaneous voices), producing
+        a single narration track. That track is then **amix'd** with the
+        scene's music cue and ambience bed using ``duration=longest`` —
+        so if music/ambience (sized to the screenplay's
+        ``estimated_duration_seconds``) is longer than the actual
+        narration, ffmpeg pads the narration with silence. That's the
+        intended behavior: a scene's soundtrack runs for the full
+        screenplay-estimated duration even when dialogue ends early.
+
+        Silent placeholder ``MOCK_WAV`` inputs are filtered out before
+        amix so they don't pollute the mix. Falls back to the longest
+        surviving input on ffmpeg failure (so the pipeline still
         completes with at least some real audio).
         """
+        real_narration = [b for b in narration_bytes_list if not _is_mock_wav(b)]
+        narration_track: bytes | None = None
+        if len(real_narration) == 1:
+            narration_track = real_narration[0]
+        elif len(real_narration) > 1:
+            narration_track = self._ffmpeg_concat(real_narration)
+            if not narration_track:
+                logger.warning(
+                    "[Mix] narration concat failed for scene %s — using longest segment",
+                    scene_id,
+                )
+                narration_track = max(real_narration, key=len)
+
         inputs: list[bytes] = []
-        inputs.extend(b for b in narration_bytes_list if not _is_mock_wav(b))
+        if narration_track and not _is_mock_wav(narration_track):
+            inputs.append(narration_track)
         if music_bytes and not _is_mock_wav(music_bytes):
             inputs.append(music_bytes)
         if ambience_bytes and not _is_mock_wav(ambience_bytes):
@@ -209,20 +232,18 @@ class AudioService:
             return MOCK_WAV
         if len(inputs) == 1:
             logger.info(
-                "[Mix] Single real input for scene %s — passing through, no mix needed",
+                "[Mix] Single real track for scene %s — passing through, no mix needed",
                 scene_id,
             )
             return inputs[0]
 
         logger.info(
-            "[Mix] amix %d real inputs for scene %s via ffmpeg",
+            "[Mix] amix %d tracks for scene %s (duration=longest pads short tracks)",
             len(inputs), scene_id,
         )
         mixed = self._ffmpeg_amix(inputs)
         if mixed:
             return mixed
-        # ffmpeg unavailable / failed — return the longest real input as a
-        # crude fallback rather than producing a corrupt byte concat.
         logger.warning(
             "[Mix] ffmpeg amix failed for scene %s — falling back to longest input",
             scene_id,
@@ -259,35 +280,36 @@ class AudioService:
     # ffmpeg helpers
     # ------------------------------------------------------------------
 
+    # Upstream TTS / music / ambience services return mixed formats (fal
+    # F5-TTS ships 32 kHz mono MP3 inside a ``.wav`` filename; stable-audio
+    # ships 44.1 kHz stereo PCM; OpenAI TTS ships 24 kHz). ffmpeg's ``amix``
+    # and ``concat`` refuse to operate on sources with differing sample
+    # rates or channel layouts, so we normalise every input through
+    # ``aresample`` + ``aformat`` before the operation.
+    _NORM_FILTER = "aresample=44100,aformat=sample_fmts=fltp:channel_layouts=stereo"
+
     @staticmethod
     def _ffmpeg_amix(inputs: list[bytes]) -> bytes | None:
-        """Run ``ffmpeg -filter_complex amix`` over the given WAV byte blobs.
-
-        Returns the mixed WAV bytes, or ``None`` on any failure (caller
-        falls back to a sensible default). All temp files are cleaned up.
-        """
-        return AudioService._ffmpeg_run(
-            inputs,
-            filter_complex=(
-                "".join(f"[{i}:a]" for i in range(len(inputs)))
-                + f"amix=inputs={len(inputs)}:duration=longest:dropout_transition=0[out]"
-            ),
-        )
+        n = len(inputs)
+        norm = "".join(f"[{i}:a]{AudioService._NORM_FILTER}[a{i}];" for i in range(n))
+        mix = "".join(f"[a{i}]" for i in range(n)) + f"amix=inputs={n}:duration=longest:dropout_transition=0[out]"
+        return AudioService._ffmpeg_run(inputs, filter_complex=norm + mix)
 
     @staticmethod
     def _ffmpeg_concat(inputs: list[bytes]) -> bytes | None:
-        """Run ``ffmpeg -filter_complex concat`` over the given WAV byte blobs."""
-        return AudioService._ffmpeg_run(
-            inputs,
-            filter_complex=(
-                "".join(f"[{i}:a]" for i in range(len(inputs)))
-                + f"concat=n={len(inputs)}:v=0:a=1[out]"
-            ),
-        )
+        n = len(inputs)
+        norm = "".join(f"[{i}:a]{AudioService._NORM_FILTER}[a{i}];" for i in range(n))
+        cat = "".join(f"[a{i}]" for i in range(n)) + f"concat=n={n}:v=0:a=1[out]"
+        return AudioService._ffmpeg_run(inputs, filter_complex=norm + cat)
 
     @staticmethod
     def _ffmpeg_run(inputs: list[bytes], *, filter_complex: str) -> bytes | None:
-        """Shared ffmpeg runner: write inputs → run filter → read output → cleanup."""
+        """Shared ffmpeg runner: write inputs → run filter → read output → cleanup.
+
+        Inputs are written with a ``.wav`` suffix but the container format is
+        auto-detected by ffmpeg, so MP3-inside-.wav blobs (fal F5-TTS ships
+        these) decode correctly.
+        """
         temp_dir = tempfile.mkdtemp(prefix="fw_audio_")
         in_paths = [os.path.join(temp_dir, f"in_{i}.wav") for i in range(len(inputs))]
         out_path = os.path.join(temp_dir, "out.wav")
@@ -297,11 +319,13 @@ class AudioService:
                     fh.write(blob)
             cmd: list[str] = ["ffmpeg", "-y"]
             for p in in_paths:
-                cmd += ["-f", "wav", "-i", p]
+                cmd += ["-i", p]
             cmd += [
                 "-filter_complex", filter_complex,
                 "-map", "[out]",
                 "-c:a", "pcm_s16le",
+                "-ar", "44100",
+                "-ac", "2",
                 out_path,
             ]
             proc = subprocess.run(
@@ -477,10 +501,9 @@ class FalAudioService(AudioService, LazyHttpxClientMixin):
         timeout: float = 180.0,
     ) -> None:
         self._api_key = api_key or os.getenv("FAL_API_KEY", "")
-        self.tts_model = tts_model or os.getenv(
-            "FAL_TTS_MODEL",
-            "fal-ai/minimax/speech-02-turbo",
-        )
+        self.tts_model = tts_model or os.getenv("FAL_TTS_MODEL", "")
+        if not self.tts_model:
+            raise RuntimeError("No TTS model configured. Set FAL_TTS_MODEL in .env")
         self.default_voice = "default"
         self.timeout = timeout
         self._http: httpx.AsyncClient | None = None
@@ -522,5 +545,73 @@ class FalAudioService(AudioService, LazyHttpxClientMixin):
                 "model": model_id,
                 "voice": actual_voice,
                 "text": text,
+            },
+        )
+
+    async def generate_music(
+        self,
+        *,
+        mood: str,
+        duration_sec: float = 0.0,
+        scene_id: str = "",
+        **kwargs: Any,
+    ) -> AudioGenerationResult:
+        """Generate background music via fal.ai audio generation model."""
+        model_id = os.getenv("FAL_MUSIC_MODEL", "").strip()
+        if not model_id:
+            raise RuntimeError("No music model configured. Set FAL_MUSIC_MODEL in .env")
+        prompt = f"Background music: {mood}. Instrumental, no vocals."
+        arguments: dict[str, Any] = {"prompt": prompt}
+        if duration_sec > 0:
+            # fal-ai/stable-audio requires an integer seconds_total
+            arguments["seconds_total"] = int(min(duration_sec, 30.0))
+
+        logger.info("[fal.ai] Generating music: model=%s, mood=%s", model_id, mood)
+        result = await fal_subscribe(self._api_key, model_id, arguments)
+        audio_url = extract_fal_media_url(result, media_type="audio")
+        audio_bytes = await http_download_bytes(self.http, audio_url)
+        logger.info("[fal.ai] Music generated (%d bytes)", len(audio_bytes))
+        return AudioGenerationResult(
+            bytes=audio_bytes,
+            resolved_payload={
+                "kind": "music",
+                "model": model_id,
+                "mood": mood,
+                "scene_id": scene_id,
+                "duration_sec": duration_sec,
+            },
+        )
+
+    async def generate_ambience(
+        self,
+        *,
+        description: str,
+        duration_sec: float = 0.0,
+        scene_id: str = "",
+        **kwargs: Any,
+    ) -> AudioGenerationResult:
+        """Generate ambient sound via fal.ai audio generation model."""
+        model_id = os.getenv("FAL_AMBIENCE_MODEL", "").strip()
+        if not model_id:
+            raise RuntimeError("No ambience model configured. Set FAL_AMBIENCE_MODEL in .env")
+        prompt = f"Ambient environmental sound: {description}. No music, no speech."
+        arguments: dict[str, Any] = {"prompt": prompt}
+        if duration_sec > 0:
+            # fal-ai/stable-audio requires an integer seconds_total
+            arguments["seconds_total"] = int(min(duration_sec, 30.0))
+
+        logger.info("[fal.ai] Generating ambience: model=%s, desc=%s", model_id, description[:60])
+        result = await fal_subscribe(self._api_key, model_id, arguments)
+        audio_url = extract_fal_media_url(result, media_type="audio")
+        audio_bytes = await http_download_bytes(self.http, audio_url)
+        logger.info("[fal.ai] Ambience generated (%d bytes)", len(audio_bytes))
+        return AudioGenerationResult(
+            bytes=audio_bytes,
+            resolved_payload={
+                "kind": "ambience",
+                "model": model_id,
+                "description": description,
+                "scene_id": scene_id,
+                "duration_sec": duration_sec,
             },
         )

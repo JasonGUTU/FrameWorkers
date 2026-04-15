@@ -22,7 +22,7 @@ from inference.generation import select_video_service
 
 
 def build_input(
-    _task_id: str,
+    _step_id: str,
     resolved_artifacts: dict,
 ) -> BaseModel:
     sp = ResolvedArtifactEntry.coerce(resolved_artifacts.get(INPUT_LABEL_SCREENPLAY))
@@ -83,9 +83,14 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
 
 CATALOG_ENTRY = (
     "VideoAgent\n"
-    "  - Input: screenplay + per-shot keyframe images\n"
-    "  - Output: video_package (shot segments, scene clips, final video)\n"
-    "  - Purpose: Plan and generate video clips from keyframe images."
+    "  - Input: a screenplay artifact + per-shot keyframe still images (one per shot).\n"
+    "  - Output: video_package (per-shot clips, per-scene assembled clips, final assembled "
+    "silent video).\n"
+    "  - Purpose: Generate video clips from keyframe stills via I2V (image-to-video). "
+    "Run me in the creative production chain ONCE both a screenplay and matching per-shot "
+    "stills exist. My output is the silent video track — any audio (narration / music / "
+    "ambience) and subtitles are produced by separate optional agents and combined at the "
+    "compositor step."
 )
 
 DESCRIPTOR = SubAgentDescriptor(

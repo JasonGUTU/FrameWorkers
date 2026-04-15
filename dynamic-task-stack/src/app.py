@@ -10,7 +10,7 @@ _project_root = str(Path(__file__).resolve().parent.parent.parent)
 if _project_root not in sys.path:
     sys.path.insert(0, _project_root)
 
-from .task_stack import create_blueprint
+from .plan_stack import create_blueprint
 from .assistant import create_assistant_blueprint
 
 
@@ -26,9 +26,9 @@ def create_app(config=None):
         app.config.update(config)
     
     # Register blueprints
-    # Task Stack routes (existing)
-    task_bp = create_blueprint()
-    app.register_blueprint(task_bp)
+    # Plan Stack routes
+    plan_stack_bp = create_blueprint()
+    app.register_blueprint(plan_stack_bp)
     
     # Assistant routes (new - isolated)
     assistant_bp = create_assistant_blueprint()

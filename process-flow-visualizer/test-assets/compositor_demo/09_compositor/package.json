@@ -1,0 +1,63 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-04-14T10:18:56.629465+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "plan": {
+      "transitions": [
+        {
+          "from_shot_id": "sh_001",
+          "to_shot_id": "sh_002",
+          "transition_type": "cut",
+          "duration_ms": 0
+        },
+        {
+          "from_shot_id": "sh_002",
+          "to_shot_id": "sh_003",
+          "transition_type": "cut",
+          "duration_ms": 0
+        },
+        {
+          "from_shot_id": "sh_003",
+          "to_shot_id": "sh_004",
+          "transition_type": "cut",
+          "duration_ms": 0
+        }
+      ],
+      "color_grade": {
+        "brightness": 0.0,
+        "contrast": 0.05,
+        "saturation": 0.0,
+        "tone": "cinematic warm"
+      },
+      "subtitle_style": {
+        "font_size": 24,
+        "font_color": "#FFFFFF",
+        "outline_color": "#000000",
+        "position": "bottom",
+        "burn_in": true
+      },
+      "output_resolution": "1920x1080",
+      "output_fps": 30,
+      "output_format": "mp4"
+    },
+    "delivery_asset": {
+      "asset_id": "compositor_final",
+      "uri": "placeholder",
+      "format": "mp4",
+      "resolution": "1920x1080",
+      "duration_seconds": 20.0
+    }
+  },
+  "metrics": {
+    "transition_count": 3,
+    "has_subtitles": true,
+    "has_audio": true
+  }
+}

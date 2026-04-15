@@ -50,7 +50,7 @@ class LogEntry:
     resource_id: Optional[str] = None
     details: Dict[str, Any] = field(default_factory=dict)
     agent_id: Optional[str] = None
-    task_id: Optional[str] = None
+    step_id: Optional[str] = None
     level: str = "INFO"                     # INFO | WARN | ERROR
     execution_id: Optional[str] = None
 
@@ -78,6 +78,6 @@ class GlobalMemoryEntry:
     """One execution's persisted artifacts — each with its own semantic caption."""
     execution_id: str
     agent_id: str
-    task_id: str
+    step_id: str
     created_at: datetime
     artifacts: List[ArtifactRef]  # per-artifact captions + paths

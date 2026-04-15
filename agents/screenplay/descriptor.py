@@ -16,7 +16,7 @@ from .labels import INPUT_LABEL_STORY
 
 
 def build_input(
-    _task_id: str,
+    _step_id: str,
     resolved_artifacts: dict,
 ) -> BaseModel:
     """Construct typed input from the resolved artifact dict.
@@ -57,9 +57,13 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
 
 CATALOG_ENTRY = (
     "ScreenplayAgent\n"
-    "  - Input: story_blueprint (cast, locations, scene_outline)\n"
-    "  - Output: screenplay (scenes -> shots: script + visual plan + consistency packs)\n"
-    "  - Purpose: Unified screenplay; feeds downstream visual and audio agents."
+    "  - Input: a story_blueprint artifact (logline, cast, locations, story_arc, scene_outline).\n"
+    "  - Output: screenplay (scenes -> shots: script + visual plan + per-scene consistency "
+    "packs + per-scene mood/tone + estimated_duration_seconds).\n"
+    "  - Purpose: Turn a structured story blueprint into a shot-by-shot screenplay that "
+    "feeds every downstream creative agent (keyframes, video clips, audio tracks, subtitles, "
+    "translation). Run me in the creative production chain ONCE a story blueprint exists; "
+    "my output is the single source of truth for shot ids / scene ids / per-scene metadata."
 )
 
 DESCRIPTOR = SubAgentDescriptor(

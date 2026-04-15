@@ -13,7 +13,7 @@ from pathlib import Path
 import pytest
 from PIL import Image
 
-# This file's tests call ``materializer.materialize(task_id, asset_dict, bundle)``
+# This file's tests call ``materializer.materialize(step_id, asset_dict, bundle)``
 # with three positional arguments, but the production materializer signature is
 # ``async def materialize(self, ctx: MaterializeContext, asset_dict)`` (two
 # positional after self). Every call here therefore raises ``TypeError`` at
@@ -189,7 +189,7 @@ _WHAT_DESCRIPTIONS: dict[str, str] = {
 
 
 def _bundle_from_assets(
-    task_id: str,
+    step_id: str,
     assets: dict[str, object],
     *,
     media: dict[str, list[dict[str, str]]] | None = None,
@@ -212,7 +212,7 @@ def _bundle_from_assets(
         for label, entries in media.items():
             resolved[label] = entries
     return InputBundleV2(
-        task_id=task_id,
+        step_id=step_id,
         context={"resolved_artifacts": resolved},
     )
 
@@ -659,7 +659,7 @@ def test_keyframe_materializer_returns_assets_without_local_progress_snapshots(m
             materializer.materialize(
                 "task_test",
                 asset_dict,
-                InputBundleV2(task_id="task_test"),
+                InputBundleV2(step_id="task_test"),
             )
         )
 

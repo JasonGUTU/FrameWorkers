@@ -13,7 +13,6 @@ from .clients import (
     MessageRole,
     ModelConfig,
 )
-from .config.model_config import ModelRegistry, get_model_config
 from .generation.image_generators.service import FalImageService, ImageService, MockImageService
 from .generation.video_generators.service import (
     FalVideoService,
@@ -30,8 +29,6 @@ __all__ = [
     "Message",
     "MessageRole",
     "ModelConfig",
-    "ModelRegistry",
-    "get_model_config",
     "FalImageService",
     "ImageService",
     "MockImageService",

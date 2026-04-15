@@ -1,0 +1,1193 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frameworkers — Sub-Agent Test Results</title>
+  <link rel="icon" type="image/svg+xml" href="./logo.svg" />
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .back-link { display:inline-block; margin-bottom:18px; color:#7eb3ff; text-decoration:none; font-size:0.9em; }
+    .back-link:hover { text-decoration:underline; }
+
+    .test-group { margin-bottom: 36px; }
+    .test-group-title {
+      font-size: 16px; font-weight: 700; color: var(--text-bright);
+      margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+    }
+    .group-badge {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 4px 12px; border-radius: 20px; white-space: nowrap;
+    }
+    .badge-intake  { background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.25); color: #86efac; }
+    .badge-production { background: rgba(79,142,247,0.15); border: 1px solid rgba(79,142,247,0.3); color: #7eb3ff; }
+    .badge-postprod { background: rgba(167,139,250,0.15); border: 1px solid rgba(167,139,250,0.3); color: #c4b5fd; }
+    .badge-editing  { background: rgba(249,115,22,0.12); border: 1px solid rgba(249,115,22,0.25); color: #fb923c; }
+    .badge-understand { background: rgba(45,212,191,0.12); border: 1px solid rgba(45,212,191,0.25); color: #5eead4; }
+    .badge-voice    { background: rgba(244,114,182,0.12); border: 1px solid rgba(244,114,182,0.25); color: #f472b6; }
+    .badge-pending  { background: rgba(100,116,139,0.15); border: 1px solid rgba(100,116,139,0.3); color: #94a3b8; }
+
+    .result-card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      overflow: hidden; margin-bottom: 14px; transition: border-color 0.2s;
+    }
+    .result-card:hover { border-color: var(--border-hover); }
+    .result-head {
+      display: flex; align-items: center; gap: 10px; padding: 12px 16px;
+      background: var(--surface-2); border-bottom: 1px solid var(--border);
+    }
+    .result-icon { width: 28px; height: 28px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+    .result-name { font-size: 13px; font-weight: 700; color: var(--text-bright); font-family: "Fira Code", monospace; }
+    .result-desc { font-size: 11px; color: var(--text-muted); margin-left: 8px; font-family: inherit; }
+    .agent-how {
+      font-size: 11.5px; color: var(--text); line-height: 1.7; padding: 10px 14px;
+      background: rgba(79,142,247,0.04); border-left: 3px solid rgba(79,142,247,0.2);
+      border-radius: 0 6px 6px 0; margin-bottom: 12px;
+    }
+    .result-status {
+      margin-left: auto; font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+      padding: 3px 10px; border-radius: 4px;
+    }
+    .status-pass { background: rgba(74,222,128,0.15); color: #86efac; border: 1px solid rgba(74,222,128,0.25); }
+    .status-verified { background: rgba(79,142,247,0.15); color: #7eb3ff; border: 1px solid rgba(79,142,247,0.25); }
+    .status-pending { background: rgba(100,116,139,0.15); color: #94a3b8; border: 1px solid rgba(100,116,139,0.3); }
+
+    .result-body { padding: 16px; }
+    .result-section { margin-bottom: 16px; }
+    .result-section:last-child { margin-bottom: 0; }
+    .result-section-title { font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px; }
+
+    .result-row { display: flex; gap: 10px; margin-bottom: 10px; font-size: 12.5px; line-height: 1.6; }
+    .result-row:last-child { margin-bottom: 0; }
+    .row-label {
+      flex-shrink: 0; min-width: 65px; font-size: 9px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px;
+      border-radius: 4px; text-align: center; height: fit-content;
+    }
+    .label-input { background: rgba(45,212,191,0.1); color: #5eead4; border: 1px solid rgba(45,212,191,0.18); }
+    .label-output { background: rgba(167,139,250,0.12); color: #c4b5fd; border: 1px solid rgba(167,139,250,0.2); }
+    .label-caption { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.22); }
+    .row-content { color: var(--text); flex: 1; }
+    .row-content code {
+      background: rgba(79,142,247,0.1); color: #7eb3ff; padding: 1px 6px;
+      border-radius: 4px; font-family: "Fira Code", monospace; font-size: 11px;
+    }
+    .output-quote {
+      background: rgba(74,222,128,0.06); border-left: 3px solid rgba(74,222,128,0.3);
+      padding: 8px 12px; border-radius: 0 6px 6px 0; font-style: italic;
+      color: #86efac; font-size: 12px; line-height: 1.6;
+    }
+    .caption-quote {
+      background: rgba(251,191,36,0.06); border-left: 3px solid rgba(251,191,36,0.3);
+      padding: 8px 12px; border-radius: 0 6px 6px 0;
+      color: #fbbf24; font-size: 11.5px; line-height: 1.5; font-family: "Fira Code", monospace;
+    }
+    .meta-note { font-size: 11px; color: var(--text-muted); margin-top: 6px; }
+
+    .media-preview { margin-top: 8px; }
+    .media-preview img { max-width: 280px; border-radius: 8px; border: 1px solid var(--border); }
+    .media-preview video { max-width: 360px; border-radius: 8px; border: 1px solid var(--border); }
+    .media-preview audio { width: 100%; max-width: 360px; }
+    .text-preview {
+      background: #060a12; border: 1px solid rgba(255,255,255,0.05); border-radius: 6px;
+      padding: 10px 14px; font-size: 11.5px; line-height: 1.6; color: var(--text);
+      max-height: 120px; overflow: auto; margin-top: 6px;
+    }
+
+    .io-flow {
+      display: flex; align-items: center; gap: 8px; margin: 12px 0; flex-wrap: wrap;
+      padding: 10px 14px; background: var(--surface-2); border-radius: 8px;
+      font-size: 11.5px; color: var(--text-muted);
+    }
+    .io-flow .arrow { color: rgba(74,222,128,0.6); font-weight: 700; }
+  </style>
+</head>
+<body>
+  <main class="page">
+
+    <a class="back-link" href="./agents.html">&larr; 返回 Sub-Agent Catalog</a>
+
+    <header class="header">
+      <div class="logo-row">
+        <img class="logo-mark" src="./logo.svg" alt="Frameworkers logo" />
+        <div class="logo-text">
+          <span class="logo-name">Frameworkers</span>
+          <span class="logo-tagline">AI Production Pipeline</span>
+        </div>
+      </div>
+      <div class="header-divider"></div>
+      <div class="header-badge">Sub-Agent Test Results</div>
+      <h1>Sub-Agent 真实测试结果</h1>
+      <p>每个 agent 使用真实输入通过完整管线运行。以下为每个 agent 的真实输入文件、LLM 输出、以及注册到 workspace 的 caption 策略。</p>
+    </header>
+
+    <!-- ── API / Service 对照表 ── -->
+    <div class="section-card" style="margin-bottom:28px">
+      <div class="section-header" style="background:var(--surface-2)">
+        <h2>Sub-Agent × API 对照表</h2>
+      </div>
+      <div class="section-body" style="overflow-x:auto">
+        <p style="color:var(--text-muted); font-size:12px; margin:0 0 10px; line-height:1.5">
+          下表是**实际运行时**的 API 对应关系（核对自 <code>.env</code> + <code>inference/generation/__init__.py</code> + <code>inference_runtime.yaml</code>）。
+          <br/>
+          <b>LLM 层</b>：所有 agent 共用一条路径——<code>LLMClient</code> → <b>Cloudflare AI Gateway (<code>CF_AIG_TOKEN</code> / <code>CF_AIG_BASE_URL</code>)</b> → 上游模型 <code>google-ai-studio/gemini-2.5-flash</code>（OpenAI 兼容 SDK 直连，<b>不</b>走 OpenRouter）。多模态（图片/视频/音频）都是把媒体 base64 化塞进 <code>chat.completions</code> 的 multimodal content array 里。
+          <br/>
+          <b>媒体生成层</b>：走 fal.ai（<code>FAL_API_KEY</code>）。默认 mock（占位字节，不花钱），设 <code>FW_USE_REAL_MEDIA_GEN=1</code> 后切到真后端；具体型号由 <code>FAL_*_MODEL</code> 环境变量决定。
+        </p>
+        <table style="width:100%; border-collapse:collapse; font-size:12px; line-height:1.6;">
+          <thead><tr style="border-bottom:1px solid var(--border); color:var(--text-muted); text-align:left;">
+            <th style="padding:6px 10px">Agent</th>
+            <th style="padding:6px 10px">类型</th>
+            <th style="padding:6px 10px">LLM</th>
+            <th style="padding:6px 10px">媒体后端（real mode）</th>
+          </tr></thead>
+          <tbody style="color:var(--text)">
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>IntakeTextAgent</code></td><td>Pure LLM</td><td>CF AI Gateway → <code>gemini-2.5-flash</code></td><td>—</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>IntakeImageAgent</code></td><td>LLM (multimodal image)</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（图片以 base64 data URL 送入）</td><td>—</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>IntakeVideoAgent</code></td><td>LLM (multimodal video)</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（视频以 base64 data URL 送入）</td><td>—</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>IntakeAudioAgent</code></td><td>LLM (multimodal audio)</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（音频以 <code>input_audio</code> base64 送入）</td><td>—</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>BriefEnricherAgent</code></td><td>Pure LLM</td><td>CF AI Gateway → <code>gemini-2.5-flash</code></td><td>—</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>StoryAgent</code></td><td>Pure LLM</td><td>CF AI Gateway → <code>gemini-2.5-flash</code></td><td>—</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>ScreenplayAgent</code></td><td>Pure LLM</td><td>CF AI Gateway → <code>gemini-2.5-flash</code></td><td>—</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>KeyFrameAgent</code></td><td>LLM + Image Gen</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（prompt 精修）</td><td><code>FalImageService</code> → <code>fal-ai/nano-banana-2</code>（<code>FAL_IMAGE_MODEL</code>）</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>VideoAgent</code></td><td>LLM + Video Gen (I2V)</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（shot 语义规划）</td><td><code>FalVideoService</code> → <code>fal-ai/kling-video/v2.6/pro/image-to-video</code>（<code>FAL_VIDEO_MODEL</code>；可灵）</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>UnivaStoryboardAgent</code></td><td>Pure LLM</td><td>CF AI Gateway → <code>gemini-2.5-flash</code></td><td>—</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>UnivaKeyFrameAgent</code></td><td>LLM + Image Gen</td><td>CF AI Gateway → <code>gemini-2.5-flash</code></td><td><code>FalImageService</code> → <code>fal-ai/nano-banana-2</code></td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>UnivaVideoAgent</code></td><td>LLM + Video Gen (I2V)</td><td>CF AI Gateway → <code>gemini-2.5-flash</code></td><td><code>FalVideoService</code> → <code>fal-ai/kling-video/v2.6/pro/image-to-video</code></td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>NarrationAgent</code></td><td>LLM + TTS</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（台词/演员映射）</td><td><code>FalAudioService</code> → <code>fal-ai/minimax/speech-02-turbo</code>（<code>FAL_TTS_MODEL</code>）</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>MusicAgent</code></td><td>LLM + Audio Gen</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（per-scene cue 规划）</td><td><code>FalAudioService</code> → <code>fal-ai/stable-audio</code>（<code>FAL_MUSIC_MODEL</code>）</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>AmbienceAgent</code></td><td>LLM + Audio Gen</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（per-scene bed 规划）</td><td><code>FalAudioService</code> → <code>fal-ai/stable-audio</code>（<code>FAL_AMBIENCE_MODEL</code>）</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>AudioMixAgent</code></td><td>LLM + FFmpeg</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（混音计划）</td><td>本地 FFmpeg <code>amix</code>（三轨混音 + 归一化）</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>VoiceCloneAgent</code></td><td>LLM + Voice Clone</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（脚本整理）</td><td><code>FalVoiceCloneService</code> → <code>fal-ai/f5-tts</code>（<code>FAL_VOICE_CLONE_MODEL</code>）</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>SubtitleAgent</code></td><td>Pure LLM</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（生成 SRT）</td><td>—</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>CompositorAgent</code></td><td>LLM + FFmpeg</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（合成计划）</td><td>本地 FFmpeg：mux + <code>subtitles</code> filter 烧录 SRT + <code>eq</code> 调色</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>TranslationAgent</code></td><td>Pure LLM</td><td>CF AI Gateway → <code>gemini-2.5-flash</code></td><td>—</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>TranscriptionAgent</code></td><td>LLM + STT</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（后处理 / 语言检测）</td><td><code>FalTranscriptionService</code> → <code>fal-ai/whisper</code>（<code>FAL_WHISPER_MODEL</code>）</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>StyleTransferAgent</code></td><td>LLM + Video Edit</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（style prompt 精修）</td><td><code>FalVideoEditService</code> → <code>fal-ai/vace/style-transfer</code>（<code>FAL_VIDEO_STYLE_MODEL</code>）</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>InpaintAgent</code></td><td>LLM + Video Edit</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（mask 描述 + 替换指令）</td><td><code>FalVideoEditService</code>：<code>fal-ai/vace/inpaint</code>（主）+ <code>fal-ai/depth-anything-v2/video</code>（depth）+ <code>fal-ai/sam2/video</code>（mask/tracking）</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>VideoExtendAgent</code></td><td>LLM + Video Gen</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（续写 prompt）</td><td>本地 FFmpeg 提末帧 → 复用 <code>FalVideoService</code>（<code>fal-ai/kling-video/v2.6/pro/image-to-video</code>）从末帧 I2V 续写</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>HighlightAgent</code></td><td>LLM + FFmpeg</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（选段决策）</td><td>本地 FFmpeg <code>-ss / -t</code> 裁剪 + <code>concat</code> 拼接</td></tr>
+            <tr><td style="padding:5px 10px"><code>VideoAnalysisAgent</code></td><td>LLM (multimodal video)</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（视频以 <code>image_url</code> 里的 <code>data:video/mp4;base64,…</code> 送入——Gemini 官方 OpenAI-compat 扩展；<b style="color:#34d399">已 live 测试通过</b>，20 秒真实视频返回 4 个 scene + 准确内容描述）</td><td>—</td></tr>
+          </tbody>
+        </table>
+        <p style="color:var(--text-muted); font-size:11px; margin:10px 0 0; line-height:1.5">
+          <b>注</b>：
+          （1）<code>inference/clients/implementations/default_client.py</code> 里还有一个 <code>ImageService</code> 类走 OpenRouter（<code>google/gemini-2.5-flash-image</code>），但 <code>select_image_service()</code> 从不返回它——实际选择是 <code>FalImageService</code> 或 <code>MockImageService</code>。根 CLAUDE.md 里"图片生成统一走 OpenRouter / Gemini Image"那句与当前代码不一致，已 stale。
+          （2）所有 LLM agent 的 provider 映射在 <code>inference_runtime.yaml</code> 的 <code>model_provider.google-ai-studio/gemini-2.5-flash: cf_aig</code> + <code>provider_client.cf_aig: openai_sdk</code>——即用 AsyncOpenAI client 直连 CF AI Gateway 的 <code>/compat</code> OpenAI 兼容端点，上游是 Gemini 2.5 Flash。
+        </p>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════════ -->
+    <!-- INTAKE AGENTS                                                     -->
+    <!-- ══════════════════════════════════════════════════════════════════ -->
+    <div class="test-group">
+      <div class="test-group-title">
+        <span class="group-badge badge-intake">INTAKE</span>
+        用户上传 Intake — 5/5 PASS
+      </div>
+
+      <!-- IntakeTextAgent -->
+      <div class="result-card">
+        <div class="result-head">
+          <div class="result-icon" style="background:rgba(74,222,128,0.12)">📝</div>
+          <span class="result-name">IntakeTextAgent</span><span class="result-desc">— 分析用户上传文本，生成描述性 caption</span>
+          <span class="result-status status-pass">PASS</span>
+        </div>
+        <div class="result-body">
+          <div class="agent-how">读取用户上传的原始文本文件。短文本（&lt;800字）直接透传不调 LLM；长文本调 LLM 生成一句话摘要。输出 caption-rich artifact 供 InputResolver 匹配给下游 StoryAgent。</div>
+          <div class="result-section">
+            <div class="result-section-title">Test 1 — 短文本 (135 chars, &lt; 800 阈值, 不调 LLM)</div>
+            <div class="result-row">
+              <span class="row-label label-input">Input</span>
+              <div class="row-content">
+                <div class="text-preview">Create a 30-second cinematic short about a retired watchmaker repairing his late wife's pocket watch before midnight on New Year's Eve.</div>
+              </div>
+            </div>
+            <div class="result-row">
+              <span class="row-label label-output">Output</span>
+              <div class="row-content">
+                <div class="output-quote">summary: (空) — 短文本直接透传原文，不调 LLM</div>
+              </div>
+            </div>
+            <div class="result-row">
+              <span class="row-label label-caption">Caption</span>
+              <div class="row-content">
+                <div class="caption-quote">"User-submitted creative brief (135 chars). Pipeline entry point — consumed by story and screenplay agents."</div>
+                <div class="meta-note">caption 由 <code>build_captions</code> 硬编码模板生成，不依赖 LLM</div>
+              </div>
+            </div>
+          </div>
+          <div class="result-section">
+            <div class="result-section-title">Test 2 — 长文本 (1259 chars, &gt; 800 阈值, 调 LLM 摘要)</div>
+            <div class="result-row">
+              <span class="row-label label-input">Input</span>
+              <div class="row-content">
+                <div class="text-preview">The story takes place in a small coastal town called Havenport during the autumn of 1987. Margaret Chen, a retired marine biologist in her late sixties, has spent the past decade living alone in a lighthouse she converted into a home after her husband's passing. One morning, she discovers a juvenile humpback whale stranded in the shallow cove below her lighthouse. The whale appears injured, with fishing net tangled around its tail flukes. Margaret must navigate the bureaucracy of marine rescue services, rally reluctant townspeople who blame whales for disrupting their fishing industry, and confront her own grief...</div>
+              </div>
+            </div>
+            <div class="result-row">
+              <span class="row-label label-output">Output</span>
+              <div class="row-content">
+                <div class="output-quote">"This text is a story synopsis about a retired marine biologist who finds a stranded whale, battling bureaucracy and town resistance with a teenager's help, ultimately reconnecting with her community."</div>
+              </div>
+            </div>
+            <div class="result-row">
+              <span class="row-label label-caption">Caption</span>
+              <div class="row-content">
+                <div class="caption-quote">"User-submitted creative brief (1259 chars). Pipeline entry point — consumed by story and screenplay agents."</div>
+                <div class="meta-note">caption 同样是模板生成（只含 char count），LLM summary 存在 payload 的 <code>content.summary</code> 字段供人查看</div>
+              </div>
+            </div>
+          </div>
+          <div class="io-flow">
+            <span>Caption 策略:</span>
+            <span class="arrow">&rarr;</span>
+            <span>硬编码模板 <code>"User-submitted creative brief ({N} chars)..."</code></span>
+            <span class="arrow">&rarr;</span>
+            <span>InputResolver 通过 "creative brief" 匹配 StoryAgent 的 <code>[creative_brief]</code> 标签</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- IntakeImageAgent -->
+      <div class="result-card">
+        <div class="result-head">
+          <div class="result-icon" style="background:rgba(74,222,128,0.12)">🏞</div>
+          <span class="result-name">IntakeImageAgent</span><span class="result-desc">— Vision LLM 分析上传图片，生成视觉描述 caption</span>
+          <span class="result-status status-pass">PASS</span>
+        </div>
+        <div class="result-body">
+          <div class="agent-how">将上传图片以 base64 data URL 作为 multimodal 附件传给 Vision LLM。LLM 返回一句话视觉描述（人物、场景、光线、情绪）。输出 JSON artifact + 原始图片文件两条记录到 workspace。</div>
+          <div class="result-row">
+            <span class="row-label label-input">Input</span>
+            <div class="row-content">
+              <code>img_char_1_character.png</code> (1355 KB) — AI 生成的角色参考图
+              <div class="media-preview">
+                <img src="./test-assets/intake_image_input.png" alt="Input: character reference image" />
+              </div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-output">Output</span>
+            <div class="row-content">
+              <div class="output-quote">"A headshot of an older man with white hair, blue eyes, a denim shirt, and a leather apron, looking right with a slight smile against a white background, in bright, even light."</div>
+              <div class="meta-note">Vision LLM 通过 multimodal 调用 (base64 data URI) 真实看到了图片内容</div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-caption">Caption</span>
+            <div class="row-content">
+              <div class="caption-quote">"User-uploaded reference image. Pending role classification by BriefEnricherAgent. Visual description available in payload."</div>
+              <div class="meta-note">JSON artifact 的 caption 是硬编码模板；LLM 的 visual_description 存在 payload 里。原始 PNG 文件额外注册为独立 <code>mime=image/*</code> artifact</div>
+            </div>
+          </div>
+          <div class="io-flow">
+            <span>Caption 策略:</span>
+            <span class="arrow">&rarr;</span>
+            <span>硬编码 <code>"User-uploaded reference image..."</code> + 原始图片单独注册 (<code>mime=image/*</code>)</span>
+            <span class="arrow">&rarr;</span>
+            <span>下游 KeyFrameAgent 按 <code>[character_reference]</code> + mime 类型匹配</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- IntakeVideoAgent -->
+      <div class="result-card">
+        <div class="result-head">
+          <div class="result-icon" style="background:rgba(74,222,128,0.12)">📹</div>
+          <span class="result-name">IntakeVideoAgent</span><span class="result-desc">— 分析上传视频，生成内容描述 caption</span>
+          <span class="result-status status-pass">PASS</span>
+        </div>
+        <div class="result-body">
+          <div class="agent-how">将上传视频以 multimodal 附件传给 Vision LLM（media_attachments type=video）。LLM 观看视频后返回一句话视觉摘要。输出 caption-rich artifact 供下游 VideoAnalysis / StyleTransfer 等 agent 消费。</div>
+          <div class="result-row">
+            <span class="row-label label-input">Input</span>
+            <div class="row-content">
+              <code>fal_i2v_smoke.mp4</code> (4910 KB) — fal.ai I2V 生成的真实视频
+              <div class="media-preview">
+                <video controls muted preload="metadata">
+                  <source src="./test-assets/intake_video_input.mp4" type="video/mp4" />
+                </video>
+              </div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-output">Output</span>
+            <div class="row-content">
+              <div class="output-quote">"An elderly man with gray hair and a beard meticulously repairs a watch with small tools under the focused light of a desk lamp, surrounded by watch parts on a wooden desk in a dimly lit room."</div>
+              <div class="meta-note">视频文件通过 <code>media_attachments=[{"type": "video"}]</code> 传给 LLM，描述与视频内容吻合</div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-caption">Caption</span>
+            <div class="row-content">
+              <div class="caption-quote">"User-uploaded video reference. Available for downstream agents."</div>
+              <div class="meta-note">caption 是硬编码模板；visual_summary 存在 payload 的 <code>content.visual_summary</code></div>
+            </div>
+          </div>
+          <div class="io-flow">
+            <span>Caption 策略:</span>
+            <span class="arrow">&rarr;</span>
+            <span>硬编码 <code>"User-uploaded video reference..."</code></span>
+            <span class="arrow">&rarr;</span>
+            <span>InputResolver 匹配 <code>[source_video]</code> 类标签</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- IntakeAudioAgent -->
+      <div class="result-card">
+        <div class="result-head">
+          <div class="result-icon" style="background:rgba(74,222,128,0.12)">🎵</div>
+          <span class="result-name">IntakeAudioAgent</span><span class="result-desc">— 分析上传音频，生成内容描述 caption</span>
+          <span class="result-status status-pass">PASS</span>
+        </div>
+        <div class="result-body">
+          <div class="agent-how">将上传音频以 multimodal 附件传给 Audio LLM（media_attachments type=audio）。LLM 听音频后返回听觉摘要（语音类型、内容、情绪）。输出 caption-rich artifact 供下游 Transcription / VoiceClone 消费。</div>
+          <div class="result-row">
+            <span class="row-label label-input">Input</span>
+            <div class="row-content">
+              <code>aud_final.wav</code> (47 KB) — OpenAI TTS 生成的旁白音频 (voice=alloy, 中性偏女声)
+              <div class="media-preview">
+                <audio controls preload="metadata">
+                  <source src="./test-assets/intake_audio_input.wav" type="audio/wav" />
+                </audio>
+              </div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-output">Output</span>
+            <div class="row-content">
+              <div class="output-quote">"A clear human voice is speaking 'Hello world. Placeholder dialogue.'"</div>
+              <div class="meta-note">音频通过 <code>media_attachments=[{"type": "audio"}]</code> 传给 LLM，转录了具体内容。TTS voice=alloy 中性偏女声，LLM 选择不判断性别</div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-caption">Caption</span>
+            <div class="row-content">
+              <div class="caption-quote">"User-uploaded audio reference. Available for downstream agents."</div>
+              <div class="meta-note">caption 是硬编码模板；auditory_summary 存在 payload 的 <code>content.auditory_summary</code></div>
+            </div>
+          </div>
+          <div class="io-flow">
+            <span>Caption 策略:</span>
+            <span class="arrow">&rarr;</span>
+            <span>硬编码 <code>"User-uploaded audio reference..."</code></span>
+            <span class="arrow">&rarr;</span>
+            <span>InputResolver 匹配 <code>[reference_audio]</code> / <code>[source_media]</code> 类标签</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- BriefEnricherAgent -->
+      <div class="result-card">
+        <div class="result-head">
+          <div class="result-icon" style="background:rgba(74,222,128,0.12)">🔗</div>
+          <span class="result-name">BriefEnricherAgent</span><span class="result-desc">— 将图片视觉描述织入 brief，分类图片角色</span>
+          <span class="result-status status-pass">PASS</span>
+        </div>
+        <div class="result-body">
+          <div class="agent-how">读取 IntakeTextAgent 的 creative brief + IntakeImageAgent 的 visual_description。LLM 根据用户文本推断每张图的 role（character/location/prop/style），将视觉描述织入 brief。更新图片 caption 为 role-specific（如 'Global character reference image'）。</div>
+          <div class="result-row">
+            <span class="row-label label-input">Input</span>
+            <div class="row-content">
+              Creative brief: "retired watchmaker repairs pocket watch on New Year's Eve, use uploaded image as protagonist"
+              <br/>Image visual_description: "older man with white hair, blue eyes, denim shirt, leather apron"
+              <div class="media-preview">
+                <img src="./test-assets/intake_image_input.png" alt="Input: character reference" />
+              </div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-output">Output</span>
+            <div class="row-content">
+              <div class="output-quote">enriched_brief: "Create a 30-second cinematic short about a retired watchmaker, an older man with white hair, blue eyes, wearing a denim shirt and a leather apron, who races against midnight to repair his late wife's cherished pocket watch on New Year's Eve."
+
+image_classifications: [{index: 0, role: "character", entity_hint: "the protagonist"}]</div>
+              <div class="meta-note">LLM 从用户文本 "use the uploaded character image as the protagonist" 判断 role=character，并把图片的 visual_description 织入 brief 使下游 StoryAgent 生成匹配参考图的角色</div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-caption">Caption 1</span>
+            <div class="row-content">
+              <div class="caption-quote">"Enriched creative brief with visual reference descriptions integrated. Supersedes the raw user brief for story generation — contains the user's original concept plus detailed visual descriptions of uploaded reference images."</div>
+              <div class="meta-note">注册为 enriched brief artifact。"Supersedes" 让 InputResolver 优先选这个而不是 IntakeTextAgent 的 raw brief</div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-caption">Caption 2</span>
+            <div class="row-content">
+              <div class="caption-quote">"Global character reference image. Visual identity anchor for downstream keyframe generation."</div>
+              <div class="meta-note">为每张分类后的图片注册 role-specific caption，下游 KeyFrameAgent 按 <code>[character_reference]</code> 精确匹配到这条</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════════ -->
+    <!-- NARRATIVE DESIGN — verified via historical E2E                    -->
+    <!-- ══════════════════════════════════════════════════════════════════ -->
+    <div class="test-group">
+      <div class="test-group-title"><span class="group-badge badge-production">NARRATIVE DESIGN</span> 叙事设计 — 已验证（历史 E2E 测试）</div>
+
+      <div class="result-card"><div class="result-head">
+        <div class="result-icon" style="background:rgba(251,191,36,0.12)">📖</div>
+        <span class="result-name">StoryAgent</span><span class="result-desc">— 从创意简报生成结构化故事蓝图</span>
+        <span class="result-status status-verified">VERIFIED</span>
+      </div>
+        <div class="result-body"><div class="agent-how">接收 creative brief JSON 文本，LLM 一次调用生成完整故事蓝图。输出 logline、角色表、地点、故事弧线、场景大纲。纯 LLM agent，无 materializer。</div></div></div>
+      <div class="result-card"><div class="result-head">
+        <div class="result-icon" style="background:rgba(167,139,250,0.12)">🎬</div>
+        <span class="result-name">ScreenplayAgent</span><span class="result-desc">— 将故事蓝图展开为分镜剧本</span>
+        <span class="result-status status-verified">VERIFIED</span>
+      </div>
+        <div class="result-body"><div class="agent-how">接收 StoryAgent 的 story_blueprint JSON 文本。LLM 展开为按 scene/shot 拆分的完整分镜剧本，含 block_type（action/dialogue/narration）、视觉方向、一致性包。纯 LLM agent。</div></div></div>
+      <div class="result-card"><div class="result-head">
+        <div class="result-icon" style="background:rgba(79,142,247,0.12)">📋</div>
+        <span class="result-name">UnivaStoryboardAgent</span><span class="result-desc">— UniVA 风格 storyboard 规划</span>
+        <span class="result-status status-verified">VERIFIED</span>
+      </div>
+        <div class="result-body"><div class="agent-how">接收 creative brief，按 UniVA 风格生成 storyboard。输出角色定义（appearance + personality）+ 逐镜头分解（setting、plot beat、camera）。纯 LLM agent。</div></div></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════════ -->
+    <!-- MEDIA GENERATION — verified via historical E2E                    -->
+    <!-- ══════════════════════════════════════════════════════════════════ -->
+    <div class="test-group">
+      <div class="test-group-title"><span class="group-badge badge-production">MEDIA GENERATION</span> 媒体生成 — 3 VERIFIED</div>
+
+      <div class="result-card"><div class="result-head">
+        <div class="result-icon" style="background:rgba(79,142,247,0.12)">🖼</div>
+        <span class="result-name">KeyFrameAgent</span><span class="result-desc">— 三层关键帧系统：身份图 + 场景锚 + 每镜头静帧</span>
+        <span class="result-status status-verified">VERIFIED</span>
+      </div>
+        <div class="result-body"><div class="agent-how">LLM 从 screenplay 规划三层关键帧（L1 全局身份图、L2 场景锚、L3 每 shot 静帧 + motion hint）。Materializer 调 fal-ai/nano-banana-2 生成/编辑图片。evaluator 校验 ID 递增 + keyframe_count=1。</div></div></div>
+      <div class="result-card"><div class="result-head">
+        <div class="result-icon" style="background:rgba(249,115,22,0.12)">🎥</div>
+        <span class="result-name">VideoAgent</span><span class="result-desc">— 逐镜头生成视频片段，I2V 模型拼接</span>
+        <span class="result-status status-verified">VERIFIED</span>
+      </div>
+        <div class="result-body"><div class="agent-how">LLM 从 screenplay + keyframes 规划每 shot 的视频生成参数。Materializer 读 L3 keyframe 图片作为 I2V 起始帧，调 fal-ai/kling-video 生成视频片段。FFmpeg 拼接 shot→scene→final。</div></div></div>
+      <div class="result-card"><div class="result-head">
+        <div class="result-icon" style="background:rgba(79,142,247,0.12)">🖼</div>
+        <span class="result-name">UnivaKeyFrameAgent</span><span class="result-desc">— UniVA 风格关键帧：角色参考图 + 逐镜头图</span>
+        <span class="result-status status-verified">VERIFIED</span>
+      </div>
+        <div class="result-body"><div class="agent-how">按 UniVA 方式生成角色参考图 + 逐 shot 关键帧。Materializer 调 fal-ai/nano-banana-2 生成图片。输出角色 identity sheets + per-shot keyframe images。</div></div></div>
+      <div class="result-card"><div class="result-head">
+        <div class="result-icon" style="background:rgba(79,142,247,0.12)">🎥</div>
+        <span class="result-name">UnivaVideoAgent</span><span class="result-desc">— UniVA 风格视频：关键帧 → I2V 片段 → 合并</span>
+        <span class="result-status status-verified">VERIFIED</span>
+      </div>
+        <div class="result-body"><div class="agent-how">从 UniVA storyboard + keyframes 生成视频。Materializer 调 fal-ai/kling-video I2V 逐 shot 生成，FFmpeg concat 合并。输出 per-shot clips + final merged video。</div></div></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════════ -->
+    <!-- POST-PRODUCTION                                                   -->
+    <!-- ══════════════════════════════════════════════════════════════════ -->
+    <div class="test-group">
+      <div class="test-group-title"><span class="group-badge badge-postprod">POST-PRODUCTION</span> 后期合成 — 2/2 PASS</div>
+
+      <!-- SubtitleAgent -->
+      <div class="result-card">
+        <div class="result-head">
+          <div class="result-icon" style="background:rgba(74,222,128,0.12)">💬</div>
+          <span class="result-name">SubtitleAgent</span><span class="result-desc">— 从剧本生成带时间戳的 SRT 字幕轨</span>
+          <span class="result-status status-pass">PASS</span>
+        </div>
+        <div class="result-body">
+          <div class="agent-how">读剧本 → 找出所有说的话和旁白 → 按说话速度算出每句话在第几秒出现 → 输出 SRT 字幕文件。action shot（纯动作没人说话的）自动跳过。</div>
+          <div class="result-row">
+            <span class="row-label label-input">Input</span>
+            <div class="row-content">
+              ScreenplayAgent 真实输出（Story → Screenplay 全链路，两个老友在火车站重逢的对话场景）:
+              <div class="text-preview">1 scene, 27 shots (12 dialogue + 15 action):
+
+sh_006 [dialogue] Jack: "Maya."
+sh_007 [dialogue] Maya: "Jack."
+sh_008 [dialogue] Maya: "You made it. Was the journey... long?"
+sh_009 [dialogue] Jack: "Longer than I expected. But uneventful."
+sh_010 [dialogue] Jack: "Twenty years, Maya. It feels like yesterday, and a lifetime ago, all at once."
+sh_011 [dialogue] Maya: "Too many what-ifs to count."
+...</div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-output">Output</span>
+            <div class="row-content">
+              <div class="output-quote">language: en, 20 cues:
+
+cue_001: [00:00:01,000 → 00:00:02,500] Jack: "Maya."
+cue_002: [00:00:02,700 → 00:00:04,200] Maya: "Jack."
+cue_003: [00:00:04,400 → 00:00:07,600] Maya: "You made it. Was the journey... long?"
+cue_004: [00:00:07,800 → 00:00:10,600] Jack: "Longer than I expected. But uneventful."
+cue_005: [00:00:10,800 → 00:00:12,300] Jack: "Twenty years, Maya."
+cue_006: [00:00:12,500 → 00:00:14,100] Jack: "It feels like yesterday,"
+cue_007: [00:00:14,300 → 00:00:17,100] Jack: "and a lifetime ago, all at once."
+cue_008: [00:00:17,300 → 00:00:19,700] Maya: "Too many what-ifs to count."
+... +12 more cues</div>
+              <div class="meta-note">ScreenplayAgent 输出 27 shots（12 dialogue + 15 action）。SubtitleAgent 提取 12 个 dialogue shot 生成 20 条 cue（长台词自动断行），action shot 正确跳过</div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-caption">Caption</span>
+            <div class="row-content">
+              <div class="caption-quote">"Subtitle track(s) (en): 20 cue(s) with SRT timing. Generated from screenplay dialogue/narration."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CompositorAgent -->
+      <div class="result-card">
+        <div class="result-head">
+          <div class="result-icon" style="background:rgba(74,222,128,0.12)">🎞</div>
+          <span class="result-name">CompositorAgent</span><span class="result-desc">— 最终合成：视频+音频 mux、字幕烧录、转场、调色</span>
+          <span class="result-status status-pass">PASS (demo bundle + 4/4 replay)</span>
+        </div>
+        <div class="result-body">
+          <div class="agent-how">LLM 规划合成方案：shot 间转场类型、调色参数、字幕样式。Materializer 用 FFmpeg 执行：video + audio mux、SRT 字幕烧录（subtitles filter）、eq 调色。输出最终可交付 MP4。<br/><br/>本例真资产存在 <code>process-flow-visualizer/test-assets/compositor_demo/</code>（种子剧本 + 4 keyframes + 4 Kling clips + narration / music / ambience / audio mix / subtitle + compositor package），对应测试 <code>tests/agents/test_compositor_demo_replay.py</code> 可离线重跑 FFmpeg 阶段验证资产可复现。</div>
+          <div class="result-row">
+            <span class="row-label label-input">Story</span>
+            <div class="row-content">
+              <b>"The Note"</b> — 咖啡馆 20s 短片。1 scene, 4 shots = 2 dialogue + 2 action（Anna, barista Mira, 一个陌生人）。
+              <div class="text-preview">{
+  "title": "The Note",
+  "scenes": [{
+    "scene_id": "sc_001",
+    "heading": "INT. Neighborhood Coffee Shop — DAY",
+    "shots": [
+      {"sh_001": "action — Mira slides steaming cup to Anna"},
+      {"sh_002": "dialogue — Anna: 'Thanks. Same time tomorrow?'"},
+      {"sh_003": "action — stranger's hand slides a folded note beside the cup"},
+      {"sh_004": "dialogue — Stranger: 'You dropped this.'"}
+    ],
+    "estimated_duration_seconds": 20.0
+  }]
+}</div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-input">Pipeline assets</span>
+            <div class="row-content">
+              <code>01_screenplay_seed.json</code> (手写种子，Plan A 合规)<br/>
+              <code>02_keyframes/</code> — 4 × PNG，fal-ai/nano-banana-2 真实生成（每张 1.6–1.9 MB）<br/>
+              <code>03_video/</code> — 4 × Kling I2V 5s clip（fal-ai/kling-video/v2.6/pro） + ffmpeg concat → <code>clip_final.mp4</code> 20.2s / 34 MB<br/>
+              <code>04_narration/</code> — 2 TTS segment（fal-ai/minimax/speech-02-turbo，Anna + Stranger 分音色）<br/>
+              <code>05_music/</code> + <code>06_ambience/</code> — 1 cue + 1 bed（fal-ai/stable-audio）<br/>
+              <code>07_audio_mix/</code> — FFmpeg amix（narration 1.0 + music 0.3 + ambience 0.2）<br/>
+              <code>08_subtitle/</code> — 2 SRT cues
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-output">Output</span>
+            <div class="row-content">
+              <div class="output-quote">transitions: 3
+  sh_001 → sh_002: cut (0ms)
+  sh_002 → sh_003: cut (0ms)
+  sh_003 → sh_004: cut (0ms)
+
+color_grade: tone="cinematic warm", brightness=0.0, contrast=0.05, saturation=0.0
+subtitle_style: font_size=24, color=#FFFFFF, outline=#000000, position=bottom, burn_in=true
+output: 1920x1080, 30fps, mp4
+
+final.mp4: 1948×1064, 20.21s, 7.49 MB — FFmpeg 真实生成</div>
+              合成视频（FFmpeg 字幕烧录 + 调色，真实生成）：
+              <div class="media-preview">
+                <video controls preload="metadata">
+                  <source src="./test-assets/compositor_demo/09_compositor/final.mp4" type="video/mp4" />
+                </video>
+              </div>
+              <div class="meta-note">FFmpeg 真实执行：<code>subtitles={srt_path}:force_style='FontSize=24,PrimaryColour=&amp;H00FFFFFF&amp;,OutlineColour=&amp;H00000000&amp;,Outline=2,Shadow=1'</code> + <code>eq=brightness=0:contrast=1.05:saturation=1.0</code> + libx264。在视频中能看到 "Thanks. Same time tomorrow?" / "You dropped this." 两条白色带黑描边字幕。</div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-output">Replay test</span>
+            <div class="row-content">
+              <div class="output-quote">tests/agents/test_compositor_demo_replay.py
+
+test_bundle_has_all_required_assets           PASSED
+test_screenplay_seed_is_plan_a_compliant      PASSED
+test_compositor_materializer_replays_from_bundle  PASSED
+test_compositor_plan_mentions_the_four_shots  PASSED
+
+============================== 4 passed in 3.78s ==============================</div>
+              从入库资产直接调 <code>CompositorService.compose(video_path, audio_path, subtitle_srt, plan)</code>，验证 FFmpeg mux + burn + grade 可 100% 离线重现。不调任何 live API。
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-caption">Caption</span>
+            <div class="row-content">
+              <div class="caption-quote">"Final composited video (1920x1080): 3 transition(s), audio mix, subtitle burn-in. Ready for delivery."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════════ -->
+    <!-- LOCALIZATION                                                      -->
+    <!-- ══════════════════════════════════════════════════════════════════ -->
+    <div class="test-group">
+      <div class="test-group-title"><span class="group-badge badge-postprod">LOCALIZATION</span> 多语言 / 本地化 — 2/2 PASS</div>
+
+      <!-- TranslationAgent -->
+      <div class="result-card">
+        <div class="result-head">
+          <div class="result-icon" style="background:rgba(251,191,36,0.12)">🌐</div>
+          <span class="result-name">TranslationAgent</span><span class="result-desc">— 翻译结构化文本，保留 JSON 结构不变</span>
+          <span class="result-status status-pass">PASS</span>
+        </div>
+        <div class="result-body">
+          <div class="agent-how">LLM 接收上游 artifact 的 JSON 文本 + target_language，翻译所有人可读字段（对白、描述、标题），保留结构性 key（scene_id、shot_id）不变。输出 translated_payload 为完整翻译后的 JSON 对象。纯 LLM agent。</div>
+          <div class="result-row">
+            <span class="row-label label-input">Input</span>
+            <div class="row-content">
+              中文剧本 (944 chars) — 火星洞穴场景，含旁白、对白、动作
+              <div class="text-preview">{
+  "content": {
+    "title": "火星洞穴",
+    "scenes": [{
+      "scene_id": "sc_001",
+      "heading": "内景 火星洞穴 - 白天",
+      "shots": [
+        {"shot_id": "sh_001", "block_type": "narration", "text": "洞穴的墙壁闪烁着神秘的蓝色光芒。清晨的阳光无法到达这里，但水晶自身散发出柔和的荧光。"},
+        {"shot_id": "sh_002", "block_type": "dialogue", "text": "快看这些水晶！它们好像在呼吸一样。", "character_name": "陈明"},
+        {"shot_id": "sh_003", "block_type": "dialogue", "text": "别碰它们。我们必须先向基地报告这个发现。", "character_name": "朴智妍"},
+        {"shot_id": "sh_004", "block_type": "action", "text": "两人小心翼翼地用仪器扫描水晶..."}
+      ]
+    }]
+  }
+}</div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-output">Output</span>
+            <div class="row-content">
+              <code>source_language: zh → target_language: en</code>
+              <div class="output-quote">{
+  "title": "Mars Caves",
+  "scenes": [{
+    "scene_id": "sc_001",
+    "heading": "INT. MARS CAVE - DAY",
+    "summary": "Two astronauts discover glowing crystals.",
+    "shots": [
+      {"shot_id": "sh_001", "block_type": "narration", "text": "The cave walls shimmer with a mysterious blue glow. Morning sunlight cannot reach here, but the crystals emit a soft fluorescence of their own."},
+      {"shot_id": "sh_002", "text": "Look at these crystals! They seem to be breathing.", "character_name": "Chen Ming"},
+      {"shot_id": "sh_003", "text": "Don't touch them. We must report this discovery to base first.", "character_name": "Park Ji-yeon"}
+    ]
+  }]
+}</div>
+              <div class="meta-note">JSON 结构完全保留（scene_id, shot_id, block_type 不变），只翻译了人可读内容。角色名音译为 Chen Ming / Park Ji-yeon</div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-caption">Caption</span>
+            <div class="row-content">
+              <div class="caption-quote">"Translation (zh → en). Full structured text translated with original structure preserved."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TranscriptionAgent -->
+      <div class="result-card">
+        <div class="result-head">
+          <div class="result-icon" style="background:rgba(251,191,36,0.12)">🎙</div>
+          <span class="result-name">TranscriptionAgent</span><span class="result-desc">— 语音转文字：带时间戳逐句转录 + 说话人识别</span>
+          <span class="result-status status-pass">PASS</span>
+        </div>
+        <div class="result-body">
+          <div class="agent-how">把音频文件上传给 fal-ai/whisper 做语音识别，拿到每句话的文字和时间。然后 LLM 整理结果：判断哪句是谁说的、去掉口头禅、格式化输出。最终得到 "第0.0-0.9秒 Speaker_1: Hello world" 这样的逐句转录。</div>
+          <div class="result-row">
+            <span class="row-label label-input">Input</span>
+            <div class="row-content">
+              <code>aud_final.wav</code> (47 KB) — OpenAI TTS 生成的旁白音频
+              <div class="media-preview">
+                <audio controls preload="metadata">
+                  <source src="./test-assets/intake_audio_input.wav" type="audio/wav" />
+                </audio>
+              </div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-output">Output</span>
+            <div class="row-content">
+              <div class="output-quote">language: en
+
+seg_001: [0.0s - 0.9s] Speaker_1: "Hello, world."
+seg_002: [1.6s - 2.4s] Speaker_1: "Placeholder dialogue."
+
+full_text: "Hello, world. Placeholder dialogue."</div>
+              <div class="meta-note">STT 由 fal.ai Whisper 真实转录，LLM 后处理归属说话人 + 格式化时间戳</div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-caption">Caption</span>
+            <div class="row-content">
+              <div class="caption-quote">"Transcript (en): 2 segment(s) with timestamps. Speech-to-text from source media."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════════ -->
+    <!-- VIDEO EDITING                                                     -->
+    <!-- ══════════════════════════════════════════════════════════════════ -->
+    <div class="test-group">
+      <div class="test-group-title"><span class="group-badge badge-editing">VIDEO EDITING</span> 视频二次编辑 — 3/3 PASS</div>
+
+      <!-- StyleTransferAgent -->
+      <div class="result-card">
+        <div class="result-head">
+          <div class="result-icon" style="background:rgba(45,212,191,0.12)">🎨</div>
+          <span class="result-name">StyleTransferAgent</span><span class="result-desc">— 视觉风格迁移：动漫/水彩/油画等</span>
+          <span class="result-status status-pass">PASS</span>
+        </div>
+        <div class="result-body">
+          <div class="agent-how">LLM 将用户的风格描述优化为模型可用的 style_prompt + 确定 strength/preserve_motion。Materializer 调 fal-ai/vace/style-transfer 上传源视频 + prompt 执行风格迁移。输出风格化视频 MP4。</div>
+          <div class="result-row">
+            <span class="row-label label-input">Input</span>
+            <div class="row-content">
+              <code>task_1_f9eb85bb_clip_final.mp4</code> (20s) + style: "Studio Ghibli anime style with soft watercolor textures, warm golden lighting"
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-output">Output</span>
+            <div class="row-content">
+              <div class="output-quote">style_prompt: "Studio Ghibli anime style, soft watercolor textures, hand-painted, warm golden lighting, serene, painterly, luminous, dreamy, pastel color palette"
+strength: 0.9
+preserve_motion: true</div>
+              <div class="meta-note">LLM 将用户的风格描述优化为模型可用的 prompt。Materializer 调 fal.ai video edit service 应用风格 — fal.ai 模型端点待确认</div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-caption">Caption</span>
+            <div class="row-content">
+              <div class="caption-quote">"Style-transferred video: The video will be transformed into the iconic Studio Ghibli anime aesthetic... Visual style applied to source video."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- InpaintAgent -->
+      <div class="result-card">
+        <div class="result-head">
+          <div class="result-icon" style="background:rgba(45,212,191,0.12)">🖌</div>
+          <span class="result-name">InpaintAgent</span><span class="result-desc">— 视频重绘 / 物体替换，支持深度前景背景分离</span>
+          <span class="result-status status-pass">PASS</span>
+        </div>
+        <div class="result-body">
+          <div class="agent-how">LLM 规划 mask_mode（manual/depth_fg/depth_bg/object_track）+ inpaint_prompt。Materializer 按 mode 调 depth estimation 或 SAM 生成 mask，再调 fal-ai/vace/inpaint 重绘。输出重绘视频 MP4。</div>
+          <div class="result-row">
+            <span class="row-label label-input">Input</span>
+            <div class="row-content">
+              <code>task_1_f9eb85bb_clip_final.mp4</code> (20s) + mask_mode: depth_background
+              <br/>replacement: "Replace the workshop background with a futuristic space station interior, with Earth visible through a large window"
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-output">Output</span>
+            <div class="row-content">
+              <div class="output-quote">mask_mode: depth_background
+inpaint_prompt: "A sleek, futuristic space station interior, characterized by polished metallic surfaces and softly glowing blue and white accent lighting. A massive panoramic window dominates the background, offering a breathtaking, high-definition view of Earth from orbit."
+blend_edge_px: 10</div>
+              <div class="meta-note">mask_mode=depth_background：用深度估计自动分离前景（钟表匠不动）和背景（工作坊 → 太空站）。fal.ai VACE inpaint 模型端点待确认</div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-caption">Caption</span>
+            <div class="row-content">
+              <div class="caption-quote">"Inpainted video (depth_background mask): Replace the workshop background with a futuristic space station interior, featuring a large window with Earth visible. Object replacement / depth-based edit applied."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VideoExtendAgent -->
+      <div class="result-card">
+        <div class="result-head">
+          <div class="result-icon" style="background:rgba(45,212,191,0.12)">⏩</div>
+          <span class="result-name">VideoExtendAgent</span><span class="result-desc">— 视频续写：从末帧继续生成新片段</span>
+          <span class="result-status status-pass">PASS</span>
+        </div>
+        <div class="result-body">
+          <div class="agent-how">LLM 将用户的续写描述优化为 continuation_prompt + motion_description。Materializer 用 FFmpeg 提取源视频末帧（-sseof -0.1），以末帧为 I2V 起始帧调 fal-ai/kling-video 生成续写片段。输出续写视频 MP4。</div>
+          <div class="result-row">
+            <span class="row-label label-input">Input</span>
+            <div class="row-content">
+              <code>task_1_f9eb85bb_clip_final.mp4</code> (20s) → FFmpeg 提取末帧 (t=20.1s) 作为 I2V 起始帧：
+              <div class="media-preview">
+                <img src="./test-assets/video_extend_last_frame.png" alt="Last frame used as I2V starting frame" />
+              </div>
+              continuation: "The watchmaker suddenly stands up in frustration, grabs the pocket watch and hurls it violently across the workshop. The watch shatters against the wall, gears and springs exploding in all directions."
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-output">Output</span>
+            <div class="row-content">
+              <div class="output-quote">prompt: "The elderly watchmaker suddenly stands up in frustration, grabs the golden pocket watch from the desk, and hurls it violently across the dim workshop. The watch shatters against the stone wall, gears and springs exploding in all directions, glinting in the lamplight."
+
+duration: 5.0s — 从安静修表突变为愤怒摔表，测试续写对剧烈情绪/动作转变的处理</div>
+              续写视频（5s，fal.ai I2V 从末帧真实生成）：
+              <div class="media-preview">
+                <video controls muted preload="metadata">
+                  <source src="./test-assets/video_extend_output.mp4" type="video/mp4" />
+                </video>
+              </div>
+              <div class="meta-note">Materializer 用 FFmpeg 提取源视频末帧 → 作为 I2V 起始帧 + continuation_prompt → fal.ai 生成续写片段</div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-caption">Caption</span>
+            <div class="row-content">
+              <div class="caption-quote">"Video extension (+5.0s): The elderly watchmaker suddenly stands up in frustration, grabs the golden pocket watch from the desk, and hurls it violently across the dim workshop. The watch shatters against the stone wall, gears and springs exploding in all directions, glinting in the lamplight.. Continuation clip generated from source video."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════════ -->
+    <!-- VIDEO UNDERSTANDING                                               -->
+    <!-- ══════════════════════════════════════════════════════════════════ -->
+    <div class="test-group">
+      <div class="test-group-title"><span class="group-badge badge-understand">VIDEO UNDERSTANDING</span> 视频理解 + 搜索 — 2/2 PASS</div>
+
+      <!-- VideoAnalysisAgent -->
+      <div class="result-card">
+        <div class="result-head">
+          <div class="result-icon" style="background:rgba(45,212,191,0.12)">🔍</div>
+          <span class="result-name">VideoAnalysisAgent</span><span class="result-desc">— 视频深度分析：场景检测、实体识别、摘要</span>
+          <span class="result-status status-pass">PASS</span>
+        </div>
+        <div class="result-body">
+          <div class="agent-how">
+            将源视频以 multimodal 附件传给 Gemini 2.5 Flash。LLM 观看视频后输出场景边界切割 + 逐场景描述 + 实体识别 + mood + 整体摘要。纯 LLM + Vision agent，无 materializer。
+            <br/><br/>
+            <b>接口契约（去歧义版）</b>：<code>VideoAnalysisAgentInput.source_video_path</code> <b>必填</b>，schema 校验器强制：(1) 路径非空；(2) 文件必须存在；(3) MIME 必须为 <code>video/*</code>——图片/音频/不存在的路径<b>全部在 validation 阶段报错</b>，不接受任何文字描述 fallback。LLM 客户端的 <code>_build_multimodal_user_content</code> 也对 video attachment 做同样检查，缺失文件会抛 <code>FileNotFoundError</code>。
+          </div>
+          <div class="result-row">
+            <span class="row-label label-input">Input</span>
+            <div class="row-content">
+              <code>process-flow-visualizer/test-assets/video_analysis_input.mp4</code> (19 MB, 20.2s) — 由 VideoAgent 生成的完整短片
+              <div class="media-preview">
+                <video controls muted preload="metadata" style="max-width:420px">
+                  <source src="./test-assets/video_analysis_input.mp4" type="video/mp4" />
+                </video>
+              </div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-output">Output (Latest live re-test · 2026-04-14)</span>
+            <div class="row-content">
+              <div class="output-quote">title: "The Meticulous Watchmaker"
+summary: "A senior watchmaker, adorned with a loupe, meticulously repairs an antique golden pocket watch in his workshop…"
+genre: Documentary
+duration: 20.5s
+
+scene_001: [0.0–5.5s]  "A senior watchmaker, wearing a loupe, is intently focused on the movement of a golden pocket watch."
+scene_002: [5.5–10.5s] "A closer view shows the watchmaker's skilled hands carefully manipulating a tool on the exposed mechanism."
+scene_003: [10.5–15.5s] "An extreme close-up focuses on the internal gears and spring barrel of the watch."
+scene_004: [15.5–20.5s] "The watchmaker is again seen in a wider shot, similar to the opening, as he completes a final check."</div>
+              <div class="meta-note" style="color:#34d399">
+                ✅ <b>Live 已验证</b>：文件以 <code>image_url: {url: "data:video/mp4;base64,…"}</code> 送入（Gemini 官方 OpenAI-compat 扩展），经 CF AI Gateway 到达 Gemini 2.5 Flash。输出明确识别了 loupe / gears / spring barrel 等内部细节——**不是只看第一帧**，是真实多帧分析。<br/>
+                执行：<code>FW_ENABLE_LIVE_LLM_TESTS=1 pytest tests/agents/test_new_agents_live.py::TestVideoAnalysisAgentLive::test_analyze_real_video -v -s</code> → PASS in 20.5s。
+              </div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-caption">Caption</span>
+            <div class="row-content">
+              <div class="caption-quote">"Video analysis: 'The Meticulous Watchmaker' — 4 scene(s), Documentary. Structured scene-by-scene breakdown with entities and descriptions."</div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label" style="color:#a78bfa">⚠️ 之前的 stale 版</span>
+            <div class="row-content" style="opacity:.7">
+              旧版测试 (<code>test_analyze_from_description</code>) 曾用 <code>/tmp/video.mp4</code> 占位路径 + <code>rework_notes</code> 塞一段文字描述作 fallback——视频字节<b>从未真送到模型</b>，只是测了 LLM 能不能基于文字描述写出 scene 结构。当前版本删掉了文字 fallback，schema 也会在接收非视频输入时直接报错，确保 "这个 agent 真的在分析视频"。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HighlightAgent -->
+      <div class="result-card">
+        <div class="result-head">
+          <div class="result-icon" style="background:rgba(45,212,191,0.12)">✂️</div>
+          <span class="result-name">HighlightAgent</span><span class="result-desc">— 精选裁剪：选取最佳片段编译集锦</span>
+          <span class="result-status status-pass">PASS</span>
+        </div>
+        <div class="result-body">
+          <div class="agent-how">LLM 基于 VideoAnalysisAgent 的场景分析 + 用户 criteria，选择最佳片段并打分（0-1）。Materializer 用 FFmpeg clip_segment 逐段裁剪 + concat_clips 拼接。输出 highlight reel MP4。</div>
+          <div class="result-row">
+            <span class="row-label label-input">Input</span>
+            <div class="row-content">
+              <code>task_1_f9eb85bb_clip_final.mp4</code> (20s) + VideoAnalysisAgent 的 1 场景分析结果（含 9 实体）
+              <br/>criteria: "most visually striking and emotionally resonant moments"
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-output">Output</span>
+            <div class="row-content">
+              <div class="output-quote">clip_001: [0.0-5.0s] score=0.85 — Introduces the watchmaker and his workspace, highlighting initial deep focus and setting of timeless craftsmanship
+clip_002: [7.0-14.0s] score=0.95 — Extremely visually striking close-up of delicate watch mechanism and watchmaker's magnified eye, emphasizing intricate beauty of the craft
+clip_003: [15.0-20.0s] score=0.90 — Most emotionally resonant: watchmaker looks up contemplatively, holding repaired watch, conveying satisfaction and dedication
+
+Total: 17.0s selected from 20s (85%)</div>
+              精华集锦（FFmpeg clip + concat 真实生成）：
+              <div class="media-preview">
+                <video controls muted preload="metadata">
+                  <source src="./test-assets/highlight_output.mp4" type="video/mp4" />
+                </video>
+              </div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-caption">Caption</span>
+            <div class="row-content">
+              <div class="caption-quote">"Highlight reel: 3 clip(s), 17.0s total. Criteria: most visually striking and emotionally resonant moments."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════════ -->
+    <!-- VOICE                                                             -->
+    <!-- ══════════════════════════════════════════════════════════════════ -->
+    <div class="test-group">
+      <div class="test-group-title"><span class="group-badge badge-voice">VOICE / AUDIO</span> 语音 / 音频 — 5/5 PASS</div>
+
+      <!-- NarrationAgent -->
+      <div class="result-card">
+        <div class="result-head">
+          <div class="result-icon" style="background:rgba(244,114,182,0.12)">🎤</div>
+          <span class="result-name">NarrationAgent</span><span class="result-desc">— 逐 shot 对白 → TTS 语音</span>
+          <span class="result-status status-pass">PASS</span>
+        </div>
+        <div class="result-body">
+          <div class="agent-how">LLM 从 screenplay 提取 dialogue/narration/monologue shot 的文本，生成 narr_NNN 格式 segments。Materializer 对每个 segment 调 fal-ai/minimax TTS 合成语音。输出 per-shot WAV 文件。</div>
+          <div class="result-row">
+            <span class="row-label label-input">Input</span>
+            <div class="row-content">ScreenplayAgent 真实输出 — 火车站重逢剧本（1 scene, 27 shots, 12 dialogue + 15 action）</div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-output">Output</span>
+            <div class="row-content">
+              <div class="output-quote">12 segments (从 27 shots 中提取 12 个 dialogue shot):
+
+narr_001: [sh_007] Jack: "Maya."
+narr_002: [sh_008] Maya: "Jack."
+narr_003: [sh_010] Maya: "You made it. Was the journey... long?"
+narr_004: [sh_011] Jack: "Longer than I expected. But uneventful."
+narr_005: [sh_013] Jack: "Twenty years, Maya. It feels like yesterday, and a lifetime ago..."
+... +7 more
+
+12 段拼接总时长 ≈ 50.22s (实际 TTS 真实秒数, 不再估算)</div>
+              TTS 语音样本（fal-ai/minimax/speech-02-turbo, 12 段拼接 ≈ 50s, 4/14 02:01 重跑）：
+              <div class="media-preview">
+                <audio controls preload="metadata">
+                  <source src="./test-assets/narration_sample.wav" type="audio/wav" />
+                </audio>
+              </div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-caption">Caption</span>
+            <div class="row-content">
+              <div class="caption-quote">"Narration audio: 12 segment(s) of TTS speech from screenplay dialogue."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MusicAgent -->
+      <div class="result-card">
+        <div class="result-head">
+          <div class="result-icon" style="background:rgba(244,114,182,0.12)">🎵</div>
+          <span class="result-name">MusicAgent</span><span class="result-desc">— 逐 scene 生成背景音乐 · 时长读 screenplay 字段</span>
+          <span class="result-status status-pass">PASS</span>
+        </div>
+        <div class="result-body">
+          <div class="agent-how">LLM 从 screenplay 的场景 mood/tone 推导音乐风格关键词。<b>时长不再自己估算</b>：直接读 <code>screenplay.scenes[scene_id].estimated_duration_seconds</code>（ScreenplayAgent 一次性算好的 <code>dialogue_words / 2.5 + action_shots × 3</code>），verbatim 写进 <code>duration_seconds</code>。AmbienceAgent 读同一字段，两者秒数保证相等。Materializer 调 fal-ai/stable-audio 生成，超 30s 分段拼接。</div>
+          <div class="result-row">
+            <span class="row-label label-input">Input</span>
+            <div class="row-content">
+              <code>[screenplay]</code> — 火车站重逢剧本（mood / tone + <code>scene.estimated_duration_seconds</code>）
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-output">Output</span>
+            <div class="row-content">
+              <div class="output-quote">music_sc_001: scene=sc_001
+  mood: "bittersweet, nostalgic, poignant, hopeful, reflective piano + strings"
+  duration_seconds: 84.6
+
+数据来源：
+  ← screenplay.content.scenes[sc_001].estimated_duration_seconds = 84.6
+  (ScreenplayAgent 按 99 dialogue words / 2.5 + 15 action × 3.0 算好一次,
+   Music 和 Ambience 都 verbatim 读取同一字段 → 保证两者秒数相等)</div>
+              背景音乐（fal-ai/stable-audio, 84s = 30+30+24 拼接, 4/14 02:06 重跑）：
+              <div class="media-preview">
+                <audio controls preload="metadata">
+                  <source src="./test-assets/music_output.wav" type="audio/wav" />
+                </audio>
+              </div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-caption">Caption</span>
+            <div class="row-content">
+              <div class="caption-quote">"Background music: 1 cue(s). Moods: poignant, bittersweet, hopeful, reflective, emotional, solo piano, strings."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AmbienceAgent -->
+      <div class="result-card">
+        <div class="result-head">
+          <div class="result-icon" style="background:rgba(244,114,182,0.12)">🌊</div>
+          <span class="result-name">AmbienceAgent</span><span class="result-desc">— 逐 scene 生成环境音 · 时长读 screenplay 字段</span>
+          <span class="result-status status-pass">PASS</span>
+        </div>
+        <div class="result-body">
+          <div class="agent-how">LLM 从 screenplay 的场景地点 / 环境推导背景声描述。<b>时长不再自己估算</b>：和 MusicAgent 完全对称 — 直接读 <code>screenplay.scenes[scene_id].estimated_duration_seconds</code> verbatim 写进 <code>duration_seconds</code>。Screenplay 里这个字段唯一，Music 和 Ambience 读出来必然相等。Materializer 调 fal-ai/stable-audio 生成，超 30s 分段拼接。</div>
+          <div class="result-row">
+            <span class="row-label label-input">Input</span>
+            <div class="row-content">
+              <code>[screenplay]</code> — 火车站重逢剧本（location / heading + <code>scene.estimated_duration_seconds</code>）
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-output">Output</span>
+            <div class="row-content">
+              <div class="output-quote">amb_sc_001: scene=sc_001
+  description: "Bustling train station platform: large crowds, PA announcements, arriving/departing trains, brake screeches"
+  duration_seconds: 84.6
+
+数据来源：
+  ← screenplay.content.scenes[sc_001].estimated_duration_seconds = 84.6
+  (同一字段 Music 也读; 两者必然相等 → 混音前不会漂)</div>
+              环境音（fal-ai/stable-audio, 84s = 30+30+24 拼接, 4/14 02:06 重跑）：
+              <div class="media-preview">
+                <audio controls preload="metadata">
+                  <source src="./test-assets/ambience_output.wav" type="audio/wav" />
+                </audio>
+              </div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-caption">Caption</span>
+            <div class="row-content">
+              <div class="caption-quote">"Ambient sounds: 1 bed(s). Bustling outdoor train station platform, daytime, with sounds of arriving and departing trains, public address announcements, and general crowd chatter."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AudioMixAgent -->
+      <div class="result-card">
+        <div class="result-head">
+          <div class="result-icon" style="background:rgba(244,114,182,0.12)">🎚</div>
+          <span class="result-name">AudioMixAgent</span><span class="result-desc">— 混音 + 拼接最终音频</span>
+          <span class="result-status status-pass">PASS</span>
+        </div>
+        <div class="result-body">
+          <div class="agent-how">LLM 按 screenplay 规划 per-scene 混音方案（一个 scene 一个 mix）。Materializer 把每个 scene 的 narration 段先 concat（场景内对白是顺序播的, 不能并发 amix）, 再用 ffmpeg <code>amix=duration=longest</code> 把 narration / music / ambience 三轨混合 — 短的轨道由 ffmpeg 自动 silence-pad 到最长的那条。最后 concat 所有 scene mix 出 final audio。</div>
+          <div class="result-row">
+            <span class="row-label label-input">Input</span>
+            <div class="row-content">screenplay (用来把 narration 的 <code>linked_shot_id</code> 反查回 scene_id) + NarrationAgent (12 真实 TTS, ≈50s) + MusicAgent (sc_001, 84s) + AmbienceAgent (sc_001, 84s)</div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-output">Output</span>
+            <div class="row-content">
+              <div class="output-quote">scene_mixes: 1
+  sc_001: aud_mix_sc_001
+    = amix(narration_concat=50s, music=84s, ambience=84s, duration=longest)
+    → 84s (narration silence-pad 到 84s, music + ambience 全程播)
+
+final_audio: aud_final = concat(scene_mixes) = 84s</div>
+              最终混音（FFmpeg amix, 84s — 对话占前 50s, 后 34s 纯音乐 + 环境音衬底, 4/14 02:07 重跑）：
+              <div class="media-preview">
+                <audio controls preload="metadata">
+                  <source src="./test-assets/audio_mix_output.wav" type="audio/wav" />
+                </audio>
+              </div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-caption">Caption</span>
+            <div class="row-content">
+              <div class="caption-quote">"Audio mix: 1 scene(s) mixed + final audio assembled."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VoiceCloneAgent -->
+      <div class="result-card">
+        <div class="result-head">
+          <div class="result-icon" style="background:rgba(244,114,182,0.12)">🗣</div>
+          <span class="result-name">VoiceCloneAgent</span><span class="result-desc">— 语音克隆：从参考音频克隆声音朗读文本</span>
+          <span class="result-status status-pass">PASS</span>
+        </div>
+        <div class="result-body">
+          <div class="agent-how">用户给一段某人说话的录音作为参考。系统先分析这个声音的特征，然后用这个声音去朗读新的文本。每句话单独生成一段音频，最后拼成完整的配音文件。调用 fal-ai/f5-tts 做声音克隆。</div>
+          <div class="result-row">
+            <span class="row-label label-input">Input</span>
+            <div class="row-content">
+              参考音频: <code>voice_clone_reference.wav</code> (340 KB, 21.7s) — fal.ai TTS 生成的旁白
+              <div class="media-preview">
+                <audio controls preload="metadata">
+                  <source src="./test-assets/voice_clone_reference.wav" type="audio/wav" />
+                </audio>
+              </div>
+              要朗读的文本（3 段）:<br/>
+              1. "The old watchmaker adjusted his loupe and peered into the golden mechanism."<br/>
+              2. "Each gear and spring held a memory of his late wife."<br/>
+              3. "As midnight approached, his hands moved with renewed purpose."
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-output">Output</span>
+            <div class="row-content">
+              <div class="output-quote">真实 fal.ai F5-TTS 语音克隆:
+
+seg_1: "The old watchmaker adjusted his loupe..." → 4.8s
+seg_2: "Each gear and spring held a memory..." → 3.3s
+seg_3: "As midnight approached, his hands..." → 3.9s
+
+合并: 12.1s (3 段克隆语音拼接)</div>
+              克隆后的语音:
+              <div class="media-preview">
+                <audio controls preload="metadata">
+                  <source src="./test-assets/voice_clone_output.wav" type="audio/wav" />
+                </audio>
+              </div>
+              <div class="meta-note">参考音频 (21.7s) → fal.ai F5-TTS clone() 提取声纹 → synthesize() ×3 段 → concat() 合并。可对比参考音频和克隆输出的声音特征是否一致</div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-caption">Caption</span>
+            <div class="row-content">
+              <div class="caption-quote">"Voice clone narration (male, calm, clear, mature): 3 segment(s). Cloned from reference audio."</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+</body>
+</html>

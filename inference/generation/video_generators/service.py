@@ -95,6 +95,73 @@ class VideoService:
             label="final",
         )
 
+    async def extract_last_frame(self, video_path: str) -> bytes:
+        """Extract the last frame from a video file as PNG bytes.
+
+        Uses ffmpeg to seek to the last frame and output a single PNG.
+        """
+        ffmpeg_bin = shutil.which("ffmpeg")
+        if not ffmpeg_bin or not os.path.isfile(video_path):
+            logger.warning("extract_last_frame: ffmpeg or video not available")
+            return b""
+
+        with tempfile.TemporaryDirectory(prefix="fw_lastframe_") as tmp_dir:
+            out_path = Path(tmp_dir) / "last_frame.png"
+            proc = subprocess.run(
+                [
+                    ffmpeg_bin, "-y",
+                    "-sseof", "-0.1",
+                    "-i", video_path,
+                    "-frames:v", "1",
+                    "-update", "1",
+                    str(out_path),
+                ],
+                capture_output=True, check=False, text=True, timeout=30,
+            )
+            if proc.returncode == 0 and out_path.exists():
+                return out_path.read_bytes()
+            logger.warning("extract_last_frame failed: %s", (proc.stderr or "").strip()[-200:])
+            return b""
+
+    async def clip_segment(
+        self, video_path: str, start: float, end: float,
+    ) -> bytes:
+        """Extract a segment [start, end] from a video file.
+
+        Returns the clipped MP4 bytes.
+        """
+        ffmpeg_bin = shutil.which("ffmpeg")
+        if not ffmpeg_bin or not os.path.isfile(video_path):
+            logger.warning("clip_segment: ffmpeg or video not available")
+            return b""
+
+        duration = end - start
+        if duration <= 0:
+            return b""
+
+        with tempfile.TemporaryDirectory(prefix="fw_clip_") as tmp_dir:
+            out_path = Path(tmp_dir) / "clip.mp4"
+            proc = subprocess.run(
+                [
+                    ffmpeg_bin, "-y",
+                    "-ss", f"{start:.3f}",
+                    "-i", video_path,
+                    "-t", f"{duration:.3f}",
+                    "-c", "copy",
+                    "-movflags", "+faststart",
+                    str(out_path),
+                ],
+                capture_output=True, check=False, text=True, timeout=60,
+            )
+            if proc.returncode == 0 and out_path.exists():
+                return out_path.read_bytes()
+            logger.warning("clip_segment failed: %s", (proc.stderr or "").strip()[-200:])
+            return b""
+
+    async def concat_clips(self, clip_bytes_list: list[bytes]) -> bytes:
+        """Concatenate clip bytes into a single MP4."""
+        return await self._concat_mp4_segments(clip_bytes_list, label="highlight")
+
     async def _concat_mp4_segments(self, segments: list[bytes], *, label: str) -> bytes:
         """Concatenate mp4 segments with ffmpeg concat demuxer.
 
@@ -212,6 +279,19 @@ class MockVideoService(VideoService):
         scene_bytes_list: list[bytes],
     ) -> bytes:
         logger.info("[MockVideoService] Assembling final video")
+        return MOCK_MP4_HEADER
+
+    async def extract_last_frame(self, video_path: str) -> bytes:
+        from .._mock_data import MOCK_PNG
+        logger.info("[MockVideoService] Placeholder last frame for %s", video_path)
+        return MOCK_PNG
+
+    async def clip_segment(self, video_path: str, start: float, end: float) -> bytes:
+        logger.info("[MockVideoService] Placeholder clip %.1f-%.1f", start, end)
+        return MOCK_MP4_HEADER
+
+    async def concat_clips(self, clip_bytes_list: list[bytes]) -> bytes:
+        logger.info("[MockVideoService] Placeholder concat %d clips", len(clip_bytes_list))
         return MOCK_MP4_HEADER
 
 

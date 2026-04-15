@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import base64
 import json
+import mimetypes
 import os
 from datetime import datetime, timezone
 from pathlib import Path
@@ -12,6 +14,125 @@ from openai import AsyncOpenAI
 
 from ..base.base_client import BaseLLMClient, Message, ModelConfig
 from ..json_parse_diag import describe_json_decode_error
+
+
+def _build_multimodal_user_content(
+    user_prompt: str,
+    media_attachments: List[Dict[str, str]],
+) -> list[dict]:
+    """Build an OpenAI-compatible multimodal content array.
+
+    Converts ``media_attachments`` (list of ``{type, path}``) into the
+    appropriate OpenAI-compat content parts alongside the text prompt.
+
+    ``type`` values:
+
+    - ``"image"``: sent as ``{"type": "image_url", "image_url": {"url":
+      "data:image/*;base64,..."}}``. Gemini OpenAI-compat endpoint decodes
+      the inline image natively.
+    - ``"audio"``: sent as ``{"type": "input_audio", "input_audio": {"data":
+      b64, "format": "wav|mp3|..."}}``. This is the standard OpenAI Realtime
+      audio input format, also supported by Gemini's OpenAI-compat bridge.
+    - ``"video"``: sent as ``{"type": "image_url", "image_url": {"url":
+      "data:video/*;base64,..."}}``. This is **Gemini's documented OpenAI-
+      compat extension** — Google's OpenAI-compat bridge recognizes video/*
+      MIME types in the ``image_url`` data URL and routes them to Gemini's
+      native inline-video path. The OpenAI spec itself does not define a
+      video content part; this shape only works against Gemini (direct or
+      via Cloudflare AI Gateway's /compat endpoint).
+      NOTE: Gemini caps inline multimedia at ~20 MB per request. Larger
+      videos must use the File API (not yet wired here).
+
+    Caller contract: every ``{path}`` MUST point to an existing file whose
+    MIME matches its declared ``type``. A missing file or a type/MIME
+    mismatch raises — this function does NOT silently skip media, because
+    a silent skip would let a downstream "video analysis" call succeed
+    while actually sending only the text prompt (a historical footgun).
+    """
+    parts: list[dict] = []
+
+    # Add media first so LLM "sees/hears" before reading the prompt
+    for att in media_attachments:
+        media_type = att.get("type", "")
+        file_path = att.get("path", "")
+
+        if not file_path:
+            raise ValueError(
+                f"media attachment of type={media_type!r} has no path"
+            )
+        if not os.path.isfile(file_path):
+            raise FileNotFoundError(
+                f"media attachment path does not exist: {file_path!r} "
+                f"(declared type={media_type!r})"
+            )
+
+        mime = mimetypes.guess_type(file_path)[0] or ""
+
+        if media_type == "image":
+            if mime and not mime.startswith("image/"):
+                raise ValueError(
+                    f"media type=image but file MIME is {mime!r} (path={file_path!r})"
+                )
+            mime = mime or "image/png"
+            with open(file_path, "rb") as fh:
+                b64 = base64.b64encode(fh.read()).decode("ascii")
+            parts.append({
+                "type": "image_url",
+                "image_url": {"url": f"data:{mime};base64,{b64}"},
+            })
+
+        elif media_type == "audio":
+            if mime and not mime.startswith("audio/"):
+                raise ValueError(
+                    f"media type=audio but file MIME is {mime!r} (path={file_path!r})"
+                )
+            mime = mime or "audio/wav"
+            # Normalize x-wav → wav, mpeg → mp3 for API compatibility
+            audio_fmt = mime.split("/")[-1]
+            if audio_fmt in ("x-wav", "x-wave"):
+                audio_fmt = "wav"
+            elif audio_fmt == "mpeg":
+                audio_fmt = "mp3"
+            with open(file_path, "rb") as fh:
+                b64 = base64.b64encode(fh.read()).decode("ascii")
+            parts.append({
+                "type": "input_audio",
+                "input_audio": {"data": b64, "format": audio_fmt},
+            })
+
+        elif media_type == "video":
+            if mime and not mime.startswith("video/"):
+                raise ValueError(
+                    f"media type=video but file MIME is {mime!r} (path={file_path!r}) — "
+                    f"VideoAnalysisAgent requires a real video/* file, not an image or audio."
+                )
+            mime = mime or "video/mp4"
+            size = os.path.getsize(file_path)
+            if size > 20 * 1024 * 1024:
+                raise ValueError(
+                    f"video file {file_path!r} is {size} bytes > 20 MB — exceeds "
+                    f"Gemini's inline multimedia cap. Use a shorter clip or switch "
+                    f"to Gemini's File API (not yet wired)."
+                )
+            with open(file_path, "rb") as fh:
+                b64 = base64.b64encode(fh.read()).decode("ascii")
+            # Gemini-documented OpenAI-compat extension: data URL with video/*
+            # MIME inside image_url is routed to Gemini's native inline-video input.
+            parts.append({
+                "type": "image_url",
+                "image_url": {"url": f"data:{mime};base64,{b64}"},
+            })
+
+        else:
+            raise ValueError(
+                f"unsupported media attachment type: {media_type!r} "
+                f"(supported: image / audio / video)"
+            )
+
+    # Add text prompt last
+    parts.append({"type": "text", "text": user_prompt})
+
+    return parts
 
 try:
     # NOTE: LiteLLM's public symbols have changed across versions.
@@ -40,15 +161,8 @@ class LLMClient(BaseLLMClient):
     def _resolve_provider(self, model: Optional[str]) -> str:
         return self.resolve_provider_for_model(model)
 
-    def _canonicalize_model(self, model: Optional[str]) -> str:
-        resolved_model = model or self.model or self.default_model or "gpt-3.5-turbo"
-        model_info = self.model_registry.get_model(resolved_model)
-        if model_info and model_info.model_id:
-            return model_info.model_id
-        return resolved_model
-
     def _resolve_model_and_client(self, model: Optional[str]) -> tuple[str, str, str]:
-        resolved_model = self._canonicalize_model(model)
+        resolved_model = model or self.model or self.default_model or "gpt-3.5-turbo"
         provider = self._resolve_provider(resolved_model)
         client_type = self.resolve_client_for_provider(provider)
         return resolved_model, provider, client_type
@@ -113,14 +227,12 @@ class LLMClient(BaseLLMClient):
         **kwargs,
     ) -> Dict[str, Any]:
         params: Dict[str, Any] = {}
-        model_info = self.model_registry.get_model(model)
         provider = self._resolve_provider(model)
         if config:
             params.update(
                 {
                     "temperature": config.temperature,
-                    "max_tokens": config.max_tokens
-                    or (model_info.max_tokens if model_info else None),
+                    "max_tokens": config.max_tokens,
                     "top_p": config.top_p,
                     "frequency_penalty": config.frequency_penalty,
                     "presence_penalty": config.presence_penalty,
@@ -302,7 +414,7 @@ class LLMClient(BaseLLMClient):
         **kwargs,
     ) -> Dict[str, Any]:
         self._ensure_litellm()
-        resolved_model = self._canonicalize_model(model or self.default_model)
+        resolved_model = model or self.default_model or "gpt-3.5-turbo"
         formatted_messages = self._format_messages(messages)
         call_params = self._build_call_params(resolved_model, config, **kwargs)
         response = litellm.completion(
@@ -385,7 +497,7 @@ class LLMClient(BaseLLMClient):
         **kwargs,
     ) -> Iterator[Dict[str, Any]]:
         self._ensure_litellm()
-        resolved_model = self._canonicalize_model(model or self.default_model)
+        resolved_model = model or self.default_model or "gpt-3.5-turbo"
         formatted_messages = self._format_messages(messages)
         call_params = self._build_call_params(
             resolved_model, config, stream=True, **kwargs
@@ -403,7 +515,7 @@ class LLMClient(BaseLLMClient):
         **kwargs,
     ) -> AsyncIterator[Dict[str, Any]]:
         self._ensure_litellm()
-        resolved_model = self._canonicalize_model(model or self.default_model)
+        resolved_model = model or self.default_model or "gpt-3.5-turbo"
         formatted_messages = self._format_messages(messages)
         call_params = self._build_call_params(
             resolved_model, config, stream=True, **kwargs
@@ -421,11 +533,18 @@ class LLMClient(BaseLLMClient):
         model: Optional[str] = None,
         max_tokens: Optional[int] = None,
         reasoning_effort: Optional[str] = None,
+        media_attachments: Optional[List[Dict[str, str]]] = None,
     ) -> dict[str, Any]:
         resolved_model, provider, client_type = self._resolve_model_and_client(model)
+
+        if media_attachments:
+            user_content = _build_multimodal_user_content(user_prompt, media_attachments)
+        else:
+            user_content = user_prompt
+
         messages = [
             {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt},
+            {"role": "user", "content": user_content},
         ]
 
         if client_type in {"openai_sdk", "gpt5_sdk"}:
@@ -495,11 +614,18 @@ class LLMClient(BaseLLMClient):
         model: Optional[str] = None,
         max_tokens: Optional[int] = None,
         reasoning_effort: Optional[str] = None,
+        media_attachments: Optional[List[Dict[str, str]]] = None,
     ) -> str:
         resolved_model, provider, client_type = self._resolve_model_and_client(model)
+
+        if media_attachments:
+            user_content = _build_multimodal_user_content(user_prompt, media_attachments)
+        else:
+            user_content = user_prompt
+
         messages = [
             {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt},
+            {"role": "user", "content": user_content},
         ]
 
         if client_type in {"openai_sdk", "gpt5_sdk"}:

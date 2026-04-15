@@ -1,0 +1,38 @@
+{
+  "content": {
+    "title": "火星洞穴",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "heading": "内景 火星洞穴 - 白天",
+        "summary": "两名宇航员发现发光的水晶。",
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "block_type": "narration",
+            "text": "洞穴的墙壁闪烁着神秘的蓝色光芒。清晨的阳光无法到达这里，但水晶自身散发出柔和的荧光。",
+            "character_name": "旁白"
+          },
+          {
+            "shot_id": "sh_002",
+            "block_type": "dialogue",
+            "text": "快看这些水晶！它们好像在呼吸一样。",
+            "character_name": "陈明"
+          },
+          {
+            "shot_id": "sh_003",
+            "block_type": "dialogue",
+            "text": "别碰它们。我们必须先向基地报告这个发现。",
+            "character_name": "朴智妍"
+          },
+          {
+            "shot_id": "sh_004",
+            "block_type": "action",
+            "text": "两人小心翼翼地用仪器扫描水晶，屏幕上显示出异常的能量读数。"
+          }
+        ],
+        "scene_end": "水晶的光芒随着他们靠近而变得更亮。"
+      }
+    ]
+  }
+}

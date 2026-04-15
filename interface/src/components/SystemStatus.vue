@@ -17,7 +17,7 @@
       </div>
       <div class="status-item" v-if="executionInfo">
         <span class="status-label">当前执行:</span>
-        <span class="status-value">Layer {{ executionInfo.current_layer_index }}, Task {{ executionInfo.current_task_index }}</span>
+        <span class="status-value">Layer {{ executionInfo.current_layer_index }}, Task {{ executionInfo.current_step_index }}</span>
       </div>
       <div class="status-item" v-if="totalTasks > 0">
         <span class="status-label">总任务数:</span>
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { taskStackAPI, executionPointerAPI } from '../services/api'
+import { planStackAPI, executionPointerAPI } from '../services/api'
 import pollingService from '../services/polling'
 
 export default {
@@ -76,13 +76,13 @@ export default {
       // Poll task stack
       pollingService.startPolling(
         'task-stack',
-        () => taskStackAPI.get(),
+        () => planStackAPI.get(),
         3000,
         (data) => {
           if (Array.isArray(data)) {
             let count = 0
             data.forEach(layer => {
-              count += layer.tasks ? layer.tasks.length : 0
+              count += layer.steps ? layer.steps.length : 0
             })
             this.totalTasks = count
           }

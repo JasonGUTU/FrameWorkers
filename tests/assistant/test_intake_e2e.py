@@ -5,6 +5,7 @@ caption-driven InputResolver, end-to-end through the Flask routes:
 
   e2e1  text-only draft idea — single text upload, IntakeText, then
         StoryAgent picks the brief up via the [creative_brief] label.
+        Audio pipeline: Narration + Music + Ambience → AudioMix.
 
   e2e2  two text uploads (the user re-submits a refined brief) — both
         text artifacts must coexist in the registry with their own
@@ -203,15 +204,15 @@ def _post(client, url, body, debug_file, *, step):
     return resp, payload
 
 
-def _create_task(client, debug_file, goal: str) -> str:
+def _create_step(client, debug_file, goal: str) -> str:
     resp, body = _post(
         client,
-        "/api/tasks/create",
+        "/api/steps/create",
         {"description": {"goal": goal}},
         debug_file,
-        step="create_task",
+        step="create_step",
     )
-    assert resp.status_code == 201, f"create_task failed: {body}"
+    assert resp.status_code == 201, f"create_step failed: {body}"
     return body["id"]
 
 
@@ -244,31 +245,33 @@ def _upload_image(client, debug_file, image_path: Path, mime: str = "image/png")
     return body
 
 
-def _execute_agent(client, debug_file, agent_id: str, task_id: str) -> dict:
+def _execute_agent(client, debug_file, agent_id: str, step_id: str) -> dict:
     resp, body = _post(
         client,
         "/api/assistant/execute",
-        {"agent_id": agent_id, "task_id": task_id},
+        {"agent_id": agent_id, "step_id": step_id},
         debug_file,
         step=f"execute_{agent_id}",
     )
     assert resp.status_code == 200, f"{agent_id} failed: {body}"
-    assert body.get("status") == "COMPLETED", f"{agent_id} not COMPLETED: {body}"
+    brief = body if isinstance(body, list) else []
+    status = brief[-1].get("status") if brief else None
+    assert status == "COMPLETED", f"{agent_id} not COMPLETED: {body}"
     return body
 
 
-def _last_execution_results(client, task_id: str) -> dict:
-    resp = client.get(f"/api/assistant/executions/task/{task_id}")
+def _last_execution_results(client, step_id: str) -> dict:
+    resp = client.get(f"/api/assistant/executions/step/{step_id}")
     assert resp.status_code == 200
     executions = resp.get_json()
     assert executions, "no executions returned"
     return executions[-1].get("results") or {}
 
 
-def _last_execution_results_for_agent(client, task_id: str, agent_id: str) -> dict:
+def _last_execution_results_for_agent(client, step_id: str, agent_id: str) -> dict:
     """Find the most recent execution for a specific agent_id (used by
     tests that re-run the same agent multiple times in a single task)."""
-    resp = client.get(f"/api/assistant/executions/task/{task_id}")
+    resp = client.get(f"/api/assistant/executions/step/{step_id}")
     assert resp.status_code == 200
     executions = resp.get_json()
     matches = [e for e in executions if e.get("agent_id") == agent_id]
@@ -351,21 +354,15 @@ def _assert_video_output_real(video_results: dict, label_prefix: str) -> None:
             )
 
 
-def _assert_audio_output_real(audio_results: dict, label_prefix: str) -> None:
-    """Verify AudioAgent's final delivery + final audio mix resolved to a real file."""
-    content = audio_results.get("content", {})
-    final_delivery = content.get("final_delivery_asset", {})
-    assert isinstance(final_delivery, dict), f"{label_prefix} final_delivery_asset missing/not-dict"
+def _assert_audio_mix_output_real(mix_results: dict, label_prefix: str) -> None:
+    """Verify AudioMixAgent's final_audio resolved to a real file."""
+    content = mix_results.get("content", {})
+    final_audio = content.get("final_audio", {})
+    assert isinstance(final_audio, dict), f"{label_prefix} final_audio missing/not-dict"
     _assert_real_media_uri(
-        str(final_delivery.get("uri", "")),
-        f"{label_prefix} final_delivery_asset",
+        str(final_audio.get("uri", "")),
+        f"{label_prefix} final_audio",
     )
-    final_audio = content.get("final_audio_asset", {})
-    if isinstance(final_audio, dict) and final_audio.get("uri"):
-        _assert_real_media_uri(
-            str(final_audio.get("uri", "")),
-            f"{label_prefix} final_audio_asset",
-        )
 
 
 def _placeholders_without_successor(workspace: Workspace) -> list[str]:
@@ -432,7 +429,7 @@ def test_e2e0_story_to_screenplay_only(monkeypatch):
     print(f"\n[e2e0] workspace={workspace_id}")
     print(f"[e2e0] debug_file={debug_file}")
 
-    task_id = _create_task(
+    step_id = _create_step(
         client,
         debug_file,
         goal="Minimal Story → Screenplay roundtrip for the univa-style refactor.",
@@ -451,13 +448,13 @@ def test_e2e0_story_to_screenplay_only(monkeypatch):
         ),
     )
 
-    _execute_agent(client, debug_file, "IntakeTextAgent", task_id)
-    _execute_agent(client, debug_file, "StoryAgent", task_id)
-    _execute_agent(client, debug_file, "ScreenplayAgent", task_id)
+    _execute_agent(client, debug_file, "IntakeTextAgent", step_id)
+    _execute_agent(client, debug_file, "StoryAgent", step_id)
+    _execute_agent(client, debug_file, "ScreenplayAgent", step_id)
 
-    story_results = _last_execution_results_for_agent(client, task_id, "StoryAgent")
+    story_results = _last_execution_results_for_agent(client, step_id, "StoryAgent")
     screenplay_results = _last_execution_results_for_agent(
-        client, task_id, "ScreenplayAgent"
+        client, step_id, "ScreenplayAgent"
     )
 
     story_content = story_results.get("content", {}) or {}
@@ -564,7 +561,7 @@ def test_e2e1_text_only_draft_idea(monkeypatch):
     print(f"\n[e2e1] workspace={workspace_id}")
     print(f"[e2e1] debug_file={debug_file}")
 
-    task_id = _create_task(
+    step_id = _create_step(
         client,
         debug_file,
         goal="A short cinematic film about a retired watchmaker repairing a pocket watch.",
@@ -584,17 +581,16 @@ def test_e2e1_text_only_draft_idea(monkeypatch):
     assert upload["scope"] == "raw_pending"
 
     # 2. IntakeTextAgent converts the placeholder into a caption-rich artifact.
-    intake_summary = _execute_agent(client, debug_file, "IntakeTextAgent", task_id)
-    assert intake_summary["status"] == "COMPLETED"
+    _execute_agent(client, debug_file, "IntakeTextAgent", step_id)
 
     # 3. Run the full content pipeline. Each downstream agent must find
     #    its inputs (the user's brief, then the upstream artifact, then
     #    keyframes for video, etc.) via the caption-driven InputResolver.
-    pipeline = ["StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent", "AudioAgent"]
+    pipeline = ["StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent"]
     pipeline_results: dict[str, dict] = {}
     for agent_id in pipeline:
-        _execute_agent(client, debug_file, agent_id, task_id)
-        pipeline_results[agent_id] = _last_execution_results(client, task_id)
+        _execute_agent(client, debug_file, agent_id, step_id)
+        pipeline_results[agent_id] = _last_execution_results(client, step_id)
 
     story_logline = pipeline_results["StoryAgent"].get("content", {}).get("logline", "")
     assert story_logline, f"StoryAgent produced no logline"
@@ -616,9 +612,6 @@ def test_e2e1_text_only_draft_idea(monkeypatch):
 
     video_results = pipeline_results["VideoAgent"]
     _assert_video_output_real(video_results, "[e2e1]")
-
-    audio_results = pipeline_results["AudioAgent"]
-    _assert_audio_output_real(audio_results, "[e2e1]")
 
     # 4. Workspace invariants.
     leaks = _placeholders_without_successor(workspace)
@@ -644,13 +637,13 @@ def test_e2e2_text_then_text(monkeypatch):
     print(f"\n[e2e2] workspace={workspace_id}")
     print(f"[e2e2] debug_file={debug_file}")
 
-    task_id = _create_task(
+    step_id = _create_step(
         client,
         debug_file,
         goal="A cinematic short — initial brief, then a totally different second brief.",
     )
 
-    pipeline = ["StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent", "AudioAgent"]
+    pipeline = ["StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent"]
 
     # ----- Phase 1: lighthouse keeper brief, full pipeline run -----
     _upload_text(
@@ -664,10 +657,10 @@ def test_e2e2_text_then_text(monkeypatch):
             "blue-grey palette, howling wind, the slow turning of the lamp."
         ),
     )
-    _execute_agent(client, debug_file, "IntakeTextAgent", task_id)
+    _execute_agent(client, debug_file, "IntakeTextAgent", step_id)
     for agent_id in pipeline:
-        _execute_agent(client, debug_file, agent_id, task_id)
-    story_v1 = _last_execution_results_for_agent(client, task_id, "StoryAgent").get("content", {}).get("logline", "")
+        _execute_agent(client, debug_file, agent_id, step_id)
+    story_v1 = _last_execution_results_for_agent(client, step_id, "StoryAgent").get("content", {}).get("logline", "")
 
     # ----- Phase 2: a TOTALLY DIFFERENT story (not a revision) -----
     # Different setting (deep sea vs island), different character
@@ -686,10 +679,10 @@ def test_e2e2_text_then_text(monkeypatch):
             "palette, low ambient hum."
         ),
     )
-    _execute_agent(client, debug_file, "IntakeTextAgent", task_id)
+    _execute_agent(client, debug_file, "IntakeTextAgent", step_id)
     for agent_id in pipeline:
-        _execute_agent(client, debug_file, agent_id, task_id)
-    story_v2 = _last_execution_results_for_agent(client, task_id, "StoryAgent").get("content", {}).get("logline", "")
+        _execute_agent(client, debug_file, agent_id, step_id)
+    story_v2 = _last_execution_results_for_agent(client, step_id, "StoryAgent").get("content", {}).get("logline", "")
 
     assert story_v1, "first StoryAgent run produced no logline"
     assert story_v2, "second StoryAgent run produced no logline"
@@ -699,11 +692,8 @@ def test_e2e2_text_then_text(monkeypatch):
 
     # Phase 2 must have produced real video + audio files (catches the
     # silent failure where placeholder URIs survive into the final assets).
-    video_results_v2 = _last_execution_results_for_agent(client, task_id, "VideoAgent")
+    video_results_v2 = _last_execution_results_for_agent(client, step_id, "VideoAgent")
     _assert_video_output_real(video_results_v2, "[e2e2 v2]")
-
-    audio_results_v2 = _last_execution_results_for_agent(client, task_id, "AudioAgent")
-    _assert_audio_output_real(audio_results_v2, "[e2e2 v2]")
 
     # Both raw-text uploads must have been converted out of raw_pending.
     leaks = _placeholders_without_successor(workspace)
@@ -732,7 +722,7 @@ def test_e2e3_text_with_image_at_t0(monkeypatch):
     print(f"[e2e3] debug_file={debug_file}")
     print(f"[e2e3] reference_image={_REFERENCE_IMAGE_FIRST.name}")
 
-    task_id = _create_task(
+    step_id = _create_step(
         client,
         debug_file,
         goal="A cinematic short about an elderly craftsman — with a matching character reference image.",
@@ -761,13 +751,13 @@ def test_e2e3_text_with_image_at_t0(monkeypatch):
     )
 
     # 3. Run both intake agents + BriefEnricherAgent.
-    _execute_agent(client, debug_file, "IntakeTextAgent", task_id)
-    _execute_agent(client, debug_file, "IntakeImageAgent", task_id)
-    _execute_agent(client, debug_file, "BriefEnricherAgent", task_id)
+    _execute_agent(client, debug_file, "IntakeTextAgent", step_id)
+    _execute_agent(client, debug_file, "IntakeImageAgent", step_id)
+    _execute_agent(client, debug_file, "BriefEnricherAgent", step_id)
 
     # 4. Validate BriefEnricher produced an enriched brief + classified the image.
     enricher_results = _last_execution_results_for_agent(
-        client, task_id, "BriefEnricherAgent"
+        client, step_id, "BriefEnricherAgent"
     )
     enricher_content = enricher_results.get("content", {}) or {}
     enriched_brief = enricher_content.get("enriched_brief", "")
@@ -805,27 +795,24 @@ def test_e2e3_text_with_image_at_t0(monkeypatch):
     # 6. Run the FULL content pipeline. BriefEnricher's enriched brief
     #    should be picked as the creative brief by StoryAgent, so the
     #    story's character descriptions match the uploaded image.
-    pipeline = ["StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent", "AudioAgent"]
+    pipeline = ["StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent"]
     for agent_id in pipeline:
-        _execute_agent(client, debug_file, agent_id, task_id)
+        _execute_agent(client, debug_file, agent_id, step_id)
 
     # 7. Verify story was produced and has content.
-    story_results = _last_execution_results_for_agent(client, task_id, "StoryAgent")
+    story_results = _last_execution_results_for_agent(client, step_id, "StoryAgent")
     story_logline = story_results.get("content", {}).get("logline", "")
     assert story_logline, "StoryAgent produced no logline"
 
-    keyframe_results = _last_execution_results_for_agent(client, task_id, "KeyFrameAgent")
+    keyframe_results = _last_execution_results_for_agent(client, step_id, "KeyFrameAgent")
     assert keyframe_results.get("content"), "KeyFrameAgent produced no content"
     keyframe_media = keyframe_results.get("_media_files", {})
     assert isinstance(keyframe_media, dict) and keyframe_media, (
         "KeyFrameAgent returned no media files"
     )
 
-    video_results = _last_execution_results_for_agent(client, task_id, "VideoAgent")
+    video_results = _last_execution_results_for_agent(client, step_id, "VideoAgent")
     _assert_video_output_real(video_results, "[e2e3]")
-
-    audio_results = _last_execution_results_for_agent(client, task_id, "AudioAgent")
-    _assert_audio_output_real(audio_results, "[e2e3]")
 
     # 8. Final invariant: nothing left in raw_pending.
     leaks = _placeholders_without_successor(workspace)
@@ -873,13 +860,13 @@ def test_e2e4_two_rounds_text_with_image(monkeypatch):
     print(f"\n[e2e4] workspace={workspace_id}")
     print(f"[e2e4] debug_file={debug_file}")
 
-    task_id = _create_task(
+    step_id = _create_step(
         client,
         debug_file,
         goal="Two rounds of text+image — verify second round replaces first.",
     )
 
-    pipeline = ["StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent", "AudioAgent"]
+    pipeline = ["StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent"]
 
     # ----- Phase 1: text (craftsman) + image #1 (craftsman photo) -----
     _upload_text(
@@ -895,20 +882,20 @@ def test_e2e4_two_rounds_text_with_image(monkeypatch):
     )
     _upload_image(client, debug_file, image_path=_REFERENCE_IMAGE_FIRST)
 
-    _execute_agent(client, debug_file, "IntakeTextAgent", task_id)
-    _execute_agent(client, debug_file, "IntakeImageAgent", task_id)
-    _execute_agent(client, debug_file, "BriefEnricherAgent", task_id)
+    _execute_agent(client, debug_file, "IntakeTextAgent", step_id)
+    _execute_agent(client, debug_file, "IntakeImageAgent", step_id)
+    _execute_agent(client, debug_file, "BriefEnricherAgent", step_id)
 
     enricher_p1 = _last_execution_results_for_agent(
-        client, task_id, "BriefEnricherAgent"
+        client, step_id, "BriefEnricherAgent"
     )
     enriched_brief_p1 = enricher_p1.get("content", {}).get("enriched_brief", "")
     assert enriched_brief_p1, "Phase 1 BriefEnricher produced no enriched brief"
 
     for agent_id in pipeline:
-        _execute_agent(client, debug_file, agent_id, task_id)
+        _execute_agent(client, debug_file, agent_id, step_id)
     story_p1 = _last_execution_results_for_agent(
-        client, task_id, "StoryAgent"
+        client, step_id, "StoryAgent"
     ).get("content", {}).get("logline", "")
     assert story_p1, "Phase 1 StoryAgent produced no logline"
 
@@ -925,20 +912,20 @@ def test_e2e4_two_rounds_text_with_image(monkeypatch):
     )
     _upload_image(client, debug_file, image_path=_REFERENCE_IMAGE_SECOND)
 
-    _execute_agent(client, debug_file, "IntakeTextAgent", task_id)
-    _execute_agent(client, debug_file, "IntakeImageAgent", task_id)
-    _execute_agent(client, debug_file, "BriefEnricherAgent", task_id)
+    _execute_agent(client, debug_file, "IntakeTextAgent", step_id)
+    _execute_agent(client, debug_file, "IntakeImageAgent", step_id)
+    _execute_agent(client, debug_file, "BriefEnricherAgent", step_id)
 
     enricher_p2 = _last_execution_results_for_agent(
-        client, task_id, "BriefEnricherAgent"
+        client, step_id, "BriefEnricherAgent"
     )
     enriched_brief_p2 = enricher_p2.get("content", {}).get("enriched_brief", "")
     assert enriched_brief_p2, "Phase 2 BriefEnricher produced no enriched brief"
 
     for agent_id in pipeline:
-        _execute_agent(client, debug_file, agent_id, task_id)
+        _execute_agent(client, debug_file, agent_id, step_id)
     story_p2 = _last_execution_results_for_agent(
-        client, task_id, "StoryAgent"
+        client, step_id, "StoryAgent"
     ).get("content", {}).get("logline", "")
     assert story_p2, "Phase 2 StoryAgent produced no logline"
 
@@ -955,11 +942,8 @@ def test_e2e4_two_rounds_text_with_image(monkeypatch):
     )
 
     # Phase 2 video + audio must be real files (not leftover from phase 1).
-    video_p2 = _last_execution_results_for_agent(client, task_id, "VideoAgent")
+    video_p2 = _last_execution_results_for_agent(client, step_id, "VideoAgent")
     _assert_video_output_real(video_p2, "[e2e4 phase2]")
-    audio_p2 = _last_execution_results_for_agent(client, task_id, "AudioAgent")
-    _assert_audio_output_real(audio_p2, "[e2e4 phase2]")
-
     # No raw_pending leaks.
     leaks = _placeholders_without_successor(workspace)
     assert not leaks, f"raw_pending placeholder has no intake successor: {leaks}"

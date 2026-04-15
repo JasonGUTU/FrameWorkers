@@ -4,14 +4,14 @@ from datetime import datetime
 
 from src.assistant.models import AgentExecution, ExecutionStatus
 from src.assistant.workspace.models import LogEntry
-from src.task_stack.api_serialize import serialize_for_api
+from src.plan_stack.api_serialize import serialize_for_api
 
 
 def test_serializers_handle_agent_execution_model():
     execution = AgentExecution(
         id="exec_1",
         agent_id="a1",
-        task_id="t1",
+        step_id="t1",
         status=ExecutionStatus.COMPLETED,
         inputs={},
         results={"ok": True},
@@ -33,7 +33,7 @@ def test_serialize_for_api_handles_log_entry():
         resource_id="f1",
         details={"x": 1},
         agent_id="a1",
-        task_id="t1",
+        step_id="t1",
         execution_id="exec_1",
     )
     log_dict = serialize_for_api(log)

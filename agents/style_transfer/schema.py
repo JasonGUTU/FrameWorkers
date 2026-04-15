@@ -1,0 +1,77 @@
+"""Schema definitions for StyleTransferAgent input / output interfaces."""
+
+from __future__ import annotations
+
+from pydantic import BaseModel, Field
+
+from ..common_schema import Meta
+
+
+# ---------------------------------------------------------------------------
+# Style transfer sub-models
+# ---------------------------------------------------------------------------
+
+class StyleSpec(BaseModel):
+    """LLM-planned style transfer specification."""
+
+    style_description: str = Field(
+        "", description="Detailed description of the target visual style"
+    )
+    style_prompt: str = Field(
+        "", description="Optimized prompt for the video edit model"
+    )
+    preserve_motion: bool = Field(
+        True, description="Whether to preserve original motion/camera movement"
+    )
+    style_strength: float = Field(
+        0.7, ge=0.0, le=1.0,
+        description="How strongly to apply the style (0=original, 1=full style)"
+    )
+
+
+class VideoAsset(BaseModel):
+    """Pointer to a generated video file."""
+
+    asset_id: str = ""
+    uri: str = ""
+    format: str = "mp4"
+
+
+# ---------------------------------------------------------------------------
+# Content / Metrics
+# ---------------------------------------------------------------------------
+
+class StyleTransferContent(BaseModel):
+    style_spec: StyleSpec = Field(default_factory=StyleSpec)
+    output_video: VideoAsset = Field(default_factory=VideoAsset)
+
+
+class StyleTransferMetrics(BaseModel):
+    style_strength: float = 0.0
+    preserve_motion: bool = True
+
+
+# ---------------------------------------------------------------------------
+# Top-level I/O
+# ---------------------------------------------------------------------------
+
+class StyleTransferAgentInput(BaseModel):
+    """Input payload for StyleTransferAgent.
+
+    ``source_video_path`` is the video file to restyle.
+    ``style_description`` is a natural-language description of the
+    desired style (e.g. 'anime', 'oil painting', 'cyberpunk').
+    ``style_reference_path`` is an optional reference image for the style.
+    """
+
+    source_video_path: str = ""
+    style_description: str = ""
+    style_reference_path: str = ""
+
+
+class StyleTransferAgentOutput(BaseModel):
+    """Output payload for StyleTransferAgent."""
+
+    meta: Meta = Field(default_factory=Meta)
+    content: StyleTransferContent = Field(default_factory=StyleTransferContent)
+    metrics: StyleTransferMetrics = Field(default_factory=StyleTransferMetrics)

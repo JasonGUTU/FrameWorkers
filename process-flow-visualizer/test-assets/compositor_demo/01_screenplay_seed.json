@@ -1,0 +1,187 @@
+{
+  "meta": {
+    "draft_id": "compositor_demo",
+    "asset_id": "screenplay_coffee_note",
+    "asset_type": "screenplay",
+    "schema_version": "0.3",
+    "created_by_agent": "seed",
+    "language": "en"
+  },
+  "content": {
+    "title": "The Note",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "",
+        "source": {"screenplay_asset_id": "", "screenplay_scene_id": ""},
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Neighborhood Coffee Shop",
+          "interior_exterior": "INT",
+          "time_of_day": "DAY"
+        },
+        "summary": "A quiet morning ritual at a coffee shop takes a gentle turn when a stranger returns something Anna didn't know she'd dropped.",
+        "continuity": {
+          "props_present": ["ceramic coffee cup", "folded paper note", "barista apron"],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A soft wool sweater in oatmeal tone, simple silver earrings.",
+              "must_keep": ["oatmeal sweater", "silver earrings"]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "Dark denim apron over a white t-shirt; hair tied back.",
+              "must_keep": ["dark denim apron"]
+            },
+            {
+              "character_id": "char_003",
+              "wardrobe": "Slim charcoal wool coat over a collared shirt.",
+              "must_keep": ["charcoal coat"]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Warm golden morning light through the front window.",
+            "Anna's cup is on the counter, not a table."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "Neighborhood coffee shop interior at 8am, warm morning light rakes in through the front window.",
+              "Counter is reclaimed wood; copper espresso machine on the back bar; handful of patrons quietly chatting in soft focus background."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Anna, early 30s, quiet confidence, light skin, shoulder-length chestnut hair, warm brown eyes."
+              ],
+              "wardrobe_notes": ["Oatmeal-tone wool sweater, silver stud earrings."],
+              "must_keep": ["oatmeal sweater", "chestnut shoulder-length hair"]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "Mira, the barista, mid-20s, easy smile, medium skin, dark hair pulled back in a low pony."
+              ],
+              "wardrobe_notes": ["Dark denim apron over a plain white tee."],
+              "must_keep": ["dark denim apron"]
+            },
+            {
+              "character_id": "char_003",
+              "identity_notes": [
+                "A stranger, late 30s, kind eyes, short dark hair, slight winter tan; understated warmth."
+              ],
+              "wardrobe_notes": ["Charcoal wool coat, collared shirt, no scarf."],
+              "must_keep": ["charcoal coat"]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "ceramic coffee cup",
+              "must_keep": ["matte cream color", "no logo", "steam curling from the top"]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "folded paper note",
+              "must_keep": ["cream-colored paper", "soft fold crease", "hand-torn edge"]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Cinematic 35mm look: warm golden morning light, shallow depth of field, soft film grain.",
+              "Palette: oatmeal, copper, cream, charcoal. Minimal cool tones."
+            ],
+            "must_avoid": [
+              "Flat fluorescent lighting, saturated neon colors, hand-held shake."
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "An ordinary order becomes a small moment of connection.",
+          "emotional_shift": "Routine → curiosity → quiet delight."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Wide interior of the coffee shop at sunrise. Mira slides a steaming ceramic cup across the reclaimed-wood counter toward Anna, who is cupping her hands around her phone. Golden light rakes across the counter.",
+            "continuity_refs": {"props": ["prop_001"], "wardrobe_character_ids": ["char_001", "char_002"]},
+            "shot_type": "wide",
+            "camera": {"angle": "eye_level", "movement": "slow push-in", "framing_notes": "Hold Anna and the cup on the counter; background patrons soft-focus."},
+            "visual_goal": "Establish Anna's calm morning ritual; plant the cup and Anna's right hand on the counter.",
+            "action_focus": "Mira slides cup toward Anna; Anna looks up from her phone.",
+            "characters_in_frame": ["char_001", "char_002"],
+            "props_in_frame": ["prop_001"],
+            "keyframe_plan": {"keyframe_count": 1, "keyframe_notes": ["Cup mid-slide, Anna's eyes lifting toward Mira."]}
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "Anna",
+            "text": "Thanks. Same time tomorrow?",
+            "continuity_refs": {"props": ["prop_001"], "wardrobe_character_ids": ["char_001"]},
+            "shot_type": "medium close-up",
+            "camera": {"angle": "eye_level", "movement": "static", "framing_notes": "Over Anna's shoulder toward Mira; cup warm in foreground."},
+            "visual_goal": "Anchor Anna's voice and quiet warmth; register Mira's small nod in reply.",
+            "action_focus": "Anna speaks over the rim of the cup; Mira nods back, smiling.",
+            "characters_in_frame": ["char_001", "char_002"],
+            "props_in_frame": ["prop_001"],
+            "keyframe_plan": {"keyframe_count": 1, "keyframe_notes": ["Anna mid-word; steam in the foreground softens the frame."]}
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Close-up of the counter. A charcoal-coated stranger's hand slides a small folded cream paper note across the wood, stopping just beside Anna's cup. The note's hand-torn edge catches the light.",
+            "continuity_refs": {"props": ["prop_001", "prop_002"], "wardrobe_character_ids": ["char_003"]},
+            "shot_type": "close-up",
+            "camera": {"angle": "high", "movement": "static", "framing_notes": "Top-down / near-top-down on the counter; cup on the right, note entering from left."},
+            "visual_goal": "Introduce the note and the stranger without revealing his face; rhyme the fold crease with the rising steam.",
+            "action_focus": "A man's hand places a folded cream note next to the cup.",
+            "characters_in_frame": ["char_003"],
+            "props_in_frame": ["prop_001", "prop_002"],
+            "keyframe_plan": {"keyframe_count": 1, "keyframe_notes": ["Note half-placed on the counter; hand still in frame; fingers beginning to lift."]}
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "block_type": "dialogue",
+            "character_id": "char_003",
+            "character_name": "Stranger",
+            "text": "You dropped this.",
+            "continuity_refs": {"props": ["prop_002"], "wardrobe_character_ids": ["char_001", "char_003"]},
+            "shot_type": "medium",
+            "camera": {"angle": "eye_level", "movement": "static", "framing_notes": "Two-shot profile; Anna right-of-frame looks up, Stranger left-of-frame half-turned."},
+            "visual_goal": "Pay off the mystery: Anna sees the stranger; a small smile of curiosity forms as she picks up the note.",
+            "action_focus": "Stranger speaks and steps back half a pace; Anna unfolds the note and the corners of her mouth lift.",
+            "characters_in_frame": ["char_001", "char_003"],
+            "props_in_frame": ["prop_002"],
+            "keyframe_plan": {"keyframe_count": 1, "keyframe_notes": ["Anna lifting the note open; stranger mid-word, already turning away."]}
+          }
+        ],
+        "estimated_duration_seconds": 20.0
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 1,
+    "shot_count_total": 4,
+    "avg_shots_per_scene": 4.0,
+    "dialogue_block_count": 2,
+    "action_block_count": 2
+  }
+}

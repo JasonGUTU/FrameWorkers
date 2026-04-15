@@ -82,13 +82,13 @@ class AssistantService:
         inputs: Dict[str, Any],
         execution: Optional[AgentExecution] = None,
     ) -> Dict[str, Any]:
-        task_id = inputs.get("task_id") or ""
+        step_id = inputs.get("step_id") or ""
         resolved_artifacts = inputs.get("resolved_artifacts") or {}
         if not isinstance(resolved_artifacts, dict):
             resolved_artifacts = {}
 
         agent = descriptor.build_equipped_agent(self.pipeline_llm_client)
-        typed_input = descriptor.build_input(task_id, resolved_artifacts)
+        typed_input = descriptor.build_input(step_id, resolved_artifacts)
 
         materialize_ctx = None
         temp_dir: Optional[str] = None
@@ -107,14 +107,14 @@ class AssistantService:
                 Each materializer's inner ``except Exception`` calls this so
                 the swallow-and-continue policy still leaves a structured
                 trace. Closes over ``execution`` so the log entry carries
-                the agent_id / task_id / execution_id triple.
+                the agent_id / step_id / execution_id triple.
                 """
                 if execution is None:
                     return
                 try:
                     self.workspace.log_artifact_materialize_failure(
                         agent_id=execution.agent_id,
-                        task_id=execution.task_id,
+                        step_id=execution.step_id,
                         execution_id=execution.id,
                         kind=kind,
                         sys_id=sys_id,
@@ -125,7 +125,7 @@ class AssistantService:
                     pass
 
             materialize_ctx = MaterializeContext(
-                task_id=task_id,
+                step_id=step_id,
                 typed_input=typed_input,
                 persist_binary=_persist,
                 report_failure=_report_failure,
@@ -192,7 +192,7 @@ class AssistantService:
     def _resolve_inputs_for_agent_with_llm(
         self,
         descriptor: Any,
-        task_id: str,
+        step_id: str,
         workspace: Workspace,
     ) -> Dict[str, Any]:
         """Semantic input resolution via the global_memory caption index.
@@ -208,23 +208,23 @@ class AssistantService:
 
         resolved = workspace.resolve_inputs_for_agent(
             agent_id=agent_id,
-            task_id=task_id,
+            step_id=step_id,
             input_needs_description=input_needs,
             llm_client=self.pipeline_llm_client,
             model=self.input_package_model,
         )
         return resolved
 
-    def _has_existing_assets(self, *, task_id: str, agent_id: str) -> bool:
+    def _has_existing_assets(self, *, step_id: str, agent_id: str) -> bool:
         """True if this agent has already produced any artifact for the task."""
         return self.workspace.global_memory.has_producer_run(
-            task_id=task_id, agent_id=agent_id,
+            step_id=step_id, agent_id=agent_id,
         )
 
     def execute_agent(
         self,
         agent_id: str,
-        task_id: str,
+        step_id: str,
         inputs: Dict[str, Any],
     ) -> AgentExecution:
         """
@@ -232,7 +232,7 @@ class AssistantService:
         
         Args:
             agent_id: ID of the agent to execute
-            task_id: ID of the task
+            step_id: ID of the task
             inputs: Input data for the agent
             
         Returns:
@@ -248,7 +248,7 @@ class AssistantService:
         # Create execution record
         execution = self.storage.create_execution(
             agent_id=agent_id,
-            task_id=task_id,
+            step_id=step_id,
             inputs=inputs
         )
         
@@ -317,11 +317,11 @@ class AssistantService:
         """Default relative paths under workspace ``artifacts/``.
 
         Binary/media files land under
-        ``artifacts/media/<agent_id>/<type>/<task_id>_<base_filename>``.
+        ``artifacts/media/<agent_id>/<type>/<step_id>_<base_filename>``.
         JSON snapshots land under
-        ``artifacts/<agent_id>/<task_id>_<agent_id_lower>_exec_<n>.json``
+        ``artifacts/<agent_id>/<step_id>_<agent_id_lower>_exec_<n>.json``
         — the producer ``agent_id`` is the slug for both the directory and
-        (lowercased) the filename. Every filename gets a ``<task_id>_``
+        (lowercased) the filename. Every filename gets a ``<step_id>_``
         prefix so multi-task workspaces can never collide.
         """
         assignments: List[Dict[str, Any]] = []
@@ -329,11 +329,11 @@ class AssistantService:
         if not isinstance(results, dict):
             return assignments
         producer = execution.agent_id or "agent"
-        task_id = (execution.task_id or "").strip()
+        step_id = (execution.step_id or "").strip()
 
         def _prefix(fn: str) -> str:
-            """Bake the task_id into the filename so multi-task workspaces are collision-free."""
-            return f"{task_id}_{fn}" if task_id else fn
+            """Bake the step_id into the filename so multi-task workspaces are collision-free."""
+            return f"{step_id}_{fn}" if step_id else fn
 
         for key, value in results.items():
             if key.startswith("_"):
@@ -372,37 +372,31 @@ class AssistantService:
         workspace: Workspace,
         *,
         overwrite_existing_assets: bool = False,
-    ) -> Dict[str, Any]:
-        """
-        Process execution results and store in workspace
-        
-        Args:
-            execution: AgentExecution instance with results
-            workspace: Workspace instance
-            
-        Returns:
-            Dictionary with ``task_id``, ``execution_id``, ``status``,
-            ``error``, ``error_reasoning`` (reserved for richer failure context; often ``null``),
-            ``workspace_id``, and ``global_memory_brief`` (a list of slim
-            rows ``[{execution_id, agent_id, task_id, status, created_at}, ...]``
-            in chronological order; same shape as the ``global_memory_brief``
-            field returned by ``GET /api/assistant/workspace/memory/brief``).
-            Full sub-agent payload remains on the stored
-            ``AgentExecution.results``; clients fetch it via
-            ``GET /api/assistant/executions/task/{task_id}`` when needed.
+    ) -> AgentExecution:
+        """Persist the execution's artifacts and return the execution itself.
+
+        ``global_memory`` is auto-populated by ArtifactWriter via the
+        workspace's ``_register_artifacts_callback`` during ``persist_execution_from_plan``;
+        directors that need cross-turn execution history query
+        ``GET /api/assistant/executions/step/<step_id>`` directly.
         """
         workspace.log_execution_result(execution)
         descriptor = self.agent_registry.get_descriptor(execution.agent_id)
         base_plan = self._deterministic_output_persist_plan(execution, descriptor)
-        # Persist plan is fully deterministic — no LLM rewrite, no
-        # naming policy file, no plan digest meta. The base plan from
-        # _deterministic_output_persist_plan already produces the final
-        # paths (artifacts/<Agent>/<task_id>_<lowercase>_exec_n.json
-        # for snapshots; artifacts/media/<Agent>/<type>/<task_id>_<base>
-        # for binaries).
         output_dict = execution.results if isinstance(execution.results, dict) else {}
         _bc = getattr(descriptor, "build_captions", None)
         captions = _bc(execution.agent_id, output_dict) if callable(_bc) else {}
+        # Handle _update: keys — update existing captions instead of creating new entries.
+        update_keys = [k for k in captions if k.startswith("_update:")]
+        for uk in update_keys:
+            entry = captions.pop(uk)
+            path = entry.get("path", "")
+            if path:
+                workspace.global_memory.update_caption_by_path(
+                    path,
+                    caption=entry.get("caption", ""),
+                    scope=entry.get("scope"),
+                )
         persisted_paths, asset_index = workspace.persist_execution_from_plan(
             execution,
             base_plan,
@@ -413,24 +407,12 @@ class AssistantService:
             execution.results["_asset_index"] = asset_index
         if persisted_paths or asset_index:
             self.storage.update_execution(execution)
-        # global_memory is auto-populated by ArtifactWriter via the
-        # workspace's _register_artifacts_callback during the persist
-        # call above; the brief here is just a derived view.
-        global_memory_brief = workspace.get_global_memory_brief(task_id=execution.task_id)
-        return {
-            "task_id": execution.task_id,
-            "execution_id": execution.id,
-            "status": execution.status.value,
-            "error": execution.error,
-            "error_reasoning": None,
-            "workspace_id": workspace.id,
-            "global_memory_brief": global_memory_brief,
-        }
+        return execution
 
     def build_execution_inputs(
         self,
         agent_id: str,
-        task_id: str,
+        step_id: str,
         workspace: Workspace,
     ) -> Dict[str, Any]:
         """Boundary 1: build final execution inputs for a sub-agent.
@@ -440,7 +422,7 @@ class AssistantService:
           2. Runs ``InputResolver`` to semantically select artifacts from
              the global_memory caption index based on the agent's
              ``input_needs_description``.
-          3. Returns a flat ``{task_id, resolved_artifacts}`` dict.
+          3. Returns a flat ``{step_id, resolved_artifacts}`` dict.
              ``resolved_artifacts`` is the only channel sub-agents see —
              ``_execute_pipeline_descriptor`` hands it straight to
              ``descriptor.build_input``.
@@ -455,26 +437,26 @@ class AssistantService:
             raise ValueError(f"Agent {agent_id} not found in registry")
 
         resolved = self._resolve_inputs_for_agent_with_llm(
-            descriptor, task_id, workspace,
+            descriptor, step_id, workspace,
         )
         resolved_artifacts = resolved.get("resolved_artifacts") or {}
         if not isinstance(resolved_artifacts, dict):
             resolved_artifacts = {}
 
         return {
-            "task_id": task_id,
+            "step_id": step_id,
             "resolved_artifacts": resolved_artifacts,
         }
 
-    def execute_agent_for_task(
+    def execute_agent_for_step(
         self,
         agent_id: str,
-        task_id: str,
-    ) -> Dict[str, Any]:
+        step_id: str,
+    ) -> AgentExecution:
         """
         Complete workflow: Execute an agent for a task.
 
-        The HTTP body has only ``agent_id`` and ``task_id``. Any user-side
+        The HTTP body has only ``agent_id`` and ``step_id``. Any user-side
         text / image / video / audio input must already exist in the
         workspace as a caption-rich artifact (e.g. via Intake agents);
         InputResolver picks it up by label.
@@ -484,27 +466,25 @@ class AssistantService:
         2. Run agent
         3. Persist execution results
 
-        Returns:
-            Execution summary dict (``task_id``, ``execution_id``, ``status``,
-            ``error``, ``error_reasoning``, ``workspace_id``, ``global_memory_brief``).
-            Sub-agent ``results`` are not included; use executions list API to load them.
+        Returns the current :class:`AgentExecution` (COMPLETED / FAILED etc.).
+        Directors pull cross-turn history from ``GET /api/assistant/executions/step/<step_id>``.
         """
         # Prepare environment
         workspace = self.prepare_environment()
-        auto_overwrite = self._has_existing_assets(task_id=task_id, agent_id=agent_id)
+        auto_overwrite = self._has_existing_assets(step_id=step_id, agent_id=agent_id)
         overwrite_existing_assets = auto_overwrite
 
-        # 1) Build inputs (task_id + resolved_artifacts)
+        # 1) Build inputs (step_id + resolved_artifacts)
         inputs = self.build_execution_inputs(
             agent_id=agent_id,
-            task_id=task_id,
+            step_id=step_id,
             workspace=workspace,
         )
         
         # 2) Run selected agent
         execution = self.execute_agent(
             agent_id=agent_id,
-            task_id=task_id,
+            step_id=step_id,
             inputs=inputs,
         )
         

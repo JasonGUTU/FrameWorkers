@@ -29,8 +29,8 @@ class AssistantStateStore:
         if runtime_base_path is None:
             # dynamic-task-stack/src/assistant/state_store.py -> FrameWorkers/
             current_file = Path(__file__)
-            project_root = current_file.parent.parent.parent.parent.parent
-            runtime_base_path = project_root / "Runtime"
+            project_root = current_file.parent.parent.parent.parent
+            runtime_base_path = project_root / "_workspaces"
 
         self.runtime_base_path = Path(runtime_base_path)
         self.runtime_base_path.mkdir(parents=True, exist_ok=True)
@@ -43,7 +43,7 @@ class AssistantStateStore:
     def create_execution(
         self,
         agent_id: str,
-        task_id: str,
+        step_id: str,
         inputs: Dict[str, Any],
     ) -> AgentExecution:
         """Create a new execution record."""
@@ -54,7 +54,7 @@ class AssistantStateStore:
             execution = AgentExecution(
                 id=execution_id,
                 agent_id=agent_id,
-                task_id=task_id,
+                step_id=step_id,
                 status=ExecutionStatus.PENDING,
                 inputs=inputs,
                 created_at=datetime.now(),
@@ -62,13 +62,13 @@ class AssistantStateStore:
             self.executions[execution_id] = execution
             return execution
 
-    def get_executions_by_task(self, task_id: str) -> List[AgentExecution]:
+    def get_executions_by_step(self, step_id: str) -> List[AgentExecution]:
         """Get all executions for a task."""
         with self.lock:
             return [
                 execution
                 for execution in self.executions.values()
-                if execution.task_id == task_id
+                if execution.step_id == step_id
             ]
 
     def get_execution(self, execution_id: str) -> Optional[AgentExecution]:

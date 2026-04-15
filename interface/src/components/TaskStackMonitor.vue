@@ -12,34 +12,34 @@
       >
         <div class="layer-header">
           <span class="layer-index">Layer {{ layer.layer_index }}</span>
-          <span class="layer-task-count">{{ layer.tasks ? layer.tasks.length : 0 }} tasks</span>
+          <span class="layer-task-count">{{ layer.steps ? layer.steps.length : 0 }} tasks</span>
         </div>
         
         <div class="layer-tasks">
           <div
-            v-for="(taskEntry, index) in layer.tasks"
-            :key="taskEntry.task_id"
+            v-for="(taskEntry, index) in layer.steps"
+            :key="taskEntry.step_id"
             class="task-item"
-            :class="getTaskStatusClass(taskEntry.task_id)"
-            @click="toggleTask(taskEntry.task_id)"
+            :class="getTaskStatusClass(taskEntry.step_id)"
+            @click="toggleTask(taskEntry.step_id)"
           >
             <div class="task-header">
               <span class="task-id">Task {{ index }}</span>
-              <span class="task-toggle">{{ expandedTasks.has(taskEntry.task_id) ? '−' : '+' }}</span>
+              <span class="task-toggle">{{ expandedTasks.has(taskEntry.step_id) ? '−' : '+' }}</span>
             </div>
-            <div class="task-status-badge">{{ getTaskStatus(taskEntry.task_id) }}</div>
+            <div class="task-status-badge">{{ getTaskStatus(taskEntry.step_id) }}</div>
             <div
-              v-if="expandedTasks.has(taskEntry.task_id)"
+              v-if="expandedTasks.has(taskEntry.step_id)"
               class="task-details"
             >
-              <div class="task-description" v-if="getTaskDescription(taskEntry.task_id)">
-                <strong>描述:</strong> {{ getTaskDescription(taskEntry.task_id) }}
+              <div class="task-description" v-if="getTaskDescription(taskEntry.step_id)">
+                <strong>描述:</strong> {{ getTaskDescription(taskEntry.step_id) }}
               </div>
-              <div class="task-progress" v-if="getTaskProgress(taskEntry.task_id)">
-                <strong>进度:</strong> {{ JSON.stringify(getTaskProgress(taskEntry.task_id)) }}
+              <div class="task-progress" v-if="getTaskProgress(taskEntry.step_id)">
+                <strong>进度:</strong> {{ JSON.stringify(getTaskProgress(taskEntry.step_id)) }}
               </div>
-              <div class="task-results" v-if="getTaskResults(taskEntry.task_id)">
-                <strong>结果:</strong> {{ JSON.stringify(getTaskResults(taskEntry.task_id)) }}
+              <div class="task-results" v-if="getTaskResults(taskEntry.step_id)">
+                <strong>结果:</strong> {{ JSON.stringify(getTaskResults(taskEntry.step_id)) }}
               </div>
             </div>
           </div>
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { taskStackAPI, tasksAPI, executionPointerAPI } from '../services/api'
+import { planStackAPI, stepsAPI, executionPointerAPI } from '../services/api'
 import pollingService from '../services/polling'
 
 export default {
@@ -78,7 +78,7 @@ export default {
       // Poll task stack
       pollingService.startPolling(
         'task-stack-monitor',
-        () => taskStackAPI.get(),
+        () => planStackAPI.get(),
         2000,
         async (data) => {
           if (Array.isArray(data)) {
@@ -86,14 +86,14 @@ export default {
             
             // Fetch task details for all tasks
             for (const layer of data) {
-              if (layer.tasks) {
-                for (const taskEntry of layer.tasks) {
-                  if (!this.tasks[taskEntry.task_id]) {
+              if (layer.steps) {
+                for (const taskEntry of layer.steps) {
+                  if (!this.tasks[taskEntry.step_id]) {
                     try {
-                      const response = await tasksAPI.get(taskEntry.task_id)
-                      this.$set(this.tasks, taskEntry.task_id, response.data)
+                      const response = await stepsAPI.get(taskEntry.step_id)
+                      this.$set(this.tasks, taskEntry.step_id, response.data)
                     } catch (error) {
-                      console.error(`Failed to fetch task ${taskEntry.task_id}:`, error)
+                      console.error(`Failed to fetch task ${taskEntry.step_id}:`, error)
                     }
                   }
                 }
@@ -170,24 +170,24 @@ export default {
       if (!this.executionPointer) return false
       
       const layer = this.layers[this.executionPointer.current_layer_index]
-      if (!layer || !layer.tasks) return false
+      if (!layer || !layer.steps) return false
       
-      const currentTask = layer.tasks[this.executionPointer.current_task_index]
-      return currentTask && currentTask.task_id === taskId
+      const currentTask = layer.steps[this.executionPointer.current_step_index]
+      return currentTask && currentTask.step_id === taskId
     },
     
     isFutureTask(taskId) {
       if (!this.executionPointer) return false
       
       const execLayer = this.executionPointer.current_layer_index
-      const execTask = this.executionPointer.current_task_index
+      const execTask = this.executionPointer.current_step_index
       
       for (let i = 0; i < this.layers.length; i++) {
         const layer = this.layers[i]
-        if (!layer.tasks) continue
+        if (!layer.steps) continue
         
-        for (let j = 0; j < layer.tasks.length; j++) {
-          if (layer.tasks[j].task_id === taskId) {
+        for (let j = 0; j < layer.steps.length; j++) {
+          if (layer.steps[j].step_id === taskId) {
             if (i > execLayer) return true
             if (i === execLayer && j > execTask) return true
             return false

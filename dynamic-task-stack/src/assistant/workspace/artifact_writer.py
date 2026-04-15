@@ -70,7 +70,7 @@ class ArtifactWriter:
         self._on_change = on_change
         # register_artifacts(execution, artifact_refs) — called after persistence
         self._register_artifacts = register_artifacts
-        # find_artifact_refs_for_producer(task_id, agent_id) → list[ArtifactRef]
+        # find_artifact_refs_for_producer(step_id, agent_id) → list[ArtifactRef]
         # of every prior file this producer wrote on this task.
         self._find_artifact_refs_for_producer = find_artifact_refs_for_producer
         # delete_file_at_path(absolute_path) → bool. Used to unlink old files.
@@ -187,7 +187,7 @@ class ArtifactWriter:
             return
         try:
             matches = self._find_artifact_refs_for_producer(
-                task_id=execution.task_id,
+                step_id=execution.step_id,
                 agent_id=execution.agent_id,
             )
         except Exception as exc:
@@ -222,7 +222,7 @@ class ArtifactWriter:
             event="artifact.purged_for_producer",
             resource_id=execution.id,
             agent_id=execution.agent_id,
-            task_id=execution.task_id,
+            step_id=execution.step_id,
             execution_id=execution.id,
             details={
                 "deleted_paths": deleted_paths,
@@ -372,7 +372,7 @@ class ArtifactWriter:
             event="artifact.persisted",
             resource_id=stored.path,
             agent_id=execution.agent_id,
-            task_id=execution.task_id,
+            step_id=execution.step_id,
             execution_id=execution.id,
             details={
                 "kind": "binary",
@@ -411,7 +411,7 @@ class ArtifactWriter:
             event="artifact.persisted",
             resource_id=stored.path,
             agent_id=execution.agent_id,
-            task_id=execution.task_id,
+            step_id=execution.step_id,
             execution_id=execution.id,
             details={
                 "kind": "media",
@@ -457,7 +457,7 @@ class ArtifactWriter:
             event="artifact.snapshot_persisted",
             resource_id=stored.path,
             agent_id=execution.agent_id,
-            task_id=execution.task_id,
+            step_id=execution.step_id,
             execution_id=execution.id,
             details={
                 "agent_id": agent_id,

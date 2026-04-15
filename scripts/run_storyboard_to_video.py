@@ -49,7 +49,7 @@ logger = logging.getLogger(__name__)
 async def _run_keyframe_agent_local(
     *,
     screenplay: dict[str, Any],
-    task_id: str,
+    step_id: str,
     out_dir: Path,
     materialize: bool,
 ) -> tuple[int, dict[str, Any] | None]:
@@ -72,7 +72,7 @@ async def _run_keyframe_agent_local(
 
     llm = LLMClient()
     agent = descriptor.build_equipped_agent(llm)
-    typed_input = descriptor.build_input(task_id, resolved_artifacts)
+    typed_input = descriptor.build_input(step_id, resolved_artifacts)
 
     materialize_ctx: MaterializeContext | None = None
     if materialize and getattr(agent, "materializer", None) is not None:
@@ -83,7 +83,7 @@ async def _run_keyframe_agent_local(
             return str(path.resolve())
 
         materialize_ctx = MaterializeContext(
-            task_id=task_id,
+            step_id=step_id,
             typed_input=typed_input,
             persist_binary=_persist,
         )
@@ -141,7 +141,7 @@ async def _run_video_agent_local(
     *,
     screenplay: dict[str, Any],
     keyframes: dict[str, Any],
-    task_id: str,
+    step_id: str,
     out_dir: Path,
     materialize: bool,
 ) -> tuple[int, dict[str, Any] | None]:
@@ -170,7 +170,7 @@ async def _run_video_agent_local(
 
     llm = LLMClient()
     agent = descriptor.build_equipped_agent(llm)
-    typed_input = descriptor.build_input(task_id, resolved_artifacts)
+    typed_input = descriptor.build_input(step_id, resolved_artifacts)
 
     materialize_ctx: MaterializeContext | None = None
     if materialize and getattr(agent, "materializer", None) is not None:
@@ -181,7 +181,7 @@ async def _run_video_agent_local(
             return str(path.resolve())
 
         materialize_ctx = MaterializeContext(
-            task_id=task_id,
+            step_id=step_id,
             typed_input=typed_input,
             persist_binary=_persist,
         )
@@ -238,7 +238,7 @@ async def _run_video_agent_local(
 async def _pipeline_async(
     *,
     screenplay: dict,
-    task_id: str,
+    step_id: str,
     out_dir: Path,
     keyframe_materialize: bool,
     video_materialize: bool,
@@ -249,7 +249,7 @@ async def _pipeline_async(
 
     kf_code, kf_payload = await _run_keyframe_agent_local(
         screenplay=screenplay,
-        task_id=f"{task_id}_keyframe",
+        step_id=f"{step_id}_keyframe",
         out_dir=kf_dir,
         materialize=keyframe_materialize,
     )
@@ -266,7 +266,7 @@ async def _pipeline_async(
     v_code, _vp = await _run_video_agent_local(
         screenplay=screenplay,
         keyframes=kf_payload,
-        task_id=f"{task_id}_video",
+        step_id=f"{step_id}_video",
         out_dir=vid_dir,
         materialize=True,
     )
@@ -325,7 +325,7 @@ def main() -> None:
     code = asyncio.run(
         _pipeline_async(
             screenplay=screenplay,
-            task_id=str(args.task_id),
+            step_id=str(args.step_id),
             out_dir=out_dir,
             keyframe_materialize=not args.no_keyframe_materialize,
             video_materialize=not args.no_video_materialize,

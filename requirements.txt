@@ -7,7 +7,7 @@
 Flask==3.0.0
 flask-cors==4.0.0
 
-# LLM clients (inference + director_nostack routing)
+# LLM clients (inference + director_agent routing)
 litellm>=1.40.0
 openai>=1.0.0
 tiktoken>=0.5.0

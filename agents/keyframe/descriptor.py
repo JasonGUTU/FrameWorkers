@@ -24,7 +24,7 @@ from inference.generation import select_image_service
 
 
 def build_input(
-    _task_id: str,
+    _step_id: str,
     resolved_artifacts: dict,
 ) -> BaseModel:
     sp = ResolvedArtifactEntry.coerce(resolved_artifacts.get(INPUT_LABEL_SCREENPLAY))
@@ -110,10 +110,14 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
 
 CATALOG_ENTRY = (
     "KeyFrameAgent\n"
-    "  - Input: screenplay (unified shots + consistency packs)\n"
-    "  - Output: keyframes_package (L1 global + L2 scene stability + L3 one still per shot); "
-    "each L3 row has prompt_summary (image API) + video_motion_hint (I2V text only)\n"
-    "  - Purpose: Anchor consistency, per-shot stills, and decoupled motion hints for video."
+    "  - Input: a screenplay artifact (scenes -> shots structure).\n"
+    "  - Output: keyframes_package (L1 global stability anchors + L2 per-scene stability + "
+    "L3 one still per shot); each L3 row has prompt_summary (image API) + video_motion_hint "
+    "(I2V text only).\n"
+    "  - Purpose: Generate consistency anchors and per-shot still images for a creative video "
+    "production — these stills become the I2V keyframes for video clip generation. Run me "
+    "in the creative production chain ONCE a structured screenplay exists; my output is "
+    "consumed by the clip-generation step."
 )
 
 DESCRIPTOR = SubAgentDescriptor(

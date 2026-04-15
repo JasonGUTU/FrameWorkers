@@ -59,7 +59,7 @@ class IntakeTextAgent(BaseAgent[IntakeTextInput, IntakeTextOutput]):
             "User-uploaded text follows. Produce a one-sentence summary "
             "describing what this text is and what it covers.\n\n"
             "=== USER TEXT ===\n"
-            f"{text[:6000]}\n"
+            f"{text}\n"
             "=== END ===\n\n"
             "Return strict JSON: {\"summary\": \"...\"}"
         )

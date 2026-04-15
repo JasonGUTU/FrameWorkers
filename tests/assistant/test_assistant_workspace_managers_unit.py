@@ -70,7 +70,7 @@ def test_global_memory_register_then_list(tmp_path):
     mem.register(
         execution_id="exec_1",
         agent_id="StoryAgent",
-        task_id="task_1",
+        step_id="task_1",
         artifacts=[_make_ref("/p/story.json", caption="story blueprint")],
     )
     entries = mem.list_all()
@@ -84,7 +84,7 @@ def test_global_memory_persists_as_markdown(tmp_path):
     mem.register(
         execution_id="exec_1",
         agent_id="StoryAgent",
-        task_id="task_1",
+        step_id="task_1",
         artifacts=[_make_ref("/p/story.json")],
     )
     md_path = tmp_path / "ws_md" / "global_memory.md"
@@ -102,13 +102,13 @@ def test_global_memory_round_trip_through_disk(tmp_path):
     mem1.register(
         execution_id="exec_1",
         agent_id="StoryAgent",
-        task_id="task_1",
+        step_id="task_1",
         artifacts=[_make_ref("/p/a.json")],
     )
     mem1.register(
         execution_id="exec_2",
         agent_id="ScreenplayAgent",
-        task_id="task_1",
+        step_id="task_1",
         artifacts=[_make_ref("/p/b.json")],
     )
     # New instance reads back the same entries from disk.
@@ -118,52 +118,24 @@ def test_global_memory_round_trip_through_disk(tmp_path):
     assert {e.agent_id for e in entries} == {"StoryAgent", "ScreenplayAgent"}
 
 
-def test_global_memory_legacy_jsonl_fallback(tmp_path):
-    """Workspaces written before the rename use ``artifact_registry.jsonl`` —
-    GlobalMemory must read them transparently so old runs still load."""
-    import json as _json
-    wid = "ws_legacy"
-    workspace_dir = tmp_path / wid
-    workspace_dir.mkdir(parents=True)
-    legacy = workspace_dir / "artifact_registry.jsonl"
-    legacy.write_text(
-        _json.dumps({
-            "execution_id": "exec_legacy",
-            "agent_id": "LegacyAgent",
-            "task_id": "task_legacy",
-            "created_at": "2026-01-01T00:00:00+00:00",
-            "artifacts": [
-                {"caption": "old caption", "scope": "global", "path": "/p/old.json", "mime": "application/json"},
-            ],
-        }) + "\n",
-        encoding="utf-8",
-    )
-
-    mem = GlobalMemory(wid, tmp_path)
-    entries = mem.list_all()
-    assert len(entries) == 1
-    assert entries[0].agent_id == "LegacyAgent"
-    assert entries[0].artifacts[0].path == "/p/old.json"
-
-
 def test_global_memory_find_by_producer_and_has_run(tmp_path):
     mem = GlobalMemory("ws_p", tmp_path)
     mem.register(
         execution_id="exec_1",
         agent_id="StoryAgent",
-        task_id="task_1",
+        step_id="task_1",
         artifacts=[_make_ref("/p/a.json")],
     )
     mem.register(
         execution_id="exec_2",
         agent_id="StoryAgent",
-        task_id="task_1",
+        step_id="task_1",
         artifacts=[_make_ref("/p/b.json")],
     )
-    refs = mem.find_by_producer(task_id="task_1", agent_id="StoryAgent")
+    refs = mem.find_by_producer(step_id="task_1", agent_id="StoryAgent")
     assert {r.path for r in refs} == {"/p/a.json", "/p/b.json"}
-    assert mem.has_producer_run(task_id="task_1", agent_id="StoryAgent") is True
-    assert mem.has_producer_run(task_id="task_1", agent_id="OtherAgent") is False
+    assert mem.has_producer_run(step_id="task_1", agent_id="StoryAgent") is True
+    assert mem.has_producer_run(step_id="task_1", agent_id="OtherAgent") is False
 
 
 def test_global_memory_prune_by_paths_removes_refs_and_empty_entries(tmp_path):
@@ -171,7 +143,7 @@ def test_global_memory_prune_by_paths_removes_refs_and_empty_entries(tmp_path):
     mem.register(
         execution_id="exec_1",
         agent_id="StoryAgent",
-        task_id="task_1",
+        step_id="task_1",
         artifacts=[_make_ref("/p/a.json"), _make_ref("/p/b.json")],
     )
     removed = mem.prune_by_paths(["/p/a.json"])
@@ -187,8 +159,8 @@ def test_global_memory_prune_by_paths_removes_refs_and_empty_entries(tmp_path):
 
 def test_log_manager_filter(tmp_path):
     lm = LogManager("ws_1", tmp_path)
-    lm.add_log(event="artifact.persisted", details={"msg": "hello"}, agent_id="a1", task_id="t1")
-    lm.add_log(event="memory.written", details={"msg": "world"}, agent_id="a2", task_id="t2")
+    lm.add_log(event="artifact.persisted", details={"msg": "hello"}, agent_id="a1", step_id="t1")
+    lm.add_log(event="memory.written", details={"msg": "world"}, agent_id="a2", step_id="t2")
 
     filtered = lm.get_logs(event="artifact.persisted", agent_id="a1")
 
@@ -209,7 +181,7 @@ def test_artifact_writer_hydrate_and_persist_index(tmp_path):
 
     execution = SimpleNamespace(
         id="exec_001",
-        task_id="task_1",
+        step_id="task_1",
         agent_id="AgentA",
         results={
             "content": {"value": 42},
@@ -253,7 +225,7 @@ def test_artifact_writer_persist_rewrites_uris_before_json_snapshot(tmp_path):
     stale_uri = str(tmp_path / "gone" / "img_001.png")
     execution = SimpleNamespace(
         id="exec_7",
-        task_id="task_uri",
+        step_id="task_uri",
         agent_id="KeyFrameAgent",
         results={
             "content": {

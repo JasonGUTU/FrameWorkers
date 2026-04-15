@@ -93,7 +93,7 @@ class Workspace:
         event: str,
         resource_id: Optional[str] = None,
         agent_id: Optional[str] = None,
-        task_id: Optional[str] = None,
+        step_id: Optional[str] = None,
         details: Optional[Dict[str, Any]] = None,
         level: str = "INFO",
         execution_id: Optional[str] = None,
@@ -102,7 +102,7 @@ class Workspace:
             event=event,
             resource_id=resource_id,
             agent_id=agent_id,
-            task_id=task_id,
+            step_id=step_id,
             details=details or {},
             level=level,
             execution_id=execution_id,
@@ -148,7 +148,7 @@ class Workspace:
         self.global_memory.register(
             execution_id=str(execution.id or ""),
             agent_id=str(execution.agent_id or ""),
-            task_id=str(execution.task_id or ""),
+            step_id=str(execution.step_id or ""),
             artifacts=refs,
         )
 
@@ -247,7 +247,7 @@ class Workspace:
         self.global_memory.register(
             execution_id=f"upload_{ts}",
             agent_id="user",
-            task_id="",  # uploads are not bound to a task at the moment of upload
+            step_id="",  # uploads are not bound to a task at the moment of upload
             artifacts=[ref],
         )
         self._add_log(
@@ -272,7 +272,7 @@ class Workspace:
         """Return a flat list of all registered artifacts in this workspace.
 
         Each entry has the artifact's caption, scope, absolute path, mime,
-        and the producing execution's agent_id/task_id/execution_id/created_at.
+        and the producing execution's agent_id/step_id/execution_id/created_at.
         """
         rows: List[Dict[str, Any]] = []
         for entry in self.global_memory.list_all():
@@ -284,56 +284,10 @@ class Workspace:
                     "caption": ref.caption,
                     "scope": ref.scope,
                     "agent_id": entry.agent_id,
-                    "task_id": entry.task_id,
+                    "step_id": entry.step_id,
                     "execution_id": entry.execution_id,
                     "created_at": entry.created_at.isoformat() if entry.created_at else "",
                 })
-        return rows
-
-    # ------------------------------------------------------------------
-    # Global memory (semantic record — the only memory layer)
-    # ------------------------------------------------------------------
-
-    def get_global_memory_brief(
-        self,
-        *,
-        task_id: Optional[str] = None,
-        agent_id: Optional[str] = None,
-        limit: Optional[int] = None,
-    ) -> List[Dict[str, Any]]:
-        """Return the director-facing rollup of ``global_memory``.
-
-        Each row is one execution that successfully produced artifacts,
-        projected down to ``{execution_id, agent_id, task_id, status,
-        created_at}``, in chronological order (oldest → newest). Director
-        uses this to plan next steps.
-
-        Failed executions do not appear here (they leave no artifacts);
-        if a director needs to see failures it should query
-        ``GET /api/assistant/workspace/logs?event=execution.failed``.
-        """
-        entries = self.global_memory.list_all()
-        if task_id:
-            entries = [e for e in entries if e.task_id == task_id or not e.task_id]
-        if agent_id:
-            entries = [e for e in entries if e.agent_id == agent_id]
-        entries.sort(
-            key=lambda e: e.created_at.isoformat() if e.created_at else "",
-        )
-        if limit is None:
-            entries = entries[-_global_memory_brief_default_limit():]
-        elif limit > 0:
-            entries = entries[-int(limit):]
-        rows = [
-            {
-                "execution_id": e.execution_id,
-                "agent_id": e.agent_id,
-                "task_id": e.task_id,
-                "status": "COMPLETED",
-                "created_at": e.created_at.isoformat() if e.created_at else "",
-            }
-            for e in entries
-        ]
         return rows
 
     def get_workspace_root_file_tree_text(self) -> str:
@@ -348,7 +302,7 @@ class Workspace:
         self,
         *,
         agent_id: str,
-        task_id: str,
+        step_id: str,
         input_needs_description: str,
         llm_client: Any,
         model: Optional[str] = None,
@@ -368,7 +322,7 @@ class Workspace:
         resolver = InputResolver(self.global_memory, self.file_manager, llm_client)
         return resolver.resolve(
             agent_id=agent_id,
-            task_id=task_id,
+            step_id=step_id,
             input_needs_description=input_needs_description,
             model=model,
         )
@@ -382,7 +336,7 @@ class Workspace:
         *,
         event: Optional[str] = None,
         agent_id: Optional[str] = None,
-        task_id: Optional[str] = None,
+        step_id: Optional[str] = None,
         limit: Optional[int] = None,
         level: Optional[str] = None,
         execution_id: Optional[str] = None,
@@ -390,7 +344,7 @@ class Workspace:
         return self.log_manager.get_logs(
             event=event,
             agent_id=agent_id,
-            task_id=task_id,
+            step_id=step_id,
             limit=limit,
             level=level,
             execution_id=execution_id,
@@ -401,7 +355,7 @@ class Workspace:
             event="execution.started",
             resource_id=execution.id,
             agent_id=execution.agent_id,
-            task_id=execution.task_id,
+            step_id=execution.step_id,
             execution_id=execution.id,
             details={
                 "status": str(getattr(execution.status, "value", execution.status)),
@@ -412,7 +366,7 @@ class Workspace:
         self,
         *,
         agent_id: str,
-        task_id: str,
+        step_id: str,
         execution_id: str,
         kind: str,
         sys_id: str,
@@ -431,7 +385,7 @@ class Workspace:
             event="artifact.materialize_failed",
             resource_id=sys_id or "",
             agent_id=agent_id,
-            task_id=task_id,
+            step_id=step_id,
             execution_id=execution_id,
             level="ERROR",
             details={
@@ -460,7 +414,7 @@ class Workspace:
             event=event,
             resource_id=execution.id,
             agent_id=execution.agent_id,
-            task_id=execution.task_id,
+            step_id=execution.step_id,
             execution_id=execution.id,
             level="INFO" if status == "COMPLETED" else "ERROR",
             details={
@@ -503,19 +457,6 @@ class Workspace:
 # ----------------------------------------------------------------------
 
 
-def _global_memory_brief_default_limit() -> int:
-    """Default cap on rows returned by ``get_global_memory_brief``.
-
-    Reads ``ASSISTANT_GLOBAL_MEMORY_CONTEXT_ENTRIES_MAX`` (kept for
-    backward compatibility with the previous brief implementation) and
-    clamps to ``[1, 500]``.
-    """
-    import os as _os
-    try:
-        n = int(_os.getenv("ASSISTANT_GLOBAL_MEMORY_CONTEXT_ENTRIES_MAX", "20").strip())
-        return max(1, min(n, 500))
-    except ValueError:
-        return 20
 
 
 def _build_file_tree_text(root: Path) -> str:

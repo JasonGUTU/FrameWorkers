@@ -1,0 +1,21 @@
+{
+  "content": {
+    "cues": [
+      {
+        "cue_id": "music_sc_001",
+        "scene_id": "sc_001",
+        "mood": "calm, curious, warm, gentle acoustic guitar, light piano",
+        "duration_seconds": 20.0,
+        "audio_asset": {
+          "asset_id": "aud_music_sc_001",
+          "uri": "/home/zhendong_li/FrameWorkers/process-flow-visualizer/test-assets/compositor_demo/05_music/aud_music_sc_001.wav",
+          "format": "wav"
+        },
+        "audio_generation_prompt": "{\"kind\": \"music\", \"mood\": \"calm, curious, warm, gentle acoustic guitar, light piano\", \"target_duration\": 20.0, \"segments\": 1}"
+      }
+    ]
+  },
+  "metrics": {
+    "cue_count": 1
+  }
+}

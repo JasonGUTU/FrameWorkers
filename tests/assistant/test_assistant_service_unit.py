@@ -10,9 +10,32 @@ from src.assistant.state_store import AssistantStateStore
 from agents.common_schema import ResolvedArtifactEntry
 
 
-def _execution_results_dict(storage: AssistantStateStore, result: dict) -> dict:
-    """Sub-agent payload lives on stored ``AgentExecution``, not on ``execute`` HTTP summary."""
-    ex_id = result.get("execution_id")
+def _last_brief_row(result) -> dict:
+    """Normalize ``execute_agent_for_step`` output to a dict.
+
+    Service-level callers get the :class:`AgentExecution` dataclass directly;
+    HTTP callers get the same object serialized to a dict.
+    """
+    if isinstance(result, dict):
+        return result
+    if isinstance(result, AgentExecution):
+        return {
+            "id": result.id,
+            "agent_id": result.agent_id,
+            "step_id": result.step_id,
+            "status": getattr(result.status, "value", str(result.status)),
+            "error": result.error,
+        }
+    raise TypeError(f"Unexpected execute result type: {type(result)!r}")
+
+
+def _execution_results_dict(storage: AssistantStateStore, result) -> dict:
+    """Sub-agent payload lives on the stored ``AgentExecution`` (not the HTTP response)."""
+    if isinstance(result, AgentExecution):
+        assert isinstance(result.results, dict)
+        return result.results
+    row = _last_brief_row(result)
+    ex_id = row.get("id") or row.get("execution_id")
     assert ex_id
     ex = storage.get_execution(ex_id)
     assert ex is not None
@@ -23,7 +46,7 @@ def _execution_results_dict(storage: AssistantStateStore, result: dict) -> dict:
 def _seed_json_snapshot(
     workspace,
     *,
-    task_id: str,
+    step_id: str,
     agent_id: str,
     caption_label: str,
     execution_id: str,
@@ -47,7 +70,7 @@ def _seed_json_snapshot(
     workspace.global_memory.register(
         execution_id=execution_id,
         agent_id=agent_id,
-        task_id=task_id,
+        step_id=step_id,
         artifacts=[
             _ArtifactRef(
                 caption=f"{caption_label} JSON artifact — seeded by test helper",
@@ -71,7 +94,7 @@ def test_service_build_execution_inputs_includes_assets(assistant_env):
     workspace = svc.prepare_environment()
     _seed_json_snapshot(
         workspace,
-        task_id="task_1",
+        step_id="task_1",
         agent_id="UpstreamAgent",
         caption_label="upstream_asset",
         execution_id=execution.id,
@@ -79,11 +102,11 @@ def test_service_build_execution_inputs_includes_assets(assistant_env):
     )
     inputs = svc.build_execution_inputs(
         agent_id="DummyAgent",
-        task_id="task_1",
+        step_id="task_1",
         workspace=workspace,
     )
 
-    assert inputs["task_id"] == "task_1"
+    assert inputs["step_id"] == "task_1"
     # resolved_artifacts is keyed by the consumer's [label] headers; DummyAgent
     # declares [upstream_asset] (single) in conftest, so the producer's snapshot
     # (whose caption contains "upstream_asset") lands under that key.
@@ -98,7 +121,7 @@ def test_service_build_execution_inputs_includes_assets(assistant_env):
     )
 
 
-def test_service_build_execution_inputs_returns_task_id_and_artifact_dict(assistant_env):
+def test_service_build_execution_inputs_returns_step_id_and_artifact_dict(assistant_env):
     svc, storage, _ = assistant_env
     execution = storage.create_execution("UpstreamAgent", "task_1", {"x": 1})
     execution.status = ExecutionStatus.COMPLETED
@@ -108,7 +131,7 @@ def test_service_build_execution_inputs_returns_task_id_and_artifact_dict(assist
     workspace = svc.prepare_environment()
     _seed_json_snapshot(
         workspace,
-        task_id="task_1",
+        step_id="task_1",
         agent_id="UpstreamAgent",
         caption_label="upstream_asset",
         execution_id=execution.id,
@@ -116,10 +139,10 @@ def test_service_build_execution_inputs_returns_task_id_and_artifact_dict(assist
     )
     inputs = svc.build_execution_inputs(
         agent_id="DummyAgent",
-        task_id="task_1",
+        step_id="task_1",
         workspace=workspace,
     )
-    assert set(inputs.keys()) == {"task_id", "resolved_artifacts"}
+    assert set(inputs.keys()) == {"step_id", "resolved_artifacts"}
     # The resolved_artifacts dict has no source_text label.
     assert "source_text" not in inputs["resolved_artifacts"]
 
@@ -152,9 +175,9 @@ def test_service_execute_and_persist_file_outputs(tmp_path, monkeypatch):
         def build_equipped_agent(self, _llm):
             return _DummyPipelineAgent()
 
-        def build_input(self, task_id, resolved_artifacts):
+        def build_input(self, step_id, resolved_artifacts):
             return {
-                "task_id": task_id,
+                "step_id": step_id,
                 "resolved_artifacts": resolved_artifacts,
                 "language": "en",
             }
@@ -173,25 +196,25 @@ def test_service_execute_and_persist_file_outputs(tmp_path, monkeypatch):
     monkeypatch.setattr(service_module, "get_agent_registry", lambda: registry)
     svc = service_module.AssistantService(storage)
 
-    result = svc.execute_agent_for_task(
+    result = svc.execute_agent_for_step(
         "DummyAgent",
         "task_file",
     )
     workspace = storage.get_global_workspace()
     artifacts = workspace.list_workspace_artifacts()
 
-    assert result["status"] == "COMPLETED"
+    assert _last_brief_row(result)["status"] == "COMPLETED"
     rdict = _execution_results_dict(storage, result)
     assert rdict["_execution_debug"]["attempts"] == 2
     assert rdict["_execution_debug"]["overall_pass"] is True
     # The dummy agent only emits one binary (`report.txt`); its results have
     # no structured top-level keys, so no JSON snapshot is written.
-    # task_id prefix is now baked into the filename: task_file_report.txt.
+    # step_id prefix is now baked into the filename: task_file_report.txt.
     binary = [a for a in artifacts if a["filename"] == "task_file_report.txt"]
     assert len(binary) == 1
-    latest_execution_id = storage.get_executions_by_task("task_file")[-1].id
+    latest_execution_id = storage.get_executions_by_step("task_file")[-1].id
     assert binary[0]["execution_id"] == latest_execution_id
-    assert binary[0]["task_id"] == "task_file"
+    assert binary[0]["step_id"] == "task_file"
     assert binary[0]["agent_id"] == "DummyAgent"
 
 
@@ -226,9 +249,9 @@ def test_service_overwrite_mode_replaces_previous_asset_files(tmp_path, monkeypa
         def build_equipped_agent(self, _llm):
             return self._agent
 
-        def build_input(self, task_id, resolved_artifacts):
+        def build_input(self, step_id, resolved_artifacts):
             return {
-                "task_id": task_id,
+                "step_id": step_id,
                 "resolved_artifacts": resolved_artifacts,
                 "language": "en",
             }
@@ -245,24 +268,24 @@ def test_service_overwrite_mode_replaces_previous_asset_files(tmp_path, monkeypa
     monkeypatch.setattr(service_module, "get_agent_registry", lambda: _DummyRegistry(descriptor))
     svc = service_module.AssistantService(storage)
 
-    first = svc.execute_agent_for_task("DummyAgent", "task_overwrite")
-    second = svc.execute_agent_for_task("DummyAgent", "task_overwrite")
+    first = svc.execute_agent_for_step("DummyAgent", "task_overwrite")
+    second = svc.execute_agent_for_step("DummyAgent", "task_overwrite")
 
     workspace = storage.get_global_workspace()
     all_artifacts = workspace.list_workspace_artifacts()
-    # task_id prefix is baked into the filename: task_overwrite_report.txt.
+    # step_id prefix is baked into the filename: task_overwrite_report.txt.
     binary_assets = [a for a in all_artifacts if a["filename"] == "task_overwrite_report.txt"]
-    # JSON snapshot filenames are now <task_id>_<agent_id_lower>_exec_<n>.json,
+    # JSON snapshot filenames are now <step_id>_<agent_id_lower>_exec_<n>.json,
     # e.g. "task_overwrite_dummyagent_exec_N.json".
     json_assets = [
         a for a in all_artifacts
         if a["mime"] == "application/json" and a["filename"].startswith("task_overwrite_dummyagent_")
     ]
 
-    assert first["status"] == "COMPLETED"
-    assert second["status"] == "COMPLETED"
+    assert _last_brief_row(first)["status"] == "COMPLETED"
+    assert _last_brief_row(second)["status"] == "COMPLETED"
     assert _execution_results_dict(storage, second)["content"]["text"] == "v2"
-    latest_execution_id = storage.get_executions_by_task("task_overwrite")[-1].id
+    latest_execution_id = storage.get_executions_by_step("task_overwrite")[-1].id
     # Coarse (task, agent) wipe means only the latest run's artifacts survive.
     assert len(binary_assets) == 1
     assert binary_assets[0]["execution_id"] == latest_execution_id
@@ -291,9 +314,9 @@ def test_service_executes_pipeline_descriptor_without_adapter(tmp_path, monkeypa
         def build_equipped_agent(self, _llm):
             return _DummyPipelineAgent()
 
-        def build_input(self, task_id, resolved_artifacts):
+        def build_input(self, step_id, resolved_artifacts):
             return {
-                "task_id": task_id,
+                "step_id": step_id,
                 "resolved_artifacts": resolved_artifacts,
                 "language": "en",
             }
@@ -305,12 +328,12 @@ def test_service_executes_pipeline_descriptor_without_adapter(tmp_path, monkeypa
     storage = AssistantStateStore(runtime_base_path=tmp_path / "Runtime")
     monkeypatch.setattr(service_module, "get_agent_registry", lambda: _DummyRegistry())
     svc = service_module.AssistantService(storage)
-    result = svc.execute_agent_for_task(
+    result = svc.execute_agent_for_step(
         "PipelineOnlyAgent",
         "task_pipeline",
     )
 
-    assert result["status"] == "COMPLETED"
+    assert _last_brief_row(result)["status"] == "COMPLETED"
     assert _execution_results_dict(storage, result)["summary"] == "pipeline ok"
 
 
@@ -347,9 +370,9 @@ def test_service_materializer_temp_dir_is_cleaned(tmp_path, monkeypatch):
         def build_equipped_agent(self, _llm):
             return _DummyPipelineAgent()
 
-        def build_input(self, task_id, resolved_artifacts):
+        def build_input(self, step_id, resolved_artifacts):
             return {
-                "task_id": task_id,
+                "step_id": step_id,
                 "resolved_artifacts": resolved_artifacts,
                 "language": "en",
             }
@@ -362,7 +385,7 @@ def test_service_materializer_temp_dir_is_cleaned(tmp_path, monkeypatch):
     monkeypatch.setattr(service_module, "get_agent_registry", lambda: _DummyRegistry())
     svc = service_module.AssistantService(storage)
 
-    result = svc.execute_agent_for_task(
+    result = svc.execute_agent_for_step(
         "PipelineWithMaterializer",
         "task_temp",
     )
@@ -434,9 +457,9 @@ def test_service_rewrites_media_asset_uri_to_workspace_path(tmp_path, monkeypatc
         def build_equipped_agent(self, _llm):
             return _DummyPipelineAgent()
 
-        def build_input(self, task_id, resolved_artifacts):
+        def build_input(self, step_id, resolved_artifacts):
             return {
-                "task_id": task_id,
+                "step_id": step_id,
                 "resolved_artifacts": resolved_artifacts,
                 "language": "en",
             }
@@ -458,7 +481,7 @@ def test_service_rewrites_media_asset_uri_to_workspace_path(tmp_path, monkeypatc
     monkeypatch.setattr(service_module, "get_agent_registry", lambda: _DummyRegistry())
     svc = service_module.AssistantService(storage)
 
-    result = svc.execute_agent_for_task(
+    result = svc.execute_agent_for_step(
         "KeyFrameAgent",
         "task_uri",
     )
@@ -472,7 +495,7 @@ def test_service_rewrites_media_asset_uri_to_workspace_path(tmp_path, monkeypatc
     # Pipeline assets should expose artifacts via _resolved_artifacts in the new architecture.
     inputs = svc.build_execution_inputs(
         agent_id="KeyFrameAgent",
-        task_id="task_uri",
+        step_id="task_uri",
         workspace=svc.workspace,
     )
     resolved = inputs["resolved_artifacts"]
@@ -517,8 +540,8 @@ def test_service_hydrates_indexed_assets_before_agent_build_input(tmp_path, monk
         def build_equipped_agent(self, _llm):
             return _ProducerAgent()
 
-        def build_input(self, task_id, resolved_artifacts):
-            return {"task_id": task_id}
+        def build_input(self, step_id, resolved_artifacts):
+            return {"step_id": step_id}
 
         @staticmethod
         def build_captions(agent_id, output_dict):
@@ -537,13 +560,13 @@ def test_service_hydrates_indexed_assets_before_agent_build_input(tmp_path, monk
         def build_equipped_agent(self, _llm):
             return _ConsumerAgent()
 
-        def build_input(self, task_id, resolved_artifacts):
+        def build_input(self, step_id, resolved_artifacts):
             producer = ResolvedArtifactEntry.coerce(
                 resolved_artifacts.get("producer_asset")
             )
             payload = producer.payload or {}
             return {
-                "task_id": task_id,
+                "step_id": step_id,
                 "observed_value": (payload.get("content") or {}).get("value", -1),
             }
 
@@ -559,8 +582,8 @@ def test_service_hydrates_indexed_assets_before_agent_build_input(tmp_path, monk
     monkeypatch.setattr(service_module, "get_agent_registry", lambda: _Registry())
     svc = service_module.AssistantService(storage)
 
-    producer_result = svc.execute_agent_for_task("ProducerAgent", "task_hydrate")
-    assert producer_result["status"] == "COMPLETED"
+    producer_result = svc.execute_agent_for_step("ProducerAgent", "task_hydrate")
+    assert _last_brief_row(producer_result)["status"] == "COMPLETED"
     # _asset_index now keys the producer by agent_id (no asset_key field).
     assert (
         _execution_results_dict(storage, producer_result)["_asset_index"]["agent_id"]
@@ -569,7 +592,7 @@ def test_service_hydrates_indexed_assets_before_agent_build_input(tmp_path, monk
 
     packaged = svc.build_execution_inputs(
         agent_id="ConsumerAgent",
-        task_id="task_hydrate",
+        step_id="task_hydrate",
         workspace=svc.workspace,
     )
     resolved = packaged["resolved_artifacts"]
@@ -577,38 +600,9 @@ def test_service_hydrates_indexed_assets_before_agent_build_input(tmp_path, monk
         f"expected producer_asset in resolved_artifacts, got: {resolved}"
     )
 
-    consumer_result = svc.execute_agent_for_task("ConsumerAgent", "task_hydrate")
-    assert consumer_result["status"] == "COMPLETED"
+    consumer_result = svc.execute_agent_for_step("ConsumerAgent", "task_hydrate")
+    assert _last_brief_row(consumer_result)["status"] == "COMPLETED"
     assert _execution_results_dict(storage, consumer_result)["observed"] == 42
-
-
-def test_service_global_memory_brief_after_register(assistant_env):
-    """``global_memory.md`` is auto-populated by ArtifactWriter; the
-    director-facing brief projects each entry down to the slim row shape
-    {execution_id, agent_id, task_id, status, created_at}."""
-    from src.assistant.workspace.models import ArtifactRef as _ArtifactRef
-    svc, _storage, _ = assistant_env
-    svc.workspace.global_memory.register(
-        execution_id="exec_gm_1",
-        agent_id="StoryAgent",
-        task_id="task_gm",
-        artifacts=[
-            _ArtifactRef(
-                caption="story snapshot — seeded by test",
-                scope="global",
-                path="/tmp/test/story.json",
-                mime="application/json",
-            )
-        ],
-    )
-    rows = svc.workspace.get_global_memory_brief(task_id="task_gm")
-    assert isinstance(rows, list)
-    assert len(rows) >= 1
-    row = rows[0]
-    assert set(row.keys()) == {"execution_id", "agent_id", "task_id", "status", "created_at"}
-    assert row["agent_id"] == "StoryAgent"
-    assert row["task_id"] == "task_gm"
-    assert row["status"] == "COMPLETED"
 
 
 def test_artifact_media_type_subdir():
@@ -627,7 +621,7 @@ def test_deterministic_persist_plan_media_under_artifacts_media_agent_type(assis
     ex = AgentExecution(
         id="exec_vid",
         agent_id="VideoAgent",
-        task_id="task_1",
+        step_id="task_1",
         status=ExecutionStatus.COMPLETED,
         inputs={},
         results={

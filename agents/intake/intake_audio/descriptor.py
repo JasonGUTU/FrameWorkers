@@ -13,7 +13,7 @@ from .evaluator import IntakeAudioEvaluator
 
 
 def build_input(
-    _task_id: str,
+    _step_id: str,
     resolved_artifacts: dict,
 ) -> BaseModel:
     raw = resolved_artifacts.get(INPUT_LABEL_RAW_AUDIO_UPLOAD)
@@ -34,9 +34,14 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
 
 CATALOG_ENTRY = (
     "IntakeAudioAgent\n"
-    "  - Input: raw_audio_upload (placeholder caption pointing at a raw audio file)\n"
-    "  - Output: a caption-rich audio artifact for downstream content agents.\n"
-    "  - Purpose: Run an audio-understanding LLM over a freshly-uploaded user audio file."
+    "  - Input: raw_audio_upload (placeholder caption pointing at a raw audio file the user "
+    "uploaded).\n"
+    "  - Output: a caption-rich audio artifact (with vision-LLM-style caption) discoverable "
+    "by downstream audio-consuming agents.\n"
+    "  - Purpose: Run an audio-understanding LLM over a freshly-uploaded user audio file so "
+    "downstream agents can find it via semantic captions. Run me whenever the user has "
+    "uploaded an audio artifact (podcast, voice sample, recording, music clip) — always "
+    "AFTER the user's text instruction has been ingested first."
 )
 
 DESCRIPTOR = SubAgentDescriptor(

@@ -18,7 +18,7 @@ class AgentRegistry:
             infos.append({
                 "id": agent_id,
                 "name": agent_id,
-                "description": (descriptor.catalog_entry or "")[:200],
+                "description": descriptor.catalog_entry or "",
                 "agent_type": "pipeline",
                 "capabilities": ["pipeline_agent"],
             })

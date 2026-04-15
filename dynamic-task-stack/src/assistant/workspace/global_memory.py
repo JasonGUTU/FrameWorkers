@@ -14,15 +14,9 @@ The global memory is a workspace-wide ledger:
     driven input matching) and ``ArtifactWriter`` (for overwrite-mode
     dedup) read from here.
 
-A lightweight director-facing rollup ({execution_id, agent_id, task_id,
-status, created_at}) is exposed via ``Workspace.get_global_memory_brief()``;
-that brief is **computed on read** from these entries — there is no
-separate brief file on disk.
-
-Renamed from ``ArtifactRegistry`` / ``artifact_registry.jsonl``: same data
-shape, friendlier on-disk format, and the name now reflects its real role
-as the workspace's semantic record. Old workspaces written before the
-rename are still readable via the legacy filename fallback below.
+Cross-turn execution history (including FAILED) is served from the
+``AssistantService`` executions table via ``GET /api/assistant/executions/step/<tid>`` —
+directors query that endpoint directly; this ledger is artifact-only.
 
 What it does NOT do:
   * Store payloads — captions and paths only; payloads loaded on demand.
@@ -50,7 +44,6 @@ from .models import ArtifactRef, GlobalMemoryEntry
 logger = logging.getLogger(__name__)
 
 GLOBAL_MEMORY_FILENAME = "global_memory.md"
-LEGACY_REGISTRY_FILENAME = "artifact_registry.jsonl"
 
 ENTRIES_HEADER = "## Entries"
 JSON_FENCE_RE = re.compile(r"```json\s*\n([\s\S]*?)\n```", re.MULTILINE)
@@ -70,17 +63,17 @@ class GlobalMemory:
 
     Public API
     ----------
-    register(execution_id, agent_id, task_id, artifacts)
+    register(execution_id, agent_id, step_id, artifacts)
         Append a new entry and return it.
     list_all() -> list[GlobalMemoryEntry]
         Return all entries (chronological order).
-    get_captions_index(task_id=None) -> str
+    get_captions_index(step_id=None) -> str
         Per-artifact LLM-readable index for InputResolver prompts.
     get_by_paths(paths) -> list[ArtifactRef]
         Look up ArtifactRef objects by file path.
-    find_by_producer(task_id, agent_id) -> list[ArtifactRef]
+    find_by_producer(step_id, agent_id) -> list[ArtifactRef]
         Every ref this producer wrote on this task (for dedup).
-    has_producer_run(task_id, agent_id) -> bool
+    has_producer_run(step_id, agent_id) -> bool
         True iff the producer has any registered entry on this task.
     prune_by_paths(paths) -> int
         Remove ArtifactRefs whose path is in ``paths``; entries that
@@ -93,9 +86,6 @@ class GlobalMemory:
         self.workspace_runtime_path = self.runtime_base_path / workspace_id
         self.workspace_runtime_path.mkdir(parents=True, exist_ok=True)
         self._memory_path = self.workspace_runtime_path / GLOBAL_MEMORY_FILENAME
-        self._legacy_registry_path = (
-            self.workspace_runtime_path / LEGACY_REGISTRY_FILENAME
-        )
 
     # ------------------------------------------------------------------
     # Serialisation helpers
@@ -114,14 +104,8 @@ class GlobalMemory:
     def _ref_from_dict(d: Any) -> ArtifactRef:
         if not isinstance(d, dict):
             return ArtifactRef()
-        # Backward compat: old entries have what+why instead of caption.
-        caption = str(d.get("caption") or "")
-        if not caption:
-            what = str(d.get("what") or "")
-            why = str(d.get("why") or "")
-            caption = f"{what} {why}".strip() if (what or why) else ""
         return ArtifactRef(
-            caption=caption,
+            caption=str(d.get("caption") or ""),
             scope=str(d.get("scope") or "global"),
             path=str(d.get("path") or ""),
             mime=str(d.get("mime") or ""),
@@ -132,7 +116,7 @@ class GlobalMemory:
         return {
             "execution_id": entry.execution_id,
             "agent_id": entry.agent_id,
-            "task_id": entry.task_id,
+            "step_id": entry.step_id,
             "created_at": entry.created_at.isoformat(),
             "artifacts": [GlobalMemory._ref_to_dict(r) for r in entry.artifacts],
         }
@@ -147,7 +131,7 @@ class GlobalMemory:
         return GlobalMemoryEntry(
             execution_id=str(d.get("execution_id") or ""),
             agent_id=str(d.get("agent_id") or ""),
-            task_id=str(d.get("task_id") or ""),
+            step_id=str(d.get("step_id") or ""),
             created_at=created_at,
             artifacts=[
                 GlobalMemory._ref_from_dict(r)
@@ -172,9 +156,8 @@ class GlobalMemory:
             f"the natural-language `caption`, `scope`, absolute `path` and `mime` "
             f"for every file that execution wrote.\n\n"
             f"`InputResolver` reads this index to match artifacts against each "
-            f"consumer agent's `[label]` slots. The lightweight director-facing "
-            f"rollup is exposed via `Workspace.get_global_memory_brief()` — there "
-            f"is no separate brief file on disk.\n\n"
+            f"consumer agent's `[label]` slots. Execution history (including failures) "
+            f"lives in the assistant executions table, not here.\n\n"
             f"{ENTRIES_HEADER}\n\n"
             f"```json\n{body}\n```\n"
         )
@@ -201,50 +184,21 @@ class GlobalMemory:
     # ------------------------------------------------------------------
 
     def _read_all(self) -> List[GlobalMemoryEntry]:
-        # Preferred: new global_memory.md (markdown wrapper).
-        if self._memory_path.exists():
-            try:
-                text = self._memory_path.read_text(encoding="utf-8")
-            except OSError as exc:
-                logger.warning("GlobalMemory: failed to read %s: %s", self._memory_path, exc)
-                return []
-            parsed = self._parse_entries_from_markdown(text)
-            if parsed is None:
-                logger.warning(
-                    "GlobalMemory: %s present but Entries block missing or invalid",
-                    self._memory_path,
-                )
-                return []
-            return [self._entry_from_dict(d) for d in parsed]
-
-        # Backward compatibility: workspaces written before the rename
-        # have an append-only ``artifact_registry.jsonl``. Read it
-        # transparently so old runs still load. The next ``register()``
-        # / ``prune_by_paths()`` call will rewrite into the new
-        # markdown file.
-        if self._legacy_registry_path.exists():
-            entries: List[GlobalMemoryEntry] = []
-            try:
-                with open(self._legacy_registry_path, "r", encoding="utf-8") as fh:
-                    for line in fh:
-                        line = line.strip()
-                        if not line:
-                            continue
-                        try:
-                            d = json.loads(line)
-                            entries.append(self._entry_from_dict(d))
-                        except Exception as exc:
-                            logger.warning(
-                                "GlobalMemory: skipping malformed legacy line: %s", exc,
-                            )
-            except OSError as exc:
-                logger.warning(
-                    "GlobalMemory: failed to read legacy registry %s: %s",
-                    self._legacy_registry_path, exc,
-                )
-            return entries
-
-        return []
+        if not self._memory_path.exists():
+            return []
+        try:
+            text = self._memory_path.read_text(encoding="utf-8")
+        except OSError as exc:
+            logger.warning("GlobalMemory: failed to read %s: %s", self._memory_path, exc)
+            return []
+        parsed = self._parse_entries_from_markdown(text)
+        if parsed is None:
+            logger.warning(
+                "GlobalMemory: %s present but Entries block missing or invalid",
+                self._memory_path,
+            )
+            return []
+        return [self._entry_from_dict(d) for d in parsed]
 
     def _write_all(self, entries: List[GlobalMemoryEntry]) -> None:
         try:
@@ -289,14 +243,14 @@ class GlobalMemory:
         *,
         execution_id: str,
         agent_id: str,
-        task_id: str,
+        step_id: str,
         artifacts: List[ArtifactRef],
     ) -> GlobalMemoryEntry:
         """Append a new entry and rewrite ``global_memory.md``."""
         entry = GlobalMemoryEntry(
             execution_id=execution_id,
             agent_id=agent_id,
-            task_id=task_id,
+            step_id=step_id,
             created_at=datetime.now(UTC),
             artifacts=artifacts,
         )
@@ -308,6 +262,29 @@ class GlobalMemory:
     def list_all(self) -> List[GlobalMemoryEntry]:
         """Return all entries in chronological order."""
         return self._read_all()
+
+    def update_caption_by_path(self, path: str, *, caption: str, scope: str | None = None) -> bool:
+        """Update the caption (and optionally scope) of an existing artifact by path.
+
+        Finds the LAST entry whose artifacts contain the given path and
+        updates its caption in-place. Returns True if an update was made.
+        """
+        entries = self._read_all()
+        updated = False
+        # Walk backwards to find the most recent entry with this path
+        for entry in reversed(entries):
+            for ref in entry.artifacts:
+                if ref.path == path:
+                    ref.caption = caption
+                    if scope is not None:
+                        ref.scope = scope
+                    updated = True
+                    break
+            if updated:
+                break
+        if updated:
+            self._write_all(entries)
+        return updated
 
     def get_by_paths(self, paths: List[str]) -> List[ArtifactRef]:
         """Return ArtifactRef objects matching the given file paths."""
@@ -322,10 +299,10 @@ class GlobalMemory:
     def find_by_producer(
         self,
         *,
-        task_id: str,
+        step_id: str,
         agent_id: str,
     ) -> List[ArtifactRef]:
-        """Return every ArtifactRef registered by ``agent_id`` on ``task_id``.
+        """Return every ArtifactRef registered by ``agent_id`` on ``step_id``.
 
         Used by ArtifactWriter overwrite-mode dedup to locate every prior
         artifact this producer wrote on this task — across binary, manifest
@@ -333,19 +310,19 @@ class GlobalMemory:
         """
         result: List[ArtifactRef] = []
         for entry in self._read_all():
-            if entry.task_id != task_id or entry.agent_id != agent_id:
+            if entry.step_id != step_id or entry.agent_id != agent_id:
                 continue
             result.extend(entry.artifacts)
         return result
 
-    def has_producer_run(self, *, task_id: str, agent_id: str) -> bool:
-        """True if any registered entry was produced by ``agent_id`` on ``task_id``.
+    def has_producer_run(self, *, step_id: str, agent_id: str) -> bool:
+        """True if any registered entry was produced by ``agent_id`` on ``step_id``.
 
         Used by AssistantService to auto-flip overwrite mode when an agent
         re-runs on a task it has already executed against.
         """
         for entry in self._read_all():
-            if entry.task_id == task_id and entry.agent_id == agent_id:
+            if entry.step_id == step_id and entry.agent_id == agent_id:
                 return True
         return False
 
@@ -372,7 +349,7 @@ class GlobalMemory:
         return removed_refs
 
     def get_captions_index(
-        self, *, task_id: Optional[str] = None,
+        self, *, step_id: Optional[str] = None,
     ) -> tuple[str, List[str]]:
         """Return ``(index_text, path_list)`` for InputResolver.
 
@@ -388,10 +365,10 @@ class GlobalMemory:
             anchor). Produced by KeyFrameAgent on 2026-04-05 13:45.
         """
         entries = self._read_all()
-        if task_id:
+        if step_id:
             entries = [
                 e for e in entries
-                if e.task_id == task_id or not e.task_id
+                if e.step_id == step_id or not e.step_id
             ]
         return self._render_captions_index(entries)
 

@@ -5,7 +5,7 @@ network, no fixtures) and exist solely to keep the architectural
 invariants from regressing. The principles being guarded are:
 
   1.  Sub-agent input boundary: every ``descriptor.build_input`` takes
-      ``(task_id, resolved_artifacts: dict)`` — where values are
+      ``(step_id, resolved_artifacts: dict)`` — where values are
       ``ResolvedArtifactEntry`` (or lists thereof). Adding a new FIELD
       to an entry only edits ``ResolvedArtifactEntry`` in
       ``agents/common_schema.py`` — one place. Adding a new CHANNEL
@@ -97,7 +97,6 @@ def test_dead_round1_symbols_never_resurface():
         _REPO / "dynamic-task-stack" / "src",
         _REPO / "inference",
         _REPO / "director_agent",
-        _REPO / "director_nostack",
         _REPO / "scripts",
     )
     for symbol in _FORBIDDEN_DEAD_SYMBOLS:
@@ -119,7 +118,7 @@ def test_dead_round1_symbols_never_resurface():
 
 def test_descriptors_take_only_resolved_artifacts():
     """``descriptor.build_input`` is the agent boundary. Its signature
-    must be ``(task_id, resolved_artifacts: dict)`` — no extra channels.
+    must be ``(step_id, resolved_artifacts: dict)`` — no extra channels.
     Adding a new parameter requires intentionally editing every
     descriptor, which is exactly the kind of change we want to be
     visible in PR review (not a one-line dataclass field bump on a
@@ -147,7 +146,7 @@ def test_descriptors_take_only_resolved_artifacts():
                 offenders.append((path, match.group(0).strip()))
     assert not offenders, (
         "descriptor.build_input signature drifted from "
-        "(task_id, resolved_artifacts):\n  "
+        "(step_id, resolved_artifacts):\n  "
         + "\n  ".join(f"{p.relative_to(_REPO)}: {sig}" for p, sig in offenders)
     )
 
@@ -218,7 +217,10 @@ _ASSISTANT_HARD_CODE_AGENTS = (
     "ScreenplayAgent",
     "KeyFrameAgent",
     "VideoAgent",
-    "AudioAgent",
+    "NarrationAgent",
+    "MusicAgent",
+    "AmbienceAgent",
+    "AudioMixAgent",
     "UnivaStoryboardAgent",
     "UnivaKeyFrameAgent",
     "UnivaVideoAgent",

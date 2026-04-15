@@ -1,577 +1,772 @@
-# Director Agent - Main orchestration logic
+"""Upfront-plan Director.
 
+Each user turn:
+  1. Project current Plan Stack into a slim memory list.
+  2. Merge the new user line with prior chat lines + stack memory.
+  3. Planner LLM produces the **full pipeline** (list of ``PlanStepSpec``).
+  4. One ``POST /api/plan-stack/modify`` batch persists the plan (create steps
+     + ensure a PENDING layer + add steps to that layer + initial execution
+     pointer).
+  5. Loop: ``get_next_step`` → ``execute_agent`` → ``update_step_status`` →
+     ``advance_execution_pointer``. On failure the replanner can retry / skip /
+     rewrite the remaining tail.
+
+There is **no fixed task_id** anymore — each PlanStep has its own backend id,
+created lazily by step 4. "Session" is an implicit concept owned by the
+director: the slim-memory projection of whatever PENDING/COMPLETED PlanSteps
+currently live on the stack.
+"""
+
+from __future__ import annotations
+
+import json
 import logging
 import time
-import json
-from typing import Dict, Any, Optional, List
+from typing import Any, Dict, List, Optional
 
-from .api_client import BackendAPIClient
-from .reasoning import LlmSubAgentPlanner, ReasoningEngine
+from .api_client import BackendAPIClient, BackendAPIError
+from . import config as director_config
 from .config import (
-    POLLING_INTERVAL,
     DIRECTOR_AGENT_NAME,
+    DIRECTOR_MEMORY_WINDOW,
+    MAX_EXECUTIONS_PER_CYCLE,
+    MAX_PIPELINE_STEPS,
+    MAX_REPLAN_ROUNDS,
+    MERGE_PRIOR_USER_LINES_MAX,
+    POLLING_INTERVAL,
 )
+from .router import LlmSubAgentPlanner, PlanStepSpec, ReplanDecision
 
 logger = logging.getLogger(__name__)
 
 
-def _task_stack_description_to_assistant_text(raw: Any) -> str:
-    """Task Stack 里 ``description`` 当前多为 **dict**；director 用它喂给 sub-agent 路由 LLM
-    挑选合适的 agent_id。需要把 dict 拍平成纯文本。
+# ---------------------------------------------------------------------------
+# Content extraction + small utilities
+# ---------------------------------------------------------------------------
 
-    仅在此处做一层对齐（不在 Assistant 里做结构化解析）。若已是字符串则原样；
-    若为 dict 则优先使用常见的 ``goal`` 字符串；否则退回 JSON 文本以便不丢信息。
-    """
-    if raw is None or raw == "":
+
+def chat_content_as_user_text(raw: Any) -> str:
+    """Normalize chat ``content`` into one string for the merge / planner LLM."""
+    if raw is None:
         return ""
     if isinstance(raw, str):
         return raw.strip()
-    if isinstance(raw, dict):
-        g = raw.get("goal")
-        if isinstance(g, str) and g.strip():
-            return g.strip()
+    if isinstance(raw, (dict, list)):
         return json.dumps(raw, ensure_ascii=False)
     return str(raw).strip()
 
 
+def _post_director_quiet(client: BackendAPIClient, content: str) -> None:
+    try:
+        client.create_message(content, sender_type="director")
+    except Exception:
+        pass
+
+
+def _prior_user_chat_lines(
+    client: BackendAPIClient,
+    *,
+    current_user_message_id: Optional[str],
+    max_lines: int,
+) -> List[str]:
+    if not current_user_message_id or max_lines <= 0:
+        return []
+    try:
+        rows = client.list_messages()
+    except Exception as exc:
+        logger.warning("list_messages for merge failed: %s", exc)
+        return []
+    if not isinstance(rows, list):
+        return []
+    cur = str(current_user_message_id)
+    tuples: List[tuple[str, str, str]] = []
+    for m in rows:
+        if not isinstance(m, dict):
+            continue
+        if str(m.get("sender_type") or "").lower() != "user":
+            continue
+        mid = str(m.get("id") or "")
+        if mid == cur:
+            continue
+        txt = chat_content_as_user_text(m.get("content", ""))
+        if not txt:
+            continue
+        ts = str(m.get("timestamp") or "")
+        tuples.append((ts, mid, txt))
+    tuples.sort(key=lambda x: x[0])
+    texts = [t[2] for t in tuples]
+    if len(texts) > max_lines:
+        texts = texts[-max_lines:]
+    return texts
+
+
+# ---------------------------------------------------------------------------
+# Stack projection / memory
+# ---------------------------------------------------------------------------
+
+
+def _slim_stack_row(step_payload: Dict[str, Any]) -> Dict[str, Any]:
+    """Project one full PlanStep dict into a memory-slim row."""
+    description = step_payload.get("description") or {}
+    agent_id = None
+    intent = None
+    if isinstance(description, dict):
+        agent_id = description.get("agent_id")
+        intent = description.get("intent")
+    return {
+        "step_id": step_payload.get("id"),
+        "agent_id": agent_id,
+        "status": step_payload.get("status"),
+        "intent": intent,
+        "results_summary": _trim_results(step_payload.get("results")),
+    }
+
+
+def _trim_results(results: Any, *, max_chars: int = 400) -> Any:
+    """Keep results compact — LLM doesn't need full blobs in memory."""
+    if results is None:
+        return None
+    try:
+        text = json.dumps(results, ensure_ascii=False, default=str)
+    except Exception:
+        text = str(results)
+    if len(text) > max_chars:
+        return text[: max_chars - 3] + "..."
+    return text
+
+
+def _project_plan_stack_as_memory(
+    client: BackendAPIClient,
+    *,
+    window: int,
+) -> List[Dict[str, Any]]:
+    """Read the Plan Stack and turn its steps into a chronological slim list."""
+    try:
+        layers = client.get_plan_stack()
+    except Exception as exc:
+        logger.warning("get_plan_stack failed: %s", exc)
+        return []
+    if not isinstance(layers, list):
+        return []
+
+    all_step_ids: List[str] = []
+    for layer in layers:
+        if not isinstance(layer, dict):
+            continue
+        steps = layer.get("steps") or []
+        for entry in steps:
+            if not isinstance(entry, dict):
+                continue
+            sid = entry.get("step_id")
+            if isinstance(sid, str) and sid:
+                all_step_ids.append(sid)
+
+    if not all_step_ids:
+        return []
+
+    # Last ``window`` steps preserve recency and cap the prompt size.
+    if window > 0 and len(all_step_ids) > window:
+        all_step_ids = all_step_ids[-window:]
+
+    slim: List[Dict[str, Any]] = []
+    for sid in all_step_ids:
+        try:
+            step = client.get_step(sid)
+        except Exception as exc:
+            logger.warning("get_step(%s) failed during memory projection: %s", sid, exc)
+            continue
+        if isinstance(step, dict):
+            slim.append(_slim_stack_row(step))
+    return slim
+
+
+def _stack_partition_by_pointer(
+    layers: List[Dict[str, Any]],
+    pointer: Optional[Dict[str, Any]],
+) -> tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+    """Split flat step list into (completed_before_pointer, pending_from_pointer)."""
+    flat: List[Dict[str, Any]] = []
+    for layer in layers:
+        if not isinstance(layer, dict):
+            continue
+        for entry in layer.get("steps") or []:
+            if isinstance(entry, dict):
+                flat.append({"layer_index": layer.get("layer_index"), **entry})
+
+    if not pointer:
+        return flat, []
+    cur_layer = pointer.get("current_layer_index", 0)
+    cur_step = pointer.get("current_step_index", 0)
+
+    before: List[Dict[str, Any]] = []
+    after: List[Dict[str, Any]] = []
+    for e in flat:
+        li = e.get("layer_index") or 0
+        if li < cur_layer:
+            before.append(e)
+        elif li > cur_layer:
+            after.append(e)
+        else:
+            # same layer — compare by position in layer.tasks list; but flat
+            # already preserves order, so we fall back to checking whether
+            # we've passed the pointer yet.
+            pass
+    # Simpler: since flat is in stack order, slice on step count ≤ cumulative index.
+    return before, after  # caller does not currently depend on this split
+
+
+# ---------------------------------------------------------------------------
+# Plan persistence — one batch write
+# ---------------------------------------------------------------------------
+
+
+def _ensure_pending_layer_index(plan_stack: List[Dict[str, Any]]) -> Optional[int]:
+    """Return the layer index of the highest existing layer, or ``None`` if empty."""
+    if not isinstance(plan_stack, list) or not plan_stack:
+        return None
+    idx = -1
+    for layer in plan_stack:
+        if isinstance(layer, dict):
+            li = layer.get("layer_index")
+            if isinstance(li, int) and li > idx:
+                idx = li
+    return idx if idx >= 0 else None
+
+
+def _persist_plan(
+    client: BackendAPIClient,
+    *,
+    plan: List[PlanStepSpec],
+    rationale: str = "",
+) -> List[str]:
+    """Batch-write a plan to the stack.
+
+    Strategy: always append a **new** layer at the end of the stack so the
+    new plan is visually separated from any prior turn's steps. All new
+    PlanSteps go into that new layer, in order.
+
+    Returns the list of created step_ids (order matches ``plan``).
+    """
+    if not plan:
+        return []
+
+    try:
+        existing_layers = client.get_plan_stack()
+    except Exception as exc:
+        logger.warning("get_plan_stack before plan persist failed: %s", exc)
+        existing_layers = []
+    if not isinstance(existing_layers, list):
+        existing_layers = []
+    highest = _ensure_pending_layer_index(existing_layers)
+    new_layer_index = (highest + 1) if highest is not None else 0
+
+    descriptions = [
+        {
+            "description": {
+                "agent_id": spec.agent_id,
+                "intent": spec.intent,
+                "plan_rationale": rationale or None,
+            }
+        }
+        for spec in plan
+    ]
+
+    # Step 1: batch create all PlanSteps + a new layer.
+    ops: List[Dict[str, Any]] = [
+        {"type": "create_steps", "params": {"steps": descriptions}},
+        {"type": "create_layers", "params": {"layers": [{"layer_index": new_layer_index}]}},
+    ]
+    try:
+        resp = client.modify_plan_stack(ops)
+    except Exception as exc:
+        logger.error("modify_plan_stack (create) failed: %s", exc)
+        return []
+    if not resp.get("success"):
+        logger.error("modify_plan_stack (create) reported errors: %s", resp.get("errors"))
+        return []
+    created_step_ids = resp.get("created_step_ids") or []
+    if len(created_step_ids) != len(plan):
+        logger.error(
+            "modify_plan_stack returned %d step ids, expected %d",
+            len(created_step_ids),
+            len(plan),
+        )
+        return []
+
+    # Step 2: add each step to the new layer (order-preserving).
+    add_ops: List[Dict[str, Any]] = [
+        {
+            "type": "add_steps_to_layers",
+            "params": {
+                "additions": [
+                    {"layer_index": new_layer_index, "step_id": sid}
+                    for sid in created_step_ids
+                ]
+            },
+        }
+    ]
+    try:
+        add_resp = client.modify_plan_stack(add_ops)
+    except Exception as exc:
+        logger.error("modify_plan_stack (add_steps_to_layers) failed: %s", exc)
+        return []
+    if not add_resp.get("success"):
+        logger.error(
+            "modify_plan_stack (add_steps_to_layers) errors: %s",
+            add_resp.get("errors"),
+        )
+        return []
+
+    # Step 3: ensure execution pointer is live on the first step we just added.
+    try:
+        pointer = client.get_execution_pointer()
+    except Exception:
+        pointer = None
+    if pointer is None:
+        try:
+            client.set_execution_pointer(
+                layer_index=new_layer_index,
+                step_index=0,
+            )
+        except Exception as exc:
+            logger.warning("set_execution_pointer on new layer failed: %s", exc)
+
+    return created_step_ids
+
+
+# ---------------------------------------------------------------------------
+# Execution loop
+# ---------------------------------------------------------------------------
+
+
+def _execute_planned_steps(
+    client: BackendAPIClient,
+    planner: LlmSubAgentPlanner,
+    *,
+    user_goal: str,
+    agents: List[Dict[str, Any]],
+    expected_step_ids: List[str],
+) -> None:
+    """Iterate the stack pointer until exhausted or safety budget hits.
+
+    ``expected_step_ids`` are the step_ids we just appended — used for
+    logging and as a guard against runaway loops touching unrelated stack
+    segments from other user turns.
+    """
+    budget_remaining = MAX_EXECUTIONS_PER_CYCLE
+    replans_used = 0
+
+    while budget_remaining > 0:
+        budget_remaining -= 1
+        try:
+            next_step = client.get_next_step()
+        except Exception as exc:
+            logger.error("get_next_step failed: %s", exc)
+            _post_director_quiet(
+                client,
+                f"[{DIRECTOR_AGENT_NAME}] get_next_step error, stopping: {exc}",
+            )
+            return
+        if not next_step:
+            # No more pending steps — plan fully executed.
+            _post_director_quiet(
+                client,
+                f"[{DIRECTOR_AGENT_NAME}] Pipeline complete.",
+            )
+            return
+
+        step_id = next_step.get("step_id")
+        step_payload = next_step.get("step") or {}
+        description = step_payload.get("description") if isinstance(step_payload, dict) else None
+        agent_id = None
+        if isinstance(description, dict):
+            agent_id = description.get("agent_id")
+        if not isinstance(agent_id, str) or not agent_id:
+            logger.error("PlanStep %s has no agent_id in description; skipping", step_id)
+            _safe_advance(client)
+            continue
+
+        existing_status = step_payload.get("status") if isinstance(step_payload, dict) else None
+        if existing_status == "COMPLETED":
+            # Stack advanced but pointer didn't. Just move on.
+            _safe_advance(client)
+            continue
+
+        # Mark in-flight.
+        try:
+            client.update_step_status(step_id, "IN_PROGRESS")
+        except Exception as exc:
+            logger.warning("update_step_status(IN_PROGRESS) failed for %s: %s", step_id, exc)
+
+        logger.info(
+            "Executing plan step %s with agent %s (remaining budget %d)",
+            step_id,
+            agent_id,
+            budget_remaining,
+        )
+        try:
+            result = client.execute_agent(agent_id, step_id)
+        except Exception as exc:
+            logger.error("execute_agent failed for %s/%s: %s", step_id, agent_id, exc)
+            _safe_mark(client, step_id, "FAILED")
+            replans_used = _handle_failure(
+                client,
+                planner,
+                agents=agents,
+                user_goal=user_goal,
+                failed_step_id=step_id,
+                failed_agent_id=agent_id,
+                failed_error=str(exc),
+                replans_used=replans_used,
+            )
+            _safe_advance(client)
+            continue
+
+        status = str((result or {}).get("status") or "").upper()
+        try:
+            if status == "COMPLETED":
+                client.update_step_status(step_id, "COMPLETED")
+            else:
+                # Assistant marks its own AgentExecution failure; propagate.
+                client.update_step_status(step_id, "FAILED" if status == "FAILED" else "COMPLETED")
+        except Exception as exc:
+            logger.warning("update_step_status final state failed for %s: %s", step_id, exc)
+
+        _announce_step(client, agent_id, status, result)
+
+        if status == "FAILED":
+            replans_used = _handle_failure(
+                client,
+                planner,
+                agents=agents,
+                user_goal=user_goal,
+                failed_step_id=step_id,
+                failed_agent_id=agent_id,
+                failed_error=str((result or {}).get("error") or ""),
+                replans_used=replans_used,
+            )
+
+        _safe_advance(client)
+
+    _post_director_quiet(
+        client,
+        f"[{DIRECTOR_AGENT_NAME}] Pipeline reached per-cycle execution budget "
+        f"({MAX_EXECUTIONS_PER_CYCLE}); stopping.",
+    )
+
+
+def _safe_advance(client: BackendAPIClient) -> None:
+    try:
+        client.advance_execution_pointer()
+    except Exception as exc:
+        logger.warning("advance_execution_pointer failed: %s", exc)
+
+
+def _safe_mark(client: BackendAPIClient, step_id: str, status: str) -> None:
+    try:
+        client.update_step_status(step_id, status)
+    except Exception as exc:
+        logger.warning("update_step_status(%s, %s) failed: %s", step_id, status, exc)
+
+
+def _announce_step(
+    client: BackendAPIClient,
+    agent_id: str,
+    status: str,
+    result: Optional[Dict[str, Any]],
+) -> None:
+    body = f"[{DIRECTOR_AGENT_NAME}] {agent_id} → {status or 'UNKNOWN'}"
+    err = (result or {}).get("error")
+    if err:
+        body += f"\nerror: {err}"
+    _post_director_quiet(client, body[:4000])
+
+
+def _handle_failure(
+    client: BackendAPIClient,
+    planner: LlmSubAgentPlanner,
+    *,
+    agents: List[Dict[str, Any]],
+    user_goal: str,
+    failed_step_id: str,
+    failed_agent_id: str,
+    failed_error: str,
+    replans_used: int,
+) -> int:
+    """Run the replanner if budget allows; rewrite the stack tail when asked.
+
+    Returns the new ``replans_used`` counter.
+    """
+    if MAX_REPLAN_ROUNDS <= 0 or replans_used >= MAX_REPLAN_ROUNDS:
+        return replans_used
+
+    try:
+        layers = client.get_plan_stack()
+    except Exception:
+        layers = []
+    try:
+        pointer = client.get_execution_pointer()
+    except Exception:
+        pointer = None
+
+    completed_tail: List[Dict[str, Any]] = []
+    pending_tail: List[Dict[str, Any]] = []
+    for layer in layers if isinstance(layers, list) else []:
+        if not isinstance(layer, dict):
+            continue
+        li = layer.get("layer_index")
+        steps = layer.get("steps") or []
+        for idx, entry in enumerate(steps):
+            if not isinstance(entry, dict):
+                continue
+            sid = entry.get("step_id")
+            if not sid:
+                continue
+            try:
+                payload = client.get_step(sid)
+            except Exception:
+                continue
+            slim = _slim_stack_row(payload if isinstance(payload, dict) else {})
+            slim["layer_index"] = li
+            slim["step_pos"] = idx
+            status = (slim.get("status") or "").upper()
+            if status in {"COMPLETED", "CANCELLED"}:
+                completed_tail.append(slim)
+            elif status == "PENDING":
+                pending_tail.append(slim)
+
+    failed_slim = {
+        "step_id": failed_step_id,
+        "agent_id": failed_agent_id,
+        "status": "FAILED",
+        "error": failed_error[:2000],
+    }
+    decision: ReplanDecision = planner.replan_on_failure(
+        user_goal=user_goal,
+        available_agents=agents,
+        failed_step=failed_slim,
+        pending_tail=pending_tail,
+        completed_tail=completed_tail,
+    )
+
+    if decision.action == "retry":
+        _safe_mark(client, failed_step_id, "PENDING")
+        try:
+            if pointer is not None:
+                client.set_execution_pointer(
+                    layer_index=pointer.get("current_layer_index", 0),
+                    step_index=pointer.get("current_step_index", 0),
+                )
+        except Exception as exc:
+            logger.warning("set_execution_pointer for retry failed: %s", exc)
+        _post_director_quiet(
+            client,
+            f"[{DIRECTOR_AGENT_NAME}] Retry {failed_agent_id} "
+            f"({decision.rationale or 'retry'}).",
+        )
+        return replans_used + 1
+
+    if decision.action == "replan" and decision.new_tail:
+        # Remove all PENDING steps from the stack, then append a new layer with
+        # the replanned tail so execution continues with the new plan.
+        removals: List[Dict[str, Any]] = [
+            {"layer_index": s.get("layer_index"), "step_id": s.get("step_id")}
+            for s in pending_tail
+            if s.get("step_id") and s.get("layer_index") is not None
+        ]
+        if removals:
+            try:
+                client.modify_plan_stack(
+                    [{"type": "remove_steps_from_layers", "params": {"removals": removals}}]
+                )
+            except Exception as exc:
+                logger.warning("replan: remove_steps_from_layers failed: %s", exc)
+        _persist_plan(
+            client,
+            plan=decision.new_tail,
+            rationale=f"replan after {failed_agent_id} FAILED: {decision.rationale[:300]}",
+        )
+        _post_director_quiet(
+            client,
+            f"[{DIRECTOR_AGENT_NAME}] Replanned tail ({len(decision.new_tail)} steps): "
+            f"{decision.rationale}",
+        )
+        return replans_used + 1
+
+    # action=="skip" or replan without a new tail: fall through — executor
+    # will advance past the failed step on its own.
+    if decision.rationale:
+        _post_director_quiet(
+            client,
+            f"[{DIRECTOR_AGENT_NAME}] Replan decision=skip ({decision.rationale}).",
+        )
+    return replans_used
+
+
+# ---------------------------------------------------------------------------
+# Top-level orchestration (one user turn)
+# ---------------------------------------------------------------------------
+
+
+def run_plan_pipeline(
+    client: BackendAPIClient,
+    planner: LlmSubAgentPlanner,
+    *,
+    agents: List[Dict[str, Any]],
+    user_goal: str,
+    current_user_message_id: Optional[str] = None,
+) -> None:
+    """Drive one user turn end-to-end: merge → upfront plan → persist → execute."""
+    latest_line = (user_goal or "").strip()
+    if not latest_line:
+        return
+
+    stack_memory = _project_plan_stack_as_memory(client, window=DIRECTOR_MEMORY_WINDOW)
+    prior_lines = _prior_user_chat_lines(
+        client,
+        current_user_message_id=current_user_message_id,
+        max_lines=MERGE_PRIOR_USER_LINES_MAX,
+    )
+    merged_goal = (
+        planner.merge_session_goal(
+            latest_user_message=latest_line,
+            stack_memory=stack_memory,
+            prior_user_chat_lines=prior_lines or None,
+        ).strip()
+        or latest_line
+    )
+
+    plan = planner.plan_pipeline_upfront(
+        user_goal=merged_goal,
+        available_agents=agents,
+        stack_memory=stack_memory,
+        max_steps=MAX_PIPELINE_STEPS,
+    )
+    if not plan:
+        _post_director_quiet(
+            client,
+            f"[{DIRECTOR_AGENT_NAME}] Planner returned no plan; nothing to do.",
+        )
+        return
+
+    created_step_ids = _persist_plan(
+        client,
+        plan=plan,
+        rationale=f"upfront plan for: {merged_goal[:200]}",
+    )
+    if not created_step_ids:
+        _post_director_quiet(
+            client,
+            f"[{DIRECTOR_AGENT_NAME}] Failed to persist plan to Plan Stack.",
+        )
+        return
+
+    _post_director_quiet(
+        client,
+        f"[{DIRECTOR_AGENT_NAME}] Plan persisted ({len(created_step_ids)} steps): "
+        + ", ".join(f"{spec.agent_id}" for spec in plan),
+    )
+
+    _execute_planned_steps(
+        client,
+        planner,
+        user_goal=merged_goal,
+        agents=agents,
+        expected_step_ids=created_step_ids,
+    )
+
+
+# ---------------------------------------------------------------------------
+# Director process
+# ---------------------------------------------------------------------------
+
+
 class DirectorAgent:
-    """
-    Director Agent - Responsible for reasoning, planning, and task orchestration
-    
-    The Director Agent:
-    1. Monitors user messages and task stack
-    2. Performs reasoning and planning
-    3. Delegates tasks to Assistant Agent
-    4. Receives execution summaries
-    5. Triggers reflection phase
-    6. Updates task stack based on results
-    """
-    
+    """Long-running process: poll chat → for each new user line, run ``run_plan_pipeline``."""
+
     def __init__(
         self,
-        api_client: Optional[BackendAPIClient] = None,
-        sub_agent_planner: Optional[LlmSubAgentPlanner] = None,
-    ):
-        """
-        Initialize Director Agent
-        
-        Args:
-            api_client: Backend API client instance (creates new if None)
-            sub_agent_planner: LLM router for ``agent_id`` (tests may inject a mock)
-        """
-        self.api_client = api_client or BackendAPIClient()
-        self.reasoning_engine = ReasoningEngine()
-        self._sub_agent_planner = sub_agent_planner or LlmSubAgentPlanner()
+        client: Optional[BackendAPIClient] = None,
+        planner: Optional[LlmSubAgentPlanner] = None,
+    ) -> None:
+        self.client = client or BackendAPIClient()
+        self.planner = planner or LlmSubAgentPlanner()
         self.running = False
-        
-        logger.info(f"{DIRECTOR_AGENT_NAME} initialized")
-    
-    def start(self):
-        """Start the Director Agent main loop"""
-        logger.info(f"{DIRECTOR_AGENT_NAME} starting...")
+
+    def start(self) -> None:
         self.running = True
-        
-        # Health check
+        logger.info("%s starting (Upfront + Plan Stack)", DIRECTOR_AGENT_NAME)
         try:
-            health = self.api_client.health_check()
-            logger.info(f"Backend health check: {health}")
+            health = self.client.health_check()
+            logger.info("Backend health: %s", health)
         except Exception as e:
-            logger.error(f"Backend health check failed: {e}")
-            logger.error("Make sure the backend is running on the configured URL")
+            logger.error("Backend health check failed: %s", e)
             return
-        
-        # Main loop
+
         while self.running:
             try:
                 self._cycle()
-                time.sleep(POLLING_INTERVAL)
-            except KeyboardInterrupt:
-                logger.info(f"{DIRECTOR_AGENT_NAME} stopping...")
-                self.running = False
-                break
             except Exception as e:
-                logger.error(f"Error in main loop: {e}", exc_info=True)
-                time.sleep(POLLING_INTERVAL)
-    
-    def stop(self):
-        """Stop the Director Agent"""
-        logger.info(f"{DIRECTOR_AGENT_NAME} stopping...")
+                logger.error("Cycle error: %s", e, exc_info=True)
+            time.sleep(POLLING_INTERVAL)
+
+    def stop(self) -> None:
         self.running = False
-    
-    def _cycle(self):
-        """
-        Single cycle of the Director Agent
-        
-        This implements the main flow:
-        1. Check for new user messages
-        2. Check current task stack status
-        3. Perform reasoning and planning
-        4. Update task stack
-        5. Get next task
-        6. Delegate to Assistant Agent
-        7. Handle execution summary
-        8. Trigger reflection if needed
-        9. Handle reflection summary
-        """
-        # Step 1: If any task is still running, wait for completion first.
-        if self._has_in_progress_tasks():
-            logger.info("Detected running sub-agent execution; defer new planning this cycle")
-            return
 
-        # Step 2: Check for new user messages
-        new_messages = self._check_new_messages()
-        
-        # Step 3: Get current task stack status
-        task_stack = self._get_task_stack()
-
-        latest_message = new_messages[-1] if new_messages else None
-        target_task_id = self._extract_target_task_id(latest_message) if latest_message else None
-        task_summary = self._get_latest_task_execution_summary(target_task_id) if target_task_id else None
-        memory_brief = self._get_memory_brief_for_task(target_task_id)
-        global_memory = memory_brief.get("global_memory_brief", []) if isinstance(memory_brief, dict) else []
-
-        # Step 4: Perform reasoning and planning
-        planning_result = self.reasoning_engine.reason_and_plan(
-            user_message=latest_message,
-            task_stack=task_stack,
-            task_summary=task_summary,
-            global_memory=global_memory,
-        )
-        
-        # Step 5: Update task stack based on planning
-        if planning_result['action'] == 'create_task':
-            self._create_tasks_from_planning(planning_result['task_updates'])
-        elif planning_result['action'] == 'execute_task' and planning_result.get('target_task_id'):
-            self._execute_existing_task_from_planning(planning_result)
-            return
-        
-        # Step 6: Get next task to execute
-        next_task_info = self._get_next_task()
-        
-        if next_task_info:
-            # Step 7: Delegate to Assistant Agent
-            execution_result = self._delegate_to_assistant(next_task_info)
-            
-            if execution_result:
-                # Step 8: Handle execution summary
-                self._handle_execution_summary(execution_result, next_task_info)
-                
-                # Step 9: Trigger reflection if needed
-                if self.reasoning_engine.should_trigger_reflection(execution_result):
-                    reflection_result = self._trigger_reflection(execution_result)
-                    
-                    if reflection_result:
-                        # Step 10: Handle reflection summary
-                        self._handle_reflection_summary(reflection_result)
-                        
-                        # Re-plan based on reflection
-                        planning_result = self.reasoning_engine.reason_and_plan(
-                            reflection_summary=reflection_result,
-                            task_stack=task_stack
-                        )
-                        
-                        # Update task stack based on reflection
-                        if planning_result['action'] == 'update_plan':
-                            self._update_task_stack_from_reflection(planning_result)
-    
-    def _check_new_messages(self) -> List[Dict[str, Any]]:
-        """
-        Check for new unread user messages
-        
-        Returns:
-            List of new user messages
-        """
-        try:
-            new_messages = self.api_client.get_unread_messages(
-                sender_type='user',
-                check_director_read=True,
-                check_user_read=False,
-            )
-            
-            if new_messages:
-                logger.info(f"Found {len(new_messages)} new user messages")
-                # Mark messages as read
-                for msg in new_messages:
-                    try:
-                        self.api_client.update_message_read_status(
-                            msg['id'],
-                            director_read_status='READ'
-                        )
-                    except Exception as e:
-                        logger.error(f"Failed to mark message {msg['id']} as read: {e}")
-            
-            return new_messages
-        except Exception as e:
-            logger.error(f"Error checking messages: {e}")
-            return []
-    
-    def _get_task_stack(self) -> List[Dict[str, Any]]:
-        """Get current task stack"""
-        try:
-            return self.api_client.get_task_stack()
-        except Exception as e:
-            logger.error(f"Error getting task stack: {e}")
-            return []
-    
-    def _get_execution_pointer(self) -> Optional[Dict[str, Any]]:
-        """Get current execution pointer"""
-        try:
-            return self.api_client.get_execution_pointer()
-        except Exception as e:
-            logger.error(f"Error getting execution pointer: {e}")
-            return None
-    
-    def _get_next_task(self) -> Optional[Dict[str, Any]]:
-        """Get next task to execute"""
-        try:
-            return self.api_client.get_next_task()
-        except Exception as e:
-            logger.error(f"Error getting next task: {e}")
-            return None
-
-    def _get_all_tasks(self) -> List[Dict[str, Any]]:
-        """Get all tasks."""
-        try:
-            return self.api_client.get_all_tasks()
-        except Exception as e:
-            logger.error(f"Error getting all tasks: {e}")
-            return []
-
-    def _has_in_progress_tasks(self) -> bool:
-        """Whether there is any ongoing task execution."""
-        tasks = self._get_all_tasks()
-        return any(task.get("status") == "IN_PROGRESS" for task in tasks)
-
-    @staticmethod
-    def _extract_target_task_id(message: Optional[Dict[str, Any]]) -> Optional[str]:
-        if not message:
-            return None
-        explicit_task_id = message.get("task_id")
-        if explicit_task_id:
-            return explicit_task_id
-        raw_content = str(message.get("content", "") or "")
-        if not raw_content:
-            return None
-        try:
-            parsed = json.loads(raw_content)
-        except Exception:
-            return None
-        if not isinstance(parsed, dict):
-            return None
-        parsed_task_id = parsed.get("task_id")
-        if isinstance(parsed_task_id, str) and parsed_task_id:
-            return parsed_task_id
-        return None
-
-    def _get_latest_task_execution_summary(self, task_id: str) -> Optional[Dict[str, Any]]:
-        """Fetch latest assistant execution summary for one task."""
-        try:
-            executions = self.api_client.get_executions_by_task(task_id)
-        except Exception as e:
-            logger.warning("Failed to fetch executions for task %s: %s", task_id, e)
-            return None
-        if not executions:
-            return None
-        latest = executions[-1]
-        return {
-            "task_id": task_id,
-            "execution_id": latest.get("id"),
-            "status": latest.get("status"),
-            "agent_id": latest.get("agent_id"),
-            "results": latest.get("results"),
-            "error": latest.get("error"),
-        }
-    
-    def _create_tasks_from_planning(self, task_updates: List[Dict[str, Any]]):
-        """
-        Create tasks based on planning result
-        
-        Args:
-            task_updates: List of task descriptions to create
-        """
-        for task_desc in task_updates:
-            try:
-                # Create task
-                task = self.api_client.create_task(task_desc['description'])
-                task_id = task['id']
-                logger.info(f"Created task: {task_id}")
-                
-                # Create or get layer 0
-                try:
-                    self.api_client.get_layer(0)
-                except:
-                    # Layer doesn't exist, create it
-                    self.api_client.create_layer(layer_index=0)
-                
-                # Add task to layer
-                self.api_client.add_task_to_layer(0, task_id)
-                logger.info(f"Added task {task_id} to layer 0")
-                
-                # Set execution pointer if not set
-                pointer = self._get_execution_pointer()
-                if not pointer:
-                    self.api_client.set_execution_pointer(0, 0)
-                    logger.info("Set execution pointer to layer 0, task 0")
-                
-            except Exception as e:
-                logger.error(f"Error creating task: {e}")
-
-    def _execute_existing_task_from_planning(self, planning_result: Dict[str, Any]) -> None:
-        """
-        Execute one agent for an existing task from a user follow-up message.
-
-        Expected planning_result payload:
-        {
-            "target_task_id": "task_xxx",
-            "message_content": "..."
-        }
-        Sub-agent id is chosen by ``LlmSubAgentPlanner`` (catalog + global_memory brief).
-        """
-        task_id = planning_result.get("target_task_id")
-        message_content = str(planning_result.get("message_content", "") or "")
-
-        if not task_id:
-            logger.warning("execute_task action missing target_task_id")
-            return
-        task = self.api_client.get_task(task_id)
-
-        next_task_info = {
-            "task_id": task_id,
-            "task": task,
-        }
-        execution_result = self._delegate_to_assistant(
-            next_task_info,
-            message_content=message_content,
-            routing_mode="followup",
-        )
-        if execution_result:
-            self._handle_execution_summary(
-                execution_result,
-                next_task_info,
-                advance_pointer=False,
-            )
-
-    def _delegate_to_assistant(
+    def orchestrate_user_turn(
         self,
-        next_task_info: Dict[str, Any],
-        message_content: str = "",
         *,
-        routing_mode: str = "stack",
-    ) -> Optional[Dict[str, Any]]:
-        """
-        Delegate task execution to Assistant Agent.
+        user_goal: str,
+        current_user_message_id: str,
+        agents: List[Dict[str, Any]],
+    ) -> None:
+        """Test / embed hook: run one user turn without the polling loop."""
+        run_plan_pipeline(
+            self.client,
+            self.planner,
+            agents=agents,
+            user_goal=user_goal,
+            current_user_message_id=current_user_message_id,
+        )
 
-        ``routing_mode``:
-        - ``stack`` — next task from execution pointer; route from task description + sub-agent catalog.
-        - ``followup`` — user message tied to ``task_id``; route with catalog + ``global_memory`` brief + latest execution summary.
-        """
-        task_id = next_task_info.get('task_id')
-        if not task_id:
-            logger.error("No task_id in next_task_info")
-            return None
+    def _cycle(self) -> None:
+        unread = self.client.get_unread_messages(
+            sender_type="user",
+            check_director_read=True,
+            check_user_read=False,
+        )
+        if not unread:
+            return
 
-        task = next_task_info.get("task")
-        if not isinstance(task, dict):
-            task = None
-        if task is None:
-            try:
-                task = self.api_client.get_task(task_id)
-            except Exception as e:
-                logger.error("Failed to load task snapshot for assistant: %s", e)
-                return None
-        next_task_info["task"] = task
+        msg = unread[0]
+        msg_id = msg.get("id")
+        if not msg_id:
+            return
 
-        # Update task status to IN_PROGRESS
         try:
-            self.api_client.update_task_status(task_id, 'IN_PROGRESS')
-        except Exception as e:
-            logger.error(f"Failed to update task status: {e}")
-        
-        # Select agent for task
-        try:
-            available_agents = self.api_client.get_all_agents()
-            if not available_agents:
-                logger.error("No available sub-agents discovered from Assistant")
-                self.api_client.update_task_status(task_id, 'FAILED')
-                return None
-
-            task_intent = _task_stack_description_to_assistant_text(task.get("description"))
-            if routing_mode == "followup":
-                brief = self._get_memory_brief_for_task(task_id)
-                gm = brief.get("global_memory_brief") if isinstance(brief, dict) else []
-                if not isinstance(gm, list):
-                    gm = []
-                summary = self._get_latest_task_execution_summary(task_id)
-                agent_id = self._sub_agent_planner.choose_for_followup(
-                    message_content=message_content,
-                    task_intent_text=task_intent,
-                    available_agents=available_agents,
-                    global_memory=gm,
-                    execution_summary=summary,
-                )
-            else:
-                agent_id = self._sub_agent_planner.choose_for_stack_task(
-                    task_intent_text=task_intent,
-                    available_agents=available_agents,
-                )
-
-            if not agent_id:
-                logger.error("No suitable agent found for task (LLM routing returned none)")
-                self.api_client.update_task_status(task_id, 'FAILED')
-                return None
-            
-            logger.info(f"Delegating task {task_id} to agent {agent_id}")
-            self.api_client.push_task_message(
-                task_id=task_id,
-                sender='director',
-                message=f"Delegated to assistant agent {agent_id}"
+            self.client.update_message_read_status(
+                str(msg_id), director_read_status="READ"
             )
-
-            # Execute agent. The HTTP body now carries only agent_id +
-            # task_id; any user-side input must already exist as a
-            # workspace artifact (caption-driven retrieval).
-            execution_result = self.api_client.execute_agent(
-                agent_id=agent_id,
-                task_id=task_id,
-            )
-
-            try:
-                executions = self.api_client.get_executions_by_task(task_id)
-                if executions:
-                    execution_result["execution"] = executions[-1]
-            except Exception as e:
-                logger.warning("Failed to fetch latest execution detail for task %s: %s", task_id, e)
-            
-            logger.info(f"Task {task_id} execution completed: {execution_result.get('status')}")
-            return execution_result
-            
         except Exception as e:
-            logger.error(f"Error delegating to assistant: {e}")
-            try:
-                self.api_client.update_task_status(task_id, 'FAILED')
-            except:
-                pass
-            return None
-    
-    def _handle_execution_summary(
-        self,
-        execution_result: Dict[str, Any],
-        task_info: Dict[str, Any],
-        *,
-        advance_pointer: bool = True,
-    ):
-        """
-        Handle execution summary from Assistant Agent
-        
-        Args:
-            execution_result: Result from task execution
-            task_info: Information about the executed task
-        """
-        task_id = task_info.get('task_id')
-        status = execution_result.get('status')
-        
-        logger.info(f"Handling execution summary for task {task_id}: {status}")
-        
-        # Update task status based on execution result
-        try:
-            if status == 'COMPLETED':
-                self.api_client.update_task_status(task_id, 'COMPLETED')
-                # Advance execution pointer
-                if advance_pointer:
-                    self.api_client.advance_execution_pointer()
-            elif status == 'FAILED':
-                self.api_client.update_task_status(task_id, 'FAILED')
-                # Advance execution pointer even on failure
-                if advance_pointer:
-                    self.api_client.advance_execution_pointer()
-        except Exception as e:
-            logger.error(f"Error handling execution summary: {e}")
-    
-    def _trigger_reflection(
-        self,
-        execution_result: Dict[str, Any]
-    ) -> Optional[Dict[str, Any]]:
-        """
-        Trigger reflection phase
-        
-        Args:
-            execution_result: Result from task execution
-            
-        Returns:
-            Reflection result or None if failed
-        """
-        logger.info("Triggering reflection phase...")
-        
-        # Placeholder: Reflection is handled by Assistant Agent
-        # In the actual implementation, this would call a reflection endpoint
-        # For now, we'll simulate it by checking execution results
-        
-        task_id = execution_result.get('task_id') or execution_result.get('results', {}).get('task_id')
-        
-        if not task_id:
-            logger.warning("No task_id in execution result, skipping reflection")
-            return None
-        
-        # Get execution details for reflection
-        try:
-            executions = self.api_client.get_executions_by_task(task_id)
-            if executions:
-                # Use the latest execution
-                latest_execution = executions[-1]
-                
-                # Create reflection summary
-                reflection_summary = {
-                    'task_id': task_id,
-                    'execution_id': latest_execution.get('id'),
-                    'status': latest_execution.get('status'),
-                    'evaluation': 'Execution completed successfully' if latest_execution.get('status') == 'COMPLETED' else 'Execution failed',
-                    'recommendations': []
-                }
-                
-                logger.info(f"Reflection completed for task {task_id}")
-                return reflection_summary
-        except Exception as e:
-            logger.error(f"Error triggering reflection: {e}")
-        
-        return None
+            logger.error("Failed to mark message read: %s", e)
+            return
 
-    def _get_memory_brief_for_task(
-        self,
-        task_id: Optional[str],
-    ) -> Dict[str, Any]:
-        if not task_id:
-            return {"global_memory_brief": []}
-        try:
-            return self.api_client.get_workspace_memory_brief(
-                task_id=task_id,
-            )
-        except Exception as exc:
-            logger.warning("Failed to fetch workspace memory brief for task %s: %s", task_id, exc)
-            return {"global_memory_brief": []}
+        user_text = chat_content_as_user_text(msg.get("content", ""))
+        if not user_text:
+            logger.warning("Empty user message %s, skipping", msg_id)
+            return
 
-    def _handle_reflection_summary(self, reflection_summary: Dict[str, Any]):
-        """
-        Handle reflection summary
-        
-        Args:
-            reflection_summary: Summary from reflection phase
-        """
-        logger.info(f"Handling reflection summary: {reflection_summary.get('evaluation')}")
-        
-        # Reflection summary is used in the next reasoning cycle
-        # This is handled in the main _cycle method
-    
-    def _update_task_stack_from_reflection(self, planning_result: Dict[str, Any]):
-        """
-        Update task stack based on reflection results
-        
-        Args:
-            planning_result: Planning result from reasoning engine
-        """
-        logger.info("Updating task stack based on reflection")
-        
-        # Placeholder: Implement task stack updates based on reflection
-        # This could involve creating new tasks, updating existing tasks, etc.
-        
-        if planning_result.get('task_updates'):
-            self._create_tasks_from_planning(planning_result['task_updates'])
+        try:
+            agents = self.client.get_all_agents()
+        except BackendAPIError as e:
+            logger.error("No agents: %s", e)
+            return
+        if not agents:
+            logger.error("Sub-agent catalog empty")
+            return
+
+        self.orchestrate_user_turn(
+            user_goal=user_text,
+            current_user_message_id=str(msg_id),
+            agents=agents,
+        )

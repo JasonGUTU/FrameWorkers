@@ -13,7 +13,7 @@ from .evaluator import IntakeTextEvaluator
 
 
 def build_input(
-    _task_id: str,
+    _step_id: str,
     resolved_artifacts: dict,
 ) -> BaseModel:
     raw = resolved_artifacts.get(INPUT_LABEL_RAW_TEXT_UPLOAD)
@@ -41,11 +41,17 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
 
 CATALOG_ENTRY = (
     "IntakeTextAgent\n"
-    "  - Input: raw_text_upload (placeholder caption pointing at a raw text file path).\n"
+    "  - Input: ANY user-provided text (creative brief, instruction, product/brand info, "
+    "script, chat message content).\n"
     "  - Output: a caption-rich text artifact suitable for downstream agents to find\n"
     "    via their semantic-typed labels (e.g. [creative_brief]).\n"
-    "  - Purpose: Convert a freshly-uploaded raw user text into a workspace artifact\n"
-    "    whose caption describes what the text is and what the user wanted it for."
+    "  - Purpose: MANDATORY first step for every pipeline run. The user's text input "
+    "(including chat instructions) must always be ingested here before any creative, "
+    "post-production, or analysis agent can run. Even if the user also provides media "
+    "(video/audio/image), run IntakeTextAgent BEFORE the corresponding Intake*Agent.\n"
+    "  - When to skip: ONLY when the user's input is genuinely empty (empty string). "
+    "For greetings, nonsense, unrelated questions — still run IntakeTextAgent to ingest "
+    "the message, then the Director can emit done afterwards based on the ingested content."
 )
 
 DESCRIPTOR = SubAgentDescriptor(

@@ -50,9 +50,9 @@ class DummyDescriptor:
     def build_equipped_agent(self, _llm):
         return _DummyPipelineAgent()
 
-    def build_input(self, task_id, resolved_artifacts):
+    def build_input(self, step_id, resolved_artifacts):
         return {
-            "task_id": task_id,
+            "step_id": step_id,
             "resolved_artifacts": resolved_artifacts,
             "language": "en",
         }
@@ -85,7 +85,7 @@ def stub_input_package_llm(monkeypatch, request):
     """Avoid real LLM calls for per-execution input packaging.
 
     Returns the new InputResolver format: {resolved_artifacts, selected_artifact_paths, rationale}.
-    Loads JSON payloads from global_memory for the given task_id.
+    Loads JSON payloads from global_memory for the given step_id.
 
     Skipped for any live e2e flag so the real InputResolver LLM path is
     exercised end-to-end.
@@ -93,7 +93,7 @@ def stub_input_package_llm(monkeypatch, request):
     if _live_e2e_enabled():
         return  # let real InputResolver run
 
-    def _stub(self, descriptor, task_id, workspace):
+    def _stub(self, descriptor, step_id, workspace):
         """Test stub for InputResolver — caption substring match against [label] headers.
 
         Mirrors production semantics: parses the consumer agent's
@@ -136,7 +136,7 @@ def stub_input_package_llm(monkeypatch, request):
         try:
             entries = workspace.global_memory.list_all()
             for entry in entries:
-                if entry.task_id and entry.task_id != task_id:
+                if entry.step_id and entry.step_id != step_id:
                     continue
                 for artifact in entry.artifacts:
                     path = str(getattr(artifact, "path", "") or "").strip()

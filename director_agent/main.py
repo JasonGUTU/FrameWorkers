@@ -1,45 +1,48 @@
 #!/usr/bin/env python3
-# Main entry point for Director Agent
+"""Process entry for the Upfront-plan Director.
 
-import sys
+Configures logging, registers SIGINT/SIGTERM to stop ``DirectorAgent`` cleanly,
+then runs ``DirectorAgent.start`` (poll chat → ``run_plan_pipeline`` per user line).
+
+Run from repo root: ``PYTHONPATH=. python -m director_agent.main`` or
+``python director_agent/run.py``.
+"""
+
+from __future__ import annotations
+
 import logging
 import signal
-from .director import DirectorAgent
-from .config import LOG_LEVEL, DIRECTOR_AGENT_NAME
+import sys
 
-# Configure logging
+from .config import LOG_LEVEL
+from .director import DirectorAgent
+
 logging.basicConfig(
-    level=getattr(logging, LOG_LEVEL.upper()),
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
+    level=getattr(logging, LOG_LEVEL.upper(), logging.INFO),
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
 )
 
 logger = logging.getLogger(__name__)
 
 
-def main():
-    """Main entry point"""
-    logger.info(f"Starting {DIRECTOR_AGENT_NAME}...")
-    
-    # Create Director Agent instance
+def main() -> None:
     director = DirectorAgent()
-    
-    # Setup signal handlers for graceful shutdown
-    def signal_handler(sig, frame):
-        logger.info("Received shutdown signal")
+
+    def handler(_sig, _frame):
+        logger.info("Shutdown signal")
         director.stop()
         sys.exit(0)
-    
-    signal.signal(signal.SIGINT, signal_handler)
-    signal.signal(signal.SIGTERM, signal_handler)
-    
-    # Start the Director Agent
+
+    signal.signal(signal.SIGINT, handler)
+    signal.signal(signal.SIGTERM, handler)
+
     try:
         director.start()
     except Exception as e:
-        logger.error(f"Fatal error: {e}", exc_info=True)
+        logger.error("Fatal: %s", e, exc_info=True)
         sys.exit(1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

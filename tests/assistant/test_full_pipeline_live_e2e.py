@@ -17,8 +17,6 @@ if str(_repo_root) not in sys.path:
 if str(_pkg_root) not in sys.path:
     sys.path.insert(0, str(_pkg_root))
 
-from director_agent.director import _task_stack_description_to_assistant_text
-
 # `src/__init__.py` imports app.py -> flask_cors.
 if "flask_cors" not in sys.modules:
     flask_cors_stub = types.ModuleType("flask_cors")
@@ -135,8 +133,8 @@ def test_full_pipeline_live_http_flow_generates_about_one_minute_video(
     print(f"[full-pipeline-live-e2e] runtime_base={runtime_base}")
     print(f"[full-pipeline-live-e2e] api_trace={debug_file}")
 
-    create_task_resp = client.post(
-        "/api/tasks/create",
+    create_step_resp = client.post(
+        "/api/steps/create",
         json={
             "description": {
                 "goal": (
@@ -151,14 +149,14 @@ def test_full_pipeline_live_http_flow_generates_about_one_minute_video(
     _append_debug_record(
         debug_file,
         {
-            "step": "create_task",
-            "status_code": create_task_resp.status_code,
-            "body": create_task_resp.get_json(),
+            "step": "create_step",
+            "status_code": create_step_resp.status_code,
+            "body": create_step_resp.get_json(),
         },
     )
-    assert create_task_resp.status_code == 201
-    task_body = create_task_resp.get_json()
-    task_id = task_body["id"]
+    assert create_step_resp.status_code == 201
+    task_body = create_step_resp.get_json()
+    step_id = task_body["id"]
 
     common_inputs: dict = {}
     payloads: dict[str, dict] = {}
@@ -171,7 +169,7 @@ def test_full_pipeline_live_http_flow_generates_about_one_minute_video(
             "/api/assistant/execute",
             json={
                 "agent_id": agent_id,
-                "task_id": task_id,
+                "step_id": step_id,
                 **common_inputs,
             },
         )
@@ -181,15 +179,16 @@ def test_full_pipeline_live_http_flow_generates_about_one_minute_video(
             {
                 "step": "execute",
                 "agent_id": agent_id,
-                "task_id": task_id,
+                "step_id": step_id,
                 "status_code": execute_resp.status_code,
                 "body": body,
             },
         )
         assert execute_resp.status_code == 200, f"{agent_id} failed: {body}"
-        assert body["status"] == "COMPLETED"
-        assert "global_memory_brief" in body
-        ex_list = client.get(f"/api/assistant/executions/task/{task_id}").get_json()
+        brief = body if isinstance(body, list) else []
+        assert isinstance(brief, list) and len(brief) >= 1
+        assert brief[-1]["status"] == "COMPLETED", f"{agent_id} not COMPLETED: {brief[-1]}"
+        ex_list = client.get(f"/api/assistant/executions/step/{step_id}").get_json()
         assert isinstance(ex_list[-1].get("results"), dict)
         payloads[agent_id] = ex_list[-1]["results"]
 
@@ -198,7 +197,7 @@ def test_full_pipeline_live_http_flow_generates_about_one_minute_video(
             "/api/assistant/execute",
             json={
                 "agent_id": agent_id,
-                "task_id": task_id,
+                "step_id": step_id,
                 **common_inputs,
             },
         )
@@ -208,15 +207,16 @@ def test_full_pipeline_live_http_flow_generates_about_one_minute_video(
             {
                 "step": "execute",
                 "agent_id": agent_id,
-                "task_id": task_id,
+                "step_id": step_id,
                 "status_code": execute_resp.status_code,
                 "body": body,
             },
         )
         assert execute_resp.status_code == 200, f"{agent_id} failed: {body}"
-        assert body["status"] == "COMPLETED"
-        assert "global_memory_brief" in body
-        ex_list = client.get(f"/api/assistant/executions/task/{task_id}").get_json()
+        brief = body if isinstance(body, list) else []
+        assert isinstance(brief, list) and len(brief) >= 1
+        assert brief[-1]["status"] == "COMPLETED", f"{agent_id} not COMPLETED: {brief[-1]}"
+        ex_list = client.get(f"/api/assistant/executions/step/{step_id}").get_json()
         assert isinstance(ex_list[-1].get("results"), dict)
         payloads[agent_id] = ex_list[-1]["results"]
 
@@ -246,12 +246,12 @@ def test_full_pipeline_live_http_flow_generates_about_one_minute_video(
     audio_results = payloads["AudioAgent"]
     assert audio_results.get("content", {}).get("final_delivery_asset")
 
-    executions_resp = client.get(f"/api/assistant/executions/task/{task_id}")
+    executions_resp = client.get(f"/api/assistant/executions/step/{step_id}")
     _append_debug_record(
         debug_file,
         {
             "step": "executions_by_task",
-            "task_id": task_id,
+            "step_id": step_id,
             "status_code": executions_resp.status_code,
             "body": executions_resp.get_json(),
         },

@@ -141,9 +141,13 @@ def extract_fal_media_url(result: dict[str, Any], *, media_type: str) -> str:
         if isinstance(url, str) and url:
             return url
 
-    direct_url = result.get(f"{media_type}_url") or result.get("url")
-    if isinstance(direct_url, str) and direct_url:
-        return direct_url
+    url_field = result.get(f"{media_type}_url") or result.get("url")
+    if isinstance(url_field, dict):
+        url = url_field.get("url")
+        if isinstance(url, str) and url:
+            return url
+    if isinstance(url_field, str) and url_field:
+        return url_field
 
     raise RuntimeError(
         f"No {media_type} URL found in fal.ai response keys={list(result.keys())}"

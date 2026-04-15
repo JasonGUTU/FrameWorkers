@@ -15,10 +15,10 @@ export const messagesAPI = {
   list: () => api.get('/messages/list')
 }
 
-// Tasks API
-export const tasksAPI = {
-  list: () => api.get('/tasks/list'),
-  get: (task_id) => api.get(`/tasks/${task_id}`)
+// Plan Steps API
+export const stepsAPI = {
+  list: () => api.get('/steps/list'),
+  get: (step_id) => api.get(`/steps/${step_id}`)
 }
 
 // Execution Pointer API
@@ -26,9 +26,9 @@ export const executionPointerAPI = {
   get: () => api.get('/execution-pointer/get')
 }
 
-// Task Stack API
-export const taskStackAPI = {
-  get: () => api.get('/task-stack')
+// Plan Stack API
+export const planStackAPI = {
+  get: () => api.get('/plan-stack')
 }
 
 export default api

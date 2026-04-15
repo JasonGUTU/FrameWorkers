@@ -104,7 +104,7 @@ class KeyframeMaterializer(BaseMaterializer):
         # No second resolved_artifacts channel — every required field
         # must already be expressed on KeyFrameAgentInput.
         typed_input = ctx.typed_input  # type: KeyFrameAgentInput
-        task_id = ctx.task_id
+        step_id = ctx.step_id
 
         content = asset_dict.get("content", {})
         scenes = content.get("scenes", [])
@@ -473,7 +473,7 @@ class KeyframeMaterializer(BaseMaterializer):
 
         logger.info(
             "Keyframe materialize complete for %s (L1=%d, L2=%d, L3=%d)",
-            task_id,
+            step_id,
             len(l1_tasks),
             len(l2_tasks),
             len(l3_tasks),

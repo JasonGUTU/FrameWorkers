@@ -15,7 +15,7 @@ from .evaluator import StoryEvaluator
 
 
 def build_input(
-    _task_id: str,
+    _step_id: str,
     resolved_artifacts: dict,
 ) -> BaseModel:
     """Construct typed input from the resolved artifact dict.
@@ -56,10 +56,12 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
 
 CATALOG_ENTRY = (
     "StoryAgent\n"
-    "  - Input: creative_brief (a natural-language description of what to produce)\n"
-    "  - Output: story_blueprint (logline, cast, locations, story_arc, scene_outline)\n"
-    "  - Purpose: Produce a structured story blueprint. Autonomously decides "
-    "whether the input is a short prompt to expand or a detailed outline to structure."
+    "  - Input: a creative brief artifact (raw or enriched with reference-image visuals).\n"
+    "  - Output: story_blueprint (logline, cast, locations, story_arc, scene_outline).\n"
+    "  - Purpose: Produce a structured story blueprint — the first creative step for any "
+    "task that requires generating a NEW film from a brief. Run me ONLY when the user wants "
+    "to create new video content from scratch (a brief / idea). SKIP me for post-edit tasks "
+    "on existing videos (style transfer, inpainting, highlights, transcription, subtitle-only)."
 )
 
 DESCRIPTOR = SubAgentDescriptor(

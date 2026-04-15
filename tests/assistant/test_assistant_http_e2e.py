@@ -69,9 +69,9 @@ class _DummyDescriptor:
     def build_equipped_agent(self, _llm):
         return _DummyPipelineAgent()
 
-    def build_input(self, task_id, resolved_artifacts):
+    def build_input(self, step_id, resolved_artifacts):
         return {
-            "task_id": task_id,
+            "step_id": step_id,
             "resolved_artifacts": resolved_artifacts,
             "language": "en",
         }
@@ -94,7 +94,7 @@ class _DummyRegistry:
                 {
                     "id": name,
                     "name": name,
-                    "description": (desc.catalog_entry or "")[:200],
+                    "description": desc.catalog_entry or "",
                     "agent_type": "pipeline",
                     "capabilities": caps,
                 }
@@ -115,9 +115,9 @@ class _ProducerDescriptor:
     def build_equipped_agent(self, _llm):
         return _ProducerPipelineAgent()
 
-    def build_input(self, task_id, resolved_artifacts):
+    def build_input(self, step_id, resolved_artifacts):
         return {
-            "task_id": task_id,
+            "step_id": step_id,
             "seed": "",
             "language": "en",
         }
@@ -136,13 +136,13 @@ class _ConsumerDescriptor:
     def build_equipped_agent(self, _llm):
         return _ConsumerPipelineAgent()
 
-    def build_input(self, task_id, resolved_artifacts):
+    def build_input(self, step_id, resolved_artifacts):
         producer = ResolvedArtifactEntry.coerce(
             resolved_artifacts.get("producer_asset")
         )
         payload = producer.payload or {}
         return {
-            "task_id": task_id,
+            "step_id": step_id,
             "observed_seed": payload.get("content", {}).get("seed", ""),
             "language": "en",
         }
@@ -202,13 +202,13 @@ def test_assistant_e2e_http_flow_covers_core_endpoints(assistant_http_client):
     assert "pipeline_agent" in sub_agent["capabilities"]
 
     # Step 2: Create one task that downstream execution can reference.
-    create_task_resp = client.post(
-        "/api/tasks/create",
+    create_step_resp = client.post(
+        "/api/steps/create",
         json={"description": {"goal": "integration task"}},
     )
-    assert create_task_resp.status_code == 201
-    task_payload = create_task_resp.get_json()
-    task_id = task_payload["id"]
+    assert create_step_resp.status_code == 201
+    task_payload = create_step_resp.get_json()
+    step_id = task_payload["id"]
     assert task_payload["description"] == {"goal": "integration task"}
 
     # Step 3: Execute DummyAgent against that task and validate result envelope.
@@ -216,30 +216,25 @@ def test_assistant_e2e_http_flow_covers_core_endpoints(assistant_http_client):
         "/api/assistant/execute",
         json={
             "agent_id": "DummyAgent",
-            "task_id": task_id,
+            "step_id": step_id,
         },
     )
     assert execute_resp.status_code == 200
-    execution_payload = execute_resp.get_json()
-    assert execution_payload["task_id"] == task_id
-    assert execution_payload.get("execution_id")
-    assert execution_payload["workspace_id"]
-    assert execution_payload["status"] == "COMPLETED"
-    assert "global_memory_brief" in execution_payload
-    assert "error_reasoning" in execution_payload
-    assert execution_payload["error_reasoning"] is None
-    assert isinstance(execution_payload["global_memory_brief"], list)
+    current = execute_resp.get_json()
+    assert isinstance(current, dict)
+    assert current["status"] == "COMPLETED"
+    assert current["error"] is None
 
     # Step 4: Query execution detail and list APIs to confirm persistence.
-    executions_resp = client.get(f"/api/assistant/executions/task/{task_id}")
+    executions_resp = client.get(f"/api/assistant/executions/step/{step_id}")
     assert executions_resp.status_code == 200
     executions = executions_resp.get_json()
     assert len(executions) == 1
     assert executions[0]["agent_id"] == "DummyAgent"
     execution_id = executions[0]["id"]
     assert execution_id
-    assert execution_payload["execution_id"] == execution_id
-    assert executions[0]["task_id"] == task_id
+    assert current["id"] == execution_id
+    assert executions[0]["step_id"] == step_id
     assert executions[0]["status"] == "COMPLETED"
     assert executions[0]["results"]["summary"] == "integration ok"
 
@@ -253,7 +248,7 @@ def test_assistant_e2e_http_flow_covers_core_endpoints(assistant_http_client):
     for entry in files:
         assert "path" in entry
         assert "agent_id" in entry
-        assert "task_id" in entry
+        assert "step_id" in entry
 
     logs_resp = client.get("/api/assistant/workspace/logs")
     assert logs_resp.status_code == 200
@@ -264,48 +259,33 @@ def test_assistant_e2e_http_flow_covers_core_endpoints(assistant_http_client):
         for log in logs
     )
 
-    # The brief endpoint derives slim rows directly from global_memory.md
-    # ({execution_id, agent_id, task_id, status, created_at}). There is no
-    # POST/list "memory entries" surface anymore — agents auto-populate
-    # global_memory through ArtifactWriter when they persist artifacts.
-    brief_resp = client.get(f"/api/assistant/workspace/memory/brief?task_id={task_id}")
-    assert brief_resp.status_code == 200
-    brief = brief_resp.get_json()
-    assert "global_memory_brief" in brief
-    rows = brief["global_memory_brief"]
-    assert isinstance(rows, list)
-    # All rows must conform to the new slim shape.
-    for row in rows:
-        assert set(row.keys()) == {
-            "execution_id", "agent_id", "task_id", "status", "created_at",
-        }
 
 def test_assistant_pipeline_execution_inputs_include_global_memory_list(
     assistant_http_client_pipeline,
 ):
     client = assistant_http_client_pipeline
 
-    create_task_resp = client.post(
-        "/api/tasks/create",
+    create_step_resp = client.post(
+        "/api/steps/create",
         json={"description": {"goal": "check global_memory on inputs"}},
     )
-    assert create_task_resp.status_code == 201
-    task_payload = create_task_resp.get_json()
-    task_id = task_payload["id"]
+    assert create_step_resp.status_code == 201
+    task_payload = create_step_resp.get_json()
+    step_id = task_payload["id"]
 
     client.post(
         "/api/assistant/execute",
-        json={"agent_id": "ProducerAgent", "task_id": task_id},
+        json={"agent_id": "ProducerAgent", "step_id": step_id},
     )
     consumer_resp = client.post(
         "/api/assistant/execute",
-        json={"agent_id": "ConsumerAgent", "task_id": task_id},
+        json={"agent_id": "ConsumerAgent", "step_id": step_id},
     )
     assert consumer_resp.status_code == 200
-    executions_resp = client.get(f"/api/assistant/executions/task/{task_id}")
+    executions_resp = client.get(f"/api/assistant/executions/step/{step_id}")
     assert executions_resp.status_code == 200
     executions = executions_resp.get_json()
     consumer_exec = next(e for e in executions if e["agent_id"] == "ConsumerAgent")
-    # The execution audit dict carries task_id + resolved_artifacts as siblings.
-    assert "task_id" in consumer_exec["inputs"]
+    # The execution audit dict carries step_id + resolved_artifacts as siblings.
+    assert "step_id" in consumer_exec["inputs"]
     assert "resolved_artifacts" in consumer_exec["inputs"]

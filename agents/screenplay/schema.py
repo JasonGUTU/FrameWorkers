@@ -132,6 +132,17 @@ class ScreenplayScene(BaseModel):
     scene_consistency_pack: SceneConsistencyPack = Field(default_factory=SceneConsistencyPack)
     scene_end: SceneEnd = Field(default_factory=SceneEnd)
     shots: list[ScriptShot] = Field(default_factory=list)
+    estimated_duration_seconds: float = Field(
+        0.0,
+        description=(
+            "Pre-computed scene length estimate, shared across NarrationAgent / "
+            "MusicAgent / AmbienceAgent so they pick identical per-scene targets. "
+            "Formula: sum dialogue+narration word counts / 2.5 (~150 wpm TTS rate) "
+            "+ 3 seconds per action-only shot for visual pacing. ScreenplayAgent "
+            "is the single producer (it sees every shot's block_type and text); "
+            "downstream audio agents read this verbatim and never re-estimate."
+        ),
+    )
 
 
 # ---------------------------------------------------------------------------

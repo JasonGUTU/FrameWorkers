@@ -38,8 +38,8 @@ class _DummyDescriptor:
     def build_equipped_agent(self, llm_client):
         return {"agent_id": self.agent_id, "llm_client": llm_client}
 
-    def build_input(self, task_id, resolved_artifacts):
-        return {"task_id": task_id}
+    def build_input(self, step_id, resolved_artifacts):
+        return {"step_id": step_id}
 
 
 class TestAgentRegistryDescriptorModel:

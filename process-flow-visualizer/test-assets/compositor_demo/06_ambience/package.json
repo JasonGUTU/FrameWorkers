@@ -1,0 +1,21 @@
+{
+  "content": {
+    "beds": [
+      {
+        "ambience_id": "amb_sc_001",
+        "scene_id": "sc_001",
+        "description": "Soft murmur of quiet patrons, gentle hum of an espresso machine, subtle clinking of cups, light distant street sounds.",
+        "duration_seconds": 20.0,
+        "audio_asset": {
+          "asset_id": "aud_amb_sc_001",
+          "uri": "/home/zhendong_li/FrameWorkers/process-flow-visualizer/test-assets/compositor_demo/06_ambience/aud_amb_sc_001.wav",
+          "format": "wav"
+        },
+        "audio_generation_prompt": "{\"kind\": \"ambience\", \"description\": \"Soft murmur of quiet patrons, gentle hum of an espresso machine, subtle clinking of cups, light distant street sounds.\", \"target_duration\": 20.0, \"segments\": 1}"
+      }
+    ]
+  },
+  "metrics": {
+    "bed_count": 1
+  }
+}

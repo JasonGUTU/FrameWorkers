@@ -13,7 +13,7 @@ from .evaluator import IntakeImageEvaluator
 
 
 def build_input(
-    _task_id: str,
+    _step_id: str,
     resolved_artifacts: dict,
 ) -> BaseModel:
     raw = resolved_artifacts.get(INPUT_LABEL_RAW_IMAGE_UPLOAD)
@@ -30,25 +30,29 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
         asset = content.get("image_asset") or {}
         if isinstance(asset, dict):
             image_uri = str(asset.get("uri", "") or "").strip()
+    visual = ""
+    if isinstance(content, dict):
+        visual = str(content.get("visual_description", "") or "").strip()
     caps: dict = {
         agent_id: {
             "caption": (
-                "User-uploaded reference image. Pending role "
-                "classification by BriefEnricherAgent. Visual "
-                "description available in payload."
+                f"User-uploaded reference image description. {visual}"
+                if visual
+                else "User-uploaded reference image description."
             ),
             "scope": "global",
         },
     }
-    # Register the original PNG file as a separate artifact entry so
-    # downstream agents can match it by mime=image/* and get the actual
-    # file path directly via entry.path (no payload unwrap needed).
+    # Register the original image file so downstream agents can match
+    # by mime=image/* and get the file path directly.
+    # One entry only — BriefEnricherAgent will update this caption
+    # with role-specific info via global_memory.update_caption_by_path().
     if image_uri:
         caps[f"{agent_id}_source_image"] = {
             "caption": (
-                "User-uploaded reference image file. Pending role "
-                "classification. Available as global anchor for "
-                "downstream keyframe generation."
+                f"User-uploaded reference image file. {visual}"
+                if visual
+                else "User-uploaded reference image file."
             ),
             "scope": "global",
             "path": image_uri,
@@ -59,12 +63,15 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
 
 CATALOG_ENTRY = (
     "IntakeImageAgent\n"
-    "  - Input: raw_image_upload (placeholder caption pointing at a raw image file)\n"
-    "  - Output: a caption-rich image artifact suitable for downstream agents to discover\n"
-    "    via their semantic-typed image labels (e.g. [character_reference]).\n"
-    "  - Purpose: Run a vision LLM over a freshly-uploaded user image and emit a workspace\n"
-    "    artifact whose caption describes what the image visually shows together with the\n"
-    "    user's stated intent."
+    "  - Input: raw_image_upload (placeholder caption pointing at a raw image file the user "
+    "uploaded).\n"
+    "  - Output: a caption-rich image artifact with vision-LLM caption, discoverable by "
+    "downstream agents via semantic-typed image labels (e.g. [character_reference]).\n"
+    "  - Purpose: Run a vision LLM over a freshly-uploaded user image so downstream agents "
+    "can use it as a reference (character, location, style, etc.). Run me whenever the user "
+    "has uploaded an image — always AFTER the user's text instruction has been ingested first. "
+    "If the image is a creative reference (not a finished asset), a brief-enrichment step "
+    "should usually follow to weave its visual description into the text brief."
 )
 
 DESCRIPTOR = SubAgentDescriptor(

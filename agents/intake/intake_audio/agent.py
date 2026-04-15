@@ -45,14 +45,19 @@ class IntakeAudioAgent(BaseAgent[IntakeAudioInput, IntakeAudioOutput]):
         rework_notes: str = "",
     ) -> IntakeAudioOutput:
         """Build the skeleton, ask the LLM to fill ``auditory_summary`` via
-        a one-shot multimodal call. NOTE: this agent is currently a stub —
-        it relies on a multimodal audio LLM endpoint that may not be wired
-        up. Calling it without that endpoint will fail at the LLM call.
+        a multimodal call with the audio file attached.
         """
         skeleton = self.build_skeleton(input_data)
         system = self.system_prompt()
         user = self.build_user_prompt(input_data)
         if rework_notes:
             user += self._rework_section(rework_notes)
-        creative = await self.llm.chat_json(system, user)
+
+        media = []
+        if input_data.raw_audio_path:
+            media.append({"type": "audio", "path": input_data.raw_audio_path})
+
+        creative = await self.llm.chat_json(
+            system, user, media_attachments=media or None,
+        )
         return self.fill_creative(skeleton, creative)

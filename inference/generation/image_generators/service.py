@@ -22,7 +22,6 @@ from .types import ImageResult, ImageSemanticContext
 
 logger = logging.getLogger(__name__)
 
-_DEFAULT_IMAGE_MODEL = "google/gemini-2.5-flash-image"
 _DEFAULT_OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 
 # ---------------------------------------------------------------------------
@@ -61,14 +60,19 @@ class ImageService(LazyHttpxClientMixin):
     def __init__(
         self,
         api_key: str | None = None,
-        model: str = _DEFAULT_IMAGE_MODEL,
+        model: str | None = None,
         base_url: str = _DEFAULT_OPENROUTER_BASE_URL,
         timeout: float = 120.0,
         retry_base_delay: float = 2.0,
         retry_max_delay: float = 30.0,
     ) -> None:
         self._api_key = api_key or os.getenv("OPENROUTER_API_KEY", "")
-        self.model = model
+        self.model = model or os.getenv("INFERENCE_IMAGE_MODEL", "")
+        if not self.model:
+            raise RuntimeError(
+                "No image model configured. Set INFERENCE_IMAGE_MODEL in .env "
+                "(e.g. google/gemini-2.5-flash-image)"
+            )
         self.base_url = base_url.rstrip("/")
         self.timeout = timeout
         self.retry_base_delay = retry_base_delay

@@ -57,7 +57,7 @@ class MaterializeContext:
     (e.g. ``dynamic-task-stack``).
 
     Attributes:
-        task_id:           Current task identifier (same scope as Task Stack ``task_id``).
+        step_id:           Current task identifier (same scope as Task Stack ``step_id``).
         typed_input:       The same Pydantic typed input that the LLM pipeline
                            received. Materializers read whatever fields they
                            need from it (e.g. ``typed_input.shot_stills``,
@@ -78,7 +78,7 @@ class MaterializeContext:
                            Python's ``logger.error`` only.
     """
 
-    task_id: str
+    step_id: str
     typed_input: BaseModel
     persist_binary: Callable[[MediaAsset], str]
     report_failure: Optional[Callable[..., None]] = None

@@ -20,7 +20,7 @@ from .evaluator import ExamplePipelineEvaluator
 
 
 def build_input(
-    _task_id: str,
+    _step_id: str,
     resolved_artifacts: dict,
 ) -> BaseModel:
     """Construct typed input from the resolved artifact dict.

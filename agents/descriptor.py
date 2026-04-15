@@ -78,7 +78,7 @@ class BaseMaterializer(ABC):
     sole responsibility.
 
     Single-input contract: a materializer receives only the
-    ``MaterializeContext`` (which carries ``typed_input``, ``task_id``,
+    ``MaterializeContext`` (which carries ``typed_input``, ``step_id``,
     and the ``persist_binary`` callback) plus the ``asset_dict`` produced
     by the LLM pipeline.  It does NOT receive any second
     ``resolved_artifacts`` channel.  Whatever data the materializer
@@ -99,7 +99,7 @@ class BaseMaterializer(ABC):
         fills it after saving.
 
         Args:
-            ctx: ``MaterializeContext`` carrying ``task_id``,
+            ctx: ``MaterializeContext`` carrying ``step_id``,
                  ``typed_input`` (the same Pydantic input the LLM pipeline
                  received), and the ``persist_binary`` callback.
             asset_dict: The agent's LLM output dict (``asset_id`` fields are
@@ -139,12 +139,12 @@ class SubAgentDescriptor:
         evaluator_factory:
             ``() -> BaseEvaluator`` — creates an evaluator instance.
         build_input:
-            ``(task_id, resolved_artifacts) -> BaseModel`` —
+            ``(step_id, resolved_artifacts) -> BaseModel`` —
             constructs the agent's typed input from the dict of artifacts
             selected by InputResolver, keyed by the consumer agent's
             ``[label]`` headers. Assistant always passes the Task Stack
-            ``task_id``; agents that do not need it may name the parameter
-            ``_task_id`` and omit it from the returned Pydantic model.
+            ``step_id``; agents that do not need it may name the parameter
+            ``_step_id`` and omit it from the returned Pydantic model.
             Duration, language, and other creative intent must be
             **inferred by the sub-agent LLM** from the resolved artifacts
             (e.g. prior JSON snapshots, source text uploads) — not from a
@@ -177,7 +177,7 @@ class SubAgentDescriptor:
 
     build_input: Callable[..., BaseModel] = field(
         repr=False,
-        default=lambda task_id, resolved_artifacts: None,
+        default=lambda step_id, resolved_artifacts: None,
     )
     service_factories: dict[str, Callable[..., Any]] = field(
         repr=False, default_factory=dict,

@@ -141,7 +141,7 @@ class VideoMaterializer(BaseMaterializer):
             List of ``MediaAsset`` objects for Assistant to persist.
         """
         typed_input = ctx.typed_input  # type: VideoAgentInput
-        task_id = ctx.task_id
+        step_id = ctx.step_id
         pending: list[MediaAsset] = []
         content = asset_dict.get("content", {})
         scene_bytes_list: list[bytes] = []
@@ -250,5 +250,5 @@ class VideoMaterializer(BaseMaterializer):
                         error=f"{type(exc).__name__}: {exc}",
                     )
 
-        logger.info("All video clips materialized for %s", task_id)
+        logger.info("All video clips materialized for %s", step_id)
         return pending

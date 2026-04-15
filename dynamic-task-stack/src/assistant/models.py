@@ -23,7 +23,7 @@ class AgentExecution:
     """Tracks an agent execution instance"""
     id: str
     agent_id: str
-    task_id: str
+    step_id: str
     status: ExecutionStatus
     inputs: Dict[str, Any]  # Inputs provided to the agent
     results: Optional[Dict[str, Any]] = None  # Results from agent execution

@@ -1,0 +1,33 @@
+{
+  "content": {
+    "segments": [
+      {
+        "segment_id": "narr_001",
+        "linked_shot_id": "sh_002",
+        "speaker": "Anna",
+        "text": "Thanks. Same time tomorrow?",
+        "audio_asset": {
+          "asset_id": "aud_narr_001",
+          "uri": "/home/zhendong_li/FrameWorkers/process-flow-visualizer/test-assets/compositor_demo/04_narration/aud_narr_001.wav",
+          "format": "wav"
+        },
+        "audio_generation_prompt": "{\"kind\": \"tts\", \"model\": \"fal-ai/minimax/speech-02-turbo\", \"voice\": \"Anna\", \"text\": \"Thanks. Same time tomorrow?\"}"
+      },
+      {
+        "segment_id": "narr_002",
+        "linked_shot_id": "sh_004",
+        "speaker": "Stranger",
+        "text": "You dropped this.",
+        "audio_asset": {
+          "asset_id": "aud_narr_002",
+          "uri": "/home/zhendong_li/FrameWorkers/process-flow-visualizer/test-assets/compositor_demo/04_narration/aud_narr_002.wav",
+          "format": "wav"
+        },
+        "audio_generation_prompt": "{\"kind\": \"tts\", \"model\": \"fal-ai/minimax/speech-02-turbo\", \"voice\": \"Stranger\", \"text\": \"You dropped this.\"}"
+      }
+    ]
+  },
+  "metrics": {
+    "segment_count": 2
+  }
+}

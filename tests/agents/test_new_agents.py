@@ -1,0 +1,952 @@
+"""Tests for the 10 new sub-agents added in the capability expansion.
+
+Each agent is tested for:
+  1. Schema — output model round-trips correctly, defaults are sane
+  2. Evaluator — check_structure catches missing/invalid fields, passes valid output
+  3. Descriptor — build_input produces correct typed input from resolved artifacts,
+     build_captions returns well-formed caption dict
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import sys
+from pathlib import Path
+
+
+def _resolve_project_root() -> Path:
+    for parent in Path(__file__).resolve().parents:
+        if (parent / "agents" / "__init__.py").exists():
+            return parent
+    raise RuntimeError("Cannot locate project root")
+
+
+_root = _resolve_project_root()
+if str(_root) not in sys.path:
+    sys.path.insert(0, str(_root))
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# TranslationAgent
+# ═══════════════════════════════════════════════════════════════════════════
+
+class TestTranslationAgent:
+    def test_schema_defaults(self):
+        from agents.translation.schema import TranslationAgentInput, TranslationAgentOutput
+        inp = TranslationAgentInput()
+        assert inp.source_json_text == ""
+        assert inp.target_language == "en"
+        out = TranslationAgentOutput()
+        assert out.content.source_language == ""
+        assert out.content.translated_payload == {}
+        assert out.metrics.has_payload is False
+
+    def test_schema_round_trip(self):
+        from agents.translation.schema import TranslationAgentOutput
+        data = {
+            "content": {
+                "source_language": "zh",
+                "target_language": "en",
+                "translated_payload": {"scene_id": "sc_001", "dialogue": "Hello world"},
+            },
+        }
+        out = TranslationAgentOutput.model_validate(data)
+        assert out.content.source_language == "zh"
+        assert out.content.translated_payload["dialogue"] == "Hello world"
+
+    def test_evaluator_passes_valid_output(self):
+        from agents.translation.schema import TranslationAgentOutput
+        from agents.translation.evaluator import TranslationEvaluator
+        data = {
+            "content": {
+                "source_language": "zh",
+                "target_language": "en",
+                "translated_payload": {"content": {"scenes": [{"dialogue": "Hello"}]}},
+            },
+        }
+        out = TranslationAgentOutput.model_validate(data)
+        evaluator = TranslationEvaluator()
+        errors = evaluator.check_structure(out)
+        assert errors == []
+
+    def test_evaluator_catches_empty_fields(self):
+        from agents.translation.schema import TranslationAgentOutput
+        from agents.translation.evaluator import TranslationEvaluator
+        out = TranslationAgentOutput()
+        evaluator = TranslationEvaluator()
+        errors = evaluator.check_structure(out)
+        assert len(errors) >= 3  # source_language, target_language, translated_payload
+
+    def test_evaluator_catches_empty_payload(self):
+        from agents.translation.schema import TranslationAgentOutput
+        from agents.translation.evaluator import TranslationEvaluator
+        data = {
+            "content": {
+                "source_language": "zh",
+                "target_language": "en",
+                "translated_payload": {},
+            },
+        }
+        out = TranslationAgentOutput.model_validate(data)
+        evaluator = TranslationEvaluator()
+        errors = evaluator.check_structure(out)
+        assert any("payload" in e for e in errors)
+
+    def test_descriptor_build_input(self):
+        from agents.translation.descriptor import build_input
+        resolved = {
+            "source_text": {
+                "caption": "Screenplay in Chinese",
+                "scope": "global",
+                "path": "/tmp/screenplay.json",
+                "mime": "application/json",
+                "payload": {"content": {"scenes": [{"dialogue": "你好"}]}, "target_language": "en"},
+            }
+        }
+        inp = build_input("task_001", resolved)
+        assert inp.target_language == "en"
+        assert "你好" in inp.source_json_text
+
+    def test_descriptor_build_captions(self):
+        from agents.translation.descriptor import build_captions
+        output_dict = {
+            "content": {
+                "source_language": "zh",
+                "target_language": "en",
+                "translated_text": "Hello",
+            },
+        }
+        caps = build_captions("TranslationAgent", output_dict)
+        assert "TranslationAgent" in caps
+        assert "zh" in caps["TranslationAgent"]["caption"]
+        assert "en" in caps["TranslationAgent"]["caption"]
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# SubtitleAgent
+# ═══════════════════════════════════════════════════════════════════════════
+
+class TestSubtitleAgent:
+    def test_schema_defaults(self):
+        from agents.subtitle.schema import SubtitleAgentInput, SubtitleAgentOutput
+        inp = SubtitleAgentInput()
+        assert inp.screenplay_json_text == ""
+        out = SubtitleAgentOutput()
+        assert out.content.tracks == []
+        assert out.metrics.total_cue_count == 0
+
+    def test_evaluator_passes_valid_output(self):
+        from agents.subtitle.schema import SubtitleAgentOutput
+        from agents.subtitle.evaluator import SubtitleEvaluator
+        data = {
+            "content": {
+                "tracks": [{
+                    "language": "en",
+                    "cues": [
+                        {"cue_id": "cue_001", "start_time": "00:00:01,000", "end_time": "00:00:04,500", "speaker": "Narrator", "text": "Hello world"},
+                        {"cue_id": "cue_002", "start_time": "00:00:05,000", "end_time": "00:00:08,000", "speaker": "Alice", "text": "How are you?"},
+                    ],
+                    "srt_text": "1\n00:00:01,000 --> 00:00:04,500\nHello world\n\n2\n00:00:05,000 --> 00:00:08,000\nHow are you?\n",
+                }]
+            }
+        }
+        out = SubtitleAgentOutput.model_validate(data)
+        evaluator = SubtitleEvaluator()
+        errors = evaluator.check_structure(out)
+        assert errors == []
+
+    def test_evaluator_catches_empty_tracks(self):
+        from agents.subtitle.schema import SubtitleAgentOutput
+        from agents.subtitle.evaluator import SubtitleEvaluator
+        out = SubtitleAgentOutput()
+        evaluator = SubtitleEvaluator()
+        errors = evaluator.check_structure(out)
+        assert any("empty" in e for e in errors)
+
+    def test_evaluator_catches_bad_time_format(self):
+        from agents.subtitle.schema import SubtitleAgentOutput
+        from agents.subtitle.evaluator import SubtitleEvaluator
+        data = {
+            "content": {
+                "tracks": [{
+                    "language": "en",
+                    "cues": [{"cue_id": "cue_001", "start_time": "0:0:1", "end_time": "0:0:4", "text": "Hi"}],
+                    "srt_text": "1\n0:0:1 --> 0:0:4\nHi\n",
+                }]
+            }
+        }
+        out = SubtitleAgentOutput.model_validate(data)
+        evaluator = SubtitleEvaluator()
+        errors = evaluator.check_structure(out)
+        assert any("SRT time" in e for e in errors)
+
+    def test_evaluator_catches_non_increasing_cue_ids(self):
+        from agents.subtitle.schema import SubtitleAgentOutput
+        from agents.subtitle.evaluator import SubtitleEvaluator
+        data = {
+            "content": {
+                "tracks": [{
+                    "language": "en",
+                    "cues": [
+                        {"cue_id": "cue_002", "start_time": "00:00:01,000", "end_time": "00:00:03,000", "text": "A"},
+                        {"cue_id": "cue_001", "start_time": "00:00:04,000", "end_time": "00:00:06,000", "text": "B"},
+                    ],
+                    "srt_text": "1\n...\n",
+                }]
+            }
+        }
+        out = SubtitleAgentOutput.model_validate(data)
+        evaluator = SubtitleEvaluator()
+        errors = evaluator.check_structure(out)
+        assert any("increasing" in e for e in errors)
+
+    def test_descriptor_build_input(self):
+        from agents.subtitle.descriptor import build_input
+        resolved = {
+            "screenplay": {
+                "caption": "Screenplay", "scope": "global", "path": "", "mime": "application/json",
+                "payload": {"content": {"scenes": []}},
+            },
+        }
+        inp = build_input("task_001", resolved)
+        assert "scenes" in inp.screenplay_json_text
+
+    def test_descriptor_build_captions(self):
+        from agents.subtitle.descriptor import build_captions
+        output_dict = {
+            "content": {"tracks": [{"language": "en", "cues": [{"cue_id": "c1"}, {"cue_id": "c2"}]}]},
+        }
+        caps = build_captions("SubtitleAgent", output_dict)
+        assert "2 cue(s)" in caps["SubtitleAgent"]["caption"]
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# TranscriptionAgent
+# ═══════════════════════════════════════════════════════════════════════════
+
+class TestTranscriptionAgent:
+    def test_schema_defaults(self):
+        from agents.transcription.schema import TranscriptionAgentInput, TranscriptionAgentOutput
+        inp = TranscriptionAgentInput()
+        assert inp.source_media_path == ""
+        out = TranscriptionAgentOutput()
+        assert out.content.segments == []
+
+    def test_evaluator_passes_valid_output(self):
+        from agents.transcription.schema import TranscriptionAgentOutput
+        from agents.transcription.evaluator import TranscriptionEvaluator
+        data = {
+            "content": {
+                "language": "zh",
+                "segments": [
+                    {"segment_id": "seg_001", "start_time": 0.0, "end_time": 3.5, "speaker": "Speaker_1", "text": "你好世界", "confidence": 0.95},
+                    {"segment_id": "seg_002", "start_time": 4.0, "end_time": 7.0, "speaker": "Speaker_2", "text": "你好", "confidence": 0.88},
+                ],
+                "full_text": "[Speaker_1]: 你好世界 [Speaker_2]: 你好",
+            }
+        }
+        out = TranscriptionAgentOutput.model_validate(data)
+        evaluator = TranscriptionEvaluator()
+        errors = evaluator.check_structure(out)
+        assert errors == []
+
+    def test_evaluator_catches_overlapping_segments(self):
+        from agents.transcription.schema import TranscriptionAgentOutput
+        from agents.transcription.evaluator import TranscriptionEvaluator
+        data = {
+            "content": {
+                "language": "en",
+                "segments": [
+                    {"segment_id": "seg_001", "start_time": 0.0, "end_time": 5.0, "text": "A", "confidence": 0.9},
+                    {"segment_id": "seg_002", "start_time": 3.0, "end_time": 7.0, "text": "B", "confidence": 0.9},
+                ],
+                "full_text": "A B",
+            }
+        }
+        out = TranscriptionAgentOutput.model_validate(data)
+        evaluator = TranscriptionEvaluator()
+        errors = evaluator.check_structure(out)
+        assert any("overlaps" in e for e in errors)
+
+    def test_evaluator_catches_end_before_start(self):
+        from agents.transcription.schema import TranscriptionAgentOutput
+        from agents.transcription.evaluator import TranscriptionEvaluator
+        data = {
+            "content": {
+                "language": "en",
+                "segments": [
+                    {"segment_id": "seg_001", "start_time": 5.0, "end_time": 3.0, "text": "bad", "confidence": 0.9},
+                ],
+                "full_text": "bad",
+            }
+        }
+        out = TranscriptionAgentOutput.model_validate(data)
+        evaluator = TranscriptionEvaluator()
+        errors = evaluator.check_structure(out)
+        assert any("end_time" in e for e in errors)
+
+    def test_descriptor_build_input(self):
+        from agents.transcription.descriptor import build_input
+        resolved = {
+            "source_media": {
+                "caption": "Video file", "scope": "global",
+                "path": "/tmp/video.mp4", "mime": "video/mp4", "payload": None,
+            },
+        }
+        inp = build_input("task_001", resolved)
+        assert inp.source_media_path == "/tmp/video.mp4"
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# CompositorAgent
+# ═══════════════════════════════════════════════════════════════════════════
+
+class TestCompositorAgent:
+    def test_schema_defaults(self):
+        from agents.compositor.schema import CompositorAgentInput, CompositorAgentOutput
+        inp = CompositorAgentInput()
+        assert inp.screenplay_json_text == ""
+        out = CompositorAgentOutput()
+        assert out.content.plan.output_resolution == "1920x1080"
+        assert out.content.plan.output_fps == 30
+
+    def test_evaluator_passes_valid_output(self):
+        from agents.compositor.schema import CompositorAgentOutput
+        from agents.compositor.evaluator import CompositorEvaluator
+        data = {
+            "content": {
+                "plan": {
+                    "transitions": [
+                        {"from_shot_id": "sh_001", "to_shot_id": "sh_002", "transition_type": "crossfade", "duration_ms": 500},
+                    ],
+                    "color_grade": {"brightness": 0.0, "contrast": 0.05, "saturation": 0.0, "tone": "warm"},
+                    "subtitle_style": {"font_size": 24, "font_color": "#FFFFFF", "outline_color": "#000000", "position": "bottom", "burn_in": True},
+                    "output_resolution": "1920x1080",
+                    "output_fps": 30,
+                    "output_format": "mp4",
+                },
+                "delivery_asset": {"asset_id": "compositor_final", "uri": "placeholder", "format": "mp4"},
+            }
+        }
+        out = CompositorAgentOutput.model_validate(data)
+        evaluator = CompositorEvaluator()
+        errors = evaluator.check_structure(out)
+        assert errors == []
+
+    def test_evaluator_catches_invalid_transition_type(self):
+        from agents.compositor.schema import CompositorAgentOutput
+        from agents.compositor.evaluator import CompositorEvaluator
+        data = {
+            "content": {
+                "plan": {
+                    "transitions": [{"from_shot_id": "sh_001", "to_shot_id": "sh_002", "transition_type": "dissolve", "duration_ms": 500}],
+                    "output_resolution": "1920x1080", "output_fps": 30,
+                },
+                "delivery_asset": {"asset_id": "compositor_final"},
+            }
+        }
+        out = CompositorAgentOutput.model_validate(data)
+        evaluator = CompositorEvaluator()
+        errors = evaluator.check_structure(out)
+        assert any("dissolve" in e for e in errors)
+
+    def test_evaluator_catches_bad_resolution(self):
+        from agents.compositor.schema import CompositorAgentOutput
+        from agents.compositor.evaluator import CompositorEvaluator
+        data = {
+            "content": {
+                "plan": {"output_resolution": "fullhd", "output_fps": 30},
+                "delivery_asset": {"asset_id": "compositor_final"},
+            }
+        }
+        out = CompositorAgentOutput.model_validate(data)
+        evaluator = CompositorEvaluator()
+        errors = evaluator.check_structure(out)
+        assert any("resolution" in e for e in errors)
+
+    def test_evaluator_catches_wrong_asset_id(self):
+        from agents.compositor.schema import CompositorAgentOutput
+        from agents.compositor.evaluator import CompositorEvaluator
+        data = {
+            "content": {
+                "plan": {"output_resolution": "1920x1080", "output_fps": 30},
+                "delivery_asset": {"asset_id": "wrong_id"},
+            }
+        }
+        out = CompositorAgentOutput.model_validate(data)
+        evaluator = CompositorEvaluator()
+        errors = evaluator.check_structure(out)
+        assert any("compositor_final" in e for e in errors)
+
+    def test_descriptor_build_input(self):
+        from agents.compositor.descriptor import build_input
+        resolved = {
+            "screenplay": {"caption": "SP", "scope": "global", "path": "", "mime": "application/json", "payload": {"content": {}}},
+            "video_package": {"caption": "VP", "scope": "global", "path": "/tmp/v.mp4", "mime": "application/json", "payload": {"content": {}}},
+            "audio_package": {"caption": "AP", "scope": "global", "path": "/tmp/a.wav", "mime": "application/json", "payload": {"content": {}}},
+            "subtitle_tracks": {"caption": "ST", "scope": "global", "path": "", "mime": "application/json", "payload": {"tracks": []}},
+        }
+        inp = build_input("task_001", resolved)
+        assert "content" in inp.screenplay_json_text
+        assert inp.video_file_path == "/tmp/v.mp4"
+        assert inp.audio_file_path == "/tmp/a.wav"
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# StyleTransferAgent
+# ═══════════════════════════════════════════════════════════════════════════
+
+class TestStyleTransferAgent:
+    def test_schema_defaults(self):
+        from agents.style_transfer.schema import StyleTransferAgentInput, StyleTransferAgentOutput
+        inp = StyleTransferAgentInput()
+        assert inp.source_video_path == ""
+        out = StyleTransferAgentOutput()
+        assert out.content.style_spec.style_strength == 0.7
+        assert out.content.style_spec.preserve_motion is True
+
+    def test_evaluator_passes_valid_output(self):
+        from agents.style_transfer.schema import StyleTransferAgentOutput
+        from agents.style_transfer.evaluator import StyleTransferEvaluator
+        data = {
+            "content": {
+                "style_spec": {
+                    "style_description": "Japanese anime style with cel shading and vibrant colors",
+                    "style_prompt": "anime cel-shaded vibrant colors sharp outlines studio ghibli inspired",
+                    "preserve_motion": True,
+                    "style_strength": 0.85,
+                },
+                "output_video": {"asset_id": "style_transfer_output", "uri": "placeholder", "format": "mp4"},
+            }
+        }
+        out = StyleTransferAgentOutput.model_validate(data)
+        evaluator = StyleTransferEvaluator()
+        errors = evaluator.check_structure(out)
+        assert errors == []
+
+    def test_evaluator_catches_empty_prompt(self):
+        from agents.style_transfer.schema import StyleTransferAgentOutput
+        from agents.style_transfer.evaluator import StyleTransferEvaluator
+        data = {
+            "content": {
+                "style_spec": {"style_description": "anime", "style_prompt": "", "style_strength": 0.8},
+                "output_video": {"asset_id": "style_transfer_output"},
+            }
+        }
+        out = StyleTransferAgentOutput.model_validate(data)
+        evaluator = StyleTransferEvaluator()
+        errors = evaluator.check_structure(out)
+        assert any("style_prompt" in e and "empty" in e for e in errors)
+
+    def test_evaluator_catches_wrong_asset_id(self):
+        from agents.style_transfer.schema import StyleTransferAgentOutput
+        from agents.style_transfer.evaluator import StyleTransferEvaluator
+        data = {
+            "content": {
+                "style_spec": {"style_description": "x", "style_prompt": "long enough prompt for the model", "style_strength": 0.8},
+                "output_video": {"asset_id": "wrong"},
+            }
+        }
+        out = StyleTransferAgentOutput.model_validate(data)
+        evaluator = StyleTransferEvaluator()
+        errors = evaluator.check_structure(out)
+        assert any("style_transfer_output" in e for e in errors)
+
+    def test_descriptor_build_input(self):
+        from agents.style_transfer.descriptor import build_input
+        resolved = {
+            "source_video": {"caption": "Source", "scope": "global", "path": "/tmp/src.mp4", "mime": "video/mp4", "payload": None},
+            "style_reference": {"caption": "Oil painting with warm tones", "scope": "global", "path": "/tmp/ref.jpg", "mime": "image/jpeg", "payload": None},
+        }
+        inp = build_input("task_001", resolved)
+        assert inp.source_video_path == "/tmp/src.mp4"
+        assert inp.style_reference_path == "/tmp/ref.jpg"
+        assert "Oil painting" in inp.style_description
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# InpaintAgent
+# ═══════════════════════════════════════════════════════════════════════════
+
+class TestInpaintAgent:
+    def test_schema_defaults(self):
+        from agents.inpaint.schema import InpaintAgentInput, InpaintAgentOutput
+        inp = InpaintAgentInput()
+        assert inp.mask_mode == "manual"
+        out = InpaintAgentOutput()
+        assert out.content.inpaint_spec.blend_edge_px == 8
+
+    def test_evaluator_passes_valid_output(self):
+        from agents.inpaint.schema import InpaintAgentOutput
+        from agents.inpaint.evaluator import InpaintEvaluator
+        data = {
+            "content": {
+                "inpaint_spec": {
+                    "mask_mode": "depth_background",
+                    "replacement_description": "Replace the background with a cyberpunk cityscape",
+                    "inpaint_prompt": "cyberpunk cityscape neon lights rain reflections night sky detailed buildings",
+                    "preserve_unmasked": True,
+                    "blend_edge_px": 12,
+                },
+                "output_video": {"asset_id": "inpaint_output", "uri": "placeholder"},
+            }
+        }
+        out = InpaintAgentOutput.model_validate(data)
+        evaluator = InpaintEvaluator()
+        errors = evaluator.check_structure(out)
+        assert errors == []
+
+    def test_evaluator_catches_invalid_mask_mode(self):
+        from agents.inpaint.schema import InpaintAgentOutput
+        from agents.inpaint.evaluator import InpaintEvaluator
+        data = {
+            "content": {
+                "inpaint_spec": {
+                    "mask_mode": "auto_magic",
+                    "replacement_description": "something",
+                    "inpaint_prompt": "long enough prompt for model",
+                },
+                "output_video": {"asset_id": "inpaint_output"},
+            }
+        }
+        out = InpaintAgentOutput.model_validate(data)
+        evaluator = InpaintEvaluator()
+        errors = evaluator.check_structure(out)
+        assert any("mask_mode" in e for e in errors)
+
+    def test_evaluator_all_four_mask_modes_valid(self):
+        from agents.inpaint.schema import InpaintAgentOutput
+        from agents.inpaint.evaluator import InpaintEvaluator
+        evaluator = InpaintEvaluator()
+        for mode in ("manual", "depth_foreground", "depth_background", "object_track"):
+            data = {
+                "content": {
+                    "inpaint_spec": {
+                        "mask_mode": mode,
+                        "replacement_description": "Replace with forest",
+                        "inpaint_prompt": "lush green forest sunlight through trees",
+                    },
+                    "output_video": {"asset_id": "inpaint_output"},
+                }
+            }
+            out = InpaintAgentOutput.model_validate(data)
+            errors = evaluator.check_structure(out)
+            mask_errors = [e for e in errors if "mask_mode" in e]
+            assert mask_errors == [], f"mask_mode={mode} should be valid"
+
+    def test_descriptor_build_input_depth_mode(self):
+        from agents.inpaint.descriptor import build_input
+        resolved = {
+            "source_video": {"caption": "Src", "scope": "global", "path": "/tmp/v.mp4", "mime": "video/mp4", "payload": None},
+            "mask": {"caption": "Replace background", "scope": "global", "path": "", "mime": "",
+                     "payload": {"mask_mode": "depth_background", "replacement_description": "sunset beach"}},
+        }
+        inp = build_input("task_001", resolved)
+        assert inp.mask_mode == "depth_background"
+        assert inp.replacement_description == "sunset beach"
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# VideoExtendAgent
+# ═══════════════════════════════════════════════════════════════════════════
+
+class TestVideoExtendAgent:
+    def test_schema_defaults(self):
+        from agents.video_extend.schema import VideoExtendAgentInput, VideoExtendAgentOutput
+        inp = VideoExtendAgentInput()
+        assert inp.source_video_path == ""
+        out = VideoExtendAgentOutput()
+        assert out.content.extension_spec.target_duration_seconds == 5.0
+
+    def test_evaluator_passes_valid_output(self):
+        from agents.video_extend.schema import VideoExtendAgentOutput
+        from agents.video_extend.evaluator import VideoExtendEvaluator
+        data = {
+            "content": {
+                "extension_spec": {
+                    "continuation_prompt": "The character turns and walks through the doorway into a brightly lit room",
+                    "target_duration_seconds": 5.0,
+                    "maintain_style": True,
+                    "motion_description": "Camera follows character through door, gentle push-in",
+                },
+                "output_video": {"asset_id": "video_extend_output", "uri": "placeholder"},
+            }
+        }
+        out = VideoExtendAgentOutput.model_validate(data)
+        evaluator = VideoExtendEvaluator()
+        errors = evaluator.check_structure(out)
+        assert errors == []
+
+    def test_evaluator_catches_excessive_duration(self):
+        from agents.video_extend.schema import VideoExtendAgentOutput
+        from agents.video_extend.evaluator import VideoExtendEvaluator
+        data = {
+            "content": {
+                "extension_spec": {
+                    "continuation_prompt": "A long continuation scene",
+                    "target_duration_seconds": 60.0,
+                    "motion_description": "Static camera",
+                },
+                "output_video": {"asset_id": "video_extend_output"},
+            }
+        }
+        out = VideoExtendAgentOutput.model_validate(data)
+        evaluator = VideoExtendEvaluator()
+        errors = evaluator.check_structure(out)
+        assert any("30s" in e for e in errors)
+
+    def test_evaluator_catches_empty_motion(self):
+        from agents.video_extend.schema import VideoExtendAgentOutput
+        from agents.video_extend.evaluator import VideoExtendEvaluator
+        data = {
+            "content": {
+                "extension_spec": {
+                    "continuation_prompt": "Character walks away from camera into the distance",
+                    "target_duration_seconds": 5.0,
+                    "motion_description": "",
+                },
+                "output_video": {"asset_id": "video_extend_output"},
+            }
+        }
+        out = VideoExtendAgentOutput.model_validate(data)
+        evaluator = VideoExtendEvaluator()
+        errors = evaluator.check_structure(out)
+        assert any("motion_description" in e for e in errors)
+
+    def test_descriptor_build_input(self):
+        from agents.video_extend.descriptor import build_input
+        resolved = {
+            "source_video": {
+                "caption": "Character stops at door",
+                "scope": "global", "path": "/tmp/clip.mp4", "mime": "video/mp4", "payload": None,
+            },
+        }
+        inp = build_input("task_001", resolved)
+        assert inp.source_video_path == "/tmp/clip.mp4"
+        assert "door" in inp.continuation_description
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# VideoAnalysisAgent
+# ═══════════════════════════════════════════════════════════════════════════
+
+class TestVideoAnalysisAgent:
+    def test_schema_defaults(self):
+        from agents.video_analysis.schema import VideoAnalysisAgentInput, VideoAnalysisAgentOutput
+        inp = VideoAnalysisAgentInput()
+        assert inp.source_video_path == ""
+        out = VideoAnalysisAgentOutput()
+        assert out.content.scenes == []
+
+    def test_evaluator_passes_valid_output(self):
+        from agents.video_analysis.schema import VideoAnalysisAgentOutput
+        from agents.video_analysis.evaluator import VideoAnalysisEvaluator
+        data = {
+            "content": {
+                "video_summary": {"title": "Morning Walk", "summary": "A person walks through a park at sunrise.", "genre": "documentary", "language": "en", "duration_seconds": 45.0},
+                "scenes": [
+                    {"scene_id": "scene_001", "start_time": 0.0, "end_time": 20.0, "description": "Wide shot of park at sunrise with dew on grass", "setting": "Park", "mood": "peaceful", "entities": ["person", "trees"]},
+                    {"scene_id": "scene_002", "start_time": 20.0, "end_time": 45.0, "description": "Close-up of person smiling", "setting": "Park bench", "mood": "happy", "entities": ["person"]},
+                ],
+            }
+        }
+        out = VideoAnalysisAgentOutput.model_validate(data)
+        evaluator = VideoAnalysisEvaluator()
+        errors = evaluator.check_structure(out)
+        assert errors == []
+
+    def test_evaluator_catches_overlapping_scenes(self):
+        from agents.video_analysis.schema import VideoAnalysisAgentOutput
+        from agents.video_analysis.evaluator import VideoAnalysisEvaluator
+        data = {
+            "content": {
+                "video_summary": {"title": "T", "summary": "S", "genre": "g"},
+                "scenes": [
+                    {"scene_id": "scene_001", "start_time": 0.0, "end_time": 20.0, "description": "A"},
+                    {"scene_id": "scene_002", "start_time": 15.0, "end_time": 30.0, "description": "B"},
+                ],
+            }
+        }
+        out = VideoAnalysisAgentOutput.model_validate(data)
+        evaluator = VideoAnalysisEvaluator()
+        errors = evaluator.check_structure(out)
+        assert any("overlaps" in e for e in errors)
+
+    def test_evaluator_catches_non_increasing_scene_ids(self):
+        from agents.video_analysis.schema import VideoAnalysisAgentOutput
+        from agents.video_analysis.evaluator import VideoAnalysisEvaluator
+        data = {
+            "content": {
+                "video_summary": {"title": "T", "summary": "S", "genre": "g"},
+                "scenes": [
+                    {"scene_id": "scene_002", "start_time": 0.0, "end_time": 10.0, "description": "A"},
+                    {"scene_id": "scene_001", "start_time": 10.0, "end_time": 20.0, "description": "B"},
+                ],
+            }
+        }
+        out = VideoAnalysisAgentOutput.model_validate(data)
+        evaluator = VideoAnalysisEvaluator()
+        errors = evaluator.check_structure(out)
+        assert any("increasing" in e for e in errors)
+
+    def test_descriptor_build_input(self):
+        from agents.video_analysis.descriptor import build_input
+        resolved = {
+            "source_video": {"caption": "Video", "scope": "global", "path": "/tmp/video.mp4", "mime": "video/mp4", "payload": None},
+        }
+        inp = build_input("task_001", resolved)
+        assert inp.source_video_path == "/tmp/video.mp4"
+
+    def test_descriptor_build_captions(self):
+        from agents.video_analysis.descriptor import build_captions
+        output_dict = {
+            "content": {
+                "video_summary": {"title": "City Walk", "genre": "vlog"},
+                "scenes": [{"scene_id": "scene_001"}, {"scene_id": "scene_002"}],
+            }
+        }
+        caps = build_captions("VideoAnalysisAgent", output_dict)
+        assert "City Walk" in caps["VideoAnalysisAgent"]["caption"]
+        assert "2 scene(s)" in caps["VideoAnalysisAgent"]["caption"]
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# HighlightAgent
+# ═══════════════════════════════════════════════════════════════════════════
+
+class TestHighlightAgent:
+    def test_schema_defaults(self):
+        from agents.highlight.schema import HighlightAgentInput, HighlightAgentOutput
+        inp = HighlightAgentInput()
+        assert inp.criteria == ""
+        out = HighlightAgentOutput()
+        assert out.content.clips == []
+
+    def test_evaluator_passes_valid_output(self):
+        from agents.highlight.schema import HighlightAgentOutput
+        from agents.highlight.evaluator import HighlightEvaluator
+        data = {
+            "content": {
+                "criteria": "most visually interesting moments",
+                "clips": [
+                    {"clip_id": "clip_001", "start_time": 5.0, "end_time": 12.0, "reason": "Beautiful sunrise shot", "score": 0.95},
+                    {"clip_id": "clip_002", "start_time": 30.0, "end_time": 38.0, "reason": "Dynamic action sequence", "score": 0.88},
+                ],
+                "compiled_video": {"asset_id": "highlight_reel", "uri": "placeholder"},
+            }
+        }
+        out = HighlightAgentOutput.model_validate(data)
+        evaluator = HighlightEvaluator()
+        errors = evaluator.check_structure(out)
+        assert errors == []
+
+    def test_evaluator_catches_overlapping_clips(self):
+        from agents.highlight.schema import HighlightAgentOutput
+        from agents.highlight.evaluator import HighlightEvaluator
+        data = {
+            "content": {
+                "criteria": "best",
+                "clips": [
+                    {"clip_id": "clip_001", "start_time": 5.0, "end_time": 15.0, "reason": "A", "score": 0.9},
+                    {"clip_id": "clip_002", "start_time": 10.0, "end_time": 20.0, "reason": "B", "score": 0.8},
+                ],
+                "compiled_video": {"asset_id": "highlight_reel"},
+            }
+        }
+        out = HighlightAgentOutput.model_validate(data)
+        evaluator = HighlightEvaluator()
+        errors = evaluator.check_structure(out)
+        assert any("overlaps" in e for e in errors)
+
+    def test_evaluator_catches_too_short_clip(self):
+        from agents.highlight.schema import HighlightAgentOutput
+        from agents.highlight.evaluator import HighlightEvaluator
+        data = {
+            "content": {
+                "criteria": "best",
+                "clips": [
+                    {"clip_id": "clip_001", "start_time": 5.0, "end_time": 5.5, "reason": "Quick", "score": 0.7},
+                ],
+                "compiled_video": {"asset_id": "highlight_reel"},
+            }
+        }
+        out = HighlightAgentOutput.model_validate(data)
+        evaluator = HighlightEvaluator()
+        errors = evaluator.check_structure(out)
+        assert any("short" in e for e in errors)
+
+    def test_descriptor_build_captions(self):
+        from agents.highlight.descriptor import build_captions
+        output_dict = {
+            "content": {
+                "criteria": "action scenes",
+                "clips": [
+                    {"start_time": 5.0, "end_time": 15.0},
+                    {"start_time": 30.0, "end_time": 40.0},
+                ],
+            }
+        }
+        caps = build_captions("HighlightAgent", output_dict)
+        assert "2 clip(s)" in caps["HighlightAgent"]["caption"]
+        assert "20.0s" in caps["HighlightAgent"]["caption"]
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# VoiceCloneAgent
+# ═══════════════════════════════════════════════════════════════════════════
+
+class TestVoiceCloneAgent:
+    def test_schema_defaults(self):
+        from agents.voice_clone.schema import VoiceCloneAgentInput, VoiceCloneAgentOutput
+        inp = VoiceCloneAgentInput()
+        assert inp.reference_audio_path == ""
+        out = VoiceCloneAgentOutput()
+        assert out.content.segments == []
+
+    def test_evaluator_passes_valid_output(self):
+        from agents.voice_clone.schema import VoiceCloneAgentOutput
+        from agents.voice_clone.evaluator import VoiceCloneEvaluator
+        data = {
+            "content": {
+                "voice_profile": {
+                    "voice_id": "voice_001",
+                    "description": "Deep male voice with warm tone",
+                    "gender": "male",
+                    "age_range": "adult",
+                    "tone": "warm, deep, resonant",
+                },
+                "segments": [
+                    {"segment_id": "vc_seg_001", "text": "Hello everyone, welcome.", "audio_asset_id": "vc_aud_001", "uri": "placeholder"},
+                    {"segment_id": "vc_seg_002", "text": "Today we will explore something new.", "audio_asset_id": "vc_aud_002", "uri": "placeholder"},
+                ],
+                "final_audio": {"asset_id": "vc_final", "uri": "placeholder", "format": "wav"},
+            }
+        }
+        out = VoiceCloneAgentOutput.model_validate(data)
+        evaluator = VoiceCloneEvaluator()
+        errors = evaluator.check_structure(out)
+        assert errors == []
+
+    def test_evaluator_catches_invalid_gender(self):
+        from agents.voice_clone.schema import VoiceCloneAgentOutput
+        from agents.voice_clone.evaluator import VoiceCloneEvaluator
+        data = {
+            "content": {
+                "voice_profile": {"voice_id": "voice_001", "description": "A voice", "gender": "unknown"},
+                "segments": [{"segment_id": "vc_seg_001", "text": "Hi", "audio_asset_id": "vc_aud_001"}],
+                "final_audio": {"asset_id": "vc_final"},
+            }
+        }
+        out = VoiceCloneAgentOutput.model_validate(data)
+        evaluator = VoiceCloneEvaluator()
+        errors = evaluator.check_structure(out)
+        assert any("gender" in e for e in errors)
+
+    def test_evaluator_catches_non_increasing_segment_ids(self):
+        from agents.voice_clone.schema import VoiceCloneAgentOutput
+        from agents.voice_clone.evaluator import VoiceCloneEvaluator
+        data = {
+            "content": {
+                "voice_profile": {"voice_id": "voice_001", "description": "Voice", "gender": "female"},
+                "segments": [
+                    {"segment_id": "vc_seg_002", "text": "First", "audio_asset_id": "vc_aud_002"},
+                    {"segment_id": "vc_seg_001", "text": "Second", "audio_asset_id": "vc_aud_001"},
+                ],
+                "final_audio": {"asset_id": "vc_final"},
+            }
+        }
+        out = VoiceCloneAgentOutput.model_validate(data)
+        evaluator = VoiceCloneEvaluator()
+        errors = evaluator.check_structure(out)
+        assert any("increasing" in e for e in errors)
+
+    def test_evaluator_catches_wrong_final_asset_id(self):
+        from agents.voice_clone.schema import VoiceCloneAgentOutput
+        from agents.voice_clone.evaluator import VoiceCloneEvaluator
+        data = {
+            "content": {
+                "voice_profile": {"voice_id": "voice_001", "description": "Voice", "gender": "male"},
+                "segments": [{"segment_id": "vc_seg_001", "text": "Hi", "audio_asset_id": "vc_aud_001"}],
+                "final_audio": {"asset_id": "wrong"},
+            }
+        }
+        out = VoiceCloneAgentOutput.model_validate(data)
+        evaluator = VoiceCloneEvaluator()
+        errors = evaluator.check_structure(out)
+        assert any("vc_final" in e for e in errors)
+
+    def test_descriptor_build_input(self):
+        from agents.voice_clone.descriptor import build_input
+        resolved = {
+            "reference_audio": {"caption": "Voice sample", "scope": "global", "path": "/tmp/ref.wav", "mime": "audio/wav", "payload": None},
+            "transcript": {"caption": "Script", "scope": "global", "path": "", "mime": "application/json", "payload": {"text": "Hello world"}},
+        }
+        inp = build_input("task_001", resolved)
+        assert inp.reference_audio_path == "/tmp/ref.wav"
+        assert "Hello world" in inp.transcript_json_text
+
+    def test_descriptor_build_captions(self):
+        from agents.voice_clone.descriptor import build_captions
+        output_dict = {
+            "content": {
+                "voice_profile": {"gender": "female", "tone": "bright, clear"},
+                "segments": [{"segment_id": "s1"}, {"segment_id": "s2"}, {"segment_id": "s3"}],
+            }
+        }
+        caps = build_captions("VoiceCloneAgent", output_dict)
+        assert "female" in caps["VoiceCloneAgent"]["caption"]
+        assert "3 segment(s)" in caps["VoiceCloneAgent"]["caption"]
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Cross-agent registry check
+# ═══════════════════════════════════════════════════════════════════════════
+
+class TestNewAgentsInRegistry:
+    """Verify all 10 new agents are properly registered."""
+
+    EXPECTED_NEW_AGENTS = [
+        "TranslationAgent",
+        "SubtitleAgent",
+        "TranscriptionAgent",
+        "CompositorAgent",
+        "StyleTransferAgent",
+        "InpaintAgent",
+        "VideoExtendAgent",
+        "VideoAnalysisAgent",
+        "HighlightAgent",
+        "VoiceCloneAgent",
+    ]
+
+    def test_all_new_agents_in_registry(self):
+        from agents import AGENT_REGISTRY
+        for agent_id in self.EXPECTED_NEW_AGENTS:
+            assert agent_id in AGENT_REGISTRY, f"{agent_id} missing from AGENT_REGISTRY"
+
+    def test_all_new_agents_have_catalog_entry(self):
+        from agents import AGENT_REGISTRY
+        for agent_id in self.EXPECTED_NEW_AGENTS:
+            desc = AGENT_REGISTRY[agent_id]
+            assert desc.catalog_entry, f"{agent_id} has empty catalog_entry"
+            assert agent_id in desc.catalog_entry
+
+    def test_all_new_agents_have_input_needs_description(self):
+        from agents import AGENT_REGISTRY
+        for agent_id in self.EXPECTED_NEW_AGENTS:
+            desc = AGENT_REGISTRY[agent_id]
+            assert desc.input_needs_description, f"{agent_id} has empty input_needs_description"
+
+    def test_all_new_descriptors_use_resolved_artifacts(self):
+        """Ensure new agents follow the resolved_artifacts convention."""
+        import inspect
+        from agents import AGENT_REGISTRY
+        for agent_id in self.EXPECTED_NEW_AGENTS:
+            desc = AGENT_REGISTRY[agent_id]
+            sig = inspect.signature(desc.build_input)
+            params = list(sig.parameters.keys())
+            assert len(params) >= 2, f"{agent_id}.build_input needs at least 2 params"
+
+    def test_total_registry_count(self):
+        from agents import AGENT_REGISTRY
+        assert len(AGENT_REGISTRY) >= 23, f"Expected >=23 agents, got {len(AGENT_REGISTRY)}"

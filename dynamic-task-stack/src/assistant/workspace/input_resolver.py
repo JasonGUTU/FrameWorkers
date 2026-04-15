@@ -75,7 +75,7 @@ class InputResolver:
     resolver = InputResolver(global_memory, file_manager, llm_client)
     resolved = resolver.resolve(
         agent_id="VideoAgent",
-        task_id="task_1_xxx",
+        step_id="task_1_xxx",
         input_needs_description=\"""
             [screenplay] (single)
             The unified screenplay document...
@@ -112,7 +112,7 @@ class InputResolver:
         self,
         *,
         agent_id: str,
-        task_id: str,
+        step_id: str,
         input_needs_description: str,
         model: Optional[str] = None,
     ) -> Dict[str, Any]:
@@ -129,12 +129,12 @@ class InputResolver:
               "rationale": "...",
             }
         """
-        captions_index, id_to_path = self._memory.get_captions_index(task_id=task_id)
+        captions_index, id_to_path = self._memory.get_captions_index(step_id=step_id)
 
         if not id_to_path:
             logger.info(
                 "[InputResolver] No artifacts registered for task %s — cold start",
-                task_id,
+                step_id,
             )
             return {
                 "resolved_artifacts": {},
@@ -241,7 +241,7 @@ class InputResolver:
 
         logger.info(
             "[InputResolver] LLM response for %s: %s",
-            agent_id, json.dumps(parsed, ensure_ascii=False)[:500],
+            agent_id, json.dumps(parsed, ensure_ascii=False),
         )
         logger.debug(
             "[InputResolver] full prompt for %s:\n%s", agent_id, user_prompt,
