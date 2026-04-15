@@ -3,7 +3,7 @@
 #   python install_requirements.py
 # (creates conda env "frameworkers" if missing, then pip-installs from this file)
 
-# Flask backend (dynamic-task-stack)
+# Flask backend (plan-stack-backend)
 Flask==3.0.0
 flask-cors==4.0.0
 

@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 def test_service_has_no_legacy_input_fallbacks() -> None:
-    svc = Path("dynamic-task-stack/src/assistant/service.py").read_text(encoding="utf-8")
+    svc = Path("plan-stack-backend/src/assistant/service.py").read_text(encoding="utf-8")
     # "selected_roles" is part of the new mandatory LLM input planner contract.
     assert "\"pipeline_bundle\"" not in svc
     assert "inputs.get(\"assets\")" not in svc

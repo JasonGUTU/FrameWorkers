@@ -40,7 +40,7 @@ from datetime import datetime
 from pathlib import Path
 
 _REPO = Path(__file__).resolve().parents[1]
-_PKG = _REPO / "dynamic-task-stack"
+_PKG = _REPO / "plan-stack-backend"
 for p in (_REPO, _PKG):
     if str(p) not in sys.path:
         sys.path.insert(0, str(p))

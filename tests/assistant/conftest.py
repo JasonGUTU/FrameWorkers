@@ -14,9 +14,9 @@ from types import SimpleNamespace
 
 import pytest
 
-# Make `dynamic-task-stack/src` package importable.
+# Make `plan-stack-backend/src` package importable.
 _repo_root = Path(__file__).resolve().parents[2]
-_pkg_root = _repo_root / "dynamic-task-stack"
+_pkg_root = _repo_root / "plan-stack-backend"
 if str(_pkg_root) not in sys.path:
     sys.path.insert(0, str(_pkg_root))
 

@@ -54,7 +54,7 @@ class MaterializeContext:
     Passed to ``BaseAgent.run()`` when the caller supports media persistence.
     When ``None``, materialization and L3 asset evaluation are skipped —
     this allows the same agent to run in environments without file I/O
-    (e.g. ``dynamic-task-stack``).
+    (e.g. ``plan-stack-backend``).
 
     Attributes:
         step_id:           Current task identifier (same scope as Task Stack ``step_id``).

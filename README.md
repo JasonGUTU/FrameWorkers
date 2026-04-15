@@ -19,7 +19,7 @@ cd interface && npm install
 
 ```bash
 # Backend (port 5002)
-cd dynamic-task-stack && python run.py
+cd plan-stack-backend && python run.py
 
 # Director (新终端)
 cd director_agent && python run.py

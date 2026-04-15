@@ -94,7 +94,7 @@ _FORBIDDEN_DEAD_SYMBOLS = (
 def test_dead_round1_symbols_never_resurface():
     targets = _all_python_files(
         _REPO / "agents",
-        _REPO / "dynamic-task-stack" / "src",
+        _REPO / "plan-stack-backend" / "src",
         _REPO / "inference",
         _REPO / "director_agent",
         _REPO / "scripts",
@@ -229,10 +229,10 @@ _ASSISTANT_HARD_CODE_AGENTS = (
 
 def test_assistant_layer_has_no_agent_id_hardcodes():
     assistant_files = (
-        _REPO / "dynamic-task-stack" / "src" / "assistant" / "service.py",
-        _REPO / "dynamic-task-stack" / "src" / "assistant" / "routes.py",
-        _REPO / "dynamic-task-stack" / "src" / "assistant" / "workspace" / "artifact_writer.py",
-        _REPO / "dynamic-task-stack" / "src" / "assistant" / "workspace" / "workspace.py",
+        _REPO / "plan-stack-backend" / "src" / "assistant" / "service.py",
+        _REPO / "plan-stack-backend" / "src" / "assistant" / "routes.py",
+        _REPO / "plan-stack-backend" / "src" / "assistant" / "workspace" / "artifact_writer.py",
+        _REPO / "plan-stack-backend" / "src" / "assistant" / "workspace" / "workspace.py",
     )
     pattern = re.compile(
         r'agent_id\s*==\s*["\'](?P<name>\w+Agent)["\']'
@@ -256,7 +256,7 @@ def test_assistant_does_not_import_agent_specific_modules():
     (e.g. ``agents.keyframe.manifest``). Agent-specific knowledge ships
     via descriptors / output_manifests, not via direct imports."""
     assistant_files = list(
-        (_REPO / "dynamic-task-stack" / "src" / "assistant").rglob("*.py")
+        (_REPO / "plan-stack-backend" / "src" / "assistant").rglob("*.py")
     )
     forbidden_re = re.compile(
         r"^\s*from\s+agents\.(?P<mod>\w+)(?:\.\w+)*\s+import",
@@ -299,7 +299,7 @@ def test_all_four_intake_agents_registered():
 
 def test_workspace_upload_route_is_registered():
     routes_src = _read(
-        _REPO / "dynamic-task-stack" / "src" / "assistant" / "routes.py"
+        _REPO / "plan-stack-backend" / "src" / "assistant" / "routes.py"
     )
     assert "/api/workspace/upload" in routes_src
     assert "def upload_user_file" in routes_src
@@ -307,7 +307,7 @@ def test_workspace_upload_route_is_registered():
 
 def test_workspace_persist_raw_upload_exists():
     src = _read(
-        _REPO / "dynamic-task-stack" / "src" / "assistant" / "workspace" / "workspace.py"
+        _REPO / "plan-stack-backend" / "src" / "assistant" / "workspace" / "workspace.py"
     )
     assert "def persist_raw_upload(" in src
     # The placeholder caption convention must be present:

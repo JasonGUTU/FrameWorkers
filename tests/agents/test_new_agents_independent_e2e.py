@@ -28,7 +28,7 @@ from pathlib import Path
 import pytest
 
 _repo_root = Path(__file__).resolve().parents[2]
-_pkg_root = _repo_root / "dynamic-task-stack"
+_pkg_root = _repo_root / "plan-stack-backend"
 for p in [str(_repo_root), str(_pkg_root)]:
     if p not in sys.path:
         sys.path.insert(0, p)

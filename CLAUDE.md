@@ -42,7 +42,7 @@ FrameWorkers/
 │   ├── audio/               # 同上
 │   ├── intake/              # 4 个 raw upload → caption-rich artifact 的 intake agent（text/image/video/audio）
 │   └── univa_{keyframe,storyboard,video}/  # 本项目自研的 univa 系列 agent（与 references/univa/ 零代码依赖，仅命名致敬）
-├── dynamic-task-stack/      # Flask 后端：Plan Stack + Assistant (顶层目录名 legacy，内部 plan_stack/ 已改对)
+├── plan-stack-backend/      # Flask 后端：Plan Stack + Assistant
 │   ├── run.py               # 入口（默认 5002）
 │   └── src/
 │       ├── app.py           # Flask app factory
@@ -68,7 +68,7 @@ FrameWorkers/
 
 ## 关键工作流入口
 
-- **启动后端**：`cd dynamic-task-stack && python run.py`（端口 5002）
+- **启动后端**：`cd plan-stack-backend && python run.py`（端口 5002）
 - **启动 director**：`cd director_agent && python run.py`
 - **前端**：`cd interface && npm run dev`
 - **核心回归**：`bash tests/run_core_tests.sh`
@@ -80,7 +80,7 @@ FrameWorkers/
 2. **统一格式**：跨 agent 数据契约就是 `descriptor.build_input(step_id, resolved_artifacts)` 这一个函数签名 —— `resolved_artifacts` 由 `InputResolver` 输出，类型是 `dict[label_name, ResolvedArtifactEntry | list[ResolvedArtifactEntry]]`。`ResolvedArtifactEntry`（见 `agents/common_schema.py`）字段固定为 `{caption, scope, path, mime, payload?}`，`(single)` label 映射到一个 entry，`(collection)` label 映射到 entry 列表。要给 entry 加字段？只改 `common_schema.py` 的 `ResolvedArtifactEntry` 一处；要加一个 **新 channel**（新的 `build_input` 参数）才需要改 13 处 descriptor 签名——这种 cross-cutting 改动本来就应该在 PR review 里显眼。不要在 agent 内部自造对外结构。
 3. **不在 assistant 层硬编码 agent 逻辑**：assistant 只负责调度与 workspace 落盘；任何 agent 特定的处理必须放在 agent 自己的 descriptor / materializer 里。
 4. **新 agent 注册**：写完后必须在 `agents/__init__.py` 的 `AGENT_REGISTRY` 登记 `DESCRIPTOR`，否则不会被发现。
-5. **HTTP 层**：`plan_stack`（URL 对外 `/api/plan-stack`）和 `assistant` 路由共用 `dynamic-task-stack/src/common_http.py` + `api_serialize.serialize_for_api`，不要在 routes 里重复写校验/序列化。
+5. **HTTP 层**：`plan_stack`（URL 对外 `/api/plan-stack`）和 `assistant` 路由共用 `plan-stack-backend/src/common_http.py` + `api_serialize.serialize_for_api`，不要在 routes 里重复写校验/序列化。
 6. **Workspace 单例**：所有 sub-agent 共享一个 workspace（`file_manager` / `global_memory` / `log_manager` / `artifact_writer` / `input_resolver`），不要绕开它直写磁盘。
 7. **对内严控，对外宽进（Postel's Law at the agent layer）**：每个 agent 对**自己的** output schema 严格维护（Pydantic + evaluator），这些 schema 服务的是 agent 自己的评估、持久化、materialization。但是**读上游产物时零假设**：`build_input` 默认应把 `resolved_artifacts[label].payload` 作为 **JSON 文本**透传（`json.dumps(payload, ensure_ascii=False, indent=2)` 塞进 typed_input 的某个 `*_json_text: str` 字段），让 agent 自己的 LLM 从 prompt 里读这段文本、理解上游形状并生成自己的输出。**不要**在 `build_input` 或 agent 代码里写 `payload.get("content").get("scene_outline")` 这种字符串 key 访问 —— 它把上游 schema 的内部字段名硬编码进下游，造成 O(N×M) 的隐性耦合，而且上游漂移后只会静默降级为空 list 而不是报错。**跨 agent 的结构约定（例如 `prop_id = prop_NNN`、`keyframe_count == 1`、`shot_id = sh_NNN` 格式）是 producer 的义务，但是由 LLM 直接产出 + evaluator 捕获 drift + rework 修正**：在 producer 的 user-message template + `system_prompt` 里把格式明确要求出来，在 evaluator 的 `check_structure` 里加格式 / 序号 / count 的正则或相等检查，让 drift 触发 rework。**不要**在 `recompute_metrics` 里"悄悄修正" LLM 输出（那是 silent override，会让真实的 drift 被屏蔽），**也不要**在 consumer 侧做 defensive parse。`recompute_metrics` 只做**纯派生** —— 把 count / sum / 分类统计这种 LLM 从未被要求写（user-message template 里根本不展示的）字段填上。现成参考：`agents/screenplay/descriptor.py` 的 `build_input` + `agents/screenplay/agent.py` 的 `system_prompt` / `SCREENPLAY_OUTPUT_TEMPLATE` / `recompute_metrics` + `agents/screenplay/evaluator.py` 的 `check_structure`（Story → Screenplay 边是这条原则的落地范本）。
 

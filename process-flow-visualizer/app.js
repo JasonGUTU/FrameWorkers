@@ -277,7 +277,7 @@ function render() {
   taskStackEl.outerHTML = sectionCard(
     "card-orange", "📋",
     "Dynamic Plan Stack — Director 集成",
-    "dynamic-task-stack/  ·  Roadmap 01",
+    "plan-stack-backend/  ·  Roadmap 01",
     `<div style="display:inline-block;background:rgba(255,160,40,0.15);border:1px solid rgba(255,160,40,0.4);color:#f0a040;font-size:0.78em;font-weight:600;letter-spacing:.08em;padding:3px 10px;border-radius:4px;margin-bottom:18px">TODO</div>
     <div style="display:flex;flex-direction:column;gap:12px;font-size:0.88em;color:#ccc;line-height:1.7">
       <div>

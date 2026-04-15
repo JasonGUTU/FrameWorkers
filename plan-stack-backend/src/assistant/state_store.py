@@ -27,7 +27,7 @@ class AssistantStateStore:
                 If None, tries to find project root automatically.
         """
         if runtime_base_path is None:
-            # dynamic-task-stack/src/assistant/state_store.py -> FrameWorkers/
+            # plan-stack-backend/src/assistant/state_store.py -> FrameWorkers/
             current_file = Path(__file__)
             project_root = current_file.parent.parent.parent.parent
             runtime_base_path = project_root / "_workspaces"
