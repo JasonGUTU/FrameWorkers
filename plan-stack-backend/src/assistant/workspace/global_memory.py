@@ -57,24 +57,25 @@ class GlobalMemory:
     ``GlobalMemoryEntry`` objects (one element per execution).
 
     Each ``register()`` call rewrites the file with the appended entry.
-    Re-execution of the same ``(task, agent)`` is handled by
+    Re-execution of the same ``agent_id`` (on any step) is handled by
     ``ArtifactWriter._purge_all_for_producer`` calling ``prune_by_paths``
     to wipe stale rows before the new run writes.
 
     Public API
     ----------
     register(execution_id, agent_id, step_id, artifacts)
-        Append a new entry and return it.
+        Append a new entry and return it. ``step_id`` is recorded for
+        traceability but not used as a scoping key for lookups.
     list_all() -> list[GlobalMemoryEntry]
         Return all entries (chronological order).
-    get_captions_index(step_id=None) -> str
+    get_captions_index() -> (str, list[str])
         Per-artifact LLM-readable index for InputResolver prompts.
     get_by_paths(paths) -> list[ArtifactRef]
         Look up ArtifactRef objects by file path.
-    find_by_producer(step_id, agent_id) -> list[ArtifactRef]
-        Every ref this producer wrote on this task (for dedup).
-    has_producer_run(step_id, agent_id) -> bool
-        True iff the producer has any registered entry on this task.
+    find_by_producer(agent_id) -> list[ArtifactRef]
+        Every ref this producer wrote (any step) — used for dedup.
+    has_producer_run(agent_id) -> bool
+        True iff the producer has any registered entry.
     prune_by_paths(paths) -> int
         Remove ArtifactRefs whose path is in ``paths``; entries that
         become empty are removed entirely.
@@ -299,30 +300,32 @@ class GlobalMemory:
     def find_by_producer(
         self,
         *,
-        step_id: str,
         agent_id: str,
     ) -> List[ArtifactRef]:
-        """Return every ArtifactRef registered by ``agent_id`` on ``step_id``.
+        """Return every ArtifactRef registered by ``agent_id`` (any step).
 
         Used by ArtifactWriter overwrite-mode dedup to locate every prior
-        artifact this producer wrote on this task — across binary, manifest
-        and json_snapshot — so they can be wiped before the new run writes.
+        artifact this producer wrote — across binary, manifest and
+        json_snapshot — so they can be wiped before the new run writes.
+        ``step_id`` is intentionally NOT part of the key: a replan or a
+        new user turn produces fresh step_ids, but re-running the same
+        agent should still garbage-collect its earlier outputs.
         """
         result: List[ArtifactRef] = []
         for entry in self._read_all():
-            if entry.step_id != step_id or entry.agent_id != agent_id:
+            if entry.agent_id != agent_id:
                 continue
             result.extend(entry.artifacts)
         return result
 
-    def has_producer_run(self, *, step_id: str, agent_id: str) -> bool:
-        """True if any registered entry was produced by ``agent_id`` on ``step_id``.
+    def has_producer_run(self, *, agent_id: str) -> bool:
+        """True if any registered entry was produced by ``agent_id`` (any step).
 
         Used by AssistantService to auto-flip overwrite mode when an agent
-        re-runs on a task it has already executed against.
+        re-runs (regardless of whether it is the same PlanStep or a fresh one).
         """
         for entry in self._read_all():
-            if entry.step_id == step_id and entry.agent_id == agent_id:
+            if entry.agent_id == agent_id:
                 return True
         return False
 
@@ -348,10 +351,14 @@ class GlobalMemory:
             self._write_all(kept_entries)
         return removed_refs
 
-    def get_captions_index(
-        self, *, step_id: Optional[str] = None,
-    ) -> tuple[str, List[str]]:
+    def get_captions_index(self) -> tuple[str, List[str]]:
         """Return ``(index_text, path_list)`` for InputResolver.
+
+        Every registered artifact is exposed — downstream InputResolver's
+        LLM decides relevance from the captions alone. There is intentionally
+        no step / session scoping: upstream producers (e.g. StoryAgent) and
+        the current consumer (e.g. KeyFrameAgent) live on different step_ids,
+        so filtering by step_id would hide inputs from the resolver.
 
         ``index_text`` is the LLM-readable caption index with ``#N`` ids.
         ``path_list`` maps each ``#N`` back to the absolute filesystem path.
@@ -364,13 +371,7 @@ class GlobalMemory:
             #1  Character reference image for char_001 (global identity
             anchor). Produced by KeyFrameAgent on 2026-04-05 13:45.
         """
-        entries = self._read_all()
-        if step_id:
-            entries = [
-                e for e in entries
-                if e.step_id == step_id or not e.step_id
-            ]
-        return self._render_captions_index(entries)
+        return self._render_captions_index(self._read_all())
 
     @staticmethod
     def _render_captions_index(

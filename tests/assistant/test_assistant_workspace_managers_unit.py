@@ -132,10 +132,10 @@ def test_global_memory_find_by_producer_and_has_run(tmp_path):
         step_id="task_1",
         artifacts=[_make_ref("/p/b.json")],
     )
-    refs = mem.find_by_producer(step_id="task_1", agent_id="StoryAgent")
+    refs = mem.find_by_producer(agent_id="StoryAgent")
     assert {r.path for r in refs} == {"/p/a.json", "/p/b.json"}
-    assert mem.has_producer_run(step_id="task_1", agent_id="StoryAgent") is True
-    assert mem.has_producer_run(step_id="task_1", agent_id="OtherAgent") is False
+    assert mem.has_producer_run(agent_id="StoryAgent") is True
+    assert mem.has_producer_run(agent_id="OtherAgent") is False
 
 
 def test_global_memory_prune_by_paths_removes_refs_and_empty_entries(tmp_path):

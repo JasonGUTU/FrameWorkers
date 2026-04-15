@@ -129,11 +129,11 @@ class InputResolver:
               "rationale": "...",
             }
         """
-        captions_index, id_to_path = self._memory.get_captions_index(step_id=step_id)
+        captions_index, id_to_path = self._memory.get_captions_index()
 
         if not id_to_path:
             logger.info(
-                "[InputResolver] No artifacts registered for task %s — cold start",
+                "[InputResolver] No artifacts registered (step %s) — cold start",
                 step_id,
             )
             return {

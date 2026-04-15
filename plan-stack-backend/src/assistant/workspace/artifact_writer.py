@@ -70,8 +70,8 @@ class ArtifactWriter:
         self._on_change = on_change
         # register_artifacts(execution, artifact_refs) — called after persistence
         self._register_artifacts = register_artifacts
-        # find_artifact_refs_for_producer(step_id, agent_id) → list[ArtifactRef]
-        # of every prior file this producer wrote on this task.
+        # find_artifact_refs_for_producer(agent_id) → list[ArtifactRef]
+        # of every prior file this producer wrote (any step).
         self._find_artifact_refs_for_producer = find_artifact_refs_for_producer
         # delete_file_at_path(absolute_path) → bool. Used to unlink old files.
         self._delete_file_at_path = delete_file_at_path
@@ -170,7 +170,7 @@ class ArtifactWriter:
                 ArtifactWriter._rewrite_asset_uris_with_persisted_paths(item, persisted_media_paths)
 
     def _purge_all_for_producer(self, execution: Any) -> None:
-        """Wipe every prior file + registry row for this ``(task, agent)``.
+        """Wipe every prior file + registry row for this ``agent_id``.
 
         Called once at the top of ``persist_execution_from_plan`` when
         ``overwrite_existing`` is true. Coarse on purpose: this is the only
@@ -178,6 +178,9 @@ class ArtifactWriter:
         the new run no longer produces. The new run then writes its
         outputs normally; ``Path.write_bytes`` would naturally overwrite
         any survivors, but with this wipe-first model there are none.
+        Scoped to ``agent_id`` only (not the current ``step_id``) so that
+        replanned / new-turn executions of the same agent still GC their
+        prior outputs.
         """
         if (
             self._find_artifact_refs_for_producer is None
@@ -187,7 +190,6 @@ class ArtifactWriter:
             return
         try:
             matches = self._find_artifact_refs_for_producer(
-                step_id=execution.step_id,
                 agent_id=execution.agent_id,
             )
         except Exception as exc:

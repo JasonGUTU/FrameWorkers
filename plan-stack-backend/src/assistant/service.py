@@ -215,11 +215,13 @@ class AssistantService:
         )
         return resolved
 
-    def _has_existing_assets(self, *, step_id: str, agent_id: str) -> bool:
-        """True if this agent has already produced any artifact for the task."""
-        return self.workspace.global_memory.has_producer_run(
-            step_id=step_id, agent_id=agent_id,
-        )
+    def _has_existing_assets(self, *, agent_id: str) -> bool:
+        """True if this agent has already produced any artifact (any step).
+
+        Scoped on ``agent_id`` alone so that cross-turn / replan re-runs of
+        the same agent still auto-flip overwrite mode and GC prior outputs.
+        """
+        return self.workspace.global_memory.has_producer_run(agent_id=agent_id)
 
     def execute_agent(
         self,
@@ -471,7 +473,7 @@ class AssistantService:
         """
         # Prepare environment
         workspace = self.prepare_environment()
-        auto_overwrite = self._has_existing_assets(step_id=step_id, agent_id=agent_id)
+        auto_overwrite = self._has_existing_assets(agent_id=agent_id)
         overwrite_existing_assets = auto_overwrite
 
         # 1) Build inputs (step_id + resolved_artifacts)
