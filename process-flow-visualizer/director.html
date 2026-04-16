@@ -219,7 +219,7 @@
           </div>
         </div>
 
-        <h3>③ Eval GT 微调 (tests/director_agent/eval_cases.json)</h3>
+        <h3>③ Eval GT 微调 (evals/director_routing/eval_cases.json)</h3>
         <ul style="color:#bbb;font-size:.9em;margin:6px 0 0 20px">
           <li>edge case 非空输入: <code>[done]</code> → <code>[IntakeTextAgent, done]</code>（baseline → descriptor_v2 之间）</li>
           <li>其他 GT（91 条链 prepend IntakeText、intake_txt 去 BriefEnricher）在 baseline 之前就已定型</li>
@@ -590,7 +590,7 @@
     try {
       const files = await discoverRuns();
       if (!files.length) {
-        loadingEl.innerHTML = 'No eval runs found. Run <code>PYTHONPATH=. python tests/director_agent/eval_routing.py</code>';
+        loadingEl.innerHTML = 'No eval runs found. Run <code>PYTHONPATH=. python evals/director_routing/eval_routing.py</code>';
         return;
       }
 

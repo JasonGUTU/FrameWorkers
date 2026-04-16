@@ -1,6 +1,6 @@
 # director_agent 路由评测用例
 
-> Source: `tests/director_agent/eval_cases.json` · **108** cases / **15** categories  
+> Source: `evals/director_routing/eval_cases.json` · **108** cases / **15** categories  
 > Chain 记法: `→` 分步；`{A|B|C}` = 这一步任一命中即可；`×N` = 连续 N 步同一组；末尾 `Agent` 后缀省略（`Story` = `StoryAgent`）。
 
 ## 目录

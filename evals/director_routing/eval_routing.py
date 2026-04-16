@@ -21,9 +21,9 @@ upfront planner never emits a "done" sentinel; the plan just terminates.
 Results are written to ``Runtime/eval_routing/<timestamp>[_<name>].json``.
 
 Usage (from repo root):
-    PYTHONPATH=. python tests/director/eval_routing.py
-    PYTHONPATH=. python tests/director/eval_routing.py --model gpt-4o
-    PYTHONPATH=. python tests/director/eval_routing.py --workers 16 --name baseline
+    PYTHONPATH=. python evals/director_routing/eval_routing.py
+    PYTHONPATH=. python evals/director_routing/eval_routing.py --model gpt-4o
+    PYTHONPATH=. python evals/director_routing/eval_routing.py --workers 16 --name baseline
 """
 
 from __future__ import annotations

@@ -1,0 +1,4186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>eval_cases.json review</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #161922;
+    --panel-2: #1c2030;
+    --border: #2a2f42;
+    --fg: #e6e8ef;
+    --muted: #8b91a8;
+    --accent: #6aa9ff;
+    --keep: #28c76f;
+    --delete: #ea5455;
+    --edit: #ff9f43;
+    --pending: #4a5070;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    height: 100%; font-size: 14px; }
+  #app { display: flex; flex-direction: column; height: 100vh; }
+  header { padding: 12px 18px; border-bottom: 1px solid var(--border); background: var(--panel);
+    display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .title { font-weight: 600; font-size: 16px; }
+  .stats { color: var(--muted); font-size: 13px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .stats .stat { display: inline-flex; align-items: center; gap: 4px; }
+  .stats .num { color: var(--fg); font-weight: 600; }
+  .stats .keep .num { color: var(--keep); }
+  .stats .delete .num { color: var(--delete); }
+  .stats .edit .num { color: var(--edit); }
+  .progress { flex: 1; min-width: 200px; height: 6px; background: var(--panel-2);
+    border-radius: 3px; overflow: hidden; }
+  .progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent), #8c6aff);
+    transition: width 200ms ease; }
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  button { background: var(--panel-2); color: var(--fg); border: 1px solid var(--border);
+    padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 13px; font-family: inherit; }
+  button:hover { background: #232a3d; border-color: #3a4360; }
+  button.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  button.primary:hover { background: #5a99f0; }
+  button.danger { background: var(--delete); color: #fff; border-color: var(--delete); }
+  button.warn { background: var(--edit); color: #fff; border-color: var(--edit); }
+  button.success { background: var(--keep); color: #fff; border-color: var(--keep); }
+
+  nav.cats { display: flex; gap: 0; padding: 0 18px; background: var(--panel);
+    border-bottom: 1px solid var(--border); overflow-x: auto; }
+  nav.cats button { background: transparent; border: none; border-bottom: 2px solid transparent;
+    padding: 8px 12px; border-radius: 0; color: var(--muted); white-space: nowrap; }
+  nav.cats button.active { color: var(--fg); border-bottom-color: var(--accent); }
+  nav.cats button:hover { background: var(--panel-2); }
+  nav.cats button .count { font-size: 11px; opacity: 0.7; margin-left: 4px; }
+  nav.cats button .badge { display: inline-block; min-width: 16px; height: 16px; line-height: 16px;
+    padding: 0 4px; border-radius: 8px; font-size: 10px; margin-left: 4px;
+    background: var(--pending); color: #fff; }
+
+  main { flex: 1; display: flex; min-height: 0; }
+  aside.list { width: 260px; border-right: 1px solid var(--border); background: var(--panel);
+    overflow-y: auto; flex-shrink: 0; }
+  .case-row { padding: 10px 14px; border-bottom: 1px solid var(--border); cursor: pointer;
+    display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  .case-row:hover { background: var(--panel-2); }
+  .case-row.active { background: var(--panel-2); border-left: 3px solid var(--accent);
+    padding-left: 11px; }
+  .case-row .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--pending);
+    flex-shrink: 0; }
+  .case-row .dot.keep { background: var(--keep); }
+  .case-row .dot.delete { background: var(--delete); }
+  .case-row .dot.edit { background: var(--edit); }
+  .case-row .name { flex: 1; font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+  .case-row .preview { color: var(--muted); font-size: 11px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px; }
+
+  section.detail { flex: 1; overflow-y: auto; padding: 24px 32px; }
+  .detail-header { display: flex; align-items: center; gap: 12px; margin-bottom: 18px;
+    flex-wrap: wrap; }
+  .detail-header .name { font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 18px; font-weight: 600; }
+  .detail-header .index { color: var(--muted); }
+  .badge-decision { display: inline-block; padding: 2px 10px; border-radius: 10px;
+    font-size: 11px; font-weight: 600; text-transform: uppercase; }
+  .badge-decision.keep { background: rgba(40,199,111,.18); color: var(--keep); }
+  .badge-decision.delete { background: rgba(234,84,85,.18); color: var(--delete); }
+  .badge-decision.edit { background: rgba(255,159,67,.18); color: var(--edit); }
+  .badge-decision.pending { background: var(--panel-2); color: var(--muted); }
+
+  .field { margin-bottom: 18px; }
+  .field-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+    color: var(--muted); margin-bottom: 6px;
+    display: flex; justify-content: space-between; align-items: center; }
+  .field-label button { padding: 2px 10px; font-size: 11px; }
+  .input-box { background: var(--panel); border: 1px solid var(--border); border-radius: 6px;
+    padding: 14px 16px; font-size: 15px; line-height: 1.5; min-height: 48px;
+    white-space: pre-wrap; word-break: break-word; }
+  .input-box.empty { color: var(--muted); font-style: italic; }
+  .input-box.edited { border-color: var(--edit); }
+
+  textarea { width: 100%; background: var(--panel); border: 1px solid var(--border);
+    border-radius: 6px; padding: 12px 14px; color: var(--fg);
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 13px; line-height: 1.6; resize: vertical; min-height: 100px; }
+  textarea:focus { outline: none; border-color: var(--accent); }
+
+  .chain { background: var(--panel); border: 1px solid var(--border); border-radius: 6px;
+    padding: 12px 0; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px; }
+  .chain.edited { border-color: var(--edit); }
+  .chain-step { padding: 4px 16px; display: flex; gap: 12px; align-items: center; }
+  .chain-step .num { color: var(--muted); width: 22px; flex-shrink: 0; text-align: right; }
+  .chain-step .agent { display: inline-block; padding: 2px 8px; border-radius: 4px;
+    background: var(--panel-2); border: 1px solid var(--border); }
+  .chain-step .agent.done { background: rgba(40, 199, 111, 0.15); color: var(--keep);
+    border-color: rgba(40,199,111,0.3); }
+  .chain-step.alt .agents { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .chain-step .alt-sep { color: var(--muted); }
+  .chain-step.alt::before { content: "{"; color: var(--muted); }
+  .chain-step.alt::after { content: "}"; color: var(--muted); }
+  .chain-step.alt { padding-left: 8px; }
+
+  .action-bar { display: flex; gap: 10px; margin: 22px 0 18px 0; flex-wrap: wrap; }
+  .action-bar button { padding: 10px 18px; font-size: 14px; font-weight: 500;
+    display: inline-flex; align-items: center; gap: 8px; }
+  .action-bar kbd { background: rgba(255,255,255,.22); border: none;
+    padding: 1px 6px; border-radius: 3px; color: #fff;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11px; }
+  .nav-bar { display: flex; gap: 10px; margin-top: 12px; padding-top: 16px;
+    border-top: 1px solid var(--border); }
+
+  .siblings { margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--border); }
+  .siblings-header { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+  .siblings ul { list-style: none; padding: 0; margin: 0; }
+  .siblings li { padding: 6px 0; display: flex; gap: 10px; align-items: center;
+    font-size: 13px; color: var(--muted); }
+  .siblings li .dot { width: 6px; height: 6px; border-radius: 50%;
+    background: var(--pending); flex-shrink: 0; }
+  .siblings li .dot.keep { background: var(--keep); }
+  .siblings li .dot.delete { background: var(--delete); }
+  .siblings li .dot.edit { background: var(--edit); }
+  .siblings li .name { font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    min-width: 110px; }
+  .siblings li a { color: var(--accent); text-decoration: none; }
+  .siblings li a:hover { text-decoration: underline; }
+
+  footer { padding: 8px 18px; border-top: 1px solid var(--border); background: var(--panel);
+    color: var(--muted); font-size: 12px; }
+  kbd { background: var(--panel-2); border: 1px solid var(--border); padding: 1px 5px;
+    border-radius: 3px; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11px; }
+
+  .note { margin-top: 8px; }
+  .note input { width: 100%; background: var(--panel); border: 1px solid var(--border);
+    border-radius: 4px; padding: 8px 12px; color: var(--fg);
+    font-family: inherit; font-size: 13px; }
+  .note input:focus { outline: none; border-color: var(--accent); }
+
+  .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+    display: flex; align-items: center; justify-content: center; z-index: 100; }
+  .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+    padding: 20px; max-width: 720px; width: 90%; max-height: 80vh; overflow-y: auto; }
+  .modal h3 { margin-top: 0; }
+  .modal pre { background: var(--bg); padding: 12px; border-radius: 4px;
+    overflow: auto; font-size: 12px; line-height: 1.6; max-height: 50vh;
+    white-space: pre-wrap; word-break: break-word; }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="title">eval_cases.json review</div>
+    <div class="stats" id="stats"></div>
+    <div class="progress"><div class="progress-bar" id="progressBar" style="width: 0%"></div></div>
+    <div class="actions">
+      <button onclick="exportJson()">Export modified JSON</button>
+      <button onclick="exportLog()">Export decision log</button>
+      <button onclick="exportSummary()">Copy summary</button>
+      <button onclick="resetAll()">Reset</button>
+    </div>
+  </header>
+  <nav class="cats" id="cats"></nav>
+  <main>
+    <aside class="list" id="caseList"></aside>
+    <section class="detail" id="detail"></section>
+  </main>
+  <footer>
+    Shortcuts:
+    <kbd>j</kbd>/<kbd>↓</kbd> next ·
+    <kbd>k</kbd>/<kbd>↑</kbd> prev ·
+    <kbd>1</kbd> keep ·
+    <kbd>2</kbd> delete ·
+    <kbd>3</kbd> edit chain ·
+    <kbd>4</kbd> edit input ·
+    <kbd>n</kbd> next pending ·
+    <kbd>esc</kbd> cancel edit ·
+    <kbd>⌘/Ctrl+Enter</kbd> save edit
+  </footer>
+</div>
+
+<script id="caseData" type="application/json">
+[
+  {
+    "name": "cr_01",
+    "user_goal": "帮我制作一个关于太空探险的短片",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_02",
+    "user_goal": "Make a short film about a day in the life of a street musician",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_03",
+    "user_goal": "帮我做一个恐怖短片，要有阴森的氛围和突然的惊吓",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_04",
+    "user_goal": "做一个3分钟的动画短片，讲一只猫在城市里冒险的故事",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_05",
+    "user_goal": "Create a cinematic trailer for a fantasy novel about dragons and kingdoms",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_06",
+    "user_goal": "做一个关于春节团圆的温情短片，画面要暖色调",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_07",
+    "user_goal": "I want a music video with dreamy visuals and slow transitions",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_08",
+    "user_goal": "做一个科幻风格的短片，讲人工智能觉醒的故事",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_09",
+    "user_goal": "帮我做一个浪漫爱情短片，发生在巴黎的咖啡馆",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_10",
+    "user_goal": "Create an animated explainer video about how blockchain works",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_11",
+    "user_goal": "拍一个关于咖啡从种植到冲泡全过程的短视频",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_12",
+    "user_goal": "做一个武侠风格的动作短片，要有飞檐走壁的画面",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_13",
+    "user_goal": "帮我做一个关于环保主题的公益短片，风格要感人",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_14",
+    "user_goal": "制作一个游戏宣传CG动画，展示史诗级的战斗场面",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_15",
+    "user_goal": "做一个悬疑推理短片，结局要有反转",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_txt_01",
+    "user_goal": "做一个产品宣传片，我们的产品是智能手表，主打运动健康功能",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_txt_02",
+    "user_goal": "制作一段30秒的品牌广告，品牌名叫StarLight，定位是年轻人潮流生活方式",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_txt_03",
+    "user_goal": "做一个旅游宣传片，目的地是云南大理，要展示苍山洱海和白族文化",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_txt_04",
+    "user_goal": "制作公司年会开场视频，公司叫未来科技，今年主题是'创新无界'",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_txt_05",
+    "user_goal": "We need a promotional video for our new electric car model X9, highlighting its 500-mile range and self-driving features",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_txt_06",
+    "user_goal": "帮我做一个餐厅宣传视频，餐厅叫'老街味道'，主打怀旧风格的川菜",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_txt_07",
+    "user_goal": "制作一个房地产楼盘宣传片，楼盘叫湖畔花园，卖点是湖景和智能家居",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_txt_08",
+    "user_goal": "做一个学校招生宣传片，学校是北京国际学校，强调双语教学和国际视野",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_txt_09",
+    "user_goal": "Create a startup pitch video for our AI assistant app called MindFlow, targeting enterprise customers",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_txt_10",
+    "user_goal": "做一个健身APP的宣传视频，APP叫FitPro，主打AI私教和饮食规划",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_img_01",
+    "user_goal": "我有几张参考图片和一个简单的想法，帮我做成视频",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_img_02",
+    "user_goal": "根据这些产品照片帮我制作一个展示视频",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_img_03",
+    "user_goal": "I have some concept art images, turn them into an animated short film",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_img_04",
+    "user_goal": "这些是我旅行拍的照片，帮我做成一个回忆视频",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_img_05",
+    "user_goal": "用这些手绘草图做成动画短片",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_01",
+    "user_goal": "做一个有中文字幕的短片，讲校园生活",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_02",
+    "user_goal": "帮我做一个带字幕的美食纪录短片",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_03",
+    "user_goal": "Create a short film with English subtitles about urban gardening",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_04",
+    "user_goal": "做一个带字幕的儿童教育动画，主题是海洋生物",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_05",
+    "user_goal": "做一个带字幕的科技产品评测视频",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "bilingual_01",
+    "user_goal": "做一个有中英双语字幕的完整短片，讲中国茶文化",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "bilingual_02",
+    "user_goal": "帮我做一个双语字幕的旅游短片，中文和日文",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "bilingual_03",
+    "user_goal": "Create a short film with both Chinese and English subtitles about martial arts",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "bilingual_04",
+    "user_goal": "做一个有中韩双语字幕的K-POP风格MV",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "bilingual_05",
+    "user_goal": "制作一个面向海外市场的品牌宣传片，需要中英文字幕",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "style_01",
+    "user_goal": "把这个视频风格转换成吉卜力动漫风格",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "style_02",
+    "user_goal": "让这段视频看起来像赛博朋克风格，霓虹灯和雨天",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "style_03",
+    "user_goal": "Apply a Van Gogh oil painting style to this video",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "style_04",
+    "user_goal": "把视频转成水墨画风格",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "style_05",
+    "user_goal": "给这个视频加上复古80年代胶片质感",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "inpaint_01",
+    "user_goal": "去掉视频里的路人",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "InpaintAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "inpaint_02",
+    "user_goal": "Remove the watermark from this video",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "InpaintAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "inpaint_03",
+    "user_goal": "把视频里的广告牌替换成我们公司的logo",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "InpaintAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "inpaint_04",
+    "user_goal": "删掉视频背景里的杂物，只保留主体人物",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "InpaintAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "inpaint_05",
+    "user_goal": "把视频里出现的车牌号码模糊处理掉",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "InpaintAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "extend_01",
+    "user_goal": "把这个5秒的视频延长到15秒",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "extend_02",
+    "user_goal": "视频太短了，帮我续写后面的画面",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "extend_03",
+    "user_goal": "Extend this sunset clip to make it longer",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "extend_04",
+    "user_goal": "让这段烟花视频再长一些，循环效果也行",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "analysis_01",
+    "user_goal": "分析这个视频的内容，告诉我每个场景讲了什么",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "analysis_02",
+    "user_goal": "Analyze this video and describe each scene in detail",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "analysis_03",
+    "user_goal": "帮我分析这段视频的镜头语言和叙事节奏",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "analysis_04",
+    "user_goal": "检查这个视频里出现了哪些人物和物品",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "highlight_01",
+    "user_goal": "从这个一小时的视频里剪出精彩片段",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent",
+        "HighlightAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "highlight_02",
+    "user_goal": "Extract the best moments from this football match video",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent",
+        "HighlightAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "highlight_03",
+    "user_goal": "帮我从会议录像中提取关键讨论片段",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent",
+        "HighlightAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "highlight_04",
+    "user_goal": "做一个旅行vlog的精彩集锦",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent",
+        "HighlightAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "highlight_05",
+    "user_goal": "从婚礼视频里剪出最感人的几个瞬间",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent",
+        "HighlightAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "transcribe_01",
+    "user_goal": "把这段音频转成文字",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeAudioAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "transcribe_02",
+    "user_goal": "Transcribe this podcast audio file",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeAudioAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "transcribe_03",
+    "user_goal": "识别这段会议录音里每个人说了什么",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeAudioAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "trans_trans_01",
+    "user_goal": "把这段音频转成文字，然后翻译成英文",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeAudioAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "trans_trans_02",
+    "user_goal": "识别这段日语录音并翻译成中文",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeAudioAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "trans_trans_03",
+    "user_goal": "Transcribe this Chinese interview audio recording and translate to English",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeAudioAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "trans_trans_sub_01",
+    "user_goal": "把这段音频转成文字，翻译成英文，然后做成字幕文件",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeAudioAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "trans_trans_sub_02",
+    "user_goal": "识别音频内容并生成中英双语字幕",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeAudioAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "voice_01",
+    "user_goal": "用这段音频里的声音来给短片配音",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeAudioAgent"
+      ],
+      [
+        "VoiceCloneAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "voice_02",
+    "user_goal": "Clone this narrator's voice for dubbing my video",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeAudioAgent"
+      ],
+      [
+        "VoiceCloneAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "voice_03",
+    "user_goal": "用这个主播的声音来朗读我的剧本",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeAudioAgent"
+      ],
+      [
+        "VoiceCloneAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "translate_01",
+    "user_goal": "把这篇中文剧本翻译成英文",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "translate_02",
+    "user_goal": "翻译这段对白成韩语",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "translate_03",
+    "user_goal": "Translate this screenplay into Japanese",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_vid_01",
+    "user_goal": "给这个访谈视频配字幕",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_vid_02",
+    "user_goal": "帮这个演讲视频加上中文字幕",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_vid_03",
+    "user_goal": "Generate subtitles for this cooking tutorial video",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_vid_04",
+    "user_goal": "给这个英文教学视频配中文字幕",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_01",
+    "user_goal": "分析这个视频，然后根据分析结果写一个类似风格的故事并制作成新视频",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_02",
+    "user_goal": "先延长这个视频，然后做风格迁移成动漫风",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_03",
+    "user_goal": "延长视频后做风格迁移再加上字幕",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "SubtitleAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_04",
+    "user_goal": "分析视频后剪辑精彩片段，然后加上背景音乐合成最终版",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "CompositorAgent",
+        "AudioMixAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_05",
+    "user_goal": "去掉视频里的水印，然后转成动漫风格",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "InpaintAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_06",
+    "user_goal": "分析这个视频然后给它配上字幕和背景音乐",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "SubtitleAgent"
+      ],
+      [
+        "SubtitleAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "CompositorAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_07",
+    "user_goal": "克隆我的声音，然后用它给一个新制作的短片配音",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeAudioAgent"
+      ],
+      [
+        "VoiceCloneAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_08",
+    "user_goal": "把这段英文采访视频翻译成中文并配上中文字幕",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_09",
+    "user_goal": "去掉视频水印，延长到30秒，再转成油画风格",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "InpaintAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_10",
+    "user_goal": "分析这个视频剪出精彩片段，加上字幕和背景音乐，输出最终版",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "SubtitleAgent",
+        "MusicAgent"
+      ],
+      [
+        "SubtitleAgent",
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "MusicAgent",
+        "SubtitleAgent"
+      ],
+      [
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_11",
+    "user_goal": "把这段采访视频转录成文字，翻译成日文，生成日文字幕后合成到视频上",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_12",
+    "user_goal": "删掉视频里的路人，然后加上赛博朋克风格滤镜，最后配上字幕",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "InpaintAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "SubtitleAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_13",
+    "user_goal": "先分析这个视频内容，然后根据分析写一个续集故事，最终做成带字幕的新短片",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_14",
+    "user_goal": "用我的声音克隆来配音，做一个带中英字幕的产品宣传片，产品是智能音箱EchoX",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeAudioAgent"
+      ],
+      [
+        "VoiceCloneAgent"
+      ],
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_15",
+    "user_goal": "从婚礼视频里剪出最精彩的片段，配上浪漫的背景音乐，加上字幕",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent",
+        "HighlightAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "SubtitleAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_16",
+    "user_goal": "把这个视频延长，去掉里面的广告牌，然后风格转成复古胶片感",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "InpaintAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_17",
+    "user_goal": "转录这段播客音频，翻译成中文，然后根据内容制作一个动画科普视频",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeAudioAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_18",
+    "user_goal": "Analyze this documentary, extract key scenes as highlights, add English subtitles and background music",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "SubtitleAgent",
+        "MusicAgent"
+      ],
+      [
+        "SubtitleAgent",
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "MusicAgent",
+        "SubtitleAgent"
+      ],
+      [
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_19",
+    "user_goal": "用这些产品图片做一个带双语字幕的宣传短片",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_20",
+    "user_goal": "把这段会议视频的关键讨论提取出来，转录后翻译成英文，输出带字幕的精华版",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent",
+        "HighlightAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_21",
+    "user_goal": "先风格迁移成水墨画风格，再延长视频，最后加上古风背景音乐",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_22",
+    "user_goal": "去掉视频里所有的文字水印和logo，加上我们自己的品牌字幕",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "InpaintAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "edge_01",
+    "user_goal": "",
+    "expected_chain": [
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "edge_02",
+    "user_goal": "asdfghjkl",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "edge_03",
+    "user_goal": "你好",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "edge_04",
+    "user_goal": "今天天气怎么样？",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "edge_05",
+    "user_goal": "帮我写个剧本就好，不需要做成视频",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  }
+]
+</script>
+
+<script>
+const DATA = JSON.parse(document.getElementById('caseData').textContent);
+const STORAGE_KEY = 'frameworkers_eval_review_v1';
+
+let state = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+let currentName = DATA[0].name;
+let currentCategory = null;
+let editMode = null;
+let editBuffer = '';
+
+function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+
+function categoryOf(name) {
+  const prefixes = ['intake_txt','intake_img','sub_vid','trans_trans_sub','trans_trans',
+    'sub','bilingual','style','inpaint','extend','analysis','highlight','transcribe',
+    'voice','translate','complex','edge','cr'];
+  for (const p of prefixes) if (name.startsWith(p + '_')) return p;
+  return 'other';
+}
+
+const CATEGORIES = (() => {
+  const seen = [];
+  for (const c of DATA) {
+    const cat = categoryOf(c.name);
+    if (!seen.includes(cat)) seen.push(cat);
+  }
+  return seen;
+})();
+const CASES_BY_CAT = (() => {
+  const m = {}; for (const cat of CATEGORIES) m[cat] = [];
+  for (const c of DATA) m[categoryOf(c.name)].push(c);
+  return m;
+})();
+const CASE_BY_NAME = Object.fromEntries(DATA.map(c => [c.name, c]));
+
+function getDecision(name) { return state[name]?.decision || null; }
+function getChain(name) { return state[name]?.chain || CASE_BY_NAME[name].expected_chain; }
+function getInput(name) {
+  const s = state[name];
+  return (s && typeof s.input === 'string') ? s.input : CASE_BY_NAME[name].user_goal;
+}
+function isPending(name) { return !state[name]?.decision; }
+function chainKey(chain) { return JSON.stringify(chain); }
+
+function chainToEditText(chain) { return chain.map(step => step.join(' | ')).join('\n'); }
+function parseChainText(text) {
+  return text.split('\n')
+    .map(l => l.replace(/^\s*\d+\.\s*/, '').replace(/[{}]/g, '').trim())
+    .filter(Boolean)
+    .map(line => line.split('|').map(s => s.trim()).filter(Boolean));
+}
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c =>
+    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+}
+
+function decide(name, decision) {
+  if (!state[name]) state[name] = {};
+  state[name].decision = decision;
+  saveState();
+  goToNextPending();
+}
+function setNote(name, note) {
+  if (!state[name]) state[name] = {};
+  state[name].note = note || null;
+  saveState();
+}
+
+function startEditChain() {
+  editMode = 'chain';
+  editBuffer = chainToEditText(getChain(currentName));
+  render();
+}
+function startEditInput() {
+  editMode = 'input';
+  editBuffer = getInput(currentName);
+  render();
+}
+function cancelEdit() { editMode = null; editBuffer = ''; render(); }
+
+function commitEdit() {
+  const ta = document.getElementById('editArea');
+  if (ta) editBuffer = ta.value;
+  if (editMode === 'chain') {
+    const newChain = parseChainText(editBuffer);
+    if (newChain.length === 0) { alert('chain cannot be empty'); return; }
+    if (!state[currentName]) state[currentName] = {};
+    state[currentName].chain = newChain;
+    if (!state[currentName].decision) state[currentName].decision = 'edit';
+  } else if (editMode === 'input') {
+    if (!state[currentName]) state[currentName] = {};
+    state[currentName].input = editBuffer;
+    if (!state[currentName].decision) state[currentName].decision = 'edit';
+  }
+  saveState();
+  editMode = null; editBuffer = '';
+  render();
+}
+
+function applyChainToTemplate() {
+  const ta = document.getElementById('editArea');
+  if (ta) editBuffer = ta.value;
+  const newChain = parseChainText(editBuffer);
+  if (newChain.length === 0) { alert('chain cannot be empty'); return; }
+  const origKey = chainKey(CASE_BY_NAME[currentName].expected_chain);
+  let n = 0;
+  for (const c of DATA) {
+    if (chainKey(c.expected_chain) === origKey) {
+      if (!state[c.name]) state[c.name] = {};
+      state[c.name].chain = newChain;
+      if (!state[c.name].decision) state[c.name].decision = 'edit';
+      n++;
+    }
+  }
+  saveState();
+  editMode = null; editBuffer = '';
+  render();
+  setTimeout(() => alert(`Applied chain edit to ${n} cases sharing this template.`), 50);
+}
+
+function goTo(name) { currentName = name; editMode = null; render(); }
+function goToNextPending() {
+  const idx = DATA.findIndex(c => c.name === currentName);
+  for (let i = 1; i <= DATA.length; i++) {
+    const c = DATA[(idx + i) % DATA.length];
+    if (isPending(c.name)) { currentName = c.name; editMode = null; render(); return; }
+  }
+  goToNext();
+}
+function goToNext() {
+  const idx = DATA.findIndex(c => c.name === currentName);
+  currentName = DATA[(idx + 1) % DATA.length].name;
+  editMode = null; render();
+}
+function goToPrev() {
+  const idx = DATA.findIndex(c => c.name === currentName);
+  currentName = DATA[(idx - 1 + DATA.length) % DATA.length].name;
+  editMode = null; render();
+}
+
+function resetAll() {
+  if (!confirm('Clear all decisions and edits? Cannot be undone.')) return;
+  state = {}; saveState(); render();
+}
+
+function download(filename, content, mime) {
+  const blob = new Blob([content], { type: mime || 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function exportJson() {
+  const result = DATA
+    .filter(c => getDecision(c.name) !== 'delete')
+    .map(c => ({
+      name: c.name,
+      user_goal: getInput(c.name),
+      expected_chain: getChain(c.name),
+    }));
+  download('eval_cases.modified.json', JSON.stringify(result, null, 2));
+}
+
+function exportLog() {
+  const log = DATA.map(c => {
+    const s = state[c.name] || {};
+    const out = {
+      name: c.name,
+      category: categoryOf(c.name),
+      decision: s.decision || 'pending',
+      original_user_goal: c.user_goal,
+      original_expected_chain: c.expected_chain,
+    };
+    if (s.input != null && s.input !== c.user_goal) out.edited_user_goal = s.input;
+    if (s.chain != null && JSON.stringify(s.chain) !== JSON.stringify(c.expected_chain))
+      out.edited_expected_chain = s.chain;
+    if (s.note) out.note = s.note;
+    return out;
+  });
+  download('eval_cases.review_log.json', JSON.stringify(log, null, 2));
+}
+
+function exportSummary() {
+  const tally = { keep: 0, delete: 0, edit: 0, pending: 0 };
+  const byCat = {};
+  for (const c of DATA) {
+    const d = getDecision(c.name) || 'pending';
+    tally[d] = (tally[d] || 0) + 1;
+    const cat = categoryOf(c.name);
+    if (!byCat[cat]) byCat[cat] = { keep: 0, delete: 0, edit: 0, pending: 0 };
+    byCat[cat][d] = (byCat[cat][d] || 0) + 1;
+  }
+  let lines = ['# eval_cases review summary', ''];
+  lines.push(`Total: ${DATA.length} | keep=${tally.keep} delete=${tally.delete} edit=${tally.edit} pending=${tally.pending}`);
+  lines.push('');
+  lines.push('## By category');
+  for (const cat of CATEGORIES) {
+    const t = byCat[cat] || {};
+    lines.push(`- ${cat} (${CASES_BY_CAT[cat].length}): keep=${t.keep||0} del=${t.delete||0} edit=${t.edit||0} pending=${t.pending||0}`);
+  }
+  const deleted = DATA.filter(c => getDecision(c.name) === 'delete');
+  if (deleted.length) {
+    lines.push(''); lines.push('## Deleted');
+    for (const c of deleted) {
+      const note = state[c.name]?.note ? ` -- ${state[c.name].note}` : '';
+      lines.push(`- ${c.name}: ${c.user_goal || '(empty)'}${note}`);
+    }
+  }
+  const edited = DATA.filter(c => getDecision(c.name) === 'edit');
+  if (edited.length) {
+    lines.push(''); lines.push('## Edited');
+    for (const c of edited) {
+      const s = state[c.name];
+      lines.push(`- ${c.name}: ${c.user_goal || '(empty)'}`);
+      if (s.input != null && s.input !== c.user_goal)
+        lines.push(`    input -> ${s.input}`);
+      if (s.chain != null && JSON.stringify(s.chain) !== JSON.stringify(c.expected_chain))
+        lines.push(`    chain -> ${chainToEditText(s.chain).replace(/\n/g, ' / ')}`);
+      if (s.note) lines.push(`    note: ${s.note}`);
+    }
+  }
+  const text = lines.join('\n');
+  navigator.clipboard.writeText(text).then(
+    () => alert('Summary copied to clipboard.'),
+    () => showModal('Summary (copy manually)', `<pre>${escapeHtml(text)}</pre>`)
+  );
+}
+
+function showModal(title, html) {
+  const bg = document.createElement('div');
+  bg.className = 'modal-bg';
+  bg.innerHTML = `<div class="modal"><h3>${escapeHtml(title)}</h3>${html}` +
+    `<div style="text-align:right;margin-top:12px;">` +
+    `<button onclick="this.closest('.modal-bg').remove()">Close</button></div></div>`;
+  bg.addEventListener('click', e => { if (e.target === bg) bg.remove(); });
+  document.body.appendChild(bg);
+}
+
+function renderStats() {
+  const tally = { keep: 0, delete: 0, edit: 0, pending: 0 };
+  for (const c of DATA) tally[getDecision(c.name) || 'pending']++;
+  const reviewed = DATA.length - tally.pending;
+  document.getElementById('stats').innerHTML = `
+    <span class="stat">总 <span class="num">${DATA.length}</span></span>
+    <span class="stat">已审 <span class="num">${reviewed}</span></span>
+    <span class="stat keep">keep <span class="num">${tally.keep}</span></span>
+    <span class="stat delete">delete <span class="num">${tally.delete}</span></span>
+    <span class="stat edit">edit <span class="num">${tally.edit}</span></span>
+  `;
+  document.getElementById('progressBar').style.width = (reviewed / DATA.length * 100) + '%';
+}
+
+function renderCats() {
+  let html = '';
+  for (const cat of CATEGORIES) {
+    const cases = CASES_BY_CAT[cat];
+    const pendingCount = cases.filter(c => isPending(c.name)).length;
+    const isActive = cat === currentCategory;
+    html += `<button class="${isActive ? 'active' : ''}" onclick="setCategory('${cat}')">` +
+      `${cat}<span class="count">(${cases.length})</span>` +
+      (pendingCount > 0 ? `<span class="badge">${pendingCount}</span>` : '') +
+      `</button>`;
+  }
+  document.getElementById('cats').innerHTML = html;
+}
+
+function setCategory(cat) {
+  currentCategory = cat;
+  // jump to first pending in category, else first
+  const cases = CASES_BY_CAT[cat];
+  const firstPending = cases.find(c => isPending(c.name));
+  currentName = (firstPending || cases[0]).name;
+  editMode = null;
+  render();
+}
+
+function renderList() {
+  const cases = CASES_BY_CAT[currentCategory];
+  document.getElementById('caseList').innerHTML = cases.map(c => {
+    const d = getDecision(c.name);
+    const dotClass = d || '';
+    return `<div class="case-row ${c.name === currentName ? 'active' : ''}" onclick="goTo('${c.name}')">` +
+      `<span class="dot ${dotClass}"></span>` +
+      `<span class="name">${c.name}</span>` +
+      `<span class="preview">${escapeHtml((c.user_goal || '').slice(0, 18))}</span>` +
+    `</div>`;
+  }).join('');
+}
+
+function renderChain(chain) {
+  return chain.map((step, i) => {
+    const num = i + 1;
+    const isAlt = step.length > 1;
+    const isDone = step.length === 1 && step[0] === 'done';
+    if (isAlt) {
+      const agents = step.map(a => `<span class="agent">${escapeHtml(a)}</span>`)
+        .join('<span class="alt-sep">|</span>');
+      return `<div class="chain-step alt"><span class="num">${num}</span>` +
+        `<span class="agents">${agents}</span></div>`;
+    } else {
+      const cls = isDone ? 'agent done' : 'agent';
+      return `<div class="chain-step"><span class="num">${num}</span>` +
+        `<span class="${cls}">${escapeHtml(step[0])}</span></div>`;
+    }
+  }).join('');
+}
+
+function renderDetail() {
+  const c = CASE_BY_NAME[currentName];
+  const s = state[currentName] || {};
+  const d = s.decision || null;
+  const inputEdited = s.input != null && s.input !== c.user_goal;
+  const chainEdited = s.chain != null && JSON.stringify(s.chain) !== JSON.stringify(c.expected_chain);
+  const idx = DATA.findIndex(x => x.name === currentName);
+
+  let inputBox;
+  if (editMode === 'input') {
+    inputBox = `<textarea id="editArea">${escapeHtml(editBuffer)}</textarea>` +
+      `<div style="display:flex;gap:8px;margin-top:8px;">` +
+        `<button class="primary" onclick="commitEdit()">Save (⌘/Ctrl+Enter)</button>` +
+        `<button onclick="cancelEdit()">Cancel (Esc)</button>` +
+      `</div>`;
+  } else {
+    const text = getInput(currentName);
+    inputBox = `<div class="input-box ${text ? '' : 'empty'} ${inputEdited ? 'edited' : ''}">` +
+      `${text ? escapeHtml(text) : '(空 — empty input)'}</div>`;
+  }
+
+  let chainBox;
+  if (editMode === 'chain') {
+    const sharedCount = DATA.filter(c2 =>
+      chainKey(c2.expected_chain) === chainKey(c.expected_chain)).length;
+    chainBox = `<textarea id="editArea" style="min-height:200px;">${escapeHtml(editBuffer)}</textarea>` +
+      `<div style="color:var(--muted);font-size:11px;margin-top:6px;">` +
+        `每行 = 一个 step；多个备选 agent 用 <code>|</code> 分隔；终点写 <code>done</code>` +
+      `</div>` +
+      `<div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">` +
+        `<button class="primary" onclick="commitEdit()">Save this case (⌘/Ctrl+Enter)</button>` +
+        (sharedCount > 1
+          ? `<button class="warn" onclick="applyChainToTemplate()">` +
+            `Apply to all ${sharedCount} cases sharing this chain</button>`
+          : '') +
+        `<button onclick="cancelEdit()">Cancel (Esc)</button>` +
+      `</div>`;
+  } else {
+    chainBox = `<div class="chain ${chainEdited ? 'edited' : ''}">${renderChain(getChain(currentName))}</div>`;
+  }
+
+  const origKey = chainKey(c.expected_chain);
+  const siblings = DATA.filter(x => x.name !== currentName &&
+    chainKey(x.expected_chain) === origKey);
+
+  const siblingsHtml = siblings.length === 0 ? '' : `
+    <div class="siblings">
+      <div class="siblings-header">
+        ${siblings.length} other case(s) share this original expected chain — useful for spotting redundancy:
+      </div>
+      <ul>${siblings.map(x => {
+        const dotCls = getDecision(x.name) || '';
+        return `<li><span class="dot ${dotCls}"></span>` +
+          `<span class="name"><a href="javascript:goTo('${x.name}')">${x.name}</a></span>` +
+          `<span>${escapeHtml(x.user_goal || '(空)')}</span></li>`;
+      }).join('')}</ul>
+    </div>
+  `;
+
+  const decisionBadge = d
+    ? `<span class="badge-decision ${d}">${d}</span>`
+    : `<span class="badge-decision pending">pending</span>`;
+
+  document.getElementById('detail').innerHTML = `
+    <div class="detail-header">
+      <span class="name">${c.name}</span>
+      <span class="index">[${idx+1} / ${DATA.length}]</span>
+      ${decisionBadge}
+    </div>
+
+    <div class="field">
+      <div class="field-label">
+        <span>User input ${inputEdited ? '(edited)' : ''}</span>
+        ${editMode !== 'input' ? `<button onclick="startEditInput()">Edit</button>` : ''}
+      </div>
+      ${inputBox}
+    </div>
+
+    <div class="field">
+      <div class="field-label">
+        <span>Expected chain ${chainEdited ? '(edited)' : ''}</span>
+        ${editMode !== 'chain' ? `<button onclick="startEditChain()">Edit</button>` : ''}
+      </div>
+      ${chainBox}
+    </div>
+
+    ${editMode ? '' : `
+    <div class="action-bar">
+      <button class="success" onclick="decide('${currentName}', 'keep')">Keep <kbd>1</kbd></button>
+      <button class="danger" onclick="decide('${currentName}', 'delete')">Delete <kbd>2</kbd></button>
+      <button class="warn" onclick="startEditChain()">Edit chain <kbd>3</kbd></button>
+      <button class="warn" onclick="startEditInput()">Edit input <kbd>4</kbd></button>
+    </div>
+    <div class="note">
+      <input type="text" placeholder="Why? optional note (saved on blur)"
+        value="${escapeHtml(s.note || '')}"
+        onblur="setNote('${currentName}', this.value)"
+        onkeydown="if(event.key==='Enter')this.blur();" />
+    </div>
+    `}
+
+    <div class="nav-bar">
+      <button onclick="goToPrev()">← Prev (k)</button>
+      <button onclick="goToNext()">Next → (j)</button>
+      <button onclick="goToNextPending()">Next pending (n)</button>
+    </div>
+
+    ${siblingsHtml}
+  `;
+
+  if (editMode) {
+    setTimeout(() => {
+      const ta = document.getElementById('editArea');
+      if (!ta) return;
+      ta.addEventListener('input', e => { editBuffer = e.target.value; });
+      ta.addEventListener('keydown', e => {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+          e.preventDefault(); commitEdit();
+        } else if (e.key === 'Escape') {
+          e.preventDefault(); cancelEdit();
+        }
+      });
+      ta.focus();
+    }, 0);
+  }
+}
+
+function render() {
+  const cat = categoryOf(currentName);
+  if (!currentCategory || cat !== currentCategory) currentCategory = cat;
+  renderStats();
+  renderCats();
+  renderList();
+  renderDetail();
+}
+
+document.addEventListener('keydown', e => {
+  if (editMode) return;
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  switch (e.key) {
+    case 'j': case 'ArrowDown': e.preventDefault(); goToNext(); break;
+    case 'k': case 'ArrowUp': e.preventDefault(); goToPrev(); break;
+    case '1': decide(currentName, 'keep'); break;
+    case '2': decide(currentName, 'delete'); break;
+    case '3': startEditChain(); break;
+    case '4': startEditInput(); break;
+    case 'n': goToNextPending(); break;
+  }
+});
+
+render();
+</script>
+</body>
+</html>
