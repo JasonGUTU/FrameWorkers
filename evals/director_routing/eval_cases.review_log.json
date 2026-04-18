@@ -1,8 +1,10 @@
 [
   {
     "name": "cr_01",
-    "user_goal": "做一个修仙漫剧，讲废柴少年觉醒上古血脉后在宗门逆袭的故事",
-    "expected_chain": [
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "做一个修仙漫剧，讲废柴少年觉醒上古血脉后在宗门逆袭的故事",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -39,8 +41,10 @@
   },
   {
     "name": "cr_02",
-    "user_goal": "Make a CEO romance mini-drama about a struggling waitress who discovers her rude regular customer is the billionaire she saved years ago",
-    "expected_chain": [
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "Make a CEO romance mini-drama about a struggling waitress who discovers her rude regular customer is the billionaire she saved years ago",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -77,8 +81,10 @@
   },
   {
     "name": "cr_03",
-    "user_goal": "做一个灵异悬疑短剧，女主搬进凶宅发现前任住户留下的录像带揭示一桩未破凶案",
-    "expected_chain": [
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "做一个灵异悬疑短剧，女主搬进凶宅发现前任住户留下的录像带揭示一桩未破凶案",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -115,8 +121,10 @@
   },
   {
     "name": "cr_04",
-    "user_goal": "做一个3分钟的重生复仇漫剧，女主被闺蜜陷害坠楼后重生回3年前开始反击",
-    "expected_chain": [
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "做一个3分钟的重生复仇漫剧，女主被闺蜜陷害坠楼后重生回3年前开始反击",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -153,8 +161,10 @@
   },
   {
     "name": "cr_05",
-    "user_goal": "Create a post-apocalyptic manhua drama where the last survivors discover a hidden sanctuary guarded by an awakened AI",
-    "expected_chain": [
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "Create a post-apocalyptic manhua drama where the last survivors discover a hidden sanctuary guarded by an awakened AI",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -191,8 +201,10 @@
   },
   {
     "name": "cr_06",
-    "user_goal": "做一个甜宠古装短剧，女主穿越成丞相嫡女，和冷面世子从相看两厌到互相救赎",
-    "expected_chain": [
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "做一个甜宠古装短剧，女主穿越成丞相嫡女，和冷面世子从相看两厌到互相救赎",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -229,8 +241,10 @@
   },
   {
     "name": "cr_07",
-    "user_goal": "I want a vertical-screen romance mini-drama where a young woman wins a dating-app lottery and ends up fake-married to a reclusive tech mogul",
-    "expected_chain": [
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "I want a vertical-screen romance mini-drama where a young woman wins a dating-app lottery and ends up fake-married to a reclusive tech mogul",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -267,8 +281,10 @@
   },
   {
     "name": "cr_08",
-    "user_goal": "做一个科幻漫剧，讲最后一个觉醒的 AI 爱上了她唯一剩下的人类工程师",
-    "expected_chain": [
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "做一个科幻漫剧，讲最后一个觉醒的 AI 爱上了她唯一剩下的人类工程师",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -305,8 +321,10 @@
   },
   {
     "name": "cr_09",
-    "user_goal": "做一个都市言情短剧，女主在雨夜的巴黎咖啡馆遇到 5 年前失踪的前男友",
-    "expected_chain": [
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "做一个都市言情短剧，女主在雨夜的巴黎咖啡馆遇到 5 年前失踪的前男友",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -343,8 +361,10 @@
   },
   {
     "name": "cr_10",
-    "user_goal": "Make a workplace revenge mini-drama where an overlooked analyst exposes her boss's insider trading by rising to CEO at a rival firm",
-    "expected_chain": [
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "Make a workplace revenge mini-drama where an overlooked analyst exposes her boss's insider trading by rising to CEO at a rival firm",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -381,8 +401,10 @@
   },
   {
     "name": "cr_11",
-    "user_goal": "做一个古装宫斗短剧，真假公主换位后互相利用，最终联手揭穿皇后的野心",
-    "expected_chain": [
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "做一个古装宫斗短剧，真假公主换位后互相利用，最终联手揭穿皇后的野心",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -419,8 +441,10 @@
   },
   {
     "name": "cr_12",
-    "user_goal": "做一个武侠漫剧，讲少年剑客为师门复仇独闯魔教七重杀阵",
-    "expected_chain": [
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "做一个武侠漫剧，讲少年剑客为师门复仇独闯魔教七重杀阵",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -457,8 +481,10 @@
   },
   {
     "name": "cr_13",
-    "user_goal": "做一个都市逆袭短剧，被赶出豪门的赘婿其实是隐藏身份的顶级财阀继承人",
-    "expected_chain": [
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "做一个都市逆袭短剧，被赶出豪门的赘婿其实是隐藏身份的顶级财阀继承人",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -495,8 +521,10 @@
   },
   {
     "name": "cr_14",
-    "user_goal": "做一个玄幻漫剧的史诗决战：七大上古神兽集结对抗重临人间的魔神",
-    "expected_chain": [
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "做一个玄幻漫剧的史诗决战：七大上古神兽集结对抗重临人间的魔神",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -533,8 +561,10 @@
   },
   {
     "name": "cr_15",
-    "user_goal": "做一个悬疑反转短剧，心理医生发现新来的病人正是多年前杀害她妹妹的凶手",
-    "expected_chain": [
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "做一个悬疑反转短剧，心理医生发现新来的病人正是多年前杀害她妹妹的凶手",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -571,8 +601,10 @@
   },
   {
     "name": "intake_img_01",
-    "user_goal": "根据我上传的这张图片作为故事主角，生成一部励志修仙漫剧",
-    "expected_chain": [
+    "category": "intake_img",
+    "decision": "pending",
+    "original_user_goal": "根据我上传的这张图片作为故事主角，生成一部励志修仙漫剧",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -615,8 +647,10 @@
   },
   {
     "name": "intake_img_02",
-    "user_goal": "把我上传的这张照片作为背景城市，做一个 3 分钟的都市悬疑短剧，氛围要压抑",
-    "expected_chain": [
+    "category": "intake_img",
+    "decision": "pending",
+    "original_user_goal": "把我上传的这张照片作为背景城市，做一个 3 分钟的都市悬疑短剧，氛围要压抑",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -659,8 +693,10 @@
   },
   {
     "name": "intake_img_03",
-    "user_goal": "Use the character in this uploaded image as the hero of a one-minute xianxia cultivation manhua trailer",
-    "expected_chain": [
+    "category": "intake_img",
+    "decision": "pending",
+    "original_user_goal": "Use the character in this uploaded image as the hero of a one-minute xianxia cultivation manhua trailer",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -703,8 +739,10 @@
   },
   {
     "name": "intake_img_04",
-    "user_goal": "以我上传的这张照片里的海边小镇为舞台，做一段古装虐恋短剧：女主为救男主葬身海底",
-    "expected_chain": [
+    "category": "intake_img",
+    "decision": "pending",
+    "original_user_goal": "以我上传的这张照片里的海边小镇为舞台，做一段古装虐恋短剧：女主为救男主葬身海底",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -747,8 +785,10 @@
   },
   {
     "name": "intake_img_05",
-    "user_goal": "Take the person in this photo as the protagonist and make a rebirth-themed mini-drama about them waking up ten years before their lover's death",
-    "expected_chain": [
+    "category": "intake_img",
+    "decision": "pending",
+    "original_user_goal": "Take the person in this photo as the protagonist and make a rebirth-themed mini-drama about them waking up ten years before their lover's death",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -791,8 +831,10 @@
   },
   {
     "name": "sub_01",
-    "user_goal": "做一集带中文字幕的校园甜宠短剧：学霸班长和转学来的不良少女互相救赎",
-    "expected_chain": [
+    "category": "sub",
+    "decision": "pending",
+    "original_user_goal": "做一集带中文字幕的校园甜宠短剧：学霸班长和转学来的不良少女互相救赎",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -838,8 +880,10 @@
   },
   {
     "name": "sub_02",
-    "user_goal": "帮我做一集带字幕的古装美食漫剧，女主是御膳房小宫女靠厨艺逆袭",
-    "expected_chain": [
+    "category": "sub",
+    "decision": "pending",
+    "original_user_goal": "帮我做一集带字幕的古装美食漫剧，女主是御膳房小宫女靠厨艺逆袭",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -885,8 +929,10 @@
   },
   {
     "name": "sub_03",
-    "user_goal": "Create a mini-drama with English subtitles about a rebirth revenge story set in modern Shanghai",
-    "expected_chain": [
+    "category": "sub",
+    "decision": "pending",
+    "original_user_goal": "Create a mini-drama with English subtitles about a rebirth revenge story set in modern Shanghai",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -932,8 +978,10 @@
   },
   {
     "name": "sub_04",
-    "user_goal": "做一部带字幕的儿童修仙漫剧，主角是七岁神兽少年为守护深海禁地而战",
-    "expected_chain": [
+    "category": "sub",
+    "decision": "pending",
+    "original_user_goal": "做一部带字幕的儿童修仙漫剧，主角是七岁神兽少年为守护深海禁地而战",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -979,8 +1027,10 @@
   },
   {
     "name": "sub_05",
-    "user_goal": "做一集带字幕的科幻短剧，男主是顶级数码评测博主忽然发现自己其实是 AI",
-    "expected_chain": [
+    "category": "sub",
+    "decision": "pending",
+    "original_user_goal": "做一集带字幕的科幻短剧，男主是顶级数码评测博主忽然发现自己其实是 AI",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1026,8 +1076,10 @@
   },
   {
     "name": "sub_vid_01",
-    "user_goal": "给这集访谈类短剧配上中文字幕",
-    "expected_chain": [
+    "category": "sub",
+    "decision": "keep",
+    "original_user_goal": "给这集访谈类短剧配上中文字幕",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1050,8 +1102,10 @@
   },
   {
     "name": "sub_vid_02",
-    "user_goal": "帮这部竖屏演讲短剧加上中文字幕",
-    "expected_chain": [
+    "category": "sub",
+    "decision": "keep",
+    "original_user_goal": "帮这部竖屏演讲短剧加上中文字幕",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1074,8 +1128,10 @@
   },
   {
     "name": "sub_vid_03",
-    "user_goal": "Generate English subtitles for this Chinese mini-drama episode",
-    "expected_chain": [
+    "category": "sub",
+    "decision": "keep",
+    "original_user_goal": "Generate English subtitles for this Chinese mini-drama episode",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1098,8 +1154,10 @@
   },
   {
     "name": "sub_vid_05",
-    "user_goal": "给这部 30 集修仙漫剧批量生成中文硬字幕",
-    "expected_chain": [
+    "category": "sub",
+    "decision": "keep",
+    "original_user_goal": "给这部 30 集修仙漫剧批量生成中文硬字幕",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1122,8 +1180,10 @@
   },
   {
     "name": "bilingual_01",
-    "user_goal": "做一集中英双语字幕的古装漫剧，讲茶道传承九代后与现代女主通过转世重连",
-    "expected_chain": [
+    "category": "bilingual",
+    "decision": "pending",
+    "original_user_goal": "做一集中英双语字幕的古装漫剧，讲茶道传承九代后与现代女主通过转世重连",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1178,8 +1238,10 @@
   },
   {
     "name": "bilingual_02",
-    "user_goal": "帮我做一集中日双语字幕的霸总短剧，男主是留日回国的隐藏财阀继承人",
-    "expected_chain": [
+    "category": "bilingual",
+    "decision": "pending",
+    "original_user_goal": "帮我做一集中日双语字幕的霸总短剧，男主是留日回国的隐藏财阀继承人",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1234,8 +1296,10 @@
   },
   {
     "name": "bilingual_03",
-    "user_goal": "Create a mini-drama with Chinese and English subtitles about a martial-arts prodigy seeking revenge across ancient and modern timelines",
-    "expected_chain": [
+    "category": "bilingual",
+    "decision": "pending",
+    "original_user_goal": "Create a mini-drama with Chinese and English subtitles about a martial-arts prodigy seeking revenge across ancient and modern timelines",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1290,8 +1354,10 @@
   },
   {
     "name": "bilingual_04",
-    "user_goal": "做一集中西语双语字幕的修仙漫剧，准备拉美市场上线",
-    "expected_chain": [
+    "category": "bilingual",
+    "decision": "pending",
+    "original_user_goal": "做一集中西语双语字幕的修仙漫剧，准备拉美市场上线",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1346,8 +1412,10 @@
   },
   {
     "name": "bilingual_05",
-    "user_goal": "做一部中英双语字幕的都市短剧，女主是中美混血的天才医生被卷入家族遗产争夺",
-    "expected_chain": [
+    "category": "bilingual",
+    "decision": "pending",
+    "original_user_goal": "做一部中英双语字幕的都市短剧，女主是中美混血的天才医生被卷入家族遗产争夺",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1402,8 +1470,10 @@
   },
   {
     "name": "style_01",
-    "user_goal": "把这段短剧风格转换成吉卜力漫剧的画风",
-    "expected_chain": [
+    "category": "style",
+    "decision": "pending",
+    "original_user_goal": "把这段短剧风格转换成吉卜力漫剧的画风",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1420,8 +1490,10 @@
   },
   {
     "name": "style_02",
-    "user_goal": "让这段短剧看起来像赛博朋克漫剧，霓虹 + 雨夜的氛围",
-    "expected_chain": [
+    "category": "style",
+    "decision": "pending",
+    "original_user_goal": "让这段短剧看起来像赛博朋克漫剧，霓虹 + 雨夜的氛围",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1438,8 +1510,10 @@
   },
   {
     "name": "style_03",
-    "user_goal": "Apply a Van Gogh oil-painting style to this cultivation-drama clip",
-    "expected_chain": [
+    "category": "style",
+    "decision": "pending",
+    "original_user_goal": "Apply a Van Gogh oil-painting style to this cultivation-drama clip",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1456,8 +1530,10 @@
   },
   {
     "name": "style_04",
-    "user_goal": "把这部真人短剧整体转成日漫画风，保留剧情和运镜",
-    "expected_chain": [
+    "category": "style",
+    "decision": "pending",
+    "original_user_goal": "把这部真人短剧整体转成日漫画风，保留剧情和运镜",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1474,8 +1550,10 @@
   },
   {
     "name": "style_05",
-    "user_goal": "把这部古装短剧转成国风水墨漫剧的风格",
-    "expected_chain": [
+    "category": "style",
+    "decision": "pending",
+    "original_user_goal": "把这部古装短剧转成国风水墨漫剧的风格",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1492,8 +1570,10 @@
   },
   {
     "name": "extend_01",
-    "user_goal": "把这场霸总对峙戏延长到 15 秒，加男主内心独白和慢镜头特写",
-    "expected_chain": [
+    "category": "extend",
+    "decision": "pending",
+    "original_user_goal": "把这场霸总对峙戏延长到 15 秒，加男主内心独白和慢镜头特写",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1510,8 +1590,10 @@
   },
   {
     "name": "extend_03",
-    "user_goal": "Extend this cultivation-duel clip by adding a slow-motion reversal where the underdog awakens a forbidden bloodline",
-    "expected_chain": [
+    "category": "extend",
+    "decision": "pending",
+    "original_user_goal": "Extend this cultivation-duel clip by adding a slow-motion reversal where the underdog awakens a forbidden bloodline",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1528,8 +1610,10 @@
   },
   {
     "name": "extend_04",
-    "user_goal": "把这段古装虐恋的告别戏延长到 20 秒，加雪景空镜和女主回忆前世的闪回",
-    "expected_chain": [
+    "category": "extend",
+    "decision": "pending",
+    "original_user_goal": "把这段古装虐恋的告别戏延长到 20 秒，加雪景空镜和女主回忆前世的闪回",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1546,8 +1630,10 @@
   },
   {
     "name": "extend_05",
-    "user_goal": "把这场女主告白落泪的戏延长 8 秒，加雨声特效和她颤抖的手部特写",
-    "expected_chain": [
+    "category": "extend",
+    "decision": "pending",
+    "original_user_goal": "把这场女主告白落泪的戏延长 8 秒，加雨声特效和她颤抖的手部特写",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1564,8 +1650,10 @@
   },
   {
     "name": "extend_06",
-    "user_goal": "Extend this reincarnation awakening scene by 10 seconds with ghostly overlays of the character's past life flashing back",
-    "expected_chain": [
+    "category": "extend",
+    "decision": "pending",
+    "original_user_goal": "Extend this reincarnation awakening scene by 10 seconds with ghostly overlays of the character's past life flashing back",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1582,8 +1670,10 @@
   },
   {
     "name": "highlight_01",
-    "user_goal": "从这集短剧里剪出最带感的反转片段做宣传物料",
-    "expected_chain": [
+    "category": "highlight",
+    "decision": "pending",
+    "original_user_goal": "从这集短剧里剪出最带感的反转片段做宣传物料",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1603,8 +1693,10 @@
   },
   {
     "name": "highlight_03",
-    "user_goal": "帮我从这部短剧里提取男女主的高甜互动瞬间做推广短视频",
-    "expected_chain": [
+    "category": "highlight",
+    "decision": "pending",
+    "original_user_goal": "帮我从这部短剧里提取男女主的高甜互动瞬间做推广短视频",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1624,8 +1716,10 @@
   },
   {
     "name": "highlight_04",
-    "user_goal": "从这部古装漫剧里剪出宫斗名场面做 30 秒爆款引流片",
-    "expected_chain": [
+    "category": "highlight",
+    "decision": "pending",
+    "original_user_goal": "从这部古装漫剧里剪出宫斗名场面做 30 秒爆款引流片",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1645,8 +1739,10 @@
   },
   {
     "name": "highlight_05",
-    "user_goal": "把这集重生短剧的打脸戏集锦剪出来",
-    "expected_chain": [
+    "category": "highlight",
+    "decision": "pending",
+    "original_user_goal": "把这集重生短剧的打脸戏集锦剪出来",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1666,8 +1762,10 @@
   },
   {
     "name": "complex_01",
-    "user_goal": "分析这部爆款短剧，然后按同类型风格写个新故事并制作成新的漫剧",
-    "expected_chain": [
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "分析这部爆款短剧，然后按同类型风格写个新故事并制作成新的漫剧",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1710,8 +1808,10 @@
   },
   {
     "name": "complex_02",
-    "user_goal": "先延长这段短剧片段，然后做风格迁移转成日漫画风",
-    "expected_chain": [
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "先延长这段短剧片段，然后做风格迁移转成日漫画风",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1731,8 +1831,10 @@
   },
   {
     "name": "complex_03",
-    "user_goal": "延长这集短剧后做风格迁移成漫剧画风，再加上中文字幕",
-    "expected_chain": [
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "延长这集短剧后做风格迁移成漫剧画风，再加上中文字幕",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1761,8 +1863,10 @@
   },
   {
     "name": "complex_04",
-    "user_goal": "分析这部 12 集短剧的节奏后剪出精彩反转片段，加背景音乐合成终版",
-    "expected_chain": [
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "分析这部 12 集短剧的节奏后剪出精彩反转片段，加背景音乐合成终版",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1791,8 +1895,10 @@
   },
   {
     "name": "complex_06",
-    "user_goal": "分析这部短剧的情绪曲线，然后给它配上字幕和背景音乐",
-    "expected_chain": [
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "分析这部短剧的情绪曲线，然后给它配上字幕和背景音乐",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1830,8 +1936,10 @@
   },
   {
     "name": "complex_08",
-    "user_goal": "把这段英文采访视频翻译成中文并配上中文字幕",
-    "expected_chain": [
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "把这段英文采访视频翻译成中文并配上中文字幕",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1857,8 +1965,10 @@
   },
   {
     "name": "complex_10",
-    "user_goal": "分析这部短剧剪出高潮反转片段，加中文字幕和背景音乐，输出终版宣传片",
-    "expected_chain": [
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "分析这部短剧剪出高潮反转片段，加中文字幕和背景音乐，输出终版宣传片",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1897,8 +2007,10 @@
   },
   {
     "name": "complex_11",
-    "user_goal": "把这部短剧 EP01 的中文配音转文字，翻译成日文，生成日文字幕后合成到视频上",
-    "expected_chain": [
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "把这部短剧 EP01 的中文配音转文字，翻译成日文，生成日文字幕后合成到视频上",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1924,8 +2036,10 @@
   },
   {
     "name": "complex_13",
-    "user_goal": "先分析这部爆款短剧，然后根据分析写一个续集故事，最终做成带字幕的新漫剧",
-    "expected_chain": [
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "先分析这部爆款短剧，然后根据分析写一个续集故事，最终做成带字幕的新漫剧",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -1977,8 +2091,10 @@
   },
   {
     "name": "complex_15",
-    "user_goal": "从这部都市甜宠短剧里剪出男女主高光互动，配浪漫背景音乐加中文字幕",
-    "expected_chain": [
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "从这部都市甜宠短剧里剪出男女主高光互动，配浪漫背景音乐加中文字幕",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -2017,8 +2133,10 @@
   },
   {
     "name": "complex_18",
-    "user_goal": "Analyze this Chinese mini-drama season, extract the high-tension climax moments, and add English subtitles plus emotional background score",
-    "expected_chain": [
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "Analyze this Chinese mini-drama season, extract the high-tension climax moments, and add English subtitles plus emotional background score",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -2060,8 +2178,10 @@
   },
   {
     "name": "complex_19",
-    "user_goal": "用我上传的这张漫剧角色图，做一部带中英双语字幕的霸总短剧预告片",
-    "expected_chain": [
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "用我上传的这张漫剧角色图，做一部带中英双语字幕的霸总短剧预告片",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -2122,8 +2242,10 @@
   },
   {
     "name": "complex_20",
-    "user_goal": "把这部短剧会议场面里的关键对白提取出来，转录翻译成英文，输出带字幕的精华版",
-    "expected_chain": [
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "把这部短剧会议场面里的关键对白提取出来，转录翻译成英文，输出带字幕的精华版",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -2155,8 +2277,10 @@
   },
   {
     "name": "complex_21",
-    "user_goal": "先做风格迁移成水墨漫剧画风，再延长关键场面，最后加上古风背景音乐",
-    "expected_chain": [
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "先做风格迁移成水墨漫剧画风，再延长关键场面，最后加上古风背景音乐",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -2185,8 +2309,10 @@
   },
   {
     "name": "complex_23",
-    "user_goal": "用我上传的这张女主定妆照做主角，做一部 3 分钟赛博朋克风格的科幻反乌托邦短剧：她是地下黑客联盟首领带队攻入克隆人公司，最后发现自己其实也是克隆体。把她揭露身份的高潮对峙戏延长 10 秒，加慢镜头特写和颤抖的手部镜头。",
-    "expected_chain": [
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "用我上传的这张女主定妆照做主角，做一部 3 分钟赛博朋克风格的科幻反乌托邦短剧：她是地下黑客联盟首领带队攻入克隆人公司，最后发现自己其实也是克隆体。把她揭露身份的高潮对峙戏延长 10 秒，加慢镜头特写和颤抖的手部镜头。",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -2232,8 +2358,10 @@
   },
   {
     "name": "complex_24",
-    "user_goal": "给这段短剧视频配一段悲伤的钢琴背景乐",
-    "expected_chain": [
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "给这段短剧视频配一段悲伤的钢琴背景乐",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -2256,8 +2384,10 @@
   },
   {
     "name": "complex_25",
-    "user_goal": "给这段雨夜戏加雨声氛围和一段钢琴背景乐",
-    "expected_chain": [
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "给这段雨夜戏加雨声氛围和一段钢琴背景乐",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -2285,8 +2415,10 @@
   },
   {
     "name": "complex_26",
-    "user_goal": "把这段视频转成漫剧画风，再配上中文字幕",
-    "expected_chain": [
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "把这段视频转成漫剧画风，再配上中文字幕",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -2312,8 +2444,10 @@
   },
   {
     "name": "complex_27",
-    "user_goal": "把这段古装短剧转成水墨风，再加一段古风背景乐",
-    "expected_chain": [
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "把这段古装短剧转成水墨风，再加一段古风背景乐",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -2339,8 +2473,10 @@
   },
   {
     "name": "complex_28",
-    "user_goal": "续写这段对峙戏 10 秒，再配上中文字幕",
-    "expected_chain": [
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "续写这段对峙戏 10 秒，再配上中文字幕",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -2366,8 +2502,10 @@
   },
   {
     "name": "complex_29",
-    "user_goal": "续写这段打斗戏 8 秒，配一段紧张激烈的背景乐",
-    "expected_chain": [
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "续写这段打斗戏 8 秒，配一段紧张激烈的背景乐",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -2393,8 +2531,10 @@
   },
   {
     "name": "complex_30",
-    "user_goal": "从这部短剧里剪出高光片段，再加上中文字幕做成宣传片",
-    "expected_chain": [
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "从这部短剧里剪出高光片段，再加上中文字幕做成宣传片",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -2423,8 +2563,10 @@
   },
   {
     "name": "edge_01",
-    "user_goal": "",
-    "expected_chain": [
+    "category": "edge",
+    "decision": "pending",
+    "original_user_goal": "",
+    "original_expected_chain": [
       [
         "done"
       ]
@@ -2432,8 +2574,10 @@
   },
   {
     "name": "edge_02",
-    "user_goal": "asdfghjkl",
-    "expected_chain": [
+    "category": "edge",
+    "decision": "pending",
+    "original_user_goal": "asdfghjkl",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -2444,8 +2588,10 @@
   },
   {
     "name": "edge_03",
-    "user_goal": "你好",
-    "expected_chain": [
+    "category": "edge",
+    "decision": "pending",
+    "original_user_goal": "你好",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -2456,8 +2602,10 @@
   },
   {
     "name": "edge_04",
-    "user_goal": "今天天气怎么样？",
-    "expected_chain": [
+    "category": "edge",
+    "decision": "pending",
+    "original_user_goal": "今天天气怎么样？",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -2468,8 +2616,10 @@
   },
   {
     "name": "edge_05",
-    "user_goal": "帮我写一段 Python 快速排序代码",
-    "expected_chain": [
+    "category": "edge",
+    "decision": "keep",
+    "original_user_goal": "帮我写一段 Python 快速排序代码",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -2480,8 +2630,10 @@
   },
   {
     "name": "edge_06",
-    "user_goal": "做点好玩的",
-    "expected_chain": [
+    "category": "edge",
+    "decision": "keep",
+    "original_user_goal": "做点好玩的",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
@@ -2492,8 +2644,10 @@
   },
   {
     "name": "edge_07",
-    "user_goal": "推荐几本修仙题材的小说给我",
-    "expected_chain": [
+    "category": "edge",
+    "decision": "keep",
+    "original_user_goal": "推荐几本修仙题材的小说给我",
+    "original_expected_chain": [
       [
         "IntakeTextAgent"
       ],
