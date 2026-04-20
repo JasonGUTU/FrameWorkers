@@ -87,11 +87,11 @@ SPEC = AgentSpec(
             cardinality="single",
             optional=True,
             description=(
-                "VideoAnalysisAgent output — scenes with mood + "
-                "video_summary.duration_seconds. Present on existing-video "
-                "edit flows where there is no screenplay; the agent "
-                "derives overall mood from the scene moods and uses "
-                "video_summary.duration_seconds as the cue duration "
+                "A scene-level video-analysis report — scenes with mood "
+                "+ video_summary.duration_seconds. Present on existing-"
+                "video edit flows where there is no screenplay; the "
+                "agent derives overall mood from the scene moods and "
+                "uses video_summary.duration_seconds as the cue duration "
                 "target. At least one of {screenplay, video_analysis} "
                 "must be supplied."
             ),

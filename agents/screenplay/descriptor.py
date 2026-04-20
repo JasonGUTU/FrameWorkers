@@ -21,11 +21,11 @@ def build_input(
     """Univa-style pass-through: dump upstream story payload as raw JSON text.
 
     Single input: the upstream story_blueprint, selected by InputResolver
-    via the ``[story]`` label. ScreenplayAgent has no concept of free-text
+    via the ``[story]`` label. This agent has no concept of free-text
     user directives — any such directive flows in through the upstream
-    re-run pattern (Director re-runs StoryAgent with the new brief; the
-    updated story_blueprint reaches ScreenplayAgent through this same
-    ``[story]`` label).
+    re-run pattern (the Director re-runs the story step with the new
+    brief; the updated story_blueprint reaches this agent through the
+    same ``[story]`` label).
     """
     story = ResolvedArtifactEntry.coerce(resolved_artifacts.get(INPUT_LABEL_STORY))
     return ScreenplayAgentInput(

@@ -76,10 +76,11 @@ class AssistantService:
 
         * ``"upstream_input_rejected"`` — the consumer LLM declared upstream
           input insufficient. Emit a ``[upstream_input_rejected] ...``
-          prefix carrying reason / missing_labels / upstream hint so the
-          director's replan prompt can recognise it and prefer replan-tail
-          over retry (retry with the same input would yield the same
-          rejection).
+          prefix carrying reason + missing_labels so the director's replan
+          prompt can recognise it and prefer replan-tail over retry (retry
+          with the same input would yield the same rejection). The Director
+          infers which upstream step to replace from the missing labels and
+          PENDING-tail history — sub-agents never name a producer.
         * anything else — fall back to the existing
           ``quality gate failed: <summary>`` format so legacy eval-gate
           failures keep their shape.
@@ -91,7 +92,6 @@ class AssistantService:
             rej = debug.get("input_rejection") or {}
             reason = str(rej.get("reason") or "(no reason)").strip()
             missing = rej.get("missing_labels") or []
-            hint = str(rej.get("upstream_agent_hint") or "").strip()
             missing_blob = (
                 ",".join(str(x) for x in missing)
                 if isinstance(missing, list)
@@ -99,7 +99,7 @@ class AssistantService:
             )
             return (
                 f"[upstream_input_rejected] reason={reason}; "
-                f"missing=[{missing_blob}]; hint={hint or '(none)'}"
+                f"missing=[{missing_blob}]"
             )
         summary = (
             debug.get("eval_summary")

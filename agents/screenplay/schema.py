@@ -188,11 +188,11 @@ class ScreenplayAgentInput(BaseModel):
     consumer code: any well-formed JSON object can be consumed, as long
     as the LLM can read and dramatize it.
 
-    Selected by InputResolver via the ``[story]`` label. ScreenplayAgent
-    has NO directive label — any user-level intent flows through the
-    upstream re-run mechanism (Director re-runs StoryAgent with the new
-    brief; the updated story_blueprint reaches us via the same
-    ``[story]`` label).
+    Selected by InputResolver via the ``[story]`` label. This agent has
+    NO directive label — any user-level intent flows through the upstream
+    re-run mechanism (the Director re-runs the story step with the new
+    brief; the updated story_blueprint reaches us via the same ``[story]``
+    label).
     """
 
     story_json_text: str = ""

@@ -84,11 +84,11 @@ SPEC = AgentSpec(
             name=INPUT_LABEL_VIDEO_PACKAGE,
             cardinality="single",
             description=(
-                "VideoAgent's JSON manifest — scenes, shot_segments, "
-                "per-clip timing. The LLM reads this to understand the "
-                "video structure it is mixing audio onto. This label "
-                "targets the JSON/manifest artifact specifically, NOT "
-                "the mp4 file."
+                "Assembled video's JSON manifest — scenes, "
+                "shot_segments, per-clip timing. The LLM reads this to "
+                "understand the video structure it is mixing audio "
+                "onto. This label targets the JSON/manifest artifact "
+                "specifically, NOT the mp4 file."
             ),
         ),
         InputLabelSpec(
@@ -108,10 +108,11 @@ SPEC = AgentSpec(
             cardinality="single",
             optional=True,
             description=(
-                "MusicAgent's JSON package (mood + duration target for "
-                "the global BGM). Present iff MusicAgent ran. Targets "
-                "the JSON/manifest artifact specifically, NOT the wav "
-                "file — the LLM reads this for mix-planning context."
+                "Background-music JSON package (mood + duration target "
+                "for the global BGM). Present iff a music-generation "
+                "step ran. Targets the JSON/manifest artifact "
+                "specifically, NOT the wav file — the LLM reads this "
+                "for mix-planning context."
             ),
         ),
         InputLabelSpec(
@@ -119,11 +120,11 @@ SPEC = AgentSpec(
             cardinality="single",
             optional=True,
             description=(
-                "The MusicAgent-generated background-music wav on disk "
-                "(binary artifact, mime=audio/wav, sys_id "
-                "'aud_music_film'). Present iff MusicAgent ran. The "
-                "materializer reads its bytes for amix. Targets the "
-                "wav binary specifically, NOT the JSON package."
+                "Background-music wav on disk (binary artifact, "
+                "mime=audio/wav, sys_id 'aud_music_film'). Present iff "
+                "a music-generation step ran. The materializer reads "
+                "its bytes for amix. Targets the wav binary "
+                "specifically, NOT the JSON package."
             ),
         ),
         InputLabelSpec(
@@ -131,11 +132,11 @@ SPEC = AgentSpec(
             cardinality="single",
             optional=True,
             description=(
-                "AmbienceAgent's JSON package (description + duration "
+                "Ambience-bed JSON package (description + duration "
                 "target for the global room-tone underlay). Present "
-                "iff AmbienceAgent ran. Targets the JSON/manifest "
-                "artifact specifically, NOT the wav file — the LLM "
-                "reads this for mix-planning context."
+                "iff an ambience-generation step ran. Targets the "
+                "JSON/manifest artifact specifically, NOT the wav "
+                "file — the LLM reads this for mix-planning context."
             ),
         ),
         InputLabelSpec(
@@ -143,11 +144,11 @@ SPEC = AgentSpec(
             cardinality="single",
             optional=True,
             description=(
-                "The AmbienceAgent-generated ambience wav on disk "
-                "(binary artifact, mime=audio/wav, sys_id "
-                "'aud_amb_film'). Present iff AmbienceAgent ran. The "
-                "materializer reads its bytes for amix. Targets the "
-                "wav binary specifically, NOT the JSON package."
+                "Ambience-bed wav on disk (binary artifact, "
+                "mime=audio/wav, sys_id 'aud_amb_film'). Present iff "
+                "an ambience-generation step ran. The materializer "
+                "reads its bytes for amix. Targets the wav binary "
+                "specifically, NOT the JSON package."
             ),
         ),
     ],

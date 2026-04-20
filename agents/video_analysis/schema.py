@@ -108,8 +108,8 @@ class VideoAnalysisAgentInput(BaseModel):
         if not mime or not mime.startswith("video/"):
             raise ValueError(
                 f"source_video_path must be a video/* file (got mime={mime!r} "
-                f"for path {v!r}); VideoAnalysisAgent does not analyze images "
-                f"— use IntakeImageAgent for image modality."
+                f"for path {v!r}); this analysis step does not analyze images "
+                f"— use the image-intake step for image modality."
             )
         return v
 

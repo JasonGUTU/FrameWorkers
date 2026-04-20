@@ -30,9 +30,9 @@ class IntakeTextInput(BaseModel):
 
     The InputResolver matches a placeholder ``[raw_text_upload]`` artifact
     and populates ``raw_text_path`` with the on-disk path of the raw user
-    file (mirrors how IntakeImageAgent receives image paths). The agent
-    reads the file lazily inside ``_generate`` so the InputResolver does
-    not need to inline-load text payloads.
+    file (mirrors how the image-intake agent receives image paths). The
+    agent reads the file lazily inside ``_generate`` so the InputResolver
+    does not need to inline-load text payloads.
     """
 
     raw_text_path: str = ""

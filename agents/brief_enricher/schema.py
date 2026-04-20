@@ -38,8 +38,8 @@ class BriefEnricherOutput(BaseModel):
 class BriefEnricherInput(BaseModel):
     """Input payload for BriefEnricherAgent — JSON-text pass-through.
 
-    ``raw_brief_json_text``: the IntakeTextAgent payload (has content.text).
-    ``image_payloads_json_text``: JSON array of IntakeImageAgent payloads
+    ``raw_brief_json_text``: the text-intake payload (has content.text).
+    ``image_payloads_json_text``: JSON array of image-intake payloads
         (each has content.visual_description). The LLM reads both blobs
         and merges visual descriptions into the brief text.
     ``image_paths``: runtime file paths of the uploaded images, parallel

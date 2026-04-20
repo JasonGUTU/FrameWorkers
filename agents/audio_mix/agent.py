@@ -46,7 +46,6 @@ class AudioMixAgent(BaseAgent[AudioMixAgentInput, AudioMixAgentOutput]):
             "  * reason: a specific defect.\n"
             "  * missing_labels: ['video'] in this case.\n"
             "  * offending_fields: e.g. ['content.scenes'].\n"
-            "  * upstream_agent_hint: 'VideoAgent'.\n"
             "If only music or only ambience is missing — DO NOT reject; "
             "mix whatever is available (both are optional global tracks; "
             "the video's own audio alone is a valid mix).\n"

@@ -11,17 +11,17 @@ materializer needs to read bytes from). Each agent's JSON package and
 its generated wav coexist at scope=global under distinct captions, so
 we declare one label per representation:
 
-  * ``video_package`` — the VideoAgent JSON manifest (scenes /
+  * ``video_package`` — the assembled-video JSON manifest (scenes /
     shot_segments / timing). Consumed by the LLM for structural context.
   * ``video_file`` — the final assembled mp4 on disk (binary, no JSON
     payload). Consumed by the materializer via ffmpeg to extract the
     Kling-baked audio track (dialogue + foley).
-  * ``music`` — the MusicAgent JSON package (mood + duration target).
-    Consumed by the LLM for mix planning context.
+  * ``music`` — the background-music JSON package (mood + duration
+    target). Consumed by the LLM for mix planning context.
   * ``music_file`` — the generated music wav file on disk (sys_id
     ``aud_music_film``). Consumed by the materializer as a second
     amix input.
-  * ``ambience`` — the AmbienceAgent JSON package (description +
+  * ``ambience`` — the ambience-bed JSON package (description +
     duration target). Consumed by the LLM for mix planning context.
   * ``ambience_file`` — the generated ambience wav file on disk
     (sys_id ``aud_amb_film``). Consumed by the materializer as a third

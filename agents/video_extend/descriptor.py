@@ -100,10 +100,10 @@ SPEC = AgentSpec(
                 "The user's natural-language instruction describing how "
                 "the video should be extended — what happens next, "
                 "target duration, plot beat, physical movement, or scene "
-                "transition. Typically produced by IntakeTextAgent from "
-                "the user's creative brief; caption usually starts with "
-                "'User-submitted creative brief'. Pick the single most "
-                "recent such instruction."
+                "transition. Typically produced by the text-intake step "
+                "from the user's creative brief; caption usually starts "
+                "with 'User-submitted creative brief'. Pick the single "
+                "most recent such instruction."
             ),
         ),
     ],

@@ -1,14 +1,14 @@
 """Ambience materializer — generates the single film-wide ambient bed.
 
 Chunks the target duration into ~30s segments and concatenates them with
-ffmpeg. AudioMixAgent later amix+trims this bed against the actual video
-length, so a slight over-generation is acceptable — under-generation is
-not (silence tail).
+ffmpeg. The downstream audio-mix step later amix+trims this bed against
+the actual video length, so a slight over-generation is acceptable —
+under-generation is not (silence tail).
 
 Persisted-JSON contract: this materializer does NOT mutate the bed dict.
 The wav file is registered in global_memory as a standalone artifact
-with sys_id ``aud_amb_film``; downstream consumers (AudioMixAgent) find
-it by caption-based resolution, not by reading an asset block from the
+with sys_id ``aud_amb_film``; downstream audio-mix consumers find it by
+caption-based resolution, not by reading an asset block from the
 ambience package JSON.
 """
 

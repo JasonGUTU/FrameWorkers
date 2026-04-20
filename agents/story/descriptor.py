@@ -65,11 +65,11 @@ SPEC = AgentSpec(
                 "video to produce. May be a short prompt ('a film about a "
                 "cat chasing a butterfly') or a longer detailed outline / "
                 "draft story text. The caption describes it as a creative "
-                "brief / project intent description. If BriefEnricherAgent "
-                "ran earlier, prefer its enriched brief over the raw "
-                "IntakeTextAgent brief (the enriched one has image "
-                "references woven in). Pick the single most recent / most "
-                "authoritative such brief."
+                "brief / project intent description. If an enriched brief "
+                "(one that integrates image reference descriptions) is "
+                "available, prefer it over the raw text-intake brief. "
+                "Pick the single most recent / most authoritative such "
+                "brief."
             ),
         ),
         InputLabelSpec(
@@ -77,14 +77,14 @@ SPEC = AgentSpec(
             cardinality="single",
             optional=True,
             description=(
-                "Optional VideoAnalysisAgent output of an inspiration / "
-                "reference video. Present in flows like 'analyse this hit "
-                "drama and write me a same-genre sequel / similar new "
-                "story' — the LLM reads its genre, mood, scene summaries, "
-                "and entities as creative seeds to shape tone and pacing "
-                "of the NEW blueprint, without copying plot verbatim. "
-                "Skip this label when there is no reference video being "
-                "analysed."
+                "Optional scene-level video-analysis report of an "
+                "inspiration / reference video. Present in flows like "
+                "'analyse this hit drama and write me a same-genre "
+                "sequel / similar new story' — the LLM reads its genre, "
+                "mood, scene summaries, and entities as creative seeds "
+                "to shape tone and pacing of the NEW blueprint, without "
+                "copying plot verbatim. Skip this label when there is "
+                "no reference video being analysed."
             ),
         ),
     ],

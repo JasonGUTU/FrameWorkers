@@ -1,15 +1,15 @@
 """Music materializer — generates the single film-wide background music track.
 
 Chunks the target duration into ~30s segments (most audio-gen backends cap
-there) and concatenates them with ffmpeg. AudioMixAgent later amix+trims
-this bed against the actual video length, so a slight over-generation is
-acceptable — under-generation is not (silence tail).
+there) and concatenates them with ffmpeg. The downstream audio-mix step
+later amix+trims this bed against the actual video length, so a slight
+over-generation is acceptable — under-generation is not (silence tail).
 
 Persisted-JSON contract: this materializer does NOT mutate the cue dict.
 The wav file is registered in global_memory as a standalone artifact with
-sys_id ``aud_music_film``; downstream consumers (AudioMixAgent) find it
-by caption-based resolution, not by reading an asset block from the
-music package JSON.
+sys_id ``aud_music_film``; downstream audio-mix consumers find it by
+caption-based resolution, not by reading an asset block from the music
+package JSON.
 """
 
 from __future__ import annotations

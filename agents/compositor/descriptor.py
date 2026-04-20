@@ -121,10 +121,11 @@ SPEC = AgentSpec(
             name=INPUT_LABEL_VIDEO_PACKAGE,
             cardinality="single",
             description=(
-                "VideoAgent's JSON manifest — scenes, shot_segments, "
-                "per-clip timing. LLM reads this to plan transitions "
-                "and grade against the video structure. Targets the "
-                "JSON/manifest artifact specifically, NOT the mp4 file."
+                "Assembled video's JSON manifest — scenes, "
+                "shot_segments, per-clip timing. LLM reads this to "
+                "plan transitions and grade against the video "
+                "structure. Targets the JSON/manifest artifact "
+                "specifically, NOT the mp4 file."
             ),
         ),
         InputLabelSpec(
@@ -143,11 +144,11 @@ SPEC = AgentSpec(
             cardinality="single",
             optional=True,
             description=(
-                "AudioMixAgent's JSON envelope (planning manifest; "
+                "Final-audio-mix JSON envelope (planning manifest; "
                 "carries no audio asset fields — the wav is a separate "
-                "binary artifact). Optional — present iff AudioMixAgent "
-                "ran. Targets the JSON/manifest artifact specifically, "
-                "NOT the wav file."
+                "binary artifact). Optional — present iff an audio-mix "
+                "step ran. Targets the JSON/manifest artifact "
+                "specifically, NOT the wav file."
             ),
         ),
         InputLabelSpec(
@@ -157,9 +158,9 @@ SPEC = AgentSpec(
             description=(
                 "The final mixed wav audio file on disk (binary "
                 "artifact, mime=audio/wav). Optional — present iff "
-                "AudioMixAgent ran. Materializer muxes this onto the "
-                "video via ffmpeg. Targets the wav binary, NOT the "
-                "JSON descriptor."
+                "an audio-mix step ran. Materializer muxes this onto "
+                "the video via ffmpeg. Targets the wav binary, NOT "
+                "the JSON descriptor."
             ),
         ),
         InputLabelSpec(
@@ -171,8 +172,8 @@ SPEC = AgentSpec(
                 "video. Zero, one, or many — resolver routes every "
                 "subtitle-shaped artifact here so bilingual / "
                 "multilingual flows can supply one artifact per language "
-                "(e.g. SubtitleAgent source-lang SRT + TranslationAgent "
-                "translated SRT, both burned simultaneously)."
+                "(e.g. a source-language SRT + a translated SRT, both "
+                "burned simultaneously)."
             ),
         ),
     ],

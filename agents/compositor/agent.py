@@ -83,8 +83,6 @@ class CompositorAgent(BaseAgent[CompositorAgentInput, CompositorAgentOutput]):
             "subtitle_tracks, and screenplay labels are optional).\n"
             "  * offending_fields: e.g. ['content.scenes[].shot_segments', "
             "'video_file_path'].\n"
-            "  * upstream_agent_hint: 'VideoAgent' (the producer of the "
-            "video package).\n"
             "If only audio or only subtitles are missing — DO NOT reject; "
             "compose with whatever tracks are present (a video without "
             "audio or without subtitles is a perfectly valid deliverable).\n"

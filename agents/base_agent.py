@@ -59,8 +59,7 @@ INPUT_REJECTION_RULE = (
     '  "input_rejection": {\n'
     '    "reason": "<one-sentence explanation of what is insufficient>",\n'
     '    "missing_labels": ["<consumer-declared label whose content is unusable>", ...],\n'
-    '    "offending_fields": ["<field path you tried to read but could not>", ...],\n'
-    '    "upstream_agent_hint": "<agent_id you think should be re-run or replaced, or \\"\\">"\n'
+    '    "offending_fields": ["<field path you tried to read but could not>", ...]\n'
     '  }\n'
     '}\n'
     "Rules for using this escape hatch:\n"
@@ -72,6 +71,9 @@ INPUT_REJECTION_RULE = (
     "preference.\n"
     "  * When rejecting, return ONLY the ``input_rejection`` object — no "
     "partial normal output alongside it.\n"
+    "  * Describe WHAT is missing in your own labels; do NOT name which "
+    "upstream agent should be re-run — that decision belongs to the "
+    "Director, not to you.\n"
     "=== END UPSTREAM INPUT REJECTION ===\n\n"
 )
 
@@ -229,8 +231,8 @@ class BaseAgent(Generic[InputT, OutputT]):
         """Return the full system prompt for any LLM calls this agent makes.
 
         Required only when ``generate()`` calls ``_llm_fill_full`` or
-        ``_llm_fill_creative``. LLM-free agents (e.g. VideoAgent) don't
-        need to override this.
+        ``_llm_fill_creative``. LLM-free agents don't need to override
+        this.
         """
         raise NotImplementedError(f"{self.agent_name}.system_prompt()")
 
@@ -239,7 +241,7 @@ class BaseAgent(Generic[InputT, OutputT]):
 
         Default implementation resolves the ``OutputT`` generic parameter
         at runtime and calls ``model_validate(raw)``.  Override only if
-        your agent needs custom parsing (e.g. KeyFrameAgent).
+        your agent needs custom parsing.
         """
         output_cls = get_args(self.__class__.__orig_bases__[0])[1]
         return output_cls.model_validate(raw)

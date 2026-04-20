@@ -8,7 +8,7 @@
             bytes directly.
   Layer 2 — Scene anchors: default global ref + prompt -> ``edit_image()``; or ``t2i`` mode.
   Layer 3 — One still per shot: edit from scene **location** L2 (or text-only fallback) so the
-            PNG matches the shot ``prompt_summary``; VideoAgent consumes **only** this URI.
+            PNG matches the shot ``prompt_summary``; the downstream video step consumes **only** this URI.
 
 *Props are included when KeyFrameAgent emitted prop anchors (``FW_ENABLE_PROP_PIPELINE``).
 

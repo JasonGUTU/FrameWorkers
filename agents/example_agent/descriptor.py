@@ -54,8 +54,8 @@ SPEC = AgentSpec(
             name=INPUT_LABEL_SOURCE_TEXT,
             cardinality="single",
             description=(
-                "Plain text to summarize (from a creative brief artifact, "
-                "IntakeTextAgent output, or any text payload)."
+                "Plain text to summarize (a creative brief artifact, a "
+                "text-intake payload, or any text artifact)."
             ),
         ),
     ],

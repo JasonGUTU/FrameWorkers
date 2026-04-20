@@ -65,8 +65,8 @@ SPEC = AgentSpec(
         "Generate a complete storyboard with character definitions and "
         "shot-by-shot breakdown using UniVA's storyboard planning "
         "approach. Pipeline entry point for UniVA-style creation (runs "
-        "instead of StoryAgent + ScreenplayAgent when the user's plan "
-        "targets the UniVA track)."
+        "instead of the standard story + screenplay steps when the "
+        "user's plan targets the UniVA track)."
     ),
     input_preamble=(
         "I am the pipeline entry point for UniVA-style storyboard "

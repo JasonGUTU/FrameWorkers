@@ -74,7 +74,7 @@ class CompositorAgentInput(BaseModel):
     subtitle style).  The materializer then executes the plan via FFmpeg.
 
     ``subtitle_json_texts`` is a list so bilingual / multilingual flows
-    (e.g. SubtitleAgent → TranslationAgent → Compositor) can pass every
+    (subtitle step → translation step → this compositor) can pass every
     language track through for simultaneous burn-in.
     """
 

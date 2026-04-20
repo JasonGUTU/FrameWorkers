@@ -4,7 +4,7 @@ Post-refactor shape: the agent emits **one** MusicCue whose duration covers
 the whole film. Per-scene cues / scene_id are gone — scene-level alignment
 is no longer meaningful in the new audio architecture (Kling bakes
 dialogue + foley into each video clip, leaving BGM as a pure global
-underlay laid on top by AudioMixAgent).
+underlay laid on top by the downstream audio-mix step).
 """
 
 from __future__ import annotations
@@ -56,8 +56,6 @@ class MusicAgent(BaseAgent[MusicAgentInput, MusicAgentOutput]):
             "screenplay and video_analysis are empty').\n"
             "  * missing_labels: ['screenplay', 'video_analysis'].\n"
             "  * offending_fields: e.g. ['content.scenes'].\n"
-            "  * upstream_agent_hint: 'ScreenplayAgent' for newly-created "
-            "films or 'VideoAnalysisAgent' for existing-video edit flows.\n"
             "Thin tone / mood descriptions are NOT a reject reason — "
             "infer mood from whatever descriptive text is present.\n"
             "=== END WHEN TO REJECT UPSTREAM INPUT ===\n\n"
@@ -98,9 +96,9 @@ class MusicAgent(BaseAgent[MusicAgentInput, MusicAgentOutput]):
             "target; if it is 0 / missing, sum scenes[*].end_time of the "
             "last scene.\n"
             "  * Round to one decimal place. Must be strictly > 0.\n"
-            "  * AudioMixAgent will amix this cue against the actual "
-            "video duration and trim — this number is a sensible target, "
-            "not a hard contract.\n\n"
+            "  * The downstream audio-mix step will amix this cue against "
+            "the actual video duration and trim — this number is a "
+            "sensible target, not a hard contract.\n\n"
             "JSON only; no markdown.\n"
             "Do NOT include an artifact_caption block."
         )

@@ -10,7 +10,7 @@
 #SBATCH --output=/home/zhendong_li/FrameWorkers/training/director/logs/train_%j.log
 #SBATCH --error=/home/zhendong_li/FrameWorkers/training/director/logs/train_%j.error
 #SBATCH --qos=eccv-2026
-#SBATCH --partition=non-reserved
+#SBATCH --partition=batch
 
 set -euo pipefail
 
@@ -18,20 +18,29 @@ REPO_ROOT="/home/zhendong_li/FrameWorkers"
 cd "$REPO_ROOT"
 
 # ---------------------------------------------------------------------------
-# Env: activate self-contained director-train (copy-clone of frameworkers env
-# at a cephfs path visible to GPU nodes). See run_smoke.sh for full rationale.
+# Env: source ~/.bashrc to bring in conda init, then activate director-train
+# by full cephfs path. The env lives on cephfs (shared across nodes); the
+# source miniconda in ~/.bashrc points at /scratch/…/miniconda3 which must be
+# resolvable on this GPU node for `conda activate` to work.
+# If /scratch is node-local and not visible here, activation fails loudly
+# below — in that case, fall back to PATH-prepend:
+#   export PATH="$ENV_DIR/bin:$PATH" ; export CONDA_PREFIX="$ENV_DIR"
 # ---------------------------------------------------------------------------
 ENV_DIR="/home/zhendong_li/.conda-envs/director-train"
-if [ ! -x "$ENV_DIR/bin/python" ]; then
-    echo "FATAL: $ENV_DIR/bin/python missing on GPU node." >&2
-    echo "       /scratch is node-local so we cannot clone the source env from here." >&2
-    echo "       Run 'bash training/director/ensure_env.sh' on the LOGIN node before sbatch." >&2
-    echo "       Or use the wrapper: 'bash training/director/submit_training.sh'." >&2
+set +u                             # ~/.bashrc may touch unset vars
+source ~/.bashrc
+conda activate "$ENV_DIR"
+set -u
+
+if [ -z "${CONDA_PREFIX:-}" ] || [ ! -x "$CONDA_PREFIX/bin/python" ]; then
+    echo "FATAL: conda activate failed." >&2
+    echo "       ~/.bashrc conda init points at /scratch/…/miniconda3 which may not be visible on this GPU node." >&2
+    echo "       Either (a) bootstrap a cephfs miniconda and rerun 'conda init' from it, or" >&2
+    echo "       (b) revert this sbatch to the PATH-prepend activation pattern (see comment above)." >&2
     exit 1
 fi
-export PATH="$ENV_DIR/bin:$PATH"
-export CONDA_PREFIX="$ENV_DIR"
 echo "python: $(which python) — $(python --version)"
+echo "CONDA_PREFIX=$CONDA_PREFIX"
 nvidia-smi | head -20
 
 # ---------------------------------------------------------------------------

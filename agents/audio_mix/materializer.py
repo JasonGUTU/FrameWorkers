@@ -3,10 +3,10 @@
 Post-refactor architecture:
   * The video's audio track (Kling's baked-in dialogue + foley) is the
     base layer — extracted with ffmpeg from the final video mp4.
-  * Optional global MusicAgent output (single film-wide wav registered
-    under sys_id ``aud_music_film``) overlays on top.
-  * Optional global AmbienceAgent output (single film-wide wav
-    registered under sys_id ``aud_amb_film``) overlays on top.
+  * Optional global background-music wav (single film-wide wav
+    registered under sys_id ``aud_music_film``) overlays on top.
+  * Optional global ambience-bed wav (single film-wide wav registered
+    under sys_id ``aud_amb_film``) overlays on top.
   * ffmpeg amix with duration=longest produces the final wav,
     registered under sys_id ``aud_final``.
 

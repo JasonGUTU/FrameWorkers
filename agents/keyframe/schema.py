@@ -126,12 +126,11 @@ class KeyFrameAgentInput(BaseModel):
     """Input payload for KeyFrameAgent — univa-style JSON-text pass-through.
 
     ``screenplay_json_text`` is the **entire** upstream screenplay payload
-    serialized as a raw JSON text blob. KeyFrameAgent's LLM reads this
-    text directly and reasons about whatever shape the upstream happens
-    to produce — there is NO field-name unpacking in ``build_input`` or
-    in the agent code. This removes the string-keyed coupling between
-    ScreenplayAgent's internal field names and KeyFrameAgent's consumer
-    code.
+    serialized as a raw JSON text blob. This agent's LLM reads this text
+    directly and reasons about whatever shape the upstream happens to
+    produce — there is NO field-name unpacking in ``build_input`` or in
+    the agent code. This removes the string-keyed coupling between the
+    upstream screenplay's internal field names and this consumer.
 
     ``character_references`` / ``location_references`` / ``style_references``
     are typed image reference lists selected via their respective labels;

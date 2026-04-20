@@ -64,9 +64,9 @@ SPEC = AgentSpec(
     ],
     output_description=(
         "transcript (timestamped segments + full text + detected language). "
-        "Shape is compatible with SubtitleAgent's 'timed source text' slot "
-        "— SubtitleAgent can consume me the same way it consumes a "
-        "screenplay."
+        "Shape is compatible with the subtitle step's 'timed source text' "
+        "slot — the subtitle step can consume me the same way it consumes "
+        "a screenplay."
     ),
     purpose_and_routing=(
         """Speech-to-text on an existing video's audio track, producing timestamped transcript segments. Trigger: existing-video flow needing subtitles or translation, with no screenplay available."""

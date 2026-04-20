@@ -9,8 +9,8 @@ Generation model: ONE LLM call via ``_llm_fill_full``. The LLM receives
 the raw brief JSON and the image description JSON array, determines each
 image's role from the TEXT context (not from the image itself), and
 produces an enriched brief that weaves the visual descriptions into the
-narrative so downstream StoryAgent creates characters / locations / props
-that MATCH the uploaded reference images.
+narrative so the downstream story step creates characters / locations /
+props that MATCH the uploaded reference images.
 
 Post-LLM pass: ``image_paths`` (runtime file paths the LLM cannot know)
 are copied from input_data into the output so ``build_captions`` can
@@ -73,7 +73,7 @@ class BriefEnricherAgent(BaseAgent[BriefEnricherInput, BriefEnricherOutput]):
             "image entries. This agent only exists to merge image "
             "descriptions into a brief — with no images, there is "
             "literally nothing for me to do (the brief should bypass me "
-            "entirely and go straight to StoryAgent).\n"
+            "entirely and go straight to the story step).\n"
             "  * Every image payload lacks a visual_description (or any "
             "equivalent description field) — without descriptions, "
             "there is nothing concrete to weave in.\n"
@@ -85,18 +85,15 @@ class BriefEnricherAgent(BaseAgent[BriefEnricherInput, BriefEnricherOutput]):
             "'image_descriptions'] is unusable.\n"
             "  * offending_fields: e.g. ['content.text', "
             "'[].content.visual_description'].\n"
-            "  * upstream_agent_hint: 'IntakeTextAgent' if the brief is "
-            "the problem, 'IntakeImageAgent' if the image descriptions "
-            "are the problem.\n"
             "If the brief is merely short or the image descriptions are "
             "thin — DO NOT reject; weave whatever is present.\n"
             "=== END WHEN TO REJECT UPSTREAM INPUT ===\n\n"
             "=== INPUT FORMAT ===\n"
             "You will receive TWO JSON text blobs:\n"
-            "1. The raw creative brief (from IntakeTextAgent) — contains "
-            "the user's story/video concept.\n"
-            "2. An array of image description payloads (from "
-            "IntakeImageAgent) — each has a ``content.visual_description`` "
+            "1. The raw creative brief (from the text-intake step) — "
+            "contains the user's story/video concept.\n"
+            "2. An array of image description payloads (from the image-"
+            "intake step) — each has a ``content.visual_description`` "
             "describing what the uploaded image shows.\n\n"
             "=== YOUR JOB ===\n"
             "1. Read the user's TEXT to understand their intent. The text "
@@ -113,8 +110,8 @@ class BriefEnricherAgent(BaseAgent[BriefEnricherInput, BriefEnricherOutput]):
             "shows a red-haired woman' but 'the protagonist is a young "
             "woman with fiery red hair and a freckled face'. Include "
             "enough visual detail from the image descriptions that "
-            "downstream StoryAgent will create characters / locations / "
-            "props whose descriptions MATCH the uploaded reference "
+            "the downstream story step will create characters / locations "
+            "/ props whose descriptions MATCH the uploaded reference "
             "images.\n\n"
             "4. Keep the original creative intent intact — do not invent "
             "new plot elements, do not remove any part of the user's "

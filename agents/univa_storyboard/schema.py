@@ -67,7 +67,7 @@ class UnivaStoryboardMetrics(BaseModel):
 class UnivaStoryboardInput(BaseModel):
     """Univa-style JSON-text pass-through. See CLAUDE.md §7."""
 
-    creative_brief_json_text: str = Field("", description="Upstream IntakeTextAgent payload as raw JSON text")
+    creative_brief_json_text: str = Field("", description="Upstream text-intake payload as raw JSON text")
 
 
 class UnivaStoryboardOutput(BaseModel):

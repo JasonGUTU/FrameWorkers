@@ -64,15 +64,15 @@ SPEC = AgentSpec(
             name=INPUT_LABEL_SOURCE_TEXT,
             cardinality="single",
             description=(
-                "The upstream artifact to translate. Accepts ANY structured "
-                "text: screenplay (ScreenplayAgent), translated screenplay, "
-                "timestamped transcript (TranscriptionAgent), subtitle SRT "
-                "track (SubtitleAgent — most common source for "
-                "bilingual/foreign-subtitle flows), story blueprint "
-                "(StoryAgent), or ingested user text. Payload is forwarded "
-                "as raw JSON text; the LLM reads whatever structure it has "
-                "and translates all human-readable fields while preserving "
-                "keys, ids, timing, ordering."
+                "The upstream artifact to translate. Accepts ANY "
+                "structured text: a screenplay document, a translated "
+                "screenplay, a timestamped transcript, a subtitle SRT "
+                "track (most common source for bilingual/foreign-"
+                "subtitle flows), a story blueprint, or ingested user "
+                "text. Payload is forwarded as raw JSON text; the LLM "
+                "reads whatever structure it has and translates all "
+                "human-readable fields while preserving keys, ids, "
+                "timing, ordering."
             ),
         ),
     ],

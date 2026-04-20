@@ -64,14 +64,13 @@ SPEC = AgentSpec(
             name=INPUT_LABEL_SOURCE_TEXT,
             cardinality="single",
             description=(
-                "Timed source text to subtitle. Accepts ANY of: a screenplay "
-                "(ScreenplayAgent output, for newly-created films); a "
-                "translated screenplay (TranslationAgent applied to a "
-                "screenplay); a timestamped transcript (TranscriptionAgent "
-                "output, for existing media with no screenplay); or a "
-                "pre-existing subtitle track in text form. Payload is "
-                "forwarded as raw JSON text and the LLM extracts "
-                "dialogue/narration lines from whatever structure it has."
+                "Timed source text to subtitle. Accepts ANY of: a "
+                "screenplay document (for newly-created films); a "
+                "translated screenplay; a timestamped transcript (for "
+                "existing media with no screenplay); or a pre-existing "
+                "subtitle track in text form. Payload is forwarded as "
+                "raw JSON text and the LLM extracts dialogue/narration "
+                "lines from whatever structure it has."
             ),
         ),
         InputLabelSpec(
@@ -79,10 +78,10 @@ SPEC = AgentSpec(
             cardinality="single",
             optional=True,
             description=(
-                "Optional video package (VideoAgent output) with per-shot "
-                "durations for precise timing alignment. If absent, cue "
-                "timing is estimated from reading-speed heuristics against "
-                "the source text."
+                "Optional assembled-video package (JSON manifest) with "
+                "per-shot durations for precise timing alignment. If "
+                "absent, cue timing is estimated from reading-speed "
+                "heuristics against the source text."
             ),
         ),
     ],

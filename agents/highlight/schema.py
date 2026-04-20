@@ -43,8 +43,8 @@ class HighlightAgentInput(BaseModel):
     """Input payload for HighlightAgent.
 
     ``source_video_path``: the video to extract highlights from.
-    ``analysis_json_text``: optional VideoAnalysisAgent output as JSON text
-      for informed selection.
+    ``analysis_json_text``: optional scene-level video-analysis report as
+      JSON text for informed selection.
     ``criteria``: what kind of highlights to extract (e.g. 'action scenes',
       'emotional moments', 'best visual shots').
     """

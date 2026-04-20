@@ -60,8 +60,6 @@ class HighlightAgent(BaseAgent[HighlightAgentInput, HighlightAgentOutput]):
             "  * missing_labels: ['source_video'] (the video_analysis "
             "label is optional).\n"
             "  * offending_fields: ['source_video_path'].\n"
-            "  * upstream_agent_hint: 'IntakeVideoAgent' (the producer "
-            "that should have ingested the user's video upload).\n"
             "If the criteria is empty or vague (e.g. 'best moments') — "
             "DO NOT reject; default to selecting the most visually "
             "interesting segments. If the analysis_json_text is empty — "

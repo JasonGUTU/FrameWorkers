@@ -82,8 +82,6 @@ class VideoAnalysisAgent(BaseAgent[VideoAnalysisAgentInput, VideoAnalysisAgentOu
             "file to analyze'.\n"
             "  * missing_labels: ['source_video'] (my only input label).\n"
             "  * offending_fields: ['source_video_path'].\n"
-            "  * upstream_agent_hint: 'IntakeVideoAgent' (the producer "
-            "that should have ingested the user's video upload).\n"
             "If the path looks unusual but is non-empty — DO NOT reject; "
             "the vision model will surface a real failure if the video is "
             "unreadable or unsupported. Short / sparse / abstract video "

@@ -92,20 +92,21 @@ SPEC = AgentSpec(
             cardinality="single",
             description=(
                 "The raw creative brief — the user's text describing the "
-                "story or video concept. Typically the output of "
-                "IntakeTextAgent. Choose the single most recent text "
-                "brief."
+                "story or video concept. Typically the structured "
+                "text-intake artifact. Choose the single most recent "
+                "text brief."
             ),
         ),
         InputLabelSpec(
             name=INPUT_LABEL_IMAGE_DESCRIPTIONS,
             cardinality="collection",
             description=(
-                "The JSON descriptor artifacts from IntakeImageAgent. "
-                "Each entry's payload contains a visual_description of "
-                "the uploaded image. Match by caption mentioning "
-                "'reference image' and mime=application/json. Include "
-                "every processed image upload."
+                "Per-image JSON descriptor artifacts from the image-"
+                "intake step. Each entry's payload contains a "
+                "visual_description of the uploaded image. Match by "
+                "caption mentioning 'reference image' and "
+                "mime=application/json. Include every processed image "
+                "upload."
             ),
         ),
         InputLabelSpec(
@@ -113,9 +114,10 @@ SPEC = AgentSpec(
             cardinality="collection",
             description=(
                 "The actual uploaded image FILES (PNG/JPG) registered by "
-                "IntakeImageAgent. Each entry's path points directly to "
-                "the image file on disk (not a JSON descriptor). Match "
-                "by mime=image/*. Include every uploaded image file."
+                "the image-intake step. Each entry's path points "
+                "directly to the image file on disk (not a JSON "
+                "descriptor). Match by mime=image/*. Include every "
+                "uploaded image file."
             ),
         ),
     ],

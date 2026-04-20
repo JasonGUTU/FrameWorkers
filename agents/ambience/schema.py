@@ -28,7 +28,7 @@ class AmbienceBed(BaseModel):
         0.0,
         description=(
             "Total film length target for the global ambience bed, in "
-            "seconds. Same estimation formula as MusicAgent: "
+            "seconds. Same estimation formula as the music step: "
             "spoken_words/2.5 + action_shots*3 summed across all scenes."
         ),
     )
@@ -47,7 +47,7 @@ class AmbienceAgentInput(BaseModel):
 
     At least ONE of the two JSON text fields must be populated — the
     agent derives dominant environment + duration from a screenplay
-    when available, else falls back to a VideoAnalysisAgent output
+    when available, else falls back to a video-analysis report
     (scene settings + video_summary.duration_seconds). Both are raw
     JSON text blobs.
     """

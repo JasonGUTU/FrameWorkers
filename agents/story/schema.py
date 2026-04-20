@@ -86,16 +86,16 @@ class StoryBlueprint(BaseModel):
 class StoryAgentInput(BaseModel):
     """Input payload for StoryAgent — univa-style JSON-text pass-through.
 
-    ``creative_brief_json_text`` is the **entire** upstream IntakeTextAgent
-    payload serialized as a raw JSON text blob. StoryAgent's LLM reads
+    ``creative_brief_json_text`` is the **entire** upstream text-intake
+    payload serialized as a raw JSON text blob. This agent's LLM reads
     this text directly and extracts the brief from whatever shape it
     finds (typically ``content.text``). There is NO field-name unpacking
     in ``build_input`` or in the agent — this removes the hidden
-    string-keyed coupling between IntakeTextAgent's internal field names
-    and StoryAgent's consumer code.
+    string-keyed coupling between the upstream text-intake's internal
+    field names and this consumer.
 
-    ``reference_analysis_json_text`` is the optional VideoAnalysisAgent
-    payload of an inspiration / reference video. When present the LLM
+    ``reference_analysis_json_text`` is the optional scene-level video-
+    analysis payload of an inspiration / reference video. When present the LLM
     should treat its genre / mood / entities / scene summaries as
     creative seeds for the new story (matching tone / template pacing),
     alongside the primary brief — enabling flows like "analyse this hit

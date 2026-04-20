@@ -152,8 +152,6 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
             "  * missing_labels: ['story'] (my only input label).\n"
             "  * offending_fields: the field paths you looked at and found "
             "empty, e.g. ['content.cast', 'content.characters'].\n"
-            "  * upstream_agent_hint: 'StoryAgent' (the producer that should "
-            "be re-run with a brief that includes the missing info).\n"
             "If the blueprint is merely sparse (e.g. a single-sentence "
             "premise with one character) — DO NOT reject; proceed and invent "
             "the supporting detail, that is part of your job.\n\n"

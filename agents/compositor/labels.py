@@ -5,11 +5,11 @@ ship as TWO coexisting scope=global artifacts (JSON manifest + binary
 file) with similar captions, so we declare one label per artifact kind
 so the caption-driven InputResolver can route each independently.
 
-  * ``video_package`` — VideoAgent JSON manifest (LLM consumes for
+  * ``video_package`` — assembled-video JSON manifest (LLM consumes for
     structural planning).
   * ``video_file`` — final assembled mp4 on disk (materializer's ffmpeg
     input).
-  * ``audio_package`` — AudioMixAgent JSON asset descriptor (LLM reads
+  * ``audio_package`` — final-audio-mix JSON asset descriptor (LLM reads
     to know which tracks are present).
   * ``audio_file`` — final mixed wav on disk (materializer muxes this
     onto the video via ffmpeg).

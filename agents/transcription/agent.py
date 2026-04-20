@@ -64,8 +64,6 @@ class TranscriptionAgent(BaseAgent[TranscriptionAgentInput, TranscriptionAgentOu
             "file to transcribe'.\n"
             "  * missing_labels: ['source_media'] (my only input label).\n"
             "  * offending_fields: ['source_media_path'].\n"
-            "  * upstream_agent_hint: 'IntakeVideoAgent' (the intake that "
-            "should have ingested the user's media upload).\n"
             "If the path looks unusual but is non-empty — DO NOT reject; "
             "the materializer (which actually invokes the ASR service) "
             "will surface a real failure if the file does not exist or is "

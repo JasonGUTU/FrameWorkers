@@ -4,7 +4,7 @@ Post-refactor shape: the agent emits **one** AmbienceBed whose duration
 covers the whole film. Per-scene beds / scene_id are gone — Kling bakes
 scene-synchronized foley (footsteps, impacts, object sounds) into each
 video clip; this bed is the continuous room-tone underlay that fills
-between foley events and is mixed in by AudioMixAgent globally.
+between foley events and is mixed in by the downstream audio-mix step globally.
 """
 
 from __future__ import annotations
@@ -55,8 +55,6 @@ class AmbienceAgent(BaseAgent[AmbienceAgentInput, AmbienceAgentOutput]):
             "screenplay and video_analysis are empty').\n"
             "  * missing_labels: ['screenplay', 'video_analysis'].\n"
             "  * offending_fields: e.g. ['content.scenes'].\n"
-            "  * upstream_agent_hint: 'ScreenplayAgent' for newly-created "
-            "films or 'VideoAnalysisAgent' for existing-video edit flows.\n"
             "Thin location / environment descriptions are NOT a reject "
             "reason — use a generic 'room tone' when nothing is specified.\n"
             "=== END WHEN TO REJECT UPSTREAM INPUT ===\n\n"
@@ -85,7 +83,8 @@ class AmbienceAgent(BaseAgent[AmbienceAgentInput, AmbienceAgentOutput]):
             "=== DURATION ===\n"
             "Compute duration_seconds so Music and Ambience stay "
             "naturally aligned:\n"
-            "  * With a screenplay — use the same formula as MusicAgent:\n"
+            "  * With a screenplay — use the same dialogue_words / action_shots "
+            "formula as the music step:\n"
             "      dialogue_words = total word count across all shots "
             "whose block_type is 'dialogue', 'narration', or 'monologue' "
             "in the entire screenplay.\n"
@@ -97,7 +96,8 @@ class AmbienceAgent(BaseAgent[AmbienceAgentInput, AmbienceAgentOutput]):
             "content.video_summary.duration_seconds directly; if 0 / "
             "missing, take scenes[-1].end_time.\n"
             "  * Round to one decimal place. Must be strictly > 0.\n"
-            "  * AudioMixAgent amix+trims against the actual video.\n\n"
+            "  * The downstream audio-mix step amix+trims against "
+            "the actual video.\n\n"
             "JSON only; no markdown.\n"
             "Do NOT include an artifact_caption block."
         )

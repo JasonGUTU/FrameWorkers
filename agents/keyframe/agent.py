@@ -163,8 +163,6 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
             "only mandatory label; reference images are optional).\n"
             "  * offending_fields: the field paths you looked at, e.g. "
             "['content.scenes', 'content.scenes[].shots'].\n"
-            "  * upstream_agent_hint: 'ScreenplayAgent' (the producer of "
-            "the screenplay artifact).\n"
             "If the screenplay is merely sparse (few scenes, thin shot "
             "descriptions, missing some style notes) — DO NOT reject; "
             "fleshing out visual specifics from sparse cues is part of "

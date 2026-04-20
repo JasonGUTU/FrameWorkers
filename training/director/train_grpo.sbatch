@@ -10,7 +10,7 @@
 #SBATCH --output=/home/zhendong_li/FrameWorkers/training/director/logs/grpo_%j.log
 #SBATCH --error=/home/zhendong_li/FrameWorkers/training/director/logs/grpo_%j.error
 #SBATCH --qos=eccv-2026
-#SBATCH --partition=non-reserved
+#SBATCH --partition=batch
 
 set -euo pipefail
 
@@ -18,17 +18,23 @@ REPO_ROOT="/home/zhendong_li/FrameWorkers"
 cd "$REPO_ROOT"
 
 # ---------------------------------------------------------------------------
-# Env: self-contained cephfs env (same pattern as train_full.sbatch)
+# Env: source ~/.bashrc → conda activate director-train (full cephfs path).
+# Same rationale as train_full.sbatch — fall back to PATH-prepend if this
+# GPU node can't see the /scratch miniconda referenced by ~/.bashrc.
 # ---------------------------------------------------------------------------
 ENV_DIR="/home/zhendong_li/.conda-envs/director-train"
-if [ ! -x "$ENV_DIR/bin/python" ]; then
-    echo "FATAL: $ENV_DIR/bin/python missing." >&2
-    echo "       Run 'bash training/director/ensure_env.sh' on the LOGIN node before sbatch." >&2
+set +u
+source ~/.bashrc
+conda activate "$ENV_DIR"
+set -u
+
+if [ -z "${CONDA_PREFIX:-}" ] || [ ! -x "$CONDA_PREFIX/bin/python" ]; then
+    echo "FATAL: conda activate failed on this GPU node." >&2
+    echo "       Either bootstrap a cephfs miniconda + re-init, or revert to PATH-prepend." >&2
     exit 1
 fi
-export PATH="$ENV_DIR/bin:$PATH"
-export CONDA_PREFIX="$ENV_DIR"
 echo "python: $(which python) — $(python --version)"
+echo "CONDA_PREFIX=$CONDA_PREFIX"
 nvidia-smi | head -20
 
 # Training deps (TRL GRPOTrainer requires trl>=0.14; verify)

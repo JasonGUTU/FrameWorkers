@@ -8,8 +8,8 @@ optional global ambience bed.
 The agent's JSON output is now essentially metadata-only: all binary
 material (the wav) is emitted by the materializer and registered as a
 standalone artifact (sys_id ``aud_final``) in global_memory. Downstream
-consumers (CompositorAgent) discover it by caption-based resolution,
-not by reading an asset block from this payload.
+compositing consumers discover it by caption-based resolution, not by
+reading an asset block from this payload.
 """
 
 from __future__ import annotations
@@ -36,12 +36,12 @@ class AudioMixAgentInput(BaseModel):
     video file, and optional global music + optional global ambience JSON
     packages and file paths.
 
-    The video side is split into two fields because the VideoAgent emits
-    two scope=global artifacts (a JSON manifest and an mp4 binary) and the
-    InputResolver must route each via a separate label (see
-    ``agents/audio_mix/labels.py`` for the rationale):
+    The video side is split into two fields because the upstream video-
+    assembly step emits two scope=global artifacts (a JSON manifest and
+    an mp4 binary) and the InputResolver must route each via a separate
+    label (see ``agents/audio_mix/labels.py`` for the rationale):
 
-      * ``video_json_text`` — serialized JSON payload of the VideoAgent's
+      * ``video_json_text`` — serialized JSON payload of the upstream
         video package (scenes, shot_segments, timing). Used by this
         agent's LLM to reason about video structure.
       * ``video_file_path`` — direct on-disk path to the final assembled

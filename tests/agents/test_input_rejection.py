@@ -84,14 +84,12 @@ class TestInputRejectionSchema:
         assert r.reason == ""
         assert r.missing_labels == []
         assert r.offending_fields == []
-        assert r.upstream_agent_hint == ""
 
     def test_round_trip(self) -> None:
         r = InputRejection(
             reason="no characters",
             missing_labels=["story"],
             offending_fields=["content.cast"],
-            upstream_agent_hint="StoryAgent",
         )
         dumped = r.model_dump()
         assert dumped["reason"] == "no characters"
@@ -120,14 +118,12 @@ class TestMaybeParseRejection:
                 "input_rejection": {
                     "reason": "no cast",
                     "missing_labels": ["story"],
-                    "upstream_agent_hint": "StoryAgent",
                 }
             }
         )
         assert isinstance(parsed, InputRejection)
         assert parsed.reason == "no cast"
         assert parsed.missing_labels == ["story"]
-        assert parsed.upstream_agent_hint == "StoryAgent"
 
     def test_returns_none_when_field_is_garbage(self) -> None:
         # Not a dict → treated as "no rejection" so normal Pydantic parsing
@@ -152,7 +148,6 @@ class TestBaseAgentRunRejectionHandling:
             reason="story_json_text is empty",
             missing_labels=["story"],
             offending_fields=["content"],
-            upstream_agent_hint="StoryAgent",
         )
         agent = _AgentThatRejects(rejection)
 
@@ -175,7 +170,6 @@ class TestBaseAgentRunRejectionHandling:
         assert "story_json_text is empty" in er["summary"]
         assert er["input_rejection"]["reason"] == "story_json_text is empty"
         assert er["input_rejection"]["missing_labels"] == ["story"]
-        assert er["input_rejection"]["upstream_agent_hint"] == "StoryAgent"
 
     def test_input_rejection_rule_block_is_non_empty(self) -> None:
         # Sanity: the rule constant actually exists, mentions the key the LLM
@@ -215,14 +209,14 @@ class TestFormatFailureError:
                     "reason": "no characters",
                     "missing_labels": ["story"],
                     "offending_fields": ["content.cast"],
-                    "upstream_agent_hint": "StoryAgent",
                 },
             }
         )
         assert err.startswith("[upstream_input_rejected] ")
         assert "reason=no characters" in err
         assert "missing=[story]" in err
-        assert "hint=StoryAgent" in err
+        # Sub-agents no longer name producers — Director infers from PENDING tail.
+        assert "hint=" not in err
 
     def test_rejection_branch_tolerates_missing_subfields(self) -> None:
         err = self._fmt(
@@ -234,7 +228,6 @@ class TestFormatFailureError:
         assert err.startswith("[upstream_input_rejected] ")
         assert "reason=bad" in err
         assert "missing=[]" in err
-        assert "hint=(none)" in err
 
     def test_quality_gate_branch_keeps_legacy_prefix(self) -> None:
         err = self._fmt(

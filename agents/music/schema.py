@@ -49,7 +49,7 @@ class MusicAgentInput(BaseModel):
 
     At least ONE of the two JSON text fields must be populated — the
     agent derives mood + duration from a screenplay when available,
-    else falls back to a VideoAnalysisAgent output (scene moods +
+    else falls back to a video-analysis report (scene moods +
     video_summary.duration_seconds). Both are raw JSON text blobs so
     the LLM reads structure directly from whatever shape is present.
     """

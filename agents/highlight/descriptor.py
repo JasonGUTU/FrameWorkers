@@ -96,10 +96,11 @@ SPEC = AgentSpec(
             cardinality="single",
             optional=True,
             description=(
-                "Optional VideoAnalysisAgent output providing structured "
-                "scene analysis for informed clip selection. Required "
-                "for narrative / content-driven selection criteria; can "
-                "be skipped for purely visual / kinetic criteria."
+                "Optional scene-level video-analysis report providing "
+                "structured scene analysis for informed clip selection. "
+                "Required for narrative / content-driven selection "
+                "criteria; can be skipped for purely visual / kinetic "
+                "criteria."
             ),
         ),
     ],

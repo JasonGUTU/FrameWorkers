@@ -103,8 +103,6 @@ class StoryAgent(BaseAgent[StoryAgentInput, StoryAgentOutput]):
             "  * missing_labels: ['creative_brief'] (my only input label).\n"
             "  * offending_fields: the field paths you looked at and "
             "found empty, e.g. ['content.text', 'content.summary'].\n"
-            "  * upstream_agent_hint: 'IntakeTextAgent' (the producer "
-            "that wraps the user's brief).\n"
             "If the brief is merely short or vague — DO NOT reject; "
             "expanding short prompts into rich blueprints is exactly what "
             "this agent is for.\n"

@@ -54,10 +54,9 @@ SPEC = AgentSpec(
         ),
     ],
     output_description=(
-        "a caption-rich video artifact discoverable by downstream "
-        "video-consuming agents (VideoAnalysisAgent, StyleTransferAgent, "
-        "VideoExtendAgent, HighlightAgent, TranscriptionAgent, "
-        "SubtitleAgent for existing video)."
+        "a caption-rich video artifact discoverable by any downstream "
+        "video-consuming step (analysis, style transfer, extension, "
+        "highlight extraction, transcription, or subtitle generation)."
     ),
     purpose_and_routing=(
         """Intake a raw user-uploaded video and register it as a caption-rich workspace artifact. Trigger: user uploaded a video file."""

@@ -33,15 +33,16 @@ class InputRejection(BaseModel):
         offending_fields:     Concrete field paths the consumer expected to
                               read but could not (e.g.
                               ``["content.scene_outline"]``). Free-form.
-        upstream_agent_hint:  Which producer agent_id the consumer thinks
-                              should be re-run or replaced (e.g.
-                              ``"StoryAgent"``). Empty string if unknown.
+
+    Sub-agents do not name which producer to re-run — that's the
+    Director's job. The Director's replanner reads ``missing_labels``
+    and the PENDING-tail history to decide which upstream step to
+    replace.
     """
 
     reason: str = ""
     missing_labels: list[str] = Field(default_factory=list)
     offending_fields: list[str] = Field(default_factory=list)
-    upstream_agent_hint: str = ""
 
 
 class UpstreamInputRejected(Exception):
@@ -174,9 +175,10 @@ class ImageReferenceEntry(BaseModel):
     typed input.
 
     Used by any agent that needs to receive image artifacts (character /
-    location / style references for KeyFrameAgent, shot stills for
-    VideoAgent, shot keyframes for UnivaVideoAgent, etc.) — the schema is
-    deliberately generic so the same type works for all label categories.
+    location / style references for keyframe planning, shot stills for
+    video assembly, shot keyframes for the univa-video path, etc.) —
+    the schema is deliberately generic so the same type works for all
+    label categories.
 
     The shape mirrors the InputResolver-resolved entry: ``path`` is always
     populated with the workspace file path; the caption fields preserve
@@ -198,8 +200,8 @@ class ImageReferenceEntry(BaseModel):
         if the entry has no usable path.
 
         Keeping the "has a path?" check here means every media consumer
-        (KeyFrameAgent / VideoAgent / UnivaVideoAgent) gets the same
-        filter — previously each re-implemented the same
+        (keyframe / video / univa-video paths) gets the same filter —
+        previously each re-implemented the same
         ``str(it.get("path", "") or "").strip()`` guard inline.
         """
         path = entry.path.strip()
