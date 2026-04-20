@@ -5,7 +5,7 @@ Input:  VideoAgentInput (``screenplay_json_text`` + ``keyframes_metadata_json_te
         image reference list)
 Output: VideoAgentOutput (VideoPackage with scenes → shot_segments, each
         shot carrying a per-shot ``semantic_context`` mirroring the relevant
-        screenplay + keyframe fields, plus transitions and asset placeholders)
+        screenplay + keyframe fields, plus transitions)
 
 Generation model: ONE LLM call via ``_llm_fill_full``. The LLM receives both
 upstream JSON text blobs and produces the complete VideoAgentOutput in a
@@ -14,10 +14,10 @@ rationale: no Python-side upstream dict walk, no shape assumption, zero
 string-keyed coupling between this agent and the producer agents' schemas.
 
 Output contract: all content-level invariants (scene_id / shot_id reuse from
-upstream, per-shot ``semantic_context`` mirroring, transition plans, asset
-placeholders) are owned by the LLM via the template + system prompt and
-enforced by VideoEvaluator's structural checks. ``recompute_metrics`` does
-NOT rewrite any LLM-authored field — it only derives summary counts.
+upstream, per-shot ``semantic_context`` mirroring, transition plans) are
+owned by the LLM via the template + system prompt and enforced by
+VideoEvaluator's structural checks. ``recompute_metrics`` does NOT rewrite
+any LLM-authored field — it only derives summary counts.
 """
 
 from __future__ import annotations
@@ -34,39 +34,28 @@ VIDEO_OUTPUT_TEMPLATE = """{
       {
         "scene_id": "sc_001",
         "order": 1,
+        "scene_context": {
+          "location_id": "<from screenplay scene.scene_consistency_pack.location_lock.location_id>",
+          "time_of_day": "<from screenplay scene.scene_consistency_pack.location_lock.time_of_day>",
+          "environment_notes": ["<from screenplay scene.scene_consistency_pack.location_lock.environment_notes>"],
+          "style_notes": ["<from screenplay scene.scene_consistency_pack.style_lock.global_style_notes>"],
+          "must_avoid": ["<from screenplay scene.scene_consistency_pack.style_lock.must_avoid>"]
+        },
         "shot_segments": [
           {
             "shot_id": "sh_001",
-            "order": 1,
-            "video_asset": {
-              "asset_id": "vid_sh_001",
-              "uri": "placeholder",
-              "width": 1024,
-              "height": 576,
-              "format": "mp4",
-              "fps": 24
-            },
             "semantic_context": {
               "shot_type": "<copied from screenplay shot.shot_type>",
               "visual_goal": "<copied from screenplay shot.visual_goal>",
               "action_focus": "<copied from screenplay shot.action_focus>",
               "characters_in_frame": ["<character_ids from screenplay shot.characters_in_frame>"],
-              "props_in_frame": ["<prop_ids from screenplay shot.props_in_frame>"],
               "camera_angle": "<copied from screenplay shot.camera.angle>",
               "camera_movement": "<copied from screenplay shot.camera.movement>",
               "framing_notes": "<copied from screenplay shot.camera.framing_notes>",
-              "scene_id": "sc_001",
-              "location_id": "<from screenplay scene.scene_consistency_pack.location_lock.location_id>",
-              "time_of_day": "<from screenplay scene.scene_consistency_pack.location_lock.time_of_day>",
-              "environment_notes": ["<from screenplay scene.scene_consistency_pack.location_lock.environment_notes>"],
-              "style_notes": ["<from screenplay scene.scene_consistency_pack.style_lock.global_style_notes>"],
-              "must_avoid": ["<from screenplay scene.scene_consistency_pack.style_lock.must_avoid>"],
-              "keyframe_notes": ["<from screenplay shot.keyframe_plan.keyframe_notes>"],
-              "keyframe_prompt_summaries": ["<from keyframes_metadata: each keyframe's prompt_summary for this shot>"],
-              "video_motion_hints": ["<from keyframes_metadata: each keyframe's video_motion_hint for this shot>"]
-            },
-            "video_generation_prompt": "",
-            "video_generation_constraints_json": ""
+              "video_motion_hints": ["<from keyframes_metadata: each keyframe's video_motion_hint for this shot>"],
+              "dialogue_text": "<for dialogue/narration/monologue shots: copy screenplay shot.text verbatim; for action shots: empty string>",
+              "emotion_hint": "<for spoken shots: copy screenplay shot.emotion_hint verbatim; empty otherwise>"
+            }
           }
         ],
         "transition_plan": [
@@ -75,22 +64,9 @@ VIDEO_OUTPUT_TEMPLATE = """{
             "to_shot_id": "sh_002",
             "transition_type": "cut"
           }
-        ],
-        "scene_clip_asset": {
-          "asset_id": "clip_sc_001",
-          "uri": "placeholder",
-          "format": "mp4"
-        }
+        ]
       }
-    ],
-    "final_video_asset": {
-      "asset_id": "final_video",
-      "uri": "placeholder",
-      "width": 1024,
-      "height": 576,
-      "format": "mp4",
-      "fps": 24
-    }
+    ]
   }
 }"""
 
@@ -114,6 +90,37 @@ class VideoAgent(BaseAgent[VideoAgentInput, VideoAgentOutput]):
             "document into a complete video package (scenes → shot "
             "segments, each carrying the per-shot semantic context that "
             "the video generation service needs).\n\n"
+            "=== WHEN TO REJECT UPSTREAM INPUT ===\n"
+            "Use the shared input_rejection escape hatch (see the UPSTREAM "
+            "INPUT REJECTION block above) ONLY if the screenplay or "
+            "keyframes_metadata makes your job impossible. Concretely, "
+            "reject when ANY of these is true after you have read both "
+            "JSON blobs carefully:\n"
+            "  * screenplay_json_text is empty, whitespace-only, or an "
+            "empty JSON object — there is no shot timeline to mirror.\n"
+            "  * Zero shots across the whole screenplay: every scene's "
+            "shots list is empty / missing. With no shots, there are no "
+            "ShotSegments to produce.\n"
+            "  * keyframes_metadata_json_text is empty or carries no "
+            "keyframes for ANY shot — the per-shot video_motion_hints "
+            "field is what drives the I2V model, so without keyframes "
+            "nothing can be generated.\n"
+            "When you reject, populate the rejection fields like this:\n"
+            "  * reason: the single most specific defect (e.g. "
+            "'keyframes_metadata has no keyframes for any screenplay "
+            "shot — nothing to feed the video generator').\n"
+            "  * missing_labels: list whichever inputs are unusable, "
+            "e.g. ['screenplay'] or ['keyframes_metadata'] or both.\n"
+            "  * offending_fields: e.g. ['content.scenes[].shots', "
+            "'content.scenes[].shots[].keyframes'].\n"
+            "  * upstream_agent_hint: 'ScreenplayAgent' if the screenplay "
+            "is the problem, 'KeyFrameAgent' if the keyframes_metadata is "
+            "the problem.\n"
+            "If the screenplay or keyframes_metadata is merely sparse "
+            "(short visual_goals, missing camera details, thin keyframe "
+            "notes) — DO NOT reject; mirror what is present and leave "
+            "downstream fields empty where the source is empty.\n"
+            "=== END WHEN TO REJECT UPSTREAM INPUT ===\n\n"
             "=== INPUT FORMAT ===\n"
             "You will receive TWO raw JSON text blobs inside the user "
             "message: the upstream screenplay and the upstream "
@@ -122,16 +129,23 @@ class VideoAgent(BaseAgent[VideoAgentInput, VideoAgentOutput]):
             "understand whatever shape it happens to have, and extract "
             "the elements you need. Typical fields: scenes[] with shots[] "
             "(shot_id, shot_type, visual_goal, action_focus, camera, "
-            "characters_in_frame, props_in_frame, keyframe_plan), "
-            "scene_consistency_pack (location_lock, style_lock); and in "
-            "keyframes_metadata: content.scenes[].shots[].keyframes[] "
-            "(prompt_summary, video_motion_hint). But the exact names "
-            "and nesting may vary. Reason from the text, not from "
-            "assumed keys.\n\n"
+            "characters_in_frame, keyframe_plan), scene_consistency_pack "
+            "(location_lock, style_lock); and in keyframes_metadata: "
+            "content.scenes[].shots[].keyframes[] (video_motion_hint). "
+            "But the exact names and nesting may vary. Reason from the "
+            "text, not from assumed keys.\n\n"
             "=== OUTPUT FORMAT ===\n"
             "JSON only; no markdown; match the user-message template "
             "exactly. Use empty string for unknowns, never null. Your "
             "output will be validated against a strict Pydantic schema.\n\n"
+            "=== SCENE-LEVEL vs SHOT-LEVEL (CRITICAL) ===\n"
+            "Put scene-level fields (location_id, time_of_day, "
+            "environment_notes, style_notes, must_avoid) on "
+            "``VideoScene.scene_context`` ONCE per scene. Do NOT repeat "
+            "them per shot_segment — the materializer merges "
+            "scene_context into each shot's semantic context before "
+            "generation, so duplicating them wastes tokens and creates "
+            "drift.\n\n"
             "=== SHOT MIRRORING (CRITICAL) ===\n"
             "For every shot in the screenplay, produce ONE ShotSegment "
             "with the same shot_id. Mirror the following into its "
@@ -139,26 +153,29 @@ class VideoAgent(BaseAgent[VideoAgentInput, VideoAgentOutput]):
             "corresponding upstream field):\n"
             "  * shot_type, visual_goal, action_focus — from screenplay "
             "shot\n"
-            "  * characters_in_frame, props_in_frame — from screenplay "
-            "shot (copy the lists)\n"
+            "  * characters_in_frame — from screenplay shot (copy the "
+            "list)\n"
             "  * camera_angle, camera_movement, framing_notes — from "
             "screenplay shot.camera.{angle, movement, framing_notes}\n"
-            "  * scene_id — from the containing screenplay scene\n"
-            "  * location_id, time_of_day, environment_notes — from "
-            "screenplay scene.scene_consistency_pack.location_lock\n"
-            "  * style_notes, must_avoid — from screenplay "
-            "scene.scene_consistency_pack.style_lock.{global_style_notes, "
-            "must_avoid}\n"
-            "  * keyframe_notes — from screenplay "
-            "shot.keyframe_plan.keyframe_notes\n"
-            "  * keyframe_prompt_summaries, video_motion_hints — from the "
-            "SECOND JSON blob (keyframes_metadata): find the matching "
-            "shot by shot_id in content.scenes[*].shots[], collect each "
-            "of its keyframes' prompt_summary / video_motion_hint into "
-            "the corresponding list.\n\n"
+            "  * video_motion_hints — from the SECOND JSON blob "
+            "(keyframes_metadata): find the matching shot by shot_id in "
+            "content.scenes[*].shots[], collect each of its keyframes' "
+            "video_motion_hint into the list.\n"
+            "  * dialogue_text — from screenplay shot.text, ONLY for "
+            "shots whose block_type is 'dialogue', 'narration', or "
+            "'monologue'. Copy the line VERBATIM, character-for-"
+            "character, in whatever language it is written (Chinese "
+            "characters stay Chinese). For action shots leave it an "
+            "empty string.\n"
+            "  * emotion_hint — from screenplay shot.emotion_hint, "
+            "copied verbatim (calm / neutral / sad / angry / whispered / "
+            "excited / warm / tense / urgent, or empty).\n\n"
             "Do NOT summarize, paraphrase, or rewrite these fields. This "
             "is a MIRROR — the same values must appear verbatim so "
-            "downstream consistency holds.\n\n"
+            "downstream consistency holds. In particular, dialogue_text "
+            "is passed straight into the Kling video prompt and drives "
+            "on-screen speech synthesis + lip-sync; any paraphrase here "
+            "shows up as the wrong line being spoken.\n\n"
             "=== ID CONVENTIONS ===\n"
             "scene_id: reuse the screenplay's scene_id verbatim "
             "(sc_001 style).\n"
@@ -166,14 +183,7 @@ class VideoAgent(BaseAgent[VideoAgentInput, VideoAgentOutput]):
             "order.\n"
             "shot_id: reuse the screenplay's shot_id verbatim (sh_NNN, "
             "globally sequential across the whole video — same as "
-            "screenplay's numbering).\n"
-            "shot_segment.order: 1, 2, 3, … per-scene (restart at 1 in "
-            "each scene), matching the screenplay's shot order inside "
-            "that scene.\n"
-            "video_asset.asset_id: vid_{shot_id} (e.g. vid_sh_001).\n"
-            "scene_clip_asset.asset_id: clip_{scene_id}.\n"
-            "final_video_asset.asset_id: always 'final_video'.\n"
-            "All *_asset.uri: 'placeholder' — the materializer fills it.\n\n"
+            "screenplay's numbering).\n\n"
             "=== TRANSITIONS ===\n"
             "For each scene, produce a transition_plan with one entry "
             "per consecutive shot pair inside that scene. Default "
@@ -181,10 +191,7 @@ class VideoAgent(BaseAgent[VideoAgentInput, VideoAgentOutput]):
             "scene has ≤ 1 shot.\n\n"
             "=== STRUCTURAL REQUIREMENTS ===\n"
             "Every shot MUST have a semantic_context with shot_id "
-            "(implicit via its parent), visual_goal non-empty. "
-            "video_generation_prompt and video_generation_constraints_json "
-            "MUST be empty strings — the materializer fills them after "
-            "calling the generation service.\n\n"
+            "(implicit via its parent), visual_goal non-empty.\n\n"
             "Do NOT include an artifact_caption block — the system "
             "generates it automatically."
         )
@@ -201,8 +208,10 @@ class VideoAgent(BaseAgent[VideoAgentInput, VideoAgentOutput]):
             "=== END KEYFRAMES METADATA ===\n\n"
             "For every screenplay shot, produce ONE shot_segment with "
             "its semantic_context mirrored verbatim from the upstream. "
-            "For keyframe_prompt_summaries / video_motion_hints, look "
-            "up the matching shot in the keyframes_metadata JSON.\n\n"
+            "Put scene-level fields on VideoScene.scene_context once "
+            "per scene — do not repeat them per shot. For "
+            "video_motion_hints, look up the matching shot in the "
+            "keyframes_metadata JSON.\n\n"
             "Produce the full video package JSON in EXACTLY this shape:\n\n"
             f"{VIDEO_OUTPUT_TEMPLATE}\n\n"
             "Return JSON only."

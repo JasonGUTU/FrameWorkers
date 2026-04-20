@@ -1,16 +1,16 @@
-"""StyleTransferAgent descriptor — self-describing manifest for the registry."""
+"""StyleTransferAgent descriptor — built from a single AgentSpec."""
 
 from __future__ import annotations
 
 from pydantic import BaseModel
 
 from ..common_schema import ResolvedArtifactEntry
-from ..descriptor import SubAgentDescriptor
+from ..descriptor import AgentSpec, InputLabelSpec, SubAgentDescriptor
 from .agent import StyleTransferAgent
-from .labels import INPUT_LABEL_SOURCE_VIDEO, INPUT_LABEL_STYLE_REFERENCE
-from .schema import StyleTransferAgentInput
 from .evaluator import StyleTransferEvaluator
+from .labels import INPUT_LABEL_SOURCE_VIDEO, INPUT_LABEL_STYLE_REFERENCE
 from .materializer import StyleTransferMaterializer
+from .schema import StyleTransferAgentInput
 
 
 def build_input(
@@ -24,7 +24,6 @@ def build_input(
         resolved_artifacts.get(INPUT_LABEL_STYLE_REFERENCE)
     )
 
-    # Style description comes from the style reference caption or payload
     style_desc = style_ref.caption or ""
     if style_ref.payload and isinstance(style_ref.payload.get("style"), str):
         style_desc = style_ref.payload["style"]
@@ -36,15 +35,26 @@ def build_input(
     )
 
 
-def build_captions(agent_id: str, output_dict: dict) -> dict:
-    content = output_dict.get("content", {})
-    spec = content.get("style_spec", {})
-    desc = spec.get("style_description", "unknown style")
+def build_captions(agent_id: str, _output_dict: dict) -> dict:
+    # Caption role: signal "style-transfer output video" so downstream
+    # video agents can discover me. Content (style_description) lives
+    # in the JSON payload, NOT in caption.
+    # See MEMORY:feedback_caption_role_not_content.
     return {
         agent_id: {
             "caption": (
-                f"Style-transferred video: {desc}. "
-                f"Visual style applied to source video."
+                "Style-transferred video: visual style applied to a "
+                "source video. Structured manifest — see payload for "
+                "the style specification."
+            ),
+            "scope": "global",
+        },
+        "style_transfer_output": {
+            "caption": (
+                "Style-transferred video binary (mp4) — source video with "
+                "visual style applied. Can be re-ingested by downstream "
+                "video agents (analysis / extension / inpainting / "
+                "compositing)."
             ),
             "scope": "global",
         },
@@ -52,40 +62,61 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
 
 
 def materializer_factory(services: dict) -> StyleTransferMaterializer:
-    return StyleTransferMaterializer(video_edit_service=services["video_edit_service"])
+    return StyleTransferMaterializer(
+        video_edit_service=services["video_edit_service"]
+    )
 
 
-CATALOG_ENTRY = (
-    "StyleTransferAgent\n"
-    "  - Input: a source-video artifact + a style reference (text describing the style, "
-    "and/or an uploaded reference image).\n"
-    "  - Output: stylized_video (source video with new visual style applied).\n"
-    "  - Purpose: Apply visual style transfer to a video (anime, oil painting, cyberpunk, "
-    "ink wash, etc.) while preserving motion. Need both an ingested source video AND a user "
-    "style description before I can run. The output is itself a finished video — no further "
-    "composition needed unless the user also wants subtitles, audio, or another edit chained on."
+SPEC = AgentSpec(
+    agent_id="StyleTransferAgent",
+    inputs=[
+        InputLabelSpec(
+            name=INPUT_LABEL_SOURCE_VIDEO,
+            cardinality="single",
+            description=(
+                "The source video FILE on disk to restyle — a binary "
+                "mp4 artifact (mime=video/mp4) whose actual bytes the "
+                "materializer feeds to the style-transfer video model. "
+                "This label targets the mp4 binary specifically, NOT "
+                "any JSON/manifest video_package artifact that may "
+                "coexist."
+            ),
+        ),
+        InputLabelSpec(
+            name=INPUT_LABEL_STYLE_REFERENCE,
+            cardinality="single",
+            description=(
+                "A style reference — either an image whose visual style "
+                "to mimic, or a text artifact describing the desired "
+                "style. The caption should describe the target aesthetic "
+                "(e.g. 'Studio Ghibli watercolor', 'cyberpunk neon noir')."
+            ),
+        ),
+    ],
+    output_description=(
+        "stylized_video (source video with new visual style applied)."
+    ),
+    purpose_and_routing=(
+        """Apply a visual style transfer to an existing video. The stylised video IS the deliverable by default. Trigger: requests to apply a visual style transformation (anime, ink-wash, cyberpunk, oil painting, named-artist style, etc.) to an existing clip."""
+    ),
+    input_preamble=(
+        "I apply visual style transfer to a video — transforming its "
+        "appearance (anime, oil painting, watercolor, cyberpunk, etc.) "
+        "while preserving the original motion and content."
+    ),
 )
 
-DESCRIPTOR = SubAgentDescriptor(
-    agent_id="StyleTransferAgent",
-    catalog_entry=CATALOG_ENTRY,
+
+DESCRIPTOR = SubAgentDescriptor.from_spec(
+    SPEC,
     agent_factory=lambda llm: StyleTransferAgent(llm_client=llm),
     evaluator_factory=StyleTransferEvaluator,
     build_input=build_input,
     build_captions=build_captions,
     service_factories={
-        "video_edit_service": lambda ctx: __import__("inference.generation", fromlist=["select_video_edit_service"]).select_video_edit_service(),
+        "video_edit_service": lambda ctx: __import__(
+            "inference.generation", fromlist=["select_video_edit_service"]
+        ).select_video_edit_service(),
     },
     materializer_factory=materializer_factory,
-    input_needs_description=(
-        "I apply visual style transfer to a video — transforming its "
-        "appearance (anime, oil painting, watercolor, cyberpunk, etc.) "
-        "while preserving the original motion and content.\n\n"
-        f"[{INPUT_LABEL_SOURCE_VIDEO}] (single)\n"
-        "The source video file to restyle.\n\n"
-        f"[{INPUT_LABEL_STYLE_REFERENCE}] (single)\n"
-        "A style reference — either an image whose visual style to mimic, "
-        "or a text artifact describing the desired style. The caption "
-        "should describe the target aesthetic."
-    ),
 )

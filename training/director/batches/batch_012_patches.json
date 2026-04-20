@@ -1,0 +1,43 @@
+[
+  {
+    "goal": "Analyze this full legal-thriller series and extract the three most explosive witness-testimony reveals into a highlight reel",
+    "rationale": "User uploaded a legal-thriller series and asks to analyze it and extract witness-testimony reveals. Plan: IntakeText logs the brief, IntakeVideo registers the source, VideoAnalysisAgent analyzes the trial beats, HighlightAgent assembles the three testimony reveals into a highlight reel. No CompositorAgent because HighlightAgent's output IS the highlight reel; compositing would be redundant. No MusicAgent because no score was requested. No SubtitleAgent because no captions were requested. No StyleTransferAgent or VideoExtendAgent because no look change or extension is requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the witness-testimony highlight-reel brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded legal-thriller series"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the trial beats and locate the three explosive witness-testimony reveals"},
+      {"agent_id": "HighlightAgent", "intent": "Assemble the testimony reveals into a highlight reel"}
+    ]
+  },
+  {
+    "goal": "Analyze this full time-loop sci-fi miniseries and cut the most striking loop-reset moments into a compilation",
+    "rationale": "User uploaded a time-loop sci-fi miniseries and asks to analyze it and cut the loop-reset moments. Plan: IntakeText logs the brief, IntakeVideo registers the source, VideoAnalysisAgent analyzes each loop's structure, HighlightAgent assembles the loop-resets into a compilation. No CompositorAgent because HighlightAgent's output is the compilation directly. No MusicAgent because no score was requested. No SubtitleAgent because no captions were requested. No StyleTransferAgent or VideoExtendAgent because no look change or extension is requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the loop-reset compilation brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded time-loop sci-fi miniseries"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze each loop's structure and locate the most striking loop-reset moments"},
+      {"agent_id": "HighlightAgent", "intent": "Assemble the loop-resets into a compilation"}
+    ]
+  },
+  {
+    "goal": "Analyze this full political-drama season and extract the three most shocking resignation speeches into a highlight reel",
+    "rationale": "User uploaded a political-drama season and asks to analyze it and extract resignation speeches. Plan: IntakeText logs the brief, IntakeVideo registers the source, VideoAnalysisAgent analyzes the season to locate each resignation beat, HighlightAgent assembles the three resignations into a highlight reel. No CompositorAgent because HighlightAgent's output IS the highlight reel. No MusicAgent because no score was requested. No SubtitleAgent because no captions were requested. No StyleTransferAgent or VideoExtendAgent because no look change or extension is requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the resignation-speech highlight-reel brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded political-drama season"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the season and locate the three most shocking resignation speeches"},
+      {"agent_id": "HighlightAgent", "intent": "Assemble the resignations into a highlight reel"}
+    ]
+  },
+  {
+    "goal": "Add English subtitles to this English-spoken live-concert recording",
+    "rationale": "User uploaded an English live-concert recording and asks for English subtitles. Plan: IntakeText logs the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the concert audio, SubtitleAgent generates English subtitles, CompositorAgent burns them onto the video. No TranslationAgent because source and subtitle languages match. No MusicAgent because the user asked to subtitle an existing concert video, not to generate a new score. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the English-subtitle request for the live-concert recording"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English live-concert recording"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the concert audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the concert recording as the final render"}
+    ]
+  }
+]

@@ -33,10 +33,11 @@ class VideoExtendMaterializer(BaseMaterializer):
     ) -> list[MediaAsset]:
         typed_input: VideoExtendAgentInput = ctx.typed_input
         content = asset_dict.get("content", {})
-        output_video = content.get("output_video", {})
-        output_video["asset_id"] = "video_extend_output"
-
         spec = content.get("extension_spec", {})
+
+        # Local uri_holder — the persisted content JSON has no asset block;
+        # ArtifactWriter still needs a dict to stamp uri into for ArtifactRef.
+        uri_holder: dict[str, Any] = {}
 
         # Extract last frame from source video
         last_frame = await self.svc.extract_last_frame(typed_input.source_video_path)
@@ -65,5 +66,5 @@ class VideoExtendMaterializer(BaseMaterializer):
             sys_id="video_extend_output",
             data=result_bytes,
             extension="mp4",
-            uri_holder=output_video,
+            uri_holder=uri_holder,
         )]

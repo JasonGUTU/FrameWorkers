@@ -449,103 +449,53 @@ class TestHighlightAgentLive:
 
 
 # ═══════════════════════════════════════════════════════════════════════════
-# 10. VoiceCloneAgent — plan voice clone narration
-# ═══════════════════════════════════════════════════════════════════════════
-
-class TestVoiceCloneAgentLive:
-    def test_plan_narration_segments(self):
-        _skip_unless_live()
-        from agents.voice_clone.agent import VoiceCloneAgent
-        from agents.voice_clone.schema import VoiceCloneAgentInput
-        from agents.voice_clone.evaluator import VoiceCloneEvaluator
-
-        transcript = json.dumps({
-            "text": "Welcome to our documentary. Today we explore the hidden world beneath the ocean surface. Marine biologists have discovered incredible new species in the deep trenches."
-        }, indent=2)
-
-        llm = _make_llm_client()
-        agent = VoiceCloneAgent(llm_client=llm)
-        inp = VoiceCloneAgentInput(
-            reference_audio_path="/tmp/reference_voice.wav",
-            transcript_json_text=transcript,
-        )
-
-        output = asyncio.run(agent.generate(inp))
-        vp = output.content.voice_profile
-        print(f"\n[VoiceCloneAgent] voice_profile: id={vp.voice_id}, gender={vp.gender}, tone={vp.tone}")
-        print(f"  {len(output.content.segments)} segments:")
-        for s in output.content.segments:
-            print(f"    {s.segment_id}: {s.text[:60]}...")
-
-        evaluator = VoiceCloneEvaluator()
-        errors = evaluator.check_structure(output)
-        assert errors == [], f"Structural errors: {errors}"
-        assert len(output.content.segments) >= 2
-        assert output.content.final_audio.asset_id == "vc_final"
-
-
-# ═══════════════════════════════════════════════════════════════════════════
 # 11. IntakeVideoAgent — video caption generation
 # ═══════════════════════════════════════════════════════════════════════════
 
 class TestIntakeVideoAgentLive:
     def test_generate_video_caption(self):
         """IntakeVideoAgent relies on a multimodal video LLM.
-        We test the LLM call path using rework_notes to describe the video."""
+        We test the LLM call path using rework_notes to describe the video.
+        Gemini rejects empty/invalid video bytes ('Unsupported file URI type'),
+        so we generate a minimal-but-valid 1s black mp4 via ffmpeg — content
+        doesn't matter because the rework note carries the actual description.
+        """
         _skip_unless_live()
+        import subprocess
+        import tempfile
         from agents.intake.intake_video.agent import IntakeVideoAgent
         from agents.intake.intake_video.schema import IntakeVideoInput
         from agents.intake.intake_video.evaluator import IntakeVideoEvaluator
 
         llm = _make_llm_client()
         agent = IntakeVideoAgent(llm_client=llm)
-        inp = IntakeVideoInput(raw_video_path="/tmp/user_upload.mp4")
 
-        output = asyncio.run(agent.generate(inp, rework_notes=(
-            "The video attachment is unavailable. Based on metadata: "
-            "30-second clip of a golden retriever playing fetch on a sunny beach, "
-            "waves in the background. Produce a visual_summary from this description."
-        )))
+        with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as tmp:
+            video_path = tmp.name
+        subprocess.run(
+            ["ffmpeg", "-y", "-f", "lavfi", "-i", "color=c=black:s=16x16:r=1",
+             "-t", "1", "-pix_fmt", "yuv420p", "-movflags", "+faststart", video_path],
+            check=True, capture_output=True,
+        )
+        try:
+            inp = IntakeVideoInput(raw_video_path=video_path)
 
-        print(f"\n[IntakeVideoAgent] visual_summary: {output.content.visual_summary}")
-        print(f"  video_asset.uri: {output.content.video_asset.uri}")
+            output = asyncio.run(agent.generate(inp, rework_notes=(
+                "The video attachment is unavailable. Based on metadata: "
+                "30-second clip of a golden retriever playing fetch on a sunny beach, "
+                "waves in the background. Produce a visual_summary from this description."
+            )))
 
-        evaluator = IntakeVideoEvaluator()
-        errors = evaluator.check_structure(output)
-        assert errors == [], f"Structural errors: {errors}"
-        assert output.content.video_asset.uri == "/tmp/user_upload.mp4"
-        assert len(output.content.visual_summary) > 10
+            print(f"\n[IntakeVideoAgent] visual_summary: {output.content.visual_summary}")
+            print(f"  video_asset.uri: {output.content.video_asset.uri}")
+
+            evaluator = IntakeVideoEvaluator()
+            errors = evaluator.check_structure(output)
+            assert errors == [], f"Structural errors: {errors}"
+            assert output.content.video_asset.uri == video_path
+            assert len(output.content.visual_summary) > 10
+        finally:
+            import os as _os
+            _os.path.isfile(video_path) and _os.unlink(video_path)
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# 12. IntakeAudioAgent — audio caption generation
-# ═══════════════════════════════════════════════════════════════════════════
-
-class TestIntakeAudioAgentLive:
-    def test_generate_audio_caption(self):
-        """IntakeAudioAgent relies on a multimodal audio LLM.
-        We test the LLM call path using rework_notes to describe the audio."""
-        _skip_unless_live()
-        from agents.intake.intake_audio.agent import IntakeAudioAgent
-        from agents.intake.intake_audio.schema import IntakeAudioInput
-        from agents.intake.intake_audio.evaluator import IntakeAudioEvaluator
-
-        llm = _make_llm_client()
-        agent = IntakeAudioAgent(llm_client=llm)
-        inp = IntakeAudioInput(raw_audio_path="/tmp/user_upload.wav")
-
-        output = asyncio.run(agent.generate(inp, rework_notes=(
-            "The audio attachment is unavailable. Based on metadata: "
-            "2-minute recording of acoustic guitar fingerpicking with soft rain "
-            "sounds in the background, mellow and contemplative mood. "
-            "Produce an auditory_summary from this description."
-        )))
-
-        print(f"\n[IntakeAudioAgent] auditory_summary: {output.content.auditory_summary}")
-        print(f"  audio_asset.uri: {output.content.audio_asset.uri}")
-
-        evaluator = IntakeAudioEvaluator()
-        errors = evaluator.check_structure(output)
-        assert errors == [], f"Structural errors: {errors}"
-        assert output.content.audio_asset.uri == "/tmp/user_upload.wav"
-        assert len(output.content.auditory_summary) > 10

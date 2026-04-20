@@ -2,7 +2,7 @@
 
 Calls an external speech-to-text service (OpenAI Whisper) to transcribe
 audio/video files.  The raw segments are written into the asset_dict
-so the LLM can post-process them (cleanup, speaker attribution).
+so the LLM can post-process them (cleanup).
 
 The materializer produces no MediaAsset output — the transcript is a
 pure-text artifact stored as JSON by the standard pipeline.
@@ -54,9 +54,7 @@ class TranscriptionMaterializer(BaseMaterializer):
                 "segment_id": f"seg_{i + 1:03d}",
                 "start_time": seg.start,
                 "end_time": seg.end,
-                "speaker": "",
                 "text": seg.text,
-                "confidence": 0.0,
             }
             for i, seg in enumerate(result.segments)
         ]

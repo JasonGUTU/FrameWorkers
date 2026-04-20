@@ -69,6 +69,45 @@ class AssistantService:
         )
 
     @staticmethod
+    def _format_failure_error(debug: Any) -> str:
+        """Build ``execution.error`` from the ``_execution_debug`` sub-dict.
+
+        Branches on ``debug.kind``:
+
+        * ``"upstream_input_rejected"`` — the consumer LLM declared upstream
+          input insufficient. Emit a ``[upstream_input_rejected] ...``
+          prefix carrying reason / missing_labels / upstream hint so the
+          director's replan prompt can recognise it and prefer replan-tail
+          over retry (retry with the same input would yield the same
+          rejection).
+        * anything else — fall back to the existing
+          ``quality gate failed: <summary>`` format so legacy eval-gate
+          failures keep their shape.
+        """
+        if not isinstance(debug, dict):
+            return "agent quality gate failed (no eval summary)"
+        kind = debug.get("kind")
+        if kind == "upstream_input_rejected":
+            rej = debug.get("input_rejection") or {}
+            reason = str(rej.get("reason") or "(no reason)").strip()
+            missing = rej.get("missing_labels") or []
+            hint = str(rej.get("upstream_agent_hint") or "").strip()
+            missing_blob = (
+                ",".join(str(x) for x in missing)
+                if isinstance(missing, list)
+                else ""
+            )
+            return (
+                f"[upstream_input_rejected] reason={reason}; "
+                f"missing=[{missing_blob}]; hint={hint or '(none)'}"
+            )
+        summary = (
+            debug.get("eval_summary")
+            or "agent quality gate failed (no eval summary)"
+        )
+        return f"quality gate failed: {summary}"
+
+    @staticmethod
     def _run_async(coro):
         loop = asyncio.new_event_loop()
         try:
@@ -170,6 +209,17 @@ class AssistantService:
                     summary = eval_result.get("summary")
                     if isinstance(summary, str) and summary:
                         debug_payload["eval_summary"] = summary
+                    # Upstream-input-rejection path: base_agent.run() surfaces a
+                    # structured rejection when the consumer's LLM reported the
+                    # upstream payload as insufficient. Carry both the kind tag
+                    # and the rejection dict through so execute_agent can format
+                    # the [upstream_input_rejected] error prefix for the director.
+                    kind = eval_result.get("kind")
+                    if isinstance(kind, str) and kind:
+                        debug_payload["kind"] = kind
+                    rejection = eval_result.get("input_rejection")
+                    if isinstance(rejection, dict):
+                        debug_payload["input_rejection"] = rejection
             if debug_payload:
                 output["_execution_debug"] = debug_payload
             output["_quality_gate_passed"] = passed
@@ -253,7 +303,15 @@ class AssistantService:
             step_id=step_id,
             inputs=inputs
         )
-        
+        # Stamp resolved input paths onto the execution so framework-level
+        # post-run hooks (Intake raw_pending → global scope flip) know
+        # exactly which registry entries this execution consumed.
+        raw_paths = inputs.get("resolved_input_paths") if isinstance(inputs, dict) else None
+        if isinstance(raw_paths, list):
+            execution.resolved_input_paths = [
+                str(p) for p in raw_paths if isinstance(p, str) and p
+            ]
+
         try:
             # Update execution status
             execution.status = ExecutionStatus.IN_PROGRESS
@@ -279,12 +337,7 @@ class AssistantService:
             else:
                 execution.status = ExecutionStatus.FAILED
                 debug = results.get("_execution_debug", {}) if isinstance(results, dict) else {}
-                summary = (
-                    debug.get("eval_summary")
-                    if isinstance(debug, dict)
-                    else ""
-                ) or "agent quality gate failed (no eval summary)"
-                execution.error = f"quality gate failed: {summary}"
+                execution.error = self._format_failure_error(debug)
             self.storage.update_execution(execution)
         except Exception as e:
             execution.status = ExecutionStatus.FAILED
@@ -409,6 +462,19 @@ class AssistantService:
             execution.results["_asset_index"] = asset_index
         if persisted_paths or asset_index:
             self.storage.update_execution(execution)
+        # Intake* opt-in: promote consumed raw_pending uploads to scope=global
+        # so non-Intake downstream consumers can discover them. The descriptor
+        # opts in via ``AgentSpec.promotes_consumed_inputs_to_global=True``
+        # (kept off by default so no other agent can silently mutate upstream
+        # artifact visibility). No-op when execution had no resolved inputs.
+        if (
+            execution.status == ExecutionStatus.COMPLETED
+            and getattr(descriptor, "promotes_consumed_inputs_to_global", False)
+            and execution.resolved_input_paths
+        ):
+            workspace.global_memory.promote_raw_pending_to_global(
+                execution.resolved_input_paths
+            )
         return execution
 
     def build_execution_inputs(
@@ -424,10 +490,14 @@ class AssistantService:
           2. Runs ``InputResolver`` to semantically select artifacts from
              the global_memory caption index based on the agent's
              ``input_needs_description``.
-          3. Returns a flat ``{step_id, resolved_artifacts}`` dict.
+          3. Returns ``{step_id, resolved_artifacts, resolved_input_paths}``.
              ``resolved_artifacts`` is the only channel sub-agents see —
              ``_execute_pipeline_descriptor`` hands it straight to
-             ``descriptor.build_input``.
+             ``descriptor.build_input``. ``resolved_input_paths`` is a
+             framework-only side-channel that ``execute_agent`` stamps onto
+             ``AgentExecution.resolved_input_paths`` so post-run hooks
+             (e.g. the Intake raw_pending → global scope flip) can act on
+             the exact set of artifact paths this execution consumed.
 
         Any raw user input must be persisted into the workspace as an
         artifact (via an Intake agent or ``POST /api/workspace/upload``)
@@ -444,10 +514,13 @@ class AssistantService:
         resolved_artifacts = resolved.get("resolved_artifacts") or {}
         if not isinstance(resolved_artifacts, dict):
             resolved_artifacts = {}
+        raw_paths = resolved.get("selected_artifact_paths") or []
+        resolved_input_paths = [str(p) for p in raw_paths if isinstance(p, str) and p]
 
         return {
             "step_id": step_id,
             "resolved_artifacts": resolved_artifacts,
+            "resolved_input_paths": resolved_input_paths,
         }
 
     def execute_agent_for_step(

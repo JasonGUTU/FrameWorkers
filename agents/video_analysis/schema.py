@@ -27,6 +27,24 @@ class SceneSegment(BaseModel):
         default_factory=list,
         description="People, objects, or notable elements in this scene"
     )
+    tension_score: float = Field(
+        0.0,
+        ge=0.0,
+        le=1.0,
+        description=(
+            "Narrative / dramatic intensity 0–1 (0 = calm/exposition, "
+            "1 = peak climax / reversal / shock). Quiet dialogue ≈ 0.1–0.3, "
+            "rising conflict ≈ 0.4–0.6, action / emotional peaks ≈ 0.7–1.0."
+        ),
+    )
+    is_climax_candidate: bool = Field(
+        False,
+        description=(
+            "True iff this scene is a plausible climax / major reversal / "
+            "emotional high-point. Typically 1–3 scenes per video, "
+            "sometimes zero (slice-of-life / purely informational footage)."
+        ),
+    )
 
 
 class VideoSummary(BaseModel):
@@ -91,8 +109,7 @@ class VideoAnalysisAgentInput(BaseModel):
             raise ValueError(
                 f"source_video_path must be a video/* file (got mime={mime!r} "
                 f"for path {v!r}); VideoAnalysisAgent does not analyze images "
-                f"or audio — use IntakeImageAgent / IntakeAudioAgent / "
-                f"TranscriptionAgent for those modalities."
+                f"— use IntakeImageAgent for image modality."
             )
         return v
 

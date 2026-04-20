@@ -1,0 +1,9 @@
+# Director LoRA training deps — install on top of the frameworkers conda env.
+# Tested versions; relax if needed.
+torch>=2.2
+transformers>=4.45
+trl>=0.11
+peft>=0.11
+datasets>=2.19
+accelerate>=0.30
+# Not strictly needed for bf16; add bitsandbytes>=0.43 if switching to 4-bit QLoRA.

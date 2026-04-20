@@ -1,0 +1,350 @@
+[
+  {
+    "goal": "Generate Chinese subtitles for this English-language interview clip",
+    "rationale": "User uploaded an English-language interview clip and asks for Chinese subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates initial English subtitles from the transcript, TranslationAgent translates them to Chinese, CompositorAgent burns the Chinese subtitles onto the video. TranslationAgent is required because the source language (English) differs from the target subtitle language (Chinese). No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Chinese-subtitle request for the English interview clip"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-language interview clip"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English interview audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Chinese"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Chinese subtitles onto the interview video as the final render"}
+    ]
+  },
+  {
+    "goal": "Translate this English-spoken cooking tutorial to Spanish and add Spanish subtitles",
+    "rationale": "User uploaded an English cooking tutorial and asks for Spanish translation + Spanish subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates initial English subtitles, TranslationAgent translates to Spanish, CompositorAgent burns the Spanish subtitles onto the video. TranslationAgent is required because source (English) and target (Spanish) languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Spanish-subtitle translation request for the English cooking tutorial"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English cooking tutorial"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English tutorial audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Spanish"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Spanish subtitles onto the tutorial as the final render"}
+    ]
+  },
+  {
+    "goal": "Generate Japanese subtitles for this English-language TED-style talk recording",
+    "rationale": "User uploaded an English TED-style talk and asks for Japanese subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to Japanese, CompositorAgent burns the Japanese subtitles. TranslationAgent is required because source (English) and target (Japanese) differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Japanese-subtitle request for the English TED-style talk"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English TED-style talk recording"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English talk audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Japanese"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Japanese subtitles onto the talk recording as the final render"}
+    ]
+  },
+  {
+    "goal": "Translate this English-spoken news broadcast to French and add French subtitles",
+    "rationale": "User uploaded an English news broadcast and asks for French translation + French subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to French, CompositorAgent burns the French subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the French-subtitle translation request for the English news broadcast"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English news broadcast"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English broadcast audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to French"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the French subtitles onto the news broadcast as the final render"}
+    ]
+  },
+  {
+    "goal": "Generate Korean subtitles for this English-language podcast interview video",
+    "rationale": "User uploaded an English podcast interview and asks for Korean subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to Korean, CompositorAgent burns the Korean subtitles. TranslationAgent is required because source (English) and target (Korean) differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Korean-subtitle request for the English podcast interview"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English podcast interview video"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English podcast audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Korean"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Korean subtitles onto the podcast interview as the final render"}
+    ]
+  },
+  {
+    "goal": "Translate this English-spoken political debate to German and add German subtitles",
+    "rationale": "User uploaded an English political debate and asks for German translation + German subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to German, CompositorAgent burns the German subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the German-subtitle translation request for the English political debate"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English political debate"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English debate audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to German"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the German subtitles onto the debate broadcast as the final render"}
+    ]
+  },
+  {
+    "goal": "Generate Chinese subtitles for this English-language corporate training seminar",
+    "rationale": "User uploaded an English corporate training seminar and asks for Chinese subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to Chinese, CompositorAgent burns the Chinese subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Chinese-subtitle request for the English corporate training seminar"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English corporate training seminar"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English seminar audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Chinese"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Chinese subtitles onto the training seminar as the final render"}
+    ]
+  },
+  {
+    "goal": "Translate this English-spoken online course video to Portuguese and add Portuguese subtitles",
+    "rationale": "User uploaded an English online course video and asks for Portuguese translation + Portuguese subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to Portuguese, CompositorAgent burns the Portuguese subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Portuguese-subtitle translation request for the English online course"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English online course video"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English course audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Portuguese"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Portuguese subtitles onto the online course as the final render"}
+    ]
+  },
+  {
+    "goal": "Generate Japanese subtitles for this English-spoken product-demo recording",
+    "rationale": "User uploaded an English product-demo recording and asks for Japanese subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to Japanese, CompositorAgent burns the Japanese subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Japanese-subtitle request for the English product-demo recording"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English product-demo recording"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English demo audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Japanese"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Japanese subtitles onto the product demo as the final render"}
+    ]
+  },
+  {
+    "goal": "Translate this English-language sports-commentary clip to Spanish and add Spanish subtitles",
+    "rationale": "User uploaded an English sports-commentary clip and asks for Spanish translation + Spanish subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to Spanish, CompositorAgent burns the Spanish subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Spanish-subtitle translation request for the English sports commentary"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English sports-commentary clip"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English commentary audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Spanish"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Spanish subtitles onto the sports commentary as the final render"}
+    ]
+  },
+  {
+    "goal": "Generate French subtitles for this English-language documentary-interview segment",
+    "rationale": "User uploaded an English documentary-interview segment and asks for French subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to French, CompositorAgent burns the French subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the French-subtitle request for the English documentary-interview segment"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English documentary-interview segment"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English interview audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to French"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the French subtitles onto the interview segment as the final render"}
+    ]
+  },
+  {
+    "goal": "Translate this English-spoken yoga-instruction video to Italian and add Italian subtitles",
+    "rationale": "User uploaded an English yoga-instruction video and asks for Italian translation + Italian subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to Italian, CompositorAgent burns the Italian subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Italian-subtitle translation request for the English yoga-instruction video"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English yoga-instruction video"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English yoga-instruction audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Italian"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Italian subtitles onto the yoga video as the final render"}
+    ]
+  },
+  {
+    "goal": "Generate Chinese subtitles for this English-language classroom-lecture recording",
+    "rationale": "User uploaded an English classroom-lecture recording and asks for Chinese subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to Chinese, CompositorAgent burns the Chinese subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Chinese-subtitle request for the English classroom lecture"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English classroom-lecture recording"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English lecture audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Chinese"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Chinese subtitles onto the classroom lecture as the final render"}
+    ]
+  },
+  {
+    "goal": "Translate this English-spoken conference keynote to Japanese and add Japanese subtitles",
+    "rationale": "User uploaded an English conference keynote and asks for Japanese translation + Japanese subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to Japanese, CompositorAgent burns the Japanese subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Japanese-subtitle translation request for the English conference keynote"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English conference keynote"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English keynote audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Japanese"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Japanese subtitles onto the keynote as the final render"}
+    ]
+  },
+  {
+    "goal": "Generate Spanish subtitles for this English-language fitness-instruction video",
+    "rationale": "User uploaded an English fitness-instruction video and asks for Spanish subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to Spanish, CompositorAgent burns the Spanish subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Spanish-subtitle request for the English fitness-instruction video"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English fitness-instruction video"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English fitness-instruction audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Spanish"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Spanish subtitles onto the fitness video as the final render"}
+    ]
+  },
+  {
+    "goal": "Translate this English-spoken children's storybook reading to Chinese and add Chinese subtitles",
+    "rationale": "User uploaded an English children's storybook reading and asks for Chinese translation + Chinese subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to Chinese, CompositorAgent burns the Chinese subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Chinese-subtitle translation request for the English children's storybook reading"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English children's storybook reading"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English reading audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Chinese"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Chinese subtitles onto the storybook reading as the final render"}
+    ]
+  },
+  {
+    "goal": "Generate Arabic subtitles for this English-language museum-guide walkthrough recording",
+    "rationale": "User uploaded an English museum-guide walkthrough recording and asks for Arabic subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to Arabic, CompositorAgent burns the Arabic subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Arabic-subtitle request for the English museum-guide walkthrough"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English museum-guide walkthrough recording"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English guide audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Arabic"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Arabic subtitles onto the walkthrough recording as the final render"}
+    ]
+  },
+  {
+    "goal": "Translate this English-spoken mini-drama episode to Japanese and add Japanese subtitles",
+    "rationale": "User uploaded an English mini-drama episode and asks for Japanese translation + Japanese subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to Japanese, CompositorAgent burns the Japanese subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Japanese-subtitle translation request for the English mini-drama episode"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English mini-drama episode"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English drama dialogue audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Japanese"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Japanese subtitles onto the mini-drama episode as the final render"}
+    ]
+  },
+  {
+    "goal": "Generate Chinese subtitles for this English-spoken stand-up comedy set",
+    "rationale": "User uploaded an English stand-up comedy set and asks for Chinese subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to Chinese, CompositorAgent burns the Chinese subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Chinese-subtitle request for the English stand-up comedy set"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English stand-up comedy set"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English set audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Chinese"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Chinese subtitles onto the comedy set as the final render"}
+    ]
+  },
+  {
+    "goal": "Translate this English-language legal-deposition recording to Spanish and add Spanish subtitles",
+    "rationale": "User uploaded an English legal-deposition recording and asks for Spanish translation + Spanish subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to Spanish, CompositorAgent burns the Spanish subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Spanish-subtitle translation request for the English legal-deposition"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English legal-deposition recording"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English deposition audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Spanish"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Spanish subtitles onto the legal deposition as the final render"}
+    ]
+  },
+  {
+    "goal": "Generate Korean subtitles for this English-language academic-lecture recording",
+    "rationale": "User uploaded an English academic-lecture recording and asks for Korean subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to Korean, CompositorAgent burns the Korean subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Korean-subtitle request for the English academic lecture"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English academic-lecture recording"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English lecture audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Korean"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Korean subtitles onto the academic lecture as the final render"}
+    ]
+  },
+  {
+    "goal": "Translate this English-spoken YouTube vlog episode to Portuguese and add Portuguese subtitles",
+    "rationale": "User uploaded an English YouTube vlog episode and asks for Portuguese translation + Portuguese subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to Portuguese, CompositorAgent burns the Portuguese subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Portuguese-subtitle translation request for the English YouTube vlog"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English YouTube vlog episode"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English vlog audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Portuguese"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Portuguese subtitles onto the vlog episode as the final render"}
+    ]
+  },
+  {
+    "goal": "Generate Japanese subtitles for this English-language celebrity award-acceptance speech",
+    "rationale": "User uploaded an English celebrity award-acceptance speech and asks for Japanese subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to Japanese, CompositorAgent burns the Japanese subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Japanese-subtitle request for the English award-acceptance speech"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English celebrity award-acceptance speech"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English speech audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Japanese"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Japanese subtitles onto the speech clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Translate this English-language tech-review channel episode to Chinese and add Chinese subtitles",
+    "rationale": "User uploaded an English tech-review channel episode and asks for Chinese translation + Chinese subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to Chinese, CompositorAgent burns the Chinese subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Chinese-subtitle translation request for the English tech-review episode"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English tech-review channel episode"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English review audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Chinese"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Chinese subtitles onto the tech-review episode as the final render"}
+    ]
+  },
+  {
+    "goal": "Generate Hindi subtitles for this English-language sermon recording",
+    "rationale": "User uploaded an English sermon recording and asks for Hindi subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to Hindi, CompositorAgent burns the Hindi subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Hindi-subtitle request for the English sermon recording"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English sermon recording"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English sermon audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Hindi"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Hindi subtitles onto the sermon recording as the final render"}
+    ]
+  },
+  {
+    "goal": "Translate this English-spoken talk-show interview recording to Spanish and add Spanish subtitles",
+    "rationale": "User uploaded an English talk-show interview recording and asks for Spanish translation + Spanish subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to Spanish, CompositorAgent burns the Spanish subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Spanish-subtitle translation request for the English talk-show interview"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English talk-show interview recording"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English interview audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Spanish"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Spanish subtitles onto the talk-show interview as the final render"}
+    ]
+  },
+  {
+    "goal": "Generate French subtitles for this English-language wedding-vow ceremony video",
+    "rationale": "User uploaded an English wedding-vow ceremony video and asks for French subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to French, CompositorAgent burns the French subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the French-subtitle request for the English wedding-vow ceremony"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English wedding-vow ceremony video"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English vow audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to French"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the French subtitles onto the ceremony video as the final render"}
+    ]
+  },
+  {
+    "goal": "Translate this English-language live-concert recording to Japanese and add Japanese subtitles",
+    "rationale": "User uploaded an English live-concert recording and asks for Japanese translation + Japanese subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to Japanese, CompositorAgent burns the Japanese subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no new score was requested, just subtitles for the existing concert audio. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Japanese-subtitle translation request for the English live-concert recording"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English live-concert recording"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English concert audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Japanese"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Japanese subtitles onto the concert recording as the final render"}
+    ]
+  },
+  {
+    "goal": "Generate Chinese subtitles for this English-language political-debate broadcast",
+    "rationale": "User uploaded an English political-debate broadcast and asks for Chinese subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, TranscriptionAgent transcribes the English audio, SubtitleAgent generates English subtitles, TranslationAgent translates to Chinese, CompositorAgent burns the Chinese subtitles. TranslationAgent is required because source and target languages differ. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent or StyleTransferAgent because no extension or look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Chinese-subtitle request for the English political-debate broadcast"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English political-debate broadcast"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English debate audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate initial English subtitles from the transcript"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English subtitles to Chinese"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the Chinese subtitles onto the debate broadcast as the final render"}
+    ]
+  }
+]

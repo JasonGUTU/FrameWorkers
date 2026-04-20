@@ -83,6 +83,32 @@ class StoryAgent(BaseAgent[StoryAgentInput, StoryAgentOutput]):
             "No dialogue/screenplay prose, shots, camera, keyframes, audio, or editing.\n"
             "IDs: char_001, loc_001, arc_001, sc_001, … — JSON only per user template; "
             "use empty string/list for unknowns, not null; no meta/metrics.\n\n"
+            "=== WHEN TO REJECT UPSTREAM INPUT ===\n"
+            "Use the shared input_rejection escape hatch (see the UPSTREAM "
+            "INPUT REJECTION block above) ONLY if the creative brief makes "
+            "your job impossible. Concretely, reject when ANY of these is "
+            "true after you have read the creative_brief_json_text "
+            "carefully:\n"
+            "  * creative_brief_json_text is empty, whitespace-only, or "
+            "an empty JSON object — there is literally no user intent to "
+            "expand.\n"
+            "  * No textual creative intent anywhere: no text / summary / "
+            "content / brief / prompt / description fields are present "
+            "with non-empty content. A story needs SOME seed of intent — "
+            "even one sentence ('a film about a cat') is enough to "
+            "proceed.\n"
+            "When you reject, populate the rejection fields like this:\n"
+            "  * reason: the single most specific defect (e.g. 'creative "
+            "brief payload is empty — no story seed to expand').\n"
+            "  * missing_labels: ['creative_brief'] (my only input label).\n"
+            "  * offending_fields: the field paths you looked at and "
+            "found empty, e.g. ['content.text', 'content.summary'].\n"
+            "  * upstream_agent_hint: 'IntakeTextAgent' (the producer "
+            "that wraps the user's brief).\n"
+            "If the brief is merely short or vague — DO NOT reject; "
+            "expanding short prompts into rich blueprints is exactly what "
+            "this agent is for.\n"
+            "=== END WHEN TO REJECT UPSTREAM INPUT ===\n\n"
             "=== INPUT FORMAT ===\n"
             "You will receive the upstream creative brief as a RAW JSON TEXT BLOB "
             "inside the user message. The brief text is typically inside a "
@@ -111,10 +137,19 @@ class StoryAgent(BaseAgent[StoryAgentInput, StoryAgentOutput]):
             structural fields (motivation, flaw, conflict, turning_point)
             without rewriting.
         """
-        return (
+        parts = [
             "=== CREATIVE BRIEF (raw JSON — read the text from it) ===\n"
             f"{input_data.creative_brief_json_text}\n"
             "=== END CREATIVE BRIEF ===\n\n"
+        ]
+        if input_data.reference_analysis_json_text:
+            parts.append(
+                "=== REFERENCE VIDEO ANALYSIS (inspiration — use as "
+                "tone / genre / pacing seed, do NOT copy plot verbatim) ===\n"
+                f"{input_data.reference_analysis_json_text}\n"
+                "=== END REFERENCE ANALYSIS ===\n\n"
+            )
+        parts.append(
             "Read the brief JSON carefully and find the user's intent:\n"
             "- If the brief is short or vague (e.g. 'a film about a cat "
             "chasing a butterfly'), expand it creatively into a full "
@@ -124,7 +159,11 @@ class StoryAgent(BaseAgent[StoryAgentInput, StoryAgentOutput]):
             "into story_arc (setup/inciting/turn/crisis/climax/resolution). "
             "Fill in any missing structural fields (motivation, flaw, conflict, "
             "turning_point, scene goal/conflict/turn) WITHOUT rewriting what "
-            "the brief already specified.\n\n"
+            "the brief already specified.\n"
+            "- If a REFERENCE VIDEO ANALYSIS block is supplied, blend its "
+            "genre / mood / entities / scene rhythm into the new blueprint "
+            "as inspiration for tone and pacing; do NOT lift its plot "
+            "verbatim — the new story must be a distinct work.\n\n"
             "Infer language from the brief; default to English if unspecified.\n\n"
             f"Output JSON exactly like this template (replace placeholders):\n"
             f"{STORY_OUTPUT_TEMPLATE}\n\n"
@@ -133,6 +172,7 @@ class StoryAgent(BaseAgent[StoryAgentInput, StoryAgentOutput]):
             "IDs: char_001, loc_001, arc_001, sc_001.\n"
             "Return JSON only."
         )
+        return "".join(parts)
 
     async def generate(
         self,

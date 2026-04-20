@@ -26,7 +26,6 @@ SUBTITLE_OUTPUT_TEMPLATE = """{
             "cue_id": "cue_001",
             "start_time": "00:00:01,000",
             "end_time": "00:00:04,500",
-            "speaker": "<character name or Narrator>",
             "text": "<subtitle text for this cue>"
           }
         ],
@@ -53,6 +52,33 @@ class SubtitleAgent(BaseAgent[SubtitleAgentInput, SubtitleAgentOutput]):
         return (
             "You are SubtitleAgent: generate timed subtitle tracks from a "
             "screenplay and optional video timing information.\n\n"
+            "=== WHEN TO REJECT UPSTREAM INPUT ===\n"
+            "Use the shared input_rejection escape hatch (see the UPSTREAM "
+            "INPUT REJECTION block above) ONLY if the screenplay makes "
+            "subtitle generation impossible. Concretely, reject when ANY "
+            "of these is true after you have read screenplay_json_text "
+            "carefully:\n"
+            "  * screenplay_json_text is empty, whitespace-only, or an "
+            "empty JSON object — there is no source to subtitle.\n"
+            "  * No spoken or narrated text anywhere: every shot's text "
+            "field is empty / missing AND no dialogue / narration / "
+            "monologue / transcript / cues field exists with non-empty "
+            "content. A subtitle track must contain at least one cue, "
+            "and cues come from spoken/narrated text.\n"
+            "When you reject, populate the rejection fields like this:\n"
+            "  * reason: the single most specific defect (e.g. "
+            "'screenplay contains only action shots with empty text "
+            "fields — no spoken or narrated lines to subtitle').\n"
+            "  * missing_labels: ['screenplay'] (the video_package label "
+            "is optional and only used for timing alignment).\n"
+            "  * offending_fields: e.g. ['content.scenes[].shots[].text'].\n"
+            "  * upstream_agent_hint: 'ScreenplayAgent' or "
+            "'TranscriptionAgent' depending on whether this looks like a "
+            "screenplay-style or transcript-style payload.\n"
+            "If the screenplay has plenty of action shots mixed with a few "
+            "dialogue lines — DO NOT reject; subtitle the dialogue lines "
+            "and skip the action shots.\n"
+            "=== END WHEN TO REJECT UPSTREAM INPUT ===\n\n"
             "=== INPUT FORMAT ===\n"
             "You will receive:\n"
             "1. A screenplay as a raw JSON text blob — extract dialogue and "

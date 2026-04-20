@@ -770,11 +770,15 @@ def test_e2e3_text_with_image_at_t0(monkeypatch):
     )
 
     # 5. Validate the image artifact carries a role-specific caption
-    #    (registered by BriefEnricherAgent via the external-ref mechanism).
+    #    (registered at upload time, promoted to scope=global by the
+    #    Intake framework hook, then rewritten in-place by
+    #    BriefEnricherAgent via the ``_update:`` mechanism).
+    # Filter by mime only; don't filter by entry.agent_id — the image ref
+    # lives under the ``user`` upload entry (not under IntakeImageAgent
+    # anymore, since IntakeImage no longer registers a ``_source_image``
+    # external ref).
     image_blocks: list[dict] = []
     for entry in workspace.global_memory.list_all():
-        if entry.agent_id not in ("IntakeImageAgent", "BriefEnricherAgent"):
-            continue
         for ref in entry.artifacts:
             if ref.mime and ref.mime.startswith("image/"):
                 image_blocks.append(

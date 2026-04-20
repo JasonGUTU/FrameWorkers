@@ -171,8 +171,8 @@ def test_e2e_new_agents_full_chain(monkeypatch):
     """Run the full chain through Flask:
     upload brief → IntakeText → Story → Screenplay →
     SubtitleAgent / TranslationAgent / CompositorAgent
-    + KeyFrame → Video → Audio (mock media) →
-    VideoAnalysis / Highlight / StyleTransfer / Inpaint / VideoExtend / VoiceClone
+    + KeyFrame → Video → Music → Ambience → AudioMix (mock media) →
+    VideoAnalysis / Highlight / StyleTransfer / Inpaint / VideoExtend
     + IntakeVideo / IntakeAudio (via text upload fallback)
     """
     ws_id = _ws_id("new_agents_chain")
@@ -185,9 +185,9 @@ def test_e2e_new_agents_full_chain(monkeypatch):
                  "Create a 30-second cinematic short about two astronauts, "
                  "Chen and Park, who explore a glowing cave on Mars. Chen "
                  "discovers alien crystals and exclaims with excitement. Park "
-                 "responds they must report back to base. A narrator describes "
-                 "the cave setting. The script must include dialogue lines, "
-                 "narration blocks, and action shots.")
+                 "responds they must report back to base. The script must "
+                 "include dialogue lines and action shots; Kling's generate_audio "
+                 "bakes character dialogue + foley directly into each video clip.")
     step_id = _create_step(client, debug_file,
                            "30-second cinematic short about astronauts on Mars")
 
@@ -247,8 +247,6 @@ def test_e2e_new_agents_full_chain(monkeypatch):
     print("[E2E] KeyFrameAgent COMPLETED (mock)")
     _run("VideoAgent", required=True)
     print("[E2E] VideoAgent COMPLETED (mock)")
-    _run("NarrationAgent", required=True)
-    print("[E2E] NarrationAgent COMPLETED (mock)")
     _run("MusicAgent", required=True)
     print("[E2E] MusicAgent COMPLETED (mock)")
     _run("AmbienceAgent", required=True)
@@ -283,14 +281,6 @@ def test_e2e_new_agents_full_chain(monkeypatch):
     if ve:
         print(f"[E2E] VideoExtendAgent COMPLETED — {ve.get('content', {}).get('extension_spec', {}).get('target_duration_seconds')}s")
 
-    vc = _run("VoiceCloneAgent")
-    if vc:
-        print(f"[E2E] VoiceCloneAgent COMPLETED — {len(vc.get('content', {}).get('segments', []))} segment(s)")
-
-    tr = _run("TranscriptionAgent")
-    if tr:
-        print(f"[E2E] TranscriptionAgent COMPLETED — {len(tr.get('content', {}).get('segments', []))} segment(s)")
-
     # --- IntakeVideoAgent ---
     _upload_text(client, debug_file,
                  "Raw user upload (mime=video/mp4): 10-second clip of ocean waves at sunset")
@@ -298,16 +288,9 @@ def test_e2e_new_agents_full_chain(monkeypatch):
     if iv:
         print(f"[E2E] IntakeVideoAgent COMPLETED — {iv.get('content', {}).get('visual_summary', '')[:60]}")
 
-    # --- IntakeAudioAgent ---
-    _upload_text(client, debug_file,
-                 "Raw user upload (mime=audio/wav): ambient forest sounds with bird chirping")
-    ia = _run("IntakeAudioAgent")
-    if ia:
-        print(f"[E2E] IntakeAudioAgent COMPLETED — {ia.get('content', {}).get('auditory_summary', '')[:60]}")
-
     # --- Final report ---
     print(f"\n{'='*60}")
-    print(f"[E2E] RESULTS — Workspace: {workspace.workspace_path}")
+    print(f"[E2E] RESULTS — Workspace: {workspace.runtime_base_path / workspace.id}")
     print(f"{'='*60}")
     passed = 0
     failed = 0
@@ -323,9 +306,8 @@ def test_e2e_new_agents_full_chain(monkeypatch):
     # At least the core chain must pass; new agents are best-effort
     assert results.get("KeyFrameAgent") == "COMPLETED"
     assert results.get("VideoAgent") == "COMPLETED"
-    assert results.get("NarrationAgent") == "COMPLETED"
     # Agents that need real media files are expected to fail in text-only E2E.
-    _NEEDS_REAL_MEDIA = {"IntakeVideoAgent", "IntakeAudioAgent", "TranscriptionAgent"}
+    _NEEDS_REAL_MEDIA = {"IntakeVideoAgent"}
     text_only_passed = sum(
         1 for a, s in results.items()
         if s == "COMPLETED" and a not in _NEEDS_REAL_MEDIA

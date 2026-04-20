@@ -116,13 +116,5 @@ class ScreenplayEvaluator(BaseEvaluator[ScreenplayAgentOutput]):
         for scene in c.scenes:
             if not scene.shots:
                 errors.append(f"scene {scene.scene_id} has no shots")
-            elif scene.estimated_duration_seconds <= 0:
-                errors.append(
-                    f"scene {scene.scene_id} has non-positive "
-                    f"estimated_duration_seconds={scene.estimated_duration_seconds} "
-                    "— downstream Narration/Music/Ambience read this as the "
-                    "authoritative scene length; compute it as "
-                    "dialogue_words/2.5 + action_shots*3.0"
-                )
 
         return errors

@@ -1,0 +1,302 @@
+[
+  {
+    "goal": "Extend this martial-arts duel scene by 10 seconds to show the hero's counter-strike, then convert the whole clip to a Studio Ghibli animated look",
+    "rationale": "User uploaded a martial-arts duel clip and asks for a 10s extension AND a Studio Ghibli style transfer. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the counter-strike beat for 10s, StyleTransferAgent applies the Ghibli look to the extended clip. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip delivered directly. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s counter-strike extension plus Studio Ghibli style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded martial-arts duel clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s of the hero delivering the counter-strike"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Studio Ghibli animated look to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this CEO-romance boardroom confrontation by 12 seconds to cover the reveal, then transfer the look to a film-noir black-and-white style",
+    "rationale": "User uploaded a CEO-romance boardroom clip and asks for a 12s extension AND a film-noir style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the reveal beat for 12s, StyleTransferAgent applies the film-noir look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12s reveal extension plus film-noir style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded CEO-romance boardroom confrontation clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 12s covering the reveal beat"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a film-noir black-and-white style to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this cultivation-fantasy tribulation by 15 seconds to show the ascension, then convert to a Chinese ink-wash painting style",
+    "rationale": "User uploaded a cultivation-fantasy tribulation clip and asks for a 15s extension AND an ink-wash style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the ascension beat for 15s, StyleTransferAgent applies the ink-wash look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 15s ascension extension plus ink-wash style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded cultivation-fantasy tribulation clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 15s showing the ascension"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Chinese ink-wash painting style to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this urban car-chase by 8 seconds through the final drift, then re-style it to a synthwave cyberpunk look",
+    "rationale": "User uploaded an urban car-chase clip and asks for an 8s extension AND a synthwave cyberpunk style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the final drift for 8s, StyleTransferAgent applies the synthwave cyberpunk look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 8s final-drift extension plus synthwave cyberpunk style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded urban car-chase clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 8s through the final drift"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a synthwave cyberpunk look to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this costume-drama palace-gate scene by 10 seconds to include the dethronement, then transfer to a Mughal miniature-painting style",
+    "rationale": "User uploaded a costume-drama palace-gate clip and asks for a 10s extension AND a Mughal miniature-painting style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the dethronement beat for 10s, StyleTransferAgent applies the Mughal miniature look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s dethronement extension plus Mughal miniature style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded costume-drama palace-gate clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s to include the dethronement"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Mughal miniature-painting style to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this sci-fi space-battle by 12 seconds to cover the captain's ram, then re-style to a Moebius retro-comic look",
+    "rationale": "User uploaded a sci-fi space-battle clip and asks for a 12s extension AND a Moebius retro-comic style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the captain's ram for 12s, StyleTransferAgent applies the Moebius retro-comic look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12s captain's-ram extension plus Moebius retro-comic style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded sci-fi space-battle clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 12s covering the captain's sacrificial ram"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Moebius retro-comic style to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this suspense interrogation by 10 seconds for the confession beat, then transfer to a Sin City graphic-novel look with selective red",
+    "rationale": "User uploaded a suspense interrogation clip and asks for a 10s extension AND a Sin City graphic-novel style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the confession beat for 10s, StyleTransferAgent applies the Sin City look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s confession extension plus Sin City graphic-novel style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded suspense interrogation clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s to include the confession beat"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Sin City graphic-novel style with selective red to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this campus sports-day finish by 8 seconds to include the tearful celebration, then re-style to a Pixar 3D-animation look",
+    "rationale": "User uploaded a campus sports-day finish-line clip and asks for an 8s extension AND a Pixar 3D-animation style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the tearful-celebration beat for 8s, StyleTransferAgent applies the Pixar look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 8s tearful-celebration extension plus Pixar 3D-animation style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded campus sports-day finish-line clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 8s for the tearful celebration"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Pixar 3D-animation look to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this workplace resignation by 10 seconds as he walks out, then transfer to an Edward Hopper lonely oil-painting look",
+    "rationale": "User uploaded a workplace resignation clip and asks for a 10s extension AND a Hopper oil-painting style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the walk-out beat for 10s, StyleTransferAgent applies the Hopper look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s walk-out extension plus Hopper oil-painting style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded workplace resignation clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s as he walks out"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply an Edward Hopper lonely oil-painting look to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this costume-drama assassination by 10 seconds to include the counter-kill, then re-style to a Kurosawa monochrome look",
+    "rationale": "User uploaded a costume-drama assassination clip and asks for a 10s extension AND a Kurosawa monochrome style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the counter-kill beat for 10s, StyleTransferAgent applies the Kurosawa monochrome look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s counter-kill extension plus Kurosawa monochrome style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded costume-drama assassination clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s to include the counter-kill"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Kurosawa monochrome look to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this martial-arts bamboo-forest duel by 12 seconds adding aerial leaps, then re-style to an ukiyo-e woodblock-print look",
+    "rationale": "User uploaded a martial-arts bamboo-forest duel clip and asks for a 12s extension AND an ukiyo-e woodblock style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues with aerial leaps for 12s, StyleTransferAgent applies the ukiyo-e look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12s aerial-leaps extension plus ukiyo-e woodblock style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded martial-arts bamboo-forest duel clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 12s adding aerial leaps between bamboo stalks"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Japanese ukiyo-e woodblock-print style to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this urban rooftop farewell by 10 seconds as she walks to the elevator, then re-style to a Wong Kar-wai neon motion-blur look",
+    "rationale": "User uploaded an urban rooftop farewell clip and asks for a 10s extension AND a Wong Kar-wai neon motion-blur style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues as she walks to the elevator for 10s, StyleTransferAgent applies the Wong Kar-wai look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s walks-to-elevator extension plus Wong Kar-wai neon motion-blur style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded urban rooftop farewell clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s as she walks to the elevator"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Wong Kar-wai neon motion-blur look to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this cyberpunk heist elevator by 12 seconds through the EMP cascade, then re-style to an Akira 80s anime look",
+    "rationale": "User uploaded a cyberpunk heist elevator clip and asks for a 12s extension AND an Akira 80s anime style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues through the EMP cascade for 12s, StyleTransferAgent applies the Akira look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12s EMP-cascade extension plus Akira 80s anime style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded cyberpunk heist elevator clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 12s through the EMP cascade dropping the guards"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply an Akira 80s anime look to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this CEO-romance proposal by 8 seconds to the tearful nod, then re-style to a pastel watercolor storybook look",
+    "rationale": "User uploaded a CEO-romance proposal clip and asks for an 8s extension AND a pastel watercolor storybook style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the tearful-nod beat for 8s, StyleTransferAgent applies the watercolor look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 8s tearful-nod extension plus pastel watercolor style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded CEO-romance proposal clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 8s to the tearful nod"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a pastel watercolor storybook look to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this post-apocalyptic gunfight by 15 seconds to the final headshot, then re-style to a Goya Black-Paintings nightmarish look",
+    "rationale": "User uploaded a post-apocalyptic gunfight clip and asks for a 15s extension AND a Goya Black-Paintings style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues to the final headshot for 15s, StyleTransferAgent applies the Goya look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 15s final-headshot extension plus Goya Black-Paintings style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded post-apocalyptic gunfight clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 15s to the final headshot"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Goya Black-Paintings nightmarish look to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this tomb-raider trap by 12 seconds through the poison-dart evasion, then re-style to a VHS found-footage grainy look",
+    "rationale": "User uploaded a tomb-raider trap clip and asks for a 12s extension AND a VHS found-footage style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues through the dart evasion for 12s, StyleTransferAgent applies the VHS grain look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12s dart-evasion extension plus VHS found-footage style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded tomb-raider trap clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 12s through the poison-dart evasion"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a VHS found-footage grainy look to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this urban subway-performer scene by 10 seconds of the crowd-gather finale, then re-style to a Basquiat graffiti look",
+    "rationale": "User uploaded an urban subway-performer clip and asks for a 10s extension AND a Basquiat graffiti style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the crowd-gather finale for 10s, StyleTransferAgent applies the Basquiat look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s crowd-gather-finale extension plus Basquiat graffiti style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded urban subway-performer clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s of the crowd-gather finale"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Basquiat neo-expressionist graffiti look to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this cultivation-fantasy sword-duel by 12 seconds with clashing qi trails, then re-style to a Chinese ink-wash landscape look",
+    "rationale": "User uploaded a cultivation-fantasy sword-duel clip and asks for a 12s extension AND a Chinese ink-wash landscape style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues with clashing qi trails for 12s, StyleTransferAgent applies the ink-wash landscape look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12s clashing-qi extension plus Chinese ink-wash landscape style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded cultivation-fantasy sword-duel clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 12s with clashing sword-qi trails between the leads"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Chinese ink-wash landscape look to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this palace-intrigue selection-trial by 10 seconds through the public retort, then re-style to a Vermeer intimate-domestic oil-painting look",
+    "rationale": "User uploaded a palace-intrigue selection-trial clip and asks for a 10s extension AND a Vermeer oil-painting style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the public-retort beat for 10s, StyleTransferAgent applies the Vermeer look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s public-retort extension plus Vermeer oil-painting style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded palace-intrigue selection-trial clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s through the female lead's public retort to the empress"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Vermeer intimate-domestic oil-painting look to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this romance-drama rain-confession by 8 seconds as the couple breaks apart, then re-style to a soft-focus pastel anime key-visual look",
+    "rationale": "User uploaded a romance-drama rain-confession clip and asks for an 8s extension AND a pastel anime key-visual style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the break-apart beat for 8s, StyleTransferAgent applies the pastel anime look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 8s break-apart extension plus soft-focus pastel anime style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded romance-drama rain-confession clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 8s as the couple breaks apart in the rain"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a soft-focus pastel anime key-visual look to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this sci-fi android-awakening by 12 seconds through the first scan, then re-style to a retro-analog 1970s hard-sci-fi film-grain look",
+    "rationale": "User uploaded a sci-fi android-awakening clip and asks for a 12s extension AND a retro-analog 1970s style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the first-scan beat for 12s, StyleTransferAgent applies the retro-analog film-grain look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12s first-scan extension plus retro-analog 1970s film-grain style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded sci-fi android-awakening clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 12s through the android's first scan of the laboratory"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a retro-analog 1970s hard-sci-fi film-grain look to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this costume-drama coronation by 12 seconds to the seal acceptance, then re-style to a Caravaggio chiaroscuro look",
+    "rationale": "User uploaded a costume-drama coronation clip and asks for a 12s extension AND a Caravaggio chiaroscuro style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the seal-acceptance beat for 12s, StyleTransferAgent applies the Caravaggio look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12s seal-acceptance extension plus Caravaggio chiaroscuro style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded costume-drama coronation clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 12s to the new emperor accepting the jade seal"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Caravaggio chiaroscuro look to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this CEO-romance argument by 8 seconds to the glass smash, then re-style to a comic-book halftone bold-outline look",
+    "rationale": "User uploaded a CEO-romance argument clip and asks for an 8s extension AND a comic-book halftone bold-outline style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues to the glass smash for 8s, StyleTransferAgent applies the comic-book look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 8s glass-smash extension plus comic-book halftone style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded CEO-romance argument clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 8s to the male lead smashing his crystal glass"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a comic-book halftone bold-outline style to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this horror attic-haunting by 10 seconds through the apparition reveal, then re-style to a Tim Burton stop-motion-puppet look",
+    "rationale": "User uploaded a horror attic-haunting clip and asks for a 10s extension AND a Tim Burton stop-motion-puppet style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues through the apparition reveal for 10s, StyleTransferAgent applies the Burton look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s apparition-reveal extension plus Tim Burton stop-motion-puppet style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded horror attic-haunting clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s through the apparition reveal in the attic"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Tim Burton stop-motion-puppet style to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this western-saloon standoff by 10 seconds to the draw, then re-style to an 1880s sepia daguerreotype-photograph look",
+    "rationale": "User uploaded a western-saloon standoff clip and asks for a 10s extension AND a sepia daguerreotype style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues to the draw for 10s, StyleTransferAgent applies the daguerreotype look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s draw extension plus sepia daguerreotype style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded western-saloon standoff clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s to the decisive draw"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply an 1880s sepia daguerreotype-photograph look to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this medieval tavern-brawl by 10 seconds adding more combatants, then re-style to a Brueghel peasant-genre oil-painting look",
+    "rationale": "User uploaded a medieval tavern-brawl clip and asks for a 10s extension AND a Brueghel peasant-genre style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues with more combatants joining the brawl for 10s, StyleTransferAgent applies the Brueghel look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s more-combatants extension plus Brueghel peasant-genre style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded medieval tavern-brawl clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s adding more combatants joining the brawl"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Brueghel peasant-genre oil-painting look to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this modern office-betrayal by 10 seconds as she silently reads the incriminating email, then re-style to a Saul Steinberg editorial-illustration look",
+    "rationale": "User uploaded a modern office-betrayal clip and asks for a 10s extension AND a Saul Steinberg editorial-illustration style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the silent-reading beat for 10s, StyleTransferAgent applies the Steinberg look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s silent-reading extension plus Saul Steinberg editorial-illustration style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded modern office-betrayal clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s as she silently reads the incriminating email"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Saul Steinberg editorial-illustration style to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this CEO-romance helicopter-arrival by 10 seconds as she steps out, then re-style to a hyper-glossy high-fashion magazine-spread look",
+    "rationale": "User uploaded a CEO-romance helicopter-arrival clip and asks for a 10s extension AND a hyper-glossy high-fashion magazine-spread style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues as she steps out for 10s, StyleTransferAgent applies the hyper-glossy fashion look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s steps-out extension plus hyper-glossy high-fashion magazine style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded CEO-romance helicopter-arrival clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s as she steps out of the helicopter"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a hyper-glossy high-fashion magazine-spread look to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this urban hospital-corridor scene by 8 seconds as she collapses against the wall, then re-style to an Edvard Munch expressionist look",
+    "rationale": "User uploaded an urban hospital-corridor clip and asks for an 8s extension AND an Edvard Munch expressionist style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the collapse beat for 8s, StyleTransferAgent applies the Munch look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 8s collapse extension plus Edvard Munch expressionist style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded urban hospital-corridor clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 8s as she collapses against the wall"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply an Edvard Munch expressionist look to the extended clip"}
+    ]
+  },
+  {
+    "goal": "Extend this fantasy dragon-roost scene by 12 seconds of the dragon taking flight, then re-style to an M.C. Escher optical-illusion look",
+    "rationale": "User uploaded a fantasy dragon-roost clip and asks for a 12s extension AND an M.C. Escher optical-illusion style. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the dragon-takes-flight beat for 12s, StyleTransferAgent applies the Escher look. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the final re-styled extended clip. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12s dragon-takes-flight extension plus M.C. Escher optical-illusion style brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded fantasy dragon-roost clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 12s of the dragon taking flight from its roost"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply an M.C. Escher optical-illusion style to the extended clip"}
+    ]
+  }
+]

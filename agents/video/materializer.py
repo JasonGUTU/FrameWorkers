@@ -19,7 +19,6 @@ a thin shim around ``VideoService``.
 
 from __future__ import annotations
 
-import json
 import logging
 import os
 from typing import Any
@@ -81,15 +80,19 @@ class VideoMaterializer(BaseMaterializer):
 
     @staticmethod
     def _to_inference_context(
-        shot_id: str, seg_semantic: dict
+        shot_id: str, seg_semantic: dict, scene_ctx: dict
     ) -> ShotSemanticContext:
-        """Convert the agent-layer ShotSemanticContext dict into the
-        inference-layer dataclass the VideoService expects.
+        """Convert the agent-layer per-shot semantic dict + parent scene's
+        scene_context into the inference-layer dataclass the VideoService
+        expects.
 
-        The two types have the exact same field names by design — see
-        ``agents/video/schema.py:ShotSemanticContext``. This is a
-        one-shot mechanical conversion at the agent / inference layer
-        boundary, NOT a semantic re-interpretation.
+        Scene-level fields (scene_id / location_id / time_of_day /
+        environment_notes / style_notes / must_avoid) are read from the
+        parent ``VideoScene``'s ``scene_context`` and the scene itself.
+        Per-shot fields are read from ``seg_semantic``. The inference-layer
+        dataclass in ``inference/generation/video_generators/types.py``
+        still carries the full flat field set, so this is where the
+        scene/shot merge happens.
         """
         return ShotSemanticContext(
             shot_id=shot_id,
@@ -100,19 +103,17 @@ class VideoMaterializer(BaseMaterializer):
             camera_angle=seg_semantic.get("camera_angle", "") or "",
             camera_movement=seg_semantic.get("camera_movement", "") or "",
             framing_notes=seg_semantic.get("framing_notes", "") or "",
-            scene_id=seg_semantic.get("scene_id", "") or "",
-            location_id=seg_semantic.get("location_id", "") or "",
-            time_of_day=seg_semantic.get("time_of_day", "") or "",
-            environment_notes=list(seg_semantic.get("environment_notes", []) or []),
-            style_notes=list(seg_semantic.get("style_notes", []) or []),
-            must_avoid=list(seg_semantic.get("must_avoid", []) or []),
-            keyframe_notes=list(seg_semantic.get("keyframe_notes", []) or []),
-            keyframe_prompt_summaries=list(
-                seg_semantic.get("keyframe_prompt_summaries", []) or []
-            ),
+            scene_id=scene_ctx.get("scene_id", "") or "",
+            location_id=scene_ctx.get("location_id", "") or "",
+            time_of_day=scene_ctx.get("time_of_day", "") or "",
+            environment_notes=list(scene_ctx.get("environment_notes", []) or []),
+            style_notes=list(scene_ctx.get("style_notes", []) or []),
+            must_avoid=list(scene_ctx.get("must_avoid", []) or []),
             video_motion_hints=list(
                 seg_semantic.get("video_motion_hints", []) or []
             ),
+            dialogue_text=seg_semantic.get("dialogue_text", "") or "",
+            emotion_hint=seg_semantic.get("emotion_hint", "") or "",
         )
 
     @staticmethod
@@ -150,13 +151,18 @@ class VideoMaterializer(BaseMaterializer):
 
         for scene in content.get("scenes", []):
             scene_id = scene.get("scene_id", "")
+            scene_ctx = dict(scene.get("scene_context", {}) or {})
+            scene_ctx["scene_id"] = scene_id
             clip_bytes_list: list[bytes] = []
 
             for seg in scene.get("shot_segments", []):
                 shot_id = seg.get("shot_id", "")
-                video_asset = seg.get("video_asset", {})
                 sys_vid_id = f"clip_{shot_id}"
-                video_asset["asset_id"] = sys_vid_id
+                # Per-clip URI holder is local — agent output no longer
+                # carries a per-shot video_asset block. MediaAsset's
+                # uri_holder just needs somewhere to write the persisted
+                # URI; Assistant reads it off the returned MediaAsset.
+                video_asset: dict[str, Any] = {"asset_id": sys_vid_id, "format": "mp4"}
 
                 # --- Load the starting-frame image for this shot ---
                 still_path = shot_still_index.get(shot_id, "")
@@ -172,11 +178,12 @@ class VideoMaterializer(BaseMaterializer):
                 # --- Build the semantic context from the agent's own
                 #     typed output — the LLM already mirrored the
                 #     upstream screenplay + keyframes fields into
-                #     seg.semantic_context, so we only need a mechanical
-                #     conversion to the inference-layer dataclass here.
+                #     seg.semantic_context + scene.scene_context, so we
+                #     only need a mechanical conversion to the inference-
+                #     layer dataclass here.
                 seg_semantic = seg.get("semantic_context", {}) or {}
                 semantic_context = self._to_inference_context(
-                    shot_id, seg_semantic
+                    shot_id, seg_semantic, scene_ctx
                 )
 
                 try:
@@ -185,16 +192,9 @@ class VideoMaterializer(BaseMaterializer):
                         keyframe_images=[image_bytes],
                         semantic_context=semantic_context,
                     )
-                    seg["video_generation_prompt"] = result.resolved_prompt
-                    seg["video_generation_constraints_json"] = (
-                        json.dumps(result.resolved_payload, ensure_ascii=False)
-                        if result.resolved_payload
-                        else ""
-                    )
-                    ext = video_asset.get("format", "mp4")
                     pending.append(MediaAsset(
                         sys_id=sys_vid_id, data=result.bytes,
-                        extension=ext, uri_holder=video_asset,
+                        extension="mp4", uri_holder=video_asset,
                     ))
                     clip_bytes_list.append(result.bytes)
                 except Exception as exc:
@@ -206,9 +206,10 @@ class VideoMaterializer(BaseMaterializer):
                             error=f"{type(exc).__name__}: {exc}",
                         )
 
-            scene_clip = scene.get("scene_clip_asset", {})
             sys_scene_clip_id = f"clip_{scene_id}"
-            scene_clip["asset_id"] = sys_scene_clip_id
+            scene_clip: dict[str, Any] = {
+                "asset_id": sys_scene_clip_id, "format": "mp4",
+            }
             if clip_bytes_list:
                 try:
                     scene_bytes = await self.video_svc.assemble_scene(
@@ -230,8 +231,7 @@ class VideoMaterializer(BaseMaterializer):
                             error=f"{type(exc).__name__}: {exc}",
                         )
 
-        final = content.get("final_video_asset", {})
-        final["asset_id"] = "clip_final"
+        final: dict[str, Any] = {"asset_id": "clip_final", "format": "mp4"}
         if scene_bytes_list:
             try:
                 final_bytes = await self.video_svc.assemble_final(

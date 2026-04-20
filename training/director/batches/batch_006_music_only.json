@@ -1,0 +1,321 @@
+[
+  {
+    "goal": "Add a melancholic solo piano score to this martial-arts farewell clip",
+    "rationale": "User uploaded a martial-arts farewell clip and asks for a melancholic solo piano score only. Plan: IntakeText captures the text brief, IntakeVideo registers the source clip, MusicAgent composes the piano score, AudioMixAgent blends the new score with the original dialogue audio, CompositorAgent renders the final video with the new mixed audio track. No AmbienceAgent because the user only requested a musical score, not environmental sounds. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the melancholic solo piano score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded martial-arts farewell clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a melancholic solo piano score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the piano score with the original dialogue audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add an epic orchestral war-drum score to this cultivation-fantasy tribulation clip",
+    "rationale": "User uploaded a cultivation-fantasy tribulation clip and asks for an epic orchestral war-drum score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the orchestral score, AudioMixAgent blends it with the original thunder SFX, CompositorAgent renders the final video. No AmbienceAgent because the user only asked for a music track, not environmental sounds like wind or rain. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the epic orchestral war-drum score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded cultivation-fantasy tribulation clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose an epic orchestral war-drum score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the orchestral score with the original thunder SFX audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add a warm romantic piano-and-strings score to this CEO-romance confession clip",
+    "rationale": "User uploaded a CEO-romance confession clip and asks for a warm romantic piano-and-strings score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the romantic score, AudioMixAgent blends it with the original dialogue audio, CompositorAgent outputs the final. No AmbienceAgent because the user only requested a music score, not environmental sounds. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the warm romantic piano-and-strings score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded CEO-romance confession clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a warm romantic piano-and-strings score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the romantic score with the original dialogue audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add a tense low-frequency electronic suspense score to this urban chase-scene clip",
+    "rationale": "User uploaded an urban chase clip and asks for a tense low-frequency electronic suspense score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the electronic suspense score, AudioMixAgent blends it with the original engine and footstep SFX, CompositorAgent outputs the final. No AmbienceAgent because the user only asked for a music score, not environmental sounds like city traffic or sirens. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the tense low-frequency electronic suspense score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded urban chase-scene clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a tense low-frequency electronic suspense score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the electronic score with the original engine and footstep SFX"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add a solemn grand palace drums-and-strings score to this costume-drama coronation clip",
+    "rationale": "User uploaded a costume-drama coronation clip and asks for a solemn grand palace drums-and-strings score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the grand palace score, AudioMixAgent blends it with the original bell-and-gong SFX, CompositorAgent outputs the final. No AmbienceAgent because the user only requested a music score, not hall ambience. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the solemn grand palace drums-and-strings score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded costume-drama coronation clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a solemn grand palace drums-and-strings score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the palace score with the original bell-and-gong SFX"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add a sweeping cinematic brass-and-percussion score to this sci-fi space battle clip",
+    "rationale": "User uploaded a sci-fi space battle clip and asks for a sweeping cinematic brass-and-percussion score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the cinematic score, AudioMixAgent blends it with the original ship-and-explosion SFX, CompositorAgent outputs the final. No AmbienceAgent because the user only asked for a music score, not environmental sounds. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the sweeping cinematic brass-and-percussion score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded sci-fi space battle clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a sweeping cinematic brass-and-percussion score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the cinematic score with the original ship-and-explosion SFX"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add a gloomy minor-key strings score to this suspense interrogation clip",
+    "rationale": "User uploaded a suspense interrogation clip and asks for a gloomy minor-key strings score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the strings score, AudioMixAgent blends it with the original dialogue audio, CompositorAgent outputs the final. No AmbienceAgent because the user only requested a music score, not room tone or environmental sounds. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the gloomy minor-key strings score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded suspense interrogation clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a gloomy minor-key strings score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the strings score with the original dialogue audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add an uplifting marching-band score to this campus sports-day clip",
+    "rationale": "User uploaded a campus sports-day clip and asks for an uplifting marching-band score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the marching-band score, AudioMixAgent blends it with the original crowd-cheer audio, CompositorAgent outputs the final. No AmbienceAgent because the user only requested a music score, not stadium ambience. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the uplifting marching-band score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded campus sports-day clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose an uplifting marching-band score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the marching-band score with the original crowd-cheer audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add a warm reflective jazz piano score to this workplace resignation clip",
+    "rationale": "User uploaded a workplace resignation clip and asks for a warm reflective jazz piano score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the jazz piano score, AudioMixAgent blends it with the original keyboard-and-shutdown audio, CompositorAgent outputs the final. No AmbienceAgent because the user only asked for a music score, not office ambience. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the warm reflective jazz piano score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded workplace resignation clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a warm reflective jazz piano score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the jazz piano score with the original keyboard-and-shutdown audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add a chilling minimalist cello score to this costume-drama assassination clip",
+    "rationale": "User uploaded a costume-drama assassination clip and asks for a chilling minimalist cello score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the cello score, AudioMixAgent blends it with the original blade-clash SFX, CompositorAgent outputs the final. No AmbienceAgent because the user only requested a music score, not night-palace ambience. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the chilling minimalist cello score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded costume-drama assassination clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a chilling minimalist cello score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the cello score with the original blade-clash SFX"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add a tense low-cello corporate-warfare score to this CEO-romance boardroom showdown clip",
+    "rationale": "User uploaded a CEO-romance boardroom showdown clip and asks for a tense low-cello corporate-warfare score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the corporate score, AudioMixAgent blends it with the original dialogue audio, CompositorAgent outputs the final. No AmbienceAgent because the user only asked for a music score, not boardroom ambience. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the tense low-cello corporate-warfare score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded CEO-romance boardroom showdown clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a tense low-cello corporate-warfare score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the corporate score with the original dialogue audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add a mournful erhu solo score to this martial-arts master-disciple farewell clip",
+    "rationale": "User uploaded a martial-arts master-disciple farewell clip and asks for a mournful erhu solo score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the erhu score, AudioMixAgent blends it with the original dialogue audio, CompositorAgent outputs the final. No AmbienceAgent because the user only requested a music score, not environmental sounds. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the mournful erhu solo score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded martial-arts master-disciple farewell clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a mournful erhu solo score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the erhu score with the original dialogue audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add a drum-heavy cultivation-battle score to this cultivation-fantasy sword-duel clip",
+    "rationale": "User uploaded a cultivation-fantasy sword-duel clip and asks for a drum-heavy cultivation-battle score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the drum-heavy battle score, AudioMixAgent blends it with the original sword-qi SFX, CompositorAgent outputs the final. No AmbienceAgent because the user only asked for a music score, not mountain-environment sounds. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the drum-heavy cultivation-battle score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded cultivation-fantasy sword-duel clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a drum-heavy cultivation-battle score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the battle score with the original sword-qi SFX"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add an upbeat playful acoustic-guitar score to this urban blind-date dinner clip",
+    "rationale": "User uploaded an urban blind-date dinner clip and asks for an upbeat playful acoustic-guitar score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the acoustic-guitar score, AudioMixAgent blends it with the original restaurant-dialogue audio, CompositorAgent outputs the final. No AmbienceAgent because the user only requested a music score, not restaurant ambience. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the upbeat playful acoustic-guitar score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded urban blind-date dinner clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose an upbeat playful acoustic-guitar score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the acoustic-guitar score with the original restaurant-dialogue audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add a high-tension guqin-and-strings score to this palace-intrigue selection-trial clip",
+    "rationale": "User uploaded a palace-intrigue selection-trial clip and asks for a high-tension guqin-and-strings score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the guqin-and-strings score, AudioMixAgent blends it with the original dialogue audio, CompositorAgent outputs the final. No AmbienceAgent because the user only asked for a music score, not inner-hall ambience. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the high-tension guqin-and-strings score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded palace-intrigue selection-trial clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a high-tension guqin-and-strings score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the guqin-and-strings score with the original dialogue audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add an ethereal flute-and-xiao score to this cultivation-fantasy heart-demon tribulation clip",
+    "rationale": "User uploaded a cultivation-fantasy heart-demon tribulation clip and asks for an ethereal flute-and-xiao score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the flute-and-xiao score, AudioMixAgent blends it with the original thunder SFX, CompositorAgent outputs the final. No AmbienceAgent because the user only requested a music score, not heaven-cloud environmental sounds. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the ethereal flute-and-xiao score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded cultivation-fantasy heart-demon tribulation clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose an ethereal flute-and-xiao score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the flute-and-xiao score with the original thunder SFX"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add a distorted electro-metal score to this cyberpunk street-fight clip",
+    "rationale": "User uploaded a cyberpunk street-fight clip and asks for a distorted electro-metal score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the electro-metal score, AudioMixAgent blends it with the original fight SFX, CompositorAgent outputs the final. No AmbienceAgent because the user only asked for a music score, not street environmental sounds. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the distorted electro-metal score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded cyberpunk street-fight clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a distorted electro-metal score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the electro-metal score with the original fight SFX"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add a cold dissonant cello score to this CEO-romance argument clip",
+    "rationale": "User uploaded a CEO-romance argument clip and asks for a cold dissonant cello score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the cello score, AudioMixAgent blends it with the original glass-shattering SFX, CompositorAgent outputs the final. No AmbienceAgent because the user only requested a music score, not living-room ambience. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the cold dissonant cello score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded CEO-romance argument clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a cold dissonant cello score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the cello score with the original glass-shattering SFX"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add an urgent traditional suona-and-drums score to this costume-drama wedding-kidnap clip",
+    "rationale": "User uploaded a costume-drama wedding-kidnap clip and asks for an urgent traditional suona-and-drums score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the suona-and-drums score, AudioMixAgent blends it with the original hoof-and-cheer SFX, CompositorAgent outputs the final. No AmbienceAgent because the user only asked for a music score, not street-crowd ambience. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the urgent traditional suona-and-drums score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded costume-drama wedding-kidnap clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose an urgent traditional suona-and-drums score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the suona-and-drums score with the original hoof-and-cheer SFX"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add a desolate frontier huqin score to this martial-arts desert-lone-traveler clip",
+    "rationale": "User uploaded a martial-arts desert-lone-traveler clip and asks for a desolate frontier huqin score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the huqin score, AudioMixAgent blends it with the original wind-and-sand SFX, CompositorAgent outputs the final. No AmbienceAgent because the user only requested a music score, not desert environmental sounds. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the desolate frontier huqin score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded martial-arts desert-lone-traveler clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a desolate frontier huqin score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the huqin score with the original wind-and-sand SFX"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add an ethereal guzheng-and-pipa duet score to this cultivation-fantasy double-cultivation healing clip",
+    "rationale": "User uploaded a cultivation-fantasy double-cultivation healing clip and asks for an ethereal guzheng-and-pipa duet score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the guzheng-and-pipa score, AudioMixAgent blends it with the original breathing SFX, CompositorAgent outputs the final. No AmbienceAgent because the user only asked for a music score, not cave environmental sounds. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the ethereal guzheng-and-pipa duet score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded cultivation-fantasy double-cultivation healing clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose an ethereal guzheng-and-pipa duet score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the guzheng-and-pipa score with the original breathing SFX"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add a melancholic saxophone jazz score to this urban rooftop farewell clip",
+    "rationale": "User uploaded an urban rooftop farewell clip and asks for a melancholic saxophone jazz score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the saxophone jazz score, AudioMixAgent blends it with the original footstep-and-lighter SFX, CompositorAgent outputs the final. No AmbienceAgent because the user only requested a music score, not rooftop wind ambience. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the melancholic saxophone jazz score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded urban rooftop farewell clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a melancholic saxophone jazz score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the saxophone jazz score with the original footstep-and-lighter SFX"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add a pulsing dark-techno score to this cyberpunk heist clip",
+    "rationale": "User uploaded a cyberpunk heist clip and asks for a pulsing dark-techno score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the dark-techno score, AudioMixAgent blends it with the original beeps-and-alarm SFX, CompositorAgent outputs the final. No AmbienceAgent because the user only asked for a music score, not elevator/hallway ambience. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the pulsing dark-techno score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded cyberpunk heist clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a pulsing dark-techno score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the dark-techno score with the original beeps-and-alarm SFX"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add a distorted electric-guitar action score to this post-apocalyptic desert gunfight clip",
+    "rationale": "User uploaded a post-apocalyptic desert gunfight clip and asks for a distorted electric-guitar action score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the electric-guitar score, AudioMixAgent blends it with the original gunfight SFX, CompositorAgent outputs the final. No AmbienceAgent because the user only requested a music score, not wasteland environmental sounds. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the distorted electric-guitar action score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded post-apocalyptic desert gunfight clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a distorted electric-guitar action score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the electric-guitar score with the original gunfight SFX"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add a warm cinematic piano-and-strings score to this modern rooftop romance kiss clip",
+    "rationale": "User uploaded a modern rooftop romance kiss clip and asks for a warm cinematic piano-and-strings score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the cinematic score, AudioMixAgent blends it with the original ambient kiss audio, CompositorAgent outputs the final. No AmbienceAgent because the user only asked for a music score, not environmental city sounds. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the warm cinematic piano-and-strings score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded modern rooftop romance kiss clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a warm cinematic piano-and-strings score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the cinematic score with the original ambient kiss audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add a tense low-drum horror score to this tomb-raider trap clip",
+    "rationale": "User uploaded a tomb-raider trap clip and asks for a tense low-drum horror score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the low-drum horror score, AudioMixAgent blends it with the original echoing-wall SFX, CompositorAgent outputs the final. No AmbienceAgent because the user only requested a music score, not tomb environmental sounds. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the tense low-drum horror score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded tomb-raider trap clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a low-drum horror score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the horror score with the original echoing-wall SFX"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add a nostalgic warm-toned acoustic folk score to this rebirth-drama childhood-home return clip",
+    "rationale": "User uploaded a rebirth-drama childhood-home return clip and asks for a nostalgic warm-toned acoustic folk score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the acoustic folk score, AudioMixAgent blends it with the original footstep-and-door SFX, CompositorAgent outputs the final. No AmbienceAgent because the user only asked for a music score, not house environmental sounds. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the nostalgic warm-toned acoustic folk score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded rebirth-drama childhood-home return clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a nostalgic warm-toned acoustic folk score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the folk score with the original footstep-and-door SFX"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add a stately Baroque harpsichord-and-strings score to this fantasy royal-court scene clip",
+    "rationale": "User uploaded a fantasy royal-court scene clip and asks for a stately Baroque harpsichord-and-strings score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the Baroque score, AudioMixAgent blends it with the original court-dialogue audio, CompositorAgent outputs the final. No AmbienceAgent because the user only requested a music score, not court-hall ambience. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the stately Baroque harpsichord-and-strings score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded fantasy royal-court scene clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a stately Baroque harpsichord-and-strings score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the Baroque score with the original court-dialogue audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  },
+  {
+    "goal": "Add a mournful minor-key piano score to this horror-drama mourning-at-the-grave clip",
+    "rationale": "User uploaded a horror-drama mourning-at-the-grave clip and asks for a mournful minor-key piano score. Plan: IntakeText logs the brief, IntakeVideo registers the source, MusicAgent composes the mournful piano score, AudioMixAgent blends it with the original wind-through-grass SFX, CompositorAgent outputs the final. No AmbienceAgent because the user only asked for a music score, not graveyard environmental sounds. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the mournful minor-key piano score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded horror-drama mourning-at-the-grave clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a mournful minor-key piano score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the piano score with the original wind-through-grass SFX"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  }
+]

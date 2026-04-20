@@ -1,0 +1,182 @@
+[
+  {
+    "goal": "Extend this rebirth-revenge courtroom scene by 10 seconds to show the female lead calmly revealing the evidence that destroys her opponent, with a slow zoom-in on the opponent's collapsing face",
+    "rationale": "User uploaded a rebirth-revenge courtroom clip and asks for a 10s extension with a slow zoom-in on the opponent's face. Chain: IntakeText logs the brief, IntakeVideo registers the source, VideoExtend continues the evidence-reveal beat with the specified zoom-in. No MusicAgent because no score was requested. No CompositorAgent because VideoExtend's extended clip is the deliverable. No VideoAnalysisAgent because no plot analysis is requested. No SubtitleAgent or StyleTransferAgent because no captions or look change were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s evidence-reveal extension brief with slow zoom-in on collapsing face details"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded rebirth-revenge courtroom clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s of the female lead revealing the evidence with a slow zoom-in on the opponent's collapsing face"}
+    ]
+  },
+  {
+    "goal": "Extend this cultivation-fantasy pagoda ascension scene by 12 seconds to show the protagonist breaking through each floor's spiritual seal, with a vertical tracking shot rising with him",
+    "rationale": "User uploaded a cultivation-fantasy pagoda clip and asks for a 12s extension with a rising vertical tracking shot. Chain: IntakeText logs the brief, IntakeVideo registers the source, VideoExtend continues the breaks-through-seals beat with the vertical track. No MusicAgent because no score was requested. No CompositorAgent because VideoExtend's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent or StyleTransferAgent because no captions or look change were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12s pagoda-seal-break extension brief with rising vertical tracking shot details"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded cultivation-fantasy pagoda ascension clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 12s of the protagonist breaking through each floor's spiritual seal with a rising vertical tracking shot"}
+    ]
+  },
+  {
+    "goal": "Extend this post-apocalyptic refugee convoy scene by 15 seconds to show the convoy cresting a hill and finding the destroyed city on the horizon, with a slow push-out from close-up to epic wide",
+    "rationale": "User uploaded a post-apocalyptic convoy clip and asks for a 15s extension with a slow push-out framing. Chain: IntakeText logs the brief, IntakeVideo registers the source, VideoExtend continues the crest-and-see-ruins beat with the push-out camera move. No MusicAgent because no score was requested. No CompositorAgent because VideoExtend's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 15s crest-and-see-ruins extension brief with slow push-out from close-up to epic wide details"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded post-apocalyptic refugee convoy clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 15s of the convoy cresting the hill and finding the destroyed city on the horizon with a slow push-out from close-up to epic wide"}
+    ]
+  },
+  {
+    "goal": "Extend this costume-drama poisoning banquet scene by 10 seconds to show the consort realizing too late that her own cup was switched and collapsing, with a shallow-focus handheld push-in",
+    "rationale": "User uploaded a costume-drama poisoning banquet clip and asks for a 10s extension with a shallow-focus handheld push-in. Plan: IntakeText logs the brief, IntakeVideo registers the source, VideoExtend continues the cup-switched-collapse beat with the handheld camera. No MusicAgent because no score was requested. No CompositorAgent because VideoExtend's extended clip is the deliverable. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent or StyleTransferAgent because no captions or look change were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s cup-switched-collapse extension brief with shallow-focus handheld push-in details"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded costume-drama poisoning banquet clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s of the consort realizing her cup was switched and collapsing with a shallow-focus handheld push-in"}
+    ]
+  },
+  {
+    "goal": "Extend this martial-arts rooftop chase clip by 12 seconds to show the pursuer cornering the hero against the rail and the hero flipping backward off the roof, with a single 180-degree continuous swing",
+    "rationale": "User uploaded a martial-arts rooftop chase clip and asks for a 12s extension captured in one 180-degree continuous swing. Chain: IntakeText logs the brief, IntakeVideo registers the source, VideoExtend continues the cornered-and-flips-off beat with the continuous swing camera. No MusicAgent because no score was requested. No CompositorAgent because VideoExtend's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12s cornered-flips-off extension brief with 180-degree continuous swing details"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded martial-arts rooftop chase clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 12s of the pursuer cornering the hero and the hero flipping backward off the roof in one 180-degree continuous swing"}
+    ]
+  },
+  {
+    "goal": "Extend this urban late-night hospital corridor scene by 8 seconds to show the female lead collapsing against the wall as news of the death reaches her, with a slow focus-rack from her face to the wall tiles",
+    "rationale": "User uploaded an urban hospital corridor clip and asks for an 8s extension with a slow focus-rack. Plan: IntakeText logs the brief, IntakeVideo registers the source, VideoExtend continues the collapses-against-wall beat with the rack-focus transition. No MusicAgent because no score was requested. No CompositorAgent because VideoExtend's extended clip is the deliverable. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 8s collapses-against-wall extension brief with slow focus-rack details"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded urban hospital corridor clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 8s of the female lead collapsing against the wall as news of the death reaches her with a slow focus-rack from face to wall tiles"}
+    ]
+  },
+  {
+    "goal": "Extend this CEO-romance airport farewell scene by 10 seconds to show the female lead running through the terminal trying to catch the male lead before departure, with a breathless handheld tracking shot",
+    "rationale": "User uploaded a CEO-romance airport farewell clip and asks for a 10s extension with a breathless handheld tracking shot. Chain: IntakeText logs the brief, IntakeVideo registers the source, VideoExtend continues the runs-through-terminal beat with the handheld tracking camera. No MusicAgent because no score was requested. No CompositorAgent because VideoExtend's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent or StyleTransferAgent because no captions or look change were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s runs-through-terminal extension brief with breathless handheld tracking details"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded CEO-romance airport farewell clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s of the female lead running through the terminal trying to catch the male lead with a breathless handheld tracking shot"}
+    ]
+  },
+  {
+    "goal": "Extend this palace-intrigue library-poisoning scene by 10 seconds to show the librarian dropping the cup as the realization dawns that the poison was on the pages she turned, with an extreme close-up on her fingertips",
+    "rationale": "User uploaded a palace-intrigue library clip and asks for a 10s extension with an extreme fingertip close-up. Plan: IntakeText logs the brief, IntakeVideo registers the source, VideoExtend continues the drops-cup-realization beat with the extreme close-up framing. No MusicAgent because no score was requested. No CompositorAgent because VideoExtend's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s drops-cup-realization extension brief with extreme fingertip close-up details"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded palace-intrigue library-poisoning clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s of the librarian dropping the cup as she realizes the poison was on the pages with an extreme close-up on her fingertips"}
+    ]
+  },
+  {
+    "goal": "Extend this sci-fi android awakening scene by 12 seconds to show the android's eyes slowly opening and scanning the empty laboratory, with a 60-fps super-slow close-up on the irises",
+    "rationale": "User uploaded a sci-fi android awakening clip and asks for a 12s extension with a 60-fps super-slow iris close-up. Chain: IntakeText logs the brief, IntakeVideo registers the source, VideoExtend continues the eyes-open-scan beat with the super-slow iris framing. No MusicAgent because no score was requested. No CompositorAgent because VideoExtend's extended clip is the deliverable. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent or StyleTransferAgent because no captions or look change were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12s eyes-open-scan extension brief with 60-fps super-slow iris close-up details"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded sci-fi android awakening clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 12s of the android's eyes slowly opening and scanning the empty laboratory with a 60-fps super-slow iris close-up"}
+    ]
+  },
+  {
+    "goal": "Extend this martial-arts bamboo-forest duel by 15 seconds to show the two fighters leaping between bamboo stalks exchanging blows mid-air, with sweeping crane shots following the leaps",
+    "rationale": "User uploaded a martial-arts bamboo-forest duel clip and asks for a 15s extension with sweeping crane shots. Plan: IntakeText logs the brief, IntakeVideo registers the source, VideoExtend continues the leaps-between-bamboo beat with the crane-following framing. No MusicAgent because no score was requested. No CompositorAgent because VideoExtend's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 15s leaps-between-bamboo extension brief with sweeping crane shot details"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded martial-arts bamboo-forest duel clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 15s of the two fighters leaping between bamboo stalks exchanging blows mid-air with sweeping crane shots following the leaps"}
+    ]
+  },
+  {
+    "goal": "Extend this dystopian surveillance-breach scene by 10 seconds to show the protagonist jacking into the terminal and cascading corrupted data across the screens, with flickering monitor lights across her face",
+    "rationale": "User uploaded a dystopian surveillance-breach clip and asks for a 10s extension with flickering monitor lights on the protagonist's face. Chain: IntakeText logs the brief, IntakeVideo registers the source, VideoExtend continues the jacks-in-and-cascades beat with the flickering-light environment. No MusicAgent because no score was requested. No CompositorAgent because VideoExtend's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent or StyleTransferAgent because no captions or look change were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s jacks-in-cascades extension brief with flickering monitor-light face details"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded dystopian surveillance-breach clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s of the protagonist jacking into the terminal and cascading corrupted data with flickering monitor lights across her face"}
+    ]
+  },
+  {
+    "goal": "Extend this romance-drama rain-confession scene by 10 seconds to show the male lead grabbing the female lead's wrist as she turns to leave and pulling her back into the rain, with slow-motion droplets and a tight two-shot",
+    "rationale": "User uploaded a romance-drama rain-confession clip and asks for a 10s extension with slow-motion rain droplets and tight two-shot framing. Chain: IntakeText logs the brief, IntakeVideo registers the source, VideoExtend continues the grabs-wrist-pulls-back beat with the specified shot details. No MusicAgent because no score was requested. No CompositorAgent because VideoExtend's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s grabs-wrist-pulls-back extension brief with slow-motion droplets and tight two-shot details"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded romance-drama rain-confession clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s of the male lead grabbing the female lead's wrist and pulling her back into the rain with slow-motion droplets and a tight two-shot"}
+    ]
+  },
+  {
+    "goal": "Extend this urban revenge-drama elevator scene by 8 seconds to show the protagonist meeting the gaze of her nemesis across the closing doors with a knowing smirk, with a slow push-in through the elevator gap",
+    "rationale": "User uploaded an urban revenge-drama elevator clip and asks for an 8s extension with a slow push-in through the elevator gap. Plan: IntakeText logs the brief, IntakeVideo registers the source, VideoExtend continues the meets-gaze-smirk beat with the push-in framing. No MusicAgent because no score was requested. No CompositorAgent because VideoExtend's extended clip is the deliverable. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 8s meets-gaze-smirk extension brief with slow elevator-gap push-in details"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded urban revenge-drama elevator clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 8s of the protagonist meeting her nemesis's gaze across the closing doors with a slow push-in through the elevator gap"}
+    ]
+  },
+  {
+    "goal": "Extend this fantasy coronation scene by 12 seconds to show the young queen first touching the iron crown then being lifted onto the throne by her councilors, with a rising bird's-eye reveal",
+    "rationale": "User uploaded a fantasy coronation clip and asks for a 12s extension with a rising bird's-eye reveal. Chain: IntakeText logs the brief, IntakeVideo registers the source, VideoExtend continues the touches-crown-lifted-on-throne beat with the bird's-eye framing. No MusicAgent because no score was requested. No CompositorAgent because VideoExtend's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent or StyleTransferAgent because no captions or look change were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12s touches-crown-lifted-on-throne extension brief with rising bird's-eye reveal details"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded fantasy coronation clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 12s of the young queen touching the iron crown then being lifted onto the throne by her councilors with a rising bird's-eye reveal"}
+    ]
+  },
+  {
+    "goal": "Extend this modern office-betrayal scene by 10 seconds to show the protagonist quietly reading her boss's incriminating email over his shoulder while he's on the phone, with a slow sideways dolly",
+    "rationale": "User uploaded a modern office-betrayal clip and asks for a 10s extension with a slow sideways dolly. Plan: IntakeText logs the brief, IntakeVideo registers the source, VideoExtend continues the reads-over-shoulder beat with the sideways dolly camera. No MusicAgent because no score was requested. No CompositorAgent because VideoExtend's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s reads-over-shoulder extension brief with slow sideways dolly details"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded modern office-betrayal clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s of the protagonist reading her boss's incriminating email over his shoulder with a slow sideways dolly"}
+    ]
+  },
+  {
+    "goal": "Extend this suspense parking-garage scene by 10 seconds to show the detective finding the blood-smeared keycard under the tire and pocketing it, with low-angle flickering fluorescent light",
+    "rationale": "User uploaded a suspense parking-garage clip and asks for a 10s extension with low-angle flickering fluorescent light. Chain: IntakeText logs the brief, IntakeVideo registers the source, VideoExtend continues the finds-keycard-pockets beat with the low-angle flicker-lit environment. No MusicAgent because no score was requested. No CompositorAgent because VideoExtend's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s finds-keycard-pockets extension brief with low-angle flickering fluorescent details"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded suspense parking-garage clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s of the detective finding the blood-smeared keycard under the tire and pocketing it with low-angle flickering fluorescent light"}
+    ]
+  },
+  {
+    "goal": "Extend this cultivation-fantasy sect-banishment scene by 12 seconds to show the protagonist walking past his former sect brothers as they refuse to meet his eyes, with a slow dolly following his walk",
+    "rationale": "User uploaded a cultivation-fantasy sect-banishment clip and asks for a 12s extension with a slow following dolly. Plan: IntakeText logs the brief, IntakeVideo registers the source, VideoExtend continues the walks-past-refuses beat with the following-dolly camera. No MusicAgent because no score was requested. No CompositorAgent because VideoExtend's extended clip is the deliverable. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent or StyleTransferAgent because no captions or look change were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12s walks-past-refuses extension brief with slow following dolly details"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded cultivation-fantasy sect-banishment clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 12s of the protagonist walking past his former sect brothers as they refuse to meet his eyes with a slow following dolly"}
+    ]
+  },
+  {
+    "goal": "Extend this rebirth-revenge wedding-crash scene by 10 seconds to show the protagonist throwing the ring back at the groom in front of all the guests, with a wide symmetrical two-shot composition",
+    "rationale": "User uploaded a rebirth-revenge wedding-crash clip and asks for a 10s extension with a wide symmetrical two-shot composition. Chain: IntakeText logs the brief, IntakeVideo registers the source, VideoExtend continues the throws-ring-back beat with the symmetrical framing. No MusicAgent because no score was requested. No CompositorAgent because VideoExtend's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s throws-ring-back extension brief with wide symmetrical two-shot composition details"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded rebirth-revenge wedding-crash clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s of the protagonist throwing the ring back at the groom in front of all the guests with a wide symmetrical two-shot composition"}
+    ]
+  },
+  {
+    "goal": "Extend this sci-fi orbital-drop combat clip by 15 seconds to show the strike team breaking atmosphere in their drop pods and deploying onto enemy turf, with fisheye lens POVs from inside each pod",
+    "rationale": "User uploaded a sci-fi orbital-drop combat clip and asks for a 15s extension with fisheye-lens POVs from inside each drop pod. Plan: IntakeText logs the brief, IntakeVideo registers the source, VideoExtend continues the breaks-atmosphere-deploy beat with the fisheye-POV framing. No MusicAgent because no score was requested. No CompositorAgent because VideoExtend's extended clip is the deliverable. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 15s breaks-atmosphere-deploy extension brief with fisheye-POV pod-interior details"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded sci-fi orbital-drop combat clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 15s of the strike team breaking atmosphere in their drop pods and deploying onto enemy turf with fisheye-lens POVs from inside each pod"}
+    ]
+  },
+  {
+    "goal": "Extend this costume-drama river-boat escape scene by 10 seconds to show the fugitive princess cutting loose the mooring rope and the boat drifting silently into the fog, with a receding wide shot from the shore",
+    "rationale": "User uploaded a costume-drama river-boat escape clip and asks for a 10s extension with a receding wide shot from the shore. Chain: IntakeText logs the brief, IntakeVideo registers the source, VideoExtend continues the cuts-rope-drifts-into-fog beat with the receding wide framing. No MusicAgent because no score was requested. No CompositorAgent because VideoExtend's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No SubtitleAgent or StyleTransferAgent because no captions or look change were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s cuts-rope-drifts-into-fog extension brief with receding wide shore-shot details"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded costume-drama river-boat escape clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s of the fugitive princess cutting loose the mooring rope and the boat drifting silently into the fog with a receding wide shot from the shore"}
+    ]
+  }
+]

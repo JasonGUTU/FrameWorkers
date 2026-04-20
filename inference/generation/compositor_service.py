@@ -29,10 +29,16 @@ class CompositorService:
         *,
         video_path: str,
         audio_path: str = "",
-        subtitle_srt: str = "",
+        subtitle_srts: list[str] | None = None,
         plan: dict[str, Any] | None = None,
     ) -> bytes:
         """Compose final video from video + audio + subtitles.
+
+        ``subtitle_srts`` is a list of SRT blobs (one per language). The
+        filter chain stacks every non-empty entry with an increasing
+        ``MarginV`` so bilingual / multilingual tracks sit on top of each
+        other instead of overlapping. Pass an empty list / None for no
+        subtitles.
 
         Returns the composited MP4 bytes.
         """
@@ -49,6 +55,7 @@ class CompositorService:
 
         temp_dir = tempfile.mkdtemp(prefix="fw_compositor_")
         out_path = os.path.join(temp_dir, "composed.mp4")
+        srt_paths: list[str] = []
 
         try:
             cmd: list[str] = [ffmpeg_bin, "-y"]
@@ -64,23 +71,28 @@ class CompositorService:
             # Build filter chain
             vfilters: list[str] = []
 
-            # Subtitle burn-in
-            srt_path = ""
-            if subtitle_srt.strip():
-                srt_path = os.path.join(temp_dir, "subs.srt")
+            # Subtitle burn-in — one filter per track, stacked by MarginV
+            # so bilingual flows render with track #1 at bottom and each
+            # subsequent track above it.
+            style = plan.get("subtitle_style", {})
+            font_size = style.get("font_size", 24)
+            font_color = (style.get("font_color", "#FFFFFF")).lstrip("#")
+            outline_color = (style.get("outline_color", "#000000")).lstrip("#")
+            real_srts = [s for s in (subtitle_srts or []) if s and s.strip()]
+            for idx, srt_body in enumerate(real_srts):
+                srt_path = os.path.join(temp_dir, f"subs_{idx}.srt")
                 with open(srt_path, "w", encoding="utf-8") as fh:
-                    fh.write(subtitle_srt)
-                style = plan.get("subtitle_style", {})
-                font_size = style.get("font_size", 24)
-                font_color = (style.get("font_color", "#FFFFFF")).lstrip("#")
-                outline_color = (style.get("outline_color", "#000000")).lstrip("#")
+                    fh.write(srt_body)
+                srt_paths.append(srt_path)
+                margin_v = 10 + idx * (font_size + 10)
                 vfilters.append(
                     f"subtitles={srt_path}:force_style="
                     f"'FontSize={font_size},"
                     f"PrimaryColour=&H00{font_color}&,"
                     f"OutlineColour=&H00{outline_color}&,"
                     f"Outline=2,"
-                    f"Shadow=1'"
+                    f"Shadow=1,"
+                    f"MarginV={margin_v}'"
                 )
 
             # Color grading
@@ -126,7 +138,7 @@ class CompositorService:
             with open(video_path, "rb") as fh:
                 return fh.read()
         finally:
-            for p in [out_path, srt_path or ""]:
+            for p in [out_path, *srt_paths]:
                 if p and os.path.exists(p):
                     try:
                         os.remove(p)
@@ -146,7 +158,7 @@ class MockCompositorService(CompositorService):
         *,
         video_path: str,
         audio_path: str = "",
-        subtitle_srt: str = "",
+        subtitle_srts: list[str] | None = None,
         plan: dict[str, Any] | None = None,
     ) -> bytes:
         logger.info("[MockCompositor] Placeholder compose for %s", video_path)

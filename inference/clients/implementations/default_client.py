@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import base64
 import json
+import logging
 import mimetypes
 import os
 from datetime import datetime, timezone
@@ -14,6 +15,8 @@ from openai import AsyncOpenAI
 
 from ..base.base_client import BaseLLMClient, Message, ModelConfig
 from ..json_parse_diag import describe_json_decode_error
+
+logger = logging.getLogger(__name__)
 
 
 def _build_multimodal_user_content(
@@ -282,50 +285,32 @@ class LLMClient(BaseLLMClient):
         }
 
     @staticmethod
-    def _strip_markdown_fences(text: str) -> str:
-        """Strip a single outer ```...``` markdown fence if present.
-
-        Some providers ignore ``response_format={"type":"json_object"}`` for
-        long completions and wrap the JSON in a ```json ... ``` block. The
-        rest of the helper still expects exactly one JSON object, so we
-        only handle the canonical fence pattern (one open + one close,
-        optional language tag) and leave anything else alone — anomalous
-        output still surfaces with the strict parse error below.
-        """
-        s = text
-        # Leading fence
-        if s.startswith("```"):
-            # Drop the first line (``` or ```json or ```JSON ...)
-            nl = s.find("\n")
-            if nl != -1:
-                s = s[nl + 1:]
-        # Trailing fence
-        s_stripped = s.rstrip()
-        if s_stripped.endswith("```"):
-            s = s_stripped[:-3]
-        return s.strip()
-
-    @staticmethod
     def _parse_json_object_strict(raw: str) -> dict[str, Any]:
         """
         Parse **chat_json** responses: one JSON object only.
-        Call sites must use provider JSON mode (``response_format`` / OpenAI json_mode);
-        a single outer markdown fence is tolerated as a defensive workaround
-        for providers that occasionally ignore json_object mode.
+        Call sites must use provider JSON mode (``response_format`` / OpenAI json_mode).
         """
         text = (raw or "").strip()
         if not text:
             raise ValueError("chat_json: empty model content (expected a JSON object)")
-        # Defensive: strip a single outer ```...``` fence if present.
-        if text.startswith("```") or text.endswith("```"):
-            text = LLMClient._strip_markdown_fences(text)
-            if not text:
-                raise ValueError(
-                    "chat_json: empty model content after markdown-fence strip"
-                )
         try:
             obj = json.loads(text)
         except json.JSONDecodeError as exc:
+            # Local repair pass — fixes the common LLM-JSON drift modes
+            # Gemini-class models produce on long structured outputs:
+            # trailing commas, unquoted keys, unescaped inner quotes in
+            # string values, and CJK confusable substitutions for ASCII
+            # delimiters. No LLM cost; runs in milliseconds.
+            try:
+                from json_repair import loads as _repair_loads
+                repaired = _repair_loads(text)
+                if isinstance(repaired, dict):
+                    return repaired
+            except Exception:
+                # Repair raised on hopeless input — fall through to the
+                # strict-error path below so the caller sees the original
+                # JSONDecodeError with diagnostics.
+                pass
             diag = describe_json_decode_error(text, exc)
             # Optional diagnostics: dump raw model output to disk for post-mortem.
             # This is off by default to avoid leaking prompts/outputs.
@@ -547,64 +532,82 @@ class LLMClient(BaseLLMClient):
             {"role": "user", "content": user_content},
         ]
 
-        if client_type in {"openai_sdk", "gpt5_sdk"}:
-            openai_client = self._get_openai_client(provider)
-            request_kwargs = self._build_openai_chat_kwargs(
-                model=resolved_model,
-                messages=messages,
-                max_tokens=max_tokens,
-                reasoning_effort=reasoning_effort,
-                json_mode=True,
-                client_type=client_type,
-            )
-            # Transient provider hiccups (rate-limit backoff, gateway
-            # flap, content filter) sometimes cause the model to return
-            # an empty ``message.content`` or no ``choices`` at all.
-            # Retry up to 2 extra times before giving up — the second
-            # call usually succeeds because the upstream backend has
-            # cleared whatever transient issue caused the first miss.
-            raw = ""
-            last_err: str = ""
-            for attempt in range(3):
-                response = await openai_client.chat.completions.create(**request_kwargs)
-                choices = getattr(response, "choices", None) or []
-                if not choices:
-                    last_err = "model returned empty choices"
-                    continue
-                msg = getattr(choices[0], "message", None)
-                if msg is None:
-                    last_err = "model returned empty message"
-                    continue
-                raw = (getattr(msg, "content", None) or "").strip()
-                if raw:
-                    break
-                last_err = "model returned empty content"
-            if not raw:
+        # One full LLM invocation returning raw string. The transient
+        # 3-try retry for empty content is internal here so the outer
+        # parse-retry doesn't multiply by 3.
+        async def _invoke_once() -> str:
+            if client_type in {"openai_sdk", "gpt5_sdk"}:
+                openai_client = self._get_openai_client(provider)
+                request_kwargs = self._build_openai_chat_kwargs(
+                    model=resolved_model,
+                    messages=messages,
+                    max_tokens=max_tokens,
+                    reasoning_effort=reasoning_effort,
+                    json_mode=True,
+                    client_type=client_type,
+                )
+                # Transient provider hiccups (rate-limit backoff, gateway
+                # flap, content filter) sometimes cause the model to
+                # return an empty ``message.content`` or no ``choices``
+                # at all. Retry up to 2 extra times — the second call
+                # usually succeeds because the upstream backend has
+                # cleared whatever transient issue caused the first miss.
+                last_err: str = ""
+                for _attempt in range(3):
+                    response = await openai_client.chat.completions.create(**request_kwargs)
+                    choices = getattr(response, "choices", None) or []
+                    if not choices:
+                        last_err = "model returned empty choices"
+                        continue
+                    msg = getattr(choices[0], "message", None)
+                    if msg is None:
+                        last_err = "model returned empty message"
+                        continue
+                    raw = (getattr(msg, "content", None) or "").strip()
+                    if raw:
+                        return raw
+                    last_err = "model returned empty content"
                 raise ValueError(
                     f"chat_json: {last_err} (after 3 attempts)"
                 )
-            return self._parse_json_object_strict(raw)
 
-        # Provider routes configured to LiteLLM — require JSON mode; no silent fallback without it.
-        self._ensure_litellm()
-        litellm_kwargs: Dict[str, Any] = {}
-        resolved_max_tokens = max_tokens if max_tokens is not None else self.max_tokens
-        if resolved_max_tokens is not None:
-            litellm_kwargs["max_tokens"] = resolved_max_tokens
-        if reasoning_effort is not None:
-            litellm_kwargs["reasoning_effort"] = reasoning_effort
-        elif self.reasoning_effort:
-            litellm_kwargs["reasoning_effort"] = self.reasoning_effort
+            # Provider routes configured to LiteLLM — require JSON mode; no silent fallback without it.
+            self._ensure_litellm()
+            litellm_kwargs: Dict[str, Any] = {}
+            resolved_max_tokens = max_tokens if max_tokens is not None else self.max_tokens
+            if resolved_max_tokens is not None:
+                litellm_kwargs["max_tokens"] = resolved_max_tokens
+            if reasoning_effort is not None:
+                litellm_kwargs["reasoning_effort"] = reasoning_effort
+            elif self.reasoning_effort:
+                litellm_kwargs["reasoning_effort"] = self.reasoning_effort
 
-        response = await litellm.acompletion(
-            model=resolved_model,
-            messages=messages,
-            response_format={"type": "json_object"},
-            **litellm_kwargs,
-        )
+            response = await litellm.acompletion(
+                model=resolved_model,
+                messages=messages,
+                response_format={"type": "json_object"},
+                **litellm_kwargs,
+            )
+            return self._extract_assistant_text(self._format_response(response)) or ""
 
-        raw = self._extract_assistant_text(self._format_response(response)) or ""
-        return self._parse_json_object_strict(raw)
+        # Parse-retry loop: ``_parse_json_object_strict`` already tries
+        # ``json-repair`` locally for trailing commas / unescaped quotes
+        # / CJK confusable substitutions. If that still fails, retry the
+        # LLM call once — a fresh sampling path usually clears the
+        # drift (different token choices avoid the same mistake).
+        for _parse_attempt in range(2):
+            raw = await _invoke_once()
+            try:
+                return self._parse_json_object_strict(raw)
+            except ValueError:
+                if _parse_attempt == 0:
+                    logger.warning(
+                        "chat_json: parse failed after json-repair fallback; retrying LLM call once"
+                    )
+                    continue
+                raise
+        # Unreachable: either returned above or re-raised on 2nd attempt.
+        raise RuntimeError("chat_json: parse-retry loop exited without result")
 
     async def chat_text(
         self,

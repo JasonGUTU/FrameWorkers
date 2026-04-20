@@ -9,11 +9,20 @@ Each test:
 
 Can run in parallel: pytest -n 6
 
-Gate: FW_ENABLE_LIVE_LLM_TESTS=1
+Gates:
+- FW_ENABLE_LIVE_LLM_TESTS=1 — required for all tests (real LLM calls)
+- FW_USE_REAL_MEDIA_GEN=1   — opt-in: switches StyleTransfer/Inpaint from
+  the LLM-only mock path (MockVideoEditService returns 28-byte placeholder)
+  to the full fal.ai pipeline (real video upload → fal inpaint/style →
+  download). Asserts the materialized mp4 is non-trivial. Costs fal credits
+  + ~30s-2min per test.
 
 Usage:
     source .env
+    # default: LLM-only (cheap, video-edit materializer goes through MockVideoEditService)
     FW_ENABLE_LIVE_LLM_TESTS=1 python -m pytest tests/agents/test_new_agents_independent_e2e.py -v -s -n 6
+    # full fal.ai pipeline for video-edit agents (costs credits, slow)
+    FW_ENABLE_LIVE_LLM_TESTS=1 FW_USE_REAL_MEDIA_GEN=1 python -m pytest tests/agents/test_new_agents_independent_e2e.py::test_inpaint_agent_independent tests/agents/test_new_agents_independent_e2e.py::test_style_transfer_agent_independent -v -s
 """
 
 from __future__ import annotations
@@ -215,8 +224,85 @@ _MINI_ANALYSIS = {
 _MOCK_WAV = (b"RIFF\x24\x00\x00\x00WAVEfmt \x10\x00\x00\x00\x01\x00\x01\x00"
              b"\x44\xac\x00\x00\x88\x58\x01\x00\x02\x00\x10\x00data\x00\x00\x00\x00")
 
-# Minimal MP4 header (28 bytes)
+# Minimal MP4 header (28 bytes) — good enough for agents whose backing
+# service only reads path/mime (fal.ai style_transfer/inpaint/highlight/
+# video_extend). NOT good enough for Gemini-based video_analysis, which
+# validates the byte stream; see ``_real_tiny_mp4()`` below.
 _MOCK_MP4 = b"\x00\x00\x00\x1cftypisom\x00\x00\x02\x00isomiso2mp41"
+
+
+_REAL_MP4_CACHE: bytes | None = None
+
+
+def _real_tiny_mp4() -> bytes:
+    """Return bytes of a 1s black 16x16 mp4. Uses ffmpeg, cached on first call.
+
+    Gemini's video API rejects fake/empty mp4 bytes ('Unsupported file URI
+    type' / INVALID_ARGUMENT), so tests that hit Gemini (VideoAnalysisAgent)
+    need real, well-formed video bytes. Synthetic 1s black video satisfies
+    the API validator without bundling any binary fixture in the repo.
+    """
+    global _REAL_MP4_CACHE
+    if _REAL_MP4_CACHE is not None:
+        return _REAL_MP4_CACHE
+    import subprocess
+    import tempfile
+    with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as tmp:
+        path = tmp.name
+    try:
+        subprocess.run(
+            ["ffmpeg", "-y", "-f", "lavfi", "-i", "color=c=black:s=16x16:r=1",
+             "-t", "1", "-pix_fmt", "yuv420p", "-movflags", "+faststart", path],
+            check=True, capture_output=True,
+        )
+        with open(path, "rb") as f:
+            _REAL_MP4_CACHE = f.read()
+    finally:
+        if os.path.isfile(path):
+            os.unlink(path)
+    return _REAL_MP4_CACHE
+
+
+def _use_real_media_gen() -> bool:
+    """True when FW_USE_REAL_MEDIA_GEN is set — video-edit materializers
+    will hit fal.ai instead of MockVideoEditService."""
+    return os.getenv("FW_USE_REAL_MEDIA_GEN", "").strip().lower() in ("1", "true", "yes")
+
+
+def _video_seed_bytes() -> bytes:
+    """Pick seed video bytes based on whether materializer hits real fal.
+
+    Three tiers, in priority order:
+    1. Real-mode + ``_REAL_VIDEO`` exists  → use the 5MB cached fal i2v clip.
+       Real content (~5s, 1948x1064) so VACE / SAM2 / depth models produce
+       meaningful output, not just succeed on a 16x16 black frame.
+    2. Real-mode + no cached video         → ffmpeg-generate a 1s tiny mp4.
+       Validates fal upload + endpoint; output quality is best-effort.
+    3. Mock mode                           → 28-byte ftyp header.
+       MockVideoEditService never reads the bytes, so it doesn't matter.
+    """
+    if _use_real_media_gen():
+        return _REAL_VIDEO.read_bytes() if _REAL_VIDEO.is_file() else _real_tiny_mp4()
+    return _MOCK_MP4
+
+
+def _assert_materialized_video(uri: str, label: str, min_bytes: int = 1024) -> None:
+    """Verify ``output_video.uri`` points to a real, non-trivial mp4.
+
+    Mock path returns ``MOCK_MP4_HEADER`` (28 bytes); a real fal output is
+    KBs to MBs. ``min_bytes=1024`` cleanly separates the two.
+    """
+    assert uri and uri != "placeholder", (
+        f"[{label}] output_video.uri not materialized: {uri!r}"
+    )
+    p = Path(uri)
+    assert p.is_file(), f"[{label}] materialized file does not exist: {uri}"
+    size = p.stat().st_size
+    print(f"  [{label}] materialized: {uri} ({size} bytes)")
+    assert size >= min_bytes, (
+        f"[{label}] materialized mp4 too small ({size} bytes) — "
+        f"likely placeholder; fal.ai may have returned empty"
+    )
 
 
 # ═══════════════════════════════════════════════════════════════════════
@@ -267,18 +353,6 @@ def test_translation_agent_independent(monkeypatch):
     assert cur.get("status") == "COMPLETED", f"FAILED: {cur.get('error', '')[:200]}"
 
 
-def test_transcription_agent_independent(monkeypatch):
-    client, ws = _make_env("TranscriptionAgent", monkeypatch)
-    _seed_file(ws, "user", "sample.wav", _MOCK_WAV,
-               "Raw user upload (mime=audio/wav): recording of two people discussing Mars exploration",
-               "audio/wav", "raw_pending")
-    step_id = _create_step(client, "Transcribe audio")
-    body = _execute(client, "TranscriptionAgent", step_id)
-    cur = _brief_last(body)
-    print(f"\n[TranscriptionAgent] status={cur.get('status')}")
-    assert cur.get("status") == "COMPLETED", f"FAILED: {cur.get('error', '')[:200]}"
-
-
 def test_compositor_agent_independent(monkeypatch):
     client, ws = _make_env("CompositorAgent", monkeypatch)
     _seed_artifact(ws, "ScreenplayAgent", _MINI_SCREENPLAY,
@@ -298,7 +372,8 @@ def test_compositor_agent_independent(monkeypatch):
 
 def test_style_transfer_agent_independent(monkeypatch):
     client, ws = _make_env("StyleTransferAgent", monkeypatch)
-    _seed_file(ws, "VideoAgent", "final.mp4", _MOCK_MP4,
+    real = _use_real_media_gen()
+    _seed_file(ws, "VideoAgent", "final.mp4", _video_seed_bytes(),
                "Final merged video of Mars cave exploration scene",
                "video/mp4")
     _seed_artifact(ws, "user", {"style": "Studio Ghibli anime with watercolor textures"},
@@ -307,13 +382,18 @@ def test_style_transfer_agent_independent(monkeypatch):
     step_id = _create_step(client, "Apply anime style to video")
     body = _execute(client, "StyleTransferAgent", step_id)
     cur = _brief_last(body)
-    print(f"\n[StyleTransferAgent] status={cur.get('status')}")
+    print(f"\n[StyleTransferAgent] status={cur.get('status')} real_media={real}")
     assert cur.get("status") == "COMPLETED", f"FAILED: {cur.get('error', '')[:200]}"
+    if real:
+        results = body.get("results") or _last_results(client, step_id)
+        uri = (results or {}).get("content", {}).get("output_video", {}).get("uri", "")
+        _assert_materialized_video(uri, "StyleTransferAgent")
 
 
 def test_inpaint_agent_independent(monkeypatch):
     client, ws = _make_env("InpaintAgent", monkeypatch)
-    _seed_file(ws, "VideoAgent", "final.mp4", _MOCK_MP4,
+    real = _use_real_media_gen()
+    _seed_file(ws, "VideoAgent", "final.mp4", _video_seed_bytes(),
                "Final video of astronauts in Mars cave",
                "video/mp4")
     _seed_artifact(ws, "user",
@@ -323,8 +403,12 @@ def test_inpaint_agent_independent(monkeypatch):
     step_id = _create_step(client, "Replace video background")
     body = _execute(client, "InpaintAgent", step_id)
     cur = _brief_last(body)
-    print(f"\n[InpaintAgent] status={cur.get('status')}")
+    print(f"\n[InpaintAgent] status={cur.get('status')} real_media={real}")
     assert cur.get("status") == "COMPLETED", f"FAILED: {cur.get('error', '')[:200]}"
+    if real:
+        results = body.get("results") or _last_results(client, step_id)
+        uri = (results or {}).get("content", {}).get("output_video", {}).get("uri", "")
+        _assert_materialized_video(uri, "InpaintAgent")
 
 
 def test_video_extend_agent_independent(monkeypatch):
@@ -332,16 +416,30 @@ def test_video_extend_agent_independent(monkeypatch):
     _seed_file(ws, "VideoAgent", "final.mp4", _MOCK_MP4,
                "Video clip ending with astronaut reaching toward glowing crystal",
                "video/mp4")
+    user_instruction = (
+        "Extend the clip by 5 seconds: the astronaut picks up the crystal "
+        "and holds it to the light."
+    )
+    _seed_artifact(ws, "IntakeTextAgent",
+                   {"content": {"text": user_instruction, "summary": ""}},
+                   "User-submitted creative brief (110 chars). Pipeline entry point — consumed by story and screenplay agents.",
+                   "global")
     step_id = _create_step(client, "Extend video clip")
     body = _execute(client, "VideoExtendAgent", step_id)
     cur = _brief_last(body)
     print(f"\n[VideoExtendAgent] status={cur.get('status')}")
+    print(f"[VideoExtendAgent] user_instruction seeded: {user_instruction!r}")
+    spec = ((cur.get("output") or {}).get("content") or {}).get("extension_spec", {})
+    print(f"[VideoExtendAgent] LLM-planned continuation_prompt:\n    {spec.get('continuation_prompt', '')[:240]}")
+    print(f"[VideoExtendAgent] LLM-planned motion_description:\n    {spec.get('motion_description', '')[:240]}")
+    print(f"[VideoExtendAgent] LLM-planned duration: {spec.get('target_duration_seconds')}s")
     assert cur.get("status") == "COMPLETED", f"FAILED: {cur.get('error', '')[:200]}"
 
 
 def test_video_analysis_agent_independent(monkeypatch):
     client, ws = _make_env("VideoAnalysisAgent", monkeypatch)
-    _seed_file(ws, "VideoAgent", "final.mp4", _MOCK_MP4,
+    # Gemini rejects malformed mp4 bytes — use a real (tiny) mp4 instead.
+    _seed_file(ws, "VideoAgent", "final.mp4", _real_tiny_mp4(),
                "30-second Mars cave exploration video with two astronauts discovering crystals",
                "video/mp4")
     step_id = _create_step(client, "Analyze video content")
@@ -365,23 +463,7 @@ def test_highlight_agent_independent(monkeypatch):
     assert cur.get("status") == "COMPLETED", f"FAILED: {cur.get('error', '')[:200]}"
 
 
-def test_voice_clone_agent_independent(monkeypatch):
-    client, ws = _make_env("VoiceCloneAgent", monkeypatch)
-    _seed_file(ws, "user", "voice_ref.wav", _MOCK_WAV,
-               "Reference audio: deep male voice sample for cloning",
-               "audio/wav")
-    _seed_artifact(ws, "TranscriptionAgent",
-                   {"content": {"full_text": "The cave walls shimmer with blue light. We need to collect samples carefully."}},
-                   "Transcript of Mars cave narration for voice clone",
-                   "global")
-    step_id = _create_step(client, "Clone voice and narrate")
-    body = _execute(client, "VoiceCloneAgent", step_id)
-    cur = _brief_last(body)
-    print(f"\n[VoiceCloneAgent] status={cur.get('status')}")
-    assert cur.get("status") == "COMPLETED", f"FAILED: {cur.get('error', '')[:200]}"
-
-
-_REAL_VIDEO = Path("/home/zhendong_li/FrameWorkers/Runtime/fal_i2v_smoke_20260403_224428.mp4")
+_REAL_VIDEO = Path("/home/zhendong_li/FrameWorkers/_workspaces/kling_capability_probe/3B_emotion_angry_shout.mp4")
 _REAL_AUDIO = Path("/home/zhendong_li/FrameWorkers/Runtime/live_e2e_outputs/workspace_global_20260405_190306/artifacts/media/AudioAgent/audio/aud_narr_sc_001_01.wav")
 
 
@@ -431,54 +513,6 @@ def test_intake_video_agent_independent(monkeypatch):
         print(f"  error: {err}")
         # IntakeVideo is a multimodal stub — may fail without vision-video LLM
         pytest.skip(f"IntakeVideoAgent requires multimodal video LLM: {err}")
-
-    print(f"  workspace: {ws_dir}")
-
-
-def test_intake_audio_agent_independent(monkeypatch):
-    client, ws = _make_env("IntakeAudioAgent", monkeypatch)
-
-    # Use the REAL audio file — copy into workspace
-    ws_dir = _ws_path(ws)
-    inputs_dir = ws_dir / "inputs"
-    inputs_dir.mkdir(parents=True, exist_ok=True)
-    audio_dest = inputs_dir / "user_upload.wav"
-    if _REAL_AUDIO.is_file():
-        import shutil
-        shutil.copy2(_REAL_AUDIO, audio_dest)
-    else:
-        audio_dest.write_bytes(_MOCK_WAV)
-
-    workspace = ws
-    workspace.global_memory.register(
-        agent_id="user",
-        execution_id="upload_audio",
-        step_id="seed",
-        artifacts=[ArtifactRef(
-            caption="Raw user upload (mime=audio/wav): narration recording, single speaker, English",
-            scope="raw_pending",
-            path=str(audio_dest),
-            mime="audio/wav",
-        )],
-    )
-
-    step_id = _create_step(client, "Analyze uploaded audio")
-    body = _execute(client, "IntakeAudioAgent", step_id)
-    status = body.get("status", "?")
-    print(f"\n[IntakeAudioAgent] status={status}")
-
-    if status == "COMPLETED":
-        results = _last_results(client, step_id)
-        summary = results.get("content", {}).get("auditory_summary", "")
-        uri = results.get("content", {}).get("audio_asset", {}).get("uri", "")
-        print(f"  auditory_summary: {summary}")
-        print(f"  audio_asset.uri: {uri}")
-        assert summary, "auditory_summary is empty"
-        assert uri, "audio_asset.uri is empty"
-    else:
-        err = body.get("error", "")[:200]
-        print(f"  error: {err}")
-        pytest.skip(f"IntakeAudioAgent requires multimodal audio LLM: {err}")
 
     print(f"  workspace: {ws_dir}")
 

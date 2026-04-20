@@ -7,11 +7,14 @@ the same lazy-init / re-open / close lifecycle for an ``httpx.AsyncClient``.
 from __future__ import annotations
 
 import asyncio
+import logging
 import os
 from pathlib import Path
 from typing import Any, Optional
 
 import httpx
+
+logger = logging.getLogger(__name__)
 
 
 class LazyHttpxClientMixin:
@@ -71,13 +74,36 @@ def require_fal_model_var(env_name: str, *, explicit: str | None) -> str:
 
 
 async def fal_subscribe(api_key: str, model_id: str, arguments: dict[str, Any]) -> dict[str, Any]:
-    """Run ``fal_client.subscribe`` with ``FAL_KEY`` set for this process."""
+    """Run ``fal_client.subscribe`` with ``FAL_KEY`` set for this process.
+
+    Hardened against silent indefinite hangs: passes ``start_timeout`` and
+    ``client_timeout`` so a stuck queue / dead worker raises rather than
+    blocking forever. Logs queue state transitions (Queued → InProgress →
+    Completed) at INFO so prod ops can see what fal is doing.
+
+    Timeouts are configurable via env (queue waits on big video models like
+    VACE can legitimately exceed 5 minutes; absolute upper bound prevents
+    runaway):
+      FW_FAL_START_TIMEOUT  — max seconds to wait for Queued → InProgress (default 900)
+      FW_FAL_CLIENT_TIMEOUT — total wall-clock cap (default 1800)
+    """
     if not api_key:
         raise RuntimeError("FAL_API_KEY is required for fal.ai services")
     try:
         import fal_client
     except ImportError as exc:
         raise RuntimeError("fal-client is required. Install with `pip install fal-client`.") from exc
+
+    start_timeout = float(os.getenv("FW_FAL_START_TIMEOUT", "900"))
+    client_timeout = float(os.getenv("FW_FAL_CLIENT_TIMEOUT", "1800"))
+
+    last_state: dict[str, str] = {"v": ""}
+
+    def _on_queue_update(status: Any) -> None:
+        cur = type(status).__name__
+        if cur != last_state["v"]:
+            logger.info("[fal:%s] queue state -> %s", model_id, cur)
+            last_state["v"] = cur
 
     previous = os.getenv("FAL_KEY")
     os.environ["FAL_KEY"] = api_key
@@ -87,6 +113,9 @@ async def fal_subscribe(api_key: str, model_id: str, arguments: dict[str, Any]) 
             model_id,
             arguments=arguments,
             with_logs=False,
+            on_queue_update=_on_queue_update,
+            start_timeout=start_timeout,
+            client_timeout=client_timeout,
         )
         if not isinstance(result, dict):
             raise RuntimeError(f"Unexpected fal.ai response type: {type(result).__name__}")

@@ -470,14 +470,20 @@ class FalVideoService(VideoService, LazyHttpxClientMixin):
             else:
                 arguments["image_url"] = image_data_urls[0]
 
-        # Kling rejects end_image_url when default generate_audio is on; dual-anchor
-        # calls default to silent video unless caller passes generate_audio explicitly.
-        if kling_dual_anchor:
-            arguments["generate_audio"] = (
-                bool(kwargs["generate_audio"])
-                if "generate_audio" in kwargs
-                else False
-            )
+        # generate_audio policy (Kling 2.6 Pro and newer produce dialogue +
+        # foley baked into the mp4 when enabled — this is load-bearing for
+        # the whole "Kling-atomic dialogue+foley" architecture). Default is
+        # ON, overridable per-call via kwargs and globally via the
+        # ``FAL_VIDEO_GENERATE_AUDIO`` env var (set to "0"/"false" for
+        # emergency kill-switch). Dual-anchor still defaults OFF because
+        # Kling rejects end_image_url + audio together.
+        if "generate_audio" in kwargs:
+            arguments["generate_audio"] = bool(kwargs["generate_audio"])
+        elif kling_dual_anchor:
+            arguments["generate_audio"] = False
+        else:
+            env_flag = (os.getenv("FAL_VIDEO_GENERATE_AUDIO", "true") or "").strip().lower()
+            arguments["generate_audio"] = env_flag not in {"0", "false", "no", "off"}
 
         return arguments
 
@@ -562,6 +568,20 @@ class FalVideoService(VideoService, LazyHttpxClientMixin):
         omit_scene_tone_blocks = motion_active
 
         parts: list[str] = [f"Shot {ctx.shot_id}"]
+        # Dialogue + emotion go right after the shot header so Kling's
+        # speech-synthesis branch sees the line before the visual details.
+        # The verbatim line is quoted to mark "say exactly this". Empty
+        # dialogue_text skips the clause (action-only shots produce foley
+        # only, no speech).
+        if ctx.dialogue_text.strip():
+            tone = ctx.emotion_hint.strip()
+            tone_suffix = f", delivered in a {tone} tone" if tone else ""
+            parts.append(
+                "DIALOGUE: the character on-screen speaks aloud the "
+                "following line, lips in visible sync with each syllable: "
+                f"\u300c{ctx.dialogue_text.strip()}\u300d"
+                f"{tone_suffix}"
+            )
         if omit_scene_tone_blocks:
             parts.append(
                 "Ref: one L3 still for look; motion from text prefix + below."

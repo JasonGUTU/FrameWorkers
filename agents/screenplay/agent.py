@@ -75,6 +75,7 @@ SCREENPLAY_OUTPUT_TEMPLATE = """{
             "character_id": "",
             "character_name": "",
             "text": "<visible action line>",
+            "emotion_hint": "",
             "continuity_refs": { "props": [], "wardrobe_character_ids": [] },
             "shot_type": "medium",
             "camera": { "angle": "eye_level", "movement": "static", "framing_notes": "<note>" },
@@ -90,7 +91,8 @@ SCREENPLAY_OUTPUT_TEMPLATE = """{
             "block_type": "dialogue",
             "character_id": "char_001",
             "character_name": "<name>",
-            "text": "<spoken line>",
+            "text": "<verbatim spoken line, in the scene's language>",
+            "emotion_hint": "<calm|neutral|sad|angry|whispered|excited|warm|tense|urgent, or empty>",
             "continuity_refs": { "props": [], "wardrobe_character_ids": ["char_001"] },
             "shot_type": "medium",
             "camera": { "angle": "eye_level", "movement": "static", "framing_notes": "" },
@@ -101,8 +103,7 @@ SCREENPLAY_OUTPUT_TEMPLATE = """{
             "keyframe_plan": { "keyframe_count": 1, "keyframe_notes": [] }
           }
         ],
-        "scene_end": { "turn": "<narrative turn>", "emotional_shift": "<shift>" },
-        "estimated_duration_seconds": 12.4
+        "scene_end": { "turn": "<narrative turn>", "emotional_shift": "<shift>" }
       }
     ]
   }
@@ -129,6 +130,33 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
             "You are ScreenplayAgent: turn a high-level story blueprint into a "
             "unified screenplay (scenes broken into shots, with narrative + "
             "visual direction and consistency packs).\n\n"
+            "=== WHEN TO REJECT UPSTREAM INPUT ===\n"
+            "Use the shared input_rejection escape hatch (see the UPSTREAM "
+            "INPUT REJECTION block above) ONLY if the story blueprint makes "
+            "your job impossible. Concretely, reject when ANY of these is "
+            "true after you have read the story_json_text carefully:\n"
+            "  * story_json_text is empty, whitespace-only, or an empty JSON "
+            "object — there is literally nothing to dramatize.\n"
+            "  * No narrative substance anywhere: no premise / logline / "
+            "story_arc / scene_outline / beats / synopsis / plot fields are "
+            "present with non-empty content. A screenplay needs SOMETHING to "
+            "expand (even one sentence of premise is enough to proceed).\n"
+            "  * No character information whatsoever: no cast / characters / "
+            "dramatis_personae / protagonist fields and no character names "
+            "mentioned anywhere in the narrative text. Dialogue shots need "
+            "someone to speak.\n"
+            "When you reject, populate the rejection fields like this:\n"
+            "  * reason: the single most specific defect (e.g. 'story "
+            "blueprint contains no cast or characters — cannot write "
+            "dialogue shots').\n"
+            "  * missing_labels: ['story'] (my only input label).\n"
+            "  * offending_fields: the field paths you looked at and found "
+            "empty, e.g. ['content.cast', 'content.characters'].\n"
+            "  * upstream_agent_hint: 'StoryAgent' (the producer that should "
+            "be re-run with a brief that includes the missing info).\n"
+            "If the blueprint is merely sparse (e.g. a single-sentence "
+            "premise with one character) — DO NOT reject; proceed and invent "
+            "the supporting detail, that is part of your job.\n\n"
             "=== INPUT FORMAT ===\n"
             "You will receive the upstream story blueprint as a RAW JSON TEXT BLOB "
             "inside the user message. Do NOT assume specific field names in "
@@ -183,27 +211,32 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
             "character_locks, props_lock, style_lock) with concrete notes drawn "
             "from the blueprint's descriptive text. An empty list means 'nothing "
             "to lock', not a lazy placeholder.\n\n"
-            "=== SCENE DURATION ESTIMATE (shared source of truth) ===\n"
-            "For every scene, compute estimated_duration_seconds as a "
-            "decimal number of seconds using this exact formula:\n"
-            "  dialogue_words = total word count across all shots whose "
-            "block_type is 'dialogue', 'narration', or 'monologue' in the "
-            "scene (count words in the shot.text string, whitespace-split).\n"
-            "  action_shots   = count of shots in the scene whose "
-            "block_type == 'action'.\n"
-            "  estimated_duration_seconds = (dialogue_words / 2.5) + "
-            "(action_shots * 3.0).\n"
-            "  * 2.5 words/sec approximates 150 wpm TTS rate; the 3s-per-"
-            "action-shot term reserves visual-pacing time for shots with "
-            "no spoken line.\n"
-            "  * Result must be strictly > 0 for any scene that has at "
-            "least one shot (every non-empty scene contributes time). "
-            "Round to one decimal place.\n"
-            "  * This number is the SINGLE SOURCE OF TRUTH for scene "
-            "duration — NarrationAgent / MusicAgent / AmbienceAgent all "
-            "read it verbatim downstream instead of re-deriving it, so "
-            "they stay in sync. Do NOT fold real-world pacing tweaks "
-            "into this field; keep it a pure mechanical estimate.\n\n"
+            "=== TEXT FIELD — VERBATIM SPOKEN LINE ===\n"
+            "For shots with block_type in {dialogue, narration, monologue}, "
+            "the ``text`` field is the **exact** line the on-screen "
+            "character speaks aloud; it is passed verbatim into the video "
+            "generation prompt and the video model synthesizes the voice + "
+            "lip-sync from it. Rules:\n"
+            "  * Write the line in the scene's natural spoken language "
+            "(Chinese characters directly if the scene is in Chinese; "
+            "English words if English; etc.). Do NOT write stage "
+            "directions, summaries, or paraphrases here.\n"
+            "  * Keep each single-shot line short enough to fit comfortably "
+            "in ~10 seconds of natural speech (a rough ceiling of ~25 "
+            "Chinese characters or ~30 English words). Split longer "
+            "dialogue across consecutive shots rather than cramming one "
+            "shot with a paragraph.\n"
+            "  * For action shots (block_type=='action') the field holds "
+            "a visible action description instead; nothing is spoken.\n\n"
+            "=== EMOTION HINT — DELIVERY TONE ===\n"
+            "For spoken shots, set ``emotion_hint`` to a short descriptor "
+            "that controls delivery tone. Preferred vocabulary: calm, "
+            "neutral, sad, angry, whispered, excited, warm, tense, urgent. "
+            "Leave empty when the tone is unspecified or the shot has no "
+            "dialogue. The hint is consumed by the downstream video + "
+            "audio pipeline; choose it from the narrative context (rising "
+            "stakes → tense / urgent; intimate moment → warm / whispered; "
+            "confrontation → angry; default → calm or neutral).\n\n"
             "Do NOT include an artifact_caption block — the system generates it "
             "automatically."
         )

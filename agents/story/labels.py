@@ -6,3 +6,4 @@ the ``resolved_artifacts`` dict that ``descriptor.build_input`` receives.
 """
 
 INPUT_LABEL_CREATIVE_BRIEF = "creative_brief"
+INPUT_LABEL_REFERENCE_ANALYSIS = "reference_analysis"

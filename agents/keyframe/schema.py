@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
-from ..common_schema import ImageAsset, ImageReferenceEntry, Meta
+from ..common_schema import ImageReferenceEntry, Meta
 
 
 # ---------------------------------------------------------------------------
@@ -25,17 +25,12 @@ class Keyframe(BaseModel):
     to avoid duplicating long still descriptions in the video model prompt.
     """
 
-    keyframe_id: str = ""
-    order: int = 0
-    image_asset: ImageAsset = Field(default_factory=ImageAsset)
     prompt_summary: str = Field("", json_schema_extra={"creative": True})
     video_motion_hint: str = Field(
         "",
         json_schema_extra={"creative": True},
         description="Short I2V motion cue; not sent to image generation.",
     )
-    # Filled by KeyframeMaterializer: exact string sent to the image API (incl. style suffix).
-    image_generation_prompt: str = ""
     # Filled in-process for skeleton consistency; not read by KeyframeMaterializer or Video.
     # Excluded from model_dump → smaller workspace JSON, no change to image/video prompts.
     constraints_applied: KeyframeConstraintsApplied = Field(
@@ -44,16 +39,10 @@ class Keyframe(BaseModel):
     )
 
 
-class ShotKeyframeSource(BaseModel):
-    source_shot_id: str = ""
-
-
 class ShotKeyframes(BaseModel):
     """Keyframes for a single shot."""
 
     shot_id: str = ""
-    order: int = 0
-    source: ShotKeyframeSource = Field(default_factory=ShotKeyframeSource)
     keyframes: list[Keyframe] = Field(default_factory=list)
 
 
@@ -64,15 +53,17 @@ class ShotKeyframes(BaseModel):
 class StabilityAnchorKeyframe(BaseModel):
     """Unified stability anchor for characters, locations, and props."""
 
-    entity_type: str = ""  # character | location | prop
     entity_id: str = ""  # char_001, loc_001, prop_001
     # Skeleton / audit only; materializer ignores. Omitted from persisted JSON.
     display_name: str = Field(default="", exclude=True)
     purpose: str = Field(default="", exclude=True)
-    keyframe_id: str = ""
-    image_asset: ImageAsset = Field(default_factory=ImageAsset)
     prompt_summary: str = Field("", json_schema_extra={"creative": True})
-    image_generation_prompt: str = ""
+    # Python-only channel for user-uploaded reference image paths. Populated
+    # by ``KeyFrameAgent._prefill_reference_images`` after the LLM call;
+    # read by ``KeyframeMaterializer`` L1 pre-check loop to skip t2i when
+    # a reference image is supplied. Excluded from persisted JSON — the
+    # resolved file path is a runtime detail, not part of the artifact.
+    reference_image_uri: str = Field(default="", exclude=True)
 
 
 class StabilityKeyframes(BaseModel):
@@ -81,15 +72,8 @@ class StabilityKeyframes(BaseModel):
     props: list[StabilityAnchorKeyframe] = Field(default_factory=list)
 
 
-class KeyframeSceneSource(BaseModel):
-    screenplay_asset_id: str = ""
-    screenplay_scene_id: str = ""
-
-
 class KeyframeScene(BaseModel):
     scene_id: str = ""
-    order: int = 0
-    source: KeyframeSceneSource = Field(default_factory=KeyframeSceneSource)
     stability_keyframes: StabilityKeyframes = Field(default_factory=StabilityKeyframes)
     shots: list[ShotKeyframes] = Field(default_factory=list)
 
@@ -151,9 +135,10 @@ class KeyFrameAgentInput(BaseModel):
 
     ``character_references`` / ``location_references`` / ``style_references``
     are typed image reference lists selected via their respective labels;
-    each entry carries a direct ``path`` so the agent can prefill
-    ``image_asset.uri`` on the matching global anchor before the
-    materializer runs.
+    each entry carries a direct ``path`` that is pre-filled into the
+    matching global anchor's ``reference_image_uri`` (Python-only field)
+    so the materializer can use the user-supplied image instead of
+    running text-to-image.
     """
 
     screenplay_json_text: str = ""

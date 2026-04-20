@@ -1,16 +1,16 @@
-"""TranscriptionAgent descriptor — self-describing manifest for the registry."""
+"""TranscriptionAgent descriptor — built from a single AgentSpec."""
 
 from __future__ import annotations
 
 from pydantic import BaseModel
 
 from ..common_schema import ResolvedArtifactEntry
-from ..descriptor import SubAgentDescriptor
+from ..descriptor import AgentSpec, InputLabelSpec, SubAgentDescriptor
 from .agent import TranscriptionAgent
-from .labels import INPUT_LABEL_SOURCE_MEDIA
-from .schema import TranscriptionAgentInput
 from .evaluator import TranscriptionEvaluator
+from .labels import INPUT_LABEL_SOURCE_MEDIA
 from .materializer import TranscriptionMaterializer
+from .schema import TranscriptionAgentInput
 
 
 def build_input(
@@ -32,8 +32,10 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
     return {
         agent_id: {
             "caption": (
-                f"Transcript ({lang}): {seg_count} segment(s) with timestamps. "
-                f"Speech-to-text from source media."
+                f"Transcript ({lang}): {seg_count} segment(s) with "
+                f"timestamps. Speech-to-text from source media. Usable "
+                f"as the 'timed source text' input to a downstream subtitle step, or "
+                f"as the 'source text' input to a downstream translation step."
             ),
             "scope": "global",
         },
@@ -41,37 +43,51 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
 
 
 def materializer_factory(services: dict) -> TranscriptionMaterializer:
-    return TranscriptionMaterializer(transcription_service=services["transcription_service"])
+    return TranscriptionMaterializer(
+        transcription_service=services["transcription_service"]
+    )
 
 
-CATALOG_ENTRY = (
-    "TranscriptionAgent\n"
-    "  - Input: any media artifact containing speech (an ingested audio file or video file).\n"
-    "  - Output: transcript (timestamped segments + full text + detected language + "
-    "speaker attribution).\n"
-    "  - Purpose: Speech-to-text. The transcript can be a deliverable on its own (when the "
-    "user just wants 'transcribe this'), or feed downstream translation / subtitle generation "
-    "for existing-media workflows that have no screenplay. Run me whenever the user asks to "
-    "transcribe, translate audio/video, or add subtitles to an existing video lacking a script."
+SPEC = AgentSpec(
+    agent_id="TranscriptionAgent",
+    inputs=[
+        InputLabelSpec(
+            name=INPUT_LABEL_SOURCE_MEDIA,
+            cardinality="single",
+            description=(
+                "An audio or video file to transcribe. Accepts any format "
+                "supported by the transcription service (mp3, wav, mp4, "
+                "etc.). The file path is passed directly to the STT "
+                "service."
+            ),
+        ),
+    ],
+    output_description=(
+        "transcript (timestamped segments + full text + detected language). "
+        "Shape is compatible with SubtitleAgent's 'timed source text' slot "
+        "— SubtitleAgent can consume me the same way it consumes a "
+        "screenplay."
+    ),
+    purpose_and_routing=(
+        """Speech-to-text on an existing video's audio track, producing timestamped transcript segments. Trigger: existing-video flow needing subtitles or translation, with no screenplay available."""
+    ),
+    input_preamble=(
+        "I transcribe audio/video files into timestamped text."
+    ),
 )
 
-DESCRIPTOR = SubAgentDescriptor(
-    agent_id="TranscriptionAgent",
-    catalog_entry=CATALOG_ENTRY,
+
+DESCRIPTOR = SubAgentDescriptor.from_spec(
+    SPEC,
     agent_factory=lambda llm: TranscriptionAgent(llm_client=llm),
     evaluator_factory=TranscriptionEvaluator,
     build_input=build_input,
     build_captions=build_captions,
     service_factories={
-        "transcription_service": lambda ctx: __import__("inference.generation", fromlist=["select_transcription_service"]).select_transcription_service(),
+        "transcription_service": lambda ctx: __import__(
+            "inference.generation",
+            fromlist=["select_transcription_service"],
+        ).select_transcription_service(),
     },
     materializer_factory=materializer_factory,
-    input_needs_description=(
-        "I transcribe audio/video files into timestamped text with speaker "
-        "attribution.\n\n"
-        f"[{INPUT_LABEL_SOURCE_MEDIA}] (single)\n"
-        "An audio or video file to transcribe. Accepts any format supported "
-        "by the transcription service (mp3, wav, mp4, etc.). The file path "
-        "is passed directly to the STT service."
-    ),
 )

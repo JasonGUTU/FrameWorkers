@@ -34,7 +34,9 @@ VIDEO_ANALYSIS_OUTPUT_TEMPLATE = """{
         "description": "<visual description of what happens in this scene>",
         "setting": "<location / environment>",
         "mood": "<emotional tone>",
-        "entities": ["<person/object 1>", "<person/object 2>"]
+        "entities": ["<person/object 1>", "<person/object 2>"],
+        "tension_score": 0.3,
+        "is_climax_candidate": false
       }
     ]
   }
@@ -69,6 +71,24 @@ class VideoAnalysisAgent(BaseAgent[VideoAnalysisAgentInput, VideoAnalysisAgentOu
         return (
             "You are VideoAnalysisAgent: analyze video content and produce "
             "a structured breakdown.\n\n"
+            "=== WHEN TO REJECT UPSTREAM INPUT ===\n"
+            "Use the shared input_rejection escape hatch (see the UPSTREAM "
+            "INPUT REJECTION block above) ONLY if the source media is "
+            "unusable. Concretely, reject when:\n"
+            "  * source_video_path is empty / whitespace-only — there is "
+            "no video to analyze.\n"
+            "When you reject, populate the rejection fields like this:\n"
+            "  * reason: e.g. 'source_video_path is empty — no video "
+            "file to analyze'.\n"
+            "  * missing_labels: ['source_video'] (my only input label).\n"
+            "  * offending_fields: ['source_video_path'].\n"
+            "  * upstream_agent_hint: 'IntakeVideoAgent' (the producer "
+            "that should have ingested the user's video upload).\n"
+            "If the path looks unusual but is non-empty — DO NOT reject; "
+            "the vision model will surface a real failure if the video is "
+            "unreadable or unsupported. Short / sparse / abstract video "
+            "content is still analyzable.\n"
+            "=== END WHEN TO REJECT UPSTREAM INPUT ===\n\n"
             "=== YOUR TASK ===\n"
             "Watch/analyze the provided video and produce:\n"
             "1. A high-level video_summary with title, summary, genre, and "
@@ -84,7 +104,17 @@ class VideoAnalysisAgent(BaseAgent[VideoAnalysisAgentInput, VideoAnalysisAgentOu
             "4. Description should capture WHAT HAPPENS visually, not just "
             "what's there (actions, movements, interactions).\n"
             "5. Entities: list specific people (by appearance if name "
-            "unknown), objects, animals that are prominent in the scene.\n\n"
+            "unknown), objects, animals that are prominent in the scene.\n"
+            "6. tension_score: 0.0–1.0 scalar for narrative / dramatic "
+            "intensity. Calibration — quiet dialogue / exposition ≈ 0.1–0.3, "
+            "rising conflict / suspense ≈ 0.4–0.6, action peaks / emotional "
+            "climaxes / shocking reversals ≈ 0.7–1.0.\n"
+            "7. is_climax_candidate: true ONLY for scenes that look like "
+            "climaxes, major reversals, or emotional peaks of the whole "
+            "video. Typically 1–3 per video; emit zero for slice-of-life / "
+            "purely informational footage with no dramatic arc. Use "
+            "sparingly — flagging every high-tension scene defeats the "
+            "purpose.\n\n"
             "=== OUTPUT FORMAT ===\n"
             "JSON only; no markdown; match the user-message template "
             "exactly.\n\n"

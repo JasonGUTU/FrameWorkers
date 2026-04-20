@@ -1,8 +1,19 @@
-"""Ambience materializer — generates environmental sounds per scene."""
+"""Ambience materializer — generates the single film-wide ambient bed.
+
+Chunks the target duration into ~30s segments and concatenates them with
+ffmpeg. AudioMixAgent later amix+trims this bed against the actual video
+length, so a slight over-generation is acceptable — under-generation is
+not (silence tail).
+
+Persisted-JSON contract: this materializer does NOT mutate the bed dict.
+The wav file is registered in global_memory as a standalone artifact
+with sys_id ``aud_amb_film``; downstream consumers (AudioMixAgent) find
+it by caption-based resolution, not by reading an asset block from the
+ambience package JSON.
+"""
 
 from __future__ import annotations
 
-import json
 import logging
 from typing import Any, TYPE_CHECKING
 
@@ -15,6 +26,12 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
+# Stable sys_id for the film-wide ambience wav. The AmbienceAgent emits
+# exactly one bed and the materializer emits exactly one wav, so a
+# constant sys_id is sufficient for global_memory registration.
+AMBIENCE_FILM_SYS_ID = "aud_amb_film"
+
+
 class AmbienceMaterializer(BaseMaterializer):
 
     def __init__(self, audio_service: AudioService) -> None:
@@ -24,37 +41,34 @@ class AmbienceMaterializer(BaseMaterializer):
         pending: list[MediaAsset] = []
         for bed in asset_dict.get("content", {}).get("beds", []):
             desc = bed.get("description", "")
-            scene_id = bed.get("scene_id", "")
             target_dur = bed.get("duration_seconds", 30.0)
-            audio_asset = bed.get("audio_asset", {})
-            asset_id = audio_asset.get("asset_id", "")
-            if asset_id:
-                try:
-                    segments: list[bytes] = []
-                    remaining = max(target_dur, 10.0)
-                    seg_idx = 0
-                    while remaining > 0:
-                        seg_dur = min(remaining, 30.0)
-                        result = await self.svc.generate_ambience(
-                            description=desc, scene_id=scene_id, duration_sec=seg_dur,
-                        )
-                        segments.append(result.bytes)
-                        remaining -= seg_dur
-                        seg_idx += 1
-                    if len(segments) == 1:
-                        final_bytes = segments[0]
-                    else:
-                        from inference.generation.audio_generators.service import AudioService
-                        joined = AudioService._ffmpeg_concat(segments)
-                        final_bytes = joined if joined else b"".join(segments)
-                    bed["audio_generation_prompt"] = json.dumps(
-                        {"kind": "ambience", "description": desc, "target_duration": target_dur, "segments": seg_idx},
-                        ensure_ascii=False,
+            try:
+                segments: list[bytes] = []
+                remaining = max(target_dur, 10.0)
+                seg_idx = 0
+                while remaining > 0:
+                    seg_dur = min(remaining, 30.0)
+                    result = await self.svc.generate_ambience(
+                        description=desc, scene_id="", duration_sec=seg_dur,
                     )
-                    pending.append(MediaAsset(
-                        sys_id=asset_id, data=final_bytes,
-                        extension="wav", uri_holder=audio_asset,
-                    ))
-                except Exception as exc:
-                    logger.error("Ambience generation failed for %s: %s", asset_id, exc)
+                    segments.append(result.bytes)
+                    remaining -= seg_dur
+                    seg_idx += 1
+                if len(segments) == 1:
+                    final_bytes = segments[0]
+                else:
+                    joined = AudioService._ffmpeg_concat(segments)
+                    final_bytes = joined if joined else b"".join(segments)
+                # Local uri_holder — see MusicMaterializer for rationale.
+                # The persisted bed JSON has no audio_asset block.
+                uri_holder: dict[str, Any] = {}
+                pending.append(MediaAsset(
+                    sys_id=AMBIENCE_FILM_SYS_ID, data=final_bytes,
+                    extension="wav", uri_holder=uri_holder,
+                ))
+            except Exception as exc:
+                logger.error(
+                    "Ambience generation failed for %s: %s",
+                    AMBIENCE_FILM_SYS_ID, exc,
+                )
         return pending

@@ -52,12 +52,11 @@
       <div class="header-divider"></div>
       <div class="header-badge">🎬 Director</div>
       <h1>Director 编排层</h1>
-      <p>DirectorAgent 编排循环、Dynamic Plan Stack 集成计划。</p>
+      <p>DirectorAgent 编排循环 + Routing Eval 基线。</p>
     </header>
 
     <!-- ── 原有的 Director 设计内容（由 app.js 渲染） ── -->
     <section id="directorViz"></section>
-    <section id="taskStackViz"></section>
 
     <!-- ── Director Routing 评测部分 ── -->
     <div class="eval-section-header">
@@ -76,371 +75,24 @@
 
 
       <div class="eval-card">
-        <h2>🚀 迭代改动：baseline → descriptor_v2</h2>
+        <h2>🧪 Director Routing 评测约定</h2>
         <p style="color:#ccc;font-size:.9em;margin-bottom:14px">
-          <b>Chain 准确率</b> 37.0% → <b style="color:#34d399">78.7%</b> (+41.7pt)
-          &nbsp;·&nbsp;
-          <b>Step 准确率</b> 65.5% → <b style="color:#34d399">91.0%</b> (+25.5pt)
+          Director prompt 只保留框架级硬约束（exact agent_id / flat sequential / each agent ≤ 1 次 / PENDING tail 可改 / <code>[upstream_input_rejected]</code> 协议解析），<b>不带任何 pipeline 模板或 routing 启发</b>。LLM 编排完全靠 sub-agent descriptor 自身的 catalog（purpose / inputs / output）+ stack memory。
         </p>
 
-        <div style="background:rgba(52,211,153,.05);border:1px dashed rgba(52,211,153,.3);border-radius:6px;padding:10px 14px;margin-bottom:14px;font-size:.85em;color:#ccc">
-          <b style="color:#34d399">⚠ 说明</b>：两次 run 之间 <b>director prompt 没有改动</b>（Intake-first 规则在 baseline 之前就加好了）。
-          所以 37% → 78.7% 的提升完全来自 descriptor 和 truncation 修复。Prompt 的历史改动见下方参考。
+        <div style="background:rgba(96,165,250,.06);border:1px dashed rgba(96,165,250,.3);border-radius:6px;padding:10px 14px;margin-bottom:14px;font-size:.85em;color:#ccc">
+          所以这一栏看到的分数反映的就是 <b>catalog 单独驱动的能力</b>。想拉分要回到 sub-agent descriptor 或 eval 数据层动，<b>不要回到 prompt 层堆 routing 模板</b>（之前那条路验证过会让 catalog ↔ prompt 互相打架）。
         </div>
 
-        <h3>① 去掉 description 截断（3 个文件）</h3>
-        <div style="background:rgba(0,0,0,.3);border-radius:6px;padding:12px 16px;margin-bottom:10px;font-family:'SF Mono',monospace;font-size:.82em">
-          <div><span style="color:#999">agents/agent_registry.py</span>  &nbsp;<span style="color:#f87171">catalog_entry[:200]</span> → <span style="color:#34d399">catalog_entry</span></div>
-          <div><span style="color:#999">director_agent/router.py</span>  &nbsp;<span style="color:#f87171">description[:500]</span> → <span style="color:#34d399">description</span></div>
-          <div><span style="color:#999">director_agent/reasoning.py</span>  &nbsp;<span style="color:#f87171">description[:500]</span> → <span style="color:#34d399">description</span></div>
-        </div>
-        <p style="color:#aaa;font-size:.85em"><b>这是关键改动</b>：baseline 时 LLM 看到的 descriptor 被截断到 200 字符，Purpose 和依赖关系全被切掉。现在看到完整描述。</p>
-
-        <h3>② Descriptor catalog_entry 重写（23 个 agent）</h3>
-        <div style="background:rgba(0,0,0,.3);border-radius:6px;padding:12px 16px;margin-bottom:10px;font-size:.85em">
-          <table style="font-size:.95em">
-            <tr><th style="color:#999">Agent</th><th style="color:#f87171">baseline</th><th style="color:#34d399">descriptor_v2 新增</th></tr>
-            <tr><td><b>IntakeTextAgent</b></td><td>raw_text_upload</td><td>ANY user text → <b>MANDATORY first step</b></td></tr>
-            <tr><td><b>IntakeVideo/Audio/Image</b></td><td>raw upload</td><td>AFTER IntakeTextAgent</td></tr>
-            <tr><td><b>StyleTransfer / Inpaint / Extend<br/>Analysis / Highlight / VoiceClone</b></td><td>source_video</td><td>AFTER <b>both IntakeText AND Intake{Video,Audio}</b></td></tr>
-            <tr><td><b>Narration / Music / Ambience</b></td><td>screenplay</td><td>audio trio — 无顺序依赖，ALL THREE 都要完成才 AudioMix</td></tr>
-            <tr><td><b>AudioMixAgent</b></td><td>narration + music + ambience</td><td>REQUIRE all three trio; BEFORE Subtitle/Compositor</td></tr>
-            <tr><td><b>SubtitleAgent</b></td><td>screenplay + video_package</td><td>screenplay <b>OR transcript</b> (现有视频路径)</td></tr>
-            <tr><td><b>TranscriptionAgent</b></td><td>source_media</td><td>prerequisite for Translation/Subtitle</td></tr>
-            <tr><td><b>BriefEnricher</b></td><td>raw brief + image desc</td><td><b>ONLY when user uploaded images</b>, skip otherwise</td></tr>
-            <tr><td><b>Story/Screenplay/KeyFrame<br/>Video/Compositor</b></td><td>just Input/Output</td><td>加 AFTER X, BEFORE Y 位置约束</td></tr>
-          </table>
-          <div style="margin-top:14px;padding:10px 14px;background:rgba(0,0,0,.25);border-radius:6px;font-family:'SF Mono',monospace;font-size:.8em;color:#bbb">
-            <div style="color:#999;margin:0 0 8px">位置约束完整列表（按类别分组）：</div>
-
-            <div style="color:#fbbf24;margin:10px 0 4px">▸ 创作主链（Story → ... → Compositor）</div>
-            <div>• <b>StoryAgent</b>: AFTER IntakeTextAgent (optionally BriefEnricher) → BEFORE ScreenplayAgent</div>
-            <div>• <b>ScreenplayAgent</b>: AFTER StoryAgent → BEFORE KeyFrameAgent (and audio trio)</div>
-            <div>• <b>KeyFrameAgent</b>: AFTER ScreenplayAgent → BEFORE VideoAgent</div>
-            <div>• <b>VideoAgent</b>: AFTER KeyFrameAgent → BEFORE audio trio</div>
-            <div>• <b>CompositorAgent</b>: LAST agent in standard chain → typically followed by done</div>
-
-            <div style="color:#fbbf24;margin:10px 0 4px">▸ Intake 层（所有 Intake 都在 IntakeText 之后）</div>
-            <div>• <b>IntakeTextAgent</b>: MANDATORY first step → BEFORE any other Intake*Agent</div>
-            <div>• <b>IntakeVideoAgent</b>: AFTER IntakeTextAgent → BEFORE any video-consuming agent (Analysis/Style/Inpaint/Extend/Highlight/Transcription on video)</div>
-            <div>• <b>IntakeAudioAgent</b>: AFTER IntakeTextAgent → BEFORE any audio-consuming agent (Transcription/VoiceClone)</div>
-            <div>• <b>IntakeImageAgent</b>: AFTER IntakeTextAgent → typically BEFORE BriefEnricherAgent</div>
-
-            <div style="color:#fbbf24;margin:10px 0 4px">▸ 视频后期处理（都需要双 Intake 前置）</div>
-            <div>• <b>StyleTransferAgent</b>: AFTER both IntakeTextAgent AND IntakeVideoAgent</div>
-            <div>• <b>InpaintAgent</b>: AFTER both IntakeTextAgent AND IntakeVideoAgent</div>
-            <div>• <b>VideoExtendAgent</b>: AFTER both IntakeTextAgent AND IntakeVideoAgent</div>
-            <div>• <b>VideoAnalysisAgent</b>: AFTER both IntakeText AND IntakeVideo → often prerequisite for HighlightAgent</div>
-            <div>• <b>HighlightAgent</b>: AFTER IntakeText + IntakeVideo → VideoAnalysisAgent should run before if content-driven selection</div>
-            <div>• <b>VoiceCloneAgent</b>: AFTER both IntakeTextAgent AND IntakeAudioAgent</div>
-
-            <div style="color:#fbbf24;margin:10px 0 4px">▸ Audio 三件套 + AudioMix</div>
-            <div>• <b>NarrationAgent / MusicAgent / AmbienceAgent</b>: audio trio — NO ordering between themselves → ALL THREE must complete before AudioMixAgent → AFTER VideoAgent and BEFORE AudioMixAgent</div>
-            <div>• <b>AudioMixAgent</b>: REQUIRE all three trio → BEFORE SubtitleAgent (if needed) → BEFORE CompositorAgent</div>
-
-            <div style="color:#fbbf24;margin:10px 0 4px">▸ 字幕/翻译（两条路径）</div>
-            <div>• <b>TranscriptionAgent</b>: AFTER IntakeAudio/IntakeVideo → prerequisite for TranslationAgent and SubtitleAgent</div>
-            <div>• <b>TranslationAgent</b>: in subtitle workflow: AFTER TranscriptionAgent → BEFORE SubtitleAgent</div>
-            <div>• <b>SubtitleAgent</b>: creative path: AFTER AudioMixAgent → BEFORE CompositorAgent · existing-video path: AFTER TranscriptionAgent (and optionally TranslationAgent)</div>
-
-            <div style="color:#fbbf24;margin:10px 0 4px">▸ BriefEnricher 触发条件</div>
-            <div>• <b>BriefEnricherAgent</b>: ONLY when user uploaded BOTH text AND images → AFTER IntakeImageAgent and BEFORE StoryAgent</div>
-          </div>
-
-          <div style="margin-top:14px;padding:12px 16px;background:rgba(52,211,153,.05);border:1px solid rgba(52,211,153,.2);border-radius:6px;font-size:.82em;color:#ccc">
-            <div style="color:#34d399;margin-bottom:10px;font-weight:600">✓ 可完成的典型任务 → agent 链</div>
-
-            <div style="margin-bottom:8px"><b style="color:#fbbf24">「做一个太空探险短片」</b>（cr 纯创作）<span style="color:#34d399">✓</span><br/>
-              <span style="font-family:'SF Mono',monospace;color:#aaa">IntakeText → Story → Screenplay → KeyFrame → Video → Narration/Music/Ambience(×3) → AudioMix → Compositor → done</span></div>
-
-            <div style="margin-bottom:8px"><b style="color:#fbbf24">「做产品宣传片，产品是智能手表」</b>（intake_txt）<span style="color:#34d399">✓</span><br/>
-              <span style="font-family:'SF Mono',monospace;color:#aaa">IntakeText → Story → Screenplay → KeyFrame → Video → 音频三件套 → AudioMix → Compositor → done</span></div>
-
-            <div style="margin-bottom:8px"><b style="color:#fbbf24">「有几张参考图，帮我做成视频」</b>（intake_img）<span style="color:#34d399">✓</span><br/>
-              <span style="font-family:'SF Mono',monospace;color:#aaa">IntakeText → IntakeImage → <b style="color:#34d399">BriefEnricher</b> → Story → ... → Compositor → done</span></div>
-
-            <div style="margin-bottom:8px"><b style="color:#fbbf24">「做一个带中英双语字幕的短片」</b>（bilingual）<span style="color:#34d399">✓</span><br/>
-              <span style="font-family:'SF Mono',monospace;color:#aaa">IntakeText → Story → ... → AudioMix → <b style="color:#34d399">Subtitle → Translation</b> → Compositor → done</span></div>
-
-            <div style="margin-bottom:8px"><b style="color:#fbbf24">「把这个视频转成吉卜力风格」</b>（style）<span style="color:#34d399">✓</span><br/>
-              <span style="font-family:'SF Mono',monospace;color:#aaa">IntakeText → IntakeVideo → StyleTransfer → done</span></div>
-
-            <div style="margin-bottom:8px"><b style="color:#fbbf24">「去掉视频里的路人」</b>（inpaint）<span style="color:#34d399">✓</span><br/>
-              <span style="font-family:'SF Mono',monospace;color:#aaa">IntakeText → IntakeVideo → Inpaint → done</span></div>
-
-            <div style="margin-bottom:8px"><b style="color:#fbbf24">「从一小时视频里剪精彩片段」</b>（highlight）<span style="color:#34d399">✓</span><br/>
-              <span style="font-family:'SF Mono',monospace;color:#aaa">IntakeText → IntakeVideo → <b style="color:#34d399">VideoAnalysis → Highlight</b> → done</span></div>
-
-            <div style="margin-bottom:8px"><b style="color:#fbbf24">「给这个访谈视频配字幕」</b>（sub_vid，现有视频字幕路径）<span style="color:#34d399">✓</span><br/>
-              <span style="font-family:'SF Mono',monospace;color:#aaa">IntakeText → IntakeVideo → <b style="color:#34d399">Transcription → Subtitle</b> → done</span></div>
-
-            <div style="margin-bottom:8px"><b style="color:#fbbf24">「把音频转文字翻成英文做字幕」</b>（trans_trans_sub）<span style="color:#34d399">✓</span><br/>
-              <span style="font-family:'SF Mono',monospace;color:#aaa">IntakeText → IntakeAudio → Transcription → Translation → Subtitle → done</span></div>
-
-            <div><b style="color:#fbbf24">「克隆这段音频里的声音来配音」</b>（voice）<span style="color:#34d399">✓</span><br/>
-              <span style="font-family:'SF Mono',monospace;color:#aaa">IntakeText → IntakeAudio → VoiceClone → done</span></div>
-
-            <div style="color:#34d399;margin:18px 0 10px;font-weight:600">✓ 可完成的复合任务（跨类别组合）</div>
-
-            <div style="margin-bottom:8px"><b style="color:#fbbf24">「分析视频后剪精彩片段，加上背景音乐合成最终版」</b>（complex_04）<span style="color:#34d399">✓</span><br/>
-              <span style="font-family:'SF Mono',monospace;color:#aaa">IntakeText → IntakeVideo → VideoAnalysis → Highlight → Music → AudioMix/Compositor → done</span></div>
-
-            <div style="margin-bottom:8px"><b style="color:#fbbf24">「延长视频后做风格迁移再加字幕」</b>（complex_03）<span style="color:#34d399">✓</span><br/>
-              <span style="font-family:'SF Mono',monospace;color:#aaa">IntakeText → IntakeVideo → VideoExtend → StyleTransfer → Transcription → Subtitle → done</span></div>
-
-            <div style="margin-bottom:8px"><b style="color:#fbbf24">「分析视频然后根据内容写类似故事并制作新视频」</b>（complex_01）<span style="color:#34d399">✓</span><br/>
-              <span style="font-family:'SF Mono',monospace;color:#aaa">IntakeText → IntakeVideo → <b style="color:#34d399">VideoAnalysis → Story → Screenplay → ...</b> → Compositor → done</span></div>
-
-            <div style="color:#f87171;margin:18px 0 10px;font-weight:600">✗ Director 规划失败的任务（根因：catalog 硬绑定，不是 LLM "决策错误"）</div>
-            <p style="color:#999;font-size:.8em;margin:0 0 10px">
-              扫描所有 production descriptor：<b style="color:#f87171">16 / 19 个 catalog_entry 直接用 PascalCase 字面量点名其他 agent</b>（"REQUIRE all three"、"AFTER XxxAgent"、"I am part of the audio trio"），把本应由 director 动态决策的"上下游关系"硬刻进了每个 sub-agent 自述里。
-              下面这些失败 case 不是 LLM 不懂用户意图，而是 catalog 给 LLM 的规则就是错的——对线性任务好用，对带分支 / 选项 / 子集的任务必然炸。
-            </p>
-
-            <div style="margin-bottom:10px"><b style="color:#fbbf24">「做一个有中英双语字幕的完整短片」</b>（bilingual_01）<span style="color:#f87171">✗</span><br/>
-              <span style="color:#aaa"><b>实际</b>：... → AudioMix → <b style="color:#f87171">Translation → Subtitle</b> → Compositor &nbsp;·&nbsp; <b>应该</b>：... → AudioMix → <b style="color:#34d399">Subtitle → Translation</b> → Compositor<br/>
-              <b style="color:#f87171">根因</b>：<code>translation/descriptor.py</code> 写的 "For subtitle workflows I run AFTER TranscriptionAgent and BEFORE SubtitleAgent" 只对 transcribe→translate→subtitle 分支成立，对 screenplay→subtitle(中)→translate(英) 分支是反的；catalog 没区分分支，LLM 照抄唯一规则。</span></div>
-
-            <div style="margin-bottom:10px"><b style="color:#fbbf24">「克隆我的声音，然后用它给一个新制作的短片配音」</b>（complex_07）<span style="color:#f87171">✗</span><br/>
-              <span style="color:#aaa"><b>实际</b>：IntakeText → IntakeAudio → <b style="color:#f87171">Story</b> → ... → Video → <b style="color:#f87171">VoiceClone</b>(才出现) &nbsp;·&nbsp; <b>应该</b>：先 VoiceClone → 再 Story → ...<br/>
-              <b style="color:#f87171">根因</b>：<code>voice_clone/descriptor.py</code> 没声明 "I replace NarrationAgent in the audio trio"，也没说自己在主创作链里的位置；同时 NarrationAgent 的 catalog 还在自述 "I am part of the audio trio"。LLM 看不到 VoiceClone↔Narration 的替换关系，只能按默认 trio 跑完再补。</span></div>
-
-            <div style="margin-bottom:10px"><b style="color:#fbbf24">「用我的声音克隆来配音，做带中英字幕的产品宣传片，产品是智能音箱 EchoX」</b>（complex_14）<span style="color:#f87171">✗</span><br/>
-              <span style="color:#aaa"><b>实际</b>：IntakeText → <b style="color:#f87171">Story</b> → ... &nbsp;·&nbsp; <b>应该</b>：IntakeText → <b style="color:#34d399">IntakeAudio</b> → VoiceClone → ... → Story → ...<br/>
-              <b style="color:#f87171">根因</b>：同 complex_07——voice_clone 没在 catalog 里建立"声音克隆是创作链前置条件"的关系。叠加长指令里"克隆"是次要需求，LLM 跟着主创作链 catalog 走了。</span></div>
-
-            <div style="margin-bottom:10px"><b style="color:#fbbf24">「分析视频后剪精彩片段，加上背景音乐合成最终版」</b>（complex_04）<span style="color:#f87171">✗</span><br/>
-              <span style="color:#aaa"><b>实际</b>：... → Music → <b style="color:#f87171">Ambience</b> → AudioMix → Compositor &nbsp;·&nbsp; <b>应该</b>：... → Music → <b style="color:#34d399">直接 AudioMix/Compositor</b><br/>
-              <b style="color:#f87171">根因</b>：<code>audio_mix/descriptor.py</code> 写 "I REQUIRE all three audio trio agents (Narration, Music, Ambience)"，<code>music/ambience/narration</code> 三家又自述 "ALL THREE must complete before AudioMixAgent"。这是个 4 处互相印证的硬约束，LLM 看到 "BGM + 合成" 就反射性补齐三件套——不是惯性，是 catalog 把 trio 写成了公理。</span></div>
-
-            <div><b style="color:#fbbf24">「删掉视频里的路人，然后加上赛博朋克风格滤镜，最后配上字幕」</b>（complex_12）<span style="color:#f87171">✗</span><br/>
-              <span style="color:#aaa"><b>实际</b>：... → Subtitle → <b style="color:#f87171">Compositor</b> → done &nbsp;·&nbsp; <b>应该</b>：... → Subtitle → done（字幕就是最终产物）<br/>
-              <b style="color:#f87171">根因</b>：<code>compositor/descriptor.py</code> 自述 "I am the LAST agent in the standard video-production chain"——但"后期编辑链"不是 standard production chain，catalog 没区分这两条路径。LLM 跟着唯一的"standard chain"模板走。</span></div>
-          </div>
-        </div>
-
-        <h3>③ Eval GT 微调 (evals/director_routing/eval_cases.json)</h3>
-        <ul style="color:#bbb;font-size:.9em;margin:6px 0 0 20px">
-          <li>edge case 非空输入: <code>[done]</code> → <code>[IntakeTextAgent, done]</code>（baseline → descriptor_v2 之间）</li>
-          <li>其他 GT（91 条链 prepend IntakeText、intake_txt 去 BriefEnricher）在 baseline 之前就已定型</li>
+        <h3>评测口径</h3>
+        <ul style="color:#bbb;font-size:.88em;margin:6px 0 0 20px;line-height:1.7">
+          <li><b>数据集</b>：<code>evals/director_routing/eval_cases.json</code>（10 个类别，每条 user_goal + expected_chain）</li>
+          <li><b>判分</b>：<code>actual[i] in expected[i]</code> at every slot —— 每个 slot 是允许的 agent 集合，positional set match</li>
+          <li><b>chain_correct</b>：长度匹配且每一格都命中。<b>step accuracy</b>：每个位置自己的命中率（独立看）。<b>edit distance</b>：set-aware Levenshtein。</li>
+          <li>下方 <b>"选择运行"</b> dropdown 自动列 <code>Runtime/eval_routing/*.json</code>，每条记录都展示总览 / 分类 / 逐步位置 / 失败模式。</li>
         </ul>
-
-        <h3>💡 核心 insight（修订版）</h3>
-        <div style="background:rgba(251,191,36,.08);border-left:3px solid #fbbf24;padding:12px 16px;margin:10px 0;border-radius:0 6px 6px 0;color:#ddd;font-size:.9em">
-          <b>LLM 更信任 descriptor 里的"事实"，不信任 prompt 里的"规则"</b>——这条结论 baseline → v2 的实验仍然成立：把 "AFTER XXX, BEFORE YYY" 写进 descriptor 后，30+ 个 Step-1 跳过 IntakeText 的错误确实修好了。
-          <br/><br/>
-          <b>但这把利剑两面开刃</b>：catalog 里的硬绑定救了"线性 standard chain"那批失败，又造成了**新一类**失败——所有需要 <b>子集 / 分支 / 替换</b> 的任务（只要 BGM 不要 trio、VoiceClone 替代 Narration、后期链不需要 Compositor、bilingual subtitle 顺序反转）都被 catalog 里"REQUIRE / ALWAYS / standard chain" 类的措辞**反向锁死**。16/19 个 descriptor 都在硬编码邻居 agent 名字这件事，本身就违反了根 CLAUDE.md 第一条 "Sub-agent 解耦：每个 agent 自包含...互不依赖"。
-        </div>
-
-        <h3>🧪 PoC 实验：全 catalog 软绑定（<code>poc_full_soft</code>）</h3>
-        <p style="color:#999;font-size:.85em;margin:6px 0 12px">
-          实验思路："catalog 硬绑定是所有失败的根因吗？"——全部 22 个 descriptor 的 catalog_entry 统一改为 capability card（描述 Purpose + Input/Output **数据类型**，<b>不点名</b>其他 agent，<b>不写</b> "AFTER / BEFORE / REQUIRE all"），看是否能在修好硬绑定失败的同时保住现有能力。<br/>
-          <b>GT 同时做了 2 条歧义修正</b>：<code>transcribe_02</code> / <code>trans_trans_03</code> 在 user_goal 里补了 "audio file" / "audio recording"——因为"podcast"、"interview"这种词在没有 modality 提示的情况下 LLM 确实无法判断是音频还是视频。
-        </p>
-
-        <div style="background:rgba(239,68,68,.08);border-left:3px solid #f87171;padding:12px 16px;margin:10px 0;border-radius:0 6px 6px 0;color:#ddd;font-size:.9em">
-          <b style="color:#f87171;font-size:1.05em">❌ 结果：全软绑定明显更差</b>
-          <table style="width:100%;margin-top:10px;font-size:.9em;border-collapse:collapse">
-            <tr style="border-bottom:1px solid #333">
-              <th style="text-align:left;padding:4px 8px">指标</th>
-              <th style="text-align:right;padding:4px 8px"><code>descriptor_v2</code><br/><span style="color:#888;font-size:.85em;font-weight:normal">（硬绑定，对照）</span></th>
-              <th style="text-align:right;padding:4px 8px"><code>poc_full_soft</code><br/><span style="color:#888;font-size:.85em;font-weight:normal">（全软绑定）</span></th>
-              <th style="text-align:right;padding:4px 8px">Δ</th>
-            </tr>
-            <tr><td style="padding:4px 8px">链级准确率</td><td style="text-align:right">78.7% (85/108)</td><td style="text-align:right;color:#f87171">44.4% (48/108)</td><td style="text-align:right;color:#f87171">−34.3 pp</td></tr>
-            <tr><td style="padding:4px 8px">步级准确率</td><td style="text-align:right">91.0% (772/849)</td><td style="text-align:right;color:#f87171">78.2%</td><td style="text-align:right;color:#f87171">−12.8 pp</td></tr>
-            <tr><td style="padding:4px 8px">修好的 case</td><td style="text-align:right">—</td><td style="text-align:right;color:#34d399">+6</td><td></td></tr>
-            <tr><td style="padding:4px 8px">回退的 case</td><td style="text-align:right">—</td><td style="text-align:right;color:#f87171">−43</td><td></td></tr>
-          </table>
-          <br/>
-          <b style="color:#fbbf24">修好的 6 个</b>：<code>bilingual_01</code>（翻译字幕顺序修正）、<code>complex_10</code> / <code>complex_18</code> / <code>complex_19</code> / <code>complex_20</code>（复合链重排）、<code>trans_trans_03</code>（GT + 软绑定一起生效）——符合预期，都是原先被硬绑定"REQUIRE / ALWAYS" 误导的 case。
-          <br/><br/>
-          <b style="color:#f87171">回退 43 个，分布</b>：<code>cr_*</code>/<code>intake_txt_*</code> 创作链 21 个（LLM 只跑 Music 或漏跑 trio 成员）、<code>intake_img_*</code> 参考图创作链 5 个、<code>sub_*</code> 字幕链 5 个（LLM 跳过 trio 直接 Subtitle）、<code>complex_*</code> 4 个、<code>edge_*</code> 2 个（空输入时反而跑起全流程）、<code>style_*</code> 2 个、其他 4 个。
-        </div>
-
-        <div style="background:rgba(167,139,250,.08);border-left:3px solid #a78bfa;padding:12px 16px;margin:10px 0;border-radius:0 6px 6px 0;color:#ddd;font-size:.9em">
-          <b style="color:#a78bfa">🔍 这次实验学到的</b>
-          <br/><br/>
-          <b>1. catalog 硬绑定不是"纯负债"，它是 LLM 路由的主要 scaffolding。</b> 22 个 descriptor 里那些 "AFTER StoryAgent, BEFORE KeyFrameAgent" 的文字看似违反解耦原则，但对 LLM 来说是**可操作的全局流水线地图**。完全去掉之后 LLM 没了锚点，即使我在软绑定版本里写了冗长的"Run me when..."场景描述，LLM 还是会**漏跑必要步骤**（比如 cr_* 的 trio 只跑一个）或**错跑不必要步骤**（edge_01 空输入跑全流程）。
-          <br/><br/>
-          <b>2. 硬绑定真正的病是"REQUIRE all / ALWAYS / standard chain"这种<u>绝对量词</u>，不是"点名其他 agent"本身。</b> 点名提供 scaffolding 是好的；问题出在<b>措辞里没留出口</b>——写 "REQUIRE all three" 就让 LLM 觉得缺一不可；写 "typically runs after X, but skip if user task doesn't need it" 就既有 scaffolding 又有弹性。
-          <br/><br/>
-          <b>3. 所以下一步应该是"精修硬绑定"，不是"全面软绑定"。</b> 具体：保留 "AFTER X / BEFORE Y" 的顺序线索，只把 "REQUIRE all / always / standard chain / MANDATORY" 这种绝对量词替换成 "typically / when user asks for / optional"。这个在 <code>poc_trio</code> 那版只改 4 个 trio descriptor 的实验里其实已经能部分验证——可惜那次跑挂在最后一个 case 上，JSON 没写成。
-          <br/><br/>
-          <b>4. 结论</b>：我的最初假说 "catalog 硬绑定是根因" <b>半对半错</b>——对于 complex_04 / bilingual_01 这种边界 case 是真的，对于 cr_* 这种主流链是错的。正确诊断是"绝对量词 + 无出口措辞是根因"。
-        </div>
-
-        <h3>📝 两个 descriptor 的改法样例（hard → soft）</h3>
-        <p style="color:#999;font-size:.85em;margin:6px 0 12px">
-          下面是本轮实验实际改过的两个 catalog_entry 对比。<b>本质只改了一件事</b>：把<u>无出口的绝对量词</u>（REQUIRE / ALWAYS / LAST）替换成<u>有出口的弹性措辞</u>（at least one / when / skip when）。
-        </p>
-
-        <!-- Example 1: AudioMixAgent -->
-        <div style="margin-bottom:18px">
-          <div style="color:#fbbf24;font-weight:600;margin-bottom:6px">① <code>agents/audio_mix/descriptor.py</code></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-            <div style="background:rgba(239,68,68,.06);border-left:3px solid #f87171;padding:10px;border-radius:0 4px 4px 0">
-              <div style="color:#f87171;font-size:.8em;font-weight:600;margin-bottom:6px">✗ 硬绑定（v2 当前）</div>
-<pre style="font-family:'SF Mono',monospace;font-size:.78em;color:#ddd;white-space:pre-wrap;margin:0;line-height:1.5">AudioMixAgent
-  - Input: narration_segments + music_cues +
-    ambience_beds (<b style="color:#f87171">all three</b> from the audio trio).
-  - Output: audio_mix.
-  - Purpose: Mix narration, music, and ambience.
-    <b style="color:#f87171">I REQUIRE all three</b> audio trio agents
-    (NarrationAgent, MusicAgent, AmbienceAgent)
-    to have completed. I run BEFORE SubtitleAgent
-    (if subtitles needed) and BEFORE CompositorAgent.</pre>
-            </div>
-            <div style="background:rgba(52,211,153,.06);border-left:3px solid #34d399;padding:10px;border-radius:0 4px 4px 0">
-              <div style="color:#34d399;font-size:.8em;font-weight:600;margin-bottom:6px">✓ 弹性措辞（目标形态）</div>
-<pre style="font-family:'SF Mono',monospace;font-size:.78em;color:#ddd;white-space:pre-wrap;margin:0;line-height:1.5">AudioMixAgent
-  - Input: <b style="color:#34d399">any non-empty subset</b> of
-    (narration_segments, music_cues, ambience_beds).
-  - Output: audio_mix.
-  - Purpose: Mix the available audio tracks. I require
-    <b style="color:#34d399">AT LEAST ONE</b> of Narration/Music/Ambience —
-    <b style="color:#34d399">NOT all three</b>. Match the subset to user intent:
-      • "only BGM" → run Music only, then me
-      • "fully voiced film" → run all three, then me
-      • "transcribe + subtitles" → <b style="color:#34d399">skip me entirely</b>
-    I run BEFORE Subtitle (if needed) and Compositor.</pre>
-            </div>
-          </div>
-          <div style="color:#999;font-size:.8em;margin-top:6px">
-            <b>差别</b>：保留了"点名 Narration/Music/Ambience"的 scaffolding（LLM 靠这个定位），只把 "REQUIRE all three" 换成 "at least one" 并补了 3 条 user-intent → subset 的映射示例。
-          </div>
-        </div>
-
-        <!-- Example 2: CompositorAgent -->
-        <div style="margin-bottom:18px">
-          <div style="color:#fbbf24;font-weight:600;margin-bottom:6px">② <code>agents/compositor/descriptor.py</code></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-            <div style="background:rgba(239,68,68,.06);border-left:3px solid #f87171;padding:10px;border-radius:0 4px 4px 0">
-              <div style="color:#f87171;font-size:.8em;font-weight:600;margin-bottom:6px">✗ 硬绑定（v2 当前）</div>
-<pre style="font-family:'SF Mono',monospace;font-size:.78em;color:#ddd;white-space:pre-wrap;margin:0;line-height:1.5">CompositorAgent
-  - Input: video_package (from VideoAgent) +
-    audio_mix (from AudioMixAgent) + optional
-    subtitle_tracks (from SubtitleAgent) + screenplay.
-  - Output: final_video.
-  - Purpose: Mux video + audio, burn subtitles,
-    add transitions, apply color grade. <b style="color:#f87171">I am the LAST
-    agent in the standard video-production chain,
-    typically followed by done.</b></pre>
-            </div>
-            <div style="background:rgba(52,211,153,.06);border-left:3px solid #34d399;padding:10px;border-radius:0 4px 4px 0">
-              <div style="color:#34d399;font-size:.8em;font-weight:600;margin-bottom:6px">✓ 弹性措辞（目标形态）</div>
-<pre style="font-family:'SF Mono',monospace;font-size:.78em;color:#ddd;white-space:pre-wrap;margin:0;line-height:1.5">CompositorAgent
-  - Input: a video artifact (required) + optional
-    audio mix + optional subtitle tracks + optional
-    screenplay (for transition / color-grade hints).
-  - Output: final_video.
-  - Purpose: Mux + burn subs + transitions + color grade.
-    Run me as the LAST step <b style="color:#34d399">ONLY when</b> the user wants
-    a fully composited MP4 combining video with audio
-    and/or subtitles. <b style="color:#34d399">SKIP me when</b> the deliverable is
-    itself a single-track artifact (e.g. subtitles only,
-    style-transferred video only, inpainted video only,
-    transcript only) — <b style="color:#34d399">that artifact IS the final output</b>.</pre>
-            </div>
-          </div>
-          <div style="color:#999;font-size:.8em;margin-top:6px">
-            <b>差别</b>：把 "I am the LAST agent in the standard chain" 这种<u>绝对主张</u>换成 "ONLY when ... / SKIP when ..." 带条件的触发。修好的是 <code>complex_12</code>（后期链字幕是终态，不该再 Compositor）类 case，但 <code>cr_*</code> 创作链里 LLM 仍然会跟着正常触发——因为触发条件"video + audio/subtitles 齐全"在创作链末尾天然成立。
-          </div>
-        </div>
-
-        <h3>🎯 Director 的 soft hint 应该怎么写</h3>
-        <p style="color:#999;font-size:.85em;margin:6px 0 12px">
-          当前 <code>director_agent/prompts.py</code> 的 <code>ROUTING_PIPELINE_STEP_SYSTEM</code> 只有一条全局硬规则（"<b>Intake first</b>"），一条反规则（"<b>Do NOT assume a fixed pipeline order</b>"），没有任何"典型链模板"。下面是建议新增的 <b>soft-hint 块</b>——把本来散在 22 个 descriptor 里"我在哪一段"的 scaffolding 集中搬到 director 一个地方，每个 agent 的 catalog_entry 就可以纯粹只讲 Purpose + I/O 了。
-        </p>
-
-        <div style="background:rgba(96,165,250,.06);border-left:3px solid #60a5fa;padding:12px 16px;margin:10px 0;border-radius:0 6px 6px 0;color:#ddd;font-size:.85em">
-          <div style="color:#60a5fa;font-weight:600;margin-bottom:8px">📝 增补到 <code>ROUTING_PIPELINE_STEP_SYSTEM</code> 末尾（soft hint，不是硬规则）</div>
-<pre style="font-family:'SF Mono',monospace;font-size:.8em;color:#ddd;white-space:pre-wrap;margin:0;line-height:1.6">- **Typical pipeline shapes (SOFT HINTS — deviate whenever user intent differs)**:
-
-  1) Creative film production (brief → finished film):
-     IntakeText → (BriefEnricher if images) → Story → Screenplay
-     → KeyFrame → Video
-     → <b>subset of</b> {Narration, Music, Ambience} <b>driven by user's explicit ask</b>
-     → AudioMix (if any audio above ran)
-     → (Subtitle if requested) → Compositor → done
-
-  2) Existing-video post-edit:
-     IntakeText → IntakeVideo
-     → one of {StyleTransfer | Inpaint | VideoExtend | Highlight}
-     → (Transcription+Subtitle if user wants subtitles on result)
-     → done OR Compositor (only if final combines multiple tracks)
-
-  3) Audio workflow (no video creation):
-     IntakeText → IntakeAudio → Transcription
-     → (Translation if user wants translated transcript / foreign subs)
-     → (Subtitle if user wants subtitle file output)
-     → done
-
-  4) Voice-clone creative (user-supplied voice → full film):
-     IntakeText → IntakeAudio (voice sample) → VoiceClone
-     → <i>replaces</i> generic Narration in shape (1) above
-
-  5) Transcribe-translate-subtitle on existing video:
-     IntakeText → IntakeVideo → Transcription → Translation → Subtitle → done
-
-- These shapes are **maps, not contracts**. When the user asks for something
-  outside these shapes (e.g. "只要 BGM 合成", "bilingual subtitles"),
-  compose the minimum subset of agents that satisfies user intent.
-  Prefer doing LESS than the template when the user's ask is narrower.</pre>
-        </div>
-
-        <p style="color:#bbb;font-size:.85em;margin:10px 0 4px">
-          <b>这么写的三点考虑</b>：
-        </p>
-        <ul style="color:#bbb;font-size:.85em;margin:0 0 0 20px;line-height:1.7">
-          <li><b>Maps, not contracts</b> —— 明确标注 "SOFT HINTS — deviate whenever user intent differs"，从全局一次性给出 LLM "通常链是这样" 的锚点，又告诉它可以偏离。</li>
-          <li><b>把出口写进模板本身</b> —— shape (1) 的 trio 那一行写 "<b>subset of</b> {...} <b>driven by user's explicit ask</b>"，同一行里同时给出 scaffolding 和弹性。</li>
-          <li><b>最后一行 "Prefer doing LESS than the template"</b> —— 专门对付 v2 硬绑定里"倾向补齐 standard chain" 的惯性。</li>
-        </ul>
-
-        <p style="color:#999;font-size:.8em;margin-top:12px">
-          <b>更新</b>：上面这个 soft-hint 块<b>已经真的加到 <code>director_agent/prompts.py</code> 的 <code>ROUTING_PIPELINE_STEP_SYSTEM</code> 末尾了</b>，并在当前"全软绑定 catalog"状态下跑了 <code>poc_softhint</code> eval——结果见下。
-        </p>
-
-        <h3>🔬 实验二：全软 catalog + Director soft-hint（<code>poc_softhint</code>）</h3>
-        <p style="color:#999;font-size:.85em;margin:6px 0 12px">
-          <b>核心假说</b>：scaffolding 可以<b>从 22 个分散的 catalog 搬到 1 个集中的 director prompt</b>——如果成立，soft-hint 块应该能把 <code>poc_full_soft</code> 的 44.4% 拉回接近 baseline 的 78.7%。
-        </p>
-
-        <div style="background:rgba(239,68,68,.08);border-left:3px solid #f87171;padding:12px 16px;margin:10px 0;border-radius:0 6px 6px 0;color:#ddd;font-size:.9em">
-          <b style="color:#f87171;font-size:1.05em">❌ 结果：soft-hint 完全没救回，scaffolding 不可搬</b>
-          <table style="width:100%;margin-top:10px;font-size:.9em;border-collapse:collapse">
-            <tr style="border-bottom:1px solid #333">
-              <th style="text-align:left;padding:4px 8px">指标</th>
-              <th style="text-align:right;padding:4px 8px"><code>descriptor_v2</code><br/><span style="color:#888;font-size:.85em;font-weight:normal">硬 catalog · 无 softhint</span></th>
-              <th style="text-align:right;padding:4px 8px"><code>poc_full_soft</code><br/><span style="color:#888;font-size:.85em;font-weight:normal">软 catalog · 无 softhint</span></th>
-              <th style="text-align:right;padding:4px 8px"><code>poc_softhint</code><br/><span style="color:#888;font-size:.85em;font-weight:normal">软 catalog · <b>有</b> softhint</span></th>
-            </tr>
-            <tr><td style="padding:4px 8px">链级准确率</td><td style="text-align:right">78.7%</td><td style="text-align:right;color:#f87171">44.4%</td><td style="text-align:right;color:#f87171">43.5% <span style="font-size:.85em;color:#888">（−0.9 vs full_soft · −35.2 vs baseline）</span></td></tr>
-            <tr><td style="padding:4px 8px">步级准确率</td><td style="text-align:right">91.0%</td><td style="text-align:right;color:#f87171">78.2%</td><td style="text-align:right;color:#f87171">75.6% <span style="font-size:.85em;color:#888">（−2.6 vs full_soft）</span></td></tr>
-            <tr><td style="padding:4px 8px">perfect chains</td><td style="text-align:right">85/108</td><td style="text-align:right">48/108</td><td style="text-align:right">47/108</td></tr>
-            <tr><td style="padding:4px 8px">耗时</td><td style="text-align:right">288s</td><td style="text-align:right">187s</td><td style="text-align:right">157s</td></tr>
-          </table>
-          <br/>
-          <b style="color:#fbbf24">vs <code>poc_full_soft</code> 的 diff</b>：<span style="color:#34d399">+5 fixed</span>（<code>edge_05</code>、<code>intake_txt_03</code>、<code>style_02</code>、<code>style_03</code>、<code>transcribe_02</code>）、<span style="color:#f87171">−6 regressed</span>（<code>bilingual_01</code>、<code>complex_10/18/19</code>、<code>cr_05/09</code>）、<b>净 −1 chain</b>。本质是在同量级失败之间互相 shuffle，没有 scaffolding 替代效应。
-        </div>
-
-        <div style="background:rgba(167,139,250,.08);border-left:3px solid #a78bfa;padding:12px 16px;margin:10px 0;border-radius:0 6px 6px 0;color:#ddd;font-size:.9em">
-          <b style="color:#a78bfa">🔍 从两次实验综合得出的最终诊断</b>
-          <br/><br/>
-          <b>1. Scaffolding 不可搬</b>——把"典型链模板"从分散的 catalog 搬到集中的 director prompt，LLM 几乎没有用上。可能的机制：
-          <ul style="margin:4px 0 8px 18px;line-height:1.6">
-            <li><b>局部性效应（locality）</b>：每次路由决策时，LLM 更信任"我手上正在考虑这个 agent，它自己说自己在 X 之后跑"，而不是"我之前看到 system prompt 里有一张模板图"。</li>
-            <li><b>注意力预算</b>：system prompt 里的 pipeline templates 块要在每次 routing 调用里和 user goal、global_memory、23 个 agent 的 catalog 一起竞争——容易被稀释。而每个 agent 自己 catalog 里的 "AFTER X / BEFORE Y" 在 "当前候选 agent 是 X" 时会被优先关注。</li>
-            <li><b>Gemini 2.5 Flash 特性</b>：可能本身对中长 system prompt 里的抽象规则不敏感，对具体 agent 描述里的具体线索更敏感——这是经验观察，不是定论。</li>
-          </ul>
-          <b>2. 正确方向不是 "soft catalog + soft hint"，是 "精修硬 catalog"</b>——保留 "AFTER X / BEFORE Y" 的点名 scaffolding（这是有价值的），<b>只</b>替换绝对量词（"REQUIRE all / ALWAYS / LAST in standard chain / MANDATORY"）成弹性措辞（"at least one / typically / skip when ..."）。这个方案即<b>下一步该跑的 <code>poc_precision</code></b>，预期大概率能拿到 <code>complex_04</code> / <code>bilingual_01</code> 类修复 <b>同时</b>保住 <code>cr_*</code> 主流链。
-          <br/><br/>
-          <b>3. 对架构决策的影响</b>——根 CLAUDE.md 里 "Sub-agent 解耦：每个 agent 自包含...互不依赖" 这条原则对 <b>code 层</b>（schema / evaluator / materializer 互不依赖）依然完全正确，但对 <b>catalog 层</b>（给 LLM 的自然语言描述）需要**降级为"尽量解耦，但允许点名邻居 agent 提供 scaffolding"</b>——因为实验证明这是 LLM 路由的必要信息。纯粹的 capability card 形态不可行。
-          <br/><br/>
-          <b>4. 两次实验合起来告诉我们的</b>：catalog 里的 PascalCase 点名不是架构问题，是 prompt-engineering 必需品。真正要治的只有一类措辞——<u>无出口的绝对量词</u>。
-        </div>
       </div>
+
 
       <div class="eval-card">
         <h2>选择运行 <span id="runInfo" style="color:#999;font-size:.85em;margin-left:12px;font-weight:normal"></span></h2>
@@ -466,7 +118,13 @@
       </div>
 
       <div class="eval-card">
-        <h2>Top 失败模式</h2>
+        <h2>失败模式</h2>
+        <p style="color:#999;font-size:.85em;margin:0 0 12px">
+          每条用例的 expected_chain 是一个有序序列。把每个失败位置归到三类：
+          <b style="color:#fbbf24">漏跑</b> = LLM 提前停了（这一格本应有 agent 但 plan 没产）；
+          <b style="color:#fbbf24">多跑</b> = LLM 越界继续（plan 走过了 expected 的终止点）；
+          <b style="color:#fbbf24">错位</b> = LLM 在这一格选了别的 agent。每个 bucket 内按出现频次排序，括号里给样本 case。
+        </p>
         <div id="failurePatterns"></div>
       </div>
 
@@ -504,24 +162,17 @@
   function bar(pct) { return `<div class="pct-bg"><div class="pct-fill ${pctClass(pct)}" style="width:${Math.max(1,pct)}%"></div></div>`; }
   function vClass(v) { return v >= 80 ? 'green' : v < 40 ? 'red' : ''; }
 
+  // 10 active categories (post-2026-04 cleanup; trans_trans / transcribe / analysis / inpaint / voice 已从 eval 移除)
   const CATEGORY_DESC = {
-    'cr': '纯创作：各种主题/风格/语言的视频制作',
-    'intake_txt': '带产品/品牌信息：用户提供具体素材信息',
-    'intake_img': '带参考图：用户提供图片',
-    'sub': '带字幕：单语字幕',
-    'bilingual': '双语字幕：中英/中韩/中日',
+    'cr': '纯创作：brief → finished film',
+    'intake_img': '带参考图：用户上传图片作为主角/背景/舞台',
+    'sub': '生成式字幕：新片自带单语字幕',
+    'sub_vid': '提取式字幕：现有视频转录后烧字幕',
+    'bilingual': '双语字幕：中英/中日/中西/中韩',
     'style': '风格迁移：各种视觉风格',
-    'inpaint': '修复/移除：去水印/路人/替换',
-    'highlight': '精彩集锦：各种场景',
-    'extend': '视频延长',
-    'analysis': '视频内容分析',
-    'sub_vid': '现有视频配字幕（含翻译字幕）',
-    'transcribe': '音频转录',
-    'translate': '文本翻译',
-    'voice': '声音克隆',
-    'trans_trans': '转录 + 翻译',
-    'trans_trans_sub': '转录 → 翻译 → 字幕',
-    'complex': '复合任务：多步骤组合',
+    'extend': '视频延长：续写/补帧/慢镜头',
+    'highlight': '精彩集锦：narrative/kinetic 选段',
+    'complex': '复合任务：多 sub-agent 链组合',
     'edge': '边缘 case：空/乱码/无关输入',
   };
 
@@ -572,16 +223,53 @@
       return `<tr><td>Step ${p}</td><td>${pos[p].c} / ${pos[p].t}</td><td>${pct.toFixed(1)}%</td><td class="bar-cell">${bar(pct)}</td></tr>`;
     }).join('');
 
-    const patterns = {};
-    for (const r of results) for (const s of r.steps) {
-      if (s.correct) continue;
-      const key = `${s.actual} 被选，但应该是 ${s.expected.join(' / ')}`;
-      patterns[key] = (patterns[key]||0)+1;
+    // Bucket failures into 3 types and track sample case names per pattern.
+    // missing  = actual is "<missing>"     → LLM stopped before producing this slot
+    // extra    = expected is ["<none>"]    → LLM kept going past expected end
+    // sub      = both real but mismatch    → LLM picked a different agent for this slot
+    const missing = {};   // expected_agent -> {n, cases:[]}
+    const extra   = {};   // actual_agent   -> {n, cases:[]}
+    const sub     = {};   // "actual → expected"   -> {n, cases:[]}
+    function bumpMap(m, k, caseName) {
+      if (!m[k]) m[k] = { n: 0, cases: [] };
+      m[k].n++;
+      if (m[k].cases.length < 5) m[k].cases.push(caseName);
     }
-    const patternRows = Object.entries(patterns).sort((a,b)=>b[1]-a[1]).slice(0,8);
-    document.getElementById('failurePatterns').innerHTML = patternRows.length
-      ? patternRows.map(([k,n])=>`<div class="finding"><b>${n}×</b> &nbsp; ${k}</div>`).join('')
-      : '<p style="color:#34d399">无失败</p>';
+    for (const r of results) {
+      for (const s of (r.steps || [])) {
+        if (s.correct) continue;
+        const actual = s.actual;
+        const expected = Array.isArray(s.expected) ? s.expected : [];
+        if (actual === '<missing>') {
+          for (const e of expected) bumpMap(missing, e, r.name);
+        } else if (expected.length === 1 && expected[0] === '<none>') {
+          bumpMap(extra, actual, r.name);
+        } else {
+          bumpMap(sub, `${actual} → ${expected.join(' / ')}`, r.name);
+        }
+      }
+    }
+    function renderBucket(title, color, totalLabel, m, formatRow) {
+      const rows = Object.entries(m).sort((a, b) => b[1].n - a[1].n);
+      const total = rows.reduce((acc, [, v]) => acc + v.n, 0);
+      if (!rows.length) return '';
+      const items = rows.slice(0, 10).map(([k, v]) => {
+        const sample = v.cases.length
+          ? `<span style="color:#888;font-size:.85em">&nbsp;·&nbsp;${v.cases.join(', ')}${v.n > v.cases.length ? ', …' : ''}</span>`
+          : '';
+        return `<div class="finding" style="border-left-color:${color}"><b style="color:${color};min-width:30px;display:inline-block">${v.n}×</b> &nbsp; ${formatRow(k)}${sample}</div>`;
+      }).join('');
+      return `<h3 style="color:${color};margin:14px 0 6px">${title} <span style="color:#888;font-size:.85em;font-weight:normal">(${total} 次 ${totalLabel})</span></h3>${items}`;
+    }
+    const html = [
+      renderBucket('漏跑（LLM 停早了）', '#f87171', '位置漏跑', missing,
+        k => `应该出现 <b>${k}</b>`),
+      renderBucket('多跑（LLM 越界继续）', '#fbbf24', '位置多跑', extra,
+        k => `多调了 <b>${k}</b>，eval 期望此处已结束`),
+      renderBucket('错位（LLM 在该格选了别的 agent）', '#a78bfa', '位置错位', sub,
+        k => k.replace(' → ', ' &nbsp;→&nbsp; ')),
+    ].filter(Boolean).join('');
+    document.getElementById('failurePatterns').innerHTML = html || '<p style="color:#34d399">无失败</p>';
   }
 
   async function evalMain() {

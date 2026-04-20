@@ -17,7 +17,6 @@ class SubtitleCue(BaseModel):
     cue_id: str = ""
     start_time: str = Field("", description="Start time in SRT format HH:MM:SS,mmm")
     end_time: str = Field("", description="End time in SRT format HH:MM:SS,mmm")
-    speaker: str = ""
     text: str = Field("", description="Subtitle text for this cue")
 
 

@@ -31,8 +31,7 @@ COMPOSITOR_OUTPUT_TEMPLATE = """{
       "color_grade": {
         "brightness": 0.0,
         "contrast": 0.05,
-        "saturation": 0.0,
-        "tone": "cinematic warm"
+        "saturation": 0.0
       },
       "subtitle_style": {
         "font_size": 24,
@@ -42,15 +41,7 @@ COMPOSITOR_OUTPUT_TEMPLATE = """{
         "burn_in": true
       },
       "output_resolution": "1920x1080",
-      "output_fps": 30,
-      "output_format": "mp4"
-    },
-    "delivery_asset": {
-      "asset_id": "compositor_final",
-      "uri": "placeholder",
-      "format": "mp4",
-      "resolution": "1920x1080",
-      "duration_seconds": 0
+      "output_fps": 30
     }
   }
 }"""
@@ -73,12 +64,42 @@ class CompositorAgent(BaseAgent[CompositorAgentInput, CompositorAgentOutput]):
             "You are CompositorAgent: plan the final video composition by "
             "reading the screenplay, video package, audio package, and "
             "subtitle tracks.\n\n"
+            "=== WHEN TO REJECT UPSTREAM INPUT ===\n"
+            "Use the shared input_rejection escape hatch (see the UPSTREAM "
+            "INPUT REJECTION block above) ONLY if the inputs make "
+            "composition impossible. Concretely, reject when:\n"
+            "  * video_json_text is empty AND video_file_path is empty — "
+            "I have no video to composite. The video is the mandatory "
+            "input; without it there is no deliverable to produce. "
+            "(Audio, subtitles, and screenplay are optional augmentations "
+            "of the video.)\n"
+            "  * The video package contains zero shot_segments / clips / "
+            "video assets — there is no actual video content to compose, "
+            "even if a JSON shell is present.\n"
+            "When you reject, populate the rejection fields like this:\n"
+            "  * reason: e.g. 'no video package or video file provided — "
+            "compositor needs a base video to work on'.\n"
+            "  * missing_labels: ['video_package'] (the audio_package, "
+            "subtitle_tracks, and screenplay labels are optional).\n"
+            "  * offending_fields: e.g. ['content.scenes[].shot_segments', "
+            "'video_file_path'].\n"
+            "  * upstream_agent_hint: 'VideoAgent' (the producer of the "
+            "video package).\n"
+            "If only audio or only subtitles are missing — DO NOT reject; "
+            "compose with whatever tracks are present (a video without "
+            "audio or without subtitles is a perfectly valid deliverable).\n"
+            "=== END WHEN TO REJECT UPSTREAM INPUT ===\n\n"
             "=== INPUT FORMAT ===\n"
             "You will receive raw JSON text blobs for:\n"
             "- Screenplay (scene/shot structure)\n"
-            "- Video package (shot clips and timing)\n"
-            "- Audio package (narration, music, ambience)\n"
-            "- Subtitle tracks (timed cues)\n\n"
+            "- Video package (shot clips and timing — clips carry Kling-"
+            "baked dialogue + foley in their own audio track)\n"
+            "- Audio package (final film-wide audio mix: video track "
+            "amix'd with optional global music + ambience)\n"
+            "- Zero or more subtitle artifacts (one per language — "
+            "bilingual / multilingual flows pass multiple; the "
+            "materializer stacks them into the final video, so your "
+            "subtitle_style applies globally to every track)\n\n"
             "=== COMPOSITION PLANNING RULES ===\n"
             "1. TRANSITIONS: For each pair of consecutive shots, decide the "
             "transition type. Use 'cut' for most shot-to-shot transitions "
@@ -90,9 +111,7 @@ class CompositorAgent(BaseAgent[CompositorAgentInput, CompositorAgentOutput]):
             "based on the video resolution. White with black outline is the "
             "default. Set burn_in=true for final delivery.\n"
             "4. RESOLUTION: Match the source video resolution. Default "
-            "1920x1080.\n"
-            "5. delivery_asset: asset_id is always 'compositor_final', "
-            "uri is always 'placeholder'.\n\n"
+            "1920x1080.\n\n"
             "=== OUTPUT FORMAT ===\n"
             "JSON only; no markdown; match the user-message template "
             "exactly.\n\n"
@@ -126,11 +145,13 @@ class CompositorAgent(BaseAgent[CompositorAgentInput, CompositorAgentOutput]):
                 "=== END AUDIO PACKAGE ===\n\n"
             )
 
-        if input_data.subtitle_json_text:
+        for i, sub_text in enumerate(input_data.subtitle_json_texts, start=1):
+            if not sub_text:
+                continue
             parts.append(
-                "=== SUBTITLE TRACKS ===\n"
-                f"{input_data.subtitle_json_text}\n"
-                "=== END SUBTITLE TRACKS ===\n\n"
+                f"=== SUBTITLE ARTIFACT #{i} ===\n"
+                f"{sub_text}\n"
+                f"=== END SUBTITLE ARTIFACT #{i} ===\n\n"
             )
 
         parts.append(

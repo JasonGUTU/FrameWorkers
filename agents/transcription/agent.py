@@ -29,9 +29,7 @@ TRANSCRIPTION_OUTPUT_TEMPLATE = """{
         "segment_id": "seg_001",
         "start_time": 0.0,
         "end_time": 3.5,
-        "speaker": "<speaker label or Speaker_1>",
-        "text": "<transcribed text>",
-        "confidence": 0.95
+        "text": "<transcribed text>"
       }
     ],
     "full_text": "<complete transcript as continuous text>"
@@ -55,6 +53,25 @@ class TranscriptionAgent(BaseAgent[TranscriptionAgentInput, TranscriptionAgentOu
         return (
             "You are TranscriptionAgent: clean up and structure raw "
             "speech-to-text output into a polished transcript.\n\n"
+            "=== WHEN TO REJECT UPSTREAM INPUT ===\n"
+            "Use the shared input_rejection escape hatch (see the UPSTREAM "
+            "INPUT REJECTION block above) ONLY if the source media is "
+            "unusable. Concretely, reject when:\n"
+            "  * source_media_path is empty / whitespace-only — there is "
+            "no file to transcribe.\n"
+            "When you reject, populate the rejection fields like this:\n"
+            "  * reason: e.g. 'source_media_path is empty — no media "
+            "file to transcribe'.\n"
+            "  * missing_labels: ['source_media'] (my only input label).\n"
+            "  * offending_fields: ['source_media_path'].\n"
+            "  * upstream_agent_hint: 'IntakeVideoAgent' (the intake that "
+            "should have ingested the user's media upload).\n"
+            "If the path looks unusual but is non-empty — DO NOT reject; "
+            "the materializer (which actually invokes the ASR service) "
+            "will surface a real failure if the file does not exist or is "
+            "not decodable. Speech-light or noisy media is not a reason "
+            "to reject.\n"
+            "=== END WHEN TO REJECT UPSTREAM INPUT ===\n\n"
             "=== INPUT FORMAT ===\n"
             "You will receive raw transcription segments from an ASR "
             "(Automatic Speech Recognition) system. Each segment has "
@@ -63,16 +80,13 @@ class TranscriptionAgent(BaseAgent[TranscriptionAgentInput, TranscriptionAgentOu
             "1. Clean up transcription artifacts: fix obvious typos, "
             "normalize punctuation, remove filler words (um, uh) unless "
             "they are meaningful.\n"
-            "2. Infer speaker labels where possible from context (e.g. "
-            "different speaking patterns, explicit introductions). Use "
-            "Speaker_1, Speaker_2, etc. when identity is unknown.\n"
-            "3. Merge very short segments from the same speaker that are "
-            "clearly part of the same sentence.\n"
-            "4. segment_id format: seg_NNN (3-digit zero-padded, globally "
+            "2. Merge very short adjacent segments that are clearly part "
+            "of the same sentence.\n"
+            "3. segment_id format: seg_NNN (3-digit zero-padded, globally "
             "sequential starting at seg_001).\n"
-            "5. Detect the language from the content.\n"
-            "6. full_text: concatenate all segment texts in order, separated "
-            "by spaces. Include speaker labels as [Speaker_1]: prefix.\n\n"
+            "4. Detect the language from the content.\n"
+            "5. full_text: concatenate all segment texts in order, separated "
+            "by spaces.\n\n"
             "=== OUTPUT FORMAT ===\n"
             "JSON only; no markdown; match the user-message template "
             "exactly.\n\n"

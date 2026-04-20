@@ -17,9 +17,7 @@ class TranscriptSegment(BaseModel):
     segment_id: str = ""
     start_time: float = Field(0.0, description="Start time in seconds")
     end_time: float = Field(0.0, description="End time in seconds")
-    speaker: str = Field("", description="Detected or inferred speaker label")
     text: str = Field("", description="Transcribed text for this segment")
-    confidence: float = Field(0.0, ge=0.0, le=1.0, description="Transcription confidence")
 
 
 # ---------------------------------------------------------------------------

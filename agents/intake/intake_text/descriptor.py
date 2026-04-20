@@ -1,15 +1,15 @@
-"""IntakeTextAgent descriptor — self-describing manifest for the registry."""
+"""IntakeTextAgent descriptor — built from a single AgentSpec."""
 
 from __future__ import annotations
 
 from pydantic import BaseModel
 
 from ...common_schema import ResolvedArtifactEntry
-from ...descriptor import SubAgentDescriptor
+from ...descriptor import AgentSpec, InputLabelSpec, SubAgentDescriptor
 from .agent import IntakeTextAgent
+from .evaluator import IntakeTextEvaluator
 from .labels import INPUT_LABEL_RAW_TEXT_UPLOAD
 from .schema import IntakeTextInput
-from .evaluator import IntakeTextEvaluator
 
 
 def build_input(
@@ -23,52 +23,66 @@ def build_input(
     return IntakeTextInput(raw_text_path=entry.path)
 
 
-def build_captions(agent_id: str, output_dict: dict) -> dict:
-    content = output_dict.get("content", {})
-    text = content.get("text", "")
-    char_count = len(text)
-    if not text:
-        caption = "Empty user text upload — no usable content."
-    else:
-        caption = (
-            f"User-submitted creative brief ({char_count} chars). "
-            "Pipeline entry point — consumed by story and screenplay agents."
-        )
+def build_captions(agent_id: str, _output_dict: dict) -> dict:
+    # Pure role/载体 caption — content (the user's raw text + optional
+    # LLM summary) lives only in the JSON snapshot payload; consumers
+    # read it via entry.payload, not caption.
+    # See MEMORY:feedback_caption_role_not_content.
     return {
-        agent_id: {"caption": caption, "scope": "global"},
+        agent_id: {
+            "caption": (
+                "Structured metadata document (JSON) for a user-submitted "
+                "text brief. Payload carries the raw text plus an optional "
+                "LLM summary for long uploads. Pipeline entry point — "
+                "consumed by story and screenplay agents."
+            ),
+            "scope": "global",
+        },
     }
 
 
-CATALOG_ENTRY = (
-    "IntakeTextAgent\n"
-    "  - Input: ANY user-provided text (creative brief, instruction, product/brand info, "
-    "script, chat message content).\n"
-    "  - Output: a caption-rich text artifact suitable for downstream agents to find\n"
-    "    via their semantic-typed labels (e.g. [creative_brief]).\n"
-    "  - Purpose: MANDATORY first step for every pipeline run. The user's text input "
-    "(including chat instructions) must always be ingested here before any creative, "
-    "post-production, or analysis agent can run. Even if the user also provides media "
-    "(video/audio/image), run IntakeTextAgent BEFORE the corresponding Intake*Agent.\n"
-    "  - When to skip: ONLY when the user's input is genuinely empty (empty string). "
-    "For greetings, nonsense, unrelated questions — still run IntakeTextAgent to ingest "
-    "the message, then the Director can emit done afterwards based on the ingested content."
+SPEC = AgentSpec(
+    agent_id="IntakeTextAgent",
+    inputs=[
+        InputLabelSpec(
+            name=INPUT_LABEL_RAW_TEXT_UPLOAD,
+            cardinality="single",
+            description=(
+                "A raw user-uploaded text artifact whose caption starts "
+                "with 'Raw user upload (mime=text/plain)' and has scope "
+                "'raw_pending'. Pick the single most recent such pending "
+                "text upload."
+            ),
+        ),
+    ],
+    output_description=(
+        "a caption-rich text artifact suitable for downstream agents to "
+        "find via their semantic-typed labels (e.g. [creative_brief])."
+    ),
+    purpose_and_routing=(
+        """Pipeline root — run FIRST on any user request containing text. Produces a caption-rich text artifact (creative brief) from the raw user upload. Trigger: any user message with text content (essentially every user turn)."""
+    ),
+    input_preamble=(
+        "I convert raw user-uploaded text into a caption-rich workspace "
+        "artifact. I am invoked once per upload, before any content agent "
+        "runs."
+    ),
+    # Text intake does NOT promote: IntakeTextAgent's JSON snapshot is
+    # self-contained (payload carries {text, summary}), so downstream agents
+    # consume the snapshot's payload, never the raw .txt. Promoting would
+    # surface a payload=None .txt that competes with the JSON for
+    # content-semantic labels like [creative_brief] and causes resolver
+    # ambiguity. Contrast with image/video intake, whose JSON only carries a
+    # URI pointer to the binary — there promote IS required so downstream
+    # multimodal/ffmpeg consumers can discover the raw bytes.
+    promotes_consumed_inputs_to_global=False,
 )
 
-DESCRIPTOR = SubAgentDescriptor(
-    agent_id="IntakeTextAgent",
-    catalog_entry=CATALOG_ENTRY,
+
+DESCRIPTOR = SubAgentDescriptor.from_spec(
+    SPEC,
     agent_factory=lambda llm: IntakeTextAgent(llm_client=llm),
     evaluator_factory=IntakeTextEvaluator,
     build_input=build_input,
     build_captions=build_captions,
-    materializer_factory=None,
-    input_needs_description=(
-        "I convert raw user-uploaded text into a caption-rich workspace "
-        "artifact. I am invoked once per upload, before any content "
-        "agent runs.\n\n"
-        f"[{INPUT_LABEL_RAW_TEXT_UPLOAD}] (single)\n"
-        "A raw user-uploaded text artifact whose caption starts with "
-        "'Raw user upload (mime=text/plain)' and has scope 'raw_pending'. "
-        "Pick the single most recent such pending text upload."
-    ),
 )

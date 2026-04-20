@@ -1,0 +1,338 @@
+[
+  {
+    "goal": "Extend this English-spoken CEO-romance boardroom scene by 10 seconds to include the reveal, then add English subtitles",
+    "rationale": "User uploaded an English-spoken CEO-romance boardroom clip, asks for a 10s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the reveal beat for 10s, TranscriptionAgent transcribes the extended clip's dialogue, SubtitleAgent generates English subtitles, CompositorAgent burns them onto the extended clip as final. No TranslationAgent because source and subtitle languages both English. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s reveal extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken CEO-romance boardroom clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s covering the reveal beat"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's dialogue audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken suspense interrogation by 10 seconds to the confession, then add English subtitles",
+    "rationale": "User uploaded an English-spoken suspense interrogation clip and asks for a 10s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the confession beat for 10s, TranscriptionAgent transcribes the extended clip, SubtitleAgent generates English subtitles, CompositorAgent burns them onto the clip. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s confession extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken suspense interrogation clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s to the suspect's emotional confession"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken martial-arts master-disciple farewell by 10 seconds to the master's last words, then add English subtitles",
+    "rationale": "User uploaded an English-spoken martial-arts farewell clip and asks for a 10s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the master's-last-words beat for 10s, TranscriptionAgent transcribes the extended clip, SubtitleAgent generates English subtitles, CompositorAgent burns them onto the clip. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s master's-last-words extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken martial-arts master-disciple farewell clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s to the master's last words"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's dialogue audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken CEO-romance rainy-night confession by 12 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken CEO-romance rainy-night confession clip and asks for a 12s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the confession for 12s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12s rainy-night-confession extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken CEO-romance rainy-night confession clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 12s continuing the rainy-night confession"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's dialogue audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken courtroom-drama closing argument by 12 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken courtroom-drama closing argument clip and asks for a 12s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the closing argument for 12s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12s closing-argument extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken courtroom-drama closing argument clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 12s continuing the closing argument"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken political-drama resignation speech by 10 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken political-drama resignation speech clip and asks for a 10s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the speech for 10s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s resignation-speech extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken political-drama resignation speech clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s continuing the resignation speech"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken medical-drama surgery-briefing by 10 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken medical-drama surgery-briefing clip and asks for a 10s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the briefing for 10s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s surgery-briefing extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken medical-drama surgery-briefing clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s continuing the surgery briefing"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken rebirth-revenge courtroom reveal by 10 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken rebirth-revenge courtroom clip and asks for a 10s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the reveal for 10s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s courtroom-reveal extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken rebirth-revenge courtroom clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s continuing the courtroom reveal"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken campus-drama graduation speech by 8 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken campus-drama graduation speech clip and asks for an 8s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the speech for 8s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 8s graduation-speech extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken campus-drama graduation speech clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 8s continuing the graduation speech"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken sci-fi captain's log recording by 12 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken sci-fi captain's log clip and asks for a 12s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the log for 12s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12s captain's-log extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken sci-fi captain's log clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 12s continuing the captain's log recording"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken detective interrogation by 10 seconds with the witness's testimony, then add English subtitles",
+    "rationale": "User uploaded an English-spoken detective interrogation clip and asks for a 10s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the witness's testimony for 10s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s witness-testimony extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken detective interrogation clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s with the witness's testimony"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's dialogue audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken spy-thriller debrief by 10 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken spy-thriller debrief clip and asks for a 10s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the debrief for 10s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s debrief extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken spy-thriller debrief clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s continuing the spy's debrief"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken superhero origin-story monologue by 12 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken superhero origin-story monologue and asks for a 12s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the monologue for 12s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12s origin-monologue extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken superhero origin-story monologue clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 12s continuing the origin monologue"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken heist-caper plan-briefing by 10 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken heist-caper plan-briefing clip and asks for a 10s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the plan briefing for 10s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s plan-briefing extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken heist-caper plan-briefing clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s continuing the heist plan briefing"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken war-drama commander speech by 12 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken war-drama commander speech clip and asks for a 12s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the speech for 12s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12s commander-speech extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken war-drama commander speech clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 12s continuing the commander's speech"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken romance-drama rooftop-confession by 10 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken romance-drama rooftop-confession clip and asks for a 10s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the confession for 10s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s rooftop-confession extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken romance-drama rooftop-confession clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s continuing the rooftop confession"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken horror-drama séance by 10 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken horror-drama séance clip and asks for a 10s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the séance for 10s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s séance extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken horror-drama séance clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s continuing the séance and its incantations"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken sports-drama locker-room pep talk by 8 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken sports-drama locker-room pep talk clip and asks for an 8s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the pep talk for 8s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 8s pep-talk extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken sports-drama locker-room pep talk clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 8s continuing the locker-room pep talk"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken cyberpunk hacker-monologue by 10 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken cyberpunk hacker-monologue clip and asks for a 10s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the monologue for 10s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s hacker-monologue extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken cyberpunk hacker-monologue clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s continuing the hacker's monologue"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken tech-startup pitch-meeting by 10 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken tech-startup pitch-meeting clip and asks for a 10s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the pitch for 10s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s pitch-meeting extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken tech-startup pitch-meeting clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s continuing the pitch"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken fantasy kingdom-council debate by 12 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken fantasy kingdom-council debate clip and asks for a 12s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the debate for 12s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12s kingdom-council debate extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken fantasy kingdom-council debate clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 12s continuing the council debate"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken mobster sit-down scene by 10 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken mobster sit-down scene clip and asks for a 10s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the sit-down for 10s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s sit-down extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken mobster sit-down scene clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s continuing the sit-down conversation"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken idol-audition drama audition-scene by 10 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken idol-audition drama audition clip and asks for a 10s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the audition for 10s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s audition extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken idol-audition drama audition clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s continuing the audition performance"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken coming-of-age family-dinner scene by 8 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken coming-of-age family-dinner scene clip and asks for an 8s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the family-dinner conversation for 8s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 8s family-dinner extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken coming-of-age family-dinner scene clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 8s continuing the family-dinner conversation"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken CEO-romance ultimatum speech by 10 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken CEO-romance ultimatum speech clip and asks for a 10s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the ultimatum for 10s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s ultimatum-speech extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken CEO-romance ultimatum speech clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s continuing the ultimatum"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken martial-arts sect-leader speech by 10 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken martial-arts sect-leader speech clip and asks for a 10s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the speech for 10s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s sect-leader speech extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken martial-arts sect-leader speech clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s continuing the sect-leader's speech"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken dystopian-resistance meeting by 12 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken dystopian-resistance meeting clip and asks for a 12s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the meeting for 12s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12s resistance-meeting extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken dystopian-resistance meeting clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 12s continuing the resistance meeting"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  },
+  {
+    "goal": "Extend this English-spoken detective noir voiceover monologue by 10 seconds, then add English subtitles",
+    "rationale": "User uploaded an English-spoken detective noir voiceover monologue clip and asks for a 10s extension AND English subtitles. Plan: IntakeText captures the brief, IntakeVideo registers the source, VideoExtendAgent continues the voiceover monologue for 10s, TranscriptionAgent transcribes, SubtitleAgent generates, CompositorAgent burns. No TranslationAgent because source and subtitle languages match. No MusicAgent because no score was requested. No VideoAnalysisAgent because no analysis is requested. No StyleTransferAgent because no look change was asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10s noir-voiceover extension plus English-subtitle brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded English-spoken detective noir voiceover monologue clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend 10s continuing the noir voiceover monologue"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the extended clip's audio with timing"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate English subtitles from the transcript"},
+      {"agent_id": "CompositorAgent", "intent": "Burn the English subtitles onto the extended clip as the final render"}
+    ]
+  }
+]

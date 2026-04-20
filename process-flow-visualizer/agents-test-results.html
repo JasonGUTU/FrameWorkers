@@ -163,8 +163,8 @@
             <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>CompositorAgent</code></td><td>LLM + FFmpeg</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（合成计划）</td><td>本地 FFmpeg：mux + <code>subtitles</code> filter 烧录 SRT + <code>eq</code> 调色</td></tr>
             <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>TranslationAgent</code></td><td>Pure LLM</td><td>CF AI Gateway → <code>gemini-2.5-flash</code></td><td>—</td></tr>
             <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>TranscriptionAgent</code></td><td>LLM + STT</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（后处理 / 语言检测）</td><td><code>FalTranscriptionService</code> → <code>fal-ai/whisper</code>（<code>FAL_WHISPER_MODEL</code>）</td></tr>
-            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>StyleTransferAgent</code></td><td>LLM + Video Edit</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（style prompt 精修）</td><td><code>FalVideoEditService</code> → <code>fal-ai/vace/style-transfer</code>（<code>FAL_VIDEO_STYLE_MODEL</code>）</td></tr>
-            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>InpaintAgent</code></td><td>LLM + Video Edit</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（mask 描述 + 替换指令）</td><td><code>FalVideoEditService</code>：<code>fal-ai/vace/inpaint</code>（主）+ <code>fal-ai/depth-anything-v2/video</code>（depth）+ <code>fal-ai/sam2/video</code>（mask/tracking）</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>StyleTransferAgent</code></td><td>LLM + Video Edit</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（style prompt 精修）</td><td><code>FalVideoEditService</code> → <code>fal-ai/wan-vace-14b</code>（POST /, v2v + text prompt，<b style="color:#34d399">已 live 跑通 1:04</b>）</td></tr>
+            <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>InpaintAgent</code></td><td>LLM + Video Edit</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（mask 描述 + 替换指令）</td><td><code>FalVideoEditService</code>：<code>fal-ai/wan-vace-14b/inpainting</code>（主，<b style="color:#34d399">管线已 live 跑通 3:46</b>，<b style="color:#fbbf24">但 mask 未真生效</b>）+ <code>fal-ai/video-depth-anything</code>（depth，<b style="color:#34d399">已 live 跑通 ~30s</b>）+ <code>fal-ai/sam2/video</code>（mask/tracking，object_track 模式用，未测）</td></tr>
             <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>VideoExtendAgent</code></td><td>LLM + Video Gen</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（续写 prompt）</td><td>本地 FFmpeg 提末帧 → 复用 <code>FalVideoService</code>（<code>fal-ai/kling-video/v2.6/pro/image-to-video</code>）从末帧 I2V 续写</td></tr>
             <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px 10px"><code>HighlightAgent</code></td><td>LLM + FFmpeg</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（选段决策）</td><td>本地 FFmpeg <code>-ss / -t</code> 裁剪 + <code>concat</code> 拼接</td></tr>
             <tr><td style="padding:5px 10px"><code>VideoAnalysisAgent</code></td><td>LLM (multimodal video)</td><td>CF AI Gateway → <code>gemini-2.5-flash</code>（视频以 <code>image_url</code> 里的 <code>data:video/mp4;base64,…</code> 送入——Gemini 官方 OpenAI-compat 扩展；<b style="color:#34d399">已 live 测试通过</b>，20 秒真实视频返回 4 个 scene + 准确内容描述）</td><td>—</td></tr>
@@ -741,36 +741,46 @@ full_text: "Hello, world. Placeholder dialogue."</div>
     <!-- VIDEO EDITING                                                     -->
     <!-- ══════════════════════════════════════════════════════════════════ -->
     <div class="test-group">
-      <div class="test-group-title"><span class="group-badge badge-editing">VIDEO EDITING</span> 视频二次编辑 — 3/3 PASS</div>
+      <div class="test-group-title"><span class="group-badge badge-editing">VIDEO EDITING</span> 视频二次编辑 — 3/3 PASS（管线跑通）· StyleTransfer / VideoExtend real fal 已端到端 · <b style="color:#fbbf24">Inpaint depth_background 有已知 mask bug，前景未被实际保留</b></div>
 
       <!-- StyleTransferAgent -->
       <div class="result-card">
         <div class="result-head">
           <div class="result-icon" style="background:rgba(45,212,191,0.12)">🎨</div>
           <span class="result-name">StyleTransferAgent</span><span class="result-desc">— 视觉风格迁移：动漫/水彩/油画等</span>
-          <span class="result-status status-pass">PASS</span>
+          <span class="result-status status-pass">PASS · REAL FAL</span>
         </div>
         <div class="result-body">
-          <div class="agent-how">LLM 将用户的风格描述优化为模型可用的 style_prompt + 确定 strength/preserve_motion。Materializer 调 fal-ai/vace/style-transfer 上传源视频 + prompt 执行风格迁移。输出风格化视频 MP4。</div>
+          <div class="agent-how">LLM 将用户的风格描述优化为模型可用的 style_prompt + 确定 strength/preserve_motion。Materializer 调 fal-ai/wan-vace-14b POST / 上传源视频 + prompt 执行风格迁移（v2v with text guidance）。输出风格化视频 MP4。</div>
           <div class="result-row">
             <span class="row-label label-input">Input</span>
             <div class="row-content">
-              <code>task_1_f9eb85bb_clip_final.mp4</code> (20s) + style: "Studio Ghibli anime style with soft watercolor textures, warm golden lighting"
+              <code>fal_i2v_smoke_20260403_224428.mp4</code> (5s, 1948×1064, 5MB) + style: "Studio Ghibli anime with watercolor textures"
             </div>
           </div>
           <div class="result-row">
             <span class="row-label label-output">Output</span>
             <div class="row-content">
-              <div class="output-quote">style_prompt: "Studio Ghibli anime style, soft watercolor textures, hand-painted, warm golden lighting, serene, painterly, luminous, dreamy, pastel color palette"
-strength: 0.9
+              <div class="output-quote">style_prompt: "Studio Ghibli anime, hand-drawn animation, watercolor painting, translucent washes, soft blending, visible brushstrokes, textured paper effect, vibrant colors, dreamlike, ethereal, naturalistic lighting, fantastical, imaginative, lush backgrounds."
+style_strength: 0.9
 preserve_motion: true</div>
-              <div class="meta-note">LLM 将用户的风格描述优化为模型可用的 prompt。Materializer 调 fal.ai video edit service 应用风格 — fal.ai 模型端点待确认</div>
+              风格迁移视频（5s 1312×736, 2.8MB, 真实 fal.ai 输出）：
+              <div class="media-preview">
+                <video controls muted preload="metadata">
+                  <source src="./test-assets/style_transfer_output_real.mp4" type="video/mp4" />
+                </video>
+              </div>
+              <div class="meta-note"><b style="color:#86efac">2026-04-17 真实 fal.ai 端到端验证</b>：完整 pipeline 1:04 ——
+                LLM 规划 ~10s + <code>fal-ai/wan-vace-14b</code> POST / Queued→InProgress→Completed ~50s（38s queue + 21s 处理）。
+                老的 <code>fal-ai/vace/style-transfer</code> 同样视频实测排队 20+ min 未进 InProgress；切换到 wan-vace-14b POST / 后从"测不动"变成"1 分钟一遍"。
+                wan-vace-14b POST / 是 v2v + text prompt 的通用入口（不是专门 /style-transfer 子路径，但 prompt 已能驱动视觉重风格化）。
+              </div>
             </div>
           </div>
           <div class="result-row">
             <span class="row-label label-caption">Caption</span>
             <div class="row-content">
-              <div class="caption-quote">"Style-transferred video: The video will be transformed into the iconic Studio Ghibli anime aesthetic... Visual style applied to source video."</div>
+              <div class="caption-quote">"Style-transferred video: The video will be transformed into the iconic Studio Ghibli anime aesthetic with watercolor textures. Visual style applied to source video."</div>
             </div>
           </div>
         </div>
@@ -781,30 +791,50 @@ preserve_motion: true</div>
         <div class="result-head">
           <div class="result-icon" style="background:rgba(45,212,191,0.12)">🖌</div>
           <span class="result-name">InpaintAgent</span><span class="result-desc">— 视频重绘 / 物体替换，支持深度前景背景分离</span>
-          <span class="result-status status-pass">PASS</span>
+          <span class="result-status status-pass" style="background:rgba(251,191,36,0.18); color:#fbbf24; border:1px solid rgba(251,191,36,0.35)">PASS (pipeline) · MASK BUG</span>
         </div>
         <div class="result-body">
-          <div class="agent-how">LLM 规划 mask_mode（manual/depth_fg/depth_bg/object_track）+ inpaint_prompt。Materializer 按 mode 调 depth estimation 或 SAM 生成 mask，再调 fal-ai/vace/inpaint 重绘。输出重绘视频 MP4。</div>
+          <div class="agent-how">LLM 规划 mask_mode（manual/depth_fg/depth_bg/object_track）+ inpaint_prompt。Materializer 按 mode 调 depth estimation 或 SAM 生成 mask，再调 wan-vace-14b/inpainting 重绘。输出重绘视频 MP4。</div>
           <div class="result-row">
             <span class="row-label label-input">Input</span>
             <div class="row-content">
-              <code>task_1_f9eb85bb_clip_final.mp4</code> (20s) + mask_mode: depth_background
-              <br/>replacement: "Replace the workshop background with a futuristic space station interior, with Earth visible through a large window"
+              <code>3B_emotion_angry_shout.mp4</code>（10s, 1948×1064, 21MB，清晰人像前景适合验证 fg/bg 分离）+ mask_mode: depth_background
+              <br/>replacement: "Replace background with futuristic city"
             </div>
           </div>
           <div class="result-row">
             <span class="row-label label-output">Output</span>
             <div class="row-content">
               <div class="output-quote">mask_mode: depth_background
-inpaint_prompt: "A sleek, futuristic space station interior, characterized by polished metallic surfaces and softly glowing blue and white accent lighting. A massive panoramic window dominates the background, offering a breathtaking, high-definition view of Earth from orbit."
-blend_edge_px: 10</div>
-              <div class="meta-note">mask_mode=depth_background：用深度估计自动分离前景（钟表匠不动）和背景（工作坊 → 太空站）。fal.ai VACE inpaint 模型端点待确认</div>
+inpaint_prompt: "A high-tech, neon-lit futuristic city at dusk, with towering skyscrapers, flying vehicles, and glowing energy pathways. Cinematic, detailed, cyberpunk aesthetic, atmospheric lighting."
+blend_edge_px: 8</div>
+              重绘视频（5s 1312×736, 7MB, 真实 fal.ai 输出）：
+              <div class="media-preview">
+                <video controls muted preload="metadata">
+                  <source src="./test-assets/inpaint_output_real.mp4" type="video/mp4" />
+                </video>
+              </div>
+              <div class="meta-note" style="background:rgba(251,191,36,0.06); border-left:3px solid rgba(251,191,36,0.4); padding:8px 12px; margin-top:6px">
+                <b style="color:#fbbf24">⚠️ 已知问题（实测验证）</b>：观察输出，前景人物也被显著重绘 —— 不仅是背景替换。
+                <b>根因在 <code>inference/generation/video_edit_service.py:212-217</code></b>：<code>estimate_depth()</code> 把 fal 返回的原始深度视频<b>不做反转 / 不做二值化</b>，直接当作 fg 和 bg mask 同一份回传；
+                然后 <code>inpaint()</code> 把视频 bytes 用 <code>data:image/png;base64,…</code> 错误 mime 塞进 mask_url。wan-vace-14b/inpainting 大概率把它当无效 mask，退化为<b>纯 v2v 文本驱动重绘</b>，所以前景同步被改。
+                <br/>修复路径：<code>estimate_depth</code> 内用 ffmpeg 把 depth video 阈值化成<b>二值 mask 视频</b>（fg = 灰度 &lt; T, bg = 灰度 &gt; T），并按 fal 接口要求的 video/png 序列上传。还要补一个 mask 长度对齐 + ffmpeg lutyuv 的 pipeline。
+              </div>
+              <div class="meta-note">
+                时长被截短：源 10s，输出 5.06s（wan-vace-14b 当前在 video_edit_service 里 hardcode <code>num_frames=81</code> @ <code>frames_per_second=16</code>），后续应改成按源视频时长动态算。
+              </div>
+              <div class="meta-note"><b style="color:#86efac">Pipeline 跑通已验证</b>：完整 3:46 ——
+                ① <code>fal-ai/video-depth-anything</code> depth estimation Queued→InProgress→Completed ~30s ·
+                ② <code>fal-ai/wan-vace-14b/inpainting</code> Queued→InProgress→Completed ~3min。
+                老的 <code>fal-ai/vace/inpaint</code> 实测排队 14+ min 未动；切到 wan-vace-14b 是 real win。
+                修过的 <code>.env</code>：<code>FAL_DEPTH_MODEL</code>（原 <code>fal-ai/depth-anything-v2/video</code> 是 404 错 ID）。
+              </div>
             </div>
           </div>
           <div class="result-row">
             <span class="row-label label-caption">Caption</span>
             <div class="row-content">
-              <div class="caption-quote">"Inpainted video (depth_background mask): Replace the workshop background with a futuristic space station interior, featuring a large window with Earth visible. Object replacement / depth-based edit applied."</div>
+              <div class="caption-quote">"Inpainted video (depth_background mask): Replace background with futuristic city. Object replacement / depth-based edit applied."</div>
             </div>
           </div>
         </div>

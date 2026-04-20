@@ -26,7 +26,6 @@ class ColorGradeSpec(BaseModel):
     brightness: float = Field(0.0, description="Brightness adjustment -1.0 to 1.0")
     contrast: float = Field(0.0, description="Contrast adjustment -1.0 to 1.0")
     saturation: float = Field(0.0, description="Saturation adjustment -1.0 to 1.0")
-    tone: str = Field("", description="Overall tone description (e.g. warm, cool, cinematic)")
 
 
 class SubtitleStyle(BaseModel):
@@ -47,17 +46,6 @@ class CompositionPlan(BaseModel):
     subtitle_style: SubtitleStyle = Field(default_factory=SubtitleStyle)
     output_resolution: str = Field("1920x1080", description="Output resolution WxH")
     output_fps: int = Field(30, description="Output frame rate")
-    output_format: str = Field("mp4", description="Output container format")
-
-
-class DeliveryAsset(BaseModel):
-    """Pointer to the final composited video file."""
-
-    asset_id: str = ""
-    uri: str = ""
-    format: str = "mp4"
-    resolution: str = ""
-    duration_seconds: float = 0.0
 
 
 # ---------------------------------------------------------------------------
@@ -66,7 +54,6 @@ class DeliveryAsset(BaseModel):
 
 class CompositorContent(BaseModel):
     plan: CompositionPlan = Field(default_factory=CompositionPlan)
-    delivery_asset: DeliveryAsset = Field(default_factory=DeliveryAsset)
 
 
 class CompositorMetrics(BaseModel):
@@ -85,12 +72,16 @@ class CompositorAgentInput(BaseModel):
     The LLM receives screenplay + video + audio + subtitle data as JSON
     text blobs and plans the composition (transitions, color grade,
     subtitle style).  The materializer then executes the plan via FFmpeg.
+
+    ``subtitle_json_texts`` is a list so bilingual / multilingual flows
+    (e.g. SubtitleAgent → TranslationAgent → Compositor) can pass every
+    language track through for simultaneous burn-in.
     """
 
     screenplay_json_text: str = ""
     video_json_text: str = ""
     audio_json_text: str = ""
-    subtitle_json_text: str = ""
+    subtitle_json_texts: list[str] = Field(default_factory=list)
     video_file_path: str = ""
     audio_file_path: str = ""
 

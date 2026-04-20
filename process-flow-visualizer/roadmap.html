@@ -81,73 +81,15 @@
 
   <script>
     const ROADMAP = [
-      {
-        index: "01",
-        title: "构建合理的测试体系",
-        items: [
-          "<strong>Sub-agent 单元测试：</strong>针对每个 agent 的输入输出结构、边界条件、格式合规性",
-          "<strong>端到端集成测试：</strong>从 user prompt → pipeline 完整运行 → 产出文件的全链路验证",
-          "建立基准数据集，支持回归对比与质量趋势追踪",
-        ],
-      },
-      {
-        index: "02",
-        title: "跨 Agent 协作验证",
-        items: [
-          "设计多 agent 组合场景（如 Story → Screenplay → KeyFrame），验证上下游产物衔接的完整性",
-          "覆盖非线性编排路径：Director 跳步、回退、并行调度时 agent 间数据传递的正确性",
-          "建立协作质量指标：上游产物变更后下游输出的一致性回归检测",
-        ],
-      },
-      {
-        index: "03",
-        title: "构建训练数据",
-        items: [
-          "从 Director routing 决策与 sub-agent 执行记录中采集配对数据",
-          "建立 prompt → structured output 的标注管线，用于 fine-tune 或 distillation",
-          "质量闭环：用 evaluator 打分结果筛选高质量样本，持续迭代数据集",
-        ],
-      },
-      {
-        index: "04",
-        title: "继续调试 Director 直到结果满意",
-        items: [
-          "<strong>poc_precision 精修实验：</strong>保留 catalog 里的 <code>AFTER X / BEFORE Y</code> scaffolding，仅把 <code>REQUIRE all / ALWAYS / LAST in standard chain</code> 等无出口的绝对量词替换成 <code>at least one / typically / skip when …</code> 弹性措辞——从 baseline 78.7% 出发，目标是同时修好 complex_04 / bilingual_01 类 case，且不回退 cr_* 主流链",
-          "<strong>扩大 eval 覆盖：</strong>在现有 108 条基础上补 edge case（空输入、单模态、歧义 modality、用户意图次要化），并为每类 failure pattern（under-shoot / premature done / trio overshoot / Compositor 多余）建立专项子集",
-          "<strong>增补 Director rationale 分析：</strong>对每个 FAIL 提取 LLM 的 rationale，聚类常见「想错原因」，反过来指导 prompt / catalog 的下一轮措辞调整",
-        ],
-        note: "两次 PoC 已证伪「全软 catalog + 集中 softhint」方向（poc_full_soft 44.4% · poc_softhint 43.5%），scaffolding 不可搬——详见 director.html",
-      },
-      {
-        index: "05",
-        title: "前端 Sub-Agent 明确给出时间线",
-        items: [
-          "<strong>Execution timeline 可视化：</strong>在 Assistant 前端为每次任务渲染横向时间轴：每个 sub-agent 一条泳道，起止时间 / 输入来源 artifact / 产物 artifact / LLM 调用次数 / rework 迭代都标清楚",
-          "<strong>关键耗时分解：</strong>LLM 推理 vs 媒体生成（fal.ai）vs 本地 FFmpeg vs evaluator rework 分别着色，让用户能一眼看出瓶颈在哪",
-          "<strong>Director 决策链同屏对照：</strong>每个 agent 执行段左侧附 Director 当时的 routing rationale 摘要，让「为什么在这一步选它」可追溯",
-        ],
-        note: "目前 interface/ 只展示聊天 + 任务栈，execution history 信息散在日志里，用户/开发者都没有直观的耗时视图",
-      },
-      {
-        index: "06",
-        title: "Sub-Agent 有能力拒绝很差的输入",
-        items: [
-          "<strong>Input validation 层独立：</strong>每个 sub-agent 的 descriptor 增加 <code>input_precheck</code> hook，在 <code>build_input</code> 之后、LLM 调用之前做资格检查（例如 StoryAgent 拒绝空 brief、VideoAgent 拒绝无 keyframe、VoiceCloneAgent 拒绝噪音声样）。命中则直接返回结构化 REJECTED 状态给 Director，不烧 LLM credit",
-          "<strong>REJECTED 作为一等状态：</strong>扩展执行状态机，Director 看到 REJECTED 后应当路由到补救 agent（如重跑 intake / 要用户补充）或 <code>done</code>，而不是像现在「勉强生成一个烂结果再评估」",
-          "<strong>Evaluator 引入 input-side 评分：</strong>现在评估器只看 output 质量（结构/创意/资产），不看 input 的充分性。补一个 <code>check_input_sufficiency</code> 分量，分低于阈值直接 REJECTED——把「垃圾进 → 垃圾出」堵在入口",
-        ],
-        note: "和 04 的 Director 调试互补——REJECTED 状态让 Director 有机会「试对一个不好的路径然后回头」，而不是默默产出 GIGO 结果",
-      },
-      {
-        index: "07",
-        title: "集成 Director 与 Plan Stack（已完成 ✓）",
-        items: [
-          "<strong>双轨合并：</strong>原 <code>director_agent</code>（带 plan stack 但未落地 Upfront）与 <code>director_nostack</code>（Markov 但无 stack）合并为单一 <code>director_agent</code>：Upfront planner 一次输出完整计划 + <code>modify_plan_stack</code> 批量落盘 + 顺光标执行",
-          "<strong>Plan Stack 为事实源：</strong>stack 投影替代旧的 in-memory rolling window；<code>merge_session_goal</code> 和 <code>plan_pipeline_upfront</code> 都看到 <code>{step_id, agent_id, status, intent, results_summary}</code>",
-          "<strong>Replanner on failure：</strong>step FAILED 触发 <code>replan_on_failure</code> LLM → retry / skip / replan_tail，predicate 由 <code>MAX_REPLAN_ROUNDS</code> 预算限制",
-        ],
-        note: "剩余后续工作：replanner 的失败上下文注入能否更丰富？（e.g. 失败时附带 AgentExecution.error 的完整 stack trace 而不仅仅是一句 error text）",
-      },
+      { index: "01", title: "跨 Agent 协作验证" },
+      { index: "02", title: "继续调试 Director 直到结果满意" },
+      { index: "03", title: "构建 Director 训练集" },
+      { index: "04", title: "RL 训练 Director" },
+      { index: "05", title: "Director × Assistant 联合测试代表性例子" },
+      { index: "06", title: "解决声话不同步的问题（已完成 ✓）" },
+      { index: "07", title: "梳理各个 Sub-Agent 之间的功能耦合（已完成 ✓）" },
+      { index: "08", title: "Sub-Agent 有能力拒绝很差的输入（已完成 ✓）" },
+      { index: "09", title: "集成 Director 与 Plan Stack（已完成 ✓）" },
     ];
 
     document.getElementById("rmList").innerHTML = ROADMAP.map(r => `
@@ -155,8 +97,6 @@
         <div class="rm-index">${r.index}</div>
         <div style="flex:1">
           <div class="rm-title">${r.title}</div>
-          <ul class="rm-ul">${r.items.map(i => `<li>${i}</li>`).join("")}</ul>
-          ${r.note ? `<div class="rm-note">※ ${r.note}</div>` : ""}
         </div>
       </div>
     `).join("");

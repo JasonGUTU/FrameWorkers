@@ -169,28 +169,58 @@ class FalVideoEditService(VideoEditService, LazyHttpxClientMixin):
         prompt: str,
         blend_px: int = 8,
     ) -> bytes:
+        import asyncio
+        import tempfile
         logger.info("[fal.ai] Inpaint: model=%s, prompt=%.60s", self._inpaint_model, prompt)
 
         arguments: dict[str, Any] = {
             "prompt": prompt,
             "video_url": await self._upload_file(video_path),
+            "match_input_num_frames": True,
+            "match_input_frames_per_second": True,
         }
 
-        # Mask can be bytes or file path
-        if isinstance(mask, str) and os.path.isfile(mask):
-            mask_mime = "image/png"
-            arguments["mask_url"] = await self._upload_file(mask)
-        elif isinstance(mask, bytes) and mask:
-            b64 = base64.b64encode(mask).decode()
-            arguments["mask_url"] = f"data:image/png;base64,{b64}"
+        # wan-vace-14b/inpainting expects mask_video_url (a real uploaded URL,
+        # not a data URI). Our depth-derived masks are video bytes — write to
+        # a temp .mp4 and upload via fal_client.upload_file.
+        tmp_mask_path: str | None = None
+        try:
+            if isinstance(mask, str) and os.path.isfile(mask):
+                arguments["mask_video_url"] = await self._upload_file(mask)
+            elif isinstance(mask, bytes) and mask:
+                with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as tmp:
+                    tmp.write(mask)
+                    tmp_mask_path = tmp.name
+                arguments["mask_video_url"] = await self._upload_file(tmp_mask_path)
 
-        result = await fal_subscribe(self._api_key, self._inpaint_model, arguments)
+            result = await fal_subscribe(self._api_key, self._inpaint_model, arguments)
+        finally:
+            if tmp_mask_path and os.path.isfile(tmp_mask_path):
+                os.unlink(tmp_mask_path)
+
         video_url = extract_fal_media_url(result, media_type="video")
         video_bytes = await http_download_bytes(self.http, video_url)
         logger.info("[fal.ai] Inpaint complete: %d bytes", len(video_bytes))
         return video_bytes
 
     async def estimate_depth(self, video_path: str) -> DepthMask:
+        """Run depth estimation, then threshold the depth video into proper
+        binary fg / bg mask videos.
+
+        Mask convention: ``WHITE = pixels to inpaint, BLACK = preserve``
+        (matches wan-vace-14b/inpainting's expectation).
+
+        depth-anything outputs grayscale where bright = close (foreground),
+        dark = far (background). So:
+          foreground mask: bright pixels → white  → ``y >= 128 ? 255 : 0``
+          background mask: dark pixels   → white  → ``y <  128 ? 255 : 0``
+        Without this threshold step the raw depth video gets passed through
+        as "mask" and wan-vace-14b silently treats it as no-mask (= pure
+        v2v), causing the foreground to be redrawn alongside the background.
+        """
+        import asyncio
+        import subprocess
+        import tempfile
         logger.info("[fal.ai] Depth estimation: model=%s", self._depth_model)
 
         arguments: dict[str, Any] = {
@@ -199,21 +229,48 @@ class FalVideoEditService(VideoEditService, LazyHttpxClientMixin):
 
         result = await fal_subscribe(self._api_key, self._depth_model, arguments)
 
-        # Download the depth map / masks from the response
         fg_bytes = b""
         bg_bytes = b""
+        depth_path: str | None = None
+        fg_path: str | None = None
+        bg_path: str | None = None
         try:
             depth_url = extract_fal_media_url(result, media_type="video")
             depth_bytes = await http_download_bytes(self.http, depth_url)
-            # The depth model returns a depth video; we use it as both masks
-            # (foreground = depth, background = inverted depth).
-            # A more sophisticated implementation would threshold the depth map.
-            fg_bytes = depth_bytes
-            bg_bytes = depth_bytes
-        except RuntimeError:
-            logger.warning("[fal.ai] Could not extract depth video URL")
 
-        logger.info("[fal.ai] Depth estimation complete")
+            with tempfile.NamedTemporaryFile(suffix="_depth.mp4", delete=False) as tmp:
+                tmp.write(depth_bytes)
+                depth_path = tmp.name
+            fg_path = depth_path + ".fg.mp4"
+            bg_path = depth_path + ".bg.mp4"
+
+            await asyncio.to_thread(
+                subprocess.run,
+                ["ffmpeg", "-y", "-i", depth_path,
+                 "-vf", "lutyuv=y='if(gte(val\\,128)\\,255\\,0)':u=128:v=128",
+                 "-an", "-c:v", "libx264", "-pix_fmt", "yuv420p", fg_path],
+                check=True, capture_output=True,
+            )
+            await asyncio.to_thread(
+                subprocess.run,
+                ["ffmpeg", "-y", "-i", depth_path,
+                 "-vf", "lutyuv=y='if(lt(val\\,128)\\,255\\,0)':u=128:v=128",
+                 "-an", "-c:v", "libx264", "-pix_fmt", "yuv420p", bg_path],
+                check=True, capture_output=True,
+            )
+            with open(fg_path, "rb") as f: fg_bytes = f.read()
+            with open(bg_path, "rb") as f: bg_bytes = f.read()
+        except (RuntimeError, subprocess.CalledProcessError) as e:
+            stderr = getattr(e, "stderr", b"")[:200] if isinstance(e, subprocess.CalledProcessError) else b""
+            logger.warning("[fal.ai] depth → binary mask conversion failed: %s %s", e, stderr)
+        finally:
+            for p in (depth_path, fg_path, bg_path):
+                if p and os.path.isfile(p):
+                    try: os.unlink(p)
+                    except OSError: pass
+
+        logger.info("[fal.ai] Depth estimation complete (fg=%d bytes, bg=%d bytes)",
+                    len(fg_bytes), len(bg_bytes))
         return DepthMask(foreground=fg_bytes, background=bg_bytes)
 
     async def track_object(self, video_path: str, description: str) -> bytes:

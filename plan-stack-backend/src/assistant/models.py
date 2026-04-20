@@ -7,7 +7,7 @@ retrieval/orchestration logic.
 from enum import Enum
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, List
 
 
 class ExecutionStatus(Enum):
@@ -31,4 +31,9 @@ class AgentExecution:
     started_at: Optional[datetime] = None
     completed_at: Optional[datetime] = None
     created_at: datetime = field(default_factory=datetime.now)
+    # Absolute workspace paths InputResolver picked for this execution's
+    # input labels. Populated by AssistantService.build_execution_inputs
+    # so framework-level hooks (e.g. the raw_pending → global scope flip
+    # for Intake* agents) can act on the inputs the agent consumed.
+    resolved_input_paths: List[str] = field(default_factory=list)
 

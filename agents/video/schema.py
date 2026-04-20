@@ -11,25 +11,14 @@ from ..common_schema import ImageReferenceEntry, Meta
 # Video sub-models
 # ---------------------------------------------------------------------------
 
-class VideoAsset(BaseModel):
-    """Pointer to a generated video file."""
-
-    asset_id: str = ""
-    uri: str = ""
-    width: int = 1024
-    height: int = 576
-    format: str = "mp4"
-    fps: int = 24
-
-
 class ShotSemanticContext(BaseModel):
     """Per-shot language-neutral semantic context for video generation.
 
     This is the agent-layer mirror of the inference-layer dataclass of the
     same name in ``inference/generation/video_generators/types.py``. It
-    carries everything a video generation service needs to turn a
-    starting keyframe + motion intent into a moving clip — and carries
-    nothing else.
+    carries per-shot information only — scene-level fields (location_id,
+    time_of_day, environment_notes, style_notes, must_avoid) live on
+    ``VideoScene.scene_context`` and are merged in by the materializer.
 
     All fields are **LLM-authored**: VideoAgent's LLM reads the upstream
     screenplay + keyframes_metadata JSON text blobs and mirrors the
@@ -43,41 +32,33 @@ class ShotSemanticContext(BaseModel):
     visual_goal: str = Field("", json_schema_extra={"creative": True})
     action_focus: str = Field("", json_schema_extra={"creative": True})
     characters_in_frame: list[str] = Field(default_factory=list)
-    props_in_frame: list[str] = Field(default_factory=list)
 
     # Camera / framing (from screenplay shot.camera)
     camera_angle: str = ""
     camera_movement: str = ""
     framing_notes: str = Field("", json_schema_extra={"creative": True})
 
-    # Scene-level context (from screenplay scene.scene_consistency_pack)
-    scene_id: str = ""
-    location_id: str = ""
-    time_of_day: str = ""
-    environment_notes: list[str] = Field(default_factory=list)
-    style_notes: list[str] = Field(default_factory=list)
-    must_avoid: list[str] = Field(default_factory=list)
-
-    # Keyframe planning (from screenplay shot.keyframe_plan + keyframes_metadata)
-    keyframe_notes: list[str] = Field(default_factory=list)
-    keyframe_prompt_summaries: list[str] = Field(default_factory=list)
+    # Motion hints mirrored from keyframes_metadata for this shot.
     video_motion_hints: list[str] = Field(default_factory=list)
+
+    # Dialogue + delivery tone mirrored from screenplay shot.text /
+    # shot.emotion_hint for spoken shots (block_type in {dialogue,
+    # narration, monologue}). Empty for action shots. These drive Kling's
+    # native speech + lip-sync when ``generate_audio=True`` — see
+    # ``inference/generation/video_generators/service.py:_compose_prompt``.
+    dialogue_text: str = Field("", json_schema_extra={"creative": True})
+    emotion_hint: str = ""
 
 
 class ShotSegment(BaseModel):
     """Minimal video generation unit — one shot rendered to a clip."""
 
     shot_id: str = ""
-    order: int = 0
-    video_asset: VideoAsset = Field(default_factory=VideoAsset)
     # LLM-authored per-shot semantic context. Mirrored from upstream
     # screenplay + keyframes_metadata via the agent's single LLM call.
     # Materializer reads these via attribute access, NEVER from upstream
     # payloads.
     semantic_context: ShotSemanticContext = Field(default_factory=ShotSemanticContext)
-    # Filled by VideoMaterializer: main prompt and JSON-serialized consistency_constraints.
-    video_generation_prompt: str = ""
-    video_generation_constraints_json: str = ""
 
 
 class TransitionPlan(BaseModel):
@@ -86,20 +67,28 @@ class TransitionPlan(BaseModel):
     transition_type: str = "cut"  # cut | dissolve | fade | soft
 
 
-class SceneClipAsset(BaseModel):
-    """Scene-level assembled clip."""
+class SceneContext(BaseModel):
+    """Scene-level context shared by every shot in the scene.
 
-    asset_id: str = ""
-    uri: str = ""
-    format: str = "mp4"
+    Moved up from per-shot ``ShotSemanticContext`` to eliminate
+    LLM-authored duplication across shots. The materializer merges this
+    into each shot's inference-layer semantic context before calling
+    VideoService.
+    """
+
+    location_id: str = ""
+    time_of_day: str = ""
+    environment_notes: list[str] = Field(default_factory=list)
+    style_notes: list[str] = Field(default_factory=list)
+    must_avoid: list[str] = Field(default_factory=list)
 
 
 class VideoScene(BaseModel):
     scene_id: str = ""
     order: int = 0
+    scene_context: SceneContext = Field(default_factory=SceneContext)
     shot_segments: list[ShotSegment] = Field(default_factory=list)
     transition_plan: list[TransitionPlan] = Field(default_factory=list)
-    scene_clip_asset: SceneClipAsset = Field(default_factory=SceneClipAsset)
 
 
 # ---------------------------------------------------------------------------
@@ -108,7 +97,6 @@ class VideoScene(BaseModel):
 
 class VideoContent(BaseModel):
     scenes: list[VideoScene] = Field(default_factory=list)
-    final_video_asset: VideoAsset = Field(default_factory=VideoAsset)
 
 
 class VideoMetrics(BaseModel):

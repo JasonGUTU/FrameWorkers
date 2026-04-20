@@ -1,6 +1,6 @@
 """Intake sub-agents — convert raw user uploads into caption-rich workspace artifacts.
 
-Each modality has its own intake agent (text/image/video/audio).  They are
+Each modality has its own intake agent (text/image/video).  They are
 **normal** sub-agents: they receive their input from InputResolver via a
 ``[raw_<kind>_upload]`` label that matches the placeholder caption created
 by ``workspace.persist_raw_upload()``.

@@ -33,10 +33,9 @@ def _is_mock_wav(data: bytes | None) -> bool:
     """True if ``data`` is the silent ``MOCK_WAV`` placeholder (or so short
     it can't possibly carry real audio).
 
-    Used by ``mix_scene_audio`` and ``assemble_final`` to drop placeholder
-    music / ambience inputs before handing the rest to ffmpeg, so the mix
-    is built only from real audio (TTS narration, real generated music,
-    etc.) and the placeholders never end up corrupting the output stream.
+    Callers drop placeholder inputs before handing the rest to ffmpeg so
+    the mix is built only from real audio and placeholders never end up
+    corrupting the output stream.
     """
     if not data:
         return True
@@ -177,105 +176,6 @@ class AudioService:
             },
         )
 
-    async def mix_scene_audio(
-        self,
-        *,
-        narration_bytes_list: list[bytes],
-        music_bytes: bytes | None = None,
-        ambience_bytes: bytes | None = None,
-        scene_id: str = "",
-        duration_sec: float = 0.0,
-    ) -> bytes:
-        """Mix narration / music / ambience for a single scene via ffmpeg.
-
-        Narration segments are **concatenated first** (they're sequential
-        spoken lines within one scene, not simultaneous voices), producing
-        a single narration track. That track is then **amix'd** with the
-        scene's music cue and ambience bed using ``duration=longest`` —
-        so if music/ambience (sized to the screenplay's
-        ``estimated_duration_seconds``) is longer than the actual
-        narration, ffmpeg pads the narration with silence. That's the
-        intended behavior: a scene's soundtrack runs for the full
-        screenplay-estimated duration even when dialogue ends early.
-
-        Silent placeholder ``MOCK_WAV`` inputs are filtered out before
-        amix so they don't pollute the mix. Falls back to the longest
-        surviving input on ffmpeg failure (so the pipeline still
-        completes with at least some real audio).
-        """
-        real_narration = [b for b in narration_bytes_list if not _is_mock_wav(b)]
-        narration_track: bytes | None = None
-        if len(real_narration) == 1:
-            narration_track = real_narration[0]
-        elif len(real_narration) > 1:
-            narration_track = self._ffmpeg_concat(real_narration)
-            if not narration_track:
-                logger.warning(
-                    "[Mix] narration concat failed for scene %s — using longest segment",
-                    scene_id,
-                )
-                narration_track = max(real_narration, key=len)
-
-        inputs: list[bytes] = []
-        if narration_track and not _is_mock_wav(narration_track):
-            inputs.append(narration_track)
-        if music_bytes and not _is_mock_wav(music_bytes):
-            inputs.append(music_bytes)
-        if ambience_bytes and not _is_mock_wav(ambience_bytes):
-            inputs.append(ambience_bytes)
-
-        if not inputs:
-            logger.info(
-                "[Mix] No real audio for scene %s — emitting silent placeholder",
-                scene_id,
-            )
-            return MOCK_WAV
-        if len(inputs) == 1:
-            logger.info(
-                "[Mix] Single real track for scene %s — passing through, no mix needed",
-                scene_id,
-            )
-            return inputs[0]
-
-        logger.info(
-            "[Mix] amix %d tracks for scene %s (duration=longest pads short tracks)",
-            len(inputs), scene_id,
-        )
-        mixed = self._ffmpeg_amix(inputs)
-        if mixed:
-            return mixed
-        logger.warning(
-            "[Mix] ffmpeg amix failed for scene %s — falling back to longest input",
-            scene_id,
-        )
-        return max(inputs, key=len)
-
-    async def assemble_final(
-        self,
-        *,
-        scene_mix_bytes_list: list[bytes],
-    ) -> bytes:
-        """Concatenate scene mixes into a single final track via ffmpeg.
-
-        Same mock-filtering + fallback logic as ``mix_scene_audio``.
-        """
-        real = [b for b in scene_mix_bytes_list if not _is_mock_wav(b)]
-        if not real:
-            logger.info("[FinalAssembly] No real scene mixes — emitting silent placeholder")
-            return MOCK_WAV
-        if len(real) == 1:
-            logger.info("[FinalAssembly] Single real scene mix — passing through")
-            return real[0]
-
-        logger.info("[FinalAssembly] concat %d real scene mixes via ffmpeg", len(real))
-        joined = self._ffmpeg_concat(real)
-        if joined:
-            return joined
-        logger.warning(
-            "[FinalAssembly] ffmpeg concat failed — falling back to longest scene mix"
-        )
-        return max(real, key=len)
-
     # ------------------------------------------------------------------
     # ffmpeg helpers
     # ------------------------------------------------------------------
@@ -368,7 +268,7 @@ class AudioService:
         video_bytes: bytes,
         audio_bytes: bytes,
     ) -> bytes:
-        """Mux final narration/music track into final video bytes.
+        """Mux a final audio track into final video bytes.
 
         Uses ffmpeg when available. Falls back to original video bytes if muxing
         fails so pipeline can continue while still returning a playable file.

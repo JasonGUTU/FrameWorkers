@@ -112,6 +112,74 @@ class BaseMaterializer(ABC):
 
 
 # ---------------------------------------------------------------------------
+# AgentSpec — single-source-of-truth for catalog_entry + input_needs_description
+# ---------------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class InputLabelSpec:
+    """Declarative spec for one input slot.
+
+    One per ``[label] (single|collection)`` block the agent exposes. Holds
+    the single description string that the framework renders into BOTH:
+      * ``catalog_entry``'s Input section (read by Director's planner LLM)
+      * ``input_needs_description``'s ``[label]`` block (read by InputResolver LLM)
+
+    Writing the description once here prevents the two LLM-facing views
+    from drifting apart (the bug pattern where CATALOG claims "accepts X
+    or Y" but input_needs_description only describes X, causing the
+    planner to route Y → this agent while the resolver fails to match).
+    """
+
+    name: str
+    cardinality: str  # "single" or "collection"
+    description: str
+    optional: bool = False
+
+
+@dataclass(frozen=True)
+class AgentSpec:
+    """Single-source manifest. Renders catalog_entry + input_needs_description.
+
+    Pass to ``SubAgentDescriptor.from_spec`` instead of hand-writing the
+    two strings separately.
+    """
+
+    agent_id: str
+    inputs: list[InputLabelSpec] = field(default_factory=list)
+    output_description: str = ""
+    purpose_and_routing: str = ""
+    input_preamble: str = ""
+    promotes_consumed_inputs_to_global: bool = False
+
+
+def render_catalog_entry(spec: AgentSpec) -> str:
+    """Planner-facing string. Lists each [label] with its description."""
+    lines: list[str] = [spec.agent_id]
+    lines.append("  - Inputs:")
+    for inp in spec.inputs:
+        req = "optional" if inp.optional else "required"
+        lines.append(
+            f"      [{inp.name}] ({inp.cardinality}, {req}): {inp.description}"
+        )
+    lines.append(f"  - Output: {spec.output_description}")
+    lines.append(f"  - Purpose / routing: {spec.purpose_and_routing}")
+    return "\n".join(lines)
+
+
+def render_input_needs_description(spec: AgentSpec) -> str:
+    """InputResolver-facing string. [label] blocks in the parseable format."""
+    parts: list[str] = []
+    if spec.input_preamble.strip():
+        parts.append(spec.input_preamble.strip())
+        parts.append("")
+    for inp in spec.inputs:
+        parts.append(f"[{inp.name}] ({inp.cardinality})")
+        parts.append(inp.description)
+        parts.append("")
+    return "\n".join(parts).rstrip()
+
+
+# ---------------------------------------------------------------------------
 # SubAgentDescriptor — the pluggable manifest
 # ---------------------------------------------------------------------------
 
@@ -192,6 +260,47 @@ class SubAgentDescriptor:
         repr=False,
         default=lambda agent_id, output_dict: {},
     )
+    promotes_consumed_inputs_to_global: bool = False
+
+    # ------------------------------------------------------------------
+    # Spec-based constructor (preferred for new agents)
+    # ------------------------------------------------------------------
+
+    @classmethod
+    def from_spec(
+        cls,
+        spec: "AgentSpec",
+        *,
+        agent_factory: Callable[..., Any],
+        evaluator_factory: Callable[..., Any],
+        build_input: Callable[..., BaseModel],
+        build_captions: Callable[..., dict[str, dict[str, str]]] | None = None,
+        service_factories: dict[str, Callable[..., Any]] | None = None,
+        materializer_factory: Callable[..., BaseMaterializer] | None = None,
+    ) -> "SubAgentDescriptor":
+        """Build a descriptor from a single AgentSpec.
+
+        ``catalog_entry`` and ``input_needs_description`` are derived from
+        the spec's structured inputs so the two LLM-facing views stay in
+        sync. Non-spec fields (factories, build_input, etc.) are passed
+        through as kwargs.
+        """
+        kwargs: dict[str, Any] = {
+            "agent_id": spec.agent_id,
+            "catalog_entry": render_catalog_entry(spec),
+            "input_needs_description": render_input_needs_description(spec),
+            "agent_factory": agent_factory,
+            "evaluator_factory": evaluator_factory,
+            "build_input": build_input,
+            "promotes_consumed_inputs_to_global": spec.promotes_consumed_inputs_to_global,
+        }
+        if build_captions is not None:
+            kwargs["build_captions"] = build_captions
+        if service_factories is not None:
+            kwargs["service_factories"] = service_factories
+        if materializer_factory is not None:
+            kwargs["materializer_factory"] = materializer_factory
+        return cls(**kwargs)
 
     # ------------------------------------------------------------------
     # Fully-equipped agent factory

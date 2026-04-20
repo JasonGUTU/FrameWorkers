@@ -1,4 +1,4 @@
-"""UnivaStoryboardAgent descriptor — self-describing manifest for the registry."""
+"""UnivaStoryboardAgent descriptor — built from a single AgentSpec."""
 
 from __future__ import annotations
 
@@ -7,11 +7,11 @@ import json
 from pydantic import BaseModel
 
 from ..common_schema import ResolvedArtifactEntry
-from ..descriptor import SubAgentDescriptor
+from ..descriptor import AgentSpec, InputLabelSpec, SubAgentDescriptor
 from .agent import UnivaStoryboardAgent
+from .evaluator import UnivaStoryboardEvaluator
 from .labels import INPUT_LABEL_CREATIVE_BRIEF
 from .schema import UnivaStoryboardInput
-from .evaluator import UnivaStoryboardEvaluator
 
 
 def build_input(
@@ -44,30 +44,43 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
     }
 
 
-CATALOG_ENTRY = (
-    "UnivaStoryboardAgent\n"
-    "  - Input: creative_brief (a natural-language description of what to produce)\n"
-    "  - Output: univa_storyboard (characters[], shots[], style)\n"
-    "  - Purpose: Generate a complete storyboard with character definitions and\n"
-    "    shot-by-shot breakdown using UniVA's storyboard planning approach."
+SPEC = AgentSpec(
+    agent_id="UnivaStoryboardAgent",
+    inputs=[
+        InputLabelSpec(
+            name=INPUT_LABEL_CREATIVE_BRIEF,
+            cardinality="single",
+            description=(
+                "A natural-language brief describing the story / video "
+                "concept to be produced. The caption describes it as a "
+                "creative brief / project intent description. Pick the "
+                "single most recent / most authoritative such brief."
+            ),
+        ),
+    ],
+    output_description=(
+        "univa_storyboard (characters[], shots[], style)."
+    ),
+    purpose_and_routing=(
+        "Generate a complete storyboard with character definitions and "
+        "shot-by-shot breakdown using UniVA's storyboard planning "
+        "approach. Pipeline entry point for UniVA-style creation (runs "
+        "instead of StoryAgent + ScreenplayAgent when the user's plan "
+        "targets the UniVA track)."
+    ),
+    input_preamble=(
+        "I am the pipeline entry point for UniVA-style storyboard "
+        "planning. I take a natural-language creative brief and produce "
+        "a storyboard with character definitions and a shot-by-shot "
+        "breakdown."
+    ),
 )
 
-DESCRIPTOR = SubAgentDescriptor(
-    agent_id="UnivaStoryboardAgent",
-    catalog_entry=CATALOG_ENTRY,
+
+DESCRIPTOR = SubAgentDescriptor.from_spec(
+    SPEC,
     agent_factory=lambda llm: UnivaStoryboardAgent(llm_client=llm),
     evaluator_factory=UnivaStoryboardEvaluator,
     build_input=build_input,
     build_captions=build_captions,
-    materializer_factory=None,
-    input_needs_description=(
-        "I am the pipeline entry point for UniVA-style storyboard planning. "
-        "I take a natural-language creative brief and produce a storyboard "
-        "with character definitions and a shot-by-shot breakdown.\n\n"
-        f"[{INPUT_LABEL_CREATIVE_BRIEF}] (single)\n"
-        "A natural-language brief describing the story / video concept to "
-        "be produced. The caption describes it as a creative brief / project "
-        "intent description. Pick the single most recent / most authoritative "
-        "such brief."
-    ),
 )

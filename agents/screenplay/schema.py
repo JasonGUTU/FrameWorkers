@@ -98,7 +98,15 @@ class SceneConsistencyPack(BaseModel):
 
 
 class ScriptShot(BaseModel):
-    """One continuous take: script line + shot planning."""
+    """One continuous take: script line + shot planning.
+
+    For spoken shots (block_type ∈ {dialogue, narration, monologue}) the
+    ``text`` field is the **verbatim line** the on-screen character
+    speaks aloud — it goes straight into Kling's video generation prompt
+    when ``generate_audio=True`` is enabled (see ``FalVideoService.
+    _compose_prompt`` and CLAUDE.md's audio architecture section). For
+    action shots it is a visible action description, not spoken.
+    """
 
     shot_id: str = ""
     order: int = 0
@@ -106,6 +114,11 @@ class ScriptShot(BaseModel):
     character_id: str = ""
     character_name: str = ""
     text: str = Field("", json_schema_extra={"creative": True})
+    # Short delivery-tone descriptor fed to Kling so it speaks the line with
+    # the right emotion (calm / neutral / sad / angry / whispered / excited /
+    # warm / tense / urgent). Empty for action shots and for spoken shots
+    # where the tone is not strong enough to specify.
+    emotion_hint: str = Field("", json_schema_extra={"creative": True})
     continuity_refs: ContinuityRefs = Field(default_factory=ContinuityRefs)
     shot_type: str = "medium"
     camera: Camera = Field(default_factory=Camera)
@@ -132,17 +145,6 @@ class ScreenplayScene(BaseModel):
     scene_consistency_pack: SceneConsistencyPack = Field(default_factory=SceneConsistencyPack)
     scene_end: SceneEnd = Field(default_factory=SceneEnd)
     shots: list[ScriptShot] = Field(default_factory=list)
-    estimated_duration_seconds: float = Field(
-        0.0,
-        description=(
-            "Pre-computed scene length estimate, shared across NarrationAgent / "
-            "MusicAgent / AmbienceAgent so they pick identical per-scene targets. "
-            "Formula: sum dialogue+narration word counts / 2.5 (~150 wpm TTS rate) "
-            "+ 3 seconds per action-only shot for visual pacing. ScreenplayAgent "
-            "is the single producer (it sees every shot's block_type and text); "
-            "downstream audio agents read this verbatim and never re-estimate."
-        ),
-    )
 
 
 # ---------------------------------------------------------------------------

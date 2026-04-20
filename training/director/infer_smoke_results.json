@@ -1,0 +1,23 @@
+[
+  {
+    "user_goal": "给这段古装短剧加一段凄美的二胡背景乐",
+    "expected": "IntakeText → IntakeVideo → Music → AudioMix → Compositor",
+    "actual": "IntakeText → IntakeVideo → Music → AudioMix",
+    "parse_ok": true,
+    "raw_response": "{\"plan\":[{\"agent_id\":\"IntakeTextAgent\",\"intent\":\"intake the ancient drama video\"},{\"agent_id\":\"IntakeVideoAgent\",\"intent\":\"intake the ancient drama video\"},{\"agent_id\":\"MusicAgent\",\"intent\":\"compose a melancholic erhu background music\"},{\"agent_id\":\"AudioMixAgent\",\"intent\":\"mix the music with the original video audio\"}],\"rationale\":\"直接从视频入手，添加背景音乐并混音输出\"}"
+  },
+  {
+    "user_goal": "把这场男主失忆后的回忆戏延长 10 秒",
+    "expected": "IntakeText → IntakeVideo → VideoExtend",
+    "actual": "IntakeText → IntakeVideo → VideoExtend",
+    "parse_ok": true,
+    "raw_response": "{\n  \"plan\": [\n    {\"agent_id\": \"IntakeTextAgent\", \"intent\": \"接收并解析用户指令\"},\n    {\"agent_id\": \"IntakeVideoAgent\", \"intent\": \"获取原始视频片段\"},\n    {\"agent_id\": \"VideoExtendAgent\", \"intent\": \"将视频片段延长10秒\"}\n  ],\n  \"rationale\": \"直接处理视频长度需求，无需其他复杂步骤\"\n}"
+  },
+  {
+    "user_goal": "给这段都市爱情戏配一段轻柔的小提琴背景乐",
+    "expected": "IntakeText → IntakeVideo → Music → AudioMix → Compositor",
+    "actual": "IntakeText → IntakeVideo → Music → AudioMix",
+    "parse_ok": true,
+    "raw_response": "{\"plan\":[{\"agent_id\":\"IntakeTextAgent\",\"intent\":\"intake the text description of the urban romance drama\"},{\"agent_id\":\"IntakeVideoAgent\",\"intent\":\"intake the video of the urban romance drama\"},{\"agent_id\":\"MusicAgent\",\"purpose\":\"generate a gentle violin background music for the video\"},{\"agent_id\":\"AudioMixAgent\",\"purpose\":\"mix the background music with the original audio of the video\"}],\"rationale\":\"直接从文本和视频入手，生成背景音乐并混音\"}"
+  }
+]

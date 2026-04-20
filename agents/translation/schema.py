@@ -16,7 +16,6 @@ class TranslationContent(BaseModel):
 
     source_language: str = Field("", description="Detected source language code (e.g. zh, en, ja)")
     target_language: str = Field("", description="Target language code")
-    translated_text: str = Field("", description="Full translated text (plain text summary or non-JSON input)")
     translated_payload: dict = Field(default_factory=dict, description="Translated structured document preserving original JSON shape")
 
 

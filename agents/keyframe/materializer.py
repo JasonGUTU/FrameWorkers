@@ -1,10 +1,11 @@
 """Keyframe image materializer — global + scene + shot anchor chain.
 
   Layer 1 — Global anchors: text -> ``generate_image()`` (characters, locations, props*).
-            **Pre-check**: if the agent's LLM output already wrote a real
-            file path into an entity's ``image_asset.uri`` field (because a
-            user-uploaded reference was selected for that entity), we skip
-            t2i for that entity and read the file bytes directly.
+            **Pre-check**: if ``KeyFrameAgent._prefill_reference_images``
+            populated an entity's Python-only ``reference_image_uri``
+            field (because a user-uploaded reference was selected for
+            that entity), we skip t2i for that entity and read the file
+            bytes directly.
   Layer 2 — Scene anchors: default global ref + prompt -> ``edit_image()``; or ``t2i`` mode.
   Layer 3 — One still per shot: edit from scene **location** L2 (or text-only fallback) so the
             PNG matches the shot ``prompt_summary``; VideoAgent consumes **only** this URI.
@@ -89,7 +90,7 @@ class KeyframeMaterializer(BaseMaterializer):
         Naming:
           L1: ``img_{entity_id}_global``
           L2: ``img_{entity_id}_{scene_id}``
-          L3: ``img_{shot_id}_{keyframe_id}`` (one row per shot; first keyframe only)
+          L3: ``img_{shot_id}_kf_001`` (one row per shot; keyframe_count == 1 invariant)
 
         Returns:
             ``MediaAsset`` list for Assistant persistence.
@@ -145,26 +146,21 @@ class KeyframeMaterializer(BaseMaterializer):
         global_image_bytes: dict[str, bytes] = {}
 
         # ══════════════════════════════════════════════════════════════
-        # Layer 1 pre-check: pick up LLM-assigned reference image paths
+        # Layer 1 pre-check: pick up user-supplied reference image paths
         # ══════════════════════════════════════════════════════════════
-        # The KeyFrameAgent LLM may have written a real file path into an
-        # entity's image_asset.uri (because [character_reference] /
-        # [location_reference] / [style_reference] entries were resolved
-        # for that entity).  When we see one, skip t2i and read the bytes
-        # directly — no fuzzy matching, no entity inference, the LLM
-        # already decided.
+        # ``KeyFrameAgent._prefill_reference_images`` writes the resolved
+        # upload path into the entity's Python-only
+        # ``reference_image_uri`` field (not persisted; see schema.py).
+        # When we see a real file here, skip t2i and read the bytes
+        # directly — no fuzzy matching, the agent already decided which
+        # reference goes with which entity.
         for entity_list_name in ("characters", "locations", "props"):
             for kf in global_anchors.get(entity_list_name, []) or []:
                 if not isinstance(kf, dict):
                     continue
                 eid = str(kf.get("entity_id", "") or "").strip()
-                img_asset = kf.get("image_asset", {})
-                if not isinstance(img_asset, dict):
-                    continue
-                uri = str(img_asset.get("uri", "") or "").strip()
+                uri = str(kf.get("reference_image_uri", "") or "").strip()
                 if not eid or not uri:
-                    continue
-                if uri in {"placeholder", ""} or uri.startswith("error:"):
                     continue
                 if not os.path.isfile(uri):
                     continue
@@ -178,15 +174,15 @@ class KeyframeMaterializer(BaseMaterializer):
                     )
                     continue
                 global_image_bytes[eid] = ref_bytes
-                ext = img_asset.get("format", "png")
+                uri_holder: dict[str, Any] = {}
                 self._pending.append(MediaAsset(
                     sys_id=f"img_{eid}_global",
                     data=ref_bytes,
-                    extension=ext,
-                    uri_holder=img_asset,
+                    extension="png",
+                    uri_holder=uri_holder,
                 ))
                 logger.info(
-                    "[L1-prefill] Used LLM-assigned reference image for %s: %s",
+                    "[L1-prefill] Used pre-filled reference image for %s: %s",
                     eid, uri,
                 )
 
@@ -407,7 +403,10 @@ class KeyframeMaterializer(BaseMaterializer):
                 kf0 = kfs[0]
                 if not isinstance(kf0, dict):
                     continue
-                kid = str(kf0.get("keyframe_id", "") or "kf_001").strip() or "kf_001"
+                # Invariant: keyframe_count == 1 per shot (enforced by evaluator);
+                # sys_id suffix is a constant "kf_001" so the ArtifactRef key is
+                # stable across runs.
+                kid = "kf_001"
                 sys_id = f"img_{shot_id}_{kid}"
                 raw_summary = str(kf0.get("prompt_summary", "") or "").strip()
                 if not raw_summary:
@@ -495,23 +494,23 @@ class KeyframeMaterializer(BaseMaterializer):
     ) -> bytes | None:
         """Generate image from text only, return bytes.
 
-        The service composes the actual text prompt from ``semantic_ctx``
-        and stores it on ``kf_dict`` as ``image_generation_prompt`` for
-        downstream audit.
+        The service composes the actual text prompt from ``semantic_ctx``;
+        the resolved prompt is logged but NOT persisted into the artifact
+        (the keyframe schema no longer carries ``image_generation_prompt``).
         """
-        img_asset = kf_dict.get("image_asset", {})
-        img_asset["asset_id"] = sys_id
         if not semantic_ctx.prompt_summary:
             return None
         try:
             result = await self.image_svc.generate_image(semantic_context=semantic_ctx)
-            kf_dict["image_generation_prompt"] = result.resolved_prompt
-            ext = img_asset.get("format", "png")
+            uri_holder: dict[str, Any] = {"asset_id": sys_id}
             self._pending.append(MediaAsset(
-                sys_id=sys_id, data=result.bytes, extension=ext,
-                uri_holder=img_asset,
+                sys_id=sys_id, data=result.bytes, extension="png",
+                uri_holder=uri_holder,
             ))
-            logger.info("[%s] Image generated: %s", layer_tag, sys_id)
+            logger.info(
+                "[%s] Image generated: %s (prompt=%r)",
+                layer_tag, sys_id, result.resolved_prompt,
+            )
             return result.bytes
         except Exception as exc:
             logger.error("[%s] Image generation failed for %s: %s", layer_tag, sys_id, exc)
@@ -535,24 +534,24 @@ class KeyframeMaterializer(BaseMaterializer):
     ) -> bytes | None:
         """Edit reference image(s) with a semantic context, return bytes.
 
-        Same audit semantics as ``_generate``: ``image_generation_prompt``
-        on ``kf_dict`` reflects what the service actually sent.
+        Same audit semantics as ``_generate``: the resolved prompt is
+        logged but NOT persisted into the artifact JSON.
         """
-        img_asset = kf_dict.get("image_asset", {})
-        img_asset["asset_id"] = sys_id
         if not semantic_ctx.prompt_summary:
             return None
         try:
             result = await self.image_svc.edit_image(
                 reference, semantic_context=semantic_ctx
             )
-            kf_dict["image_generation_prompt"] = result.resolved_prompt
-            ext = img_asset.get("format", "png")
+            uri_holder: dict[str, Any] = {"asset_id": sys_id}
             self._pending.append(MediaAsset(
-                sys_id=sys_id, data=result.bytes, extension=ext,
-                uri_holder=img_asset,
+                sys_id=sys_id, data=result.bytes, extension="png",
+                uri_holder=uri_holder,
             ))
-            logger.info("[%s] Edit generated: %s", layer_tag, sys_id)
+            logger.info(
+                "[%s] Edit generated: %s (prompt=%r)",
+                layer_tag, sys_id, result.resolved_prompt,
+            )
             return result.bytes
         except Exception as exc:
             logger.error("[%s] Edit failed for %s: %s", layer_tag, sys_id, exc)

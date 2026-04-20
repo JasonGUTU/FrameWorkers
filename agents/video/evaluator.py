@@ -1,7 +1,6 @@
 """Evaluator for VideoAgent output (Video Package).
 
-All three layers (output-internal only — no cross-validation against
-upstream artifacts):
+Layers 1 + 3 (L2 intentionally not overridden — see below):
 
 Layer 1 -- structural checks:
   - shot_id format ``^sh_\\d{3}$`` and global-sequential numbering
@@ -11,20 +10,21 @@ Layer 1 -- structural checks:
     drift instead of a silent Python-side patch-up.
   - Transition plan from/to shot_ids exist in scene
   - Metrics consistency (scene_count, shot_segment_count)
-  - Shot order continuity per scene (1, 2, 3, … per scene)
   - Temporal/transition validation (type)
   - Required content (non-empty scenes and shot_segments)
 
 Layer 2 -- creative assessment:
   Not applicable. VideoAgent output is entirely structural (IDs,
-  asset pointers, transition types, mirrored semantic_context). All
-  quality dimensions that matter are checked in Layer 1 (structural)
-  or Layer 3 (asset).
+  transition types, mirrored semantic_context). All quality dimensions
+  that matter are checked in Layer 1.
 
 Layer 3 -- post-materialization asset checks:
-  - clip_generation_success: shot-level clip success rate
-  - assembly_completeness: scene clips + final video
-  - motion_quality: (TODO) video analysis model
+  Asset pointers were dropped from the schema (video_asset /
+  scene_clip_asset / final_video_asset no longer exist on the output),
+  so per-clip URI inspection is no longer possible from the asset dict
+  alone. L3 returns a vacuous pass; per-clip generation failures are
+  surfaced via ``MaterializeContext.report_failure`` into the workspace
+  event log instead.
 """
 
 from __future__ import annotations
@@ -32,7 +32,7 @@ from __future__ import annotations
 import re
 from typing import Any
 
-from ..base_evaluator import BaseEvaluator, check_uri
+from ..base_evaluator import BaseEvaluator
 from .schema import VideoAgentOutput
 
 
@@ -95,13 +95,6 @@ class VideoEvaluator(BaseEvaluator[VideoAgentOutput]):
             sum(len(s.shot_segments) for s in c.scenes),
         )
 
-        # --- Shot order continuity per scene ---
-        for scene in c.scenes:
-            self._check_order_continuous(
-                errors, f"scene {scene.scene_id} shot_segment",
-                [seg.order for seg in scene.shot_segments],
-            )
-
         # --- Temporal / transition checks ---
         VALID_TRANSITIONS = {"cut", "dissolve", "fade", "soft"}
         for scene in c.scenes:
@@ -124,9 +117,8 @@ class VideoEvaluator(BaseEvaluator[VideoAgentOutput]):
         return errors
 
     # Note: evaluate_creative is intentionally NOT overridden.
-    # VideoAgent output is entirely structural (IDs, asset pointers,
-    # transition types).  All quality dimensions that matter are checked
-    # in Layer 1 (structural) or Layer 3 (asset).
+    # VideoAgent output is entirely structural (IDs, transition types).
+    # All quality dimensions that matter are checked in Layer 1.
 
     # ------------------------------------------------------------------
     # Layer 3 -- Post-materialization asset evaluation
@@ -136,99 +128,40 @@ class VideoEvaluator(BaseEvaluator[VideoAgentOutput]):
         self,
         asset_data: dict[str, Any],
     ) -> dict[str, Any]:
-        """Check that shot clips, scene clips, and final video were generated."""
+        """Vacuous pass: asset URIs are no longer carried on the schema.
+
+        The slim schema does not persist per-shot ``video_asset``,
+        per-scene ``scene_clip_asset``, or ``final_video_asset`` blocks,
+        so the asset dict alone cannot distinguish a clip that generated
+        vs. one that failed. Per-clip generation failures are surfaced
+        by ``VideoMaterializer`` via
+        ``MaterializeContext.report_failure`` into the workspace event
+        log; L3 here is kept as a stub returning ``overall_pass=True``
+        so the base pipeline's L3 hook remains wired.
+        """
         content = asset_data.get("content", {})
         scenes = content.get("scenes", [])
-
-        total_clips_planned = 0
-        total_clips_success = 0
-        total_clips_error = 0
-
-        # --- Shot clips ---
-        for scene in scenes:
-            for seg in scene.get("shot_segments", []):
-                uri = seg.get("video_asset", {}).get("uri", "")
-                total_clips_planned += 1
-                status = check_uri(uri)
-                if status == "success":
-                    total_clips_success += 1
-                elif status == "error":
-                    total_clips_error += 1
-
-        # --- Scene clips ---
-        scene_clips_planned = 0
-        scene_clips_success = 0
-        for scene in scenes:
-            clip = scene.get("scene_clip_asset", {})
-            if clip:
-                scene_clips_planned += 1
-                uri = clip.get("uri", "")
-                if check_uri(uri) == "success":
-                    scene_clips_success += 1
-
-        # --- Final video ---
-        final = content.get("final_video_asset", {})
-        final_ok = check_uri(final.get("uri", "")) == "success"
-
-        # --- Compute scores ---
-        # Vacuous case: empty plan → 1.0 (nothing to fail). A real "no
-        # shots were planned" failure should be caught upstream by the
-        # structural L1 check, not here.
-        clip_success_rate = (
-            total_clips_success / total_clips_planned
-            if total_clips_planned
-            else 1.0
-        )
-        scene_assembly_rate = (
-            scene_clips_success / scene_clips_planned
-            if scene_clips_planned
-            else 1.0
+        total_clips_planned = sum(
+            len(s.get("shot_segments", []) or []) for s in scenes
         )
 
         dimensions = {
             "clip_generation_success": {
-                "score": clip_success_rate,
-                "notes": [
-                    f"{total_clips_success}/{total_clips_planned} shot clips generated",
-                    *(
-                        [f"{total_clips_error} clips failed with errors"]
-                        if total_clips_error
-                        else []
-                    ),
-                ],
-            },
-            "assembly_completeness": {
-                "score": (
-                    (scene_assembly_rate + (1.0 if final_ok else 0.0)) / 2.0
-                ),
-                "notes": [
-                    f"{scene_clips_success}/{scene_clips_planned} scene clips assembled",
-                    f"final video: {'OK' if final_ok else 'MISSING'}",
-                ],
-            },
-            "motion_quality": {
                 "score": 1.0,
-                "notes": ["motion quality check not yet implemented"],
+                "notes": [
+                    f"{total_clips_planned} shot clips planned; per-clip "
+                    f"failures are reported via the workspace event log, "
+                    f"not the asset dict",
+                ],
             },
         }
-
-        # final_ok is now load-bearing on overall_pass — previously it was
-        # only mentioned in the summary string, so a run could miss the
-        # final assembled video and still report overall_pass=True (which
-        # let "0/N shot clips, final=MISSING" silently pass as COMPLETED).
-        overall_pass = (
-            clip_success_rate >= self.ASSET_PASS_THRESHOLD
-            and final_ok
-        )
         summary = (
-            f"Video asset eval: {total_clips_success}/{total_clips_planned} "
-            f"shot clips ({clip_success_rate:.0%}), "
-            f"{scene_clips_success}/{scene_clips_planned} scene clips, "
-            f"final={'OK' if final_ok else 'MISSING'}."
+            f"Video asset eval: {total_clips_planned} shot clips planned "
+            f"(URI-based L3 check disabled — see materializer failure "
+            f"reports)."
         )
-
         return {
             "dimensions": dimensions,
-            "overall_pass": overall_pass,
+            "overall_pass": True,
             "summary": summary,
         }

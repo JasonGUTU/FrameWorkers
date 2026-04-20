@@ -66,6 +66,17 @@ class ShotSemanticContext:
     keyframe_prompt_summaries: list[str] = field(default_factory=list)
     video_motion_hints: list[str] = field(default_factory=list)
 
+    # Dialogue spoken by the character on-screen, verbatim (may be non-ASCII
+    # — e.g. Chinese characters written directly). Empty for action-only
+    # shots. Drives Kling's native speech synthesis + lip-sync when
+    # ``generate_audio=True``; see ``FalVideoService._compose_prompt``.
+    dialogue_text: str = ""
+    # Short delivery-tone descriptor controlling how the line is spoken.
+    # Free-form but the typical vocabulary is: calm / neutral / sad /
+    # angry / whispered / excited / warm / tense / urgent. Empty when
+    # there is no dialogue or tone is unspecified.
+    emotion_hint: str = ""
+
 
 @dataclass
 class VideoClipResult:

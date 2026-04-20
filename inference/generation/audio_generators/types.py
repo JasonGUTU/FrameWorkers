@@ -8,11 +8,11 @@ own schema for inspection/replay.
 
 Unlike the image and video services, audio doesn't need a separate
 ``*SemanticContext`` type yet — the current calls are simple enough
-(a line of narration text, a mood string, an ambience description)
-that the caller passes them as plain parameters. When / if a more
-complex audio agent is added that wants to describe "what this cue
-is for" in richer semantic terms, a ``AudioSemanticContext`` can be
-introduced alongside this file.
+(a TTS text, a mood string, an ambience description) that the caller
+passes them as plain parameters. When / if a more complex audio agent
+is added that wants to describe "what this cue is for" in richer
+semantic terms, a ``AudioSemanticContext`` can be introduced alongside
+this file.
 """
 
 from __future__ import annotations

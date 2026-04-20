@@ -1,15 +1,15 @@
-"""VideoAnalysisAgent descriptor — self-describing manifest for the registry."""
+"""VideoAnalysisAgent descriptor — built from a single AgentSpec."""
 
 from __future__ import annotations
 
 from pydantic import BaseModel
 
 from ..common_schema import ResolvedArtifactEntry
-from ..descriptor import SubAgentDescriptor
+from ..descriptor import AgentSpec, InputLabelSpec, SubAgentDescriptor
 from .agent import VideoAnalysisAgent
+from .evaluator import VideoAnalysisEvaluator
 from .labels import INPUT_LABEL_SOURCE_VIDEO
 from .schema import VideoAnalysisAgentInput
-from .evaluator import VideoAnalysisEvaluator
 
 
 def build_input(
@@ -25,51 +25,60 @@ def build_input(
 
 
 def build_captions(agent_id: str, output_dict: dict) -> dict:
+    # Caption role: signal "video analysis document" for downstream
+    # consumers (Story reference, Music mood derivation). Content
+    # (title / genre free text) lives in the JSON payload, NOT caption.
+    # See MEMORY:feedback_caption_role_not_content.
     content = output_dict.get("content", {})
-    summary = content.get("video_summary", {})
-    title = summary.get("title", "Untitled")
     scene_count = len(content.get("scenes", []))
-    genre = summary.get("genre", "")
     return {
         agent_id: {
             "caption": (
-                f"Video analysis: '{title}' — {scene_count} scene(s), "
-                f"{genre}. Structured scene-by-scene breakdown with "
-                f"entities and descriptions."
+                f"Video analysis document: {scene_count} scene(s). "
+                f"Structured scene-by-scene breakdown with entities and "
+                f"descriptions."
             ),
             "scope": "global",
         },
     }
 
 
-CATALOG_ENTRY = (
-    "VideoAnalysisAgent\n"
-    "  - Input: a source-video artifact + analysis-intent text (what aspects the user cares "
-    "about — e.g. 'find the funniest moments', 'identify all speakers').\n"
-    "  - Output: video_analysis (scene segments, per-scene visual descriptions, entities, "
-    "overall content summary).\n"
-    "  - Purpose: Deep structured analysis of video content via vision LLM — scene detection, "
-    "visual description, entity identification, content summarization. Run me when the user "
-    "wants understanding / analysis / summarization of an existing video, OR as a prep step "
-    "before content-driven highlight selection (so the highlight step gets richer scene "
-    "metadata). SKIP when the user only wants simple per-clip operations (style transfer, "
-    "inpainting, transcription)."
+SPEC = AgentSpec(
+    agent_id="VideoAnalysisAgent",
+    inputs=[
+        InputLabelSpec(
+            name=INPUT_LABEL_SOURCE_VIDEO,
+            cardinality="single",
+            description=(
+                "The video FILE on disk to analyze — a binary mp4 "
+                "artifact (mime=video/mp4) whose actual bytes a vision-"
+                "capable LLM watches to produce a structured breakdown "
+                "(scene boundaries, visual descriptions, entities, "
+                "summary). This label targets the mp4 binary "
+                "specifically, NOT any JSON/manifest video_package "
+                "artifact that may coexist."
+            ),
+        ),
+    ],
+    output_description=(
+        "video_analysis (scene segments, per-scene visual descriptions, "
+        "entities, overall content summary)."
+    ),
+    purpose_and_routing=(
+        """Deep structured analysis of an existing video — scene boundaries, mood, entities, climax candidates — producing a structured JSON for downstream consumers. Trigger: requests to analyse an existing video's narrative beats / mood curve / pacing / climax detection."""
+    ),
+    input_preamble=(
+        "I perform deep structured analysis of video content: scene "
+        "detection, visual description, entity identification, and "
+        "content summarization."
+    ),
 )
 
-DESCRIPTOR = SubAgentDescriptor(
-    agent_id="VideoAnalysisAgent",
-    catalog_entry=CATALOG_ENTRY,
+
+DESCRIPTOR = SubAgentDescriptor.from_spec(
+    SPEC,
     agent_factory=lambda llm: VideoAnalysisAgent(llm_client=llm),
     evaluator_factory=VideoAnalysisEvaluator,
     build_input=build_input,
     build_captions=build_captions,
-    materializer_factory=None,
-    input_needs_description=(
-        "I perform deep structured analysis of video content: scene "
-        "detection, visual description, entity identification, and "
-        "content summarization.\n\n"
-        f"[{INPUT_LABEL_SOURCE_VIDEO}] (single)\n"
-        "The video file to analyze. I use a vision-capable LLM to "
-        "watch the video and produce a structured breakdown."
-    ),
 )

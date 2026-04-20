@@ -59,12 +59,4 @@ class CompositorEvaluator(BaseEvaluator[CompositorAgentOutput]):
                     f"color_grade.{field_name} ({val}) out of range [-1.0, 1.0]"
                 )
 
-        # Delivery asset
-        da = output.content.delivery_asset
-        if da.asset_id != "compositor_final":
-            errors.append(
-                f"delivery_asset.asset_id must be 'compositor_final', "
-                f"got '{da.asset_id}'"
-            )
-
         return errors

@@ -1,0 +1,13 @@
+[
+  {
+    "goal": "Add a soft jazz-saxophone score to this romance-drama elevator reconciliation clip",
+    "rationale": "User uploaded a romance-drama elevator reconciliation clip and asks for a soft jazz-saxophone score. Plan: IntakeText captures the text brief, IntakeVideo registers the source clip, MusicAgent composes the jazz-saxophone score, AudioMixAgent blends it with the original elevator-hum-and-dialogue audio, CompositorAgent outputs the final. No AmbienceAgent because the user only requested a music score, not elevator ambience. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No StyleTransferAgent or SubtitleAgent because no look change or captions were requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the soft jazz-saxophone score brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded romance-drama elevator reconciliation clip"},
+      {"agent_id": "MusicAgent", "intent": "Compose a soft jazz-saxophone score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the jazz-saxophone score with the original elevator-hum-and-dialogue audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the clip with the new mixed audio as the final render"}
+    ]
+  }
+]

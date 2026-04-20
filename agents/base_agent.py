@@ -33,6 +33,8 @@ from pydantic import BaseModel
 
 from inference.clients import LLMClient
 
+from .common_schema import InputRejection, UpstreamInputRejected
+
 if TYPE_CHECKING:
     from .base_evaluator import BaseEvaluator
     from .descriptor import BaseMaterializer, MediaAsset
@@ -41,6 +43,58 @@ logger = logging.getLogger(__name__)
 
 InputT = TypeVar("InputT", bound=BaseModel)
 OutputT = TypeVar("OutputT", bound=BaseModel)
+
+
+# ---------------------------------------------------------------------------
+# Shared rule: every LLM-driven agent may abort with a structured rejection
+# of upstream input instead of producing a normal output.
+# ---------------------------------------------------------------------------
+
+INPUT_REJECTION_RULE = (
+    "=== UPSTREAM INPUT REJECTION ===\n"
+    "If the upstream artifacts handed to you are too incomplete or malformed "
+    "for you to produce a useful output, DO NOT fabricate content to cope. "
+    "Instead respond with JSON of EXACTLY this shape and nothing else:\n"
+    '{\n'
+    '  "input_rejection": {\n'
+    '    "reason": "<one-sentence explanation of what is insufficient>",\n'
+    '    "missing_labels": ["<consumer-declared label whose content is unusable>", ...],\n'
+    '    "offending_fields": ["<field path you tried to read but could not>", ...],\n'
+    '    "upstream_agent_hint": "<agent_id you think should be re-run or replaced, or \\"\\">"\n'
+    '  }\n'
+    '}\n'
+    "Rules for using this escape hatch:\n"
+    "  * Only reject when the input makes your job impossible — NOT when it is "
+    "merely sparse or stylistically weak. Sparse input should still yield a "
+    "real output.\n"
+    "  * Your rejection claim must be grounded in what is (or is not) present "
+    "in the JSON text you were given. Do not reject based on aesthetic "
+    "preference.\n"
+    "  * When rejecting, return ONLY the ``input_rejection`` object — no "
+    "partial normal output alongside it.\n"
+    "=== END UPSTREAM INPUT REJECTION ===\n\n"
+)
+
+
+def _maybe_parse_rejection(raw_json: dict[str, Any]) -> InputRejection | None:
+    """Return a parsed :class:`InputRejection` if the LLM's raw JSON carries
+    an ``input_rejection`` top-level key, else ``None``.
+
+    Tolerates garbage shape (e.g. ``input_rejection`` not a dict) by
+    returning ``None`` so the caller falls back to normal parsing and the
+    downstream Pydantic validator raises a legible error.
+    """
+    raw = raw_json.get("input_rejection") if isinstance(raw_json, dict) else None
+    if not isinstance(raw, dict):
+        return None
+    try:
+        return InputRejection.model_validate(raw)
+    except Exception as exc:
+        logger.warning(
+            "LLM emitted an input_rejection key but it failed validation: %s (raw=%r)",
+            exc, raw,
+        )
+        return None
 
 
 # ---------------------------------------------------------------------------
@@ -249,8 +303,12 @@ class BaseAgent(Generic[InputT, OutputT]):
         Returned output is parsed via ``parse_output()`` but
         ``recompute_metrics`` is NOT called — the caller (``generate()``)
         decides when (and whether) to recompute.
+
+        If the LLM emits a top-level ``input_rejection`` key, raises
+        :class:`UpstreamInputRejected` so ``run()`` can short-circuit
+        without retrying (same input → same rejection).
         """
-        system = self.system_prompt()
+        system = INPUT_REJECTION_RULE + self.system_prompt()
         user = self.build_user_prompt(input_data)
         if rework_notes:
             user += self._rework_section(rework_notes)
@@ -261,8 +319,15 @@ class BaseAgent(Generic[InputT, OutputT]):
             )
         logger.debug("[%s] System prompt length: %d", self.agent_name, len(system))
         logger.debug("[%s] User prompt length: %d", self.agent_name, len(user))
-        raw_json = await self.llm.chat_json(system, user)
+        raw_json = await self.llm.chat_json(system, user, max_tokens=65536)
         logger.info("[%s] Received LLM response, parsing …", self.agent_name)
+        rejection = _maybe_parse_rejection(raw_json)
+        if rejection is not None:
+            logger.warning(
+                "[%s] LLM rejected upstream input: %s",
+                self.agent_name, rejection.reason,
+            )
+            raise UpstreamInputRejected(rejection)
         # Strip metrics before parsing — LLM may echo "<SYSTEM_COMPUTED>"
         # placeholders which fail Pydantic type validation.  Defaults (0/0.0)
         # are safe because subclasses call recompute_metrics afterwards.
@@ -281,8 +346,12 @@ class BaseAgent(Generic[InputT, OutputT]):
         Subclasses that use this must also implement ``system_prompt()``,
         ``build_creative_prompt(input_data, skeleton)``, and
         ``fill_creative(skeleton, creative_dict)``.
+
+        Same rejection escape hatch as ``_llm_fill_full``: a top-level
+        ``input_rejection`` in the LLM response raises
+        :class:`UpstreamInputRejected`.
         """
-        system = self.system_prompt()
+        system = INPUT_REJECTION_RULE + self.system_prompt()
         user = self.build_creative_prompt(input_data, skeleton)
         if rework_notes:
             user += self._rework_section(rework_notes)
@@ -293,11 +362,18 @@ class BaseAgent(Generic[InputT, OutputT]):
             )
         logger.debug("[%s] System prompt length: %d", self.agent_name, len(system))
         logger.debug("[%s] User prompt length: %d", self.agent_name, len(user))
-        creative_json = await self.llm.chat_json(system, user)
+        creative_json = await self.llm.chat_json(system, user, max_tokens=65536)
         logger.info(
             "[%s] Received creative-only LLM response, merging …",
             self.agent_name,
         )
+        rejection = _maybe_parse_rejection(creative_json)
+        if rejection is not None:
+            logger.warning(
+                "[%s] LLM (creative pass) rejected upstream input: %s",
+                self.agent_name, rejection.reason,
+            )
+            raise UpstreamInputRejected(rejection)
         return self.fill_creative(skeleton, creative_json)
 
     @staticmethod
@@ -368,7 +444,30 @@ class BaseAgent(Generic[InputT, OutputT]):
             asset_dict = None
 
             # --- Step 1: Generate (subclass-owned flow) ---
-            output = await self.generate(input_data, rework_notes=rework_notes)
+            try:
+                output = await self.generate(input_data, rework_notes=rework_notes)
+            except UpstreamInputRejected as rejected:
+                # Same input → same rejection; no retry. Surface the structured
+                # rejection through eval_result so assistant can format the
+                # [upstream_input_rejected] error prefix for the director.
+                logger.warning(
+                    "[%s] Upstream input rejected, short-circuiting run: %s",
+                    self.agent_name, rejected.rejection.reason,
+                )
+                return ExecutionResult(
+                    output=None,
+                    eval_result={
+                        "kind": "upstream_input_rejected",
+                        "overall_pass": False,
+                        "summary": (
+                            f"upstream input rejected: "
+                            f"{rejected.rejection.reason or '(no reason)'}"
+                        ),
+                        "input_rejection": rejected.rejection.model_dump(),
+                    },
+                    passed=False,
+                    attempts=attempt,
+                )
 
             # --- Step 2: L1+L2 evaluation (structural + creative) ---
             if self.evaluator is not None:

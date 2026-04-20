@@ -48,6 +48,31 @@ GLOBAL_MEMORY_FILENAME = "global_memory.md"
 ENTRIES_HEADER = "## Entries"
 JSON_FENCE_RE = re.compile(r"```json\s*\n([\s\S]*?)\n```", re.MULTILINE)
 
+# Captures the suffix ``persist_raw_upload`` appends to placeholder
+# captions (``". Pending intake processing — only visible to Intake* agents."``).
+# The suffix is valid while the ref is ``scope=raw_pending`` — it warns the
+# resolver LLM off picking a not-yet-ingested upload for non-Intake consumers.
+# Once the Intake* framework hook promotes the ref to ``scope=global``, the
+# suffix is stale (the ref is no longer hidden) and must be stripped so the
+# caption doesn't self-contradict. The leading period is preserved by
+# falling back to a clean trailing period on the kept prefix.
+_PENDING_INTAKE_SUFFIX_RE = re.compile(
+    r"\.\s*Pending intake processing.*$",
+    re.IGNORECASE,
+)
+
+
+def _strip_pending_intake_suffix(caption: str) -> str:
+    """Remove the raw_pending-only ``Pending intake processing…`` clause.
+
+    Used exclusively by ``GlobalMemory.promote_raw_pending_to_global``. No-op
+    when the suffix is absent — keeps the function idempotent across
+    replays.
+    """
+    if not caption:
+        return caption
+    return _PENDING_INTAKE_SUFFIX_RE.sub(".", caption).rstrip()
+
 
 class GlobalMemory:
     """Per-execution artifact ledger for one workspace.
@@ -286,6 +311,41 @@ class GlobalMemory:
         if updated:
             self._write_all(entries)
         return updated
+
+    def promote_raw_pending_to_global(self, paths: List[str]) -> int:
+        """Flip ``scope=raw_pending`` → ``scope=global`` for refs at the given paths.
+
+        Used by the Intake* framework hook: once an Intake agent has
+        successfully ingested a raw upload, the framework promotes that
+        upload's registry entry so non-Intake consumers can see it.
+
+        Semantics:
+          * Only touches refs whose current scope is exactly
+            ``"raw_pending"``. Refs already at ``"global"`` (or any other
+            scope) are left alone — idempotent, safe on replays / retries.
+          * Strips the stale ``". Pending intake processing — only visible
+            to Intake* agents."`` suffix from the caption so a global-
+            visible ref no longer self-describes as hidden. The bytes-
+            layer prefix ``"Raw user upload (mime=…)"`` is kept intact.
+          * Rewrites ``global_memory.md`` only if at least one ref was
+            promoted.
+
+        Returns the number of refs whose scope was actually changed.
+        """
+        wanted = {str(p).strip() for p in paths if p}
+        if not wanted:
+            return 0
+        entries = self._read_all()
+        promoted = 0
+        for entry in entries:
+            for ref in entry.artifacts:
+                if ref.path in wanted and ref.scope == "raw_pending":
+                    ref.scope = "global"
+                    ref.caption = _strip_pending_intake_suffix(ref.caption)
+                    promoted += 1
+        if promoted:
+            self._write_all(entries)
+        return promoted
 
     def get_by_paths(self, paths: List[str]) -> List[ArtifactRef]:
         """Return ArtifactRef objects matching the given file paths."""

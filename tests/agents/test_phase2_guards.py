@@ -217,7 +217,6 @@ _ASSISTANT_HARD_CODE_AGENTS = (
     "ScreenplayAgent",
     "KeyFrameAgent",
     "VideoAgent",
-    "NarrationAgent",
     "MusicAgent",
     "AmbienceAgent",
     "AudioMixAgent",
@@ -289,10 +288,10 @@ def test_assistant_does_not_import_agent_specific_modules():
 # ---------------------------------------------------------------------------
 
 
-def test_all_four_intake_agents_registered():
+def test_all_intake_agents_registered():
     from agents import AGENT_REGISTRY  # late import — tests import order
 
-    expected = {"IntakeTextAgent", "IntakeImageAgent", "IntakeVideoAgent", "IntakeAudioAgent"}
+    expected = {"IntakeTextAgent", "IntakeImageAgent", "IntakeVideoAgent"}
     missing = expected - set(AGENT_REGISTRY.keys())
     assert not missing, f"Missing intake agents from AGENT_REGISTRY: {missing}"
 

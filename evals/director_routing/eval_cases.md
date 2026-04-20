@@ -1,145 +1,156 @@
 # director_agent 路由评测用例
 
-> Source: `evals/director_routing/eval_cases.json` · **77** cases / **10** categories  
+> Source: `evals/director_routing/eval_cases.json` · **100** cases / **8** categories  
 > Chain 记法: `→` 分步；`{A|B|C}` = 这一步任一命中即可；`×N` = 连续 N 步同一组；末尾 `Agent` 后缀省略（`Story` = `StoryAgent`）。
 
 ## 目录
 
 - [创作类 (creative — brief → finished film)](#cr) · 15
 - [输入类 (intake — 图片参考素材)](#intake) · 5
-- [生成式字幕 (subtitles for newly-created films)](#sub) · 5
-- [提取式字幕 (subtitles from existing video)](#sub_vid) · 4
+- [字幕类 (subtitles — 单语字幕)](#sub) · 9
 - [双语字幕 (bilingual subtitles)](#bilingual) · 5
 - [风格迁移 (style transfer)](#style) · 5
 - [视频续写 (video extend)](#extend) · 5
 - [精彩片段 (highlight)](#highlight) · 4
-- [复杂组合 (complex)](#complex) · 22
-- [边界用例 (edge cases)](#edge) · 7
+- [复杂组合 (complex)](#complex) · 52
 
 
 ## <a id="cr"></a>创作类 (creative — brief → finished film)
 
 | # | name | input | expected chain |
 |---:|---|---|---|
-| 1 | `cr_01` | 做一个修仙漫剧，讲废柴少年觉醒上古血脉后在宗门逆袭的故事 | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 1 | `cr_01` | Make a cultivation-fantasy animated drama about a washed-up young man who awakens an ancient bloodline and rises through the ranks of his sect | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
 | 2 | `cr_02` | Make a CEO romance mini-drama about a struggling waitress who discovers her rude regular customer is the billionaire she saved years ago | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
-| 3 | `cr_03` | 做一个灵异悬疑短剧，女主搬进凶宅发现前任住户留下的录像带揭示一桩未破凶案 | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
-| 4 | `cr_04` | 做一个3分钟的重生复仇漫剧，女主被闺蜜陷害坠楼后重生回3年前开始反击 | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
-| 5 | `cr_05` | Create a post-apocalyptic manhua drama where the last survivors discover a hidden sanctuary guarded by an awakened AI | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
-| 6 | `cr_06` | 做一个甜宠古装短剧，女主穿越成丞相嫡女，和冷面世子从相看两厌到互相救赎 | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
-| 7 | `cr_07` | I want a vertical-screen romance mini-drama where a young woman wins a dating-app lottery and ends up fake-married to a reclusive tech mogul | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
-| 8 | `cr_08` | 做一个科幻漫剧，讲最后一个觉醒的 AI 爱上了她唯一剩下的人类工程师 | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
-| 9 | `cr_09` | 做一个都市言情短剧，女主在雨夜的巴黎咖啡馆遇到 5 年前失踪的前男友 | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 3 | `cr_03` | Make a supernatural-thriller mini-drama where the female lead moves into a haunted house and finds a videotape left by the previous tenant that reveals an unsolved murder | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 4 | `cr_04` | Make a 3-minute rebirth-revenge animated drama where the female lead is framed by her best friend and falls to her death, then is reborn three years earlier to strike back | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 5 | `cr_05` | Create a post-apocalyptic animated drama where the last survivors discover a hidden sanctuary guarded by an awakened AI | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 6 | `cr_06` | Make a sweet costume-drama mini-drama where the female lead transmigrates into the chancellor's legitimate daughter and moves from mutual loathing to mutual redemption with a cold-faced prince | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 7 | `cr_07` | I want a romance mini-drama where a young woman wins a dating-app lottery and ends up fake-married to a reclusive tech mogul | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 8 | `cr_08` | Make a sci-fi animated drama about the last awakened AI falling in love with the only human engineer left | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 9 | `cr_09` | Make an urban romance mini-drama where the female lead runs into her ex-boyfriend — missing for five years — in a rainy-night Paris café | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
 | 10 | `cr_10` | Make a workplace revenge mini-drama where an overlooked analyst exposes her boss's insider trading by rising to CEO at a rival firm | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
-| 11 | `cr_11` | 做一个古装宫斗短剧，真假公主换位后互相利用，最终联手揭穿皇后的野心 | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
-| 12 | `cr_12` | 做一个武侠漫剧，讲少年剑客为师门复仇独闯魔教七重杀阵 | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
-| 13 | `cr_13` | 做一个都市逆袭短剧，被赶出豪门的赘婿其实是隐藏身份的顶级财阀继承人 | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
-| 14 | `cr_14` | 做一个玄幻漫剧的史诗决战：七大上古神兽集结对抗重临人间的魔神 | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
-| 15 | `cr_15` | 做一个悬疑反转短剧，心理医生发现新来的病人正是多年前杀害她妹妹的凶手 | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 11 | `cr_11` | Make a palace-intrigue costume-drama mini-drama where a real and a fake princess swap places, exploit each other, and ultimately team up to expose the empress's ambitions | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 12 | `cr_12` | Make a martial-arts animated drama about a young swordsman who, to avenge his sect, ventures alone into the demonic cult's seven-layered killing formation | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 13 | `cr_13` | Make an urban underdog-comeback mini-drama where the live-in son-in-law thrown out of the rich family is secretly the heir of a top conglomerate | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 14 | `cr_14` | Make an epic-battle scene for a fantasy animated drama: seven ancient divine beasts gather to face a demon god returning to the mortal realm | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 15 | `cr_15` | Make a suspense-twist mini-drama where a therapist realizes her new patient is the man who murdered her sister years ago | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
 
 ## <a id="intake"></a>输入类 (intake — 图片参考素材)
 
 | # | name | input | expected chain |
 |---:|---|---|---|
-| 16 | `intake_img_01` | 根据我上传的这张图片作为故事主角，生成一部励志修仙漫剧 | IntakeText → IntakeImage → BriefEnricher → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
-| 17 | `intake_img_02` | 把我上传的这张照片作为背景城市，做一个 3 分钟的都市悬疑短剧，氛围要压抑 | IntakeText → IntakeImage → BriefEnricher → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
-| 18 | `intake_img_03` | Use the character in this uploaded image as the hero of a one-minute xianxia cultivation manhua trailer | IntakeText → IntakeImage → BriefEnricher → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
-| 19 | `intake_img_04` | 以我上传的这张照片里的海边小镇为舞台，做一段古装虐恋短剧：女主为救男主葬身海底 | IntakeText → IntakeImage → BriefEnricher → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 16 | `intake_img_01` | Using this uploaded image as the story's protagonist, produce an inspirational cultivation-fantasy animated drama | IntakeText → IntakeImage → BriefEnricher → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 17 | `intake_img_02` | Using this uploaded photo as the city backdrop, make a 3-minute urban-suspense mini-drama with an oppressive atmosphere | IntakeText → IntakeImage → BriefEnricher → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 18 | `intake_img_03` | Use the character in this uploaded image as the hero of a one-minute cultivation-fantasy animated-drama trailer | IntakeText → IntakeImage → BriefEnricher → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 19 | `intake_img_04` | Set in the seaside town from this uploaded photo, make a tragic costume-drama mini-drama: the female lead dies under the sea to save the male lead | IntakeText → IntakeImage → BriefEnricher → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
 | 20 | `intake_img_05` | Take the person in this photo as the protagonist and make a rebirth-themed mini-drama about them waking up ten years before their lover's death | IntakeText → IntakeImage → BriefEnricher → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
 
-## <a id="sub"></a>生成式字幕 (subtitles for newly-created films)
+## <a id="sub"></a>字幕类 (subtitles — 单语字幕)
 
 | # | name | input | expected chain |
 |---:|---|---|---|
-| 21 | `sub_01` | 做一集带中文字幕的校园甜宠短剧：学霸班长和转学来的不良少女互相救赎 | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|AudioMix} → {AudioMix\|Subtitle} → Compositor → done |
-| 22 | `sub_02` | 帮我做一集带字幕的古装美食漫剧，女主是御膳房小宫女靠厨艺逆袭 | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|AudioMix} → {AudioMix\|Subtitle} → Compositor → done |
+| 21 | `sub_01` | Make an English-subtitled campus sweet-romance mini-drama: the top-student class president and a transferred-in delinquent girl redeem each other | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|AudioMix} → {AudioMix\|Subtitle} → Compositor → done |
+| 22 | `sub_02` | Make a subtitled costume-drama culinary animated drama where the female lead, a junior imperial-kitchen maid, rises through her cooking skills | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|AudioMix} → {AudioMix\|Subtitle} → Compositor → done |
 | 23 | `sub_03` | Create a mini-drama with English subtitles about a rebirth revenge story set in modern Shanghai | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|AudioMix} → {AudioMix\|Subtitle} → Compositor → done |
-| 24 | `sub_04` | 做一部带字幕的儿童修仙漫剧，主角是七岁神兽少年为守护深海禁地而战 | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|AudioMix} → {AudioMix\|Subtitle} → Compositor → done |
-| 25 | `sub_05` | 做一集带字幕的科幻短剧，男主是顶级数码评测博主忽然发现自己其实是 AI | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|AudioMix} → {AudioMix\|Subtitle} → Compositor → done |
-
-## <a id="sub_vid"></a>提取式字幕 (subtitles from existing video)
-
-| # | name | input | expected chain |
-|---:|---|---|---|
-| 26 | `sub_vid_01` | 给这集访谈类短剧配上中文字幕 | IntakeText → IntakeVideo → Transcription → Subtitle → Compositor → done |
-| 27 | `sub_vid_02` | 帮这部竖屏演讲短剧加上中文字幕 | IntakeText → IntakeVideo → Transcription → Subtitle → Compositor → done |
-| 28 | `sub_vid_03` | Generate English subtitles for this Chinese mini-drama episode | IntakeText → IntakeVideo → Transcription → Subtitle → Compositor → done |
-| 29 | `sub_vid_05` | 给这部 30 集修仙漫剧批量生成中文硬字幕 | IntakeText → IntakeVideo → Transcription → Subtitle → Compositor → done |
+| 24 | `sub_04` | Make a subtitled children's cultivation-fantasy animated drama whose protagonist is a seven-year-old divine-beast boy fighting to protect a deep-sea forbidden zone | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|AudioMix} → {AudioMix\|Subtitle} → Compositor → done |
+| 25 | `sub_05` | Make a subtitled sci-fi mini-drama where the male lead, a top tech-reviewer blogger, suddenly discovers he is actually an AI | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|AudioMix} → {AudioMix\|Subtitle} → Compositor → done |
+| 26 | `sub_vid_01` | Add English subtitles to this interview-style mini-drama | IntakeText → IntakeVideo → Transcription → Subtitle → Compositor → done |
+| 27 | `sub_vid_02` | Add English subtitles to this speech mini-drama | IntakeText → IntakeVideo → Transcription → Subtitle → Compositor → done |
+| 28 | `sub_vid_03` | Generate Chinese subtitles for this English mini-drama episode | IntakeText → IntakeVideo → Transcription → Subtitle → Translation → Compositor → done |
+| 29 | `sub_vid_05` | Batch-generate English burned-in subtitles for this 30-episode cultivation-fantasy animated drama | IntakeText → IntakeVideo → Transcription → Subtitle → Compositor → done |
 
 ## <a id="bilingual"></a>双语字幕 (bilingual subtitles)
 
 | # | name | input | expected chain |
 |---:|---|---|---|
-| 30 | `bilingual_01` | 做一集中英双语字幕的古装漫剧，讲茶道传承九代后与现代女主通过转世重连 | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|Translation} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {AudioMix\|Translation} → Compositor → done |
-| 31 | `bilingual_02` | 帮我做一集中日双语字幕的霸总短剧，男主是留日回国的隐藏财阀继承人 | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|Translation} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {AudioMix\|Translation} → Compositor → done |
-| 32 | `bilingual_03` | Create a mini-drama with Chinese and English subtitles about a martial-arts prodigy seeking revenge across ancient and modern timelines | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|Translation} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {AudioMix\|Translation} → Compositor → done |
-| 33 | `bilingual_04` | 做一集中西语双语字幕的修仙漫剧，准备拉美市场上线 | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|Translation} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {AudioMix\|Translation} → Compositor → done |
-| 34 | `bilingual_05` | 做一部中英双语字幕的都市短剧，女主是中美混血的天才医生被卷入家族遗产争夺 | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|Translation} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {AudioMix\|Translation} → Compositor → done |
+| 30 | `bilingual_01` | Make an English-Chinese bilingual costume-drama animated drama about a nine-generation tea-ceremony lineage reconnected with a modern female lead through reincarnation | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|Translation} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {AudioMix\|Translation} → Compositor → done |
+| 31 | `bilingual_02` | Make an English-Japanese bilingual CEO-romance mini-drama where the male lead is a Japan-returned, hidden-identity conglomerate heir | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|Translation} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {AudioMix\|Translation} → Compositor → done |
+| 32 | `bilingual_03` | Create a mini-drama with English and Chinese subtitles about a martial-arts prodigy seeking revenge across ancient and modern timelines | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|Translation} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {AudioMix\|Translation} → Compositor → done |
+| 33 | `bilingual_04` | Make an English-Spanish bilingual cultivation-fantasy animated drama, targeting Latin American market release | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|Translation} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {AudioMix\|Translation} → Compositor → done |
+| 34 | `bilingual_05` | Make an English-Chinese bilingual urban mini-drama where the female lead, a Chinese-American prodigy doctor, gets pulled into a family-inheritance battle | IntakeText → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|Translation} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {AudioMix\|Translation} → Compositor → done |
 
 ## <a id="style"></a>风格迁移 (style transfer)
 
 | # | name | input | expected chain |
 |---:|---|---|---|
-| 35 | `style_01` | 把这段短剧风格转换成吉卜力漫剧的画风 | IntakeText → IntakeVideo → StyleTransfer → done |
-| 36 | `style_02` | 让这段短剧看起来像赛博朋克漫剧，霓虹 + 雨夜的氛围 | IntakeText → IntakeVideo → StyleTransfer → done |
+| 35 | `style_01` | Convert this mini-drama clip to a Studio Ghibli animated-drama style | IntakeText → IntakeVideo → StyleTransfer → done |
+| 36 | `style_02` | Make this mini-drama clip look like a cyberpunk animated drama with neon and rainy-night atmosphere | IntakeText → IntakeVideo → StyleTransfer → done |
 | 37 | `style_03` | Apply a Van Gogh oil-painting style to this cultivation-drama clip | IntakeText → IntakeVideo → StyleTransfer → done |
-| 38 | `style_04` | 把这部真人短剧整体转成日漫画风，保留剧情和运镜 | IntakeText → IntakeVideo → StyleTransfer → done |
-| 39 | `style_05` | 把这部古装短剧转成国风水墨漫剧的风格 | IntakeText → IntakeVideo → StyleTransfer → done |
+| 38 | `style_04` | Convert this live-action mini-drama entirely to a Japanese anime style, preserving plot and camera work | IntakeText → IntakeVideo → StyleTransfer → done |
+| 39 | `style_05` | Convert this costume-drama mini-drama to a Chinese ink-wash animated-drama style | IntakeText → IntakeVideo → StyleTransfer → done |
 
 ## <a id="extend"></a>视频续写 (video extend)
 
 | # | name | input | expected chain |
 |---:|---|---|---|
-| 40 | `extend_01` | 把这场霸总对峙戏延长到 15 秒，加男主内心独白和慢镜头特写 | IntakeText → IntakeVideo → VideoExtend → done |
+| 40 | `extend_01` | Extend this CEO-romance confrontation scene to 15 seconds, adding the male lead's inner monologue and slow-motion close-ups | IntakeText → IntakeVideo → VideoExtend → done |
 | 41 | `extend_03` | Extend this cultivation-duel clip by adding a slow-motion reversal where the underdog awakens a forbidden bloodline | IntakeText → IntakeVideo → VideoExtend → done |
-| 43 | `extend_04` | 把这段古装虐恋的告别戏延长到 20 秒，加雪景空镜和女主回忆前世的闪回 | IntakeText → IntakeVideo → VideoExtend → done |
-| 44 | `extend_05` | 把这场女主告白落泪的戏延长 8 秒，加雨声特效和她颤抖的手部特写 | IntakeText → IntakeVideo → VideoExtend → done |
-| 45 | `extend_06` | Extend this reincarnation awakening scene by 10 seconds with ghostly overlays of the character's past life flashing back | IntakeText → IntakeVideo → VideoExtend → done |
+| 42 | `extend_04` | Extend this tragic costume-drama farewell scene to 20 seconds, adding snow-scene cutaways and flashbacks of the female lead recalling her past life | IntakeText → IntakeVideo → VideoExtend → done |
+| 43 | `extend_05` | Extend this scene of the female lead confessing and crying by 8 seconds, adding rain sound effects and close-ups of her trembling hands | IntakeText → IntakeVideo → VideoExtend → done |
+| 44 | `extend_06` | Extend this reincarnation awakening scene by 10 seconds with ghostly overlays of the character's past life flashing back | IntakeText → IntakeVideo → VideoExtend → done |
 
 ## <a id="highlight"></a>精彩片段 (highlight)
 
 | # | name | input | expected chain |
 |---:|---|---|---|
-| 46 | `highlight_01` | 从这集短剧里剪出最带感的反转片段做宣传物料 | IntakeText → IntakeVideo → VideoAnalysis → Highlight → done |
-| 47 | `highlight_03` | 帮我从这部短剧里提取男女主的高甜互动瞬间做推广短视频 | IntakeText → IntakeVideo → VideoAnalysis → Highlight → done |
-| 48 | `highlight_04` | 从这部古装漫剧里剪出宫斗名场面做 30 秒爆款引流片 | IntakeText → IntakeVideo → VideoAnalysis → Highlight → done |
-| 49 | `highlight_05` | 把这集重生短剧的打脸戏集锦剪出来 | IntakeText → IntakeVideo → VideoAnalysis → Highlight → done |
+| 45 | `highlight_01` | Cut the most thrilling twist moments from this mini-drama episode into promotional material | IntakeText → IntakeVideo → VideoAnalysis → Highlight → done |
+| 46 | `highlight_03` | Extract the sweetest lead-couple interactions from this mini-drama into a promo short | IntakeText → IntakeVideo → VideoAnalysis → Highlight → done |
+| 47 | `highlight_04` | Cut the palace-intrigue iconic scenes from this costume-drama animated drama into a 30-second viral promo | IntakeText → IntakeVideo → VideoAnalysis → Highlight → done |
+| 48 | `highlight_05` | Cut a compilation of face-slapping payback moments from this rebirth mini-drama episode | IntakeText → IntakeVideo → VideoAnalysis → Highlight → done |
 
 ## <a id="complex"></a>复杂组合 (complex)
 
 | # | name | input | expected chain |
 |---:|---|---|---|
-| 50 | `complex_01` | 分析这部爆款短剧，然后按同类型风格写个新故事并制作成新的漫剧 | IntakeText → IntakeVideo → VideoAnalysis → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
-| 51 | `complex_02` | 先延长这段短剧片段，然后做风格迁移转成日漫画风 | IntakeText → IntakeVideo → VideoExtend → StyleTransfer → done |
-| 52 | `complex_03` | 延长这集短剧后做风格迁移成漫剧画风，再加上中文字幕 | IntakeText → IntakeVideo → VideoExtend → StyleTransfer → Transcription → Subtitle → Compositor → done |
-| 53 | `complex_04` | 分析这部 12 集短剧的节奏后剪出精彩反转片段，加背景音乐合成终版 | IntakeText → IntakeVideo → VideoAnalysis → Highlight → Music → AudioMix → Compositor → done |
-| 54 | `complex_06` | 分析这部短剧的情绪曲线，然后给它配上字幕和背景音乐 | IntakeText → IntakeVideo → {VideoAnalysis\|Transcription} → {Transcription\|Subtitle\|VideoAnalysis} → {Subtitle\|Music\|Transcription} → {Music\|Subtitle} → AudioMix → Compositor → done |
-| 55 | `complex_08` | 把这段英文采访视频翻译成中文并配上中文字幕 | IntakeText → IntakeVideo → Transcription → Subtitle → Translation → Compositor → done |
-| 56 | `complex_10` | 分析这部短剧剪出高潮反转片段，加中文字幕和背景音乐，输出终版宣传片 | IntakeText → IntakeVideo → VideoAnalysis → Highlight → {Transcription\|Music} → {Subtitle\|Transcription\|Music} → {Music\|Subtitle} → AudioMix → Compositor → done |
-| 57 | `complex_11` | 把这部短剧 EP01 的中文配音转文字，翻译成日文，生成日文字幕后合成到视频上 | IntakeText → IntakeVideo → Transcription → Subtitle → Translation → Compositor → done |
-| 58 | `complex_13` | 先分析这部爆款短剧，然后根据分析写一个续集故事，最终做成带字幕的新漫剧 | IntakeText → IntakeVideo → VideoAnalysis → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|AudioMix} → {AudioMix\|Subtitle} → Compositor → done |
-| 59 | `complex_15` | 从这部都市甜宠短剧里剪出男女主高光互动，配浪漫背景音乐加中文字幕 | IntakeText → IntakeVideo → VideoAnalysis → Highlight → {Music\|Transcription} → {Transcription\|Music\|Subtitle} → {Subtitle\|Music} → AudioMix → Compositor → done |
-| 60 | `complex_18` | Analyze this Chinese mini-drama season, extract the high-tension climax moments, and add English subtitles plus emotional background score | IntakeText → IntakeVideo → VideoAnalysis → Highlight → Transcription → {Subtitle\|Transcription} → {Translation\|Subtitle\|Music} → {Music\|Translation} → AudioMix → Compositor → done |
-| 61 | `complex_19` | 用我上传的这张漫剧角色图，做一部带中英双语字幕的霸总短剧预告片 | IntakeText → IntakeImage → BriefEnricher → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|Translation} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {AudioMix\|Translation} → Compositor → done |
-| 62 | `complex_20` | 把这部短剧会议场面里的关键对白提取出来，转录翻译成英文，输出带字幕的精华版 | IntakeText → IntakeVideo → VideoAnalysis → Highlight → Transcription → Subtitle → Translation → Compositor → done |
-| 63 | `complex_21` | 先做风格迁移成水墨漫剧画风，再延长关键场面，最后加上古风背景音乐 | IntakeText → IntakeVideo → StyleTransfer → VideoExtend → Music → AudioMix → Compositor → done |
-| 64 | `complex_23` | 用我上传的这张女主定妆照做主角，做一部 3 分钟赛博朋克风格的科幻反乌托邦短剧：她是地下黑客联盟首领带队攻入克隆人公司，最后发现自己其实也是克隆体。把她揭露身份的高潮对峙戏延长 10 秒，加慢镜头特写和颤抖的手部镜头。 | IntakeText → IntakeImage → BriefEnricher → Story → Screenplay → KeyFrame → Video → VideoExtend → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
-| 65 | `complex_24` | 给这段短剧视频配一段悲伤的钢琴背景乐 | IntakeText → IntakeVideo → Music → AudioMix → Compositor → done |
-| 66 | `complex_25` | 给这段雨夜戏加雨声氛围和一段钢琴背景乐 | IntakeText → IntakeVideo → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
-| 67 | `complex_26` | 把这段视频转成漫剧画风，再配上中文字幕 | IntakeText → IntakeVideo → StyleTransfer → Transcription → Subtitle → Compositor → done |
-| 68 | `complex_27` | 把这段古装短剧转成水墨风，再加一段古风背景乐 | IntakeText → IntakeVideo → StyleTransfer → Music → AudioMix → Compositor → done |
-| 69 | `complex_28` | 续写这段对峙戏 10 秒，再配上中文字幕 | IntakeText → IntakeVideo → VideoExtend → Transcription → Subtitle → Compositor → done |
-| 70 | `complex_29` | 续写这段打斗戏 8 秒，配一段紧张激烈的背景乐 | IntakeText → IntakeVideo → VideoExtend → Music → AudioMix → Compositor → done |
-| 71 | `complex_30` | 从这部短剧里剪出高光片段，再加上中文字幕做成宣传片 | IntakeText → IntakeVideo → VideoAnalysis → Highlight → Transcription → Subtitle → Compositor → done |
-
-## <a id="edge"></a>边界用例 (edge cases)
-
-| # | name | input | expected chain |
-|---:|---|---|---|
-| 72 | `edge_01` |  | done |
-| 73 | `edge_02` | asdfghjkl | IntakeText → done |
-| 74 | `edge_03` | 你好 | IntakeText → done |
-| 75 | `edge_04` | 今天天气怎么样？ | IntakeText → done |
-| 76 | `edge_05` | 帮我写一段 Python 快速排序代码 | IntakeText → done |
-| 77 | `edge_06` | 做点好玩的 | IntakeText → done |
-| 78 | `edge_07` | 推荐几本修仙题材的小说给我 | IntakeText → done |
+| 49 | `complex_01` | Analyze this hit mini-drama, then write a new story in the same genre and produce it as a new animated drama | IntakeText → IntakeVideo → VideoAnalysis → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 50 | `complex_02` | First extend this mini-drama clip, then style-transfer it into a Japanese anime look | IntakeText → IntakeVideo → VideoExtend → StyleTransfer → done |
+| 51 | `complex_03` | Extend this mini-drama episode, then style-transfer it into an animated-drama look, and add English subtitles | IntakeText → IntakeVideo → VideoExtend → StyleTransfer → Transcription → Subtitle → Compositor → done |
+| 52 | `complex_04` | Analyze the pacing of this 12-episode mini-drama, cut the best twist moments, add background music, and composite the final | IntakeText → IntakeVideo → VideoAnalysis → Highlight → Music → AudioMix → Compositor → done |
+| 53 | `complex_06` | Analyze this mini-drama's emotional arc, then add subtitles and background music to it | IntakeText → IntakeVideo → {VideoAnalysis\|Transcription} → {Transcription\|Subtitle\|VideoAnalysis} → {Subtitle\|Music\|Transcription} → {Music\|Subtitle} → AudioMix → Compositor → done |
+| 54 | `complex_08` | Translate this Chinese interview video to English and add English subtitles | IntakeText → IntakeVideo → Transcription → Subtitle → Translation → Compositor → done |
+| 55 | `complex_10` | Analyze this mini-drama, cut the climactic twist moments, add English subtitles and background music, and output the final promo | IntakeText → IntakeVideo → VideoAnalysis → Highlight → {Transcription\|Music} → {Subtitle\|Transcription\|Music} → {Music\|Subtitle} → AudioMix → Compositor → done |
+| 56 | `complex_11` | Transcribe this mini-drama EP01's English dub, translate it to Japanese, generate Japanese subtitles, and burn them onto the video | IntakeText → IntakeVideo → Transcription → Subtitle → Translation → Compositor → done |
+| 57 | `complex_13` | First analyze this hit mini-drama, then write a sequel story based on the analysis, and produce it as a new subtitled animated drama | IntakeText → IntakeVideo → VideoAnalysis → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|AudioMix} → {AudioMix\|Subtitle} → Compositor → done |
+| 58 | `complex_15` | Cut the lead-couple highlight interactions from this urban sweet-romance mini-drama, add romantic background music and English subtitles | IntakeText → IntakeVideo → VideoAnalysis → Highlight → {Music\|Transcription} → {Transcription\|Music\|Subtitle} → {Subtitle\|Music} → AudioMix → Compositor → done |
+| 59 | `complex_18` | Analyze this English mini-drama season, extract the high-tension climax moments, and add Chinese subtitles plus emotional background score | IntakeText → IntakeVideo → VideoAnalysis → Highlight → Transcription → {Subtitle\|Transcription} → {Translation\|Subtitle\|Music} → {Music\|Translation} → AudioMix → Compositor → done |
+| 60 | `complex_19` | Using this uploaded animated-drama character image, make an English-Chinese bilingual CEO-romance mini-drama trailer | IntakeText → IntakeImage → BriefEnricher → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|Translation} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {AudioMix\|Translation} → Compositor → done |
+| 61 | `complex_20` | Extract the key dialogue from this mini-drama's meeting scenes, transcribe and translate them to Chinese, and output a subtitled highlight edit | IntakeText → IntakeVideo → VideoAnalysis → Highlight → Transcription → Subtitle → Translation → Compositor → done |
+| 62 | `complex_21` | First style-transfer to an ink-wash animated-drama look, then extend the key scene, finally add traditional-style background music | IntakeText → IntakeVideo → StyleTransfer → VideoExtend → Music → AudioMix → Compositor → done |
+| 63 | `complex_23` | Using this uploaded female-lead character portrait as the protagonist, make a 3-minute cyberpunk sci-fi dystopian mini-drama: she leads an underground hacker coalition raiding a clone corporation and finally discovers she is also a clone. Extend the climactic identity-reveal confrontation scene by 10 seconds, adding slow-motion close-ups and shots of her trembling hands. | IntakeText → IntakeImage → BriefEnricher → Story → Screenplay → KeyFrame → Video → VideoExtend → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 64 | `complex_24` | Add a sad piano background score to this mini-drama clip | IntakeText → IntakeVideo → Music → AudioMix → Compositor → done |
+| 65 | `complex_25` | Add rain ambience and a piano background score to this rainy-night scene | IntakeText → IntakeVideo → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 66 | `complex_26` | Convert this clip to an animated-drama look and add English subtitles | IntakeText → IntakeVideo → StyleTransfer → Transcription → Subtitle → Compositor → done |
+| 67 | `complex_27` | Convert this costume-drama mini-drama clip to an ink-wash style and add a traditional-style background score | IntakeText → IntakeVideo → StyleTransfer → Music → AudioMix → Compositor → done |
+| 68 | `complex_28` | Extend this confrontation scene by 10 seconds and add English subtitles | IntakeText → IntakeVideo → VideoExtend → Transcription → Subtitle → Compositor → done |
+| 69 | `complex_29` | Extend this fight scene by 8 seconds and add a tense, intense background score | IntakeText → IntakeVideo → VideoExtend → Music → AudioMix → Compositor → done |
+| 70 | `complex_30` | Cut the highlight moments from this mini-drama and add English subtitles to produce a promo | IntakeText → IntakeVideo → VideoAnalysis → Highlight → Transcription → Subtitle → Compositor → done |
+| 71 | `complex_31` | Add an upbeat electronic ambient background score to this urban-nightscape vlog clip | IntakeText → IntakeVideo → Music → AudioMix → Compositor → done |
+| 72 | `complex_32` | Add a cinematic orchestral score to this costume-drama fight scene | IntakeText → IntakeVideo → Music → AudioMix → Compositor → done |
+| 73 | `complex_33` | Add ocean-wave ambience and a lyrical piano background score to this seaside farewell scene | IntakeText → IntakeVideo → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 74 | `complex_34` | Add thunder-and-wind ambience and an epic percussion background score to this cultivation-fantasy final-battle clip | IntakeText → IntakeVideo → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 75 | `complex_35` | Convert this urban-romance clip to a cyberpunk look and add a synth-driven electronic score | IntakeText → IntakeVideo → StyleTransfer → Music → AudioMix → Compositor → done |
+| 76 | `complex_36` | Turn this martial-arts clip into traditional ink-painting style with a guqin score | IntakeText → IntakeVideo → StyleTransfer → Music → AudioMix → Compositor → done |
+| 77 | `complex_37` | Convert this workplace-confrontation scene to a Japanese anime look and add English subtitles | IntakeText → IntakeVideo → StyleTransfer → Transcription → Subtitle → Compositor → done |
+| 78 | `complex_38` | Convert this interview clip to a Van Gogh oil-painting look and add English subtitles | IntakeText → IntakeVideo → StyleTransfer → Transcription → Subtitle → Compositor → done |
+| 79 | `complex_39` | Extend this CEO-romance confession scene by 12 seconds and add a romantic piano background score | IntakeText → IntakeVideo → VideoExtend → Music → AudioMix → Compositor → done |
+| 80 | `complex_40` | Extend this ancient sword-duel scene by 15 seconds and layer in an epic battle score | IntakeText → IntakeVideo → VideoExtend → Music → AudioMix → Compositor → done |
+| 81 | `complex_41` | Extend this rebirth-awakening scene by 10 seconds and add English subtitles | IntakeText → IntakeVideo → VideoExtend → Transcription → Subtitle → Compositor → done |
+| 82 | `complex_42` | Extend this cultivation awakening scene by 8 seconds and add English subtitles | IntakeText → IntakeVideo → VideoExtend → Transcription → Subtitle → Compositor → done |
+| 83 | `complex_43` | Cut the palace-intrigue showdown iconic scenes from this mini-drama into a promo reel and add English subtitles | IntakeText → IntakeVideo → VideoAnalysis → Highlight → Transcription → Subtitle → Compositor → done |
+| 84 | `complex_44` | Cut the top tear-jerker moments from this romance drama into a 30-second promo with English subtitles | IntakeText → IntakeVideo → VideoAnalysis → Highlight → Transcription → Subtitle → Compositor → done |
+| 85 | `complex_45` | Extend this tragic costume-drama scene by 10 seconds and convert the whole thing to an ink-wash animated-drama look | IntakeText → IntakeVideo → VideoExtend → StyleTransfer → done |
+| 86 | `complex_46` | Extend this martial-arts fight scene by 8 seconds, convert it to an animated-drama look, and add English subtitles | IntakeText → IntakeVideo → VideoExtend → StyleTransfer → Transcription → Subtitle → Compositor → done |
+| 87 | `complex_47` | First convert this urban car-chase scene to a cyberpunk look, then extend the climax by 12 seconds, finally add a synth-driven score | IntakeText → IntakeVideo → StyleTransfer → VideoExtend → Music → AudioMix → Compositor → done |
+| 88 | `complex_48` | Analyze this 20-episode cultivation drama and cut the most epic reveal moments with an orchestral score | IntakeText → IntakeVideo → VideoAnalysis → Highlight → Music → AudioMix → Compositor → done |
+| 89 | `complex_49` | Translate this Japanese-language interview mini-drama into English subtitles and burn them onto the video | IntakeText → IntakeVideo → Transcription → Subtitle → Translation → Compositor → done |
+| 90 | `complex_50` | Extract the highlight dialogue from this Chinese-language business-warfare mini-drama, translate it to English, and add subtitles | IntakeText → IntakeVideo → VideoAnalysis → Highlight → Transcription → Subtitle → Translation → Compositor → done |
+| 91 | `complex_51` | Analyze this CEO-romance mini-drama's pacing, then add English subtitles and a background score | IntakeText → IntakeVideo → {VideoAnalysis\|Transcription} → {Transcription\|Subtitle\|VideoAnalysis} → {Subtitle\|Music\|Transcription} → {Music\|Subtitle} → AudioMix → Compositor → done |
+| 92 | `complex_52` | Cut the climactic scenes from this costume-drama mini-drama into a trailer, with English subtitles and an epic score | IntakeText → IntakeVideo → VideoAnalysis → Highlight → {Transcription\|Music} → {Subtitle\|Transcription\|Music} → {Music\|Subtitle} → AudioMix → Compositor → done |
+| 93 | `complex_53` | Cut the face-slapping iconic scenes from this urban rebirth mini-drama, add rousing music and English subtitles | IntakeText → IntakeVideo → VideoAnalysis → Highlight → {Music\|Transcription} → {Transcription\|Music\|Subtitle} → {Subtitle\|Music} → AudioMix → Compositor → done |
+| 94 | `complex_54` | Analyze the tropes of this hit sci-fi mini-drama and rewrite a new story in the same style as a new animated drama | IntakeText → IntakeVideo → VideoAnalysis → Story → Screenplay → KeyFrame → Video → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 95 | `complex_55` | Write a sequel based on the plotline of this palace-intrigue mini-drama and produce it as a new English-subtitled animated drama | IntakeText → IntakeVideo → VideoAnalysis → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|AudioMix} → {AudioMix\|Subtitle} → Compositor → done |
+| 96 | `complex_56` | Study this cultivation-fantasy drama's character arcs and generate a prequel animated drama with English subtitles | IntakeText → IntakeVideo → VideoAnalysis → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|AudioMix} → {AudioMix\|Subtitle} → Compositor → done |
+| 97 | `complex_57` | Using these uploaded costume-drama character images as the protagonists, make an English-Chinese bilingual palace-intrigue mini-drama promo | IntakeText → IntakeImage → BriefEnricher → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|Translation} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {AudioMix\|Translation} → Compositor → done |
+| 98 | `complex_58` | Use these uploaded cyberpunk character portraits to produce a bilingual (English/Chinese) sci-fi mini-drama trailer | IntakeText → IntakeImage → BriefEnricher → Story → Screenplay → KeyFrame → Video → {Music\|Ambience\|Subtitle} → {Music\|Ambience\|Subtitle\|Translation} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {Music\|Ambience\|Subtitle\|Translation\|AudioMix} → {AudioMix\|Translation} → Compositor → done |
+| 99 | `complex_59` | Using this uploaded female-swordsman character portrait as the protagonist, make a martial-arts mini-drama; extend the sect-massacre opening scene by 15 seconds with slow-motion | IntakeText → IntakeImage → BriefEnricher → Story → Screenplay → KeyFrame → Video → VideoExtend → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 100 | `complex_60` | Use this uploaded medical-drama character portrait as the lead and produce a rebirth mini-drama with the climax reveal extended by 10 seconds | IntakeText → IntakeImage → BriefEnricher → Story → Screenplay → KeyFrame → Video → VideoExtend → {Music\|Ambience} → {Ambience\|Music} → AudioMix → Compositor → done |

@@ -3,7 +3,7 @@
     "name": "cr_01",
     "category": "cr",
     "decision": "pending",
-    "original_user_goal": "做一个修仙漫剧，讲废柴少年觉醒上古血脉后在宗门逆袭的故事",
+    "original_user_goal": "Make a cultivation-fantasy animated drama about a washed-up young man who awakens an ancient bloodline and rises through the ranks of his sect",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -83,7 +83,7 @@
     "name": "cr_03",
     "category": "cr",
     "decision": "pending",
-    "original_user_goal": "做一个灵异悬疑短剧，女主搬进凶宅发现前任住户留下的录像带揭示一桩未破凶案",
+    "original_user_goal": "Make a supernatural-thriller mini-drama where the female lead moves into a haunted house and finds a videotape left by the previous tenant that reveals an unsolved murder",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -123,7 +123,7 @@
     "name": "cr_04",
     "category": "cr",
     "decision": "pending",
-    "original_user_goal": "做一个3分钟的重生复仇漫剧，女主被闺蜜陷害坠楼后重生回3年前开始反击",
+    "original_user_goal": "Make a 3-minute rebirth-revenge animated drama where the female lead is framed by her best friend and falls to her death, then is reborn three years earlier to strike back",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -163,7 +163,7 @@
     "name": "cr_05",
     "category": "cr",
     "decision": "pending",
-    "original_user_goal": "Create a post-apocalyptic manhua drama where the last survivors discover a hidden sanctuary guarded by an awakened AI",
+    "original_user_goal": "Create a post-apocalyptic animated drama where the last survivors discover a hidden sanctuary guarded by an awakened AI",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -203,7 +203,7 @@
     "name": "cr_06",
     "category": "cr",
     "decision": "pending",
-    "original_user_goal": "做一个甜宠古装短剧，女主穿越成丞相嫡女，和冷面世子从相看两厌到互相救赎",
+    "original_user_goal": "Make a sweet costume-drama mini-drama where the female lead transmigrates into the chancellor's legitimate daughter and moves from mutual loathing to mutual redemption with a cold-faced prince",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -243,7 +243,7 @@
     "name": "cr_07",
     "category": "cr",
     "decision": "pending",
-    "original_user_goal": "I want a vertical-screen romance mini-drama where a young woman wins a dating-app lottery and ends up fake-married to a reclusive tech mogul",
+    "original_user_goal": "I want a romance mini-drama where a young woman wins a dating-app lottery and ends up fake-married to a reclusive tech mogul",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -283,7 +283,7 @@
     "name": "cr_08",
     "category": "cr",
     "decision": "pending",
-    "original_user_goal": "做一个科幻漫剧，讲最后一个觉醒的 AI 爱上了她唯一剩下的人类工程师",
+    "original_user_goal": "Make a sci-fi animated drama about the last awakened AI falling in love with the only human engineer left",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -323,7 +323,7 @@
     "name": "cr_09",
     "category": "cr",
     "decision": "pending",
-    "original_user_goal": "做一个都市言情短剧，女主在雨夜的巴黎咖啡馆遇到 5 年前失踪的前男友",
+    "original_user_goal": "Make an urban romance mini-drama where the female lead runs into her ex-boyfriend — missing for five years — in a rainy-night Paris café",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -403,7 +403,7 @@
     "name": "cr_11",
     "category": "cr",
     "decision": "pending",
-    "original_user_goal": "做一个古装宫斗短剧，真假公主换位后互相利用，最终联手揭穿皇后的野心",
+    "original_user_goal": "Make a palace-intrigue costume-drama mini-drama where a real and a fake princess swap places, exploit each other, and ultimately team up to expose the empress's ambitions",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -443,7 +443,7 @@
     "name": "cr_12",
     "category": "cr",
     "decision": "pending",
-    "original_user_goal": "做一个武侠漫剧，讲少年剑客为师门复仇独闯魔教七重杀阵",
+    "original_user_goal": "Make a martial-arts animated drama about a young swordsman who, to avenge his sect, ventures alone into the demonic cult's seven-layered killing formation",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -483,7 +483,7 @@
     "name": "cr_13",
     "category": "cr",
     "decision": "pending",
-    "original_user_goal": "做一个都市逆袭短剧，被赶出豪门的赘婿其实是隐藏身份的顶级财阀继承人",
+    "original_user_goal": "Make an urban underdog-comeback mini-drama where the live-in son-in-law thrown out of the rich family is secretly the heir of a top conglomerate",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -523,7 +523,7 @@
     "name": "cr_14",
     "category": "cr",
     "decision": "pending",
-    "original_user_goal": "做一个玄幻漫剧的史诗决战：七大上古神兽集结对抗重临人间的魔神",
+    "original_user_goal": "Make an epic-battle scene for a fantasy animated drama: seven ancient divine beasts gather to face a demon god returning to the mortal realm",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -563,7 +563,7 @@
     "name": "cr_15",
     "category": "cr",
     "decision": "pending",
-    "original_user_goal": "做一个悬疑反转短剧，心理医生发现新来的病人正是多年前杀害她妹妹的凶手",
+    "original_user_goal": "Make a suspense-twist mini-drama where a therapist realizes her new patient is the man who murdered her sister years ago",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -603,7 +603,7 @@
     "name": "intake_img_01",
     "category": "intake_img",
     "decision": "pending",
-    "original_user_goal": "根据我上传的这张图片作为故事主角，生成一部励志修仙漫剧",
+    "original_user_goal": "Using this uploaded image as the story's protagonist, produce an inspirational cultivation-fantasy animated drama",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -649,7 +649,7 @@
     "name": "intake_img_02",
     "category": "intake_img",
     "decision": "pending",
-    "original_user_goal": "把我上传的这张照片作为背景城市，做一个 3 分钟的都市悬疑短剧，氛围要压抑",
+    "original_user_goal": "Using this uploaded photo as the city backdrop, make a 3-minute urban-suspense mini-drama with an oppressive atmosphere",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -695,7 +695,7 @@
     "name": "intake_img_03",
     "category": "intake_img",
     "decision": "pending",
-    "original_user_goal": "Use the character in this uploaded image as the hero of a one-minute xianxia cultivation manhua trailer",
+    "original_user_goal": "Use the character in this uploaded image as the hero of a one-minute cultivation-fantasy animated-drama trailer",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -741,7 +741,7 @@
     "name": "intake_img_04",
     "category": "intake_img",
     "decision": "pending",
-    "original_user_goal": "以我上传的这张照片里的海边小镇为舞台，做一段古装虐恋短剧：女主为救男主葬身海底",
+    "original_user_goal": "Set in the seaside town from this uploaded photo, make a tragic costume-drama mini-drama: the female lead dies under the sea to save the male lead",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -833,7 +833,7 @@
     "name": "sub_01",
     "category": "sub",
     "decision": "pending",
-    "original_user_goal": "做一集带中文字幕的校园甜宠短剧：学霸班长和转学来的不良少女互相救赎",
+    "original_user_goal": "Make an English-subtitled campus sweet-romance mini-drama: the top-student class president and a transferred-in delinquent girl redeem each other",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -882,7 +882,7 @@
     "name": "sub_02",
     "category": "sub",
     "decision": "pending",
-    "original_user_goal": "帮我做一集带字幕的古装美食漫剧，女主是御膳房小宫女靠厨艺逆袭",
+    "original_user_goal": "Make a subtitled costume-drama culinary animated drama where the female lead, a junior imperial-kitchen maid, rises through her cooking skills",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -980,7 +980,7 @@
     "name": "sub_04",
     "category": "sub",
     "decision": "pending",
-    "original_user_goal": "做一部带字幕的儿童修仙漫剧，主角是七岁神兽少年为守护深海禁地而战",
+    "original_user_goal": "Make a subtitled children's cultivation-fantasy animated drama whose protagonist is a seven-year-old divine-beast boy fighting to protect a deep-sea forbidden zone",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1029,7 +1029,7 @@
     "name": "sub_05",
     "category": "sub",
     "decision": "pending",
-    "original_user_goal": "做一集带字幕的科幻短剧，男主是顶级数码评测博主忽然发现自己其实是 AI",
+    "original_user_goal": "Make a subtitled sci-fi mini-drama where the male lead, a top tech-reviewer blogger, suddenly discovers he is actually an AI",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1078,7 +1078,7 @@
     "name": "sub_vid_01",
     "category": "sub",
     "decision": "keep",
-    "original_user_goal": "给这集访谈类短剧配上中文字幕",
+    "original_user_goal": "Add English subtitles to this interview-style mini-drama",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1104,7 +1104,7 @@
     "name": "sub_vid_02",
     "category": "sub",
     "decision": "keep",
-    "original_user_goal": "帮这部竖屏演讲短剧加上中文字幕",
+    "original_user_goal": "Add English subtitles to this speech mini-drama",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1130,7 +1130,7 @@
     "name": "sub_vid_03",
     "category": "sub",
     "decision": "keep",
-    "original_user_goal": "Generate English subtitles for this Chinese mini-drama episode",
+    "original_user_goal": "Generate Chinese subtitles for this English mini-drama episode",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1145,6 +1145,9 @@
         "SubtitleAgent"
       ],
       [
+        "TranslationAgent"
+      ],
+      [
         "CompositorAgent"
       ],
       [
@@ -1156,7 +1159,7 @@
     "name": "sub_vid_05",
     "category": "sub",
     "decision": "keep",
-    "original_user_goal": "给这部 30 集修仙漫剧批量生成中文硬字幕",
+    "original_user_goal": "Batch-generate English burned-in subtitles for this 30-episode cultivation-fantasy animated drama",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1182,7 +1185,7 @@
     "name": "bilingual_01",
     "category": "bilingual",
     "decision": "pending",
-    "original_user_goal": "做一集中英双语字幕的古装漫剧，讲茶道传承九代后与现代女主通过转世重连",
+    "original_user_goal": "Make an English-Chinese bilingual costume-drama animated drama about a nine-generation tea-ceremony lineage reconnected with a modern female lead through reincarnation",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1240,7 +1243,7 @@
     "name": "bilingual_02",
     "category": "bilingual",
     "decision": "pending",
-    "original_user_goal": "帮我做一集中日双语字幕的霸总短剧，男主是留日回国的隐藏财阀继承人",
+    "original_user_goal": "Make an English-Japanese bilingual CEO-romance mini-drama where the male lead is a Japan-returned, hidden-identity conglomerate heir",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1298,7 +1301,7 @@
     "name": "bilingual_03",
     "category": "bilingual",
     "decision": "pending",
-    "original_user_goal": "Create a mini-drama with Chinese and English subtitles about a martial-arts prodigy seeking revenge across ancient and modern timelines",
+    "original_user_goal": "Create a mini-drama with English and Chinese subtitles about a martial-arts prodigy seeking revenge across ancient and modern timelines",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1356,7 +1359,7 @@
     "name": "bilingual_04",
     "category": "bilingual",
     "decision": "pending",
-    "original_user_goal": "做一集中西语双语字幕的修仙漫剧，准备拉美市场上线",
+    "original_user_goal": "Make an English-Spanish bilingual cultivation-fantasy animated drama, targeting Latin American market release",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1414,7 +1417,7 @@
     "name": "bilingual_05",
     "category": "bilingual",
     "decision": "pending",
-    "original_user_goal": "做一部中英双语字幕的都市短剧，女主是中美混血的天才医生被卷入家族遗产争夺",
+    "original_user_goal": "Make an English-Chinese bilingual urban mini-drama where the female lead, a Chinese-American prodigy doctor, gets pulled into a family-inheritance battle",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1472,7 +1475,7 @@
     "name": "style_01",
     "category": "style",
     "decision": "pending",
-    "original_user_goal": "把这段短剧风格转换成吉卜力漫剧的画风",
+    "original_user_goal": "Convert this mini-drama clip to a Studio Ghibli animated-drama style",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1492,7 +1495,7 @@
     "name": "style_02",
     "category": "style",
     "decision": "pending",
-    "original_user_goal": "让这段短剧看起来像赛博朋克漫剧，霓虹 + 雨夜的氛围",
+    "original_user_goal": "Make this mini-drama clip look like a cyberpunk animated drama with neon and rainy-night atmosphere",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1532,7 +1535,7 @@
     "name": "style_04",
     "category": "style",
     "decision": "pending",
-    "original_user_goal": "把这部真人短剧整体转成日漫画风，保留剧情和运镜",
+    "original_user_goal": "Convert this live-action mini-drama entirely to a Japanese anime style, preserving plot and camera work",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1552,7 +1555,7 @@
     "name": "style_05",
     "category": "style",
     "decision": "pending",
-    "original_user_goal": "把这部古装短剧转成国风水墨漫剧的风格",
+    "original_user_goal": "Convert this costume-drama mini-drama to a Chinese ink-wash animated-drama style",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1572,7 +1575,7 @@
     "name": "extend_01",
     "category": "extend",
     "decision": "pending",
-    "original_user_goal": "把这场霸总对峙戏延长到 15 秒，加男主内心独白和慢镜头特写",
+    "original_user_goal": "Extend this CEO-romance confrontation scene to 15 seconds, adding the male lead's inner monologue and slow-motion close-ups",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1612,7 +1615,7 @@
     "name": "extend_04",
     "category": "extend",
     "decision": "pending",
-    "original_user_goal": "把这段古装虐恋的告别戏延长到 20 秒，加雪景空镜和女主回忆前世的闪回",
+    "original_user_goal": "Extend this tragic costume-drama farewell scene to 20 seconds, adding snow-scene cutaways and flashbacks of the female lead recalling her past life",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1632,7 +1635,7 @@
     "name": "extend_05",
     "category": "extend",
     "decision": "pending",
-    "original_user_goal": "把这场女主告白落泪的戏延长 8 秒，加雨声特效和她颤抖的手部特写",
+    "original_user_goal": "Extend this scene of the female lead confessing and crying by 8 seconds, adding rain sound effects and close-ups of her trembling hands",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1672,7 +1675,7 @@
     "name": "highlight_01",
     "category": "highlight",
     "decision": "pending",
-    "original_user_goal": "从这集短剧里剪出最带感的反转片段做宣传物料",
+    "original_user_goal": "Cut the most thrilling twist moments from this mini-drama episode into promotional material",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1695,7 +1698,7 @@
     "name": "highlight_03",
     "category": "highlight",
     "decision": "pending",
-    "original_user_goal": "帮我从这部短剧里提取男女主的高甜互动瞬间做推广短视频",
+    "original_user_goal": "Extract the sweetest lead-couple interactions from this mini-drama into a promo short",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1718,7 +1721,7 @@
     "name": "highlight_04",
     "category": "highlight",
     "decision": "pending",
-    "original_user_goal": "从这部古装漫剧里剪出宫斗名场面做 30 秒爆款引流片",
+    "original_user_goal": "Cut the palace-intrigue iconic scenes from this costume-drama animated drama into a 30-second viral promo",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1741,7 +1744,7 @@
     "name": "highlight_05",
     "category": "highlight",
     "decision": "pending",
-    "original_user_goal": "把这集重生短剧的打脸戏集锦剪出来",
+    "original_user_goal": "Cut a compilation of face-slapping payback moments from this rebirth mini-drama episode",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1764,7 +1767,7 @@
     "name": "complex_01",
     "category": "complex",
     "decision": "keep",
-    "original_user_goal": "分析这部爆款短剧，然后按同类型风格写个新故事并制作成新的漫剧",
+    "original_user_goal": "Analyze this hit mini-drama, then write a new story in the same genre and produce it as a new animated drama",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1810,7 +1813,7 @@
     "name": "complex_02",
     "category": "complex",
     "decision": "keep",
-    "original_user_goal": "先延长这段短剧片段，然后做风格迁移转成日漫画风",
+    "original_user_goal": "First extend this mini-drama clip, then style-transfer it into a Japanese anime look",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1833,7 +1836,7 @@
     "name": "complex_03",
     "category": "complex",
     "decision": "keep",
-    "original_user_goal": "延长这集短剧后做风格迁移成漫剧画风，再加上中文字幕",
+    "original_user_goal": "Extend this mini-drama episode, then style-transfer it into an animated-drama look, and add English subtitles",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1865,7 +1868,7 @@
     "name": "complex_04",
     "category": "complex",
     "decision": "keep",
-    "original_user_goal": "分析这部 12 集短剧的节奏后剪出精彩反转片段，加背景音乐合成终版",
+    "original_user_goal": "Analyze the pacing of this 12-episode mini-drama, cut the best twist moments, add background music, and composite the final",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1897,7 +1900,7 @@
     "name": "complex_06",
     "category": "complex",
     "decision": "pending",
-    "original_user_goal": "分析这部短剧的情绪曲线，然后给它配上字幕和背景音乐",
+    "original_user_goal": "Analyze this mini-drama's emotional arc, then add subtitles and background music to it",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1938,7 +1941,7 @@
     "name": "complex_08",
     "category": "complex",
     "decision": "keep",
-    "original_user_goal": "把这段英文采访视频翻译成中文并配上中文字幕",
+    "original_user_goal": "Translate this Chinese interview video to English and add English subtitles",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -1967,7 +1970,7 @@
     "name": "complex_10",
     "category": "complex",
     "decision": "pending",
-    "original_user_goal": "分析这部短剧剪出高潮反转片段，加中文字幕和背景音乐，输出终版宣传片",
+    "original_user_goal": "Analyze this mini-drama, cut the climactic twist moments, add English subtitles and background music, and output the final promo",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -2009,7 +2012,7 @@
     "name": "complex_11",
     "category": "complex",
     "decision": "keep",
-    "original_user_goal": "把这部短剧 EP01 的中文配音转文字，翻译成日文，生成日文字幕后合成到视频上",
+    "original_user_goal": "Transcribe this mini-drama EP01's English dub, translate it to Japanese, generate Japanese subtitles, and burn them onto the video",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -2038,7 +2041,7 @@
     "name": "complex_13",
     "category": "complex",
     "decision": "pending",
-    "original_user_goal": "先分析这部爆款短剧，然后根据分析写一个续集故事，最终做成带字幕的新漫剧",
+    "original_user_goal": "First analyze this hit mini-drama, then write a sequel story based on the analysis, and produce it as a new subtitled animated drama",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -2093,7 +2096,7 @@
     "name": "complex_15",
     "category": "complex",
     "decision": "pending",
-    "original_user_goal": "从这部都市甜宠短剧里剪出男女主高光互动，配浪漫背景音乐加中文字幕",
+    "original_user_goal": "Cut the lead-couple highlight interactions from this urban sweet-romance mini-drama, add romantic background music and English subtitles",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -2135,7 +2138,7 @@
     "name": "complex_18",
     "category": "complex",
     "decision": "pending",
-    "original_user_goal": "Analyze this Chinese mini-drama season, extract the high-tension climax moments, and add English subtitles plus emotional background score",
+    "original_user_goal": "Analyze this English mini-drama season, extract the high-tension climax moments, and add Chinese subtitles plus emotional background score",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -2180,7 +2183,7 @@
     "name": "complex_19",
     "category": "complex",
     "decision": "pending",
-    "original_user_goal": "用我上传的这张漫剧角色图，做一部带中英双语字幕的霸总短剧预告片",
+    "original_user_goal": "Using this uploaded animated-drama character image, make an English-Chinese bilingual CEO-romance mini-drama trailer",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -2244,7 +2247,7 @@
     "name": "complex_20",
     "category": "complex",
     "decision": "keep",
-    "original_user_goal": "把这部短剧会议场面里的关键对白提取出来，转录翻译成英文，输出带字幕的精华版",
+    "original_user_goal": "Extract the key dialogue from this mini-drama's meeting scenes, transcribe and translate them to Chinese, and output a subtitled highlight edit",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -2279,7 +2282,7 @@
     "name": "complex_21",
     "category": "complex",
     "decision": "keep",
-    "original_user_goal": "先做风格迁移成水墨漫剧画风，再延长关键场面，最后加上古风背景音乐",
+    "original_user_goal": "First style-transfer to an ink-wash animated-drama look, then extend the key scene, finally add traditional-style background music",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -2311,7 +2314,7 @@
     "name": "complex_23",
     "category": "complex",
     "decision": "pending",
-    "original_user_goal": "用我上传的这张女主定妆照做主角，做一部 3 分钟赛博朋克风格的科幻反乌托邦短剧：她是地下黑客联盟首领带队攻入克隆人公司，最后发现自己其实也是克隆体。把她揭露身份的高潮对峙戏延长 10 秒，加慢镜头特写和颤抖的手部镜头。",
+    "original_user_goal": "Using this uploaded female-lead character portrait as the protagonist, make a 3-minute cyberpunk sci-fi dystopian mini-drama: she leads an underground hacker coalition raiding a clone corporation and finally discovers she is also a clone. Extend the climactic identity-reveal confrontation scene by 10 seconds, adding slow-motion close-ups and shots of her trembling hands.",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -2360,7 +2363,7 @@
     "name": "complex_24",
     "category": "complex",
     "decision": "keep",
-    "original_user_goal": "给这段短剧视频配一段悲伤的钢琴背景乐",
+    "original_user_goal": "Add a sad piano background score to this mini-drama clip",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -2386,7 +2389,7 @@
     "name": "complex_25",
     "category": "complex",
     "decision": "keep",
-    "original_user_goal": "给这段雨夜戏加雨声氛围和一段钢琴背景乐",
+    "original_user_goal": "Add rain ambience and a piano background score to this rainy-night scene",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -2417,7 +2420,7 @@
     "name": "complex_26",
     "category": "complex",
     "decision": "keep",
-    "original_user_goal": "把这段视频转成漫剧画风，再配上中文字幕",
+    "original_user_goal": "Convert this clip to an animated-drama look and add English subtitles",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -2446,7 +2449,7 @@
     "name": "complex_27",
     "category": "complex",
     "decision": "keep",
-    "original_user_goal": "把这段古装短剧转成水墨风，再加一段古风背景乐",
+    "original_user_goal": "Convert this costume-drama mini-drama clip to an ink-wash style and add a traditional-style background score",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -2475,7 +2478,7 @@
     "name": "complex_28",
     "category": "complex",
     "decision": "keep",
-    "original_user_goal": "续写这段对峙戏 10 秒，再配上中文字幕",
+    "original_user_goal": "Extend this confrontation scene by 10 seconds and add English subtitles",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -2504,7 +2507,7 @@
     "name": "complex_29",
     "category": "complex",
     "decision": "keep",
-    "original_user_goal": "续写这段打斗戏 8 秒，配一段紧张激烈的背景乐",
+    "original_user_goal": "Extend this fight scene by 8 seconds and add a tense, intense background score",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -2533,7 +2536,7 @@
     "name": "complex_30",
     "category": "complex",
     "decision": "keep",
-    "original_user_goal": "从这部短剧里剪出高光片段，再加上中文字幕做成宣传片",
+    "original_user_goal": "Cut the highlight moments from this mini-drama and add English subtitles to produce a promo",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
@@ -2562,66 +2565,25 @@
     ]
   },
   {
-    "name": "edge_01",
-    "category": "edge",
-    "decision": "pending",
-    "original_user_goal": "",
-    "original_expected_chain": [
-      [
-        "done"
-      ]
-    ]
-  },
-  {
-    "name": "edge_02",
-    "category": "edge",
-    "decision": "pending",
-    "original_user_goal": "asdfghjkl",
-    "original_expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
-      [
-        "done"
-      ]
-    ]
-  },
-  {
-    "name": "edge_03",
-    "category": "edge",
-    "decision": "pending",
-    "original_user_goal": "你好",
-    "original_expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
-      [
-        "done"
-      ]
-    ]
-  },
-  {
-    "name": "edge_04",
-    "category": "edge",
-    "decision": "pending",
-    "original_user_goal": "今天天气怎么样？",
-    "original_expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
-      [
-        "done"
-      ]
-    ]
-  },
-  {
-    "name": "edge_05",
-    "category": "edge",
+    "name": "complex_31",
+    "category": "complex",
     "decision": "keep",
-    "original_user_goal": "帮我写一段 Python 快速排序代码",
+    "original_user_goal": "Add an upbeat electronic ambient background score to this urban-nightscape vlog clip",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
       ],
       [
         "done"
@@ -2629,13 +2591,25 @@
     ]
   },
   {
-    "name": "edge_06",
-    "category": "edge",
+    "name": "complex_32",
+    "category": "complex",
     "decision": "keep",
-    "original_user_goal": "做点好玩的",
+    "original_user_goal": "Add a cinematic orchestral score to this costume-drama fight scene",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
       ],
       [
         "done"
@@ -2643,13 +2617,1047 @@
     ]
   },
   {
-    "name": "edge_07",
-    "category": "edge",
+    "name": "complex_33",
+    "category": "complex",
     "decision": "keep",
-    "original_user_goal": "推荐几本修仙题材的小说给我",
+    "original_user_goal": "Add ocean-wave ambience and a lyrical piano background score to this seaside farewell scene",
     "original_expected_chain": [
       [
         "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_34",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Add thunder-and-wind ambience and an epic percussion background score to this cultivation-fantasy final-battle clip",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_35",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Convert this urban-romance clip to a cyberpunk look and add a synth-driven electronic score",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_36",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Turn this martial-arts clip into traditional ink-painting style with a guqin score",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_37",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Convert this workplace-confrontation scene to a Japanese anime look and add English subtitles",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_38",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Convert this interview clip to a Van Gogh oil-painting look and add English subtitles",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_39",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Extend this CEO-romance confession scene by 12 seconds and add a romantic piano background score",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_40",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Extend this ancient sword-duel scene by 15 seconds and layer in an epic battle score",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_41",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Extend this rebirth-awakening scene by 10 seconds and add English subtitles",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_42",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Extend this cultivation awakening scene by 8 seconds and add English subtitles",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_43",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Cut the palace-intrigue showdown iconic scenes from this mini-drama into a promo reel and add English subtitles",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_44",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Cut the top tear-jerker moments from this romance drama into a 30-second promo with English subtitles",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_45",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Extend this tragic costume-drama scene by 10 seconds and convert the whole thing to an ink-wash animated-drama look",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_46",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Extend this martial-arts fight scene by 8 seconds, convert it to an animated-drama look, and add English subtitles",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_47",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "First convert this urban car-chase scene to a cyberpunk look, then extend the climax by 12 seconds, finally add a synth-driven score",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_48",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Analyze this 20-episode cultivation drama and cut the most epic reveal moments with an orchestral score",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_49",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Translate this Japanese-language interview mini-drama into English subtitles and burn them onto the video",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_50",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Extract the highlight dialogue from this Chinese-language business-warfare mini-drama, translate it to English, and add subtitles",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "SubtitleAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_51",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Analyze this CEO-romance mini-drama's pacing, then add English subtitles and a background score",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "SubtitleAgent",
+        "VideoAnalysisAgent"
+      ],
+      [
+        "SubtitleAgent",
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "MusicAgent",
+        "SubtitleAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_52",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Cut the climactic scenes from this costume-drama mini-drama into a trailer, with English subtitles and an epic score",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "MusicAgent"
+      ],
+      [
+        "SubtitleAgent",
+        "TranscriptionAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "SubtitleAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_53",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Cut the face-slapping iconic scenes from this urban rebirth mini-drama, add rousing music and English subtitles",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "MusicAgent",
+        "SubtitleAgent"
+      ],
+      [
+        "SubtitleAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_54",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Analyze the tropes of this hit sci-fi mini-drama and rewrite a new story in the same style as a new animated drama",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_55",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Write a sequel based on the plotline of this palace-intrigue mini-drama and produce it as a new English-subtitled animated drama",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "SubtitleAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "SubtitleAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "SubtitleAgent",
+        "AudioMixAgent"
+      ],
+      [
+        "AudioMixAgent",
+        "SubtitleAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_56",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Study this cultivation-fantasy drama's character arcs and generate a prequel animated drama with English subtitles",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "SubtitleAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "SubtitleAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "SubtitleAgent",
+        "AudioMixAgent"
+      ],
+      [
+        "AudioMixAgent",
+        "SubtitleAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_57",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Using these uploaded costume-drama character images as the protagonists, make an English-Chinese bilingual palace-intrigue mini-drama promo",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "SubtitleAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "SubtitleAgent",
+        "TranslationAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "SubtitleAgent",
+        "TranslationAgent",
+        "AudioMixAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "SubtitleAgent",
+        "TranslationAgent",
+        "AudioMixAgent"
+      ],
+      [
+        "AudioMixAgent",
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_58",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Use these uploaded cyberpunk character portraits to produce a bilingual (English/Chinese) sci-fi mini-drama trailer",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "SubtitleAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "SubtitleAgent",
+        "TranslationAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "SubtitleAgent",
+        "TranslationAgent",
+        "AudioMixAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "SubtitleAgent",
+        "TranslationAgent",
+        "AudioMixAgent"
+      ],
+      [
+        "AudioMixAgent",
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_59",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Using this uploaded female-swordsman character portrait as the protagonist, make a martial-arts mini-drama; extend the sect-massacre opening scene by 15 seconds with slow-motion",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_60",
+    "category": "complex",
+    "decision": "keep",
+    "original_user_goal": "Use this uploaded medical-drama character portrait as the lead and produce a rebirth mini-drama with the climax reveal extended by 10 seconds",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
       ],
       [
         "done"

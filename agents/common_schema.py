@@ -7,6 +7,58 @@ from typing import Any
 
 from pydantic import BaseModel, Field
 
+
+# ---------------------------------------------------------------------------
+# Upstream-input rejection (consumer-side "loose in" with teeth)
+# ---------------------------------------------------------------------------
+
+class InputRejection(BaseModel):
+    """A consumer sub-agent's structured report that upstream input is too
+    incomplete / malformed for it to do its job.
+
+    Consumers (via their main generation LLM call) emit this instead of a
+    normal output when they cannot proceed. The pipeline short-circuits
+    (no retry — same input would yield the same rejection) and surfaces
+    this to the director so the replanner can steer toward fixing the
+    producer (``replan-tail`` inserting a better upstream step), not
+    retrying the consumer.
+
+    Fields:
+        reason:               Short natural-language explanation of what is
+                              insufficient about the upstream payload.
+        missing_labels:       Which of the consumer's declared input labels
+                              had no usable content (e.g. ``["story"]``).
+                              Empty list means "all labels resolved but
+                              their content is unusable".
+        offending_fields:     Concrete field paths the consumer expected to
+                              read but could not (e.g.
+                              ``["content.scene_outline"]``). Free-form.
+        upstream_agent_hint:  Which producer agent_id the consumer thinks
+                              should be re-run or replaced (e.g.
+                              ``"StoryAgent"``). Empty string if unknown.
+    """
+
+    reason: str = ""
+    missing_labels: list[str] = Field(default_factory=list)
+    offending_fields: list[str] = Field(default_factory=list)
+    upstream_agent_hint: str = ""
+
+
+class UpstreamInputRejected(Exception):
+    """Raised from ``BaseAgent.generate()`` (or helpers) when the consuming
+    LLM declares upstream input insufficient.
+
+    Carries a structured :class:`InputRejection`. ``BaseAgent.run()``
+    catches this, short-circuits the retry loop, and surfaces the
+    rejection through ``ExecutionResult.eval_result``.
+    """
+
+    def __init__(self, rejection: InputRejection) -> None:
+        self.rejection = rejection
+        super().__init__(
+            f"upstream input rejected: {rejection.reason or '(no reason)'}"
+        )
+
 # ---------------------------------------------------------------------------
 # Shared atomic types
 # ---------------------------------------------------------------------------

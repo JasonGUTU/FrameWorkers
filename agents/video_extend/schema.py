@@ -20,20 +20,9 @@ class ExtensionSpec(BaseModel):
     target_duration_seconds: float = Field(
         5.0, description="How many seconds to extend by"
     )
-    maintain_style: bool = Field(
-        True, description="Keep visual style consistent with source"
-    )
     motion_description: str = Field(
         "", description="Description of motion/camera movement for the extension"
     )
-
-
-class VideoAsset(BaseModel):
-    """Pointer to a generated video file."""
-
-    asset_id: str = ""
-    uri: str = ""
-    format: str = "mp4"
 
 
 # ---------------------------------------------------------------------------
@@ -42,7 +31,6 @@ class VideoAsset(BaseModel):
 
 class VideoExtendContent(BaseModel):
     extension_spec: ExtensionSpec = Field(default_factory=ExtensionSpec)
-    output_video: VideoAsset = Field(default_factory=VideoAsset)
 
 
 class VideoExtendMetrics(BaseModel):

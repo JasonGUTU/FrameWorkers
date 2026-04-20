@@ -1,4 +1,10 @@
-"""Evaluator for AudioMixAgent output."""
+"""Evaluator for AudioMixAgent output.
+
+The agent's JSON output is now just an envelope — the wav lives under
+sys_id ``aud_final`` in global_memory. The structural check here is
+trivial; the real signal is whether the materializer produced a real
+audio file, which is surfaced via the asset evaluation layer (L3).
+"""
 
 from __future__ import annotations
 
@@ -11,14 +17,4 @@ class AudioMixEvaluator(BaseEvaluator[AudioMixAgentOutput]):
     creative_dimensions: list[tuple[str, str]] = []
 
     def check_structure(self, output: AudioMixAgentOutput) -> list[str]:
-        errors: list[str] = []
-        if not output.content.scene_mixes:
-            errors.append("scene_mixes list is empty")
-        for i, m in enumerate(output.content.scene_mixes):
-            if not m.scene_id:
-                errors.append(f"scene_mixes[{i}].scene_id is empty")
-            if not m.mix_asset.asset_id:
-                errors.append(f"scene_mixes[{i}].mix_asset.asset_id is empty")
-        if output.content.final_audio.asset_id != "aud_final":
-            errors.append(f"final_audio.asset_id must be 'aud_final', got '{output.content.final_audio.asset_id}'")
-        return errors
+        return []

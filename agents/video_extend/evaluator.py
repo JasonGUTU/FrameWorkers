@@ -39,11 +39,4 @@ class VideoExtendEvaluator(BaseEvaluator[VideoExtendAgentOutput]):
                 "for a single extension"
             )
 
-        da = output.content.output_video
-        if da.asset_id != "video_extend_output":
-            errors.append(
-                f"output_video.asset_id must be 'video_extend_output', "
-                f"got '{da.asset_id}'"
-            )
-
         return errors

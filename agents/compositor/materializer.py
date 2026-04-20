@@ -33,28 +33,42 @@ class CompositorMaterializer(BaseMaterializer):
     ) -> list[MediaAsset]:
         typed_input: CompositorAgentInput = ctx.typed_input
         content = asset_dict.get("content", {})
-        delivery = content.get("delivery_asset", {})
-        delivery["asset_id"] = "compositor_final"
-
         plan = content.get("plan", {})
 
-        # Extract SRT text from subtitle input if it looks like JSON with tracks
-        subtitle_srt = ""
-        raw_sub = typed_input.subtitle_json_text
-        if raw_sub:
-            import json
+        # Local uri_holder — the persisted content JSON has no asset block;
+        # ArtifactWriter still needs a dict to stamp uri into for ArtifactRef.
+        uri_holder: dict[str, Any] = {}
+
+        # Flatten each subtitle artifact (each artifact may itself carry
+        # one or more tracks under content.tracks[*].srt_text) into the
+        # list of SRT blobs ffmpeg will stack. Bilingual / multilingual
+        # flows pass one artifact per language via the collection label.
+        import json
+
+        subtitle_srts: list[str] = []
+        for raw_sub in typed_input.subtitle_json_texts:
+            if not raw_sub:
+                continue
             try:
                 sub_data = json.loads(raw_sub)
-                tracks = sub_data.get("content", sub_data).get("tracks", [])
-                if tracks:
-                    subtitle_srt = tracks[0].get("srt_text", "")
-            except (json.JSONDecodeError, AttributeError):
-                subtitle_srt = raw_sub
+            except (json.JSONDecodeError, TypeError):
+                # Raw SRT body passed as plain text (fallback).
+                text = raw_sub.strip()
+                if text:
+                    subtitle_srts.append(text)
+                continue
+            tracks = (sub_data.get("content", sub_data) or {}).get("tracks", [])
+            for track in tracks:
+                if not isinstance(track, dict):
+                    continue
+                srt = (track.get("srt_text") or "").strip()
+                if srt:
+                    subtitle_srts.append(srt)
 
         result_bytes = await self.svc.compose(
             video_path=typed_input.video_file_path,
             audio_path=typed_input.audio_file_path,
-            subtitle_srt=subtitle_srt,
+            subtitle_srts=subtitle_srts,
             plan=plan,
         )
 
@@ -66,5 +80,5 @@ class CompositorMaterializer(BaseMaterializer):
             sys_id="compositor_final",
             data=result_bytes,
             extension="mp4",
-            uri_holder=delivery,
+            uri_holder=uri_holder,
         )]

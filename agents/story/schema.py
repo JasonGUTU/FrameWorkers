@@ -93,9 +93,18 @@ class StoryAgentInput(BaseModel):
     in ``build_input`` or in the agent — this removes the hidden
     string-keyed coupling between IntakeTextAgent's internal field names
     and StoryAgent's consumer code.
+
+    ``reference_analysis_json_text`` is the optional VideoAnalysisAgent
+    payload of an inspiration / reference video. When present the LLM
+    should treat its genre / mood / entities / scene summaries as
+    creative seeds for the new story (matching tone / template pacing),
+    alongside the primary brief — enabling flows like "analyse this hit
+    drama and write me a same-genre sequel story". Empty string when
+    no reference analysis was routed in.
     """
 
     creative_brief_json_text: str = ""
+    reference_analysis_json_text: str = ""
 
 
 class StoryAgentOutput(StoryBlueprint):

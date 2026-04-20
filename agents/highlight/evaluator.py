@@ -69,11 +69,4 @@ class HighlightEvaluator(BaseEvaluator[HighlightAgentOutput]):
             if not clip.reason:
                 errors.append(f"{prefix}.reason is empty")
 
-        da = c.compiled_video
-        if da.asset_id != "highlight_reel":
-            errors.append(
-                f"compiled_video.asset_id must be 'highlight_reel', "
-                f"got '{da.asset_id}'"
-            )
-
         return errors

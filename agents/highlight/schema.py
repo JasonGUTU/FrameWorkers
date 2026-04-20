@@ -21,14 +21,6 @@ class HighlightClip(BaseModel):
     score: float = Field(0.0, ge=0.0, le=1.0, description="Relevance/quality score")
 
 
-class VideoAsset(BaseModel):
-    """Pointer to a generated video file."""
-
-    asset_id: str = ""
-    uri: str = ""
-    format: str = "mp4"
-
-
 # ---------------------------------------------------------------------------
 # Content / Metrics
 # ---------------------------------------------------------------------------
@@ -36,7 +28,6 @@ class VideoAsset(BaseModel):
 class HighlightContent(BaseModel):
     criteria: str = Field("", description="Selection criteria used")
     clips: list[HighlightClip] = Field(default_factory=list)
-    compiled_video: VideoAsset = Field(default_factory=VideoAsset)
 
 
 class HighlightMetrics(BaseModel):

@@ -227,3 +227,7 @@ Runtime/
 _workspaces/
 # Symlink that exposes ../Runtime to the visualizer dev server
 process-flow-visualizer/Runtime
+
+# Training artifacts — LoRA weights, tokenizers, checkpoints (multi-GB, not for git)
+training/**/adapters/
+*.bak

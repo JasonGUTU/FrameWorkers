@@ -196,7 +196,7 @@ class BaseEvaluator(Generic[OutputT]):
         )
 
         # --- Call LLM and normalize ---
-        result = await self.llm.chat_json(system, user)
+        result = await self.llm.chat_json(system, user, max_tokens=65536)
         dims = result.get("dimensions", {})
         all_pass = all(
             d.get("score", 0) >= self.CREATIVE_PASS_THRESHOLD

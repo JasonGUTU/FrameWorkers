@@ -11,6 +11,10 @@ flask-cors==4.0.0
 litellm>=1.40.0
 openai>=1.0.0
 tiktoken>=0.5.0
+# LLM JSON output repair (handles trailing commas, unescaped quotes, CJK
+# confusable substitutions that Gemini-class models occasionally emit on
+# long structured outputs). Used as fallback in default_client.chat_json.
+json-repair>=0.30.0
 
 # Media generation (fal.ai backend for image / video / audio gen)
 fal-client>=0.5.9

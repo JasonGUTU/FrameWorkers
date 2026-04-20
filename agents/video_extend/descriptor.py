@@ -1,18 +1,23 @@
-"""VideoExtendAgent descriptor — self-describing manifest for the registry."""
+"""VideoExtendAgent descriptor — built from a single AgentSpec."""
 
 from __future__ import annotations
 
+import json
+
 from pydantic import BaseModel
 
-from ..common_schema import ResolvedArtifactEntry
-from ..descriptor import SubAgentDescriptor
-from .agent import VideoExtendAgent
-from .labels import INPUT_LABEL_SOURCE_VIDEO
-from .schema import VideoExtendAgentInput
-from .evaluator import VideoExtendEvaluator
-from .materializer import VideoExtendMaterializer
-
 from inference.generation import select_video_service
+
+from ..common_schema import ResolvedArtifactEntry
+from ..descriptor import AgentSpec, InputLabelSpec, SubAgentDescriptor
+from .agent import VideoExtendAgent
+from .evaluator import VideoExtendEvaluator
+from .labels import (
+    INPUT_LABEL_CONTINUATION_INSTRUCTION,
+    INPUT_LABEL_SOURCE_VIDEO,
+)
+from .materializer import VideoExtendMaterializer
+from .schema import VideoExtendAgentInput
 
 
 def build_input(
@@ -22,12 +27,16 @@ def build_input(
     video = ResolvedArtifactEntry.coerce(
         resolved_artifacts.get(INPUT_LABEL_SOURCE_VIDEO)
     )
+    instruction = ResolvedArtifactEntry.coerce(
+        resolved_artifacts.get(INPUT_LABEL_CONTINUATION_INSTRUCTION)
+    )
 
-    continuation = ""
-    if video.payload and isinstance(video.payload.get("continuation"), str):
-        continuation = video.payload["continuation"]
-    elif video.caption:
-        continuation = video.caption
+    if instruction.payload:
+        continuation = json.dumps(
+            instruction.payload, ensure_ascii=False, indent=2
+        )
+    else:
+        continuation = instruction.caption
 
     return VideoExtendAgentInput(
         source_video_path=video.path,
@@ -36,15 +45,28 @@ def build_input(
 
 
 def build_captions(agent_id: str, output_dict: dict) -> dict:
+    # Caption role: signal "video extension output" + target duration
+    # (metric). Content (continuation_prompt free text) lives in the
+    # JSON payload, NOT in caption.
+    # See MEMORY:feedback_caption_role_not_content.
     content = output_dict.get("content", {})
     spec = content.get("extension_spec", {})
     dur = spec.get("target_duration_seconds", 0)
-    desc = spec.get("continuation_prompt", "")
     return {
         agent_id: {
             "caption": (
-                f"Video extension (+{dur}s): {desc}. "
-                f"Continuation clip generated from source video."
+                f"Extended video (+{dur}s): continuation clip generated "
+                f"from a source video. Structured manifest — see payload "
+                f"for the extension specification."
+            ),
+            "scope": "global",
+        },
+        "video_extend_output": {
+            "caption": (
+                "Extended video binary (mp4) — continuation clip generated "
+                "from the source video, ready for re-ingestion by "
+                "downstream video agents (analysis / style transfer / "
+                "inpainting / compositing)."
             ),
             "scope": "global",
         },
@@ -55,35 +77,56 @@ def materializer_factory(services: dict) -> VideoExtendMaterializer:
     return VideoExtendMaterializer(video_service=services["video_service"])
 
 
-CATALOG_ENTRY = (
-    "VideoExtendAgent\n"
-    "  - Input: a source-video artifact + a continuation-description text (e.g. '延长到 15 秒', "
-    "'add 5 more seconds where the character walks away').\n"
-    "  - Output: extended_video (a continuation clip seamlessly appended to the source).\n"
-    "  - Purpose: Extend / continue a video by generating new frames that seamlessly follow "
-    "the source video's last frame. Need both an ingested source video AND a user "
-    "continuation description before I can run. The output is itself a finished video — no "
-    "further composition needed unless the user wants subtitles, audio, or another edit "
-    "chained on top."
+SPEC = AgentSpec(
+    agent_id="VideoExtendAgent",
+    inputs=[
+        InputLabelSpec(
+            name=INPUT_LABEL_SOURCE_VIDEO,
+            cardinality="single",
+            description=(
+                "The source video clip FILE on disk — a binary mp4 "
+                "artifact (mime=video/mp4) whose actual bytes the "
+                "materializer needs to extract the last frame from via "
+                "ffmpeg (the last frame becomes the starting keyframe "
+                "for the continuation). This label targets the mp4 "
+                "binary specifically, NOT any JSON/manifest "
+                "video_package artifact that may coexist."
+            ),
+        ),
+        InputLabelSpec(
+            name=INPUT_LABEL_CONTINUATION_INSTRUCTION,
+            cardinality="single",
+            description=(
+                "The user's natural-language instruction describing how "
+                "the video should be extended — what happens next, "
+                "target duration, plot beat, physical movement, or scene "
+                "transition. Typically produced by IntakeTextAgent from "
+                "the user's creative brief; caption usually starts with "
+                "'User-submitted creative brief'. Pick the single most "
+                "recent such instruction."
+            ),
+        ),
+    ],
+    output_description=(
+        "extended_video (a continuation clip seamlessly appended to the "
+        "source)."
+    ),
+    purpose_and_routing=(
+        """Extend the duration of an existing video clip (slow-mo, atmospheric inserts, close-ups, sound-effect overlays). The extended clip IS the deliverable by default. Trigger: requests to lengthen / add cinematic devices to an existing clip. NOT for narrative continuation (writing the next scene's plot) — that's a Story-chain task."""
+    ),
+    input_preamble=(
+        "I extend / continue a video clip by generating new frames that "
+        "seamlessly follow the source video's ending."
+    ),
 )
 
-DESCRIPTOR = SubAgentDescriptor(
-    agent_id="VideoExtendAgent",
-    catalog_entry=CATALOG_ENTRY,
+
+DESCRIPTOR = SubAgentDescriptor.from_spec(
+    SPEC,
     agent_factory=lambda llm: VideoExtendAgent(llm_client=llm),
     evaluator_factory=VideoExtendEvaluator,
     build_input=build_input,
     build_captions=build_captions,
-    service_factories={
-        "video_service": lambda ctx: select_video_service(),
-    },
+    service_factories={"video_service": lambda ctx: select_video_service()},
     materializer_factory=materializer_factory,
-    input_needs_description=(
-        "I extend/continue a video clip by generating new frames that "
-        "seamlessly follow the source video's ending.\n\n"
-        f"[{INPUT_LABEL_SOURCE_VIDEO}] (single)\n"
-        "The source video to extend. The last frame is used as the "
-        "starting point for continuation. The caption or payload should "
-        "describe what should happen next."
-    ),
 )

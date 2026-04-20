@@ -27,12 +27,7 @@ HIGHLIGHT_OUTPUT_TEMPLATE = """{
         "reason": "<why this segment is a highlight>",
         "score": 0.9
       }
-    ],
-    "compiled_video": {
-      "asset_id": "highlight_reel",
-      "uri": "placeholder",
-      "format": "mp4"
-    }
+    ]
   }
 }"""
 
@@ -53,6 +48,27 @@ class HighlightAgent(BaseAgent[HighlightAgentInput, HighlightAgentOutput]):
         return (
             "You are HighlightAgent: select the best highlight segments "
             "from a video based on given criteria.\n\n"
+            "=== WHEN TO REJECT UPSTREAM INPUT ===\n"
+            "Use the shared input_rejection escape hatch (see the UPSTREAM "
+            "INPUT REJECTION block above) ONLY if the inputs make "
+            "highlight selection impossible. Concretely, reject when:\n"
+            "  * source_video_path is empty / whitespace-only — there is "
+            "no video to extract highlights from.\n"
+            "When you reject, populate the rejection fields like this:\n"
+            "  * reason: e.g. 'source_video_path is empty — no video to "
+            "extract highlights from'.\n"
+            "  * missing_labels: ['source_video'] (the video_analysis "
+            "label is optional).\n"
+            "  * offending_fields: ['source_video_path'].\n"
+            "  * upstream_agent_hint: 'IntakeVideoAgent' (the producer "
+            "that should have ingested the user's video upload).\n"
+            "If the criteria is empty or vague (e.g. 'best moments') — "
+            "DO NOT reject; default to selecting the most visually "
+            "interesting segments. If the analysis_json_text is empty — "
+            "DO NOT reject; the analysis is purely an optional "
+            "augmentation, you can select highlights from the video "
+            "directly.\n"
+            "=== END WHEN TO REJECT UPSTREAM INPUT ===\n\n"
             "=== YOUR TASK ===\n"
             "Given a video (and optionally a structured analysis), select "
             "the segments that best match the criteria. For each clip:\n"
@@ -67,8 +83,14 @@ class HighlightAgent(BaseAgent[HighlightAgentInput, HighlightAgentOutput]):
             "- Clips should not overlap.\n"
             "- Prefer clips that are self-contained and visually "
             "interesting.\n"
-            "- compiled_video asset_id is always 'highlight_reel', "
-            "uri is always 'placeholder'.\n\n"
+            "- If VIDEO ANALYSIS was provided AND the criteria targets "
+            "narrative / content concepts (plot beats, reversals, "
+            "emotional peaks, character interactions), FIRST consider "
+            "scenes where `is_climax_candidate` is true, then sort "
+            "remaining candidates by `tension_score` descending. Don't "
+            "blindly pick top-N by tension for purely visual criteria "
+            "(action choreography, VFX, kinetic B-roll) — those can come "
+            "from anywhere in the video.\n\n"
             "=== OUTPUT FORMAT ===\n"
             "JSON only; no markdown; match the user-message template "
             "exactly.\n\n"

@@ -142,9 +142,16 @@ def test_service_build_execution_inputs_returns_step_id_and_artifact_dict(assist
         step_id="task_1",
         workspace=workspace,
     )
-    assert set(inputs.keys()) == {"step_id", "resolved_artifacts"}
+    assert set(inputs.keys()) == {
+        "step_id",
+        "resolved_artifacts",
+        "resolved_input_paths",
+    }
     # The resolved_artifacts dict has no source_text label.
     assert "source_text" not in inputs["resolved_artifacts"]
+    # resolved_input_paths is a framework-only side channel; it mirrors
+    # the paths behind resolved_artifacts.
+    assert isinstance(inputs["resolved_input_paths"], list)
 
 
 def test_service_execute_and_persist_file_outputs(tmp_path, monkeypatch):

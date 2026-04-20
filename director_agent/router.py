@@ -66,6 +66,11 @@ class ReplanDecision:
 
 
 def _agents_catalog_for_prompt(agents: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    # Director-owned routing topology (see director_agent/topology.py). Injected
+    # into each agent's catalog entry so sub-agent descriptors stay free of
+    # cross-agent naming per the "Sub-agent 解耦" principle.
+    from .topology import get_topology_block
+
     out: List[Dict[str, Any]] = []
     for a in agents:
         if not isinstance(a, dict):
@@ -73,10 +78,16 @@ def _agents_catalog_for_prompt(agents: List[Dict[str, Any]]) -> List[Dict[str, A
         aid = str(a.get("id") or "").strip()
         if not aid:
             continue
+        base_desc = str(a.get("description") or "")
+        topo_block = get_topology_block(aid)
+        if topo_block:
+            full_desc = base_desc + "\n\n" + topo_block
+        else:
+            full_desc = base_desc
         out.append(
             {
                 "id": aid,
-                "description": str(a.get("description") or ""),
+                "description": full_desc,
                 "capabilities": a.get("capabilities")
                 if isinstance(a.get("capabilities"), list)
                 else [],
@@ -213,12 +224,32 @@ class LlmSubAgentPlanner:
             mem_blob=_memory_blob(stack_memory or []),
             max_plan_steps=max_steps,
         )
-        try:
-            data = self._complete_json_dict(prompts.PLAN_UPFRONT_SYSTEM, user)
-        except Exception as exc:
-            logger.error("plan_pipeline_upfront LLM failed: %s", exc)
-            return []
-        return _parse_plan(data, allowed, max_steps=max_steps)
+        # Unified retry budget covering BOTH failure modes:
+        #   (a) LLM samples `{"plan":[]}` despite the "never empty" prompt rule
+        #   (b) LLM emits malformed JSON (missing `}` between array elements is a
+        #       known gemini-2.5-flash flake under json_object mode), causing
+        #       chat_json to raise ValueError. Earlier code returned [] on the
+        #       initial exception without ever entering the retry loop.
+        plan: List[PlanStepSpec] = []
+        attempts = 3
+        for attempt in range(attempts):
+            try:
+                data = self._complete_json_dict(prompts.PLAN_UPFRONT_SYSTEM, user)
+                plan = _parse_plan(data, allowed, max_steps=max_steps)
+            except Exception as exc:
+                logger.error(
+                    "plan_pipeline_upfront attempt %d/%d failed: %s",
+                    attempt + 1, attempts, exc,
+                )
+                plan = []
+            if plan:
+                break
+            if attempt + 1 < attempts:
+                logger.warning(
+                    "plan_pipeline_upfront attempt %d/%d empty/failed, retrying",
+                    attempt + 1, attempts,
+                )
+        return plan
 
     # ------------------------------------------------------------------
     # Replanner

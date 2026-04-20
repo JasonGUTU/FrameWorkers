@@ -273,32 +273,6 @@ function render() {
     completed_at: "2026-04-07T12:00:05Z",
     created_at: "2026-04-07T12:00:00Z",
   };
-  /* ── Plan Stack (TODO) ── */
-  taskStackEl.outerHTML = sectionCard(
-    "card-orange", "📋",
-    "Dynamic Plan Stack — Director 集成",
-    "plan-stack-backend/  ·  Roadmap 01",
-    `<div style="display:inline-block;background:rgba(255,160,40,0.15);border:1px solid rgba(255,160,40,0.4);color:#f0a040;font-size:0.78em;font-weight:600;letter-spacing:.08em;padding:3px 10px;border-radius:4px;margin-bottom:18px">TODO</div>
-    <div style="display:flex;flex-direction:column;gap:12px;font-size:0.88em;color:#ccc;line-height:1.7">
-      <div>
-        <div style="font-weight:600;color:#e0e0e0;margin-bottom:4px">现状</div>
-        <div>DirectorAgent 使用固定 <code>session-implicit (Plan Stack driven)</code> step_id，轮询 <code>/api/messages/unread</code> 驱动 pipeline，任务状态完全依赖内存与 chat 消息，无法中断恢复或并发调度。</div>
-      </div>
-      <div>
-        <div style="font-weight:600;color:#e0e0e0;margin-bottom:4px">目标：将 Director 迁移至 Plan Stack</div>
-        <div style="display:flex;flex-direction:column;gap:6px">
-          <div>① <strong>任务生命周期管理</strong> — 每个 pipeline 运行对应一个 Plan Stack 任务，支持 PENDING / RUNNING / COMPLETED / FAILED 状态追踪</div>
-          <div>② <strong>中断恢复</strong> — pipeline 中断后可从上一个已完成 step 续跑，无需重头执行</div>
-          <div>③ <strong>并发调度</strong> — 多个 user session 可并行运行独立 pipeline，不再共享同一 step_id</div>
-          <div>④ <strong>上下文统一</strong> — Director 与 Assistant 共用 Plan Stack 的 workspace / memory 接口，消除重复状态维护</div>
-        </div>
-      </div>
-      <div style="padding:10px 14px;background:rgba(255,255,255,0.03);border-left:3px solid rgba(255,160,40,0.4);border-radius:4px;color:#aaa">
-        依赖 Dynamic Plan Stack 的 <code>create_app</code> 路由与 <code>AssistantStateStore</code> 已就绪，主要工作为 Director 调度层的重构。
-      </div>
-    </div>`
-  );
-
   httpEl.outerHTML = sectionCard(
     "card-blue", "🌐",
     `HTTP &nbsp;<code>POST /api/assistant/execute</code>`,

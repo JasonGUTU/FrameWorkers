@@ -1,0 +1,617 @@
+[
+  {
+    "goal": "Make a cultivation-fantasy animated drama about a sect junior who discovers the revered elder is the demon the sect was founded to purge",
+    "rationale": "User asks for pure creation of a cultivation-fantasy animated drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts the screenplay, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes the score, AudioMixAgent blends both audio layers, CompositorAgent renders the final episode. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content to analyze, highlight, extend, or re-style. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the cultivation-fantasy brief with the elder-is-the-founding-demon reveal plot"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering the junior's suspicion, proof-hunt, and confrontation arcs"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with archive discovery, duel, and sect-reckoning beats"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the junior, hidden scrolls, and the elder's true demonic form"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the mountain-sect ambience with brazier flames and subterranean vault hums"},
+      {"agent_id": "MusicAgent", "intent": "Compose a cultivation-fantasy revelatory score with a descending dread motif"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the animated drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a martial-arts animated drama about a deposed swordsman teaching a village militia to repel roving bandits during a long winter",
+    "rationale": "User asks for pure creation of a martial-arts animated drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the martial-arts brief with the deposed swordsman and village-militia winter-defense plot"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering exile, first bandit raid, drilling, and siege-winter climax"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with teaching montages and the final snowbound ambush"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the exiled master, villagers, and the snow-bound pass"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the winter-pass ambience with wind, crunching snow, and distant hoofbeats"},
+      {"agent_id": "MusicAgent", "intent": "Compose a stoic martial-arts score with rising folk-percussion for the ambush"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the animated drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a cultivation-fantasy animated drama about a spiritual-root-less girl who wins the sect tournament through tactics alone",
+    "rationale": "User asks for pure creation of a cultivation-fantasy animated drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the cultivation-fantasy brief with the no-spiritual-root tactical-win sect tournament"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering underdog training, bracket rounds, and improvised finale"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with three signature tournament rounds and the decisive feint"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the protagonist, rivals, and the tournament platform arena"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the tournament-arena ambience with crowd roar and talisman whirr"},
+      {"agent_id": "MusicAgent", "intent": "Compose a witty tactical-fight score with underdog fanfare cues"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the animated drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a martial-arts mini-drama about the sole student of a late blademaster who must deliver a sealed peace-treaty letter across war-torn Kyoto",
+    "rationale": "User asks for pure creation of a martial-arts mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the martial-arts brief with the lone student and peace-treaty courier run"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering departure, three waylays, and peace-summit arrival"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with rooftop chase, riverside duel, and final envoy reveal"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the student, opposing factions, and burned-out Kyoto districts"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the war-torn city ambience with distant fires and curfew bells"},
+      {"agent_id": "MusicAgent", "intent": "Compose a somber martial-arts score with shakuhachi and taiko cues"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a cultivation-fantasy animated drama about a reclusive immortal dragged back to the mortal world to raise her prodigal great-grandson",
+    "rationale": "User asks for pure creation of a cultivation-fantasy animated drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the cultivation-fantasy brief with the reclusive-immortal and prodigal-descendant mentoring arc"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering her return, culture shock, and grandson's awakening"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with tender-mocking mentor beats and a final guardian-showdown"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the immortal, the grandson's city life, and the concealed sect enclave"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the urban-and-hidden-sect contrast ambience"},
+      {"agent_id": "MusicAgent", "intent": "Compose a warm-yet-epic cultivation-fantasy score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the animated drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a CEO romance mini-drama about a struggling indie architect competing for a billion-dollar contract against the stern CEO who was her first love",
+    "rationale": "User asks for pure creation of a CEO romance mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the CEO-romance brief with the indie-architect contract rivalry and past-love plot"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering the bid, reveal, and reconciliation on the construction site"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with pitch-room tension and blueprint-over-coffee softening"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the architect's studio, the glass-tower boardroom, and the rooftop reveal"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the corporate-tower and late-night-studio ambience contrast"},
+      {"agent_id": "MusicAgent", "intent": "Compose a sleek CEO-romance score with a tender piano sub-theme"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a CEO romance mini-drama about a novelist secretly ghostwriting a reclusive CEO's memoir who realizes he was her childhood pen pal",
+    "rationale": "User asks for pure creation of a CEO romance mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the CEO-romance brief with the ghostwriter memoir and pen-pal reveal plot"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first interview, archive discovery, and honest re-introduction"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with interview-room repartee and the letter-archive reveal"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the novelist, CEO, and the cedar letter chest"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the CEO-penthouse-study ambience with fireplace and fountain pen scratches"},
+      {"agent_id": "MusicAgent", "intent": "Compose a nostalgic romance score with soft-strings recurrence"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a CEO romance mini-drama about conglomerate-heir twins who swap places to escape matchmaking; the serious brother falls for a social-media matchmaker",
+    "rationale": "User asks for pure creation of a CEO romance mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the CEO-romance brief with the heir-twin swap and matchmaker romance plot"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering the swap, mistaken-identity courtship, and family reveal"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with blind-date comedy scenes and the board-room unmasking"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for both twins, the matchmaker, and the family estate"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the gala and matchmaker-studio ambience"},
+      {"agent_id": "MusicAgent", "intent": "Compose a playful swap-comedy romance score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a CEO romance mini-drama about a venture capitalist forced to shadow a small-town bakery; he finds warmth in the widow owner's quiet persistence",
+    "rationale": "User asks for pure creation of a CEO romance mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the CEO-romance brief with the VC-shadowing bakery slow-burn plot"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering his resentment, apprenticeship, and soft conversion"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with pre-dawn baking shifts and the investment-pitch climax"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the CEO, the widow owner, and the town's main square"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the small-town bakery ambience with oven hum, yeast, and distant chapel bells"},
+      {"agent_id": "MusicAgent", "intent": "Compose a warm small-town romance score with cello and guitar"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "I want a CEO romance mini-drama about a reluctant shipping-conglomerate heir and the dock-worker union leader he must negotiate with — an old flame",
+    "rationale": "User asks for pure creation of a CEO romance mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the CEO-romance brief with the shipping-heir and union-leader old-flame negotiation"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering the strike, private talks, and reconciliation under pressure"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with picket-line confrontations and late-night cabin reconciliations"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the heir, union leader, and the freight-port setting"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the port and boardroom contrast ambience with gulls and air-horn blasts"},
+      {"agent_id": "MusicAgent", "intent": "Compose a grown-up CEO-romance score with brass-and-strings warmth"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Create a rebirth mini-drama about a disgraced surgeon who wakes three days before her patient died of sabotage and must find the rival before he strikes",
+    "rationale": "User asks for pure creation of a rebirth mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the rebirth mini-drama brief with the surgeon's three-day sabotage rewind plot"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering the rewind, silent investigation, and OR showdown"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with hospital-corridor tension and the pre-op confrontation"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the surgeon, rival, and the targeted OR"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the hospital ambience with monitor beeps and soft PA pages"},
+      {"agent_id": "MusicAgent", "intent": "Compose a medical-thriller rebirth score with ticking-clock motif"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Produce a transmigration mini-drama about a game designer who becomes the NPC villainess in the mobile game she built — and rewrites her doomed arc",
+    "rationale": "User asks for pure creation of a transmigration mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the transmigration brief with the designer-as-villainess meta-rewrite plot"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering arrival, script breaks, and self-authored redemption"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with story-bending scenes and the fourth-wall finale"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the protagonist, game-world locales, and system-menu overlays"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the fantasy-game-world ambience with UI chimes and ambient spells"},
+      {"agent_id": "MusicAgent", "intent": "Compose a meta-fantasy score with 8-bit leitmotif shards"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a rebirth mini-drama about an e-sports captain who wakes the morning before the tournament loss that ended her team's sponsorship",
+    "rationale": "User asks for pure creation of a rebirth mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the rebirth mini-drama brief with the e-sports captain's tournament-rewind plot"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering the morning rewind, redrafted strategy, and grand-final comeback"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with practice-room beats and the decisive final map call"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the captain, teammates, and the tournament LAN arena"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the LAN-arena and training-house ambience with keyboard clacks and crowd roars"},
+      {"agent_id": "MusicAgent", "intent": "Compose a driving e-sports-rebirth score with synth swells"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a transmigration mini-drama about a modern paramedic who wakes up as an ancient-court physician expected to save an empress in her first week",
+    "rationale": "User asks for pure creation of a transmigration mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the transmigration brief with the paramedic-turned-court-physician first-week crisis"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering arrival, diagnosis, and political entanglement"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with herb-cabinet improvisation and bedside-politics scenes"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the paramedic, ailing empress, and herbal pharmacy"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the imperial-palace infirmary ambience with brazier crackle and silk rustle"},
+      {"agent_id": "MusicAgent", "intent": "Compose a cross-era score pairing strings and a distant monitor-beep motif"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a sci-fi animated drama about an AI gardener who learns what grief is when the elderly neighbor she tends to stops coming out to water his tomatoes",
+    "rationale": "User asks for pure creation of a sci-fi animated drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the sci-fi brief with the AI-gardener learning grief through a neighbor's absence"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering routine, absence, and the AI's first ritual of mourning"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with garden-dialogue beats and the quiet empty-chair epilogue"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the AI gardener, the neighbor's porch, and the overgrown tomato vines"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the quiet suburban-garden ambience with birdsong and wind chimes"},
+      {"agent_id": "MusicAgent", "intent": "Compose a tender minimalist sci-fi score with solo piano"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the animated drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Produce a sci-fi animated drama about a colony-ship captain forced to choose between saving her ailing daughter or diverting to rescue an icy-planet beacon",
+    "rationale": "User asks for pure creation of a sci-fi animated drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the sci-fi brief with the colony-ship captain's impossible divert choice"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering the distress signal, crew dissent, and her quiet decision"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with bridge-crew debate beats and the cryo-bay farewell"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the captain, daughter's cryopod, and the icy beacon planet"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the colony-ship bridge and cryo-bay ambience with coolant hiss and console chirps"},
+      {"agent_id": "MusicAgent", "intent": "Compose a sweeping sci-fi score with mother-daughter leitmotif"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the animated drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Create a cyberpunk animated drama about a biohacker fleeing a corporate lab with the cure that proves her CEO is also the disease's originator",
+    "rationale": "User asks for pure creation of a cyberpunk animated drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the cyberpunk brief with the biohacker-fugitive and CEO-as-source reveal"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering the theft, chase, and underground-clinic release"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with drone-pursuit set-pieces and the data-drop finale"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the biohacker, corporate interiors, and neon back-alleys"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the corporate-lab and wet-alley cyberpunk ambience"},
+      {"agent_id": "MusicAgent", "intent": "Compose a driving cyberpunk score with heart-monitor percussion"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the animated drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a sci-fi animated drama about two astronauts trapped in a failing lifeboat recording year-long messages to unborn children they may never see",
+    "rationale": "User asks for pure creation of a sci-fi animated drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the sci-fi brief with the stranded astronauts and year-of-messages plot"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering oxygen rationing, filmed letters, and final transmission"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay as a series of dated log entries and shared silences"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the two astronauts and the lifeboat's drifting interior"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the lifeboat ambience with hull creaks, vent hums, and distant static"},
+      {"agent_id": "MusicAgent", "intent": "Compose an intimate sci-fi score with solo cello and sparse electronics"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the animated drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a palace-intrigue costume-drama mini-drama about a mute court pharmacist who exposes a poisoning plot in the concubine quarters using only notes and signs",
+    "rationale": "User asks for pure creation of a palace-intrigue costume-drama mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the palace-intrigue brief with the mute pharmacist's poisoning-plot exposure"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering silent inference, coded notes, and concubine showdown"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with silent visual clue-chains and the climactic written accusation"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the pharmacist, herb cabinets, and the rival concubines"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the imperial-herb-room and concubine-court ambience with footfalls and silk"},
+      {"agent_id": "MusicAgent", "intent": "Compose a restrained palace-intrigue score with guzheng and low strings"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a costume-drama mini-drama about an emperor's banished sister returning under a false name to reclaim a decree that would restore her sons' succession",
+    "rationale": "User asks for pure creation of a costume-drama mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the costume-drama brief with the banished sister's false-name return and decree reclaim"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering covert return, palace-archive hunt, and ceremonial reveal"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with disguise scenes and the throne-room unmasking"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the sister, allies in hiding, and the imperial archives"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the palace ambience with courtyard bells and whispered corridors"},
+      {"agent_id": "MusicAgent", "intent": "Compose a regal costume-drama score with stately percussion"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a costume-drama mini-drama about a young widow ruling her late husband's county who must fend off an encroaching general without ever leaving her gates",
+    "rationale": "User asks for pure creation of a costume-drama mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the costume-drama brief with the young widow's siege-resistance by statecraft alone"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering the general's arrival, maps, envoys, and stand-down"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with war-room scenes and the final envoy-audience stand"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the widow, advisors, and the besieging army outside the gate"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the walled-county ambience with crow caws, torch crackle, and distant drums"},
+      {"agent_id": "MusicAgent", "intent": "Compose a steely costume-drama siege score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a palace-intrigue mini-drama about a physician who uncovers that the emperor's apparent madness is a staged pretext to replace him with a puppet heir",
+    "rationale": "User asks for pure creation of a palace-intrigue mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the palace-intrigue brief with the staged-madness succession-coup plot"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering diagnosis, ledger hunt, and throne-hall reveal"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with apothecary scenes and the decisive audience"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the physician, conspirators, and the inner imperial chambers"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the palace-corridor ambience with muted gongs and whispered eunuchs"},
+      {"agent_id": "MusicAgent", "intent": "Compose a tense palace-intrigue score with pipa and low strings"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Generate an urban romance mini-drama about a bedridden novelist and a delivery driver who builds a daily courtship through notes folded into her grocery bags",
+    "rationale": "User asks for pure creation of an urban romance mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the urban-romance brief with the bedridden novelist and note-bearing driver"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering the first note, vulnerability, and doorstep meeting"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay as epistolary-style scenes with intercut city rides"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the novelist's apartment, the city route, and the handwritten notes"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the apartment and city-street ambience with door-buzzers and bike chains"},
+      {"agent_id": "MusicAgent", "intent": "Compose a tender urban-romance score with typewriter-click percussion"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a slice-of-life mini-drama about two competing food-cart owners at the night market whose rivalry hides a shared family secret neither has faced",
+    "rationale": "User asks for pure creation of a slice-of-life mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the slice-of-life brief with the two food-cart rivals and hidden shared past"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering the rivalry, chance discovery, and midnight reconciliation"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with service-rush comedy and the quiet post-market confession"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for both carts, the night-market alley, and the family photograph"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the night-market ambience with sizzle, chatter, and neon signs buzzing"},
+      {"agent_id": "MusicAgent", "intent": "Compose a warm slice-of-life score with folk-pop instrumentation"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an urban romance mini-drama about a professional funeral crier who meets a widower who sees through her performance and asks her to grieve for real",
+    "rationale": "User asks for pure creation of an urban romance mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the urban-romance brief with the funeral-crier and widower honest-grief plot"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering the confrontation, slow trust, and her first real tears"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with funeral-hall scenes and the rain-soaked riverside scene"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the crier, widower, and the grey-walled parlor"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the funeral-parlor and riverside ambience with soft weeping and water"},
+      {"agent_id": "MusicAgent", "intent": "Compose a mournful-yet-hopeful urban-romance score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a slice-of-life mini-drama about a divorce mediator whose newest client is her own ex-husband seeking to separate from his second marriage",
+    "rationale": "User asks for pure creation of a slice-of-life mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the slice-of-life brief with the mediator handling her ex-husband's second divorce"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering professional boundary, messy recollections, and a clean goodbye"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with conference-room set-pieces and the coffee-shop coda"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the mediator, ex-husband, and the glass-walled mediation room"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the mediation-office and rainy-street ambience"},
+      {"agent_id": "MusicAgent", "intent": "Compose a bittersweet slice-of-life score with reflective piano lines"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a horror mini-drama about a lighthouse keeper whose diary predicts each night's tragedy — and today she's written about tomorrow's",
+    "rationale": "User asks for pure creation of a horror mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the horror brief with the lighthouse keeper's prophetic diary and tomorrow's entry"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering the pattern, denial, and the morning of her own entry"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with cold-open tragedies and the dawn lighthouse climax"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the keeper, diary pages, and the storm-lashed lighthouse"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the lighthouse ambience with foghorn, surf, and creaking lamp"},
+      {"agent_id": "MusicAgent", "intent": "Compose a slow-build horror score with ghostly choral swells"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a supernatural mini-drama about a night-shift subway conductor who begins to hear a child crying from the abandoned station she is warned never to stop at",
+    "rationale": "User asks for pure creation of a supernatural mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the supernatural brief with the subway conductor and the haunted abandoned station"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering forbidden stop, compulsion, and hidden-room discovery"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with tunnel-POV scenes and the boarded-door reveal"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the conductor, train cab, and the abandoned platform"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the tunnel ambience with rail screech, water drip, and faint child's voice"},
+      {"agent_id": "MusicAgent", "intent": "Compose a dread-drenched supernatural score with sub-bass and distant whispers"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a folk-horror mini-drama about a village festival whose sacrificial bride must be chosen from outsiders; the only female guest realizes too late why she was invited",
+    "rationale": "User asks for pure creation of a folk-horror mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the folk-horror brief with the festival, outsider-bride rule, and late realization"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering hospitality, growing unease, and sunrise escape"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with processional beats and the final dawn chase"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the guest, villagers, and the painted altar"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the village ambience with distant drums, chants, and goat bells"},
+      {"agent_id": "MusicAgent", "intent": "Compose an unsettling folk-horror score with fiddle and chant layers"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an investigative-thriller mini-drama about a missing-persons podcaster who becomes her own next episode when a listener starts mailing her keepsakes",
+    "rationale": "User asks for pure creation of an investigative-thriller mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the investigative-thriller brief with the podcaster's own disappearance setup"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering case research, escalation, and studio-finale confrontation"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with on-mic scenes and the locked-studio climax"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the podcaster, the mailed keepsakes, and the recording booth"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the recording-studio ambience with compressor hum and mic thuds"},
+      {"agent_id": "MusicAgent", "intent": "Compose a stalker-thriller score with breathy synths and heart-beat percussion"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Produce a crime mini-drama about a forensic accountant who finds her late father's name in the mob ledger she was hired to audit and must decide what to tell her client",
+    "rationale": "User asks for pure creation of a crime mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the crime brief with the accountant's ledger-discovery moral dilemma"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering the audit, private investigation, and courtroom choice"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with bookkeeping-detail scenes and the late-night father-memory flashback"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the accountant, the ledger, and the empty office at midnight"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the office ambience with keyboard clacks, fluorescent buzz, and printer whir"},
+      {"agent_id": "MusicAgent", "intent": "Compose a morally-weighted crime score with solo saxophone motif"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a thriller mini-drama about a prison chaplain who is the only one who believes the death-row inmate's innocence — until his own phone buzzes a threat with her name",
+    "rationale": "User asks for pure creation of a thriller mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the thriller brief with the chaplain's innocence-belief and incoming threat"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering growing conviction, evidence hunt, and clock-ticking finale"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with chapel-visit scenes and the execution-hour climax"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the chaplain, inmate, and the prison hall"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the prison-interior ambience with metal doors, distant radios, and cold fluorescents"},
+      {"agent_id": "MusicAgent", "intent": "Compose a minor-key thriller score with pulse-quickening strings"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a WWII-era animated drama about a clandestine radio operator sending coded resistance messages and learning her long-dead brother is alive behind enemy lines",
+    "rationale": "User asks for pure creation of a WWII-era animated drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the WWII-era brief with the clandestine radio operator and thought-dead brother plot"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering nightly transmissions, recognized hand, and rescue gamble"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with Morse-scene beats and the border-crossing finale"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the operator, attic station, and the smuggler route map"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the wartime attic ambience with valve-radio hiss and distant air-raid sirens"},
+      {"agent_id": "MusicAgent", "intent": "Compose a poignant WWII score with accordion, cello, and sparse brass"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the animated drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a frontier animated drama about a cavalry officer who must negotiate peace with the mountain clan that killed her father a decade earlier",
+    "rationale": "User asks for pure creation of a frontier animated drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the frontier-drama brief with the officer's inherited grief and peace-negotiation plot"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering parley prep, mountain council, and a soldier's forgiveness"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with ride-up beats and the firelit council scene"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the officer, mountain elders, and the high-pass encampment"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the frontier ambience with wind, horse tack, and crackling council fires"},
+      {"agent_id": "MusicAgent", "intent": "Compose a reflective frontier score with Native-inflected flute and low strings"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the animated drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a sports drama mini-drama about a ballet prodigy sidelined by injury who coaches a raw-talent street dancer to the national stage and confronts her own unfinished dream",
+    "rationale": "User asks for pure creation of a sports drama mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the sports-drama brief with the sidelined ballet prodigy and street-dancer protégé"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first audition, training montage, and nationals-finale"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with studio-rehearsal beats and the backstage confession"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for coach, dancer, and the national-stage lights"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the dance-studio and backstage ambience with barre creaks and distant applause"},
+      {"agent_id": "MusicAgent", "intent": "Compose an uplifting sports-drama score with orchestral-pop swells"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a mystery mini-drama about an antique appraiser who uncovers a forgery ring hidden in a provincial museum's long-forgotten loan collection",
+    "rationale": "User asks for pure creation of a mystery mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the mystery brief with the appraiser's forgery-ring reveal in a provincial museum"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first appraisal, hidden provenance, and curator confrontation"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with vault-opening beats and the exhibition-night arrest"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the appraiser, forged pieces, and the museum storage"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the museum ambience with dehumidifier hum and footstep echoes"},
+      {"agent_id": "MusicAgent", "intent": "Compose a cerebral mystery score with harpsichord and low strings"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a coming-of-age mini-drama about a quiet teacher whose only connection to her late daughter is a new student who looks uncannily like her",
+    "rationale": "User asks for pure creation of a coming-of-age mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the coming-of-age brief with the teacher and her late daughter's lookalike student"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering shock, quiet mentorship, and letting go at graduation"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with classroom-quiet scenes and the graduation-day farewell"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the teacher, student, and the sunlit classroom"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the school ambience with chalk taps, distant bells, and hallway chatter"},
+      {"agent_id": "MusicAgent", "intent": "Compose a gentle coming-of-age score with solo piano and strings"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a sports drama mini-drama about a blind archer who qualifies for the Paralympics using coordinates her late sister mapped in an old diary",
+    "rationale": "User asks for pure creation of a sports drama mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the sports-drama brief with the blind archer and late-sister's diary coordinates"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering grief, unconventional training, and qualifying-final arrow"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with range-echo practice beats and the final competition scene"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the archer, diary pages, and the qualifying-day venue"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the archery-range ambience with bowstring snaps, breath, and spectator hush"},
+      {"agent_id": "MusicAgent", "intent": "Compose a moving sports-drama score with expansive strings"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a disaster-survival mini-drama about eight strangers stuck in an elevator for five days during a citywide blackout, each with a secret that keeps them alive",
+    "rationale": "User asks for pure creation of a disaster-survival mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the disaster-survival brief with the eight-strangers elevator blackout scenario"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering day-by-day revelations and the rescue-morning choice"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay in chapter-like day chunks with a final confession"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the strangers, the claustrophobic cab, and the emergency-ceiling hatch"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the elevator-cab ambience with cable creaks, air-vent cycles, and muffled city silence"},
+      {"agent_id": "MusicAgent", "intent": "Compose a claustrophobic survival score with slow-building unease"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a family-drama mini-drama about a widowed mother who lets her teenage son film her daily life for his college application and rediscovers parts of herself",
+    "rationale": "User asks for pure creation of a family-drama mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the family-drama brief with the widow and son's college-application doc plot"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first shoot, walls down, and submission-day farewell"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with handheld-interview beats and the quiet acceptance-letter coda"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for mother, son, and the cluttered kitchen-studio"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the household ambience with dishwasher, radio, and morning-bird chirps"},
+      {"agent_id": "MusicAgent", "intent": "Compose a warm family-drama score with acoustic guitar and piano"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make a period-romance mini-drama about a Sengoku-era courier carrying love letters between enemy generals' children across a season of war",
+    "rationale": "User asks for pure creation of a period-romance mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the period-romance brief with the Sengoku courier carrying forbidden love letters"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering monsoon rides, near-captures, and armistice revelation"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with travel-beat cross-cuts between letter writers and courier"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the courier, the two lovers, and war-torn roads between castles"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the Sengoku countryside ambience with rain, cicadas, and distant war drums"},
+      {"agent_id": "MusicAgent", "intent": "Compose a period-romance score with shakuhachi and koto interlays"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    ]
+  }
+]

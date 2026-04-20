@@ -203,8 +203,9 @@ class TestSubtitleAgent:
 
     def test_descriptor_build_input(self):
         from agents.subtitle.descriptor import build_input
+        from agents.subtitle.labels import INPUT_LABEL_SOURCE_TEXT
         resolved = {
-            "screenplay": {
+            INPUT_LABEL_SOURCE_TEXT: {
                 "caption": "Screenplay", "scope": "global", "path": "", "mime": "application/json",
                 "payload": {"content": {"scenes": []}},
             },
@@ -381,10 +382,15 @@ class TestCompositorAgent:
 
     def test_descriptor_build_input(self):
         from agents.compositor.descriptor import build_input
+        # video_file / audio_file labels carry the binary paths; the
+        # sibling video_package / audio_package labels carry the JSON
+        # manifest payloads. CompositorAgent now reads them independently.
         resolved = {
             "screenplay": {"caption": "SP", "scope": "global", "path": "", "mime": "application/json", "payload": {"content": {}}},
-            "video_package": {"caption": "VP", "scope": "global", "path": "/tmp/v.mp4", "mime": "application/json", "payload": {"content": {}}},
-            "audio_package": {"caption": "AP", "scope": "global", "path": "/tmp/a.wav", "mime": "application/json", "payload": {"content": {}}},
+            "video_package": {"caption": "VP", "scope": "global", "path": "", "mime": "application/json", "payload": {"content": {}}},
+            "video_file": {"caption": "VF", "scope": "global", "path": "/tmp/v.mp4", "mime": "video/mp4", "payload": None},
+            "audio_package": {"caption": "AP", "scope": "global", "path": "", "mime": "application/json", "payload": {"content": {}}},
+            "audio_file": {"caption": "AF", "scope": "global", "path": "/tmp/a.wav", "mime": "audio/wav", "payload": None},
             "subtitle_tracks": {"caption": "ST", "scope": "global", "path": "", "mime": "application/json", "payload": {"tracks": []}},
         }
         inp = build_input("task_001", resolved)
@@ -614,17 +620,56 @@ class TestVideoExtendAgent:
         errors = evaluator.check_structure(out)
         assert any("motion_description" in e for e in errors)
 
-    def test_descriptor_build_input(self):
+    def test_descriptor_build_input_dumps_instruction_payload_as_json(self):
         from agents.video_extend.descriptor import build_input
         resolved = {
             "source_video": {
-                "caption": "Character stops at door",
-                "scope": "global", "path": "/tmp/clip.mp4", "mime": "video/mp4", "payload": None,
+                "caption": "User-uploaded video reference.",
+                "scope": "global", "path": "/tmp/clip.mp4", "mime": "video/mp4",
+                "payload": None,
+            },
+            "continuation_instruction": {
+                "caption": "User-submitted creative brief (32 chars). ...",
+                "scope": "global", "path": "/tmp/brief.json",
+                "mime": "application/json",
+                "payload": {"content": {"text": "Character walks out the door"}},
             },
         }
         inp = build_input("task_001", resolved)
         assert inp.source_video_path == "/tmp/clip.mp4"
         assert "door" in inp.continuation_description
+        assert "content" in inp.continuation_description
+
+    def test_descriptor_build_input_falls_back_to_instruction_caption(self):
+        from agents.video_extend.descriptor import build_input
+        resolved = {
+            "source_video": {
+                "caption": "Source video clip.",
+                "scope": "global", "path": "/tmp/clip.mp4", "mime": "video/mp4",
+                "payload": None,
+            },
+            "continuation_instruction": {
+                "caption": "Extend 5 seconds: character walks away.",
+                "scope": "global", "path": "/tmp/brief.txt",
+                "mime": "text/plain", "payload": None,
+            },
+        }
+        inp = build_input("task_001", resolved)
+        assert inp.source_video_path == "/tmp/clip.mp4"
+        assert inp.continuation_description == "Extend 5 seconds: character walks away."
+
+    def test_descriptor_build_input_empty_when_no_instruction(self):
+        from agents.video_extend.descriptor import build_input
+        resolved = {
+            "source_video": {
+                "caption": "Source video clip.",
+                "scope": "global", "path": "/tmp/clip.mp4", "mime": "video/mp4",
+                "payload": None,
+            },
+        }
+        inp = build_input("task_001", resolved)
+        assert inp.source_video_path == "/tmp/clip.mp4"
+        assert inp.continuation_description == ""
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -633,9 +678,15 @@ class TestVideoExtendAgent:
 
 class TestVideoAnalysisAgent:
     def test_schema_defaults(self):
+        """Input REJECTS empty path (validator enforces a real video file).
+
+        Output still has sane defaults for empty construction.
+        """
+        import pytest
+        from pydantic import ValidationError
         from agents.video_analysis.schema import VideoAnalysisAgentInput, VideoAnalysisAgentOutput
-        inp = VideoAnalysisAgentInput()
-        assert inp.source_video_path == ""
+        with pytest.raises(ValidationError):
+            VideoAnalysisAgentInput()
         out = VideoAnalysisAgentOutput()
         assert out.content.scenes == []
 
@@ -691,12 +742,21 @@ class TestVideoAnalysisAgent:
         assert any("increasing" in e for e in errors)
 
     def test_descriptor_build_input(self):
+        """VideoAnalysisAgentInput validates path exists + is video/* mime.
+
+        Use a real tempfile with .mp4 suffix so the validator passes.
+        """
+        import tempfile
         from agents.video_analysis.descriptor import build_input
-        resolved = {
-            "source_video": {"caption": "Video", "scope": "global", "path": "/tmp/video.mp4", "mime": "video/mp4", "payload": None},
-        }
-        inp = build_input("task_001", resolved)
-        assert inp.source_video_path == "/tmp/video.mp4"
+        with tempfile.NamedTemporaryFile(suffix=".mp4") as tmp:
+            resolved = {
+                "source_video": {
+                    "caption": "Video", "scope": "global",
+                    "path": tmp.name, "mime": "video/mp4", "payload": None,
+                },
+            }
+            inp = build_input("task_001", resolved)
+            assert inp.source_video_path == tmp.name
 
     def test_descriptor_build_captions(self):
         from agents.video_analysis.descriptor import build_captions
@@ -707,8 +767,12 @@ class TestVideoAnalysisAgent:
             }
         }
         caps = build_captions("VideoAnalysisAgent", output_dict)
-        assert "City Walk" in caps["VideoAnalysisAgent"]["caption"]
-        assert "2 scene(s)" in caps["VideoAnalysisAgent"]["caption"]
+        cap = caps["VideoAnalysisAgent"]["caption"]
+        # Caption carries role + scene count. Content (title, genre) lives
+        # in payload, never in caption. See MEMORY:feedback_caption_role_not_content.
+        assert "2 scene(s)" in cap
+        assert "City Walk" not in cap
+        assert "vlog" not in cap
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -793,130 +857,20 @@ class TestHighlightAgent:
 
 
 # ═══════════════════════════════════════════════════════════════════════════
-# VoiceCloneAgent
-# ═══════════════════════════════════════════════════════════════════════════
-
-class TestVoiceCloneAgent:
-    def test_schema_defaults(self):
-        from agents.voice_clone.schema import VoiceCloneAgentInput, VoiceCloneAgentOutput
-        inp = VoiceCloneAgentInput()
-        assert inp.reference_audio_path == ""
-        out = VoiceCloneAgentOutput()
-        assert out.content.segments == []
-
-    def test_evaluator_passes_valid_output(self):
-        from agents.voice_clone.schema import VoiceCloneAgentOutput
-        from agents.voice_clone.evaluator import VoiceCloneEvaluator
-        data = {
-            "content": {
-                "voice_profile": {
-                    "voice_id": "voice_001",
-                    "description": "Deep male voice with warm tone",
-                    "gender": "male",
-                    "age_range": "adult",
-                    "tone": "warm, deep, resonant",
-                },
-                "segments": [
-                    {"segment_id": "vc_seg_001", "text": "Hello everyone, welcome.", "audio_asset_id": "vc_aud_001", "uri": "placeholder"},
-                    {"segment_id": "vc_seg_002", "text": "Today we will explore something new.", "audio_asset_id": "vc_aud_002", "uri": "placeholder"},
-                ],
-                "final_audio": {"asset_id": "vc_final", "uri": "placeholder", "format": "wav"},
-            }
-        }
-        out = VoiceCloneAgentOutput.model_validate(data)
-        evaluator = VoiceCloneEvaluator()
-        errors = evaluator.check_structure(out)
-        assert errors == []
-
-    def test_evaluator_catches_invalid_gender(self):
-        from agents.voice_clone.schema import VoiceCloneAgentOutput
-        from agents.voice_clone.evaluator import VoiceCloneEvaluator
-        data = {
-            "content": {
-                "voice_profile": {"voice_id": "voice_001", "description": "A voice", "gender": "unknown"},
-                "segments": [{"segment_id": "vc_seg_001", "text": "Hi", "audio_asset_id": "vc_aud_001"}],
-                "final_audio": {"asset_id": "vc_final"},
-            }
-        }
-        out = VoiceCloneAgentOutput.model_validate(data)
-        evaluator = VoiceCloneEvaluator()
-        errors = evaluator.check_structure(out)
-        assert any("gender" in e for e in errors)
-
-    def test_evaluator_catches_non_increasing_segment_ids(self):
-        from agents.voice_clone.schema import VoiceCloneAgentOutput
-        from agents.voice_clone.evaluator import VoiceCloneEvaluator
-        data = {
-            "content": {
-                "voice_profile": {"voice_id": "voice_001", "description": "Voice", "gender": "female"},
-                "segments": [
-                    {"segment_id": "vc_seg_002", "text": "First", "audio_asset_id": "vc_aud_002"},
-                    {"segment_id": "vc_seg_001", "text": "Second", "audio_asset_id": "vc_aud_001"},
-                ],
-                "final_audio": {"asset_id": "vc_final"},
-            }
-        }
-        out = VoiceCloneAgentOutput.model_validate(data)
-        evaluator = VoiceCloneEvaluator()
-        errors = evaluator.check_structure(out)
-        assert any("increasing" in e for e in errors)
-
-    def test_evaluator_catches_wrong_final_asset_id(self):
-        from agents.voice_clone.schema import VoiceCloneAgentOutput
-        from agents.voice_clone.evaluator import VoiceCloneEvaluator
-        data = {
-            "content": {
-                "voice_profile": {"voice_id": "voice_001", "description": "Voice", "gender": "male"},
-                "segments": [{"segment_id": "vc_seg_001", "text": "Hi", "audio_asset_id": "vc_aud_001"}],
-                "final_audio": {"asset_id": "wrong"},
-            }
-        }
-        out = VoiceCloneAgentOutput.model_validate(data)
-        evaluator = VoiceCloneEvaluator()
-        errors = evaluator.check_structure(out)
-        assert any("vc_final" in e for e in errors)
-
-    def test_descriptor_build_input(self):
-        from agents.voice_clone.descriptor import build_input
-        resolved = {
-            "reference_audio": {"caption": "Voice sample", "scope": "global", "path": "/tmp/ref.wav", "mime": "audio/wav", "payload": None},
-            "transcript": {"caption": "Script", "scope": "global", "path": "", "mime": "application/json", "payload": {"text": "Hello world"}},
-        }
-        inp = build_input("task_001", resolved)
-        assert inp.reference_audio_path == "/tmp/ref.wav"
-        assert "Hello world" in inp.transcript_json_text
-
-    def test_descriptor_build_captions(self):
-        from agents.voice_clone.descriptor import build_captions
-        output_dict = {
-            "content": {
-                "voice_profile": {"gender": "female", "tone": "bright, clear"},
-                "segments": [{"segment_id": "s1"}, {"segment_id": "s2"}, {"segment_id": "s3"}],
-            }
-        }
-        caps = build_captions("VoiceCloneAgent", output_dict)
-        assert "female" in caps["VoiceCloneAgent"]["caption"]
-        assert "3 segment(s)" in caps["VoiceCloneAgent"]["caption"]
-
-
-# ═══════════════════════════════════════════════════════════════════════════
 # Cross-agent registry check
 # ═══════════════════════════════════════════════════════════════════════════
 
 class TestNewAgentsInRegistry:
-    """Verify all 10 new agents are properly registered."""
+    """Verify all new agents are properly registered."""
 
     EXPECTED_NEW_AGENTS = [
         "TranslationAgent",
         "SubtitleAgent",
-        "TranscriptionAgent",
         "CompositorAgent",
         "StyleTransferAgent",
-        "InpaintAgent",
         "VideoExtendAgent",
         "VideoAnalysisAgent",
         "HighlightAgent",
-        "VoiceCloneAgent",
     ]
 
     def test_all_new_agents_in_registry(self):
@@ -948,5 +902,8 @@ class TestNewAgentsInRegistry:
             assert len(params) >= 2, f"{agent_id}.build_input needs at least 2 params"
 
     def test_total_registry_count(self):
+        # Floor guard against accidental mass un-registration. Update this
+        # number on intentional agent restructures; the specific critical
+        # set is enforced by ``test_all_new_agents_in_registry`` above.
         from agents import AGENT_REGISTRY
-        assert len(AGENT_REGISTRY) >= 23, f"Expected >=23 agents, got {len(AGENT_REGISTRY)}"
+        assert len(AGENT_REGISTRY) >= 18, f"Expected >=18 agents, got {len(AGENT_REGISTRY)}"

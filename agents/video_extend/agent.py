@@ -21,13 +21,7 @@ VIDEO_EXTEND_OUTPUT_TEMPLATE = """{
     "extension_spec": {
       "continuation_prompt": "<detailed description of what happens next>",
       "target_duration_seconds": 5.0,
-      "maintain_style": true,
       "motion_description": "<camera and subject motion for the extension>"
-    },
-    "output_video": {
-      "asset_id": "video_extend_output",
-      "uri": "placeholder",
-      "format": "mp4"
     }
   }
 }"""
@@ -49,6 +43,40 @@ class VideoExtendAgent(BaseAgent[VideoExtendAgentInput, VideoExtendAgentOutput])
         return (
             "You are VideoExtendAgent: plan a continuation for an existing "
             "video clip.\n\n"
+            "=== INPUT SHAPE ===\n"
+            "`continuation_description` is a free-form intent blob. It may "
+            "arrive as a short one-liner ('character walks away') OR as a "
+            "pretty-printed JSON document (e.g. the IntakeTextAgent "
+            "snapshot, shaped like `{\"content\": {\"text\": \"...user "
+            "prompt...\", \"summary\": \"...\"}}`). Parse it pragmatically: "
+            "dig the actual user intent out of whichever field carries it "
+            "(`content.text`, `summary`, `continuation`, or the whole "
+            "blob if it is plain text) — do not quote the JSON back at "
+            "the reader.\n\n"
+            "=== WHEN TO REJECT UPSTREAM INPUT ===\n"
+            "Use the shared input_rejection escape hatch (see the UPSTREAM "
+            "INPUT REJECTION block above) ONLY if the inputs make "
+            "extension impossible. Concretely, reject when ANY of these "
+            "is true:\n"
+            "  * source_video_path is empty / whitespace-only — there is "
+            "no video to extend.\n"
+            "  * continuation_description is empty / whitespace-only, OR "
+            "carries no discernible user intent after you parse it — "
+            "inventing a continuation would override the user's intent.\n"
+            "When you reject, populate the rejection fields like this:\n"
+            "  * reason: the single most specific defect (e.g. 'no "
+            "continuation instruction provided — cannot decide what "
+            "should happen next in the extended clip').\n"
+            "  * missing_labels: ['source_video'] for missing video, "
+            "['continuation_instruction'] for missing intent text.\n"
+            "  * offending_fields: ['source_video_path'] or "
+            "['continuation_description'].\n"
+            "  * upstream_agent_hint: 'IntakeVideoAgent' for missing "
+            "video, 'IntakeTextAgent' for missing continuation prompt.\n"
+            "If the continuation description is short (e.g. 'character "
+            "walks away') — DO NOT reject; that is enough to plan from, "
+            "expand the visual specifics yourself.\n"
+            "=== END WHEN TO REJECT UPSTREAM INPUT ===\n\n"
             "=== YOUR TASK ===\n"
             "Given a source video and a description of what should happen "
             "next, produce:\n"
@@ -59,13 +87,10 @@ class VideoExtendAgent(BaseAgent[VideoExtendAgentInput, VideoExtendAgentOutput])
             "(e.g. 'camera slowly pans right as the character walks toward "
             "the door').\n"
             "3. target_duration_seconds: typically 3-10 seconds. Match the "
-            "pacing of the original.\n"
-            "4. maintain_style: true unless the user explicitly wants a "
-            "visual change.\n\n"
+            "pacing of the original.\n\n"
             "=== OUTPUT FORMAT ===\n"
             "JSON only; no markdown; match the user-message template "
-            "exactly. asset_id is always 'video_extend_output', uri is "
-            "always 'placeholder'.\n\n"
+            "exactly.\n\n"
             "Do NOT include an artifact_caption block — the system "
             "generates it automatically."
         )

@@ -1,0 +1,191 @@
+[
+  {
+    "goal": "Convert this urban night-market clip to a retro-game 16-bit pixel-art style",
+    "rationale": "User uploaded an urban night-market clip and asks for a retro-game 16-bit pixel-art style. Plan: IntakeText captures the text brief, IntakeVideo registers the source clip, StyleTransfer applies the pixel-art style. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the re-styled clip, delivered directly. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the retro-game 16-bit pixel-art style-transfer brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded urban night-market clip"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a retro-game 16-bit pixel-art style to the clip"}
+    ]
+  },
+  {
+    "goal": "Transfer this martial-arts river-crossing scene into a Peking-opera hand-painted scroll style",
+    "rationale": "User uploaded a martial-arts river-crossing clip and asks for a Peking-opera hand-painted scroll style. Chain: IntakeText logs the brief, IntakeVideo registers the source, StyleTransfer applies the scroll style. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Peking-opera hand-painted scroll style-transfer brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded martial-arts river-crossing clip"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Peking-opera hand-painted scroll style to the clip"}
+    ]
+  },
+  {
+    "goal": "Convert this palace-intrigue night-audience scene to a Vermeer intimate-domestic oil-painting look",
+    "rationale": "User uploaded a palace-intrigue night-audience clip and asks for a Vermeer intimate-domestic look. Plan: IntakeText logs the brief, IntakeVideo registers the source, StyleTransfer applies the Vermeer style. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Vermeer intimate-domestic oil-painting style-transfer brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded palace-intrigue night-audience clip"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Vermeer intimate-domestic oil-painting look to the clip"}
+    ]
+  },
+  {
+    "goal": "Transfer this dystopian police-station scene into a brutalist concrete-architectural-illustration style",
+    "rationale": "User uploaded a dystopian police-station clip and asks for a brutalist concrete-architectural-illustration style. Chain: IntakeText logs the brief, IntakeVideo registers the source, StyleTransfer applies the brutalist style. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brutalist concrete-architectural-illustration style-transfer brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded dystopian police-station clip"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a brutalist concrete-architectural-illustration style to the clip"}
+    ]
+  },
+  {
+    "goal": "Convert this costume-drama imperial-temple scene to a Mughal miniature-painting style",
+    "rationale": "User uploaded a costume-drama imperial-temple clip and asks for a Mughal miniature-painting style. Plan: IntakeText logs the brief, IntakeVideo registers the source, StyleTransfer applies the Mughal miniature style. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Mughal miniature-painting style-transfer brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded costume-drama imperial-temple clip"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Mughal miniature-painting style to the clip"}
+    ]
+  },
+  {
+    "goal": "Transfer this cyberpunk hacker-den scene into a vaporwave aesthetic with pastel grid and palm silhouettes",
+    "rationale": "User uploaded a cyberpunk hacker-den clip and asks for a vaporwave aesthetic. Chain: IntakeText logs the brief, IntakeVideo registers the source, StyleTransfer applies the vaporwave style. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the vaporwave pastel-grid-palm-silhouette style-transfer brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded cyberpunk hacker-den clip"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a vaporwave aesthetic with pastel grid and palm silhouettes to the clip"}
+    ]
+  },
+  {
+    "goal": "Convert this CEO-romance yacht-party scene to an Art Deco jazz-age glamour style",
+    "rationale": "User uploaded a CEO-romance yacht-party clip and asks for an Art Deco jazz-age glamour style. Plan: IntakeText logs the brief, IntakeVideo registers the source, StyleTransfer applies the Art Deco style. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Art Deco jazz-age glamour style-transfer brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded CEO-romance yacht-party clip"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply an Art Deco jazz-age glamour style to the clip"}
+    ]
+  },
+  {
+    "goal": "Transfer this martial-arts monastery-training scene into an Akira neon-and-blood 80s anime style",
+    "rationale": "User uploaded a martial-arts monastery-training clip and asks for an Akira neon-and-blood 80s anime style. Chain: IntakeText logs the brief, IntakeVideo registers the source, StyleTransfer applies the Akira style. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Akira neon-and-blood 80s anime style-transfer brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded martial-arts monastery-training clip"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply an Akira neon-and-blood 80s anime style to the clip"}
+    ]
+  },
+  {
+    "goal": "Convert this urban courtroom trial scene to a Saul Steinberg editorial-illustration style",
+    "rationale": "User uploaded an urban courtroom trial clip and asks for a Saul Steinberg editorial-illustration style. Plan: IntakeText logs the brief, IntakeVideo registers the source, StyleTransfer applies the Steinberg editorial style. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Saul Steinberg editorial-illustration style-transfer brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded urban courtroom trial clip"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Saul Steinberg editorial-illustration style to the clip"}
+    ]
+  },
+  {
+    "goal": "Transfer this sci-fi starship engine-room scene into a Jack Kirby Fourth-World cosmic-comic style",
+    "rationale": "User uploaded a sci-fi starship engine-room clip and asks for a Jack Kirby Fourth-World cosmic-comic style. Chain: IntakeText logs the brief, IntakeVideo registers the source, StyleTransfer applies the Kirby cosmic-comic style. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Kirby Fourth-World cosmic-comic style-transfer brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded sci-fi starship engine-room clip"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Jack Kirby Fourth-World cosmic-comic style to the clip"}
+    ]
+  },
+  {
+    "goal": "Convert this fantasy dragon-roost scene to an M.C. Escher optical-illusion lithograph style",
+    "rationale": "User uploaded a fantasy dragon-roost clip and asks for an M.C. Escher optical-illusion lithograph style. Plan: IntakeText logs the brief, IntakeVideo registers the source, StyleTransfer applies the Escher style. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the M.C. Escher optical-illusion lithograph style-transfer brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded fantasy dragon-roost clip"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply an M.C. Escher optical-illusion lithograph style to the clip"}
+    ]
+  },
+  {
+    "goal": "Transfer this medieval tavern-brawl scene into a Brueghel peasant-genre oil-painting style",
+    "rationale": "User uploaded a medieval tavern-brawl clip and asks for a Brueghel peasant-genre oil-painting style. Chain: IntakeText logs the brief, IntakeVideo registers the source, StyleTransfer applies the Brueghel style. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Brueghel peasant-genre oil-painting style-transfer brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded medieval tavern-brawl clip"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Brueghel peasant-genre oil-painting style to the clip"}
+    ]
+  },
+  {
+    "goal": "Convert this modern gym-training scene to a comic-book action-silhouette speed-line style",
+    "rationale": "User uploaded a modern gym-training clip and asks for a comic-book action-silhouette speed-line style. Plan: IntakeText logs the brief, IntakeVideo registers the source, StyleTransfer applies the comic-book speed-line style. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the comic-book action-silhouette speed-line style-transfer brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded modern gym-training clip"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a comic-book action-silhouette speed-line style to the clip"}
+    ]
+  },
+  {
+    "goal": "Transfer this horror attic scene into a Goya Black Paintings nightmarish-expressive style",
+    "rationale": "User uploaded a horror attic clip and asks for a Goya Black Paintings nightmarish-expressive style. Chain: IntakeText logs the brief, IntakeVideo registers the source, StyleTransfer applies the Goya style. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Goya Black Paintings nightmarish style-transfer brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded horror attic clip"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Goya Black Paintings nightmarish-expressive style to the clip"}
+    ]
+  },
+  {
+    "goal": "Convert this romance-drama cable-car ride scene to a Pixar 3D-animation bright-storytelling style",
+    "rationale": "User uploaded a romance-drama cable-car ride clip and asks for a Pixar 3D-animation style. Plan: IntakeText logs the brief, IntakeVideo registers the source, StyleTransfer applies the Pixar style. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Pixar 3D-animation bright-storytelling style-transfer brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded romance-drama cable-car ride clip"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Pixar 3D-animation bright-storytelling style to the clip"}
+    ]
+  },
+  {
+    "goal": "Transfer this suspense warehouse-raid scene into a Warhol silkscreen pop-art style with four-color panels",
+    "rationale": "User uploaded a suspense warehouse-raid clip and asks for a Warhol silkscreen pop-art style with four-color panels. Chain: IntakeText logs the brief, IntakeVideo registers the source, StyleTransfer applies the Warhol style. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Warhol silkscreen pop-art four-color-panel style-transfer brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded suspense warehouse-raid clip"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Warhol silkscreen pop-art style with four-color panels to the clip"}
+    ]
+  },
+  {
+    "goal": "Convert this palace-intrigue flower-garden scene to a Van Gogh swirling post-impressionist style",
+    "rationale": "User uploaded a palace-intrigue flower-garden clip and asks for a Van Gogh swirling post-impressionist style. Plan: IntakeText logs the brief, IntakeVideo registers the source, StyleTransfer applies the Van Gogh style. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Van Gogh swirling post-impressionist style-transfer brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded palace-intrigue flower-garden clip"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Van Gogh swirling post-impressionist style to the clip"}
+    ]
+  },
+  {
+    "goal": "Transfer this cyberpunk holographic parade scene into a Georges Méliès early-cinema stop-trick style",
+    "rationale": "User uploaded a cyberpunk holographic parade clip and asks for a Georges Méliès early-cinema stop-trick style. Chain: IntakeText logs the brief, IntakeVideo registers the source, StyleTransfer applies the Méliès stop-trick style. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Georges Méliès early-cinema stop-trick style-transfer brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded cyberpunk holographic parade clip"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Georges Méliès early-cinema stop-trick style to the clip"}
+    ]
+  },
+  {
+    "goal": "Convert this ninja rooftop-run scene to a rotoscope Linklater hand-traced animated style",
+    "rationale": "User uploaded a ninja rooftop-run clip and asks for a rotoscope Linklater hand-traced animated style. Plan: IntakeText logs the brief, IntakeVideo registers the source, StyleTransfer applies the rotoscope Linklater style. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the rotoscope Linklater hand-traced animated style-transfer brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded ninja rooftop-run clip"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a rotoscope Linklater hand-traced animated style to the clip"}
+    ]
+  },
+  {
+    "goal": "Transfer this ancient-Egypt market scene into an Egyptian-hieroglyph-mural flat-profile painting style",
+    "rationale": "User uploaded an ancient-Egypt market clip and asks for an Egyptian-hieroglyph-mural flat-profile painting style. Chain: IntakeText logs the brief, IntakeVideo registers the source, StyleTransfer applies the hieroglyph-mural style. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Egyptian-hieroglyph-mural flat-profile style-transfer brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded ancient-Egypt market clip"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply an Egyptian-hieroglyph-mural flat-profile painting style to the clip"}
+    ]
+  },
+  {
+    "goal": "Convert this modern subway-performer scene to a Basquiat neo-expressionist graffiti style",
+    "rationale": "User uploaded a modern subway-performer clip and asks for a Basquiat neo-expressionist graffiti style. Plan: IntakeText logs the brief, IntakeVideo registers the source, StyleTransfer applies the Basquiat style. No MusicAgent because no score was requested. No CompositorAgent because StyleTransfer's output is the deliverable. No VideoAnalysisAgent because no analysis is requested. No VideoExtendAgent because no extension is asked for. No SubtitleAgent because no captions were asked for.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the Basquiat neo-expressionist graffiti style-transfer brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded modern subway-performer clip"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a Basquiat neo-expressionist graffiti style to the clip"}
+    ]
+  }
+]

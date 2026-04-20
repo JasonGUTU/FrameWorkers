@@ -26,7 +26,6 @@ from .audio_generators.service import AudioService, FalAudioService, MockAudioSe
 from .compositor_service import CompositorService, MockCompositorService
 from .transcription_service import TranscriptionService, FalTranscriptionService, MockTranscriptionService
 from .video_edit_service import VideoEditService, MockVideoEditService, FalVideoEditService
-from .voice_clone_service import VoiceCloneService, MockVoiceCloneService, FalVoiceCloneService
 
 
 def _env_truthy(name: str) -> bool:
@@ -89,12 +88,6 @@ def select_video_edit_service() -> VideoEditService:
     return MockVideoEditService()
 
 
-def select_voice_clone_service() -> VoiceCloneService:
-    if _env_truthy("FW_USE_REAL_MEDIA_GEN"):
-        return FalVoiceCloneService()
-    return MockVoiceCloneService()
-
-
 __all__ = [
     "FalImageService",
     "ImageService",
@@ -119,8 +112,4 @@ __all__ = [
     "MockVideoEditService",
     "FalVideoEditService",
     "select_video_edit_service",
-    "VoiceCloneService",
-    "MockVoiceCloneService",
-    "FalVoiceCloneService",
-    "select_voice_clone_service",
 ]

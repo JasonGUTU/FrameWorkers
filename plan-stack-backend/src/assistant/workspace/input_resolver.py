@@ -207,7 +207,7 @@ class InputResolver:
         import asyncio
         loop = asyncio.new_event_loop()
         try:
-            for max_tok in (8192, 16384):
+            for max_tok in (65536, 65536):
                 try:
                     kwargs: Dict[str, Any] = {
                         "system_prompt": system_prompt,

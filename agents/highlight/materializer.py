@@ -32,13 +32,15 @@ class HighlightMaterializer(BaseMaterializer):
     ) -> list[MediaAsset]:
         typed_input: HighlightAgentInput = ctx.typed_input
         content = asset_dict.get("content", {})
-        compiled = content.get("compiled_video", {})
-        compiled["asset_id"] = "highlight_reel"
 
         clips_spec = content.get("clips", [])
         if not clips_spec:
             logger.warning("HighlightMaterializer: no clips selected")
             return []
+
+        # Local uri_holder — the persisted content JSON has no asset block;
+        # ArtifactWriter still needs a dict to stamp uri into for ArtifactRef.
+        uri_holder: dict[str, Any] = {}
 
         clip_bytes_list: list[bytes] = []
         for clip in clips_spec:
@@ -71,5 +73,5 @@ class HighlightMaterializer(BaseMaterializer):
             sys_id="highlight_reel",
             data=reel_bytes,
             extension="mp4",
-            uri_holder=compiled,
+            uri_holder=uri_holder,
         )]
