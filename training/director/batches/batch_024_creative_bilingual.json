@@ -1,0 +1,903 @@
+[
+  {
+    "goal": "Make an English-Chinese bilingual cultivation-fantasy animated drama about a disgraced sect heir who founds his own school on a forgotten island and trains orphans of the purge",
+    "rationale": "User asks for pure creation of a bilingual cultivation-fantasy animated drama with English-first captions and a Chinese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts the screenplay, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes the score, AudioMixAgent blends both audio layers, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Chinese subtitle track, CompositorAgent composites both caption tracks and renders the final episode. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual cultivation-fantasy brief with the disgraced heir and island orphan school"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering exile, island founding, and first graduation duel"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with training beats and the graduation-duel finale"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the heir, orphans, and the forgotten island"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the island-school ambience with surf, wind bells, and distant mountain birds"},
+      {"agent_id": "MusicAgent", "intent": "Compose a rousing cultivation-fantasy score with erhu and taiko"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the English dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Chinese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the animated drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Japanese bilingual CEO-romance mini-drama about a Tokyo fintech CEO and the American crisis negotiator hired to handle his company's IPO-day leak",
+    "rationale": "User asks for pure creation of a bilingual CEO-romance mini-drama with English-first captions and a Japanese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Japanese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual CEO-romance brief with the fintech CEO and the crisis-negotiator IPO-day leak"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first meeting, leak containment, and post-listing dinner"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with boardroom-brief beats and the Ginza rooftop dinner"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the CEO, negotiator, and the Tokyo office"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the corporate-and-rooftop ambience with train jingles, elevator chimes, and night city"},
+      {"agent_id": "MusicAgent", "intent": "Compose a sleek CEO-romance score with muted piano and shinobue"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Japanese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Spanish bilingual rebirth mini-drama about a Mexico-City chef who wakes on the morning her restaurant's fire started and has a chance to protect her sous-chef sister",
+    "rationale": "User asks for pure creation of a bilingual rebirth mini-drama with English-first captions and a Spanish subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Spanish subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual rebirth brief with the Mexico-City chef's restaurant-fire rewind"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering rewind morning, safety retrofit, and family-service reopening"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with kitchen-prep beats and the sister-saved finale"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the chef, sister, and the restaurant"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the Mexico-City restaurant ambience with plancha sizzle, café chatter, and mariachi through the wall"},
+      {"agent_id": "MusicAgent", "intent": "Compose a warm rebirth score with nylon guitar and marimba"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Spanish subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Korean bilingual sci-fi animated drama about a Seoul-based orbital-engineer who catches her dead colleague's voice drifting through a malfunctioning satellite",
+    "rationale": "User asks for pure creation of a bilingual sci-fi animated drama with English-first captions and a Korean subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Korean subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual sci-fi brief with the Seoul orbital engineer and a dead colleague's drift"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first transmission, decoding, and mission-control decision"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with ground-control beats and the orbital-signal farewell"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the engineer, ground control, and the failing satellite"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the ground-control ambience with console hums, radio static, and late-night air conditioning"},
+      {"agent_id": "MusicAgent", "intent": "Compose a haunting sci-fi score with gayageum and soft synth pads"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Korean subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the animated drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Chinese bilingual palace-intrigue costume-drama about an imperial painter who hides the true succession decree inside the brushstrokes of her final court portrait",
+    "rationale": "User asks for pure creation of a bilingual palace-intrigue costume-drama with English-first captions and a Chinese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Chinese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual palace-intrigue brief with the painter hiding the succession decree in brushstrokes"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering commission, coded painting, and hall-of-audiences unveiling"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with studio beats and the audience-hall reveal"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the painter, the emperor, and the courtyard atelier"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the palace-atelier ambience with brush strokes, ink grinding, and courtyard birds"},
+      {"agent_id": "MusicAgent", "intent": "Compose a refined palace-intrigue score with guqin and dizi"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Chinese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Portuguese bilingual urban-romance mini-drama about a Lisbon tram driver and the cellist whose evening practice rides the same route home",
+    "rationale": "User asks for pure creation of a bilingual urban-romance mini-drama with English-first captions and a Portuguese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Portuguese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual urban-romance brief with the Lisbon tram driver and the evening-practice cellist"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first shared ride, small conversations, and a riverside recital"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with tram-window beats and the Alfama-stop recital"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the driver, cellist, and the cobblestone route"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the Lisbon-tram ambience with bell dings, cobble rumble, and distant fado"},
+      {"agent_id": "MusicAgent", "intent": "Compose a gentle urban-romance score with solo cello and accordion"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Portuguese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Chinese bilingual martial-arts animated drama about a wandering ex-bodyguard who returns home to find her village being slowly bought by a foreign combine",
+    "rationale": "User asks for pure creation of a bilingual martial-arts animated drama with English-first captions and a Chinese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Chinese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual martial-arts brief with the ex-bodyguard defending her home village from a foreign combine"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering return, village-hall confrontation, and courtyard defense"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with marketplace beats and the courtyard face-off"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the ex-bodyguard, combine enforcers, and the village square"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the village ambience with market criers, wagon wheels, and distant cicadas"},
+      {"agent_id": "MusicAgent", "intent": "Compose a grounded martial-arts score with pipa and drum"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Chinese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the animated drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-French bilingual mystery mini-drama about a Montreal notary who notices the same exotic wildflower pressed into three clients' wills and traces it to a single dying arboretum",
+    "rationale": "User asks for pure creation of a bilingual mystery mini-drama with English-first captions and a French subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the French subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual mystery brief with the Montreal notary and the pressed-wildflower wills trail"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first discovery, botanist consult, and arboretum confrontation"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with office-desk beats and the conservatory-night finale"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the notary, botanist, and the failing arboretum"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the Montreal-office and arboretum ambience with filing-drawer thuds and mist-sprayers"},
+      {"agent_id": "MusicAgent", "intent": "Compose a pensive mystery score with harpsichord and clarinet"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the French subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Japanese bilingual rebirth animated drama about a manga assistant who wakes a week before her mangaka mentor's fatal overdose and tries to change his schedule",
+    "rationale": "User asks for pure creation of a bilingual rebirth animated drama with English-first captions and a Japanese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Japanese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual rebirth brief with the manga assistant's one-week mentor-rewind"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering rewind morning, editorial pushback, and deadline-night intervention"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with studio-desk beats and the hospital-avoided finale"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the assistant, the mentor, and the cluttered studio"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the manga-studio ambience with paper shuffles, G-pen scratches, and distant Shinkansen"},
+      {"agent_id": "MusicAgent", "intent": "Compose a hopeful rebirth score with piano and koto"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Japanese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the animated drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Spanish bilingual sports-drama mini-drama about a Buenos-Aires polo captain mentoring her niece on the rival estancia's horses the week before a regional championship",
+    "rationale": "User asks for pure creation of a bilingual sports-drama mini-drama with English-first captions and a Spanish subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Spanish subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual sports-drama brief with the Buenos-Aires polo captain and her niece's rival-estancia training"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first training, rival-estancia dinner, and championship chukker"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with stables beats and the championship final"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the captain, niece, and the polo field"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the polo-field ambience with hooves, mallet-strikes, and distant pampas wind"},
+      {"agent_id": "MusicAgent", "intent": "Compose a driving sports-drama score with bandoneon and strings"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Spanish subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Chinese bilingual cyberpunk animated drama about a Shanghai night-courier whose drone is hijacked on every run through the Pudong financial district until she finds the signal's origin",
+    "rationale": "User asks for pure creation of a bilingual cyberpunk animated drama with English-first captions and a Chinese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Chinese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual cyberpunk brief with the Shanghai drone-courier and recurring hijacks in Pudong"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first hijack, signal triangulation, and rooftop showdown"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with alley-ride beats and the rooftop antenna-farm finale"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the courier, her drone, and the Pudong skyline"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the neon-city ambience with drone rotors, subway rumble, and night-market chatter"},
+      {"agent_id": "MusicAgent", "intent": "Compose a pulsing cyberpunk score with synth bass and erhu"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Chinese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the animated drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Korean bilingual CEO-romance mini-drama about a Busan shipping heiress who discovers that the blind-date investor she rejected is now the only one who can save her father's yard",
+    "rationale": "User asks for pure creation of a bilingual CEO-romance mini-drama with English-first captions and a Korean subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Korean subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual CEO-romance brief with the Busan heiress and her rejected-investor lifeline"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering the yard crisis, forced re-approach, and harbor-view reconciliation"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with dry-dock beats and the harbor-balcony signing"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the heiress, investor, and the Busan shipyard"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the shipyard and harbor ambience with gulls, crane clangs, and distant ship horns"},
+      {"agent_id": "MusicAgent", "intent": "Compose a warm CEO-romance score with piano and daegeum"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Korean subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Chinese bilingual supernatural mini-drama about a Hong-Kong funeral planner who begins seeing each client's regret written on the walls of the room where they died",
+    "rationale": "User asks for pure creation of a bilingual supernatural mini-drama with English-first captions and a Chinese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Chinese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual supernatural brief with the Hong-Kong funeral planner reading regrets on the walls"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first visitation, a client's hidden confession, and a seaside farewell ritual"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with high-rise apartment beats and the seaside farewell"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the planner, deceased clients, and the city-skyline backdrop"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the apartment and harbor ambience with tram bells, ferry horns, and kettle steam"},
+      {"agent_id": "MusicAgent", "intent": "Compose a reflective supernatural score with guqin and soft strings"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Chinese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Arabic bilingual historical mini-drama about a Cairo bookseller during the 1890s whose careful acquisitions keep a banned manuscript circulating through generations of scholars",
+    "rationale": "User asks for pure creation of a bilingual historical mini-drama with English-first captions and an Arabic subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Arabic subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual historical brief with the Cairo bookseller preserving a banned manuscript"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering acquisition, evasion, and handoff to the next scholar"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with shop-back-room beats and the alley-lantern handoff"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the bookseller, scholars, and the Cairo alleyways"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the Cairo ambience with distant calls-to-prayer, cart wheels, and the rustle of paper"},
+      {"agent_id": "MusicAgent", "intent": "Compose a reflective historical score with oud and qanun"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Arabic subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Chinese bilingual cultivation-fantasy mini-drama about a celestial bureaucrat banished to tally mortal good deeds for a year before she can return to the sky courts",
+    "rationale": "User asks for pure creation of a bilingual cultivation-fantasy mini-drama with English-first captions and a Chinese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Chinese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual cultivation-fantasy brief with the celestial bureaucrat tallying mortal good deeds"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering arrival, ledger entries, and sky-court reinstatement"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with village-scribe beats and the sky-court reopening"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the bureaucrat, the village, and the sky-court"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the village-and-sky-court ambience with temple bells, quills, and clouds"},
+      {"agent_id": "MusicAgent", "intent": "Compose a luminous cultivation-fantasy score with xiao and harp"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Chinese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Japanese bilingual slice-of-life mini-drama about a Kyoto kimono-restorer apprenticing her nephew, who keeps sneaking sketches of her work into his art-school portfolio",
+    "rationale": "User asks for pure creation of a bilingual slice-of-life mini-drama with English-first captions and a Japanese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Japanese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual slice-of-life brief with the Kyoto kimono-restorer and her art-school nephew"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first mending, sketch discovery, and portfolio-review epilogue"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with atelier beats and the portfolio-review afternoon"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the restorer, nephew, and the Kyoto atelier"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the atelier ambience with fabric rustle, kettle boil, and temple bells"},
+      {"agent_id": "MusicAgent", "intent": "Compose a gentle slice-of-life score with koto and shakuhachi"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Japanese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Spanish bilingual thriller mini-drama about a Madrid nurse who begins receiving identical threatening voicemails from a patient who died the same night as her own brother",
+    "rationale": "User asks for pure creation of a bilingual thriller mini-drama with English-first captions and a Spanish subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Spanish subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual thriller brief with the Madrid nurse and matching threatening voicemails"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first message, phone-trace sleuthing, and hospital-records revelation"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with breakroom beats and the archive-basement reveal"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the nurse, the hospital, and the phone-archive basement"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the Madrid-hospital ambience with distant gurneys, PA pages, and street cafés"},
+      {"agent_id": "MusicAgent", "intent": "Compose a taut thriller score with guitar and heartbeat percussion"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Spanish subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Korean bilingual coming-of-age mini-drama about a first-generation Korean-American returning to her grandmother's village for the summer to compete in a regional sijo festival",
+    "rationale": "User asks for pure creation of a bilingual coming-of-age mini-drama with English-first captions and a Korean subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Korean subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual coming-of-age brief with the Korean-American and the regional sijo festival"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering arrival, grandmother's coaching, and festival-stage recitation"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with farmhouse-porch beats and the festival-stage climax"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the teen, grandmother, and the festival village"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the rural-village ambience with cicadas, rice-paddy wind, and folk-drum practice"},
+      {"agent_id": "MusicAgent", "intent": "Compose a tender coming-of-age score with gayageum and piano"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Korean subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Chinese bilingual urban-romance mini-drama about a Taipei night-market noodle-stand owner and the ex-professor who writes anonymous newspaper reviews of her soup broth",
+    "rationale": "User asks for pure creation of a bilingual urban-romance mini-drama with English-first captions and a Chinese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Chinese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual urban-romance brief with the Taipei night-market owner and the anonymous soup-reviewing professor"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first review, stakeout, and shared closing-hour bowl"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with stand-counter beats and the closing-hour revelation"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the owner, the professor, and the night market"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the night-market ambience with wok hiss, haggling, and scooter horns"},
+      {"agent_id": "MusicAgent", "intent": "Compose a warm urban-romance score with acoustic guitar and erhu"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Chinese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Japanese bilingual martial-arts animated drama about a tea-ceremony master's quiet daughter who enters a regional iaido tournament to reclaim her late father's reputation",
+    "rationale": "User asks for pure creation of a bilingual martial-arts animated drama with English-first captions and a Japanese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Japanese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual martial-arts brief with the tea-master's daughter reclaiming her father's iaido legacy"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering training, tournament bracket, and final draw-cut"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with dojo beats and the final-round draw"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the daughter, rivals, and the tournament hall"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the dojo ambience with wooden-floor creaks, tea kettle, and distant crowd hush"},
+      {"agent_id": "MusicAgent", "intent": "Compose a restrained martial-arts score with shakuhachi and taiko"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Japanese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the animated drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Spanish bilingual urban-drama mini-drama about a Barcelona taxi driver and the tourist passenger whose missing-person poster turns up three cities later in the driver's own logbook",
+    "rationale": "User asks for pure creation of a bilingual urban-drama mini-drama with English-first captions and a Spanish subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Spanish subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual urban-drama brief with the Barcelona driver, missing tourist, and the logbook trail"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first fare, three-city search, and a back-alley bar reunion"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with cab-interior beats and the final-bar encounter"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the driver, tourist, and the Barcelona streets"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the Barcelona ambience with scooter buzz, café spoons, and Mediterranean wind"},
+      {"agent_id": "MusicAgent", "intent": "Compose a sultry urban-drama score with flamenco guitar and cajón"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Spanish subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Chinese bilingual rebirth animated drama about a disgraced esports coach who wakes at the draft for the season she lost her star player and this time tries a completely different roster philosophy",
+    "rationale": "User asks for pure creation of a bilingual rebirth animated drama with English-first captions and a Chinese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Chinese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual rebirth brief with the esports coach's draft-day rewind and new roster philosophy"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering draft hall, early-split scrims, and playoffs decider"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with draft-hall beats and the playoff-lobby climax"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the coach, roster, and the tournament venue"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the esports-venue ambience with keyboard clacks, crowd roars, and commentator chatter"},
+      {"agent_id": "MusicAgent", "intent": "Compose a driving rebirth score with synth bass and pulsing drums"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Chinese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the animated drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Chinese bilingual palace-intrigue mini-drama about a widowed consort whose quiet embroidery designs carry coded warnings to factions outside the forbidden inner court",
+    "rationale": "User asks for pure creation of a bilingual palace-intrigue mini-drama with English-first captions and a Chinese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Chinese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual palace-intrigue brief with the widowed consort's coded-embroidery warnings"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first warning, secret courier network, and dawn-audience reveal"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with embroidery-chamber beats and the throne-room vindication"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the consort, couriers, and the palace-inner court"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the palace-inner ambience with silk rustle, tea pouring, and courtyard birds"},
+      {"agent_id": "MusicAgent", "intent": "Compose a refined palace-intrigue score with guzheng and low strings"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Chinese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Japanese bilingual slice-of-life animated drama about a Sapporo soba-chef who takes in a runaway teenager the week before a heavy snow closes her mountain road",
+    "rationale": "User asks for pure creation of a bilingual slice-of-life animated drama with English-first captions and a Japanese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Japanese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual slice-of-life brief with the Sapporo soba-chef sheltering a runaway teen through a snow-in"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering arrival, shared soba-making, and a parent's post-thaw arrival"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with kitchen-bench beats and the snow-clear morning reunion"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the chef, teen, and the mountain shop"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the mountain-shop ambience with wooden eaves, howling snow wind, and soba-cutting"},
+      {"agent_id": "MusicAgent", "intent": "Compose a cozy slice-of-life score with cello, guitar, and marimba"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Japanese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the animated drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Chinese bilingual sci-fi animated drama about a Beijing data-archivist who finds that her late father's voice has been quietly preserved inside the city's public-transport announcement system",
+    "rationale": "User asks for pure creation of a bilingual sci-fi animated drama with English-first captions and a Chinese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Chinese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual sci-fi brief with the Beijing archivist finding her late father's voice in the transit system"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first recognition, departmental petition, and rush-hour memorial"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with archive-cubicle beats and the subway platform farewell"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the archivist, subway platforms, and family photographs"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the subway ambience with door chimes, PA announcements, and crowd shuffle"},
+      {"agent_id": "MusicAgent", "intent": "Compose a wistful sci-fi score with erhu and soft synth pads"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Chinese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the animated drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Spanish bilingual historical mini-drama about a Havana sugar-mill bookkeeper who risks her family's standing to falsify records freeing an entire cutting crew the month before abolition",
+    "rationale": "User asks for pure creation of a bilingual historical mini-drama with English-first captions and a Spanish subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Spanish subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual historical brief with the Havana bookkeeper falsifying records before abolition"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first entry, house-visit interrogation, and dawn-of-abolition release"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with ledger-desk beats and the courtyard release"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the bookkeeper, cutting crew, and the sugar-mill estate"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the sugar-mill ambience with grinding rollers, distant songs, and tropical insects"},
+      {"agent_id": "MusicAgent", "intent": "Compose a heartfelt historical score with solo trumpet and acoustic guitar"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Spanish subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-French bilingual urban-romance mini-drama about a Paris luthier whose violin-repair stand shares a hallway with a silent-film archivist's screening room",
+    "rationale": "User asks for pure creation of a bilingual urban-romance mini-drama with English-first captions and a French subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the French subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual urban-romance brief with the Paris luthier and silent-film archivist sharing a hallway"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first lent repair, shared screening, and rooftop confession"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with workshop beats and the rooftop-farewell scene"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the luthier, archivist, and the old Parisian building"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the Paris-building ambience with creaking parquet, projector whir, and tram bells"},
+      {"agent_id": "MusicAgent", "intent": "Compose a romantic urban score with solo violin and accordion"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the French subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Korean bilingual supernatural mini-drama about a Jeju haenyeo who dives for a family heirloom her drowned mother once swore she'd buried in the reef",
+    "rationale": "User asks for pure creation of a bilingual supernatural mini-drama with English-first captions and a Korean subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Korean subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual supernatural brief with the Jeju haenyeo and her drowned mother's reef heirloom"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first dive, vision below, and returned-home farewell"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with boat beats and the cliff-side altar scene"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the haenyeo, the reef, and the altar"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the sea-dive ambience with regulator breathing, whale calls, and distant gulls"},
+      {"agent_id": "MusicAgent", "intent": "Compose a haunting supernatural score with gayageum and wordless voice"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Korean subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Chinese bilingual costume-drama mini-drama about a Song-dynasty female pharmacist who turns a traveling circus's trick antidotes into a real tonic for a plague-stricken town",
+    "rationale": "User asks for pure creation of a bilingual costume-drama mini-drama with English-first captions and a Chinese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Chinese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual costume-drama brief with the Song pharmacist turning circus tricks into a real tonic"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering arrival, formula redraft, and village-square distribution"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with apothecary beats and the village-square distribution climax"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the pharmacist, circus troupe, and the plague-stricken village"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the apothecary ambience with pestle scrapes, smoke, and distant travelling drums"},
+      {"agent_id": "MusicAgent", "intent": "Compose an empathetic costume-drama score with dizi and pipa"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Chinese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Japanese bilingual comedy-drama mini-drama about an Osaka stand-up comedian touring rural towns with an audio-described set designed for her blind grandmother's first-ever live show",
+    "rationale": "User asks for pure creation of a bilingual comedy-drama mini-drama with English-first captions and a Japanese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Japanese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual comedy-drama brief with the Osaka comedian's audio-described rural tour for her blind grandmother"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first town, backstage doubt, and grandmother's hometown set"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with green-room beats and the hometown finale"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the comedian, grandmother, and the rural venues"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the rural-venue ambience with folding-chair shuffles, laughter, and distant rain"},
+      {"agent_id": "MusicAgent", "intent": "Compose a warm comedy-drama score with ukulele and glockenspiel"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Japanese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Chinese bilingual crime mini-drama about a Kunming mushroom-hunter who stumbles on a trafficking route hidden inside a state-forest's foraging permits",
+    "rationale": "User asks for pure creation of a bilingual crime mini-drama with English-first captions and a Chinese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Chinese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual crime brief with the Kunming mushroom-hunter and trafficking-route permits"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first permit, forest stakeout, and ranger-station handoff"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with forest beats and the ranger-station evidence table"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the hunter, ranger, and the forest trailheads"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the forest ambience with cicadas, twig cracks, and distant off-road engines"},
+      {"agent_id": "MusicAgent", "intent": "Compose a tense crime score with muted strings and percussion"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Chinese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Spanish bilingual CEO-romance mini-drama about a Bogotá biotech CEO whose discreet Saturday volunteer shifts at a community clinic attract a tenacious board-room skeptic",
+    "rationale": "User asks for pure creation of a bilingual CEO-romance mini-drama with English-first captions and a Spanish subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Spanish subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual CEO-romance brief with the Bogotá biotech CEO and the skeptical board-member shadowing her volunteer shifts"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering clinic weekend, argument, and an investor-pitch reconciliation"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with clinic-back-hall beats and the investor-panel vote"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the CEO, skeptic, and the community clinic"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the clinic-and-boardroom ambience with baby cries, keyboard clicks, and distant elevator"},
+      {"agent_id": "MusicAgent", "intent": "Compose a warm CEO-romance score with charango and soft strings"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Spanish subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Korean bilingual workplace-drama mini-drama about a Seoul broadcasting intern who catches her news-anchor senior softening every story about the station's parent chaebol",
+    "rationale": "User asks for pure creation of a bilingual workplace-drama mini-drama with English-first captions and a Korean subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Korean subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual workplace-drama brief with the Seoul intern catching chaebol-related copy softening"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first suspicion, archive comparison, and live-air disclosure"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with copy-desk beats and the on-air correction climax"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the intern, senior anchor, and the broadcast studio"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the broadcast-newsroom ambience with monitor chatter, floor-director cues, and distant production"},
+      {"agent_id": "MusicAgent", "intent": "Compose a taut workplace-drama score with pulsing piano and strings"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Korean subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Chinese bilingual fantasy-adventure animated drama about a Sichuan lantern-maker whose paper dragons come alive only under the light of a particular comet's tail",
+    "rationale": "User asks for pure creation of a bilingual fantasy-adventure animated drama with English-first captions and a Chinese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Chinese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual fantasy-adventure brief with the Sichuan lantern-maker's comet-lit paper dragons"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first flight, village peril, and comet-midnight climax"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with workshop beats and the comet-night rooftop battle"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the lantern-maker, paper dragons, and the comet's tail"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the rural-village and rooftop ambience with crickets, lantern flap, and distant celebration"},
+      {"agent_id": "MusicAgent", "intent": "Compose a sweeping fantasy-adventure score with strings and choral swells"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Chinese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the animated drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Spanish bilingual supernatural mini-drama about a Oaxaca curandera whose traditional remedies start predicting each patient's missing family member's return",
+    "rationale": "User asks for pure creation of a bilingual supernatural mini-drama with English-first captions and a Spanish subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Spanish subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual supernatural brief with the Oaxaca curandera whose remedies predict returns"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first prediction, village gathering, and a final reunion at the plaza"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with casita beats and the plaza reunion"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the curandera, patients, and the plaza"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the Oaxaca ambience with copal smoke, distant marimba, and adobe-wall echoes"},
+      {"agent_id": "MusicAgent", "intent": "Compose a tender supernatural score with marimba, violin, and voice"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Spanish subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Japanese bilingual thriller mini-drama about a Yokohama customs inspector who finds her boss's initials stamped on every container flagged by a recent whistleblower's dossier",
+    "rationale": "User asks for pure creation of a bilingual thriller mini-drama with English-first captions and a Japanese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Japanese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual thriller brief with the Yokohama inspector tracing her boss's initials across flagged containers"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first match, covert audit, and the dock-office confrontation"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with container-yard beats and the dock-office climax"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the inspector, containers, and the harbor office"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the port ambience with crane clangs, forklift beeps, and distant ferry horns"},
+      {"agent_id": "MusicAgent", "intent": "Compose a coiled thriller score with shakuhachi and sub-bass"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Japanese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Chinese bilingual horror mini-drama about a Chengdu teahouse owner whose back room's teakettle whistles only when a customer plans to leave without paying — or worse",
+    "rationale": "User asks for pure creation of a bilingual horror mini-drama with English-first captions and a Chinese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Chinese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual horror brief with the Chengdu teahouse's warning kettle"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first whistle, escalating customers, and a midnight confrontation"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with tea-room beats and the midnight-kitchen standoff"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the owner, suspicious customers, and the back-room kettle"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the teahouse ambience with porcelain clinks, mahjong tiles, and a distant firing kiln"},
+      {"agent_id": "MusicAgent", "intent": "Compose a quiet horror score with erhu and low bowed strings"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Chinese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Spanish bilingual family-drama mini-drama about a Quito florist holding her brother's wedding together after their estranged father turns up uninvited with a plea",
+    "rationale": "User asks for pure creation of a bilingual family-drama mini-drama with English-first captions and a Spanish subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Spanish subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual family-drama brief with the Quito florist's wedding and estranged father's unannounced arrival"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering setup, confrontation at rehearsal, and a reluctant toast"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with flower-shop beats and the rehearsal-dinner confrontation"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the florist, father, and the wedding venue"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the venue ambience with street bells, garden fountains, and distant Andean pipes"},
+      {"agent_id": "MusicAgent", "intent": "Compose a tender family-drama score with charango and strings"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Spanish subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Chinese bilingual cultivation-fantasy mini-drama about a retired demon-slayer tea-master whose last brew summons the spirit of the apprentice she failed to protect",
+    "rationale": "User asks for pure creation of a bilingual cultivation-fantasy mini-drama with English-first captions and a Chinese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Chinese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual cultivation-fantasy brief with the tea-master summoning her lost apprentice"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering the final brew, spirit-dialogue, and daybreak release"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with tea-room beats and the daybreak-farewell scene"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the tea-master, apprentice spirit, and the mountain teahouse"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the mountain-teahouse ambience with kettle whistle, wind-bells, and distant chimes"},
+      {"agent_id": "MusicAgent", "intent": "Compose a reflective cultivation-fantasy score with guqin and solo flute"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Chinese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Korean bilingual slice-of-life mini-drama about a Daegu fabric-store owner who lets a group of drama-club teenagers borrow costumes for a production she once starred in a lifetime ago",
+    "rationale": "User asks for pure creation of a bilingual slice-of-life mini-drama with English-first captions and a Korean subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Korean subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual slice-of-life brief with the Daegu fabric-store owner lending costumes to drama-club teens"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering the first borrow, dress rehearsal, and opening-night attendance"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with store-back-room beats and the theater-lobby reunion"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the owner, teens, and the small-town theater"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the store and theater ambience with sewing-machine hum, hangar slide, and audience hush"},
+      {"agent_id": "MusicAgent", "intent": "Compose a tender slice-of-life score with acoustic guitar and haegeum"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Korean subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Chinese bilingual urban-drama mini-drama about a Shenzhen rideshare driver who begins recording her passengers' voice memos and stitches them into a viral radio essay",
+    "rationale": "User asks for pure creation of a bilingual urban-drama mini-drama with English-first captions and a Chinese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Chinese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual urban-drama brief with the Shenzhen rideshare driver's viral passenger-voice essay"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first memo, editorial piecing, and a listener's phone-in revelation"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with dashboard beats and the radio-station recording-booth finale"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the driver, passengers, and the recording booth"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the rideshare ambience with signal chimes, subway rush through windows, and GPS voice"},
+      {"agent_id": "MusicAgent", "intent": "Compose a reflective urban-drama score with ambient pads and piano"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Chinese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Japanese bilingual sports-drama mini-drama about a Tokyo sumo-stable cook who becomes the stable's unofficial mental coach while preparing every meal for its ranked wrestlers",
+    "rationale": "User asks for pure creation of a bilingual sports-drama mini-drama with English-first captions and a Japanese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Japanese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual sports-drama brief with the Tokyo sumo-cook as unofficial mental coach"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering a rising wrestler's slump, kitchen counsel, and tournament-day victory"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with stable-kitchen beats and the dohyō-edge encouragement"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the cook, wrestler, and the training stable"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the sumo-stable ambience with chopping block, kettle steam, and training-ring thuds"},
+      {"agent_id": "MusicAgent", "intent": "Compose a warm sports-drama score with taiko accents and strings"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Japanese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Chinese bilingual rom-com mini-drama about a Guangzhou wedding planner who accidentally books the same couple's dream venue twice on the same afternoon",
+    "rationale": "User asks for pure creation of a bilingual rom-com mini-drama with English-first captions and a Chinese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Chinese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual rom-com brief with the Guangzhou planner's accidental double-booking disaster"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering the mistake, frantic merge, and shared-ceremony coda"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with venue-hallway chaos and the joint-altar epilogue"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the planner, both couples, and the venue garden"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the venue ambience with fluttering ribbons, string-quartet warmup, and distant firecrackers"},
+      {"agent_id": "MusicAgent", "intent": "Compose a bubbly rom-com score with pizzicato strings and xylophone"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Chinese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Japanese bilingual horror mini-drama about a Nara forest ranger who starts finding identical origami cranes at the exact spots where old pilgrimage sites once stood",
+    "rationale": "User asks for pure creation of a bilingual horror mini-drama with English-first captions and a Japanese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Japanese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual horror brief with the Nara ranger and the origami-cranes at lost pilgrimage sites"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first crane, maps cross-reference, and a dawn-shrine confrontation"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with ranger-cabin beats and the dawn-shrine climax"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the ranger, forest paths, and the old shrine"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the forest-shrine ambience with wind through cedar, distant temple bells, and deer calls"},
+      {"agent_id": "MusicAgent", "intent": "Compose a creeping horror score with shakuhachi and bowed piano"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Japanese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Chinese bilingual costume-drama animated drama about a Tang-dynasty female horse-trainer who wins the emperor's prized stallion and is then accused of witchcraft by the imperial stable-master",
+    "rationale": "User asks for pure creation of a bilingual costume-drama animated drama with English-first captions and a Chinese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Chinese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual costume-drama brief with the Tang horse-trainer and the witchcraft accusation"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering the prize, trial, and open-courtyard vindication"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with stable beats and the open-courtyard trial"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the trainer, stallion, and the imperial stable"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the imperial-stable ambience with hooves, feed buckets, and courtyard horns"},
+      {"agent_id": "MusicAgent", "intent": "Compose a stately costume-drama score with pipa and sheng"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Chinese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the animated drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Spanish bilingual sci-fi mini-drama about a Chile-based radio-astronomer who realizes her desert array is picking up the collective heartbeat of an endangered migratory bird flock",
+    "rationale": "User asks for pure creation of a bilingual sci-fi mini-drama with English-first captions and a Spanish subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Spanish subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual sci-fi brief with the Chile astronomer picking up the migratory flock's heartbeat"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first signal, biologist collaboration, and a mid-migration rescue"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with control-room beats and the dawn-desert release"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the astronomer, telescope array, and migrating birds"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the desert-array ambience with antenna motors, radio hiss, and night-wind"},
+      {"agent_id": "MusicAgent", "intent": "Compose a luminous sci-fi score with quena flute and strings"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Spanish subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Chinese bilingual suspense mini-drama about a Nanjing paper-conservator who realizes the Ming-dynasty scroll on her desk was intentionally damaged by its own commissioning family",
+    "rationale": "User asks for pure creation of a bilingual suspense mini-drama with English-first captions and a Chinese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Chinese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual suspense brief with the Nanjing conservator and the intentionally-damaged Ming scroll"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first scan, family interview, and ethics-panel testimony"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with conservation-lab beats and the ethics-panel climax"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the conservator, scroll, and the commissioning family"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the conservation-lab ambience with HVAC hum, scalpel-click, and distant courtyard rain"},
+      {"agent_id": "MusicAgent", "intent": "Compose a taut suspense score with guqin and low strings"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Chinese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Japanese bilingual rom-com mini-drama about a Kobe baker and an indifferent pastry critic whose daily reviews become a secret love-letter thread her staff notices first",
+    "rationale": "User asks for pure creation of a bilingual rom-com mini-drama with English-first captions and a Japanese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Japanese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual rom-com brief with the Kobe baker and the secret-love-letter pastry reviews"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first review, staff's discovery, and a sunrise-delivery confession"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with bakery-counter beats and the sunrise-delivery scene"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the baker, critic, and the bakery"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the bakery ambience with oven exhaust, customer chatter, and Kobe-street rain"},
+      {"agent_id": "MusicAgent", "intent": "Compose a bright rom-com score with ukulele, glockenspiel, and brass"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Japanese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Chinese bilingual rebirth mini-drama about a music-school principal who wakes on the morning the rival academy purchased her endowment and resolves to run the bid her old self refused",
+    "rationale": "User asks for pure creation of a bilingual rebirth mini-drama with English-first captions and a Chinese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Chinese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual rebirth brief with the music-school principal running a bid she once declined"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering rewind, emergency-board meeting, and concert-hall announcement"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with board-room beats and the concert-hall announcement"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the principal, rivals, and the concert hall"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the music-school ambience with distant practice scales, brass warmups, and hallway chatter"},
+      {"agent_id": "MusicAgent", "intent": "Compose a determined rebirth score with piano and small ensemble"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Chinese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Korean bilingual fantasy-adventure animated drama about a palace night-watch guard who discovers the royal fox statues come alive to patrol the kingdom whenever she sings her grandmother's lullaby",
+    "rationale": "User asks for pure creation of a bilingual fantasy-adventure animated drama with English-first captions and a Korean subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Korean subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual fantasy-adventure brief with the night-watch guard and the lullaby-summoned fox statues"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first patrol, court skepticism, and dawn-defense climax"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with palace-courtyard beats and the dawn-defense climax"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the guard, awakened foxes, and the palace grounds"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the palace-night ambience with lantern crackle, distant patrol drums, and wind in the eaves"},
+      {"agent_id": "MusicAgent", "intent": "Compose a lyrical fantasy-adventure score with gayageum and choir"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Korean subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the animated drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Spanish bilingual coming-of-age mini-drama about a Medellín teenage muralist whose first commission opens up a dispute with the neighborhood's unofficial mural-elders' council",
+    "rationale": "User asks for pure creation of a bilingual coming-of-age mini-drama with English-first captions and a Spanish subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Spanish subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual coming-of-age brief with the Medellín muralist and mural-elders council dispute"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first commission, contested meeting, and a dawn co-signed wall"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with barrio-council beats and the dawn wall unveiling"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the teenage muralist, the elders, and the mural wall"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the Medellín-barrio ambience with salsa drifting, scooters, and distant cable-car hum"},
+      {"agent_id": "MusicAgent", "intent": "Compose a hopeful coming-of-age score with Latin percussion and acoustic guitar"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Spanish subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-Chinese bilingual cultivation-fantasy mini-drama about a younger sister posing as her stronger elder sister at the sect's annual trials to keep her sister's disciple-seat alive while she's injured",
+    "rationale": "User asks for pure creation of a bilingual cultivation-fantasy mini-drama with English-first captions and a Chinese subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the Chinese subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual cultivation-fantasy brief with the younger sister standing in at the sect trials"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first round, disguise strain, and elder-council accommodation"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with trial-stage beats and the elder-council final round"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the sisters, rivals, and the sect's trial platform"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the sect-platform ambience with wind, talisman whispers, and disciple murmurs"},
+      {"agent_id": "MusicAgent", "intent": "Compose a determined cultivation-fantasy score with pipa and percussion"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the Chinese subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  },
+  {
+    "goal": "Make an English-French bilingual historical mini-drama about a Marseille dockside seamstress who secretly mends the uniforms of returning sailors by matching each button to the widow waiting at the pier",
+    "rationale": "User asks for pure creation of a bilingual historical mini-drama with English-first captions and a French subtitle track. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, SubtitleAgent generates the English subtitle track, TranslationAgent produces the French subtitle track, CompositorAgent composites both tracks and renders. No IntakeVideoAgent because no video was uploaded. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent / VideoExtendAgent / StyleTransferAgent because there is no uploaded content.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the bilingual historical brief with the Marseille seamstress matching uniform buttons to waiting widows"},
+      {"agent_id": "StoryAgent", "intent": "Write the story outline covering first uniform, widow's recognition, and a quayside memorial"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with dock-loft beats and the quayside ceremony"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes for the seamstress, widows, and the dock"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the Marseille-dock ambience with seagulls, ship bells, and distant café accordions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a tender historical score with accordion and solo cello"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate the English subtitle track synced to the dialogue"},
+      {"agent_id": "TranslationAgent", "intent": "Produce the French subtitle track from the English source"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the mini-drama video with the mixed audio and both caption tracks as the final episode"}
+    ]
+  }
+]

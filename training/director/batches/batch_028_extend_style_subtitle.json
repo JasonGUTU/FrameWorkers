@@ -1,0 +1,405 @@
+[
+  {
+    "goal": "Extend this uploaded product-launch teaser with an extra 30 seconds of matching footage, restyle the whole clip in a vintage Kodachrome look, and add English subtitles to the voice-over",
+    "rationale": "User uploaded a product-launch teaser and asks to extend it, restyle it in vintage Kodachrome, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the teaser, VideoExtendAgent adds a matching 30-second tail, StyleTransferAgent applies the vintage Kodachrome look, TranscriptionAgent transcribes the voice-over, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants to enhance the whole teaser, not extract highlights. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle teaser brief with a vintage Kodachrome look"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded teaser"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add a matching 30-second tail to the teaser"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply the vintage Kodachrome look to the whole clip"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the voice-over"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled video with captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Add a 20-second closing scene to this uploaded café ad, re-style the whole spot in a hand-painted watercolor look, and put English subtitles on the voice-over",
+    "rationale": "User uploaded a café ad and asks to extend it, restyle it in watercolor, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the spot, VideoExtendAgent adds a 20-second closing scene, StyleTransferAgent applies the watercolor look, TranscriptionAgent transcribes the voice-over, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle café-ad brief with a watercolor look"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded café ad"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add a 20-second closing scene"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a hand-painted watercolor look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the voice-over"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled ad with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Extend this uploaded university-recruitment short with another 45 seconds of matching campus shots, restyle it in a bright cel-shaded anime look, and add English subtitles for every spoken line",
+    "rationale": "User uploaded a university-recruitment short and asks to extend it, restyle it cel-shaded anime, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the short, VideoExtendAgent adds 45 seconds of matching campus shots, StyleTransferAgent applies the cel-shaded anime look, TranscriptionAgent transcribes the dialogue, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle recruitment-short brief with a cel-shaded anime look"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded recruitment short"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add 45 seconds of matching campus shots"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a cel-shaded anime look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the dialogue"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled short with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Pad this uploaded open-day classroom clip with an extra 30 seconds of matching footage, restyle the whole video in a soft chalkboard-sketch look, and add English captions under every instruction",
+    "rationale": "User uploaded an open-day classroom clip and asks to extend it, restyle it in a chalkboard-sketch look, and add English captions. Plan: IntakeText captures the brief, IntakeVideoAgent registers the clip, VideoExtendAgent adds 30 seconds of matching footage, StyleTransferAgent applies the chalkboard-sketch look, TranscriptionAgent transcribes the narration, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle classroom-clip brief with a chalkboard-sketch look"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded classroom clip"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add 30 seconds of matching footage"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply the chalkboard-sketch look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the narration"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled clip with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Extend this uploaded real-estate tour with another 40 seconds of matching interior shots, restyle the entire clip in an oil-painting look, and add English subtitles for every voice-over",
+    "rationale": "User uploaded a real-estate tour and asks to extend it, restyle it in oil-painting, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the tour, VideoExtendAgent adds 40 seconds of matching interior shots, StyleTransferAgent applies the oil-painting look, TranscriptionAgent transcribes the voice-over, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle real-estate tour brief with an oil-painting look"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded real-estate tour"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add 40 seconds of matching interior shots"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply an oil-painting look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the voice-over"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled tour with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Add a 25-second intro to this uploaded culinary-school promo, restyle it in a retro film-grain black-and-white look, and add English subtitles for the chef's narration",
+    "rationale": "User uploaded a culinary-school promo and asks to extend it, restyle it in retro film-grain B&W, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the promo, VideoExtendAgent adds a 25-second intro, StyleTransferAgent applies the retro B&W look, TranscriptionAgent transcribes the narration, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle culinary-school promo brief with retro B&W"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded promo"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add a 25-second intro"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a retro film-grain black-and-white look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the chef's narration"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled promo with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Extend this uploaded outdoor-apparel spot with 30 more seconds of matching mountain shots, restyle the clip in a gritty charcoal-sketch look, and add English subtitles over the tagline",
+    "rationale": "User uploaded an outdoor-apparel spot and asks to extend it, restyle it in charcoal-sketch, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the spot, VideoExtendAgent adds 30 seconds of mountain shots, StyleTransferAgent applies the charcoal-sketch look, TranscriptionAgent transcribes the tagline, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle outdoor-apparel spot brief with charcoal-sketch"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded outdoor-apparel spot"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add 30 seconds of matching mountain shots"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a gritty charcoal-sketch look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the tagline voice-over"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled spot with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Pad this uploaded yoga-studio promo with 20 more seconds of matching mat-work shots, restyle the entire clip in a sun-bleached pastel look, and add English subtitles for every instruction",
+    "rationale": "User uploaded a yoga-studio promo and asks to extend it, restyle it in sun-bleached pastel, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the promo, VideoExtendAgent adds 20 seconds of matching mat-work shots, StyleTransferAgent applies the sun-bleached pastel look, TranscriptionAgent transcribes the instruction, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle yoga promo brief with sun-bleached pastel"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded yoga promo"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add 20 seconds of matching mat-work shots"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a sun-bleached pastel look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the instruction"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled promo with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Extend this uploaded nonprofit explainer with 40 more seconds of matching field footage, restyle it in a low-poly vector look, and add English subtitles for every line",
+    "rationale": "User uploaded a nonprofit explainer and asks to extend it, restyle it in low-poly vector, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the explainer, VideoExtendAgent adds 40 seconds of matching field footage, StyleTransferAgent applies the low-poly vector look, TranscriptionAgent transcribes the narration, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle nonprofit explainer brief with low-poly vector"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded explainer"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add 40 seconds of matching field footage"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a low-poly vector look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the narration"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled explainer with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Add a 35-second montage to this uploaded fashion-brand campaign, restyle the whole clip in a printed-magazine halftone look, and add English subtitles for every voice-over line",
+    "rationale": "User uploaded a fashion-brand campaign and asks to extend it, restyle it in halftone, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the campaign, VideoExtendAgent adds a 35-second montage, StyleTransferAgent applies the halftone look, TranscriptionAgent transcribes the voice-over, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle fashion-campaign brief with a halftone look"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded fashion campaign"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add a 35-second montage"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a printed-magazine halftone look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the voice-over"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled campaign with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Extend this uploaded mobile-game launch trailer with another 30 seconds of matching gameplay, restyle the clip in a neon-arcade cyberpunk look, and add English subtitles for the narrator",
+    "rationale": "User uploaded a mobile-game launch trailer and asks to extend it, restyle it in neon-arcade cyberpunk, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the trailer, VideoExtendAgent adds 30 seconds of matching gameplay, StyleTransferAgent applies the neon-arcade look, TranscriptionAgent transcribes the narration, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle launch-trailer brief with a neon-arcade look"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded launch trailer"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add 30 seconds of matching gameplay"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a neon-arcade cyberpunk look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the narrator"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled trailer with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Pad this uploaded dental-clinic explainer with 25 more seconds of matching chair-side footage, restyle it in a soft pastel flat-illustration look, and add English subtitles for the dentist's narration",
+    "rationale": "User uploaded a dental-clinic explainer and asks to extend it, restyle it in flat-illustration pastel, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the explainer, VideoExtendAgent adds 25 seconds of chair-side footage, StyleTransferAgent applies the pastel flat-illustration look, TranscriptionAgent transcribes the narration, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle dental explainer brief with pastel flat-illustration"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded dental explainer"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add 25 seconds of chair-side footage"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a soft pastel flat-illustration look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the dentist's narration"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled explainer with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Extend this uploaded brewery-tour video with 40 more seconds of matching tank-room shots, restyle the clip in a warm copper-and-amber film look, and add English subtitles for the brewmaster's narration",
+    "rationale": "User uploaded a brewery-tour video and asks to extend it, restyle it in copper-and-amber film, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the tour, VideoExtendAgent adds 40 seconds of matching tank-room shots, StyleTransferAgent applies the copper-and-amber film look, TranscriptionAgent transcribes the brewmaster's narration, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle brewery-tour brief with a copper-and-amber film look"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded brewery tour"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add 40 seconds of matching tank-room shots"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a warm copper-and-amber film look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the brewmaster's narration"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled tour with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Add a 15-second establishing scene to this uploaded gym-membership promo, restyle the spot in a high-contrast printed-newsprint look, and add English subtitles for the testimonial",
+    "rationale": "User uploaded a gym-membership promo and asks to extend it, restyle it in high-contrast newsprint, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the promo, VideoExtendAgent adds a 15-second establishing scene, StyleTransferAgent applies the newsprint look, TranscriptionAgent transcribes the testimonial, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle gym-promo brief with a newsprint look"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded gym promo"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add a 15-second establishing scene"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a high-contrast newsprint look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the testimonial"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled promo with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Extend this uploaded hotel-brand short with 30 more seconds of matching lobby footage, restyle the whole clip in a lush art-deco gold-and-green look, and add English subtitles for the voice-over",
+    "rationale": "User uploaded a hotel-brand short and asks to extend it, restyle it in art-deco gold-and-green, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the short, VideoExtendAgent adds 30 seconds of matching lobby footage, StyleTransferAgent applies the art-deco look, TranscriptionAgent transcribes the voice-over, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle hotel-brand short brief with art-deco gold-and-green"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded hotel-brand short"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add 30 seconds of matching lobby footage"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a lush art-deco gold-and-green look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the voice-over"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled short with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Pad this uploaded surf-school video with another 40 seconds of matching beach footage, restyle the entire clip in a '70s-era film look, and add English subtitles for every voice-over",
+    "rationale": "User uploaded a surf-school video and asks to extend it, restyle it in '70s film, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the video, VideoExtendAgent adds 40 seconds of matching beach footage, StyleTransferAgent applies the '70s film look, TranscriptionAgent transcribes the voice-over, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle surf-school brief with a '70s film look"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded surf-school video"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add 40 seconds of matching beach footage"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a '70s-era film look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the voice-over"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled video with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Extend this uploaded city-tour promo with another 25 seconds of matching street footage, restyle the spot in a crisp silk-screen print look, and add English subtitles for the tour guide",
+    "rationale": "User uploaded a city-tour promo and asks to extend it, restyle it in silk-screen print, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the promo, VideoExtendAgent adds 25 seconds of matching street footage, StyleTransferAgent applies the silk-screen look, TranscriptionAgent transcribes the guide's narration, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle city-tour promo brief with a silk-screen look"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded city-tour promo"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add 25 seconds of matching street footage"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a crisp silk-screen print look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the guide's narration"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled promo with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Add a 40-second finale to this uploaded architectural-firm demo-reel, restyle the whole reel in a drafting-blueprint look, and add English subtitles for every voice-over",
+    "rationale": "User uploaded an architectural-firm demo-reel and asks to extend it, restyle it in a drafting-blueprint look, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the reel, VideoExtendAgent adds a 40-second finale, StyleTransferAgent applies the drafting-blueprint look, TranscriptionAgent transcribes the voice-over, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle architectural demo-reel brief with a blueprint look"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded demo-reel"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add a 40-second finale"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a drafting-blueprint look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the voice-over"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Extend this uploaded e-commerce product spot with 20 more seconds of matching product-rotation footage, restyle the spot in a crisp pastel flat-illustration look, and add English subtitles for the voice-over",
+    "rationale": "User uploaded an e-commerce product spot and asks to extend it, restyle it in pastel flat-illustration, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the spot, VideoExtendAgent adds 20 seconds of matching product-rotation footage, StyleTransferAgent applies the pastel flat-illustration look, TranscriptionAgent transcribes the voice-over, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle e-commerce spot brief with pastel flat-illustration"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded product spot"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add 20 seconds of matching rotation footage"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a crisp pastel flat-illustration look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the voice-over"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled spot with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Add a 30-second sunset-walk to this uploaded wellness-app promo, restyle the whole clip in a golden-hour film look, and add English subtitles for every narration line",
+    "rationale": "User uploaded a wellness-app promo and asks to extend it, restyle it in golden-hour film, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the promo, VideoExtendAgent adds a 30-second sunset-walk, StyleTransferAgent applies the golden-hour film look, TranscriptionAgent transcribes the narration, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle wellness-app promo brief with a golden-hour film look"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded wellness-app promo"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add a 30-second sunset-walk"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a golden-hour film look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the narration"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled promo with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Extend this uploaded hotel-bakery short with another 30 seconds of matching oven-and-counter footage, restyle the whole clip in a warm art-nouveau look, and add English subtitles for the voice-over",
+    "rationale": "User uploaded a hotel-bakery short and asks to extend it, restyle it in art-nouveau, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the short, VideoExtendAgent adds 30 seconds of matching oven-and-counter footage, StyleTransferAgent applies the art-nouveau look, TranscriptionAgent transcribes the voice-over, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle hotel-bakery short brief with art-nouveau"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded hotel-bakery short"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add 30 seconds of matching oven-and-counter footage"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a warm art-nouveau look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the voice-over"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled short with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Pad this uploaded automotive-brand ad with 45 more seconds of matching track footage, restyle the spot in a stark noir black-and-white look, and add English subtitles for every tagline",
+    "rationale": "User uploaded an automotive-brand ad and asks to extend it, restyle it in stark noir B&W, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the ad, VideoExtendAgent adds 45 seconds of matching track footage, StyleTransferAgent applies the noir B&W look, TranscriptionAgent transcribes the tagline, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle automotive-brand ad brief with noir black-and-white"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded automotive-brand ad"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add 45 seconds of matching track footage"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a stark noir black-and-white look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the tagline"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled ad with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Extend this uploaded children's-show promo with 20 more seconds of matching playroom footage, restyle the clip in a soft crayon-texture look, and add English subtitles for every voice-over",
+    "rationale": "User uploaded a children's-show promo and asks to extend it, restyle it in a soft crayon-texture look, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the promo, VideoExtendAgent adds 20 seconds of matching playroom footage, StyleTransferAgent applies the crayon-texture look, TranscriptionAgent transcribes the voice-over, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle children's-show promo brief with a crayon-texture look"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded children's-show promo"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add 20 seconds of matching playroom footage"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a soft crayon-texture look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the voice-over"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled promo with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Add a 25-second opening sequence to this uploaded tea-brand short, restyle the spot in a traditional ink-wash look, and add English subtitles for every tagline",
+    "rationale": "User uploaded a tea-brand short and asks to extend it, restyle it in a traditional ink-wash look, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the short, VideoExtendAgent adds a 25-second opening sequence, StyleTransferAgent applies the ink-wash look, TranscriptionAgent transcribes the tagline, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle tea-brand short brief with an ink-wash look"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded tea-brand short"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add a 25-second opening sequence"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a traditional ink-wash look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the tagline"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled short with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Extend this uploaded fintech app demo with 30 more seconds of matching UI-interaction footage, restyle the whole demo in a clean minimalist vector look, and add English subtitles for every call-out",
+    "rationale": "User uploaded a fintech app demo and asks to extend it, restyle it in minimalist vector, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the demo, VideoExtendAgent adds 30 seconds of matching UI-interaction footage, StyleTransferAgent applies the minimalist vector look, TranscriptionAgent transcribes the call-outs, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle fintech demo brief with minimalist vector"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded fintech demo"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add 30 seconds of matching UI-interaction footage"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a clean minimalist vector look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the call-outs"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled demo with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Pad this uploaded sports-brand promo with another 40 seconds of matching training-field footage, restyle the whole spot in a glossy neon-chrome look, and add English subtitles for the tagline",
+    "rationale": "User uploaded a sports-brand promo and asks to extend it, restyle it in glossy neon-chrome, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the promo, VideoExtendAgent adds 40 seconds of matching training-field footage, StyleTransferAgent applies the neon-chrome look, TranscriptionAgent transcribes the tagline, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle sports-brand promo brief with a neon-chrome look"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded sports-brand promo"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add 40 seconds of matching training-field footage"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a glossy neon-chrome look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the tagline"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled promo with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Extend this uploaded coffee-shop promo with 30 more seconds of matching morning-counter shots, restyle the whole clip in a soft linocut print look, and add English subtitles for the barista's voice-over",
+    "rationale": "User uploaded a coffee-shop promo and asks to extend it, restyle it in linocut print, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the promo, VideoExtendAgent adds 30 seconds of matching morning-counter shots, StyleTransferAgent applies the linocut print look, TranscriptionAgent transcribes the barista's voice-over, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle coffee-shop promo brief with a linocut print look"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded coffee-shop promo"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add 30 seconds of matching morning-counter shots"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a soft linocut print look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the barista's voice-over"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled promo with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Add a 35-second drone-over-countryside scene to this uploaded eco-tourism promo, restyle the whole clip in a hand-tinted vintage-postcard look, and add English subtitles for the guide",
+    "rationale": "User uploaded an eco-tourism promo and asks to extend it, restyle it in a hand-tinted vintage-postcard look, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the promo, VideoExtendAgent adds a 35-second drone scene, StyleTransferAgent applies the vintage-postcard look, TranscriptionAgent transcribes the guide's narration, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle eco-tourism promo brief with a vintage-postcard look"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded eco-tourism promo"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add a 35-second drone-over-countryside scene"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a hand-tinted vintage-postcard look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the guide's narration"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled promo with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Extend this uploaded auction-house preview with another 20 seconds of matching lot-display footage, restyle the whole clip in a gilded old-master painting look, and add English subtitles for the auctioneer",
+    "rationale": "User uploaded an auction-house preview and asks to extend it, restyle it in a gilded old-master painting look, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the preview, VideoExtendAgent adds 20 seconds of matching lot-display footage, StyleTransferAgent applies the old-master painting look, TranscriptionAgent transcribes the auctioneer, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle auction-house preview brief with an old-master painting look"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded auction-house preview"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add 20 seconds of matching lot-display footage"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a gilded old-master painting look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the auctioneer's narration"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled preview with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Pad this uploaded bookstore-brand short with 30 more seconds of matching shelf-browse footage, restyle the clip in a warm sepia-toned woodcut look, and add English subtitles for the owner's voice-over",
+    "rationale": "User uploaded a bookstore-brand short and asks to extend it, restyle it in sepia woodcut, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the short, VideoExtendAgent adds 30 seconds of matching shelf-browse footage, StyleTransferAgent applies the sepia woodcut look, TranscriptionAgent transcribes the owner's voice-over, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle bookstore short brief with a sepia woodcut look"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded bookstore short"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add 30 seconds of matching shelf-browse footage"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a warm sepia-toned woodcut look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the owner's voice-over"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled short with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Extend this uploaded musical-theatre teaser with another 40 seconds of matching backstage footage, restyle the whole teaser in a painted-stage-backdrop look, and add English subtitles for every line",
+    "rationale": "User uploaded a musical-theatre teaser and asks to extend it, restyle it in a painted-stage-backdrop look, and add English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the teaser, VideoExtendAgent adds 40 seconds of matching backstage footage, StyleTransferAgent applies the painted-stage-backdrop look, TranscriptionAgent transcribes the dialogue, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because no highlight extraction was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the original audio is preserved unchanged. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the extend-restyle-subtitle musical-theatre teaser brief with a painted-stage-backdrop look"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded musical-theatre teaser"},
+      {"agent_id": "VideoExtendAgent", "intent": "Add 40 seconds of matching backstage footage"},
+      {"agent_id": "StyleTransferAgent", "intent": "Apply a painted-stage-backdrop look"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the dialogue"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended-restyled teaser with the captions as the final deliverable"}
+    ]
+  }
+]

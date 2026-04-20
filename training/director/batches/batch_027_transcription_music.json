@@ -1,0 +1,405 @@
+[
+  {
+    "goal": "Add English subtitles and a soft bossa-nova backing track to this uploaded café-interview video",
+    "rationale": "User uploaded a café-interview video and asks for English subtitles plus a bossa-nova backing track mixed with the original room audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the interview, TranscriptionAgent transcribes the dialogue, SubtitleAgent generates English captions, MusicAgent composes the bossa-nova track, AudioMixAgent blends the track with the preserved café audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full interview, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the café's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled café interview with a bossa-nova backing track"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded café-interview video"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the full interview dialogue"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a soft bossa-nova backing track"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the bossa-nova track with the preserved café audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the video with the captions and mixed audio as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Put English subtitles on this uploaded yoga-instructor walkthrough and lay a gentle ambient-piano score under the narration",
+    "rationale": "User uploaded a yoga walkthrough and asks for English subtitles plus a gentle piano score mixed with the original studio audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the walkthrough, TranscriptionAgent transcribes the narration, SubtitleAgent generates English captions, MusicAgent composes the piano score, AudioMixAgent blends the score with the preserved studio audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full walkthrough, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the studio's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled yoga walkthrough with a gentle piano score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded yoga-instructor walkthrough"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the instructor's narration"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a gentle ambient-piano score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the piano score with the preserved studio audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the walkthrough with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Subtitle this uploaded cooking demo in English and add a warm acoustic-guitar backing track mixed with the original kitchen sounds",
+    "rationale": "User uploaded a cooking demo and asks for English subtitles plus an acoustic-guitar backing track mixed with the original kitchen audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the demo, TranscriptionAgent transcribes the narration, SubtitleAgent generates English captions, MusicAgent composes the guitar backing, AudioMixAgent blends the backing with the preserved kitchen audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full demo, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the kitchen's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled cooking demo with an acoustic-guitar backing track"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded cooking demo"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the chef's narration"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a warm acoustic-guitar backing track"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the guitar track with the preserved kitchen sounds"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the demo with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Add English subtitles and a tranquil strings score to this uploaded garden-walking meditation video",
+    "rationale": "User uploaded a garden-walking meditation video and asks for English subtitles plus a tranquil strings score mixed with the original garden audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the meditation, TranscriptionAgent transcribes the narration, SubtitleAgent generates English captions, MusicAgent composes the strings score, AudioMixAgent blends the score with the preserved garden audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full meditation, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the garden's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled garden-meditation with a tranquil strings score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded meditation video"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the meditation narration"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a tranquil strings score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the strings score with the preserved garden audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the meditation with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Subtitle this uploaded explainer-whiteboard lecture in English and lay a lively synth-pop beat under the narration",
+    "rationale": "User uploaded an explainer whiteboard lecture and asks for English subtitles plus a synth-pop beat mixed with the original room audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the lecture, TranscriptionAgent transcribes the narration, SubtitleAgent generates English captions, MusicAgent composes the synth-pop beat, AudioMixAgent blends the beat with the preserved room audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full lecture, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the room's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled whiteboard lecture with a lively synth-pop beat"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded whiteboard lecture"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the lecturer's narration"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a lively synth-pop beat"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the synth-pop beat with the preserved room audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the lecture with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Put English subtitles on this uploaded memoir book-tour reading and lay a contemplative cello score under the author's voice",
+    "rationale": "User uploaded a memoir book-tour reading and asks for English subtitles plus a contemplative cello score mixed with the original venue audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the reading, TranscriptionAgent transcribes the reading, SubtitleAgent generates English captions, MusicAgent composes the cello score, AudioMixAgent blends the score with the preserved venue audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full reading, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the venue's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled memoir reading with a contemplative cello score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded book-tour reading"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the author's reading"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a contemplative cello score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the cello score with the preserved venue audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reading with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Subtitle this uploaded sign-painting workshop video in English and add a mellow lo-fi score mixed with the brush-on-canvas audio",
+    "rationale": "User uploaded a sign-painting workshop video and asks for English subtitles plus a lo-fi score mixed with the original studio audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the workshop, TranscriptionAgent transcribes the narration, SubtitleAgent generates English captions, MusicAgent composes the lo-fi score, AudioMixAgent blends the score with the preserved studio audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full workshop, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the studio's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled sign-painting workshop with a mellow lo-fi score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded sign-painting workshop"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the painter's narration"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a mellow lo-fi score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the lo-fi score with the preserved brush-on-canvas audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the workshop with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Add English subtitles to this uploaded nursery-rhyme storytime and layer a cheerful ukulele-and-glockenspiel score under the reading",
+    "rationale": "User uploaded a nursery-rhyme storytime and asks for English subtitles plus a cheerful ukulele-and-glockenspiel score mixed with the preserved reading audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the storytime, TranscriptionAgent transcribes the rhymes, SubtitleAgent generates English captions, MusicAgent composes the cheerful score, AudioMixAgent blends the score with the preserved reading audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full storytime, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the storytime's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled nursery-rhyme storytime with a cheerful score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded storytime video"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe each rhyme"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a cheerful ukulele-and-glockenspiel score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the score with the preserved reading audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the storytime with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Subtitle this uploaded historic-archive walkthrough in English and lay a library-folk score mixed with the preserved footstep-and-paper audio",
+    "rationale": "User uploaded a historic-archive walkthrough and asks for English subtitles plus a library-folk score mixed with the original walkthrough audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the walkthrough, TranscriptionAgent transcribes the guide's narration, SubtitleAgent generates English captions, MusicAgent composes the library-folk score, AudioMixAgent blends the score with the preserved footstep-and-paper audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full walkthrough, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the archive's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled archive walkthrough with a library-folk score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded archive walkthrough"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the guide's narration"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a library-folk score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the library-folk score with the preserved footstep-and-paper audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the walkthrough with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Put English subtitles on this uploaded museum curator's exhibit tour and add a stately string-ensemble score under the narration",
+    "rationale": "User uploaded a curator's exhibit tour and asks for English subtitles plus a string-ensemble score mixed with the preserved tour audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the tour, TranscriptionAgent transcribes the narration, SubtitleAgent generates English captions, MusicAgent composes the strings score, AudioMixAgent blends the score with the preserved tour audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full tour, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the museum's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled exhibit tour with a stately string-ensemble score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded curator tour"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the curator's narration"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a stately string-ensemble score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the strings score with the preserved tour audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the tour with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Add English subtitles to this uploaded ski-resort weekly-update vlog and lay a breezy electronic score under the host's chat",
+    "rationale": "User uploaded a ski-resort vlog and asks for English subtitles plus a breezy electronic score mixed with the preserved vlog audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the vlog, TranscriptionAgent transcribes the host's dialogue, SubtitleAgent generates English captions, MusicAgent composes the breezy electronic score, AudioMixAgent blends the score with the preserved vlog audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full vlog, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the resort's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled ski-resort vlog with a breezy electronic score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded resort vlog"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the host's dialogue"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a breezy electronic score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the electronic score with the preserved vlog audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the vlog with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Subtitle this uploaded pottery-throwing tutorial in English and add a soothing harp-and-bells score under the teacher's narration",
+    "rationale": "User uploaded a pottery-throwing tutorial and asks for English subtitles plus a soothing harp-and-bells score mixed with the preserved studio audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the tutorial, TranscriptionAgent transcribes the narration, SubtitleAgent generates English captions, MusicAgent composes the harp-and-bells score, AudioMixAgent blends the score with the preserved studio audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full tutorial, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the studio's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled pottery tutorial with a soothing harp-and-bells score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded pottery tutorial"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the teacher's narration"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a soothing harp-and-bells score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the harp-and-bells score with the preserved wheel audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the tutorial with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Put English subtitles on this uploaded stand-up comedian's long-form set and lay a light cocktail-piano score under the crowd laughter",
+    "rationale": "User uploaded a stand-up long-form set and asks for English subtitles plus a light cocktail-piano score mixed with the preserved audience audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the set, TranscriptionAgent transcribes the dialogue, SubtitleAgent generates English captions, MusicAgent composes the cocktail-piano score, AudioMixAgent blends the score with the preserved audience audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full set, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the venue's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled long-form stand-up with a light cocktail-piano score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded stand-up set"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the comedian's set"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a light cocktail-piano score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the piano score with the preserved audience audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the set with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Add English subtitles and a nostalgic saxophone score to this uploaded retired-teacher interview series",
+    "rationale": "User uploaded a retired-teacher interview series and asks for English subtitles plus a nostalgic saxophone score mixed with the preserved room audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the series, TranscriptionAgent transcribes the interviews, SubtitleAgent generates English captions, MusicAgent composes the saxophone score, AudioMixAgent blends the score with the preserved room audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full series, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the room's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled retired-teacher interviews with a nostalgic saxophone score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded interview series"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe each teacher's interview"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a nostalgic saxophone score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the saxophone score with the preserved room audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the series with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Subtitle this uploaded street-magician's sidewalk set in English and add a jaunty accordion-and-drums score mixed with the crowd reactions",
+    "rationale": "User uploaded a street-magician's sidewalk set and asks for English subtitles plus a jaunty accordion-and-drums score mixed with the preserved sidewalk audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the set, TranscriptionAgent transcribes the patter, SubtitleAgent generates English captions, MusicAgent composes the accordion-and-drums score, AudioMixAgent blends the score with the preserved sidewalk audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full set, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the sidewalk's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled street-magic sidewalk set with a jaunty accordion score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded street-magician's set"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the magician's patter"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a jaunty accordion-and-drums score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the score with the preserved sidewalk audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the set with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Add English subtitles and a tender piano lullaby to this uploaded midwife's postpartum care video",
+    "rationale": "User uploaded a midwife's postpartum care video and asks for English subtitles plus a tender piano lullaby mixed with the preserved care-room audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the video, TranscriptionAgent transcribes the midwife's guidance, SubtitleAgent generates English captions, MusicAgent composes the piano lullaby, AudioMixAgent blends the lullaby with the preserved care-room audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full video, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the care-room's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled midwife care video with a tender piano lullaby"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded care video"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the midwife's guidance"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a tender piano lullaby"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the lullaby with the preserved care-room audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the video with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Subtitle this uploaded bonsai-master masterclass in English and add a meditative shakuhachi score under the instruction",
+    "rationale": "User uploaded a bonsai masterclass and asks for English subtitles plus a meditative shakuhachi score mixed with the preserved studio audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the masterclass, TranscriptionAgent transcribes the instruction, SubtitleAgent generates English captions, MusicAgent composes the shakuhachi score, AudioMixAgent blends the score with the preserved studio audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full masterclass, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the studio's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled bonsai masterclass with a meditative shakuhachi score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded masterclass"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the master's instruction"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a meditative shakuhachi score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the shakuhachi score with the preserved studio audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the masterclass with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Add English subtitles to this uploaded historian's lecture-series pilot and lay a warm string-quartet score under the delivery",
+    "rationale": "User uploaded a historian's lecture-series pilot and asks for English subtitles plus a warm string-quartet score mixed with the preserved room audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the pilot, TranscriptionAgent transcribes the lecture, SubtitleAgent generates English captions, MusicAgent composes the string-quartet score, AudioMixAgent blends the score with the preserved room audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full pilot, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the room's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled history lecture-pilot with a warm string-quartet score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded lecture pilot"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the lecture"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a warm string-quartet score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the string-quartet score with the preserved room audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the pilot with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Put English subtitles on this uploaded drive-time commentary vlog and add a smooth R&B groove under the host",
+    "rationale": "User uploaded a drive-time commentary vlog and asks for English subtitles plus a smooth R&B groove mixed with the preserved car audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the vlog, TranscriptionAgent transcribes the host, SubtitleAgent generates English captions, MusicAgent composes the R&B groove, AudioMixAgent blends the groove with the preserved car audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full vlog, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the car's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled drive-time commentary with a smooth R&B groove"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded drive-time vlog"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the host's commentary"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a smooth R&B groove"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the groove with the preserved car audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the vlog with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Subtitle this uploaded corporate-onboarding presentation in English and lay a steady synth-pad score under the narration",
+    "rationale": "User uploaded a corporate-onboarding presentation and asks for English subtitles plus a steady synth-pad score mixed with the preserved room audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the presentation, TranscriptionAgent transcribes the narration, SubtitleAgent generates English captions, MusicAgent composes the synth-pad score, AudioMixAgent blends the score with the preserved room audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full presentation, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the room's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled onboarding presentation with a steady synth-pad score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded onboarding presentation"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the presenter"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a steady synth-pad score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the synth-pad score with the preserved room audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the presentation with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Add English subtitles to this uploaded winemaker's cellar-tour and add a mellow Mediterranean guitar score under the preserved cellar audio",
+    "rationale": "User uploaded a winemaker's cellar-tour and asks for English subtitles plus a Mediterranean guitar score mixed with the preserved cellar audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the tour, TranscriptionAgent transcribes the winemaker's narration, SubtitleAgent generates English captions, MusicAgent composes the Mediterranean-guitar score, AudioMixAgent blends the score with the preserved cellar audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full tour, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the cellar's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled cellar-tour with a mellow Mediterranean-guitar score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded cellar tour"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the winemaker's narration"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a mellow Mediterranean-guitar score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the guitar score with the preserved cellar audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the tour with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Subtitle this uploaded community-theater rehearsal in English and lay a muted-strings score under the director's notes",
+    "rationale": "User uploaded a community-theater rehearsal and asks for English subtitles plus a muted-strings score mixed with the preserved rehearsal audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the rehearsal, TranscriptionAgent transcribes the director and cast, SubtitleAgent generates English captions, MusicAgent composes the muted-strings score, AudioMixAgent blends the score with the preserved rehearsal audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full rehearsal, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the rehearsal's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled community-theater rehearsal with a muted-strings score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded rehearsal"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the director and cast"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions with speaker tags"},
+      {"agent_id": "MusicAgent", "intent": "Compose a muted-strings score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the muted-strings score with the preserved rehearsal audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the rehearsal with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Add English subtitles to this uploaded nurse-practitioner patient-ed video and lay a calming ambient score under the instruction",
+    "rationale": "User uploaded a nurse-practitioner patient-education video and asks for English subtitles plus a calming ambient score mixed with the preserved clinic audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the video, TranscriptionAgent transcribes the instruction, SubtitleAgent generates English captions, MusicAgent composes the calming ambient score, AudioMixAgent blends the score with the preserved clinic audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full video, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the clinic's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled patient-ed video with a calming ambient score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded patient-ed video"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the instruction"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a calming ambient score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambient score with the preserved clinic audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the video with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Subtitle this uploaded church choir-practice video in English and add a warm organ underscore that doubles the choir line",
+    "rationale": "User uploaded a church choir practice and asks for English subtitles plus a warm organ underscore mixed with the preserved choir audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the practice, TranscriptionAgent transcribes the sung lyrics and director's notes, SubtitleAgent generates English captions, MusicAgent composes the organ underscore, AudioMixAgent blends the underscore with the preserved choir audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full practice, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the church's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled choir-practice with a warm organ underscore"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded choir practice"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe lyrics and director's notes"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a warm organ underscore that doubles the choir line"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the organ underscore with the preserved choir audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the practice with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Put English subtitles on this uploaded language-school vocabulary-drill video and lay an upbeat synth-chime score under the drill",
+    "rationale": "User uploaded a vocabulary-drill video and asks for English subtitles plus an upbeat synth-chime score mixed with the preserved classroom audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the drill, TranscriptionAgent transcribes the drill dialogue, SubtitleAgent generates English captions, MusicAgent composes the synth-chime score, AudioMixAgent blends the score with the preserved classroom audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full drill, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the classroom's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled vocabulary drill with an upbeat synth-chime score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded vocabulary drill"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the drill dialogue"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose an upbeat synth-chime score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the synth-chime score with the preserved classroom audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the drill with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Add English subtitles to this uploaded bicycle-commute vlog and lay a breezy indie-folk score under the rider's narration",
+    "rationale": "User uploaded a bicycle-commute vlog and asks for English subtitles plus a breezy indie-folk score mixed with the preserved street audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the vlog, TranscriptionAgent transcribes the rider, SubtitleAgent generates English captions, MusicAgent composes the indie-folk score, AudioMixAgent blends the score with the preserved street audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full vlog, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the street's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled bicycle commute with an indie-folk score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded bicycle-commute vlog"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the rider's narration"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a breezy indie-folk score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the indie-folk score with the preserved street audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the vlog with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Subtitle this uploaded barista-training video in English and lay a cozy morning-coffeehouse score under the preserved espresso-machine audio",
+    "rationale": "User uploaded a barista-training video and asks for English subtitles plus a cozy coffeehouse score mixed with the preserved café audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the video, TranscriptionAgent transcribes the instruction, SubtitleAgent generates English captions, MusicAgent composes the coffeehouse score, AudioMixAgent blends the score with the preserved café audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full video, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the café's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled barista-training with a cozy coffeehouse score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded training video"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the instruction"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a cozy coffeehouse score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the coffeehouse score with the preserved espresso-machine audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the training with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Add English subtitles and a serene strings-and-koto score to this uploaded calligraphy-workshop video",
+    "rationale": "User uploaded a calligraphy-workshop video and asks for English subtitles plus a serene strings-and-koto score mixed with the preserved studio audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the workshop, TranscriptionAgent transcribes the narration, SubtitleAgent generates English captions, MusicAgent composes the strings-and-koto score, AudioMixAgent blends the score with the preserved studio audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full workshop, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the studio's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled calligraphy workshop with a serene strings-and-koto score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded calligraphy workshop"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the calligrapher's narration"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a serene strings-and-koto score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the strings-and-koto score with the preserved studio audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the workshop with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Subtitle this uploaded sunrise hike-vlog in English and add a gentle acoustic-guitar-and-whistle score mixed with the preserved trail audio",
+    "rationale": "User uploaded a sunrise-hike vlog and asks for English subtitles plus an acoustic-guitar-and-whistle score mixed with the preserved trail audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the vlog, TranscriptionAgent transcribes the hiker, SubtitleAgent generates English captions, MusicAgent composes the acoustic-guitar-and-whistle score, AudioMixAgent blends the score with the preserved trail audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full vlog, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the trail's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled sunrise-hike vlog with an acoustic-and-whistle score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded hike vlog"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the hiker's narration"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a gentle acoustic-guitar-and-whistle score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the acoustic-and-whistle score with the preserved trail audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the vlog with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Add English subtitles to this uploaded drum-teacher method-demo and layer a tight backbeat under the teacher's counts",
+    "rationale": "User uploaded a drum-teacher method demo and asks for English subtitles plus a tight backbeat mixed with the preserved studio audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the demo, TranscriptionAgent transcribes the counts and cues, SubtitleAgent generates English captions, MusicAgent composes the tight backbeat, AudioMixAgent blends the backbeat with the preserved studio audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full demo, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the studio's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled drum-method demo with a tight backbeat"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded drum demo"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the counts and cues"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a tight backbeat underscore"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the backbeat with the preserved studio audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the demo with the captions and mixed audio"}
+    ]
+  },
+  {
+    "goal": "Subtitle this uploaded woodworking-safety lecture in English and lay a steady acoustic score under the preserved saw-shop audio",
+    "rationale": "User uploaded a woodworking-safety lecture and asks for English subtitles plus a steady acoustic score mixed with the preserved saw-shop audio. Plan: IntakeText captures the brief, IntakeVideoAgent registers the lecture, TranscriptionAgent transcribes the safety instruction, SubtitleAgent generates English captions, MusicAgent composes the steady acoustic score, AudioMixAgent blends the score with the preserved saw-shop audio, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoAnalysisAgent / HighlightAgent because the user wants the full lecture, not a highlight edit. No VideoExtendAgent / StyleTransferAgent because no extension or restyle was requested. No AmbienceAgent because the shop's original ambient audio is preserved as the ambient layer. No TranslationAgent because source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the brief for subtitled woodworking-safety lecture with a steady acoustic score"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded safety lecture"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the safety instruction"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "MusicAgent", "intent": "Compose a steady acoustic score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the acoustic score with the preserved saw-shop audio"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the lecture with the captions and mixed audio"}
+    ]
+  }
+]

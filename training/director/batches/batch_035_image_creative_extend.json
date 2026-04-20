@@ -1,0 +1,560 @@
+[
+  {
+    "goal": "Using this uploaded character portrait, produce a long-form cultivation-fantasy animated drama about her reluctant return to the abandoned sect on the mountain, extending the video with extra footage to fill a full 10-minute episode",
+    "rationale": "User uploaded a character portrait and asks for a long-form cultivation-fantasy animated drama in which the generated clips are extended to fill a 10-minute episode. Plan: IntakeText captures the brief, IntakeImageAgent ingests the portrait, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial animated video, VideoExtendAgent adds the footage needed to reach the 10-minute target, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends both audio layers, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10-minute extended cultivation-fantasy brief with the reluctant-return plot"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded character portrait as the protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the protagonist and fold her features into the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for her mountain return, sect-confrontation, and peak-altar reconciliation"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with arrival beats and the peak-altar resolution"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes preserving the uploaded portrait across the mountain settings"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill the 10-minute episode"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the mountain-sect ambience with wind-bells and wood creaks"},
+      {"agent_id": "MusicAgent", "intent": "Compose a grounded cultivation-fantasy score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Using this uploaded CEO portrait, make a full-length sweet CEO-romance mini-drama about his reluctant first date with a newly-hired chief-of-staff, extending the generated clips to fill an 8-minute runtime",
+    "rationale": "User uploaded a CEO portrait and asks for a full-length CEO-romance mini-drama with extended runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the portrait, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach the 8-minute runtime, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 8-minute extended CEO-romance brief with the chief-of-staff first date"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded CEO portrait as the male-lead reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the CEO and fold his look into the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for the reluctant first date and rooftop dinner"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with boardroom beats and rooftop-dinner resolution"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes preserving the uploaded CEO's features across scenes"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill the 8-minute runtime"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the office-tower and rooftop ambience"},
+      {"agent_id": "MusicAgent", "intent": "Compose a warm CEO-romance score with piano and strings"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended mini-drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Based on this uploaded martial-arts master portrait, build a long-form martial-arts animated drama about his final tournament in which he must defeat his three former students, extending the clips to fill 12 minutes",
+    "rationale": "User uploaded a martial-arts master portrait and asks for a long-form martial-arts animated drama with 12-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the portrait, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 12 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12-minute extended martial-arts brief with the tournament-and-three-students finale"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded master portrait as the protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the master and fold his features into the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for the three-student bracket and the final duel"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with tournament beats and the final-duel resolution"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes preserving the uploaded master across the tournament settings"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 12 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the dojo-and-arena ambience"},
+      {"agent_id": "MusicAgent", "intent": "Compose a martial-arts score with taiko and strings"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Using this uploaded photograph of a deserted train station, make a full-length supernatural mini-drama about the stationmaster whose returning ghosts all disembark at 3 a.m., extending the clips to fill 10 minutes",
+    "rationale": "User uploaded a deserted train-station photograph and asks for a full-length supernatural mini-drama with 10-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the photograph, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 10 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10-minute extended supernatural brief with the 3-a.m. ghost arrivals"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded train-station photograph as the setting reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the station and anchor the enriched brief to its architecture"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for the stationmaster's three-ghost nights"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with platform beats and the dawn-departure resolution"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes faithful to the uploaded station"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 10 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the empty-station ambience with rail clicks and wind"},
+      {"agent_id": "MusicAgent", "intent": "Compose a quiet supernatural score with muted brass"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended mini-drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "With this uploaded jade-pendant still-life, produce a long-form palace-intrigue animated drama about the consort who claims it as her own on the eve of the emperor's succession, extending the clips to fill 11 minutes",
+    "rationale": "User uploaded a jade-pendant still-life and asks for a long-form palace-intrigue animated drama with 11-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the still-life, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 11 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 11-minute extended palace-intrigue brief with the jade-pendant claim"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded jade-pendant still-life as the central-prop reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the pendant and anchor the enriched brief to its engraving"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for the consort's pendant claim on succession's eve"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with palace-inner-court beats and the throne-room reveal"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes featuring the uploaded pendant across settings"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 11 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the palace ambience with silk, courtyard birds, and footfalls"},
+      {"agent_id": "MusicAgent", "intent": "Compose a palace-intrigue score with guzheng and low strings"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Using the cyberpunk-skyline concept art in this uploaded image, build a long-form cyberpunk animated drama about a signal-tracer navigating the city by neon shadows alone, extending the generated clips to fill a 12-minute episode",
+    "rationale": "User uploaded a cyberpunk-skyline concept art and asks for a long-form cyberpunk animated drama with 12-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the concept art, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 12 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12-minute extended cyberpunk brief with the signal-tracer neon-shadow navigation"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded cyberpunk-skyline concept art as the setting reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the skyline and map its landmarks into the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for the signal-tracer's city crossing"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with rooftop beats and the antenna-farm finale"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes faithful to the uploaded skyline"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 12 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the cyberpunk-city ambience"},
+      {"agent_id": "MusicAgent", "intent": "Compose a driving cyberpunk score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Take this uploaded sepia photograph of a 1920s speakeasy and build a long-form period romance animated drama about its reluctant co-owner falling for a Prohibition-era reporter, extending to fill 10 minutes",
+    "rationale": "User uploaded a sepia 1920s-speakeasy photograph and asks for a long-form period-romance animated drama with 10-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the photograph, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 10 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10-minute extended period-romance brief with the speakeasy co-owner and the reporter"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded 1920s speakeasy photograph as the setting reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the speakeasy and anchor the enriched brief to its Art-Deco look"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for the co-owner and Prohibition-reporter arc"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with bar-front beats and the back-alley farewell"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes faithful to the uploaded speakeasy"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 10 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the speakeasy ambience with glass clinks and distant jazz"},
+      {"agent_id": "MusicAgent", "intent": "Compose a jazz-trio period-romance score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Using this uploaded portrait of a teen dancer, make a long-form coming-of-age animated drama about her regional-competition journey after her grandmother dies mid-training, extending to fill 9 minutes",
+    "rationale": "User uploaded a teen-dancer portrait and asks for a long-form coming-of-age animated drama with 9-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the portrait, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 9 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 9-minute extended coming-of-age brief with the teen dancer's regional journey"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded teen-dancer portrait as the protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the teen and fold her presence into the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for her rehearsal, grief, and stage-finale dedication"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with rehearsal beats and the regional-final solo"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes preserving the uploaded dancer across studios and stages"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 9 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the rehearsal-studio and stage ambience"},
+      {"agent_id": "MusicAgent", "intent": "Compose a bittersweet coming-of-age score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Take this uploaded hand-drawn map of a fantasy continent and build a long-form fantasy-adventure animated drama about the first team to traverse all its uncharted passes in a single season, extending clips to fill 12 minutes",
+    "rationale": "User uploaded a hand-drawn fantasy-continent map and asks for a long-form fantasy-adventure animated drama with 12-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the map, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 12 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12-minute extended fantasy-adventure brief with the first-season traverse"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded hand-drawn continent map as the setting reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the map's landmarks and anchor the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for the team's three-pass traverse"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with pass-crossing beats and a summit-reunion finale"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes faithful to the uploaded map's topography"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 12 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the mountain-pass ambience with wind and distant streams"},
+      {"agent_id": "MusicAgent", "intent": "Compose a sweeping fantasy-adventure score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Using this uploaded character-sheet of a retired magician, produce a full-length mystery animated drama about her one-last-show tour that unravels the disappearance of a rival decades earlier, extending to fill 10 minutes",
+    "rationale": "User uploaded a retired-magician character sheet and asks for a full-length mystery animated drama with 10-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the character sheet, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 10 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10-minute extended mystery brief with the magician's one-last-show tour"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded magician character sheet as the protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the magician and fold her features into the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for the three-city tour and rival-disappearance revelation"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with backstage beats and the final-city reveal"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes preserving the uploaded magician across venues"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 10 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the backstage and theatre ambience"},
+      {"agent_id": "MusicAgent", "intent": "Compose a mystery-magic score with harp and bass"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "With this uploaded portrait of a tomboy mechanic, make a long-form workplace-romance animated drama about her reluctant teamwork with the rival pit crew chief at a regional rally, extending clips to fill 10 minutes",
+    "rationale": "User uploaded a tomboy-mechanic portrait and asks for a long-form workplace-romance animated drama with 10-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the portrait, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 10 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10-minute extended workplace-romance brief with the mechanic and rival pit crew chief"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded mechanic portrait as the protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the mechanic and fold her look into the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for their reluctant teamwork at the regional rally"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with pit-garage beats and the podium-side reconciliation"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes preserving the uploaded mechanic across the rally"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 10 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the pit-garage and rally ambience"},
+      {"agent_id": "MusicAgent", "intent": "Compose a driving workplace-romance score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Using this uploaded portrait of a ballerina with a cast, produce a long-form dance-drama animated piece about her comeback through a folk-festival tour after a career-ending injury, extending to fill 11 minutes",
+    "rationale": "User uploaded a ballerina-with-cast portrait and asks for a long-form dance-drama animated drama with 11-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the portrait, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 11 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 11-minute extended dance-drama brief with the ballerina's folk-festival comeback"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded ballerina portrait as the protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the ballerina and fold her features into the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for her folk-festival tour and final-night solo"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with rehab beats and the final-night solo"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes preserving the uploaded ballerina across venues"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 11 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the backstage and festival ambience"},
+      {"agent_id": "MusicAgent", "intent": "Compose a lyrical dance-drama score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Take this uploaded night-alley concept art and build a long-form urban-thriller animated drama about a whistle-blower whose safehouse rotates among five identical alleys, extending to fill 10 minutes",
+    "rationale": "User uploaded a night-alley concept art and asks for a long-form urban-thriller animated drama with 10-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the concept art, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 10 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10-minute extended urban-thriller brief with the whistle-blower's rotating safehouse"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded night-alley concept art as the setting reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the alley and anchor the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for the safehouse-rotation and dawn-meet finale"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with alley beats and the dawn-handoff resolution"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes faithful to the uploaded alley"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 10 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the rain-and-neon alley ambience"},
+      {"agent_id": "MusicAgent", "intent": "Compose a taut urban-thriller score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Using this uploaded countryside-barn photo, make a long-form family-drama animated piece about three grown sisters who reopen the dairy their mother ran before they were born, extending clips to fill 9 minutes",
+    "rationale": "User uploaded a countryside-barn photo and asks for a long-form family-drama animated drama with 9-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the photo, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 9 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 9-minute extended family-drama brief with the three sisters reopening the dairy"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded countryside-barn photo as the setting reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the barn and anchor the enriched brief to its stone"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for the sisters' joint renovation"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with milking-shed beats and a dawn-first-batch finale"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes faithful to the uploaded barn"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 9 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the countryside-barn ambience with wind and distant cattle"},
+      {"agent_id": "MusicAgent", "intent": "Compose a tender family-drama score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Using this uploaded young-scientist portrait, produce a full-length sci-fi animated drama about her orbital-greenhouse maiden run when the crew ship goes dark, extending to fill 12 minutes",
+    "rationale": "User uploaded a young-scientist portrait and asks for a full-length sci-fi animated drama with 12-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the portrait, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 12 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12-minute extended sci-fi brief with the orbital greenhouse and crew-dark crisis"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded young-scientist portrait as the protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the scientist and fold her look into the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for her maiden run and emergency-crew restoration"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with greenhouse-module beats and the comms-restore finale"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes preserving the uploaded scientist across the greenhouse"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 12 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the orbital-greenhouse ambience with hydroponic mist and servo hum"},
+      {"agent_id": "MusicAgent", "intent": "Compose a tense sci-fi score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "With this uploaded seaside-fishing-village concept art, build a long-form historical animated drama about the widow who restores the fleet after a decade of decline, extending clips to fill 11 minutes",
+    "rationale": "User uploaded a seaside-fishing-village concept art and asks for a long-form historical animated drama with 11-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the concept art, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 11 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 11-minute extended historical brief with the widow's fleet restoration"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded fishing-village concept art as the setting reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the village and anchor the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for her fleet's restoration and first-catch ceremony"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with dockside beats and the launch-morning celebration"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes faithful to the uploaded village"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 11 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the seaside-village ambience with surf and gulls"},
+      {"agent_id": "MusicAgent", "intent": "Compose a heart-lifting historical score with fiddle and accordion"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Using this uploaded portrait of a blind musician, make a long-form music-drama animated piece about his concert tour that ends in the town that raised him, extending clips to fill 10 minutes",
+    "rationale": "User uploaded a blind-musician portrait and asks for a long-form music-drama animated drama with 10-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the portrait, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 10 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10-minute extended music-drama brief with the blind-musician hometown tour"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded blind-musician portrait as the protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the musician and fold his look into the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for the three-city tour and hometown-finale"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with tour-bus beats and the hometown-stage finale"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes preserving the uploaded musician across venues"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 10 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the tour-bus and venue ambience"},
+      {"agent_id": "MusicAgent", "intent": "Compose a tender music-drama score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Take this uploaded medieval-abbey photograph and build a long-form mystery animated drama about the novice who uncovers a burned manuscript the abbot claims was never written, extending to fill 11 minutes",
+    "rationale": "User uploaded a medieval-abbey photograph and asks for a long-form mystery animated drama with 11-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the photograph, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 11 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 11-minute extended mystery brief with the novice and the burned manuscript"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded abbey photograph as the setting reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the abbey and anchor the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for the novice's manuscript recovery"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with scriptorium beats and a dawn-chapel revelation"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes faithful to the uploaded abbey"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 11 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the abbey ambience with bells and distant chant"},
+      {"agent_id": "MusicAgent", "intent": "Compose a reverent medieval-mystery score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Using this uploaded portrait of a street artist in fingerless gloves, produce a full-length urban drama animated piece about her month-long mural commission that becomes a neighborhood memorial, extending clips to fill 9 minutes",
+    "rationale": "User uploaded a street-artist portrait and asks for a full-length urban-drama animated drama with 9-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the portrait, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 9 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 9-minute extended urban-drama brief with the street artist's memorial mural"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded street-artist portrait as the protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the street artist and fold her style into the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for the month of the mural and unveiling"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with wall beats and the unveiling-night epilogue"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes preserving the uploaded artist across the block"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 9 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the urban-block ambience with children and passing buses"},
+      {"agent_id": "MusicAgent", "intent": "Compose a heart-forward urban-drama score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "With this uploaded portrait of a veteran captain, make a long-form maritime drama animated piece about her final run through a waterway she helped chart fifty years ago, extending clips to fill 12 minutes",
+    "rationale": "User uploaded a veteran-captain portrait and asks for a long-form maritime-drama animated drama with 12-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the portrait, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 12 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12-minute extended maritime-drama brief with the veteran captain's final run"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded captain portrait as the protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the captain and fold her insignia into the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for her final run through the charted waterway"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with wheelhouse beats and the arrival-port ceremony"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes preserving the uploaded captain across the ship"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 12 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the ship ambience with engine hum and gulls"},
+      {"agent_id": "MusicAgent", "intent": "Compose a swelling maritime-drama score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Using this uploaded portrait of a widowed tailor, produce a long-form slice-of-life animated drama about his decision to let an apprentice wear his late wife's last unfinished coat to her first big interview, extending to fill 8 minutes",
+    "rationale": "User uploaded a widowed-tailor portrait and asks for a long-form slice-of-life animated drama with 8-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the portrait, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 8 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 8-minute extended slice-of-life brief with the tailor and the unfinished coat"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded tailor portrait as the protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the tailor and fold his atelier details into the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for the fitting and the interview-day loan"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with shop beats and the interview-morning send-off"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes preserving the uploaded tailor in the shop"},
+      {"agent_id": "VideoAgent", "intent": "Generate the video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 8 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the shop ambience with sewing machines and distant street traffic"},
+      {"agent_id": "MusicAgent", "intent": "Compose a tender slice-of-life score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Take this uploaded portrait of a twenty-something barista and build a long-form urban-fantasy animated piece about her coffee that accidentally starts revealing customers' lost memories, extending to fill 10 minutes",
+    "rationale": "User uploaded a barista portrait and asks for a long-form urban-fantasy animated drama with 10-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the portrait, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 10 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10-minute extended urban-fantasy brief with the barista and memory-revealing coffee"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded barista portrait as the protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the barista and fold her apron into the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for three customers' memory revelations and a closing-night coda"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with counter beats and the closing-night epilogue"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes preserving the uploaded barista across the café"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 10 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the café ambience with steam and espresso-machine tones"},
+      {"agent_id": "MusicAgent", "intent": "Compose a dreamy urban-fantasy score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Using this uploaded portrait of an aging librarian, make a long-form heartwarming animated drama about her last-year book-club hosting her old students across a single season, extending clips to fill 11 minutes",
+    "rationale": "User uploaded an aging-librarian portrait and asks for a long-form heartwarming animated drama with 11-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the portrait, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 11 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 11-minute extended heartwarming brief with the librarian's last-year book club"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded librarian portrait as the protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the librarian and fold her cardigan details into the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for the season's book-club sessions"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with library beats and the retirement-night finale"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes preserving the uploaded librarian across sessions"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 11 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the library ambience with page turns and hush"},
+      {"agent_id": "MusicAgent", "intent": "Compose a gentle heartwarming score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "With this uploaded portrait of a quiet astronomer, produce a long-form sci-fi animated drama about her single-telescope observatory detecting an unexpected repeating pulse, extending clips to fill 10 minutes",
+    "rationale": "User uploaded a quiet-astronomer portrait and asks for a long-form sci-fi animated drama with 10-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the portrait, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 10 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10-minute extended sci-fi brief with the astronomer's unexpected pulse"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded astronomer portrait as the protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the astronomer and fold her gear into the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for her detection, verification, and broadcast-morning reveal"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with observatory beats and the dawn-call press release"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes preserving the uploaded astronomer across the observatory"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 10 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the observatory ambience with dome rotation and night wind"},
+      {"agent_id": "MusicAgent", "intent": "Compose a luminous sci-fi score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Take this uploaded portrait of a mute mountain guide and build a long-form wilderness-drama animated piece about her leading a group of climbers through a blizzard she foresaw in the morning fog, extending clips to fill 12 minutes",
+    "rationale": "User uploaded a mute-guide portrait and asks for a long-form wilderness-drama animated drama with 12-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the portrait, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 12 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12-minute extended wilderness-drama brief with the mute guide's blizzard foresight"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded guide portrait as the protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the guide and fold her gear into the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for the ascent, blizzard, and dawn-retreat"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with whiteout beats and the shelter-morning resolution"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes preserving the uploaded guide across the mountain"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 12 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the mountain-blizzard ambience"},
+      {"agent_id": "MusicAgent", "intent": "Compose a sweeping wilderness-drama score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Using this uploaded portrait of a reclusive painter, make a long-form artistic-drama animated piece about her final gallery show that unveils forty years of secret canvases, extending clips to fill 11 minutes",
+    "rationale": "User uploaded a reclusive-painter portrait and asks for a long-form artistic-drama animated drama with 11-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the portrait, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 11 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 11-minute extended artistic-drama brief with the reclusive painter's forty-year unveiling"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded painter portrait as the protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the painter and fold her atelier into the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for the canvas-recovery and gallery-night unveiling"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with studio beats and the gallery-premiere finale"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes preserving the uploaded painter across the studio"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 11 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the atelier and gallery ambience"},
+      {"agent_id": "MusicAgent", "intent": "Compose a lyrical artistic-drama score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "With this uploaded portrait of a second-generation immigrant chef, produce a long-form culinary-drama animated piece about her reopening her father's shuttered cart in a new market district, extending to fill 9 minutes",
+    "rationale": "User uploaded an immigrant-chef portrait and asks for a long-form culinary-drama animated drama with 9-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the portrait, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 9 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 9-minute extended culinary-drama brief with the chef reopening her father's cart"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded chef portrait as the protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the chef and fold her heirloom apron into the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for the cart's renovation and opening-day service"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with cart beats and the first-lunch rush"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes preserving the uploaded chef across the market"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 9 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the market-and-cart ambience"},
+      {"agent_id": "MusicAgent", "intent": "Compose a warm culinary-drama score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Using this uploaded portrait of a retired detective, make a long-form mystery animated piece about her final cold case resolved during a single weekend at a seaside retreat, extending to fill 10 minutes",
+    "rationale": "User uploaded a retired-detective portrait and asks for a long-form mystery animated drama with 10-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the portrait, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 10 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 10-minute extended mystery brief with the retired detective's seaside-weekend case"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded detective portrait as the protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the detective and fold her notebook into the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for the weekend's clue-chain and Sunday-morning resolution"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with retreat-cabin beats and the pier-side reveal"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes preserving the uploaded detective across the retreat"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 10 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the seaside-retreat ambience"},
+      {"agent_id": "MusicAgent", "intent": "Compose a cerebral mystery score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "With this uploaded portrait of a stoic samurai, produce a long-form martial-arts animated piece about his promise to shelter a boy who stole a daimyo's sword, extending clips to fill 12 minutes",
+    "rationale": "User uploaded a stoic-samurai portrait and asks for a long-form martial-arts animated drama with 12-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the portrait, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 12 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12-minute extended martial-arts brief with the samurai's promise to shelter the boy"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded samurai portrait as the protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the samurai and fold his katana into the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for the flight, the daimyo's pursuit, and the final river crossing"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with roadside-inn beats and the river-ford stand"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes preserving the uploaded samurai across the landscape"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 12 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the countryside ambience with cicadas and distant bells"},
+      {"agent_id": "MusicAgent", "intent": "Compose a measured martial-arts score with shakuhachi and drums"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Using this uploaded portrait of a photojournalist in a sandstorm, build a long-form documentary-style animated drama about her final assignment in a silent-war region, extending clips to fill 11 minutes",
+    "rationale": "User uploaded a photojournalist-in-sandstorm portrait and asks for a long-form documentary-style animated drama with 11-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the portrait, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 11 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 11-minute extended documentary-style brief with the photojournalist's silent-war assignment"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded photojournalist portrait as the protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the photojournalist and fold her gear into the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for her arrival, the silence, and the last-roll submission"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with sandstorm beats and the darkroom finale"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes preserving the uploaded photojournalist across locations"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 11 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the silent-war-zone ambience with wind and distant jets"},
+      {"agent_id": "MusicAgent", "intent": "Compose a restrained documentary-style score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  },
+  {
+    "goal": "Take this uploaded portrait of a retired astronaut and produce a long-form sci-fi animated drama about her first return to orbit as a passenger on the ship her late wife designed, extending clips to fill 12 minutes",
+    "rationale": "User uploaded a retired-astronaut portrait and asks for a long-form sci-fi animated drama with 12-minute runtime. Plan: IntakeText captures the brief, IntakeImageAgent ingests the portrait, BriefEnricherAgent describes it and folds its details into the enriched brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates the initial video, VideoExtendAgent adds matching footage to reach 12 minutes, AmbienceAgent generates the ambience, MusicAgent composes the score, AudioMixAgent blends, CompositorAgent renders. No IntakeVideoAgent because no video was uploaded. No VideoAnalysisAgent / HighlightAgent because no uploaded content is being analyzed or highlighted. No StyleTransferAgent because no restyle was requested. No SubtitleAgent / TranslationAgent because captions were not requested.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the 12-minute extended sci-fi brief with the astronaut's return on her late wife's ship"},
+      {"agent_id": "IntakeImageAgent", "intent": "Ingest the uploaded astronaut portrait as the protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe the astronaut and fold her insignia into the enriched brief"},
+      {"agent_id": "StoryAgent", "intent": "Write the outline for her launch, in-flight reconciliation, and dawn splashdown"},
+      {"agent_id": "ScreenplayAgent", "intent": "Draft the screenplay with cabin-window beats and the reentry scene"},
+      {"agent_id": "KeyFrameAgent", "intent": "Generate keyframes preserving the uploaded astronaut across the ship"},
+      {"agent_id": "VideoAgent", "intent": "Generate the animated video clips from the keyframes"},
+      {"agent_id": "VideoExtendAgent", "intent": "Extend the clips with matching footage to fill 12 minutes"},
+      {"agent_id": "AmbienceAgent", "intent": "Generate the ship-cabin ambience with pressurization and low vent hum"},
+      {"agent_id": "MusicAgent", "intent": "Compose a reflective sci-fi score"},
+      {"agent_id": "AudioMixAgent", "intent": "Blend the ambience and score into a cohesive audio track"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the extended animated drama with the mixed audio as the final episode"}
+    ]
+  }
+]

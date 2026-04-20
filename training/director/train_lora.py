@@ -45,26 +45,20 @@ LORA_CONFIG = dict(
                     "gate_proj", "up_proj", "down_proj"],
 )
 
-SFT_CONFIG = dict(
+SFT_CONFIG_DEFAULTS = dict(
     learning_rate=2e-5,
-    num_train_epochs=3,
-    per_device_train_batch_size=1,
-    gradient_accumulation_steps=4,   # effective batch = 4 (small dataset)
     bf16=True,
-    logging_steps=1,
+    logging_steps=10,
     save_strategy="epoch",
     report_to="none",
     max_length=SEQ_LEN,
 )
 
-DPO_CONFIG = dict(
+DPO_CONFIG_DEFAULTS = dict(
     learning_rate=5e-7,
-    num_train_epochs=1,
-    per_device_train_batch_size=1,
-    gradient_accumulation_steps=4,
     bf16=True,
     beta=0.1,
-    logging_steps=1,
+    logging_steps=10,
     save_strategy="epoch",
     report_to="none",
     max_length=SEQ_LEN,
@@ -79,11 +73,20 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--stage", choices=["sft", "dpo", "both"], default="both")
     ap.add_argument("--base-model", default=BASE_MODEL)
+    ap.add_argument("--sft-path", default=None, help="JSONL path (default: samples_sft.jsonl beside this script)")
+    ap.add_argument("--dpo-path", default=None, help="JSONL path (default: samples_dpo.jsonl beside this script)")
+    ap.add_argument("--adapter-dir", default=None, help="adapter output dir (default: adapters/ beside this script)")
+    ap.add_argument("--sft-epochs", type=int, default=3)
+    ap.add_argument("--dpo-epochs", type=int, default=1)
+    ap.add_argument("--per-device-batch", type=int, default=1)
+    ap.add_argument("--grad-accum", type=int, default=4)
     args = ap.parse_args()
 
     root = Path(__file__).parent
-    adapter_dir = root / "adapters"
-    adapter_dir.mkdir(exist_ok=True)
+    adapter_dir = Path(args.adapter_dir) if args.adapter_dir else root / "adapters"
+    adapter_dir.mkdir(exist_ok=True, parents=True)
+    sft_data_path = Path(args.sft_path) if args.sft_path else root / "samples_sft.jsonl"
+    dpo_data_path = Path(args.dpo_path) if args.dpo_path else root / "samples_dpo.jsonl"
 
     # Heavy imports are inside main so `--help` works without GPU libs installed
     import torch
@@ -103,10 +106,10 @@ def main():
     if args.stage in ("sft", "both"):
         from trl import SFTConfig, SFTTrainer
 
-        print("\n=== Stage 1: SFT on 5 samples ===")
+        print(f"\n=== Stage 1: SFT ({sft_data_path.name}) ===")
         sft_ds = load_dataset(
             "json",
-            data_files=str(root / "samples_sft.jsonl"),
+            data_files=str(sft_data_path),
             split="train",
         )
         print(f"SFT dataset: {len(sft_ds)} samples")
@@ -120,7 +123,10 @@ def main():
         sft_output = adapter_dir / "sft"
         sft_config = SFTConfig(
             output_dir=str(sft_output),
-            **SFT_CONFIG,
+            num_train_epochs=args.sft_epochs,
+            per_device_train_batch_size=args.per_device_batch,
+            gradient_accumulation_steps=args.grad_accum,
+            **SFT_CONFIG_DEFAULTS,
         )
         trainer = SFTTrainer(
             model=model,
@@ -144,10 +150,10 @@ def main():
         from trl import DPOConfig, DPOTrainer
         from peft import PeftModel
 
-        print("\n=== Stage 2: DPO on 5 pairs (starting from SFT adapter) ===")
+        print(f"\n=== Stage 2: DPO ({dpo_data_path.name}, starting from SFT adapter) ===")
         dpo_ds = load_dataset(
             "json",
-            data_files=str(root / "samples_dpo.jsonl"),
+            data_files=str(dpo_data_path),
             split="train",
         )
         print(f"DPO dataset: {len(dpo_ds)} pairs")
@@ -169,7 +175,10 @@ def main():
         dpo_output = adapter_dir / "dpo"
         dpo_config = DPOConfig(
             output_dir=str(dpo_output),
-            **DPO_CONFIG,
+            num_train_epochs=args.dpo_epochs,
+            per_device_train_batch_size=args.per_device_batch,
+            gradient_accumulation_steps=args.grad_accum,
+            **DPO_CONFIG_DEFAULTS,
         )
         dpo_trainer = DPOTrainer(
             model=policy,

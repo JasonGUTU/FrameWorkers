@@ -1,0 +1,392 @@
+[
+  {
+    "goal": "Extract the best moments from this uploaded TED-style lecture into a three-minute reel with English subtitles on every spoken line",
+    "rationale": "User uploaded a TED-style lecture and asks for a highlight reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the lecture, VideoAnalysisAgent parses the talk's argument arc, HighlightAgent assembles the reel, TranscriptionAgent transcribes the spoken dialogue, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the user only asked for highlights plus captions — the original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the three-minute lecture highlight-with-subtitles brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded TED-style lecture"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the talk's argument arc and standout claims"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the key argument beats into a three-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the spoken dialogue for the selected clips"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Cut this uploaded panel-discussion recording into a two-minute best-quotes reel with English subtitles over every speaker",
+    "rationale": "User uploaded a panel-discussion recording and asks for a best-quotes reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the panel, VideoAnalysisAgent parses the exchange, HighlightAgent assembles the reel, TranscriptionAgent transcribes the dialogue, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the panel's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the two-minute best-quotes reel-with-subtitles brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded panel-discussion recording"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the panel's exchange for decisive quote moments"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the strongest quotes into a two-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe each speaker's selected quotes"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions with speaker attribution"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Pull the critical steps from this uploaded car-repair tutorial into a two-minute how-to reel with English subtitles for every instruction",
+    "rationale": "User uploaded a car-repair tutorial and asks for a how-to reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the tutorial, VideoAnalysisAgent parses the steps, HighlightAgent assembles the reel, TranscriptionAgent transcribes the narrated instructions, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the tutorial's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the two-minute car-repair how-to reel brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded car-repair tutorial"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the tutorial's step sequence and tool usage"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the critical steps into a two-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the narrated instructions"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions for every instruction"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Edit this uploaded keynote address into a four-minute must-watch highlight with English subtitles over every line",
+    "rationale": "User uploaded a keynote address and asks for a must-watch highlight with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the keynote, VideoAnalysisAgent parses the talk structure, HighlightAgent assembles the highlight, TranscriptionAgent transcribes the dialogue, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the keynote's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the four-minute keynote must-watch-with-subtitles brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded keynote address"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the talk's central thesis and climactic beats"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the central claims into a four-minute highlight"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the speaker's selected dialogue"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the highlight with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Cut this uploaded cooking-show episode into a three-minute recipe-card reel with English subtitles for every measurement and instruction",
+    "rationale": "User uploaded a cooking-show episode and asks for a recipe-card reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the episode, VideoAnalysisAgent parses the recipe steps, HighlightAgent assembles the reel, TranscriptionAgent transcribes the narration, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the episode's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the three-minute recipe-card reel brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded cooking-show episode"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the recipe's step sequence"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the recipe steps into a three-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the narrated measurements and instructions"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions for every step"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Make a five-minute accessible classroom-recap from this uploaded mathematics lecture with English subtitles on every proof step",
+    "rationale": "User uploaded a mathematics lecture and asks for a five-minute accessible recap with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the lecture, VideoAnalysisAgent parses the proof progression, HighlightAgent assembles the recap, TranscriptionAgent transcribes the narration, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the lecture's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the five-minute accessible mathematics-recap brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded mathematics lecture"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the proof progression and inflection points"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the proof steps into a five-minute recap"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the lecturer's spoken math and commentary"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions for each proof step"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the recap with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Cut this uploaded court-hearing recording into a two-minute key-exchanges reel with English subtitles for every line",
+    "rationale": "User uploaded a court-hearing recording and asks for a key-exchanges reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the hearing, VideoAnalysisAgent parses the procedural flow, HighlightAgent assembles the reel, TranscriptionAgent transcribes the dialogue, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the hearing's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the two-minute court-hearing key-exchanges reel brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded court-hearing recording"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the hearing's procedural flow and decisive objections"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the decisive exchanges into a two-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the counsel and witness dialogue"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions with speaker tags"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Edit this uploaded investigative-podcast video version into a three-minute reveal-reel with English subtitles on every narration line",
+    "rationale": "User uploaded the video version of an investigative podcast and asks for a reveal-reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the podcast video, VideoAnalysisAgent parses the reveal structure, HighlightAgent assembles the reel, TranscriptionAgent transcribes the narration, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the podcast's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the three-minute investigative-reveal-reel-with-subtitles brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded podcast video"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the reveal structure and turning points"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the reveal moments into a three-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the narration and interview snippets"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Pull the best client-testimonials from this uploaded training-session recording into a four-minute reel with English subtitles on every comment",
+    "rationale": "User uploaded a training-session recording and asks for a client-testimonials reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the session, VideoAnalysisAgent parses the testimonial segments, HighlightAgent assembles the reel, TranscriptionAgent transcribes the comments, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the session's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the four-minute client-testimonials reel-with-subtitles brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded training-session recording"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the testimonial segments and emotional peaks"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the strongest testimonials into a four-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe each client's comments"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions with speaker tags"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Cut this uploaded science-documentary episode into a two-minute key-discoveries reel with English subtitles on every narration line",
+    "rationale": "User uploaded a science-documentary episode and asks for a key-discoveries reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the episode, VideoAnalysisAgent parses the discoveries presented, HighlightAgent assembles the reel, TranscriptionAgent transcribes the narration, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the documentary's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the two-minute science-documentary key-discoveries reel brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded documentary episode"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the episode's discoveries and demonstration peaks"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the key discoveries into a two-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the narration for the selected clips"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Make a three-minute live-debate clash-reel from this uploaded recording with English subtitles over each speaker's exchange",
+    "rationale": "User uploaded a live-debate recording and asks for a clash-reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the debate, VideoAnalysisAgent parses the clashes, HighlightAgent assembles the reel, TranscriptionAgent transcribes the dialogue, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the debate's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the three-minute live-debate clash-reel brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded debate recording"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the debate's clash points and rebuttals"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the strongest clashes into a three-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe each speaker's clash exchanges"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions with speaker tags"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Edit this uploaded astronaut-crew interview into a three-minute mission-lessons reel with English subtitles for every takeaway",
+    "rationale": "User uploaded an astronaut-crew interview and asks for a mission-lessons reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the interview, VideoAnalysisAgent parses the interview arc, HighlightAgent assembles the reel, TranscriptionAgent transcribes the answers, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the interview's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the three-minute astronaut mission-lessons reel brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded astronaut-crew interview"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the interview for takeaway moments"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the key takeaways into a three-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe each astronaut's answers"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions with astronaut names"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Cut this uploaded surgical-training lecture into a two-minute critical-technique reel with English subtitles on every instruction",
+    "rationale": "User uploaded a surgical-training lecture and asks for a critical-technique reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the lecture, VideoAnalysisAgent parses the surgical steps, HighlightAgent assembles the reel, TranscriptionAgent transcribes the instruction, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the lecture's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the two-minute surgical critical-technique reel brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded surgical-training lecture"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the lecture's surgical steps and cautionary moments"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the critical techniques into a two-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the narrated instruction"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Make a three-minute best-bites reel from this uploaded food-critic review with English subtitles for every tasting note",
+    "rationale": "User uploaded a food-critic review video and asks for a best-bites reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the review, VideoAnalysisAgent parses the tasting moments, HighlightAgent assembles the reel, TranscriptionAgent transcribes the tasting notes, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the review's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the three-minute food-critic best-bites reel brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded food-critic review"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the review for its standout tasting moments"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the best-bite moments into a three-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe each tasting note"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Cut this uploaded teacher-training workshop into a five-minute best-practices reel with English subtitles on every recommendation",
+    "rationale": "User uploaded a teacher-training workshop and asks for a best-practices reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the workshop, VideoAnalysisAgent parses the teaching guidance, HighlightAgent assembles the reel, TranscriptionAgent transcribes the guidance, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the workshop's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the five-minute teacher best-practices reel brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded teacher-training workshop"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the workshop for standout teaching guidance"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the best recommendations into a five-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the trainer's guidance"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Edit this uploaded investor-presentation into a two-minute key-claims reel with English subtitles on every claim",
+    "rationale": "User uploaded an investor-presentation and asks for a key-claims reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the presentation, VideoAnalysisAgent parses the pitch structure, HighlightAgent assembles the reel, TranscriptionAgent transcribes the claims, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the presentation's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the two-minute investor key-claims reel brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded investor-presentation"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the pitch's structure and claim beats"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the key claims into a two-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the presenter's claims"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Make a four-minute product-demo highlight from this uploaded launch-event recording with English subtitles on every feature call-out",
+    "rationale": "User uploaded a launch-event recording and asks for a product-demo highlight with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the event, VideoAnalysisAgent parses the demo structure, HighlightAgent assembles the highlight, TranscriptionAgent transcribes the feature call-outs, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the event's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the four-minute product-demo highlight brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded launch-event recording"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the demo's feature sequence and reaction peaks"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the feature call-outs into a four-minute highlight"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the call-out narration"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the highlight with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Cut this uploaded documentary-interview reel into a three-minute historian-quotes highlight with English subtitles on every recollection",
+    "rationale": "User uploaded a documentary-interview reel and asks for a historian-quotes highlight with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the reel, VideoAnalysisAgent parses the interview beats, HighlightAgent assembles the highlight, TranscriptionAgent transcribes the recollections, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the reel's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the three-minute historian-quotes highlight brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded documentary-interview reel"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the historian's recollection arc"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the strongest recollections into a three-minute highlight"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the historian's quotations"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the highlight with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Pull the best audience Q&A moments from this uploaded tech-conference panel into a two-minute reel with English subtitles on every exchange",
+    "rationale": "User uploaded a tech-conference panel and asks for a Q&A reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the panel, VideoAnalysisAgent parses the Q&A flow, HighlightAgent assembles the reel, TranscriptionAgent transcribes the exchanges, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the panel's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the two-minute tech-conference Q&A reel brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded tech-conference panel"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the audience Q&A flow for decisive exchanges"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the best exchanges into a two-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the audience questions and panelist replies"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions with role tags"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Cut this uploaded wine-tasting seminar into a three-minute tasting-notes reel with English subtitles for every descriptor",
+    "rationale": "User uploaded a wine-tasting seminar and asks for a tasting-notes reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the seminar, VideoAnalysisAgent parses the tasting sequence, HighlightAgent assembles the reel, TranscriptionAgent transcribes the descriptors, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the seminar's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the three-minute wine tasting-notes reel brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded wine-tasting seminar"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the tasting sequence and sommelier descriptors"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the standout tasting moments into a three-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the sommelier's descriptors"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Make a two-minute essential-takeaways reel from this uploaded legal-CLE seminar with English subtitles on every rule stated",
+    "rationale": "User uploaded a legal-CLE seminar and asks for an essential-takeaways reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the seminar, VideoAnalysisAgent parses the rule discussions, HighlightAgent assembles the reel, TranscriptionAgent transcribes the rules, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the seminar's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the two-minute legal-CLE takeaways reel brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded legal-CLE seminar"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the seminar for rule-statement moments"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the essential takeaways into a two-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe each rule statement"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Edit this uploaded podcast-video series into a five-minute best-guests supercut with English subtitles on every contribution",
+    "rationale": "User uploaded a podcast-video series and asks for a best-guests supercut with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the series, VideoAnalysisAgent parses each guest's contributions, HighlightAgent assembles the supercut, TranscriptionAgent transcribes the dialogue, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the podcast's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the five-minute best-guests supercut brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded podcast-video series"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze each guest's contribution arc"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the best-guest moments into a five-minute supercut"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe each guest's standout contributions"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions with guest tags"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the supercut with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Cut this uploaded architect's site-walkthrough into a three-minute design-decisions reel with English subtitles for every call-out",
+    "rationale": "User uploaded an architect's site-walkthrough and asks for a design-decisions reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the walkthrough, VideoAnalysisAgent parses the call-out structure, HighlightAgent assembles the reel, TranscriptionAgent transcribes the call-outs, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the walkthrough's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the three-minute design-decisions reel brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded architect's walkthrough"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the walkthrough's call-out structure"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the strongest design call-outs into a three-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the architect's call-outs"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Make a two-minute grand-opening remarks reel from this uploaded event recording with English subtitles on every speaker's dedication",
+    "rationale": "User uploaded a grand-opening event recording and asks for a remarks reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the event, VideoAnalysisAgent parses each speaker's remarks, HighlightAgent assembles the reel, TranscriptionAgent transcribes the dedications, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the event's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the two-minute grand-opening remarks reel brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded grand-opening event"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze each speaker's remarks for dedication moments"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the key dedications into a two-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe each speaker's words"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions with speaker labels"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Edit this uploaded clinical-case-conference recording into a four-minute teaching-points reel with English subtitles on every diagnosis",
+    "rationale": "User uploaded a clinical-case-conference recording and asks for a teaching-points reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the conference, VideoAnalysisAgent parses each case's presentation, HighlightAgent assembles the reel, TranscriptionAgent transcribes the diagnoses, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the conference's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the four-minute clinical teaching-points reel brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded case-conference recording"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze each case's presentation and diagnosis reveal"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the core teaching points into a four-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the diagnosis statements"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Make a three-minute interview-highlights reel from this uploaded CEO-fireside-chat recording with English subtitles for every revealing quote",
+    "rationale": "User uploaded a CEO-fireside-chat recording and asks for an interview-highlights reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the chat, VideoAnalysisAgent parses the quote-worthy exchanges, HighlightAgent assembles the reel, TranscriptionAgent transcribes the quotes, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the chat's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the three-minute CEO-fireside interview-highlights reel brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded fireside-chat recording"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the chat for revealing quote moments"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the most revealing moments into a three-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the selected quotes"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Cut this uploaded oral-history recording into a five-minute generations-testimony reel with English subtitles for each story told",
+    "rationale": "User uploaded an oral-history recording and asks for a generations-testimony reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the recording, VideoAnalysisAgent parses each generation's testimony, HighlightAgent assembles the reel, TranscriptionAgent transcribes the stories, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the recording's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the five-minute generations-testimony reel brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded oral-history recording"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze each generation's testimony for emotional peaks"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the strongest stories into a five-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe each narrator's story"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions with narrator tags"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Pull the critical findings from this uploaded city-council town-hall into a two-minute policy-reel with English subtitles on every vote",
+    "rationale": "User uploaded a city-council town-hall and asks for a policy-reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the town-hall, VideoAnalysisAgent parses the voting beats, HighlightAgent assembles the reel, TranscriptionAgent transcribes the votes and statements, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the town-hall's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the two-minute city-council policy reel brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded town-hall recording"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the town-hall for decisive votes and statements"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the critical findings into a two-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the votes and key statements"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions with speaker tags"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Edit this uploaded product-review vlog into a two-minute verdict-reel with English subtitles on the reviewer's final calls",
+    "rationale": "User uploaded a product-review vlog and asks for a verdict-reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the vlog, VideoAnalysisAgent parses the verdict flow, HighlightAgent assembles the reel, TranscriptionAgent transcribes the verdicts, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the vlog's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the two-minute product-review verdict reel brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded product-review vlog"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the vlog for verdict moments"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the reviewer's final calls into a two-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the verdicts and ratings"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  },
+  {
+    "goal": "Make a three-minute hiring-manager advice reel from this uploaded career-panel recording with English subtitles on every recommendation",
+    "rationale": "User uploaded a career-panel recording and asks for a hiring-manager advice reel with English subtitles. Plan: IntakeText captures the brief, IntakeVideoAgent registers the panel, VideoAnalysisAgent parses the panel's advice, HighlightAgent assembles the reel, TranscriptionAgent transcribes the recommendations, SubtitleAgent generates English captions, CompositorAgent renders. No StoryAgent / ScreenplayAgent / KeyFrameAgent / VideoAgent because no new narrative is being generated. No IntakeImageAgent or BriefEnricherAgent because no reference image was provided. No VideoExtendAgent / StyleTransferAgent because only highlighting was requested. No MusicAgent / AmbienceAgent / AudioMixAgent because the panel's original audio is kept untouched. No TranslationAgent because the source and caption languages match.",
+    "plan": [
+      {"agent_id": "IntakeTextAgent", "intent": "Capture the three-minute hiring-manager advice reel brief"},
+      {"agent_id": "IntakeVideoAgent", "intent": "Register the uploaded career-panel recording"},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze each panelist's advice beats"},
+      {"agent_id": "HighlightAgent", "intent": "Select and assemble the strongest recommendations into a three-minute reel"},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe each panelist's advice"},
+      {"agent_id": "SubtitleAgent", "intent": "Generate synced English captions with panelist tags"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the reel with the captions as the final deliverable"}
+    ]
+  }
+]
