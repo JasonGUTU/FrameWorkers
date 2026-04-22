@@ -24,6 +24,10 @@ from __future__ import annotations
 import io
 import json
 import logging
+import os
+import shutil
+import subprocess
+import tempfile
 import wave
 from typing import Any, TYPE_CHECKING
 
@@ -49,17 +53,69 @@ _SILENCE_CHANNELS = 2
 _SILENCE_SAMPLE_WIDTH = 2  # 16-bit
 
 
-def _wav_duration_sec(wav_bytes: bytes) -> float:
-    """Parse wav header to get duration. Returns 0 on malformed input."""
+def _audio_duration_sec(audio_bytes: bytes) -> float:
+    """Return duration in seconds for any ffmpeg-decodable audio blob.
+
+    Why not ``wave.open``: fal's Minimax TTS returns MPEG audio (mp3
+    payload, audio/mpeg content-type) even when we request ``wav``, and
+    Python's ``wave`` module only parses real RIFF/WAVE containers. It
+    raises on mp3 bytes, and silently returning 0 there made every clip's
+    ``end_sec == start_sec`` — the L3 asset check caught it, but only
+    after wasting 3 retries.
+
+    Strategy: try ``wave`` first (cheap, zero-subprocess on real WAV);
+    fall back to ``ffprobe`` for anything else (catches mp3, m4a, ogg
+    — the universe ``AudioService._ffmpeg_concat`` already decodes
+    downstream).
+    """
     try:
-        with wave.open(io.BytesIO(wav_bytes), "rb") as wf:
+        with wave.open(io.BytesIO(audio_bytes), "rb") as wf:
             frames = wf.getnframes()
             rate = wf.getframerate()
-            return frames / float(rate) if rate > 0 else 0.0
+            if rate > 0:
+                return frames / float(rate)
     except Exception:
-        # Mock TTS / malformed wav — conservatively report 0; the L3 asset
-        # check will flag this downstream.
+        pass
+
+    ffprobe = shutil.which("ffprobe")
+    if not ffprobe:
+        logger.warning(
+            "NarratorMaterializer: non-WAV audio and no ffprobe found "
+            "— falling back to 0s duration (timing will be wrong)",
+        )
         return 0.0
+
+    tmp = tempfile.NamedTemporaryFile(
+        suffix=".audio", delete=False, prefix="fw_narrator_dur_",
+    )
+    try:
+        tmp.write(audio_bytes)
+        tmp.close()
+        proc = subprocess.run(
+            [
+                ffprobe, "-v", "error",
+                "-show_entries", "format=duration",
+                "-of", "default=noprint_wrappers=1:nokey=1",
+                tmp.name,
+            ],
+            capture_output=True, text=True, timeout=10, check=False,
+        )
+        out = (proc.stdout or "").strip()
+        if not out:
+            logger.warning(
+                "NarratorMaterializer: ffprobe returned empty duration "
+                "(stderr: %s)", (proc.stderr or "").strip()[-200:],
+            )
+            return 0.0
+        return float(out)
+    except Exception as exc:
+        logger.warning("NarratorMaterializer: ffprobe failed: %s", exc)
+        return 0.0
+    finally:
+        try:
+            os.remove(tmp.name)
+        except OSError:
+            pass
 
 
 def _silence_wav_bytes(duration_sec: float) -> bytes:
@@ -150,7 +206,7 @@ class NarratorMaterializer(BaseMaterializer):
 
             wav_bytes = result.bytes or b""
             concat_blobs.append(wav_bytes)
-            dur = _wav_duration_sec(wav_bytes)
+            dur = _audio_duration_sec(wav_bytes)
             if not speaker_used:
                 speaker_used = (result.resolved_payload or {}).get("voice", "") if result.resolved_payload else ""
 

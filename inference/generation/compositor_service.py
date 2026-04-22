@@ -218,6 +218,13 @@ class CompositorService:
                 # Repeat last file without duration per the concat spec.
                 fh.write(f"file {_quote_ffmpeg_path(real_entries[-1][0])}\n")
 
+            # Exact total duration so ffmpeg doesn't stretch the trailing
+            # ``file <last>`` repeat beyond its stated segment slot. The
+            # concat demuxer's default-1s behavior for stills without a
+            # duration line was previously padding the output to
+            # (sum(durations) + 1s * last-repeat + rounding) ≈ +13s of
+            # freeze-frame. ``-t`` caps cleanly to the narrator timeline.
+            total_seconds = sum(d for _, d in real_entries)
             scale_filter = (
                 f"scale={width}:{height}:force_original_aspect_ratio="
                 f"decrease,pad={width}:{height}:(ow-iw)/2:(oh-ih)/2:"
@@ -228,6 +235,8 @@ class CompositorService:
                 "-f", "concat", "-safe", "0",
                 "-i", filelist_path,
                 "-vf", scale_filter,
+                "-vsync", "cfr",
+                "-t", f"{total_seconds:.3f}",
                 "-c:v", "libx264", "-preset", "fast", "-crf", "23",
                 "-movflags", "+faststart",
                 slideshow_path,
