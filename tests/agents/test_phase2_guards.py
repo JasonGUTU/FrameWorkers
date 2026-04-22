@@ -358,12 +358,19 @@ def test_screenplay_labels_module_only_exports_story_label():
 
 
 def test_only_entry_point_agents_declare_creative_brief():
-    """Only StoryAgent and UnivaStoryboardAgent are allowed to declare
-    the [creative_brief] label. Mid-pipeline agents (Screenplay, KeyFrame,
-    etc.) must not have this label, otherwise users could accidentally
-    bypass Story and inject directives mid-pipeline."""
+    """Only creative-head agents may declare the [creative_brief] label.
+
+    Currently: StoryAgent (cinematic flows) / UnivaStoryboardAgent
+    (univa flows) / IntakeTextAgent (consumes the raw upload but never
+    forwards it as creative_brief — the label is the upstream-facing one
+    it picks from) / NarrationAgent (illustrated-storytelling flows).
+
+    Mid-pipeline agents (Screenplay, KeyFrame, etc.) must not have this
+    label, otherwise users could accidentally bypass the creative head
+    and inject directives mid-pipeline.
+    """
     descriptor_files = list((_REPO / "agents").rglob("descriptor.py"))
-    allowed_dirs = {"story", "univa_storyboard", "intake"}
+    allowed_dirs = {"story", "univa_storyboard", "intake", "narration"}
     offenders: list[Path] = []
     for path in descriptor_files:
         text = _read(path)

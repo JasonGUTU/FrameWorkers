@@ -1,0 +1,136 @@
+"""NarratorAgent descriptor — built from a single AgentSpec."""
+
+from __future__ import annotations
+
+import json
+
+from pydantic import BaseModel
+
+from inference.generation import select_audio_service
+
+from ..common_schema import ResolvedArtifactEntry
+from ..descriptor import AgentSpec, InputLabelSpec, SubAgentDescriptor
+from .agent import NarratorAgent
+from .evaluator import NarratorEvaluator
+from .labels import INPUT_LABEL_NARRATION_SCRIPT
+from .materializer import (
+    NARRATOR_AUDIO_SYS_ID,
+    NARRATOR_SEGMENT_TIMING_SYS_ID,
+    NARRATOR_SRT_SYS_ID,
+    NarratorMaterializer,
+)
+from .schema import NarratorAgentInput
+
+
+def build_input(
+    _step_id: str,
+    resolved_artifacts: dict,
+) -> BaseModel:
+    narration = ResolvedArtifactEntry.coerce(
+        resolved_artifacts.get(INPUT_LABEL_NARRATION_SCRIPT)
+    )
+    return NarratorAgentInput(
+        narration_script_json_text=json.dumps(
+            narration.payload or {}, ensure_ascii=False, indent=2
+        ),
+    )
+
+
+def build_captions(agent_id: str, output_dict: dict) -> dict:
+    # Four separate captions so downstream consumers can resolve each
+    # artifact to the right compositor input label:
+    #   - NarratorAgent JSON snapshot → dev/debug, not routed
+    #   - aud_narrator_full wav       → audio_package label
+    #   - narrator_srt JSON           → subtitle_tracks label (SubtitleAgent shape)
+    #   - narrator_segment_timing JSON → segment_timing label (slideshow mode)
+    content = output_dict.get("content", {})
+    metrics = output_dict.get("metrics", {})
+    line_count = metrics.get("line_count", len(content.get("lines", [])))
+    seg_count = metrics.get("segment_count", 0)
+    total_dur = content.get("total_duration_sec", 0.0)
+    language = content.get("language", "") or "und"
+
+    return {
+        agent_id: {
+            "caption": (
+                f"Narrator session manifest (JSON): {line_count} line(s), "
+                f"{seg_count} segment(s), total {total_dur:.1f}s. Carries "
+                f"per-line / per-segment timing. Dev/debug view; downstream "
+                f"consumption goes through the sibling audio / srt / timing "
+                f"artifacts."
+            ),
+            "scope": "global",
+        },
+        NARRATOR_AUDIO_SYS_ID: {
+            "caption": (
+                f"Narrator voiceover audio track (wav, {total_dur:.1f}s, "
+                f"language={language}). Concatenated TTS for an illustrated-"
+                f"storytelling video. Consumed by the compositor step as the "
+                f"film's final audio track."
+            ),
+            "scope": "global",
+        },
+        NARRATOR_SRT_SYS_ID: {
+            "caption": (
+                f"Narrator subtitle track (SRT, language={language}): one cue "
+                f"per narration line, timed against the narrator audio. "
+                f"Consumed by the compositor step as a burn-in subtitle source."
+            ),
+            "scope": "global",
+        },
+        NARRATOR_SEGMENT_TIMING_SYS_ID: {
+            "caption": (
+                f"Narrator per-segment timing manifest (JSON): "
+                f"{seg_count} segment(s) with start / end / duration seconds. "
+                f"Used by a slideshow compositor to set how long each "
+                f"illustration stays on screen."
+            ),
+            "scope": "global",
+        },
+    }
+
+
+def materializer_factory(services: dict) -> NarratorMaterializer:
+    return NarratorMaterializer(audio_service=services["audio_service"])
+
+
+SPEC = AgentSpec(
+    agent_id="NarratorAgent",
+    inputs=[
+        InputLabelSpec(
+            name=INPUT_LABEL_NARRATION_SCRIPT,
+            cardinality="single",
+            description=(
+                "The narration script manifest (JSON) carrying segments and "
+                "lines — per-line TTS text plus pause_after_ms. Produced by "
+                "the narration step. I TTS each line, concat with per-line "
+                "pauses, and emit a full narrator wav plus timed SRT plus "
+                "per-segment timing for slideshow alignment."
+            ),
+        ),
+    ],
+    output_description=(
+        "narrator_voiceover (full wav + timed SRT + per-segment timing) for "
+        "an illustrated-storytelling video."
+    ),
+    purpose_and_routing=(
+        """Render the narration script as a narrator voiceover track: per-line TTS, concatenated with pauses, plus a line-level SRT and per-segment timing for slideshow alignment. Trigger: an illustrated-audiobook / story-time video flow. Requires an upstream narration script (segments + lines + pause_after_ms)."""
+    ),
+    input_preamble=(
+        "I render the narration script as a continuous narrator voiceover. "
+        "I TTS each line individually (so timing is per-line accurate), insert "
+        "pauses, and emit a full wav plus a timed SRT plus a per-segment "
+        "timing manifest the slideshow compositor uses."
+    ),
+)
+
+
+DESCRIPTOR = SubAgentDescriptor.from_spec(
+    SPEC,
+    agent_factory=lambda llm: NarratorAgent(llm_client=llm),
+    evaluator_factory=NarratorEvaluator,
+    build_input=build_input,
+    build_captions=build_captions,
+    service_factories={"audio_service": lambda ctx: select_audio_service()},
+    materializer_factory=materializer_factory,
+)

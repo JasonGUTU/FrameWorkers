@@ -37,6 +37,9 @@ from .highlight.agent import HighlightAgent
 from .music.agent import MusicAgent
 from .ambience.agent import AmbienceAgent
 from .audio_mix.agent import AudioMixAgent
+from .narration.agent import NarrationAgent
+from .illustration.agent import IllustrationAgent
+from .narrator.agent import NarratorAgent
 
 # -- Evaluator classes -----------------------------------------------------
 from .story.evaluator import StoryEvaluator
@@ -55,6 +58,9 @@ from .highlight.evaluator import HighlightEvaluator
 from .music.evaluator import MusicEvaluator
 from .ambience.evaluator import AmbienceEvaluator
 from .audio_mix.evaluator import AudioMixEvaluator
+from .narration.evaluator import NarrationEvaluator
+from .illustration.evaluator import IllustrationEvaluator
+from .narrator.evaluator import NarratorEvaluator
 
 # -- Descriptors -----------------------------------------------------------
 from .story.descriptor import DESCRIPTOR as _story_desc
@@ -76,6 +82,9 @@ from .highlight.descriptor import DESCRIPTOR as _highlight_desc
 from .music.descriptor import DESCRIPTOR as _music_desc
 from .ambience.descriptor import DESCRIPTOR as _ambience_desc
 from .audio_mix.descriptor import DESCRIPTOR as _audio_mix_desc
+from .narration.descriptor import DESCRIPTOR as _narration_desc
+from .illustration.descriptor import DESCRIPTOR as _illustration_desc
+from .narrator.descriptor import DESCRIPTOR as _narrator_desc
 
 # ---------------------------------------------------------------------------
 # AGENT_REGISTRY — SubAgentDescriptor-based registry for pipeline agents
@@ -103,6 +112,9 @@ AGENT_REGISTRY: dict[str, SubAgentDescriptor] = {
         _music_desc,
         _ambience_desc,
         _audio_mix_desc,
+        _narration_desc,
+        _illustration_desc,
+        _narrator_desc,
     ]
 }
 
@@ -164,4 +176,10 @@ __all__ = [
     "AmbienceEvaluator",
     "AudioMixAgent",
     "AudioMixEvaluator",
+    "NarrationAgent",
+    "NarrationEvaluator",
+    "IllustrationAgent",
+    "IllustrationEvaluator",
+    "NarratorAgent",
+    "NarratorEvaluator",
 ]
