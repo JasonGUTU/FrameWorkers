@@ -8,17 +8,9 @@ from ...common_schema import Meta
 
 
 class IntakeTextContent(BaseModel):
-    """Pass-through container for the raw user text plus an LLM/static summary."""
+    """Pass-through container for the raw user text."""
 
     text: str = Field("", description="The original user-uploaded text, verbatim")
-    summary: str = Field(
-        "",
-        json_schema_extra={"creative": True},
-        description=(
-            "Short LLM-generated summary of long text uploads. "
-            "Empty for short uploads (the raw text is used as-is)."
-        ),
-    )
 
 
 class IntakeTextMetrics(BaseModel):

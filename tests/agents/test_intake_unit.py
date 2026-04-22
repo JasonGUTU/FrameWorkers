@@ -27,7 +27,7 @@ _repo_root = Path(__file__).resolve().parents[2]
 if str(_repo_root) not in sys.path:
     sys.path.insert(0, str(_repo_root))
 
-from agents.intake.intake_text.agent import IntakeTextAgent, SHORT_TEXT_THRESHOLD
+from agents.intake.intake_text.agent import IntakeTextAgent
 from agents.intake.intake_text.evaluator import IntakeTextEvaluator
 from agents.intake.intake_text.schema import IntakeTextInput, IntakeTextOutput
 
@@ -42,23 +42,15 @@ from agents.intake.intake_image.schema import IntakeImageInput, IntakeImageOutpu
 
 
 class _StubTextLLM:
-    """Stand-in for ``LLMClient.chat_json`` — records the call and returns
-    a fixed JSON dict."""
+    """Stand-in for ``LLMClient.chat_json`` — records calls so we can
+    assert IntakeTextAgent never touches the LLM (pure pass-through)."""
 
-    def __init__(self, payload: dict | None = None) -> None:
-        self.payload = payload if payload is not None else {"summary": "stub summary"}
+    def __init__(self) -> None:
         self.calls: list[tuple[str, str]] = []
 
     async def chat_json(self, system_prompt: str, user_prompt: str, **_: object) -> dict:
         self.calls.append((system_prompt, user_prompt))
-        return dict(self.payload)
-
-
-class _RaisingTextLLM:
-    """Always raises — exercises the long-text fallback caption."""
-
-    async def chat_json(self, system_prompt: str, user_prompt: str, **_: object) -> dict:
-        raise RuntimeError("simulated provider failure")
+        return {}
 
 
 class _StubVisionLLM:
@@ -115,7 +107,7 @@ def _write_png(color: tuple[int, int, int] = (255, 0, 0)) -> str:
 
 
 class TestIntakeTextAgent:
-    def test_short_text_skips_llm_and_uses_static_caption(self):
+    def test_short_text_pass_through(self):
         stub = _StubTextLLM()
         agent = IntakeTextAgent(llm_client=stub)
         path = _write_text("make a 30s film about a cat in a workshop")
@@ -125,37 +117,31 @@ class TestIntakeTextAgent:
         ))
 
         assert isinstance(out, IntakeTextOutput)
-        assert stub.calls == [], "short text must NOT call the LLM"
+        assert stub.calls == [], "IntakeText is pure pass-through — no LLM call"
         assert out.content.text.startswith("make a 30s film")
-        assert out.content.summary == ""
         assert out.metrics.char_count == len(out.content.text)
 
-    def test_long_text_calls_llm_for_summary(self):
-        stub = _StubTextLLM(payload={"summary": "a multi-page user story outline"})
+    def test_long_text_preserved_verbatim_no_llm(self):
+        """Regression guard: long uploads must NOT be summarised.
+
+        Historically a > 800-char upload triggered an LLM summary that
+        StoryAgent was instructed to 'prefer over the full text'. Both
+        halves were removed; this test locks the new contract in: the
+        full raw text must reach downstream consumers byte-for-byte,
+        regardless of length.
+        """
+        stub = _StubTextLLM()
         agent = IntakeTextAgent(llm_client=stub)
-        long_text = "x" * (SHORT_TEXT_THRESHOLD + 200)
+        long_text = "The heiress Lin Wan walks into the gala. " * 80  # ~3.3k chars
         path = _write_text(long_text)
 
         out = asyncio.run(agent.generate(
             IntakeTextInput(raw_text_path=path),
         ))
 
-        assert len(stub.calls) == 1, "long text must call chat_json exactly once"
-        assert out.content.summary == "a multi-page user story outline"
-        assert out.content.text == long_text
-
-    def test_long_text_llm_failure_falls_back_to_snippet_caption(self):
-        agent = IntakeTextAgent(llm_client=_RaisingTextLLM())
-        long_text = "the quick brown fox jumps over the lazy dog. " * 30
-        path = _write_text(long_text)
-
-        out = asyncio.run(agent.generate(
-            IntakeTextInput(raw_text_path=path),
-        ))
-
-        # No LLM summary — but the agent must still emit a valid caption
-        # so the artifact remains usable downstream.
-        assert out.content.summary == ""
+        assert stub.calls == [], "long text must NOT trigger an LLM summary"
+        assert out.content.text == long_text.strip()
+        assert out.metrics.char_count == len(long_text.strip())
 
     def test_empty_path_returns_valid_artifact(self):
         agent = IntakeTextAgent(llm_client=_StubTextLLM())

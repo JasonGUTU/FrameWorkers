@@ -24,17 +24,16 @@ def build_input(
 
 
 def build_captions(agent_id: str, _output_dict: dict) -> dict:
-    # Pure role/载体 caption — content (the user's raw text + optional
-    # LLM summary) lives only in the JSON snapshot payload; consumers
-    # read it via entry.payload, not caption.
-    # See MEMORY:feedback_caption_role_not_content.
+    # Pure role/载体 caption — content (the user's raw text) lives only
+    # in the JSON snapshot payload; consumers read it via entry.payload,
+    # not caption. See MEMORY:feedback_caption_role_not_content.
     return {
         agent_id: {
             "caption": (
                 "Structured metadata document (JSON) for a user-submitted "
-                "text brief. Payload carries the raw text plus an optional "
-                "LLM summary for long uploads. Pipeline entry point — "
-                "consumed by story and screenplay agents."
+                "text brief. Payload carries the raw text verbatim. "
+                "Pipeline entry point — consumed by story and screenplay "
+                "agents."
             ),
             "scope": "global",
         },
@@ -68,13 +67,13 @@ SPEC = AgentSpec(
         "runs."
     ),
     # Text intake does NOT promote: IntakeTextAgent's JSON snapshot is
-    # self-contained (payload carries {text, summary}), so downstream agents
-    # consume the snapshot's payload, never the raw .txt. Promoting would
-    # surface a payload=None .txt that competes with the JSON for
-    # content-semantic labels like [creative_brief] and causes resolver
-    # ambiguity. Contrast with image/video intake, whose JSON only carries a
-    # URI pointer to the binary — there promote IS required so downstream
-    # multimodal/ffmpeg consumers can discover the raw bytes.
+    # self-contained (payload carries {text}), so downstream agents consume
+    # the snapshot's payload, never the raw .txt. Promoting would surface a
+    # payload=None .txt that competes with the JSON for content-semantic
+    # labels like [creative_brief] and causes resolver ambiguity. Contrast
+    # with image/video intake, whose JSON only carries a URI pointer to the
+    # binary — there promote IS required so downstream multimodal/ffmpeg
+    # consumers can discover the raw bytes.
     promotes_consumed_inputs_to_global=False,
 )
 
