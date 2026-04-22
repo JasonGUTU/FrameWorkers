@@ -99,12 +99,37 @@ class CompositorMaterializer(BaseMaterializer):
                 if srt:
                     subtitle_srts.append(srt)
 
-        result_bytes = await self.svc.compose(
-            video_path=typed_input.video_file_path,
-            audio_path=typed_input.audio_file_path,
-            subtitle_srts=subtitle_srts,
-            plan=plan,
-        )
+        # --- Slideshow-mode branch ---
+        # Route decision: illustration_image_paths populated ⇒ we are in
+        # illustrated-storytelling mode, build the video track by ffmpeg
+        # concat'ing images with per-segment durations. The LLM prompt
+        # already rejects mutually-ambiguous inputs (both video_file_path
+        # AND illustration_image_paths present), so reaching here with a
+        # populated list means this is the intended branch.
+        if typed_input.illustration_image_paths:
+            images_with_durations = _pair_images_with_durations(
+                typed_input.illustration_image_paths,
+                typed_input.segment_timing_json_text,
+            )
+            if not images_with_durations:
+                logger.warning(
+                    "CompositorMaterializer: slideshow mode but no "
+                    "(image, duration) pairs could be built from segment_timing"
+                )
+                return []
+            result_bytes = await self.svc.compose_slideshow(
+                images_with_durations=images_with_durations,
+                audio_path=typed_input.audio_file_path,
+                subtitle_srts=subtitle_srts,
+                plan=plan,
+            )
+        else:
+            result_bytes = await self.svc.compose(
+                video_path=typed_input.video_file_path,
+                audio_path=typed_input.audio_file_path,
+                subtitle_srts=subtitle_srts,
+                plan=plan,
+            )
 
         if not result_bytes:
             logger.warning("CompositorMaterializer: compose returned empty bytes")
@@ -116,3 +141,44 @@ class CompositorMaterializer(BaseMaterializer):
             extension="mp4",
             uri_holder=uri_holder,
         )]
+
+
+def _pair_images_with_durations(
+    image_paths: list[str], segment_timing_json_text: str,
+) -> list[tuple[str, float]]:
+    """Zip illustration paths (ordered by segment) with per-segment durations.
+
+    ``segment_timing_json_text`` is the JSON payload NarratorAgent
+    emits — ``content.segment_timings = [{segment_id, duration_sec,
+    ...}]`` in segment order. We match by ordinal index (path 0 ↔
+    segment_timings[0]), not by segment_id text, because descriptor-side
+    ``_sort_image_paths_by_segment`` already put the paths in seg_NNN
+    order and NarratorAgent emits segment_timings in the same order.
+    Length mismatch is tolerated: extra paths fall back to a 3-second
+    default, extra timings are ignored.
+    """
+    import json
+    DEFAULT_DUR_SEC = 3.0
+
+    try:
+        timing = json.loads(segment_timing_json_text or "{}")
+    except Exception:
+        timing = {}
+    content = timing.get("content", timing) if isinstance(timing, dict) else {}
+    segment_timings = (
+        content.get("segment_timings", [])
+        if isinstance(content, dict) else []
+    )
+
+    durations: list[float] = []
+    for st in segment_timings:
+        if not isinstance(st, dict):
+            continue
+        dur = float(st.get("duration_sec", 0.0) or 0.0)
+        durations.append(dur if dur > 0 else DEFAULT_DUR_SEC)
+
+    pairs: list[tuple[str, float]] = []
+    for i, path in enumerate(image_paths):
+        dur = durations[i] if i < len(durations) else DEFAULT_DUR_SEC
+        pairs.append((path, dur))
+    return pairs

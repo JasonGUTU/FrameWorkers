@@ -115,16 +115,25 @@ class LlmSubAgentPlanner:
         llm_client: Any = None,
         *,
         fewshots: bool = True,
+        policies: bool = True,
     ) -> None:
         raw = (model or DIRECTOR_ROUTING_MODEL or DIRECTOR_MEMORY_MODEL or "").strip()
         self._model = raw or "gpt-3.5-turbo"
         self._llm = llm_client
-        # fewshots=False swaps PLAN_UPFRONT_SYSTEM → PLAN_UPFRONT_SYSTEM_BARE
-        # (fewshot block stripped). Used for eval ablations that want the 55%
-        # apples-to-apples baseline; production keeps the default (True).
-        self._plan_system_prompt = (
-            prompts.PLAN_UPFRONT_SYSTEM if fewshots else prompts.PLAN_UPFRONT_SYSTEM_BARE
-        )
+        # Two independent scaffold flags (topology is the third — env var
+        # FW_TOPOLOGY, handled inside _agents_catalog_for_prompt):
+        #   fewshots=True  → append 7 worked-pattern examples
+        #   policies=True  → append 4 semantic routing rules
+        # fewshots=True implicitly requires policies=True (the worked patterns
+        # embody the policies). LoRA training typically uses
+        # (fewshots=False, policies=True) to keep routing rules as runtime
+        # hints rather than baking them into weights.
+        if fewshots:
+            self._core = prompts.PLAN_UPFRONT_CORE_WITH_FEWSHOTS
+        elif policies:
+            self._core = prompts.PLAN_UPFRONT_CORE_WITH_POLICIES
+        else:
+            self._core = prompts.PLAN_UPFRONT_CORE
 
     # ------------------------------------------------------------------
     # LLM client plumbing
@@ -231,12 +240,15 @@ class LlmSubAgentPlanner:
         if not allowed:
             return []
         catalog = _agents_catalog_for_prompt(available_agents)
-        user = prompts.build_plan_upfront_user_prompt(
+        system = prompts.build_plan_system_prompt(
+            core=self._core,
             allowed=allowed,
             catalog=catalog,
+            max_plan_steps=max_steps,
+        )
+        user = prompts.build_plan_user_prompt(
             user_goal=user_goal,
             mem_blob=_memory_blob(stack_memory or []),
-            max_plan_steps=max_steps,
         )
         # Unified retry budget covering BOTH failure modes:
         #   (a) LLM samples `{"plan":[]}` despite the "never empty" prompt rule
@@ -248,7 +260,7 @@ class LlmSubAgentPlanner:
         attempts = 3
         for attempt in range(attempts):
             try:
-                data = self._complete_json_dict(self._plan_system_prompt, user)
+                data = self._complete_json_dict(system, user)
                 plan = _parse_plan(data, allowed, max_steps=max_steps)
             except Exception as exc:
                 logger.error(

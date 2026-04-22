@@ -76,6 +76,14 @@ class CompositorAgentInput(BaseModel):
     ``subtitle_json_texts`` is a list so bilingual / multilingual flows
     (subtitle step → translation step → this compositor) can pass every
     language track through for simultaneous burn-in.
+
+    ``illustration_image_paths`` + ``segment_timing_json_text`` populate
+    the slideshow-mode branch: when present (and video_package / video_file
+    are absent), the materializer assembles the video track by ffmpeg-
+    concat'ing still images with per-segment durations instead of muxing
+    an existing mp4. Paths are already ordered by segment_id at build_input
+    time so the materializer iterates them in render order without
+    re-sorting.
     """
 
     screenplay_json_text: str = ""
@@ -84,6 +92,8 @@ class CompositorAgentInput(BaseModel):
     subtitle_json_texts: list[str] = Field(default_factory=list)
     video_file_path: str = ""
     audio_file_path: str = ""
+    illustration_image_paths: list[str] = Field(default_factory=list)
+    segment_timing_json_text: str = ""
 
 
 class CompositorAgentOutput(BaseModel):

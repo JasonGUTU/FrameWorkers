@@ -55,15 +55,29 @@ MERGE_LATEST_USER_HEADER = (
 
 
 # ---------------------------------------------------------------------------
-# Upfront planner
+# Upfront planner — prompt pieces
 # ---------------------------------------------------------------------------
+#
+# Three independent blocks, composed into named constants below:
+#
+#   _PLAN_UPFRONT_MINIMAL   : task + JSON schema + 6 framework-invariant
+#                             structural rules. BASIC INFO — the planner needs
+#                             these no matter what.
+#   _PLAN_UPFRONT_POLICIES  : 5 semantic routing rules (CHAIN SELECTION /
+#                             CREATIVE FLOW AUDIO / SUBTITLE /
+#                             HIGHLIGHT TERMINAL / VIDEO_ANALYSIS).
+#                             SCAFFOLD — explicit routing-decision hints.
+#   _PLAN_UPFRONT_FEWSHOTS  : 8 worked-pattern examples. SCAFFOLD —
+#                             imitation hints.
+#
+# Three canonical compositions (PLAN_UPFRONT_CORE{,_WITH_POLICIES,
+# _WITH_FEWSHOTS}) give the combinations we actually use at runtime / eval /
+# training. Each scaffold is independently toggleable, but FEWSHOTS without
+# POLICIES is not exposed — the worked patterns implicitly embody the
+# policies, so dropping POLICIES while keeping FEWSHOTS produces inconsistent
+# guidance.
 
-# Core planner prompt (task + structural rules + routing policies). Shared by
-# PLAN_UPFRONT_SYSTEM (which appends the 7 worked-pattern fewshots) and
-# PLAN_UPFRONT_SYSTEM_BARE (which stops here). Split exists because training a
-# LoRA with fewshots on can cause the creative-flow shape to overshoot onto
-# terminal chains (VideoExtend / Highlight) — bare training avoids that.
-_PLAN_UPFRONT_CORE = (
+_PLAN_UPFRONT_MINIMAL = (
     "You are the Director. For ONE user goal, produce the **complete ordered pipeline** of "
     "sub-agent executions needed to satisfy it. You are NOT picking one step — you plan the "
     "whole thing upfront. Use the agent catalog (each entry's inputs / output / "
@@ -89,8 +103,32 @@ _PLAN_UPFRONT_CORE = (
     "there (never output `[]`).\n"
     "- `intent` for each step should be concrete (what outputs this step should produce, any "
     "user constraints to honor). Do NOT restate the full user goal — just what THIS step does.\n"
-    "\n"
+)
+
+
+_PLAN_UPFRONT_POLICIES = (
     "**Routing policy (deliberate router defaults — override only when user_goal is explicit):**\n"
+    "\n"
+    "0. CHAIN SELECTION (mutually-exclusive deliverable classes). Match the user_goal to "
+    "EXACTLY ONE of:\n"
+    "  (a) CINEMATIC / CREATIVE FILM — Story → Screenplay → KeyFrame → Video → (audio) → "
+    "Compositor. Use for mini-drama / short drama / manhua / animated drama / trailer / "
+    "vertical short / film — any deliverable that is a multi-shot film with distinct "
+    "scenes and camera-driven storytelling.\n"
+    "  (b) EXISTING-VIDEO EDIT — IntakeVideoAgent → (analysis / extend / style / "
+    "highlight / transcribe+subtitle) → (Compositor). Use for transforming / extending / "
+    "analyzing / extracting-from a user-uploaded video.\n"
+    "  (c) ILLUSTRATED STORYTELLING — NarrationAgent → IllustrationAgent → NarratorAgent "
+    "→ CompositorAgent. Use when the deliverable is a SLIDESHOW of still illustrations "
+    "timed to a narrator voiceover (audiobook-with-pictures / storytime video / "
+    "narrated picture-book). Triggers: 'read this story as an illustrated audiobook', "
+    "'make an illustrated story-time video', 'narrated picture book', 'children's "
+    "story-time video'. NOT triggered by generic 'make a film / drama' requests — those "
+    "go to (a).\n"
+    "  StoryAgent (chain a) and NarrationAgent (chain c) are MUTUALLY EXCLUSIVE — never "
+    "include both in one plan; they serve different deliverable classes. IllustrationAgent "
+    "and NarratorAgent ONLY appear in chain (c), never mixed with Screenplay/KeyFrame/"
+    "Video/AudioMix.\n"
     "\n"
     "1. CREATIVE FLOW AUDIO DEFAULT: creative-flow chains (Story → Screenplay → KeyFrame → Video → ...) "
     "default to BOTH MusicAgent AND AmbienceAgent as the cinematic underlay. Override this default "
@@ -130,9 +168,6 @@ _PLAN_UPFRONT_CORE = (
     "  Do NOT include it for pure edit tasks that transform the video without needing its content "
     "structure — style transfer only, video extend only, add-music-only, add-ambience-only, or any "
     "combinations thereof.\n"
-    "\n"
-    "(For per-agent inclusion/exclusion conditions — BriefEnricher, Story, Transcription, "
-    "AudioMix/Music/Ambience — read each agent's [Director topology] block in the catalog below.)\n"
 )
 
 
@@ -166,12 +201,29 @@ _PLAN_UPFRONT_FEWSHOTS = (
     "scenes from this urban rebirth mini-drama, add rousing music and English subtitles':\n"
     "   IntakeTextAgent → IntakeVideoAgent → VideoAnalysisAgent → HighlightAgent → TranscriptionAgent → SubtitleAgent → MusicAgent → AudioMixAgent → CompositorAgent\n"
     "\n"
+    "8. Illustrated storytelling — 'Read this short story as an illustrated audiobook video' / "
+    "'Make a narrated picture-book video of this bedtime tale' / 'Turn this fable into a "
+    "storytime slideshow with pictures and narration':\n"
+    "   IntakeTextAgent → NarrationAgent → IllustrationAgent → NarratorAgent → CompositorAgent\n"
+    "   (NarrationAgent writes the narrator script + per-segment image prompts; Illustration "
+    "generates one image per segment; Narrator TTS's the lines + emits the timed SRT + per-"
+    "segment timing; Compositor concats the image sequence into a slideshow, muxes the "
+    "narrator audio, and burns the subtitles. StoryAgent / ScreenplayAgent / KeyFrameAgent / "
+    "VideoAgent / AudioMixAgent are NEVER in this chain.)\n"
+    "\n"
     "These are SHAPES not rigid contracts — swap optional steps in or out per user_goal, but respect the demonstrated ordering (IntakeText first; Transcription→Subtitle→Translation; Music/Ambience→AudioMix→Compositor; VideoAnalysis before Highlight; Compositor only when deliverable is a composed video).\n"
 )
 
 
-PLAN_UPFRONT_SYSTEM = _PLAN_UPFRONT_CORE + "\n" + _PLAN_UPFRONT_FEWSHOTS
-PLAN_UPFRONT_SYSTEM_BARE = _PLAN_UPFRONT_CORE
+# Canonical compositions — pick one as the `core` argument to
+# ``build_plan_system_prompt``. PLAN_UPFRONT_CORE_WITH_FEWSHOTS matches the
+# previous ``PLAN_UPFRONT_SYSTEM`` (production default); PLAN_UPFRONT_CORE
+# matches the absolute minimum (no scaffolds, just basic info & rules).
+PLAN_UPFRONT_CORE               = _PLAN_UPFRONT_MINIMAL
+PLAN_UPFRONT_CORE_WITH_POLICIES = _PLAN_UPFRONT_MINIMAL + "\n" + _PLAN_UPFRONT_POLICIES
+PLAN_UPFRONT_CORE_WITH_FEWSHOTS = (
+    _PLAN_UPFRONT_MINIMAL + "\n" + _PLAN_UPFRONT_POLICIES + "\n" + _PLAN_UPFRONT_FEWSHOTS
+)
 
 
 # ---------------------------------------------------------------------------
@@ -242,25 +294,47 @@ def build_merge_user_prompt(
     )
 
 
-def build_plan_upfront_user_prompt(
+def build_plan_system_prompt(
     *,
+    core: str,
     allowed: List[str],
     catalog: List[Dict[str, Any]],
-    user_goal: str,
-    mem_blob: str,
     max_plan_steps: int,
 ) -> str:
+    """Assemble the full system message for the upfront planner.
+
+    SYSTEM = <core> + allowed_ids + catalog + static footer. Everything here
+    is stable across requests, so API providers can KV-cache the prefix and
+    LoRA training/inference see byte-identical context.
+
+    The per-call dynamic bits (user_goal + optional stack_memory) go in the
+    USER message, assembled by ``build_plan_user_prompt``.
+    """
     return (
-        "Allowed agent ids (you MUST copy one exactly for each plan step):\n"
+        core
+        + "\n\nAllowed agent ids (you MUST copy one exactly for each plan step):\n"
         + json.dumps(allowed, ensure_ascii=False)
         + "\n\nAgent catalog:\n"
         + json.dumps(catalog, ensure_ascii=False, default=str)
-        + "\n\nUser goal (merged single instruction):\n"
-        + (user_goal or "").strip()[:12000]
-        + "\n\nstack_memory (slim rows from prior PlanSteps on this session; empty if first turn):\n"
-        + mem_blob
         + f"\n\nHard upper bound on plan length: {max_plan_steps} steps. "
         "Prefer shorter plans. Respond with JSON only."
+    )
+
+
+def build_plan_user_prompt(*, user_goal: str, mem_blob: str = "[]") -> str:
+    """Per-call USER message: the goal, plus stack_memory if non-empty.
+
+    For training samples and first-turn eval cases, ``mem_blob`` is ``"[]"``
+    and the message is exactly the trimmed goal. Multi-turn production runs
+    pass a real JSON list; the memory section is appended only when present.
+    """
+    goal = (user_goal or "").strip()[:12000]
+    if mem_blob.strip() in ("", "[]"):
+        return goal
+    return (
+        goal
+        + "\n\nstack_memory (slim rows from prior PlanSteps on this session):\n"
+        + mem_blob
     )
 
 

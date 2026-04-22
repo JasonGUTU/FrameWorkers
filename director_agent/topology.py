@@ -218,15 +218,59 @@ AGENT_TOPOLOGY: Dict[str, Dict[str, str]] = {
     },
     "CompositorAgent": {
         "upstream": (
-            "AudioMixAgent (when audio was mixed) or SubtitleAgent (subtitle-only "
-            "burn-in path)"
+            "AudioMixAgent (when audio was mixed), SubtitleAgent (subtitle-only "
+            "burn-in path), or NarratorAgent + IllustrationAgent (illustrated-"
+            "storytelling slideshow path)"
         ),
         "downstream": "(terminal — no downstream)",
         "when_to_include": (
             "When the deliverable is a composed video that combines video with "
-            "audio and/or subtitles. Skip when the deliverable is a single-track "
+            "audio and/or subtitles — including illustrated-storytelling "
+            "slideshows where the video track is an image sequence rather than "
+            "an assembled mp4. Skip when the deliverable is a single-track "
             "artifact (style-only / extend-only / highlight-only reel / "
             "subtitle-file-only / transcript-only)."
+        ),
+    },
+
+    # ── Illustrated-storytelling chain ───────────────────────────────
+    # Mutually exclusive with the creative-film chain
+    # (Story → Screenplay → KeyFrame → Video → AudioMix → Compositor).
+    # Triggered only when the user asks for an audiobook-with-pictures /
+    # storytime / illustrated-narration video — a slideshow of still
+    # illustrations timed to a narrator voiceover.
+    "NarrationAgent": {
+        "upstream": "IntakeTextAgent (plain brief or long prose)",
+        "downstream": "IllustrationAgent AND NarratorAgent (both consume it in parallel)",
+        "when_to_include": (
+            "Only on illustrated-storytelling / audiobook-with-pictures / "
+            "storytime video requests. NEVER include together with StoryAgent / "
+            "ScreenplayAgent / KeyFrameAgent / VideoAgent — those are the "
+            "mutually-exclusive cinematic chain. Triggers: 'read this story "
+            "as an illustrated audiobook', 'make an illustrated story-time "
+            "video', 'narrate with matching pictures', 'kids storybook video' "
+            "etc."
+        ),
+    },
+    "IllustrationAgent": {
+        "upstream": "NarrationAgent",
+        "downstream": "CompositorAgent (via illustration_sequence label)",
+        "when_to_include": (
+            "Always follows NarrationAgent in illustrated-storytelling flows. "
+            "Never runs outside that chain — it consumes NarrationAgent's "
+            "per-segment image_prompt and overall_style anchor."
+        ),
+    },
+    "NarratorAgent": {
+        "upstream": "NarrationAgent",
+        "downstream": (
+            "CompositorAgent (supplies audio_file via audio_package, SRT via "
+            "subtitle_tracks, and per-segment durations via segment_timing)"
+        ),
+        "when_to_include": (
+            "Always follows NarrationAgent in illustrated-storytelling flows. "
+            "Provides the TTS voiceover + burned subtitles + per-segment timing "
+            "the slideshow compositor uses to align each illustration."
         ),
     },
 }

@@ -156,6 +156,124 @@ class CompositorService:
                 pass
 
 
+    async def compose_slideshow(
+        self,
+        *,
+        images_with_durations: list[tuple[str, float]],
+        audio_path: str = "",
+        subtitle_srts: list[str] | None = None,
+        plan: dict[str, Any] | None = None,
+        target_fps: int = 30,
+    ) -> bytes:
+        """Compose a slideshow video: still-image sequence + audio + subtitles.
+
+        Pipeline:
+          1. ffmpeg concat demuxer on the (image, duration) list → a
+             silent slideshow mp4 at ``target_fps``. Images are force-
+             scaled/padded to the plan's ``output_resolution`` so a run
+             with mixed image dimensions still renders cleanly.
+          2. Delegate to ``self.compose()`` using the intermediate
+             slideshow as ``video_path`` — reuses audio mux, subtitle
+             burn-in, color grade from the existing pipeline with zero
+             duplication.
+        """
+        real_entries = [
+            (p, float(d)) for (p, d) in images_with_durations
+            if p and os.path.isfile(p) and float(d) > 0
+        ]
+        if not real_entries:
+            logger.warning(
+                "CompositorService.compose_slideshow: no usable "
+                "(image, duration) pairs — returning mock bytes",
+            )
+            return MOCK_MP4_HEADER
+
+        ffmpeg_bin = shutil.which("ffmpeg")
+        if not ffmpeg_bin:
+            logger.warning(
+                "CompositorService.compose_slideshow: ffmpeg not found",
+            )
+            return MOCK_MP4_HEADER
+
+        plan = plan or {}
+        resolution = str(plan.get("output_resolution", "1920x1080"))
+        try:
+            width, height = [int(x) for x in resolution.lower().split("x", 1)]
+        except Exception:
+            width, height = 1920, 1080
+
+        temp_dir = tempfile.mkdtemp(prefix="fw_slideshow_")
+        filelist_path = os.path.join(temp_dir, "filelist.txt")
+        slideshow_path = os.path.join(temp_dir, "slideshow.mp4")
+
+        try:
+            # Write ffmpeg concat demuxer filelist. Per the concat format:
+            # each image needs a ``file`` line + a ``duration`` line; the
+            # LAST image also needs to be repeated WITHOUT a duration
+            # because concat ignores the trailing duration otherwise.
+            with open(filelist_path, "w", encoding="utf-8") as fh:
+                for i, (img_path, dur) in enumerate(real_entries):
+                    fh.write(f"file {_quote_ffmpeg_path(img_path)}\n")
+                    fh.write(f"duration {dur:.3f}\n")
+                # Repeat last file without duration per the concat spec.
+                fh.write(f"file {_quote_ffmpeg_path(real_entries[-1][0])}\n")
+
+            scale_filter = (
+                f"scale={width}:{height}:force_original_aspect_ratio="
+                f"decrease,pad={width}:{height}:(ow-iw)/2:(oh-ih)/2:"
+                f"color=black,setsar=1,fps={target_fps},format=yuv420p"
+            )
+            cmd = [
+                ffmpeg_bin, "-y",
+                "-f", "concat", "-safe", "0",
+                "-i", filelist_path,
+                "-vf", scale_filter,
+                "-c:v", "libx264", "-preset", "fast", "-crf", "23",
+                "-movflags", "+faststart",
+                slideshow_path,
+            ]
+            proc = subprocess.run(
+                cmd, capture_output=True, check=False, text=True, timeout=600,
+            )
+            if proc.returncode != 0 or not os.path.exists(slideshow_path):
+                logger.warning(
+                    "compose_slideshow ffmpeg concat failed (code=%s): %s",
+                    proc.returncode, (proc.stderr or "").strip()[-500:],
+                )
+                return MOCK_MP4_HEADER
+
+            # Delegate audio mux + subtitle burn-in to the existing
+            # compose() pipeline — keeps all FFmpeg logic in one place.
+            return await self.compose(
+                video_path=slideshow_path,
+                audio_path=audio_path,
+                subtitle_srts=subtitle_srts,
+                plan=plan,
+            )
+
+        except Exception as exc:
+            logger.warning("compose_slideshow error: %s", exc)
+            return MOCK_MP4_HEADER
+        finally:
+            for p in [filelist_path, slideshow_path]:
+                if p and os.path.exists(p):
+                    try:
+                        os.remove(p)
+                    except OSError:
+                        pass
+            try:
+                shutil.rmtree(temp_dir, ignore_errors=True)
+            except OSError:
+                pass
+
+
+def _quote_ffmpeg_path(p: str) -> str:
+    """Wrap a path in single quotes for ffmpeg's concat demuxer, escaping
+    embedded single quotes with the '\\''-ish dance concat expects."""
+    escaped = p.replace("'", "'\\''")
+    return f"'{escaped}'"
+
+
 class MockCompositorService(CompositorService):
     """Mock compositor that returns placeholder MP4 bytes."""
 
@@ -168,4 +286,19 @@ class MockCompositorService(CompositorService):
         plan: dict[str, Any] | None = None,
     ) -> bytes:
         logger.info("[MockCompositor] Placeholder compose for %s", video_path)
+        return MOCK_MP4_HEADER
+
+    async def compose_slideshow(
+        self,
+        *,
+        images_with_durations: list[tuple[str, float]],
+        audio_path: str = "",
+        subtitle_srts: list[str] | None = None,
+        plan: dict[str, Any] | None = None,
+        target_fps: int = 30,
+    ) -> bytes:
+        logger.info(
+            "[MockCompositor] Placeholder compose_slideshow for %d images",
+            len(images_with_durations),
+        )
         return MOCK_MP4_HEADER

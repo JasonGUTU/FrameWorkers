@@ -13,7 +13,9 @@ from .evaluator import CompositorEvaluator
 from .labels import (
     INPUT_LABEL_AUDIO_FILE,
     INPUT_LABEL_AUDIO_PACKAGE,
+    INPUT_LABEL_ILLUSTRATION_SEQUENCE,
     INPUT_LABEL_SCREENPLAY,
+    INPUT_LABEL_SEGMENT_TIMING,
     INPUT_LABEL_SUBTITLE_TRACKS,
     INPUT_LABEL_VIDEO_FILE,
     INPUT_LABEL_VIDEO_PACKAGE,
@@ -50,6 +52,28 @@ def build_input(
         if e.payload
     ]
 
+    # Slideshow mode — an illustrated-storytelling chain routes its
+    # IllustrationAgent output (one image artifact per segment) through
+    # the [illustration_sequence] collection label, and NarratorAgent's
+    # segment_timing JSON through [segment_timing]. We sort the image
+    # paths by their embedded ``seg_NNN`` token so the materializer
+    # iterates them in render order (InputResolver does not guarantee
+    # collection-label ordering).
+    illustration_entries = ResolvedArtifactEntry.coerce_list(
+        resolved_artifacts.get(INPUT_LABEL_ILLUSTRATION_SEQUENCE)
+    )
+    illustration_image_paths = _sort_image_paths_by_segment(
+        [e.path for e in illustration_entries if e.path]
+    )
+
+    timing = ResolvedArtifactEntry.coerce(
+        resolved_artifacts.get(INPUT_LABEL_SEGMENT_TIMING)
+    )
+    segment_timing_json_text = (
+        json.dumps(timing.payload, ensure_ascii=False, indent=2)
+        if timing.payload else ""
+    )
+
     return CompositorAgentInput(
         screenplay_json_text=json.dumps(
             screenplay.payload or {}, ensure_ascii=False, indent=2
@@ -67,7 +91,30 @@ def build_input(
         # manifests into ``*_package`` based on each label's description.
         video_file_path=video_file.path or "",
         audio_file_path=audio_file.path or "",
+        illustration_image_paths=illustration_image_paths,
+        segment_timing_json_text=segment_timing_json_text,
     )
+
+
+def _sort_image_paths_by_segment(paths: list[str]) -> list[str]:
+    """Order illustration paths by their embedded ``seg_NNN`` token.
+
+    IllustrationMaterializer writes each image as
+    ``illustration_seg_NNN.png`` via sys_id, so the segment order is
+    recoverable from the filename without re-fetching captions. Paths
+    without a parseable segment token sink to the end in their original
+    relative order.
+    """
+    import re
+    _SEG_RE = re.compile(r"seg_(\d+)")
+
+    def _key(p: str) -> tuple[int, int, str]:
+        m = _SEG_RE.search(p)
+        if m:
+            return (0, int(m.group(1)), p)
+        return (1, 0, p)
+
+    return sorted(paths, key=_key)
 
 
 def build_captions(agent_id: str, output_dict: dict) -> dict:
@@ -120,23 +167,61 @@ SPEC = AgentSpec(
         InputLabelSpec(
             name=INPUT_LABEL_VIDEO_PACKAGE,
             cardinality="single",
+            optional=True,
             description=(
                 "Assembled video's JSON manifest — scenes, "
                 "shot_segments, per-clip timing. LLM reads this to "
                 "plan transitions and grade against the video "
                 "structure. Targets the JSON/manifest artifact "
-                "specifically, NOT the mp4 file."
+                "specifically, NOT the mp4 file. Optional because "
+                "illustrated-storytelling flows produce an image "
+                "sequence instead (see illustration_sequence); exactly "
+                "one of {video_package, illustration_sequence} must be "
+                "present."
             ),
         ),
         InputLabelSpec(
             name=INPUT_LABEL_VIDEO_FILE,
             cardinality="single",
+            optional=True,
             description=(
                 "The final assembled mp4 video file on disk (binary "
                 "artifact, mime=video/mp4). Materializer reads its "
                 "path and passes it to ffmpeg for composition. "
                 "Targets the mp4 binary specifically, NOT the JSON "
-                "manifest."
+                "manifest. Optional — absent on illustrated-storytelling "
+                "flows where there is no assembled mp4 to mux (the "
+                "video track is rendered from illustration_sequence "
+                "images)."
+            ),
+        ),
+        InputLabelSpec(
+            name=INPUT_LABEL_ILLUSTRATION_SEQUENCE,
+            cardinality="collection",
+            optional=True,
+            description=(
+                "Ordered per-segment still illustrations (png images) "
+                "for an illustrated-storytelling / audiobook-with-"
+                "pictures video. Present only on illustrated-"
+                "storytelling flows produced by an illustration step; "
+                "mutually exclusive with video_package / video_file. "
+                "Every image is burned as one slide whose on-screen "
+                "duration is driven by segment_timing."
+            ),
+        ),
+        InputLabelSpec(
+            name=INPUT_LABEL_SEGMENT_TIMING,
+            cardinality="single",
+            optional=True,
+            description=(
+                "Per-segment timing manifest (JSON: "
+                "``content.segment_timings = [{segment_id, start_sec, "
+                "end_sec, duration_sec, line_ids}, ...]``). Produced by "
+                "the narrator step on illustrated-storytelling flows. "
+                "Required whenever illustration_sequence is present — "
+                "tells the compositor how long each illustration stays "
+                "on screen so the image sequence aligns with the "
+                "narrator audio."
             ),
         ),
         InputLabelSpec(
