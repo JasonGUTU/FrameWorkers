@@ -14,12 +14,10 @@ def bad_request(message: str):
     return jsonify({"error": message}), 400
 
 
-def json_body_or_error(*, allow_empty: bool = False):
-    """Parse JSON body; reject null body; optionally reject empty object."""
+def json_body_or_error():
+    """Parse JSON body; reject null or empty body."""
     data = request.get_json()
-    if data is None:
-        return None, bad_request("Invalid JSON body")
-    if not allow_empty and not data:
+    if not data:
         return None, bad_request("Invalid JSON body")
     return data, None
 

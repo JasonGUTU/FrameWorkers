@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --job-name=director_lora
+#SBATCH --job-name=director_lora_overfit
 #SBATCH --nodelist=sof1-h200-[0,1,2,3,4,6,7]
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --time=8:00:00
+#SBATCH --time=10:00:00
 #SBATCH --cpus-per-task=16
 #SBATCH --mem-per-cpu=8G
 #SBATCH --gpus=h200:1
@@ -11,6 +11,12 @@
 #SBATCH --error=/home/zhendong_li/FrameWorkers/training/director/logs/train_%j.error
 #SBATCH --qos=eccv-2026
 #SBATCH --partition=non-reserved
+
+# Overfit experiment — SFT 50 epochs + DPO 1 epoch on same canonical data.
+# Output adapters: training/director/adapters_overfit/{sft,dpo}/
+# Expected: train_loss → 0, generalization likely regresses on held-out eval.
+# That regression IS the signal (measures how much SFT capacity the 3-epoch
+# default leaves on the table vs. how much drives overfit).
 
 set -euo pipefail
 
@@ -40,19 +46,19 @@ PYTHONPATH=. python training/director/validate.py \
     --dpo samples_dpo_full.jsonl \
     --seq-len 4096
 
-echo "=== train SFT → DPO ==="
+echo "=== train SFT (50 epochs) → DPO (1 epoch) — OVERFIT ==="
 PYTHONPATH=. python training/director/train_lora.py \
     --stage both \
     --sft-path training/director/samples_sft_full.jsonl \
     --dpo-path training/director/samples_dpo_full.jsonl \
-    --adapter-dir training/director/adapters_full \
-    --sft-epochs 3 \
+    --adapter-dir training/director/adapters_overfit \
+    --sft-epochs 50 \
     --dpo-epochs 1 \
     --per-device-batch 1 \
     --grad-accum 8
 
-echo "=== infer smoke (adapter=adapters_full/dpo) ==="
+echo "=== infer smoke (adapter=adapters_overfit/dpo) ==="
 PYTHONPATH=. python training/director/infer.py \
-    --adapter training/director/adapters_full/dpo || true
+    --adapter training/director/adapters_overfit/dpo || true
 
 echo "=== DONE ==="

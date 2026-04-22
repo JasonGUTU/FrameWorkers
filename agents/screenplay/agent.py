@@ -111,8 +111,6 @@ SCREENPLAY_OUTPUT_TEMPLATE = """{
 
 
 class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
-    def __init__(self, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
 
     async def generate(
         self,

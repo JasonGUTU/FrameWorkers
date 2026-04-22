@@ -14,13 +14,6 @@ Each agent can be assembled with an evaluator and materializer (via
 generation, evaluation, and retry internally — callers receive a single
 ``ExecutionResult`` indicating pass/fail, eval details, and any media
 assets produced.
-
-Skeleton-first mode (opt-in per agent):
-  When ``build_skeleton()`` returns a non-None output, the agent switches to
-  skeleton mode.  The system pre-builds all structural fields (IDs, order,
-  source refs, placeholders) from shared assets, and the LLM is asked only
-  to fill creative fields (prompt_summary, dialogue text, mood, etc.).
-  This eliminates structural errors and reduces output tokens by 35-70%.
 """
 
 from __future__ import annotations
@@ -203,10 +196,6 @@ class BaseAgent(Generic[InputT, OutputT]):
       - ``_llm_fill_full(input_data, rework_notes)``: full-output LLM call.
         Requires the subclass to also implement ``build_user_prompt`` and
         ``system_prompt``.
-      - ``_llm_fill_creative(input_data, skeleton, rework_notes)``: LLM
-        fills only creative fields, merged into a pre-built skeleton.
-        Requires the subclass to also implement ``build_creative_prompt``,
-        ``fill_creative``, and ``system_prompt``.
 
     Optional overrides:
       - parse_output(raw_json): default uses OutputT.model_validate()
@@ -230,9 +219,8 @@ class BaseAgent(Generic[InputT, OutputT]):
     def system_prompt(self) -> str:
         """Return the full system prompt for any LLM calls this agent makes.
 
-        Required only when ``generate()`` calls ``_llm_fill_full`` or
-        ``_llm_fill_creative``. LLM-free agents don't need to override
-        this.
+        Required only when ``generate()`` calls ``_llm_fill_full``.
+        LLM-free agents don't need to override this.
         """
         raise NotImplementedError(f"{self.agent_name}.system_prompt()")
 
@@ -337,47 +325,6 @@ class BaseAgent(Generic[InputT, OutputT]):
             raw_json["metrics"] = {}
         return self.parse_output(raw_json)
 
-    async def _llm_fill_creative(
-        self,
-        input_data: InputT,
-        skeleton: OutputT,
-        rework_notes: str = "",
-    ) -> OutputT:
-        """Helper: ask the LLM to fill only creative fields, merge into skeleton.
-
-        Subclasses that use this must also implement ``system_prompt()``,
-        ``build_creative_prompt(input_data, skeleton)``, and
-        ``fill_creative(skeleton, creative_dict)``.
-
-        Same rejection escape hatch as ``_llm_fill_full``: a top-level
-        ``input_rejection`` in the LLM response raises
-        :class:`UpstreamInputRejected`.
-        """
-        system = INPUT_REJECTION_RULE + self.system_prompt()
-        user = self.build_creative_prompt(input_data, skeleton)
-        if rework_notes:
-            user += self._rework_section(rework_notes)
-            logger.info(
-                "[%s] Rework notes injected (%d chars)",
-                self.agent_name,
-                len(rework_notes),
-            )
-        logger.debug("[%s] System prompt length: %d", self.agent_name, len(system))
-        logger.debug("[%s] User prompt length: %d", self.agent_name, len(user))
-        creative_json = await self.llm.chat_json(system, user, max_tokens=65536)
-        logger.info(
-            "[%s] Received creative-only LLM response, merging …",
-            self.agent_name,
-        )
-        rejection = _maybe_parse_rejection(creative_json)
-        if rejection is not None:
-            logger.warning(
-                "[%s] LLM (creative pass) rejected upstream input: %s",
-                self.agent_name, rejection.reason,
-            )
-            raise UpstreamInputRejected(rejection)
-        return self.fill_creative(skeleton, creative_json)
-
     @staticmethod
     def _rework_section(rework_notes: str) -> str:
         return (
@@ -437,6 +384,30 @@ class BaseAgent(Generic[InputT, OutputT]):
         output: OutputT | None = None
         media_assets: list = []
         asset_dict: dict[str, Any] | None = None
+
+        # --- Pre-generate hook: seed input_data with deterministic upstream
+        # data (STT segments, OCR lines, etc.) BEFORE the LLM loop starts.
+        # Runs exactly once — tool-agent materializers own this path; pure
+        # binary materializers leave it as the default no-op. Fires only
+        # when a materialize_ctx is supplied; otherwise the caller doesn't
+        # want materialization and pre-gen seeding would have nowhere to
+        # persist its side-effects.
+        if self.materializer is not None and materialize_ctx is not None:
+            try:
+                await self.materializer.pre_generate(materialize_ctx, input_data)
+            except Exception as exc:
+                logger.error(
+                    "[%s] pre_generate failed: %s", self.agent_name, exc,
+                )
+                return ExecutionResult(
+                    output=None,
+                    eval_result={
+                        "overall_pass": False,
+                        "summary": f"pre_generate error: {exc}",
+                    },
+                    passed=False,
+                    attempts=0,
+                )
 
         for attempt in range(1, max_retries + 1):
             logger.info(
@@ -581,18 +552,4 @@ class BaseAgent(Generic[InputT, OutputT]):
             passed=False, attempts=max_retries,
             media_assets=media_assets, asset_dict=asset_dict,
         )
-
-    # ------------------------------------------------------------------
-    # Helpers
-    # ------------------------------------------------------------------
-
-    @staticmethod
-    def _normalize_order(items: list, attr: str = "order") -> None:
-        """Set ``item.<attr> = i`` for 1-based enumeration.
-
-        Commonly used in ``recompute_metrics`` to fix order fields
-        that the LLM may have generated out of sequence.
-        """
-        for i, item in enumerate(items, 1):
-            setattr(item, attr, i)
 

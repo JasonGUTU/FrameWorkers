@@ -236,11 +236,12 @@ def run_eval(
     workers: int = 10,
     name: Optional[str] = None,
     max_steps: int = 20,
+    fewshots: bool = True,
 ) -> None:
     from director_agent.router import LlmSubAgentPlanner
 
     cases = load_cases(cases_path)
-    planner = LlmSubAgentPlanner(model=model)
+    planner = LlmSubAgentPlanner(model=model, fewshots=fewshots)
     catalog = build_agent_catalog()
     model_name = planner._model
 
@@ -394,6 +395,10 @@ if __name__ == "__main__":
                         help="Hard upper bound on plan length sent to the planner")
     parser.add_argument("--name", type=str, default=None,
                         help="Optional run name (appears in filename and web UI)")
+    parser.add_argument("--fewshots", action=argparse.BooleanOptionalAction, default=True,
+                        help="Include 7 worked-pattern fewshot examples in planner system prompt "
+                             "(default on). Pair `--no-fewshots` with `FW_TOPOLOGY=0` env var for "
+                             "the apples-to-apples bare baseline.")
     args = parser.parse_args()
     run_eval(
         model=args.model,
@@ -401,4 +406,5 @@ if __name__ == "__main__":
         workers=args.workers,
         name=args.name,
         max_steps=args.max_steps,
+        fewshots=args.fewshots,
     )

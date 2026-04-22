@@ -77,10 +77,11 @@ class AssistantService:
         * ``"upstream_input_rejected"`` — the consumer LLM declared upstream
           input insufficient. Emit a ``[upstream_input_rejected] ...``
           prefix carrying reason + missing_labels so the director's replan
-          prompt can recognise it and prefer replan-tail over retry (retry
-          with the same input would yield the same rejection). The Director
-          infers which upstream step to replace from the missing labels and
-          PENDING-tail history — sub-agents never name a producer.
+          prompt can recognise it and emit a tail that replaces the upstream
+          producer (re-running the failed consumer with the same input would
+          yield the same rejection). The Director infers which upstream step
+          to replace from the missing labels and PENDING-tail history —
+          sub-agents never name a producer.
         * anything else — fall back to the existing
           ``quality gate failed: <summary>`` format so legacy eval-gate
           failures keep their shape.
@@ -305,12 +306,10 @@ class AssistantService:
         )
         # Stamp resolved input paths onto the execution so framework-level
         # post-run hooks (Intake raw_pending → global scope flip) know
-        # exactly which registry entries this execution consumed.
-        raw_paths = inputs.get("resolved_input_paths") if isinstance(inputs, dict) else None
-        if isinstance(raw_paths, list):
-            execution.resolved_input_paths = [
-                str(p) for p in raw_paths if isinstance(p, str) and p
-            ]
+        # exactly which registry entries this execution consumed. The list
+        # was already sanitized by ``build_execution_inputs`` — no defensive
+        # re-filtering here.
+        execution.resolved_input_paths = list(inputs.get("resolved_input_paths") or [])
 
         try:
             # Update execution status
@@ -546,8 +545,7 @@ class AssistantService:
         """
         # Prepare environment
         workspace = self.prepare_environment()
-        auto_overwrite = self._has_existing_assets(agent_id=agent_id)
-        overwrite_existing_assets = auto_overwrite
+        overwrite_existing_assets = self._has_existing_assets(agent_id=agent_id)
 
         # 1) Build inputs (step_id + resolved_artifacts)
         inputs = self.build_execution_inputs(

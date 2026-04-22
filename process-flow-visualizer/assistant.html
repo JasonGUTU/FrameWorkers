@@ -9,6 +9,36 @@
   <style>
     .back { display:inline-block; margin-bottom:18px; color:#7eb3ff; text-decoration:none; font-size:0.9em; }
     .back:hover { text-decoration:underline; }
+
+    /* ── Eval section styles (shared shape with director.html) ── */
+    .eval-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:22px 26px;margin-bottom:20px}
+    .eval-card h2{margin:0 0 12px;font-size:1.15em;color:#e0e0e0}
+    .eval-card h3{margin:16px 0 8px;font-size:1em;color:#ccc}
+    .eval-stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:14px}
+    .eval-stat-box{background:rgba(255,255,255,.05);border-radius:8px;padding:16px;text-align:center}
+    .eval-stat-value{font-size:1.9em;font-weight:700;color:#fbbf24}
+    .eval-stat-value.green{color:#34d399}.eval-stat-value.red{color:#f87171}.eval-stat-value.blue{color:#7eb3ff}
+    .eval-stat-label{font-size:.8em;color:#999;margin-top:4px}
+    .eval-card table{width:100%;border-collapse:collapse;font-size:.85em;margin-top:8px}
+    .eval-card th,.eval-card td{padding:8px 10px;text-align:left;border-bottom:1px solid rgba(255,255,255,.06)}
+    .eval-card th{color:#999;font-weight:600;font-size:.8em;text-transform:uppercase}
+    .eval-card td{color:#ccc;vertical-align:top}
+    .bar-cell{min-width:120px}
+    .pct-bg{background:rgba(255,255,255,.06);border-radius:3px;height:14px;overflow:hidden}
+    .pct-fill{height:100%;border-radius:3px}
+    .fill-good{background:#34d399}.fill-mid{background:#fbbf24}.fill-bad{background:#f87171}
+    .tag-pass{color:#34d399;font-weight:600}.tag-fail{color:#f87171;font-weight:600}
+    .mono-small{font-family:'SF Mono','Fira Code',monospace;font-size:.82em;color:#999}
+    .finding{background:rgba(126,179,255,.08);border-left:3px solid #7eb3ff;padding:12px 16px;margin:10px 0;border-radius:0 6px 6px 0;color:#ddd;font-size:.9em}
+    .finding b{color:#fff}
+    .finding.warn{background:rgba(248,113,113,.08);border-left-color:#f87171}
+    .finding.warn b{color:#fca5a5}
+    .run-select{background:#1a1a2e;color:#e0e0e0;border:1px solid rgba(255,255,255,.15);border-radius:6px;padding:6px 12px;font-size:.85em}
+    #evalLoading{text-align:center;color:#999;padding:20px}
+    #evalError{background:rgba(248,113,113,.1);border:1px solid #f87171;padding:16px;border-radius:6px;color:#f87171;display:none}
+    .eval-section-header{margin:30px 0 16px 0;padding-top:20px;border-top:2px solid rgba(255,255,255,.1)}
+    .eval-section-header h2{color:#7eb3ff;font-size:1.4em}
+    .case-err{font-family:'SF Mono','Fira Code',monospace;font-size:.78em;color:#f87171;white-space:pre-wrap}
   </style>
 </head>
 <body>
@@ -30,7 +60,247 @@
 
     <section id="phasesViz"></section>
 
+    <!-- ── Assistant-Pipeline 评测（端到端 25 条 text-only GT 计划）── -->
+    <div class="eval-section-header">
+      <h2>🧪 Assistant Pipeline 评测（端到端执行）</h2>
+      <p style="color:#bbb;font-size:.95em">
+        每条 case = 一条 director-given GT 计划（来自 <code>evals/director_routing/eval_cases.json</code> 纯文本 25 条）——
+        runner 按 GT 顺序调 <code>AssistantService.execute_agent_for_step</code>，subprocess 隔离每个 case 的 workspace。
+        测的是：<b>sub-agent 协作 · workspace 管理 · InputResolver 召回</b>。Media API 全 mock（<code>FW_USE_REAL_MEDIA_GEN</code> unset），Text LLM 真调 Gemini 2.5 Flash。
+      </p>
+    </div>
+
+    <div id="evalLoading">Loading eval results ...</div>
+    <div id="evalError"></div>
+    <div id="evalContent" style="display:none">
+
+      <div class="eval-card">
+        <h2>选择运行 · <span id="runInfo" style="color:#7eb3ff;font-weight:normal"></span></h2>
+        <select id="runSelect" class="run-select"></select>
+      </div>
+
+      <div class="eval-card">
+        <h2>总览</h2>
+        <div class="eval-stats-grid" id="overviewGrid"></div>
+        <h3>历次迭代（按时间倒序）</h3>
+        <table>
+          <thead><tr><th>运行时间</th><th>Tag</th><th>Pass / Total</th><th>Pass%</th><th>Step%</th><th>Elapsed</th></tr></thead>
+          <tbody id="historyTable"></tbody>
+        </table>
+      </div>
+
+      <div class="eval-card">
+        <h2>本轮 case-by-case</h2>
+        <table>
+          <thead><tr><th>Case</th><th>链长</th><th>完成 steps</th><th>结果</th><th>Elapsed</th><th>失败信息</th></tr></thead>
+          <tbody id="caseTable"></tbody>
+        </table>
+      </div>
+
+      <div class="eval-card">
+        <h2>失败分布（本轮）</h2>
+        <table>
+          <thead><tr><th>First-failure agent</th><th>次数</th><th>典型 case</th></tr></thead>
+          <tbody id="failureByAgent"></tbody>
+        </table>
+      </div>
+
+      <div class="eval-card">
+        <h2>🔍 主要失败原因分析（最新一轮）</h2>
+        <p style="color:#bbb;font-size:.9em;margin:0 0 16px">
+          从 baseline 的 24% 到 Run 5 的 88% 靠 4 轮基础设施修复：schema 瘦身消除 VideoAgent 10.5K 截断 · 显式 <code>max_tokens=65536</code> 破 CF AIG 的隐性 output cap · <code>json-repair</code> + 1 次 LLM parse-retry 救 CJK confusable / 未转义引号 / trailing comma / unquoted key · 修 logger NameError 回归。
+          剩 3 条挂在 <b>LLM 对 typed schema 的语义合规漂移</b>——evaluator / Pydantic 正确抓到了，但 rework 3 次修不回。
+        </p>
+
+        <div class="finding warn">
+          <b>① cr_07 — Screenplay 漏写了临时 NPC 说话人的 <code>character_id</code></b>
+          <div style="margin-top:6px;font-size:.88em;color:#bbb">
+            <code>sh_026</code>/<code>sh_039</code> 是 dialogue shot，<code>character_name="Reporter"/"Journalist"</code>，<code>character_id=""</code> 空串。
+            scene 的 <code>character_locks</code> 只登记了主角 <code>char_001~003</code>，没给"记者"这种剧情里的临时 NPC 留位置。
+            evaluator 要求 dialogue shot 必须有非空 character_id → LLM 没合法值可填 → 留空 → 挂。3 次 rework 一直重复同一错。
+          </div>
+          <div style="margin-top:8px;font-size:.82em;color:#999">
+            <b>根因</b>：agent prompt 没告诉 LLM 怎么处理"主角外的偶发说话人"——要么动态追加 <code>char_NNN</code> 并回填 <code>character_locks</code>，要么改 <code>block_type</code> 为 <code>narration/monologue</code>。
+          </div>
+        </div>
+
+        <div class="finding warn">
+          <b>② bilingual_02 — Compositor 最后一条 transition 的 <code>to_shot_id</code> 写成 <code>null</code></b>
+          <div style="margin-top:6px;font-size:.88em;color:#bbb">
+            LLM 输出了 57 条 transitions，最后一条 <code>transitions[56].to_shot_id = null</code>（LLM 可能以为"链路最末没有下一个 shot"）。
+            Pydantic schema 要求 <code>to_shot_id: str</code>（非 None）→ <code>ValidationError</code> 在 <code>parse_output</code> 直接抛 exception → <b>跳过 evaluator rework 循环</b>。
+          </div>
+          <div style="margin-top:8px;font-size:.82em;color:#999">
+            <b>根因</b>：base_agent 的 retry/rework 只响应 evaluator 的 L1/L2/L3 结果；Pydantic parse-time 报错直接 raise，<b>没接 retry 路径</b>。<code>chat_json</code> 里的 JSON parse retry 也救不了——JSON 本身合法（<code>null</code> 是合法 JSON 值），挂在类型层。
+          </div>
+        </div>
+
+        <div class="finding warn">
+          <b>③ bilingual_05 — KeyFrame L2 stability_keyframes 引用了 L1 global_anchors 里不存在的 location</b>
+          <div style="margin-top:6px;font-size:.88em;color:#bbb">
+            L1 <code>global_anchors.locations = ['loc_001']</code>，但 8 个 scene 的 L2 <code>stability_keyframes</code> 分别引用 <code>loc_002</code> / <code>loc_003</code> / <code>loc_004</code> —— 6 处违反 L1↔L2 referential integrity。
+          </div>
+          <div style="margin-top:8px;font-size:.82em;color:#999">
+            <b>根因</b>：KeyFrame template + system_prompt 要求每个 scene-level entity 都要在 L1 登记，但 8 scene × 多 location 的规模下 LLM 漏登了 3 个。evaluator 严格 check 抓到，但 rework notes 只说 "references loc_002 not in global_anchors"——LLM 每次 rework 都漏差不多的。
+            materializer 有 Layer 1.5 backfill 机制可以自动补救，但 <b>evaluator 先否决导致 backfill 永远无机会触发</b>——evaluator 严 vs materializer 宽中间脱节。
+          </div>
+        </div>
+
+        <h3 style="margin-top:22px">治理方向</h3>
+        <ul style="color:#bbb;font-size:.88em;margin:8px 0 0 20px;line-height:1.7">
+          <li><b>Rework 定向化</b>：evaluator 报错时把定位（哪个 shot / 哪个 scene / 期望值示例）嵌进 <code>rework_notes</code>，不是整段塞 <code>eval_summary</code>。</li>
+          <li><b>Pydantic ValidationError 接 retry</b>：parse 层失败应该像 JSON parse 一样触发 1 次 LLM 重调——目前完全无 retry 路径，一挂就 FAIL。</li>
+          <li><b>evaluator ↔ materializer backfill 打通</b>：KeyFrame 的 L1.5 backfill 对缺失 L1 能自愈，但 evaluator 在前面挡住了。可以让"content-semantic"引用完整性检查（比如 L1↔L2 referential integrity）下放给 materializer 阶段处理，evaluator 只保留 LLM 真正能修的语法层检查。</li>
+        </ul>
+      </div>
+
+    </div>
+
   </main>
   <script src="./app.js?v=13"></script>
+  <script>
+  /* ── Assistant Pipeline Eval ── */
+  const EVAL_DIR = './Runtime/assistant_pipeline/';
+
+  async function discoverRuns() {
+    const resp = await fetch(EVAL_DIR + '?t=' + Date.now(), { cache: 'no-store' });
+    const html = await resp.text();
+    const re = /href="([^"?]+?)\/?"/g;
+    const seen = new Set();
+    const dirs = [];
+    let m;
+    while ((m = re.exec(html)) !== null) {
+      const name = m[1].replace(/\/$/, '');
+      if (seen.has(name)) continue;
+      seen.add(name);
+      if (/^\d{8}_\d{6}/.test(name)) dirs.push(name);
+    }
+    return dirs.sort().reverse();
+  }
+
+  async function loadRun(name) {
+    const url = EVAL_DIR + name + '/summary.json?t=' + Date.now();
+    const resp = await fetch(url, { cache: 'no-store' });
+    if (!resp.ok) throw new Error(`summary.json 404 for ${name}`);
+    return resp.json();
+  }
+
+  function pctClass(pct){ return pct>=80 ? 'fill-good' : pct>=50 ? 'fill-mid' : 'fill-bad'; }
+  function valCls(v){ return v>=80 ? 'green' : v<50 ? 'red' : ''; }
+  function escapeHtml(s){
+    return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function renderRun(data) {
+    const m = data.meta || {};
+    const results = data.results || [];
+
+    const info = `${m.timestamp||'?'} · ${m.run_name||''} · ${m.workers||'?'} workers`;
+    document.getElementById('runInfo').textContent = info;
+
+    document.getElementById('overviewGrid').innerHTML = [
+      [`${m.pass_count||0}/${m.selected_cases||results.length||0}`, '通过 / 总', valCls(m.pass_pct||0)],
+      [`${(m.pass_pct||0).toFixed(1)}%`, `Pass 率`, valCls(m.pass_pct||0)],
+      [`${(m.step_completion_pct||0).toFixed(1)}%`, `Step 完成率 (${m.total_steps_completed||0}/${m.total_steps_planned||0})`, valCls(m.step_completion_pct||0)],
+      [`${m.elapsed_total_s||0}s`, `Elapsed`, ''],
+      [`${m.timeout_per_case_s||'?'}s`, `超时/case`, ''],
+    ].map(([val,lbl,cls])=>
+      `<div class="eval-stat-box"><div class="eval-stat-value ${cls}">${val}</div><div class="eval-stat-label">${lbl}</div></div>`
+    ).join('');
+
+    // case table
+    document.getElementById('caseTable').innerHTML = results.map(r => {
+      const chainLen = (r.plan||r.steps||[]).length;
+      const done = r.completed_steps||0;
+      const tag = r.chain_correct ? '<span class="tag-pass">PASS</span>' : '<span class="tag-fail">FAIL</span>';
+      const elapsed = (r.elapsed_s||0).toFixed(0) + 's';
+      let errCell = '';
+      if (!r.chain_correct) {
+        const badStep = (r.steps||[]).find(s => s.status !== 'COMPLETED');
+        if (badStep) {
+          const stepErr = (badStep.error || '').slice(0, 160);
+          errCell = `<span class="mono-small">step${badStep.index} ${badStep.agent_id}</span><br><span class="case-err">${escapeHtml(stepErr)}${badStep.error && badStep.error.length>160?'…':''}</span>`;
+        } else if (r.error) {
+          errCell = `<span class="case-err">${escapeHtml(r.error.slice(0,160))}</span>`;
+        }
+      }
+      return `<tr><td class="mono-small">${escapeHtml(r.name)}</td><td>${chainLen}</td><td>${done}/${chainLen}</td><td>${tag}</td><td>${elapsed}</td><td>${errCell}</td></tr>`;
+    }).join('');
+
+    // failure-by-agent table
+    const faMap = m.first_failure_by_agent || {};
+    const faRows = Object.entries(faMap).sort((a,b)=>b[1]-a[1]);
+    if (faRows.length) {
+      document.getElementById('failureByAgent').innerHTML = faRows.map(([agent, n]) => {
+        const sampleCases = results.filter(r => {
+          if (r.chain_correct) return false;
+          const bad = (r.steps||[]).find(s => s.status !== 'COMPLETED');
+          return bad && bad.agent_id === agent;
+        }).map(r => r.name).join(', ');
+        return `<tr><td><b>${escapeHtml(agent)}</b></td><td>${n}</td><td class="mono-small">${escapeHtml(sampleCases)}</td></tr>`;
+      }).join('');
+    } else {
+      document.getElementById('failureByAgent').innerHTML = '<tr><td colspan="3" style="color:#34d399;text-align:center">无失败 — 全部 PASS</td></tr>';
+    }
+  }
+
+  async function evalMain() {
+    const loadingEl = document.getElementById('evalLoading');
+    const errorEl = document.getElementById('evalError');
+    try {
+      const dirs = await discoverRuns();
+      if (!dirs.length) {
+        loadingEl.innerHTML = '暂无数据。跑：<code>PYTHONPATH=. python evals/assistant_pipeline/eval_pipeline.py</code>';
+        return;
+      }
+
+      const sel = document.getElementById('runSelect');
+      const allMeta = [];
+      for (const d of dirs) {
+        try {
+          const data = await loadRun(d);
+          allMeta.push({ dir: d, meta: data.meta || {}, data });
+        } catch { /* skip dirs without summary.json */ }
+      }
+      if (!allMeta.length) {
+        loadingEl.innerHTML = '找到 run 目录但无 <code>summary.json</code>';
+        return;
+      }
+
+      for (const { dir, meta } of allMeta) {
+        const opt = document.createElement('option');
+        opt.value = dir;
+        const lbl = meta.run_name ? `${meta.timestamp} · ${meta.run_name}` : meta.timestamp || dir;
+        const pp = (meta.pass_pct||0).toFixed(1);
+        opt.textContent = `${lbl}  (pass ${pp}%, step ${(meta.step_completion_pct||0).toFixed(1)}%)`;
+        sel.appendChild(opt);
+      }
+
+      document.getElementById('historyTable').innerHTML = allMeta.map(({ dir, meta }) => {
+        const cCls = (meta.pass_pct||0)>=80 ? 'tag-pass' : (meta.pass_pct||0)<50 ? 'tag-fail' : '';
+        const tag = meta.run_name || '—';
+        return `<tr><td class="mono-small">${escapeHtml(meta.timestamp||dir)}</td><td><b style="color:#7eb3ff">${escapeHtml(tag)}</b></td><td>${meta.pass_count||0} / ${meta.selected_cases||'?'}</td><td class="${cCls}">${(meta.pass_pct||0).toFixed(1)}%</td><td>${(meta.step_completion_pct||0).toFixed(1)}%</td><td>${meta.elapsed_total_s||'?'}s</td></tr>`;
+      }).join('');
+
+      async function loadSelected() {
+        const hit = allMeta.find(x => x.dir === sel.value);
+        if (hit) renderRun(hit.data);
+        else { const d = await loadRun(sel.value); renderRun(d); }
+      }
+      sel.addEventListener('change', loadSelected);
+      await loadSelected();
+
+      loadingEl.style.display = 'none';
+      document.getElementById('evalContent').style.display = 'block';
+    } catch (e) {
+      loadingEl.style.display = 'none';
+      errorEl.style.display = 'block';
+      errorEl.textContent = '加载评测结果失败：' + e.message;
+      console.error(e);
+    }
+  }
+
+  evalMain();
+  </script>
 </body>
 </html>

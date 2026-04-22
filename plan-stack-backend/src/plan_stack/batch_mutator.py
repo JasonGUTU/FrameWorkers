@@ -193,7 +193,7 @@ class PlanStackBatchMutator:
                     elif operation.type == BatchOperationType.ADD_STEPS_TO_LAYERS:
                         additions = operation.params.get("additions", [])
                         if not isinstance(additions, list):
-                            raise ValueError("ADD_TASKS_TO_LAYERS requires 'additions' as a list")
+                            raise ValueError("ADD_STEPS_TO_LAYERS requires 'additions' as a list")
 
                         success_list = []
                         for addition in additions:
@@ -228,7 +228,7 @@ class PlanStackBatchMutator:
                         removals = operation.params.get("removals", [])
                         if not isinstance(removals, list):
                             raise ValueError(
-                                "REMOVE_TASKS_FROM_LAYERS requires 'removals' as a list"
+                                "REMOVE_STEPS_FROM_LAYERS requires 'removals' as a list"
                             )
 
                         success_list = []
@@ -264,15 +264,15 @@ class PlanStackBatchMutator:
                     errors.append(
                         {
                             "operation_index": idx,
-                            "type": operation.type.value if operation else "unknown",
+                            "type": operation.type.value,
                             "error": str(exc),
-                            "params": operation.params if operation else None,
+                            "params": operation.params,
                         }
                     )
                     results.append(
                         {
                             "operation_index": idx,
-                            "type": operation.type.value if operation else "unknown",
+                            "type": operation.type.value,
                             "success": False,
                             "error": str(exc),
                         }

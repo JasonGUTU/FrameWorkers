@@ -14,8 +14,8 @@ Stage 2 (DPO):
     reference. Runs DPOTrainer on 5 (prompt, chosen, rejected) triples.
 
 Output:
-    training/director/adapters/sft/       — LoRA weights after SFT
-    training/director/adapters/dpo/       — LoRA weights after SFT + DPO
+    training/director/adapters_full/sft/  — LoRA weights after SFT
+    training/director/adapters_full/dpo/  — LoRA weights after SFT + DPO
 
 Usage (on GPU node, after `conda activate frameworkers` + deps installed):
     PYTHONPATH=. python training/director/train_lora.py
@@ -73,9 +73,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--stage", choices=["sft", "dpo", "both"], default="both")
     ap.add_argument("--base-model", default=BASE_MODEL)
-    ap.add_argument("--sft-path", default=None, help="JSONL path (default: samples_sft.jsonl beside this script)")
-    ap.add_argument("--dpo-path", default=None, help="JSONL path (default: samples_dpo.jsonl beside this script)")
-    ap.add_argument("--adapter-dir", default=None, help="adapter output dir (default: adapters/ beside this script)")
+    ap.add_argument("--sft-path", default=None, help="JSONL path (default: samples_sft_full.jsonl beside this script)")
+    ap.add_argument("--dpo-path", default=None, help="JSONL path (default: samples_dpo_full.jsonl beside this script)")
+    ap.add_argument("--adapter-dir", default=None, help="adapter output dir (default: adapters_full/ beside this script)")
     ap.add_argument("--sft-epochs", type=int, default=3)
     ap.add_argument("--dpo-epochs", type=int, default=1)
     ap.add_argument("--per-device-batch", type=int, default=1)
@@ -83,10 +83,10 @@ def main():
     args = ap.parse_args()
 
     root = Path(__file__).parent
-    adapter_dir = Path(args.adapter_dir) if args.adapter_dir else root / "adapters"
+    adapter_dir = Path(args.adapter_dir) if args.adapter_dir else root / "adapters_full"
     adapter_dir.mkdir(exist_ok=True, parents=True)
-    sft_data_path = Path(args.sft_path) if args.sft_path else root / "samples_sft.jsonl"
-    dpo_data_path = Path(args.dpo_path) if args.dpo_path else root / "samples_dpo.jsonl"
+    sft_data_path = Path(args.sft_path) if args.sft_path else root / "samples_sft_full.jsonl"
+    dpo_data_path = Path(args.dpo_path) if args.dpo_path else root / "samples_dpo_full.jsonl"
 
     # Heavy imports are inside main so `--help` works without GPU libs installed
     import torch
@@ -191,7 +191,7 @@ def main():
         dpo_trainer.save_model(str(dpo_output))
         print(f"DPO adapter saved: {dpo_output}")
 
-    print("\nDone. Next step: training/director/infer.py --adapter adapters/dpo")
+    print("\nDone. Next step: training/director/infer.py --adapter adapters_full/dpo")
 
 
 if __name__ == "__main__":

@@ -56,11 +56,10 @@ class PlanStepSpec:
 class ReplanDecision:
     """Output of ``replan_on_failure``.
 
-    ``action`` is one of ``retry`` / ``skip`` / ``replan``.
-    When ``action == "replan"``, ``new_tail`` holds the replacement PENDING tail.
+    ``new_tail`` holds the replacement for the PENDING tail. When empty, the
+    director has no actionable tail and simply advances past the failed step.
     """
 
-    action: str
     new_tail: List[PlanStepSpec] = field(default_factory=list)
     rationale: str = ""
 
@@ -69,7 +68,10 @@ def _agents_catalog_for_prompt(agents: List[Dict[str, Any]]) -> List[Dict[str, A
     # Director-owned routing topology (see director_agent/topology.py). Injected
     # into each agent's catalog entry so sub-agent descriptors stay free of
     # cross-agent naming per the "Sub-agent 解耦" principle.
-    from .topology import get_topology_block
+    # FW_TOPOLOGY=0 ablates the injection (eval-only escape hatch). Default ON.
+    enable_topo = os.getenv("FW_TOPOLOGY", "1") != "0"
+    if enable_topo:
+        from .topology import get_topology_block
 
     out: List[Dict[str, Any]] = []
     for a in agents:
@@ -79,11 +81,11 @@ def _agents_catalog_for_prompt(agents: List[Dict[str, Any]]) -> List[Dict[str, A
         if not aid:
             continue
         base_desc = str(a.get("description") or "")
-        topo_block = get_topology_block(aid)
-        if topo_block:
-            full_desc = base_desc + "\n\n" + topo_block
-        else:
+        if not enable_topo:
             full_desc = base_desc
+        else:
+            topo_block = get_topology_block(aid)
+            full_desc = base_desc + "\n\n" + topo_block if topo_block else base_desc
         out.append(
             {
                 "id": aid,
@@ -107,10 +109,22 @@ def _memory_blob(memory: List[Dict[str, Any]]) -> str:
 class LlmSubAgentPlanner:
     """LiteLLM via ``inference.clients.LLMClient`` — merge + upfront plan + replan."""
 
-    def __init__(self, model: Optional[str] = None, llm_client: Any = None) -> None:
+    def __init__(
+        self,
+        model: Optional[str] = None,
+        llm_client: Any = None,
+        *,
+        fewshots: bool = True,
+    ) -> None:
         raw = (model or DIRECTOR_ROUTING_MODEL or DIRECTOR_MEMORY_MODEL or "").strip()
         self._model = raw or "gpt-3.5-turbo"
         self._llm = llm_client
+        # fewshots=False swaps PLAN_UPFRONT_SYSTEM → PLAN_UPFRONT_SYSTEM_BARE
+        # (fewshot block stripped). Used for eval ablations that want the 55%
+        # apples-to-apples baseline; production keeps the default (True).
+        self._plan_system_prompt = (
+            prompts.PLAN_UPFRONT_SYSTEM if fewshots else prompts.PLAN_UPFRONT_SYSTEM_BARE
+        )
 
     # ------------------------------------------------------------------
     # LLM client plumbing
@@ -234,7 +248,7 @@ class LlmSubAgentPlanner:
         attempts = 3
         for attempt in range(attempts):
             try:
-                data = self._complete_json_dict(prompts.PLAN_UPFRONT_SYSTEM, user)
+                data = self._complete_json_dict(self._plan_system_prompt, user)
                 plan = _parse_plan(data, allowed, max_steps=max_steps)
             except Exception as exc:
                 logger.error(
@@ -265,14 +279,15 @@ class LlmSubAgentPlanner:
         completed_tail: List[Dict[str, Any]],
         max_steps: int = MAX_PIPELINE_STEPS,
     ) -> ReplanDecision:
-        """Decide how to react to a step failure.
+        """Produce a replacement tail for a failed step.
 
-        On LLM failure or malformed output, returns ``action="skip"`` so the
-        director just advances past the failed step.
+        On LLM failure, malformed output, or empty plan, returns an empty
+        ``new_tail`` — the director then advances past the failed step without
+        replanning. ``MAX_REPLAN_ROUNDS`` caps total attempts.
         """
         allowed = _allowed_ids(available_agents)
         if not allowed:
-            return ReplanDecision(action="skip", rationale="empty catalog")
+            return ReplanDecision(rationale="empty catalog")
         catalog = _agents_catalog_for_prompt(available_agents)
         user = prompts.build_replan_user_prompt(
             allowed=allowed,
@@ -286,22 +301,14 @@ class LlmSubAgentPlanner:
             data = self._complete_json_dict(prompts.REPLAN_TAIL_SYSTEM, user)
         except Exception as exc:
             logger.error("replan_on_failure LLM failed: %s", exc)
-            return ReplanDecision(action="skip", rationale=f"replan LLM error: {exc}")
+            return ReplanDecision(rationale=f"replan LLM error: {exc}")
         if not isinstance(data, dict):
-            return ReplanDecision(action="skip", rationale="non-object replan JSON")
-        action = str(data.get("action") or "").strip().lower()
+            return ReplanDecision(rationale="non-object replan JSON")
+        new_tail = _parse_plan(data, allowed, max_steps=max_steps)
         rationale = str(data.get("rationale") or "").strip()
-        if action == "retry":
-            return ReplanDecision(action="retry", rationale=rationale)
-        if action == "skip":
-            return ReplanDecision(action="skip", rationale=rationale)
-        if action == "replan":
-            new_tail = _parse_plan(data, allowed, max_steps=max_steps)
-            if not new_tail:
-                return ReplanDecision(action="skip", rationale="replan produced empty plan")
-            return ReplanDecision(action="replan", new_tail=new_tail, rationale=rationale)
-        logger.warning("replan_on_failure: unknown action %r, defaulting to skip", action)
-        return ReplanDecision(action="skip", rationale="unknown action")
+        if not new_tail:
+            return ReplanDecision(rationale=rationale or "replan produced empty plan")
+        return ReplanDecision(new_tail=new_tail, rationale=rationale)
 
 
 # ---------------------------------------------------------------------------

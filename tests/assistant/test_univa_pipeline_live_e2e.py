@@ -128,16 +128,27 @@ def test_univa_pipeline_live_e2e(assistant_http_client_real_agents):
 
     # -- Create task (same prompt as the original FrameWorkers e2e test) ----
     create_step_resp = client.post(
-        "/api/steps/create",
+        "/api/plan-stack/modify",
         json={
-            "description": {
-                "goal": (
-                    "Create a simple cinematic short video: "
-                    "A retired watchmaker races against the final moments before "
-                    "midnight to repair his late wife's cherished pocket watch, seeking "
-                    "a moment of peace and connection as the new year begins."
-                )
-            }
+            "operations": [
+                {
+                    "type": "create_steps",
+                    "params": {
+                        "steps": [
+                            {
+                                "description": {
+                                    "goal": (
+                                        "Create a simple cinematic short video: "
+                                        "A retired watchmaker races against the final moments before "
+                                        "midnight to repair his late wife's cherished pocket watch, seeking "
+                                        "a moment of peace and connection as the new year begins."
+                                    )
+                                }
+                            }
+                        ]
+                    },
+                }
+            ]
         },
     )
     _append_debug_record(debug_file, {
@@ -145,9 +156,8 @@ def test_univa_pipeline_live_e2e(assistant_http_client_real_agents):
         "status_code": create_step_resp.status_code,
         "body": create_step_resp.get_json(),
     })
-    assert create_step_resp.status_code == 201
-    task_body = create_step_resp.get_json()
-    step_id = task_body["id"]
+    assert create_step_resp.status_code == 200
+    step_id = create_step_resp.get_json()["created_step_ids"][0]
     print(f"[univa-e2e] step_id={step_id}")
 
     common_inputs: dict = {}

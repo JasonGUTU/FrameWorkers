@@ -220,6 +220,52 @@
       </div>
     </section>
 
+    <!-- 5. InputResolver 能力评估（real-workspace replay） -->
+    <section class="ws-section">
+      <h2>⑤ InputResolver 能力评估 · 结论：<span style="color:#34d399">无需训练</span></h2>
+      <div class="ws-sub">用真实 assistant_pipeline 产出的 workspace 做 replay 测试——不调 sub-agent，只单独测 InputResolver 的 label→artifact 语义召回能力。</div>
+
+      <div style="margin-top:14px;padding:12px 16px;background:#1a2f24;border-left:3px solid #34d399;border-radius:4px">
+        <div style="font-weight:600;color:#34d399;margin-bottom:6px">📊 测试结果（3 轮完整 ablation）</div>
+        <table style="width:100%;border-collapse:collapse;font-size:.92em">
+          <thead>
+            <tr style="border-bottom:1px solid #2a3a32;text-align:left">
+              <th style="padding:6px 8px;color:#9ca3af;font-weight:500">配置</th>
+              <th style="padding:6px 8px;color:#9ca3af;font-weight:500">Plan-perfect</th>
+              <th style="padding:6px 8px;color:#9ca3af;font-weight:500">Step accuracy</th>
+              <th style="padding:6px 8px;color:#9ca3af;font-weight:500">Label accuracy</th>
+            </tr>
+          </thead>
+          <tbody style="font-family:ui-monospace,Menlo,monospace">
+            <tr><td style="padding:6px 8px">带 37 处 agent 名字锚点（旧版）</td><td style="padding:6px 8px;color:#34d399">22/22 (100%)</td><td style="padding:6px 8px;color:#34d399">168/168 (100%)</td><td style="padding:6px 8px;color:#34d399">577/577 (100%)</td></tr>
+            <tr><td style="padding:6px 8px">清除 37 处锚点 → 按产物类型命名</td><td style="padding:6px 8px;color:#34d399">22/22 (100%)</td><td style="padding:6px 8px;color:#34d399">168/168 (100%)</td><td style="padding:6px 8px;color:#34d399">578/578 (100%)</td></tr>
+            <tr><td style="padding:6px 8px">+删 <code>upstream_agent_hint</code> 协议、0 cross-agent ref</td><td style="padding:6px 8px;color:#34d399">22/22 (100%)</td><td style="padding:6px 8px;color:#34d399">168/168 (100%)</td><td style="padding:6px 8px;color:#34d399">576/576 (100%)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="margin-top:14px;padding:12px 16px;background:#2a1f14;border-left:3px solid #fbbf24;border-radius:4px">
+        <div style="font-weight:600;color:#fbbf24;margin-bottom:6px">⚠ 测试数据集的范围 & 限制</div>
+        <div style="color:#e5d5b0;line-height:1.7;font-size:.92em">
+          <strong>测试样本</strong>：<code>Runtime/assistant_pipeline/20260420_181029_user_edits</code> 里 <strong>22 条真 pass case</strong>（25 条中通过的 22 条），每条有完整的 <code>global_memory.md</code> 快照可 replay。<br>
+          <strong>样本构成</strong>：<code>cr_01 ~ cr_15</code>（15 条纯创作）、<code>sub_01 ~ sub_05</code>（5 条字幕）、<code>bilingual_01/03/04</code>（3 条双语字幕）。<br>
+          <strong>没覆盖的场景</strong>：复杂多候选 disambiguation（e.g. <code>complex_*</code> 里 VideoAnalysis + VideoAgent + StyleTransfer 三者共存时 resolver 要从多个视频制品里挑对的那个），因为这些在 assistant_pipeline 里失败了、没有 workspace 可 replay。<br>
+          <strong>所以 100% 是"通过 case 上的 100%"</strong>——不是"全场景 100%"。这些通过 case 本身 label 候选不多（通常每个 label 仅 1 个合法 upstream），resolver 压力较小；真实难度主要在未测的复杂多路分支里。
+        </div>
+      </div>
+
+      <div style="margin-top:14px;padding:12px 16px;background:#1a1f2e;border-left:3px solid #60a5fa;border-radius:4px">
+        <div style="font-weight:600;color:#60a5fa;margin-bottom:6px">🔑 结论：InputResolver 模块无需单独训练</div>
+        <div style="line-height:1.8;color:#d0d8e8;font-size:.92em">
+          <strong>1. 现成 Gemini 2.5 Flash + high reasoning 已经 100%</strong>——在测试子集上没有容纳训练收益的空间（ceiling 已达成）。<br>
+          <strong>2. Producer 识别走的是 caption index 末尾的 <code>Produced by XxxAgent</code> 元数据通道</strong>，不依赖 label description 里的字符串点名——所以 sub-agent 侧的 agent-name 锚点 100% 可删、换成产物类型描述，无任何准确率代价。<br>
+          <strong>3. 架构简化实证有效</strong>：<code>InputLabelSpec.description</code> 里的 37 处 cross-agent refs + <code>upstream_agent_hint</code> 协议字段 全部清除 → sub-agent 0 cross-ref → 测试结果 100%。<br>
+          <strong>4. SFT 的目标是 Director planner（路由决策），不是 InputResolver</strong>。InputResolver 是 framework 运行时组件，不在 SFT 管辖范围。<br>
+          <strong>5. 若未来测出复杂场景 disambiguation 低于 95%</strong>，优先考虑的是 label description 更强的反例提示（"don't pick X"），而不是训练——因为训一个次要推理链路 ROI 太低。
+        </div>
+      </div>
+    </section>
+
   </main>
 </body>
 </html>

@@ -20,6 +20,41 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
+def _extract_subtitle_tracks(sub_data: Any) -> list[dict]:
+    """Return the subtitle ``tracks`` list from whatever upstream shape.
+
+    Directly-routed artifacts and translated artifacts travel the same
+    ``subtitle_tracks`` collection label, so InputResolver hands this
+    materializer either:
+
+      * A ``SubtitleAgent`` output — tracks live at ``content.tracks``.
+      * A ``TranslationAgent`` output — tracks live at
+        ``content.translated_payload.content.tracks`` (translation
+        preserves the upstream shape under a ``translated_payload``
+        wrapper so the consumer sees the original document, just
+        translated).
+
+    Translation output gets peeled first: an ``en`` SRT handed in wrapped
+    as ``{content: {translated_payload: <SubtitleAgent>}}`` would
+    otherwise silently contribute zero tracks under a naive
+    ``content.tracks`` read and collapse bilingual flows to monolingual.
+    """
+    if not isinstance(sub_data, dict):
+        return []
+    content = sub_data.get("content", sub_data) or {}
+    if not isinstance(content, dict):
+        return []
+    translated = content.get("translated_payload")
+    if isinstance(translated, dict):
+        inner = translated.get("content", translated) or {}
+        if isinstance(inner, dict):
+            inner_tracks = inner.get("tracks")
+            if isinstance(inner_tracks, list) and inner_tracks:
+                return inner_tracks
+    tracks = content.get("tracks")
+    return tracks if isinstance(tracks, list) else []
+
+
 class CompositorMaterializer(BaseMaterializer):
     """Compose final video from video + audio + subtitle inputs."""
 
@@ -57,8 +92,7 @@ class CompositorMaterializer(BaseMaterializer):
                 if text:
                     subtitle_srts.append(text)
                 continue
-            tracks = (sub_data.get("content", sub_data) or {}).get("tracks", [])
-            for track in tracks:
+            for track in _extract_subtitle_tracks(sub_data):
                 if not isinstance(track, dict):
                     continue
                 srt = (track.get("srt_text") or "").strip()

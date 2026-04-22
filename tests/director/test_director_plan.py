@@ -192,32 +192,8 @@ class TestMergeSessionGoal:
 
 
 class TestReplanOnFailure:
-    def test_retry(self):
-        p = _planner({"action": "retry", "rationale": "transient"})
-        d = p.replan_on_failure(
-            user_goal="g",
-            available_agents=_CATALOG,
-            failed_step={"step_id": "s1", "agent_id": "StoryAgent"},
-            pending_tail=[],
-            completed_tail=[],
-        )
-        assert d.action == "retry"
-        assert d.rationale == "transient"
-
-    def test_skip(self):
-        p = _planner({"action": "skip", "rationale": "optional"})
-        d = p.replan_on_failure(
-            user_goal="g",
-            available_agents=_CATALOG,
-            failed_step={"step_id": "s1", "agent_id": "StoryAgent"},
-            pending_tail=[],
-            completed_tail=[],
-        )
-        assert d.action == "skip"
-
-    def test_replan(self):
+    def test_valid_plan(self):
         p = _planner({
-            "action": "replan",
             "plan": [{"agent_id": "ScreenplayAgent", "intent": "retry"}],
             "rationale": "new plan",
         })
@@ -228,11 +204,11 @@ class TestReplanOnFailure:
             pending_tail=[],
             completed_tail=[],
         )
-        assert d.action == "replan"
         assert [s.agent_id for s in d.new_tail] == ["ScreenplayAgent"]
+        assert d.rationale == "new plan"
 
-    def test_replan_with_empty_plan_becomes_skip(self):
-        p = _planner({"action": "replan", "plan": []})
+    def test_empty_plan_returns_empty_tail(self):
+        p = _planner({"plan": []})
         d = p.replan_on_failure(
             user_goal="g",
             available_agents=_CATALOG,
@@ -240,10 +216,10 @@ class TestReplanOnFailure:
             pending_tail=[],
             completed_tail=[],
         )
-        assert d.action == "skip"
+        assert d.new_tail == []
 
-    def test_unknown_action_becomes_skip(self):
-        p = _planner({"action": "ponder"})
+    def test_no_plan_field_returns_empty_tail(self):
+        p = _planner({"rationale": "nothing to do"})
         d = p.replan_on_failure(
             user_goal="g",
             available_agents=_CATALOG,
@@ -251,9 +227,9 @@ class TestReplanOnFailure:
             pending_tail=[],
             completed_tail=[],
         )
-        assert d.action == "skip"
+        assert d.new_tail == []
 
-    def test_llm_exception_becomes_skip(self):
+    def test_llm_exception_returns_empty_tail(self):
         p = _planner(RuntimeError("boom"))
         d = p.replan_on_failure(
             user_goal="g",
@@ -262,7 +238,7 @@ class TestReplanOnFailure:
             pending_tail=[],
             completed_tail=[],
         )
-        assert d.action == "skip"
+        assert d.new_tail == []
 
 
 # ---------------------------------------------------------------------------

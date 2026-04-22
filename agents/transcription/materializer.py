@@ -1,11 +1,17 @@
-"""Transcription materializer — calls transcription service for STT.
+"""Transcription materializer — STT seeding via the pre_generate hook.
 
-Calls an external speech-to-text service (OpenAI Whisper) to transcribe
-audio/video files.  The raw segments are written into the asset_dict
-so the LLM can post-process them (cleanup).
+TranscriptionAgent is a tool-type agent: its LLM's job is polishing
+already-transcribed segments, not inventing them. The actual STT work
+must happen BEFORE the LLM runs, otherwise L1 rejects the empty
+placeholder the LLM produces and the retry loop never reaches a
+materializer that overrides it.
 
-The materializer produces no MediaAsset output — the transcript is a
-pure-text artifact stored as JSON by the standard pipeline.
+This materializer therefore does its work in ``pre_generate``, which
+BaseAgent.run() invokes exactly once before entering the retry loop.
+It calls the STT service and serializes the raw segments into
+``input_data.raw_segments_json_text``; the agent's user_prompt renders
+that JSON inline so the LLM sees real ASR output. ``materialize()`` is
+a no-op (transcripts are pure-text artifacts — no binary asset).
 """
 
 from __future__ import annotations
@@ -15,7 +21,7 @@ import logging
 from typing import Any, TYPE_CHECKING
 
 from ..descriptor import BaseMaterializer, MediaAsset
-from inference.generation.transcription_service import TranscriptionService
+from inference.generation.transcription_service import TranscriptionBackend
 
 if TYPE_CHECKING:
     from ..base_agent import MaterializeContext
@@ -27,29 +33,23 @@ logger = logging.getLogger(__name__)
 class TranscriptionMaterializer(BaseMaterializer):
     """Transcribe audio/video via an external STT service."""
 
-    def __init__(self, transcription_service: TranscriptionService) -> None:
+    def __init__(self, transcription_service: TranscriptionBackend) -> None:
         self.stt_svc = transcription_service
 
-    async def materialize(
+    async def pre_generate(
         self,
         ctx: "MaterializeContext",
-        asset_dict: dict[str, Any],
-    ) -> list[MediaAsset]:
-        """Run STT on the source media file.
+        input_data: "TranscriptionAgentInput",
+    ) -> None:
+        """Call STT once and seed ``input_data.raw_segments_json_text``.
 
-        Writes raw transcription segments back into asset_dict so the
-        agent's LLM phase (or recompute_metrics) can consume them.
-        Returns empty list — no binary media assets produced.
+        Runs before the LLM loop (BaseAgent.run() invokes this exactly
+        once per run), so every LLM retry sees the same real ASR output
+        without re-paying the STT call.
         """
-        typed_input: TranscriptionAgentInput = ctx.typed_input
+        result = await self.stt_svc.transcribe(input_data.source_media_path)
 
-        result = await self.stt_svc.transcribe(typed_input.source_media_path)
-
-        # Write results back into asset_dict for the LLM / post-processing
-        content = asset_dict.setdefault("content", {})
-        content["language"] = result.language
-        content["full_text"] = result.full_text
-        content["segments"] = [
+        raw_segments = [
             {
                 "segment_id": f"seg_{i + 1:03d}",
                 "start_time": seg.start,
@@ -58,9 +58,26 @@ class TranscriptionMaterializer(BaseMaterializer):
             }
             for i, seg in enumerate(result.segments)
         ]
-
-        logger.info(
-            "TranscriptionMaterializer: %d segments, language=%s for task %s",
-            len(result.segments), result.language, ctx.step_id,
+        payload = {
+            "language": result.language,
+            "segments": raw_segments,
+            "full_text": result.full_text,
+        }
+        input_data.raw_segments_json_text = json.dumps(
+            payload, ensure_ascii=False, indent=2
         )
+        logger.info(
+            "TranscriptionMaterializer.pre_generate: %d segments, "
+            "language=%s for task %s",
+            len(raw_segments), result.language, ctx.step_id,
+        )
+
+    async def materialize(
+        self,
+        ctx: "MaterializeContext",
+        asset_dict: dict[str, Any],
+    ) -> list[MediaAsset]:
+        """No binary output — transcripts persist as JSON via the
+        standard agent pipeline. STT itself already ran in
+        ``pre_generate``."""
         return []

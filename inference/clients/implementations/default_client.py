@@ -9,11 +9,11 @@ import mimetypes
 import os
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, AsyncIterator, Dict, Iterator, List, Optional, Union
+from typing import Any, Dict, List, Optional
 
 from openai import AsyncOpenAI
 
-from ..base.base_client import BaseLLMClient, Message, ModelConfig
+from ..base.base_client import BaseLLMClient
 from ..json_parse_diag import describe_json_decode_error
 
 logger = logging.getLogger(__name__)
@@ -218,43 +218,6 @@ class LLMClient(BaseLLMClient):
             )
         return self._openai_clients[provider]
 
-    @property
-    def client(self) -> AsyncOpenAI:
-        """Backward-compatible default OpenAI client accessor."""
-        return self._get_openai_client("openai")
-
-    def _build_call_params(
-        self,
-        model: str,
-        config: Optional[ModelConfig],
-        **kwargs,
-    ) -> Dict[str, Any]:
-        params: Dict[str, Any] = {}
-        provider = self._resolve_provider(model)
-        if config:
-            params.update(
-                {
-                    "temperature": config.temperature,
-                    "max_tokens": config.max_tokens,
-                    "top_p": config.top_p,
-                    "frequency_penalty": config.frequency_penalty,
-                    "presence_penalty": config.presence_penalty,
-                    "stop": config.stop,
-                    "stream": config.stream,
-                    "timeout": config.timeout,
-                }
-            )
-            if config.custom_headers:
-                params["extra_headers"] = config.custom_headers
-            if config.extra_params:
-                params.update(config.extra_params)
-            if config.api_key:
-                os.environ[f"{provider.upper()}_API_KEY"] = config.api_key
-            if config.base_url:
-                params["api_base"] = config.base_url
-        params.update(kwargs)
-        return {k: v for k, v in params.items() if v is not None}
-
     @staticmethod
     def _format_response(response: Any) -> Dict[str, Any]:
         if hasattr(response, "model_dump"):
@@ -268,20 +231,6 @@ class LLMClient(BaseLLMClient):
             "usage": getattr(response, "usage", {}),
             "model": getattr(response, "model", ""),
             "id": getattr(response, "id", ""),
-        }
-
-    @staticmethod
-    def _format_chunk(chunk: Any) -> Dict[str, Any]:
-        if hasattr(chunk, "model_dump"):
-            return chunk.model_dump()
-        if hasattr(chunk, "dict"):
-            return chunk.dict()
-        if isinstance(chunk, dict):
-            return chunk
-        return {
-            "choices": getattr(chunk, "choices", []),
-            "model": getattr(chunk, "model", ""),
-            "id": getattr(chunk, "id", ""),
         }
 
     @staticmethod
@@ -391,27 +340,10 @@ class LLMClient(BaseLLMClient):
             kwargs["reasoning_effort"] = resolved_reasoning_effort
         return kwargs
 
-    def call(
-        self,
-        messages: List[Union[Message, Dict[str, Any]]],
-        model: Optional[str] = None,
-        config: Optional[ModelConfig] = None,
-        **kwargs,
-    ) -> Dict[str, Any]:
-        self._ensure_litellm()
-        resolved_model = model or self.default_model or "gpt-3.5-turbo"
-        formatted_messages = self._format_messages(messages)
-        call_params = self._build_call_params(resolved_model, config, **kwargs)
-        response = litellm.completion(
-            model=resolved_model, messages=formatted_messages, **call_params
-        )
-        return self._format_response(response)
-
     async def acall(
         self,
-        messages: List[Union[Message, Dict[str, Any]]],
+        messages: List[Dict[str, Any]],
         model: Optional[str] = None,
-        config: Optional[ModelConfig] = None,
         **kwargs,
     ) -> Dict[str, Any]:
         """Async raw chat completion that honors provider routing.
@@ -432,15 +364,14 @@ class LLMClient(BaseLLMClient):
         OpenAI model id.
         """
         resolved_model, provider, client_type = self._resolve_model_and_client(model)
-        formatted_messages = self._format_messages(messages)
 
         if client_type in {"openai_sdk", "gpt5_sdk"}:
             openai_client = self._get_openai_client(provider)
-            # Translate optional config + kwargs into OpenAI-SDK-shaped
-            # request kwargs. ``_build_openai_chat_kwargs`` already
-            # handles the gpt-5 max_completion_tokens vs max_tokens split
-            # and reasoning_effort. Anything else (response_format, tools,
-            # etc.) flows through via the kwargs catch-all below.
+            # Translate optional kwargs into OpenAI-SDK-shaped request kwargs.
+            # ``_build_openai_chat_kwargs`` already handles the gpt-5
+            # max_completion_tokens vs max_tokens split and reasoning_effort.
+            # Anything else (response_format, tools, etc.) flows through via
+            # the kwargs catch-all below.
             local_kwargs = dict(kwargs)
             max_tokens_resolved: Optional[int] = local_kwargs.pop(
                 "max_tokens", None
@@ -448,12 +379,9 @@ class LLMClient(BaseLLMClient):
             reasoning_effort_resolved: Optional[str] = local_kwargs.pop(
                 "reasoning_effort", None
             )
-            if config is not None:
-                if max_tokens_resolved is None:
-                    max_tokens_resolved = config.max_tokens
             request_kwargs = self._build_openai_chat_kwargs(
                 model=resolved_model,
-                messages=formatted_messages,
+                messages=messages,
                 max_tokens=max_tokens_resolved,
                 reasoning_effort=reasoning_effort_resolved,
                 # ``acall`` does NOT force JSON mode — callers (e.g.
@@ -468,47 +396,12 @@ class LLMClient(BaseLLMClient):
 
         # Non-OpenAI-SDK providers — fall back to litellm.
         self._ensure_litellm()
-        call_params = self._build_call_params(resolved_model, config, **kwargs)
         response = await litellm.acompletion(
-            model=resolved_model, messages=formatted_messages, **call_params
+            model=resolved_model,
+            messages=messages,
+            **{k: v for k, v in kwargs.items() if v is not None},
         )
         return self._format_response(response)
-
-    def stream_call(
-        self,
-        messages: List[Union[Message, Dict[str, Any]]],
-        model: Optional[str] = None,
-        config: Optional[ModelConfig] = None,
-        **kwargs,
-    ) -> Iterator[Dict[str, Any]]:
-        self._ensure_litellm()
-        resolved_model = model or self.default_model or "gpt-3.5-turbo"
-        formatted_messages = self._format_messages(messages)
-        call_params = self._build_call_params(
-            resolved_model, config, stream=True, **kwargs
-        )
-        for chunk in litellm.stream(
-            model=resolved_model, messages=formatted_messages, **call_params
-        ):
-            yield self._format_chunk(chunk)
-
-    async def astream_call(
-        self,
-        messages: List[Union[Message, Dict[str, Any]]],
-        model: Optional[str] = None,
-        config: Optional[ModelConfig] = None,
-        **kwargs,
-    ) -> AsyncIterator[Dict[str, Any]]:
-        self._ensure_litellm()
-        resolved_model = model or self.default_model or "gpt-3.5-turbo"
-        formatted_messages = self._format_messages(messages)
-        call_params = self._build_call_params(
-            resolved_model, config, stream=True, **kwargs
-        )
-        async for chunk in litellm.astream(
-            model=resolved_model, messages=formatted_messages, **call_params
-        ):
-            yield self._format_chunk(chunk)
 
     async def chat_json(
         self,

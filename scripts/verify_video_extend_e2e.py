@@ -192,9 +192,21 @@ def main() -> int:
         "User-submitted creative brief (110 chars). Pipeline entry point — consumed by story and screenplay agents.",
     )
 
-    resp = client.post("/api/steps/create", json={"description": {"goal": "Extend video clip"}})
-    assert resp.status_code == 201, resp.status_code
-    step_id = resp.get_json()["id"]
+    resp = client.post(
+        "/api/plan-stack/modify",
+        json={
+            "operations": [
+                {
+                    "type": "create_steps",
+                    "params": {
+                        "steps": [{"description": {"goal": "Extend video clip"}}]
+                    },
+                }
+            ]
+        },
+    )
+    assert resp.status_code == 200, resp.status_code
+    step_id = resp.get_json()["created_step_ids"][0]
 
     resp = client.post(
         "/api/assistant/execute",

@@ -101,10 +101,6 @@ class KeyframeMaterializer(BaseMaterializer):
         # callsite. Reset on each materialize() call.
         self._ctx: "MaterializeContext" = ctx
 
-        # The materializer reads its input data from ctx.typed_input only.
-        # No second resolved_artifacts channel — every required field
-        # must already be expressed on KeyFrameAgentInput.
-        typed_input = ctx.typed_input  # type: KeyFrameAgentInput
         step_id = ctx.step_id
 
         content = asset_dict.get("content", {})

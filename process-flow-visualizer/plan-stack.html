@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frameworkers — Plan Stack</title>
+  <link rel="icon" type="image/svg+xml" href="./logo.svg" />
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .ps-back {
+      display: inline-block;
+      margin-bottom: 18px;
+      color: #c084fc;
+      text-decoration: none;
+      font-size: 0.9em;
+    }
+    .ps-back:hover { text-decoration: underline; }
+    .ps-section {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-left: 3px solid #8b5cf6;
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin-bottom: 18px;
+    }
+    .ps-h {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .ps-n {
+      font-size: 0.82em;
+      color: #c084fc;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+    .ps-t {
+      font-weight: 600;
+      color: #e6e6e6;
+      font-size: 1.08em;
+    }
+    .ps-section p {
+      color: #c8c8cc;
+      font-size: 0.92em;
+      line-height: 1.72;
+      margin: 4px 0 8px;
+    }
+    .ps-section code {
+      background: rgba(139,92,246,0.12);
+      border: 1px solid rgba(139,92,246,0.24);
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-size: 0.86em;
+      color: #e9d5ff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    .ps-pill {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 0.76em;
+      font-weight: 600;
+      margin-right: 6px;
+      margin-bottom: 4px;
+    }
+    .ps-pill.pend   { background:rgba(251,191,36,0.15); color:#fde68a; border:1px solid rgba(251,191,36,0.3); }
+    .ps-pill.run    { background:rgba(79,142,247,0.15); color:#93c5fd; border:1px solid rgba(79,142,247,0.3); }
+    .ps-pill.done   { background:rgba(74,222,128,0.15); color:#86efac; border:1px solid rgba(74,222,128,0.3); }
+    .ps-pill.fail   { background:rgba(248,113,113,0.15); color:#fca5a5; border:1px solid rgba(248,113,113,0.3); }
+    .ps-pill.cancel { background:rgba(148,163,184,0.15); color:#cbd5e1; border:1px solid rgba(148,163,184,0.3); }
+
+    .ps-stack-diagram {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin: 12px 0 6px;
+      font-size: 0.88em;
+    }
+    .ps-layer {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(139,92,246,0.06);
+      border: 1px solid rgba(139,92,246,0.18);
+      border-radius: 6px;
+      padding: 8px 12px;
+    }
+    .ps-layer .idx {
+      font-family: ui-monospace, Menlo, monospace;
+      color: #c084fc;
+      font-weight: 700;
+      min-width: 58px;
+    }
+    .ps-layer .steps {
+      display: flex; flex-wrap: wrap; gap: 6px; flex: 1;
+    }
+    .ps-step {
+      background: #16121c;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #cbd5e1;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: 0.85em;
+    }
+    .ps-step.current {
+      border-color: #fbbf24;
+      color: #fde68a;
+      box-shadow: 0 0 0 1px rgba(251,191,36,0.35);
+    }
+    .ps-step.done { opacity: 0.55; text-decoration: line-through; }
+    .ps-step.failed { border-color: #f87171; color: #fca5a5; }
+    .ps-arrow { color: #8b5cf6; font-weight: 700; margin: 0 4px; }
+
+    /* Mutation 四种操作 before/after 小图 */
+    .ps-mut-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .ps-mut-card {
+      background: #0d0d14;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-left: 3px solid #8b5cf6;
+      border-radius: 6px;
+      padding: 12px 14px;
+    }
+    .ps-mut-card h4 {
+      margin: 0 0 6px;
+      color: #e9d5ff;
+      font-size: 0.9em;
+      font-family: ui-monospace, Menlo, monospace;
+      letter-spacing: 0.02em;
+    }
+    .ps-mut-card .mut-caption {
+      color: #9ca3af;
+      font-size: 0.82em;
+      margin: 0 0 10px;
+      line-height: 1.5;
+    }
+    .ps-mut-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 6px 0;
+      font-size: 0.78em;
+    }
+    .ps-mut-label {
+      color: #c084fc;
+      width: 48px;
+      flex-shrink: 0;
+      font-family: ui-monospace, Menlo, monospace;
+    }
+    .ps-mut-body {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      align-items: center;
+    }
+    .ps-mut-ghost {
+      background: #16121c;
+      border: 1px dashed rgba(139,92,246,0.4);
+      color: #9ca3af;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: 0.9em;
+    }
+    .ps-mut-new {
+      background: rgba(74,222,128,0.1);
+      border: 1px solid rgba(74,222,128,0.4);
+      color: #86efac;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: 0.9em;
+    }
+    .ps-mut-gone {
+      background: rgba(248,113,113,0.08);
+      border: 1px dashed rgba(248,113,113,0.35);
+      color: #fca5a5;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: 0.9em;
+      text-decoration: line-through;
+      opacity: 0.7;
+    }
+
+    /* Replan 前后并排对比 */
+    .ps-replan-compare {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 14px;
+      align-items: center;
+      margin-top: 12px;
+    }
+    .ps-replan-compare .ps-stack-diagram { margin: 0; }
+    .ps-replan-compare .compare-label {
+      font-size: 0.76em;
+      color: #c084fc;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .ps-replan-compare .big-arrow {
+      font-size: 1.8em;
+      color: #fbbf24;
+      text-align: center;
+      padding: 0 4px;
+    }
+    .ps-replan-compare .big-arrow-caption {
+      font-size: 0.72em;
+      color: #fde68a;
+      text-align: center;
+      margin-top: 2px;
+      font-family: ui-monospace, Menlo, monospace;
+    }
+
+    /* Director 主循环 flowchart */
+    .ps-flow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: 0.82em;
+    }
+    .ps-flow-node {
+      background: #0d0d14;
+      border: 1px solid rgba(139,92,246,0.35);
+      border-radius: 6px;
+      padding: 8px 14px;
+      color: #e9d5ff;
+      min-width: 260px;
+      text-align: center;
+    }
+    .ps-flow-node.diamond {
+      background: rgba(251,191,36,0.08);
+      border-color: rgba(251,191,36,0.5);
+      color: #fde68a;
+      border-radius: 4px;
+    }
+    .ps-flow-node.term {
+      background: rgba(148,163,184,0.08);
+      border-color: rgba(148,163,184,0.35);
+      color: #cbd5e1;
+      border-radius: 999px;
+    }
+    .ps-flow-node.fail {
+      background: rgba(248,113,113,0.08);
+      border-color: rgba(248,113,113,0.4);
+      color: #fca5a5;
+    }
+    .ps-flow-node.ok {
+      background: rgba(74,222,128,0.08);
+      border-color: rgba(74,222,128,0.4);
+      color: #86efac;
+    }
+    .ps-flow-arrow {
+      color: #8b5cf6;
+      font-weight: 700;
+      font-size: 1.2em;
+    }
+    .ps-flow-branch {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+      margin-top: 4px;
+    }
+    .ps-flow-branch > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .ps-flow-branch .branch-head {
+      font-size: 0.76em;
+      color: #fde68a;
+    }
+    .ps-flow-loop {
+      font-size: 0.76em;
+      color: #9ca3af;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed rgba(255,255,255,0.1);
+      width: 260px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+
+    <header class="header">
+      <a class="ps-back" href="./index.html">← 返回总览</a>
+      <div class="logo-row">
+        <img class="logo-mark" src="./logo.svg" alt="Frameworkers logo" />
+        <div class="logo-text">
+          <span class="logo-name">Frameworkers</span>
+          <span class="logo-tagline">Plan Stack Backend</span>
+        </div>
+      </div>
+      <div class="header-divider"></div>
+      <div class="header-badge">📚 Plan Stack</div>
+      <h1>Plan Stack 工作行为</h1>
+      <p>
+        Director 与 Assistant 之间的持久化桥梁。五张图把工作方式说完：stack 怎么长、
+        step status 怎么流转、mutation 四种操作的效果、失败时 replan 前后的结构差、Director 的执行循环。
+      </p>
+    </header>
+
+    <!-- 01 Stack 结构 -->
+    <section class="ps-section">
+      <div class="ps-h"><span class="ps-n">01</span><span class="ps-t">Stack 结构 ＆ Execution Pointer</span></div>
+      <p>
+        按 layer 分层存放 PlanStep；<code>ExecutionPointer = (layer_index, step_index)</code> 指向当前要跑的一步。
+        pointer 走过的 step 自然"冻结"。
+      </p>
+
+      <div class="ps-stack-diagram">
+        <div class="ps-layer">
+          <div class="idx">layer 0</div>
+          <div class="steps">
+            <span class="ps-step done">IntakeText</span><span class="ps-arrow">→</span>
+            <span class="ps-step done">Story</span><span class="ps-arrow">→</span>
+            <span class="ps-step done">Screenplay</span>
+          </div>
+        </div>
+        <div class="ps-layer">
+          <div class="idx">layer 1</div>
+          <div class="steps">
+            <span class="ps-step done">KeyFrame</span><span class="ps-arrow">→</span>
+            <span class="ps-step current">Video ▸ pointer</span><span class="ps-arrow">→</span>
+            <span class="ps-step">Music</span><span class="ps-arrow">→</span>
+            <span class="ps-step">Compositor</span>
+          </div>
+        </div>
+      </div>
+      <p style="color:#9ca3af;font-size:0.84em;margin-top:10px">
+        <strong>多层 = 多次 plan</strong>：每次新 user turn 或 replan 都调 <code>_persist_plan</code> 追加<strong>一个</strong>新 layer，
+        把这次规划的所有 step 挂进去。单次 turn 且无 replan 时，stack 只有一层。
+      </p>
+    </section>
+
+    <!-- 02 状态机 -->
+    <section class="ps-section">
+      <div class="ps-h"><span class="ps-n">02</span><span class="ps-t">PlanStep 状态流转</span></div>
+      <p style="margin-top:14px;font-size:1em;line-height:2">
+        <span class="ps-pill pend">PENDING</span>
+        <span class="ps-arrow">→</span>
+        <span class="ps-pill run">IN_PROGRESS</span>
+        <span class="ps-arrow">→</span>
+        <span class="ps-pill done">COMPLETED</span>
+        <span style="color:#666;margin:0 10px">│</span>
+        <span class="ps-pill fail">FAILED</span>
+        <span style="color:#666;margin:0 10px">│</span>
+        <span class="ps-pill cancel">CANCELLED</span>
+      </p>
+      <p style="color:#9ca3af;font-size:0.84em">
+        终态三选一。没有"已执行集合" — 一个 step 是否已经跑过，由 pointer 是否走过它来定。
+      </p>
+    </section>
+
+    <!-- 03 Mutation 四种操作 -->
+    <section class="ps-section">
+      <div class="ps-h"><span class="ps-n">03</span><span class="ps-t">原子批量 Mutation 的四种操作</span></div>
+      <p>
+        所有结构性改动只走 <code>POST /api/plan-stack/modify</code>，整批作为单事务（全成功 / 全回滚）。四种 op 的效果：
+      </p>
+
+      <div class="ps-mut-grid">
+
+        <div class="ps-mut-card">
+          <h4>create_steps</h4>
+          <p class="mut-caption">生成孤立的 PlanStep（尚未进 stack）。</p>
+          <div class="ps-mut-row">
+            <span class="ps-mut-label">before</span>
+            <div class="ps-mut-body"><span class="ps-mut-ghost">∅</span></div>
+          </div>
+          <div class="ps-mut-row">
+            <span class="ps-mut-label">after</span>
+            <div class="ps-mut-body">
+              <span class="ps-mut-new">step_1</span>
+              <span class="ps-mut-new">step_2</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ps-mut-card">
+          <h4>create_layers</h4>
+          <p class="mut-caption">追加一个空的 PlanLayer 槽位。</p>
+          <div class="ps-mut-row">
+            <span class="ps-mut-label">before</span>
+            <div class="ps-mut-body"><span class="ps-mut-ghost">layer 0 [ …done… ]</span></div>
+          </div>
+          <div class="ps-mut-row">
+            <span class="ps-mut-label">after</span>
+            <div class="ps-mut-body">
+              <span class="ps-mut-ghost">layer 0 [ …done… ]</span>
+              <span class="ps-mut-new">layer 1 [ ]</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ps-mut-card">
+          <h4>add_steps_to_layers</h4>
+          <p class="mut-caption">把已有的 step 挂到指定 layer 的指定位置。</p>
+          <div class="ps-mut-row">
+            <span class="ps-mut-label">before</span>
+            <div class="ps-mut-body">
+              <span class="ps-mut-ghost">step_1</span>
+              <span class="ps-mut-ghost">step_2</span>
+              <span class="ps-mut-ghost">layer 1 [ ]</span>
+            </div>
+          </div>
+          <div class="ps-mut-row">
+            <span class="ps-mut-label">after</span>
+            <div class="ps-mut-body">
+              <span class="ps-mut-new">layer 1 [ step_1 → step_2 ]</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ps-mut-card">
+          <h4>remove_steps_from_layers</h4>
+          <p class="mut-caption">从 layer 解绑 step（step 对象不删，可再挂）。</p>
+          <div class="ps-mut-row">
+            <span class="ps-mut-label">before</span>
+            <div class="ps-mut-body">
+              <span class="ps-mut-ghost">layer 1 [ step_1 → step_2 → step_3 ]</span>
+            </div>
+          </div>
+          <div class="ps-mut-row">
+            <span class="ps-mut-label">after</span>
+            <div class="ps-mut-body">
+              <span class="ps-mut-new">layer 1 [ step_1 ]</span>
+              <span class="ps-mut-gone">step_2</span>
+              <span class="ps-mut-gone">step_3</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 04 Replan 前后对比 -->
+    <section class="ps-section">
+      <div class="ps-h"><span class="ps-n">04</span><span class="ps-t">失败时的 Replan（结构变化）</span></div>
+      <p>
+        一个 step 返回 FAILED → planner 产出新的 <code>new_tail</code> →
+        删光 PENDING tail，追加一个新 layer 承载 new_tail。pointer 随 advance 自然走到新 layer 起点。
+      </p>
+
+      <div class="ps-replan-compare">
+        <div>
+          <div class="compare-label">before · failure</div>
+          <div class="ps-stack-diagram">
+            <div class="ps-layer">
+              <div class="idx">layer 0</div>
+              <div class="steps">
+                <span class="ps-step done">IntakeText</span><span class="ps-arrow">→</span>
+                <span class="ps-step failed">Story ✗</span><span class="ps-arrow">→</span>
+                <span class="ps-step">Screenplay</span><span class="ps-arrow">→</span>
+                <span class="ps-step">KeyFrame</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="big-arrow">⇒</div>
+          <div class="big-arrow-caption">remove<br/>PENDING tail<br/>+ new layer</div>
+        </div>
+
+        <div>
+          <div class="compare-label">after · replanned</div>
+          <div class="ps-stack-diagram">
+            <div class="ps-layer">
+              <div class="idx">layer 0</div>
+              <div class="steps">
+                <span class="ps-step done">IntakeText</span><span class="ps-arrow">→</span>
+                <span class="ps-step failed">Story ✗</span>
+              </div>
+            </div>
+            <div class="ps-layer">
+              <div class="idx">layer 1</div>
+              <div class="steps">
+                <span class="ps-step current">StoryRetry ▸ pointer</span><span class="ps-arrow">→</span>
+                <span class="ps-step">Screenplay'</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p style="margin-top:12px;color:#9ca3af;font-size:0.84em">
+        <code>new_tail</code> 为空（LLM 故障 / 没给出 plan）→ 不动 stack，executor 直接 <code>advance</code> 跳过失败步。
+        总预算由 <code>MAX_REPLAN_ROUNDS</code> 限制，耗尽后锁死 replan，按当前 stack 跑完。
+      </p>
+    </section>
+
+    <!-- 05 Director 执行循环 -->
+    <section class="ps-section">
+      <div class="ps-h"><span class="ps-n">05</span><span class="ps-t">Director 执行循环</span></div>
+      <p>
+        按 pointer 拉 step → 执行 → 按 status 决定 replan / advance → 回到顶部；直到 stack 跑完或 per-cycle budget 耗尽。
+      </p>
+
+      <div class="ps-flow">
+        <div class="ps-flow-node"><code>GET /api/plan-stack/next</code></div>
+        <div class="ps-flow-arrow">↓</div>
+        <div class="ps-flow-node diamond">step is None ?</div>
+
+        <div class="ps-flow-branch">
+          <div>
+            <div class="branch-head">yes</div>
+            <div class="ps-flow-arrow">↓</div>
+            <div class="ps-flow-node term">cycle done</div>
+          </div>
+          <div>
+            <div class="branch-head">no</div>
+            <div class="ps-flow-arrow">↓</div>
+            <div class="ps-flow-node"><code>PUT /status IN_PROGRESS</code></div>
+            <div class="ps-flow-arrow">↓</div>
+            <div class="ps-flow-node"><code>POST /api/assistant/execute</code></div>
+            <div class="ps-flow-arrow">↓</div>
+            <div class="ps-flow-node"><code>PUT /status COMPLETED | FAILED</code></div>
+            <div class="ps-flow-arrow">↓</div>
+            <div class="ps-flow-node diamond">status ?</div>
+
+            <div class="ps-flow-branch">
+              <div>
+                <div class="branch-head">COMPLETED</div>
+                <div class="ps-flow-arrow">↓</div>
+                <div class="ps-flow-node ok">advance pointer</div>
+              </div>
+              <div>
+                <div class="branch-head">FAILED</div>
+                <div class="ps-flow-arrow">↓</div>
+                <div class="ps-flow-node fail">replan_on_failure()</div>
+                <div class="ps-flow-arrow">↓</div>
+                <div class="ps-flow-node diamond">new_tail ?</div>
+                <div class="ps-flow-branch">
+                  <div>
+                    <div class="branch-head">非空</div>
+                    <div class="ps-flow-arrow">↓</div>
+                    <div class="ps-flow-node">modify:<br/>remove tail + new layer</div>
+                  </div>
+                  <div>
+                    <div class="branch-head">空</div>
+                    <div class="ps-flow-arrow">↓</div>
+                    <div class="ps-flow-node">advance (skip)</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ps-flow-loop">↑ 下一轮</div>
+      </div>
+
+      <p style="margin-top:10px;color:#9ca3af;font-size:0.84em">
+        Director 只看 <code>PlanStep.status</code> + pointer，不关心 Assistant 怎么跑 sub-agent、
+        workspace 里落了什么 artifact — 这是 Director / Assistant 解耦的边界。
+      </p>
+    </section>
+
+  </main>
+</body>
+</html>

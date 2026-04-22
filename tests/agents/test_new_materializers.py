@@ -57,10 +57,10 @@ class _SpyCompositorService:
     def __init__(self):
         self.calls: list[dict] = []
 
-    async def compose(self, *, video_path, audio_path="", subtitle_srt="", plan=None):
+    async def compose(self, *, video_path, audio_path="", subtitle_srts=None, plan=None):
         self.calls.append({
             "video_path": video_path, "audio_path": audio_path,
-            "subtitle_srt": subtitle_srt, "plan": plan,
+            "subtitle_srts": list(subtitle_srts or []), "plan": plan,
         })
         return b"composed_mp4_bytes"
 
@@ -75,7 +75,9 @@ class TestCompositorMaterializer:
         inp = CompositorAgentInput(
             video_file_path="/tmp/video.mp4",
             audio_file_path="/tmp/audio.wav",
-            subtitle_json_text='{"content":{"tracks":[{"srt_text":"1\\n00:00:01,000 --> 00:00:03,000\\nHello\\n"}]}}',
+            subtitle_json_texts=[
+                '{"content":{"tracks":[{"srt_text":"1\\n00:00:01,000 --> 00:00:03,000\\nHello\\n"}]}}',
+            ],
         )
         asset_dict = {
             "content": {
@@ -92,7 +94,45 @@ class TestCompositorMaterializer:
         assert assets[0].data == b"composed_mp4_bytes"
         assert len(svc.calls) == 1
         assert svc.calls[0]["video_path"] == "/tmp/video.mp4"
-        assert "Hello" in svc.calls[0]["subtitle_srt"]
+        srts = svc.calls[0]["subtitle_srts"]
+        assert len(srts) == 1
+        assert "Hello" in srts[0]
+
+    def test_collects_multiple_tracks_for_bilingual_burn_in(self):
+        """Bilingual flow: one SubtitleAgent artifact + one TranslationAgent
+        artifact come in through the ``subtitle_tracks`` collection label.
+        The materializer must peel the translation's ``translated_payload``
+        wrapper and hand both SRT blobs to the compositor service."""
+        from agents.compositor.materializer import CompositorMaterializer
+        from agents.compositor.schema import CompositorAgentInput
+
+        svc = _SpyCompositorService()
+        mat = CompositorMaterializer(compositor_service=svc)
+        # First entry: SubtitleAgent-direct shape (CN).
+        cn = (
+            '{"content":{"tracks":[{"srt_text":'
+            '"1\\n00:00:01,000 --> 00:00:03,000\\n你好\\n"}]}}'
+        )
+        # Second entry: TranslationAgent shape (EN wrapped under
+        # content.translated_payload).
+        en = (
+            '{"content":{"source_language":"zh","target_language":"en",'
+            '"translated_payload":{"content":{"tracks":[{"srt_text":'
+            '"1\\n00:00:01,000 --> 00:00:03,000\\nHello\\n"}]}}}}'
+        )
+        inp = CompositorAgentInput(
+            video_file_path="/tmp/video.mp4",
+            audio_file_path="/tmp/audio.wav",
+            subtitle_json_texts=[cn, en],
+        )
+        ctx = _make_ctx(inp)
+        assets = asyncio.run(mat.materialize(ctx, {"content": {"plan": {}}}))
+
+        assert len(assets) == 1
+        srts = svc.calls[0]["subtitle_srts"]
+        assert len(srts) == 2, f"expected both CN+EN tracks, got {srts!r}"
+        joined = "\n".join(srts)
+        assert "你好" in joined and "Hello" in joined
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -117,27 +157,48 @@ class _SpyTranscriptionService:
 
 
 class TestTranscriptionMaterializer:
-    def test_writes_segments_into_asset_dict(self):
+    def test_pre_generate_seeds_raw_segments_into_input_data(self):
+        """STT ran in pre_generate; raw_segments_json_text on input_data
+        should contain the serialized ASR output for the LLM to clean up."""
+        import json
         from agents.transcription.materializer import TranscriptionMaterializer
         from agents.transcription.schema import TranscriptionAgentInput
 
         svc = _SpyTranscriptionService()
         mat = TranscriptionMaterializer(transcription_service=svc)
         inp = TranscriptionAgentInput(source_media_path="/tmp/audio.mp3")
-        asset_dict = {"content": {}}
+        ctx = _make_ctx(inp)
+        asyncio.run(mat.pre_generate(ctx, inp))
+
+        assert svc.calls == ["/tmp/audio.mp3"]
+        assert inp.raw_segments_json_text, "raw_segments_json_text must be filled"
+        payload = json.loads(inp.raw_segments_json_text)
+        assert payload["language"] == "zh"
+        assert payload["full_text"] == "你好世界 测试转录"
+        assert len(payload["segments"]) == 2
+        assert payload["segments"][0]["segment_id"] == "seg_001"
+        assert payload["segments"][0]["text"] == "你好世界"
+        assert payload["segments"][1]["start_time"] == 3.0
+
+    def test_materialize_is_no_op(self):
+        """Transcripts are pure-JSON artifacts — materialize emits no
+        binary asset and no longer mutates asset_dict (that moved to
+        pre_generate)."""
+        from agents.transcription.materializer import TranscriptionMaterializer
+        from agents.transcription.schema import TranscriptionAgentInput
+
+        svc = _SpyTranscriptionService()
+        mat = TranscriptionMaterializer(transcription_service=svc)
+        inp = TranscriptionAgentInput(source_media_path="/tmp/audio.mp3")
+        asset_dict: dict = {"content": {"segments": ["stub"]}}
         ctx = _make_ctx(inp)
         assets = asyncio.run(mat.materialize(ctx, asset_dict))
 
-        # No binary assets for transcription
         assert assets == []
-        # But asset_dict is populated
-        content = asset_dict["content"]
-        assert content["language"] == "zh"
-        assert content["full_text"] == "你好世界 测试转录"
-        assert len(content["segments"]) == 2
-        assert content["segments"][0]["segment_id"] == "seg_001"
-        assert content["segments"][0]["text"] == "你好世界"
-        assert content["segments"][1]["start_time"] == 3.0
+        # STT was NOT invoked — pre_generate owns that call now.
+        assert svc.calls == []
+        # asset_dict must be untouched by materialize().
+        assert asset_dict == {"content": {"segments": ["stub"]}}
 
 
 # ═══════════════════════════════════════════════════════════════════════════

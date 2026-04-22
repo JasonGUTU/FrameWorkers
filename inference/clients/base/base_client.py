@@ -3,56 +3,25 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from dataclasses import dataclass, field
-from enum import Enum
 import os
-from typing import Any, AsyncIterator, Dict, Iterator, List, Optional, Union
+from typing import Any, Dict, List, Optional
 
 from ...config.model_config import lookup_provider
 
 
-class MessageRole(str, Enum):
-    """Message role types."""
-
-    SYSTEM = "system"
-    USER = "user"
-    ASSISTANT = "assistant"
-    FUNCTION = "function"
-    TOOL = "tool"
-
-
-@dataclass
-class ModelConfig:
-    """Configuration for model calls."""
-
-    model: str
-    temperature: float = 0.7
-    max_tokens: Optional[int] = None
-    top_p: float = 1.0
-    frequency_penalty: float = 0.0
-    presence_penalty: float = 0.0
-    stop: Optional[List[str]] = None
-    stream: bool = False
-    timeout: Optional[float] = None
-    api_key: Optional[str] = None
-    base_url: Optional[str] = None
-    custom_headers: Dict[str, str] = field(default_factory=dict)
-    extra_params: Dict[str, Any] = field(default_factory=dict)
-
-
-@dataclass
-class Message:
-    """Chat message structure."""
-
-    role: str
-    content: Union[str, List[Dict[str, Any]]]
-    name: Optional[str] = None
-    tool_calls: Optional[List[Dict[str, Any]]] = None
-    tool_call_id: Optional[str] = None
-
-
 class BaseLLMClient(ABC):
-    """Base class shared by all concrete client implementations."""
+    """Base class shared by all concrete client implementations.
+
+    Concrete subclasses implement three async entry points:
+
+      * ``acall`` — low-level chat completion; used by callers that need
+        raw messages + provider-specific kwargs (multimodal, response_format).
+      * ``chat_json`` — JSON-mode structured output; parses + validates.
+      * ``chat_text`` — plain-text response.
+
+    All three honor the runtime provider routing loaded from
+    ``inference_runtime.yaml`` / built-in ``_MODEL_PROVIDER`` table.
+    """
 
     _env_initialized: bool = False
     _routing_initialized: bool = False
@@ -61,7 +30,6 @@ class BaseLLMClient(ABC):
     def __init__(
         self,
         default_model: Optional[str] = None,
-        config_path: Optional[str] = None,
         *,
         model: Optional[str] = None,
         max_tokens: Optional[int] = None,
@@ -88,8 +56,6 @@ class BaseLLMClient(ABC):
         self.reasoning_effort = reasoning_effort
         self._api_key = api_key
         self._base_url = base_url
-        if config_path:
-            self._load_config(config_path)
 
     def _load_runtime_routing(self) -> Dict[str, Any]:
         """Load user-defined runtime routing config from project root."""
@@ -163,84 +129,19 @@ class BaseLLMClient(ABC):
                 return str(mapped)
         return "openai_sdk" if provider == "openai" else "litellm"
 
-    def _load_config(self, config_path: str):
-        from ...config.config_loader import ConfigLoader
-
-        config = ConfigLoader.load(config_path)
-        if "default_model" in config:
-            self.default_model = config["default_model"]
-            self.model = self.default_model
-        if "api_keys" in config:
-            for provider, key in config["api_keys"].items():
-                env_var = f"{provider.upper()}_API_KEY"
-                if not os.getenv(env_var):
-                    os.environ[env_var] = key
-
-    def _format_messages(
-        self, messages: List[Union[Message, Dict[str, Any]]]
-    ) -> List[Dict[str, Any]]:
-        formatted = []
-        for msg in messages:
-            if isinstance(msg, Message):
-                formatted.append(
-                    {
-                        "role": msg.role,
-                        "content": msg.content,
-                        **(
-                            {
-                                k: v
-                                for k, v in {
-                                    "name": msg.name,
-                                    "tool_calls": msg.tool_calls,
-                                    "tool_call_id": msg.tool_call_id,
-                                }.items()
-                                if v is not None
-                            }
-                        ),
-                    }
-                )
-            else:
-                formatted.append(msg)
-        return formatted
-
-    @abstractmethod
-    def call(
-        self,
-        messages: List[Union[Message, Dict[str, Any]]],
-        model: Optional[str] = None,
-        config: Optional[ModelConfig] = None,
-        **kwargs,
-    ) -> Dict[str, Any]:
-        pass
-
     @abstractmethod
     async def acall(
         self,
-        messages: List[Union[Message, Dict[str, Any]]],
+        messages: List[Dict[str, Any]],
         model: Optional[str] = None,
-        config: Optional[ModelConfig] = None,
         **kwargs,
     ) -> Dict[str, Any]:
-        pass
+        """Low-level async chat completion.
 
-    @abstractmethod
-    def stream_call(
-        self,
-        messages: List[Union[Message, Dict[str, Any]]],
-        model: Optional[str] = None,
-        config: Optional[ModelConfig] = None,
-        **kwargs,
-    ) -> Iterator[Dict[str, Any]]:
-        pass
-
-    @abstractmethod
-    async def astream_call(
-        self,
-        messages: List[Union[Message, Dict[str, Any]]],
-        model: Optional[str] = None,
-        config: Optional[ModelConfig] = None,
-        **kwargs,
-    ) -> AsyncIterator[Dict[str, Any]]:
+        ``messages`` is a list of OpenAI-format dicts (``{role, content}``).
+        Extra kwargs (``response_format``, tools, etc.) flow through to the
+        underlying SDK call.
+        """
         pass
 
     @abstractmethod

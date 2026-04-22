@@ -86,6 +86,31 @@ class BaseMaterializer(ABC):
     input.
     """
 
+    async def pre_generate(
+        self,
+        ctx: "MaterializeContext",
+        input_data: Any,
+    ) -> None:
+        """Optional hook invoked ONCE before the agent's LLM loop starts.
+
+        Tool-type agents (e.g. TranscriptionAgent, OCR, scene-detect) need
+        deterministic upstream data — STT segments, OCR lines, shot
+        boundaries — before the LLM can do anything useful. BaseAgent's
+        default pipeline is ``generate → L1/L2 → materialize → L3``, which
+        leaves no room to populate such data between input_data arriving
+        and the first LLM call. This hook closes that gap: a materializer
+        that needs to seed input_data with external, deterministic data
+        overrides ``pre_generate`` and mutates ``input_data`` in place
+        (e.g. filling a ``raw_segments_json_text`` field). BaseAgent runs
+        the hook exactly once, outside the retry loop, so the seed data
+        survives rework_notes-driven retries without re-paying the STT /
+        OCR / etc. cost.
+
+        Materializers that only produce binary output (image/video/audio)
+        have no use for this and keep the default no-op.
+        """
+        return None
+
     @abstractmethod
     async def materialize(
         self,
@@ -193,8 +218,9 @@ class SubAgentDescriptor:
     Attributes:
         agent_id:
             Unique agent identifier, e.g. ``"AudioAgent"``.  Used as the
-            lookup key in the registry, in ``RoutingStep.agent_id``, and as
-            the slug for the JSON snapshot file written under
+            lookup key in the registry, as the director planner's
+            ``PlanStepSpec.agent_id`` value, and as the slug for the JSON
+            snapshot file written under
             ``artifacts/<agent_id>/<agent_id>_exec_<n>.json``.
         catalog_entry:
             Human-readable text describing this agent's purpose, inputs,

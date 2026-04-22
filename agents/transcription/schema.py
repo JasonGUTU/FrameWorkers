@@ -50,9 +50,20 @@ class TranscriptionAgentInput(BaseModel):
 
     ``source_media_path`` is the direct file path to the audio or video
     file to transcribe.
+
+    ``raw_segments_json_text`` is populated by TranscriptionMaterializer's
+    ``pre_generate`` hook BEFORE the LLM loop starts: the materializer
+    calls the STT service once and serializes the raw timestamped
+    segments as a JSON text blob here. The agent's ``build_user_prompt``
+    renders this inline so the LLM cleans real ASR output instead of
+    being asked to invent transcription from just a file path. Left
+    empty when running the agent without a materialize_ctx (e.g.
+    isolated LLM-only unit tests), in which case the LLM falls back to
+    a minimal placeholder output.
     """
 
     source_media_path: str = ""
+    raw_segments_json_text: str = ""
 
 
 class TranscriptionAgentOutput(BaseModel):

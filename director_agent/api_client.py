@@ -1,7 +1,7 @@
 """HTTP client for Plan Stack backend.
 
 Covers: chat messages + sub-agent catalog + Assistant execute + Plan Stack
-(CRUD + layer + execution pointer + batch modify).
+reads (step / layers / pointer) + status updates + atomic batch modify.
 """
 
 from __future__ import annotations

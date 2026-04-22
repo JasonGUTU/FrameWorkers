@@ -7,7 +7,6 @@ from enum import Enum
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Optional, Dict, Any, List
-import uuid
 
 
 class PlanStepStatus(Enum):
@@ -38,7 +37,6 @@ class UserMessage:
     id: str
     content: str
     timestamp: datetime
-    user_id: str
     sender_type: MessageSenderType  # Type of sender: director, subagent, user
     director_read_status: ReadingStatus
     user_read_status: ReadingStatus

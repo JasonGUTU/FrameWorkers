@@ -129,10 +129,22 @@ def _post(client, url, body, debug_file, *, step):
 
 
 def _create_step(client, debug_file, goal: str) -> str:
-    resp, body = _post(client, "/api/steps/create",
-                       {"description": {"goal": goal}}, debug_file, step="create_step")
-    assert resp.status_code == 201, f"create_step failed: {body}"
-    return body["id"]
+    resp, body = _post(
+        client,
+        "/api/plan-stack/modify",
+        {
+            "operations": [
+                {
+                    "type": "create_steps",
+                    "params": {"steps": [{"description": {"goal": goal}}]},
+                }
+            ]
+        },
+        debug_file,
+        step="create_step",
+    )
+    assert resp.status_code == 200, f"create_step failed: {body}"
+    return body["created_step_ids"][0]
 
 
 def _upload_text(client, debug_file, text: str) -> dict:

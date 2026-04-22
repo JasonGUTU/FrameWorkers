@@ -36,22 +36,12 @@ def create_assistant_blueprint():
     def get_all_sub_agents():
         """
         Get all installed sub-agents (from registry)
-        
+
         Returns aggregated information about all available sub-agents
         """
         registry = get_agent_registry()
         agents_info = registry.gather_agents_info()
         return jsonify(agents_info)
-    
-    @bp.route('/api/assistant/sub-agents/<agent_id>', methods=['GET'])
-    def get_sub_agent(agent_id: str):
-        """Get information about a specific sub-agent"""
-        registry = get_agent_registry()
-        agents_info = registry.gather_agents_info().get("agents", [])
-        agent = next((item for item in agents_info if item.get("id") == agent_id), None)
-        if agent is None:
-            return jsonify({'error': 'Sub-agent not found'}), 404
-        return jsonify(agent)
     
     # Execution routes
     @bp.route('/api/assistant/execute', methods=['POST'])

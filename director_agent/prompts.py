@@ -1,4 +1,4 @@
-"""LLM system prompts and user-message assembly for Upfront planner + merge."""
+"""LLM system prompts and user-message assembly for merge + Upfront planner + replanner."""
 
 from __future__ import annotations
 
@@ -58,7 +58,12 @@ MERGE_LATEST_USER_HEADER = (
 # Upfront planner
 # ---------------------------------------------------------------------------
 
-PLAN_UPFRONT_SYSTEM = (
+# Core planner prompt (task + structural rules + routing policies). Shared by
+# PLAN_UPFRONT_SYSTEM (which appends the 7 worked-pattern fewshots) and
+# PLAN_UPFRONT_SYSTEM_BARE (which stops here). Split exists because training a
+# LoRA with fewshots on can cause the creative-flow shape to overshoot onto
+# terminal chains (VideoExtend / Highlight) — bare training avoids that.
+_PLAN_UPFRONT_CORE = (
     "You are the Director. For ONE user goal, produce the **complete ordered pipeline** of "
     "sub-agent executions needed to satisfy it. You are NOT picking one step — you plan the "
     "whole thing upfront. Use the agent catalog (each entry's inputs / output / "
@@ -87,7 +92,7 @@ PLAN_UPFRONT_SYSTEM = (
     "\n"
     "**Routing policy (deliberate router defaults — override only when user_goal is explicit):**\n"
     "\n"
-    "1. CREATIVE FLOW AUDIO DEFAULT: cr-style chains (Story → Screenplay → KeyFrame → Video → ...) "
+    "1. CREATIVE FLOW AUDIO DEFAULT: creative-flow chains (Story → Screenplay → KeyFrame → Video → ...) "
     "default to BOTH MusicAgent AND AmbienceAgent as the cinematic underlay. Override this default "
     "based on what kind of audio layer the user semantically requests:\n"
     "  * only a musical / melodic score (regardless of genre or instrument) → run MusicAgent only, "
@@ -128,7 +133,10 @@ PLAN_UPFRONT_SYSTEM = (
     "\n"
     "(For per-agent inclusion/exclusion conditions — BriefEnricher, Story, Transcription, "
     "AudioMix/Music/Ambience — read each agent's [Director topology] block in the catalog below.)\n"
-    "\n"
+)
+
+
+_PLAN_UPFRONT_FEWSHOTS = (
     "**Correct plan patterns for representative tasks** (imitate these shapes; adapt to each specific user_goal):\n"
     "\n"
     "1. Pure creation, no subtitle — 'Make a CEO romance mini-drama about a struggling waitress...' / "
@@ -162,23 +170,31 @@ PLAN_UPFRONT_SYSTEM = (
 )
 
 
+PLAN_UPFRONT_SYSTEM = _PLAN_UPFRONT_CORE + "\n" + _PLAN_UPFRONT_FEWSHOTS
+PLAN_UPFRONT_SYSTEM_BARE = _PLAN_UPFRONT_CORE
+
+
 # ---------------------------------------------------------------------------
 # Replanner — invoked when a step fails mid-plan
 # ---------------------------------------------------------------------------
 
 REPLAN_TAIL_SYSTEM = (
-    "A step in the current Plan Stack just FAILED. You have three options:\n"
-    '  {"action":"retry"}  — retry the failed step with the same agent_id\n'
-    '  {"action":"skip"}   — leave the failure in place, continue to the next planned step\n'
-    '  {"action":"replan","plan":[{"agent_id":"...","intent":"..."},...],'
-    '"rationale":"<why>"}  — replace ALL remaining (PENDING) steps in the stack with a new tail\n'
+    "A step in the current Plan Stack just FAILED. Produce a replacement for "
+    "the remaining PENDING tail of the stack.\n"
     "\n"
-    "Use the failed_step's `error` field, the COMPLETED prefix, the PENDING tail, "
-    "and the agent catalog to decide.\n"
+    "Output JSON:\n"
+    '  {"plan":[{"agent_id":"...","intent":"..."},...],"rationale":"<why>"}\n'
+    "\n"
+    "If you want to re-run the failed step (e.g. transient error), emit a plan "
+    "that starts with the same agent_id again — the plan is the tail, so a "
+    "single-element plan of just the failed agent re-runs that one step.\n"
+    "\n"
+    "Use the failed_step's `error` field, the COMPLETED prefix, the PENDING "
+    "tail, and the agent catalog to decide.\n"
     "\n"
     "Structural rules (framework invariants):\n"
     "- Only the PENDING tail can be replanned. COMPLETED steps stay frozen.\n"
-    "- agent_ids in a replan MUST be copied from the allowed list exactly.\n"
+    "- agent_ids MUST be copied from the allowed list exactly.\n"
     "\n"
     "**Special case — upstream input rejection (machine-protocol decoder):**\n"
     "If the failed step's `error` string starts with `[upstream_input_rejected]`, "
@@ -186,18 +202,15 @@ REPLAN_TAIL_SYSTEM = (
     "were too incomplete / malformed for it to do its job. The error carries "
     "`reason=...; missing=[<labels>]` fields. Sub-agents deliberately do NOT "
     "name which upstream step to replace — that's your job.\n"
-    "  * DO NOT choose `retry` in this case — the same input will produce the "
-    "same rejection; retry is wasted.\n"
-    "  * DO NOT choose `skip` unless every remaining PENDING step is truly "
-    "optional — usually the downstream cannot proceed without the data this "
-    "step needed.\n"
-    "  * Prefer `replan`: identify the upstream producer yourself by reading "
-    "the failed consumer's input labels (in the agent catalog), matching "
-    "`missing=[...]` to the labels, and tracing back through the COMPLETED "
-    "prefix to find the step whose output feeds those labels. The new tail "
-    "should start by re-running (or replacing) that producer with a better "
-    "brief, then continue the original work. Keep the COMPLETED prefix "
-    "intact; only replace the PENDING tail.\n"
+    "  * Do NOT emit a plan that simply re-runs the failed consumer — the same "
+    "input will produce the same rejection.\n"
+    "  * Identify the upstream producer yourself by reading the failed "
+    "consumer's input labels (in the agent catalog), matching `missing=[...]` "
+    "to the labels, and tracing back through the COMPLETED prefix to find the "
+    "step whose output feeds those labels. The new tail should start by "
+    "re-running (or replacing) that producer with a better brief, then continue "
+    "the original work. Keep the COMPLETED prefix intact; only replace the "
+    "PENDING tail.\n"
     "Respond with JSON only, no markdown."
 )
 
@@ -269,9 +282,9 @@ def build_replan_user_prompt(
         + (user_goal or "").strip()[:12000]
         + "\n\nFailed step (the one that just failed):\n"
         + failed_step_blob
-        + "\n\nPENDING tail (will be replaced if action=replan):\n"
+        + "\n\nPENDING tail (the portion your replacement plan replaces):\n"
         + pending_tail_blob
         + "\n\nCOMPLETED history (immutable; for context):\n"
         + completed_blob
-        + "\n\nDecide action ∈ {retry, skip, replan}. Respond with JSON only."
+        + "\n\nProduce the replacement tail as a `plan` JSON array. Respond with JSON only."
     )

@@ -46,7 +46,6 @@ class MusicMaterializer(BaseMaterializer):
                 # Generate segments of max 30s each, then concat
                 segments: list[bytes] = []
                 remaining = max(target_dur, 10.0)
-                seg_idx = 0
                 while remaining > 0:
                     seg_dur = min(remaining, 30.0)
                     result = await self.svc.generate_music(
@@ -54,7 +53,6 @@ class MusicMaterializer(BaseMaterializer):
                     )
                     segments.append(result.bytes)
                     remaining -= seg_dur
-                    seg_idx += 1
                 # Concat if multiple segments
                 if len(segments) == 1:
                     final_bytes = segments[0]

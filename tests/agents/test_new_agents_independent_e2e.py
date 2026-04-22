@@ -138,9 +138,19 @@ def _seed_file(workspace: Workspace, agent_id: str, filename: str, data: bytes, 
 
 
 def _create_step(client, goal: str) -> str:
-    resp = client.post("/api/steps/create", json={"description": {"goal": goal}})
-    assert resp.status_code == 201
-    return resp.get_json()["id"]
+    resp = client.post(
+        "/api/plan-stack/modify",
+        json={
+            "operations": [
+                {
+                    "type": "create_steps",
+                    "params": {"steps": [{"description": {"goal": goal}}]},
+                }
+            ]
+        },
+    )
+    assert resp.status_code == 200
+    return resp.get_json()["created_step_ids"][0]
 
 
 def _execute(client, agent_id: str, step_id: str) -> dict:

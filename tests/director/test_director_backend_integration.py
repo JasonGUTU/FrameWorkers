@@ -118,7 +118,7 @@ class _FakePlanner:
     def replan_on_failure(self, **kwargs):
         self.calls["replan"] += 1
         from director_agent.router import ReplanDecision
-        return self._replan_decision or ReplanDecision(action="skip")
+        return self._replan_decision or ReplanDecision()
 
 
 # ---------------------------------------------------------------------------

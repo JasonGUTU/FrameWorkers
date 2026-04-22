@@ -146,7 +146,7 @@
   const EVAL_DIR = './Runtime/eval_routing/';
 
   async function discoverRuns() {
-    const resp = await fetch(EVAL_DIR);
+    const resp = await fetch(EVAL_DIR + '?t=' + Date.now(), { cache: 'no-store' });
     const html = await resp.text();
     const re = /href="([^"]+\.json)"/g;
     const files = [];
@@ -156,7 +156,7 @@
   }
 
   async function loadRun(filename) {
-    const resp = await fetch(EVAL_DIR + filename);
+    const resp = await fetch(EVAL_DIR + filename + '?t=' + Date.now(), { cache: 'no-store' });
     return resp.json();
   }
 

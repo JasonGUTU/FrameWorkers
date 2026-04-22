@@ -79,21 +79,8 @@ class LogManager:
             return None
         data = json.loads(line)
         data["timestamp"] = datetime.fromisoformat(data["timestamp"])
-        # Drop any historical fields that no longer live on LogEntry so
-        # legacy logs.jsonl files written before the schema cleanup still
-        # parse cleanly.
-        for legacy in ("operation_type", "resource_type"):
-            data.pop(legacy, None)
-        # Old jsonl rows lacked a top-level event — historically the
-        # categorisation lived in details.event_type. Promote it so the
-        # row can still be filtered by event after parsing.
-        if not data.get("event"):
-            details = data.get("details") or {}
-            event_type = details.get("event_type") if isinstance(details, dict) else None
-            data["event"] = str(event_type or "")
         data.setdefault("level", "INFO")
         data.setdefault("execution_id", None)
-        data.pop("duration_ms", None)
         return LogEntry(**data)
 
     @staticmethod

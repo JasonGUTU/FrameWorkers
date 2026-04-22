@@ -10,6 +10,7 @@ from __future__ import annotations
 import sys
 import types
 from pathlib import Path
+from typing import Any, Dict, List, Optional
 
 import pytest
 
@@ -35,14 +36,11 @@ def _reset_storage() -> None:
     """Clear the Plan Stack singleton's internal state between tests.
 
     Routes bind to ``storage`` at import time so we cannot rebind the name;
-    instead we swap the inner ``_state`` and re-point the cached aliases.
+    instead we swap the inner ``_state`` and re-point the two child helpers
+    that captured it at construction.
     """
     fresh = PlanStackStateStore()
     global_storage._state = fresh
-    global_storage.user_messages = fresh.user_messages
-    global_storage.plan_steps = fresh.plan_steps
-    global_storage.plan_layers = fresh.plan_layers
-    global_storage.lock = fresh.lock
     global_storage._batch_mutator._state = fresh
     global_storage._execution_flow._state = fresh
 
@@ -65,29 +63,80 @@ def _ok_json(resp, status=None):
     return resp.get_json()
 
 
-class TestPlanStackCrudEndpoints:
-    def test_create_step_roundtrip(self, client):
-        body = _ok_json(
-            client.post("/api/steps/create", json={"description": {"goal": "hello"}}),
-            status=201,
+def _create_steps(client, descriptions: List[Dict[str, Any]]) -> List[str]:
+    """Batch-create steps via ``/api/plan-stack/modify`` and return their ids."""
+    body = _ok_json(
+        client.post(
+            "/api/plan-stack/modify",
+            json={
+                "operations": [
+                    {
+                        "type": "create_steps",
+                        "params": {
+                            "steps": [{"description": d} for d in descriptions]
+                        },
+                    }
+                ]
+            },
         )
-        assert body["id"].startswith("step_"), body
-        assert body["status"] == "PENDING"
+    )
+    assert body["success"] is True, body
+    return list(body["created_step_ids"])
 
-        got = _ok_json(client.get(f"/api/steps/{body['id']}"), status=200)
-        assert got["id"] == body["id"]
+
+def _create_layer(client, layer_index: Optional[int] = None) -> int:
+    """Batch-create one layer and return its index."""
+    params: Dict[str, Any] = {"layers": [{"layer_index": layer_index}]}
+    body = _ok_json(
+        client.post(
+            "/api/plan-stack/modify",
+            json={"operations": [{"type": "create_layers", "params": params}]},
+        )
+    )
+    assert body["success"] is True, body
+    return body["created_layer_indices"][0]
+
+
+def _add_steps_to_layer(client, layer_index: int, step_ids: List[str]) -> None:
+    body = _ok_json(
+        client.post(
+            "/api/plan-stack/modify",
+            json={
+                "operations": [
+                    {
+                        "type": "add_steps_to_layers",
+                        "params": {
+                            "additions": [
+                                {"layer_index": layer_index, "step_id": sid}
+                                for sid in step_ids
+                            ]
+                        },
+                    }
+                ]
+            },
+        )
+    )
+    assert body["success"] is True, body
+
+
+class TestPlanStackStepReads:
+    def test_step_create_and_get(self, client):
+        [sid] = _create_steps(client, [{"goal": "hello"}])
+        assert sid.startswith("step_"), sid
+
+        got = _ok_json(client.get(f"/api/steps/{sid}"), status=200)
+        assert got["id"] == sid
         assert got["description"] == {"goal": "hello"}
+        assert got["status"] == "PENDING"
 
     def test_get_all_steps(self, client):
-        for i in range(3):
-            client.post("/api/steps/create", json={"description": {"i": i}})
+        _create_steps(client, [{"i": i} for i in range(3)])
         body = _ok_json(client.get("/api/steps/list"))
         assert isinstance(body, list)
         assert len(body) == 3
 
     def test_update_step_status_and_reflect(self, client):
-        create = _ok_json(client.post("/api/steps/create", json={"description": {"goal": "placeholder"}}))
-        sid = create["id"]
+        [sid] = _create_steps(client, [{"goal": "placeholder"}])
         updated = _ok_json(
             client.put(f"/api/steps/{sid}/status", json={"status": "IN_PROGRESS"}),
             status=200,
@@ -99,13 +148,9 @@ class TestPlanStackCrudEndpoints:
 
 class TestPlanStackLayerAndPointer:
     def test_create_layer_add_step_get_next(self, client):
-        step = _ok_json(client.post("/api/steps/create", json={"description": {"k": "v"}}))
-        sid = step["id"]
-        _ok_json(client.post("/api/layers/create", json={"layer_index": 0}), status=201)
-        _ok_json(
-            client.post("/api/layers/0/steps", json={"step_id": sid}),
-            status=200,
-        )
+        [sid] = _create_steps(client, [{"k": "v"}])
+        _create_layer(client, layer_index=0)
+        _add_steps_to_layer(client, 0, [sid])
 
         stack = _ok_json(client.get("/api/plan-stack"))
         assert len(stack) == 1
@@ -123,13 +168,12 @@ class TestPlanStackLayerAndPointer:
         assert nxt["step"]["id"] == sid
 
     def test_execution_pointer_advance(self, client):
-        create = _ok_json(client.post("/api/steps/create", json={"description": {"goal": "placeholder"}}))
-        s1 = create["id"]
-        create2 = _ok_json(client.post("/api/steps/create", json={"description": {"goal": "placeholder"}}))
-        s2 = create2["id"]
-        _ok_json(client.post("/api/layers/create", json={"layer_index": 0}), status=201)
-        _ok_json(client.post("/api/layers/0/steps", json={"step_id": s1}))
-        _ok_json(client.post("/api/layers/0/steps", json={"step_id": s2}))
+        sids = _create_steps(
+            client,
+            [{"goal": "placeholder"}, {"goal": "placeholder"}],
+        )
+        _create_layer(client, layer_index=0)
+        _add_steps_to_layer(client, 0, sids)
 
         _ok_json(
             client.put(
@@ -305,10 +349,6 @@ class TestAssistantExecutionsByStep:
     """``/api/assistant/executions/step/<step_id>`` is the cross-module foreign key."""
 
     def test_executions_endpoint_reachable_and_empty(self, client):
-        step = _ok_json(
-            client.post("/api/steps/create", json={"description": {"goal": "placeholder"}}),
-            status=201,
-        )
-        sid = step["id"]
+        [sid] = _create_steps(client, [{"goal": "placeholder"}])
         body = _ok_json(client.get(f"/api/assistant/executions/step/{sid}"))
         assert body == []

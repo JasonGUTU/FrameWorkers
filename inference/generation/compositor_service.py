@@ -74,10 +74,15 @@ class CompositorService:
             # Subtitle burn-in — one filter per track, stacked by MarginV
             # so bilingual flows render with track #1 at bottom and each
             # subsequent track above it.
+            # FontName is forced to a CJK-capable family so Chinese /
+            # Japanese / Korean cues render real glyphs instead of libass's
+            # default-font tofu; the name resolves through fontconfig, which
+            # falls back to Latin automatically for non-CJK text.
             style = plan.get("subtitle_style", {})
             font_size = style.get("font_size", 24)
             font_color = (style.get("font_color", "#FFFFFF")).lstrip("#")
             outline_color = (style.get("outline_color", "#000000")).lstrip("#")
+            font_name = style.get("font_name", "Noto Sans CJK SC")
             real_srts = [s for s in (subtitle_srts or []) if s and s.strip()]
             for idx, srt_body in enumerate(real_srts):
                 srt_path = os.path.join(temp_dir, f"subs_{idx}.srt")
@@ -87,7 +92,8 @@ class CompositorService:
                 margin_v = 10 + idx * (font_size + 10)
                 vfilters.append(
                     f"subtitles={srt_path}:force_style="
-                    f"'FontSize={font_size},"
+                    f"'FontName={font_name},"
+                    f"FontSize={font_size},"
                     f"PrimaryColour=&H00{font_color}&,"
                     f"OutlineColour=&H00{outline_color}&,"
                     f"Outline=2,"

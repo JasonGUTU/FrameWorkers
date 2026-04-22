@@ -24,7 +24,7 @@ from .image_generators.service import FalImageService, ImageService, MockImageSe
 from .video_generators.service import FalVideoService, MockVideoService, VideoService, WavespeedVideoService
 from .audio_generators.service import AudioService, FalAudioService, MockAudioService
 from .compositor_service import CompositorService, MockCompositorService
-from .transcription_service import TranscriptionService, FalTranscriptionService, MockTranscriptionService
+from .transcription_service import FalTranscriptionService, MockTranscriptionService
 from .video_edit_service import VideoEditService, MockVideoEditService, FalVideoEditService
 
 
@@ -105,7 +105,7 @@ __all__ = [
     "CompositorService",
     "MockCompositorService",
     "select_compositor_service",
-    "TranscriptionService",
+    "FalTranscriptionService",
     "MockTranscriptionService",
     "select_transcription_service",
     "VideoEditService",

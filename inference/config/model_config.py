@@ -11,29 +11,22 @@ from __future__ import annotations
 
 from typing import Optional
 
+# Kept intentionally short — the canonical map lives in
+# ``inference_runtime.yaml``. Only list model ids the project actually
+# uses (or might flip to without a config change).
 _MODEL_PROVIDER: dict[str, str] = {
-    # OpenAI
+    # OpenAI (GPT-5 family is the opt-in alternative to the default Gemini
+    # routing; the other GPT-4/3.5 ids were dropped from this table because
+    # no caller references them.)
     "gpt-5": "openai",
     "gpt-5-mini": "openai",
     "gpt-4o": "openai",
     "gpt-4o-mini": "openai",
-    "gpt-4-turbo": "openai",
-    "gpt-4": "openai",
-    "gpt-3.5-turbo": "openai",
-    # Anthropic
-    "claude-3-5-sonnet-20241022": "anthropic",
-    "claude-3-opus-20240229": "anthropic",
-    "claude-3-sonnet-20240229": "anthropic",
-    "claude-3-haiku-20240307": "anthropic",
-    # Google (AI Studio)
+    # Google (AI Studio) — the default LLM for the whole project
+    # (``INFERENCE_DEFAULT_MODEL`` in ``.env``). The legacy ``gemini-pro`` /
+    # ``gemini-pro-vision`` ids were removed — Google deprecated them in
+    # 2024 and no caller references them.
     "google-ai-studio/gemini-2.5-flash": "google",
-    "gemini-pro": "google",
-    "gemini-pro-vision": "google",
-    # Ollama (local)
-    "llama2": "ollama",
-    "llama3": "ollama",
-    "mistral": "ollama",
-    "codellama": "ollama",
 }
 
 

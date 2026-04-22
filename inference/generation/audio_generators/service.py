@@ -29,23 +29,6 @@ _TTS_VOICES: tuple[str, ...] = ("alloy", "echo", "fable", "nova", "onyx", "shimm
 _DEFAULT_VOICE = "alloy"
 
 
-def _is_mock_wav(data: bytes | None) -> bool:
-    """True if ``data`` is the silent ``MOCK_WAV`` placeholder (or so short
-    it can't possibly carry real audio).
-
-    Callers drop placeholder inputs before handing the rest to ffmpeg so
-    the mix is built only from real audio and placeholders never end up
-    corrupting the output stream.
-    """
-    if not data:
-        return True
-    if data == MOCK_WAV:
-        return True
-    # Anything shorter than 200 bytes can't possibly contain real audio
-    # samples — a usable WAV body needs at least a few hundred bytes.
-    return len(data) < 200
-
-
 class AudioService:
     """Audio generation service backed by OpenAI TTS + pluggable music/SFX."""
 
@@ -401,9 +384,10 @@ class FalAudioService(AudioService, LazyHttpxClientMixin):
         timeout: float = 180.0,
     ) -> None:
         self._api_key = api_key or os.getenv("FAL_API_KEY", "")
+        # TTS model is resolved lazily in ``generate_speech`` (mirroring
+        # ``generate_music`` / ``generate_ambience``): constructing the
+        # service shouldn't require every capability's env var to be set.
         self.tts_model = tts_model or os.getenv("FAL_TTS_MODEL", "")
-        if not self.tts_model:
-            raise RuntimeError("No TTS model configured. Set FAL_TTS_MODEL in .env")
         self.default_voice = "default"
         self.timeout = timeout
         self._http: httpx.AsyncClient | None = None
@@ -426,6 +410,8 @@ class FalAudioService(AudioService, LazyHttpxClientMixin):
         response_format: str = "wav",
     ) -> AudioGenerationResult:
         model_id = model or self.tts_model
+        if not model_id:
+            raise RuntimeError("No TTS model configured. Set FAL_TTS_MODEL in .env")
         actual_voice = voice if voice is not None else self._speaker_id_to_voice(speaker_id)
         arguments: dict[str, Any] = {"text": text}
         if actual_voice:

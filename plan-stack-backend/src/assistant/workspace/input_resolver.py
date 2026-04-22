@@ -203,35 +203,28 @@ class InputResolver:
         )
 
         parsed: Optional[Dict[str, Any]] = None
-        last_exc: Optional[Exception] = None
         import asyncio
         loop = asyncio.new_event_loop()
         try:
-            for max_tok in (65536, 65536):
-                try:
-                    kwargs: Dict[str, Any] = {
-                        "system_prompt": system_prompt,
-                        "user_prompt": user_prompt,
-                        "max_tokens": max_tok,
-                        "reasoning_effort": "high",
-                    }
-                    if model:
-                        kwargs["model"] = model
-                    parsed = loop.run_until_complete(self._llm.chat_json(**kwargs))
-                    break
-                except Exception as exc:
-                    last_exc = exc
-                    continue
+            kwargs: Dict[str, Any] = {
+                "system_prompt": system_prompt,
+                "user_prompt": user_prompt,
+                "max_tokens": 65536,
+                "reasoning_effort": "high",
+            }
+            if model:
+                kwargs["model"] = model
+            try:
+                parsed = loop.run_until_complete(self._llm.chat_json(**kwargs))
+            except Exception as exc:
+                logger.warning("[InputResolver] LLM call failed: %s", exc)
+                return {
+                    "resolved_artifacts": {},
+                    "selected_artifact_paths": [],
+                    "rationale": f"LLM selection failed: {exc}",
+                }
         finally:
             loop.close()
-
-        if parsed is None:
-            logger.warning("[InputResolver] LLM call failed: %s", last_exc)
-            return {
-                "resolved_artifacts": {},
-                "selected_artifact_paths": [],
-                "rationale": f"LLM selection failed: {last_exc}",
-            }
         if not isinstance(parsed, dict):
             return {
                 "resolved_artifacts": {},
@@ -264,12 +257,9 @@ class InputResolver:
                 continue
             paths: List[str] = []
             for raw_id in ids:
-                idx = int(raw_id) if isinstance(raw_id, (int, float)) else None
-                if idx is None:
-                    # Backward compat: LLM might still return a path string
-                    if isinstance(raw_id, str) and raw_id.strip():
-                        paths.append(raw_id.strip())
+                if not isinstance(raw_id, (int, float)):
                     continue
+                idx = int(raw_id)
                 if 0 <= idx < len(id_to_path):
                     paths.append(id_to_path[idx])
                 else:

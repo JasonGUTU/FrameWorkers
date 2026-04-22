@@ -194,22 +194,31 @@ def test_assistant_e2e_http_flow_covers_core_endpoints(assistant_http_client):
     sub_agents = sub_agents_resp.get_json()
     assert sub_agents["total_agents"] == 1
     assert "DummyAgent" in sub_agents["agent_ids"]
-
-    sub_agent_resp = client.get("/api/assistant/sub-agents/DummyAgent")
-    assert sub_agent_resp.status_code == 200
-    sub_agent = sub_agent_resp.get_json()
-    assert sub_agent["id"] == "DummyAgent"
-    assert "pipeline_agent" in sub_agent["capabilities"]
-
-    # Step 2: Create one task that downstream execution can reference.
-    create_step_resp = client.post(
-        "/api/steps/create",
-        json={"description": {"goal": "integration task"}},
+    dummy_info = next(
+        (a for a in sub_agents["agents"] if a["id"] == "DummyAgent"),
+        None,
     )
-    assert create_step_resp.status_code == 201
-    task_payload = create_step_resp.get_json()
-    step_id = task_payload["id"]
-    assert task_payload["description"] == {"goal": "integration task"}
+    assert dummy_info is not None
+    assert "pipeline_agent" in dummy_info["capabilities"]
+
+    # Step 2: Create one task via the batch endpoint.
+    create_step_resp = client.post(
+        "/api/plan-stack/modify",
+        json={
+            "operations": [
+                {
+                    "type": "create_steps",
+                    "params": {
+                        "steps": [{"description": {"goal": "integration task"}}]
+                    },
+                }
+            ]
+        },
+    )
+    assert create_step_resp.status_code == 200
+    create_body = create_step_resp.get_json()
+    assert create_body["success"] is True
+    step_id = create_body["created_step_ids"][0]
 
     # Step 3: Execute DummyAgent against that task and validate result envelope.
     execute_resp = client.post(
@@ -266,12 +275,22 @@ def test_assistant_pipeline_execution_inputs_include_global_memory_list(
     client = assistant_http_client_pipeline
 
     create_step_resp = client.post(
-        "/api/steps/create",
-        json={"description": {"goal": "check global_memory on inputs"}},
+        "/api/plan-stack/modify",
+        json={
+            "operations": [
+                {
+                    "type": "create_steps",
+                    "params": {
+                        "steps": [
+                            {"description": {"goal": "check global_memory on inputs"}}
+                        ]
+                    },
+                }
+            ]
+        },
     )
-    assert create_step_resp.status_code == 201
-    task_payload = create_step_resp.get_json()
-    step_id = task_payload["id"]
+    assert create_step_resp.status_code == 200
+    step_id = create_step_resp.get_json()["created_step_ids"][0]
 
     client.post(
         "/api/assistant/execute",

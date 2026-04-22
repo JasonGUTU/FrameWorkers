@@ -1,6 +1,5 @@
 """Director: Upfront planner writes full pipeline to Plan Stack, then drives execution."""
 
-from .api_client import BackendAPIClient, BackendAPIError
 from .director import (
     DirectorAgent,
     chat_content_as_user_text,
@@ -9,8 +8,6 @@ from .director import (
 from .router import LlmSubAgentPlanner, PlanStepSpec, ReplanDecision
 
 __all__ = [
-    "BackendAPIClient",
-    "BackendAPIError",
     "DirectorAgent",
     "LlmSubAgentPlanner",
     "PlanStepSpec",

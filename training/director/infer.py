@@ -4,8 +4,8 @@ Runs the trained model on a fresh user_goal (not in eval, not in train),
 forces JSON output, parses via router._parse_plan, and reports success.
 
 Usage (on GPU node):
-    PYTHONPATH=. python training/director/infer.py --adapter adapters/dpo
-    PYTHONPATH=. python training/director/infer.py --adapter adapters/sft
+    PYTHONPATH=. python training/director/infer.py --adapter adapters_full/dpo
+    PYTHONPATH=. python training/director/infer.py --adapter adapters_full/sft
     PYTHONPATH=. python training/director/infer.py --adapter-none  # base model only
 """
 

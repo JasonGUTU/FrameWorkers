@@ -154,7 +154,7 @@ def test_compositor_materializer_replays_from_bundle(tmp_path):
     out_bytes = asyncio.run(svc.compose(
         video_path=str(video_path),
         audio_path=str(audio_path),
-        subtitle_srt=srt_path.read_text(encoding="utf-8"),
+        subtitle_srts=[srt_path.read_text(encoding="utf-8")],
         plan=plan,
     ))
 

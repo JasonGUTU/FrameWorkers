@@ -290,10 +290,6 @@ class Workspace:
                 })
         return rows
 
-    def get_workspace_root_file_tree_text(self) -> str:
-        """Human-readable tree of every file under the workspace runtime root."""
-        return _build_file_tree_text(self.runtime_base_path / self.id)
-
     # ------------------------------------------------------------------
     # Input Resolution
     # ------------------------------------------------------------------
@@ -452,34 +448,3 @@ class Workspace:
         )
 
 
-# ----------------------------------------------------------------------
-# Module-level helpers
-# ----------------------------------------------------------------------
-
-
-
-
-def _build_file_tree_text(root: Path) -> str:
-    """Render a workspace runtime root as a flat indented file tree."""
-    lines: List[str] = []
-    max_lines = 800
-    try:
-        root = root.resolve()
-        all_files = sorted(
-            (p for p in root.rglob("*") if p.is_file()),
-            key=lambda p: str(p.relative_to(root)).replace("\\", "/"),
-        )
-    except OSError as exc:
-        return f"(unable to list files: {exc})"
-
-    for p in all_files[:max_lines]:
-        try:
-            rel = p.relative_to(root)
-        except ValueError:
-            continue
-        depth = len(rel.parts)
-        indent = "  " * max(0, depth - 1)
-        lines.append(f"{indent}{rel.parts[-1]}")
-    if len(all_files) > max_lines:
-        lines.append(f"... ({len(all_files) - max_lines} more files truncated)")
-    return "\n".join(lines) if lines else "(no files yet)"

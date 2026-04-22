@@ -8,8 +8,9 @@ Each user turn:
      + ensure a PENDING layer + add steps to that layer + initial execution
      pointer).
   5. Loop: ``get_next_step`` → ``execute_agent`` → ``update_step_status`` →
-     ``advance_execution_pointer``. On failure the replanner can retry / skip /
-     rewrite the remaining tail.
+     ``advance_execution_pointer``. On failure the replanner rewrites the
+     remaining PENDING tail (replan); if it can't, the executor advances past
+     the failed step.
 """
 
 from __future__ import annotations
@@ -19,16 +20,8 @@ import logging
 import time
 from typing import Any, Dict, List, Optional
 
+from . import config
 from .api_client import BackendAPIClient, BackendAPIError
-from .config import (
-    DIRECTOR_AGENT_NAME,
-    DIRECTOR_MEMORY_WINDOW,
-    MAX_EXECUTIONS_PER_CYCLE,
-    MAX_PIPELINE_STEPS,
-    MAX_REPLAN_ROUNDS,
-    MERGE_PRIOR_USER_LINES_MAX,
-    POLLING_INTERVAL,
-)
 from .router import LlmSubAgentPlanner, PlanStepSpec, ReplanDecision
 
 logger = logging.getLogger(__name__)
@@ -304,15 +297,9 @@ def _execute_planned_steps(
     *,
     user_goal: str,
     agents: List[Dict[str, Any]],
-    expected_step_ids: List[str],
 ) -> None:
-    """Iterate the stack pointer until exhausted or safety budget hits.
-
-    ``expected_step_ids`` are the step_ids we just appended — used for
-    logging and as a guard against runaway loops touching unrelated stack
-    segments from other user turns.
-    """
-    budget_remaining = MAX_EXECUTIONS_PER_CYCLE
+    """Iterate the stack pointer until exhausted or safety budget hits."""
+    budget_remaining = config.MAX_EXECUTIONS_PER_CYCLE
     replans_used = 0
 
     while budget_remaining > 0:
@@ -323,14 +310,14 @@ def _execute_planned_steps(
             logger.error("get_next_step failed: %s", exc)
             _post_director_quiet(
                 client,
-                f"[{DIRECTOR_AGENT_NAME}] get_next_step error, stopping: {exc}",
+                f"[{config.DIRECTOR_AGENT_NAME}] get_next_step error, stopping: {exc}",
             )
             return
         if not next_step:
             # No more pending steps — plan fully executed.
             _post_director_quiet(
                 client,
-                f"[{DIRECTOR_AGENT_NAME}] Pipeline complete.",
+                f"[{config.DIRECTOR_AGENT_NAME}] Pipeline complete.",
             )
             return
 
@@ -409,8 +396,8 @@ def _execute_planned_steps(
 
     _post_director_quiet(
         client,
-        f"[{DIRECTOR_AGENT_NAME}] Pipeline reached per-cycle execution budget "
-        f"({MAX_EXECUTIONS_PER_CYCLE}); stopping.",
+        f"[{config.DIRECTOR_AGENT_NAME}] Pipeline reached per-cycle execution budget "
+        f"({config.MAX_EXECUTIONS_PER_CYCLE}); stopping.",
     )
 
 
@@ -434,7 +421,7 @@ def _announce_step(
     status: str,
     result: Optional[Dict[str, Any]],
 ) -> None:
-    body = f"[{DIRECTOR_AGENT_NAME}] {agent_id} → {status or 'UNKNOWN'}"
+    body = f"[{config.DIRECTOR_AGENT_NAME}] {agent_id} → {status or 'UNKNOWN'}"
     err = (result or {}).get("error")
     if err:
         body += f"\nerror: {err}"
@@ -456,7 +443,7 @@ def _handle_failure(
 
     Returns the new ``replans_used`` counter.
     """
-    if MAX_REPLAN_ROUNDS <= 0 or replans_used >= MAX_REPLAN_ROUNDS:
+    if config.MAX_REPLAN_ROUNDS <= 0 or replans_used >= config.MAX_REPLAN_ROUNDS:
         return replans_used
 
     try:
@@ -508,24 +495,7 @@ def _handle_failure(
         completed_tail=completed_tail,
     )
 
-    if decision.action == "retry":
-        _safe_mark(client, failed_step_id, "PENDING")
-        try:
-            if pointer is not None:
-                client.set_execution_pointer(
-                    layer_index=pointer.get("current_layer_index", 0),
-                    step_index=pointer.get("current_step_index", 0),
-                )
-        except Exception as exc:
-            logger.warning("set_execution_pointer for retry failed: %s", exc)
-        _post_director_quiet(
-            client,
-            f"[{DIRECTOR_AGENT_NAME}] Retry {failed_agent_id} "
-            f"({decision.rationale or 'retry'}).",
-        )
-        return replans_used + 1
-
-    if decision.action == "replan" and decision.new_tail:
+    if decision.new_tail:
         # Remove all PENDING steps from the stack, then append a new layer with
         # the replanned tail so execution continues with the new plan.
         removals: List[Dict[str, Any]] = [
@@ -547,17 +517,17 @@ def _handle_failure(
         )
         _post_director_quiet(
             client,
-            f"[{DIRECTOR_AGENT_NAME}] Replanned tail ({len(decision.new_tail)} steps): "
+            f"[{config.DIRECTOR_AGENT_NAME}] Replanned tail ({len(decision.new_tail)} steps): "
             f"{decision.rationale}",
         )
         return replans_used + 1
 
-    # action=="skip" or replan without a new tail: fall through — executor
-    # will advance past the failed step on its own.
+    # No actionable decision (replan without a new tail after all retries).
+    # Fall through — the executor will advance past the failed step on its own.
     if decision.rationale:
         _post_director_quiet(
             client,
-            f"[{DIRECTOR_AGENT_NAME}] Replan decision=skip ({decision.rationale}).",
+            f"[{config.DIRECTOR_AGENT_NAME}] Replan produced no actionable tail ({decision.rationale}); advancing.",
         )
     return replans_used
 
@@ -580,11 +550,11 @@ def run_plan_pipeline(
     if not latest_line:
         return
 
-    stack_memory = _project_plan_stack_as_memory(client, window=DIRECTOR_MEMORY_WINDOW)
+    stack_memory = _project_plan_stack_as_memory(client, window=config.DIRECTOR_MEMORY_WINDOW)
     prior_lines = _prior_user_chat_lines(
         client,
         current_user_message_id=current_user_message_id,
-        max_lines=MERGE_PRIOR_USER_LINES_MAX,
+        max_lines=config.MERGE_PRIOR_USER_LINES_MAX,
     )
     merged_goal = (
         planner.merge_session_goal(
@@ -599,12 +569,12 @@ def run_plan_pipeline(
         user_goal=merged_goal,
         available_agents=agents,
         stack_memory=stack_memory,
-        max_steps=MAX_PIPELINE_STEPS,
+        max_steps=config.MAX_PIPELINE_STEPS,
     )
     if not plan:
         _post_director_quiet(
             client,
-            f"[{DIRECTOR_AGENT_NAME}] Planner returned no plan; nothing to do.",
+            f"[{config.DIRECTOR_AGENT_NAME}] Planner returned no plan; nothing to do.",
         )
         return
 
@@ -616,13 +586,13 @@ def run_plan_pipeline(
     if not created_step_ids:
         _post_director_quiet(
             client,
-            f"[{DIRECTOR_AGENT_NAME}] Failed to persist plan to Plan Stack.",
+            f"[{config.DIRECTOR_AGENT_NAME}] Failed to persist plan to Plan Stack.",
         )
         return
 
     _post_director_quiet(
         client,
-        f"[{DIRECTOR_AGENT_NAME}] Plan persisted ({len(created_step_ids)} steps): "
+        f"[{config.DIRECTOR_AGENT_NAME}] Plan persisted ({len(created_step_ids)} steps): "
         + ", ".join(f"{spec.agent_id}" for spec in plan),
     )
 
@@ -631,7 +601,6 @@ def run_plan_pipeline(
         planner,
         user_goal=merged_goal,
         agents=agents,
-        expected_step_ids=created_step_ids,
     )
 
 
@@ -654,7 +623,7 @@ class DirectorAgent:
 
     def start(self) -> None:
         self.running = True
-        logger.info("%s starting (Upfront + Plan Stack)", DIRECTOR_AGENT_NAME)
+        logger.info("%s starting (Upfront + Plan Stack)", config.DIRECTOR_AGENT_NAME)
         try:
             health = self.client.health_check()
             logger.info("Backend health: %s", health)
@@ -667,7 +636,7 @@ class DirectorAgent:
                 self._cycle()
             except Exception as e:
                 logger.error("Cycle error: %s", e, exc_info=True)
-            time.sleep(POLLING_INTERVAL)
+            time.sleep(config.POLLING_INTERVAL)
 
     def stop(self) -> None:
         self.running = False

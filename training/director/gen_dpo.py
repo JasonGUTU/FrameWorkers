@@ -141,23 +141,69 @@ INJECTORS = {
 }
 
 
-def _length_align(chosen_rationale: str, rejected_rationale: str) -> str:
-    """Pad/trim rejected rationale to within ±5% of chosen length (count chars as proxy).
-    Returns a rationale whose length satisfies the validate.py ≤10% check."""
-    c_len = len(chosen_rationale)
-    lo = int(c_len * 0.95)
-    hi = int(c_len * 1.05)
+# ---------------------------------------------------------------------------
+# Token-level length balance
+#   validate.py (check #3) uses Qwen tokenizer and rejects pairs where
+#   abs(c_tokens - r_tokens) / max(c_tokens, r_tokens) > 10% on the full
+#   serialized assistant.content. We therefore measure tokens of the final
+#   JSON (rationale + plan both count), not characters of the rationale alone.
+#   Internal target window is 8% to leave headroom under the 10% check.
+# ---------------------------------------------------------------------------
+
+_TOKENIZER = None
+
+
+def _get_tokenizer():
+    global _TOKENIZER
+    if _TOKENIZER is None:
+        from transformers import AutoTokenizer
+        _TOKENIZER = AutoTokenizer.from_pretrained("Qwen/Qwen2.5-7B-Instruct")
+    return _TOKENIZER
+
+
+def _token_len(text: str) -> int:
+    return len(_get_tokenizer().encode(text, add_special_tokens=False))
+
+
+def _assistant_content(rationale: str, plan: list[dict]) -> str:
+    return json.dumps({"rationale": rationale, "plan": plan}, ensure_ascii=False)
+
+
+_PAD_SENT = " The extra agent belongs here because thorough pipelines beat lean ones by default."
+
+
+def _length_align(
+    chosen_rationale: str,
+    chosen_plan: list[dict],
+    rejected_rationale: str,
+    rejected_plan: list[dict],
+    target_delta: float = 0.08,
+    max_iter: int = 30,
+) -> str:
+    """Adjust rejected_rationale so that the full assistant.content token count
+    lands within ±target_delta of chosen's. Pads with extra sentences or trims
+    at sentence boundaries. Returns best-effort even if convergence fails."""
+    chosen_content = _assistant_content(chosen_rationale, chosen_plan)
+    c_tokens = _token_len(chosen_content)
+    lo = int(c_tokens * (1 - target_delta))
+    hi = int(c_tokens * (1 + target_delta))
+
     r = rejected_rationale
-    if len(r) > hi:
-        # trim on sentence boundaries if possible, else hard cut
-        r = r[:hi].rsplit(".", 1)[0] + "."
-        if len(r) < lo:
-            r = rejected_rationale[:hi]
-    elif len(r) < lo:
-        pad = " This extra step is included because thorough pipelines are better defaults than lean ones."
-        while len(r) < lo:
-            r = r + pad
-        r = r[:hi]
+    for _ in range(max_iter):
+        r_tokens = _token_len(_assistant_content(r, rejected_plan))
+        if lo <= r_tokens <= hi:
+            return r
+        if r_tokens < lo:
+            r = r + _PAD_SENT
+        else:
+            # trim the last full sentence
+            stripped = r.rstrip()
+            if stripped.endswith("."):
+                stripped = stripped[:-1]
+            head, sep, _tail = stripped.rpartition(".")
+            if not sep:
+                break  # cannot trim further
+            r = head + "."
     return r
 
 
@@ -181,7 +227,7 @@ def build_pairs(records: list[dict]) -> list[dict]:
             if injected is None:
                 continue
             # align lengths
-            rej_rat = _length_align(rec["rationale"], injected["rationale"])
+            rej_rat = _length_align(rec["rationale"], rec["plan"], injected["rationale"], injected["plan"])
             pairs.append({
                 "goal": rec["goal"],
                 "chosen_rationale": rec["rationale"],
@@ -199,7 +245,7 @@ def build_pairs(records: list[dict]) -> list[dict]:
             injected = INJECTORS[b](rec)
             if injected is None:
                 continue
-            rej_rat = _length_align(rec["rationale"], injected["rationale"])
+            rej_rat = _length_align(rec["rationale"], rec["plan"], injected["rationale"], injected["plan"])
             pairs.append({
                 "goal": rec["goal"],
                 "chosen_rationale": rec["rationale"],

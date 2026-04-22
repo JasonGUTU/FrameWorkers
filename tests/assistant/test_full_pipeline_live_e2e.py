@@ -134,16 +134,27 @@ def test_full_pipeline_live_http_flow_generates_about_one_minute_video(
     print(f"[full-pipeline-live-e2e] api_trace={debug_file}")
 
     create_step_resp = client.post(
-        "/api/steps/create",
+        "/api/plan-stack/modify",
         json={
-            "description": {
-                "goal": (
-                    "Create a simple cinematic short video: "
-                    "A retired watchmaker races against the final moments before "
-                    "midnight to repair his late wife's cherished pocket watch, seeking "
-                    "a moment of peace and connection as the new year begins."
-                )
-            }
+            "operations": [
+                {
+                    "type": "create_steps",
+                    "params": {
+                        "steps": [
+                            {
+                                "description": {
+                                    "goal": (
+                                        "Create a simple cinematic short video: "
+                                        "A retired watchmaker races against the final moments before "
+                                        "midnight to repair his late wife's cherished pocket watch, seeking "
+                                        "a moment of peace and connection as the new year begins."
+                                    )
+                                }
+                            }
+                        ]
+                    },
+                }
+            ]
         },
     )
     _append_debug_record(
@@ -154,9 +165,8 @@ def test_full_pipeline_live_http_flow_generates_about_one_minute_video(
             "body": create_step_resp.get_json(),
         },
     )
-    assert create_step_resp.status_code == 201
-    task_body = create_step_resp.get_json()
-    step_id = task_body["id"]
+    assert create_step_resp.status_code == 200
+    step_id = create_step_resp.get_json()["created_step_ids"][0]
 
     common_inputs: dict = {}
     payloads: dict[str, dict] = {}

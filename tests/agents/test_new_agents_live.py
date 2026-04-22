@@ -173,7 +173,11 @@ class TestSubtitleAgentLive:
 
 class TestTranscriptionAgentLive:
     def test_post_process_raw_segments(self):
-        """Test the LLM post-processing phase with synthetic raw segments."""
+        """Exercise the LLM cleanup phase with synthetic raw segments
+        pre-seeded on ``TranscriptionAgentInput.raw_segments_json_text``
+        — same channel the TranscriptionMaterializer.pre_generate hook
+        fills with real STT output in production."""
+        import json
         _skip_unless_live()
         from agents.transcription.agent import TranscriptionAgent
         from agents.transcription.schema import TranscriptionAgentInput
@@ -181,20 +185,27 @@ class TestTranscriptionAgentLive:
 
         llm = _make_llm_client()
         agent = TranscriptionAgent(llm_client=llm)
-        inp = TranscriptionAgentInput(source_media_path="/tmp/sample_audio.wav")
+        raw_payload = {
+            "language": "en",
+            "segments": [
+                {"segment_id": "seg_001", "start_time": 0.0, "end_time": 2.5, "text": "um hello everyone welcome to the show"},
+                {"segment_id": "seg_002", "start_time": 3.0, "end_time": 5.5, "text": "today we're going to talk about uh artificial intelligence"},
+                {"segment_id": "seg_003", "start_time": 6.0, "end_time": 8.0, "text": "let me introduce our guest doctor Sarah Chen"},
+                {"segment_id": "seg_004", "start_time": 8.5, "end_time": 11.0, "text": "thank you for having me it's a pleasure to be here"},
+            ],
+            "full_text": "um hello everyone welcome to the show today we're going to talk about uh artificial intelligence let me introduce our guest doctor Sarah Chen thank you for having me it's a pleasure to be here",
+        }
+        inp = TranscriptionAgentInput(
+            source_media_path="/tmp/sample_audio.wav",
+            raw_segments_json_text=json.dumps(raw_payload, ensure_ascii=False),
+        )
 
-        output = asyncio.run(agent.generate(inp, rework_notes=(
-            "Raw ASR segments to post-process:\n"
-            "[0.0-2.5] um hello everyone welcome to the show\n"
-            "[3.0-5.5] today we're going to talk about uh artificial intelligence\n"
-            "[6.0-8.0] let me introduce our guest doctor Sarah Chen\n"
-            "[8.5-11.0] thank you for having me it's a pleasure to be here\n"
-        )))
+        output = asyncio.run(agent.generate(inp))
 
         print(f"\n[TranscriptionAgent] language={output.content.language}")
         print(f"[TranscriptionAgent] {len(output.content.segments)} segments")
         for s in output.content.segments[:5]:
-            print(f"  {s.segment_id}: [{s.start_time}-{s.end_time}] {s.speaker}: {s.text[:60]}")
+            print(f"  {s.segment_id}: [{s.start_time}-{s.end_time}] {s.text[:60]}")
 
         evaluator = TranscriptionEvaluator()
         errors = evaluator.check_structure(output)

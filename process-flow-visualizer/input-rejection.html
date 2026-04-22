@@ -214,9 +214,13 @@
     <h1 class="page-h1">⚠ Upstream Input Rejection</h1>
     <p class="page-sub">
       Consumer sub-agent 在生成时主动拒绝不合格上游输入的机制 ——
-      <span class="keystat">19 / 19</span>
-      已注册 LLM agent（除 4 个 Intake 边界）全部接入。
+      <span class="keystat">16 / 16</span>
+      已注册 LLM agent（除 3 个 Intake 边界）全部接入。
       消除"上游残缺 → 下游硬着头皮编出 plausible 垃圾 → 静默污染整条 pipeline"的 silent-failure 模式。
+      <br>
+      <strong style="color:#86efac">重要更新（2026-04-20 重构）：</strong>协议已简化 ——
+      sub-agent 只报"缺了哪些 label"，不再报"应该重跑哪个 producer"；
+      producer 识别完全交给 Director 从 PENDING-tail + catalog 自行推断。
     </p>
 
     <!-- Section 1 -->
@@ -240,8 +244,8 @@
           <ul>
             <li>ScreenplayAgent 的 LLM 看到残缺 JSON，主动产 <code>input_rejection</code></li>
             <li>BaseAgent.run() 短路 —— <strong>0 retry</strong>（同输入必同结果）</li>
-            <li>execution.error 加 <code>[upstream_input_rejected]</code> 前缀 + reason / missing / hint</li>
-            <li>Director replan LLM 识别前缀 → 走 replan-tail 修复上游 producer，而非 retry / skip</li>
+            <li>execution.error 加 <code>[upstream_input_rejected]</code> 前缀 + reason + missing_labels</li>
+            <li>Director replan LLM 识别前缀，自己从 PENDING tail + catalog 推出 producer → 走 replan-tail 修复上游，而非 retry / skip</li>
             <li>故障点被精准定位到第一个出问题的环节，不再扩散</li>
           </ul>
         </div>
@@ -255,6 +259,7 @@
         往 ScreenplayAgent 喂 <code style="background:rgba(79,142,247,0.1);color:#7eb3ff;padding:1px 6px;border-radius:4px;font-family:'Fira Code',monospace;font-size:11.5px;">story_json_text = "{}"</code>，LLM 实际输出（来自 <code style="background:rgba(79,142,247,0.1);color:#7eb3ff;padding:1px 6px;border-radius:4px;font-family:'Fira Code',monospace;font-size:11.5px;">scripts/verify_input_rejection_e2e.py</code>）：
       </p>
       <pre class="code"><span class="c">// LLM 自主产出，被 base_agent._maybe_parse_rejection 解析</span>
+<span class="c">// 注意：不再含 upstream_agent_hint 字段 —— sub-agent 不指定 producer</span>
 {
   <span class="k">"input_rejection"</span>: {
     <span class="k">"reason"</span>: <span class="s">"Story blueprint contains no narrative substance or character information; cannot create a screenplay."</span>,
@@ -263,14 +268,13 @@
       <span class="s">"logline"</span>, <span class="s">"premise"</span>, <span class="s">"story_arc"</span>, <span class="s">"scene_outline"</span>, <span class="s">"beats"</span>,
       <span class="s">"synopsis"</span>, <span class="s">"plot"</span>, <span class="s">"cast"</span>, <span class="s">"characters"</span>,
       <span class="s">"dramatis_personae"</span>, <span class="s">"protagonist"</span>
-    ],
-    <span class="k">"upstream_agent_hint"</span>: <span class="s">"StoryAgent"</span>
+    ]
   }
 }</pre>
       <p style="margin-top:14px;">
         上层 AssistantService 把这个 rejection 翻译成 director 看到的 <code style="background:rgba(79,142,247,0.1);color:#7eb3ff;padding:1px 6px;border-radius:4px;font-family:'Fira Code',monospace;font-size:11.5px;">execution.error</code>：
       </p>
-      <pre class="code"><span class="err">[upstream_input_rejected]</span> reason=Story blueprint contains no narrative substance or character information; cannot create a screenplay.; missing=[story]; hint=StoryAgent</pre>
+      <pre class="code"><span class="err">[upstream_input_rejected]</span> reason=Story blueprint contains no narrative substance or character information; cannot create a screenplay.; missing=[story]</pre>
       <p class="meta-note">
         对照组（"sparse-but-valid" 一句话 logline + 一个角色）：<strong style="color:#86efac;">不触发拒绝</strong>，正常产出 3-scene 完整剧本 —— 校准没有 over-reject。
       </p>
@@ -300,18 +304,23 @@
         <span class="flow-arrow">&rarr;</span>
         <span class="flow-step fs-llm">Director replan LLM 识别前缀</span>
         <span class="flow-arrow">&rarr;</span>
-        <span class="flow-step fs-good">action=replan，重跑/替换 hint 指向的 producer</span>
+        <span class="flow-step fs-llm">从 PENDING tail + catalog 自己推 producer</span>
+        <span class="flow-arrow">&rarr;</span>
+        <span class="flow-step fs-good">action=replan，替换推出的 producer</span>
       </div>
       <p class="meta-note">
-        <strong>关键约束</strong>：rejection 路径强制 0 retry —— 同 input 必同 rejection，retry 只浪费 LLM 调用。重试责任完全交给 director 的 replan-tail（修复上游再重新进入下游）。
+        <strong>关键约束 1</strong>：rejection 路径强制 0 retry —— 同 input 必同 rejection，retry 只浪费 LLM 调用。重试责任完全交给 director 的 replan-tail（修复上游再重新进入下游）。
+      </p>
+      <p class="meta-note" style="margin-top:8px;">
+        <strong>关键约束 2（2026-04-20 重构）</strong>：sub-agent <strong style="color:#fca5a5">不指定</strong>要替换哪个 producer —— 那是 Director 的职责。Director 读 failed step 的 input labels + missing=[...] 的并集 + COMPLETED tail 里每步的 agent_id，自行推断"哪个 upstream 产出了 missing 的那些 label"，然后决定替哪步。sub-agent 名字不再出现在跨层协议里。
       </p>
     </div>
 
     <!-- Section 4 -->
     <div class="section">
-      <h2 data-num="4">已接入的 19 个 sub-agent</h2>
+      <h2 data-num="4">已接入的 16 个 sub-agent</h2>
       <p>
-        每个 agent 在自己的 <code style="background:rgba(79,142,247,0.1);color:#7eb3ff;padding:1px 6px;border-radius:4px;font-family:'Fira Code',monospace;font-size:11.5px;">system_prompt()</code> 里声明专属的 "WHEN TO REJECT" 标准（哪些 label 缺失 / 哪些字段为空算"不可能完成"），并指向应该被 replan 的上游 producer：
+        每个 agent 在自己的 <code style="background:rgba(79,142,247,0.1);color:#7eb3ff;padding:1px 6px;border-radius:4px;font-family:'Fira Code',monospace;font-size:11.5px;">system_prompt()</code> 里声明专属的 "WHEN TO REJECT" 标准（哪些 label 缺失 / 哪些字段为空算"不可能完成"）。<strong style="color:#fca5a5">不再指定</strong>要重跑哪个 producer —— producer 推断是 Director 的职责：
       </p>
       <div class="cov">
         <div class="cov-chip demo">ScreenplayAgent ★</div>
@@ -319,48 +328,51 @@
         <div class="cov-chip">KeyFrameAgent</div>
         <div class="cov-chip">VideoAgent</div>
         <div class="cov-chip">BriefEnricherAgent</div>
-        <div class="cov-chip">NarrationAgent</div>
         <div class="cov-chip">MusicAgent</div>
         <div class="cov-chip">AmbienceAgent</div>
         <div class="cov-chip">AudioMixAgent</div>
-        <div class="cov-chip">VoiceCloneAgent</div>
         <div class="cov-chip">SubtitleAgent</div>
         <div class="cov-chip">TranslationAgent</div>
         <div class="cov-chip">TranscriptionAgent</div>
         <div class="cov-chip">CompositorAgent</div>
         <div class="cov-chip">StyleTransferAgent</div>
-        <div class="cov-chip">InpaintAgent</div>
         <div class="cov-chip">VideoExtendAgent</div>
         <div class="cov-chip">VideoAnalysisAgent</div>
         <div class="cov-chip">HighlightAgent</div>
       </div>
       <p class="meta-note">
-        ★ ScreenplayAgent 是首个示范 + 唯一已经过真实 LLM e2e 验证的 agent。其他 18 个的 prompt 改动已落地、单元测试通过，e2e 校准随实际 pipeline 跑起来再观察。
+        ★ ScreenplayAgent 是首个示范 agent（真实 LLM e2e 已验证，见 <code style="background:rgba(79,142,247,0.1);color:#7eb3ff;padding:1px 6px;border-radius:4px;font-family:'Fira Code',monospace;font-size:11.5px;">scripts/verify_input_rejection_e2e.py</code>）。其他 15 个的 prompt 改动已落地、12 个单元测试全过。
       </p>
       <p class="meta-note" style="margin-top:8px;">
-        <strong>不接入的</strong>：4 个 Intake agent（吃 raw user upload 而非上游 agent 产物 —— rejection 模型不适用）。
+        <strong>不接入的</strong>：3 个 Intake agent（吃 raw user upload 而非上游 agent 产物 —— rejection 模型不适用）。早期的 NarrationAgent / VoiceCloneAgent / IntakeAudioAgent / InpaintAgent 已在 2026-04 清理中从 registry 移除或不再注册。
       </p>
       <div class="cov" style="margin-top:10px;">
         <div class="cov-chip skip">IntakeTextAgent</div>
         <div class="cov-chip skip">IntakeImageAgent</div>
         <div class="cov-chip skip">IntakeVideoAgent</div>
-        <div class="cov-chip skip">IntakeAudioAgent</div>
       </div>
     </div>
 
     <!-- Section 5 -->
     <div class="section">
       <h2 data-num="5">跨层改动 summary</h2>
-      <pre class="code"><span class="c">// 5 层改动 + 1 个新测试文件，共 6 类文件</span>
-agents/common_schema.py        <span class="c">// + InputRejection schema + UpstreamInputRejected exception</span>
-agents/base_agent.py           <span class="c">// + INPUT_REJECTION_RULE 常量；_llm_fill_full/_creative 检测 + 抛异常；run() 捕获短路（0 retry）</span>
-plan-stack-backend/.../service.py  <span class="c">// _execute_pipeline_descriptor 透传 kind+rejection 到 _execution_debug；</span>
-                               <span class="c">// _format_failure_error() 按 kind 分流出 [upstream_input_rejected] 前缀</span>
-director_agent/prompts.py      <span class="c">// REPLAN_TAIL_SYSTEM 加规则：看到前缀强制 replan，禁止 retry</span>
-agents/&lt;19 个 agent&gt;/agent.py  <span class="c">// 每个 system_prompt() 加 WHEN TO REJECT 块</span>
-tests/agents/test_input_rejection.py  <span class="c">// + 12 个新测试 — schema / parser / run() 短路 / error 字符串分流</span></pre>
+      <pre class="code"><span class="c">// 5 层改动 + 1 个测试文件，共 6 类文件（2026-04-20 重构后）</span>
+agents/common_schema.py        <span class="c">// InputRejection schema（3 字段：reason / missing_labels / offending_fields）</span>
+                               <span class="c">// + UpstreamInputRejected exception</span>
+                               <span class="c">// ⚠ 旧 upstream_agent_hint 字段已删除</span>
+agents/base_agent.py           <span class="c">// INPUT_REJECTION_RULE 常量（不再指示点名 producer）</span>
+                               <span class="c">// _llm_fill_full/_creative 检测 + 抛异常；run() 捕获短路（0 retry）</span>
+plan-stack-backend/.../service.py  <span class="c">// _format_failure_error() 输出 reason + missing（不再含 hint=）</span>
+director_agent/prompts.py      <span class="c">// REPLAN_TAIL_SYSTEM 规则：看到前缀强制 replan + 从 PENDING tail + catalog</span>
+                               <span class="c">// 自行推 producer（不再读 hint= 字段）</span>
+agents/&lt;16 个 agent&gt;/agent.py  <span class="c">// 每个 system_prompt() 加 WHEN TO REJECT 块</span>
+                               <span class="c">// ⚠ 旧的 "upstream_agent_hint: 'XxxAgent'" 行全部删除</span>
+tests/agents/test_input_rejection.py  <span class="c">// 12 个测试 — schema / parser / run() 短路 / error 字符串分流（hint 断言移除）</span></pre>
       <p class="meta-note">
-        <strong>测试结果</strong>：核心回归 102/102 通过，新增 12 个 rejection 单元测试通过，e2e smoke (real LLM) 通过。Director 的 Python 代码<strong>一行未动</strong>，prompt 文本是唯一改动。
+        <strong>测试结果</strong>：12 个 rejection 单元测试全过（schema / maybe_parse / short-circuit / error format）。Director 的 Python 代码<strong>一行未动</strong> —— replanner 本来就是纯 LLM-driven（无 deterministic hint 解析器），prompt 文本是唯一协议载体。
+      </p>
+      <p class="meta-note" style="margin-top:8px;">
+        <strong>架构意义</strong>：sub-agent 不再向 Director 跨层"点名"某个 producer agent_id 的字符串。这消除了 sub-agent 层最后一块跨 agent 耦合 —— 现在 sub-agent docstring / comment / prompt 里 <strong style="color:#86efac">0 处</strong>其它 agent 名字（仅剩 Python 结构引用如 import / __all__）。
       </p>
     </div>
 

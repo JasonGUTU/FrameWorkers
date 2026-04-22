@@ -13,8 +13,6 @@ use the same prompt.
 
 from __future__ import annotations
 
-from typing import Any
-
 from ..base_agent import BaseAgent
 from .schema import StoryAgentInput, StoryAgentOutput
 
@@ -70,8 +68,6 @@ STORY_OUTPUT_TEMPLATE = """{
 
 
 class StoryAgent(BaseAgent[StoryAgentInput, StoryAgentOutput]):
-    def __init__(self, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
 
     # ------------------------------------------------------------------
     # Prompts

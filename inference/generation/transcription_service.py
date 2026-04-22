@@ -1,18 +1,16 @@
 """Transcription service — speech-to-text.
 
 Backends:
-- ``TranscriptionService``: OpenAI Whisper API (requires OPENAI_API_KEY)
 - ``FalTranscriptionService``: fal.ai Whisper (requires FAL_API_KEY)
 - ``MockTranscriptionService``: placeholder segments (no API call)
 """
 
 from __future__ import annotations
 
-import base64
 import logging
 import os
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, Protocol
 
 logger = logging.getLogger(__name__)
 
@@ -31,51 +29,13 @@ class TranscriptionResult:
     full_text: str = ""
 
 
-class TranscriptionService:
-    """Speech-to-text service backed by OpenAI Whisper API."""
+class TranscriptionBackend(Protocol):
+    """Structural type used by ``TranscriptionMaterializer`` to accept either
+    ``FalTranscriptionService`` or ``MockTranscriptionService`` without
+    requiring a shared base class.
+    """
 
-    def __init__(
-        self,
-        client: "AsyncOpenAI | None" = None,
-        model: str = "whisper-1",
-    ) -> None:
-        self._client = client
-        self.model = model
-
-    @property
-    def client(self):
-        if self._client is None:
-            from openai import AsyncOpenAI
-            self._client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-        return self._client
-
-    async def transcribe(self, media_path: str) -> TranscriptionResult:
-        if not media_path or not os.path.isfile(media_path):
-            logger.warning("TranscriptionService: file not found: %s", media_path)
-            return TranscriptionResult()
-
-        logger.info("Transcribing %s with model %s", media_path, self.model)
-
-        with open(media_path, "rb") as audio_file:
-            response = await self.client.audio.transcriptions.create(
-                model=self.model,
-                file=audio_file,
-                response_format="verbose_json",
-                timestamp_granularities=["segment"],
-            )
-
-        segments = []
-        for seg in getattr(response, "segments", []) or []:
-            segments.append(TranscriptSegment(
-                start=seg.get("start", 0.0) if isinstance(seg, dict) else getattr(seg, "start", 0.0),
-                end=seg.get("end", 0.0) if isinstance(seg, dict) else getattr(seg, "end", 0.0),
-                text=(seg.get("text", "") if isinstance(seg, dict) else getattr(seg, "text", "")).strip(),
-            ))
-
-        full_text = getattr(response, "text", "") or ""
-        language = getattr(response, "language", "") or ""
-
-        return TranscriptionResult(language=language, segments=segments, full_text=full_text)
+    async def transcribe(self, media_path: str) -> TranscriptionResult: ...
 
 
 class FalTranscriptionService:

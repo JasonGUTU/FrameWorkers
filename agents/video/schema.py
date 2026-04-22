@@ -114,9 +114,6 @@ class VideoPackage(BaseModel):
     meta: Meta = Field(default_factory=Meta)
     content: VideoContent = Field(default_factory=VideoContent)
     metrics: VideoMetrics = Field(default_factory=VideoMetrics)
-    # Per-clip captions keyed by sys_id (e.g. "clip_sh_001", "clip_final").
-    # Populated by recompute_metrics(); read by ArtifactWriter for per-artifact registry entries.
-    # Excluded from JSON snapshot to keep persisted files clean.
 
 
 # --- Input types ---

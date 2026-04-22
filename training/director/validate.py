@@ -240,9 +240,9 @@ def check_eval_isolation(samples_sft, samples_dpo, eval_cases_path: Path):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--seq-len", type=int, default=4096)
-    ap.add_argument("--sft", default="samples_sft.jsonl",
+    ap.add_argument("--sft", default="samples_sft_full.jsonl",
                     help="SFT jsonl filename (relative to training/director/) or absolute path")
-    ap.add_argument("--dpo", default="samples_dpo.jsonl",
+    ap.add_argument("--dpo", default="samples_dpo_full.jsonl",
                     help="DPO jsonl filename (relative to training/director/) or absolute path")
     args = ap.parse_args()
 

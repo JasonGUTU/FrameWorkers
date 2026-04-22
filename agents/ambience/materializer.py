@@ -45,7 +45,6 @@ class AmbienceMaterializer(BaseMaterializer):
             try:
                 segments: list[bytes] = []
                 remaining = max(target_dur, 10.0)
-                seg_idx = 0
                 while remaining > 0:
                     seg_dur = min(remaining, 30.0)
                     result = await self.svc.generate_ambience(
@@ -53,7 +52,6 @@ class AmbienceMaterializer(BaseMaterializer):
                     )
                     segments.append(result.bytes)
                     remaining -= seg_dur
-                    seg_idx += 1
                 if len(segments) == 1:
                     final_bytes = segments[0]
                 else:
