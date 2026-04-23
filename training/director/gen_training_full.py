@@ -1,22 +1,22 @@
-"""Scale to 1000 SFT + 500 DPO training samples via LLM teacher.
+"""Generate ~1100 SFT training samples via LLM teacher.
 
 Uses project-native `inference.clients.LLMClient` (Cloudflare AI Gateway)
 to call a strong teacher (Claude Sonnet / GPT-5 / Gemini Pro) for:
-  - Generating diverse user_goal variants for each unique chain
-  - Writing high-quality CoT rationale for each (goal, chain)
-  - Writing "justification" rationale for bias-injected rejected chains
-
-Bias injection for DPO is PROGRAMMATIC (Python, not LLM) — deterministic
-and covers all 4 known failure modes: VA overshoot / Ambience coupling /
-Compositor suffix / missing IntakeText.
+  - Generating diverse user_goal variants for each unique chain in
+    VARIANTS_BUDGET
+  - Writing high-quality CoT rationale + per-step intents for each
+    (goal, chain)
 
 Output:
-    training/director/samples_sft_full.jsonl   (~1000 samples)
-    training/director/samples_dpo_full.jsonl   (~500 pairs)
+    training/director/samples_sft_full.jsonl   (~1100 samples)
+
+Next stage (optional): GRPO (see train_grpo.py). DPO stage was retired —
+GRPO optimizes the programmatic chain-match reward directly, so we no
+longer need programmatic bias-injected preference pairs.
 
 Usage:
-    PYTHONPATH=. python training/director/gen_training_full.py --dry-run   # 50 samples only
-    PYTHONPATH=. python training/director/gen_training_full.py             # full 1000+500
+    PYTHONPATH=. python training/director/gen_training_full.py --dry-run   # ~50 samples
+    PYTHONPATH=. python training/director/gen_training_full.py             # full
 """
 
 from __future__ import annotations
@@ -209,89 +209,8 @@ intents 约束：
 """
 
 
-REJECTED_RATIONALE_SYSTEM = """\
-你是为 DPO 训练合成 "rejected" rationale 的助手。
-给定：(user_goal, chosen chain, rejected chain, 注入的 bias 类型)
-
-你的任务是写一段**看似合理但实际错误**的 rationale，为这条 rejected chain 找"借口"。
-这段 rationale 在训练时会被模型学到"这类推理是错的"。
-
-约束：
-- rationale 要**自洽**，不能明显胡扯
-- 要包含 bias 对应的**错误推理模式**，如：
-  - "需要先分析视频才能决定..." (VA overshoot 的借口)
-  - "音乐搭配环境音更有氛围..." (Ambience coupling 的借口)
-  - "视频交付都应由 Compositor 收尾..." (Compositor suffix 的借口)
-  - "纯视频操作可以省略 IntakeText..." (missing IntakeText 的借口)
-- rationale 长度目标必须对齐参考的 chosen rationale token 数 ± 5%
-- 中英文按 user_goal 的语种决定
-- 输出纯文本 rationale
-"""
-
-
 # ---------------------------------------------------------------------------
-# Bias injection (programmatic, deterministic)
-# ---------------------------------------------------------------------------
-
-def inject_va_overshoot(chain: list[dict]) -> list[dict] | None:
-    """Insert VideoAnalysisAgent after IntakeVideoAgent. Only applies to
-    uploaded-video chains where VA is NOT already there."""
-    agent_ids = [s["agent_id"] for s in chain]
-    if "IntakeVideoAgent" not in agent_ids or "VideoAnalysisAgent" in agent_ids:
-        return None
-    out = []
-    for step in chain:
-        out.append(step)
-        if step["agent_id"] == "IntakeVideoAgent":
-            out.append({"agent_id": "VideoAnalysisAgent",
-                        "intent": "Analyze the video's content and mood before proceeding."})
-    return out
-
-
-def inject_ambience_coupling(chain: list[dict]) -> list[dict] | None:
-    """Insert AmbienceAgent after MusicAgent. Only applies when Music is
-    present but Ambience is NOT."""
-    agent_ids = [s["agent_id"] for s in chain]
-    if "MusicAgent" not in agent_ids or "AmbienceAgent" in agent_ids:
-        return None
-    out = []
-    for step in chain:
-        out.append(step)
-        if step["agent_id"] == "MusicAgent":
-            out.append({"agent_id": "AmbienceAgent",
-                        "intent": "Layer in environmental sounds to enrich the mood."})
-    return out
-
-
-def inject_compositor_suffix(chain: list[dict]) -> list[dict] | None:
-    """Append CompositorAgent. Only applies when chain ends with
-    VideoExtend/Highlight/StyleTransfer (raw deliverables)."""
-    if not chain:
-        return None
-    last = chain[-1]["agent_id"]
-    if last not in ("VideoExtendAgent", "HighlightAgent", "StyleTransferAgent"):
-        return None
-    return chain + [{"agent_id": "CompositorAgent",
-                     "intent": "Finalize the clip as the deliverable."}]
-
-
-def drop_intake_text(chain: list[dict]) -> list[dict] | None:
-    """Remove IntakeTextAgent from the front. Only applies if present."""
-    if not chain or chain[0]["agent_id"] != "IntakeTextAgent":
-        return None
-    return chain[1:]
-
-
-BIAS_INJECTORS = [
-    ("va_overshoot",        inject_va_overshoot),
-    ("ambience_coupling",   inject_ambience_coupling),
-    ("compositor_suffix",   inject_compositor_suffix),
-    ("missing_intake_text", drop_intake_text),
-]
-
-
-# ---------------------------------------------------------------------------
-# Teacher-model helpers (stubs — wire when ready)
+# Teacher-model helper
 # ---------------------------------------------------------------------------
 
 async def llm_json(system: str, user: str, model: str = TEACHER_MODEL) -> Any:
@@ -299,17 +218,6 @@ async def llm_json(system: str, user: str, model: str = TEACHER_MODEL) -> Any:
     from inference.clients import LLMClient
     client = LLMClient()
     return await client.chat_json(
-        system_prompt=system,
-        user_prompt=user,
-        model=model,
-    )
-
-
-async def llm_text(system: str, user: str, model: str = TEACHER_MODEL) -> str:
-    """Call the teacher; return raw text (for rationale)."""
-    from inference.clients import LLMClient
-    client = LLMClient()
-    return await client.chat_text(
         system_prompt=system,
         user_prompt=user,
         model=model,
@@ -344,17 +252,6 @@ async def gen_assistant_response(user_goal: str, chain_ids: list[str]) -> dict:
     return {"rationale": rationale, "plan": plan}
 
 
-async def gen_rejected_rationale(user_goal: str, chosen_rationale: str,
-                                  chosen_chain: list[str], rejected_chain: list[str],
-                                  bias_type: str) -> str:
-    user = json.dumps({
-        "user_goal": user_goal,
-        "chosen_chain": chosen_chain,
-        "rejected_chain": rejected_chain,
-        "bias_type": bias_type,
-        "chosen_rationale_length_hint": len(chosen_rationale),
-    }, ensure_ascii=False)
-    return (await llm_text(REJECTED_RATIONALE_SYSTEM, user)).strip()
 
 
 # ---------------------------------------------------------------------------
@@ -383,26 +280,19 @@ async def _gather_with_limit(coros: list, limit: int = 20) -> list:
 # Spot-check dump (human-readable markdown sample for QA before training)
 # ---------------------------------------------------------------------------
 
-def write_spot_check_md(sft_records: list[dict], dpo_records: list[dict],
-                         out_path: Path, n_sft: int, n_dpo: int, seed: int = 42) -> None:
-    """Sample N SFT + N/2 DPO records and dump in human-readable markdown.
-    The reviewer answers 3 questions per sample (see docstring at top of file)."""
+def write_spot_check_md(sft_records: list[dict], out_path: Path,
+                         n_sft: int, seed: int = 42) -> None:
+    """Sample N SFT records and dump in human-readable markdown for manual QA."""
     rng = random.Random(seed)
     sft_sample = rng.sample(sft_records, min(n_sft, len(sft_records)))
-    dpo_sample = rng.sample(dpo_records, min(n_dpo, len(dpo_records)))
 
     lines = [
-        f"# Spot check — {len(sft_sample)} SFT + {len(dpo_sample)} DPO samples",
+        f"# Spot check — {len(sft_sample)} SFT samples",
         "",
         "**For each SFT sample, check:**",
         "1. rationale 引用的规则在 descriptor 里存在吗？（不要胡编「根据 XXX 原则」）",
         "2. rationale 的结论和 plan 一致吗？（rationale 说不加 X，plan 里就不该有 X）",
         "3. intent 是否带上了 user_goal 的具体内容（不是模板化的「process the X」）",
-        "",
-        "**For each DPO pair, check:**",
-        "1. chosen rationale 是否清晰拒绝了 rejected 引入的 bias",
-        "2. rejected rationale 是否「看似合理但显然错」（自洽但确实是错的推理）",
-        "3. 长度是否大致平衡（chosen vs rejected total assistant content 差距 < 15%）",
         "",
         "---",
         "",
@@ -423,23 +313,6 @@ def write_spot_check_md(sft_records: list[dict], dpo_records: list[dict],
             lines.append(f"- `{s['agent_id']}` — {s['intent']}")
         lines.append("")
 
-    lines.append("# DPO pairs")
-    lines.append("")
-    for i, r in enumerate(dpo_sample, 1):
-        prompt = r["prompt"]
-        user = next(m["content"] for m in prompt if m["role"] == "user")
-        chosen = json.loads(r["chosen"][0]["content"])
-        rejected = json.loads(r["rejected"][0]["content"])
-        lines.append(f"## DPO #{i}")
-        lines.append(f"**user_goal:** {user}")
-        lines.append("")
-        lines.append(f"**chosen rationale:** {chosen['rationale']}")
-        lines.append("**chosen plan:** " + " → ".join(s["agent_id"] for s in chosen["plan"]))
-        lines.append("")
-        lines.append(f"**rejected rationale:** {rejected['rationale']}")
-        lines.append("**rejected plan:** " + " → ".join(s["agent_id"] for s in rejected["plan"]))
-        lines.append("")
-
     out_path.write_text("\n".join(lines), encoding="utf-8")
 
 
@@ -448,7 +321,9 @@ def write_spot_check_md(sft_records: list[dict], dpo_records: list[dict],
 # ---------------------------------------------------------------------------
 
 async def run(dry_run: bool = False, seed: int = 42, concurrency: int = 20,
-              spot_check_n: int = 50) -> None:
+              spot_check_n: int = 50,
+              chains_filter: tuple[str, ...] = (),
+              append_to: Path | None = None) -> None:
     random.seed(seed)
     from training.director.gen_samples import build_system_prompt, _assistant_response
     system_prompt = build_system_prompt()
@@ -458,16 +333,34 @@ async def run(dry_run: bool = False, seed: int = 42, concurrency: int = 20,
     eval_cases = json.loads(eval_path.read_text(encoding="utf-8"))
     eval_goals_norm = {_normalize(c["user_goal"]) for c in eval_cases}
 
-    # Scale down budget for dry-run (50 SFT + ~25 DPO total)
+    # Scale down budget for dry-run (~50 SFT samples total)
     budget = VARIANTS_BUDGET.copy()
+
+    # Apply --chains-filter: keep only shapes whose tuple contains EVERY
+    # requested agent id (AND-semantics). Used to regenerate a slice of
+    # the blueprint without re-burning the whole 1280-sample budget —
+    # e.g. ``--chains-filter NarrationAgent`` picks the 12 storytelling
+    # shapes.
+    if chains_filter:
+        required = set(chains_filter)
+        budget = {
+            chain: n for chain, n in budget.items() if required.issubset(set(chain))
+        }
+        if not budget:
+            raise SystemExit(
+                f"No chain shapes contain all of {sorted(required)!r} — nothing to generate"
+            )
+
     if dry_run:
         budget = {k: max(2, v // 20) for k, v in budget.items()}
     total_sft = sum(budget.values())
     print(f"Target: {total_sft} SFT samples across {len(budget)} chains "
-          f"(concurrency={concurrency}, dry_run={dry_run})")
+          f"(concurrency={concurrency}, dry_run={dry_run}"
+          + (f", chains_filter={sorted(chains_filter)}" if chains_filter else "")
+          + ")")
 
     # -------- Phase 1: generate goals for all chains in parallel --------
-    print("\n[1/3] Generating user_goals…")
+    print("\n[1/2] Generating user_goals…")
     goal_coros = [gen_goals_for_chain(chain, n) for chain, n in budget.items()]
     goal_results = await _gather_with_limit(goal_coros, limit=concurrency)
     chain_to_goals: dict[tuple, list[str]] = {}
@@ -483,7 +376,7 @@ async def run(dry_run: bool = False, seed: int = 42, concurrency: int = 20,
     print(f"  {n_goals} goals after eval-isolation filter")
 
     # -------- Phase 2: generate (rationale, plan) per goal in parallel --------
-    print(f"\n[2/3] Generating rationale + intents for {n_goals} goals…")
+    print(f"\n[2/2] Generating rationale + intents for {n_goals} goals…")
     flat: list[tuple[tuple, str]] = []  # (chain_ids, goal)
     for chain, goals in chain_to_goals.items():
         for g in goals:
@@ -503,85 +396,46 @@ async def run(dry_run: bool = False, seed: int = 42, concurrency: int = 20,
                 {"role": "user",      "content": goal},
                 {"role": "assistant", "content": _assistant_response(resp["rationale"], resp["plan"])},
             ],
-            "_meta": {"chain_ids": list(chain), "plan": resp["plan"]},
         })
     print(f"  {len(sft_records)} SFT records (failed: {failed})")
-
-    # -------- Phase 3: build DPO pairs --------
-    print("\n[3/3] Generating DPO rejected rationales…")
-    dpo_target = 25 if dry_run else 500
-    dpo_sources = random.sample(sft_records, k=min(len(sft_records), dpo_target * 2))
-
-    # First pass: pick a bias-injector per source synchronously (deterministic)
-    dpo_jobs = []  # list of (src, chosen_obj, rejected_plan, bias_name)
-    for src in dpo_sources:
-        chosen_plan = src["_meta"]["plan"]
-        chosen_obj = json.loads(src["messages"][-1]["content"])
-        applicable = []
-        for name, fn in BIAS_INJECTORS:
-            rp = fn(chosen_plan)
-            if rp is not None:
-                applicable.append((name, rp))
-        if not applicable:
-            continue
-        bias_name, rejected_plan = random.choice(applicable)
-        dpo_jobs.append((src, chosen_obj, rejected_plan, bias_name))
-        if len(dpo_jobs) >= dpo_target:
-            break
-
-    # Second pass: parallel call teacher for rejected rationales
-    rej_coros = [
-        gen_rejected_rationale(
-            user_goal=src["messages"][1]["content"],
-            chosen_rationale=chosen_obj["rationale"],
-            chosen_chain=src["_meta"]["chain_ids"],
-            rejected_chain=[s["agent_id"] for s in rejected_plan],
-            bias_type=bias_name,
-        )
-        for (src, chosen_obj, rejected_plan, bias_name) in dpo_jobs
-    ]
-    rej_results = await _gather_with_limit(rej_coros, limit=concurrency)
-
-    dpo_records: list[dict] = []
-    failed_dpo = 0
-    for (src, chosen_obj, rejected_plan, bias_name), rej in zip(dpo_jobs, rej_results):
-        if isinstance(rej, Exception):
-            failed_dpo += 1
-            continue
-        rejected_content = _assistant_response(rej, rejected_plan)
-        dpo_records.append({
-            "prompt": src["messages"][:2],
-            "chosen": [{"role": "assistant", "content": src["messages"][-1]["content"]}],
-            "rejected": [{"role": "assistant", "content": rejected_content}],
-        })
-    print(f"  {len(dpo_records)} DPO pairs (failed: {failed_dpo})")
-
-    # Strip _meta before save
-    for r in sft_records:
-        r.pop("_meta", None)
 
     # ----- Save -----
     out_dir = Path(__file__).parent
     suffix = "_dryrun" if dry_run else "_full"
-    sft_path = out_dir / f"samples_sft{suffix}.jsonl"
-    dpo_path = out_dir / f"samples_dpo{suffix}.jsonl"
     spot_path = out_dir / f"samples{suffix}.spot_check.md"
 
-    with sft_path.open("w", encoding="utf-8") as f:
-        for r in sft_records:
-            f.write(json.dumps(r, ensure_ascii=False) + "\n")
-    with dpo_path.open("w", encoding="utf-8") as f:
-        for r in dpo_records:
-            f.write(json.dumps(r, ensure_ascii=False) + "\n")
+    if append_to is not None:
+        # Merge into an existing jsonl (e.g. the post-processed 1110-sample
+        # baseline) so the delta slice this run produced adds to — rather
+        # than replaces — the prior corpus. Useful with --chains-filter
+        # to grow coverage of a new chain class without re-burning the
+        # whole budget.
+        sft_path = append_to if append_to.is_absolute() else (out_dir / append_to)
+        existing = []
+        if sft_path.is_file():
+            with sft_path.open("r", encoding="utf-8") as f:
+                existing = [line for line in f if line.strip()]
+        with sft_path.open("w", encoding="utf-8") as f:
+            for line in existing:
+                f.write(line if line.endswith("\n") else line + "\n")
+            for r in sft_records:
+                f.write(json.dumps(r, ensure_ascii=False) + "\n")
+        print(
+            f"\nAppended {len(sft_records)} new samples → "
+            f"{sft_path.relative_to(Path.cwd())} "
+            f"(prior {len(existing)} preserved; total {len(existing) + len(sft_records)})"
+        )
+    else:
+        sft_path = out_dir / f"samples_sft{suffix}.jsonl"
+        with sft_path.open("w", encoding="utf-8") as f:
+            for r in sft_records:
+                f.write(json.dumps(r, ensure_ascii=False) + "\n")
+        print(f"\nWrote {sft_path.relative_to(Path.cwd())}  ({len(sft_records)} samples)")
 
-    write_spot_check_md(sft_records, dpo_records, spot_path,
-                        n_sft=spot_check_n, n_dpo=spot_check_n // 2, seed=seed)
-
-    print(f"\nWrote {sft_path.relative_to(Path.cwd())}  ({len(sft_records)} samples)")
-    print(f"Wrote {dpo_path.relative_to(Path.cwd())}  ({len(dpo_records)} pairs)")
-    print(f"Wrote {spot_path.relative_to(Path.cwd())}  (review {spot_check_n} SFT + {spot_check_n//2} DPO before training)")
-    print("\nNext: PYTHONPATH=. python training/director/validate.py --seq-len 4096 \\")
-    print(f"        --sft {sft_path.name} --dpo {dpo_path.name}")
+    write_spot_check_md(sft_records, spot_path, n_sft=spot_check_n, seed=seed)
+    print(f"Wrote {spot_path.relative_to(Path.cwd())}  (review {spot_check_n} SFT before training)")
+    print("\nNext: PYTHONPATH=. python training/director/validate.py --seq-len 8192 \\")
+    print(f"        --sft {sft_path.name}")
 
 
 # ---------------------------------------------------------------------------
@@ -596,15 +450,40 @@ def _normalize(g: str) -> str:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true",
-                    help="Generate ~50 SFT + ~25 DPO for smoke test")
+                    help="Generate ~50 SFT samples for smoke test")
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--concurrency", type=int, default=20,
                     help="Max concurrent teacher API calls (default 20)")
     ap.add_argument("--spot-check", type=int, default=50,
-                    help="Number of SFT samples (and N/2 DPO pairs) to dump for human review")
+                    help="Number of SFT samples to dump for human review")
+    ap.add_argument(
+        "--chains-filter", nargs="*", default=[],
+        help=(
+            "Regenerate only chain shapes that contain ALL of the given "
+            "agent ids. AND-semantics — e.g. `--chains-filter NarrationAgent` "
+            "targets the 12 storytelling shapes; `--chains-filter "
+            "NarrationAgent TranslationAgent` narrows to bilingual "
+            "storytelling chains."
+        ),
+    )
+    ap.add_argument(
+        "--append-to", type=Path, default=None,
+        help=(
+            "Instead of overwriting samples_sft_full.jsonl, merge the "
+            "newly generated samples into this existing jsonl (prior rows "
+            "preserved). Pair with --chains-filter to grow coverage of a "
+            "new chain class without re-burning the full 1280-sample budget."
+        ),
+    )
     args = ap.parse_args()
-    asyncio.run(run(dry_run=args.dry_run, seed=args.seed,
-                    concurrency=args.concurrency, spot_check_n=args.spot_check))
+    asyncio.run(run(
+        dry_run=args.dry_run,
+        seed=args.seed,
+        concurrency=args.concurrency,
+        spot_check_n=args.spot_check,
+        chains_filter=tuple(args.chains_filter),
+        append_to=args.append_to,
+    ))
 
 
 if __name__ == "__main__":
