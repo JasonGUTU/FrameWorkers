@@ -418,9 +418,12 @@ def test_video_extend_agent_independent(monkeypatch):
         "Extend the clip by 5 seconds: the astronaut picks up the crystal "
         "and holds it to the light."
     )
-    _seed_artifact(ws, "IntakeTextAgent",
-                   {"content": {"text": user_instruction, "summary": ""}},
-                   "User-submitted creative brief (110 chars). Pipeline entry point — consumed by story and screenplay agents.",
+    # IntakeTextAgent was retired — user text briefs are now auto-
+    # persisted under agent_id="user" (matching
+    # workspace.persist_raw_upload's text/plain branch).
+    _seed_artifact(ws, "user",
+                   {"content": {"text": user_instruction}},
+                   "Structured metadata document (JSON) for a user-submitted text brief. Payload carries the raw text verbatim. Pipeline entry point — consumed by story / screenplay / narration agents.",
                    "global")
     step_id = _create_step(client, "Extend video clip")
     body = _execute(client, "VideoExtendAgent", step_id)

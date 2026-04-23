@@ -53,60 +53,60 @@ TEACHER_MODEL = "anthropic/claude-sonnet-4"  # change as needed; also supports g
 VARIANTS_BUDGET = {
     # ── Cinematic / creative film (chain a) ───────────────────────────
     # Creative full chain (highest freq in real use)
-    ("IntakeTextAgent", "StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent",
+    ("StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent",
      "MusicAgent", "AmbienceAgent", "AudioMixAgent", "CompositorAgent"): 100,
     # Creative + subtitle (TranscriptionAgent on the Kling-baked audio)
-    ("IntakeTextAgent", "StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent",
+    ("StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent",
      "MusicAgent", "AmbienceAgent", "AudioMixAgent", "TranscriptionAgent", "CompositorAgent"): 80,
     # Creative + bilingual
-    ("IntakeTextAgent", "StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent",
+    ("StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent",
      "MusicAgent", "AmbienceAgent", "AudioMixAgent", "TranscriptionAgent", "TranslationAgent",
      "CompositorAgent"): 60,
     # Image-based creative
-    ("IntakeTextAgent", "IntakeImageAgent", "BriefEnricherAgent", "StoryAgent", "ScreenplayAgent",
+    ("IntakeImageAgent", "BriefEnricherAgent", "StoryAgent", "ScreenplayAgent",
      "KeyFrameAgent", "VideoAgent", "MusicAgent", "AmbienceAgent", "AudioMixAgent", "CompositorAgent"): 60,
 
     # ── Existing-video edit (chain b) ─────────────────────────────────
     # BGM on uploaded video
-    ("IntakeTextAgent", "IntakeVideoAgent", "MusicAgent", "AudioMixAgent", "CompositorAgent"): 80,
+    ("IntakeVideoAgent", "MusicAgent", "AudioMixAgent", "CompositorAgent"): 80,
     # BGM + ambience on uploaded video
-    ("IntakeTextAgent", "IntakeVideoAgent", "MusicAgent", "AmbienceAgent", "AudioMixAgent",
+    ("IntakeVideoAgent", "MusicAgent", "AmbienceAgent", "AudioMixAgent",
      "CompositorAgent"): 50,
     # Style transfer only
-    ("IntakeTextAgent", "IntakeVideoAgent", "StyleTransferAgent"): 60,
+    ("IntakeVideoAgent", "StyleTransferAgent"): 60,
     # Style + subtitle (Transcription direct)
-    ("IntakeTextAgent", "IntakeVideoAgent", "StyleTransferAgent", "TranscriptionAgent",
+    ("IntakeVideoAgent", "StyleTransferAgent", "TranscriptionAgent",
      "CompositorAgent"): 50,
     # Style + music
-    ("IntakeTextAgent", "IntakeVideoAgent", "StyleTransferAgent", "MusicAgent", "CompositorAgent"): 40,
+    ("IntakeVideoAgent", "StyleTransferAgent", "MusicAgent", "CompositorAgent"): 40,
     # Video extend only
-    ("IntakeTextAgent", "IntakeVideoAgent", "VideoExtendAgent"): 60,
+    ("IntakeVideoAgent", "VideoExtendAgent"): 60,
     # Extend + music
-    ("IntakeTextAgent", "IntakeVideoAgent", "VideoExtendAgent", "MusicAgent", "AudioMixAgent",
+    ("IntakeVideoAgent", "VideoExtendAgent", "MusicAgent", "AudioMixAgent",
      "CompositorAgent"): 40,
     # Extend + subtitle
-    ("IntakeTextAgent", "IntakeVideoAgent", "VideoExtendAgent", "TranscriptionAgent",
+    ("IntakeVideoAgent", "VideoExtendAgent", "TranscriptionAgent",
      "CompositorAgent"): 40,
     # Highlight only
-    ("IntakeTextAgent", "IntakeVideoAgent", "VideoAnalysisAgent", "HighlightAgent"): 60,
+    ("IntakeVideoAgent", "VideoAnalysisAgent", "HighlightAgent"): 60,
     # Highlight + subtitle
-    ("IntakeTextAgent", "IntakeVideoAgent", "VideoAnalysisAgent", "HighlightAgent",
+    ("IntakeVideoAgent", "VideoAnalysisAgent", "HighlightAgent",
      "TranscriptionAgent", "CompositorAgent"): 40,
     # Highlight + music
-    ("IntakeTextAgent", "IntakeVideoAgent", "VideoAnalysisAgent", "HighlightAgent", "MusicAgent",
+    ("IntakeVideoAgent", "VideoAnalysisAgent", "HighlightAgent", "MusicAgent",
      "CompositorAgent"): 30,
     # Transcribe + translate (bilingual subtitle on uploaded video)
-    ("IntakeTextAgent", "IntakeVideoAgent", "TranscriptionAgent", "TranslationAgent",
+    ("IntakeVideoAgent", "TranscriptionAgent", "TranslationAgent",
      "CompositorAgent"): 40,
     # Subtitle for uploaded video (monolingual)
-    ("IntakeTextAgent", "IntakeVideoAgent", "TranscriptionAgent", "CompositorAgent"): 50,
+    ("IntakeVideoAgent", "TranscriptionAgent", "CompositorAgent"): 50,
     # Extend + style
-    ("IntakeTextAgent", "IntakeVideoAgent", "VideoExtendAgent", "StyleTransferAgent"): 30,
+    ("IntakeVideoAgent", "VideoExtendAgent", "StyleTransferAgent"): 30,
     # Style + extend + music
-    ("IntakeTextAgent", "IntakeVideoAgent", "StyleTransferAgent", "VideoExtendAgent",
+    ("IntakeVideoAgent", "StyleTransferAgent", "VideoExtendAgent",
      "MusicAgent", "CompositorAgent"): 30,
     # Analyze + creative + subtitle (long)
-    ("IntakeTextAgent", "IntakeVideoAgent", "VideoAnalysisAgent", "StoryAgent", "ScreenplayAgent",
+    ("IntakeVideoAgent", "VideoAnalysisAgent", "StoryAgent", "ScreenplayAgent",
      "KeyFrameAgent", "VideoAgent", "MusicAgent", "AmbienceAgent", "AudioMixAgent",
      "TranscriptionAgent", "CompositorAgent"): 30,
 
@@ -119,41 +119,41 @@ VARIANTS_BUDGET = {
     # wild; the pair/triple variants seed cross-modifier routing.
     #
     # Pure
-    ("IntakeTextAgent", "NarrationAgent", "IllustrationAgent", "NarratorAgent", "CompositorAgent"): 60,
+    ("NarrationAgent", "IllustrationAgent", "NarratorAgent", "CompositorAgent"): 60,
     # + Translation (bilingual SRT)
-    ("IntakeTextAgent", "NarrationAgent", "IllustrationAgent", "NarratorAgent",
+    ("NarrationAgent", "IllustrationAgent", "NarratorAgent",
      "TranslationAgent", "CompositorAgent"): 25,
     # + Music (BGM under narrator)
-    ("IntakeTextAgent", "NarrationAgent", "IllustrationAgent", "NarratorAgent", "MusicAgent",
+    ("NarrationAgent", "IllustrationAgent", "NarratorAgent", "MusicAgent",
      "AudioMixAgent", "CompositorAgent"): 25,
     # + Ambience (ambient bed)
-    ("IntakeTextAgent", "NarrationAgent", "IllustrationAgent", "NarratorAgent", "AmbienceAgent",
+    ("NarrationAgent", "IllustrationAgent", "NarratorAgent", "AmbienceAgent",
      "AudioMixAgent", "CompositorAgent"): 20,
     # + IntakeImage + BriefEnricher (character / setting reference)
-    ("IntakeTextAgent", "IntakeImageAgent", "BriefEnricherAgent", "NarrationAgent",
+    ("IntakeImageAgent", "BriefEnricherAgent", "NarrationAgent",
      "IllustrationAgent", "NarratorAgent", "CompositorAgent"): 20,
     # + Music + Ambience (dual audio underlay)
-    ("IntakeTextAgent", "NarrationAgent", "IllustrationAgent", "NarratorAgent",
+    ("NarrationAgent", "IllustrationAgent", "NarratorAgent",
      "MusicAgent", "AmbienceAgent", "AudioMixAgent", "CompositorAgent"): 20,
     # + Music + Translation (BGM + bilingual — common international audiobook)
-    ("IntakeTextAgent", "NarrationAgent", "IllustrationAgent", "NarratorAgent",
+    ("NarrationAgent", "IllustrationAgent", "NarratorAgent",
      "MusicAgent", "AudioMixAgent", "TranslationAgent", "CompositorAgent"): 15,
     # + Ambience + Translation (ambient bed + bilingual)
-    ("IntakeTextAgent", "NarrationAgent", "IllustrationAgent", "NarratorAgent",
+    ("NarrationAgent", "IllustrationAgent", "NarratorAgent",
      "AmbienceAgent", "AudioMixAgent", "TranslationAgent", "CompositorAgent"): 10,
     # + imgref + Music (character ref + BGM, no bilingual)
-    ("IntakeTextAgent", "IntakeImageAgent", "BriefEnricherAgent", "NarrationAgent",
+    ("IntakeImageAgent", "BriefEnricherAgent", "NarrationAgent",
      "IllustrationAgent", "NarratorAgent", "MusicAgent", "AudioMixAgent",
      "CompositorAgent"): 15,
     # + imgref + Translation (character ref + bilingual, no audio overlay)
-    ("IntakeTextAgent", "IntakeImageAgent", "BriefEnricherAgent", "NarrationAgent",
+    ("IntakeImageAgent", "BriefEnricherAgent", "NarrationAgent",
      "IllustrationAgent", "NarratorAgent", "TranslationAgent", "CompositorAgent"): 15,
     # + imgref + Music + Translation (triple-modifier; was original "full_01")
-    ("IntakeTextAgent", "IntakeImageAgent", "BriefEnricherAgent", "NarrationAgent",
+    ("IntakeImageAgent", "BriefEnricherAgent", "NarrationAgent",
      "IllustrationAgent", "NarratorAgent", "MusicAgent", "AudioMixAgent",
      "TranslationAgent", "CompositorAgent"): 15,
     # + imgref + Music + Ambience + Translation (all 4 modifiers — truly full)
-    ("IntakeTextAgent", "IntakeImageAgent", "BriefEnricherAgent", "NarrationAgent",
+    ("IntakeImageAgent", "BriefEnricherAgent", "NarrationAgent",
      "IllustrationAgent", "NarratorAgent", "MusicAgent", "AmbienceAgent",
      "AudioMixAgent", "TranslationAgent", "CompositorAgent"): 10,
 }  # Total: 1280 — storytelling expanded 6→12 shapes / 165→250 samples

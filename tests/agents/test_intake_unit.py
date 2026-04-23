@@ -1,4 +1,11 @@
-"""Unit tests for IntakeTextAgent and IntakeImageAgent.
+"""Unit tests for IntakeImageAgent.
+
+IntakeTextAgent was retired 2026-04-23 — chat / text-plain uploads
+are now persisted directly as ``[creative_brief]`` artifacts by
+``workspace.persist_raw_upload`` (see its text/plain branch), so no
+agent needs to intake them. IntakeImageAgent stays as a real LLM-
+backed agent because it captions the uploaded image via a vision
+model, which no infrastructure shortcut can replicate.
 
 These tests cover the four intake-flow corner cases that the intake
 sub-system promises to handle without crashing or losing data:
@@ -27,10 +34,6 @@ _repo_root = Path(__file__).resolve().parents[2]
 if str(_repo_root) not in sys.path:
     sys.path.insert(0, str(_repo_root))
 
-from agents.intake.intake_text.agent import IntakeTextAgent
-from agents.intake.intake_text.evaluator import IntakeTextEvaluator
-from agents.intake.intake_text.schema import IntakeTextInput, IntakeTextOutput
-
 from agents.intake.intake_image.agent import IntakeImageAgent
 from agents.intake.intake_image.evaluator import IntakeImageEvaluator
 from agents.intake.intake_image.schema import IntakeImageInput, IntakeImageOutput
@@ -39,18 +42,6 @@ from agents.intake.intake_image.schema import IntakeImageInput, IntakeImageOutpu
 # ---------------------------------------------------------------------------
 # Stub LLM clients
 # ---------------------------------------------------------------------------
-
-
-class _StubTextLLM:
-    """Stand-in for ``LLMClient.chat_json`` — records calls so we can
-    assert IntakeTextAgent never touches the LLM (pure pass-through)."""
-
-    def __init__(self) -> None:
-        self.calls: list[tuple[str, str]] = []
-
-    async def chat_json(self, system_prompt: str, user_prompt: str, **_: object) -> dict:
-        self.calls.append((system_prompt, user_prompt))
-        return {}
 
 
 class _StubVisionLLM:
@@ -86,86 +77,12 @@ class _RaisingVisionLLM:
 # ---------------------------------------------------------------------------
 
 
-def _write_text(text: str) -> str:
-    fh = tempfile.NamedTemporaryFile("w", suffix=".txt", delete=False, encoding="utf-8")
-    fh.write(text)
-    fh.close()
-    return fh.name
-
-
 def _write_png(color: tuple[int, int, int] = (255, 0, 0)) -> str:
     img = Image.new("RGB", (8, 8), color=color)
     fh = tempfile.NamedTemporaryFile("wb", suffix=".png", delete=False)
     img.save(fh, format="PNG")
     fh.close()
     return fh.name
-
-
-# ---------------------------------------------------------------------------
-# IntakeTextAgent
-# ---------------------------------------------------------------------------
-
-
-class TestIntakeTextAgent:
-    def test_short_text_pass_through(self):
-        stub = _StubTextLLM()
-        agent = IntakeTextAgent(llm_client=stub)
-        path = _write_text("make a 30s film about a cat in a workshop")
-
-        out = asyncio.run(agent.generate(
-            IntakeTextInput(raw_text_path=path),
-        ))
-
-        assert isinstance(out, IntakeTextOutput)
-        assert stub.calls == [], "IntakeText is pure pass-through — no LLM call"
-        assert out.content.text.startswith("make a 30s film")
-        assert out.metrics.char_count == len(out.content.text)
-
-    def test_long_text_preserved_verbatim_no_llm(self):
-        """Regression guard: long uploads must NOT be summarised.
-
-        Historically a > 800-char upload triggered an LLM summary that
-        StoryAgent was instructed to 'prefer over the full text'. Both
-        halves were removed; this test locks the new contract in: the
-        full raw text must reach downstream consumers byte-for-byte,
-        regardless of length.
-        """
-        stub = _StubTextLLM()
-        agent = IntakeTextAgent(llm_client=stub)
-        long_text = "The heiress Lin Wan walks into the gala. " * 80  # ~3.3k chars
-        path = _write_text(long_text)
-
-        out = asyncio.run(agent.generate(
-            IntakeTextInput(raw_text_path=path),
-        ))
-
-        assert stub.calls == [], "long text must NOT trigger an LLM summary"
-        assert out.content.text == long_text.strip()
-        assert out.metrics.char_count == len(long_text.strip())
-
-    def test_empty_path_returns_valid_artifact(self):
-        agent = IntakeTextAgent(llm_client=_StubTextLLM())
-        out = asyncio.run(agent.generate(
-            IntakeTextInput(raw_text_path=""),
-        ))
-        assert out.metrics.char_count == 0
-
-    def test_missing_file_treated_as_empty(self):
-        agent = IntakeTextAgent(llm_client=_StubTextLLM())
-        out = asyncio.run(agent.generate(
-            IntakeTextInput(raw_text_path="/tmp/no_such_file_xyz.txt"),
-        ))
-        assert out.metrics.char_count == 0
-
-    def test_full_run_passes_evaluator(self):
-        agent = IntakeTextAgent(llm_client=_StubTextLLM())
-        agent.evaluator = IntakeTextEvaluator()
-        path = _write_text("hello world creative brief")
-        result = asyncio.run(agent.run(
-            IntakeTextInput(raw_text_path=path),
-        ))
-        assert result.passed is True
-        assert result.attempts == 1
 
 
 # ---------------------------------------------------------------------------
@@ -261,23 +178,6 @@ class TestIntakeImageAgent:
 # ---------------------------------------------------------------------------
 # Descriptor wiring
 # ---------------------------------------------------------------------------
-
-
-def test_intake_text_descriptor_extracts_path_from_resolved_entry():
-    from agents.intake.intake_text.descriptor import build_input as build_text_input
-    from agents.intake.intake_text.labels import INPUT_LABEL_RAW_TEXT_UPLOAD
-
-    resolved = {
-        INPUT_LABEL_RAW_TEXT_UPLOAD: {
-            "caption": "Raw user upload (mime=text/plain). Pending intake processing — only visible to Intake* agents.",
-            "scope": "raw_pending",
-            "path": "/tmp/some/upload.txt",
-            "mime": "text/plain",
-        }
-    }
-    inp = build_text_input("task_xxx", resolved)
-    assert isinstance(inp, IntakeTextInput)
-    assert inp.raw_text_path == "/tmp/some/upload.txt"
 
 
 def test_intake_image_descriptor_extracts_path_from_resolved_entry():

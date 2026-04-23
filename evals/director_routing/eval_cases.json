@@ -4,9 +4,6 @@
     "user_goal": "Make a cultivation-fantasy animated drama about a washed-up young man who awakens an ancient bloodline and rises through the ranks of his sect",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "StoryAgent"
       ],
       [
@@ -41,9 +38,6 @@
     "name": "cr_02",
     "user_goal": "Make a CEO romance mini-drama about a struggling waitress who discovers her rude regular customer is the billionaire she saved years ago",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "StoryAgent"
       ],
@@ -80,9 +74,6 @@
     "user_goal": "Make a supernatural-thriller mini-drama where the female lead moves into a haunted house and finds a videotape left by the previous tenant that reveals an unsolved murder",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "StoryAgent"
       ],
       [
@@ -117,9 +108,6 @@
     "name": "cr_04",
     "user_goal": "Make a 3-minute rebirth-revenge animated drama where the female lead is framed by her best friend and falls to her death, then is reborn three years earlier to strike back",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "StoryAgent"
       ],
@@ -156,9 +144,6 @@
     "user_goal": "Create a post-apocalyptic animated drama where the last survivors discover a hidden sanctuary guarded by an awakened AI",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "StoryAgent"
       ],
       [
@@ -193,9 +178,6 @@
     "name": "cr_06",
     "user_goal": "Make a sweet costume-drama mini-drama where the female lead transmigrates into the chancellor's legitimate daughter and moves from mutual loathing to mutual redemption with a cold-faced prince",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "StoryAgent"
       ],
@@ -232,9 +214,6 @@
     "user_goal": "I want a romance mini-drama where a young woman wins a dating-app lottery and ends up fake-married to a reclusive tech mogul",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "StoryAgent"
       ],
       [
@@ -269,9 +248,6 @@
     "name": "cr_08",
     "user_goal": "Make a sci-fi animated drama about the last awakened AI falling in love with the only human engineer left",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "StoryAgent"
       ],
@@ -308,9 +284,6 @@
     "user_goal": "Make an urban romance mini-drama where the female lead runs into her ex-boyfriend — missing for five years — in a rainy-night Paris café",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "StoryAgent"
       ],
       [
@@ -345,9 +318,6 @@
     "name": "cr_10",
     "user_goal": "Make a workplace revenge mini-drama where an overlooked analyst exposes her boss's insider trading by rising to CEO at a rival firm",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "StoryAgent"
       ],
@@ -384,9 +354,6 @@
     "user_goal": "Make a palace-intrigue costume-drama mini-drama where a real and a fake princess swap places, exploit each other, and ultimately team up to expose the empress's ambitions",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "StoryAgent"
       ],
       [
@@ -421,9 +388,6 @@
     "name": "cr_12",
     "user_goal": "Make a martial-arts animated drama about a young swordsman who, to avenge his sect, ventures alone into the demonic cult's seven-layered killing formation",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "StoryAgent"
       ],
@@ -460,9 +424,6 @@
     "user_goal": "Make an urban underdog-comeback mini-drama where the live-in son-in-law thrown out of the rich family is secretly the heir of a top conglomerate",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "StoryAgent"
       ],
       [
@@ -497,9 +458,6 @@
     "name": "cr_14",
     "user_goal": "Make an epic-battle scene for a fantasy animated drama: seven ancient divine beasts gather to face a demon god returning to the mortal realm",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "StoryAgent"
       ],
@@ -536,9 +494,6 @@
     "user_goal": "Make a suspense-twist mini-drama where a therapist realizes her new patient is the man who murdered her sister years ago",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "StoryAgent"
       ],
       [
@@ -573,9 +528,6 @@
     "name": "intake_img_01",
     "user_goal": "Using this uploaded image as the story's protagonist, produce an inspirational cultivation-fantasy animated drama",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeImageAgent"
       ],
@@ -618,9 +570,6 @@
     "user_goal": "Using this uploaded photo as the city backdrop, make a 3-minute urban-suspense mini-drama with an oppressive atmosphere",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeImageAgent"
       ],
       [
@@ -661,9 +610,6 @@
     "name": "intake_img_03",
     "user_goal": "Use the character in this uploaded image as the hero of a one-minute cultivation-fantasy animated-drama trailer",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeImageAgent"
       ],
@@ -706,9 +652,6 @@
     "user_goal": "Set in the seaside town from this uploaded photo, make a tragic costume-drama mini-drama: the female lead dies under the sea to save the male lead",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeImageAgent"
       ],
       [
@@ -750,9 +693,6 @@
     "user_goal": "Take the person in this photo as the protagonist and make a rebirth-themed mini-drama about them waking up ten years before their lover's death",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeImageAgent"
       ],
       [
@@ -793,9 +733,6 @@
     "name": "sub_01",
     "user_goal": "Make an English-subtitled campus sweet-romance mini-drama: the top-student class president and a transferred-in delinquent girl redeem each other",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "StoryAgent"
       ],
@@ -841,9 +778,6 @@
     "user_goal": "Make a subtitled costume-drama culinary animated drama where the female lead, a junior imperial-kitchen maid, rises through her cooking skills",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "StoryAgent"
       ],
       [
@@ -887,9 +821,6 @@
     "name": "sub_03",
     "user_goal": "Create a mini-drama with English subtitles about a rebirth revenge story set in modern Shanghai",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "StoryAgent"
       ],
@@ -935,9 +866,6 @@
     "user_goal": "Make a subtitled children's cultivation-fantasy animated drama whose protagonist is a seven-year-old divine-beast boy fighting to protect a deep-sea forbidden zone",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "StoryAgent"
       ],
       [
@@ -981,9 +909,6 @@
     "name": "sub_05",
     "user_goal": "Make a subtitled sci-fi mini-drama where the male lead, a top tech-reviewer blogger, suddenly discovers he is actually an AI",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "StoryAgent"
       ],
@@ -1029,9 +954,6 @@
     "user_goal": "Add English subtitles to this interview-style mini-drama",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -1050,9 +972,6 @@
     "user_goal": "Add English subtitles to this speech mini-drama",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -1070,9 +989,6 @@
     "name": "sub_vid_03",
     "user_goal": "Generate Chinese subtitles for this English mini-drama episode",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -1095,9 +1011,6 @@
     "user_goal": "Batch-generate English burned-in subtitles for this 30-episode cultivation-fantasy animated drama",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -1115,9 +1028,6 @@
     "name": "bilingual_01",
     "user_goal": "Make an English-Chinese bilingual costume-drama animated drama about a nine-generation tea-ceremony lineage reconnected with a modern female lead through reincarnation",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "StoryAgent"
       ],
@@ -1172,9 +1082,6 @@
     "user_goal": "Make an English-Japanese bilingual CEO-romance mini-drama where the male lead is a Japan-returned, hidden-identity conglomerate heir",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "StoryAgent"
       ],
       [
@@ -1227,9 +1134,6 @@
     "name": "bilingual_03",
     "user_goal": "Create a mini-drama with English and Chinese subtitles about a martial-arts prodigy seeking revenge across ancient and modern timelines",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "StoryAgent"
       ],
@@ -1284,9 +1188,6 @@
     "user_goal": "Make an English-Spanish bilingual cultivation-fantasy animated drama, targeting Latin American market release",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "StoryAgent"
       ],
       [
@@ -1339,9 +1240,6 @@
     "name": "bilingual_05",
     "user_goal": "Make an English-Chinese bilingual urban mini-drama where the female lead, a Chinese-American prodigy doctor, gets pulled into a family-inheritance battle",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "StoryAgent"
       ],
@@ -1396,9 +1294,6 @@
     "user_goal": "Convert this mini-drama clip to a Studio Ghibli animated-drama style",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -1413,9 +1308,6 @@
     "name": "style_02",
     "user_goal": "Make this mini-drama clip look like a cyberpunk animated drama with neon and rainy-night atmosphere",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -1432,9 +1324,6 @@
     "user_goal": "Apply a Van Gogh oil-painting style to this cultivation-drama clip",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -1449,9 +1338,6 @@
     "name": "style_04",
     "user_goal": "Convert this live-action mini-drama entirely to a Japanese anime style, preserving plot and camera work",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -1468,9 +1354,6 @@
     "user_goal": "Convert this costume-drama mini-drama to a Chinese ink-wash animated-drama style",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -1485,9 +1368,6 @@
     "name": "extend_01",
     "user_goal": "Extend this CEO-romance confrontation scene to 15 seconds, adding the male lead's inner monologue and slow-motion close-ups",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -1504,9 +1384,6 @@
     "user_goal": "Extend this cultivation-duel clip by adding a slow-motion reversal where the underdog awakens a forbidden bloodline",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -1521,9 +1398,6 @@
     "name": "extend_04",
     "user_goal": "Extend this tragic costume-drama farewell scene to 20 seconds, adding snow-scene cutaways and flashbacks of the female lead recalling her past life",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -1540,9 +1414,6 @@
     "user_goal": "Extend this scene of the female lead confessing and crying by 8 seconds, adding rain sound effects and close-ups of her trembling hands",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -1558,9 +1429,6 @@
     "user_goal": "Extend this reincarnation awakening scene by 10 seconds with ghostly overlays of the character's past life flashing back",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -1575,9 +1443,6 @@
     "name": "highlight_01",
     "user_goal": "Cut the most thrilling twist moments from this mini-drama episode into promotional material",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -1597,9 +1462,6 @@
     "user_goal": "Extract the sweetest lead-couple interactions from this mini-drama into a promo short",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -1617,9 +1479,6 @@
     "name": "highlight_04",
     "user_goal": "Cut the palace-intrigue iconic scenes from this costume-drama animated drama into a 30-second viral promo",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -1639,9 +1498,6 @@
     "user_goal": "Cut a compilation of face-slapping payback moments from this rebirth mini-drama episode",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -1659,9 +1515,6 @@
     "name": "complex_01",
     "user_goal": "Analyze this hit mini-drama, then write a new story in the same genre and produce it as a new animated drama",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -1704,9 +1557,6 @@
     "user_goal": "First extend this mini-drama clip, then style-transfer it into a Japanese anime look",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -1724,9 +1574,6 @@
     "name": "complex_03",
     "user_goal": "Extend this mini-drama episode, then style-transfer it into an animated-drama look, and add English subtitles",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -1751,9 +1598,6 @@
     "name": "complex_04",
     "user_goal": "Analyze the pacing of this 12-episode mini-drama, cut the best twist moments, add background music, and composite the final",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -1781,9 +1625,6 @@
     "name": "complex_06",
     "user_goal": "Analyze this mini-drama's emotional arc, then add subtitles and background music to it",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -1819,9 +1660,6 @@
     "user_goal": "Translate this Chinese interview video to English and add English subtitles",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -1842,9 +1680,6 @@
     "name": "complex_10",
     "user_goal": "Analyze this mini-drama, cut the climactic twist moments, add English subtitles and background music, and output the final promo",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -1882,9 +1717,6 @@
     "user_goal": "Transcribe this mini-drama EP01's English dub, translate it to Japanese, generate Japanese subtitles, and burn them onto the video",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -1905,9 +1737,6 @@
     "name": "complex_13",
     "user_goal": "First analyze this hit mini-drama, then write a sequel story based on the analysis, and produce it as a new subtitled animated drama",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -1959,9 +1788,6 @@
     "user_goal": "Cut the lead-couple highlight interactions from this urban sweet-romance mini-drama, add romantic background music and English subtitles",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -1998,9 +1824,6 @@
     "user_goal": "Analyze this English mini-drama season, extract the high-tension climax moments, and add Chinese subtitles plus emotional background score",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -2036,9 +1859,6 @@
     "name": "complex_19",
     "user_goal": "Using this uploaded animated-drama character image, make an English-Chinese bilingual CEO-romance mini-drama trailer",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeImageAgent"
       ],
@@ -2099,9 +1919,6 @@
     "user_goal": "Extract the key dialogue from this mini-drama's meeting scenes, transcribe and translate them to Chinese, and output a subtitled highlight edit",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -2129,9 +1946,6 @@
     "user_goal": "First style-transfer to an ink-wash animated-drama look, then extend the key scene, finally add traditional-style background music",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -2158,9 +1972,6 @@
     "name": "complex_23",
     "user_goal": "Using this uploaded female-lead character portrait as the protagonist, make a 3-minute cyberpunk sci-fi dystopian mini-drama: she leads an underground hacker coalition raiding a clone corporation and finally discovers she is also a clone. Extend the climactic identity-reveal confrontation scene by 10 seconds, adding slow-motion close-ups and shots of her trembling hands.",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeImageAgent"
       ],
@@ -2206,9 +2017,6 @@
     "user_goal": "Add a sad piano background score to this mini-drama clip",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -2229,9 +2037,6 @@
     "name": "complex_25",
     "user_goal": "Add rain ambience and a piano background score to this rainy-night scene",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -2259,9 +2064,6 @@
     "user_goal": "Convert this clip to an animated-drama look and add English subtitles",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -2282,9 +2084,6 @@
     "name": "complex_27",
     "user_goal": "Convert this costume-drama mini-drama clip to an ink-wash style and add a traditional-style background score",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -2310,9 +2109,6 @@
     "user_goal": "Extend this confrontation scene by 10 seconds and add English subtitles",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -2333,9 +2129,6 @@
     "name": "complex_29",
     "user_goal": "Extend this fight scene by 8 seconds and add a tense, intense background score",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -2361,9 +2154,6 @@
     "user_goal": "Cut the highlight moments from this mini-drama and add English subtitles to produce a promo",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -2388,9 +2178,6 @@
     "user_goal": "Add an upbeat electronic ambient background score to this urban-nightscape vlog clip",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -2412,9 +2199,6 @@
     "user_goal": "Add a cinematic orchestral score to this costume-drama fight scene",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -2435,9 +2219,6 @@
     "name": "complex_33",
     "user_goal": "Add ocean-wave ambience and a lyrical piano background score to this seaside farewell scene",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -2465,9 +2246,6 @@
     "user_goal": "Add thunder-and-wind ambience and an epic percussion background score to this cultivation-fantasy final-battle clip",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -2494,9 +2272,6 @@
     "user_goal": "Convert this urban-romance clip to a cyberpunk look and add a synth-driven electronic score",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -2520,9 +2295,6 @@
     "name": "complex_36",
     "user_goal": "Turn this martial-arts clip into traditional ink-painting style with a guqin score",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -2548,9 +2320,6 @@
     "user_goal": "Convert this workplace-confrontation scene to a Japanese anime look and add English subtitles",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -2572,9 +2341,6 @@
     "user_goal": "Convert this interview clip to a Van Gogh oil-painting look and add English subtitles",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -2595,9 +2361,6 @@
     "name": "complex_39",
     "user_goal": "Extend this CEO-romance confession scene by 12 seconds and add a romantic piano background score",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -2623,9 +2386,6 @@
     "user_goal": "Extend this ancient sword-duel scene by 15 seconds and layer in an epic battle score",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -2650,9 +2410,6 @@
     "user_goal": "Extend this rebirth-awakening scene by 10 seconds and add English subtitles",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -2674,9 +2431,6 @@
     "user_goal": "Extend this cultivation awakening scene by 8 seconds and add English subtitles",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -2697,9 +2451,6 @@
     "name": "complex_43",
     "user_goal": "Cut the palace-intrigue showdown iconic scenes from this mini-drama into a promo reel and add English subtitles",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -2725,9 +2476,6 @@
     "user_goal": "Cut the top tear-jerker moments from this romance drama into a 30-second promo with English subtitles",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -2752,9 +2500,6 @@
     "user_goal": "Extend this tragic costume-drama scene by 10 seconds and convert the whole thing to an ink-wash animated-drama look",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -2772,9 +2517,6 @@
     "name": "complex_46",
     "user_goal": "Extend this martial-arts fight scene by 8 seconds, convert it to an animated-drama look, and add English subtitles",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -2799,9 +2541,6 @@
     "name": "complex_47",
     "user_goal": "First convert this urban car-chase scene to a cyberpunk look, then extend the climax by 12 seconds, finally add a synth-driven score",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -2830,9 +2569,6 @@
     "user_goal": "Analyze this 20-episode cultivation drama and cut the most epic reveal moments with an orchestral score",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -2860,9 +2596,6 @@
     "user_goal": "Translate this Japanese-language interview mini-drama into English subtitles and burn them onto the video",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -2883,9 +2616,6 @@
     "name": "complex_50",
     "user_goal": "Extract the highlight dialogue from this Chinese-language business-warfare mini-drama, translate it to English, and add subtitles",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -2913,9 +2643,6 @@
     "name": "complex_51",
     "user_goal": "Analyze this CEO-romance mini-drama's pacing, then add English subtitles and a background score",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -2950,9 +2677,6 @@
     "name": "complex_52",
     "user_goal": "Cut the climactic scenes from this costume-drama mini-drama into a trailer, with English subtitles and an epic score",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -2990,9 +2714,6 @@
     "user_goal": "Cut the face-slapping iconic scenes from this urban rebirth mini-drama, add rousing music and English subtitles",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -3028,9 +2749,6 @@
     "name": "complex_54",
     "user_goal": "Analyze the tropes of this hit sci-fi mini-drama and rewrite a new story in the same style as a new animated drama",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -3072,9 +2790,6 @@
     "name": "complex_55",
     "user_goal": "Write a sequel based on the plotline of this palace-intrigue mini-drama and produce it as a new English-subtitled animated drama",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeVideoAgent"
       ],
@@ -3126,9 +2841,6 @@
     "user_goal": "Study this cultivation-fantasy drama's character arcs and generate a prequel animated drama with English subtitles",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeVideoAgent"
       ],
       [
@@ -3178,9 +2890,6 @@
     "name": "complex_57",
     "user_goal": "Using these uploaded costume-drama character images as the protagonists, make an English-Chinese bilingual palace-intrigue mini-drama promo",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeImageAgent"
       ],
@@ -3241,9 +2950,6 @@
     "user_goal": "Use these uploaded cyberpunk character portraits to produce a bilingual (English/Chinese) sci-fi mini-drama trailer",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeImageAgent"
       ],
       [
@@ -3303,9 +3009,6 @@
     "user_goal": "Using this uploaded female-swordsman character portrait as the protagonist, make a martial-arts mini-drama; extend the sect-massacre opening scene by 15 seconds with slow-motion",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeImageAgent"
       ],
       [
@@ -3349,9 +3052,6 @@
     "name": "complex_60",
     "user_goal": "Use this uploaded medical-drama character portrait as the lead and produce a rebirth mini-drama with the climax reveal extended by 10 seconds",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeImageAgent"
       ],
@@ -3397,9 +3097,6 @@
     "user_goal": "Turn this children's bedtime tale into an illustrated audiobook video — calm narration with one soft watercolor picture per scene: Once upon a time, a little rabbit named Pip found a tiny glowing seed in the meadow...",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "NarrationAgent"
       ],
       [
@@ -3422,9 +3119,6 @@
     "name": "storytelling_02",
     "user_goal": "Make a narrated picture-book video of this Aesop's fable about the ant and the grasshopper",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "NarrationAgent"
       ],
@@ -3449,9 +3143,6 @@
     "user_goal": "Read this classical Chinese Tang-dynasty poem aloud and show a matching ink-painting illustration for each verse, slideshow-style",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "NarrationAgent"
       ],
       [
@@ -3474,9 +3165,6 @@
     "name": "storytelling_04",
     "user_goal": "Produce a narrated picture-book science storytime about how emperor penguins raise their chicks in Antarctica; one cute cartoon image per behavior",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "NarrationAgent"
       ],
@@ -3501,9 +3189,6 @@
     "user_goal": "Create an illustrated audiobook of this Greek myth about Persephone returning from the underworld every spring, storybook style",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "NarrationAgent"
       ],
       [
@@ -3526,9 +3211,6 @@
     "name": "storytelling_music_01",
     "user_goal": "Make an illustrated audiobook of this lullaby-style bedtime story with a gentle, slow piano score playing softly under the narrator",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "NarrationAgent"
       ],
@@ -3563,9 +3245,6 @@
     "user_goal": "Narrate this forest-adventure children's story as an illustrated audiobook with a gentle forest-ambience bed (wind through leaves, distant birds)",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "NarrationAgent"
       ],
       [
@@ -3599,9 +3278,6 @@
     "user_goal": "Make an English-Chinese bilingual illustrated audiobook of this short fairytale — narrate in English, burn both English and Chinese subtitles on the slideshow",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "NarrationAgent"
       ],
       [
@@ -3627,9 +3303,6 @@
     "name": "storytelling_imgref_01",
     "user_goal": "Using the uploaded character portrait as the heroine, turn this short folktale into an illustrated audiobook where every picture keeps her appearance consistent with the reference",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeImageAgent"
       ],
@@ -3659,9 +3332,6 @@
     "name": "storytelling_full_01",
     "user_goal": "Using the uploaded character portrait of the fox protagonist, produce an English-Chinese bilingual illustrated audiobook of this folk tale, narrated in English with a gentle koto-and-flute background score",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeImageAgent"
       ],
@@ -3705,9 +3375,6 @@
     "user_goal": "Make an illustrated audiobook of this ocean-themed children's story with a gentle piano lullaby playing under the narrator AND ambient wave sounds in the background",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "NarrationAgent"
       ],
       [
@@ -3748,9 +3415,6 @@
     "user_goal": "Create an English-Chinese bilingual illustrated audiobook of this Hans Christian Andersen fairytale with a gentle harp-and-celesta BGM",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "NarrationAgent"
       ],
       [
@@ -3786,9 +3450,6 @@
     "name": "storytelling_imgref_music_01",
     "user_goal": "Using this uploaded portrait of the protagonist as the main character, turn this short myth into an illustrated audiobook with a soft guzheng score under the narration",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeImageAgent"
       ],
@@ -3829,9 +3490,6 @@
     "user_goal": "Using this uploaded character portrait of the storyteller grandmother, produce an English-Spanish bilingual illustrated audiobook of this folk tale",
     "expected_chain": [
       [
-        "IntakeTextAgent"
-      ],
-      [
         "IntakeImageAgent"
       ],
       [
@@ -3863,9 +3521,6 @@
     "name": "storytelling_ultra_01",
     "user_goal": "Using this uploaded fox-protagonist portrait, make a bilingual English-Chinese illustrated audiobook of the fox-and-crow fable with both a gentle flute score AND forest-ambience sounds under the narrator",
     "expected_chain": [
-      [
-        "IntakeTextAgent"
-      ],
       [
         "IntakeImageAgent"
       ],

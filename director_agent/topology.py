@@ -21,15 +21,13 @@ from typing import Any, Dict
 
 AGENT_TOPOLOGY: Dict[str, Dict[str, str]] = {
     # ── Intake layer (pipeline entry points) ─────────────────────────
-    "IntakeTextAgent": {
-        "upstream": "(none — pipeline entry point for the user's text message)",
-        "downstream": "any content-producing or editing agent, depending on intent",
-        "when_to_include": (
-            "MANDATORY first step for any task with a text goal. "
-            "For greetings / noise / unrelated chat / empty input, the plan should "
-            "terminate at this step (no downstream creative agents)."
-        ),
-    },
+    # IntakeTextAgent was retired 2026-04-23 — chat messages and
+    # text/plain uploads are now persisted as [creative_brief] artifacts
+    # directly by ``workspace.persist_raw_upload`` + the
+    # ``create_user_message`` side-effect, so no agent step is needed
+    # to bridge user text into the workspace. StoryAgent / NarrationAgent
+    # / BriefEnricherAgent resolve ``[creative_brief]`` straight out of
+    # global memory.
     "IntakeVideoAgent": {
         "upstream": "(raw user-uploaded video, pre-intake)",
         "downstream": (
@@ -60,7 +58,8 @@ AGENT_TOPOLOGY: Dict[str, Dict[str, str]] = {
     },
     "StoryAgent": {
         "upstream": (
-            "one of: IntakeTextAgent (plain brief) / BriefEnricherAgent "
+            "one of: [creative_brief] (plain brief — auto-persisted from the "
+            "user's chat / text upload by the workspace layer) / BriefEnricherAgent "
             "(image-reference flow) / VideoAnalysisAgent (continuation flow — "
             "analyse then write same-genre new story / sequel)"
         ),
@@ -249,7 +248,8 @@ AGENT_TOPOLOGY: Dict[str, Dict[str, str]] = {
     # illustrations timed to a narrator voiceover.
     "NarrationAgent": {
         "upstream": (
-            "IntakeTextAgent (plain brief or long prose), OR BriefEnricherAgent "
+            "the user's auto-persisted [creative_brief] (plain brief or long prose), "
+            "OR BriefEnricherAgent "
             "(when the user uploaded a character / setting reference image to "
             "anchor the illustrations)"
         ),

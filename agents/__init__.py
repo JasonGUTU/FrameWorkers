@@ -23,7 +23,6 @@ from .screenplay.agent import ScreenplayAgent
 from .keyframe.agent import KeyFrameAgent
 from .video.agent import VideoAgent
 from .brief_enricher.agent import BriefEnricherAgent
-from .intake.intake_text.agent import IntakeTextAgent
 from .intake.intake_image.agent import IntakeImageAgent
 from .intake.intake_video.agent import IntakeVideoAgent
 from .transcription.agent import TranscriptionAgent
@@ -66,7 +65,6 @@ from .screenplay.descriptor import DESCRIPTOR as _screenplay_desc
 from .keyframe.descriptor import DESCRIPTOR as _keyframe_desc
 from .video.descriptor import DESCRIPTOR as _video_desc
 from .brief_enricher.descriptor import DESCRIPTOR as _brief_enricher_desc
-from .intake.intake_text.descriptor import DESCRIPTOR as _intake_text_desc
 from .intake.intake_image.descriptor import DESCRIPTOR as _intake_image_desc
 from .intake.intake_video.descriptor import DESCRIPTOR as _intake_video_desc
 from .transcription.descriptor import DESCRIPTOR as _transcription_desc
@@ -95,7 +93,6 @@ AGENT_REGISTRY: dict[str, SubAgentDescriptor] = {
         _keyframe_desc,
         _video_desc,
         _brief_enricher_desc,
-        _intake_text_desc,
         _intake_image_desc,
         _intake_video_desc,
         _transcription_desc,
@@ -146,7 +143,6 @@ __all__ = [
     "BriefEnricherAgent",
     "BriefEnricherEvaluator",
     # Intake agents
-    "IntakeTextAgent",
     "IntakeImageAgent",
     "IntakeVideoAgent",
     # New capability agents

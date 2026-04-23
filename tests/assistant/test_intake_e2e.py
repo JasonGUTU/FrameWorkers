@@ -455,7 +455,7 @@ def test_e2e0_story_to_screenplay_only(monkeypatch):
         ),
     )
 
-    _execute_agent(client, debug_file, "IntakeTextAgent", step_id)
+    # IntakeTextAgent retired — brief auto-persisted by workspace upload; no execute step needed
     _execute_agent(client, debug_file, "StoryAgent", step_id)
     _execute_agent(client, debug_file, "ScreenplayAgent", step_id)
 
@@ -588,7 +588,7 @@ def test_e2e1_text_only_draft_idea(monkeypatch):
     assert upload["scope"] == "raw_pending"
 
     # 2. IntakeTextAgent converts the placeholder into a caption-rich artifact.
-    _execute_agent(client, debug_file, "IntakeTextAgent", step_id)
+    # IntakeTextAgent retired — brief auto-persisted by workspace upload; no execute step needed
 
     # 3. Run the full content pipeline. Each downstream agent must find
     #    its inputs (the user's brief, then the upstream artifact, then
@@ -664,7 +664,7 @@ def test_e2e2_text_then_text(monkeypatch):
             "blue-grey palette, howling wind, the slow turning of the lamp."
         ),
     )
-    _execute_agent(client, debug_file, "IntakeTextAgent", step_id)
+    # IntakeTextAgent retired — brief auto-persisted by workspace upload; no execute step needed
     for agent_id in pipeline:
         _execute_agent(client, debug_file, agent_id, step_id)
     story_v1 = _last_execution_results_for_agent(client, step_id, "StoryAgent").get("content", {}).get("logline", "")
@@ -686,7 +686,7 @@ def test_e2e2_text_then_text(monkeypatch):
             "palette, low ambient hum."
         ),
     )
-    _execute_agent(client, debug_file, "IntakeTextAgent", step_id)
+    # IntakeTextAgent retired — brief auto-persisted by workspace upload; no execute step needed
     for agent_id in pipeline:
         _execute_agent(client, debug_file, agent_id, step_id)
     story_v2 = _last_execution_results_for_agent(client, step_id, "StoryAgent").get("content", {}).get("logline", "")
@@ -758,7 +758,7 @@ def test_e2e3_text_with_image_at_t0(monkeypatch):
     )
 
     # 3. Run both intake agents + BriefEnricherAgent.
-    _execute_agent(client, debug_file, "IntakeTextAgent", step_id)
+    # IntakeTextAgent retired — brief auto-persisted by workspace upload; no execute step needed
     _execute_agent(client, debug_file, "IntakeImageAgent", step_id)
     _execute_agent(client, debug_file, "BriefEnricherAgent", step_id)
 
@@ -893,7 +893,7 @@ def test_e2e4_two_rounds_text_with_image(monkeypatch):
     )
     _upload_image(client, debug_file, image_path=_REFERENCE_IMAGE_FIRST)
 
-    _execute_agent(client, debug_file, "IntakeTextAgent", step_id)
+    # IntakeTextAgent retired — brief auto-persisted by workspace upload; no execute step needed
     _execute_agent(client, debug_file, "IntakeImageAgent", step_id)
     _execute_agent(client, debug_file, "BriefEnricherAgent", step_id)
 
@@ -923,7 +923,7 @@ def test_e2e4_two_rounds_text_with_image(monkeypatch):
     )
     _upload_image(client, debug_file, image_path=_REFERENCE_IMAGE_SECOND)
 
-    _execute_agent(client, debug_file, "IntakeTextAgent", step_id)
+    # IntakeTextAgent retired — brief auto-persisted by workspace upload; no execute step needed
     _execute_agent(client, debug_file, "IntakeImageAgent", step_id)
     _execute_agent(client, debug_file, "BriefEnricherAgent", step_id)
 

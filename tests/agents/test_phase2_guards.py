@@ -289,11 +289,22 @@ def test_assistant_does_not_import_agent_specific_modules():
 
 
 def test_all_intake_agents_registered():
+    """IntakeTextAgent was retired 2026-04-23 — chat/text uploads are
+    now persisted directly as [creative_brief] artifacts by the
+    workspace layer (see ``workspace.persist_raw_upload`` branching on
+    ``mime=text/plain``). Binary intake agents stay registered since
+    they still carry real LLM work (image captioning / video analysis)."""
     from agents import AGENT_REGISTRY  # late import — tests import order
 
-    expected = {"IntakeTextAgent", "IntakeImageAgent", "IntakeVideoAgent"}
+    expected = {"IntakeImageAgent", "IntakeVideoAgent"}
     missing = expected - set(AGENT_REGISTRY.keys())
     assert not missing, f"Missing intake agents from AGENT_REGISTRY: {missing}"
+    assert "IntakeTextAgent" not in AGENT_REGISTRY, (
+        "IntakeTextAgent was retired — its responsibilities moved into "
+        "workspace.persist_raw_upload. Removing it from the registry was "
+        "the point of the refactor; re-adding it re-introduces a no-value "
+        "agent step at the head of every plan."
+    )
 
 
 def test_workspace_upload_route_is_registered():
@@ -361,16 +372,18 @@ def test_only_entry_point_agents_declare_creative_brief():
     """Only creative-head agents may declare the [creative_brief] label.
 
     Currently: StoryAgent (cinematic flows) / UnivaStoryboardAgent
-    (univa flows) / IntakeTextAgent (consumes the raw upload but never
-    forwards it as creative_brief — the label is the upstream-facing one
-    it picks from) / NarrationAgent (illustrated-storytelling flows).
+    (univa flows) / NarrationAgent (illustrated-storytelling flows).
+    (IntakeTextAgent was retired — chat/text uploads are now persisted
+    directly as [creative_brief] artifacts by the workspace layer, so
+    no agent needs to "intake" the label before downstream consumers
+    read it.)
 
     Mid-pipeline agents (Screenplay, KeyFrame, etc.) must not have this
     label, otherwise users could accidentally bypass the creative head
     and inject directives mid-pipeline.
     """
     descriptor_files = list((_REPO / "agents").rglob("descriptor.py"))
-    allowed_dirs = {"story", "univa_storyboard", "intake", "narration"}
+    allowed_dirs = {"story", "univa_storyboard", "narration"}
     offenders: list[Path] = []
     for path in descriptor_files:
         text = _read(path)

@@ -84,6 +84,23 @@ FrameWorkers/
 6. **Workspace 单例**：所有 sub-agent 共享一个 workspace（`file_manager` / `global_memory` / `log_manager` / `artifact_writer` / `input_resolver`），不要绕开它直写磁盘。
 7. **对内严控，对外宽进（Postel's Law at the agent layer）**：每个 agent 对**自己的** output schema 严格维护（Pydantic + evaluator），这些 schema 服务的是 agent 自己的评估、持久化、materialization。但是**读上游产物时零假设**：`build_input` 默认应把 `resolved_artifacts[label].payload` 作为 **JSON 文本**透传（`json.dumps(payload, ensure_ascii=False, indent=2)` 塞进 typed_input 的某个 `*_json_text: str` 字段），让 agent 自己的 LLM 从 prompt 里读这段文本、理解上游形状并生成自己的输出。**不要**在 `build_input` 或 agent 代码里写 `payload.get("content").get("scene_outline")` 这种字符串 key 访问 —— 它把上游 schema 的内部字段名硬编码进下游，造成 O(N×M) 的隐性耦合，而且上游漂移后只会静默降级为空 list 而不是报错。**跨 agent 的结构约定（例如 `prop_id = prop_NNN`、`keyframe_count == 1`、`shot_id = sh_NNN` 格式）是 producer 的义务，但是由 LLM 直接产出 + evaluator 捕获 drift + rework 修正**：在 producer 的 user-message template + `system_prompt` 里把格式明确要求出来，在 evaluator 的 `check_structure` 里加格式 / 序号 / count 的正则或相等检查，让 drift 触发 rework。**不要**在 `recompute_metrics` 里"悄悄修正" LLM 输出（那是 silent override，会让真实的 drift 被屏蔽），**也不要**在 consumer 侧做 defensive parse。`recompute_metrics` 只做**纯派生** —— 把 count / sum / 分类统计这种 LLM 从未被要求写（user-message template 里根本不展示的）字段填上。现成参考：`agents/screenplay/descriptor.py` 的 `build_input` + `agents/screenplay/agent.py` 的 `system_prompt` / `SCREENPLAY_OUTPUT_TEMPLATE` / `recompute_metrics` + `agents/screenplay/evaluator.py` 的 `check_structure`（Story → Screenplay 边是这条原则的落地范本）。
 
+8. **Director prompt 构成：basic info ≠ scaffold**。Director 做 routing 看到的 prompt 必须按"信息类别"严格分层，任何 ablation / 训练数据构造之前都要先把每块归类清楚，不能笼统叫"bare"。
+
+   **basic info（必须在 prompt 里，不可剥）：**
+   - Task 定义 + 输出 JSON schema
+   - 结构规则（framework invariants：每个 agent ≤1 次 / plan 非空 / flat order 等；text intake 已退役，chat/文本上传由 `workspace.persist_raw_upload` 直接落成 `[creative_brief]` 全局 artifact，plan 不再从 IntakeTextAgent 起步）
+   - `allowed_ids`（19 个 agent 名字列表）
+   - **每个 agent 的完整 descriptor**（`AgentSpec` 的 `inputs / output_description / purpose_and_routing` 三段，由 `render_catalog_entry()` 渲染成 ~1500 chars/agent × 19）—— 这**不是** scaffold，是告诉 planner "每个 agent 能干啥 / 吃啥 / 产啥" 的基本事实。跟"找人干活必须知道他能干啥"一个意思。`training/director/gen_samples.py::build_compact_catalog()` 之前输出的 degenerate `{id, purpose=id}` 是残缺的 basic info，必须改成至少给 `purpose_and_routing` 一行。
+
+   **scaffold（可选加分项，三者独立 ablation）：**
+   - **fewshots**：`_PLAN_UPFRONT_FEWSHOTS` 的 7 条 worked pattern 示例（"看例子"）。开关：`LlmSubAgentPlanner(fewshots=True|False)`。
+   - **topology**：`topology.py::get_topology_block()` 注入到每个 catalog entry 尾部的 upstream/downstream hint 块（"看邻居"）。开关：`FW_TOPOLOGY=0|1` env var。
+   - **routing policies**：`_PLAN_UPFRONT_CORE` 里"CREATIVE FLOW AUDIO / SUBTITLE INCLUSION / HIGHLIGHT TERMINAL / VIDEO_ANALYSIS INCLUSION" 4 条明示规则（"按规则条文"）。**当前硬编码在 core 里，应该抽成独立段 + 独立 flag**，与前两个同级。
+
+   **命名规则：** 谈 ablation 时必须明确写"(fewshots=X, topology=Y, policies=Z)" 三元组。**禁止用"bare"一个词含糊指代**——之前 Gemini 61%（basic info 完整 + 无 fewshot + 无 topology + 有 policy）和 LoRA 训练数据（basic info 缺 descriptor + 无 fewshot + 无 topology + 有 policy）两个完全不同的 prompt 都被叫 "bare"，导致整个 ablation 对比错乱。
+
+   **训练 LoRA 的准则：** LoRA 推理时的 prompt = LoRA 训练时的 prompt。两边都必须给 basic info（包含 descriptor），不给相当于让 LoRA 靠 SFT 统计规律硬背"agent 能干啥"，是次优设计。训练时想学什么 scaffold-free 行为就只在训练 prompt 里剥那几个 scaffold flag，basic info 保留。
+
 ## 核心数据流
 
 ```

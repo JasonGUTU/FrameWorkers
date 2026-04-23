@@ -208,8 +208,11 @@ def test_e2e_new_agents_full_chain(monkeypatch):
     step_id = _create_step(client, debug_file,
                            "30-second cinematic short about astronauts on Mars")
 
-    _execute(client, debug_file, "IntakeTextAgent", step_id)
-    print("[E2E] IntakeTextAgent COMPLETED")
+    # IntakeTextAgent was retired 2026-04-23 — the brief_upload call
+    # above persisted the chat text directly as a [creative_brief]
+    # artifact via workspace.persist_raw_upload's text/plain branch,
+    # so StoryAgent resolves it without a dedicated intake step.
+    print("[E2E] brief artifact auto-persisted by workspace layer — no IntakeText step")
 
     # Track results for final report
     results: dict[str, str] = {}

@@ -1,6 +1,8 @@
 """Ad-hoc real-run verifier for VideoExtendAgent.
 
-Seeds a mock video artifact + an IntakeTextAgent-style JSON artifact,
+Seeds a mock video artifact + a user creative_brief JSON artifact
+(matches the shape workspace.persist_raw_upload's text/plain branch
+registers at scope=global; IntakeTextAgent was retired 2026-04-23),
 calls POST /api/assistant/execute, then prints every non-trivial piece
 of the execution so we can eyeball the full chain end-to-end:
 
@@ -187,9 +189,11 @@ def main() -> int:
         "and holds it to the light."
     )
     _seed_json(
-        ws, "IntakeTextAgent",
-        {"content": {"text": user_instruction, "summary": ""}, "metrics": {"char_count": len(user_instruction)}},
-        "User-submitted creative brief (110 chars). Pipeline entry point — consumed by story and screenplay agents.",
+        ws, "user",
+        {"content": {"text": user_instruction}, "metrics": {"char_count": len(user_instruction)}},
+        "Structured metadata document (JSON) for a user-submitted text brief. "
+        "Payload carries the raw text verbatim. Pipeline entry point — "
+        "consumed by story / screenplay / narration agents.",
     )
 
     resp = client.post(

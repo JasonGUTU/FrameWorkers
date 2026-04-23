@@ -31,9 +31,9 @@ from director_agent.router import (
 
 
 _CATALOG = [
-    {"id": "IntakeTextAgent", "description": "intake text"},
     {"id": "StoryAgent", "description": "story"},
     {"id": "ScreenplayAgent", "description": "screenplay"},
+    {"id": "KeyFrameAgent", "description": "keyframe"},
 ]
 
 
@@ -108,8 +108,8 @@ class TestPlanPipelineUpfront:
     def test_happy_path(self):
         p = _planner({
             "plan": [
-                {"agent_id": "IntakeTextAgent", "intent": "intake"},
                 {"agent_id": "StoryAgent", "intent": "story"},
+                {"agent_id": "ScreenplayAgent", "intent": "screenplay"},
             ],
             "rationale": "template",
         })
@@ -118,7 +118,7 @@ class TestPlanPipelineUpfront:
             available_agents=_CATALOG,
             stack_memory=[],
         )
-        assert [s.agent_id for s in plan] == ["IntakeTextAgent", "StoryAgent"]
+        assert [s.agent_id for s in plan] == ["StoryAgent", "ScreenplayAgent"]
 
     def test_empty_catalog_short_circuits(self):
         p = _planner({"plan": [{"agent_id": "StoryAgent"}]})
@@ -412,7 +412,7 @@ class TestRunPlanPipeline:
         planner = MagicMock()
         planner.merge_session_goal.return_value = "merged"
         planner.plan_pipeline_upfront.return_value = [
-            PlanStepSpec("IntakeTextAgent", "intake text"),
+            PlanStepSpec("StoryAgent", "intake text"),
             PlanStepSpec("StoryAgent", "write story"),
         ]
 
@@ -425,7 +425,7 @@ class TestRunPlanPipeline:
         )
 
         assert backend.execute_calls == [
-            ("IntakeTextAgent", backend.execute_calls[0][1]),
+            ("StoryAgent", backend.execute_calls[0][1]),
             ("StoryAgent", backend.execute_calls[1][1]),
         ]
         # Both step ids should be distinct and each marked COMPLETED at the end.
@@ -474,7 +474,7 @@ class TestRunPlanPipeline:
         planner = MagicMock()
         planner.merge_session_goal.return_value = "merged"
         planner.plan_pipeline_upfront.return_value = [
-            PlanStepSpec("IntakeTextAgent", "intake"),
+            PlanStepSpec("StoryAgent", "intake"),
             PlanStepSpec("StoryAgent", "story"),
         ]
 
@@ -506,7 +506,7 @@ class TestProjectStackMemory:
         backend = _FakeBackend()
         resp = backend.modify_plan_stack([
             {"type": "create_steps", "params": {"steps": [
-                {"description": {"agent_id": "IntakeTextAgent", "intent": "intake"}},
+                {"description": {"agent_id": "StoryAgent", "intent": "intake"}},
                 {"description": {"agent_id": "StoryAgent", "intent": "story"}},
             ]}},
             {"type": "create_layers", "params": {"layers": [{"layer_index": 0}]}},
@@ -520,7 +520,7 @@ class TestProjectStackMemory:
         ])
         out = _project_plan_stack_as_memory(backend, window=20)
         assert len(out) == 2
-        assert out[0]["agent_id"] == "IntakeTextAgent"
+        assert out[0]["agent_id"] == "StoryAgent"
         assert out[1]["agent_id"] == "StoryAgent"
 
 

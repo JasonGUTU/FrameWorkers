@@ -191,29 +191,46 @@ class Workspace:
         mime: str,
         original_filename: str = "",
     ) -> Dict[str, Any]:
-        """Persist a raw user upload as a workspace artifact with a placeholder caption.
+        """Persist a raw user upload as a workspace artifact.
 
-        Writes the bytes under ``inputs/<timestamp>_<filename>`` and
-        registers an ``ArtifactRef`` with a generic placeholder caption
-        (``scope=raw_pending``). A subsequent invocation of the matching
-        Intake agent picks this artifact up via its
-        ``[raw_<kind>_upload]`` label and produces a caption-rich
-        follow-up artifact for downstream content agents.
+        **text/plain** takes a direct-to-global path: the upload is
+        wrapped in the same ``{meta, content: {text}, metrics}`` JSON
+        shape the retired IntakeTextAgent used to produce, written as
+        a ``brief_<ts>.json`` artifact, and registered at
+        ``scope=global`` with the story/screenplay/narration-facing
+        caption. This replaces the retired IntakeTextAgent step; chat
+        messages and text uploads become immediately consumable without
+        a dedicated intake pass.
+
+        **Binary uploads (image/video/audio)** keep the two-step path:
+        bytes are saved, registered at ``scope=raw_pending`` with a
+        placeholder caption, and the matching IntakeXxxAgent runs next
+        to produce the caption-rich artifact (IntakeImage / IntakeVideo
+        still carry real LLM work — captioning, scene probing — so the
+        intake pattern stays load-bearing for them).
 
         Returns a dict describing the persisted artifact: ``path``,
-        ``filename``, ``mime``, ``caption``.
+        ``filename``, ``mime``, ``caption``, ``scope``.
         """
         from datetime import datetime, UTC
+        import json as _json
         import os as _os
         from .models import ArtifactRef as _ArtifactRef
 
         ts = datetime.now(UTC).strftime("%Y%m%d_%H%M%S_%f")
+
+        if mime == "text/plain":
+            return self._persist_text_brief(
+                ts=ts,
+                text=(file_content.decode("utf-8", errors="replace") if file_content else ""),
+                original_filename=original_filename,
+            )
+
         ext = ""
         if original_filename and "." in original_filename:
             ext = _os.path.splitext(original_filename)[1].lower()
         elif mime:
             mime_to_ext = {
-                "text/plain": ".txt",
                 "image/png": ".png",
                 "image/jpeg": ".jpg",
                 "image/webp": ".webp",
@@ -266,6 +283,89 @@ class Workspace:
             "mime": mime,
             "caption": placeholder_caption,
             "scope": "raw_pending",
+        }
+
+    def _persist_text_brief(
+        self,
+        *,
+        ts: str,
+        text: str,
+        original_filename: str = "",
+    ) -> Dict[str, Any]:
+        """Register a user text brief straight at scope=global.
+
+        Shape matches the retired IntakeTextAgent's output: the
+        ``{content: {text}}`` payload is the contract story/screenplay/
+        narration agents already read via ``entry.payload``.
+        """
+        from datetime import datetime, UTC
+        import json as _json
+        from .models import ArtifactRef as _ArtifactRef
+
+        text = (text or "").strip()
+        doc = {
+            "meta": {
+                "asset_type": "text_brief",
+                "created_at": datetime.now(UTC).isoformat(),
+            },
+            "content": {"text": text},
+            "metrics": {"char_count": len(text)},
+        }
+        doc_bytes = _json.dumps(doc, ensure_ascii=False, indent=2).encode("utf-8")
+
+        base = "brief"
+        if original_filename:
+            # keep the user's stem but force a .json extension (we're
+            # registering the structured wrapper, not the raw .txt).
+            import os as _os
+            stem = _os.path.splitext(original_filename)[0] or base
+            filename = f"{ts}_{stem}.json"
+        else:
+            filename = f"{base}_{ts}.json"
+        relative_path = f"inputs/{filename}"
+
+        stored = self.store_file_at_relative_path(
+            relative_path,
+            file_content=doc_bytes,
+            filename=filename,
+        )
+
+        caption = (
+            "Structured metadata document (JSON) for a user-submitted "
+            "text brief. Payload carries the raw text verbatim. "
+            "Pipeline entry point — consumed by story / screenplay / "
+            "narration agents."
+        )
+        ref = _ArtifactRef(
+            caption=caption,
+            scope="global",
+            path=stored.path,
+            mime="application/json",
+        )
+        self.global_memory.register(
+            execution_id=f"brief_{ts}",
+            agent_id="user",
+            step_id="",
+            artifacts=[ref],
+        )
+        self._add_log(
+            event="user.upload",
+            resource_id=stored.path,
+            agent_id="user",
+            details={
+                "filename": filename,
+                "mime": "application/json",
+                "scope": "global",
+                "source": "text_brief",
+                "char_count": len(text),
+            },
+        )
+        return {
+            "path": stored.path,
+            "filename": filename,
+            "mime": "application/json",
+            "caption": caption,
+            "scope": "global",
         }
 
     def list_workspace_artifacts(self) -> List[Dict[str, Any]]:

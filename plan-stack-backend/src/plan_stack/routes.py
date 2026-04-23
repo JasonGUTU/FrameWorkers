@@ -1,5 +1,6 @@
 # API routes for Frameworks Backend
 
+import logging
 from flask import Blueprint, request, jsonify
 from typing import Optional
 
@@ -15,6 +16,8 @@ from .models import (
     PlanStepStatus, ReadingStatus, MessageSenderType,
     BatchOperation, BatchOperationType
 )
+
+logger = logging.getLogger(__name__)
 
 
 def create_blueprint():
@@ -49,6 +52,32 @@ def create_blueprint():
             return error
 
         message = storage.create_user_message(content, sender_type)
+
+        # Auto-register user chat text as a creative_brief in the
+        # workspace. Post IntakeTextAgent retirement (2026-04-23) this
+        # is the glue that turns chat messages into workspace artifacts
+        # the downstream story/screenplay/narration agents can resolve
+        # via ``[creative_brief]``. Only user-sourced non-empty messages
+        # trigger; director/subagent chatter stays out of the artifact
+        # pool so it doesn't compete with real briefs during resolution.
+        if sender_type == MessageSenderType.USER and (content or "").strip():
+            try:
+                from ..assistant.state_store import assistant_state_store
+                workspace = assistant_state_store.get_global_workspace()
+                if workspace is not None:
+                    workspace.persist_raw_upload(
+                        file_content=content.encode("utf-8"),
+                        mime="text/plain",
+                        original_filename="",
+                    )
+            except Exception as exc:
+                # Never block message creation on the glue failing; the
+                # chat record itself is independent of the artifact.
+                logger.warning(
+                    "Failed to auto-persist chat text as workspace brief: %s",
+                    exc,
+                )
+
         return jsonify(serialize_for_api(message)), 201
 
     @bp.route('/api/messages/list', methods=['GET'])
