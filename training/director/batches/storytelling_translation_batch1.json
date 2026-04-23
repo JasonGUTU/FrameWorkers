@@ -1,0 +1,112 @@
+[
+  {
+    "goal": "Make an English-Chinese bilingual illustrated audiobook of this Shakespeare children's adaptation of 'A Midsummer Night's Dream' — narrate in English, burn both English and Chinese subtitles — pastel fairy forest illustration",
+    "rationale": "User explicitly requests English-Chinese bilingual illustrated audiobook, narrator in English, burn both languages. Chain (c) + Translation: NarrationAgent English narrator script + pastel fairy-forest segments; IllustrationAgent anchored; NarratorAgent English TTS + English SRT + timing; TranslationAgent translates the narrator SRT into Chinese (second track); CompositorAgent slideshow mp4 with both language subtitles burned.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite the Shakespeare kids adaptation of Midsummer Night's Dream as an English narrator script, pastel fairy-forest illustration style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate pastel fairy-forest illustrations per segment, anchored on moonlit forest opening"},
+      {"agent_id": "NarratorAgent", "intent": "English warm narrator TTS + English SRT + segment timing"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English narrator SRT to Chinese, preserving per-cue timestamps"},
+      {"agent_id": "CompositorAgent", "intent": "Composite slideshow + English narrator audio + burn both English + Chinese subtitle tracks"}
+    ]
+  },
+  {
+    "goal": "Turn this Japanese folktale 'Urashima Taro' (the fisherman and the turtle) into an English-Japanese bilingual illustrated audiobook — woodblock ukiyo-e illustration style",
+    "rationale": "User wants English-Japanese bilingual illustrated audiobook of Urashima Taro + woodblock ukiyo-e. Chain (c) + Translation: NarrationAgent English narrator + ukiyo-e segments; Illustration anchors; Narrator English TTS; Translation → Japanese SRT; Compositor burns bilingual subtitles.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite Urashima Taro as English narrator script, woodblock ukiyo-e illustration style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate ukiyo-e illustrations per segment, anchored on seaside opening"},
+      {"agent_id": "NarratorAgent", "intent": "English narrator TTS + English SRT + segment timing"},
+      {"agent_id": "TranslationAgent", "intent": "Translate English SRT to Japanese, preserving cue timestamps"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + English narrator audio + burn English + Japanese subtitle tracks"}
+    ]
+  },
+  {
+    "goal": "做一个中英双语有声绘本，朗读《愚公移山》寓言故事 —— 中文旁白、中英双字幕 —— 中国工笔重彩插画",
+    "rationale": "用户要求《愚公移山》中英双语有声绘本，中文旁白 + 中英双字幕 + 中国工笔重彩。Chain (c) + Translation：NarrationAgent 中文旁白 + 工笔重彩段；Illustration 锚；NarratorAgent 中文 TTS + 中文 SRT；TranslationAgent 中文 SRT → 英文；Compositor 烧双字幕。",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "将《愚公移山》改为中文旁白脚本，按寓言情节分段，中国工笔重彩风"},
+      {"agent_id": "IllustrationAgent", "intent": "生成工笔重彩插图，第一张愚公山前定调"},
+      {"agent_id": "NarratorAgent", "intent": "中文男声 TTS + 中文 SRT + 每段时长"},
+      {"agent_id": "TranslationAgent", "intent": "把中文 SRT 翻译成英文，保留时间戳"},
+      {"agent_id": "CompositorAgent", "intent": "拼接工笔彩图 + 中文旁白音 + 烧中英双字幕"}
+    ]
+  },
+  {
+    "goal": "Make an English-Spanish bilingual illustrated audiobook of this Latin-American folk tale about La Llorona — ghost-story retelling suitable for teens, with moonlit sepia illustration style",
+    "rationale": "User asks for English-Spanish bilingual illustrated audiobook of La Llorona + moonlit sepia style. Chain (c) + Translation: English narrator script + sepia segments; Illustration anchor; Narrator English; Translation → Spanish SRT; Compositor bilingual burn.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite La Llorona folk tale as a teen-suitable English narrator script, moonlit sepia illustration style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate moonlit sepia illustrations, anchored on riverside opening"},
+      {"agent_id": "NarratorAgent", "intent": "English narrator TTS + English SRT + timing"},
+      {"agent_id": "TranslationAgent", "intent": "Translate English SRT to Spanish, preserving timestamps"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + English narrator audio + burn English + Spanish subtitles"}
+    ]
+  },
+  {
+    "goal": "Create an English-French bilingual illustrated audiobook of this Charles Perrault fairytale 'Puss in Boots' — classic storybook illustration in a Golden Age of Illustration style",
+    "rationale": "User gives Puss in Boots + English-French bilingual + Golden Age Illustration style. Chain (c) + Translation: English narrator script + classic-illustration segments; Illustration anchor; Narrator English; Translation → French SRT; Compositor bilingual burn.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite Puss in Boots as a classic English narrator script, Golden Age storybook illustration style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Golden-Age illustrations, anchored on opening cottage scene"},
+      {"agent_id": "NarratorAgent", "intent": "English narrator TTS + English SRT + segment timing"},
+      {"agent_id": "TranslationAgent", "intent": "Translate English SRT to French, keeping cue timestamps intact"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + English narrator audio + burn English + French subtitle tracks"}
+    ]
+  },
+  {
+    "goal": "把《鹬蚌相争》这个中国寓言做成中英双语有声绘本，中文旁白、烧中英双字幕 —— 中国工笔水彩插画",
+    "rationale": "用户要求《鹬蚌相争》中英双语 + 中文旁白 + 烧双字幕 + 工笔水彩。Chain (c) + Translation：中文旁白 + 工笔水彩段；Illustration 锚；中文 TTS + 中文 SRT；Translation → 英文 SRT；Compositor 双字幕。",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "将《鹬蚌相争》改为中文寓言旁白，按『争食 / 对峙 / 渔人得利』切段，中国工笔水彩风"},
+      {"agent_id": "IllustrationAgent", "intent": "生成工笔水彩插图，第一张河边鹬蚌定调"},
+      {"agent_id": "NarratorAgent", "intent": "中文生动旁白 TTS + 中文 SRT + 每段时长"},
+      {"agent_id": "TranslationAgent", "intent": "把中文 SRT 翻英文，保留时间戳"},
+      {"agent_id": "CompositorAgent", "intent": "拼接工笔水彩 + 中文旁白 + 烧中英双字幕"}
+    ]
+  },
+  {
+    "goal": "Produce an English-German bilingual illustrated audiobook of this Hans Christian Andersen tale 'The Nightingale' (the Chinese emperor and the bird) — delicate chinoiserie illustration",
+    "rationale": "User asks for English-German bilingual of Andersen's Nightingale + chinoiserie style. Chain (c) + Translation: English narrator + chinoiserie segments; Illustration anchor; Narrator English; Translation → German SRT; Compositor.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite Andersen's The Nightingale as English narrator script, delicate chinoiserie illustration style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate chinoiserie illustrations, anchored on imperial-garden opening"},
+      {"agent_id": "NarratorAgent", "intent": "English narrator TTS + English SRT + segment timing"},
+      {"agent_id": "TranslationAgent", "intent": "Translate English SRT to German, preserving timestamps"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + English narrator + burn English + German subtitles"}
+    ]
+  },
+  {
+    "goal": "Make a narrated illustrated video of this short Kannada folk tale in English-Kannada bilingual version — burnished gold South-Indian temple-art illustration style",
+    "rationale": "User provides Kannada folk tale + English-Kannada bilingual + South-Indian temple art style. Chain (c) + Translation: English narrator + temple-art segments; Illustration anchor; Narrator English; Translation → Kannada SRT; Compositor bilingual.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite the Kannada folk tale as an English narrator script, burnished gold South-Indian temple-art style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate temple-art illustrations, anchored on temple opening"},
+      {"agent_id": "NarratorAgent", "intent": "English narrator TTS + English SRT + timing"},
+      {"agent_id": "TranslationAgent", "intent": "Translate English SRT to Kannada, preserving timestamps"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + English narrator + burn English + Kannada subtitles"}
+    ]
+  },
+  {
+    "goal": "Turn this Brazilian Amazon folktale about the Boto (pink river dolphin seducer spirit) into an English-Portuguese bilingual illustrated audiobook — luminous tropical river art style",
+    "rationale": "User gives Brazilian Boto folktale + English-Portuguese bilingual + luminous tropical river art. Chain (c) + Translation: English narrator + luminous-river segments; Illustration anchor; Narrator English; Translation → Portuguese SRT; Compositor bilingual.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite the Boto Amazon folktale as an English narrator script, luminous tropical river art style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate luminous-river illustrations, anchored on Amazon dusk opening"},
+      {"agent_id": "NarratorAgent", "intent": "English narrator TTS + English SRT + segment timing"},
+      {"agent_id": "TranslationAgent", "intent": "Translate English SRT to Portuguese, keeping cue timestamps"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + English narrator + burn English + Portuguese subtitles"}
+    ]
+  },
+  {
+    "goal": "Make an illustrated audiobook of this Tibetan Buddhist parable about the blind men and the elephant in English-Tibetan bilingual — mandala-inspired symmetrical illustration style",
+    "rationale": "User gives blind men and the elephant parable + English-Tibetan bilingual + mandala illustration. Chain (c) + Translation: English narrator + mandala segments; Illustration anchor; Narrator English; Translation → Tibetan SRT; Compositor bilingual.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite the Tibetan blind-men-and-elephant parable as an English narrator script, mandala-inspired illustration style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate mandala-symmetrical illustrations, anchored on circular scene opening"},
+      {"agent_id": "NarratorAgent", "intent": "English reverent narrator TTS + English SRT + timing"},
+      {"agent_id": "TranslationAgent", "intent": "Translate English SRT to Tibetan, preserving cue timestamps"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + English narrator + burn English + Tibetan subtitles"}
+    ]
+  }
+]

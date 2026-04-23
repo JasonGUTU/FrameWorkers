@@ -71,7 +71,7 @@
   .case-row .dot.edit { background: var(--edit); }
   .case-row .name { flex: 1; font-family: ui-monospace, "SF Mono", Menlo, monospace; }
   .case-row .preview { color: var(--muted); font-size: 11px;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px; }
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 360px; }
 
   section.detail { flex: 1; overflow-y: auto; padding: 24px 32px; }
   .detail-header { display: flex; align-items: center; gap: 12px; margin-bottom: 18px;
@@ -526,7 +526,7 @@ function renderList() {
     return `<div class="case-row ${c.name === currentName ? 'active' : ''}" onclick="goTo('${c.name}')">` +
       `<span class="dot ${dotClass}"></span>` +
       `<span class="name">${c.name}</span>` +
-      `<span class="preview">${escapeHtml((c.user_goal || '').slice(0, 18))}</span>` +
+      `<span class="preview" title="${escapeHtml(c.user_goal || '')}">${escapeHtml(c.user_goal || '')}</span>` +
     `</div>`;
   }).join('');
 }
