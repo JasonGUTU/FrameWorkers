@@ -1,0 +1,262 @@
+[
+  {
+    "goal": "Make a bilingual illustrated audiobook of the Greek myth of 'Persephone and Hades' — English narration, ancient lyre + cello BGM — English + Greek subtitles — red-figure Greek vase painting illustration style",
+    "rationale": "Greek myth + bilingual + lyre BGM, no upload. 7-step: narration → illustrations → BGM → narrator → mix → translate → composite with subs.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of Persephone and Hades — abduction, underworld stay, pomegranate seeds, seasonal bargain — one beat per scene."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate red-figure Greek vase style illustrations — Persephone gathering flowers, Hades' chariot, underworld, Demeter's mourning."},
+      {"agent_id": "MusicAgent", "intent": "Compose ancient lyre + cello BGM — mythic and mournful, length-matched."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize an English voiceover with a solemn mythic cadence."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narration over ducked lyre/cello BGM."},
+      {"agent_id": "TranslationAgent", "intent": "Translate English narration into Greek and produce aligned EN + GR subtitle tracks."},
+      {"agent_id": "CompositorAgent", "intent": "Composite vase-painting slideshow with mixed audio, burn EN + GR subtitles, render the bilingual Greek myth audiobook."}
+    ]
+  },
+  {
+    "goal": "做一个中英双语《七仙女下凡》中国民间故事有声绘本 — 中文旁白、底铺笛子与琵琶 BGM — 中英双字幕 — 国风工笔重彩插画",
+    "rationale": "七仙女 + 中英双语 + 笛琵琶. 7 步链.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《七仙女下凡》旁白 — 董永卖身葬父、七仙女下凡相助、王母诏回、天河相望."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成工笔重彩插画 — 七仙女、董永、织布场景、天河."},
+      {"agent_id": "MusicAgent", "intent": "作笛子 + 琵琶 BGM — 民间故事温柔凄美, 长度匹配."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 民间故事讲述."},
+      {"agent_id": "AudioMixAgent", "intent": "中文旁白与 BGM 混音."},
+      {"agent_id": "TranslationAgent", "intent": "把中文旁白翻译成英文, 生成中英双字幕."},
+      {"agent_id": "CompositorAgent", "intent": "合成工笔 slideshow, 铺混音, 烧中英双字幕, 输出中英双语《七仙女下凡》绘本."}
+    ]
+  },
+  {
+    "goal": "Create a bilingual illustrated audiobook of the Dutch legend of 'Hansje Brinker, the Boy Who Plugged the Dyke' — English narration, accordion + pipe-organ BGM — English + Dutch subtitles — classical Dutch landscape painting style illustrations",
+    "rationale": "Dutch legend + bilingual + accordion/organ. 7-step chain.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of Hansje Brinker — boy plugs dyke with finger through the night, saves his village — one beat per scene."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Dutch landscape painting style illustrations — windmills, dyke, boy with finger in dyke, village rescue."},
+      {"agent_id": "MusicAgent", "intent": "Compose accordion + pipe-organ BGM — steady, resolute, length-matched."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a determined English voiceover for this folk tale."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narration over ducked BGM."},
+      {"agent_id": "TranslationAgent", "intent": "Translate English narration into Dutch and produce aligned EN + NL subtitle tracks."},
+      {"agent_id": "CompositorAgent", "intent": "Composite Dutch landscape slideshow with mixed audio, burn EN + NL subtitles, render the bilingual audiobook."}
+    ]
+  },
+  {
+    "goal": "做一个中英双语《精卫填海》中国神话有声绘本 — 中文旁白、底铺苍凉古筝独奏 BGM — 中英双字幕 — 青铜器纹饰风插画",
+    "rationale": "精卫填海 + 中英双语 + 古筝. 7 步链.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《精卫填海》神话旁白 — 少女溺海、化作精卫、日日衔石填海、坚韧不屈."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成青铜器纹饰风插画 — 少女、化鸟、衔石、茫茫大海."},
+      {"agent_id": "MusicAgent", "intent": "作苍凉古筝独奏 BGM — 远古悲壮感, 长度匹配."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 神话庄严讲述."},
+      {"agent_id": "AudioMixAgent", "intent": "中文旁白与古筝 BGM 混音."},
+      {"agent_id": "TranslationAgent", "intent": "把中文旁白翻译成英文, 生成中英双字幕."},
+      {"agent_id": "CompositorAgent", "intent": "合成青铜纹饰 slideshow, 铺混音, 烧中英双字幕, 输出中英双语《精卫填海》神话绘本."}
+    ]
+  },
+  {
+    "goal": "Make a bilingual illustrated audiobook of the Hungarian folktale 'The Salt Princess' (King Lear-style sister-love test) — English narration, traditional cimbalom + Hungarian fiddle BGM — English + Hungarian subtitles — Hungarian embroidery-motif illustration style",
+    "rationale": "Hungarian folktale + bilingual + cimbalom. 7-step chain.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of 'The Salt Princess' Hungarian folktale — youngest daughter says she loves father like salt, exiled, proves salt's worth — one beat per scene."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Hungarian embroidery-motif style illustrations — three princesses, castle, humble cottage, royal reunion."},
+      {"agent_id": "MusicAgent", "intent": "Compose cimbalom + Hungarian fiddle BGM — lilting and folksy, length-matched."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a warm English voiceover with a Hungarian storyteller cadence."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narration over ducked BGM."},
+      {"agent_id": "TranslationAgent", "intent": "Translate English narration into Hungarian and produce aligned EN + HU subtitle tracks."},
+      {"agent_id": "CompositorAgent", "intent": "Composite embroidery-motif slideshow with mixed audio, burn EN + HU subtitles, render the bilingual audiobook."}
+    ]
+  },
+  {
+    "goal": "做一个中英双语《大禹治水》中国历史绘本 — 中文旁白、底铺古琴 + 铜钟 BGM — 中英双字幕 — 夏商风岩画工笔",
+    "rationale": "大禹治水 + 中英双语 + 古琴铜钟. 7 步链.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《大禹治水》旁白 — 洪水滔天、大禹治水、三过家门而不入、疏导成河."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成夏商风岩画工笔插画 — 洪水、大禹、耒耜、河道、神龙相助."},
+      {"agent_id": "MusicAgent", "intent": "作古琴 + 铜钟 BGM — 远古庄严, 长度匹配."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 历史庄重讲述."},
+      {"agent_id": "AudioMixAgent", "intent": "中文旁白与 BGM 混音."},
+      {"agent_id": "TranslationAgent", "intent": "把中文旁白翻译成英文, 生成中英双字幕."},
+      {"agent_id": "CompositorAgent", "intent": "合成岩画工笔 slideshow, 铺混音, 烧中英双字幕, 输出中英双语《大禹治水》历史绘本."}
+    ]
+  },
+  {
+    "goal": "Make a bilingual illustrated audiobook of the Finnish national epic 'Kalevala' — 'Sampo, the Magical Mill' chapter — English narration, kantele + throat-singing BGM — English + Finnish subtitles — Finnish mythological woodcut illustration style",
+    "rationale": "Kalevala + bilingual + kantele. 7-step chain.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of the Sampo chapter of Kalevala — Ilmarinen forging the magical mill, its theft, sea battle — one beat per scene."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Finnish mythological woodcut illustrations — Ilmarinen forge, Sampo mill, sea battle, broken Sampo pieces."},
+      {"agent_id": "MusicAgent", "intent": "Compose kantele + throat-singing BGM — mystic and ancient, length-matched."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a resonant English voiceover with an epic poem cadence."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narration over ducked kantele BGM."},
+      {"agent_id": "TranslationAgent", "intent": "Translate English narration into Finnish and produce aligned EN + FI subtitle tracks."},
+      {"agent_id": "CompositorAgent", "intent": "Composite woodcut slideshow with mixed audio, burn EN + FI subtitles, render the bilingual Kalevala audiobook."}
+    ]
+  },
+  {
+    "goal": "做一个中英双语《唐伯虎三笑点秋香》中国古典爱情故事有声绘本 — 中文旁白、底铺江南丝竹 + 评弹风 BGM — 中英双字幕 — 明代工笔仕女图风插画",
+    "rationale": "唐伯虎 + 中英双语 + 江南丝竹评弹. 7 步链.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《唐伯虎三笑点秋香》旁白 — 华府下人扮相、三次邂逅秋香、终成佳偶."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成明代工笔仕女图风插画 — 华府园林、秋香、唐伯虎变装、书画酬唱."},
+      {"agent_id": "MusicAgent", "intent": "作江南丝竹 + 评弹风 BGM, 长度匹配."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 江南民间故事趣味讲述."},
+      {"agent_id": "AudioMixAgent", "intent": "中文旁白与 BGM 混音."},
+      {"agent_id": "TranslationAgent", "intent": "把中文旁白翻译成英文, 生成中英双字幕."},
+      {"agent_id": "CompositorAgent", "intent": "合成工笔仕女 slideshow, 铺混音, 烧中英双字幕, 输出中英双语《唐伯虎三笑》绘本."}
+    ]
+  },
+  {
+    "goal": "Create a bilingual illustrated audiobook of the Romani folktale 'The Horse Who Spoke' — English narration, Romani violin + tambourine BGM — English + Romani subtitles — Romani folk-painting illustration style",
+    "rationale": "Romani folktale + bilingual + violin/tambourine. 7-step chain.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of 'The Horse Who Spoke' Romani folktale — speaking horse guides wanderer — one beat per scene."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Romani folk-painting illustrations — wagon, horse, caravan, road ahead."},
+      {"agent_id": "MusicAgent", "intent": "Compose Romani violin + tambourine BGM — lively and haunting, length-matched."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize an English voiceover with a wandering storyteller cadence."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narration over ducked Romani BGM."},
+      {"agent_id": "TranslationAgent", "intent": "Translate English narration into Romani and produce aligned EN + Romani subtitle tracks."},
+      {"agent_id": "CompositorAgent", "intent": "Composite folk-painting slideshow with mixed audio, burn EN + Romani subtitles, render the bilingual audiobook."}
+    ]
+  },
+  {
+    "goal": "做一个中英双语《女娲造人》中国创世神话有声绘本 — 中文旁白、底铺古埙 + 女声吟唱 BGM — 中英双字幕 — 神话壁画风插画",
+    "rationale": "女娲造人 + 中英双语 + 古埙吟唱. 7 步链.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《女娲造人》神话旁白 — 天地初开、女娲抟土造人、赋予灵魂、繁衍生息."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成神话壁画风插画 — 女娲、黄土、造人过程、新生人类."},
+      {"agent_id": "MusicAgent", "intent": "作古埙 + 女声吟唱 BGM — 神话创世的苍古感, 长度匹配."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 创世神话庄严讲述."},
+      {"agent_id": "AudioMixAgent", "intent": "中文旁白与 BGM 混音."},
+      {"agent_id": "TranslationAgent", "intent": "把中文旁白翻译成英文, 生成中英双字幕."},
+      {"agent_id": "CompositorAgent", "intent": "合成壁画风 slideshow, 铺混音, 烧中英双字幕, 输出中英双语《女娲造人》创世绘本."}
+    ]
+  },
+  {
+    "goal": "Make a bilingual illustrated audiobook of Rumi's Sufi parable 'The Reed Flute's Cry' — English narration, ney (Sufi reed flute) + tanbur BGM — English + Farsi subtitles — Persian illumination painting illustration style",
+    "rationale": "Rumi + bilingual + Persian ney. 7-step chain.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of Rumi's Reed Flute's Cry — reed's lament of separation, longing for home, mystic union — one beat per section."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Persian illumination painting illustrations — reed bed, flute carver, Sufi dancer, seeker of truth."},
+      {"agent_id": "MusicAgent", "intent": "Compose ney + tanbur BGM — meditative and plaintive, length-matched."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a contemplative English voiceover suited for Rumi's mysticism."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narration over ducked ney/tanbur BGM."},
+      {"agent_id": "TranslationAgent", "intent": "Translate English narration into Farsi and produce aligned EN + FA subtitle tracks."},
+      {"agent_id": "CompositorAgent", "intent": "Composite illumination slideshow with mixed audio, burn EN + FA subtitles, render the bilingual Sufi audiobook."}
+    ]
+  },
+  {
+    "goal": "做一个中英双语《白鹿原》白孝文视角选段中国现代文学有声绘本 — 中文旁白、底铺秦腔 + 板胡 BGM — 中英双字幕 — 陕北版画风插画",
+    "rationale": "白鹿原选段 + 中英双语 + 秦腔板胡. 7 步链.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写白孝文视角选段旁白 — 白鹿原风雨、家族命运、角色挣扎, 每段对应一幅版画."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成陕北版画风插画 — 黄土塬、白鹿原祠堂、人物群像."},
+      {"agent_id": "MusicAgent", "intent": "作秦腔 + 板胡 BGM — 陕北苍凉感, 长度匹配."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 陕北方言讲述."},
+      {"agent_id": "AudioMixAgent", "intent": "中文旁白与 BGM 混音."},
+      {"agent_id": "TranslationAgent", "intent": "把中文旁白翻译成英文, 生成中英双字幕."},
+      {"agent_id": "CompositorAgent", "intent": "合成陕北版画 slideshow, 铺混音, 烧中英双字幕, 输出中英双语《白鹿原》选段绘本."}
+    ]
+  },
+  {
+    "goal": "Create a bilingual illustrated audiobook of the Czech folktale 'The Twelve Months' — English narration, Czech dulcimer + fiddle BGM — English + Czech subtitles — Czech folk-art illustration style",
+    "rationale": "Czech folktale + bilingual + dulcimer. 7-step chain.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of 'The Twelve Months' — girl sent into winter forest, meets 12 Months who help — one beat per scene."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Czech folk-art illustrations — winter forest, campfire, 12 Months personified, snow, spring flowers."},
+      {"agent_id": "MusicAgent", "intent": "Compose Czech dulcimer + fiddle BGM — folk and seasonal, length-matched."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a warm English voiceover for a folk tale."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narration over ducked dulcimer/fiddle BGM."},
+      {"agent_id": "TranslationAgent", "intent": "Translate English narration into Czech and produce aligned EN + CZ subtitle tracks."},
+      {"agent_id": "CompositorAgent", "intent": "Composite folk-art slideshow with mixed audio, burn EN + CZ subtitles, render the bilingual audiobook."}
+    ]
+  },
+  {
+    "goal": "做一个中英双语《文成公主入藏》历史有声绘本 — 中文旁白、底铺藏族歌谣 + 唢呐 + 法号 BGM — 中英双字幕 — 唐代壁画 + 藏族唐卡混合风插画",
+    "rationale": "文成公主 + 中英双语 + 藏族音乐. 7 步链.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《文成公主入藏》历史旁白 — 唐朝和亲西藏、迎娶松赞干布、佛法东传、汉藏情谊."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成唐代壁画 + 藏族唐卡混合风插画 — 长安、入藏途中、拉萨迎亲、大昭寺."},
+      {"agent_id": "MusicAgent", "intent": "作藏族歌谣 + 唢呐 + 法号 BGM — 汉藏融合, 长度匹配."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 历史庄重讲述."},
+      {"agent_id": "AudioMixAgent", "intent": "中文旁白与 BGM 混音."},
+      {"agent_id": "TranslationAgent", "intent": "把中文旁白翻译成英文, 生成中英双字幕."},
+      {"agent_id": "CompositorAgent", "intent": "合成混合风 slideshow, 铺混音, 烧中英双字幕, 输出中英双语《文成公主入藏》绘本."}
+    ]
+  },
+  {
+    "goal": "Make a bilingual illustrated audiobook of the Welsh legend of 'The Lady of the Lake' (Myfanwy) — English narration, Welsh harp + male chorus BGM — English + Welsh subtitles — Celtic twilight-romanticism illustration style",
+    "rationale": "Welsh legend + bilingual + Welsh harp. 7-step chain.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of the Lady of the Lake Myfanwy legend — one beat per scene, mythic Celtic cadence."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Celtic twilight-romanticism illustrations — lake, lady, mortal suitor, magical covenant."},
+      {"agent_id": "MusicAgent", "intent": "Compose Welsh harp + male chorus BGM — lyrical and mystic, length-matched."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize an English voiceover with a Welsh mythic cadence."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narration over ducked Welsh harp BGM."},
+      {"agent_id": "TranslationAgent", "intent": "Translate English narration into Welsh and produce aligned EN + CY subtitle tracks."},
+      {"agent_id": "CompositorAgent", "intent": "Composite Celtic slideshow with mixed audio, burn EN + CY subtitles, render the bilingual audiobook."}
+    ]
+  },
+  {
+    "goal": "做一个中英双语《林冲风雪山神庙》水浒传片段有声绘本 — 中文旁白、底铺古琴 + 风雪声采样作 BGM 过渡 — 中英双字幕 — 国画工笔连环画风插画",
+    "rationale": "水浒 + 中英双语 + 古琴. 7 步链.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《林冲风雪山神庙》旁白 — 被诬陷、风雪中山神庙避难、听闻奸计、手刃仇人、雪夜上梁山."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成国画工笔连环画风插画 — 山神庙、风雪、林冲拔刀、雪夜上梁山."},
+      {"agent_id": "MusicAgent", "intent": "作古琴 + 风雪声采样 BGM — 苍凉悲壮, 长度匹配."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 章回小说讲述风格."},
+      {"agent_id": "AudioMixAgent", "intent": "中文旁白与 BGM 混音."},
+      {"agent_id": "TranslationAgent", "intent": "把中文旁白翻译成英文, 生成中英双字幕."},
+      {"agent_id": "CompositorAgent", "intent": "合成连环画 slideshow, 铺混音, 烧中英双字幕, 输出中英双语《林冲风雪山神庙》绘本."}
+    ]
+  },
+  {
+    "goal": "Make a bilingual illustrated audiobook of the Australian Aboriginal Dreamtime story of 'The Rainbow Serpent' — English narration, didgeridoo + clapsticks BGM — English + Yolŋu Matha (Aboriginal language) subtitles — Australian Aboriginal dot painting illustration style",
+    "rationale": "Aboriginal Dreamtime + bilingual + didgeridoo. 7-step chain.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write a respectful English narration of the Rainbow Serpent Dreamtime creation story — one beat per scene."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Australian Aboriginal dot painting style illustrations — primordial earth, rainbow serpent, rivers, waterholes, creatures."},
+      {"agent_id": "MusicAgent", "intent": "Compose didgeridoo + clapsticks BGM — ancient and earth-rooted, length-matched."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a reverent English voiceover with a Dreamtime storyteller cadence."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narration over ducked didgeridoo BGM."},
+      {"agent_id": "TranslationAgent", "intent": "Translate English narration into Yolŋu Matha and produce aligned EN + Yolŋu subtitle tracks."},
+      {"agent_id": "CompositorAgent", "intent": "Composite dot-painting slideshow with mixed audio, burn EN + Yolŋu subtitles, render the bilingual Dreamtime audiobook."}
+    ]
+  },
+  {
+    "goal": "做一个中英双语《大闹天宫》齐天大圣孙悟空经典片段有声绘本 — 中文旁白、底铺京剧武场 + 打击乐 BGM — 中英双字幕 — 国风连环画工笔风",
+    "rationale": "大闹天宫 + 中英双语 + 京剧武场. 7 步链.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《大闹天宫》旁白 — 孙悟空偷蟠桃、闯天宫、与天兵天将斗、被压五行山."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成国风连环画工笔插画 — 孙悟空、蟠桃园、天庭众神、打斗场面."},
+      {"agent_id": "MusicAgent", "intent": "作京剧武场 + 打击乐 BGM — 戏剧化铿锵, 长度匹配."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 评书讲述戏剧化."},
+      {"agent_id": "AudioMixAgent", "intent": "中文旁白与 BGM 混音."},
+      {"agent_id": "TranslationAgent", "intent": "把中文旁白翻译成英文, 生成中英双字幕."},
+      {"agent_id": "CompositorAgent", "intent": "合成连环画 slideshow, 铺混音, 烧中英双字幕, 输出中英双语《大闹天宫》绘本."}
+    ]
+  },
+  {
+    "goal": "Make a bilingual illustrated audiobook of the Icelandic saga 'Njáls Saga' — 'The Burning of Njál' chapter (abridged for kids) — English narration, kantele + low drums BGM — English + Icelandic subtitles — Norse saga woodblock illustration style",
+    "rationale": "Iceland saga + bilingual + kantele. 7-step chain.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write a kid-appropriate English narration of the Burning of Njál chapter — feud, fire, honor — one beat per scene."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Norse saga woodblock illustrations — longhouse, warriors, fire, aftermath."},
+      {"agent_id": "MusicAgent", "intent": "Compose kantele + low drums BGM — austere and tragic, length-matched."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize an English voiceover with a Norse saga cadence."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narration over ducked kantele BGM."},
+      {"agent_id": "TranslationAgent", "intent": "Translate English narration into Icelandic and produce aligned EN + IS subtitle tracks."},
+      {"agent_id": "CompositorAgent", "intent": "Composite woodblock slideshow with mixed audio, burn EN + IS subtitles, render the bilingual Njál saga audiobook."}
+    ]
+  },
+  {
+    "goal": "做一个中英双语《穆桂英大破天门阵》杨家将有声绘本 — 中文旁白、底铺京剧老生苍劲唱腔 + 板鼓 BGM — 中英双字幕 — 戏曲舞台年画风插画",
+    "rationale": "穆桂英 + 中英双语 + 京剧老生板鼓. 7 步链.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《穆桂英大破天门阵》杨家将旁白 — 辽国天门阵、穆桂英奉诏出征、智破奇阵、载誉而归."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成戏曲舞台年画风插画 — 天门阵、穆桂英披挂出征、破阵、凯旋."},
+      {"agent_id": "MusicAgent", "intent": "作京剧老生唱腔 + 板鼓 BGM — 战场豪迈, 长度匹配."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 评书演义讲述."},
+      {"agent_id": "AudioMixAgent", "intent": "中文旁白与 BGM 混音."},
+      {"agent_id": "TranslationAgent", "intent": "把中文旁白翻译成英文, 生成中英双字幕."},
+      {"agent_id": "CompositorAgent", "intent": "合成舞台年画 slideshow, 铺混音, 烧中英双字幕, 输出中英双语《穆桂英破天门阵》绘本."}
+    ]
+  }
+]

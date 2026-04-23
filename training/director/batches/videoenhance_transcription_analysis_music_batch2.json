@@ -1,0 +1,242 @@
+[
+  {
+    "goal": "这是我拍的宝宝第一次走路的视频,帮我加点温馨的背景音乐,把我的中文旁白转成中文字幕 — BGM 风格按画面感觉来",
+    "rationale": "家庭温馨视频 + 暖 BGM + 字幕. 转写旁白 → 分析视频温情度 → 作温暖 BGM → 混音 → 合成带字幕.",
+    "plan": [
+      {"agent_id": "IntakeVideoAgent", "intent": "把上传的宝宝第一次走路视频作为源."},
+      {"agent_id": "TranscriptionAgent", "intent": "转写用户中文旁白成中文字幕时间轨."},
+      {"agent_id": "VideoAnalysisAgent", "intent": "分析视频内容 — 宝宝走路的小步、跌倒、笑声 — 为 BGM 定温馨调式."},
+      {"agent_id": "MusicAgent", "intent": "根据分析作温暖温馨的 BGM — 钢琴 + 轻弦乐, 长度匹配视频."},
+      {"agent_id": "AudioMixAgent", "intent": "把 BGM 混在原音频之下, 保留宝宝的笑声."},
+      {"agent_id": "CompositorAgent", "intent": "合成视频 + 混音 + 烧中文字幕, 输出温馨家庭视频."}
+    ]
+  },
+  {
+    "goal": "Add a fitting BGM to this retro-style short film I made, and burn in English subtitles for the dialogue — music style should match the 80s vibe of the visuals",
+    "rationale": "Retro short film + 80s-style BGM + subtitles. Transcribe dialogue → analyze 80s retro visuals → compose 80s synth BGM → mix → composite with subs.",
+    "plan": [
+      {"agent_id": "IntakeVideoAgent", "intent": "Ingest the uploaded retro-style short film as source."},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the dialogue into English subtitle cues."},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the retro 80s visuals — lighting, color palette, pacing — to inform BGM style (synth-pop direction)."},
+      {"agent_id": "MusicAgent", "intent": "Compose a BGM with 80s synth-pop style matching the analyzed retro aesthetic, length-matched."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix the synth BGM under the dialogue so conversations remain clear."},
+      {"agent_id": "CompositorAgent", "intent": "Composite the short film with mixed audio, burn English subtitles, output the enhanced retro film."}
+    ]
+  },
+  {
+    "goal": "这个探店 vlog 视频帮我加合适的背景音乐,把店主讲解的部分转成中文字幕 — 音乐风格看店铺氛围决定",
+    "rationale": "探店 vlog + 内容感知 BGM + 字幕. 转写店主 → 分析店铺氛围 → 作匹配 BGM → 混音 → 合成.",
+    "plan": [
+      {"agent_id": "IntakeVideoAgent", "intent": "把上传的探店 vlog 作为源."},
+      {"agent_id": "TranscriptionAgent", "intent": "转写店主讲解成中文字幕时间轨."},
+      {"agent_id": "VideoAnalysisAgent", "intent": "分析店铺氛围 — 文艺咖啡店、热闹夜市摊位、还是古朴手作店 — 为 BGM 定调."},
+      {"agent_id": "MusicAgent", "intent": "根据分析作匹配的 BGM, 长度与视频匹配."},
+      {"agent_id": "AudioMixAgent", "intent": "BGM 混在店主讲解之下, 讲解清晰."},
+      {"agent_id": "CompositorAgent", "intent": "合成 vlog + 混音 + 烧中文字幕, 输出增强探店 vlog."}
+    ]
+  },
+  {
+    "goal": "Add BGM and English subtitles to this street interview I shot — music should match the interview's mood (upbeat or reflective depending on what the people say)",
+    "rationale": "Street interview + mood-matched BGM + subs. Transcribe interview → analyze emotional tone → compose mood-matched BGM → mix → composite with subs.",
+    "plan": [
+      {"agent_id": "IntakeVideoAgent", "intent": "Ingest the uploaded street interview footage."},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the interview dialogue into English subtitle cues."},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the interview's emotional tone — upbeat, reflective, melancholy — based on content and facial expressions for BGM direction."},
+      {"agent_id": "MusicAgent", "intent": "Compose a BGM matching the analyzed emotional tone, length-matched."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix the BGM under the interview audio so voices stay clear."},
+      {"agent_id": "CompositorAgent", "intent": "Composite the footage with mixed audio, burn English subtitles, output the final street interview."}
+    ]
+  },
+  {
+    "goal": "这是我拍的一段雪山日出的 4K 延时摄影, 配合适的史诗感音乐并且把旁白(我录了一段) 转中文字幕",
+    "rationale": "延时摄影 + 史诗 BGM + 字幕. 转写旁白 → 分析延时画面 → 作史诗 BGM → 混音 → 合成.",
+    "plan": [
+      {"agent_id": "IntakeVideoAgent", "intent": "把上传的雪山日出 4K 延时视频作为源."},
+      {"agent_id": "TranscriptionAgent", "intent": "转写视频中的旁白成中文字幕时间轨."},
+      {"agent_id": "VideoAnalysisAgent", "intent": "分析延时画面 — 光线从暗到明的转变、云海翻腾、金色顶峰 — 为 BGM 定史诗基调."},
+      {"agent_id": "MusicAgent", "intent": "作一段史诗感 BGM — 管弦乐渐进, 日出高潮处 climax, 长度匹配."},
+      {"agent_id": "AudioMixAgent", "intent": "BGM 混在旁白之下, 延时无现场声可突出音乐."},
+      {"agent_id": "CompositorAgent", "intent": "合成延时 + 混音 + 烧中文字幕, 输出雪山日出史诗片."}
+    ]
+  },
+  {
+    "goal": "Add fitting background music to this wildlife footage of African savanna I shot on safari, with English subtitles from the guide's narration — music style should match the analyzed animal activity",
+    "rationale": "Safari wildlife footage + BGM matching animal activity + subs. Transcribe guide → analyze wildlife activity → compose matched BGM → mix → composite with subs.",
+    "plan": [
+      {"agent_id": "IntakeVideoAgent", "intent": "Ingest the uploaded African safari wildlife footage."},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the guide's English narration into subtitle cues."},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze animal activity and landscape — grazing vs. hunt vs. scenic — to guide BGM intensity profile."},
+      {"agent_id": "MusicAgent", "intent": "Compose a BGM whose intensity envelope follows the analyzed animal-activity profile — tribal percussion over orchestral, length-matched."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix BGM under the guide's narration so his voice stays clear."},
+      {"agent_id": "CompositorAgent", "intent": "Composite footage with mixed audio, burn English subtitles, output the finalized safari video."}
+    ]
+  },
+  {
+    "goal": "给我这个拉面店出餐的过程视频加合适 BGM, 烧中文字幕(我有讲解) — 音乐风格看画面节奏决定",
+    "rationale": "出餐视频 + 节奏 BGM + 字幕. 转写讲解 → 分析出餐节奏 → 作 BGM → 混音 → 合成.",
+    "plan": [
+      {"agent_id": "IntakeVideoAgent", "intent": "把上传的拉面店出餐过程视频作为源."},
+      {"agent_id": "TranscriptionAgent", "intent": "转写讲解成中文字幕时间轨."},
+      {"agent_id": "VideoAnalysisAgent", "intent": "分析出餐节奏 — 煮面、捞面、摆碗 — 为 BGM 定节奏."},
+      {"agent_id": "MusicAgent", "intent": "根据分析作节奏感 BGM, 长度匹配."},
+      {"agent_id": "AudioMixAgent", "intent": "BGM 混在讲解之下, 讲解清晰."},
+      {"agent_id": "CompositorAgent", "intent": "合成视频 + 混音 + 烧中文字幕, 输出拉面出餐视频."}
+    ]
+  },
+  {
+    "goal": "Add a BGM matching the mood of this ballet rehearsal clip I filmed, burn in the dancer's coaching notes as English subtitles — music style determined by video analysis of the movements",
+    "rationale": "Ballet rehearsal + mood BGM + subs. Transcribe coaching → analyze dance mood → compose classical BGM → mix → composite with subs.",
+    "plan": [
+      {"agent_id": "IntakeVideoAgent", "intent": "Ingest the uploaded ballet rehearsal clip."},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the dancer's coaching notes into English subtitle cues."},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze ballet movements — leaps, pirouettes, resting — to set BGM's classical mood and dynamics."},
+      {"agent_id": "MusicAgent", "intent": "Compose a classical BGM whose dynamics track the movement analysis, length-matched."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix BGM below coaching audio."},
+      {"agent_id": "CompositorAgent", "intent": "Composite rehearsal footage with mixed audio, burn English subtitles, output the final ballet clip."}
+    ]
+  },
+  {
+    "goal": "这个是我拍的茶艺表演过程视频,请加一段适合茶艺氛围的古典音乐,并把茶人讲解转中文字幕",
+    "rationale": "茶艺视频 + 古典 BGM + 字幕. 转写讲解 → 分析茶艺节奏 → 作古典 BGM → 混音 → 合成.",
+    "plan": [
+      {"agent_id": "IntakeVideoAgent", "intent": "把上传的茶艺表演视频作为源."},
+      {"agent_id": "TranscriptionAgent", "intent": "转写茶人讲解成中文字幕轨."},
+      {"agent_id": "VideoAnalysisAgent", "intent": "分析茶艺节奏 — 温润优雅、慢动作冲泡 — 为 BGM 定古典风."},
+      {"agent_id": "MusicAgent", "intent": "作一段古琴或者箫的古典 BGM — 清雅禅意, 长度匹配."},
+      {"agent_id": "AudioMixAgent", "intent": "BGM 混在讲解之下."},
+      {"agent_id": "CompositorAgent", "intent": "合成视频 + 混音 + 烧中文字幕, 输出茶艺表演视频."}
+    ]
+  },
+  {
+    "goal": "Enhance this kickboxing training compilation I recorded — add intense hip-hop BGM tracking the movement intensity, burn my English coaching into subtitles",
+    "rationale": "Kickboxing compilation + hip-hop BGM + subs. Transcribe coaching → analyze movement intensity → compose hip-hop BGM → mix → composite with subs.",
+    "plan": [
+      {"agent_id": "IntakeVideoAgent", "intent": "Ingest the uploaded kickboxing training compilation."},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English coaching commentary into subtitle cues."},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze kickboxing movement intensity across the compilation — warmup low, sparring high — to drive BGM dynamics."},
+      {"agent_id": "MusicAgent", "intent": "Compose an intense hip-hop BGM that ramps with analyzed intensity, length-matched."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix BGM beneath coaching commentary so voice stays prominent."},
+      {"agent_id": "CompositorAgent", "intent": "Composite compilation with mixed audio, burn English subtitles, output the training video."}
+    ]
+  },
+  {
+    "goal": "给我这个拍的古镇夜游视频加一些古典风 BGM,把导游讲解转成中文字幕",
+    "rationale": "古镇夜游视频 + 古典 BGM + 字幕. 转写导游 → 分析古镇画面 → 作古典 BGM → 混音 → 合成.",
+    "plan": [
+      {"agent_id": "IntakeVideoAgent", "intent": "把上传的古镇夜游视频作为源."},
+      {"agent_id": "TranscriptionAgent", "intent": "转写导游讲解成中文字幕轨."},
+      {"agent_id": "VideoAnalysisAgent", "intent": "分析古镇夜景 — 灯笼、石板路、水巷 — 为 BGM 定古典基调."},
+      {"agent_id": "MusicAgent", "intent": "作一段中国古典风 BGM — 古筝或者二胡, 夜游氛围, 长度匹配."},
+      {"agent_id": "AudioMixAgent", "intent": "BGM 混在导游讲解之下."},
+      {"agent_id": "CompositorAgent", "intent": "合成夜游视频 + 混音 + 烧中文字幕, 输出古镇夜游视频."}
+    ]
+  },
+  {
+    "goal": "Add a matching cinematic BGM to this montage of my road trip across the American Southwest, with English subtitles for the voiceover I recorded over it",
+    "rationale": "Road trip montage + cinematic BGM + subs. Transcribe voiceover → analyze montage pacing → compose cinematic BGM → mix → composite with subs.",
+    "plan": [
+      {"agent_id": "IntakeVideoAgent", "intent": "Ingest the uploaded American Southwest road trip montage."},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the voiceover into English subtitle cues."},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze montage pacing — desert driving, canyon stops, sunset timelapses — to inform cinematic BGM arc."},
+      {"agent_id": "MusicAgent", "intent": "Compose a cinematic indie-Americana BGM matching the montage analysis, length-matched."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix BGM under the voiceover so it stays clear."},
+      {"agent_id": "CompositorAgent", "intent": "Composite montage with mixed audio, burn English subtitles, output the road trip video."}
+    ]
+  },
+  {
+    "goal": "给我这个朋友婚礼的精剪视频加浪漫 BGM 并把新人誓言转中文字幕 — 音乐基调参考画面情绪",
+    "rationale": "婚礼精剪 + 浪漫 BGM + 字幕. 转写誓言 → 分析婚礼情绪 → 作浪漫 BGM → 混音 → 合成.",
+    "plan": [
+      {"agent_id": "IntakeVideoAgent", "intent": "把上传的婚礼精剪视频作为源."},
+      {"agent_id": "TranscriptionAgent", "intent": "转写新人誓言成中文字幕轨."},
+      {"agent_id": "VideoAnalysisAgent", "intent": "分析婚礼情绪 — 甜蜜、庄重、感动瞬间 — 为 BGM 定调."},
+      {"agent_id": "MusicAgent", "intent": "作浪漫 BGM, 钢琴 + 弦乐, 感动处 build up, 长度匹配."},
+      {"agent_id": "AudioMixAgent", "intent": "BGM 混在誓言音频之下, 誓言清晰."},
+      {"agent_id": "CompositorAgent", "intent": "合成婚礼视频 + 混音 + 烧中文字幕, 输出成片."}
+    ]
+  },
+  {
+    "goal": "Add an educational soft BGM to this chemistry lab demonstration I filmed, and burn the narration into English subtitles — music style matched to the calm teaching nature",
+    "rationale": "Chemistry demo + soft educational BGM + subs. Transcribe narration → analyze teaching pacing → compose soft BGM → mix → composite with subs.",
+    "plan": [
+      {"agent_id": "IntakeVideoAgent", "intent": "Ingest the uploaded chemistry lab demonstration."},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the narration into English subtitle cues."},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the demonstration — careful measured steps, chemical reactions — to inform BGM style (gentle, educational)."},
+      {"agent_id": "MusicAgent", "intent": "Compose a soft educational BGM, light piano and marimba, length-matched."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix BGM quietly beneath the narration so steps stay crystal clear."},
+      {"agent_id": "CompositorAgent", "intent": "Composite demo footage with mixed audio, burn English subtitles, output the final teaching video."}
+    ]
+  },
+  {
+    "goal": "给我这段陪妈妈逛早市的生活记录视频加怀旧 BGM, 把我的中文碎碎念转字幕",
+    "rationale": "生活记录视频 + 怀旧 BGM + 字幕. 转写碎碎念 → 分析市井生活氛围 → 作怀旧 BGM → 混音 → 合成.",
+    "plan": [
+      {"agent_id": "IntakeVideoAgent", "intent": "把上传的陪妈妈逛早市视频作为源."},
+      {"agent_id": "TranscriptionAgent", "intent": "转写碎碎念旁白成中文字幕轨."},
+      {"agent_id": "VideoAnalysisAgent", "intent": "分析市井生活氛围 — 早市热闹、食材、母子对话 — 为 BGM 定怀旧基调."},
+      {"agent_id": "MusicAgent", "intent": "作一段怀旧 BGM, 钢琴 + 木吉他, 长度匹配."},
+      {"agent_id": "AudioMixAgent", "intent": "BGM 混在原音频之下, 市井声和对话保留."},
+      {"agent_id": "CompositorAgent", "intent": "合成视频 + 混音 + 烧中文字幕, 输出生活记录视频."}
+    ]
+  },
+  {
+    "goal": "Take this tech tutorial video I recorded, add subtle electronic BGM that doesn't distract from the tutorial, and burn English subtitles from my voiceover",
+    "rationale": "Tech tutorial + subtle electronic BGM + subs. Transcribe voiceover → analyze tutorial pacing → compose subtle BGM → mix → composite with subs.",
+    "plan": [
+      {"agent_id": "IntakeVideoAgent", "intent": "Ingest the uploaded tech tutorial recording."},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe voiceover into English subtitle cues."},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze tutorial pacing — screen walk-throughs, demos, explanations — to calibrate BGM intensity (should stay subtle)."},
+      {"agent_id": "MusicAgent", "intent": "Compose subtle electronic BGM — low-key synth pads, length-matched."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix BGM very low under the voiceover so tutorial instruction stays dominant."},
+      {"agent_id": "CompositorAgent", "intent": "Composite tutorial with mixed audio, burn English subtitles, output the final tech tutorial."}
+    ]
+  },
+  {
+    "goal": "这是我老婆跳现代舞排练的视频,帮我加合适的现代风 BGM, 并把编导讲解转中文字幕",
+    "rationale": "现代舞排练 + 现代 BGM + 字幕. 转写编导 → 分析舞蹈动作 → 作现代 BGM → 混音 → 合成.",
+    "plan": [
+      {"agent_id": "IntakeVideoAgent", "intent": "把上传的现代舞排练视频作为源."},
+      {"agent_id": "TranscriptionAgent", "intent": "转写编导讲解成中文字幕."},
+      {"agent_id": "VideoAnalysisAgent", "intent": "分析现代舞动作 — 张力、节奏变化 — 为 BGM 定调."},
+      {"agent_id": "MusicAgent", "intent": "作现代风 BGM — electronic + classical fusion, 长度匹配."},
+      {"agent_id": "AudioMixAgent", "intent": "BGM 混在编导讲解下."},
+      {"agent_id": "CompositorAgent", "intent": "合成排练视频 + 混音 + 烧中文字幕, 输出现代舞视频."}
+    ]
+  },
+  {
+    "goal": "Make this birthday party home video more polished — add festive BGM, burn in English subtitles from everyone speaking",
+    "rationale": "Birthday home video + festive BGM + subs. Transcribe speakers → analyze party mood → compose festive BGM → mix → composite with subs.",
+    "plan": [
+      {"agent_id": "IntakeVideoAgent", "intent": "Ingest the uploaded birthday party home video."},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe all spoken English audio into subtitle cues."},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze party mood — cake moment, singing, presents — for BGM festive tone and dynamic peaks."},
+      {"agent_id": "MusicAgent", "intent": "Compose festive pop/acoustic BGM matching party mood, length-matched."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix BGM under the original party audio preserving singing and laughter."},
+      {"agent_id": "CompositorAgent", "intent": "Composite home video with mixed audio, burn English subtitles, output the polished birthday video."}
+    ]
+  },
+  {
+    "goal": "这是我做手作木工的视频,帮我加工匠风的 BGM, 并把我讲的步骤转中文字幕",
+    "rationale": "木工手作 + 工匠 BGM + 字幕. 转写步骤 → 分析手作节奏 → 作工匠 BGM → 混音 → 合成.",
+    "plan": [
+      {"agent_id": "IntakeVideoAgent", "intent": "把上传的手作木工视频作为源."},
+      {"agent_id": "TranscriptionAgent", "intent": "转写讲解成中文字幕."},
+      {"agent_id": "VideoAnalysisAgent", "intent": "分析木工步骤节奏 — 切割、打磨、组装 — 为 BGM 定工匠基调."},
+      {"agent_id": "MusicAgent", "intent": "作工匠风 BGM — acoustic 吉他 + 木质打击, 长度匹配."},
+      {"agent_id": "AudioMixAgent", "intent": "BGM 混在讲解下, 工具声保留."},
+      {"agent_id": "CompositorAgent", "intent": "合成木工视频 + 混音 + 烧中文字幕, 输出手作视频."}
+    ]
+  },
+  {
+    "goal": "Add a cozy indie-folk BGM to this autumn-walk vlog I recorded in the woods, with English subtitles from my voiceover — music style determined by video content",
+    "rationale": "Autumn walk vlog + cozy BGM + subs. Transcribe voiceover → analyze autumn vibes → compose indie-folk BGM → mix → composite with subs.",
+    "plan": [
+      {"agent_id": "IntakeVideoAgent", "intent": "Ingest the uploaded autumn walk vlog."},
+      {"agent_id": "TranscriptionAgent", "intent": "Transcribe the English voiceover into subtitle cues."},
+      {"agent_id": "VideoAnalysisAgent", "intent": "Analyze the autumn-walk content — foliage, quiet forest, introspective pacing — to inform BGM style."},
+      {"agent_id": "MusicAgent", "intent": "Compose cozy indie-folk BGM — fingerpicked guitar, light strings, length-matched."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix BGM under voiceover, let nature sounds come through."},
+      {"agent_id": "CompositorAgent", "intent": "Composite vlog with mixed audio, burn English subtitles, output the final autumn vlog."}
+    ]
+  }
+]
