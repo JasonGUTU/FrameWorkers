@@ -124,105 +124,6 @@ class TestTranslationAgent:
 
 
 # ═══════════════════════════════════════════════════════════════════════════
-# SubtitleAgent
-# ═══════════════════════════════════════════════════════════════════════════
-
-class TestSubtitleAgent:
-    def test_schema_defaults(self):
-        from agents.subtitle.schema import SubtitleAgentInput, SubtitleAgentOutput
-        inp = SubtitleAgentInput()
-        assert inp.screenplay_json_text == ""
-        out = SubtitleAgentOutput()
-        assert out.content.tracks == []
-        assert out.metrics.total_cue_count == 0
-
-    def test_evaluator_passes_valid_output(self):
-        from agents.subtitle.schema import SubtitleAgentOutput
-        from agents.subtitle.evaluator import SubtitleEvaluator
-        data = {
-            "content": {
-                "tracks": [{
-                    "language": "en",
-                    "cues": [
-                        {"cue_id": "cue_001", "start_time": "00:00:01,000", "end_time": "00:00:04,500", "speaker": "Narrator", "text": "Hello world"},
-                        {"cue_id": "cue_002", "start_time": "00:00:05,000", "end_time": "00:00:08,000", "speaker": "Alice", "text": "How are you?"},
-                    ],
-                    "srt_text": "1\n00:00:01,000 --> 00:00:04,500\nHello world\n\n2\n00:00:05,000 --> 00:00:08,000\nHow are you?\n",
-                }]
-            }
-        }
-        out = SubtitleAgentOutput.model_validate(data)
-        evaluator = SubtitleEvaluator()
-        errors = evaluator.check_structure(out)
-        assert errors == []
-
-    def test_evaluator_catches_empty_tracks(self):
-        from agents.subtitle.schema import SubtitleAgentOutput
-        from agents.subtitle.evaluator import SubtitleEvaluator
-        out = SubtitleAgentOutput()
-        evaluator = SubtitleEvaluator()
-        errors = evaluator.check_structure(out)
-        assert any("empty" in e for e in errors)
-
-    def test_evaluator_catches_bad_time_format(self):
-        from agents.subtitle.schema import SubtitleAgentOutput
-        from agents.subtitle.evaluator import SubtitleEvaluator
-        data = {
-            "content": {
-                "tracks": [{
-                    "language": "en",
-                    "cues": [{"cue_id": "cue_001", "start_time": "0:0:1", "end_time": "0:0:4", "text": "Hi"}],
-                    "srt_text": "1\n0:0:1 --> 0:0:4\nHi\n",
-                }]
-            }
-        }
-        out = SubtitleAgentOutput.model_validate(data)
-        evaluator = SubtitleEvaluator()
-        errors = evaluator.check_structure(out)
-        assert any("SRT time" in e for e in errors)
-
-    def test_evaluator_catches_non_increasing_cue_ids(self):
-        from agents.subtitle.schema import SubtitleAgentOutput
-        from agents.subtitle.evaluator import SubtitleEvaluator
-        data = {
-            "content": {
-                "tracks": [{
-                    "language": "en",
-                    "cues": [
-                        {"cue_id": "cue_002", "start_time": "00:00:01,000", "end_time": "00:00:03,000", "text": "A"},
-                        {"cue_id": "cue_001", "start_time": "00:00:04,000", "end_time": "00:00:06,000", "text": "B"},
-                    ],
-                    "srt_text": "1\n...\n",
-                }]
-            }
-        }
-        out = SubtitleAgentOutput.model_validate(data)
-        evaluator = SubtitleEvaluator()
-        errors = evaluator.check_structure(out)
-        assert any("increasing" in e for e in errors)
-
-    def test_descriptor_build_input(self):
-        from agents.subtitle.descriptor import build_input
-        from agents.subtitle.labels import INPUT_LABEL_SOURCE_TEXT
-        resolved = {
-            INPUT_LABEL_SOURCE_TEXT: {
-                "caption": "Screenplay", "scope": "global", "path": "", "mime": "application/json",
-                "payload": {"content": {"scenes": []}},
-            },
-        }
-        inp = build_input("task_001", resolved)
-        assert "scenes" in inp.screenplay_json_text
-
-    def test_descriptor_build_captions(self):
-        from agents.subtitle.descriptor import build_captions
-        output_dict = {
-            "content": {"tracks": [{"language": "en", "cues": [{"cue_id": "c1"}, {"cue_id": "c2"}]}]},
-        }
-        caps = build_captions("SubtitleAgent", output_dict)
-        assert "2 cue(s)" in caps["SubtitleAgent"]["caption"]
-
-
-# ═══════════════════════════════════════════════════════════════════════════
 # TranscriptionAgent
 # ═══════════════════════════════════════════════════════════════════════════
 
@@ -865,7 +766,6 @@ class TestNewAgentsInRegistry:
 
     EXPECTED_NEW_AGENTS = [
         "TranslationAgent",
-        "SubtitleAgent",
         "CompositorAgent",
         "StyleTransferAgent",
         "VideoExtendAgent",

@@ -139,36 +139,7 @@ class TestTranslationAgentLive:
 
 
 # ═══════════════════════════════════════════════════════════════════════════
-# 2. SubtitleAgent — generate SRT from screenplay
-# ═══════════════════════════════════════════════════════════════════════════
-
-class TestSubtitleAgentLive:
-    def test_generate_subtitles_from_screenplay(self):
-        _skip_unless_live()
-        from agents.subtitle.agent import SubtitleAgent
-        from agents.subtitle.schema import SubtitleAgentInput
-        from agents.subtitle.evaluator import SubtitleEvaluator
-
-        llm = _make_llm_client()
-        agent = SubtitleAgent(llm_client=llm)
-        inp = SubtitleAgentInput(screenplay_json_text=_MINI_SCREENPLAY_JSON)
-
-        output = asyncio.run(agent.generate(inp))
-        print(f"\n[SubtitleAgent] {len(output.content.tracks)} track(s)")
-        for t in output.content.tracks:
-            print(f"  language={t.language}, {len(t.cues)} cues")
-            for c in t.cues[:3]:
-                print(f"    {c.cue_id}: {c.start_time} -> {c.end_time}: {c.text[:50]}")
-
-        evaluator = SubtitleEvaluator()
-        errors = evaluator.check_structure(output)
-        assert errors == [], f"Structural errors: {errors}"
-        assert len(output.content.tracks) >= 1
-        assert len(output.content.tracks[0].cues) >= 2
-
-
-# ═══════════════════════════════════════════════════════════════════════════
-# 3. TranscriptionAgent — LLM post-processing (materializer needs real audio)
+# 2. TranscriptionAgent — LLM post-processing (materializer needs real audio)
 # ═══════════════════════════════════════════════════════════════════════════
 
 class TestTranscriptionAgentLive:

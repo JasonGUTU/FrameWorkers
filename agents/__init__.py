@@ -28,7 +28,6 @@ from .intake.intake_image.agent import IntakeImageAgent
 from .intake.intake_video.agent import IntakeVideoAgent
 from .transcription.agent import TranscriptionAgent
 from .translation.agent import TranslationAgent
-from .subtitle.agent import SubtitleAgent
 from .compositor.agent import CompositorAgent
 from .style_transfer.agent import StyleTransferAgent
 from .video_extend.agent import VideoExtendAgent
@@ -49,7 +48,6 @@ from .video.evaluator import VideoEvaluator
 from .brief_enricher.evaluator import BriefEnricherEvaluator
 from .transcription.evaluator import TranscriptionEvaluator
 from .translation.evaluator import TranslationEvaluator
-from .subtitle.evaluator import SubtitleEvaluator
 from .compositor.evaluator import CompositorEvaluator
 from .style_transfer.evaluator import StyleTransferEvaluator
 from .video_extend.evaluator import VideoExtendEvaluator
@@ -73,7 +71,6 @@ from .intake.intake_image.descriptor import DESCRIPTOR as _intake_image_desc
 from .intake.intake_video.descriptor import DESCRIPTOR as _intake_video_desc
 from .transcription.descriptor import DESCRIPTOR as _transcription_desc
 from .translation.descriptor import DESCRIPTOR as _translation_desc
-from .subtitle.descriptor import DESCRIPTOR as _subtitle_desc
 from .compositor.descriptor import DESCRIPTOR as _compositor_desc
 from .style_transfer.descriptor import DESCRIPTOR as _style_transfer_desc
 from .video_extend.descriptor import DESCRIPTOR as _video_extend_desc
@@ -103,7 +100,6 @@ AGENT_REGISTRY: dict[str, SubAgentDescriptor] = {
         _intake_video_desc,
         _transcription_desc,
         _translation_desc,
-        _subtitle_desc,
         _compositor_desc,
         _style_transfer_desc,
         _video_extend_desc,
@@ -158,8 +154,6 @@ __all__ = [
     "TranscriptionEvaluator",
     "TranslationAgent",
     "TranslationEvaluator",
-    "SubtitleAgent",
-    "SubtitleEvaluator",
     "CompositorAgent",
     "CompositorEvaluator",
     "StyleTransferAgent",

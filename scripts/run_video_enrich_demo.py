@@ -5,13 +5,15 @@ Chain (no Plan Stack, no director — just descriptor.build_input + agent.run):
     VideoAnalysisAgent  ──┐
                           ├─▶ MusicAgent ──▶ aud_music_film.wav ─┐
                           └─▶ AmbienceAgent ─▶ aud_amb_film.wav ─┤
-    TranscriptionAgent ─▶ SubtitleAgent ─▶ cn SRT ─▶ TranslationAgent ─▶ en SRT
+    TranscriptionAgent ─────▶ timestamped segments  ─▶ TranslationAgent ─▶ translated segments
                                                                           │
                           source mp4 ─────────────────────────────────────┤
                                                                           ▼
                                                 AudioMixAgent ─▶ aud_final.wav
                                                                           │
-    CompositorAgent ◀─ video + final audio + [cn SRT, en SRT] ◀───────────┘
+    CompositorAgent ◀─ video + final audio + [cn segments, en segments] ◀┘
+                  (materializer renders segments → SRT via pure-python helper
+                   and ffmpeg burns both language tracks in one pass)
                           │
                           ▼
                compositor_final.mp4
@@ -170,34 +172,28 @@ async def _pipeline(source_video: Path, out_root: Path) -> Path:
     if not segments:
         raise RuntimeError("TranscriptionAgent returned no usable segments — aborting")
 
-    logger.info("▶ SubtitleAgent (CN SRT from transcript)")
-    cn_sub_payload, _ = await run_agent(
-        "SubtitleAgent",
-        resolved_artifacts={
-            "source_text": artifact(payload=tr_payload, mime="application/json"),
-        },
-        step_id="step_subtitle_cn",
-        out_dir=out_root / "03_subtitle_cn",
-    )
-
-    logger.info("▶ TranslationAgent (CN SRT → EN SRT)")
+    logger.info("▶ TranslationAgent (CN transcript → EN transcript)")
     # TranslationAgent reads ``target_language`` from the upstream payload
-    # (see agents/translation/descriptor.py). Injecting it on the CN SRT
-    # payload is the project's canonical way of steering a translation.
-    cn_sub_with_tgt = dict(cn_sub_payload or {})
-    cn_sub_with_tgt["target_language"] = "en"
+    # (see agents/translation/descriptor.py). Injecting it on the
+    # transcription payload is the project's canonical way of steering a
+    # translation — and the translated payload preserves the transcript
+    # shape (same content.segments with timestamps, just translated text).
+    cn_tr_with_tgt = dict(tr_payload or {})
+    cn_tr_with_tgt["target_language"] = "en"
     tn_payload, _ = await run_agent(
         "TranslationAgent",
         resolved_artifacts={
-            "source_text": artifact(payload=cn_sub_with_tgt, mime="application/json"),
+            "source_text": artifact(payload=cn_tr_with_tgt, mime="application/json"),
         },
         step_id="step_translation",
-        out_dir=out_root / "04_translation",
+        out_dir=out_root / "03_translation",
     )
-    # Pass the raw TranslationAgent output through — CompositorMaterializer's
-    # _extract_subtitle_tracks peels the ``content.translated_payload``
-    # wrapper automatically, so the same collection label handles both
-    # SubtitleAgent-direct and Translation-relayed artifacts.
+    # CompositorMaterializer's _extract_srt_texts handles both shapes:
+    #   (a) the raw CN transcription payload (content.segments → rendered to SRT)
+    #   (b) the EN translation wrapper (content.translated_payload.content.segments
+    #       → wrapper peeled, inner segments rendered to SRT)
+    # so one list of {CN transcript, EN translation} burns bilingually.
+    cn_sub_payload = tr_payload
     en_sub_payload = tn_payload or {}
 
     logger.info("▶ MusicAgent")
@@ -207,7 +203,7 @@ async def _pipeline(source_video: Path, out_root: Path) -> Path:
             "video_analysis": artifact(payload=va_payload, mime="application/json"),
         },
         step_id="step_music",
-        out_dir=out_root / "05_music",
+        out_dir=out_root / "04_music",
     )
     music_wav = music_files.get("aud_music_film", "")
 
@@ -218,7 +214,7 @@ async def _pipeline(source_video: Path, out_root: Path) -> Path:
             "video_analysis": artifact(payload=va_payload, mime="application/json"),
         },
         step_id="step_ambience",
-        out_dir=out_root / "06_ambience",
+        out_dir=out_root / "05_ambience",
     )
     amb_wav = amb_files.get("aud_amb_film", "")
 
@@ -238,7 +234,7 @@ async def _pipeline(source_video: Path, out_root: Path) -> Path:
             "ambience_file": artifact(path=amb_wav, mime="audio/wav"),
         },
         step_id="step_audio_mix",
-        out_dir=out_root / "07_audio_mix",
+        out_dir=out_root / "06_audio_mix",
     )
     final_audio = mix_files.get("aud_final", "")
 
@@ -256,7 +252,7 @@ async def _pipeline(source_video: Path, out_root: Path) -> Path:
             ],
         },
         step_id="step_compositor",
-        out_dir=out_root / "08_compositor",
+        out_dir=out_root / "07_compositor",
     )
     final_mp4 = comp_files.get("compositor_final", "")
     if not final_mp4 or not Path(final_mp4).is_file():

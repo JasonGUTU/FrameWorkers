@@ -70,8 +70,7 @@ AGENT_TOPOLOGY: Dict[str, Dict[str, str]] = {
         "upstream": "StoryAgent",
         "downstream": (
             "KeyFrameAgent (keyframe planning); also read by "
-            "SubtitleAgent / MusicAgent / AmbienceAgent for shot-level "
-            "dialogue / mood / duration"
+            "MusicAgent / AmbienceAgent for shot-level mood / duration"
         ),
         "when_to_include": "Always follows StoryAgent in creative flows.",
     },
@@ -124,37 +123,41 @@ AGENT_TOPOLOGY: Dict[str, Dict[str, str]] = {
     },
 
     # ── Subtitle / Translation ───────────────────────────────────────
-    "SubtitleAgent": {
+    # Post-refactor: SubtitleAgent has been retired. The canonical source
+    # of truth for subtitle text is the actual audio track (either
+    # VideoAgent's Kling-baked voice on creative flows OR the original
+    # audio on existing-video flows), so TranscriptionAgent's STT output
+    # feeds subtitle burn-in directly. CompositorAgent's materializer
+    # renders TranscriptionAgent's timestamped segments to SRT with a
+    # pure-Python helper — no separate LLM pass needed.
+    "TranscriptionAgent": {
         "upstream": (
-            "ScreenplayAgent (creative flow) or TranscriptionAgent (existing-video flow)"
+            "Any agent producing playable audio/video: AudioMixAgent "
+            "(creative-flow Kling-baked voice), IntakeVideoAgent (raw "
+            "upload), StyleTransferAgent / VideoExtendAgent / "
+            "HighlightAgent (existing-video edit outputs)"
         ),
         "downstream": (
-            "TranslationAgent (for bilingual / foreign-language output) or "
-            "CompositorAgent (direct burn-in when no translation needed)"
+            "CompositorAgent (its materializer converts the segments to "
+            "SRT and burns them in); TranslationAgent inserts between "
+            "Transcription and Compositor for bilingual / foreign-"
+            "language subtitle flows"
         ),
         "when_to_include": (
-            "Only when user explicitly requests subtitles. The task being a "
-            "'short drama / mini-drama / manhua' alone is NOT a subtitle trigger."
+            "Whenever the user asks for subtitles / captions / a "
+            "transcript — on creative flows AND existing-video flows. "
+            "Skip on silent video or when no subtitle / caption track is "
+            "requested on the deliverable. The task being a 'short drama "
+            "/ mini-drama / manhua' alone is NOT a subtitle trigger."
         ),
     },
     "TranslationAgent": {
-        "upstream": "SubtitleAgent (direct neighbor — never precedes it)",
+        "upstream": "TranscriptionAgent (direct neighbor — never precedes it)",
         "downstream": "CompositorAgent",
         "when_to_include": (
-            "Bilingual subtitle output or foreign-language subtitle on existing "
-            "video. Must follow SubtitleAgent so cue boundaries are defined."
-        ),
-    },
-    "TranscriptionAgent": {
-        "upstream": (
-            "IntakeVideoAgent (raw upload) or any video-edit agent (HighlightAgent, "
-            "StyleTransferAgent, VideoExtendAgent) that produced a reusable video"
-        ),
-        "downstream": "SubtitleAgent",
-        "when_to_include": (
-            "Existing-video flow needing subtitles or translation. Skip in "
-            "creative flows (ScreenplayAgent feeds SubtitleAgent directly there). "
-            "Skip on silent video without subtitle intent."
+            "Bilingual subtitle output or foreign-language subtitle on any "
+            "video flow. Must follow TranscriptionAgent so cue boundaries "
+            "are defined."
         ),
     },
 
@@ -177,10 +180,10 @@ AGENT_TOPOLOGY: Dict[str, Dict[str, str]] = {
         "upstream": "VideoAnalysisAgent",
         "downstream": (
             "(terminal by default — the highlight reel IS the deliverable). "
-            "May extend into TranscriptionAgent → SubtitleAgent → CompositorAgent "
-            "if subtitles requested, or MusicAgent → AudioMixAgent → CompositorAgent "
-            "if BGM requested, or CompositorAgent alone if user asks for a "
-            "composed output."
+            "May extend into TranscriptionAgent → CompositorAgent if "
+            "subtitles requested, or MusicAgent → AudioMixAgent → "
+            "CompositorAgent if BGM requested, or CompositorAgent alone if "
+            "user asks for a composed output."
         ),
         "when_to_include": (
             "User requests extracting specific themed moments / climax / best "
@@ -191,9 +194,9 @@ AGENT_TOPOLOGY: Dict[str, Dict[str, str]] = {
         "upstream": "IntakeVideoAgent (or VideoExtendAgent in extend-then-stylise chain)",
         "downstream": (
             "(terminal by default — the stylised video IS the deliverable). "
-            "May extend with VideoExtendAgent, TranscriptionAgent → SubtitleAgent → "
-            "CompositorAgent, or MusicAgent → AudioMixAgent → CompositorAgent when "
-            "user requests subtitles / BGM / composed output."
+            "May extend with VideoExtendAgent, TranscriptionAgent → "
+            "CompositorAgent, or MusicAgent → AudioMixAgent → CompositorAgent "
+            "when user requests subtitles / BGM / composed output."
         ),
         "when_to_include": (
             "User requests a visual style transformation (anime, ink-wash, "
@@ -206,8 +209,8 @@ AGENT_TOPOLOGY: Dict[str, Dict[str, str]] = {
         "downstream": (
             "(terminal by default — the extended clip IS the deliverable). "
             "May chain with StyleTransferAgent, MusicAgent → AudioMixAgent → "
-            "CompositorAgent, or TranscriptionAgent → SubtitleAgent → "
-            "CompositorAgent when user requests additional treatment."
+            "CompositorAgent, or TranscriptionAgent → CompositorAgent when "
+            "user requests additional treatment."
         ),
         "when_to_include": (
             "User requests lengthening / adding cinematic devices (slow-mo, "
@@ -218,9 +221,9 @@ AGENT_TOPOLOGY: Dict[str, Dict[str, str]] = {
     },
     "CompositorAgent": {
         "upstream": (
-            "AudioMixAgent (when audio was mixed), SubtitleAgent (subtitle-only "
-            "burn-in path), or NarratorAgent + IllustrationAgent (illustrated-"
-            "storytelling slideshow path)"
+            "AudioMixAgent (when audio was mixed), TranscriptionAgent / "
+            "TranslationAgent (subtitle burn-in path), or NarratorAgent + "
+            "IllustrationAgent (illustrated-storytelling slideshow path)"
         ),
         "downstream": "(terminal — no downstream)",
         "when_to_include": (

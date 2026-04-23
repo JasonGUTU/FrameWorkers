@@ -208,13 +208,15 @@ _MINI_AUDIO_PACKAGE = {
     },
 }
 
-_MINI_SUBTITLE = {
-    "meta": {"asset_type": "subtitle_tracks"},
+_MINI_TRANSCRIPT = {
+    "meta": {"asset_type": "transcription"},
     "content": {
-        "tracks": [{"language": "en", "cues": [
-            {"cue_id": "cue_001", "start_time": "00:00:01,000", "end_time": "00:00:04,000", "text": "The cave walls shimmer."},
-            {"cue_id": "cue_002", "start_time": "00:00:04,500", "end_time": "00:00:06,500", "text": "Look at these crystals!"},
-        ], "srt_text": "1\n00:00:01,000 --> 00:00:04,000\nThe cave walls shimmer.\n\n2\n00:00:04,500 --> 00:00:06,500\nLook at these crystals!\n"}],
+        "language": "en",
+        "segments": [
+            {"segment_id": "seg_001", "start_time": 1.0, "end_time": 4.0, "text": "The cave walls shimmer."},
+            {"segment_id": "seg_002", "start_time": 4.5, "end_time": 6.5, "text": "Look at these crystals!"},
+        ],
+        "full_text": "The cave walls shimmer. Look at these crystals!",
     },
 }
 
@@ -319,21 +321,6 @@ def _assert_materialized_video(uri: str, label: str, min_bytes: int = 1024) -> N
 # 12 independent tests
 # ═══════════════════════════════════════════════════════════════════════
 
-def test_subtitle_agent_independent(monkeypatch):
-    client, ws = _make_env("SubtitleAgent", monkeypatch)
-    _seed_artifact(ws, "ScreenplayAgent", _MINI_SCREENPLAY,
-                   "Screenplay: 1 scene, 4 shots with dialogue and narration")
-    step_id = _create_step(client, "Generate subtitles")
-    body = _execute(client, "SubtitleAgent", step_id)
-    cur = _brief_last(body)
-    print(f"\n[SubtitleAgent] status={cur.get('status')}")
-    assert cur.get("status") == "COMPLETED", f"FAILED: {cur.get('error', '')[:200]}"
-    results = body.get("results") or _last_results(client, step_id)
-    tracks = (results or {}).get("content", {}).get("tracks", [])
-    print(f"  tracks={len(tracks)}, cues={sum(len(t.get('cues',[])) for t in tracks)}")
-    print(f"  workspace: {_ws_path(ws)}")
-
-
 def test_translation_agent_independent(monkeypatch):
     client, ws = _make_env("TranslationAgent", monkeypatch)
     # Seed a Chinese screenplay so there's something meaningful to translate
@@ -371,8 +358,9 @@ def test_compositor_agent_independent(monkeypatch):
                    "Video package: 1 scene, 4 shot clips, final merged video")
     _seed_artifact(ws, "AudioMixAgent", _MINI_AUDIO_PACKAGE,
                    "Audio mix: narration, music, ambience mixed into final audio")
-    _seed_artifact(ws, "SubtitleAgent", _MINI_SUBTITLE,
-                   "Subtitle tracks (en): 2 cues with SRT timing")
+    _seed_artifact(ws, "TranscriptionAgent", _MINI_TRANSCRIPT,
+                   "Transcript (en): 2 segments with timing — CompositorMaterializer "
+                   "renders these to SRT via the shared segments_to_srt helper")
     step_id = _create_step(client, "Compose final video")
     body = _execute(client, "CompositorAgent", step_id)
     cur = _brief_last(body)

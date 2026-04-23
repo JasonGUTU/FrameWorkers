@@ -65,12 +65,12 @@ SPEC = AgentSpec(
             cardinality="single",
             description=(
                 "The upstream artifact to translate. Accepts ANY "
-                "structured text: a screenplay document, a translated "
-                "screenplay, a timestamped transcript, a subtitle SRT "
-                "track (most common source for bilingual/foreign-"
-                "subtitle flows), a story blueprint, or ingested user "
-                "text. Payload is forwarded as raw JSON text; the LLM "
-                "reads whatever structure it has and translates all "
+                "structured text: a timestamped transcript (the most "
+                "common source for bilingual / foreign-subtitle flows — "
+                "produced by the preceding transcription step), a "
+                "screenplay document, a story blueprint, or ingested "
+                "user text. Payload is forwarded as raw JSON text; the "
+                "LLM reads whatever structure it has and translates all "
                 "human-readable fields while preserving keys, ids, "
                 "timing, ordering."
             ),
@@ -78,11 +78,11 @@ SPEC = AgentSpec(
     ],
     output_description=(
         "translation (translated text preserving the input structure: keys, "
-        "ids, timing, ordering — e.g. a translated SRT keeps every cue "
-        "timestamp intact)."
+        "ids, timing, ordering — e.g. a translated transcript keeps every "
+        "segment timestamp intact)."
     ),
     purpose_and_routing=(
-        """Translate structured text (subtitle SRT, screenplay, etc.) preserving keys / ids / timing / ordering. Must run on already-subtitled content — the SRT defines cue boundaries; translating the raw transcript before subtitling would break timing. Trigger: bilingual subtitle output or foreign-language subtitle on existing video."""
+        """Translate structured text (timestamped transcript, screenplay, etc.) preserving keys / ids / timing / ordering. On subtitle flows MUST follow the transcription step so segment boundaries are already defined; the compositor then renders both the original and translated segments to burn-in SRT. Trigger: bilingual subtitle output or foreign-language subtitle on any video flow."""
     ),
     input_preamble=(
         "I translate structured text (screenplays, transcripts, subtitle "

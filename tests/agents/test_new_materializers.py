@@ -99,16 +99,18 @@ class TestCompositorMaterializer:
         assert "Hello" in srts[0]
 
     def test_collects_multiple_tracks_for_bilingual_burn_in(self):
-        """Bilingual flow: one SubtitleAgent artifact + one TranslationAgent
-        artifact come in through the ``subtitle_tracks`` collection label.
-        The materializer must peel the translation's ``translated_payload``
+        """Bilingual flow: one tracks-shape artifact (NarratorAgent SRT
+        envelope, or legacy subtitle) + one TranslationAgent artifact
+        come in through the ``subtitle_tracks`` collection label. The
+        materializer must peel the translation's ``translated_payload``
         wrapper and hand both SRT blobs to the compositor service."""
         from agents.compositor.materializer import CompositorMaterializer
         from agents.compositor.schema import CompositorAgentInput
 
         svc = _SpyCompositorService()
         mat = CompositorMaterializer(compositor_service=svc)
-        # First entry: SubtitleAgent-direct shape (CN).
+        # First entry: direct tracks-shape (CN) — what NarratorAgent
+        # emits via its narrator_srt JSON envelope.
         cn = (
             '{"content":{"tracks":[{"srt_text":'
             '"1\\n00:00:01,000 --> 00:00:03,000\\n你好\\n"}]}}'

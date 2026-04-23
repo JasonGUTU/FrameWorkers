@@ -32,6 +32,7 @@ import wave
 from typing import Any, TYPE_CHECKING
 
 from ..descriptor import BaseMaterializer, MediaAsset
+from inference.generation._srt import segments_to_srt
 from inference.generation.audio_generators.service import AudioService
 
 if TYPE_CHECKING:
@@ -130,31 +131,25 @@ def _silence_wav_bytes(duration_sec: float) -> bytes:
     return buf.getvalue()
 
 
-def _format_srt_time(sec: float) -> str:
-    """Format seconds as SRT timestamp: HH:MM:SS,mmm."""
-    ms_total = int(round(sec * 1000))
-    hours, ms_total = divmod(ms_total, 3_600_000)
-    minutes, ms_total = divmod(ms_total, 60_000)
-    seconds, millis = divmod(ms_total, 1000)
-    return f"{hours:02d}:{minutes:02d}:{seconds:02d},{millis:03d}"
-
-
-def _build_srt_text(
+def _clips_with_text(
     clips: list[dict[str, Any]], id_to_text: dict[str, str],
-) -> str:
-    """Render line-level clips as an SRT block. Index starts at 1."""
-    entries: list[str] = []
-    for i, clip in enumerate(clips, start=1):
+) -> list[dict[str, Any]]:
+    """Enrich clip entries with their text, in segments_to_srt's expected shape.
+
+    NarratorMaterializer keeps ``clips`` and ``id_to_text`` side-by-side
+    for per-line timestamp bookkeeping; the SRT renderer wants a single
+    list of ``{start_sec, end_sec, text}`` dicts. This zips them so the
+    shared helper can run unchanged.
+    """
+    out: list[dict[str, Any]] = []
+    for clip in clips:
         line_id = str(clip.get("line_id", "") or "")
-        text = (id_to_text.get(line_id, "") or "").strip()
-        if not text:
-            continue
-        start = float(clip.get("start_sec", 0.0) or 0.0)
-        end = float(clip.get("end_sec", 0.0) or 0.0)
-        entries.append(
-            f"{i}\n{_format_srt_time(start)} --> {_format_srt_time(end)}\n{text}\n"
-        )
-    return "\n".join(entries)
+        out.append({
+            "start_sec": clip.get("start_sec", 0.0),
+            "end_sec": clip.get("end_sec", 0.0),
+            "text": id_to_text.get(line_id, ""),
+        })
+    return out
 
 
 class NarratorMaterializer(BaseMaterializer):
@@ -272,7 +267,7 @@ class NarratorMaterializer(BaseMaterializer):
             })
 
         # --- 4. Build SRT from per-line clips ---
-        srt_text = _build_srt_text(clips, id_to_text)
+        srt_text = segments_to_srt(_clips_with_text(clips, id_to_text))
 
         # --- 5. Stamp back onto asset_dict so persisted JSON carries the view ---
         content["clips"] = [

@@ -11,6 +11,7 @@ import logging
 from typing import Any, TYPE_CHECKING
 
 from ..descriptor import BaseMaterializer, MediaAsset
+from inference.generation._srt import segments_to_srt
 from inference.generation.compositor_service import CompositorService
 
 if TYPE_CHECKING:
@@ -20,39 +21,69 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
-def _extract_subtitle_tracks(sub_data: Any) -> list[dict]:
-    """Return the subtitle ``tracks`` list from whatever upstream shape.
+def _extract_srt_texts(sub_data: Any) -> list[str]:
+    """Return one or more SRT blobs from any shape routed to ``subtitle_tracks``.
 
-    Directly-routed artifacts and translated artifacts travel the same
-    ``subtitle_tracks`` collection label, so InputResolver hands this
-    materializer either:
+    The ``subtitle_tracks`` collection label is the single rendezvous
+    point for every producer of burnable captions. This extractor
+    accepts all the shapes that can legitimately show up there, in
+    priority order:
 
-      * A ``SubtitleAgent`` output — tracks live at ``content.tracks``.
-      * A ``TranslationAgent`` output — tracks live at
-        ``content.translated_payload.content.tracks`` (translation
-        preserves the upstream shape under a ``translated_payload``
-        wrapper so the consumer sees the original document, just
-        translated).
-
-    Translation output gets peeled first: an ``en`` SRT handed in wrapped
-    as ``{content: {translated_payload: <SubtitleAgent>}}`` would
-    otherwise silently contribute zero tracks under a naive
-    ``content.tracks`` read and collapse bilingual flows to monolingual.
+      1. ``TranslationAgent`` output — tracks live at
+         ``content.translated_payload.content.tracks[*].srt_text``.
+         Translation preserves the upstream shape under a
+         ``translated_payload`` wrapper so a translated SRT remains an
+         SRT; without peeling the wrapper first a bilingual flow
+         silently collapses to monolingual.
+      2. ``NarratorAgent`` SRT envelope OR legacy ``SubtitleAgent``
+         output — tracks live at ``content.tracks[*].srt_text``.
+      3. ``TranscriptionAgent`` output — ``content.segments`` carries
+         raw per-line timestamps + text; render to SRT here via the
+         shared ``segments_to_srt`` helper (pure Python, no LLM — this
+         is why SubtitleAgent is no longer a separate step: once
+         dialogue is Kling-baked, the ASR segments ARE the source of
+         truth for what the viewer hears).
+      4. A raw ``srt_text`` field at the top of ``content`` (plain-
+         SRT producers).
     """
     if not isinstance(sub_data, dict):
         return []
     content = sub_data.get("content", sub_data) or {}
     if not isinstance(content, dict):
         return []
+
+    # 1. Translated wrapper — peel and recurse on the inner document.
     translated = content.get("translated_payload")
     if isinstance(translated, dict):
-        inner = translated.get("content", translated) or {}
-        if isinstance(inner, dict):
-            inner_tracks = inner.get("tracks")
-            if isinstance(inner_tracks, list) and inner_tracks:
-                return inner_tracks
+        inner_srts = _extract_srt_texts(translated)
+        if inner_srts:
+            return inner_srts
+
+    # 2. tracks[].srt_text (NarratorAgent / legacy SubtitleAgent shape).
     tracks = content.get("tracks")
-    return tracks if isinstance(tracks, list) else []
+    if isinstance(tracks, list):
+        out: list[str] = []
+        for track in tracks:
+            if isinstance(track, dict):
+                srt = str(track.get("srt_text") or "").strip()
+                if srt:
+                    out.append(srt)
+        if out:
+            return out
+
+    # 3. TranscriptionAgent shape — segments[{start_time, end_time, text}].
+    segments = content.get("segments")
+    if isinstance(segments, list) and segments:
+        rendered = segments_to_srt(segments).strip()
+        if rendered:
+            return [rendered]
+
+    # 4. Raw srt_text at top of content.
+    raw_srt = str(content.get("srt_text") or "").strip()
+    if raw_srt:
+        return [raw_srt]
+
+    return []
 
 
 class CompositorMaterializer(BaseMaterializer):
@@ -92,12 +123,7 @@ class CompositorMaterializer(BaseMaterializer):
                 if text:
                     subtitle_srts.append(text)
                 continue
-            for track in _extract_subtitle_tracks(sub_data):
-                if not isinstance(track, dict):
-                    continue
-                srt = (track.get("srt_text") or "").strip()
-                if srt:
-                    subtitle_srts.append(srt)
+            subtitle_srts.extend(_extract_srt_texts(sub_data))
 
         # --- Slideshow-mode branch ---
         # Route decision: illustration_image_paths populated ⇒ we are in

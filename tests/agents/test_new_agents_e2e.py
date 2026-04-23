@@ -182,10 +182,15 @@ def _last_results(client, step_id: str) -> dict:
 def test_e2e_new_agents_full_chain(monkeypatch):
     """Run the full chain through Flask:
     upload brief → IntakeText → Story → Screenplay →
-    SubtitleAgent / TranslationAgent / CompositorAgent
+    TranslationAgent / CompositorAgent
     + KeyFrame → Video → Music → Ambience → AudioMix (mock media) →
     VideoAnalysis / Highlight / StyleTransfer / Inpaint / VideoExtend
     + IntakeVideo / IntakeAudio (via text upload fallback)
+
+    SubtitleAgent was retired — TranscriptionAgent's STT output goes
+    directly into the CompositorAgent subtitle_tracks label (the
+    materializer renders its segments to SRT via a pure-Python helper).
+    This smoke no longer exercises a dedicated subtitle step.
     """
     ws_id = _ws_id("new_agents_chain")
     client, workspace, debug_file = _build_client(ws_id, monkeypatch)
@@ -241,14 +246,10 @@ def test_e2e_new_agents_full_chain(monkeypatch):
             print(f"[E2E] {agent_id} FAILED: {exc}")
             return {}
 
-    # --- 3. SubtitleAgent (consumes screenplay) ---
-    subtitle = _run("SubtitleAgent")
-    if subtitle:
-        tracks = subtitle.get("content", {}).get("tracks", [])
-        cue_count = sum(len(t.get("cues", [])) for t in tracks)
-        print(f"[E2E] SubtitleAgent COMPLETED — {len(tracks)} track(s), {cue_count} cue(s)")
-
-    # --- 4. TranslationAgent ---
+    # --- 3. TranslationAgent (reads screenplay text — in production it
+    # reads TranscriptionAgent's transcript of the final audio, but this
+    # smoke runs before the audio chain is assembled, so we let it pick
+    # up whatever textual upstream InputResolver routes). ---
     translation = _run("TranslationAgent")
     if translation:
         payload = translation.get("content", {}).get("translated_payload", {})

@@ -114,15 +114,8 @@ LABEL_PRODUCERS: Dict[str, Dict[str, List[str]]] = {
         "ambience": ["AmbienceAgent"],
         "ambience_file": ["AmbienceAgent"],
     },
-    "SubtitleAgent": {
-        "source_text": ["ScreenplayAgent", "TranscriptionAgent"],
-        "video_package": [
-            "VideoAgent", "StyleTransferAgent", "VideoExtendAgent", "HighlightAgent",
-            "user", "IntakeVideoAgent",
-        ],
-    },
     "TranslationAgent": {
-        "source_text": ["SubtitleAgent"],
+        "source_text": ["TranscriptionAgent"],
     },
     "TranscriptionAgent": {
         "source_media": [
@@ -154,7 +147,7 @@ LABEL_PRODUCERS: Dict[str, Dict[str, List[str]]] = {
         ],
         "audio_package": ["AudioMixAgent"],
         "audio_file": ["AudioMixAgent"],
-        "subtitle_tracks": ["SubtitleAgent", "TranslationAgent"],
+        "subtitle_tracks": ["TranscriptionAgent", "TranslationAgent"],
     },
 }
 
