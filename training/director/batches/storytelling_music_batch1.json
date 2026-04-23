@@ -1,0 +1,182 @@
+[
+  {
+    "goal": "Make a narrated picture-book video of this ocean-rescue children's story with gentle waves-and-strings background score under the narrator — one watercolor illustration per scene",
+    "rationale": "User supplies an ocean-rescue children's prose and explicitly asks for a gentle waves-and-strings background score. Chain (c) storytelling + Music: NarrationAgent writes kid-friendly narrator script + watercolor segments; IllustrationAgent anchored-style illustrations; NarratorAgent TTS per line + SRT + timing; MusicAgent composes a gentle waves-and-strings underlay; AudioMixAgent blends narrator + music into the final audio; CompositorAgent slideshow-mode mp4 + subtitles. No Ambience / Translation (user asked only for score).",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite the ocean-rescue children's tale as a warm narrator script segmented for watercolor picture-book illustrations"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate gentle watercolor ocean illustrations per segment, anchored to scene 1"},
+      {"agent_id": "MusicAgent", "intent": "Compose a gentle waves-and-strings background score for the full narration duration"},
+      {"agent_id": "NarratorAgent", "intent": "TTS each narrator line with a warm kid-story voice, emit SRT + segment timing"},
+      {"agent_id": "AudioMixAgent", "intent": "Mix the narrator voice over the waves-and-strings score, narrator forward, score at ambient level"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the slideshow with the mixed audio + burn English subtitles into final mp4"}
+    ]
+  },
+  {
+    "goal": "把《睡美人》童话做成有声绘本视频，配竖琴音乐做 BGM —— 梦幻粉色水彩插画风",
+    "rationale": "用户给了睡美人完整童话，明确要求竖琴 BGM + 梦幻粉色水彩插图。chain (c) + Music：NarrationAgent 写童话中文旁白 + 每段梦幻水彩画面 prompt；Illustration 锚定粉色水彩；MusicAgent 作一段竖琴背景；NarratorAgent 中文温柔女声 TTS + 中文 SRT + 段时长；AudioMix 把旁白铺在竖琴之上；Compositor 合成。",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "将睡美人改为中文梦幻童话旁白脚本，按『诅咒 / 百年 / 王子 / 唤醒』切段，粉色水彩风格"},
+      {"agent_id": "IllustrationAgent", "intent": "生成梦幻粉色水彩插图，第一张定调后其余并行锚定"},
+      {"agent_id": "MusicAgent", "intent": "作一段悠扬的竖琴背景乐，持续全片长度"},
+      {"agent_id": "NarratorAgent", "intent": "中文温柔女声 TTS 每句旁白 + 中文 SRT + 每段时长"},
+      {"agent_id": "AudioMixAgent", "intent": "混音：中文旁白为主体，竖琴 BGM 作为柔和底"},
+      {"agent_id": "CompositorAgent", "intent": "拼接粉色水彩幻灯片、mux 混音、烧中文字幕"}
+    ]
+  },
+  {
+    "goal": "Turn this cowboy campfire tale into an illustrated audiobook with a low acoustic-guitar BGM humming under the narrator — desert-warm ink illustration style",
+    "rationale": "User provides cowboy campfire tale + explicitly wants acoustic-guitar BGM + desert ink illustration. Storytelling + Music chain: NarrationAgent writes campfire storyteller narrator voice + desert ink segments; Illustration anchors on campfire scene; MusicAgent composes low acoustic-guitar underlay; Narrator warm male TTS; AudioMix narrator over guitar; Compositor.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite the cowboy campfire tale as a storyteller narrator script, desert-warm ink illustration style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate desert-warm ink illustrations per segment, anchored on campfire opening"},
+      {"agent_id": "MusicAgent", "intent": "Compose low slow acoustic-guitar BGM for full narration"},
+      {"agent_id": "NarratorAgent", "intent": "Warm male storyteller TTS, English SRT, segment timing"},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narrator prominently over low-level guitar hum"},
+      {"agent_id": "CompositorAgent", "intent": "Composite illustrated slideshow + mixed audio + English subtitles"}
+    ]
+  },
+  {
+    "goal": "Make an illustrated audiobook of the 'Little Mermaid' fairytale with ethereal piano-and-choir score beneath the narrator — dreamy sea-glass painting style",
+    "rationale": "User supplies Little Mermaid fairytale + explicit ethereal piano-and-choir score + dreamy sea-glass painting style. Chain (c) + Music: NarrationAgent writes ethereal narrator script + sea-glass segments; Illustration anchors; MusicAgent composes piano-choir underlay; Narrator ethereal voice; AudioMix; Compositor.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite Little Mermaid as an ethereal narrator script, dreamy sea-glass painting style, segmented by fairytale beats"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate sea-glass dreamy illustrations per segment, anchored on opening underwater scene"},
+      {"agent_id": "MusicAgent", "intent": "Compose an ethereal piano-and-choir score for the full narration length"},
+      {"agent_id": "NarratorAgent", "intent": "Ethereal TTS + English SRT + segment timing"},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narrator over soft piano-choir underlay"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + mixed audio + subtitles composite"}
+    ]
+  },
+  {
+    "goal": "把《梁山伯与祝英台》古典爱情故事做成中文有声绘本，配古筝作为背景音乐 —— 工笔古风水墨风",
+    "rationale": "用户给了梁祝故事，要求古筝背景 + 工笔古风水墨。chain (c) + Music：NarrationAgent 写中文古典旁白 + 工笔水墨段；Illustration 锚古风画面；MusicAgent 作古筝段；Narrator 中文女声 TTS；AudioMix；Compositor。",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "将梁祝故事改为中文古典旁白脚本，按『读书同窗 / 长亭送别 / 知婚定 / 殉情化蝶』切段，工笔古风水墨"},
+      {"agent_id": "IllustrationAgent", "intent": "生成工笔古风水墨插图，第一张定调"},
+      {"agent_id": "MusicAgent", "intent": "作一段古筝背景乐，悠扬伤感，覆盖全片"},
+      {"agent_id": "NarratorAgent", "intent": "中文女声 TTS + 中文 SRT + 段时长"},
+      {"agent_id": "AudioMixAgent", "intent": "旁白为主古筝为底混音"},
+      {"agent_id": "CompositorAgent", "intent": "拼接古风水墨 + 混音 + 中文字幕"}
+    ]
+  },
+  {
+    "goal": "Create an illustrated audiobook of this Japanese ghost story 'Yuki-Onna' (the snow woman) with a haunting shamisen score under the narration — traditional Japanese winter woodblock style",
+    "rationale": "User gave Yuki-Onna ghost story + haunting shamisen score + Japanese winter woodblock. Chain (c) + Music: Narrator script in measured ghost-story tone, woodblock segments; Illustration anchors on snowy forest; MusicAgent shamisen; Narrator quiet voice; AudioMix; Compositor.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite Yuki-Onna ghost story as a measured ghost-tale narrator script, Japanese winter woodblock style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate winter-woodblock illustrations per segment, anchored on snowy forest opening"},
+      {"agent_id": "MusicAgent", "intent": "Compose a haunting shamisen background score for the full narration"},
+      {"agent_id": "NarratorAgent", "intent": "Quiet storyteller TTS + English SRT + timing"},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narrator over low haunting shamisen"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + mixed audio + subtitles"}
+    ]
+  },
+  {
+    "goal": "Make a narrated picture-book video of this bedtime story about a dragon who can't breathe fire — with a cozy lullaby-piano score under the narration, bright crayon illustration style",
+    "rationale": "User supplies dragon bedtime story + cozy lullaby-piano score + bright crayon illustration. Storytelling + Music: NarrationAgent writes gentle bedtime narrator + crayon segments; Illustration anchors on friendly dragon; MusicAgent lullaby piano; Narrator soft voice; AudioMix; Compositor.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite the little-dragon bedtime tale as a gentle-narrator script, bright-crayon illustration style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate bright-crayon dragon illustrations per segment, anchored on friendly-dragon opening"},
+      {"agent_id": "MusicAgent", "intent": "Compose a cozy lullaby-piano score for the full narration duration"},
+      {"agent_id": "NarratorAgent", "intent": "Gentle bedtime TTS + English SRT + segment timing"},
+      {"agent_id": "AudioMixAgent", "intent": "Soft mix: narrator forward, lullaby piano underlay"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + mixed audio + subtitles mp4"}
+    ]
+  },
+  {
+    "goal": "Produce a narrated illustrated video of this Greek tragedy summary of Oedipus Rex with a dramatic string-quartet underlay — classical-painting oil illustration style",
+    "rationale": "User gave Oedipus summary + dramatic string-quartet + classical oil painting. Storytelling + Music: Narrator dramatic script segmented by tragedy arc, classical oil style; Illustration anchors; MusicAgent string quartet; Narrator deep dramatic TTS; AudioMix; Compositor.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite Oedipus Rex summary as a dramatic narrator script, classical-oil painting illustration style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate classical-oil illustrations per tragedy beat, anchored on Thebes opening"},
+      {"agent_id": "MusicAgent", "intent": "Compose a dramatic string-quartet score for the full narration"},
+      {"agent_id": "NarratorAgent", "intent": "Deep-dramatic TTS + English SRT + timing"},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narrator over dramatic string-quartet underlay"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + mixed audio + subtitles composite"}
+    ]
+  },
+  {
+    "goal": "Make an illustrated audiobook of this Harlem-Renaissance-era fable about a jazz musician finding their voice — with a mellow saxophone BGM and art-deco illustration style",
+    "rationale": "User supplies jazz-musician fable + mellow saxophone BGM + art-deco illustration. Storytelling + Music: Narrator storyteller segments, art-deco style; Illustration anchors on smoky stage; MusicAgent mellow saxophone; Narrator warm voice; AudioMix; Compositor.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite the jazz-musician Harlem Renaissance fable as an illustrated-audiobook narrator script, art-deco illustration style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate art-deco smoky-stage illustrations per segment, anchored on opening club scene"},
+      {"agent_id": "MusicAgent", "intent": "Compose a mellow saxophone BGM for the full narration"},
+      {"agent_id": "NarratorAgent", "intent": "Warm storyteller TTS + English SRT + segment timing"},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narrator over mellow saxophone underlay"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + mixed audio + subtitles"}
+    ]
+  },
+  {
+    "goal": "把《孔乙己》现代文学短篇做成中文有声绘本短片，配二胡悠扬作为 BGM —— 近代中国风铅笔素描插画",
+    "rationale": "用户要求《孔乙己》做成中文有声绘本 + 二胡 BGM + 近代中国铅笔素描插画。chain (c) + Music：NarrationAgent 中文近代文学旁白；Illustration 铅笔素描锚酒店；MusicAgent 二胡；Narrator 中文 TTS；AudioMix；Compositor。",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "将《孔乙己》改为中文旁白脚本，按小说段落切，铅笔素描近代风"},
+      {"agent_id": "IllustrationAgent", "intent": "生成铅笔素描插图，第一张酒店场景定调"},
+      {"agent_id": "MusicAgent", "intent": "作一段悠扬二胡 BGM，全片长度"},
+      {"agent_id": "NarratorAgent", "intent": "中文男声 TTS + 中文 SRT + 段时长"},
+      {"agent_id": "AudioMixAgent", "intent": "旁白为主、二胡为底混音"},
+      {"agent_id": "CompositorAgent", "intent": "拼接铅笔素描 + 混音 + 中文字幕"}
+    ]
+  },
+  {
+    "goal": "Turn this medieval Arthurian legend about the Sword in the Stone into a narrated illustrated video with epic orchestral brass score — illuminated-manuscript illustration style",
+    "rationale": "User gave Sword in the Stone + epic orchestral brass + illuminated-manuscript style. Storytelling + Music: Narrator heraldic cadence, illuminated manuscript segments; Illustration anchors; MusicAgent orchestral brass; Narrator noble voice; AudioMix; Compositor.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite Sword in the Stone Arthurian legend as a heraldic narrator script, illuminated-manuscript style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate illuminated-manuscript illustrations per legend beat, anchored on tournament opening"},
+      {"agent_id": "MusicAgent", "intent": "Compose an epic orchestral brass score for the full narration"},
+      {"agent_id": "NarratorAgent", "intent": "Noble-narrator TTS + English SRT + timing"},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narrator over orchestral brass"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + mixed audio + subtitles mp4"}
+    ]
+  },
+  {
+    "goal": "Make a narrated illustrated video of this Inuit legend about Sedna, the sea goddess, with a haunting throat-singing and drum score — Arctic night art with aurora colors",
+    "rationale": "User gave Sedna Inuit legend + haunting throat-singing/drum score + Arctic aurora art. Chain (c) + Music: Narrator reverent script, Arctic aurora segments; Illustration anchors on ice-and-sea; MusicAgent throat-singing + drum; Narrator reverent voice; AudioMix; Compositor.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite the Sedna Inuit legend as a reverent narrator script, Arctic-aurora illustration style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Arctic-aurora illustrations per legend beat, anchored on ice-and-sea opening"},
+      {"agent_id": "MusicAgent", "intent": "Compose a haunting throat-singing and drum score for the full narration"},
+      {"agent_id": "NarratorAgent", "intent": "Reverent storyteller TTS + English SRT + segment timing"},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narrator over throat-singing/drum underlay"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + mixed audio + subtitles composite"}
+    ]
+  },
+  {
+    "goal": "Create a narrated picture-book video of this modern anti-bullying children's story with a soft ukulele melody under the narrator — bright flat-vector illustration style",
+    "rationale": "User gave anti-bullying children's story + soft ukulele + flat-vector illustration. Chain (c) + Music: Narrator child-friendly script, flat-vector segments; Illustration anchors; MusicAgent soft ukulele; Narrator warm voice; AudioMix; Compositor.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite the anti-bullying kids' story as a gentle narrator script, bright flat-vector illustration style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate bright flat-vector illustrations per segment, anchored on school-yard opening"},
+      {"agent_id": "MusicAgent", "intent": "Compose a soft ukulele melody score for the full narration"},
+      {"agent_id": "NarratorAgent", "intent": "Warm kid-story TTS + English SRT + segment timing"},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narrator over soft ukulele"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + mixed audio + subtitles mp4"}
+    ]
+  },
+  {
+    "goal": "把《罗生门》芥川龙之介短篇改编做成日文有声绘本，配阴郁的能乐笛笙作 BGM —— 浓墨阴影日式插画",
+    "rationale": "用户给了《罗生门》短篇 + 能乐笛笙阴郁 BGM + 浓墨阴影日式插画。chain (c) + Music：NarrationAgent 日文阴郁旁白；Illustration 阴影浓墨锚罗生门楼阁；MusicAgent 能乐笛笙；Narrator 日文男声；AudioMix；Compositor。",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "将罗生门改为日文阴郁旁白脚本，浓墨阴影日式插画风，按小说段落切"},
+      {"agent_id": "IllustrationAgent", "intent": "生成浓墨阴影日式插画，第一张罗生门楼阁定调"},
+      {"agent_id": "MusicAgent", "intent": "作一段阴郁能乐笛笙 BGM 覆盖全片"},
+      {"agent_id": "NarratorAgent", "intent": "日文男声 TTS + 日文 SRT + 段时长"},
+      {"agent_id": "AudioMixAgent", "intent": "旁白为主、笛笙为底"},
+      {"agent_id": "CompositorAgent", "intent": "拼接日式插画 + 混音 + 日文字幕"}
+    ]
+  },
+  {
+    "goal": "Make an illustrated audiobook of this Brothers Grimm tale 'The Fisherman and His Wife' with escalating orchestral tension under the narrator — storm-progression watercolor style",
+    "rationale": "User supplies Grimm's Fisherman-and-Wife with escalating orchestral tension + storm-progression watercolor. Chain (c) + Music: Narrator dramatic rising-greed script, storm watercolor segments; Illustration anchors on calm sea; MusicAgent escalating orchestral; Narrator dramatic voice; AudioMix; Compositor.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite Grimm's Fisherman-and-Wife tale as a rising-greed narrator script, storm-progression watercolor style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate watercolor illustrations with escalating storm intensity per segment, anchored on calm-sea opening"},
+      {"agent_id": "MusicAgent", "intent": "Compose an escalating orchestral score matching the narrative tension"},
+      {"agent_id": "NarratorAgent", "intent": "Dramatic narrator TTS + English SRT + segment timing"},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narrator over escalating orchestral underlay"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + mixed audio + subtitles mp4"}
+    ]
+  }
+]

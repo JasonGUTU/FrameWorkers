@@ -1,0 +1,202 @@
+[
+  {
+    "goal": "Make a narrated picture-book video of this Norse myth about Thor losing his hammer Mjölnir — one dramatic stormy-palette illustration per scene",
+    "rationale": "User supplied a Norse myth prose and asks for a narrated picture-book with dramatic illustrations. Chain (c) pure storytelling: NarrationAgent rewrites Thor's hammer quest in a bardic narrator voice, segments by story beats (theft / disguise / wedding feast / retrieval / thunder), picks a stormy-palette overall_style; IllustrationAgent anchors on scene 1 then edits rest in parallel; NarratorAgent does deep-voiced TTS + SRT + timing; Compositor slideshow + audio + subtitles. No Music / Ambience / Translation — user asked narrator + pictures only.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite Thor's stolen-hammer Norse myth as a bardic narrator script, segmented by story beat with stormy dramatic palette style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate one dramatic illustration per story beat, anchored to scene 1 for consistent stormy Viking aesthetic"},
+      {"agent_id": "NarratorAgent", "intent": "TTS each narrator line with a low resonant voice, concatenate with dramatic pauses, emit English SRT + segment timing"},
+      {"agent_id": "CompositorAgent", "intent": "Composite illustrations with narrator audio and burn English subtitles, export mp4"}
+    ]
+  },
+  {
+    "goal": "把安徒生的《丑小鸭》做成中文有声绘本视频 — 柔和水彩插画风格，每个情节变化一张图",
+    "rationale": "用户给了安徒生《丑小鸭》的完整童话，要求做成中文有声绘本视频 + 柔和水彩风 + 每情节一图。chain (c) 插图叙事纯链：NarrationAgent 用温柔童话旁白语气改写，按『孵化 / 被排斥 / 流浪 / 发现真我』四五段切分，风格锚『柔和水彩，淡雅冷暖色调』；IllustrationAgent 第一张 t2i 定调，其余 edit_image 并行保持水彩一致；NarratorAgent 中文温柔女声 TTS + 中文 SRT；Compositor 拼幻灯片 + 叠中文字幕。不加 Music/Ambience（用户只说旁白）。",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "将《丑小鸭》改写为温柔童话中文旁白，按情节转折切段，每段配柔和水彩画面描述"},
+      {"agent_id": "IllustrationAgent", "intent": "生成每段柔和水彩插图，第一张定调后其余并行锚定"},
+      {"agent_id": "NarratorAgent", "intent": "温柔中文女声 TTS 每句旁白，拼接 + 中文 SRT + 段落时长"},
+      {"agent_id": "CompositorAgent", "intent": "拼接水彩插图序列、mux 旁白、烧中文字幕"}
+    ]
+  },
+  {
+    "goal": "Turn this West African Anansi the Spider folktale into a narrated kids video — tribal pattern illustrations, one per trick",
+    "rationale": "User gave a West African Anansi spider trickster tale, asks for narrated kids video with tribal-pattern illustrations. Pure storytelling chain (c): NarrationAgent adapts the folktale to kid-friendly English narrator voice, segments by Anansi's tricks, style 'West African tribal pattern picture-book, warm earth tones'; Illustration anchors then parallelizes; Narrator friendly TTS; Compositor slideshow. No Music (user didn't say 'with drums' or 'with a score').",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite Anansi folktale as a kid-friendly narrator script with warm tribal-pattern picture-book style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate tribal-pattern illustrations per story beat with warm earth-tone consistency"},
+      {"agent_id": "NarratorAgent", "intent": "Friendly-voice TTS per line + SRT + segment timing"},
+      {"agent_id": "CompositorAgent", "intent": "Composite slideshow with narrator audio and English subtitles"}
+    ]
+  },
+  {
+    "goal": "Make an illustrated audiobook of the Hawaiian legend of Maui lassoing the sun — golden-hour island-sunset art style",
+    "rationale": "User supplies the Maui legend and asks for illustrated audiobook with golden-hour island-sunset art. Pure storytelling: NarrationAgent writes a Hawaiian storyteller narrator voice, segments (slow sun / Maui's plan / rope the sun / bargain / world with longer days), overall_style 'island sunset, golden amber palette'; Illustration anchor on dawn scene; Narrator warm TTS; Compositor mp4. No additional audio overlay requested.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite Maui's sun-lassoing Hawaiian legend as an illustrated-audiobook script with golden-hour island-sunset style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate golden-hour sunset illustrations per segment, anchored to dawn scene for palette consistency"},
+      {"agent_id": "NarratorAgent", "intent": "TTS with a warm storyteller voice + English SRT + per-segment timing"},
+      {"agent_id": "CompositorAgent", "intent": "Composite the slideshow, mux narrator audio, burn English subtitles"}
+    ]
+  },
+  {
+    "goal": "把《桃太郎》日本民间传说做成有声插画视频，日本传统浮世绘木版画风",
+    "rationale": "用户要求日本民间故事《桃太郎》做成有声插画视频，指定浮世绘木版画风。chain (c)：NarrationAgent 写日式旁白（桃中诞生 / 成长 / 征鬼岛 / 凯旋），风格锚『日本江户浮世绘木版画』；IllustrationAgent 锚一张木版风定调，后续保持版画质感；NarratorAgent 日文/中文 TTS（LLM 根据 brief 自己判断语言）+ SRT + 段时长；Compositor 幻灯片 + 字幕。不加 BGM。",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "将桃太郎改写为分段旁白脚本，五段左右，画面风格锚『日式浮世绘木版画』"},
+      {"agent_id": "IllustrationAgent", "intent": "生成每段浮世绘木版风插图，第一张定调后并行锚定"},
+      {"agent_id": "NarratorAgent", "intent": "TTS 每句旁白并拼接，输出 SRT + 每段时长"},
+      {"agent_id": "CompositorAgent", "intent": "拼接浮世绘图序列，mux 旁白音，烧字幕"}
+    ]
+  },
+  {
+    "goal": "Create an illustrated audiobook of this Russian fairytale about Baba Yaga's chicken-legged hut — dark romantic fantasy illustration",
+    "rationale": "User gave a Baba Yaga Russian fairytale and asks for dark romantic fantasy illustration style. Pure storytelling chain: NarrationAgent writes creepy-fairytale narrator voice, segments (lost child in forest / finds hut / meets Baba Yaga / impossible task / escape), overall_style 'dark romantic fantasy illustration, deep forest greens and candlelit amber'; Illustration anchor on forest; Narrator slightly ominous female voice; Compositor mp4. No Music — user didn't ask.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite Baba Yaga Russian fairytale as a creepy-fairytale narrator script with dark romantic fantasy style and candlelit palette"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate dark-romantic illustrations per segment, anchored to the haunted-forest opening"},
+      {"agent_id": "NarratorAgent", "intent": "TTS with a slightly ominous storyteller voice, English SRT, segment timing"},
+      {"agent_id": "CompositorAgent", "intent": "Composite slideshow + narrator audio + English subtitles"}
+    ]
+  },
+  {
+    "goal": "把《西游记》孙悟空拜师学艺这段儿童改写版做成有声绘本：孙悟空寻访菩提老祖到学艺成功。中式卡通插画风",
+    "rationale": "用户给了《西游记》学艺片段的儿童改写版，要求中式卡通插画风有声绘本。chain (c) 纯叙事：NarrationAgent 写少年友好旁白，按『离家 / 寻访 / 拜师 / 学艺 / 出山』切段，风格『中式可爱卡通，亮色国漫』；Illustration 锚猴王出山场景；NarratorAgent 中文少儿声 TTS + 中文 SRT；Compositor 合成。不加 BGM。",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "将孙悟空学艺片段改写为适合小孩的旁白脚本，按学艺阶段切段，中式亮色卡通风"},
+      {"agent_id": "IllustrationAgent", "intent": "生成每段中式卡通猴王插图，第一张定调后并行锚定"},
+      {"agent_id": "NarratorAgent", "intent": "中文少儿友好旁白 TTS，输出中文 SRT + 段时长"},
+      {"agent_id": "CompositorAgent", "intent": "拼接卡通插图序列、mux 旁白音、烧中文字幕"}
+    ]
+  },
+  {
+    "goal": "Make a storytime illustrated video of this Native American Coyote legend about how he stole fire for the people — desert sunset warm-palette art",
+    "rationale": "User supplies the Coyote-steals-fire legend and specifies desert sunset warm palette. Pure storytelling: NarrationAgent rewrites in Native-American oral-tradition cadence, segments by theft beats, overall_style 'desert sunset warm palette, mesa silhouettes'; Illustration anchor on mesa; Narrator evocative voice; Compositor. No additional audio.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite Coyote-steals-fire Native legend in oral-tradition narrator cadence, desert sunset palette style, segmented by theft beats"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate warm-palette mesa-silhouette illustrations anchored on the opening scene"},
+      {"agent_id": "NarratorAgent", "intent": "Evocative storyteller TTS, English SRT, segment timing"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + narrator audio + subtitles mp4"}
+    ]
+  },
+  {
+    "goal": "Turn this Egyptian myth about Isis resurrecting Osiris into an illustrated audiobook — hieroglyph-inspired flat illustration style",
+    "rationale": "User gave Isis-Osiris myth and asks for hieroglyph-inspired flat illustration. Pure storytelling (c): NarrationAgent writes solemn mythic narrator voice, segments by Osiris's death / search / assembly / resurrection / Horus's birth, overall_style 'ancient Egyptian hieroglyph-inspired flat illustration, lapis-blue and gold'; Illustration anchor on Nile scene; Narrator solemn female voice; Compositor mp4.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite Isis-and-Osiris myth as a solemn mythic narrator script, hieroglyph-inspired flat style, lapis + gold palette"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate hieroglyph-flat illustrations per segment, anchored to the Nile scene"},
+      {"agent_id": "NarratorAgent", "intent": "Solemn narrator TTS, English SRT + segment timing"},
+      {"agent_id": "CompositorAgent", "intent": "Composite illustrated slideshow + narrator audio + subtitles"}
+    ]
+  },
+  {
+    "goal": "Create a narrated illustrated video of this Persian fairytale about the magic flying carpet of Prince Husain — intricate Persian miniature painting style",
+    "rationale": "User provides Persian flying-carpet fairytale + asks for Persian miniature painting style. Pure storytelling: NarrationAgent writes classical fairytale narrator voice, segments by journey / bargain / carpet / reveal, overall_style 'intricate Persian miniature painting, jewel-toned'; Illustration anchor; Narrator warm voice; Compositor.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite Prince Husain's flying-carpet Persian fairytale as a classical narrator script, Persian miniature style, jewel-tone palette"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Persian miniature illustrations per segment, anchored on the opening scene"},
+      {"agent_id": "NarratorAgent", "intent": "Warm storyteller TTS + English SRT + segment timing"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + narrator audio + subtitles composite"}
+    ]
+  },
+  {
+    "goal": "Make a narrated picture-book video of this Irish legend about Finn MacCool and the Giant's Causeway — Celtic knotwork illustration style",
+    "rationale": "User gave Finn MacCool & Giant's Causeway Irish legend, specifies Celtic knotwork illustration. Pure storytelling: Narrator-voice script segmented by legendary beats; overall_style 'Celtic knotwork, green-and-gold illuminated manuscript'; Illustration anchor on the Causeway; Narrator Irish-cadence voice; Compositor.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite Finn MacCool Irish legend as a narrator script with Celtic knotwork style, illuminated-manuscript palette"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Celtic knotwork illustrations per legendary beat, anchored on the Giant's Causeway opening"},
+      {"agent_id": "NarratorAgent", "intent": "Irish-cadence narrator TTS, English SRT, segment timing"},
+      {"agent_id": "CompositorAgent", "intent": "Composite slideshow + narrator audio + burn English subtitles"}
+    ]
+  },
+  {
+    "goal": "Turn Mother Goose nursery rhymes into a narrated children's illustrated video — vintage 19th-century nursery-book illustration style",
+    "rationale": "User provides classic Mother Goose nursery rhymes and asks for vintage nursery-book illustration. Pure storytelling: Narrator gently reads rhymes, one per segment (e.g. Little Miss Muffet / Hickory Dickory Dock / Humpty Dumpty / Jack and Jill), overall_style 'vintage 19th-century nursery-book illustration, cream paper, muted watercolor'; Illustration anchor; Narrator warm child-friendly voice; Compositor.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Segment Mother Goose rhymes, one per segment, narrator-voice script in vintage 19th-century nursery-book style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate a vintage nursery-book illustration per rhyme, anchored to the first rhyme's art style"},
+      {"agent_id": "NarratorAgent", "intent": "Warm kid-story TTS per rhyme, English SRT, timing"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + narrator audio + subtitles mp4"}
+    ]
+  },
+  {
+    "goal": "Make a narrated illustrated video of this Korean folktale about the Dog and the Sun/Moon — Korean papercut illustration style",
+    "rationale": "User gave Korean dog-and-sun/moon folktale + Korean papercut illustration. Pure storytelling: Narrator script segmented by tiger chase / rope from heavens / ascension / becoming sun and moon / why dogs now chase sun+moon; overall_style 'Korean traditional papercut illustration, bright primary colors'; Illustration anchor; Narrator; Compositor.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite Korean dog-and-sun/moon folktale as a narrator script with Korean papercut illustration style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Korean papercut illustrations per segment, anchored on opening scene"},
+      {"agent_id": "NarratorAgent", "intent": "Warm narrator TTS + English SRT + segment timing"},
+      {"agent_id": "CompositorAgent", "intent": "Composite slideshow + narrator audio + subtitles"}
+    ]
+  },
+  {
+    "goal": "把《嫦娥奔月》神话做成中文有声绘本视频 — 中国水墨画风格，金色月光主调",
+    "rationale": "用户给了嫦娥奔月完整神话，要求中国水墨画风 + 金色月光主调。纯叙事 (c) 链：NarrationAgent 中文神话旁白改写，按『后羿射日 / 得不死药 / 嫦娥偷食 / 奔月 / 玉兔为伴』切段，风格『中国水墨 + 金色月光』；Illustration 锚月光场景；Narrator 中文 TTS；Compositor。不加 BGM。",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "将嫦娥奔月神话改写为中文旁白脚本，按神话五段切分，水墨 + 金色月光风格"},
+      {"agent_id": "IllustrationAgent", "intent": "生成中国水墨金色月光插图，第一张定调后并行锚定"},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白 TTS，输出中文 SRT + 每段时长"},
+      {"agent_id": "CompositorAgent", "intent": "拼接水墨插图、mux 旁白、烧中文字幕"}
+    ]
+  },
+  {
+    "goal": "Make a Dr. Seuss-style narrated picture-book video from this original silly rhyme about a bookworm named Wobblepip who eats too many words — zany squiggly illustration",
+    "rationale": "User provides an original Seussian silly rhyme prose + asks for zany squiggly Seuss-style illustration. Pure storytelling: Narrator script preserves rhyme meter, segments by silly beat (finding books / eating words / getting sick / spitting words back / lesson), overall_style 'Dr Seuss zany squiggly illustration, saturated silly palette'; Illustration anchor; Narrator bouncy voice; Compositor.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Preserve the silly-rhyme meter in narrator script, segment by silly beat, Seuss-zany illustration style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate zany squiggly illustrations per beat, anchored on opening"},
+      {"agent_id": "NarratorAgent", "intent": "Bouncy read-aloud TTS + English SRT + timing"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + narrator audio + subtitles"}
+    ]
+  },
+  {
+    "goal": "Turn this Vietnamese folktale about the origin of the betel nut (tale of three siblings) into an illustrated audiobook — tropical watercolor style",
+    "rationale": "User provides Vietnamese betel-nut-origin folktale + tropical watercolor style. Pure storytelling: Narrator segments by brother's quest / sister's search / transformation into tree-and-vine; overall_style 'tropical watercolor, lush green palette'; Illustration anchor; Narrator; Compositor.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite Vietnamese betel-nut-origin folktale as narrator script, tropical watercolor style, lush green palette"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate tropical watercolor illustrations per segment, anchored on jungle opening"},
+      {"agent_id": "NarratorAgent", "intent": "Warm narrator TTS + English SRT + segment timing"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow composite + narrator audio + subtitles"}
+    ]
+  },
+  {
+    "goal": "做一个《女娲补天》中文神话有声绘本 — 浓墨重彩神话插画风，突出五彩石与补天大场景",
+    "rationale": "用户指定女娲补天神话 + 浓墨重彩风格，强调五彩石与补天场景。纯叙事：NarrationAgent 中文神话旁白，分段『天崩 / 寻石 / 炼石 / 补天 / 世界重立』，风格『浓墨重彩神话插画，金红青橙』；Illustration 锚补天大场景；Narrator 中文 TTS；Compositor。",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "将女娲补天神话改写为中文旁白五段，浓墨重彩神话插画风"},
+      {"agent_id": "IllustrationAgent", "intent": "生成浓墨重彩插图序列，第一张补天大场景定调"},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白 TTS + 中文 SRT + 每段时长"},
+      {"agent_id": "CompositorAgent", "intent": "拼接神话插图 + 旁白 + 中文字幕"}
+    ]
+  },
+  {
+    "goal": "Make a narrated illustrated video of this Scottish fairytale about the selkies of the North Sea — misty sea-blue watercolor style",
+    "rationale": "User gave a selkie Scottish fairytale + misty sea-blue watercolor. Pure storytelling: Narrator script segmented by fisherman's find / stolen sealskin / marriage / children / return to sea; overall_style 'misty sea-blue watercolor, moody coastal palette'; Illustration anchor on rocky shore; Narrator Scottish cadence; Compositor.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite Scottish selkie fairytale as narrator script, misty sea-blue watercolor style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate misty watercolor coastal illustrations, anchored on rocky-shore opening"},
+      {"agent_id": "NarratorAgent", "intent": "Scottish-cadence narrator TTS + English SRT + timing"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + narrator audio + subtitles composite"}
+    ]
+  },
+  {
+    "goal": "Create an illustrated audiobook of the Brothers Grimm tale 'Sweet Porridge' — cozy cottage-kitchen watercolor style for small kids",
+    "rationale": "User provides Grimm's Sweet Porridge tale + cozy cottage-kitchen watercolor for small kids. Pure storytelling: Narrator child-friendly voice, segments by poor girl meets old woman / magic pot / porridge floods village / spell to stop; overall_style 'cozy cottage-kitchen watercolor, warm buttery palette'; Illustration anchor; Narrator; Compositor.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite Grimm's Sweet Porridge as a kid-friendly narrator script, cozy cottage-kitchen watercolor style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate cozy watercolor illustrations per segment, anchored on cottage-kitchen opening"},
+      {"agent_id": "NarratorAgent", "intent": "Warm kid-story narrator TTS + English SRT + segment timing"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + narrator audio + subtitles mp4"}
+    ]
+  },
+  {
+    "goal": "把《山海经》中的异兽『九尾狐』和『穷奇』两个短故事合成一个中文有声绘本 — 中国古典工笔彩绘风",
+    "rationale": "用户指定《山海经》两个异兽短篇合一做成中文工笔彩绘有声绘本。纯叙事：NarrationAgent 中文旁白，两个异兽各切 2-3 段（外形 / 神话 / 传说寓意），风格『中国古典工笔彩绘，矿物颜料浓郁』；Illustration 锚九尾狐场景；Narrator 中文 TTS；Compositor。",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "将九尾狐与穷奇两个异兽故事合为中文旁白脚本，分段外形神话寓意三大段 × 2，工笔彩绘风"},
+      {"agent_id": "IllustrationAgent", "intent": "生成古典工笔彩绘异兽插图，第一张九尾狐定调风格"},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白 TTS 每句、输出中文 SRT + 每段时长"},
+      {"agent_id": "CompositorAgent", "intent": "拼接工笔彩绘图 + 旁白 + 中文字幕"}
+    ]
+  }
+]
