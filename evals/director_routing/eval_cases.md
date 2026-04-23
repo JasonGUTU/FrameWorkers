@@ -1,6 +1,6 @@
 # director_agent 路由评测用例
 
-> Source: `evals/director_routing/eval_cases.json` · **110** cases / **9** categories  
+> Source: `evals/director_routing/eval_cases.json` · **115** cases / **9** categories  
 > Chain 记法: `→` 分步；`{A\|B\|C}` = 这一步任一命中即可；`×N` = 连续 N 步同一组；末尾 `Agent` 后缀省略（`Story` = `StoryAgent`）。
 
 ## 目录
@@ -9,7 +9,7 @@
 - [输入类 (intake — 图片参考素材)](#intake) · 5
 - [字幕类 (subtitles — 单语字幕)](#sub) · 9
 - [双语字幕 (bilingual subtitles)](#bilingual) · 5
-- [讲故事类 (illustrated storytelling — slideshow + narrator)](#storytelling) · 10
+- [讲故事类 (illustrated storytelling — slideshow + narrator)](#storytelling) · 15
 - [风格迁移 (style transfer)](#style) · 5
 - [视频续写 (video extend)](#extend) · 5
 - [精彩片段 (highlight)](#highlight) · 4
@@ -84,6 +84,11 @@
 | 108 | `storytelling_bilingual_01` | Make an English-Chinese bilingual illustrated audiobook of this short fairytale — narrate in English, burn both English and Chinese subtitles on the slideshow | IntakeText → Narration → {Illustration\|Narrator} → {Narrator\|Illustration} → Translation → Compositor → done |
 | 109 | `storytelling_imgref_01` | Using the uploaded character portrait as the heroine, turn this short folktale into an illustrated audiobook where every picture keeps her appearance consistent with the reference | IntakeText → IntakeImage → BriefEnricher → Narration → {Illustration\|Narrator} → {Narrator\|Illustration} → Compositor → done |
 | 110 | `storytelling_full_01` | Using the uploaded character portrait of the fox protagonist, produce an English-Chinese bilingual illustrated audiobook of this folk tale, narrated in English with a gentle koto-and-flute background score | IntakeText → IntakeImage → BriefEnricher → Narration → {Illustration\|Narrator\|Music} → {Narrator\|Illustration\|Music} → {Music\|Narrator\|Illustration} → AudioMix → Translation → Compositor → done |
+| 111 | `storytelling_music_ambience_01` | Make an illustrated audiobook of this ocean-themed children's story with a gentle piano lullaby playing under the narrator AND ambient wave sounds in the background | IntakeText → Narration → {Illustration\|Narrator\|Music\|Ambience} → {Narrator\|Illustration\|Music\|Ambience} → {Music\|Ambience\|Illustration\|Narrator} → {Ambience\|Music} → AudioMix → Compositor → done |
+| 112 | `storytelling_music_bilingual_01` | Create an English-Chinese bilingual illustrated audiobook of this Hans Christian Andersen fairytale with a gentle harp-and-celesta BGM | IntakeText → Narration → {Illustration\|Narrator\|Music} → {Narrator\|Illustration\|Music} → {Music\|Narrator\|Illustration} → AudioMix → Translation → Compositor → done |
+| 113 | `storytelling_imgref_music_01` | Using this uploaded portrait of the protagonist as the main character, turn this short myth into an illustrated audiobook with a soft guzheng score under the narration | IntakeText → IntakeImage → BriefEnricher → Narration → {Illustration\|Narrator\|Music} → {Narrator\|Illustration\|Music} → {Music\|Narrator\|Illustration} → AudioMix → Compositor → done |
+| 114 | `storytelling_imgref_bilingual_01` | Using this uploaded character portrait of the storyteller grandmother, produce an English-Spanish bilingual illustrated audiobook of this folk tale | IntakeText → IntakeImage → BriefEnricher → Narration → {Illustration\|Narrator} → {Narrator\|Illustration} → Translation → Compositor → done |
+| 115 | `storytelling_ultra_01` | Using this uploaded fox-protagonist portrait, make a bilingual English-Chinese illustrated audiobook of the fox-and-crow fable with both a gentle flute score AND forest-ambience sounds under the narrator | IntakeText → IntakeImage → BriefEnricher → Narration → {Illustration\|Narrator\|Music\|Ambience} → {Narrator\|Illustration\|Music\|Ambience} → {Music\|Ambience\|Illustration\|Narrator} → {Ambience\|Music} → AudioMix → Translation → Compositor → done |
 
 ## <a id="style"></a>风格迁移 (style transfer)
 

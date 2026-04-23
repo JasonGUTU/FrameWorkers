@@ -3699,5 +3699,216 @@
         "done"
       ]
     ]
+  },
+  {
+    "name": "storytelling_music_ambience_01",
+    "user_goal": "Make an illustrated audiobook of this ocean-themed children's story with a gentle piano lullaby playing under the narrator AND ambient wave sounds in the background",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_music_bilingual_01",
+    "user_goal": "Create an English-Chinese bilingual illustrated audiobook of this Hans Christian Andersen fairytale with a gentle harp-and-celesta BGM",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_imgref_music_01",
+    "user_goal": "Using this uploaded portrait of the protagonist as the main character, turn this short myth into an illustrated audiobook with a soft guzheng score under the narration",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_imgref_bilingual_01",
+    "user_goal": "Using this uploaded character portrait of the storyteller grandmother, produce an English-Spanish bilingual illustrated audiobook of this folk tale",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_ultra_01",
+    "user_goal": "Using this uploaded fox-protagonist portrait, make a bilingual English-Chinese illustrated audiobook of the fox-and-crow fable with both a gentle flute score AND forest-ambience sounds under the narrator",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
   }
 ]

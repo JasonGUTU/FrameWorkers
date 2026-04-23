@@ -111,25 +111,52 @@ VARIANTS_BUDGET = {
      "TranscriptionAgent", "CompositorAgent"): 30,
 
     # ── Illustrated storytelling (chain c) — newest deliverable class ─
-    # Pure storytelling — highest freq within this category
+    # Single-modifier variants + pair combos of the 4 modifier dims
+    # (Music / Ambience / Translation / IntakeImage+BriefEnricher) —
+    # 6 pair combos total, 5 added below plus the existing triple-
+    # modifier "full" variant. Pure + single-modifier dominate the
+    # budget because they are the most frequent request shape in the
+    # wild; the pair/triple variants seed cross-modifier routing.
+    #
+    # Pure
     ("IntakeTextAgent", "NarrationAgent", "IllustrationAgent", "NarratorAgent", "CompositorAgent"): 60,
-    # Storytelling + bilingual subtitle (Translation on narrator's SRT)
+    # + Translation (bilingual SRT)
     ("IntakeTextAgent", "NarrationAgent", "IllustrationAgent", "NarratorAgent",
      "TranslationAgent", "CompositorAgent"): 25,
-    # Storytelling + BGM (Music + AudioMix layered under narrator voice)
+    # + Music (BGM under narrator)
     ("IntakeTextAgent", "NarrationAgent", "IllustrationAgent", "NarratorAgent", "MusicAgent",
      "AudioMixAgent", "CompositorAgent"): 25,
-    # Storytelling + ambience bed
+    # + Ambience (ambient bed)
     ("IntakeTextAgent", "NarrationAgent", "IllustrationAgent", "NarratorAgent", "AmbienceAgent",
      "AudioMixAgent", "CompositorAgent"): 20,
-    # Storytelling + character reference (IntakeImage + BriefEnricher prepend)
+    # + IntakeImage + BriefEnricher (character / setting reference)
     ("IntakeTextAgent", "IntakeImageAgent", "BriefEnricherAgent", "NarrationAgent",
      "IllustrationAgent", "NarratorAgent", "CompositorAgent"): 20,
-    # Storytelling full-loaded (character ref + music + bilingual)
+    # + Music + Ambience (dual audio underlay)
+    ("IntakeTextAgent", "NarrationAgent", "IllustrationAgent", "NarratorAgent",
+     "MusicAgent", "AmbienceAgent", "AudioMixAgent", "CompositorAgent"): 20,
+    # + Music + Translation (BGM + bilingual — common international audiobook)
+    ("IntakeTextAgent", "NarrationAgent", "IllustrationAgent", "NarratorAgent",
+     "MusicAgent", "AudioMixAgent", "TranslationAgent", "CompositorAgent"): 15,
+    # + Ambience + Translation (ambient bed + bilingual)
+    ("IntakeTextAgent", "NarrationAgent", "IllustrationAgent", "NarratorAgent",
+     "AmbienceAgent", "AudioMixAgent", "TranslationAgent", "CompositorAgent"): 10,
+    # + imgref + Music (character ref + BGM, no bilingual)
+    ("IntakeTextAgent", "IntakeImageAgent", "BriefEnricherAgent", "NarrationAgent",
+     "IllustrationAgent", "NarratorAgent", "MusicAgent", "AudioMixAgent",
+     "CompositorAgent"): 15,
+    # + imgref + Translation (character ref + bilingual, no audio overlay)
+    ("IntakeTextAgent", "IntakeImageAgent", "BriefEnricherAgent", "NarrationAgent",
+     "IllustrationAgent", "NarratorAgent", "TranslationAgent", "CompositorAgent"): 15,
+    # + imgref + Music + Translation (triple-modifier; was original "full_01")
     ("IntakeTextAgent", "IntakeImageAgent", "BriefEnricherAgent", "NarrationAgent",
      "IllustrationAgent", "NarratorAgent", "MusicAgent", "AudioMixAgent",
      "TranslationAgent", "CompositorAgent"): 15,
-}  # Total: 1105
+    # + imgref + Music + Ambience + Translation (all 4 modifiers — truly full)
+    ("IntakeTextAgent", "IntakeImageAgent", "BriefEnricherAgent", "NarrationAgent",
+     "IllustrationAgent", "NarratorAgent", "MusicAgent", "AmbienceAgent",
+     "AudioMixAgent", "TranslationAgent", "CompositorAgent"): 10,
+}  # Total: 1280 — storytelling expanded 6→12 shapes / 165→250 samples
 
 
 # ---------------------------------------------------------------------------

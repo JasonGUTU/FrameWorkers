@@ -1076,7 +1076,7 @@
   },
   {
     "name": "sub_vid_01",
-    "category": "sub",
+    "category": "sub_vid",
     "decision": "keep",
     "original_user_goal": "Add English subtitles to this interview-style mini-drama",
     "original_expected_chain": [
@@ -1099,7 +1099,7 @@
   },
   {
     "name": "sub_vid_02",
-    "category": "sub",
+    "category": "sub_vid",
     "decision": "keep",
     "original_user_goal": "Add English subtitles to this speech mini-drama",
     "original_expected_chain": [
@@ -1122,7 +1122,7 @@
   },
   {
     "name": "sub_vid_03",
-    "category": "sub",
+    "category": "sub_vid",
     "decision": "keep",
     "original_user_goal": "Generate Chinese subtitles for this English mini-drama episode",
     "original_expected_chain": [
@@ -1148,7 +1148,7 @@
   },
   {
     "name": "sub_vid_05",
-    "category": "sub",
+    "category": "sub_vid",
     "decision": "keep",
     "original_user_goal": "Batch-generate English burned-in subtitles for this 30-episode cultivation-fantasy animated drama",
     "original_expected_chain": [
@@ -3905,6 +3905,227 @@
         "MusicAgent",
         "NarratorAgent",
         "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_music_ambience_01",
+    "category": "storytelling",
+    "decision": "pending",
+    "original_user_goal": "Make an illustrated audiobook of this ocean-themed children's story with a gentle piano lullaby playing under the narrator AND ambient wave sounds in the background",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_music_bilingual_01",
+    "category": "storytelling",
+    "decision": "pending",
+    "original_user_goal": "Create an English-Chinese bilingual illustrated audiobook of this Hans Christian Andersen fairytale with a gentle harp-and-celesta BGM",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_imgref_music_01",
+    "category": "storytelling",
+    "decision": "pending",
+    "original_user_goal": "Using this uploaded portrait of the protagonist as the main character, turn this short myth into an illustrated audiobook with a soft guzheng score under the narration",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_imgref_bilingual_01",
+    "category": "storytelling",
+    "decision": "pending",
+    "original_user_goal": "Using this uploaded character portrait of the storyteller grandmother, produce an English-Spanish bilingual illustrated audiobook of this folk tale",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_ultra_01",
+    "category": "storytelling",
+    "decision": "pending",
+    "original_user_goal": "Using this uploaded fox-protagonist portrait, make a bilingual English-Chinese illustrated audiobook of the fox-and-crow fable with both a gentle flute score AND forest-ambience sounds under the narrator",
+    "original_expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
       ],
       [
         "AudioMixAgent"
