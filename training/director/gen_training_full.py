@@ -40,29 +40,43 @@ sys.path.insert(0, str(REPO_ROOT))
 
 TEACHER_MODEL = "anthropic/claude-sonnet-4"  # change as needed; also supports gpt-5, gemini-2.5-pro
 
-# Variants-per-chain budget. Sums to ~1000 for SFT.
+# Variants-per-chain budget. Sums to ~1100 for SFT.
+#
+# SubtitleAgent was retired in 2026-04 — subtitle flows now route
+# TranscriptionAgent directly into Compositor (which renders segments
+# → SRT via a pure-Python helper), and bilingual flows route
+# TranscriptionAgent → TranslationAgent → Compositor. Illustrated-
+# storytelling chain (NarrationAgent → IllustrationAgent → NarratorAgent
+# → Compositor) is the newest deliverable class, with optional hybrids
+# that couple in MusicAgent / AmbienceAgent / AudioMixAgent /
+# TranslationAgent / IntakeImageAgent + BriefEnricherAgent.
 VARIANTS_BUDGET = {
+    # ── Cinematic / creative film (chain a) ───────────────────────────
     # Creative full chain (highest freq in real use)
     ("IntakeTextAgent", "StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent",
      "MusicAgent", "AmbienceAgent", "AudioMixAgent", "CompositorAgent"): 100,
-    # Creative + subtitle
+    # Creative + subtitle (TranscriptionAgent on the Kling-baked audio)
     ("IntakeTextAgent", "StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent",
-     "MusicAgent", "AmbienceAgent", "AudioMixAgent", "SubtitleAgent", "CompositorAgent"): 80,
+     "MusicAgent", "AmbienceAgent", "AudioMixAgent", "TranscriptionAgent", "CompositorAgent"): 80,
     # Creative + bilingual
     ("IntakeTextAgent", "StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent",
-     "MusicAgent", "AmbienceAgent", "AudioMixAgent", "SubtitleAgent", "TranslationAgent", "CompositorAgent"): 60,
+     "MusicAgent", "AmbienceAgent", "AudioMixAgent", "TranscriptionAgent", "TranslationAgent",
+     "CompositorAgent"): 60,
     # Image-based creative
     ("IntakeTextAgent", "IntakeImageAgent", "BriefEnricherAgent", "StoryAgent", "ScreenplayAgent",
      "KeyFrameAgent", "VideoAgent", "MusicAgent", "AmbienceAgent", "AudioMixAgent", "CompositorAgent"): 60,
+
+    # ── Existing-video edit (chain b) ─────────────────────────────────
     # BGM on uploaded video
     ("IntakeTextAgent", "IntakeVideoAgent", "MusicAgent", "AudioMixAgent", "CompositorAgent"): 80,
     # BGM + ambience on uploaded video
-    ("IntakeTextAgent", "IntakeVideoAgent", "MusicAgent", "AmbienceAgent", "AudioMixAgent", "CompositorAgent"): 50,
+    ("IntakeTextAgent", "IntakeVideoAgent", "MusicAgent", "AmbienceAgent", "AudioMixAgent",
+     "CompositorAgent"): 50,
     # Style transfer only
     ("IntakeTextAgent", "IntakeVideoAgent", "StyleTransferAgent"): 60,
-    # Style + subtitle
+    # Style + subtitle (Transcription direct)
     ("IntakeTextAgent", "IntakeVideoAgent", "StyleTransferAgent", "TranscriptionAgent",
-     "SubtitleAgent", "CompositorAgent"): 50,
+     "CompositorAgent"): 50,
     # Style + music
     ("IntakeTextAgent", "IntakeVideoAgent", "StyleTransferAgent", "MusicAgent", "CompositorAgent"): 40,
     # Video extend only
@@ -71,21 +85,21 @@ VARIANTS_BUDGET = {
     ("IntakeTextAgent", "IntakeVideoAgent", "VideoExtendAgent", "MusicAgent", "AudioMixAgent",
      "CompositorAgent"): 40,
     # Extend + subtitle
-    ("IntakeTextAgent", "IntakeVideoAgent", "VideoExtendAgent", "TranscriptionAgent", "SubtitleAgent",
+    ("IntakeTextAgent", "IntakeVideoAgent", "VideoExtendAgent", "TranscriptionAgent",
      "CompositorAgent"): 40,
     # Highlight only
     ("IntakeTextAgent", "IntakeVideoAgent", "VideoAnalysisAgent", "HighlightAgent"): 60,
     # Highlight + subtitle
     ("IntakeTextAgent", "IntakeVideoAgent", "VideoAnalysisAgent", "HighlightAgent",
-     "TranscriptionAgent", "SubtitleAgent", "CompositorAgent"): 40,
+     "TranscriptionAgent", "CompositorAgent"): 40,
     # Highlight + music
     ("IntakeTextAgent", "IntakeVideoAgent", "VideoAnalysisAgent", "HighlightAgent", "MusicAgent",
      "CompositorAgent"): 30,
-    # Transcribe + translate + subtitle
+    # Transcribe + translate (bilingual subtitle on uploaded video)
     ("IntakeTextAgent", "IntakeVideoAgent", "TranscriptionAgent", "TranslationAgent",
-     "SubtitleAgent", "CompositorAgent"): 40,
+     "CompositorAgent"): 40,
     # Subtitle for uploaded video (monolingual)
-    ("IntakeTextAgent", "IntakeVideoAgent", "TranscriptionAgent", "SubtitleAgent", "CompositorAgent"): 50,
+    ("IntakeTextAgent", "IntakeVideoAgent", "TranscriptionAgent", "CompositorAgent"): 50,
     # Extend + style
     ("IntakeTextAgent", "IntakeVideoAgent", "VideoExtendAgent", "StyleTransferAgent"): 30,
     # Style + extend + music
@@ -94,8 +108,28 @@ VARIANTS_BUDGET = {
     # Analyze + creative + subtitle (long)
     ("IntakeTextAgent", "IntakeVideoAgent", "VideoAnalysisAgent", "StoryAgent", "ScreenplayAgent",
      "KeyFrameAgent", "VideoAgent", "MusicAgent", "AmbienceAgent", "AudioMixAgent",
-     "SubtitleAgent", "CompositorAgent"): 30,
-}  # Total: 1030
+     "TranscriptionAgent", "CompositorAgent"): 30,
+
+    # ── Illustrated storytelling (chain c) — newest deliverable class ─
+    # Pure storytelling — highest freq within this category
+    ("IntakeTextAgent", "NarrationAgent", "IllustrationAgent", "NarratorAgent", "CompositorAgent"): 60,
+    # Storytelling + bilingual subtitle (Translation on narrator's SRT)
+    ("IntakeTextAgent", "NarrationAgent", "IllustrationAgent", "NarratorAgent",
+     "TranslationAgent", "CompositorAgent"): 25,
+    # Storytelling + BGM (Music + AudioMix layered under narrator voice)
+    ("IntakeTextAgent", "NarrationAgent", "IllustrationAgent", "NarratorAgent", "MusicAgent",
+     "AudioMixAgent", "CompositorAgent"): 25,
+    # Storytelling + ambience bed
+    ("IntakeTextAgent", "NarrationAgent", "IllustrationAgent", "NarratorAgent", "AmbienceAgent",
+     "AudioMixAgent", "CompositorAgent"): 20,
+    # Storytelling + character reference (IntakeImage + BriefEnricher prepend)
+    ("IntakeTextAgent", "IntakeImageAgent", "BriefEnricherAgent", "NarrationAgent",
+     "IllustrationAgent", "NarratorAgent", "CompositorAgent"): 20,
+    # Storytelling full-loaded (character ref + music + bilingual)
+    ("IntakeTextAgent", "IntakeImageAgent", "BriefEnricherAgent", "NarrationAgent",
+     "IllustrationAgent", "NarratorAgent", "MusicAgent", "AudioMixAgent",
+     "TranslationAgent", "CompositorAgent"): 15,
+}  # Total: 1105
 
 
 # ---------------------------------------------------------------------------

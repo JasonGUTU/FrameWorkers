@@ -212,8 +212,12 @@ let editBuffer = '';
 function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
 
 function categoryOf(name) {
+  // Prefix specificity matters — list longer / more specific prefixes first
+  // so e.g. 'storytelling_full_01' doesn't accidentally fall through to 'story'.
+  // All 'storytelling_*' variants (pure / music / ambience / bilingual /
+  // imgref / full) collapse into one 'storytelling' category.
   const prefixes = ['intake_txt','intake_img','sub_vid','trans_trans_sub','trans_trans',
-    'sub','bilingual','style','inpaint','extend','analysis','highlight','transcribe',
+    'storytelling','sub','bilingual','style','inpaint','extend','analysis','highlight','transcribe',
     'voice','translate','complex','edge','cr'];
   for (const p of prefixes) if (name.startsWith(p + '_')) return p;
   return 'other';

@@ -47,9 +47,14 @@ AGENT_TOPOLOGY: Dict[str, Dict[str, str]] = {
     # ── Creative pipeline (brief → finished film) ─────────────────────
     "BriefEnricherAgent": {
         "upstream": "IntakeImageAgent",
-        "downstream": "StoryAgent",
+        "downstream": (
+            "StoryAgent (cinematic creative flow) OR NarrationAgent "
+            "(illustrated-storytelling flow with a user-uploaded "
+            "character / setting reference)"
+        ),
         "when_to_include": (
-            "iff IntakeImageAgent ran (image-reference creative flow). "
+            "iff IntakeImageAgent ran (image-reference creative flow OR "
+            "illustrated-storytelling flow with a reference portrait). "
             "Skip otherwise."
         ),
     },
@@ -243,7 +248,11 @@ AGENT_TOPOLOGY: Dict[str, Dict[str, str]] = {
     # storytime / illustrated-narration video — a slideshow of still
     # illustrations timed to a narrator voiceover.
     "NarrationAgent": {
-        "upstream": "IntakeTextAgent (plain brief or long prose)",
+        "upstream": (
+            "IntakeTextAgent (plain brief or long prose), OR BriefEnricherAgent "
+            "(when the user uploaded a character / setting reference image to "
+            "anchor the illustrations)"
+        ),
         "downstream": "IllustrationAgent AND NarratorAgent (both consume it in parallel)",
         "when_to_include": (
             "Only on illustrated-storytelling / audiobook-with-pictures / "
@@ -252,7 +261,12 @@ AGENT_TOPOLOGY: Dict[str, Dict[str, str]] = {
             "mutually-exclusive cinematic chain. Triggers: 'read this story "
             "as an illustrated audiobook', 'make an illustrated story-time "
             "video', 'narrate with matching pictures', 'kids storybook video' "
-            "etc."
+            "etc. Optional extensions of the storytelling chain (add "
+            "MusicAgent / AmbienceAgent / AudioMixAgent for scored narration; "
+            "add TranslationAgent for bilingual subtitle burn-in; prepend "
+            "IntakeImageAgent + BriefEnricherAgent for a character-reference "
+            "illustrated audiobook) are OPT-IN only — triggered by explicit "
+            "user mention, not by default."
         ),
     },
     "IllustrationAgent": {

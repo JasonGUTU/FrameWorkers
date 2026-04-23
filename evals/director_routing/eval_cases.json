@@ -811,22 +811,22 @@
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "AudioMixAgent"
       ],
       [
         "AudioMixAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "CompositorAgent"
@@ -858,22 +858,22 @@
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "AudioMixAgent"
       ],
       [
         "AudioMixAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "CompositorAgent"
@@ -905,22 +905,22 @@
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "AudioMixAgent"
       ],
       [
         "AudioMixAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "CompositorAgent"
@@ -952,22 +952,22 @@
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "AudioMixAgent"
       ],
       [
         "AudioMixAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "CompositorAgent"
@@ -999,22 +999,22 @@
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "AudioMixAgent"
       ],
       [
         "AudioMixAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "CompositorAgent"
@@ -1038,9 +1038,6 @@
         "TranscriptionAgent"
       ],
       [
-        "SubtitleAgent"
-      ],
-      [
         "CompositorAgent"
       ],
       [
@@ -1062,9 +1059,6 @@
         "TranscriptionAgent"
       ],
       [
-        "SubtitleAgent"
-      ],
-      [
         "CompositorAgent"
       ],
       [
@@ -1084,9 +1078,6 @@
       ],
       [
         "TranscriptionAgent"
-      ],
-      [
-        "SubtitleAgent"
       ],
       [
         "TranslationAgent"
@@ -1111,9 +1102,6 @@
       ],
       [
         "TranscriptionAgent"
-      ],
-      [
-        "SubtitleAgent"
       ],
       [
         "CompositorAgent"
@@ -1145,25 +1133,25 @@
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent",
         "AudioMixAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent",
         "AudioMixAgent"
       ],
@@ -1201,25 +1189,25 @@
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent",
         "AudioMixAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent",
         "AudioMixAgent"
       ],
@@ -1257,25 +1245,25 @@
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent",
         "AudioMixAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent",
         "AudioMixAgent"
       ],
@@ -1313,25 +1301,25 @@
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent",
         "AudioMixAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent",
         "AudioMixAgent"
       ],
@@ -1369,25 +1357,25 @@
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent",
         "AudioMixAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent",
         "AudioMixAgent"
       ],
@@ -1752,9 +1740,6 @@
         "TranscriptionAgent"
       ],
       [
-        "SubtitleAgent"
-      ],
-      [
         "CompositorAgent"
       ],
       [
@@ -1808,17 +1793,15 @@
       ],
       [
         "TranscriptionAgent",
-        "SubtitleAgent",
         "VideoAnalysisAgent"
       ],
       [
-        "SubtitleAgent",
-        "MusicAgent",
-        "TranscriptionAgent"
+        "TranscriptionAgent",
+        "MusicAgent"
       ],
       [
         "MusicAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "AudioMixAgent"
@@ -1843,9 +1826,6 @@
       ],
       [
         "TranscriptionAgent"
-      ],
-      [
-        "SubtitleAgent"
       ],
       [
         "TranslationAgent"
@@ -1879,13 +1859,12 @@
         "MusicAgent"
       ],
       [
-        "SubtitleAgent",
         "TranscriptionAgent",
         "MusicAgent"
       ],
       [
         "MusicAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "AudioMixAgent"
@@ -1910,9 +1889,6 @@
       ],
       [
         "TranscriptionAgent"
-      ],
-      [
-        "SubtitleAgent"
       ],
       [
         "TranslationAgent"
@@ -1953,22 +1929,22 @@
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "AudioMixAgent"
       ],
       [
         "AudioMixAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "CompositorAgent"
@@ -2000,11 +1976,10 @@
       ],
       [
         "TranscriptionAgent",
-        "MusicAgent",
-        "SubtitleAgent"
+        "MusicAgent"
       ],
       [
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "MusicAgent"
       ],
       [
@@ -2038,12 +2013,8 @@
         "TranscriptionAgent"
       ],
       [
-        "SubtitleAgent",
-        "TranscriptionAgent"
-      ],
-      [
         "TranslationAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "MusicAgent"
       ],
       [
@@ -2089,25 +2060,25 @@
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent",
         "AudioMixAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent",
         "AudioMixAgent"
       ],
@@ -2141,9 +2112,6 @@
       ],
       [
         "TranscriptionAgent"
-      ],
-      [
-        "SubtitleAgent"
       ],
       [
         "TranslationAgent"
@@ -2303,9 +2271,6 @@
         "TranscriptionAgent"
       ],
       [
-        "SubtitleAgent"
-      ],
-      [
         "CompositorAgent"
       ],
       [
@@ -2355,9 +2320,6 @@
       ],
       [
         "TranscriptionAgent"
-      ],
-      [
-        "SubtitleAgent"
       ],
       [
         "CompositorAgent"
@@ -2412,9 +2374,6 @@
       ],
       [
         "TranscriptionAgent"
-      ],
-      [
-        "SubtitleAgent"
       ],
       [
         "CompositorAgent"
@@ -2601,9 +2560,6 @@
         "TranscriptionAgent"
       ],
       [
-        "SubtitleAgent"
-      ],
-      [
         "CompositorAgent"
       ],
       [
@@ -2626,9 +2582,6 @@
       ],
       [
         "TranscriptionAgent"
-      ],
-      [
-        "SubtitleAgent"
       ],
       [
         "CompositorAgent"
@@ -2709,9 +2662,6 @@
         "TranscriptionAgent"
       ],
       [
-        "SubtitleAgent"
-      ],
-      [
         "CompositorAgent"
       ],
       [
@@ -2734,9 +2684,6 @@
       ],
       [
         "TranscriptionAgent"
-      ],
-      [
-        "SubtitleAgent"
       ],
       [
         "CompositorAgent"
@@ -2766,9 +2713,6 @@
         "TranscriptionAgent"
       ],
       [
-        "SubtitleAgent"
-      ],
-      [
         "CompositorAgent"
       ],
       [
@@ -2794,9 +2738,6 @@
       ],
       [
         "TranscriptionAgent"
-      ],
-      [
-        "SubtitleAgent"
       ],
       [
         "CompositorAgent"
@@ -2845,9 +2786,6 @@
       ],
       [
         "TranscriptionAgent"
-      ],
-      [
-        "SubtitleAgent"
       ],
       [
         "CompositorAgent"
@@ -2931,9 +2869,6 @@
         "TranscriptionAgent"
       ],
       [
-        "SubtitleAgent"
-      ],
-      [
         "TranslationAgent"
       ],
       [
@@ -2964,9 +2899,6 @@
         "TranscriptionAgent"
       ],
       [
-        "SubtitleAgent"
-      ],
-      [
         "TranslationAgent"
       ],
       [
@@ -2993,17 +2925,15 @@
       ],
       [
         "TranscriptionAgent",
-        "SubtitleAgent",
         "VideoAnalysisAgent"
       ],
       [
-        "SubtitleAgent",
-        "MusicAgent",
-        "TranscriptionAgent"
+        "TranscriptionAgent",
+        "MusicAgent"
       ],
       [
         "MusicAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "AudioMixAgent"
@@ -3037,13 +2967,12 @@
         "MusicAgent"
       ],
       [
-        "SubtitleAgent",
         "TranscriptionAgent",
         "MusicAgent"
       ],
       [
         "MusicAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "AudioMixAgent"
@@ -3078,11 +3007,10 @@
       ],
       [
         "TranscriptionAgent",
-        "MusicAgent",
-        "SubtitleAgent"
+        "MusicAgent"
       ],
       [
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "MusicAgent"
       ],
       [
@@ -3168,22 +3096,22 @@
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "AudioMixAgent"
       ],
       [
         "AudioMixAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "CompositorAgent"
@@ -3221,22 +3149,22 @@
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "AudioMixAgent"
       ],
       [
         "AudioMixAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "CompositorAgent"
@@ -3274,25 +3202,25 @@
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent",
         "AudioMixAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent",
         "AudioMixAgent"
       ],
@@ -3336,25 +3264,25 @@
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent"
+        "TranscriptionAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent",
         "AudioMixAgent"
       ],
       [
         "MusicAgent",
         "AmbienceAgent",
-        "SubtitleAgent",
+        "TranscriptionAgent",
         "TranslationAgent",
         "AudioMixAgent"
       ],
@@ -3455,6 +3383,314 @@
       ],
       [
         "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_01",
+    "user_goal": "Turn this children's bedtime tale into an illustrated audiobook video — calm narration with one soft watercolor picture per scene: Once upon a time, a little rabbit named Pip found a tiny glowing seed in the meadow...",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_02",
+    "user_goal": "Make a narrated picture-book video of this Aesop's fable about the ant and the grasshopper",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_03",
+    "user_goal": "Read this classical Chinese Tang-dynasty poem aloud and show a matching ink-painting illustration for each verse, slideshow-style",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_04",
+    "user_goal": "Produce a narrated picture-book science storytime about how emperor penguins raise their chicks in Antarctica; one cute cartoon image per behavior",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_05",
+    "user_goal": "Create an illustrated audiobook of this Greek myth about Persephone returning from the underworld every spring, storybook style",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_music_01",
+    "user_goal": "Make an illustrated audiobook of this lullaby-style bedtime story with a gentle, slow piano score playing softly under the narrator",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_ambience_01",
+    "user_goal": "Narrate this forest-adventure children's story as an illustrated audiobook with a gentle forest-ambience bed (wind through leaves, distant birds)",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_bilingual_01",
+    "user_goal": "Make an English-Chinese bilingual illustrated audiobook of this short fairytale — narrate in English, burn both English and Chinese subtitles on the slideshow",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_imgref_01",
+    "user_goal": "Using the uploaded character portrait as the heroine, turn this short folktale into an illustrated audiobook where every picture keeps her appearance consistent with the reference",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_full_01",
+    "user_goal": "Using the uploaded character portrait of the fox protagonist, produce an English-Chinese bilingual illustrated audiobook of this folk tale, narrated in English with a gentle koto-and-flute background score",
+    "expected_chain": [
+      [
+        "IntakeTextAgent"
+      ],
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "TranslationAgent"
       ],
       [
         "CompositorAgent"
