@@ -108,5 +108,38 @@
       {"agent_id": "TranslationAgent", "intent": "Translate English SRT to Tibetan, preserving cue timestamps"},
       {"agent_id": "CompositorAgent", "intent": "Slideshow + English narrator + burn English + Tibetan subtitles"}
     ]
+  },
+  {
+    "goal": "把《塞翁失马》这个成语故事做成有声绘本视频 — 中文旁白、但只烧英文字幕（不烧中文字幕）—— 国风水墨插画",
+    "rationale": "用户要求中文旁白 + **只烧英文字幕**（字幕语 ≠ 旁白语，且不保留源语言 track）—— Narrator 出中文 SRT 后必须 TranslationAgent 翻成英文，Compositor 只烧英文那一轨。Chain (c) + Translation：NarrationAgent 中文旁白 + 国风水墨段；Illustration 锚；Narrator 中文 TTS + 中文 SRT；Translation 中文 SRT → 英文 SRT；Compositor **只** burn 英文字幕，不烧中文。不加 Music / Ambience（用户没要）。",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "将《塞翁失马》改为中文旁白脚本，按『失马 / 得马 / 堕马 / 免征』切段，国风水墨插画风"},
+      {"agent_id": "IllustrationAgent", "intent": "生成国风水墨插图，第一张边塞马场定调"},
+      {"agent_id": "NarratorAgent", "intent": "中文男声 TTS + 中文 SRT + 每段时长"},
+      {"agent_id": "TranslationAgent", "intent": "把 Narrator 出的中文 SRT 翻译成英文 SRT，保留时间戳"},
+      {"agent_id": "CompositorAgent", "intent": "拼接水墨插图 + 中文旁白音 + 只烧翻译后的英文字幕（不烧中文）"}
+    ]
+  },
+  {
+    "goal": "Read this Japanese-inspired tea-ceremony fable as an illustrated audiobook — English narration with Japanese-only subtitles burned in (no English subtitles) — ink-wash tatami illustration style",
+    "rationale": "User specifies English narrator + **Japanese-only** subtitles (foreign-only: subtitle language ≠ narrator language, source-language track NOT preserved). Narrator emits English SRT; TranslationAgent translates to Japanese; Compositor burns only the Japanese track, not English. Chain (c) + Translation: English narrator + ink-wash tatami segments; Illustration anchors on tea-room; Narrator English TTS + English SRT; Translation → Japanese SRT; Compositor burns JAPANESE ONLY, no English subs. No Music / Ambience (user did not ask).",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite the tea-ceremony fable as an English narrator script, ink-wash tatami illustration style, segmented by ceremony beats"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate ink-wash tatami illustrations per segment, anchored on tea-room opening"},
+      {"agent_id": "NarratorAgent", "intent": "English measured narrator TTS + English SRT + segment timing"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English narrator SRT into Japanese, preserving per-cue timestamps"},
+      {"agent_id": "CompositorAgent", "intent": "Composite slideshow + English narrator audio + burn only the Japanese subtitle track (no English subs)"}
+    ]
+  },
+  {
+    "goal": "Produce an illustrated audiobook of this Cuban mariposa-and-moonflower fable — English narration with Spanish-only subtitles burned in (no English subtitles) — tropical Caribbean folk-art illustration style",
+    "rationale": "User specifies English narrator + **Spanish-only** subtitles (foreign-only: audience-language subs without bilingual). Narrator emits English SRT; Translation → Spanish; Compositor burns only Spanish, no English subs. Chain (c) + Translation: English narrator + Caribbean folk-art segments; Illustration anchors; Narrator English TTS + English SRT; Translation → Spanish SRT; Compositor burns SPANISH ONLY. No Music / Ambience (not asked).",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite the Cuban mariposa-and-moonflower fable as an English narrator script, tropical Caribbean folk-art illustration style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Caribbean folk-art illustrations, anchored on moonlit garden opening"},
+      {"agent_id": "NarratorAgent", "intent": "English warm narrator TTS + English SRT + segment timing"},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English narrator SRT into Spanish, preserving per-cue timestamps"},
+      {"agent_id": "CompositorAgent", "intent": "Composite slideshow + English narrator audio + burn only the Spanish subtitle track (no English subs)"}
+    ]
   }
 ]

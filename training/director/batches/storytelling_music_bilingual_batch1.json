@@ -1,0 +1,132 @@
+[
+  {
+    "goal": "Make a bilingual illustrated audiobook of the French fairytale 'Le Petit Chaperon Rouge' (Little Red Riding Hood) with soft lute BGM underneath — French narration — French + Chinese subtitles burned in — French storybook watercolor illustrations",
+    "rationale": "Narrated picture-book + BGM + bilingual subtitles but no uploaded character image, so start with Narration. Write narration, illustrate per scene, compose lute BGM, voice French narration, mix narration+BGM, translate to produce FR+CN subs, composite.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write a French narration script of 'Le Petit Chaperon Rouge' styled for picture-book pacing — one beat per illustrated scene."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate a French storybook watercolor illustration per narration beat — forest, cottage, wolf encounter — with consistent palette across scenes."},
+      {"agent_id": "MusicAgent", "intent": "Compose a soft lute BGM track that runs underneath the narration — evocative of French medieval storytelling, ducked below voice."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a warm French voiceover narration suited for reading the tale aloud to children."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix the French narration voiceover on top of the ducked lute BGM to a single audiobook track."},
+      {"agent_id": "TranslationAgent", "intent": "Translate the French narration into Chinese and produce time-aligned FR + CN subtitle tracks."},
+      {"agent_id": "CompositorAgent", "intent": "Composite the watercolor slideshow with the mixed narration+BGM track, burn FR + CN subtitles, render the final bilingual fairytale audiobook."}
+    ]
+  },
+  {
+    "goal": "把日本民间传说《竹取物语》(辉夜姬) 做成英日双语有声绘本 — 日语旁白、日英双字幕 — 底铺传统日本古琴 BGM — 江户时代浮世绘木版画插画风",
+    "rationale": "带 BGM 的双语绘本, 无上传图. 写日语旁白, 每场景生成浮世绘插画, 作古琴 BGM, 日语配音, 音乐与人声混音, 生成日英双字幕, 合成.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用日语写《竹取物语》的旁白脚本, 每段对应一个场景, 节奏适合绘本."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白节拍生成每场景的江户浮世绘木版画插画 — 竹林、竹中月光、宫殿、月宫归去."},
+      {"agent_id": "MusicAgent", "intent": "作一段传统日本古琴 BGM, 衬托物语的清幽意境, 音量低于人声."},
+      {"agent_id": "NarratorAgent", "intent": "日语旁白配音, 物语吟诵风格, 语调温柔缓慢."},
+      {"agent_id": "AudioMixAgent", "intent": "把日语旁白与古琴 BGM 混音到一个轨道, BGM ducked."},
+      {"agent_id": "TranslationAgent", "intent": "把日语旁白翻译成英文, 生成日英双字幕时间轨."},
+      {"agent_id": "CompositorAgent", "intent": "合成浮世绘 slideshow, 铺混音音轨, 烧日英双字幕, 输出英日双语有声绘本."}
+    ]
+  },
+  {
+    "goal": "Make an illustrated audiobook of the Greek myth of Orpheus and Eurydice with soft lyre BGM — English narration — English + Greek subtitles — ancient Greek red-figure vase painting illustration style",
+    "rationale": "Bilingual music+picture-book, no image. Write narration, illustrate in Greek vase style, compose lyre BGM, narrate in English, mix, translate EN→GR for subtitles, composite.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of the Orpheus and Eurydice myth — mythic tone, one beat per scene, ending at Orpheus's fatal glance."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate red-figure Greek vase style illustrations per scene — Orpheus with lyre, Eurydice, underworld gates, Hades and Persephone."},
+      {"agent_id": "MusicAgent", "intent": "Compose a soft lyre BGM threading through the narration — sparse, ancient-feeling, emotionally tinged with loss."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize an English voiceover with a solemn mythic storytelling cadence."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix the English narration over the ducked lyre BGM into a unified audiobook track."},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English narration into Greek and produce aligned EN + GR subtitle tracks."},
+      {"agent_id": "CompositorAgent", "intent": "Composite the vase-painting slideshow with mixed audio, burn EN + GR subtitles, render the final bilingual Greek myth audiobook."}
+    ]
+  },
+  {
+    "goal": "做一个中英双语《梁祝化蝶》有声绘本视频 — 中文旁白、中英双字幕 — 底铺江南丝竹 BGM — 中国工笔重彩插画风",
+    "rationale": "中英双语绘本 + BGM, 无上传图. 写中文旁白, 工笔插画, 丝竹 BGM, 中文配音, 混音, 生成中英双字幕, 合成.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《梁祝化蝶》的旁白脚本 — 从草桥结拜到化蝶双飞, 一段一幅画."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成中国工笔重彩插画 — 书院、十八相送、祝英台投坟、双蝶飞舞."},
+      {"agent_id": "MusicAgent", "intent": "作一段江南丝竹 BGM, 二胡为主, 衬托梁祝的凄美."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 评书/民间故事的温柔讲述感, 突出情感起伏."},
+      {"agent_id": "AudioMixAgent", "intent": "把中文旁白与丝竹 BGM 混到一个音轨, BGM ducked."},
+      {"agent_id": "TranslationAgent", "intent": "把中文旁白翻译成英文, 生成中英双字幕时间轨."},
+      {"agent_id": "CompositorAgent", "intent": "合成工笔插画 slideshow, 铺混音, 烧中英双字幕, 输出中英双语《梁祝》绘本."}
+    ]
+  },
+  {
+    "goal": "Create an illustrated audiobook of the Persian folktale 'The Conference of the Birds' with traditional oud BGM — English narration — English + Farsi subtitles — Persian miniature painting illustration style",
+    "rationale": "Bilingual music+audiobook, no image. Narration → miniature illustrations → oud BGM → English voiceover → mix → translate to Farsi for subs → composite.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of 'The Conference of the Birds' Sufi allegory — introspective mystic tone, one beat per scene."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Persian miniature painting style illustrations per scene — hoopoe, birds' journey through seven valleys, final revelation."},
+      {"agent_id": "MusicAgent", "intent": "Compose a traditional oud BGM with a meditative modal drone, suited to Sufi storytelling."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a contemplative English voiceover suited to mystic poetry."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix English narration over the ducked oud BGM."},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English narration into Farsi and produce EN + FA subtitle tracks aligned to narration timing."},
+      {"agent_id": "CompositorAgent", "intent": "Composite the miniature-painting slideshow with mixed audio, burn EN + FA subtitles, render the bilingual Sufi audiobook."}
+    ]
+  },
+  {
+    "goal": "Make a narrated illustrated video of a Russian fairytale about Vasilisa the Beautiful and Baba Yaga, with balalaika and accordion BGM — English narration — English + Russian subtitles — Russian lacquer-box folk painting illustration style",
+    "rationale": "Music + bilingual + picture-book, no image. Narration → lacquer-box illustrations → balalaika+accordion BGM → English narrator → mix → EN+RU subs → composite.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of the Vasilisa and Baba Yaga tale — one beat per scene, dark fairytale cadence."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Russian lacquer-box folk painting illustrations per scene — Vasilisa with her doll, Baba Yaga's chicken-legged hut, the three horsemen."},
+      {"agent_id": "MusicAgent", "intent": "Compose a balalaika + accordion BGM that runs through the narration — mournful Russian folk feel."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize an English voiceover with a dark fairytale tone."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix English narration over the ducked balalaika/accordion BGM."},
+      {"agent_id": "TranslationAgent", "intent": "Translate the English narration to Russian and produce aligned EN + RU subtitle tracks."},
+      {"agent_id": "CompositorAgent", "intent": "Composite the lacquer-painting slideshow with the mixed audio, burn EN + RU subtitles, export the bilingual Russian fairytale audiobook."}
+    ]
+  },
+  {
+    "goal": "把《一千零一夜》里阿拉丁神灯的片段做成英阿双语有声绘本 — 英文旁白、英阿双字幕 — 底铺传统卡龙琴 BGM — 波斯手绘本缀金插画风",
+    "rationale": "音乐 + 双语 + 绘本, 无图. 写英文旁白 → 波斯插画 → 卡龙琴 BGM → 英文配音 → 混音 → 英译阿拉伯文生成双字幕 → 合成.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用英文写阿拉丁神灯片段的旁白脚本, 异域神秘感, 每段对应一幅插画."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成波斯手绘本缀金插画 — 阿拉丁、洞窟、神灯、巨精灵、宫殿."},
+      {"agent_id": "MusicAgent", "intent": "作一段传统卡龙琴 BGM, 阿拉伯调式, 衬托神秘冒险感."},
+      {"agent_id": "NarratorAgent", "intent": "英文旁白配音, 神秘讲故事的语调."},
+      {"agent_id": "AudioMixAgent", "intent": "英文旁白与卡龙琴 BGM 混音, BGM ducked."},
+      {"agent_id": "TranslationAgent", "intent": "把英文旁白翻译成阿拉伯文, 生成英阿双字幕时间轨."},
+      {"agent_id": "CompositorAgent", "intent": "合成波斯风插画 slideshow, 铺混音, 烧英阿双字幕, 输出英阿双语阿拉丁有声绘本."}
+    ]
+  },
+  {
+    "goal": "Create a narrated picture-book video of the Indian Panchatantra fable 'The Crow and the Snake' with sitar + tabla BGM — English narration — English + Hindi subtitles — Indian Madhubani folk painting illustration style",
+    "rationale": "Bilingual fable with BGM, no uploaded image. Narration → Madhubani illustrations → sitar/tabla BGM → English narrator → mix → EN+HI subs → composite.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of the Panchatantra 'Crow and the Snake' fable — didactic tone with a moral, one beat per scene."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Madhubani folk-painting illustrations per scene — tree, crow family, snake, jackal advisor."},
+      {"agent_id": "MusicAgent", "intent": "Compose a sitar + tabla BGM that carries through the fable — subtle, not overpowering."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize an English voiceover with a traditional storyteller's cadence suited to fables."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix English narration over ducked sitar+tabla BGM."},
+      {"agent_id": "TranslationAgent", "intent": "Translate English narration into Hindi and produce aligned EN + HI subtitle tracks."},
+      {"agent_id": "CompositorAgent", "intent": "Composite Madhubani slideshow with the mixed audio, burn EN + HI subtitles, render the bilingual Panchatantra audiobook."}
+    ]
+  },
+  {
+    "goal": "Make an illustrated audiobook of the Spanish legend of the 'El Dorado' golden city with flamenco guitar + castanet BGM — Spanish narration — Spanish + English subtitles — colonial-era Spanish oil-painting style illustrations",
+    "rationale": "Music + bilingual + picture-book, no upload. Write Spanish narration → colonial oil-painting illustrations → flamenco-guitar BGM → Spanish narrator → mix → translate SP→EN for subs → composite.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write a Spanish narration of the El Dorado legend — colonial mystery tone, one beat per scene."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate colonial-era Spanish oil-painting style illustrations per scene — jungle expeditions, native rituals, golden city glimpses."},
+      {"agent_id": "MusicAgent", "intent": "Compose flamenco guitar + castanet BGM threading through the narration — mysterious and adventurous."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a dramatic Spanish voiceover suited to colonial-era legend."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix Spanish narration over the ducked flamenco guitar BGM."},
+      {"agent_id": "TranslationAgent", "intent": "Translate Spanish narration into English and produce SP + EN subtitle tracks aligned to narration timing."},
+      {"agent_id": "CompositorAgent", "intent": "Composite the oil-painting slideshow with mixed audio, burn SP + EN subtitles, render the final bilingual El Dorado audiobook."}
+    ]
+  },
+  {
+    "goal": "做一个中英双语《嫦娥奔月》有声绘本 — 中文旁白、中英双字幕 — 底铺古琴 BGM — 敦煌壁画工笔重彩风插画",
+    "rationale": "音乐 + 中英双语 + 绘本, 无图. 写中文旁白 → 敦煌工笔插画 → 古琴 BGM → 中文配音 → 混音 → 中译英生成双字幕 → 合成.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《嫦娥奔月》旁白 — 后羿射日、西王母赐仙药、嫦娥奔月、玉兔广寒宫, 每段对应一幅壁画."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成敦煌风工笔重彩插画 — 色彩浓丽, 飞天线条流畅, 月宫金碧辉煌."},
+      {"agent_id": "MusicAgent", "intent": "作一段古琴 BGM — 《广陵散》风格, 苍茫幽远."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 神话讲述的庄重语调."},
+      {"agent_id": "AudioMixAgent", "intent": "中文旁白与古琴 BGM 混音到单轨, BGM ducked."},
+      {"agent_id": "TranslationAgent", "intent": "把中文旁白翻译成英文, 生成中英双字幕时间轨."},
+      {"agent_id": "CompositorAgent", "intent": "合成敦煌风 slideshow, 铺混音, 烧中英双字幕, 输出中英双语《嫦娥奔月》有声绘本."}
+    ]
+  }
+]

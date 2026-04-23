@@ -1,0 +1,202 @@
+[
+  {
+    "goal": "Make an illustrated audiobook of the Hawaiian legend of Pele, goddess of volcanoes — English narration, one lava-and-ocean illustration per scene",
+    "rationale": "Narrated picture-book, no music/ambience/subtitles. Write narration → illustrate per scene → voice narration → composite slideshow.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of the Pele legend — one beat per scene, mythic tone."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate one lava-and-ocean themed illustration per scene — Pele's volcanic rage, ocean shores, sister rivalries."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize an English voiceover with a mythic storytelling cadence."},
+      {"agent_id": "CompositorAgent", "intent": "Composite illustrations into a slideshow synced with the narration, render the final audiobook."}
+    ]
+  },
+  {
+    "goal": "把《神笔马良》做成中文有声绘本视频 — 每段一幅水墨画,中文旁白",
+    "rationale": "纯有声绘本, 无 BGM 无字幕. 中文旁白 → 水墨插画 → 中文配音 → 合成.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《神笔马良》旁白 — 马良得到神笔、画物变真、斗财主, 每段一幅画."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成水墨插画 — 马良、神笔、画出的水牛大鱼、财主."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 民间故事讲述语调."},
+      {"agent_id": "CompositorAgent", "intent": "合成水墨 slideshow, 输出中文《神笔马良》有声绘本."}
+    ]
+  },
+  {
+    "goal": "Turn Oscar Wilde's 'The Selfish Giant' into a narrated picture-book video — English narration, one Edwardian children's storybook illustration per scene",
+    "rationale": "Classic tale as pure picture-book. Narration → Edwardian illustrations → English narrator → composite.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of 'The Selfish Giant' — one beat per scene, following the original's emotional arc."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Edwardian children's storybook illustrations per scene — giant's garden, children, eternal winter, spring return."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a tender English voiceover suited to a Wilde fairytale."},
+      {"agent_id": "CompositorAgent", "intent": "Composite illustrations into a slideshow synced with narration, render the audiobook."}
+    ]
+  },
+  {
+    "goal": "做一个《花木兰》中文儿童有声绘本 — 每段对应一幅工笔彩绘插画, 中文旁白朗读",
+    "rationale": "木兰故事, 纯绘本. 中文旁白 → 工笔插画 → 中文配音 → 合成.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《花木兰》儿童版旁白 — 替父从军、战场立功、辞官归乡."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成工笔彩绘插画 — 木兰织布、戎装出征、战场骑马、辞官归家."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 少儿故事温暖讲述."},
+      {"agent_id": "CompositorAgent", "intent": "合成工笔插画 slideshow, 输出中文《花木兰》儿童绘本."}
+    ]
+  },
+  {
+    "goal": "Turn the Grimm fairytale 'Hansel and Gretel' into a narrated illustrated video — English narration, Gothic watercolor style illustrations",
+    "rationale": "Grimm tale as pure picture-book. Narration → Gothic illustrations → English narrator → composite.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of Hansel and Gretel — one beat per scene, dark fairytale cadence."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Gothic watercolor illustrations — forest breadcrumbs, candy cottage, witch, oven rescue."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize an English voiceover with a dark fairytale storyteller tone."},
+      {"agent_id": "CompositorAgent", "intent": "Composite illustrations into a slideshow synced with narration, render the audiobook."}
+    ]
+  },
+  {
+    "goal": "把《叶公好龙》的中国成语寓言做成中文有声绘本 — 国画工笔风插画,中文旁白",
+    "rationale": "成语寓言, 纯绘本. 中文旁白 → 国画工笔插画 → 中文配音 → 合成.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《叶公好龙》旁白 — 叶公各处画龙, 真龙临门, 叶公落荒而逃."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成国画工笔插画 — 叶公画龙的雅室、墙上龙图、真龙破窗、叶公惊逃."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 带寓意的讲述语调."},
+      {"agent_id": "CompositorAgent", "intent": "合成国画 slideshow, 输出中文《叶公好龙》有声成语绘本."}
+    ]
+  },
+  {
+    "goal": "Make an illustrated audiobook of the Norse myth of Loki cutting off Sif's hair — English narration, Viking rune-etched wood carving style illustrations",
+    "rationale": "Norse myth pure picture-book. Narration → Viking-style illustrations → English narrator → composite.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of the Loki/Sif/hair myth — one beat per scene, mythic tone."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Viking rune-etched wood carving style illustrations — Loki in the night, sleeping Sif, Thor's fury, dwarven golden hair."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a resonant English voiceover with mythic narrator cadence."},
+      {"agent_id": "CompositorAgent", "intent": "Composite illustrations into a slideshow synced with narration, render the audiobook."}
+    ]
+  },
+  {
+    "goal": "做一个《卖火柴的小女孩》中文有声绘本 — 每段一幅北欧冷色调插画, 中文旁白朗读安徒生原文改编版",
+    "rationale": "安徒生童话, 纯绘本. 中文旁白 → 冷色调插画 → 中文配音 → 合成.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《卖火柴的小女孩》旁白 — 寒冷街角、擦火柴看到幻象、最终倒在雪中."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成北欧冷色调插画 — 雪夜、街角、火柴短暂光亮中的幻象、小女孩."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 温柔感伤的语调."},
+      {"agent_id": "CompositorAgent", "intent": "合成冷色调 slideshow, 输出中文《卖火柴的小女孩》有声绘本."}
+    ]
+  },
+  {
+    "goal": "Make a narrated picture-book video of the West African Anansi tale 'How Anansi Tricked the Snake' — English narration, tribal-pattern storybook illustrations",
+    "rationale": "West African trickster tale, pure picture-book. Narration → tribal illustrations → English narrator → composite.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of Anansi tricking the snake — one beat per scene, trickster-tale cadence."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate tribal-pattern storybook illustrations — Anansi spider character, jungle, snake, bamboo trap."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize an English voiceover with a cheeky trickster storyteller cadence."},
+      {"agent_id": "CompositorAgent", "intent": "Composite illustrations into slideshow synced with narration, render the final audiobook."}
+    ]
+  },
+  {
+    "goal": "把《精卫填海》的中国神话做成中文儿童有声绘本 — 每段一幅中式水墨插画,中文旁白",
+    "rationale": "中国神话, 纯绘本. 中文旁白 → 水墨插画 → 中文配音 → 合成.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《精卫填海》旁白 — 女娃溺死化鸟、精卫日日衔石填东海."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成水墨插画 — 少女、海边落水、化作精卫鸟、衔石向海."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 古神话的庄重讲述."},
+      {"agent_id": "CompositorAgent", "intent": "合成水墨 slideshow, 输出中文《精卫填海》儿童神话绘本."}
+    ]
+  },
+  {
+    "goal": "Turn this original kid's birthday-themed story 'Mika's Surprise Party' into a narrated picture-book video — English narration, bright modern children's book illustration style",
+    "rationale": "Original kid's story, pure picture-book. Narration → modern kids' illustrations → English narrator → composite.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of 'Mika's Surprise Party' — one beat per scene, upbeat kid-friendly cadence."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate bright modern children's book illustrations — Mika, friends, colorful balloons, cake, surprise reveal."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a cheerful English voiceover suited for reading to children at a birthday."},
+      {"agent_id": "CompositorAgent", "intent": "Composite bright illustrations into slideshow synced with narration, render the audiobook."}
+    ]
+  },
+  {
+    "goal": "做一个《年兽的故事》中文儿童有声绘本 — 中文旁白、每段一幅年画风插画",
+    "rationale": "中国民俗, 纯绘本. 中文旁白 → 年画风插画 → 中文配音 → 合成.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《年兽的故事》儿童旁白 — 年兽下山害人, 村民用红色鞭炮吓退, 过年传统由此来."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成年画风插画 — 村庄、年兽怪形象、红春联、鞭炮、村民欢庆."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 温暖讲年俗的语调."},
+      {"agent_id": "CompositorAgent", "intent": "合成年画风 slideshow, 输出中文《年兽的故事》儿童绘本."}
+    ]
+  },
+  {
+    "goal": "Make an illustrated audiobook of the Scottish tale of 'The Selkie Wife' — English narration, misty Scottish coast watercolor illustrations",
+    "rationale": "Scottish folk tale, pure picture-book. Narration → misty coast illustrations → English narrator → composite.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of the Selkie Wife tale — one beat per scene, melancholic folk cadence."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate misty Scottish coast watercolor illustrations — seal on the rocks, hidden sealskin, fisherman's cottage, return to the sea."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a soft, wistful English voiceover suited for a Celtic folktale."},
+      {"agent_id": "CompositorAgent", "intent": "Composite watercolor illustrations into slideshow synced with narration, render the final audiobook."}
+    ]
+  },
+  {
+    "goal": "把《盘古开天地》中国创世神话做成中文儿童有声绘本 — 浓墨重彩神话插画,中文旁白",
+    "rationale": "中国创世神话, 纯绘本. 中文旁白 → 神话插画 → 中文配音 → 合成.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《盘古开天地》旁白 — 混沌如鸡子、盘古睁眼、劈开天地、肉身化为山河."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成浓墨重彩神话插画 — 混沌、盘古劈天、天地分开、盘古化山河."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 创世神话的庄重语调."},
+      {"agent_id": "CompositorAgent", "intent": "合成神话风 slideshow, 输出中文《盘古开天地》创世绘本."}
+    ]
+  },
+  {
+    "goal": "Turn this Maori legend of 'Maui Fishing Up the North Island' into a narrated picture-book — English narration, Polynesian-carving-inspired illustrations",
+    "rationale": "Maori legend, pure picture-book. Narration → Polynesian illustrations → English narrator → composite.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of Maui fishing up the North Island — one beat per scene, mythic cadence."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Polynesian-carving-inspired illustrations — Maui's canoe, magic fishhook, giant fish emerging, new land."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize an English voiceover with a mythic Maori storyteller cadence."},
+      {"agent_id": "CompositorAgent", "intent": "Composite illustrations into slideshow synced with narration, render the final audiobook."}
+    ]
+  },
+  {
+    "goal": "做一个《狐假虎威》中国寓言中文有声绘本 — 中国工笔动物插画,中文旁白",
+    "rationale": "成语寓言, 纯绘本. 中文旁白 → 工笔动物插画 → 中文配音 → 合成.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《狐假虎威》旁白 — 狐狸被虎抓住, 假借天帝之威骗虎, 虎惶恐放行."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成工笔动物插画 — 林中、虎抓狐、狐狸抬起下巴扬威、百兽惊逃、虎纳闷."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 寓言讲述语调."},
+      {"agent_id": "CompositorAgent", "intent": "合成工笔 slideshow, 输出中文《狐假虎威》寓言绘本."}
+    ]
+  },
+  {
+    "goal": "Create a narrated picture-book of this original author's bedtime story 'Benny Bear's Dream Balloon' — English narration, dreamy pastel kids' illustrations",
+    "rationale": "Original bedtime story, pure picture-book. Narration → pastel illustrations → English narrator → composite.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of 'Benny Bear's Dream Balloon' — calming bedtime cadence, one beat per scene."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate dreamy pastel kids' illustrations — little bear, balloon rising, starry sky, soft return home."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a soft, lullaby-like English voiceover for a bedtime audiobook."},
+      {"agent_id": "CompositorAgent", "intent": "Composite pastel slideshow with narration, render the bedtime audiobook."}
+    ]
+  },
+  {
+    "goal": "把《桃花源记》陶渊明古文做成中文意境有声绘本 — 中文旁白朗读原文, 每段一幅山水写意插画",
+    "rationale": "古文意境绘本. 中文旁白 → 山水写意插画 → 中文配音 → 合成.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《桃花源记》原文朗读 + 意境旁白 — 渔人缘溪行、桃林、洞口、世外桃源."},
+      {"agent_id": "IllustrationAgent", "intent": "按原文生成山水写意插画 — 溪流、桃林、石洞、田园桃源风光."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 文人朗读的清雅语调."},
+      {"agent_id": "CompositorAgent", "intent": "合成写意山水 slideshow, 输出《桃花源记》意境绘本."}
+    ]
+  },
+  {
+    "goal": "Make an illustrated audiobook of the Native American Iroquois creation legend of 'The Great Turtle Island' — English narration, nature-reverent Native American-inspired illustrations",
+    "rationale": "Native American creation legend, pure picture-book. Narration → reverent illustrations → English narrator → composite.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write a respectful English narration of the Turtle Island creation legend — one beat per scene, mythic reverent tone."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Native American-inspired illustrations — sky world, Sky Woman falling, muskrat bringing mud, turtle's growing back."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize an English voiceover with a slow, reverent storyteller cadence."},
+      {"agent_id": "CompositorAgent", "intent": "Composite illustrations into slideshow synced with narration, render the final audiobook."}
+    ]
+  },
+  {
+    "goal": "做一个《阿凡提智斗地主》新疆民间故事中文儿童有声绘本 — 新疆民族风插画,中文旁白",
+    "rationale": "新疆民间故事, 纯绘本. 中文旁白 → 民族风插画 → 中文配音 → 合成.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写阿凡提智斗地主的儿童旁白 — 地主想占农民地, 阿凡提用巧计反让地主认输."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成新疆民族风插画 — 阿凡提、毛驴、地主府邸、西域街市、红毯."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 趣味讲述, 突出阿凡提的机智."},
+      {"agent_id": "CompositorAgent", "intent": "合成民族风 slideshow, 输出中文《阿凡提》儿童绘本."}
+    ]
+  }
+]

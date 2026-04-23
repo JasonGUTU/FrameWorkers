@@ -1,0 +1,142 @@
+[
+  {
+    "goal": "Using this uploaded portrait of my daughter in her ballet tutu, make a narrated picture-book video adaptation of 'The Nutcracker' starring her as Clara — English narration, soft tchaikovsky-inspired piano BGM underneath — classical storybook illustration style",
+    "rationale": "Uploaded portrait anchors Clara to the daughter. Caption → enrich brief binding her to Clara → narration → illustrations with daughter as character reference → tchaikovsky-style BGM → English narrator → mix narration+BGM → composite. No subtitles wanted.",
+    "plan": [
+      {"agent_id": "IntakeImageAgent", "intent": "Describe the uploaded portrait of the daughter in her ballet tutu — facial features, tutu details, posture — so Clara appears consistently across scenes."},
+      {"agent_id": "BriefEnricherAgent", "intent": "Fuse the user goal (Nutcracker picture-book starring the daughter as Clara) with the portrait description into a unified brief: Clara locked to the daughter, classical storybook illustrations, English narration + tchaikovsky-piano BGM."},
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of 'The Nutcracker' adapted to picture-book length — one beat per scene, child-friendly pacing."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate classical storybook illustrations per scene, using the uploaded daughter portrait as character reference for Clara."},
+      {"agent_id": "MusicAgent", "intent": "Compose a soft piano BGM inspired by Tchaikovsky's Nutcracker motifs — delicate, threading through the narration."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a warm English voiceover suited for reading this fairytale aloud to a child."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix the English narration over the ducked piano BGM into a single audiobook track."},
+      {"agent_id": "CompositorAgent", "intent": "Composite the storybook illustrations into a slideshow, lay the mixed narration+BGM track, render the final picture-book video."}
+    ]
+  },
+  {
+    "goal": "用我上传的这张戴 sombrero 的小老鼠 mascot 插画做主角,把墨西哥民间故事《La Llorona》改写成适合孩子的有声绘本 — 西班牙语旁白、底铺 mariachi guitar BGM — 墨西哥民间艺术风插画",
+    "rationale": "上传 mascot 锁定主角老鼠. Caption → enrich → 西语旁白 → mariachi BGM → 西语配音 → 混音 → 合成. 无字幕.",
+    "plan": [
+      {"agent_id": "IntakeImageAgent", "intent": "描述上传的戴 sombrero 的小老鼠 mascot 插画 — 服饰、比例、色彩、姿态 — 作为主角视觉锚定."},
+      {"agent_id": "BriefEnricherAgent", "intent": "结合用户意图(La Llorona 改编成儿童西语绘本)与 mascot 描述形成统一 brief: 主角形象锁到小老鼠 mascot, 墨西哥民间艺术风插画, 西语旁白 + mariachi BGM."},
+      {"agent_id": "NarrationAgent", "intent": "用西班牙语写适合孩子的 La Llorona 改编旁白, 去除恐怖元素, 保留墨西哥民间风味, 每段对应一个场景."},
+      {"agent_id": "IllustrationAgent", "intent": "按西语旁白生成墨西哥民间艺术风插画, 主角始终使用 mascot 老鼠做 character reference."},
+      {"agent_id": "MusicAgent", "intent": "作一段 mariachi guitar BGM, 衬托墨西哥风情但不压过人声."},
+      {"agent_id": "NarratorAgent", "intent": "西语旁白配音, 温暖讲故事语调."},
+      {"agent_id": "AudioMixAgent", "intent": "把西语旁白与 mariachi BGM 混音, BGM ducked."},
+      {"agent_id": "CompositorAgent", "intent": "合成民间艺术风 slideshow, 铺混音, 输出西语墨西哥风儿童有声绘本."}
+    ]
+  },
+  {
+    "goal": "Using this uploaded oil painting of a brave young knight I commissioned, make a narrated picture-book video of an original medieval quest story 'The Knight and the Dragon's Riddle' — English narration, orchestral medieval BGM with harp and strings — medieval illuminated manuscript illustration style",
+    "rationale": "Uploaded knight painting locks protagonist. Caption → enrich → English narration → illuminated manuscript illustrations → orchestral BGM → English narrator → mix → composite.",
+    "plan": [
+      {"agent_id": "IntakeImageAgent", "intent": "Describe the uploaded oil painting of the young knight — armor style, facial features, pose, color palette — for character consistency across the story."},
+      {"agent_id": "BriefEnricherAgent", "intent": "Blend the user goal ('Knight and Dragon's Riddle' original quest audiobook) with the knight painting description into a unified brief: knight locked to the painting, illuminated manuscript style, English narration + orchestral medieval BGM."},
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of the original 'Knight and Dragon's Riddle' quest — one beat per scene, classic quest pacing with an ending riddle."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate illuminated manuscript style illustrations per scene, using the uploaded knight painting as character reference for the knight."},
+      {"agent_id": "MusicAgent", "intent": "Compose an orchestral medieval BGM with harp, strings, and light woodwinds — heroic, suited to an adventurous fable."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a resonant English voiceover with a storyteller-bard tone."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix English narration over the ducked orchestral BGM."},
+      {"agent_id": "CompositorAgent", "intent": "Composite the illuminated slideshow with the mixed audio, render the final quest audiobook."}
+    ]
+  },
+  {
+    "goal": "用上传的这张穿着宋朝书生长袍的我画像做主角,把苏轼《赤壁赋》改编成中文有声绘本 — 中文旁白、底铺古琴箫 BGM — 宋代水墨长卷风插画",
+    "rationale": "上传画像锁定书生主角(用户自己). Caption → enrich → 中文旁白 → 宋代水墨插画 → 古琴箫 BGM → 中文配音 → 混音 → 合成. 无字幕.",
+    "plan": [
+      {"agent_id": "IntakeImageAgent", "intent": "描述上传的宋朝书生长袍用户画像 — 面部特征、服饰细节、姿态 — 作为苏轼角色的视觉锚定."},
+      {"agent_id": "BriefEnricherAgent", "intent": "合并用户意图(赤壁赋中文绘本)与书生画像描述形成统一 brief: 苏轼角色锁到上传画像, 宋代水墨长卷风, 中文旁白 + 古琴箫 BGM."},
+      {"agent_id": "NarrationAgent", "intent": "把《赤壁赋》改编成散文式中文旁白脚本, 保留原文意境和名句, 每段对应一幅山水插画."},
+      {"agent_id": "IllustrationAgent", "intent": "生成宋代水墨长卷风插画, 苏轼形象始终使用用户画像做 character reference, 赤壁江月大场景."},
+      {"agent_id": "MusicAgent", "intent": "作一段古琴 + 箫 BGM, 低回悠远, 衬托赤壁夜景."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 文人雅士的散文吟诵调式."},
+      {"agent_id": "AudioMixAgent", "intent": "把中文旁白与古琴箫 BGM 混音, BGM ducked."},
+      {"agent_id": "CompositorAgent", "intent": "合成宋代水墨 slideshow, 铺混音, 输出中文《赤壁赋》有声绘本."}
+    ]
+  },
+  {
+    "goal": "Using this uploaded cartoon sketch of my nephew as a little astronaut, make a bedtime illustrated audiobook of an original kids' story 'Milo's Journey to the Moon' — English narration, soft dreamy synth BGM — kids' cartoon cel style illustrations matching the sketch",
+    "rationale": "Uploaded astronaut sketch defines protagonist Milo. Caption → enrich → narration → cartoon illustrations → dreamy synth BGM → English narrator → mix → composite.",
+    "plan": [
+      {"agent_id": "IntakeImageAgent", "intent": "Describe the uploaded cartoon sketch of the nephew in astronaut suit — suit details, face, color palette — so Milo stays consistent across scenes."},
+      {"agent_id": "BriefEnricherAgent", "intent": "Merge the user goal ('Milo's Journey to the Moon' kids bedtime audiobook) with the astronaut sketch description: Milo locked to the sketch, cartoon cel style, English narration + dreamy synth BGM."},
+      {"agent_id": "NarrationAgent", "intent": "Write a soothing English bedtime narration of 'Milo's Journey to the Moon' — short, calming sentences, one page per scene."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate cartoon cel style illustrations per scene, using the uploaded astronaut sketch as character reference for Milo."},
+      {"agent_id": "MusicAgent", "intent": "Compose soft dreamy synth BGM with drifting pads — calming, bedtime-appropriate."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a gentle, whispered English voiceover suited for a bedtime audiobook."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix the English narration over the very quiet dreamy synth BGM."},
+      {"agent_id": "CompositorAgent", "intent": "Composite cartoon illustrations into a slideshow, lay mixed audio, render final bedtime audiobook."}
+    ]
+  },
+  {
+    "goal": "用上传的这张我家金毛犬 Coco 的照片做主角,把 Coco 的一天改编成一个温暖的中文有声绘本 — 中文旁白、底铺木吉他 BGM — 手绘彩铅插画风",
+    "rationale": "上传照片锁定 Coco 形象. Caption → enrich → 中文旁白 → 彩铅插画 → 木吉他 BGM → 中文配音 → 混音 → 合成.",
+    "plan": [
+      {"agent_id": "IntakeImageAgent", "intent": "描述上传的金毛犬 Coco 照片 — 毛色、体型、表情、项圈细节 — 作为 Coco 主角的视觉锚定."},
+      {"agent_id": "BriefEnricherAgent", "intent": "合并用户意图(Coco 的一天温暖绘本)与 Coco 照片描述形成统一 brief: Coco 锁到上传照片, 彩铅插画风, 中文旁白 + 木吉他 BGM."},
+      {"agent_id": "NarrationAgent", "intent": "用中文写 Coco 的一天的旁白 — 清晨散步、追球、午睡、晚餐、主人回家, 温暖生活化的节奏."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成彩铅风插画, Coco 形象始终使用上传照片做 character reference."},
+      {"agent_id": "MusicAgent", "intent": "作一段轻快木吉他 BGM, 生活化温暖感."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 温暖日记式讲述."},
+      {"agent_id": "AudioMixAgent", "intent": "中文旁白与木吉他 BGM 混音, BGM ducked."},
+      {"agent_id": "CompositorAgent", "intent": "合成彩铅插画 slideshow, 铺混音, 输出中文 Coco 的一天有声绘本."}
+    ]
+  },
+  {
+    "goal": "Using this uploaded watercolor I painted of a mermaid with long teal hair, make an original illustrated audiobook 'The Mermaid's Song' — English narration, soft harp and ocean-strings BGM — watercolor dreamy illustration style matching the painting",
+    "rationale": "Uploaded mermaid watercolor defines protagonist and visual idiom. Caption → enrich → narration → matching watercolor illustrations → harp+strings BGM → English narrator → mix → composite.",
+    "plan": [
+      {"agent_id": "IntakeImageAgent", "intent": "Describe the uploaded watercolor of the teal-haired mermaid — hair color, tail details, facial features, watercolor technique — for character and style consistency."},
+      {"agent_id": "BriefEnricherAgent", "intent": "Combine the user goal ('Mermaid's Song' original audiobook) with the watercolor description: mermaid locked to painting, matching watercolor illustration style, English narration + harp/ocean-strings BGM."},
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of 'The Mermaid's Song' — lyrical, dreamy, one beat per ocean scene."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate watercolor illustrations matching the uploaded painting's style, using the mermaid painting as character reference."},
+      {"agent_id": "MusicAgent", "intent": "Compose soft harp + ocean-strings BGM — ethereal, watery, threaded through the narration."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a lyrical English voiceover suited for a dreamy tale."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix English narration over ducked harp/strings BGM."},
+      {"agent_id": "CompositorAgent", "intent": "Composite watercolor slideshow with mixed audio, render the final dreamy audiobook."}
+    ]
+  },
+  {
+    "goal": "用我妈上传的这张她年轻时在戏台上扮穆桂英的老照片做主角,把《穆桂英挂帅》这出戏改编成有声绘本视频 — 中文旁白、底铺京胡和锣鼓 BGM — 戏曲脸谱工笔重彩风插画",
+    "rationale": "上传老照片锁定穆桂英形象. Caption → enrich → 中文旁白 → 戏曲风插画 → 京胡锣鼓 BGM → 中文配音 → 混音 → 合成.",
+    "plan": [
+      {"agent_id": "IntakeImageAgent", "intent": "描述上传的母亲饰穆桂英老照片 — 头盔翎子、戏服花纹、姿态、照片质感 — 作为穆桂英视觉锚定."},
+      {"agent_id": "BriefEnricherAgent", "intent": "合并用户意图(穆桂英挂帅有声绘本)与老照片描述形成统一 brief: 穆桂英形象锁到母亲戏装老照片, 戏曲脸谱工笔重彩风, 中文旁白 + 京胡锣鼓 BGM."},
+      {"agent_id": "NarrationAgent", "intent": "用中文写穆桂英挂帅的旁白 — 从辕门斩子到穆桂英挂帅出征, 每段对应一幅戏曲场景插画, 评书风节奏."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成戏曲脸谱工笔重彩插画, 穆桂英形象始终使用老照片做 character reference, 刀马旦扮相."},
+      {"agent_id": "MusicAgent", "intent": "作一段京胡 + 锣鼓 BGM, 戏曲武场氛围."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 评书讲述, 突出穆桂英的英气."},
+      {"agent_id": "AudioMixAgent", "intent": "中文旁白与京胡锣鼓 BGM 混音, BGM ducked."},
+      {"agent_id": "CompositorAgent", "intent": "合成戏曲风 slideshow, 铺混音, 输出中文《穆桂英挂帅》有声绘本."}
+    ]
+  },
+  {
+    "goal": "Using this uploaded photo of my son with his teddy bear Barnaby, make a narrated picture-book video of an original story 'Barnaby's Big Adventure' where the teddy bear comes to life — English narration, playful xylophone + pizzicato strings BGM — kids' storybook illustration style",
+    "rationale": "Uploaded photo has both son and teddy. Caption → enrich → narration → illustrations using photo as anchor → playful BGM → English narrator → mix → composite.",
+    "plan": [
+      {"agent_id": "IntakeImageAgent", "intent": "Describe the uploaded photo of the son with his teddy bear Barnaby — the son's appearance, the teddy's look (fur color, expression, ribbon), their interaction — so both characters stay consistent."},
+      {"agent_id": "BriefEnricherAgent", "intent": "Blend the user goal ('Barnaby's Big Adventure' original kids audiobook) with the photo description: son and Barnaby locked to uploaded likenesses, kids' storybook illustration, English narration + playful xylophone/pizzicato BGM."},
+      {"agent_id": "NarrationAgent", "intent": "Write a playful English narration of 'Barnaby's Big Adventure' — teddy comes to life at night, exploring the house, one beat per scene."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate kids' storybook illustrations per scene, using the uploaded photo as character reference for both the son and Barnaby."},
+      {"agent_id": "MusicAgent", "intent": "Compose a playful xylophone + pizzicato strings BGM — whimsical, bouncy, suited to a toy coming alive."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a playful, gently dramatic English voiceover suited for reading aloud to a child."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix English narration over the ducked playful BGM."},
+      {"agent_id": "CompositorAgent", "intent": "Composite illustrations into a slideshow, lay mixed audio, render the final playful audiobook."}
+    ]
+  },
+  {
+    "goal": "用我自己上传的武士动漫人设立绘做主角,把《忠臣藏》(四十七浪人)故事做成日语有声绘本 — 日语旁白、底铺尺八和太鼓 BGM — 浮世绘戏剧化风插画",
+    "rationale": "上传武士立绘锁主角形象. Caption → enrich → 日语旁白 → 浮世绘插画 → 尺八太鼓 BGM → 日语配音 → 混音 → 合成.",
+    "plan": [
+      {"agent_id": "IntakeImageAgent", "intent": "描述上传的武士动漫人设立绘 — 甲胄样式、发型、面部特征、刀、色调 — 作为主角大石内藏助的视觉锚定."},
+      {"agent_id": "BriefEnricherAgent", "intent": "合并用户意图(忠臣藏日语绘本)与立绘描述形成统一 brief: 大石内藏助锁到上传立绘, 浮世绘戏剧化风, 日语旁白 + 尺八太鼓 BGM."},
+      {"agent_id": "NarrationAgent", "intent": "用日语写忠臣藏故事旁白 — 浅野内匠頭切腹、四十七浪人隐忍、雪夜讨入吉良邸, 每段对应一幅浮世绘."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成浮世绘戏剧化风插画, 大石内藏助形象始终使用上传立绘做 character reference."},
+      {"agent_id": "MusicAgent", "intent": "作一段尺八 + 太鼓 BGM — 庄严悲壮, 衬托忠臣藏的气节."},
+      {"agent_id": "NarratorAgent", "intent": "日语旁白配音, 物语吟诵的庄重语调."},
+      {"agent_id": "AudioMixAgent", "intent": "日语旁白与尺八太鼓 BGM 混音, BGM ducked."},
+      {"agent_id": "CompositorAgent", "intent": "合成浮世绘 slideshow, 铺混音, 输出日语《忠臣藏》有声绘本."}
+    ]
+  }
+]

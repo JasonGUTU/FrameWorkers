@@ -1,0 +1,122 @@
+[
+  {
+    "goal": "Using this uploaded portrait of an elderly lighthouse keeper, turn this short maritime folktale about him and a ghost ship into an illustrated audiobook",
+    "rationale": "User explicitly uploads a character portrait + asks for an illustrated audiobook of a maritime folktale featuring that character. Chain (c) + imgref: IntakeImageAgent registers the portrait; BriefEnricherAgent folds the visual description of the keeper into the brief; NarrationAgent writes a maritime storyteller script with the keeper's appearance baked into image_prompts, segmented; IllustrationAgent generates each illustration referencing the enriched description; NarratorAgent TTS + SRT; CompositorAgent slideshow. No Music/Ambience/Translation — user asked narrator + pictures only.",
+    "plan": [
+      {"agent_id": "IntakeImageAgent", "intent": "Register the uploaded elderly lighthouse keeper portrait as reference image"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Fold the keeper's visual description into the creative brief so the illustrated narration can anchor his appearance across scenes"},
+      {"agent_id": "NarrationAgent", "intent": "Rewrite the ghost-ship maritime folktale as a storyteller narrator script, segmented by scenes, with image_prompts that reference the uploaded keeper's features"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate maritime-moody illustrations per segment with consistent appearance of the uploaded keeper, anchored on first scene"},
+      {"agent_id": "NarratorAgent", "intent": "Weathered storyteller TTS + English SRT + segment timing"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + narrator audio + burn English subtitles, export mp4"}
+    ]
+  },
+  {
+    "goal": "用上传的这张小女孩照片作为主角，把她变成童话《爱丽丝漫游仙境》主角做成中文有声绘本 — 每段一幅梦幻水彩画",
+    "rationale": "用户上传了小女孩照片作为主角 + 要做成爱丽丝漫游仙境中文有声绘本 + 梦幻水彩。chain (c) + imgref：IntakeImageAgent 登记照片；BriefEnricherAgent 把照片视觉特征写进 brief；NarrationAgent 写中文童话旁白按章切段 + 每段画面 prompt 引用上传人物特征；Illustration 每段梦幻水彩锚照片特征；Narrator 中文 TTS；Compositor。不加 BGM。",
+    "plan": [
+      {"agent_id": "IntakeImageAgent", "intent": "登记用户上传的小女孩照片为主角参考"},
+      {"agent_id": "BriefEnricherAgent", "intent": "把小女孩照片的视觉特征整合进创作简报，方便下游插图一致"},
+      {"agent_id": "NarrationAgent", "intent": "将爱丽丝漫游仙境改为中文童话旁白脚本，主角贴合上传照片特征，按章切段"},
+      {"agent_id": "IllustrationAgent", "intent": "生成梦幻水彩插图每段，主角形象贴照片特征，第一张定调"},
+      {"agent_id": "NarratorAgent", "intent": "中文温柔女声 TTS + 中文 SRT + 每段时长"},
+      {"agent_id": "CompositorAgent", "intent": "拼水彩幻灯片 + mux 旁白 + 烧中文字幕"}
+    ]
+  },
+  {
+    "goal": "Using this uploaded photo of a tabby cat named Whiskers, make an illustrated audiobook of an original tale about her exploring a grandmother's attic — warm golden-hour illustration style",
+    "rationale": "User uploaded a specific tabby cat photo (Whiskers) + original attic-exploration tale + warm golden-hour style. Chain (c) + imgref: IntakeImage → BriefEnricher → Narration (adapts attic tale with Whiskers appearance in image_prompts) → Illustration (warm golden-hour style, Whiskers recognizable) → Narrator → Compositor.",
+    "plan": [
+      {"agent_id": "IntakeImageAgent", "intent": "Register the uploaded tabby cat Whiskers photo as protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Describe Whiskers' distinguishing markings and fold into the creative brief"},
+      {"agent_id": "NarrationAgent", "intent": "Rewrite the grandmother's-attic tale as a narrator script with Whiskers' tabby appearance in each image_prompt, warm golden-hour style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate golden-hour illustrations per segment with consistent Whiskers appearance, anchored on attic entrance scene"},
+      {"agent_id": "NarratorAgent", "intent": "Cozy storytime TTS + English SRT + segment timing"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + narrator audio + subtitles mp4"}
+    ]
+  },
+  {
+    "goal": "Using this uploaded portrait of a young samurai, make an illustrated audiobook of a short bushido tale about him facing a masked challenger at sunset — Japanese ink-brush illustration style",
+    "rationale": "User uploaded young samurai portrait + bushido tale + Japanese ink-brush style. Chain (c) + imgref: IntakeImage registers the portrait; BriefEnricher folds his visual into brief; Narration writes bushido narrator script with his appearance in image_prompts, ink-brush style; Illustration anchored on duel scene; Narrator; Compositor.",
+    "plan": [
+      {"agent_id": "IntakeImageAgent", "intent": "Register the uploaded young samurai portrait as main-character reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Fold the samurai's visual features (armor, crest, posture) into the creative brief"},
+      {"agent_id": "NarrationAgent", "intent": "Rewrite the bushido sunset-duel tale as a solemn narrator script with image_prompts referencing the uploaded samurai, Japanese ink-brush style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate ink-brush illustrations per segment with consistent samurai appearance, anchored on duel opening"},
+      {"agent_id": "NarratorAgent", "intent": "Solemn narrator TTS + English SRT + timing"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + narrator audio + burn English subtitles"}
+    ]
+  },
+  {
+    "goal": "用上传的这张年轻女巫角色设定图做主角，生成一段魔法学徒成长的中文有声绘本 — 暗色奇幻插画风",
+    "rationale": "用户上传年轻女巫设定图 + 要中文魔法学徒成长有声绘本 + 暗色奇幻。chain (c) + imgref：IntakeImage 登记女巫图；BriefEnricher 特征整合；Narration 写中文成长旁白 + 主角特征贴女巫图；Illustration 暗色奇幻锚；Narrator 中文女声；Compositor。",
+    "plan": [
+      {"agent_id": "IntakeImageAgent", "intent": "登记女巫角色设定图为主角参考"},
+      {"agent_id": "BriefEnricherAgent", "intent": "将女巫的服饰、发色、法器特征整合进创作简报"},
+      {"agent_id": "NarrationAgent", "intent": "写中文魔法学徒成长旁白脚本，主角贴女巫特征，分段，暗色奇幻画面风格"},
+      {"agent_id": "IllustrationAgent", "intent": "生成暗色奇幻插图每段，女巫形象保持一致，第一张魔法学院场景定调"},
+      {"agent_id": "NarratorAgent", "intent": "中文女声 TTS 旁白 + 中文 SRT + 段时长"},
+      {"agent_id": "CompositorAgent", "intent": "拼接暗色奇幻插图 + 旁白 + 中文字幕"}
+    ]
+  },
+  {
+    "goal": "Using this uploaded drawing of an anthropomorphic wolf knight, produce an illustrated audiobook of an original heroic tale about him defending a forest village — medieval fantasy illustration",
+    "rationale": "User uploaded anthropomorphic wolf knight drawing + heroic tale + medieval fantasy style. Chain (c) + imgref: IntakeImage registers; BriefEnricher folds visual into brief; Narration writes heroic narrator script with wolf knight in image_prompts; Illustration anchor; Narrator; Compositor.",
+    "plan": [
+      {"agent_id": "IntakeImageAgent", "intent": "Register the uploaded wolf knight drawing as protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Fold the wolf knight's armor, crest, fur color into the creative brief"},
+      {"agent_id": "NarrationAgent", "intent": "Rewrite the forest-village defense heroic tale as a narrator script with image_prompts referencing the wolf knight, medieval fantasy style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate medieval-fantasy illustrations per segment with consistent wolf knight appearance, anchored on village forest scene"},
+      {"agent_id": "NarratorAgent", "intent": "Heroic narrator TTS + English SRT + segment timing"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + narrator audio + subtitles composite"}
+    ]
+  },
+  {
+    "goal": "Using this uploaded photo of an astronaut in a spacesuit, create a narrated picture-book of her first solo lunar exploration discovering alien crystals — dreamy soft sci-fi pastel style",
+    "rationale": "User uploaded astronaut photo + lunar exploration alien crystals tale + dreamy soft sci-fi pastel. Chain (c) + imgref: IntakeImage registers; BriefEnricher folds visual; Narration writes exploration narrator script with astronaut appearance in image_prompts; Illustration anchor; Narrator; Compositor.",
+    "plan": [
+      {"agent_id": "IntakeImageAgent", "intent": "Register uploaded astronaut portrait as protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Fold the astronaut's spacesuit visual features into the creative brief"},
+      {"agent_id": "NarrationAgent", "intent": "Rewrite lunar-exploration alien-crystals tale as a narrator script with image_prompts referencing the astronaut, dreamy soft sci-fi pastel style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate soft sci-fi pastel illustrations per segment with consistent astronaut, anchored on lunar-surface opening"},
+      {"agent_id": "NarratorAgent", "intent": "Calm awe-filled narrator TTS + English SRT + timing"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + narrator audio + subtitles mp4"}
+    ]
+  },
+  {
+    "goal": "用上传的这张中国传统书生画像做主角，生成《聊斋志异》式狐仙奇遇短篇的中文有声绘本 — 水墨古风插画",
+    "rationale": "用户上传中国传统书生画像 + 聊斋式狐仙奇遇短篇 + 水墨古风。chain (c) + imgref：IntakeImage 登记；BriefEnricher 特征整合；Narration 写中文聊斋旁白 + 主角贴书生像；Illustration 水墨古风锚；Narrator 中文；Compositor。",
+    "plan": [
+      {"agent_id": "IntakeImageAgent", "intent": "登记中国传统书生画像为主角参考"},
+      {"agent_id": "BriefEnricherAgent", "intent": "整合书生的长衫、文房、神情特征进创作简报"},
+      {"agent_id": "NarrationAgent", "intent": "写聊斋式狐仙奇遇中文旁白脚本，主角贴书生形象，分段，水墨古风"},
+      {"agent_id": "IllustrationAgent", "intent": "生成水墨古风插图，每段书生形象一致，第一张书屋夜读定调"},
+      {"agent_id": "NarratorAgent", "intent": "中文男声古雅旁白 TTS + 中文 SRT + 段时长"},
+      {"agent_id": "CompositorAgent", "intent": "拼水墨插图 + 旁白 + 中文字幕"}
+    ]
+  },
+  {
+    "goal": "Using this uploaded sketch of an old wizard with a long white beard, produce an illustrated audiobook of an original Arthurian-era tale about him mentoring a young squire — Golden Age of Illustration painting style",
+    "rationale": "User uploaded old wizard sketch + Arthurian mentoring tale + Golden Age Illustration painting style. Chain (c) + imgref: IntakeImage; BriefEnricher folds wizard visual; Narration writes mentoring tale narrator script; Illustration anchors; Narrator; Compositor.",
+    "plan": [
+      {"agent_id": "IntakeImageAgent", "intent": "Register uploaded old wizard sketch as reference character"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Fold the wizard's beard, robe, staff features into the creative brief"},
+      {"agent_id": "NarrationAgent", "intent": "Rewrite the Arthurian mentoring tale as a classical narrator script with image_prompts referencing the uploaded wizard, Golden Age Illustration style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Golden-Age painting illustrations per segment with consistent wizard, anchored on castle-tower opening"},
+      {"agent_id": "NarratorAgent", "intent": "Noble storyteller TTS + English SRT + timing"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + narrator audio + subtitles mp4"}
+    ]
+  },
+  {
+    "goal": "Using this uploaded portrait of a fierce-eyed female pirate captain, turn this short swashbuckling tale about her hunt for a cursed treasure chest into an illustrated audiobook — richly detailed oil painting style",
+    "rationale": "User uploaded female pirate captain portrait + swashbuckling cursed-treasure tale + richly detailed oil painting style. Chain (c) + imgref: IntakeImage; BriefEnricher folds pirate visual; Narration narrator script with captain appearance; Illustration oil painting anchor; Narrator; Compositor.",
+    "plan": [
+      {"agent_id": "IntakeImageAgent", "intent": "Register uploaded female pirate captain portrait as protagonist reference"},
+      {"agent_id": "BriefEnricherAgent", "intent": "Fold the captain's eye color, hat, coat, scar features into the creative brief"},
+      {"agent_id": "NarrationAgent", "intent": "Rewrite the swashbuckling cursed-treasure tale as a spirited narrator script with image_prompts referencing the captain's portrait, oil-painting style"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate rich oil-painting illustrations per segment with consistent captain, anchored on ship-deck opening"},
+      {"agent_id": "NarratorAgent", "intent": "Spirited storyteller TTS + English SRT + segment timing"},
+      {"agent_id": "CompositorAgent", "intent": "Slideshow + narrator audio + subtitles composite"}
+    ]
+  }
+]

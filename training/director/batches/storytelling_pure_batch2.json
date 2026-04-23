@@ -198,5 +198,25 @@
       {"agent_id": "NarratorAgent", "intent": "中文旁白 TTS 每句、输出中文 SRT + 每段时长"},
       {"agent_id": "CompositorAgent", "intent": "拼接工笔彩绘图 + 旁白 + 中文字幕"}
     ]
+  },
+  {
+    "goal": "Make an illustrated audiobook of Aesop's 'The Boy Who Cried Wolf' — narrate in English with English subtitles burned in — rustic countryside woodcut illustration style",
+    "rationale": "User asks for illustrated audiobook of The Boy Who Cried Wolf, narrator English + English subtitles burned in. Subtitle language == narrator language, so NarratorAgent's source-language SRT is already what Compositor burns — no TranslationAgent needed. Chain (c) pure: NarrationAgent English narrator script + rustic woodcut segments; IllustrationAgent anchored on village-pasture; NarratorAgent English TTS + English SRT + segment timing; CompositorAgent slideshow + narrator audio + burn the English SRT Narrator already emitted. No Translation (subtitle language == narrator language), no Music / Ambience (user did not ask).",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Rewrite The Boy Who Cried Wolf as an English narrator script, rustic countryside woodcut illustration style, segmented by cry-wolf beats"},
+      {"agent_id": "IllustrationAgent", "intent": "Generate rustic woodcut illustrations per segment, anchored on village-pasture opening"},
+      {"agent_id": "NarratorAgent", "intent": "Warm storyteller English TTS + English SRT + per-segment timing"},
+      {"agent_id": "CompositorAgent", "intent": "Composite slideshow + narrator audio + burn the English SRT NarratorAgent emitted"}
+    ]
+  },
+  {
+    "goal": "把《守株待兔》这个中国成语寓言做成中文有声绘本 — 中文旁白、烧中文字幕 —— 水墨淡彩插画风",
+    "rationale": "用户指定《守株待兔》中文旁白 + **中文字幕**（烧旁白同语字幕）+ 水墨淡彩风。字幕语 = 旁白语，NarratorAgent 本就 emit 中文 SRT、Compositor 直接烧那一轨 —— 不用 TranslationAgent。Chain (c) 纯链：NarrationAgent 中文寓言旁白 + 水墨淡彩段；Illustration 锚；Narrator 中文 TTS + 中文 SRT；Compositor 烧 Narrator 自产的中文 SRT。不加 Translation（字幕语==旁白语），不加 Music / Ambience（用户没说）。",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "将《守株待兔》成语寓言改为中文旁白脚本，按『农夫劳作 / 兔子撞树 / 守株等待 / 荒废田地』切段，水墨淡彩风"},
+      {"agent_id": "IllustrationAgent", "intent": "生成水墨淡彩插图，第一张田垄兔树场景定调"},
+      {"agent_id": "NarratorAgent", "intent": "中文男声 TTS + 中文 SRT + 每段时长"},
+      {"agent_id": "CompositorAgent", "intent": "拼接水墨淡彩 + 中文旁白音 + 烧 Narrator 自产的中文字幕"}
+    ]
   }
 ]

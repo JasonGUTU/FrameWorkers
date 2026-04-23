@@ -1,0 +1,182 @@
+[
+  {
+    "goal": "Create an illustrated audiobook of the Scandinavian folktale 'The Three Billy Goats Gruff' — English narration, playful German oompah-style BGM — Scandinavian folk-art illustrations",
+    "rationale": "Picture-book + music, no ambience/subs. Narration → Scandinavian folk illustrations → oompah BGM → English narrator → mix → composite.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of Three Billy Goats Gruff — one beat per goat crossing, playful children's cadence."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Scandinavian folk-art illustrations per scene — bridge, goats (small/medium/large), troll beneath."},
+      {"agent_id": "MusicAgent", "intent": "Compose playful oompah-style BGM — tuba, accordion, rhythm lively, matching the goat-crossing tempo."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a fun-filled English voiceover suited for reading to young children."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix English narration over the ducked oompah BGM."},
+      {"agent_id": "CompositorAgent", "intent": "Composite Scandinavian illustrations into slideshow, lay mixed audio, render final picture-book video."}
+    ]
+  },
+  {
+    "goal": "做一个《三打白骨精》儿童中文有声绘本视频 — 中文旁白、底铺京剧锣鼓与铙钹 BGM — 国风水墨插画",
+    "rationale": "中文绘本 + 京剧 BGM, 无字幕. 中文旁白 → 国风水墨插画 → 京剧 BGM → 中文配音 → 混音 → 合成.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《三打白骨精》儿童旁白 — 白骨精变老妇、少女、老翁, 孙悟空三次棒打."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成国风水墨插画 — 山洞、白骨变形、孙悟空挥棒、师徒."},
+      {"agent_id": "MusicAgent", "intent": "作一段京剧武场 BGM — 锣鼓铙钹点缀打斗场景."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 评书式讲述, 戏剧化."},
+      {"agent_id": "AudioMixAgent", "intent": "中文旁白与京剧 BGM 混音, BGM ducked."},
+      {"agent_id": "CompositorAgent", "intent": "合成水墨 slideshow, 铺混音, 输出中文《三打白骨精》儿童绘本."}
+    ]
+  },
+  {
+    "goal": "Make an illustrated audiobook of the Italian folktale 'Pinocchio meets the Fox and the Cat' — English narration, playful accordion + mandolin BGM — painterly Italian Renaissance-inspired illustration style",
+    "rationale": "Italian tale + Italian BGM. Narration → Renaissance illustrations → accordion/mandolin BGM → English narrator → mix → composite.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of Pinocchio meeting the Fox and the Cat — one beat per scene, cautionary fairytale cadence."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Italian Renaissance-inspired painterly illustrations — village road, wooden Pinocchio, fox and cat disguises."},
+      {"agent_id": "MusicAgent", "intent": "Compose playful accordion + mandolin BGM with an Italian folk feel."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize an English voiceover with a whimsical Italian storyteller cadence."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix English narration over the ducked accordion/mandolin BGM."},
+      {"agent_id": "CompositorAgent", "intent": "Composite Renaissance illustrations into slideshow, lay mixed audio, render the audiobook."}
+    ]
+  },
+  {
+    "goal": "做一个《草原夜色》原创中文儿童有声绘本 — 小羊迷路后遇见牧羊犬送回家的温暖故事,中文旁白、底铺马头琴 BGM — 蒙古风格插画",
+    "rationale": "原创中文绘本 + 蒙族 BGM. 中文旁白 → 蒙古风插画 → 马头琴 BGM → 中文配音 → 混音 → 合成.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《草原夜色》旁白 — 小羊迷路夜色降临、牧羊犬闻香而来、一起回羊圈."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成蒙古风插画 — 草原、星空、小羊、牧羊犬、蒙古包、羊圈."},
+      {"agent_id": "MusicAgent", "intent": "作一段马头琴 BGM — 辽阔草原感, 温暖感伤交织."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 温柔哄睡语调."},
+      {"agent_id": "AudioMixAgent", "intent": "中文旁白与马头琴 BGM 混音, BGM ducked."},
+      {"agent_id": "CompositorAgent", "intent": "合成蒙古风 slideshow, 铺混音, 输出中文《草原夜色》睡前绘本."}
+    ]
+  },
+  {
+    "goal": "Create a narrated illustrated audiobook of 'The Little Mermaid' (Andersen, unabridged tragic ending) — English narration, orchestral strings + harp BGM — romantic-era seascape oil-painting illustration style",
+    "rationale": "Classic fairytale + orchestral BGM. Narration → oil-painting illustrations → strings+harp BGM → English narrator → mix → composite.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of Andersen's tragic Little Mermaid — one beat per scene, poignant fairytale cadence."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate romantic-era oil-painting illustrations — underwater palace, rescuing the prince, sea witch, wedding, sea foam ending."},
+      {"agent_id": "MusicAgent", "intent": "Compose orchestral strings + harp BGM — melancholic, aligned to the tale's tragic arc."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a tender, wistful English voiceover suited for Andersen's tragic tale."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix the English narration over the ducked strings/harp BGM."},
+      {"agent_id": "CompositorAgent", "intent": "Composite oil-painting slideshow with mixed audio, render the final audiobook."}
+    ]
+  },
+  {
+    "goal": "把《嫦娥奔月》做成中文有声绘本 — 中文旁白、底铺琵琶古筝合奏 BGM — 敦煌壁画飞天风插画",
+    "rationale": "中国神话 + 琵琶古筝 BGM. 中文旁白 → 敦煌飞天插画 → 琵琶古筝 BGM → 中文配音 → 混音 → 合成.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《嫦娥奔月》旁白 — 后羿射日、西王母赐仙药、嫦娥奔月、月宫相思."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成敦煌壁画飞天风插画 — 色彩浓艳、线条流畅、月宫金碧."},
+      {"agent_id": "MusicAgent", "intent": "作一段琵琶 + 古筝合奏 BGM — 飘逸出尘, 符合月宫神话."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 神话庄重讲述."},
+      {"agent_id": "AudioMixAgent", "intent": "中文旁白与琵琶古筝 BGM 混音."},
+      {"agent_id": "CompositorAgent", "intent": "合成敦煌风 slideshow, 铺混音, 输出中文《嫦娥奔月》有声绘本."}
+    ]
+  },
+  {
+    "goal": "Make a narrated picture-book video of the Tibetan legend of the White Yak — English narration, Tibetan singing bowls + low horn BGM — thangka painting style illustrations",
+    "rationale": "Tibetan legend + thangka + singing bowls. Narration → thangka illustrations → Tibetan BGM → English narrator → mix → composite.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of the White Yak legend — one beat per scene, mountain legend cadence."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate thangka-painting style illustrations — snowy peaks, nomad tents, white yak with mystic aura."},
+      {"agent_id": "MusicAgent", "intent": "Compose BGM with Tibetan singing bowls + low horns — meditative, mountain-atmospheric."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a resonant English voiceover with a reverent storyteller cadence."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narration over the ducked Tibetan BGM."},
+      {"agent_id": "CompositorAgent", "intent": "Composite thangka slideshow with mixed audio, render the final audiobook."}
+    ]
+  },
+  {
+    "goal": "把《梁山伯与祝英台》做成中文儿童有声绘本 — 中文旁白、底铺二胡协奏曲《梁祝》片段作 BGM — 江南丝竹写意插画",
+    "rationale": "中国爱情传说 + 梁祝二胡 BGM. 中文旁白 → 江南写意插画 → 梁祝二胡 BGM → 中文配音 → 混音 → 合成.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《梁祝》儿童版旁白 — 同窗、十八相送、投坟、化蝶."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成江南丝竹写意风插画 — 书院、长亭、双蝶飞舞."},
+      {"agent_id": "MusicAgent", "intent": "作一段基于《梁祝协奏曲》motif 的二胡 BGM — 凄美婉转."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 温柔讲述民间爱情传说."},
+      {"agent_id": "AudioMixAgent", "intent": "中文旁白与二胡 BGM 混音."},
+      {"agent_id": "CompositorAgent", "intent": "合成江南风 slideshow, 铺混音, 输出中文《梁祝》儿童绘本."}
+    ]
+  },
+  {
+    "goal": "Create an illustrated audiobook of an original bedtime story 'Owl's Music Box Nightlight' — English narration, soft wind-up music-box + celesta BGM — dreamy nursery illustration style",
+    "rationale": "Original bedtime + music box BGM. Narration → dreamy illustrations → music-box BGM → English narrator → mix → composite.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write a soothing English bedtime narration of 'Owl's Music Box Nightlight' — one beat per scene, calming lullaby cadence."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate dreamy nursery illustrations — moonlit owl, bedroom, music box with dancing figures."},
+      {"agent_id": "MusicAgent", "intent": "Compose soft wind-up music-box + celesta BGM — gentle, hypnotic."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a soft whispered English voiceover for a bedtime audiobook."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narration over very soft music-box BGM."},
+      {"agent_id": "CompositorAgent", "intent": "Composite dreamy nursery slideshow with mixed audio, render the bedtime audiobook."}
+    ]
+  },
+  {
+    "goal": "把《山海经》异兽故事里的《毕方》改编做成中文有声绘本 — 中文旁白、底铺古琴和埙合奏 BGM — 汉代帛画风插画",
+    "rationale": "山海经异兽 + 古琴埙 BGM. 中文旁白 → 汉帛画风插画 → 古琴埙 BGM → 中文配音 → 混音 → 合成.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写毕方异兽改编旁白 — 章莪之山、独足赤喙、衔火飞过, 神秘古奥感."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成汉帛画风插画 — 古朴线条, 山岩、独足火鸟毕方."},
+      {"agent_id": "MusicAgent", "intent": "作古琴 + 埙合奏 BGM — 苍古神秘, 远古神话氛围."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 古奥低沉的讲述语调."},
+      {"agent_id": "AudioMixAgent", "intent": "中文旁白与古琴埙 BGM 混音."},
+      {"agent_id": "CompositorAgent", "intent": "合成帛画风 slideshow, 铺混音, 输出中文《山海经 · 毕方》有声绘本."}
+    ]
+  },
+  {
+    "goal": "Make an illustrated audiobook of the Hawaiian legend of Nā-maka-o-Kahaʻi (water goddess) — English narration, traditional ukulele + island drums BGM — Polynesian-inspired illustrations",
+    "rationale": "Hawaiian legend + ukulele BGM. Narration → Polynesian illustrations → ukulele/drums BGM → English narrator → mix → composite.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of Nā-maka-o-Kahaʻi — one beat per scene, mythic Polynesian cadence."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate Polynesian-inspired illustrations — ocean goddess, volcanic sister, waves, island shores."},
+      {"agent_id": "MusicAgent", "intent": "Compose ukulele + traditional island drums BGM — warm, rhythmic, Pacific feel."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize an English voiceover with a Pacific storyteller cadence."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narration over ducked ukulele/drums BGM."},
+      {"agent_id": "CompositorAgent", "intent": "Composite Polynesian slideshow with mixed audio, render the final audiobook."}
+    ]
+  },
+  {
+    "goal": "把《宝莲灯》沉香救母的传说做成中文儿童有声绘本 — 中文旁白、底铺中国民乐合奏 BGM — 中国年画风插画",
+    "rationale": "中国神话 + 民乐合奏 BGM. 中文旁白 → 年画插画 → 民乐 BGM → 中文配音 → 混音 → 合成.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《宝莲灯》沉香救母的儿童版旁白 — 母子分离、沉香学艺、劈山救母."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成年画风插画 — 母子、华山、沉香劈山、团圆."},
+      {"agent_id": "MusicAgent", "intent": "作一段中国民乐合奏 BGM — 笛子、琵琶、扬琴, 紧张与温情交织."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 民间故事的亲切讲述."},
+      {"agent_id": "AudioMixAgent", "intent": "中文旁白与民乐合奏 BGM 混音."},
+      {"agent_id": "CompositorAgent", "intent": "合成年画风 slideshow, 铺混音, 输出中文《宝莲灯》儿童绘本."}
+    ]
+  },
+  {
+    "goal": "Create a narrated picture-book video of this original empathy-themed children's story 'The Quiet New Kid' about welcoming a shy new classmate — English narration, soft optimistic acoustic-guitar BGM — modern kids' book illustration style",
+    "rationale": "Empathy-themed original story + soft guitar BGM. Narration → modern kids' illustrations → acoustic guitar BGM → English narrator → mix → composite.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of 'The Quiet New Kid' — one beat per scene, empathic children's cadence."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate modern kids' book illustrations — classroom, shy new kid, peers, friendship forming."},
+      {"agent_id": "MusicAgent", "intent": "Compose soft optimistic acoustic-guitar BGM — warm, uplifting, quietly joyful."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a warm, empathic English voiceover suited to emotional children's stories."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narration over ducked acoustic-guitar BGM."},
+      {"agent_id": "CompositorAgent", "intent": "Composite modern kids illustration slideshow with mixed audio, render final audiobook."}
+    ]
+  },
+  {
+    "goal": "把《牛郎织女》七夕传说做成中文儿童有声绘本 — 中文旁白、底铺笛子古筝 BGM — 国风工笔彩绘插画",
+    "rationale": "七夕传说 + 笛子古筝 BGM. 中文旁白 → 工笔插画 → 笛子古筝 BGM → 中文配音 → 混音 → 合成.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "用中文写《牛郎织女》儿童旁白 — 天上织女下凡、牛郎相遇、王母划银河、鹊桥相会."},
+      {"agent_id": "IllustrationAgent", "intent": "按旁白生成工笔彩绘插画 — 牛郎、织女、银河、鹊桥."},
+      {"agent_id": "MusicAgent", "intent": "作一段笛子 + 古筝 BGM — 柔美浪漫, 突出鹊桥相会的七夕意境."},
+      {"agent_id": "NarratorAgent", "intent": "中文旁白配音, 温柔浪漫的传说讲述."},
+      {"agent_id": "AudioMixAgent", "intent": "中文旁白与笛子古筝 BGM 混音."},
+      {"agent_id": "CompositorAgent", "intent": "合成工笔 slideshow, 铺混音, 输出中文《牛郎织女》七夕绘本."}
+    ]
+  },
+  {
+    "goal": "Make a narrated picture-book video of this original adventure story 'Captain Finnegan's Whale Song' — English narration, sea shanty BGM (concertina + fiddle + male chorus) — old maritime watercolor illustration style",
+    "rationale": "Original maritime adventure + sea shanty BGM. Narration → maritime watercolor illustrations → sea shanty BGM → English narrator → mix → composite.",
+    "plan": [
+      {"agent_id": "NarrationAgent", "intent": "Write an English narration of 'Captain Finnegan's Whale Song' — one beat per scene, nautical adventure cadence."},
+      {"agent_id": "IllustrationAgent", "intent": "Generate old maritime watercolor illustrations — ship, captain, whales, stormy and calm seas."},
+      {"agent_id": "MusicAgent", "intent": "Compose sea shanty BGM — concertina, fiddle, occasional male chorus."},
+      {"agent_id": "NarratorAgent", "intent": "Synthesize a gruff but warm English voiceover suited to a seafaring tale."},
+      {"agent_id": "AudioMixAgent", "intent": "Mix narration over ducked sea shanty BGM."},
+      {"agent_id": "CompositorAgent", "intent": "Composite maritime watercolor slideshow with mixed audio, render the final audiobook."}
+    ]
+  }
+]
