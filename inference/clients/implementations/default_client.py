@@ -148,12 +148,131 @@ except ImportError:
     LITELLM_AVAILABLE = False
 
 
+def _parse_data_url(url: str) -> tuple[bytes, str]:
+    """``data:<mime>;base64,<payload>`` → ``(bytes, mime)``."""
+    if not url.startswith("data:"):
+        raise ValueError(f"expected data: URL, got {url[:40]!r}")
+    header, _, payload = url[5:].partition(",")
+    if ";base64" not in header:
+        raise ValueError(f"expected base64 data: URL, got header={header!r}")
+    mime = header.split(";", 1)[0]
+    return base64.b64decode(payload), mime
+
+
+def _openai_messages_to_genai(messages: List[Dict[str, Any]]):
+    """Convert OpenAI-format messages → ``(system_instruction, contents)``
+    for ``google.genai`` ``generate_content``.
+
+    Last system message wins (matches OpenAI semantics where there is
+    typically one system message). User parts (text + multimodal) are
+    flattened into a single ``Content(role="user", parts=[...])``.
+    """
+    from google.genai import types
+
+    system_instruction: Optional[str] = None
+    user_parts: list = []
+
+    for msg in messages:
+        role = msg.get("role")
+        content = msg.get("content")
+
+        if role == "system":
+            if isinstance(content, str):
+                system_instruction = content
+            elif isinstance(content, list):
+                texts = [
+                    p.get("text", "")
+                    for p in content
+                    if isinstance(p, dict) and p.get("type") == "text"
+                ]
+                system_instruction = "".join(texts)
+            continue
+
+        if role == "user":
+            if isinstance(content, str):
+                user_parts.append(types.Part.from_text(text=content))
+            elif isinstance(content, list):
+                for part in content:
+                    if not isinstance(part, dict):
+                        continue
+                    ptype = part.get("type")
+                    if ptype == "text":
+                        user_parts.append(
+                            types.Part.from_text(text=part.get("text", ""))
+                        )
+                    elif ptype == "image_url":
+                        url = (part.get("image_url") or {}).get("url", "")
+                        data, mime = _parse_data_url(url)
+                        user_parts.append(
+                            types.Part.from_bytes(data=data, mime_type=mime)
+                        )
+                    elif ptype == "input_audio":
+                        audio = part.get("input_audio") or {}
+                        data = base64.b64decode(audio.get("data", ""))
+                        fmt = audio.get("format", "wav")
+                        user_parts.append(
+                            types.Part.from_bytes(data=data, mime_type=f"audio/{fmt}")
+                        )
+                    else:
+                        raise ValueError(
+                            f"google_genai: unsupported content part type: {ptype!r}"
+                        )
+            else:
+                raise ValueError(
+                    f"google_genai: unsupported user content type: {type(content).__name__}"
+                )
+            continue
+
+        if role == "assistant":
+            # Multi-turn assistant priors aren't used in this codebase;
+            # if a caller starts using them, route as role="model".
+            if isinstance(content, str) and content:
+                user_parts.append(types.Part.from_text(text=content))
+            continue
+
+        raise ValueError(f"google_genai: unsupported message role: {role!r}")
+
+    contents = (
+        [types.Content(role="user", parts=user_parts)] if user_parts else []
+    )
+    return system_instruction, contents
+
+
+def _genai_response_to_openai_dict(response: Any, model: str) -> Dict[str, Any]:
+    """Wrap a ``google.genai`` response in the OpenAI ``chat.completions``
+    shape so downstream ``_format_response`` / ``_extract_assistant_text``
+    paths keep working unchanged."""
+    text = getattr(response, "text", "") or ""
+    usage_meta = getattr(response, "usage_metadata", None)
+    usage: Dict[str, Any] = {}
+    if usage_meta is not None:
+        usage = {
+            "prompt_tokens": getattr(usage_meta, "prompt_token_count", 0) or 0,
+            "completion_tokens": getattr(usage_meta, "candidates_token_count", 0)
+            or 0,
+            "total_tokens": getattr(usage_meta, "total_token_count", 0) or 0,
+        }
+    return {
+        "choices": [
+            {
+                "index": 0,
+                "message": {"role": "assistant", "content": text},
+                "finish_reason": "stop",
+            }
+        ],
+        "usage": usage,
+        "model": model,
+        "id": "",
+    }
+
+
 class LLMClient(BaseLLMClient):
     """Unified client with provider-based automatic routing."""
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._openai_clients: Dict[str, AsyncOpenAI] = {}
+        self._genai_clients: Dict[str, Any] = {}
 
     def _ensure_litellm(self) -> None:
         if not LITELLM_AVAILABLE:
@@ -217,6 +336,47 @@ class LLMClient(BaseLLMClient):
                 default_headers=default_headers or None,
             )
         return self._openai_clients[provider]
+
+    def _get_genai_client(self, provider: str):
+        """Lazy-construct a ``google.genai.Client`` per provider.
+
+        Uses ``provider_key_env`` / ``provider_base_url_env`` from
+        ``inference_runtime.yaml`` to resolve which env vars hold the
+        API key + custom gateway base URL.
+        """
+        if provider not in self._genai_clients:
+            from google import genai
+
+            key_env_name = self._provider_env_name(provider, "api_key")
+            base_url_env_name = self._provider_env_name(provider, "base_url")
+            api_key = self._api_key or os.getenv(key_env_name or "GEMINI_API_KEY")
+            base_url = self._base_url or os.getenv(base_url_env_name or "")
+            client_kwargs: Dict[str, Any] = {}
+            if api_key:
+                client_kwargs["api_key"] = api_key
+            if base_url:
+                client_kwargs["http_options"] = {"base_url": base_url}
+            self._genai_clients[provider] = genai.Client(**client_kwargs)
+        return self._genai_clients[provider]
+
+    def _build_genai_config(
+        self,
+        *,
+        system_instruction: Optional[str],
+        max_tokens: Optional[int],
+        json_mode: bool,
+    ):
+        from google.genai import types
+
+        config_kwargs: Dict[str, Any] = {}
+        if system_instruction:
+            config_kwargs["system_instruction"] = system_instruction
+        if json_mode:
+            config_kwargs["response_mime_type"] = "application/json"
+        resolved_max_tokens = max_tokens if max_tokens is not None else self.max_tokens
+        if resolved_max_tokens is not None:
+            config_kwargs["max_output_tokens"] = resolved_max_tokens
+        return types.GenerateContentConfig(**config_kwargs)
 
     @staticmethod
     def _format_response(response: Any) -> Dict[str, Any]:
@@ -348,20 +508,13 @@ class LLMClient(BaseLLMClient):
     ) -> Dict[str, Any]:
         """Async raw chat completion that honors provider routing.
 
-        Mirrors ``chat_json``'s two-branch dispatch:
-          * If the resolved provider routes to ``openai_sdk`` / ``gpt5_sdk``,
-            call ``AsyncOpenAI.chat.completions.create`` directly so that
-            multimodal messages and ``response_format`` flow through the
-            real OpenAI SDK (and provider-side gateways like cf_aig that
-            speak the OpenAI wire format).
-          * Otherwise fall back to litellm.
-
-        Without this branch, ``acall`` always required litellm AND would
-        hand provider-prefixed model names like
-        ``google-ai-studio/gemini-2.5-flash`` to ``litellm.acompletion``
-        which doesn't recognize them — breaking ``IntakeImageAgent``'s
-        vision call when the configured default model isn't a literal
-        OpenAI model id.
+        Mirrors ``chat_json``'s three-branch dispatch:
+          * ``openai_sdk`` / ``gpt5_sdk``: call
+            ``AsyncOpenAI.chat.completions.create`` directly so multimodal
+            messages and ``response_format`` flow through the OpenAI SDK.
+          * ``google_genai``: call ``google.genai`` async path (cf_aig
+            provider via the CF AI Gateway native-Gemini Worker).
+          * Anything else: fall back to litellm.
         """
         resolved_model, provider, client_type = self._resolve_model_and_client(model)
 
@@ -393,6 +546,26 @@ class LLMClient(BaseLLMClient):
             request_kwargs.update(local_kwargs)
             response = await openai_client.chat.completions.create(**request_kwargs)
             return self._format_response(response)
+
+        if client_type == "google_genai":
+            genai_client = self._get_genai_client(provider)
+            system_instruction, contents = _openai_messages_to_genai(messages)
+            response_format = kwargs.get("response_format")
+            json_mode = (
+                isinstance(response_format, dict)
+                and response_format.get("type") == "json_object"
+            )
+            config = self._build_genai_config(
+                system_instruction=system_instruction,
+                max_tokens=kwargs.get("max_tokens"),
+                json_mode=json_mode,
+            )
+            response = await genai_client.aio.models.generate_content(
+                model=resolved_model,
+                contents=contents,
+                config=config,
+            )
+            return _genai_response_to_openai_dict(response, resolved_model)
 
         # Non-OpenAI-SDK providers — fall back to litellm.
         self._ensure_litellm()
@@ -463,6 +636,27 @@ class LLMClient(BaseLLMClient):
                 raise ValueError(
                     f"chat_json: {last_err} (after 3 attempts)"
                 )
+
+            if client_type == "google_genai":
+                genai_client = self._get_genai_client(provider)
+                system_instruction, contents = _openai_messages_to_genai(messages)
+                config = self._build_genai_config(
+                    system_instruction=system_instruction,
+                    max_tokens=max_tokens,
+                    json_mode=True,
+                )
+                last_err = ""
+                for _attempt in range(3):
+                    response = await genai_client.aio.models.generate_content(
+                        model=resolved_model,
+                        contents=contents,
+                        config=config,
+                    )
+                    raw = (getattr(response, "text", "") or "").strip()
+                    if raw:
+                        return raw
+                    last_err = "model returned empty content"
+                raise ValueError(f"chat_json: {last_err} (after 3 attempts)")
 
             # Provider routes configured to LiteLLM — require JSON mode; no silent fallback without it.
             self._ensure_litellm()
@@ -536,6 +730,21 @@ class LLMClient(BaseLLMClient):
             )
             response = await openai_client.chat.completions.create(**request_kwargs)
             return response.choices[0].message.content or ""
+
+        if client_type == "google_genai":
+            genai_client = self._get_genai_client(provider)
+            system_instruction, contents = _openai_messages_to_genai(messages)
+            config = self._build_genai_config(
+                system_instruction=system_instruction,
+                max_tokens=max_tokens,
+                json_mode=False,
+            )
+            response = await genai_client.aio.models.generate_content(
+                model=resolved_model,
+                contents=contents,
+                config=config,
+            )
+            return getattr(response, "text", "") or ""
 
         self._ensure_litellm()
         litellm_kwargs: Dict[str, Any] = {}

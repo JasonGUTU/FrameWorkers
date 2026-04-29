@@ -11,7 +11,7 @@ DIRECTOR_AGENT_NAME = os.getenv("DIRECTOR_AGENT_NAME", "DirectorAgent")
 # Planner LLM (the one that produces the full plan array + optional replan).
 DIRECTOR_MEMORY_MODEL = os.getenv(
     "DIRECTOR_MEMORY_MODEL",
-    os.getenv("INFERENCE_DEFAULT_MODEL", "google-ai-studio/gemini-2.5-flash"),
+    os.getenv("INFERENCE_DEFAULT_MODEL", "gemini-2.5-flash"),
 )
 DIRECTOR_ROUTING_MODEL = os.getenv(
     "DIRECTOR_ROUTING_MODEL",

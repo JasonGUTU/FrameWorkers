@@ -13,18 +13,21 @@ Minimax for TTS**; flux is explicitly banned).
 
 | Model ID | Used by | Notes |
 |----------|---------|-------|
-| `google-ai-studio/gemini-2.5-flash` | All sub-agents + Director | Default via ``INFERENCE_DEFAULT_MODEL``. Routed through Cloudflare AI Gateway's OpenAI-compat endpoint (`openai_sdk` client_type), NOT LiteLLM. |
+| `gemini-2.5-flash` | All sub-agents + Director | Default via ``INFERENCE_DEFAULT_MODEL``. Routed through Cloudflare AI Gateway's native-Gemini Worker (`google_genai` client_type using the `google.genai` SDK). |
 | `gpt-5` / `gpt-5-mini` | Opt-in per caller | GPT-5 chat completion uses `max_completion_tokens` + `reasoning_effort`; handled by `_build_openai_chat_kwargs`. |
 | `gpt-4o` / `gpt-4o-mini` | Reserved | Listed in the built-in provider table for drop-in use. |
 
-The three transport paths inside `LLMClient`:
+The four transport paths inside `LLMClient`:
 
-- **`openai_sdk`** (default for Gemini via CF AI Gateway and for OpenAI) —
+- **`openai_sdk`** (default for OpenAI) —
   talks to `AsyncOpenAI.chat.completions.create`.
 - **`gpt5_sdk`** — same transport as `openai_sdk` but flips on `reasoning_effort`
   and the `max_completion_tokens` param name.
-- **`litellm`** — fallback when the resolved provider doesn't have a direct
-  OpenAI-compat route. The only path that requires `litellm` at runtime.
+- **`google_genai`** (default for Gemini via CF AI Gateway native-Gemini
+  Worker) — talks to `google.genai.Client.aio.models.generate_content` with
+  a custom `http_options.base_url`.
+- **`litellm`** — fallback when the resolved provider doesn't match any
+  of the above.
 
 ## Media generation (via `inference/generation`)
 
@@ -84,5 +87,5 @@ MIME + size caps (inline video capped at ~20 MB — Gemini's limit).
   `inference_runtime.yaml` under `provider_key_env`).
 - **`inference_runtime.yaml`** is the canonical routing file. It declares
   `model_provider` (model → provider) and `provider_client` (provider →
-  `openai_sdk` / `gpt5_sdk` / `litellm`) so the built-in table and
-  client-type defaults can be overridden per deployment.
+  `openai_sdk` / `gpt5_sdk` / `google_genai` / `litellm`) so the built-in
+  table and client-type defaults can be overridden per deployment.

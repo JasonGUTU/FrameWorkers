@@ -20,7 +20,7 @@ Chain (no Plan Stack, no director — just descriptor.build_input + agent.run):
 
 Env (auto-loaded from .env):
   FAL_API_KEY         — real fal backends for audio + transcription
-  CF_AIG_TOKEN        — chat LLM (gemini-2.5-flash via CF AI Gateway)
+  GEMINI_API_KEY      — chat LLM (gemini-2.5-flash via CF AI Gateway native-Gemini Worker)
   FW_USE_REAL_MEDIA_GEN=1 is forced on so music/ambience/compositor use real backends.
 """
 

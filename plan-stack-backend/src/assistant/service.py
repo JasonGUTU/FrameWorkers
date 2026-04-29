@@ -38,7 +38,7 @@ class AssistantService:
         self.agent_registry = get_agent_registry()
         self.pipeline_llm_client = PipelineLLMClient()
         _default_model = os.getenv(
-            "INFERENCE_DEFAULT_MODEL", "google-ai-studio/gemini-2.5-flash"
+            "INFERENCE_DEFAULT_MODEL", "gemini-2.5-flash"
         ).strip()
         self.input_package_model = (
             os.getenv("ASSISTANT_INPUT_PACKAGE_MODEL", "").strip() or _default_model

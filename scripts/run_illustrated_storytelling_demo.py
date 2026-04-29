@@ -17,8 +17,8 @@ Chain (no Plan Stack, no director — just descriptor.build_input + agent.run):
        compositor_final.mp4
 
 Env (auto-loaded from .env):
-  CF_AIG_TOKEN        — chat LLM (gemini-2.5-flash via CF AI Gateway) for
-                        NarrationAgent's creative pass.
+  GEMINI_API_KEY      — chat LLM (gemini-2.5-flash via CF AI Gateway
+                        native-Gemini Worker) for NarrationAgent's creative pass.
   INFERENCE_IMAGE_MODEL — Gemini image-gen model (defaults to
                         ``google/gemini-2.5-flash-image``). Used by
                         IllustrationAgent for text-to-image anchor + the

@@ -82,7 +82,7 @@ async def _run_case(label: str, story_payload: dict | str) -> dict:
 
 
 async def _main() -> int:
-    if os.getenv("OPENAI_API_KEY") is None and os.getenv("CF_AIG_TOKEN") is None:
+    if os.getenv("OPENAI_API_KEY") is None and os.getenv("GEMINI_API_KEY") is None:
         print(
             "ERROR: no LLM credentials in env. Run with: "
             "`set -a && source .env && set +a` first.",

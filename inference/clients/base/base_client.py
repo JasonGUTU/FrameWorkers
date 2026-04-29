@@ -81,11 +81,18 @@ class BaseLLMClient(ABC):
             for provider, key_value in api_keys.items():
                 if key_value in (None, ""):
                     continue
+                # Skip unresolved ``${VAR}`` placeholders — ConfigLoader
+                # leaves the literal text when the source env var is unset,
+                # and writing that into os.environ pollutes downstream
+                # SDKs that probe env vars by name.
+                key_str = str(key_value)
+                if key_str.startswith("${") and key_str.endswith("}"):
+                    continue
                 env_name = provider_key_env.get(
                     provider, f"{str(provider).upper()}_API_KEY"
                 )
                 if not os.getenv(env_name):
-                    os.environ[env_name] = str(key_value)
+                    os.environ[env_name] = key_str
 
         return routing if isinstance(routing, dict) else {}
 

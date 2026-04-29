@@ -22,11 +22,14 @@ _MODEL_PROVIDER: dict[str, str] = {
     "gpt-5-mini": "openai",
     "gpt-4o": "openai",
     "gpt-4o-mini": "openai",
-    # Google (AI Studio) — the default LLM for the whole project
-    # (``INFERENCE_DEFAULT_MODEL`` in ``.env``). The legacy ``gemini-pro`` /
+    # Google (Gemini) — the default LLM for the whole project
+    # (``INFERENCE_DEFAULT_MODEL`` in ``.env``). Routed via cf_aig provider
+    # (CF AI Gateway native-Gemini Worker, google_genai client_type) per
+    # ``inference_runtime.yaml``; the bare ``gemini-2.5-flash`` id is what
+    # google.genai SDK accepts. The legacy ``gemini-pro`` /
     # ``gemini-pro-vision`` ids were removed — Google deprecated them in
     # 2024 and no caller references them.
-    "google-ai-studio/gemini-2.5-flash": "google",
+    "gemini-2.5-flash": "cf_aig",
 }
 
 
