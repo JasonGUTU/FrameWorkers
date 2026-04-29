@@ -1,52 +1,51 @@
-"""GRPO reward functions for director-routing LoRA.
+"""Programmatic reward function for GRPO routing distillation.
 
-Reward logic mirrors evals/director_routing eval scoring so RL optimizes
-directly against what eval measures:
+Standard binary + additive design (DeepSeek-R1 / DeepSeekMath template):
 
-  - JSON parse failure             → 0.0
-  - Any agent_id ∉ AGENT_REGISTRY  → 0.0
-  - Duplicate agent_id in plan     → 0.0
-  - Otherwise: reward = step_accuracy = correct_positions / total_positions
-    where total = max(len(actual), len(expected)) to penalize length mismatch.
+    R = R_format + R_accuracy           ∈ {0.0, 1.0, 2.0}
+    R_format   = 1 if completion parses to a valid plan with all-known
+                 agent_ids and no duplicates, else 0
+    R_accuracy = 1 if parsed chain perfectly matches expected_chain
+                 (set-aware slots), else 0
 
-Full chain match yields reward == 1.0. This is the single scalar fed to GRPO;
-no reward shaping beyond malformed-output cliff.
+GRPO trainer reads only ``RewardBreakdown.score``; the other fields exist
+purely for training-dynamics logging (format-failure rates by category,
+truncation rate, perfect-chain rate).
 
-Pure-python: no torch/transformers deps. Import from train_grpo.py at runtime.
+Pure Python, no torch dependency. Self-tested at module bottom.
 """
 from __future__ import annotations
 
 import json
 import re
-from typing import Any
+from dataclasses import dataclass
 
-
-# ---------------------------------------------------------------------------
-# Completion parsing
-# ---------------------------------------------------------------------------
 
 _JSON_SPAN_RE = re.compile(r"\{.*\}", re.DOTALL)
 
 
-def _extract_json_object(text: str) -> dict | None:
-    """Find the outermost JSON object in the completion string.
+@dataclass
+class RewardBreakdown:
+    score: float                 # what GRPO loss reads
+    did_parse: bool              # JSON object recoverable from completion
+    all_agents_known: bool       # every agent_id in allowed whitelist
+    no_duplicate: bool           # each agent_id appears at most once
+    chain_perfect: bool          # set-aware exact full-chain match
+    got_truncated: bool          # rollout hit max_new_tokens (no EOS / no JSON close)
+    n_correct: int               # diagnostic: correctly-placed slots (when format_ok)
+    n_expected: int
+    n_actual: int
 
-    Robust to leading/trailing whitespace, markdown fences, or pre/post prose:
-    tries strict parse first, then a greedy {...} span match.
-    """
+
+def _extract_json_object(text: str) -> dict | None:
     text = text.strip()
-    # Strip common markdown fences
     if text.startswith("```"):
         text = re.sub(r"^```(?:json)?\s*", "", text)
         text = re.sub(r"\s*```$", "", text)
-
-    # Strict
     try:
         return json.loads(text)
     except json.JSONDecodeError:
         pass
-
-    # Greedy span fallback
     m = _JSON_SPAN_RE.search(text)
     if not m:
         return None
@@ -57,17 +56,13 @@ def _extract_json_object(text: str) -> dict | None:
 
 
 def parse_plan(completion: str) -> list[str] | None:
-    """Extract the plan chain (list of agent_id strings) from a completion.
-
-    Returns None if the completion is malformed / missing plan / bad shape.
-    """
     obj = _extract_json_object(completion)
     if not isinstance(obj, dict):
         return None
     plan = obj.get("plan")
     if not isinstance(plan, list) or not plan:
         return None
-    chain = []
+    chain: list[str] = []
     for step in plan:
         if not isinstance(step, dict):
             return None
@@ -78,104 +73,134 @@ def parse_plan(completion: str) -> list[str] | None:
     return chain
 
 
-# ---------------------------------------------------------------------------
-# Reward
-# ---------------------------------------------------------------------------
-
-def score_plan(
-    actual_chain: list[str] | None,
-    expected_chain: list[str],
-    allowed_agents: set[str],
-) -> float:
-    """Compute reward ∈ [0, 1] for one (actual, expected) pair.
-
-    - actual_chain None → 0.0 (malformed completion)
-    - unknown agent_id → 0.0 (catalog violation)
-    - duplicate agent_id → 0.0 (plan schema violation: each agent ≤ 1 per plan)
-    - else: correct_positions / max(len(actual), len(expected))
-    """
-    if actual_chain is None:
-        return 0.0
-    if any(a not in allowed_agents for a in actual_chain):
-        return 0.0
-    if len(set(actual_chain)) != len(actual_chain):
-        return 0.0
-
-    correct = 0
-    for i, agent in enumerate(actual_chain):
-        if i < len(expected_chain) and agent == expected_chain[i]:
-            correct += 1
-    total = max(len(actual_chain), len(expected_chain))
-    return correct / total if total > 0 else 0.0
+def _slot_matches(agent: str, slot) -> bool:
+    if isinstance(slot, list):
+        return agent in slot
+    return agent == slot
 
 
 def compute_reward(
     completion_text: str,
-    expected_chain: list[str],
-    allowed_agents: set[str],
-) -> float:
-    """Top-level: string completion + expected GT → scalar reward."""
-    actual = parse_plan(completion_text)
-    return score_plan(actual, expected_chain, allowed_agents)
+    expected_chain: list,
+    allowed_agents: set,
+    eos_hit: bool = True,
+) -> RewardBreakdown:
+    """Format gate + chain-accuracy partial credit + perfect bonus.
 
+    R = 0.5 * pos_correct + 0.5 * float(chain_perfect)  ∈ [0, 1]
 
-# ---------------------------------------------------------------------------
-# TRL GRPOTrainer reward-function wrapper
-# ---------------------------------------------------------------------------
+    Format gate: parse fail OR unknown agent_id OR duplicate agent → R = 0
+    (SFT base never produces format errors empirically — gate just prevents
+    GRPO from drifting into nonsense output during exploration).
 
-def make_grpo_reward_fn(allowed_agents: set[str]):
-    """Return a reward callable compatible with trl GRPOTrainer's reward_funcs.
-
-    Signature: (prompts, completions, **kwargs) -> list[float]
-    `expected_chain` comes in via **kwargs as dataset column passthrough.
-
-    `completions` may be either:
-      - list[str]                             (plain text)
-      - list[list[{"role", "content"}]]       (chat-formatted)
+    Partial credit avoids σ=0 collapse when 4 rollouts all hit the same
+    binary {0,1} bucket. Perfect bonus prevents satisficing (model learning
+    "stable 4/5" instead of "risk-it 5/5") — perfect rewards 2.5× more than
+    near-miss 4/5 (1.0 vs 0.4).
     """
-    def reward_fn(prompts, completions, **kwargs):
-        expected = kwargs.get("expected_chain")
-        if expected is None:
-            raise KeyError("reward_fn needs `expected_chain` column in dataset")
-        rewards = []
-        for completion, exp in zip(completions, expected):
-            if isinstance(completion, list):
-                text = completion[-1]["content"]
-            else:
-                text = str(completion)
-            rewards.append(compute_reward(text, exp, allowed_agents))
-        return rewards
+    actual = parse_plan(completion_text)
+    n_exp = len(expected_chain)
 
-    reward_fn.__name__ = "chain_match_reward"
-    return reward_fn
+    if actual is None:
+        return RewardBreakdown(
+            score=0.0, did_parse=False,
+            all_agents_known=False, no_duplicate=False, chain_perfect=False,
+            got_truncated=not eos_hit,
+            n_correct=0, n_expected=n_exp, n_actual=0,
+        )
+
+    all_known = all(a in allowed_agents for a in actual)
+    no_dup = len(set(actual)) == len(actual)
+
+    # Format gate — agent_id wrong / duplicate → 0
+    if not (all_known and no_dup):
+        return RewardBreakdown(
+            score=0.0, did_parse=True,
+            all_agents_known=all_known, no_duplicate=no_dup,
+            chain_perfect=False, got_truncated=False,
+            n_correct=0, n_expected=n_exp, n_actual=len(actual),
+        )
+
+    # Format pass — score on chain accuracy
+    n_correct = sum(
+        1 for i, a in enumerate(actual)
+        if i < n_exp and _slot_matches(a, expected_chain[i])
+    )
+    chain_perfect = (len(actual) == n_exp and n_correct == n_exp)
+
+    pos_correct = n_correct / max(len(actual), n_exp) if n_exp > 0 else 0.0
+    score = 0.5 * pos_correct + 0.5 * (1.0 if chain_perfect else 0.0)
+
+    return RewardBreakdown(
+        score=score,
+        did_parse=True,
+        all_agents_known=all_known,
+        no_duplicate=no_dup,
+        chain_perfect=chain_perfect,
+        got_truncated=False,
+        n_correct=n_correct,
+        n_expected=n_exp,
+        n_actual=len(actual),
+    )
 
 
 # ---------------------------------------------------------------------------
-# Self-test (run: python grpo_reward.py)
+# Self-test
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    ALLOWED = {
-        "IntakeTextAgent", "IntakeVideoAgent", "StoryAgent", "ScreenplayAgent",
-        "KeyFrameAgent", "VideoAgent", "AmbienceAgent", "MusicAgent",
-        "AudioMixAgent", "CompositorAgent", "VideoAnalysisAgent", "HighlightAgent",
-    }
-    EXPECTED = [
-        "IntakeTextAgent", "StoryAgent", "ScreenplayAgent", "KeyFrameAgent",
-        "VideoAgent", "AmbienceAgent", "MusicAgent", "AudioMixAgent",
-        "CompositorAgent",
-    ]
+    ALLOWED = {"StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent",
+               "MusicAgent", "AmbienceAgent", "AudioMixAgent", "CompositorAgent"}
+    EXPECTED = ["StoryAgent", "ScreenplayAgent", "VideoAgent"]
 
     cases = [
-        ("exact match", json.dumps({"rationale": "ok", "plan": [{"agent_id": a, "intent": "x"} for a in EXPECTED]}), 1.0),
-        ("missing one",   json.dumps({"rationale": "ok", "plan": [{"agent_id": a, "intent": "x"} for a in EXPECTED[:-1]]}), 8/9),
-        ("wrong first",   json.dumps({"rationale": "ok", "plan": [{"agent_id": a, "intent": "x"} for a in ["VideoAnalysisAgent"]+EXPECTED[1:]]}), 8/9),  # 8 slots right, 1 wrong
-        ("unknown agent", json.dumps({"rationale": "ok", "plan": [{"agent_id": "FooAgent", "intent": "x"}]}), 0.0),
-        ("duplicate",     json.dumps({"rationale": "ok", "plan": [{"agent_id": "IntakeTextAgent", "intent": "x"}, {"agent_id": "IntakeTextAgent", "intent": "x"}]}), 0.0),
-        ("malformed",     "not json at all", 0.0),
-        ("markdown fence", "```json\n" + json.dumps({"rationale": "ok", "plan": [{"agent_id": a, "intent": "x"} for a in EXPECTED]}) + "\n```", 1.0),
+        ("perfect", EXPECTED,
+         json.dumps({"rationale": "ok", "plan": [
+             {"agent_id": "StoryAgent", "intent": "x"},
+             {"agent_id": "ScreenplayAgent", "intent": "x"},
+             {"agent_id": "VideoAgent", "intent": "x"},
+         ]}), 2.0),
+        ("format ok content wrong", EXPECTED,
+         json.dumps({"rationale": "ok", "plan": [
+             {"agent_id": "StoryAgent", "intent": "x"},
+             {"agent_id": "MusicAgent", "intent": "x"},
+             {"agent_id": "VideoAgent", "intent": "x"},
+         ]}), 1.0),
+        ("unknown agent", EXPECTED,
+         json.dumps({"rationale": "ok", "plan": [
+             {"agent_id": "StoryAgent", "intent": "x"},
+             {"agent_id": "FooAgent", "intent": "x"},
+         ]}), 0.0),
+        ("duplicate", EXPECTED,
+         json.dumps({"rationale": "ok", "plan": [
+             {"agent_id": "StoryAgent", "intent": "x"},
+             {"agent_id": "StoryAgent", "intent": "x"},
+         ]}), 0.0),
+        ("malformed json", EXPECTED, "not json at all", 0.0),
+        ("markdown fence", EXPECTED,
+         "```json\n" + json.dumps({"rationale": "ok", "plan": [
+             {"agent_id": "StoryAgent", "intent": "x"},
+             {"agent_id": "ScreenplayAgent", "intent": "x"},
+             {"agent_id": "VideoAgent", "intent": "x"},
+         ]}) + "\n```", 2.0),
+        ("set-slot perfect",
+         ["StoryAgent", ["MusicAgent", "AmbienceAgent"], "VideoAgent"],
+         json.dumps({"rationale": "ok", "plan": [
+             {"agent_id": "StoryAgent", "intent": "x"},
+             {"agent_id": "AmbienceAgent", "intent": "x"},
+             {"agent_id": "VideoAgent", "intent": "x"},
+         ]}), 2.0),
+        ("length mismatch (format ok, accuracy 0)", EXPECTED,
+         json.dumps({"rationale": "ok", "plan": [
+             {"agent_id": "StoryAgent", "intent": "x"},
+         ]}), 1.0),
     ]
-    for name, completion, expected_reward in cases:
-        got = compute_reward(completion, EXPECTED, ALLOWED)
-        marker = "✓" if abs(got - expected_reward) < 1e-6 else "✗"
-        print(f"{marker} {name:20s}  expected={expected_reward:.4f}  got={got:.4f}")
+
+    n_pass = 0
+    for name, exp, completion, want in cases:
+        bd = compute_reward(completion, exp, ALLOWED, eos_hit=True)
+        ok = abs(bd.score - want) < 1e-6
+        marker = "✓" if ok else "✗"
+        print(f"{marker} {name:42s} expected={want:.1f}  got={bd.score:.1f}")
+        if ok: n_pass += 1
+    print(f"\n{n_pass}/{len(cases)} passed")

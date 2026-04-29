@@ -64,38 +64,11 @@
     <!-- ── Director Routing 评测部分 ── -->
     <div class="eval-section-header">
       <h2>🧪 Director Routing 评测</h2>
-      <p style="color:#bbb;font-size:.95em">Upfront planner 评测：测试 DirectorAgent 一次性产出完整 pipeline 的能力。每条用例定义期望的 agent 调用序列（IntakeTextAgent 开始 → 终止 agent 结束），对比 <code>plan_pipeline_upfront</code> 的输出数组是否覆盖/顺序一致。</p>
     </div>
 
     <div id="evalLoading">Loading eval results ...</div>
     <div id="evalError"></div>
     <div id="evalContent" style="display:none">
-
-      <div class="eval-card">
-        <h2>数据集</h2>
-        <p class="mono-small">GT 原则：IntakeTextAgent first · Intake 前置 · Audio 三件套顺序不限 · BriefEnricher 仅在有图片输入时</p>
-      </div>
-
-
-      <div class="eval-card">
-        <h2>🧪 Director Routing 评测约定</h2>
-        <p style="color:#ccc;font-size:.9em;margin-bottom:14px">
-          Director prompt 只保留框架级硬约束（exact agent_id / flat sequential / each agent ≤ 1 次 / PENDING tail 可改 / <code>[upstream_input_rejected]</code> 协议解析），<b>不带任何 pipeline 模板或 routing 启发</b>。LLM 编排完全靠 sub-agent descriptor 自身的 catalog（purpose / inputs / output）+ stack memory。
-        </p>
-
-        <div style="background:rgba(96,165,250,.06);border:1px dashed rgba(96,165,250,.3);border-radius:6px;padding:10px 14px;margin-bottom:14px;font-size:.85em;color:#ccc">
-          所以这一栏看到的分数反映的就是 <b>catalog 单独驱动的能力</b>。想拉分要回到 sub-agent descriptor 或 eval 数据层动，<b>不要回到 prompt 层堆 routing 模板</b>（之前那条路验证过会让 catalog ↔ prompt 互相打架）。
-        </div>
-
-        <h3>评测口径</h3>
-        <ul style="color:#bbb;font-size:.88em;margin:6px 0 0 20px;line-height:1.7">
-          <li><b>数据集</b>：<code>evals/director_routing/eval_cases.json</code>（10 个类别，每条 user_goal + expected_chain）</li>
-          <li><b>判分</b>：<code>actual[i] in expected[i]</code> at every slot —— 每个 slot 是允许的 agent 集合，positional set match</li>
-          <li><b>chain_correct</b>：长度匹配且每一格都命中。<b>step accuracy</b>：每个位置自己的命中率（独立看）。<b>edit distance</b>：set-aware Levenshtein。</li>
-          <li>下方 <b>"选择运行"</b> dropdown 自动列 <code>Runtime/eval_routing/*.json</code>，每条记录都展示总览 / 分类 / 逐步位置 / 失败模式。</li>
-        </ul>
-      </div>
-
 
       <div class="eval-card">
         <h2>选择运行 <span id="runInfo" style="color:#999;font-size:.85em;margin-left:12px;font-weight:normal"></span></h2>
@@ -165,7 +138,7 @@
   function bar(pct) { return `<div class="pct-bg"><div class="pct-fill ${pctClass(pct)}" style="width:${Math.max(1,pct)}%"></div></div>`; }
   function vClass(v) { return v >= 80 ? 'green' : v < 40 ? 'red' : ''; }
 
-  // 10 active categories (post-2026-04 cleanup; trans_trans / transcribe / analysis / inpaint / voice 已从 eval 移除)
+  // 11 active categories (post-2026-04 cleanup; trans_trans / transcribe / analysis / inpaint / voice 已从 eval 移除)
   const CATEGORY_DESC = {
     'cr': '纯创作：brief → finished film',
     'intake_img': '带参考图：用户上传图片作为主角/背景/舞台',
@@ -175,6 +148,7 @@
     'style': '风格迁移：各种视觉风格',
     'extend': '视频延长：续写/补帧/慢镜头',
     'highlight': '精彩集锦：narrative/kinetic 选段',
+    'storytelling': '插图叙事：narrator 旁白 + 静态插图幻灯片（picture book / audiobook）',
     'complex': '复合任务：多 sub-agent 链组合',
     'edge': '边缘 case：空/乱码/无关输入',
   };
@@ -195,9 +169,19 @@
       [(m.elapsed_s||0)+'s', `耗时 (${m.workers||'?'} workers)`, ''],
     ].map(([val,lbl,cls])=>`<div class="eval-stat-box"><div class="eval-stat-value ${cls}">${val}</div><div class="eval-stat-label">${lbl}</div></div>`).join('');
 
+    // Ordered prefix match — longer/more specific prefixes first so variants like
+    // storytelling_music_01 / storytelling_longstory_03 / cr_longstory_02 collapse
+    // into 'storytelling' / 'cr' rather than fragmenting into 10+ sub-buckets.
+    const CATEGORY_PREFIXES = ['intake_txt','intake_img','sub_vid','trans_trans_sub','trans_trans',
+      'storytelling','sub','bilingual','style','inpaint','extend','analysis','highlight',
+      'transcribe','voice','translate','complex','edge','cr'];
+    function categoryOf(name) {
+      for (const p of CATEGORY_PREFIXES) if (name.startsWith(p + '_')) return p;
+      return 'other';
+    }
     const cats = {};
     for (const r of results) {
-      const prefix = r.name.replace(/_\d+$/, '');
+      const prefix = categoryOf(r.name);
       if (!cats[prefix]) cats[prefix] = {total:0, perfect:0, stepsT:0, stepsC:0};
       cats[prefix].total++;
       if (r.chain_correct) cats[prefix].perfect++;

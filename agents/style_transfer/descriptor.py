@@ -96,7 +96,7 @@ SPEC = AgentSpec(
     output_description=(
         "stylized_video (source video with new visual style applied)."
     ),
-    purpose_and_routing=(
+    purpose_and_trigger=(
         """Apply a visual style transfer to an existing video. The stylised video IS the deliverable by default. Trigger: requests to apply a visual style transformation (anime, ink-wash, cyberpunk, oil painting, named-artist style, etc.) to an existing clip."""
     ),
     input_preamble=(

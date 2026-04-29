@@ -65,9 +65,9 @@ SPEC = AgentSpec(
             cardinality="single",
             description=(
                 "The upstream artifact to translate. Accepts ANY "
-                "structured text: a timestamped transcript (the most "
-                "common source for bilingual / foreign-subtitle flows — "
-                "produced by the preceding transcription step), a "
+                "structured text: a timestamped transcript (timed "
+                "segments + per-segment text — common source for "
+                "bilingual / foreign-subtitle deliverables), a "
                 "screenplay document, a story blueprint, or ingested "
                 "user text. Payload is forwarded as raw JSON text; the "
                 "LLM reads whatever structure it has and translates all "
@@ -81,8 +81,8 @@ SPEC = AgentSpec(
         "ids, timing, ordering — e.g. a translated transcript keeps every "
         "segment timestamp intact)."
     ),
-    purpose_and_routing=(
-        """Translate structured text (timestamped transcript, screenplay, etc.) preserving keys / ids / timing / ordering. On subtitle flows MUST follow the transcription step so segment boundaries are already defined; the compositor then renders both the original and translated segments to burn-in SRT. Trigger: bilingual subtitle output or foreign-language subtitle on any video flow."""
+    purpose_and_trigger=(
+        """Translate structured text (timestamped transcript, screenplay, etc.) preserving keys / ids / timing / ordering — e.g. a translated transcript keeps every segment's start/end timestamps intact so the translation aligns 1:1 with the source. Trigger: user asks for bilingual or foreign-language subtitles, or asks to translate any structured upstream artifact (screenplay, story blueprint, transcript) into another language."""
     ),
     input_preamble=(
         "I translate structured text (screenplays, transcripts, subtitle "

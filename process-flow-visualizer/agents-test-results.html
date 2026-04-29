@@ -179,6 +179,46 @@
     </div>
 
     <!-- ══════════════════════════════════════════════════════════════════ -->
+    <!-- FEATURED — illustrated-storytelling end-to-end demo                -->
+    <!-- ══════════════════════════════════════════════════════════════════ -->
+    <div class="test-group">
+      <div class="test-group-title">
+        <span class="group-badge badge-production">FEATURED DEMO</span>
+        Illustrated Storytelling — end-to-end (Narration → Illustration → Narrator → Compositor)
+      </div>
+
+      <div class="result-card" style="border-left:3px solid #fbbf24">
+        <div class="result-head">
+          <div class="result-icon" style="background:rgba(251,191,36,0.14)">📖</div>
+          <span class="result-name">storytelling_demo_v2</span>
+          <span class="result-desc">— 用户文本故事 → narrator 旁白 + 逐段插画 → 烧字幕 / 混音的 illustrated audiobook 视频</span>
+          <span class="result-status status-pass">LIVE END-TO-END</span>
+        </div>
+        <div class="result-body">
+          <div class="result-row">
+            <span class="row-label label-input">Input story</span>
+            <div class="row-content">
+              <code>00_input_story.txt</code> (478 chars) — 用户提交的短篇童话原稿，作为 NarrationAgent 的 creative_brief。
+              <div class="text-preview">In a quiet village at the edge of an old forest, a girl named Lin found an abandoned lantern beside the river. When she lit it that evening, a tiny silver fox stepped out of the flame and spoke her name. The fox told Lin that it had been trapped in the lantern for a hundred years, waiting for someone kind enough to wonder what a lost light might mean. Together they walked home through the trees, and for the first time in her life Lin felt that the forest was listening back.</div>
+            </div>
+          </div>
+          <div class="result-row">
+            <span class="row-label label-output">Final video</span>
+            <div class="row-content">
+              <code>04_compositor/compositor_final.mp4</code> (9.3 MB) — illustrated audiobook，narrator voiceover + 逐段插画切换 + 烧入字幕。
+              <div class="media-preview">
+                <video controls preload="metadata">
+                  <source src="./test-assets/storytelling_demo_v2/compositor_final.mp4" type="video/mp4" />
+                </video>
+              </div>
+              <div class="meta-note">CompositorAgent 用 NarratorAgent 的 per-segment timing 决定每张插画停留时长（不是均分），SRT 烧字幕，输出可直接交付的 mp4。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════════════ -->
     <!-- INTAKE AGENTS                                                     -->
     <!-- ══════════════════════════════════════════════════════════════════ -->
     <div class="test-group">

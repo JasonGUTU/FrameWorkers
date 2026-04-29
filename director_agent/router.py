@@ -90,9 +90,6 @@ def _agents_catalog_for_prompt(agents: List[Dict[str, Any]]) -> List[Dict[str, A
             {
                 "id": aid,
                 "description": full_desc,
-                "capabilities": a.get("capabilities")
-                if isinstance(a.get("capabilities"), list)
-                else [],
             }
         )
     return out

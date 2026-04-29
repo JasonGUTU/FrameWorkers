@@ -172,7 +172,7 @@ class AgentSpec:
     agent_id: str
     inputs: list[InputLabelSpec] = field(default_factory=list)
     output_description: str = ""
-    purpose_and_routing: str = ""
+    purpose_and_trigger: str = ""
     input_preamble: str = ""
     promotes_consumed_inputs_to_global: bool = False
 
@@ -187,7 +187,7 @@ def render_catalog_entry(spec: AgentSpec) -> str:
             f"      [{inp.name}] ({inp.cardinality}, {req}): {inp.description}"
         )
     lines.append(f"  - Output: {spec.output_description}")
-    lines.append(f"  - Purpose / routing: {spec.purpose_and_routing}")
+    lines.append(f"  - Purpose / Trigger: {spec.purpose_and_trigger}")
     return "\n".join(lines)
 
 

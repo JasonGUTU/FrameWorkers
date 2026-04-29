@@ -78,7 +78,7 @@ SPEC = AgentSpec(
             optional=True,
             description=(
                 "Optional scene-level video-analysis report of an "
-                "inspiration / reference video. Present in flows like "
+                "inspiration / reference video. Use cases include "
                 "'analyse this hit drama and write me a same-genre "
                 "sequel / similar new story' — the LLM reads its genre, "
                 "mood, scene summaries, and entities as creative seeds "
@@ -92,8 +92,8 @@ SPEC = AgentSpec(
         "story_blueprint (logline, cast, locations, story_arc, "
         "scene_outline)."
     ),
-    purpose_and_routing=(
-        """First creative step for any task that produces a NEW film from scratch. Trigger: requests to create new film content (mini-drama, manhua, trailer, vertical short, etc.) — user provides a creative brief but no source video."""
+    purpose_and_trigger=(
+        """First creative step for any task that produces a NEW film from scratch. Trigger: requests to create new film content (mini-drama, manhua, trailer, vertical short, etc.) — user provides a creative brief and is not asking to transform / edit an existing source video. A reference video used purely as creative inspiration (for genre / mood seeding via an upstream video analysis report) is allowed and does not disqualify this trigger."""
     ),
     input_preamble=(
         "I am the pipeline entry point for story planning. I take a "

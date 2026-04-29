@@ -100,10 +100,10 @@ SPEC = AgentSpec(
                 "The user's natural-language instruction describing how "
                 "the video should be extended — what happens next, "
                 "target duration, plot beat, physical movement, or scene "
-                "transition. Typically produced by the text-intake step "
-                "from the user's creative brief; caption usually starts "
-                "with 'User-submitted creative brief'. Pick the single "
-                "most recent such instruction."
+                "transition. Typically the ``[creative_brief]`` artifact "
+                "registered from the user's chat / text upload (caption "
+                "usually starts with 'User-submitted creative brief'). "
+                "Pick the single most recent such instruction."
             ),
         ),
     ],
@@ -111,8 +111,8 @@ SPEC = AgentSpec(
         "extended_video (a continuation clip seamlessly appended to the "
         "source)."
     ),
-    purpose_and_routing=(
-        """Extend the duration of an existing video clip (slow-mo, atmospheric inserts, close-ups, sound-effect overlays). The extended clip IS the deliverable by default. Trigger: requests to lengthen / add cinematic devices to an existing clip. NOT for narrative continuation (writing the next scene's plot) — that's a Story-chain task."""
+    purpose_and_trigger=(
+        """Extend the duration of an existing video clip by appending a continuation generated from its last frame (slow-mo, atmospheric inserts, close-ups, sound-effect overlays). The extended clip IS the deliverable by default. Trigger: requests to lengthen / add cinematic devices to an existing clip — visual continuation grounded in the source's last frame. This agent does NOT generate new screenplay or scene content; it only extrapolates visually from the source clip's tail."""
     ),
     input_preamble=(
         "I extend / continue a video clip by generating new frames that "

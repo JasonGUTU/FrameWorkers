@@ -1,23 +1,23 @@
 [
   {
-    "user_goal": "给这段古装短剧加一段凄美的二胡背景乐",
-    "expected": "IntakeText → IntakeVideo → Music → AudioMix → Compositor",
-    "actual": "IntakeText → IntakeVideo → Music → AudioMix",
+    "user_goal": "Add a melancholic erhu background music track to this period drama clip.",
+    "expected": "IntakeVideo → Music → AudioMix → Compositor",
+    "actual": "IntakeVideo → Music → AudioMix → Compositor",
     "parse_ok": true,
-    "raw_response": "{\"plan\":[{\"agent_id\":\"IntakeTextAgent\",\"intent\":\"intake the ancient drama video\"},{\"agent_id\":\"IntakeVideoAgent\",\"intent\":\"intake the ancient drama video\"},{\"agent_id\":\"MusicAgent\",\"intent\":\"compose a melancholic erhu background music\"},{\"agent_id\":\"AudioMixAgent\",\"intent\":\"mix the music with the original video audio\"}],\"rationale\":\"直接从视频入手，添加背景音乐并混音输出\"}"
+    "raw_response": "{\"rationale\": \"Modified video cut from an uploaded source video with BGM as the only added overlays. Reject: VideoAnalysisAgent (no source-video analysis required); NarratorAgent (not a slideshow / illustrated-storytelling format); AmbienceAgent (no environmental layer requested); HighlightAgent (not a highlight workflow); ScreenplayAgent (no NEW film scene-decomposition needed); VideoExtendAgent (no video extension requested); NarrationAgent (not a slideshow / illustrated-storytelling format); "
   },
   {
-    "user_goal": "把这场男主失忆后的回忆戏延长 10 秒",
-    "expected": "IntakeText → IntakeVideo → VideoExtend",
-    "actual": "IntakeText → IntakeVideo → VideoExtend",
+    "user_goal": "Extend this memory-flashback scene of the male lead by 10 more seconds.",
+    "expected": "IntakeVideo → VideoExtend",
+    "actual": "IntakeVideo → VideoExtend → Compositor",
     "parse_ok": true,
-    "raw_response": "{\n  \"plan\": [\n    {\"agent_id\": \"IntakeTextAgent\", \"intent\": \"接收并解析用户指令\"},\n    {\"agent_id\": \"IntakeVideoAgent\", \"intent\": \"获取原始视频片段\"},\n    {\"agent_id\": \"VideoExtendAgent\", \"intent\": \"将视频片段延长10秒\"}\n  ],\n  \"rationale\": \"直接处理视频长度需求，无需其他复杂步骤\"\n}"
+    "raw_response": "{\"rationale\": \"Extended video cut from an uploaded source video; no audio / subtitle requested. Excluded — NarratorAgent (not a slideshow / illustrated-storytelling format); NarrationAgent (not a slideshow / illustrated-storytelling format); MusicAgent (no BGM requested); AmbienceAgent (no environmental layer requested); VideoAgent (no NEW motion-clip generation requested); StoryAgent (no NEW film authoring requested); HighlightAgent (not a highlight workflow); ScreenplayAgent (no NEW film scene"
   },
   {
-    "user_goal": "给这段都市爱情戏配一段轻柔的小提琴背景乐",
-    "expected": "IntakeText → IntakeVideo → Music → AudioMix → Compositor",
-    "actual": "IntakeText → IntakeVideo → Music → AudioMix",
+    "user_goal": "Add a gentle violin background music track to this urban-romance clip.",
+    "expected": "IntakeVideo → Music → AudioMix → Compositor",
+    "actual": "IntakeVideo → Music → AudioMix → Compositor",
     "parse_ok": true,
-    "raw_response": "{\"plan\":[{\"agent_id\":\"IntakeTextAgent\",\"intent\":\"intake the text description of the urban romance drama\"},{\"agent_id\":\"IntakeVideoAgent\",\"intent\":\"intake the video of the urban romance drama\"},{\"agent_id\":\"MusicAgent\",\"purpose\":\"generate a gentle violin background music for the video\"},{\"agent_id\":\"AudioMixAgent\",\"purpose\":\"mix the background music with the original audio of the video\"}],\"rationale\":\"直接从文本和视频入手，生成背景音乐并混音\"}"
+    "raw_response": "{\"rationale\": \"Modified video cut from an uploaded source video with BGM as the only added overlays. Reject: VideoAnalysisAgent (no source-video analysis required); NarratorAgent (not a slideshow / illustrated-storytelling format); AmbienceAgent (no environmental layer requested); HighlightAgent (not a highlight workflow); ScreenplayAgent (no NEW film scene-decomposition needed); VideoExtendAgent (no video extension requested); NarrationAgent (not a slideshow / illustrated-storytelling format); "
   }
 ]

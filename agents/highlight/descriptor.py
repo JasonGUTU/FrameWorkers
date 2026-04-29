@@ -107,8 +107,8 @@ SPEC = AgentSpec(
     output_description=(
         "highlight_reel (selected clips compiled into a single reel)."
     ),
-    purpose_and_routing=(
-        """Extract highlight / best-moment clips from an existing video and compile them into a reel. The highlight reel IS the deliverable by default. Trigger: requests to extract specific themed moments / climax / highlight scenes / best clips into a reel."""
+    purpose_and_trigger=(
+        """Extract highlight / best-moment clips from an existing video and compile them into a reel. The highlight reel IS the deliverable by default. Trigger: requests to extract specific themed moments / climax / highlight scenes / best clips into a reel. For narrative / content-driven selection criteria (e.g. 'cut the most emotional scenes', 'pull the climactic confrontations'), upstream video analysis is needed for scene-level cues; pure visual / kinetic criteria can run without it."""
     ),
     input_preamble=(
         "I select the best highlight segments from a video and compile "

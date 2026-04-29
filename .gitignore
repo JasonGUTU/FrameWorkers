@@ -223,11 +223,20 @@ Thumbs.db
 *.wav
 
 # Project runtime outputs (sub-agent workspaces, e2e debug, generated artifacts)
-Runtime/
+Runtime/*
+# Exception: track eval-routing JSON results so we can compare runs across commits.
+!Runtime/eval_routing/
+Runtime/eval_routing/*
+!Runtime/eval_routing/*.json
 _workspaces/
 # Symlink that exposes ../Runtime to the visualizer dev server
 process-flow-visualizer/Runtime
 
 # Training artifacts — LoRA weights, tokenizers, checkpoints (multi-GB, not for git)
 training/**/adapters/
+training/**/adapters_*/
+# Training pipeline runtime — slurm logs, x15-expanded jsonls (>400M each), empty infer placeholders
+training/director/logs/
+training/director/*.x15.jsonl
+training/director/infer_on_training_*.jsonl
 *.bak

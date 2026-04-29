@@ -62,7 +62,7 @@ SPEC = AgentSpec(
     output_description=(
         "example_summary (title, summary, key_points, word_count)."
     ),
-    purpose_and_routing=(
+    purpose_and_trigger=(
         "Demonstrate the pipeline agent pattern. Summarizes input text. "
         "Kept as a development template — not registered in "
         "AGENT_REGISTRY and not invoked by Director."

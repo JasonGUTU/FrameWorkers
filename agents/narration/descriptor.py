@@ -71,8 +71,8 @@ SPEC = AgentSpec(
         "narration_script (language + overall_style + segments with "
         "per-segment image_prompt and per-line TTS text)."
     ),
-    purpose_and_routing=(
-        """Creative head for illustrated-storytelling / audiobook-with-pictures videos. Produces a narrator script split into illustration-aligned segments — one picture's worth of story per segment. Trigger: user wants to 'read a story as an illustrated audiobook', 'make an illustrated story-time video', 'narrate this story with matching pictures', or similar. Do NOT use for cinematic / multi-shot video flows (those go through Screenplay → KeyFrame → Video instead)."""
+    purpose_and_trigger=(
+        """Produce a narrator script split into illustration-aligned segments — one picture's worth of story per segment, each carrying its own image_prompt and per-line TTS text. Trigger: user asks for an illustrated audiobook / narrated picture book / story-time slideshow video where the visual track is a sequence of still illustrations timed to a narrator voiceover. The output is a script document, not a screenplay; it has no per-shot breakdown, dialogue blocking, or camera direction."""
     ),
     input_preamble=(
         "I am the creative head for illustrated-storytelling videos. "

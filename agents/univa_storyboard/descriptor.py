@@ -61,7 +61,7 @@ SPEC = AgentSpec(
     output_description=(
         "univa_storyboard (characters[], shots[], style)."
     ),
-    purpose_and_routing=(
+    purpose_and_trigger=(
         "Generate a complete storyboard with character definitions and "
         "shot-by-shot breakdown using UniVA's storyboard planning "
         "approach. Pipeline entry point for UniVA-style creation (runs "

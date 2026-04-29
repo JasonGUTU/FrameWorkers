@@ -76,10 +76,7 @@ SPEC = AgentSpec(
             description=(
                 "The screenplay — I read its overall mood/tone to pick a "
                 "film-wide music style and count spoken words + action "
-                "shots across every scene to size a single global cue. "
-                "Present on newly-created films; absent on existing-video "
-                "edit flows — in that case route a video_analysis "
-                "artifact instead."
+                "shots across every scene to size a single global cue."
             ),
         ),
         InputLabelSpec(
@@ -88,24 +85,21 @@ SPEC = AgentSpec(
             optional=True,
             description=(
                 "A scene-level video-analysis report — scenes with mood "
-                "+ video_summary.duration_seconds. Present on existing-"
-                "video edit flows where there is no screenplay; the "
-                "agent derives overall mood from the scene moods and "
-                "uses video_summary.duration_seconds as the cue duration "
-                "target. At least one of {screenplay, video_analysis} "
-                "must be supplied."
+                "+ video_summary.duration_seconds. I derive overall mood "
+                "from the scene moods and use video_summary.duration_seconds "
+                "as the cue duration target."
             ),
         ),
     ],
     output_description="music_cue (one film-wide background music track).",
-    purpose_and_routing=(
-        """Generate ONE film-wide background music track. Trigger: cinematic default for any newly-created film deliverable (unless user specifies ambience-only), or user explicitly requests music / BGM / soundtrack / score on an existing video."""
+    purpose_and_trigger=(
+        """Generate ONE film-wide background music track. Both inputs (screenplay, video_analysis) are individually optional, but at least one must be available — without either I have no source of duration target or mood. Trigger: include only when the user explicitly mentions music / BGM / score / soundtrack in the goal (e.g. 'add some music', 'with orchestral theme', 'piano score under narrator'). Silence is the default — do not include unless the goal warrants."""
     ),
     input_preamble=(
         "I generate one global background music track for the whole film. "
         "I prefer a screenplay when available (rich mood + shot counts) "
         "and fall back to a scene-level video analysis (mood + duration) "
-        "on existing-video edit flows."
+        "when only that is supplied."
     ),
 )
 

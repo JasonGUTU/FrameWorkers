@@ -64,7 +64,7 @@ SPEC = AgentSpec(
         "video_analysis (scene segments, per-scene visual descriptions, "
         "entities, overall content summary)."
     ),
-    purpose_and_routing=(
+    purpose_and_trigger=(
         """Deep structured analysis of an existing video — scene boundaries, mood, entities, climax candidates — producing a structured JSON for downstream consumers. Trigger: requests to analyse an existing video's narrative beats / mood curve / pacing / climax detection."""
     ),
     input_preamble=(

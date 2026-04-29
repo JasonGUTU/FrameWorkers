@@ -77,9 +77,7 @@ SPEC = AgentSpec(
                 "The screenplay — I read the dominant location(s) to "
                 "pick a continuous room-tone underlay, and count spoken "
                 "words + action shots across every scene to size a "
-                "single global bed. Present on newly-created films; "
-                "absent on existing-video edit flows — in that case "
-                "route a video_analysis artifact instead."
+                "single global bed."
             ),
         ),
         InputLabelSpec(
@@ -88,27 +86,24 @@ SPEC = AgentSpec(
             optional=True,
             description=(
                 "A scene-level video-analysis report — scenes with "
-                "setting / mood + video_summary.duration_seconds. Present "
-                "on existing-video edit flows where there is no "
-                "screenplay; the agent derives dominant environment from "
-                "scenes[*].setting and uses "
-                "video_summary.duration_seconds as the bed duration "
-                "target. At least one of {screenplay, video_analysis} "
-                "must be supplied."
+                "setting / mood + video_summary.duration_seconds. I "
+                "derive dominant environment from scenes[*].setting and "
+                "use video_summary.duration_seconds as the bed duration "
+                "target."
             ),
         ),
     ],
     output_description=(
         "ambience_bed (one film-wide room-tone underlay)."
     ),
-    purpose_and_routing=(
-        """Generate ONE film-wide ambient sound bed (room tone / environmental underlay). Trigger: cinematic default alongside music for newly-created films (unless user specifies music-only), or user asks for atmospheric beds (rain, wind, crowd, room tone) on existing video."""
+    purpose_and_trigger=(
+        """Generate ONE film-wide ambient sound bed (room tone / environmental underlay). Both inputs (screenplay, video_analysis) are individually optional, but at least one must be available — without either I have no source of duration target or environment information. Trigger: include only when the user explicitly mentions ambient / atmospheric / environmental sound in the goal (e.g. 'add ambient sounds', 'layer in rain + traffic', 'jungle ambience'). Silence is the default — do not include unless the goal warrants."""
     ),
     input_preamble=(
         "I generate one global ambient room-tone underlay that covers "
         "the entire film. I prefer a screenplay when available and "
         "fall back to a scene-level video analysis (mood + duration) "
-        "on existing-video edit flows."
+        "when only that is supplied."
     ),
 )
 

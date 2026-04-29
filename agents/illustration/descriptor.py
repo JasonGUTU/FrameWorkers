@@ -92,8 +92,8 @@ SPEC = AgentSpec(
         "illustration_manifest (one png image per narration segment, "
         "aligned by segment_id, with cross-segment style consistency)."
     ),
-    purpose_and_routing=(
-        """Generate one illustration per narration segment for an illustrated-storytelling video. Trigger: an illustrated-audiobook / story-time video flow where the video track is a slideshow of still images rather than a multi-shot assembled video. Requires an upstream narration script (segments + image_prompt + overall_style)."""
+    purpose_and_trigger=(
+        """Generate one illustration per segment described in a narration script — uses the first generated image as a visual style reference for the rest to keep cross-segment style consistency. Trigger: user asks for an illustrated audiobook / picture-book / story-time slideshow video where each narrated segment gets its own still image. Requires a narration script as upstream input."""
     ),
     input_preamble=(
         "I produce one illustration per narration segment. I read the "

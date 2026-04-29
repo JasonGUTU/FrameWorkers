@@ -1,0 +1,109 @@
+\section{Reinforcement Learning Refinement (GRPO)}
+\label{sec:grpo}
+
+We refine the SFT adapter from \S\ref{sec:sft} with Group Relative
+Policy Optimization (GRPO) using a deterministic rule-based reward;
+the reward is byte-aligned with the chain-accuracy eval metric, so no
+separate reward model is trained.
+
+\paragraph{Rollouts.}
+For each training prompt $p$ with ground-truth chain
+$\mathbf{c}^*\!=\!(c^*_1,\dots,c^*_K)$, the trainable policy
+$\pi_\theta$ samples $G\!=\!4$ completions $\{\mathbf{o}_g\}_{g=1}^{G}$
+at $T\!=\!0.9$, top-$k\!=\!0$, top-$p\!=\!1.0$, min-$p\!=\!0$ (TRL
+\texttt{GRPOTrainer} defaults). An earlier restrictive configuration
+($T\!=\!0.7$, top-$k\!=\!20$, top-$p\!=\!0.9$, min-$p\!=\!0.05$)
+collapsed the $G$ rollouts onto identical completions for our
+deterministic SFT base, eliminating intra-group reward variance and
+zeroing the policy gradient. Each $\mathbf{o}_g$ is parsed into a
+chain $\hat{\mathbf{c}}_g$.
+
+\paragraph{Reward.}
+The reward uses a format gate followed by a continuous partial-credit
+score with a perfect-match bonus:
+\begin{equation}
+R(\mathbf{o}_g,\mathbf{c}^*)
+\;=\;
+\begin{cases}
+0 & \text{if format invalid} \\
+\tfrac{1}{2}\,\rho_g \;+\; \tfrac{1}{2}\,\mathbb{1}[\text{perfect}] & \text{otherwise}
+\end{cases}
+\;\in\;[0,\,1]
+\end{equation}
+where the \emph{format gate} fires (returning $0$) on parse failure,
+unknown agent IDs, or duplicate IDs; the \emph{position-accuracy} term
+\begin{equation}
+\rho_g \;=\; \frac{n_\text{correct}(\hat{\mathbf{c}}_g,\mathbf{c}^*)}
+                 {\max(|\hat{\mathbf{c}}_g|,\,K)}
+\;\in\;[0,\,1]
+\end{equation}
+counts set-aware position matches normalised by the longer chain
+(implicit length penalty); and $\mathbb{1}[\text{perfect}]\!=\!1$ iff
+$|\hat{\mathbf{c}}_g|\!=\!K$ and $\rho_g\!=\!1$. The set-aware
+matching $\equiv_\text{set}$ at each position permits agents declared
+interchangeable (e.g.\ $\{$Music, Ambience$\}$). Empirically the SFT
+base produces format errors at rate $0$ ($212/212$ rollouts in our
+smoke runs all passed format checks), so the gate is a
+GRPO-exploration safeguard against drift rather than an active term;
+the $50/50$ split between $\rho_g$ and the perfect bonus gives dense
+partial-credit gradient on near-misses while making a perfect output
+$2.5\!\times$ the reward of a $4/5$-correct partial, preventing
+satisficing on near-perfect chains.
+
+\paragraph{Advantage and loss.}
+Within each group of $G$ rollouts on the same prompt,
+\begin{equation}
+\hat{A}_g \;=\; \frac{R_g-\mu}{\sigma+\varepsilon},\quad
+\mu=\tfrac{1}{G}\!\sum_g R_g,\;
+\sigma=\sqrt{\tfrac{1}{G}\!\sum_g (R_g-\mu)^2}.
+\end{equation}
+Groups with $\sigma\!<\!\varepsilon\!=\!10^{-6}$ contribute zero
+advantage by construction; under data-parallel training these groups
+are not skipped at the loop level (which would desynchronise NCCL
+collective calls across ranks and deadlock), but rather their loss
+contribution is masked to zero via the
+$\text{valid\_mask}\!\times\!\text{aligned\_mask}$ product, yielding a
+zero gradient and a no-op optimiser step. The single-step on-policy
+objective combines an advantage-weighted log-likelihood and a KL
+anchor against the frozen SFT snapshot $\pi_\text{ref}$:
+\begin{equation}
+\mathcal{L}(\theta)
+\;=\;
+-\,\mathbb{E}_{(g,t)}\!\left[\hat{A}_g\,\log\pi_\theta(c_{g,t}\,|\,p,c_{g,<t})\right]
+\;+\;\beta\,\mathbb{E}\!\left[\widehat{\text{KL}}_{K3}(\pi_\theta\!\parallel\!\pi_\text{ref})\right]
+\end{equation}
+with $\widehat{\text{KL}}_{K3}=\hat{r}-\log\hat{r}-1$ and
+$\hat{r}=\pi_\text{ref}(c_{g,t})/\pi_\theta(c_{g,t})$ (Schulman's
+unbiased non-negative KL estimator). The sequence-level $\hat{A}_g$ is
+broadcast uniformly over completion tokens of rollout $g$.
+
+\paragraph{Implementation.}
+A custom rollout loop replaces \texttt{model.generate()} so logits are
+cast to fp32 before softmax and multinomial — bf16 long-tail underflow
+on Qwen's $152$K-vocab softmax otherwise produces NaN probability rows
+that crash \texttt{torch.multinomial}.\footnote{This caused a
+TRL-based prototype to crash five times within the first $400$ steps
+before the custom sampler was written.} The $G$ rollouts of the same
+prompt share a single batched forward pass (the $\sim 7$K-token
+prompt is encoded once at batch size $G$ rather than $G$ times
+sequentially), reducing per-step rollout time from $\approx 19$\,s to
+$\approx 12$\,s on Qwen3-8B. A single shared base carries two named
+LoRA adapters (\textit{policy}, trainable; \textit{ref}, frozen),
+saving $\approx 14$\,GB of GPU memory versus two independent
+\texttt{PeftModel} instances. Multi-GPU training uses 4-rank
+\texttt{torchrun} DDP with manual gradient all-reduce: the standard
+\texttt{DistributedDataParallel} wrapper conflicts with PEFT's
+\texttt{set\_adapter} forward hooks, so each rank holds an independent
+copy of the base + adapters, processes its own dataset shard
+($\text{idx\_order}[\text{rank}::\text{world\_size}]$ with the same
+shuffle seed across ranks for non-overlapping coverage), and after
+backward each trainable parameter's gradient is averaged across ranks
+via \texttt{dist.all\_reduce}.
+
+\paragraph{Configuration.}
+$G\!=\!4$, $\beta\!=\!0.04$, lr $1\!\times\!10^{-6}$, bf16 with
+gradient checkpointing, gradient norm clipped to $1$, $3$ epochs over
+$1396$ training prompts. Only the policy LoRA's $\sim 87$M parameters
+are trainable. Single 4-GPU H200 DDP run, yielding
+$1396\!\times\!3 / 4 \approx 1047$ optimiser steps and
+$\approx 5$--$6$\,hours wall clock for the full budget.

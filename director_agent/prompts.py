@@ -81,7 +81,7 @@ _PLAN_UPFRONT_MINIMAL = (
     "You are the Director. For ONE user goal, produce the **complete ordered pipeline** of "
     "sub-agent executions needed to satisfy it. You are NOT picking one step — you plan the "
     "whole thing upfront. Use the agent catalog (each entry's inputs / output / "
-    "purpose-and-routing) and the stack memory to decide which agents to include and in what "
+    "purpose-and-trigger) and the stack memory to decide which agents to include and in what "
     "order. The catalog is the single source of truth about what each agent does, what it "
     "needs upstream, and when to run it.\n"
     "Respond with JSON only, no markdown: "
@@ -94,12 +94,13 @@ _PLAN_UPFRONT_MINIMAL = (
     "sub-agent produces its artifact once and downstream consumers resolve "
     "it by caption; there is no valid reason to invoke the same agent "
     "twice in one plan.\n"
-    "- The user's chat text (or uploaded text/plain file) is auto-persisted "
-    "as a ``[creative_brief]`` artifact by the workspace layer, so no "
-    "explicit text-intake step is needed — plans start directly at the "
-    "first content-producing agent (Story / Narration / IntakeImage / "
-    "IntakeVideo / StyleTransfer / etc.). Binary media still go through "
-    "the matching IntakeImageAgent / IntakeVideoAgent before consumption.\n"
+    "- User text input (chat / text-file upload) is already available as the "
+    "``[creative_brief]`` artifact — no text-intake step is needed; agents that "
+    "consume ``[creative_brief]`` directly can be the first step in the plan. "
+    "Binary media (images / videos) still require their respective intake step "
+    "(the agent whose role is to register the raw upload as a caption-rich "
+    "workspace artifact for that media type) before any agent that consumes "
+    "those media types.\n"
     "- Greetings / noise / unrelated chat / empty input should still emit a "
     "non-empty plan; pick the most charitable single agent that matches "
     "(e.g. ``[{\"agent_id\":\"StoryAgent\",...}]`` if the user gestured at a "
@@ -110,12 +111,12 @@ _PLAN_UPFRONT_MINIMAL = (
 
 
 _PLAN_UPFRONT_POLICIES = (
-    "**Routing policy (deliberate router defaults — override only when user_goal is explicit):**\n"
+    "**Routing policies (explicit triggers — include each agent only when the user_goal warrants):**\n"
     "\n"
     "0. CHAIN SELECTION (mutually-exclusive deliverable classes). Match the user_goal to "
     "EXACTLY ONE of:\n"
-    "  (a) CINEMATIC / CREATIVE FILM — Story → Screenplay → KeyFrame → Video → (audio) → "
-    "Compositor. Use for mini-drama / short drama / manhua / animated drama / trailer / "
+    "  (a) CINEMATIC / CREATIVE FILM — Story → Screenplay → KeyFrame → Video → Compositor. "
+    "Use for mini-drama / short drama / manhua / animated drama / trailer / "
     "vertical short / film — any deliverable that is a multi-shot film with distinct "
     "scenes and camera-driven storytelling.\n"
     "  (b) EXISTING-VIDEO EDIT — IntakeVideoAgent → (analysis / extend / style / "
@@ -128,9 +129,8 @@ _PLAN_UPFRONT_POLICIES = (
     "'make an illustrated story-time video', 'narrated picture book', 'children's "
     "story-time video'. NOT triggered by generic 'make a film / drama' requests — those "
     "go to (a).\n"
-    "  Optional extensions of chain (c) — appended ONLY when the user explicitly asks:\n"
-    "    * BGM / score under narrator → insert MusicAgent → AudioMixAgent before Compositor.\n"
-    "    * Ambient bed under narrator → insert AmbienceAgent → AudioMixAgent before Compositor.\n"
+    "  Optional extensions of chain (c) — appended ONLY when the user explicitly asks "
+    "(audio overlays follow §1 AUDIO OVERLAY POLICY uniformly and are not restated here):\n"
     "    * Bilingual / foreign subtitles on the narrator audio → insert TranslationAgent "
     "between NarratorAgent and CompositorAgent (NarratorAgent already emits the source-"
     "language SRT; TranslationAgent produces the second language).\n"
@@ -144,25 +144,24 @@ _PLAN_UPFRONT_POLICIES = (
     "BriefEnricherAgent / IntakeImageAgent may appear in EITHER chain (a) or chain (c) "
     "as appropriate — they are cross-chain utilities.)\n"
     "\n"
-    "1. CREATIVE FLOW AUDIO DEFAULT (chain (a) only): cinematic chains (Story → Screenplay → KeyFrame → Video → ...) "
-    "default to BOTH MusicAgent AND AmbienceAgent as the cinematic underlay. Override this default "
-    "based on what kind of audio layer the user semantically requests:\n"
-    "  * only a musical / melodic score (regardless of genre or instrument) → run MusicAgent only, "
-    "skip AmbienceAgent.\n"
-    "  * only environmental / atmospheric ambient sound (natural sound effects like weather, room "
-    "tone, crowd, etc., with no melodic score) → run AmbienceAgent only, skip MusicAgent.\n"
-    "  * both categories co-requested (a musical score AND an ambient layer as distinct requests) "
-    "→ run both.\n"
-    "  * neither audio category mentioned → run both (cinematic default for any creative flow).\n"
-    "  This default does NOT apply to chain (c) illustrated-storytelling: NarratorAgent's TTS IS "
-    "the audio track there, and Music / Ambience are opt-in overlays only (include them iff the "
-    "user explicitly asks for BGM / score / ambient sound under the narrator).\n"
+    "1. AUDIO OVERLAY POLICY (applies uniformly to ALL flows — cinematic chain (a), illustrated-"
+    "storytelling chain (c), existing-video chain (b)): MusicAgent and AmbienceAgent are opt-in "
+    "overlays. No chain adds them by default — silence is the default. Include based on what kind "
+    "of audio layer the user explicitly mentions:\n"
+    "  * user mentions music / BGM / score (e.g. 'add some music', 'with BGM', 'orchestral theme', "
+    "'piano score under the narrator') → run MusicAgent + AudioMixAgent.\n"
+    "  * user mentions ambient / atmospheric / environmental sound (e.g. 'add some ambient sounds', "
+    "'layer in rain + café murmur', 'jungle ambience under the narration') → run AmbienceAgent + "
+    "AudioMixAgent.\n"
+    "  * user mentions both categories (musical score AND ambient layer as distinct requests) → run "
+    "MusicAgent + AmbienceAgent + AudioMixAgent.\n"
+    "  * user mentions neither → no MusicAgent, no AmbienceAgent, no AudioMixAgent.\n"
     "\n"
     "2. SUBTITLE INCLUSION: Include TranscriptionAgent iff the user_goal semantically asks for a "
     "subtitle / caption track on the deliverable — in any language, single or bilingual/multilingual. "
     "The task being a drama / mini-drama / animated drama alone is NOT a subtitle request — many "
     "dramas ship without subtitles. TranscriptionAgent's STT output is the canonical subtitle source "
-    "for every non-storytelling flow (on creative flows it reads the Kling-baked voice track from "
+    "for every non-storytelling flow (on creative flows it reads the baked-in voice track from "
     "the assembled video so the subtitles match what's actually heard); CompositorAgent's materializer "
     "renders its timestamped segments directly to SRT — there is no separate subtitle agent. For "
     "bilingual / foreign-language subtitles, append TranslationAgent between TranscriptionAgent and "
@@ -196,9 +195,10 @@ _PLAN_UPFRONT_POLICIES = (
 _PLAN_UPFRONT_FEWSHOTS = (
     "**Correct plan patterns for representative tasks** (imitate these shapes; adapt to each specific user_goal):\n"
     "\n"
-    "1. Pure creation, no subtitle — 'Make a CEO romance mini-drama about a struggling waitress...' / "
-    "'Make a cultivation-fantasy animated drama about a washed-up young man...':\n"
-    "   StoryAgent → ScreenplayAgent → KeyFrameAgent → VideoAgent → MusicAgent → AmbienceAgent → AudioMixAgent → CompositorAgent\n"
+    "1. Pure creation, no audio, no subtitle — 'Make a CEO romance mini-drama about a struggling waitress...' / "
+    "'Make a cultivation-fantasy animated drama about a washed-up young man...' (goal does not "
+    "mention music / ambience / subtitles):\n"
+    "   StoryAgent → ScreenplayAgent → KeyFrameAgent → VideoAgent → CompositorAgent\n"
     "\n"
     "2. Existing-video + subtitle only — 'Add English subtitles to this interview-style mini-drama':\n"
     "   IntakeVideoAgent → TranscriptionAgent → CompositorAgent\n"
@@ -207,9 +207,9 @@ _PLAN_UPFRONT_FEWSHOTS = (
     "from this mini-drama episode into promotional material':\n"
     "   IntakeVideoAgent → VideoAnalysisAgent → HighlightAgent\n"
     "\n"
-    "4. Creative + bilingual subtitle — 'Make an English-Chinese bilingual costume-drama animated drama "
-    "about a nine-generation tea-ceremony lineage...':\n"
-    "   StoryAgent → ScreenplayAgent → KeyFrameAgent → VideoAgent → MusicAgent → AmbienceAgent → AudioMixAgent → TranscriptionAgent → TranslationAgent → CompositorAgent\n"
+    "4. Creative + bilingual subtitle, no audio — 'Make an English-Chinese bilingual costume-drama animated drama "
+    "about a nine-generation tea-ceremony lineage...' (goal does not mention music / ambience):\n"
+    "   StoryAgent → ScreenplayAgent → KeyFrameAgent → VideoAgent → TranscriptionAgent → TranslationAgent → CompositorAgent\n"
     "\n"
     "5. Existing-video combo (extend + style + subtitle) — 'Extend this mini-drama episode, then "
     "style-transfer it into an animated-drama look, and add English subtitles':\n"
@@ -247,7 +247,7 @@ _PLAN_UPFRONT_FEWSHOTS = (
     "image_prompts reference the character; MusicAgent + AudioMixAgent layer BGM under the "
     "narrator wav before Compositor slideshow mux.)\n"
     "\n"
-    "These are SHAPES not rigid contracts — swap optional steps in or out per user_goal, but respect the demonstrated ordering (no IntakeText step — the user's chat/text is auto-persisted as a creative_brief; Transcription→Translation→Compositor for subtitles; Music/Ambience→AudioMix→Compositor for audio; VideoAnalysis before Highlight; Compositor only when deliverable is a composed video).\n"
+    "These are SHAPES not rigid contracts — swap optional steps in or out per user_goal, but respect the demonstrated ordering (Transcription→Translation→Compositor for subtitles; Music/Ambience→AudioMix→Compositor for audio; VideoAnalysis before Highlight; Compositor only when deliverable is a composed video).\n"
 )
 
 
@@ -330,6 +330,26 @@ def build_merge_user_prompt(
     )
 
 
+def _render_catalog_markdown(catalog: List[Dict[str, Any]]) -> str:
+    """Render the agent catalog as plain text blocks, one per agent.
+
+    Each entry's ``description`` (from ``render_catalog_entry``) already
+    starts with the agent_id on its own line, then indented Inputs / Output
+    / Purpose-routing lines. Joining the descriptions with ``\\n\\n`` keeps
+    that structure intact with real newlines.
+
+    The previous format wrapped the whole catalog in ``json.dumps`` which
+    escaped every ``\\n`` into the literal two-character ``\\n`` sequence.
+    Qwen2.5's tokenizer encodes that as ``\\`` + ``n`` (two tokens) per line
+    of every agent description, vs one token for a real newline. With ~30
+    newlines × 20 agents this saves ~5-10% of the system-prompt tokens AND
+    presents the structure to the LM as actual indented lists rather than
+    a single long JSON-escaped string.
+    """
+    blocks = [(item.get("description") or item.get("id") or "").strip() for item in catalog]
+    return "\n\n".join(b for b in blocks if b)
+
+
 def build_plan_system_prompt(
     *,
     core: str,
@@ -350,8 +370,12 @@ def build_plan_system_prompt(
         core
         + "\n\nAllowed agent ids (you MUST copy one exactly for each plan step):\n"
         + json.dumps(allowed, ensure_ascii=False)
-        + "\n\nAgent catalog:\n"
-        + json.dumps(catalog, ensure_ascii=False, default=str)
+        + "\n\nAgent catalog — each entry has `Inputs`, `Output`, and `Purpose / Trigger`. "
+        "To plan: scan all entries, include each agent whose `Purpose / Trigger` matches "
+        "the user_goal AND whose `Inputs` can be satisfied by either the user's upload or "
+        "another included agent's `Output`. Order included agents so that every agent's "
+        "`Inputs` are produced by some agent earlier in the plan.\n\n"
+        + _render_catalog_markdown(catalog)
         + f"\n\nHard upper bound on plan length: {max_plan_steps} steps. "
         "Prefer shorter plans. Respond with JSON only."
     )
@@ -386,8 +410,8 @@ def build_replan_user_prompt(
     return (
         "Allowed agent ids:\n"
         + json.dumps(allowed, ensure_ascii=False)
-        + "\n\nAgent catalog (short):\n"
-        + json.dumps(catalog, ensure_ascii=False, default=str)
+        + "\n\nAgent catalog:\n\n"
+        + _render_catalog_markdown(catalog)
         + "\n\nUser goal:\n"
         + (user_goal or "").strip()[:12000]
         + "\n\nFailed step (the one that just failed):\n"

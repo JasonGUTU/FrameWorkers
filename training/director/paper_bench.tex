@@ -1,0 +1,62 @@
+\section{FrameWorkers-Bench: Sub-agent Routing Benchmark}
+\label{sec:bench}
+
+We evaluate director routing as a standalone task: given a natural-
+language user goal $g$ for a video deliverable, produce the ordered
+chain of sub-agents whose composition satisfies it. Routing is
+combinatorial over a closed vocabulary of $20$ agents and multi-step
+(plans range from $2$ to $12$ agents); routing errors compound
+downstream because each agent consumes specific upstream artifacts.
+
+\paragraph{Agents.}
+The inventory $\mathcal{A}$ contains $20$ agents across modalities:
+text (Story, Screenplay, Narration, Translation, IntakeText), image
+(Illustration, KeyFrame, IntakeImage, BriefEnricher), video (Video,
+VideoAnalysis, StyleTransfer, Highlight, IntakeVideo), audio (Music,
+Ambience, Narrator, AudioMix, Transcription), and final composition
+(Compositor). Each agent carries a typed descriptor specifying its
+\texttt{Inputs}, \texttt{Output}, and \texttt{Purpose / Trigger}; the
+descriptors are concatenated verbatim into the planner's system prompt.
+
+\paragraph{Task.}
+A planner $\pi$ maps $g$ to an ordered chain
+$\hat{\mathbf{c}} = (\hat{c}_1, \dots, \hat{c}_n)$ with
+$\hat{c}_i\!\in\!\mathcal{A}$. Hard structural constraints: each
+$\hat{c}_i$ appears at most once in a plan; the chain length is bounded
+by $n\!\le\!20$; no branching or parallelism. User text input is
+already represented as a global \texttt{[creative\_brief]} artifact, so
+plans start at the first content-producing agent rather than from a
+text-intake step.
+
+\paragraph{Evaluation set.}
+$130$ hand-authored goals span $42$ canonical chain shapes
+(e.g.\ \emph{cinematic film}: Story$\to$Screenplay$\to$KeyFrame$\to$Video$\to$Compositor;
+\emph{illustrated storytelling}: Narration$\to$Illustration$\to$Narrator$\to$Compositor;
+\emph{video edit + subtitle}: IntakeVideo$\to$Transcription$\to$Translation$\to$Compositor),
+distributed across deliverable modalities and modifier flags
+(bilingual, music, ambience, image-reference, longstory). The set is
+held-out and is enforced to have zero overlap (under text
+normalization) with the training corpus.
+
+\paragraph{Metrics.}
+A gold chain $\mathbf{c}^*$ is a sequence in which positions may be
+\emph{set-valued}: $c^*_i$ is either a single agent or a set of
+interchangeable agents (e.g.\ $\{$Music, Ambience$\}$ when the audio
+slot tolerates either ordering). For a predicted chain $\hat{\mathbf{c}}$:
+\begin{align}
+\text{chain\_acc}(\hat{\mathbf{c}},\mathbf{c}^*) &= \mathbb{1}\!\big[\hat{\mathbf{c}}\!\equiv_\text{set}\!\mathbf{c}^*\big], \\
+\text{step\_acc}(\hat{\mathbf{c}},\mathbf{c}^*) &= \frac{|\{i\,:\,\hat{c}_i\in c^*_i\}|}{\max(|\hat{\mathbf{c}}|,\,|\mathbf{c}^*|)}.
+\end{align}
+$\equiv_\text{set}$ requires identical length and per-position
+agent-set membership; the $\max$ denominator in step\_acc penalizes
+length mismatches symmetrically.
+
+\paragraph{Reference.}
+Gemini 2.5 Flash on the canonical bare prompt (no fewshots, no policy
+scaffolding, no topology hints) achieves chain\_acc $X.X\%$ and
+step\_acc $Y.Y\%$ over the $130$ goals.\footnote{The \emph{bare} prompt
+is byte-identical to the one used during training and inference of our
+LoRA. Adding worked-example fewshots and topology hints lifts Gemini
+to $\approx\!88\%$ chain\_acc but obscures whether the headline number
+reflects model capability or template memorization, so we adopt the
+bare prompt as the reference configuration.}

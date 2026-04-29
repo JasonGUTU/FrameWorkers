@@ -59,7 +59,7 @@ SPEC = AgentSpec(
         "discoverable by downstream agents via semantic-typed image "
         "labels (e.g. [character_reference], [style_reference])."
     ),
-    purpose_and_routing=(
+    purpose_and_trigger=(
         """Intake raw user-uploaded image(s) as character / location / style reference artifact(s). Trigger: user uploaded image(s) as creative reference."""
     ),
     input_preamble=(

@@ -139,7 +139,6 @@ class _FakeExecutionAgent:
         class _FakeDescriptor:
             id = "FakeAgent"
             description = "Fake agent for integration tests"
-            capabilities = []
             input_needs_description = {}
             output_labels = []
 
@@ -167,7 +166,6 @@ def agents_catalog():
         {
             "id": "FakeAgent",
             "description": "Fake agent",
-            "capabilities": [],
         }
     ]
 

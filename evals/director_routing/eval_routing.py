@@ -237,11 +237,12 @@ def run_eval(
     name: Optional[str] = None,
     max_steps: int = 20,
     fewshots: bool = True,
+    policies: bool = True,
 ) -> None:
     from director_agent.router import LlmSubAgentPlanner
 
     cases = load_cases(cases_path)
-    planner = LlmSubAgentPlanner(model=model, fewshots=fewshots)
+    planner = LlmSubAgentPlanner(model=model, fewshots=fewshots, policies=policies)
     catalog = build_agent_catalog()
     model_name = planner._model
 
@@ -397,8 +398,10 @@ if __name__ == "__main__":
                         help="Optional run name (appears in filename and web UI)")
     parser.add_argument("--fewshots", action=argparse.BooleanOptionalAction, default=True,
                         help="Include 7 worked-pattern fewshot examples in planner system prompt "
-                             "(default on). Pair `--no-fewshots` with `FW_TOPOLOGY=0` env var for "
-                             "the apples-to-apples bare baseline.")
+                             "(default on).")
+    parser.add_argument("--policies", action=argparse.BooleanOptionalAction, default=True,
+                        help="Include 4 semantic routing policies in planner system prompt "
+                             "(default on).")
     args = parser.parse_args()
     run_eval(
         model=args.model,
@@ -407,4 +410,5 @@ if __name__ == "__main__":
         name=args.name,
         max_steps=args.max_steps,
         fewshots=args.fewshots,
+        policies=args.policies,
     )

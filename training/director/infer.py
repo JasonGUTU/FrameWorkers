@@ -23,15 +23,15 @@ sys.path.insert(0, str(REPO_ROOT))
 # Held-out test goals — none of these are in the 100-case eval set or the
 # 5-case training set. Designed to exercise each of the 3 known bias types.
 TEST_GOALS = [
-    # Should be short chain, NO VideoAnalysis (bias A test)
-    ("给这段古装短剧加一段凄美的二胡背景乐",
-     "IntakeText → IntakeVideo → Music → AudioMix → Compositor"),
-    # Should end at VideoExtend, NO Compositor (bias C test)
-    ("把这场男主失忆后的回忆戏延长 10 秒",
-     "IntakeText → IntakeVideo → VideoExtend"),
-    # Should be Music-only, NO Ambience (bias B test)
-    ("给这段都市爱情戏配一段轻柔的小提琴背景乐",
-     "IntakeText → IntakeVideo → Music → AudioMix → Compositor"),
+    # Audio-only on existing video — should NOT trigger creative chain
+    ("Add a melancholic erhu background music track to this period drama clip.",
+     "IntakeVideo → Music → AudioMix → Compositor"),
+    # Pure video extension — should end at VideoExtend, NO Compositor
+    ("Extend this memory-flashback scene of the male lead by 10 more seconds.",
+     "IntakeVideo → VideoExtend"),
+    # Audio-only — Music, NOT Ambience
+    ("Add a gentle violin background music track to this urban-romance clip.",
+     "IntakeVideo → Music → AudioMix → Compositor"),
 ]
 
 
@@ -43,7 +43,7 @@ def _build_system_prompt():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--base-model", default="Qwen/Qwen2.5-7B-Instruct")
+    ap.add_argument("--base-model", default="Qwen/Qwen3-8B")
     ap.add_argument("--adapter", default=None,
                     help="Path (relative to training/director/) to LoRA adapter, or unset for base model only.")
     ap.add_argument("--adapter-none", action="store_true",
@@ -92,6 +92,7 @@ def main():
         ]
         prompt_text = tokenizer.apply_chat_template(
             messages, tokenize=False, add_generation_prompt=True,
+            enable_thinking=False,  # Qwen3 — direct JSON output, no <think> wrapper
         )
         inputs = tokenizer(prompt_text, return_tensors="pt").to(model.device)
 
@@ -103,9 +104,12 @@ def main():
                 temperature=0.0,
                 pad_token_id=tokenizer.pad_token_id,
             )
+        prompt_len = inputs.input_ids.shape[1]
+        n_new_tokens = out.shape[1] - prompt_len
         full = tokenizer.decode(out[0], skip_special_tokens=True)
         # Extract generated part (after the prompt)
         response = full[len(tokenizer.decode(inputs.input_ids[0], skip_special_tokens=True)):].strip()
+        print(f"    n_new_tokens: {n_new_tokens} (cap {args.max_new_tokens})")
 
         # Parse
         parse_ok = False

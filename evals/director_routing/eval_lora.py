@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Eval trained director-routing LoRA adapter on the 100-case held-out set.
 
-Loads Qwen2.5-7B-Instruct + PeftModel(adapter), runs ``plan_pipeline_upfront``
+Loads Qwen3-8B + PeftModel(adapter), runs ``plan_pipeline_upfront``
 semantics LOCALLY (no OpenRouter / LiteLLM), and scores chains with the same
 positional-set-match logic as ``eval_routing.py``.
 
-System prompt is the bare variant (PLAN_UPFRONT_SYSTEM_BARE + compact catalog) —
-matches what the training pipeline produces. Apples-to-apples baseline is the
-bare Gemini run (FW_TOPOLOGY=0 + --no-fewshots).
+System prompt comes from ``training/director/gen_samples.build_system_prompt``
+(=``PLAN_UPFRONT_CORE_WITH_POLICIES`` + full descriptor catalog without
+topology). Matches Gemini eval via ``eval_routing.py --no-fewshots`` with
+``FW_TOPOLOGY=0`` byte-for-byte — the apples-to-apples baseline.
 
 Usage (on GPU node with the training-env conda activated):
     PYTHONPATH=. python evals/director_routing/eval_lora.py \\
@@ -137,6 +138,7 @@ def generate_plan(
         add_generation_prompt=True,
         return_tensors="pt",
         return_dict=True,
+        enable_thinking=False,  # Qwen3 — direct JSON output, no <think> wrapper
     )
     inputs = {k: v.to(model.device) for k, v in inputs.items()}
     with torch.inference_mode():
@@ -313,7 +315,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--adapter", default=None,
                     help="Path to LoRA adapter dir. Omit for base-model-only baseline.")
-    ap.add_argument("--base-model", default="Qwen/Qwen2.5-7B-Instruct")
+    ap.add_argument("--base-model", default="Qwen/Qwen3-8B")
     ap.add_argument("--cases", type=Path, default=DEFAULT_CASES_PATH)
     ap.add_argument("--name", default=None,
                     help="Optional label suffix for the results JSON.")

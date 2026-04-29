@@ -113,8 +113,8 @@ SPEC = AgentSpec(
         "narrator_voiceover (full wav + timed SRT + per-segment timing) for "
         "an illustrated-storytelling video."
     ),
-    purpose_and_routing=(
-        """Render the narration script as a narrator voiceover track: per-line TTS, concatenated with pauses, plus a line-level SRT and per-segment timing for slideshow alignment. Trigger: an illustrated-audiobook / story-time video flow. Requires an upstream narration script (segments + lines + pause_after_ms)."""
+    purpose_and_trigger=(
+        """Render a narration script as a continuous narrator voiceover: per-line TTS concatenated with inter-line pauses, emitted as a full wav + a line-level SRT + a per-segment timing manifest for slideshow alignment. Trigger: user asks for narrated voiceover where the script is line-by-line (not per-shot dialogue). Requires a narration script as upstream input."""
     ),
     input_preamble=(
         "I render the narration script as a continuous narrator voiceover. "

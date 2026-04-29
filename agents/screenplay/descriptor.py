@@ -73,8 +73,8 @@ SPEC = AgentSpec(
         "consistency packs + per-scene mood/tone + "
         "estimated_duration_seconds)."
     ),
-    purpose_and_routing=(
-        """Turn a story blueprint into a scene/shot-structured screenplay with dialogue, action beats, and camera direction. The screenplay encodes shot-level dialogue / mood / duration consumed by downstream rendering and audio agents."""
+    purpose_and_trigger=(
+        """Turn a story blueprint into a scene/shot-structured screenplay with per-shot dialogue, action beats, camera direction, and per-scene mood/tone/estimated duration. Trigger: include whenever the plan produces a multi-shot film from a creative brief and needs scene/shot decomposition before any per-shot rendering or shot-level audio scoring step. Requires an upstream story blueprint."""
     ),
     input_preamble=(
         "I take a high-level story plan and turn it into a full unified "

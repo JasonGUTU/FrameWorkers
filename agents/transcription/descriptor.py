@@ -64,12 +64,13 @@ SPEC = AgentSpec(
     ],
     output_description=(
         "transcript (timestamped segments + full text + detected language). "
-        "Shape is compatible with the subtitle step's 'timed source text' "
-        "slot — the subtitle step can consume me the same way it consumes "
-        "a screenplay."
+        "Each segment carries start/end timestamps and per-segment text, "
+        "making it a drop-in 'timed source text' artifact suitable for "
+        "subtitle burn-in or for translation into another language while "
+        "preserving the segment timing."
     ),
-    purpose_and_routing=(
-        """Speech-to-text on an existing video's audio track, producing timestamped transcript segments. Trigger: existing-video flow needing subtitles or translation, with no screenplay available."""
+    purpose_and_trigger=(
+        """Speech-to-text on an existing video's audio track — produces timestamped transcript segments matching what's actually heard. Trigger: a deliverable needs a subtitle / caption track or a translation source and a screenplay document is not available (e.g. user uploaded a video with spoken content; transcribe its audio for downstream subtitling or translation)."""
     ),
     input_preamble=(
         "I transcribe audio/video files into timestamped text."

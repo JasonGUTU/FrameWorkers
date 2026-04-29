@@ -157,11 +157,9 @@ SPEC = AgentSpec(
             cardinality="single",
             optional=True,
             description=(
-                "Optional screenplay for scene/shot structure context — "
-                "present on newly-created films, absent on existing-video "
-                "edit flows (style transfer / video extend / highlight / "
-                "transcription+subtitle). When absent the agent plans the "
-                "composition from the video_package alone."
+                "Optional screenplay for scene/shot structure context. "
+                "When absent the agent plans the composition from the "
+                "video_package or illustration_sequence alone."
             ),
         ),
         InputLabelSpec(
@@ -173,11 +171,11 @@ SPEC = AgentSpec(
                 "shot_segments, per-clip timing. LLM reads this to "
                 "plan transitions and grade against the video "
                 "structure. Targets the JSON/manifest artifact "
-                "specifically, NOT the mp4 file. Optional because "
-                "illustrated-storytelling flows produce an image "
-                "sequence instead (see illustration_sequence); exactly "
-                "one of {video_package, illustration_sequence} must be "
-                "present."
+                "specifically, NOT the mp4 file. Optional — mutually "
+                "exclusive with illustration_sequence; exactly one of "
+                "{video_package, illustration_sequence} must be present "
+                "(the visual track is either an assembled video or a "
+                "still-image slideshow)."
             ),
         ),
         InputLabelSpec(
@@ -189,10 +187,10 @@ SPEC = AgentSpec(
                 "artifact, mime=video/mp4). Materializer reads its "
                 "path and passes it to ffmpeg for composition. "
                 "Targets the mp4 binary specifically, NOT the JSON "
-                "manifest. Optional — absent on illustrated-storytelling "
-                "flows where there is no assembled mp4 to mux (the "
-                "video track is rendered from illustration_sequence "
-                "images)."
+                "manifest. Optional — absent when the visual track is "
+                "an illustration_sequence slideshow (the mp4 is "
+                "rendered from still images rather than muxed from an "
+                "existing clip)."
             ),
         ),
         InputLabelSpec(
@@ -201,12 +199,11 @@ SPEC = AgentSpec(
             optional=True,
             description=(
                 "Ordered per-segment still illustrations (png images) "
-                "for an illustrated-storytelling / audiobook-with-"
-                "pictures video. Present only on illustrated-"
-                "storytelling flows produced by an illustration step; "
-                "mutually exclusive with video_package / video_file. "
-                "Every image is burned as one slide whose on-screen "
-                "duration is driven by segment_timing."
+                "for a slideshow-style video track. Mutually exclusive "
+                "with video_package / video_file — present when the "
+                "visual track is still images rather than an assembled "
+                "clip. Every image is burned as one slide whose "
+                "on-screen duration is driven by segment_timing."
             ),
         ),
         InputLabelSpec(
@@ -216,12 +213,11 @@ SPEC = AgentSpec(
             description=(
                 "Per-segment timing manifest (JSON: "
                 "``content.segment_timings = [{segment_id, start_sec, "
-                "end_sec, duration_sec, line_ids}, ...]``). Produced by "
-                "the narrator step on illustrated-storytelling flows. "
-                "Required whenever illustration_sequence is present — "
-                "tells the compositor how long each illustration stays "
-                "on screen so the image sequence aligns with the "
-                "narrator audio."
+                "end_sec, duration_sec, line_ids}, ...]``). Required "
+                "whenever illustration_sequence is present — tells the "
+                "compositor how long each illustration stays on screen "
+                "so the image sequence aligns with the accompanying "
+                "audio."
             ),
         ),
         InputLabelSpec(
@@ -231,9 +227,9 @@ SPEC = AgentSpec(
             description=(
                 "Final-audio-mix JSON envelope (planning manifest; "
                 "carries no audio asset fields — the wav is a separate "
-                "binary artifact). Optional — present iff an audio-mix "
-                "step ran. Targets the JSON/manifest artifact "
-                "specifically, NOT the wav file."
+                "binary artifact). Optional — present when a final "
+                "mixed audio track is in the plan. Targets the JSON / "
+                "manifest artifact specifically, NOT the wav file."
             ),
         ),
         InputLabelSpec(
@@ -242,10 +238,10 @@ SPEC = AgentSpec(
             optional=True,
             description=(
                 "The final mixed wav audio file on disk (binary "
-                "artifact, mime=audio/wav). Optional — present iff "
-                "an audio-mix step ran. Materializer muxes this onto "
-                "the video via ffmpeg. Targets the wav binary, NOT "
-                "the JSON descriptor."
+                "artifact, mime=audio/wav). Optional — present when a "
+                "final mixed audio track is in the plan. Materializer "
+                "muxes this onto the video via ffmpeg. Targets the wav "
+                "binary, NOT the JSON descriptor."
             ),
         ),
         InputLabelSpec(
@@ -256,17 +252,20 @@ SPEC = AgentSpec(
                 "Optional subtitle artifacts (SRT cues) to burn into the "
                 "video. Zero, one, or many — resolver routes every "
                 "subtitle-shaped artifact here so bilingual / "
-                "multilingual flows can supply one artifact per language "
+                "multilingual plans can supply one artifact per language "
                 "(e.g. a source-language SRT + a translated SRT, both "
                 "burned simultaneously)."
             ),
         ),
     ],
     output_description=(
-        "final_video (composited MP4 with audio, subtitles, transitions)."
+        "final_video (composited MP4 with inter-shot transitions and "
+        "final encoding; carries a final audio mix only when an audio "
+        "track was supplied upstream, and burned subtitle track(s) only "
+        "when subtitle artifact(s) were supplied upstream)."
     ),
-    purpose_and_routing=(
-        """Final deliverable: mux video + final audio + subtitle tracks into a single polished mp4. Terminal step that produces the fully composited output."""
+    purpose_and_trigger=(
+        """Mux a video track + optional final audio + optional subtitle track(s) into a polished final mp4 with inter-shot transitions and final encoding. Trigger: terminal step for any plan that produces (a) a multi-shot assembled film from a screenplay-driven pipeline, (b) a slideshow narrated illustration sequence aligned to a voiceover, or (c) any video deliverable that combines a video track with separately-produced final audio or subtitle tracks. Not needed when the deliverable is itself already a single self-contained finished video and no additional audio or subtitle layers are requested."""
     ),
     input_preamble=(
         "I compose the final deliverable video by muxing video clips "

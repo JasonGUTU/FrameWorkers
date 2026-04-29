@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>training/director SFT samples review</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #161922;
+    --panel-2: #1c2030;
+    --panel-3: #232a3d;
+    --border: #2a2f42;
+    --fg: #e6e8ef;
+    --muted: #8b91a8;
+    --accent: #6aa9ff;
+    --accent-2: #8c6aff;
+    --green: #28c76f;
+    --red: #ea5455;
+    --amber: #ff9f43;
+    --cyan: #4dd0e1;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    height: 100%; font-size: 14px; }
+  #app { display: flex; flex-direction: column; height: 100vh; }
+
+  header { padding: 10px 18px; border-bottom: 1px solid var(--border); background: var(--panel);
+    display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .title { font-weight: 600; font-size: 16px; }
+  .title small { color: var(--muted); font-weight: 400; margin-left: 6px; }
+  .file-select { display: flex; gap: 6px; align-items: center; }
+  .file-select label { color: var(--muted); font-size: 12px; }
+  select, input { background: var(--panel-2); color: var(--fg); border: 1px solid var(--border);
+    padding: 5px 9px; border-radius: 4px; font-size: 13px; font-family: inherit; }
+  select:focus, input:focus { outline: none; border-color: var(--accent); }
+  .summary { color: var(--muted); font-size: 13px; display: flex; gap: 14px; flex-wrap: wrap;
+    margin-left: auto; }
+  .summary .stat .num { color: var(--fg); font-weight: 600; }
+
+  main { flex: 1; display: flex; min-height: 0; }
+  aside.left { width: 380px; border-right: 1px solid var(--border); background: var(--panel);
+    display: flex; flex-direction: column; flex-shrink: 0; min-height: 0; }
+  .tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--panel); }
+  .tabs button { flex: 1; background: transparent; color: var(--muted); border: none;
+    border-bottom: 2px solid transparent; padding: 10px 12px; cursor: pointer;
+    font-family: inherit; font-size: 13px; }
+  .tabs button.active { color: var(--fg); border-bottom-color: var(--accent); }
+  .tabs button:hover { background: var(--panel-2); }
+
+  .tab-pane { flex: 1; overflow-y: auto; min-height: 0; }
+  .tab-pane.hidden { display: none; }
+
+  /* Stats tab */
+  .stats-section { padding: 14px 16px; border-bottom: 1px solid var(--border); }
+  .stats-section h3 { margin: 0 0 10px 0; font-size: 12px; text-transform: uppercase;
+    letter-spacing: 0.6px; color: var(--muted); font-weight: 600; }
+  .bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px;
+    font-size: 12px; cursor: pointer; padding: 3px 4px; border-radius: 3px; }
+  .bar-row:hover { background: var(--panel-2); }
+  .bar-row.active { background: var(--panel-3); }
+  .bar-row .label { font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bar-row .num { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 36px;
+    text-align: right; }
+  .bar-row .bar { width: 70px; height: 6px; background: var(--panel-2); border-radius: 3px;
+    overflow: hidden; flex-shrink: 0; }
+  .bar-row .bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+
+  .clear-filter { margin: 6px 0 12px 0; padding: 6px 10px; background: var(--panel-2);
+    border: 1px solid var(--border); border-radius: 4px; color: var(--muted);
+    cursor: pointer; font-size: 12px; font-family: inherit; width: 100%; }
+  .clear-filter:hover { background: var(--panel-3); color: var(--fg); }
+  .clear-filter.hidden { display: none; }
+
+  /* Samples tab */
+  .filter-bar { padding: 10px 12px; border-bottom: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 8px; background: var(--panel); position: sticky;
+    top: 0; z-index: 1; }
+  .filter-bar input { width: 100%; }
+  .filter-info { font-size: 11px; color: var(--muted); display: flex; justify-content: space-between; }
+  .filter-info .chip { padding: 2px 6px; border-radius: 3px; background: var(--panel-2);
+    color: var(--fg); font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 10px; }
+  .filter-info .chip .x { color: var(--red); margin-left: 6px; cursor: pointer; }
+
+  .sample-list { padding: 0; }
+  .sample-row { padding: 9px 12px; border-bottom: 1px solid var(--border); cursor: pointer;
+    font-size: 12px; }
+  .sample-row:hover { background: var(--panel-2); }
+  .sample-row.active { background: var(--panel-3); border-left: 3px solid var(--accent);
+    padding-left: 9px; }
+  .sample-row .row-top { display: flex; gap: 6px; align-items: center; margin-bottom: 3px; }
+  .sample-row .idx { color: var(--muted); font-variant-numeric: tabular-nums;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace; min-width: 36px; }
+  .sample-row .shape { color: var(--cyan); font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+  .sample-row .goal-preview { color: var(--fg); opacity: 0.85; line-height: 1.4;
+    overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+
+  /* Detail */
+  section.detail { flex: 1; overflow-y: auto; padding: 22px 30px; min-width: 0; }
+  .detail-empty { color: var(--muted); font-style: italic; }
+  .detail-header { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; flex-wrap: wrap; }
+  .detail-header .num { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 18px;
+    font-weight: 600; color: var(--accent); }
+  .detail-header .shape-pill { padding: 3px 9px; border-radius: 11px; background: var(--panel-2);
+    border: 1px solid var(--border); color: var(--cyan);
+    font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11px; }
+  .detail-header .step-count { color: var(--muted); font-size: 12px; }
+
+  .field { margin-bottom: 18px; }
+  .field-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px;
+    color: var(--muted); margin-bottom: 6px; font-weight: 600;
+    display: flex; gap: 8px; align-items: center; }
+  .field-label .meta { color: var(--muted); font-weight: 400; text-transform: none;
+    letter-spacing: 0; }
+  .box { background: var(--panel); border: 1px solid var(--border); border-radius: 6px;
+    padding: 13px 16px; line-height: 1.55; white-space: pre-wrap; word-break: break-word; }
+  .box.user-goal { font-size: 14px; }
+  .box.rationale { font-size: 13px; color: var(--fg); opacity: 0.92;
+    border-left: 3px solid var(--accent-2); }
+
+  .plan-step { background: var(--panel); border: 1px solid var(--border); border-radius: 6px;
+    padding: 11px 14px; margin-bottom: 8px; }
+  .plan-step .step-head { display: flex; gap: 10px; align-items: baseline; margin-bottom: 4px; }
+  .plan-step .step-num { font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    color: var(--muted); font-size: 12px; min-width: 22px; }
+  .plan-step .agent-id { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-weight: 600;
+    color: var(--accent); }
+  .plan-step .intent { color: var(--fg); opacity: 0.92; line-height: 1.5; font-size: 13px;
+    padding-left: 32px; }
+
+  .toggle-row { display: flex; gap: 8px; margin-top: 22px; flex-wrap: wrap; }
+  .toggle-row button { background: var(--panel-2); color: var(--muted); border: 1px solid var(--border);
+    padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-family: inherit; }
+  .toggle-row button:hover { background: var(--panel-3); color: var(--fg); }
+  .toggle-row button.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .raw-box { margin-top: 14px; background: #0a0d13; border: 1px solid var(--border);
+    border-radius: 6px; padding: 12px 14px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px;
+    line-height: 1.5; overflow-x: auto; white-space: pre; }
+  .raw-box.hidden { display: none; }
+
+  .system-box { margin-top: 14px; background: var(--panel); border: 1px solid var(--border);
+    border-radius: 6px; padding: 14px 16px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11px;
+    line-height: 1.55; max-height: 480px; overflow: auto; white-space: pre-wrap;
+    word-break: break-word; color: #c8cbd6; }
+  .system-box.hidden { display: none; }
+
+  .loading { padding: 30px; color: var(--muted); }
+  .error { padding: 18px; background: rgba(234,84,85,0.1); color: var(--red);
+    border: 1px solid rgba(234,84,85,0.3); border-radius: 6px; margin: 16px; }
+
+  /* Length distribution */
+  .lendist { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11px;
+    color: var(--muted); margin-top: 4px; }
+  .lendist .row { display: flex; gap: 6px; align-items: center; margin-bottom: 2px; }
+  .lendist .row .b { width: 60px; height: 4px; background: var(--panel-2); border-radius: 2px;
+    overflow: hidden; flex-shrink: 0; }
+  .lendist .row .bf { height: 100%; background: var(--accent); }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="title">SFT samples review <small id="src-name"></small></div>
+    <div class="file-select">
+      <label>file:</label>
+      <select id="file-picker">
+        <option value="./samples_sft_full.v2.jsonl" selected>samples_sft_full.v2.jsonl</option>
+        <option value="./samples_sft_full.jsonl">samples_sft_full.jsonl</option>
+      </select>
+      <label style="margin-left:8px">or upload:</label>
+      <input id="file-upload" type="file" accept=".jsonl,.json" style="font-size:11px;padding:2px;" />
+    </div>
+    <div class="summary" id="summary"></div>
+  </header>
+
+  <main>
+    <aside class="left">
+      <div class="tabs">
+        <button id="tab-stats" class="active">Overview</button>
+        <button id="tab-samples">Samples</button>
+      </div>
+
+      <div id="pane-stats" class="tab-pane">
+        <button id="clear-filter" class="clear-filter hidden">Clear filter</button>
+
+        <div class="stats-section">
+          <h3>Chain shapes <span id="cs-count" style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0"></span></h3>
+          <div id="chain-shapes"></div>
+        </div>
+
+        <div class="stats-section">
+          <h3>Agent occurrences</h3>
+          <div id="agent-hist"></div>
+        </div>
+
+        <div class="stats-section">
+          <h3>User-goal length (chars)</h3>
+          <div id="goal-len" class="lendist"></div>
+        </div>
+      </div>
+
+      <div id="pane-samples" class="tab-pane hidden" style="display:flex;flex-direction:column;">
+        <div class="filter-bar">
+          <input id="search" type="text" placeholder="Search user_goal..." />
+          <div class="filter-info">
+            <div id="filter-active"></div>
+            <div id="filter-count"></div>
+          </div>
+        </div>
+        <div class="sample-list" id="sample-list"></div>
+      </div>
+    </aside>
+
+    <section class="detail" id="detail">
+      <div class="loading">Loading samples...</div>
+    </section>
+  </main>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const escapeHtml = (s) => String(s).replace(/[&<>"']/g, c => ({
+  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+}[c]));
+
+let RAW = [];        // [{user, assistant, system, plan, chain, rationale}]
+let FILTERED = [];   // indices into RAW
+let SHAPES = [];     // [{shape, count, agent_ids}]
+let AGENTS = [];     // [{agent, count}]
+let SELECTED_SHAPE = null;
+let SEARCH_QUERY = '';
+let SELECTED_IDX = null;
+
+async function loadFile(path) {
+  $('detail').innerHTML = '<div class="loading">Loading ' + escapeHtml(path) + '...</div>';
+  $('summary').innerHTML = '';
+  try {
+    const resp = await fetch(path, { cache: 'no-cache' });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const text = await resp.text();
+    ingestText(text, path.split('/').pop());
+  } catch (e) {
+    const isFile = location.protocol === 'file:';
+    const hint = isFile
+      ? '<br><br>You opened this page via <code>file://</code>. fetch() is blocked for local files in most browsers.<br>Either start a server in this directory (<code>python3 -m http.server 8000</code>) and visit <code>http://localhost:8000/training_review.html</code>, or use the <b>upload</b> input next to the file selector to load the JSONL directly.'
+      : '<br><br>Looks like the JSONL is not reachable from this URL. Check your server\'s root directory, or use the upload input.';
+    $('detail').innerHTML = '<div class="error"><b>Failed to load</b> <code>' + escapeHtml(path) + '</code>: ' + escapeHtml(e.message) + hint + '</div>';
+    RAW = []; SHAPES = []; AGENTS = [];
+    renderStats(); renderSummary();
+  }
+}
+
+function ingestText(text, label) {
+  RAW = parseJsonl(text);
+  $('src-name').textContent = '· ' + label + ' (' + RAW.length + ' samples)';
+  computeStats();
+  SELECTED_SHAPE = null;
+  SEARCH_QUERY = '';
+  SELECTED_IDX = null;
+  $('search').value = '';
+  applyFilter();
+  renderStats();
+  renderSummary();
+  if (FILTERED.length > 0) {
+    selectSample(FILTERED[0]);
+  } else {
+    $('detail').innerHTML = '<div class="detail-empty">No samples parsed from file.</div>';
+  }
+}
+
+function parseJsonl(text) {
+  const out = [];
+  const lines = text.split('\n');
+  for (const line of lines) {
+    if (!line.trim()) continue;
+    let obj;
+    try { obj = JSON.parse(line); } catch { continue; }
+    const msgs = obj.messages || [];
+    let user = '', assistant = '', system = '';
+    for (const m of msgs) {
+      if (m.role === 'user') user = m.content;
+      else if (m.role === 'assistant') assistant = m.content;
+      else if (m.role === 'system') system = m.content;
+    }
+    let plan = [], rationale = '', parsed = null;
+    try {
+      parsed = JSON.parse(assistant);
+      plan = parsed.plan || [];
+      rationale = parsed.rationale || '';
+    } catch { /* malformed */ }
+    const chain = plan.map(s => s.agent_id || '?');
+    out.push({
+      user, assistant, system,
+      plan, rationale,
+      chain,
+      shape: chain.join(' → '),
+      parseOk: !!parsed,
+    });
+  }
+  return out;
+}
+
+function computeStats() {
+  const shapeCount = new Map();
+  const agentCount = new Map();
+  for (const r of RAW) {
+    shapeCount.set(r.shape, (shapeCount.get(r.shape) || 0) + 1);
+    for (const a of r.chain) agentCount.set(a, (agentCount.get(a) || 0) + 1);
+  }
+  SHAPES = [...shapeCount.entries()]
+    .map(([shape, count]) => ({ shape, count, agent_ids: shape.split(' → ') }))
+    .sort((a, b) => b.count - a.count);
+  AGENTS = [...agentCount.entries()]
+    .map(([agent, count]) => ({ agent, count }))
+    .sort((a, b) => b.count - a.count);
+}
+
+function applyFilter() {
+  const q = SEARCH_QUERY.trim().toLowerCase();
+  FILTERED = [];
+  for (let i = 0; i < RAW.length; i++) {
+    const r = RAW[i];
+    if (SELECTED_SHAPE != null && r.shape !== SELECTED_SHAPE) continue;
+    if (q && !r.user.toLowerCase().includes(q)) continue;
+    FILTERED.push(i);
+  }
+  renderSampleList();
+  renderFilterInfo();
+}
+
+function renderSummary() {
+  if (RAW.length === 0) { $('summary').innerHTML = ''; return; }
+  const malformed = RAW.filter(r => !r.parseOk).length;
+  const avgLen = RAW.reduce((a, r) => a + r.user.length, 0) / RAW.length;
+  const avgSteps = RAW.reduce((a, r) => a + r.chain.length, 0) / RAW.length;
+  $('summary').innerHTML = `
+    <span class="stat"><span class="num">${RAW.length}</span> samples</span>
+    <span class="stat"><span class="num">${SHAPES.length}</span> chain shapes</span>
+    <span class="stat"><span class="num">${AGENTS.length}</span> agents used</span>
+    <span class="stat">avg <span class="num">${avgSteps.toFixed(1)}</span> steps</span>
+    <span class="stat">avg goal <span class="num">${avgLen.toFixed(0)}</span> ch</span>
+    ${malformed > 0 ? `<span class="stat" style="color:var(--red)">${malformed} malformed</span>` : ''}
+  `;
+}
+
+function renderStats() {
+  // Chain shapes
+  const csList = $('chain-shapes');
+  $('cs-count').textContent = `(${SHAPES.length})`;
+  if (SHAPES.length === 0) { csList.innerHTML = ''; return; }
+  const maxShape = SHAPES[0].count;
+  csList.innerHTML = SHAPES.map(s => `
+    <div class="bar-row ${SELECTED_SHAPE === s.shape ? 'active' : ''}" data-shape="${escapeHtml(s.shape)}" title="${escapeHtml(s.shape)}">
+      <span class="num">${s.count}</span>
+      <span class="bar"><span class="bar-fill" style="width:${(s.count / maxShape * 100).toFixed(1)}%"></span></span>
+      <span class="label">${escapeHtml(s.shape)}</span>
+    </div>
+  `).join('');
+  csList.querySelectorAll('.bar-row').forEach(el => {
+    el.addEventListener('click', () => {
+      const shape = el.getAttribute('data-shape');
+      SELECTED_SHAPE = (SELECTED_SHAPE === shape) ? null : shape;
+      applyFilter();
+      renderStats();
+      // jump to samples tab
+      switchTab('samples');
+      if (FILTERED.length > 0) selectSample(FILTERED[0]);
+    });
+  });
+
+  // Agent histogram
+  const agList = $('agent-hist');
+  if (AGENTS.length === 0) { agList.innerHTML = ''; return; }
+  const maxA = AGENTS[0].count;
+  agList.innerHTML = AGENTS.map(a => `
+    <div class="bar-row" title="${escapeHtml(a.agent)}">
+      <span class="num">${a.count}</span>
+      <span class="bar"><span class="bar-fill" style="width:${(a.count / maxA * 100).toFixed(1)}%"></span></span>
+      <span class="label">${escapeHtml(a.agent)}</span>
+    </div>
+  `).join('');
+
+  // Goal length distribution (10 buckets)
+  if (RAW.length === 0) { $('goal-len').innerHTML = ''; return; }
+  const lens = RAW.map(r => r.user.length);
+  const max = Math.max(...lens);
+  const min = Math.min(...lens);
+  const N_BUCKETS = 10;
+  const span = Math.max(1, max - min);
+  const buckets = new Array(N_BUCKETS).fill(0);
+  for (const l of lens) {
+    let b = Math.floor((l - min) / span * N_BUCKETS);
+    if (b >= N_BUCKETS) b = N_BUCKETS - 1;
+    buckets[b]++;
+  }
+  const maxB = Math.max(...buckets);
+  $('goal-len').innerHTML = buckets.map((c, i) => {
+    const lo = Math.round(min + (span * i / N_BUCKETS));
+    const hi = Math.round(min + (span * (i + 1) / N_BUCKETS));
+    return `<div class="row">
+      <span style="min-width:80px">${lo}–${hi}</span>
+      <span class="b"><span class="bf" style="width:${(c / maxB * 100).toFixed(1)}%"></span></span>
+      <span style="color:var(--fg)">${c}</span>
+    </div>`;
+  }).join('');
+
+  // Clear-filter button
+  $('clear-filter').classList.toggle('hidden', SELECTED_SHAPE == null);
+}
+
+function renderFilterInfo() {
+  const parts = [];
+  if (SELECTED_SHAPE != null) {
+    parts.push(`<span class="chip" title="${escapeHtml(SELECTED_SHAPE)}">shape: ${escapeHtml(SELECTED_SHAPE.length > 40 ? SELECTED_SHAPE.slice(0, 38) + '…' : SELECTED_SHAPE)}<span class="x" id="clear-shape">✕</span></span>`);
+  }
+  if (SEARCH_QUERY.trim()) {
+    parts.push(`<span class="chip">q: ${escapeHtml(SEARCH_QUERY)}</span>`);
+  }
+  $('filter-active').innerHTML = parts.join(' ');
+  $('filter-count').textContent = `${FILTERED.length} / ${RAW.length}`;
+  const cs = document.getElementById('clear-shape');
+  if (cs) cs.addEventListener('click', () => {
+    SELECTED_SHAPE = null;
+    applyFilter();
+    renderStats();
+  });
+}
+
+function renderSampleList() {
+  const list = $('sample-list');
+  if (FILTERED.length === 0) {
+    list.innerHTML = '<div style="padding:20px;color:var(--muted);font-style:italic">No samples match.</div>';
+    return;
+  }
+  const limit = Math.min(FILTERED.length, 500);
+  let html = '';
+  for (let k = 0; k < limit; k++) {
+    const i = FILTERED[k];
+    const r = RAW[i];
+    const goalShort = r.user.length > 200 ? r.user.slice(0, 200) + '...' : r.user;
+    html += `
+      <div class="sample-row ${SELECTED_IDX === i ? 'active' : ''}" data-idx="${i}">
+        <div class="row-top">
+          <span class="idx">#${i + 1}</span>
+          <span class="shape" title="${escapeHtml(r.shape)}">${escapeHtml(r.chain.length + ' steps · ' + r.chain.join(' → '))}</span>
+        </div>
+        <div class="goal-preview">${escapeHtml(goalShort)}</div>
+      </div>
+    `;
+  }
+  if (FILTERED.length > limit) {
+    html += `<div style="padding:10px 14px;color:var(--muted);font-size:11px;font-style:italic">
+      Showing first ${limit} of ${FILTERED.length} — narrow the filter to see more.
+    </div>`;
+  }
+  list.innerHTML = html;
+  list.querySelectorAll('.sample-row').forEach(el => {
+    el.addEventListener('click', () => {
+      const idx = parseInt(el.getAttribute('data-idx'));
+      selectSample(idx);
+    });
+  });
+}
+
+function selectSample(idx) {
+  SELECTED_IDX = idx;
+  const r = RAW[idx];
+  if (!r) return;
+  // re-render sample list to update active highlight
+  document.querySelectorAll('.sample-row').forEach(el => {
+    el.classList.toggle('active', parseInt(el.getAttribute('data-idx')) === idx);
+  });
+  // detail
+  let planHtml = '';
+  if (r.plan.length === 0 && !r.parseOk) {
+    planHtml = '<div style="color:var(--red)">Assistant message did not parse as JSON.</div>';
+  } else {
+    planHtml = r.plan.map((s, i) => `
+      <div class="plan-step">
+        <div class="step-head">
+          <span class="step-num">${i + 1}.</span>
+          <span class="agent-id">${escapeHtml(s.agent_id || '?')}</span>
+        </div>
+        <div class="intent">${escapeHtml(s.intent || '')}</div>
+      </div>
+    `).join('');
+  }
+  $('detail').innerHTML = `
+    <div class="detail-header">
+      <span class="num">#${idx + 1}</span>
+      <span class="shape-pill" title="${escapeHtml(r.shape)}">${escapeHtml(r.chain.join(' → ') || '(empty plan)')}</span>
+      <span class="step-count">${r.chain.length} steps · goal ${r.user.length} ch</span>
+    </div>
+
+    <div class="field">
+      <div class="field-label">User goal <span class="meta">${r.user.length} chars</span></div>
+      <div class="box user-goal">${escapeHtml(r.user)}</div>
+    </div>
+
+    <div class="field">
+      <div class="field-label">Rationale</div>
+      <div class="box rationale">${r.rationale ? escapeHtml(r.rationale) : '<span style="color:var(--muted);font-style:italic">(empty)</span>'}</div>
+    </div>
+
+    <div class="field">
+      <div class="field-label">Plan</div>
+      ${planHtml}
+    </div>
+
+    <div class="toggle-row">
+      <button id="btn-raw">Raw assistant JSON</button>
+      <button id="btn-system">System prompt (${r.system.length} ch)</button>
+      <button id="btn-copy-goal">Copy user goal</button>
+      <button id="btn-prev">← Prev</button>
+      <button id="btn-next">Next →</button>
+    </div>
+
+    <pre class="raw-box hidden" id="raw-box">${escapeHtml(r.assistant)}</pre>
+    <div class="system-box hidden" id="system-box">${escapeHtml(r.system)}</div>
+  `;
+  $('btn-raw').addEventListener('click', (e) => {
+    const b = $('raw-box');
+    b.classList.toggle('hidden');
+    e.target.classList.toggle('on', !b.classList.contains('hidden'));
+  });
+  $('btn-system').addEventListener('click', (e) => {
+    const b = $('system-box');
+    b.classList.toggle('hidden');
+    e.target.classList.toggle('on', !b.classList.contains('hidden'));
+  });
+  $('btn-copy-goal').addEventListener('click', () => {
+    navigator.clipboard.writeText(r.user).then(() => {
+      const btn = $('btn-copy-goal');
+      const orig = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(() => { btn.textContent = orig; }, 1200);
+    });
+  });
+  $('btn-prev').addEventListener('click', () => {
+    const pos = FILTERED.indexOf(idx);
+    if (pos > 0) { selectSample(FILTERED[pos - 1]); scrollSampleIntoView(); }
+  });
+  $('btn-next').addEventListener('click', () => {
+    const pos = FILTERED.indexOf(idx);
+    if (pos >= 0 && pos < FILTERED.length - 1) { selectSample(FILTERED[pos + 1]); scrollSampleIntoView(); }
+  });
+}
+
+function scrollSampleIntoView() {
+  const el = document.querySelector('.sample-row.active');
+  if (el && el.scrollIntoView) el.scrollIntoView({ block: 'nearest' });
+}
+
+function switchTab(name) {
+  $('tab-stats').classList.toggle('active', name === 'stats');
+  $('tab-samples').classList.toggle('active', name === 'samples');
+  $('pane-stats').classList.toggle('hidden', name !== 'stats');
+  $('pane-samples').classList.toggle('hidden', name !== 'samples');
+}
+
+// Wire UI
+$('tab-stats').addEventListener('click', () => switchTab('stats'));
+$('tab-samples').addEventListener('click', () => switchTab('samples'));
+$('clear-filter').addEventListener('click', () => {
+  SELECTED_SHAPE = null;
+  applyFilter();
+  renderStats();
+});
+$('search').addEventListener('input', (e) => {
+  SEARCH_QUERY = e.target.value;
+  applyFilter();
+});
+$('file-picker').addEventListener('change', (e) => {
+  loadFile(e.target.value);
+});
+$('file-upload').addEventListener('change', (e) => {
+  const f = e.target.files[0];
+  if (!f) return;
+  $('detail').innerHTML = '<div class="loading">Reading ' + escapeHtml(f.name) + '...</div>';
+  const reader = new FileReader();
+  reader.onload = (evt) => ingestText(evt.target.result, f.name);
+  reader.onerror = () => { $('detail').innerHTML = '<div class="error">Failed to read file.</div>'; };
+  reader.readAsText(f);
+});
+
+// Keyboard nav
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (SELECTED_IDX == null) return;
+  const pos = FILTERED.indexOf(SELECTED_IDX);
+  if (pos < 0) return;
+  if (e.key === 'j' || e.key === 'ArrowDown') {
+    if (pos < FILTERED.length - 1) { selectSample(FILTERED[pos + 1]); scrollSampleIntoView(); e.preventDefault(); }
+  } else if (e.key === 'k' || e.key === 'ArrowUp') {
+    if (pos > 0) { selectSample(FILTERED[pos - 1]); scrollSampleIntoView(); e.preventDefault(); }
+  }
+});
+
+loadFile($('file-picker').value);
+</script>
+</body>
+</html>

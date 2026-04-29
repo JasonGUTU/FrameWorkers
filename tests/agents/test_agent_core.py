@@ -68,9 +68,12 @@ class TestAgentRegistryDescriptorModel:
         gathered = registry.gather_agents_info()
         assert gathered["total_agents"] == 1
         assert gathered["agent_ids"] == ["StoryAgent"]
-        assert "pipeline_agent" in gathered["all_capabilities"]
         assert gathered["agents"][0]["id"] == "StoryAgent"
         assert "asset_key" not in gathered["agents"][0]
+        # capabilities / agent_type fields were dropped (dead constants)
+        assert "capabilities" not in gathered["agents"][0]
+        assert "agent_type" not in gathered["agents"][0]
+        assert "all_capabilities" not in gathered
 
     def test_reload_clears_descriptors(self):
         registry = AgentRegistry()

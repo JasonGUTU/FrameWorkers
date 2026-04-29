@@ -83,9 +83,10 @@ SPEC = AgentSpec(
         InputLabelSpec(
             name=INPUT_LABEL_VIDEO_PACKAGE,
             cardinality="single",
+            optional=True,
             description=(
-                "Assembled video's JSON manifest — scenes, "
-                "shot_segments, per-clip timing. The LLM reads this to "
+                "Optional — assembled video's JSON manifest (scenes, "
+                "shot_segments, per-clip timing). The LLM reads this to "
                 "understand the video structure it is mixing audio "
                 "onto. This label targets the JSON/manifest artifact "
                 "specifically, NOT the mp4 file."
@@ -94,12 +95,13 @@ SPEC = AgentSpec(
         InputLabelSpec(
             name=INPUT_LABEL_VIDEO_FILE,
             cardinality="single",
+            optional=True,
             description=(
-                "The final assembled mp4 video file on disk (binary "
-                "artifact, mime=video/mp4). The materializer reads its "
-                "path and runs ffmpeg to extract the Kling-baked audio "
-                "track (dialogue + foley) as the base layer of the "
-                "mix. This label targets the mp4 binary specifically, "
+                "Optional — the final assembled mp4 video file on disk "
+                "(binary artifact, mime=video/mp4). When present, the "
+                "materializer extracts the clip's baked-in dialogue + "
+                "foley audio track and uses it as one source layer in "
+                "the mix. This label targets the mp4 binary specifically, "
                 "NOT the JSON manifest."
             ),
         ),
@@ -157,8 +159,8 @@ SPEC = AgentSpec(
         "optional music + optional ambience; wav registered under "
         "sys_id 'aud_final')."
     ),
-    purpose_and_routing=(
-        """Mix audio sources (video's Kling-baked dialogue+foley track + optional music + optional ambience) into ONE final wav for composition."""
+    purpose_and_trigger=(
+        """Combine whichever audio source layers are present (video's baked-in dialogue+foley audio extracted from an upstream assembled mp4, plus any global music track, plus any global ambience bed) into ONE final wav. All input layers are individually optional; at least one source layer must be available for the mix to produce output. Trigger: the plan needs a single combined audio file from multiple audio sources — typically when the plan adds a music and/or ambience layer to an assembled video, but also any other case where multiple audio source layers must be unified into one wav before final composition."""
     ),
     input_preamble=(
         "I amix the video's own dialogue+foley track with optional "

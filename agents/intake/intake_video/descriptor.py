@@ -58,7 +58,7 @@ SPEC = AgentSpec(
         "video-consuming step (analysis, style transfer, extension, "
         "highlight extraction, transcription, or subtitle generation)."
     ),
-    purpose_and_routing=(
+    purpose_and_trigger=(
         """Intake a raw user-uploaded video and register it as a caption-rich workspace artifact. Trigger: user uploaded a video file."""
     ),
     input_preamble=(

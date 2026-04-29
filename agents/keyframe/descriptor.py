@@ -148,47 +148,56 @@ SPEC = AgentSpec(
         InputLabelSpec(
             name=INPUT_LABEL_CHARACTER_REFERENCE,
             cardinality="collection",
+            optional=True,
             description=(
                 "Image artifacts that depict what specific characters in "
                 "the story should look like. Each entry's caption "
                 "identifies the character (by name, role, or visual "
-                "description). I use these as global character anchors in "
-                "Layer 1 instead of generating from text — I record the "
-                "resolved image path on the matching character entity so "
-                "the materializer reads the bytes from disk instead of "
-                "running text-to-image."
+                "description). When present, I use these as global "
+                "character anchors in Layer 1 instead of generating from "
+                "text — I record the resolved image path on the matching "
+                "character entity so the materializer reads the bytes from "
+                "disk instead of running text-to-image. When absent, I "
+                "generate the character anchor from text alone."
             ),
         ),
         InputLabelSpec(
             name=INPUT_LABEL_LOCATION_REFERENCE,
             cardinality="collection",
+            optional=True,
             description=(
                 "Image artifacts depicting what specific locations or "
                 "settings in the story should look like. Same handling as "
-                "character references — the resolved path is recorded on "
-                "the matching location entity."
+                "character references — when present, the resolved path is "
+                "recorded on the matching location entity; when absent, "
+                "the location is generated from text."
             ),
         ),
         InputLabelSpec(
             name=INPUT_LABEL_PROP_REFERENCE,
             cardinality="collection",
+            optional=True,
             description=(
                 "Image artifacts depicting what specific props or objects "
                 "in the story should look like. Same handling as character "
-                "references — the resolved path is recorded on the "
-                "matching prop entity."
+                "references — when present, the resolved path is recorded "
+                "on the matching prop entity; when absent, the prop is "
+                "generated from text."
             ),
         ),
         InputLabelSpec(
             name=INPUT_LABEL_STYLE_REFERENCE,
             cardinality="collection",
+            optional=True,
             description=(
                 "Image artifacts conveying overall visual style, mood, "
                 "palette, or aesthetic that should inform image "
                 "generation. Unlike character/location references, these "
                 "don't depict specific entities — they describe how "
-                "things should look in general. I incorporate them as "
-                "style guidance in my generation prompts."
+                "things should look in general. When present, I "
+                "incorporate them as style guidance in my generation "
+                "prompts; when absent, the style is inferred from the "
+                "screenplay's per-scene mood / tone metadata."
             ),
         ),
     ],
@@ -197,8 +206,8 @@ SPEC = AgentSpec(
         "stability + L3 one still per shot); each L3 row has "
         "prompt_summary (image API) + video_motion_hint (I2V text only)."
     ),
-    purpose_and_routing=(
-        """Generate per-shot keyframe still images for every shot in the screenplay (image-generation backend). When reference images are available in context (character / location / style references), use them to keep visual identity consistent across shots."""
+    purpose_and_trigger=(
+        """Generate per-shot keyframe still images for every shot in a screenplay — uses character / location / style reference images when available to keep visual identity consistent across shots. Trigger: include whenever the plan produces a multi-shot film and needs per-shot starting frames before video synthesis. Requires an upstream screenplay; reference images are optional."""
     ),
     input_preamble=(
         "I plan and render the visual reference images for a video: "

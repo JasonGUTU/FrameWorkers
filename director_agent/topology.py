@@ -96,24 +96,29 @@ AGENT_TOPOLOGY: Dict[str, Dict[str, str]] = {
     # ── Audio chain ──────────────────────────────────────────────────
     "MusicAgent": {
         "upstream": (
-            "ScreenplayAgent (creative flow) or VideoAnalysisAgent (existing-video)"
+            "ScreenplayAgent (cinematic flow) / NarrationAgent (illustrated-"
+            "storytelling flow) / VideoAnalysisAgent (existing-video flow)"
         ),
         "downstream": "AudioMixAgent",
         "when_to_include": (
-            "Cinematic default for any newly-created film deliverable (unless "
-            "user specifies ambience-only). On existing video, only when user "
-            "explicitly requests music / BGM / soundtrack / score."
+            "Opt-in across all flows. Include only when the user explicitly "
+            "mentions music / BGM / soundtrack / score (e.g. 'add some music', "
+            "'with an orchestral score', 'piano BGM under the narrator'). No "
+            "chain has a 'default' music layer — silence is the default."
         ),
     },
     "AmbienceAgent": {
         "upstream": (
-            "ScreenplayAgent (creative flow) or VideoAnalysisAgent (existing-video)"
+            "ScreenplayAgent (cinematic flow) / NarrationAgent (illustrated-"
+            "storytelling flow) / VideoAnalysisAgent (existing-video flow)"
         ),
         "downstream": "AudioMixAgent",
         "when_to_include": (
-            "Cinematic default alongside MusicAgent for any newly-created film "
-            "deliverable (unless user specifies music-only). On existing video, "
-            "only when user explicitly requests ambient / atmospheric beds."
+            "Opt-in across all flows. Include only when the user explicitly "
+            "mentions ambient / atmospheric / environmental sound design "
+            "(e.g. 'add some ambient sounds', 'layer in rain + café murmur', "
+            "'jungle ambience under the narration'). No chain has a 'default' "
+            "ambience layer — silence is the default."
         ),
     },
     "AudioMixAgent": {

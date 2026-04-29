@@ -146,11 +146,13 @@ SPEC = AgentSpec(
     ],
     output_description=(
         "video_package (per-shot clips, per-scene assembled clips, "
-        "final assembled video — clips carry Kling-baked dialogue + "
-        "foley in their audio track when generate_audio is on)."
+        "final assembled video — clips carry baked-in character "
+        "dialogue + on-screen foley in their audio track, generated "
+        "together with the visual frames; the output does not include "
+        "music or ambience layers)."
     ),
-    purpose_and_routing=(
-        """Generate per-shot video clips from keyframe images (Kling I2V) and assemble the full film. Kling's generate_audio bakes character dialogue + on-screen foley directly into each clip's audio track — those are NOT handled separately by music / ambience / audio-mix. BGM and atmospheric beds are produced elsewhere and layered on later."""
+    purpose_and_trigger=(
+        """Generate per-shot video clips from keyframe images via image-to-video synthesis and assemble them into the full film. The image-to-video model bakes character dialogue + on-screen foley directly into each clip's audio track at generation time — the output mp4 already carries baked dialogue+foley audio. The output does not include music or ambience layers. Trigger: include whenever the plan produces a multi-shot assembled film from a screenplay and per-shot keyframes; requires both upstream."""
     ),
     input_preamble=(
         "I generate per-shot moving video clips by feeding a planned "

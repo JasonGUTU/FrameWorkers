@@ -89,8 +89,8 @@ FrameWorkers/
    **basic info（必须在 prompt 里，不可剥）：**
    - Task 定义 + 输出 JSON schema
    - 结构规则（framework invariants：每个 agent ≤1 次 / plan 非空 / flat order 等；text intake 已退役，chat/文本上传由 `workspace.persist_raw_upload` 直接落成 `[creative_brief]` 全局 artifact，plan 不再从 IntakeTextAgent 起步）
-   - `allowed_ids`（19 个 agent 名字列表）
-   - **每个 agent 的完整 descriptor**（`AgentSpec` 的 `inputs / output_description / purpose_and_routing` 三段，由 `render_catalog_entry()` 渲染成 ~1500 chars/agent × 19）—— 这**不是** scaffold，是告诉 planner "每个 agent 能干啥 / 吃啥 / 产啥" 的基本事实。跟"找人干活必须知道他能干啥"一个意思。`training/director/gen_samples.py::build_compact_catalog()` 之前输出的 degenerate `{id, purpose=id}` 是残缺的 basic info，必须改成至少给 `purpose_and_routing` 一行。
+   - `allowed_ids`（20 个 agent 名字列表，以 `agents/__init__.py::AGENT_REGISTRY` 为准）
+   - **每个 agent 的完整 descriptor**（`AgentSpec` 的 `inputs / output_description / purpose_and_trigger` 三段，由 `render_catalog_entry()` 渲染成 ~1500 chars/agent × 20）—— 这**不是** scaffold，是告诉 planner "每个 agent 能干啥 / 吃啥 / 产啥" 的基本事实。跟"找人干活必须知道他能干啥"一个意思。`training/director/gen_samples.py::build_compact_catalog()` 之前输出的 degenerate `{id, purpose=id}` 是残缺的 basic info，必须改成至少给 `purpose_and_trigger` 一行。
 
    **scaffold（可选加分项，三者独立 ablation）：**
    - **fewshots**：`_PLAN_UPFRONT_FEWSHOTS` 的 7 条 worked pattern 示例（"看例子"）。开关：`LlmSubAgentPlanner(fewshots=True|False)`。

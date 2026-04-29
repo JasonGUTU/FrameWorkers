@@ -86,23 +86,17 @@ class _DummyRegistry:
 
     def gather_agents_info(self):
         agents = []
-        capabilities = set()
         for name, desc in self._descriptors.items():
-            caps = ["pipeline_agent"]
-            capabilities.update(caps)
             agents.append(
                 {
                     "id": name,
                     "name": name,
                     "description": desc.catalog_entry or "",
-                    "agent_type": "pipeline",
-                    "capabilities": caps,
                 }
             )
         return {
             "total_agents": len(agents),
             "agents": agents,
-            "all_capabilities": sorted(capabilities),
             "agent_ids": [agent["id"] for agent in agents],
         }
 
@@ -199,7 +193,7 @@ def test_assistant_e2e_http_flow_covers_core_endpoints(assistant_http_client):
         None,
     )
     assert dummy_info is not None
-    assert "pipeline_agent" in dummy_info["capabilities"]
+    assert "capabilities" not in dummy_info  # removed 2026-04 — dead field
 
     # Step 2: Create one task via the batch endpoint.
     create_step_resp = client.post(

@@ -1,0 +1,106 @@
+"""GRPO shape: vid_bilingual_sub — IntakeVideo → Transcription → Translation → Compositor.
+
+40 samples (target_n=40). Bilingual subtitle overlay on uploaded video.
+"""
+from __future__ import annotations
+
+
+def _make(topic, src_lang, tgt_lang):
+    return {
+        "rationale": (
+            f"{topic} clip + {src_lang}-and-{tgt_lang} bilingual subtitle overlay. "
+            "Reject MusicAgent / AmbienceAgent / AudioMixAgent (no audio overlay), "
+            "VideoAnalysisAgent / HighlightAgent (no analysis or trim), StyleTransferAgent "
+            "/ VideoExtendAgent (no restyle / length change)."
+        ),
+        "intents": [
+            f"Ingest the user's uploaded {topic} clip into the workspace.",
+            f"Transcribe the {src_lang} dialogue into timestamped subtitle segments.",
+            f"Translate the {src_lang} subtitle track into {tgt_lang} as the second-language overlay.",
+            f"Composite the final {topic} mp4 with bilingual {src_lang}-and-{tgt_lang} subtitles overlaid.",
+        ],
+    }
+
+
+SAMPLES: list[dict] = [
+    {**_make("Spanish cooking class", "Spanish", "English"),
+     "user_goal": "Add Spanish-and-English bilingual subtitles to my Spanish cooking class clip."},
+    {**_make("Korean medical lecture", "Korean", "English"),
+     "user_goal": "Add Korean-and-English bilingual subtitles to my Korean medical lecture recording."},
+    {**_make("Japanese tea-ceremony tutorial", "Japanese", "English"),
+     "user_goal": "Add Japanese-and-English bilingual subtitles to my Japanese tea-ceremony tutorial."},
+    {**_make("French cheese-making demo", "French", "English"),
+     "user_goal": "Add French-and-English bilingual subtitles to my French cheese-making demo."},
+    {**_make("German engineering lecture", "German", "English"),
+     "user_goal": "Add German-and-English bilingual subtitles to my German engineering lecture."},
+    {**_make("Italian cooking show", "Italian", "English"),
+     "user_goal": "Add Italian-and-English bilingual subtitles to my Italian cooking show."},
+    {**_make("Russian programming tutorial", "Russian", "English"),
+     "user_goal": "Add Russian-and-English bilingual subtitles to my Russian programming tutorial."},
+    {**_make("Mandarin business presentation", "Mandarin", "English"),
+     "user_goal": "Add Mandarin-and-English bilingual subtitles to my Mandarin business presentation."},
+    {**_make("Hindi yoga class", "Hindi", "English"),
+     "user_goal": "Add Hindi-and-English bilingual subtitles to my Hindi yoga class."},
+    {**_make("Cantonese dim-sum tutorial", "Cantonese", "English"),
+     "user_goal": "Add Cantonese-and-English bilingual subtitles to my Cantonese dim-sum tutorial."},
+    {**_make("Arabic news commentary", "Arabic", "English"),
+     "user_goal": "Add Arabic-and-English bilingual subtitles to my Arabic news commentary."},
+    {**_make("Turkish recipe video", "Turkish", "English"),
+     "user_goal": "Add Turkish-and-English bilingual subtitles to my Turkish recipe video."},
+    {**_make("Vietnamese travel vlog", "Vietnamese", "English"),
+     "user_goal": "Add Vietnamese-and-English bilingual subtitles to my Vietnamese travel vlog."},
+    {**_make("Thai street-food tour", "Thai", "English"),
+     "user_goal": "Add Thai-and-English bilingual subtitles to my Thai street-food tour."},
+    {**_make("Polish history lecture", "Polish", "English"),
+     "user_goal": "Add Polish-and-English bilingual subtitles to my Polish history lecture."},
+    {**_make("Portuguese language lesson", "Portuguese", "English"),
+     "user_goal": "Add Portuguese-and-English bilingual subtitles to my Portuguese language lesson."},
+    {**_make("Greek philosophy seminar", "Greek", "English"),
+     "user_goal": "Add Greek-and-English bilingual subtitles to my Greek philosophy seminar."},
+    {**_make("Hebrew prayer recitation", "Hebrew", "English"),
+     "user_goal": "Add Hebrew-and-English bilingual subtitles to my Hebrew prayer recitation."},
+    {**_make("Persian poetry reading", "Persian", "English"),
+     "user_goal": "Add Persian-and-English bilingual subtitles to my Persian poetry reading."},
+    {**_make("Bengali storytelling", "Bengali", "English"),
+     "user_goal": "Add Bengali-and-English bilingual subtitles to my Bengali storytelling video."},
+    {**_make("Punjabi cooking demo", "Punjabi", "English"),
+     "user_goal": "Add Punjabi-and-English bilingual subtitles to my Punjabi cooking demo."},
+    {**_make("Tamil temple-festival commentary", "Tamil", "English"),
+     "user_goal": "Add Tamil-and-English bilingual subtitles to my Tamil temple-festival commentary."},
+    {**_make("Yoruba elder interview", "Yoruba", "English"),
+     "user_goal": "Add Yoruba-and-English bilingual subtitles to my Yoruba elder interview."},
+    {**_make("Swahili documentary", "Swahili", "English"),
+     "user_goal": "Add Swahili-and-English bilingual subtitles to my Swahili documentary."},
+    {**_make("Tagalog family interview", "Tagalog", "English"),
+     "user_goal": "Add Tagalog-and-English bilingual subtitles to my Tagalog family interview."},
+    {**_make("Indonesian street-food", "Indonesian", "English"),
+     "user_goal": "Add Indonesian-and-English bilingual subtitles to my Indonesian street-food video."},
+    {**_make("Mongolian throat-singing", "Mongolian", "English"),
+     "user_goal": "Add Mongolian-and-English bilingual subtitles to my Mongolian throat-singing recording."},
+    {**_make("Tibetan monastic chant", "Tibetan", "English"),
+     "user_goal": "Add Tibetan-and-English bilingual subtitles to my Tibetan monastic chant recording."},
+    {**_make("Welsh choir performance", "Welsh", "English"),
+     "user_goal": "Add Welsh-and-English bilingual subtitles to my Welsh choir performance."},
+    {**_make("Swedish folk-music interview", "Swedish", "English"),
+     "user_goal": "Add Swedish-and-English bilingual subtitles to my Swedish folk-music interview."},
+    {**_make("Norwegian sailor's tale", "Norwegian", "English"),
+     "user_goal": "Add Norwegian-and-English bilingual subtitles to my Norwegian sailor's tale recording."},
+    {**_make("Finnish forest-guide tour", "Finnish", "English"),
+     "user_goal": "Add Finnish-and-English bilingual subtitles to my Finnish forest-guide tour."},
+    {**_make("Dutch art history lecture", "Dutch", "English"),
+     "user_goal": "Add Dutch-and-English bilingual subtitles to my Dutch art history lecture."},
+    {**_make("Quebec-French interview", "Quebec French", "English"),
+     "user_goal": "Add Quebec-French-and-English bilingual subtitles to my Quebec-French interview."},
+    {**_make("Catalan cookbook reading", "Catalan", "Spanish"),
+     "user_goal": "Add Catalan-and-Spanish bilingual subtitles to my Catalan cookbook reading."},
+    {**_make("Basque dance commentary", "Basque", "Spanish"),
+     "user_goal": "Add Basque-and-Spanish bilingual subtitles to my Basque dance commentary."},
+    {**_make("Quechua harvest-festival", "Quechua", "Spanish"),
+     "user_goal": "Add Quechua-and-Spanish bilingual subtitles to my Quechua harvest-festival video."},
+    {**_make("Maori powhiri-welcome ceremony", "Maori", "English"),
+     "user_goal": "Add Maori-and-English bilingual subtitles to my Maori powhiri-welcome ceremony video."},
+    {**_make("Navajo Code-Talker interview", "Navajo", "English"),
+     "user_goal": "Add Navajo-and-English bilingual subtitles to my Navajo Code-Talker interview."},
+    {**_make("Lakota elder storytelling", "Lakota", "English"),
+     "user_goal": "Add Lakota-and-English bilingual subtitles to my Lakota elder storytelling video."},
+]

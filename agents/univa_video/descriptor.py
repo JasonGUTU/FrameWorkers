@@ -98,7 +98,7 @@ SPEC = AgentSpec(
     output_description=(
         "univa_video (per-shot 5s MP4 clips + final merged video)."
     ),
-    purpose_and_routing=(
+    purpose_and_trigger=(
         "Generate video clips from keyframe images using I2V, then "
         "merge into a continuous video using UniVA's pipeline approach. "
         "Last step of the UniVA-track pipeline (runs after "

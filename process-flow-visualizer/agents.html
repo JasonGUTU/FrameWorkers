@@ -288,7 +288,7 @@
     <!-- ── Stats ── -->
     <div class="stats-bar">
       <div class="stat-chip">
-        <span class="stat-num">26</span>
+        <span class="stat-num">22</span>
         <span class="stat-label">已实现<br>Sub-Agents</span>
       </div>
       <div class="stat-chip">
@@ -296,12 +296,8 @@
         <span class="stat-label">功能域</span>
       </div>
       <div class="stat-chip">
-        <span class="stat-num">26</span>
+        <span class="stat-num">22</span>
         <span class="stat-label">完整可用<br>(E2E 验证通过)</span>
-      </div>
-      <div class="stat-chip">
-        <span class="stat-num">10</span>
-        <span class="stat-label">新增能力<br>(service + materializer 已实现)</span>
       </div>
     </div>
 
@@ -320,7 +316,7 @@
           <span class="flow-arrow">&rarr;</span>
           <span class="flow-chip chip-video">VideoAgent</span>
           <span class="flow-arrow">&rarr;</span>
-          <span class="flow-chip chip-audio">Narration/Music/Ambience → AudioMix</span>
+          <span class="flow-chip chip-audio">Music + Ambience → AudioMix</span>
           <span class="flow-arrow">&rarr;</span>
           <span class="flow-chip chip-new">SubtitleAgent</span>
           <span class="flow-arrow">&rarr;</span>
@@ -338,7 +334,7 @@
           <span class="flow-chip chip-new">TranslationAgent</span>
           <span class="flow-arrow">&rarr;</span>
           <div class="flow-branch">
-            <span class="flow-chip chip-audio">Narration/Music/Ambience → AudioMix</span>
+            <span class="flow-chip chip-audio">Music + Ambience → AudioMix</span>
             <span class="flow-chip chip-new">SubtitleAgent</span>
           </div>
           <span class="flow-arrow">&rarr;</span>
@@ -355,10 +351,25 @@
           <span class="flow-arrow">&rarr;</span>
           <div class="flow-branch">
             <span class="flow-chip chip-edit">StyleTransferAgent</span>
-            <span class="flow-chip chip-edit">InpaintAgent</span>
             <span class="flow-chip chip-edit">VideoExtendAgent</span>
             <span class="flow-chip chip-edit">HighlightAgent</span>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-section">
+      <div class="flow-title">典型工作流：illustrated-storytelling（图文故事 / audiobook）</div>
+      <div class="flow-box">
+        <div class="flow-chain">
+          <span class="flow-chip chip-story">NarrationAgent</span>
+          <span class="flow-arrow">&rarr;</span>
+          <div class="flow-branch">
+            <span class="flow-chip chip-keyframe">IllustrationAgent</span>
+            <span class="flow-chip chip-audio">NarratorAgent</span>
+          </div>
+          <span class="flow-arrow">&rarr;</span>
+          <span class="flow-chip chip-new">CompositorAgent</span>
         </div>
       </div>
     </div>
@@ -371,7 +382,7 @@
         <span class="tier-badge narrative">NARRATIVE DESIGN</span>
         <span class="tier-title">叙事设计</span>
       </div>
-      <p class="tier-desc">纯文本推理：从创意简报到结构化故事蓝图与分镜剧本。</p>
+      <p class="tier-desc">纯文本推理：把创意简报拆成结构化故事蓝图 / 分镜剧本（电影多镜头流）或 illustration-aligned 叙事脚本（illustrated-storytelling 流）。</p>
 
       <div class="agent-grid">
 
@@ -409,18 +420,18 @@
           </div>
         </div>
 
-        <!-- UnivaStoryboardAgent -->
+        <!-- NarrationAgent -->
         <div class="agent-card">
           <div class="agent-card-head">
-            <div class="agent-icon" style="background:rgba(248,113,113,0.12)">📋</div>
-            <span class="agent-name">UnivaStoryboardAgent</span>
+            <div class="agent-icon" style="background:rgba(248,113,113,0.12)">📓</div>
+            <span class="agent-name">NarrationAgent</span>
             <span class="agent-type-tag tag-llm">Pure LLM</span>
           </div>
           <div class="agent-card-body">
-            <p class="agent-purpose">UniVA 风格 storyboard 规划：从 creative brief 生成角色定义 + 逐镜头分解。</p>
+            <p class="agent-purpose">illustrated-storytelling / audiobook-with-pictures 的创意头：把 creative brief 拆成「一张图一段故事」的 illustration-aligned segments，每段带 image_prompt + 逐行 TTS 文本 + 跨段 art-style 锚点。电影 / 多镜头流不走这里（那条走 Screenplay）。</p>
             <div class="agent-io">
               <div class="agent-io-row"><span class="io-label io-in">Input</span><span class="io-val">creative_brief</span></div>
-              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">univa_storyboard (characters[], shots[], style)</span></div>
+              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">narration_script (language + overall_style + segments · image_prompt · per-line TTS text)</span></div>
             </div>
             <div class="agent-status"><span class="status-dot dot-ready"></span><span class="status-text">完整可用</span></div>
           </div>
@@ -466,44 +477,27 @@
             <span class="agent-type-tag tag-llm-media">LLM + Media</span>
           </div>
           <div class="agent-card-body">
-            <p class="agent-purpose">逐镜头生成视频片段：关键帧 + motion hint &rarr; I2V 模型生成 &rarr; 拼接为连续视频。</p>
+            <p class="agent-purpose">逐镜头 Kling I2V 生成 + 逐场景 / 全片拼接。Kling 的 generate_audio 会把角色对白和画面 foley 直接烘进每段 clip 的音轨，这些不由 music / ambience / audio_mix 另出；BGM 和环境底另起 agent 后期叠加。</p>
             <div class="agent-io">
               <div class="agent-io-row"><span class="io-label io-in">Input</span><span class="io-val">screenplay + per-shot keyframe images</span></div>
-              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">video_package (shot clips + scene clips + merged video)</span></div>
+              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">video_package (shot clips · scene clips · merged film; clips 自带 dialogue + foley 音轨)</span></div>
             </div>
             <div class="agent-status"><span class="status-dot dot-ready"></span><span class="status-text">完整可用</span></div>
           </div>
         </div>
 
-        <!-- UnivaKeyFrameAgent -->
+        <!-- IllustrationAgent -->
         <div class="agent-card">
           <div class="agent-card-head">
-            <div class="agent-icon" style="background:rgba(79,142,247,0.14)">🖼</div>
-            <span class="agent-name">UnivaKeyFrameAgent</span>
+            <div class="agent-icon" style="background:rgba(79,142,247,0.14)">📚</div>
+            <span class="agent-name">IllustrationAgent</span>
             <span class="agent-type-tag tag-llm-media">LLM + Media</span>
           </div>
           <div class="agent-card-body">
-            <p class="agent-purpose">UniVA 风格关键帧生成：角色参考图 + 逐镜头关键帧图。</p>
+            <p class="agent-purpose">illustrated-storytelling 插画生成：按 narration script 的 segments 逐段出图，首帧作为跨段风格锚点（first-frame-as-anchor）保证整本风格一致。</p>
             <div class="agent-io">
-              <div class="agent-io-row"><span class="io-label io-in">Input</span><span class="io-val">univa_storyboard</span></div>
-              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">univa_keyframes (character refs + per-shot images)</span></div>
-            </div>
-            <div class="agent-status"><span class="status-dot dot-ready"></span><span class="status-text">完整可用</span></div>
-          </div>
-        </div>
-
-        <!-- UnivaVideoAgent -->
-        <div class="agent-card">
-          <div class="agent-card-head">
-            <div class="agent-icon" style="background:rgba(79,142,247,0.14)">🎥</div>
-            <span class="agent-name">UnivaVideoAgent</span>
-            <span class="agent-type-tag tag-llm-media">LLM + Media</span>
-          </div>
-          <div class="agent-card-body">
-            <p class="agent-purpose">UniVA 风格视频生成：从逐镜头关键帧生成 I2V 视频片段并合并。</p>
-            <div class="agent-io">
-              <div class="agent-io-row"><span class="io-label io-in">Input</span><span class="io-val">univa_storyboard + univa_keyframes</span></div>
-              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">univa_video (per-shot clips + merged video)</span></div>
+              <div class="agent-io-row"><span class="io-label io-in">Input</span><span class="io-val">narration_script (segments + per-segment image_prompt + overall_style)</span></div>
+              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">illustration_manifest (one PNG per segment, style-consistent)</span></div>
             </div>
             <div class="agent-status"><span class="status-dot dot-ready"></span><span class="status-text">完整可用</span></div>
           </div>
@@ -532,10 +526,10 @@
             <span class="agent-type-tag tag-llm">Pure LLM</span>
           </div>
           <div class="agent-card-body">
-            <p class="agent-purpose">从剧本对白/旁白生成带时间戳的 SRT 字幕轨。支持按视频时间线对齐，自动断行和阅读速度控制。</p>
+            <p class="agent-purpose">从定时文本源生成 SRT 字幕轨：源可以是 screenplay 的对白（新建流），也可以是 transcript（已有视频加字幕流）。两条路径 schema 兼容，走同一个 label。</p>
             <div class="agent-io">
-              <div class="agent-io-row"><span class="io-label io-in">Input</span><span class="io-val">screenplay + optional video_package (timing)</span></div>
-              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">subtitle_tracks (SRT cues with timing)</span></div>
+              <div class="agent-io-row"><span class="io-label io-in">Input</span><span class="io-val">screenplay OR transcript（其一，带 timing）</span></div>
+              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">subtitle_tracks (SRT cues with timing, one track per language)</span></div>
             </div>
             <div class="agent-status"><span class="status-dot dot-ready"></span><span class="status-text">纯 LLM — 完整可用</span></div>
           </div>
@@ -581,10 +575,10 @@
             <span class="agent-type-tag tag-llm">Pure LLM</span>
           </div>
           <div class="agent-card-body">
-            <p class="agent-purpose">翻译结构化文本（剧本、转录、故事蓝图），保留所有结构性 key（scene_id, shot_id 等）不变，只翻译人可读内容。</p>
+            <p class="agent-purpose">翻译结构化文本（SRT、screenplay 等），保留所有 keys / ids / timing / ordering — 例如译后 SRT 每条 cue 的时间戳原样保留。必须在已出 SRT 后再跑（把 raw transcript 先翻译再断句会破坏时间戳）。</p>
             <div class="agent-io">
-              <div class="agent-io-row"><span class="io-label io-in">Input</span><span class="io-val">source_text (any structured artifact) + target_language</span></div>
-              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">translation (translated text, structure preserved)</span></div>
+              <div class="agent-io-row"><span class="io-label io-in">Input</span><span class="io-val">subtitle_tracks (SRT) + target_language</span></div>
+              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">translation (结构保持，cue 时间戳原样保留)</span></div>
             </div>
             <div class="agent-status"><span class="status-dot dot-ready"></span><span class="status-text">纯 LLM — 完整可用</span></div>
           </div>
@@ -598,10 +592,10 @@
             <span class="agent-type-tag tag-llm-media">LLM + Media</span>
           </div>
           <div class="agent-card-body">
-            <p class="agent-purpose">语音转文字：从音频/视频提取带时间戳的逐句转录，支持说话人识别和语言检测。</p>
+            <p class="agent-purpose">已有视频音轨 → 语音转文字：带时间戳的逐句 transcript + 整段 full_text + 检测到的语言。输出 shape 与 SubtitleAgent 的 timed-source 输入兼容，可直接被 SubtitleAgent 当作 screenplay 的替代喂入。</p>
             <div class="agent-io">
               <div class="agent-io-row"><span class="io-label io-in">Input</span><span class="io-val">source_media (audio/video file)</span></div>
-              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">transcript (segments with timestamps + speaker + full_text)</span></div>
+              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">transcript (timestamped segments + full_text + detected language)</span></div>
             </div>
             <div class="agent-status"><span class="status-dot dot-ready"></span><span class="status-text">E2E 通过 — OpenAI Whisper (mock + real)</span></div>
           </div>
@@ -639,23 +633,6 @@
           </div>
         </div>
 
-        <!-- InpaintAgent -->
-        <div class="agent-card">
-          <div class="agent-card-head">
-            <div class="agent-icon" style="background:rgba(45,212,191,0.12)">🖌</div>
-            <span class="agent-name">InpaintAgent</span>
-            <span class="agent-type-tag tag-llm-media">LLM + Media</span>
-          </div>
-          <div class="agent-card-body">
-            <p class="agent-purpose">视频重绘 / 物体替换。支持四种 mask 模式：手动 mask、深度前景、深度背景（前景不动改背景或反之）、物体追踪。</p>
-            <div class="agent-io">
-              <div class="agent-io-row"><span class="io-label io-in">Input</span><span class="io-val">source_video + mask (manual/depth_fg/depth_bg/object) + description</span></div>
-              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">inpainted_video (replaced region blended into source)</span></div>
-            </div>
-            <div class="agent-status"><span class="status-dot dot-ready"></span><span class="status-text">E2E 通过 — fal.ai video edit (mock + real)</span></div>
-          </div>
-        </div>
-
         <!-- VideoExtendAgent -->
         <div class="agent-card">
           <div class="agent-card-head">
@@ -664,10 +641,10 @@
             <span class="agent-type-tag tag-llm-media">LLM + Media</span>
           </div>
           <div class="agent-card-body">
-            <p class="agent-purpose">视频续写：从源视频末帧出发，按文字描述继续生成新片段。可复用现有 I2V video_service。</p>
+            <p class="agent-purpose">给已有 clip 延时长：慢动作、氛围插入、特写、音效叠加等电影化手法，无缝续在源视频末尾。**不是叙事续写**（下一场剧情要走 Story 链），产出本身即是可交付成品。</p>
             <div class="agent-io">
-              <div class="agent-io-row"><span class="io-label io-in">Input</span><span class="io-val">source_video + continuation_description</span></div>
-              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">extended_video (continuation clip, 3-10s)</span></div>
+              <div class="agent-io-row"><span class="io-label io-in">Input</span><span class="io-val">source_video + 延长意图描述</span></div>
+              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">extended_video (continuation 段无缝 append 到源)</span></div>
             </div>
             <div class="agent-status"><span class="status-dot dot-ready"></span><span class="status-text">E2E 通过 — FFmpeg 帧提取 + I2V (mock + real)</span></div>
           </div>
@@ -733,25 +710,9 @@
         <span class="tier-badge voice">VOICE / AUDIO</span>
         <span class="tier-title">语音 / 音频</span>
       </div>
-      <p class="tier-desc">TTS 旁白、背景音乐、环境音、混音、语音克隆。每个 agent 只处理一种音频轨，由 AudioMixAgent 混合。</p>
+      <p class="tier-desc">BGM / 环境底 / 混音，加 illustrated-storytelling 专用 narrator voiceover。Music 和 Ambience 各出一条 film-wide 单轨，由 AudioMixAgent 叠上 Video 自带的 Kling dialogue+foley 轨合并成终轨。</p>
 
       <div class="agent-grid">
-
-        <div class="agent-card">
-          <div class="agent-card-head">
-            <div class="agent-icon" style="background:rgba(244,114,182,0.12)">🎤</div>
-            <span class="agent-name">NarrationAgent</span>
-            <span class="agent-type-tag tag-llm-media">LLM + Media</span>
-          </div>
-          <div class="agent-card-body">
-            <p class="agent-purpose">逐 shot 对白/旁白 → TTS 语音生成。从剧本提取每句台词，调用 TTS 服务合成语音。</p>
-            <div class="agent-io">
-              <div class="agent-io-row"><span class="io-label io-in">Input</span><span class="io-val">screenplay (dialogue/narration text)</span></div>
-              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">narration_segments (per-shot WAV)</span></div>
-            </div>
-            <div class="agent-status"><span class="status-dot dot-ready"></span><span class="status-text">E2E 通过 — fal.ai TTS</span></div>
-          </div>
-        </div>
 
         <div class="agent-card">
           <div class="agent-card-head">
@@ -760,10 +721,10 @@
             <span class="agent-type-tag tag-llm-media">LLM + Media</span>
           </div>
           <div class="agent-card-body">
-            <p class="agent-purpose">逐 scene 生成背景音乐。从剧本的场景 mood/tone 推导音乐风格和配器。</p>
+            <p class="agent-purpose">生成 ONE film-wide 背景音乐轨。新建影片默认触发（除非用户只要 ambience），或已有视频上要求 BGM / soundtrack / score 时触发。</p>
             <div class="agent-io">
-              <div class="agent-io-row"><span class="io-label io-in">Input</span><span class="io-val">screenplay (scene mood/tone)</span></div>
-              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">music_cues (per-scene WAV)</span></div>
+              <div class="agent-io-row"><span class="io-label io-in">Input</span><span class="io-val">screenplay (整体 mood/tone)</span></div>
+              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">music_track (film-wide WAV)</span></div>
             </div>
             <div class="agent-status"><span class="status-dot dot-ready"></span><span class="status-text">E2E 通过</span></div>
           </div>
@@ -776,10 +737,10 @@
             <span class="agent-type-tag tag-llm-media">LLM + Media</span>
           </div>
           <div class="agent-card-body">
-            <p class="agent-purpose">逐 scene 生成环境音。从剧本的场景地点/环境推导背景声（风声、雨声、城市噪音等）。</p>
+            <p class="agent-purpose">生成 ONE film-wide 环境底（room tone / 氛围底噪）。影片默认和 music 并行触发（除非只要 music），或已有视频要求铺雨声 / 风声 / 人群底噪时触发。</p>
             <div class="agent-io">
-              <div class="agent-io-row"><span class="io-label io-in">Input</span><span class="io-val">screenplay (scene location/setting)</span></div>
-              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">ambience_beds (per-scene WAV)</span></div>
+              <div class="agent-io-row"><span class="io-label io-in">Input</span><span class="io-val">screenplay (整体 setting / 环境描述)</span></div>
+              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">ambience_bed (film-wide WAV)</span></div>
             </div>
             <div class="agent-status"><span class="status-dot dot-ready"></span><span class="status-text">E2E 通过</span></div>
           </div>
@@ -792,10 +753,10 @@
             <span class="agent-type-tag tag-llm-media">LLM + Media</span>
           </div>
           <div class="agent-card-body">
-            <p class="agent-purpose">混音 + 拼接：将旁白、音乐、环境音三轨混合为逐场景混音，再拼接为最终音频。</p>
+            <p class="agent-purpose">把视频自带的 Kling dialogue+foley 轨 + 可选 music + 可选 ambience 三路 amix 成 ONE film-wide 终轨（sys_id = aud_final），给 Compositor 用。</p>
             <div class="agent-io">
-              <div class="agent-io-row"><span class="io-label io-in">Input</span><span class="io-val">narration + music + ambience tracks</span></div>
-              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">audio_mix (per-scene mix + final audio WAV)</span></div>
+              <div class="agent-io-row"><span class="io-label io-in">Input</span><span class="io-val">video_package audio + optional music + optional ambience</span></div>
+              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">audio_mix (film-wide final WAV, sys_id=aud_final)</span></div>
             </div>
             <div class="agent-status"><span class="status-dot dot-ready"></span><span class="status-text">E2E 通过</span></div>
           </div>
@@ -803,17 +764,17 @@
 
         <div class="agent-card">
           <div class="agent-card-head">
-            <div class="agent-icon" style="background:rgba(244,114,182,0.12)">🗣</div>
-            <span class="agent-name">VoiceCloneAgent</span>
+            <div class="agent-icon" style="background:rgba(244,114,182,0.12)">🔊</div>
+            <span class="agent-name">NarratorAgent</span>
             <span class="agent-type-tag tag-llm-media">LLM + Media</span>
           </div>
           <div class="agent-card-body">
-            <p class="agent-purpose">语音克隆：从参考音频提取声纹，用克隆声音朗读给定文本。替代 NarrationAgent 使用。</p>
+            <p class="agent-purpose">illustrated-storytelling 旁白渲染：逐行 TTS 带停顿拼成连续 narrator wav，同时产出行级 SRT 和 per-segment timing（给 slideshow compositor 用来决定每张插画停留多久）。</p>
             <div class="agent-io">
-              <div class="agent-io-row"><span class="io-label io-in">Input</span><span class="io-val">reference_audio (voice sample) + transcript</span></div>
-              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">voice_clone_narration (segments in cloned voice + final audio)</span></div>
+              <div class="agent-io-row"><span class="io-label io-in">Input</span><span class="io-val">narration_script (segments + lines + pause_after_ms)</span></div>
+              <div class="agent-io-row"><span class="io-label io-out">Output</span><span class="io-val">narrator_voiceover (full WAV + timed SRT + per-segment timing)</span></div>
             </div>
-            <div class="agent-status"><span class="status-dot dot-ready"></span><span class="status-text">E2E 通过 — fal.ai F5-TTS</span></div>
+            <div class="agent-status"><span class="status-dot dot-ready"></span><span class="status-text">E2E 通过 — fal.ai TTS</span></div>
           </div>
         </div>
 
@@ -839,7 +800,7 @@
             <span class="agent-type-tag tag-llm">Pure LLM</span>
           </div>
           <div class="agent-card-body">
-            <p class="agent-purpose">分析用户上传的文本，生成描述性 caption 并分类（creative brief / reference / etc）。</p>
+            <p class="agent-purpose">Pipeline 根节点：任何带文字的用户请求都 FIRST 跑这个（即几乎每一轮用户输入）。把 raw 文本落成带 caption 的 workspace artifact（creative brief），供下游按 label 召回。</p>
             <div class="agent-status"><span class="status-dot dot-ready"></span><span class="status-text">完整可用</span></div>
           </div>
         </div>
@@ -851,7 +812,7 @@
             <span class="agent-type-tag tag-llm-vision">LLM + Vision</span>
           </div>
           <div class="agent-card-body">
-            <p class="agent-purpose">Vision LLM 分析上传图片，生成视觉描述 + 用途分类 caption。</p>
+            <p class="agent-purpose">上传图像 → Vision LLM caption，作为 character / location / style reference artifact 落盘，下游按 semantic-typed image label（如 [character_reference] / [style_reference]）召回。</p>
             <div class="agent-status"><span class="status-dot dot-ready"></span><span class="status-text">完整可用</span></div>
           </div>
         </div>
@@ -863,19 +824,7 @@
             <span class="agent-type-tag tag-llm-vision">LLM + Vision</span>
           </div>
           <div class="agent-card-body">
-            <p class="agent-purpose">分析上传视频，生成内容描述 caption。</p>
-            <div class="agent-status"><span class="status-dot dot-ready"></span><span class="status-text">完整可用</span></div>
-          </div>
-        </div>
-
-        <div class="agent-card">
-          <div class="agent-card-head">
-            <div class="agent-icon" style="background:rgba(74,222,128,0.12)">🎵</div>
-            <span class="agent-name">IntakeAudioAgent</span>
-            <span class="agent-type-tag tag-llm">Pure LLM</span>
-          </div>
-          <div class="agent-card-body">
-            <p class="agent-purpose">分析上传音频，生成内容描述 caption。</p>
+            <p class="agent-purpose">上传视频 → 落成带 caption 的 workspace artifact，供下游任何视频消费 agent（analysis / style transfer / extend / highlight / transcription / subtitle）按 label 召回。</p>
             <div class="agent-status"><span class="status-dot dot-ready"></span><span class="status-text">完整可用</span></div>
           </div>
         </div>

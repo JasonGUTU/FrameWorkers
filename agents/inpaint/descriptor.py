@@ -114,13 +114,13 @@ SPEC = AgentSpec(
     output_description=(
         "inpainted_video (source video with the masked region replaced)."
     ),
-    purpose_and_routing=(
+    purpose_and_trigger=(
         "Video inpainting / object removal / object replacement. Supports "
         "manual masks, depth-based segmentation, and object tracking. "
         "Need both an ingested source video AND a user instruction text "
-        "before I can run. The output is itself a finished video — no "
-        "further composition needed unless the user also wants subtitles "
-        "or style transfer chained on top."
+        "before I can run. The output is itself a finished video and is "
+        "the deliverable by default — no further composition needed unless "
+        "the user explicitly asks for additional treatments on top."
     ),
     input_preamble=(
         "I perform video inpainting / object replacement. I support "

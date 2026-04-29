@@ -99,14 +99,7 @@ function render() {
   const phasesEl   = $g("phasesViz");
   const subagentEl = $g("subagentViz");
   const workspaceEl= $g("workspaceViz");
-  const testAgentsEl          = $g("testAgentsViz");
-  const testAssistantServiceEl = $g("testAssistantServiceViz");
-  const testWorkspaceEl       = $g("testWorkspaceViz");
-  const testSerializersEl     = $g("testSerializersViz");
-  const testAssistantHttpEl   = $g("testAssistantHttpViz");
   const taskStackEl           = $g("taskStackViz");
-  const testDirectorNostackEl = $g("testDirectorNostackViz");
-  const testDtsEl             = $g("testDtsViz");
 
   const { agent_id: agentId, step_id: taskId } = EXECUTE_EXAMPLE;
 
@@ -225,35 +218,49 @@ function render() {
 
       <div>
         <div style="font-weight:600;color:#fbbf24;margin-bottom:6px">① 接收前端需求 + 合并 session goal</div>
-        <div>Director 长驻轮询 chat。新消息到达 → 投影<strong>当前 Plan Stack 的近 N 个 step</strong>（<code>{step_id, agent_id, status, intent, results_summary}</code>）作为 stack_memory → 拉 <code>MERGE_PRIOR_USER_LINES_MAX</code> 条先前用户文本 → 一次 <code>merge_session_goal</code> LLM 产出整个 session 的 <code>merged_goal</code>。</div>
+        <div>DirectorAgent 长驻轮询 chat（间隔 <code>POLLING_INTERVAL</code>，默认 2s），抓首条 unread user message。新消息到达后：
+        <ul style="margin:6px 0 0 18px;padding:0;color:#aaa">
+          <li>投影当前 Plan Stack 近 <code>DIRECTOR_MEMORY_WINDOW</code>（默认 20）个 step 为 <code>stack_memory</code>，每行
+            <code>{step_id, agent_id, status, intent, results_summary}</code></li>
+          <li>拉 <code>MERGE_PRIOR_USER_LINES_MAX</code>（默认 10）条更早 user 文本为 <code>prior_lines</code></li>
+          <li>一次 <code>merge_session_goal</code> LLM 产出 <code>merged_goal</code>；若 stack_memory 与 prior_lines 都为空，直接返回原始 latest_line（不调 LLM）</li>
+        </ul></div>
       </div>
 
       <div>
-        <div style="font-weight:600;color:#fbbf24;margin-bottom:6px">② Upfront 规划 → 一次性写入 Plan Stack</div>
-        <div>一次 <code>plan_pipeline_upfront</code> LLM 产出完整计划数组 <code>[{agent_id, intent}, ...]</code>，然后一次
-        <code>POST /api/plan-stack/modify</code> 批量（create_steps + create_layers + add_steps_to_layers 的 batch op）把全部 PlanStep 落盘，执行光标指到新 layer 的第 0 步。
+        <div style="font-weight:600;color:#fbbf24;margin-bottom:6px">② Upfront 规划 → 写入 Plan Stack</div>
+        <div>一次 <code>plan_pipeline_upfront</code> LLM 产出完整计划数组 <code>[{agent_id, intent}, ...]</code>，由 <code>_persist_plan</code> 分两次
+        <code>POST /api/plan-stack/modify</code> 落盘：
         <ul style="margin:6px 0 0 18px;padding:0;color:#aaa">
-          <li>不做 Markov 逐步 — 整条 pipeline 一次 LLM 决策</li>
-          <li>每个 PlanStep 的 <code>description</code> 存 <code>{agent_id, intent, plan_rationale}</code>，stack 本身就是 self-describing</li>
-          <li><code>MAX_PIPELINE_STEPS</code> 卡住计划长度</li>
+          <li>第一批 batch ops = <code>[create_steps, create_layers]</code>：建全部 PlanStep + 一个新 layer（<code>layer_index = max(existing) + 1</code>）</li>
+          <li>第二批 batch ops = <code>[add_steps_to_layers]</code>：按顺序把刚拿到的 step_id 挂进新 layer</li>
+          <li><strong>execution pointer</strong>：仅当 <code>get_execution_pointer()</code> 为空（首次规划）时 <code>set_execution_pointer(new_layer, 0)</code>；否则保持当前 pointer 不动，等它走完旧 layer 自然滚进新 layer</li>
+          <li>每个 PlanStep.description = <code>{agent_id, intent, plan_rationale}</code>，stack 自描述；plan-step 不做 per-step Markov 决策，整条 pipeline 一次 LLM 出</li>
+          <li><code>MAX_PIPELINE_STEPS</code>（默认 20）卡住计划长度；planner 返 <code>[]</code> 时最多 3 次重试再放弃本轮</li>
         </ul></div>
       </div>
 
       <div>
         <div style="font-weight:600;color:#fbbf24;margin-bottom:6px">③ 顺光标执行 → Assistant</div>
-        <div>循环：<code>GET /api/plan-stack/next</code> 拿下一个 PlanStep → <code>PUT /api/steps/&lt;sid&gt;/status IN_PROGRESS</code> → <code>POST /api/assistant/execute {agent_id, step_id}</code> → 写回终态（COMPLETED/FAILED）→ <code>POST /api/execution-pointer/advance</code>。
-        每个 execute 返回单条 <code>AgentExecution</code> 行，director 投影成 slim row 发一条 chat 消息通知前端。<code>MAX_EXECUTIONS_PER_CYCLE</code> 做全局兜底。</div>
+        <div>循环（per-cycle 全局预算 <code>MAX_EXECUTIONS_PER_CYCLE</code>，默认 30）：
+        <ul style="margin:6px 0 0 18px;padding:0;color:#aaa">
+          <li><code>GET /api/plan-stack/next</code> → 拿 <code>{step_id, step, layer_index, step_index, layer}</code>；空则发 "Pipeline complete" 后回到轮询</li>
+          <li><code>PUT /api/steps/&lt;sid&gt;/status</code> = <code>IN_PROGRESS</code></li>
+          <li><code>POST /api/assistant/execute {agent_id, step_id}</code> → 拿单条 <code>AgentExecution</code>（含 status / error / inputs / results / 时间戳）</li>
+          <li><code>PUT /api/steps/&lt;sid&gt;/status</code> = <code>COMPLETED</code> 或 <code>FAILED</code></li>
+          <li>发一条 director chat 消息 <code>[DirectorAgent] &lt;agent_id&gt; → &lt;status&gt;</code>（带 error），给前端实时看进度</li>
+          <li><code>POST /api/execution-pointer/advance</code> 推进光标</li>
+        </ul></div>
       </div>
 
       <div>
-        <div style="font-weight:600;color:#fbbf24;margin-bottom:6px">④ 失败走 replan（不是静态 DAG）</div>
-        <div>某 step FAILED → <code>replan_on_failure</code> LLM 输出 <code>{action: retry | skip | replan}</code>：
+        <div style="font-weight:600;color:#fbbf24;margin-bottom:6px">④ FAILED 走 replan（不是静态 DAG，也没有 retry 通道）</div>
+        <div>step FAILED → <code>planner.replan_on_failure(...)</code> 返回 <code>ReplanDecision {new_tail, rationale}</code>，director 按 <code>new_tail</code> 是否为空分两条路径：
         <ul style="margin:6px 0 0 18px;padding:0;color:#aaa">
-          <li><strong>retry</strong> — 重置 step 为 PENDING + pointer 回滚，同 agent 再跑一次</li>
-          <li><strong>replan</strong> — <code>remove_steps_from_layers</code> 删掉 PENDING tail + 追加新 layer 承载新 tail，pointer 自然走到新 layer</li>
-          <li><strong>skip</strong> — 不动 stack，pointer 前进越过失败 step</li>
+          <li><strong>replan</strong>（<code>new_tail</code> 非空）：先 <code>remove_steps_from_layers</code> 摘掉 stack 上所有 PENDING step，然后走 <code>_persist_plan</code> 追加新 layer 承载 <code>new_tail</code>；pointer 自然滚进新 layer。<code>replans_used += 1</code></li>
+          <li><strong>skip</strong>（<code>new_tail</code> 为空 / replanner LLM 出错）：不动 stack，executor 直接 <code>advance_execution_pointer</code> 越过这个失败 step</li>
         </ul>
-        <code>MAX_REPLAN_ROUNDS</code> 限制本轮 replan 次数。下一条用户消息进来 → 回到 ①，在现有 Plan Stack 上追加新 layer 继续规划。</div>
+        <code>MAX_REPLAN_ROUNDS</code>（默认 2）限制单 cycle 内 replan 次数；耗尽后任何 FAILED 一律 skip。下一条 user message 进来 → 回到 ①，新计划再追加一层 layer。</div>
       </div>
 
     </div>`
@@ -410,127 +417,6 @@ function render() {
       </div>
     </div>`
   );
-
-  /* ── Tests — per-component cards ── */
-  function testTable(rows) {
-    return `<table class="suite-table">${
-      rows.map(([label, desc]) => `
-        <tr>
-          <td class="suite-label">${escapeHtml(label)}</td>
-          <td class="suite-desc">${desc}</td>
-        </tr>`).join("")
-    }</table>`;
-  }
-
-  /* Director — "消息驱动 Pipeline 编排" section removed per user request */
-  if (testDirectorNostackEl && testDirectorNostackEl.parentNode) testDirectorNostackEl.remove();
-
-  testDtsEl.outerHTML = sectionCard(
-    "card-green", "🧪", "Dynamic Plan Stack 测试", "pytest tests/dynamic_plan_stack/ -v",
-    testTable([
-      ["Flask App 初始化",
-        "<strong>目的：</strong>验证 create_app 正确注册核心路由；<strong>结果：</strong>支持运行时 config 覆盖，路由可达"],
-    ])
-  );
-
-  /* Assistant */
-  testAssistantHttpEl.outerHTML = sectionCard(
-    "card-green", "🧪", "Assistant HTTP API 测试", "pytest tests/assistant/test_assistant_http_e2e.py tests/assistant/test_full_pipeline_live_e2e.py -v",
-    testTable([
-      ["端点全链路",
-        "<strong>目的：</strong>验证 REST 端点端到端联通；<strong>结果：</strong>发现 → 创建 task → execute → 查 executions → workspace files/logs 全部返回正确"],
-      ["跨 agent 数据流",
-        "<strong>目的：</strong>验证前序 agent 产出流入后续 agent；<strong>结果：</strong>ProducerAgent 产出被 ConsumerAgent 在同一 task 读取；global_memory 出现在下游 inputs"],
-      ["路由 + 兜底校验",
-        "<strong>目的：</strong>验证缺失 agent_id / step_id 时返回 400；非法 agent_id 返回 404"],
-      ["完整生成",
-        `<strong>目的：</strong>真实 LLM + fal API 驱动完整 pipeline，生成约 1 分钟视频；<strong>结果：</strong>audio_results 包含 final_delivery_asset，产出可播放。
-<div style="margin-top:14px">
-  <div style="font-size:0.78em;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:6px">User Prompt</div>
-  <div style="font-size:1.05em;font-style:italic;color:#ddd;padding:10px 14px;background:rgba(255,255,255,0.05);border-left:3px solid #888;border-radius:4px">"Create a simple cinematic short video around ten seconds long: a watchmaker fixes one broken watch before midnight."</div>
-</div>
-<div style="margin-top:14px">
-  <div style="font-size:0.78em;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:6px">StoryAgent → Storyline</div>
-  <div style="padding:10px 14px;background:rgba(255,255,255,0.04);border-left:3px solid #5a8a6a;border-radius:4px;font-size:0.88em;line-height:1.6;color:#ccc">
-    <div style="color:#e8c97a;font-weight:600;margin-bottom:6px">A retired watchmaker races against the final ten seconds before midnight to repair his late wife's cherished pocket watch, seeking a moment of peace and connection as the new year begins.</div>
-    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
-      <span style="background:rgba(255,255,255,0.08);padding:2px 8px;border-radius:12px;font-size:0.82em">Drama</span>
-      <span style="background:rgba(255,255,255,0.08);padding:2px 8px;border-radius:12px;font-size:0.82em">Slice of Life</span>
-      <span style="background:rgba(255,255,255,0.08);padding:2px 8px;border-radius:12px;font-size:0.82em">Poignant · Hopeful · Tense · Nostalgic</span>
-    </div>
-    <div><strong style="color:#aaa">Setup —</strong> Elias works on his late wife's pocket watch with seconds to midnight, grief and urgency intertwined.</div>
-    <div style="margin-top:4px"><strong style="color:#aaa">Crisis —</strong> A small mistake causes his hands to falter; he glances at the clock and steadies his resolve.</div>
-    <div style="margin-top:4px"><strong style="color:#aaa">Climax —</strong> With renewed resolve, he performs the final delicate repair just as midnight arrives — the watch ticks.</div>
-    <div style="margin-top:4px"><strong style="color:#aaa">Resolution —</strong> Elias smiles softly amidst fireworks — a quiet moment of peace and connection with her memory.</div>
-  </div>
-</div>
-<div style="margin-top:12px"><video controls style="max-width:100%;border-radius:6px" src="./demo.mp4"></video></div>
-<div style="margin-top:16px">
-  <div style="font-size:0.78em;text-transform:uppercase;letter-spacing:.06em;color:#888;margin-bottom:10px">已知问题分析</div>
-  <div style="display:flex;flex-direction:column;gap:10px">
-    <div style="padding:10px 14px;background:rgba(255,100,80,0.06);border-left:3px solid #c0503a;border-radius:4px;font-size:0.87em;line-height:1.7;color:#ccc">
-      <div style="font-weight:600;color:#e88;margin-bottom:4px">① KeyframeAgent — Anchor 一致性不足</div>
-      <div>已实现分层 anchor 机制，但人物外观、场景风格仍存在跨镜头漂移。</div>
-      <div style="margin-top:6px;background:rgba(0,0,0,0.25);border-radius:4px;padding:8px 12px;font-family:monospace;font-size:0.85em;color:#9ecfaa;line-height:1.8">
-        Layer 1 — Global anchors&nbsp;&nbsp;: text → generate_image()<br>
-        Layer 2 — Scene anchors&nbsp;&nbsp;&nbsp;: global anchor img + prompt → edit_image()<br>
-        Layer 3 — Shot keyframes&nbsp;&nbsp;: scene anchor img(s) + prompt → edit_image()
-      </div>
-      <div style="margin-top:8px;color:#aaa"><strong style="color:#bbb">待优化：</strong>目前每个角色/场景仅有单一 anchor 图，可扩展为多视角 anchor（正面 / 侧面 / 特写），进一步提升人物一致性。</div>
-    </div>
-    <div style="padding:10px 14px;background:rgba(255,180,40,0.05);border-left:3px solid #a07828;border-radius:4px;font-size:0.87em;line-height:1.7;color:#ccc">
-      <div style="font-weight:600;color:#d4a84b;margin-bottom:4px">② Video Generation — 模型能力局限</div>
-      <div>当前视频生成模型在运动合理性、时序连贯性、细节保真度上存在上限，属于底层模型能力问题，非 pipeline 逻辑问题。短期可通过换用更强的 video gen API 缓解，长期依赖模型本身的迭代进步。</div>
-    </div>
-  </div>
-</div>`],
-    ])
-  );
-
-  testAssistantServiceEl.outerHTML = sectionCard(
-    "card-green", "🧪", "Assistant Service 测试", "pytest tests/assistant/test_assistant_service_unit.py -v",
-    testTable([
-      ["执行输入打包",
-        "<strong>目的：</strong>验证 build_execution_inputs 正确打包上下文；<strong>结果：</strong>InputResolver 选出的 artifact 落进 inputs.resolved_artifacts；descriptor.build_input 收到的就是这个 dict（无包装类）"],
-      ["文件持久化",
-        "<strong>目的：</strong>验证 agent 产出写入 workspace 的完整路径；<strong>结果：</strong>overwrite 模式替换旧文件；媒体 URI 重写为 workspace 路径；materializer 临时目录执行后清理；路径遵循 artifacts/media/{agent}/ 规范"],
-    ])
-  );
-
-  testSerializersEl.outerHTML = sectionCard(
-    "card-green", "🧪", "Assistant Serializers 测试", "pytest tests/assistant/test_assistant_serializers_unit.py -v",
-    testTable([
-      ["序列化完整性",
-        "<strong>目的：</strong>验证 Assistant/Execution 模型序列化为 dict 的字段完整性；<strong>结果：</strong>文件/日志 helper 字段不丢失；response 中二进制字段重写为 workspace 路径"],
-    ])
-  );
-
-  /* Sub-agents */
-  testAgentsEl.outerHTML = sectionCard(
-    "card-green", "🧪", "Sub-agents 测试", "pytest tests/agents/ -v",
-    testTable([
-      ["Agent 描述符合约",
-        "<strong>目的：</strong>验证 registry 注册/列举/reload 正确；<strong>结果：</strong>identity 字段完整、build_input 使用 v2 命名与字面 asset key、无旧版 input fallback"],
-      ["媒体产出物化",
-        "<strong>目的：</strong>验证各媒体 materializer 产出路径与格式；<strong>结果：</strong>video/keyframe/audio 产出正确、fal 多图 payload 支持与拒绝、scene 拼接时长、audio mux 保留视频时长"],
-    ])
-  );
-
-  /* Workspace */
-  testWorkspaceEl.outerHTML = sectionCard(
-    "card-green", "🧪", "Workspace Managers 测试", "pytest tests/assistant/test_assistant_workspace_managers_unit.py -v",
-    testTable([
-      ["文件管理器",
-        "<strong>目的：</strong>验证文件列举与二进制读取；<strong>结果：</strong>从 URI 读取内容正确、收集已物化文件完整"],
-      ["记忆管理器",
-        "<strong>目的：</strong>验证 global_memory 读写与过滤；<strong>结果：</strong>brief 返回精简行（无 content/artifact_locations）；按 step_id/agent_id 过滤一致；写入必须提供 step_id"],
-      ["日志管理器",
-        "<strong>目的：</strong>验证日志多维过滤；<strong>结果：</strong>按 operation_type / resource_type / agent_id 过滤结果正确"],
-      ["资产管理器",
-        "<strong>目的：</strong>验证 asset index 读写；<strong>结果：</strong>hydrate 展开正确、persist index 写入文件可读回"],
-    ])
-  );
-
 
 }
 

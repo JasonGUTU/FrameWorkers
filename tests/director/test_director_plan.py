@@ -584,6 +584,6 @@ class TestCatalogNormalization:
     def test_allowed_ids_matches_catalog_order(self):
         assert _allowed_ids([
             {"id": "A"},
-            {"id": "B", "capabilities": []},
+            {"id": "B"},
             "junk",
         ]) == ["A", "B"]

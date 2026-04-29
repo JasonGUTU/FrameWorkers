@@ -13,27 +13,29 @@ class AgentRegistry:
         self._descriptors: Dict[str, Any] = {}
 
     def get_all_agents_info(self) -> List[Dict[str, Any]]:
+        """Return per-agent info dicts for the prompt + introspection.
+
+        Schema after 2026-04 cleanup: ``{id, name, description}``. The old
+        ``agent_type`` and ``capabilities`` fields were dropped because every
+        agent always carried the same constant value (``"pipeline"`` /
+        ``["pipeline_agent"]``) so they provided zero routing signal and
+        ~600 bytes of dead text per full catalog prompt.
+        """
         infos: List[Dict[str, Any]] = []
         for agent_id, descriptor in self._descriptors.items():
             infos.append({
                 "id": agent_id,
                 "name": agent_id,
                 "description": descriptor.catalog_entry or "",
-                "agent_type": "pipeline",
-                "capabilities": ["pipeline_agent"],
             })
 
         return infos
 
     def gather_agents_info(self) -> Dict[str, Any]:
         agents_info = self.get_all_agents_info()
-        all_capabilities: set[str] = set()
-        for info in agents_info:
-            all_capabilities.update(info.get("capabilities", []))
         return {
             "total_agents": len(agents_info),
             "agents": agents_info,
-            "all_capabilities": sorted(all_capabilities),
             "agent_ids": [info["id"] for info in agents_info],
         }
 

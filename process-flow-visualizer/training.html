@@ -14,7 +14,7 @@
     .card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:22px 26px;margin-bottom:20px}
     .card h2{margin:0 0 14px;font-size:1.15em;color:#e0e0e0}
     .card h3{margin:16px 0 8px;font-size:1em;color:#ccc}
-    .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:14px}
+    .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:14px}
     .stat-box{background:rgba(255,255,255,.05);border-radius:8px;padding:16px;text-align:center}
     .stat-value{font-size:1.9em;font-weight:700;color:#fbbf24}
     .stat-value.green{color:#34d399}.stat-value.blue{color:#60a5fa}.stat-value.purple{color:#a78bfa}
@@ -35,53 +35,15 @@
     .arrow{color:#666;margin:0 3px}
     .bar-bg{background:rgba(255,255,255,.06);border-radius:3px;height:12px;overflow:hidden;min-width:100px}
     .bar-fill{height:100%;background:linear-gradient(90deg,#fbbf24,#f97316);border-radius:3px}
-    .bar-fill.blue{background:linear-gradient(90deg,#60a5fa,#a78bfa)}
-    .bar-fill.green{background:linear-gradient(90deg,#34d399,#2dd4bf)}
 
-    /* pipeline diagram */
     .flow{display:flex;align-items:stretch;gap:14px;flex-wrap:wrap;margin:10px 0}
-    .flow-step{flex:1;min-width:200px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:14px 16px}
+    .flow-step{flex:1;min-width:220px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:14px 16px}
     .flow-step h4{margin:0 0 6px;font-size:.92em;color:#fbbf24}
     .flow-step .meta{font-size:.75em;color:#888;margin-bottom:8px;font-family:'SF Mono','Fira Code',monospace}
     .flow-step p{margin:4px 0;font-size:.85em;color:#ccc;line-height:1.5}
     .flow-arrow{align-self:center;color:#666;font-size:1.5em;padding:0 4px}
 
-    /* bias cards */
-    .bias-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:10px}
-    .bias-card{background:rgba(255,255,255,.04);border-left:3px solid #a78bfa;border-radius:0 8px 8px 0;padding:14px 16px}
-    .bias-card h4{margin:0 0 6px;font-size:.95em}
-    .bias-card .bias-count{color:#fbbf24;font-weight:600}
-    .bias-card.VA{border-left-color:#f87171}
-    .bias-card.Ambience{border-left-color:#fbbf24}
-    .bias-card.Compositor{border-left-color:#a78bfa}
-    .bias-card.missing_IntakeText{border-left-color:#60a5fa}
-    .plan-compare{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
-    .plan-side{background:rgba(0,0,0,.25);border-radius:6px;padding:10px 12px;font-family:'SF Mono','Fira Code',monospace;font-size:.75em;line-height:1.6}
-    .plan-side h5{margin:0 0 6px;font-size:.8em;letter-spacing:.5px;text-transform:uppercase;display:flex;align-items:center;gap:6px}
-    .plan-side h5 .tag{font-size:.75em;font-weight:400;padding:1px 6px;border-radius:3px;letter-spacing:.3px}
-    .plan-side.chosen h5{color:#34d399}
-    .plan-side.chosen h5 .tag{background:rgba(52,211,153,.18);color:#a7f3d0}
-    .plan-side.rejected h5{color:#f87171}
-    .plan-side.rejected h5 .tag{background:rgba(248,113,113,.18);color:#fca5a5}
-    .plan-side .step{padding:1px 4px;border-radius:3px;display:inline-block}
-    /* chosen-only (correct step missing from rejected) → green "must-have" */
-    .plan-side.chosen .step-only{background:rgba(52,211,153,.22);color:#bbf7d0;border-left:2px solid #34d399;padding-left:6px;font-weight:600}
-    .plan-side.chosen .step-only::before{content:"✓ ";color:#34d399;font-weight:700}
-    /* rejected-only (wrong step inserted in rejected) → red "do-not-do" */
-    .plan-side.rejected .step-only{background:rgba(248,113,113,.22);color:#ffd2d2;border-left:2px solid #f87171;padding-left:6px;font-weight:600}
-    .plan-side.rejected .step-only::before{content:"✗ ";color:#f87171;font-weight:700}
-    .plan-side .ghost{opacity:.3}
-
-    /* sample block */
     .sample-box{background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:14px 16px;margin-top:10px}
-    .sample-box .label{font-size:.75em;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-    .sample-box .goal{color:#fde68a;font-size:.92em;line-height:1.5;margin-bottom:12px}
-    .sample-box .rationale{color:#cfd4db;font-size:.85em;line-height:1.7;margin-bottom:12px}
-    .sample-box .rationale .neg{color:#f87171;font-weight:500}
-    .sample-box .plan-step{font-family:'SF Mono','Fira Code',monospace;font-size:.78em;color:#cbd5e1;padding:3px 0;border-bottom:1px dashed rgba(255,255,255,.05)}
-    .sample-box .plan-step:last-child{border-bottom:none}
-    .sample-box .plan-step b{color:#fbbf24}
-    .sample-box .plan-step i{color:#888;font-style:normal;margin-left:8px}
 
     .note{background:rgba(96,165,250,.07);border-left:3px solid #60a5fa;padding:12px 16px;margin:10px 0;border-radius:0 6px 6px 0;color:#ddd;font-size:.88em;line-height:1.6}
     .warn{background:rgba(251,191,36,.07);border-left:3px solid #fbbf24;padding:12px 16px;margin:10px 0;border-radius:0 6px 6px 0;color:#ddd;font-size:.88em;line-height:1.6}
@@ -108,206 +70,196 @@
       <div class="header-divider"></div>
       <div class="header-badge">🧠 Director LoRA Training</div>
       <h1>Director Routing LoRA — 训练数据 &amp; 流程</h1>
-      <p>把现在 "Gemini flash + fewshot + descriptor 补丁" 这一套支架堆的 routing 能力 <b>烘进本地 Qwen2.5-7B-Instruct LoRA 权重</b>。SFT 先学合法 chain + 显式反 bias rationale；DPO 再用 4 类 chosen/rejected 偏好对对四种典型 routing 错误做显式纠偏。</p>
     </header>
 
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <!-- 总览统计 -->
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- ═══ Pipeline ═══ -->
     <div class="card">
-      <h2>📊 Training Data Overview</h2>
-      <div class="stat-grid">
-        <div class="stat-box"><div class="stat-value blue">28</div><div class="stat-label">Unique Chains (BUDGET)</div></div>
-        <div class="stat-box"><div class="stat-value">1,110</div><div class="stat-label">SFT Samples</div></div>
-        <div class="stat-box"><div class="stat-value purple">500</div><div class="stat-label">DPO Pairs</div></div>
-        <div class="stat-box"><div class="stat-value green">Qwen2.5-7B</div><div class="stat-label">Base Model</div></div>
-        <div class="stat-box"><div class="stat-value">LoRA r=32</div><div class="stat-label">q/k/v/o + gate/up/down</div></div>
-        <div class="stat-box"><div class="stat-value">55%</div><div class="stat-label">Gemini 裸 baseline · no fewshot / no topology</div></div>
-      </div>
-      <div class="note">
-        <b>BUDGET 怎么算出来的</b>：从 <code>evals/director_routing/eval_cases.json</code>（100 条 held-out eval）反推。
-        <code>_canonical_chain()</code> 把每条 eval 的 partial-order 层坍缩成一条 deterministic chain，
-        <code>target = max(eval_count × 10, 30)</code>。所以大桶（eval 出现频次高的）最多 150 条（Creative 核心），
-        小桶保 30 条底。全部 28 种覆盖了我们产品想支持的所有合法 routing。
-      </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <!-- 训练流程 -->
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <div class="card">
-      <h2>🔥 Training Pipeline (两阶段 LoRA)</h2>
+      <h2>🔥 两阶段 LoRA</h2>
       <div class="flow">
         <div class="flow-step">
           <h4>① SFT</h4>
-          <div class="meta">1,110 samples · 3 epochs · ~416 steps</div>
-          <p><b>学什么：</b>从 goal 语义 → 28 种合法 chain 的路由映射；每条样本的 rationale 显式写 <code class="neg">"No X because Y"</code> 反 4 种 bias。</p>
-          <p><b>Loss：</b>completion-only（prompt tokens=-100，assistant JSON cross-entropy）</p>
+          <div class="meta">1,406 samples · 3 epochs · ~530 steps</div>
+          <p><b>学什么：</b>从 user_goal 语义到合法 chain 的路由映射；rationale 显式声明"为什么 <b>不</b> 加 XxxAgent"形式的反 bias trace。</p>
+          <p><b>Loss：</b>completion-only CE（prompt tokens 标 -100，只对 assistant JSON 算 cross-entropy）。</p>
           <p class="mono-small">lr=2e-5, bf16, batch=1, grad_accum=8</p>
         </div>
         <div class="flow-arrow">➜</div>
         <div class="flow-step">
-          <h4>② DPO</h4>
-          <div class="meta">500 pairs · 1 epoch · β=0.1 · ~62 steps</div>
-          <p><b>学什么：</b>在 SFT adapter 基础上，显式对 4 类常见 routing 错误做偏好纠偏——<b>chosen</b> 是 SFT 样本的正确 plan，<b>rejected</b> 注入一种 bias 的错误 plan + "找借口"式 rationale。</p>
-          <p><b>长度约束：</b>chosen / rejected token 长度差 ≤ 10%（防止 DPO 偷学"长=对"）。</p>
-          <p class="mono-small">lr=5e-7, bf16, batch=1, grad_accum=8</p>
+          <h4>② GRPO（hand-rolled, no TRL）</h4>
+          <div class="meta">G=4 rollouts/prompt · 3 epochs · β=0.04</div>
+          <p><b>学什么：</b>在 SFT adapter 上跑 on-policy rollouts，用程序化 reward 直接拉 chain accuracy。算法 = DeepSeekMath / DeepSeek-R1 风格 GRPO，单步更新，no PPO clipping（importance ratio ≈ 1）。</p>
+          <p><b>Reward：</b>format gate（解析失败 / 未知 agent / 重复 → 0），过 gate 后 <code class="mono">R = 0.5·pos_correct + 0.5·1[chain_perfect] ∈ [0, 1]</code>。partial credit 防 σ=0 group 信号塌陷，perfect bonus 防 satisficing。</p>
+          <p class="mono-small">lr=1e-6, bf16 forward · fp32 sampling（NaN guard）</p>
         </div>
         <div class="flow-arrow">➜</div>
         <div class="flow-step">
-          <h4>③ Adapter Artifacts</h4>
+          <h4>③ Adapter 输出</h4>
           <div class="meta">training/director/adapters_full/</div>
           <p><code class="mono">adapters_full/sft/</code> — SFT 后 LoRA</p>
-          <p><code class="mono">adapters_full/dpo/</code> — SFT + DPO 后 LoRA（最终权重）</p>
-          <p><b>推理：</b><code class="mono">infer.py --adapter adapters_full/dpo</code> 加载 base + DPO adapter 跑 held-out eval。</p>
+          <p><code class="mono">adapters_full/grpo/</code> — SFT + GRPO 后 LoRA（最终权重）</p>
+          <p><b>推理：</b><code class="mono">infer.py --adapter adapters_full/grpo</code></p>
         </div>
-      </div>
-      <div class="note">
-        <b>Hardware：</b>1× H200（80GB）就够——Qwen2.5-7B bf16 + LoRA r=32 只占 ~18GB，全 epoch ~30 分钟。
-        sbatch 见 <code class="mono">training/director/train_full.sbatch</code>，queue 用 <code>non-reserved</code> partition + <code>eccv-2026</code> QoS。
       </div>
     </div>
 
-    <!-- 两条代表性 SFT 样本 -->
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- ═══ 数据格式 + 真实 sample ═══ -->
     <div class="card">
-      <h2>🔍 两条代表性 SFT 样本</h2>
-      <p style="color:#bbb;font-size:.9em;margin-bottom:14px">
-        <code class="mono">training/director/samples_sft_full.jsonl</code> 里 1110 条，各 chain 都有覆盖。下面挑两条不同 chain 的样本展示 user → assistant 的真实格式。system prompt（~2300 tokens 完整 planner prompt + agent catalog）太长省略。
+      <h2>📝 数据格式 — 一条 SFT sample 长什么样</h2>
+      <p style="color:#bbb;font-size:.9em;margin-bottom:10px">
+        每行 <code class="mono">{"messages": [system, user, assistant]}</code>。训练时 prompt = system + user，target = assistant。<b>system</b> ≈ <b>30K chars / ~7.5K tokens</b>（<code class="mono">PLAN_UPFRONT_CORE</code> + 当前注册的 22 个 agent 的 markdown catalog；占满 seq_len=8192 的大部分，留 ~700 tokens 给 assistant 输出）；user = 一句 user_goal；assistant = 合法 JSON <code class="mono">{"rationale":"...", "plan":[{"agent_id":"...","intent":"..."},...]}</code>。所有 chat template 渲染都强制 <code class="mono">enable_thinking=False</code>。
+      </p>
+      <div class="warn" style="margin:8px 0 14px">
+        <b>当前活跃数据集 = <code class="mono">samples_sft_full.templated.jsonl</code>（1,417 条）</b>，由 <code class="mono">build_templated_sft_jsonl.py</code> 程序化生成 —— 所有 v3 / overfit_templated sbatch 都用这一份。同目录的 <code class="mono">samples_sft_full.jsonl</code> 是早期手写 / teacher-LLM 生成的版本，仅 vanilla <code class="mono">train_sft.sbatch</code> 还引用，新实验已经不用。
+      </div>
+      <p style="color:#bbb;font-size:.85em;margin-bottom:14px">
+        <b>Templated 数据的关键设计：</b>
+        rationale 全部由 chain-free 骨架模板程序化生成 ——
+        所有 1,417 条 rationale ≥ 500 chars（均值 844 chars），<b>100% 带显式 Reject 列表</b>（chain 里没出现的 agent 全部一一列出 + 单句理由）。
+        intent 从每个 agent 的 3-variant 池里按 (slug, idx, slot) 的 md5 哈希挑，<b>不引用 user_goal 的具体词</b>（"Author the story blueprint" / "Render per-shot clips" 这种通用句式）。
+        rationale 也<b>不混 user_goal 的题材词</b>（"post-apocalyptic" 不会出现在 rationale 里），让 LoRA 学的是 <b>chain shape selection logic</b> —— 看 user_goal 的 trigger 词决定整条 chain，再逐 agent 解释为什么不加其他的 —— 而不是从 user_goal 抄词到 intent。
+        下面两条都是 <code class="mono">samples_sft_full.templated.jsonl</code> 里的真实样本（system 太长省略）。
       </p>
 
-      <!-- Sample 1: Creative 纯创作流 -->
+      <!-- Sample 1: illustrated storytelling -->
       <div style="margin-bottom:16px;padding:12px 16px;background:#1a1f2e;border-left:3px solid #60a5fa;border-radius:4px">
-        <div style="font-size:.8em;color:#60a5fa;margin-bottom:6px;letter-spacing:.5px">① CREATIVE / 纯创作流 · sample #408</div>
+        <div style="font-size:.8em;color:#60a5fa;margin-bottom:6px;letter-spacing:.5px">① ILLUSTRATED-STORYTELLING / 图文故事 — rationale 869 chars（含 16 个 Reject 条目）</div>
         <div style="margin-bottom:10px">
           <span style="color:#60a5fa;font-weight:600;font-size:.85em">USER</span>
-          <div style="padding:8px 12px;background:#0f1520;border-radius:4px;margin-top:4px;color:#d0d8e8;font-size:.92em">Make a rebirth-revenge mini-drama about a woman framed by her best friend who wakes up three years earlier to strike back</div>
+          <div style="padding:8px 12px;background:#0f1520;border-radius:4px;margin-top:4px;color:#d0d8e8;font-size:.92em;line-height:1.55">Make a narrated picture-book storytime about the life cycle of a dragonfly, with vibrant watercolor illustrations per life stage.</div>
         </div>
         <div>
           <span style="color:#34d399;font-weight:600;font-size:.85em">ASSISTANT</span>
           <div style="padding:10px 12px;background:#0f1520;border-radius:4px;margin-top:4px;font-family:ui-monospace,Menlo,monospace;font-size:.82em;line-height:1.6;color:#d0d8e8;white-space:pre-wrap">{
-  "rationale": "User asks for pure creation of a rebirth-revenge mini-drama. Plan: IntakeText captures the brief, StoryAgent writes the outline, ScreenplayAgent drafts, KeyFrameAgent generates keyframes, VideoAgent generates video, AmbienceAgent generates ambience, MusicAgent composes score, AudioMixAgent blends, Compositor renders.",
+  "rationale": "Illustrated storytelling slideshow produced from a text brief, nothing layered on top. Skipped: StoryAgent (no NEW film authoring requested); TranscriptionAgent (no subtitle requested); VideoExtendAgent (no video extension requested); BriefEnricherAgent (no image upload to enrich the brief with); KeyFrameAgent (no keyframe planning required); MusicAgent (no BGM requested); AudioMixAgent (no audio tracks to mix); HighlightAgent (not a highlight workflow); StyleTransferAgent (no style transfer requested); AmbienceAgent (no environmental layer requested); VideoAgent (no NEW motion-clip generation requested); TranslationAgent (no translation / second language requested); IntakeImageAgent (no image upload); VideoAnalysisAgent (no source-video analysis required); IntakeVideoAgent (no source clip uploaded); ScreenplayAgent (no NEW film scene-decomposition needed).",
   "plan": [
-    {"agent_id": "<span style="color:#fbbf24">IntakeTextAgent</span>", "intent": "Capture the rebirth-revenge mini-drama creative brief with the frame-up and rewind plot"},
-    {"agent_id": "<span style="color:#fbbf24">StoryAgent</span>",      "intent": "Write the story outline covering the betrayal, death, rebirth, and counter-attack arcs"},
-    {"agent_id": "<span style="color:#fbbf24">ScreenplayAgent</span>", "intent": "Draft the screenplay with the rebirth turning-point and payback scenes"},
-    {"agent_id": "<span style="color:#fbbf24">KeyFrameAgent</span>",   "intent": "Generate keyframes for the female lead's two timelines and the friend's downfall"},
-    {"agent_id": "<span style="color:#fbbf24">VideoAgent</span>",      "intent": "Generate the video clips from the keyframes"},
-    {"agent_id": "<span style="color:#fbbf24">AmbienceAgent</span>",   "intent": "Generate the urban corporate ambience for the modern-day payback scenes"},
-    {"agent_id": "<span style="color:#fbbf24">MusicAgent</span>",      "intent": "Compose a tense rebirth-revenge score with emotional peaks"},
-    {"agent_id": "<span style="color:#fbbf24">AudioMixAgent</span>",   "intent": "Blend the ambience and score into a cohesive audio track"},
-    {"agent_id": "<span style="color:#fbbf24">CompositorAgent</span>", "intent": "Composite the mini-drama video with the mixed audio as the final episode"}
+    { "agent_id": "<span style="color:#fbbf24">NarrationAgent</span>",   "intent": "Author the narration script from the brief — paragraph-by-paragraph story text." },
+    { "agent_id": "<span style="color:#fbbf24">IllustrationAgent</span>", "intent": "Render one still illustration per narration paragraph." },
+    { "agent_id": "<span style="color:#fbbf24">NarratorAgent</span>",     "intent": "Synthesize the narrator audio track from the narration script." },
+    { "agent_id": "<span style="color:#fbbf24">CompositorAgent</span>",   "intent": "Composite the final mp4 — assemble video, audio, and any subtitle / transitions into the deliverable." }
   ]
 }</div>
         </div>
       </div>
 
-      <!-- Sample 2: existing-video edit -->
+      <!-- Sample 2: cinematic creative -->
       <div style="padding:12px 16px;background:#2a1a1f;border-left:3px solid #f97316;border-radius:4px">
-        <div style="font-size:.8em;color:#f97316;margin-bottom:6px;letter-spacing:.5px">② EXISTING-VIDEO EDIT / 现有视频续写 + 配乐 · sample #0</div>
+        <div style="font-size:.8em;color:#f97316;margin-bottom:6px;letter-spacing:.5px">② CINEMATIC CREATIVE / 多镜头电影流 — rationale 777 chars（含 13 个 Reject 条目）</div>
         <div style="margin-bottom:10px">
           <span style="color:#f97316;font-weight:600;font-size:.85em">USER</span>
-          <div style="padding:8px 12px;background:#1a0f0b;border-radius:4px;margin-top:4px;color:#d0d8e8;font-size:.92em">Extend this martial-arts fight clip by 10 seconds to show the protagonist cornered on a cliff edge and drawing his final killing strike, and add a tense traditional-style action score</div>
+          <div style="padding:8px 12px;background:#1a0f0b;border-radius:4px;margin-top:4px;color:#d0d8e8;font-size:.92em">Make a post-apocalyptic mini-drama where two strangers cross a radioactive wasteland to deliver a sealed package whose contents could end the war or restart it, with droning ambient-electronic BGM.</div>
         </div>
         <div>
           <span style="color:#34d399;font-weight:600;font-size:.85em">ASSISTANT</span>
           <div style="padding:10px 12px;background:#1a0f0b;border-radius:4px;margin-top:4px;font-family:ui-monospace,Menlo,monospace;font-size:.82em;line-height:1.6;color:#d0d8e8;white-space:pre-wrap">{
-  "rationale": "User uploaded a martial-arts fight clip and explicitly asks for a 10s extension plus a traditional-style action score. VideoAnalysis is NOT added because the user does not ask for analysis or highlight cutting. Ambience is NOT added because the user only requested a musical score, not environmental sounds.",
+  "rationale": "Cinematic mini-drama from a text brief; overlays applied: BGM. Excluded — VideoExtendAgent (no video extension requested); HighlightAgent (not a highlight workflow); IllustrationAgent (not a slideshow / illustrated-storytelling format); BriefEnricherAgent (no image upload to enrich the brief with); TranslationAgent (no translation / second language requested); VideoAnalysisAgent (no source-video analysis required); AmbienceAgent (no environmental layer requested); IntakeImageAgent (no image upload); NarrationAgent (not a slideshow / illustrated-storytelling format); NarratorAgent (not a slideshow / illustrated-storytelling format); TranscriptionAgent (no subtitle requested); IntakeVideoAgent (no source clip uploaded); StyleTransferAgent (no style transfer requested).",
   "plan": [
-    {"agent_id": "<span style="color:#fbbf24">IntakeTextAgent</span>",  "intent": "Capture the 10s cliff-edge killing-strike extension and tense traditional-style score brief"},
-    {"agent_id": "<span style="color:#fbbf24">IntakeVideoAgent</span>", "intent": "Register the uploaded martial-arts fight clip"},
-    {"agent_id": "<span style="color:#fbbf24">VideoExtendAgent</span>", "intent": "Extend 10s of the protagonist cornered on the cliff edge drawing his final killing strike"},
-    {"agent_id": "<span style="color:#fbbf24">MusicAgent</span>",       "intent": "Compose a tense traditional-style martial-arts score"},
-    {"agent_id": "<span style="color:#fbbf24">AudioMixAgent</span>",    "intent": "Blend the new score with the original sword-SFX audio"},
-    {"agent_id": "<span style="color:#fbbf24">CompositorAgent</span>",  "intent": "Composite the extended clip with the mixed audio as the final martial-arts render"}
+    { "agent_id": "<span style="color:#fbbf24">StoryAgent</span>",      "intent": "Author the story blueprint following the brief, with a clear arc and beat structure." },
+    { "agent_id": "<span style="color:#fbbf24">ScreenplayAgent</span>", "intent": "Decompose the story into scenes with mood progression aligned to the brief." },
+    { "agent_id": "<span style="color:#fbbf24">KeyFrameAgent</span>",   "intent": "Lay out keyframes for the screenplay's settings, scene-by-scene." },
+    { "agent_id": "<span style="color:#fbbf24">VideoAgent</span>",      "intent": "Produce per-shot video clips from each keyframe, holding aesthetic continuity across cuts." },
+    { "agent_id": "<span style="color:#fbbf24">MusicAgent</span>",      "intent": "Write the requested BGM, aligned to the brief's tonal cue." },
+    { "agent_id": "<span style="color:#fbbf24">AudioMixAgent</span>",   "intent": "Combine the produced audio layers into a single mixed wav." },
+    { "agent_id": "<span style="color:#fbbf24">CompositorAgent</span>", "intent": "Mux the final mp4, combining the rendered visual track with audio and any subtitle overlay." }
   ]
 }</div>
         </div>
       </div>
 
       <p style="color:#888;font-size:.82em;margin-top:12px">
-        <b>注意：</b>rationale 不止是解释性文本——它显式声明"为什么 <b>不</b> 加 XxxAgent"（如 ② 里 "VideoAnalysis NOT added because..." 和 "Ambience NOT added because..."），把 routing 判断的 <b>reasoning trace</b> 编码进训练目标，让 SFT loss 在 assistant 段把反-bias 的 why-not 也一起压进权重。这是为什么 SFT 之后还需要 DPO 纠偏——rationale 写得再清楚，模型还是会漂；DPO 用结构性的 chosen/rejected 对比把漂压回去。
+        两条对比 — chain 不同（① 4 步 storytelling slideshow / ② 7 步 cinematic）但 rationale 句式都一样：<b>chain 描述一句话 + Skipped/Excluded 列表</b>，每个未上 chain 的 agent 都给一行 reason。intent 也是模板池里挑的，chain shape 是唯一让两条样本"长得不一样"的变量 —— 这就是这套数据想要 LoRA 学的：<b>看 user_goal 的 trigger 词 → 选出正确 chain shape</b>，理由用统一句式说出来。
       </p>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <!-- SFT 细节 -->
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- ═══ SFT 数据多样性 ═══ -->
     <div class="card">
-      <h2>① SFT — 输入 &amp; 期望输出</h2>
-
-      <h3 style="color:#60a5fa">📥 模型输入</h3>
-      <p style="color:#ccc;font-size:.88em;line-height:1.7;margin-bottom:6px">
-        <b>两条 chat messages：<code>[system, user]</code></b>
-      </p>
-      <div class="sample-box" style="font-family:ui-monospace,Menlo,monospace;font-size:.82em;color:#cbd5e1;line-height:1.65">
-<span style="color:#888">system：</span>planner prompt + 19 个 agent 的 catalog（~2300 tokens）
-<span style="color:#888">user  ：</span>user_goal 一句话（例：<span style="color:#fde68a">"Make a rebirth-revenge mini-drama about a woman framed by her best friend..."</span>）</div>
-
-      <h3 style="color:#34d399">📤 期望输出</h3>
-      <p style="color:#ccc;font-size:.88em;line-height:1.7;margin-bottom:6px">
-        <b>一段合法 JSON 字符串，schema 固定</b>：
-      </p>
-      <div class="sample-box" style="font-family:ui-monospace,Menlo,monospace;font-size:.82em;color:#cbd5e1;line-height:1.65;white-space:pre-wrap">{
-  "rationale": "User asks for pure creation of... No XxxAgent because...",
-  "plan": [
-    { "agent_id": "IntakeTextAgent", "intent": "..." },
-    { "agent_id": "StoryAgent",      "intent": "..." },
-    ...
-  ]
-}</div>
-      <p style="color:#bbb;font-size:.82em;margin-top:8px">
-        下面 <b>"🔍 两条代表性 SFT 样本"</b> 里能看到真实 user/assistant 对的完整内容。
-      </p>
-    </div>
-
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <!-- DPO 细节 -->
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <div class="card">
-      <h2>② DPO — 输入 &amp; 期望输出 &amp; Loss</h2>
-
-      <h3 style="color:#60a5fa">📥 模型输入</h3>
-      <p style="color:#ccc;font-size:.88em;line-height:1.7;margin-bottom:6px">
-        <b>三元组 <code>(prompt, chosen, rejected)</code></b>——同一个 prompt 配 <b>一好一坏两个 assistant 答复</b>：
-      </p>
-      <div class="sample-box" style="font-family:ui-monospace,Menlo,monospace;font-size:.82em;color:#cbd5e1;line-height:1.65;white-space:pre-wrap">{
-  <span style="color:#60a5fa">"prompt"</span>  : [ system + user ]                          <span style="color:#888"># 跟 SFT 同款</span>
-  <span style="color:#34d399">"chosen"</span>  : [{ role: "assistant", content: <span style="color:#34d399">正确 JSON</span> }]  <span style="color:#888"># 从 SFT 样本拷来</span>
-  <span style="color:#f87171">"rejected"</span>: [{ role: "assistant", content: <span style="color:#f87171">注入 bias 后的 JSON</span> }]
-                                                        <span style="color:#888"># 4 类 bias 之一：VA / Ambience / Compositor / missing_IntakeText</span>
-}</div>
-      <div class="warn" style="margin-top:8px">
-        <b>约束：</b>chosen / rejected 的 token 数差 ≤ 10%，否则 DPO 会偷学 "长 = 对" 这个 shortcut。
+      <h2>📐 SFT 数据多样性的三层</h2>
+      <div class="flow">
+        <div class="flow-step">
+          <h4>① goal: 题材 × 设定 × 角色 × 语言</h4>
+          <p>cultivation / martial-arts / CEO / rebirth / palace / cyberpunk / horror / thriller / sports / rom-com / historical / slice-of-life / mystery / illustrated-storytelling 十几大类，每条 user_goal 再细分情节、角色、地点、语言。</p>
+          <p class="mono-small">例："Make a cultivation-fantasy animated drama about a sect junior who discovers the revered elder is the demon the sect was founded to purge"</p>
+        </div>
+        <div class="flow-step">
+          <h4>② rationale: 显式反 bias</h4>
+          <p>每条都写"为什么 <b>不</b> 加 XxxAgent"形式的 trace（VideoAnalysis / Ambience / Compositor / 漏 IntakeText 这几类常见误添）。</p>
+          <p>这是 routing 判断的关键监督信号——不只是链模式，而是每条 agent 该不该出现的 <b>reasoning trace</b>。</p>
+        </div>
+        <div class="flow-step">
+          <h4>③ intent per agent: grounded</h4>
+          <p>每步 8–25 词，必须引用当前 goal 的具体情节 / 角色 / 物件。不能写成 <code class="mono">"step for MusicAgent"</code> 这种模板（eval 会把模板化输出当弱信号扣分）。</p>
+          <p class="mono-small">例："Generate keyframes for the killing-formation's seven layers and the swordsman's progression"</p>
+        </div>
       </div>
-
-      <h3 style="color:#34d399">📤 期望输出</h3>
-      <p style="color:#ccc;font-size:.88em;line-height:1.7">
-        DPO 不生成新 token——它要求模型<b>对同一 prompt 下的两个 completion 打出对比鲜明的 log-prob</b>：
-        <b style="color:#34d399">chosen 的相对 log-prob 涨</b>，<b style="color:#f87171">rejected 的相对 log-prob 跌</b>。
-        训完 <code>adapters_full/dpo/</code> 就是带着这个偏好的 LoRA。部署时 <b>推理接口跟 SFT 一模一样</b>（base + LoRA + 自回归生成 JSON）。
-      </p>
-
-      <h3 style="color:#a78bfa">🧮 Loss 公式</h3>
-      <div class="sample-box" style="font-family:ui-monospace,Menlo,monospace;color:#cbd5e1;font-size:.88em;line-height:1.65">
-        Δ<sub>chosen</sub>   = log π<sub>θ</sub>(y<sub>w</sub>|x) − log π<sub>ref</sub>(y<sub>w</sub>|x)
-        <br>Δ<sub>rejected</sub> = log π<sub>θ</sub>(y<sub>l</sub>|x) − log π<sub>ref</sub>(y<sub>l</sub>|x)
-        <br>
-        <br>L<sub>DPO</sub> = − log σ( β · (Δ<sub>chosen</sub> − Δ<sub>rejected</sub>) )
-      </div>
-      <p style="color:#ccc;font-size:.88em;line-height:1.7;margin-top:8px">
-        <code>π<sub>θ</sub></code> = 可训 policy（base + SFT LoRA，LoRA 可更新）；
-        <code>π<sub>ref</sub></code> = 冻结参考（同 base，LoRA 旁路）。
-        <b>直觉：</b>policy 把 chosen 的相对概率提上来、rejected 压下去，括号里为正，sigmoid → 1，loss → 0；反过来 loss 大。
-        <code>β=0.1</code> 是 KL 锁，防止 policy 跑得离 ref 太远。
-      </p>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <!-- Chain 分布 -->
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- ═══ GRPO Reward & Loss ═══ -->
     <div class="card">
-      <h2>🧬 SFT Chain Distribution — 28 种合法 routing</h2>
+      <h2>⚖️ GRPO Reward &amp; Loss</h2>
+
+      <h3 style="color:#60a5fa">Reward 函数（format gate + 部分分数 + 完美奖励）</h3>
+      <div class="sample-box" style="font-family:ui-monospace,Menlo,monospace;font-size:.86em;color:#cbd5e1;line-height:1.7;white-space:pre-wrap"># Format gate（下面任一条不通过 → R = 0，不再算 chain accuracy）
+1. JSON 解析失败           — 直接 json.loads / 去掉 ```json``` fence / 兜底 regex \{.*\} 三轮都失败
+2. 顶层不是 object          — JSON 解析出来不是 dict（例如返回了 list / 字符串 / 数字）
+3. 缺 "plan" 字段            — 顶层 dict 没有 "plan" key
+4. plan 不是非空 list       — "plan" 是空 list、不是 list、或是 null
+5. plan 里有非 dict 元素    — plan 中某一项不是 object（例如直接写了字符串）
+6. step 缺 "agent_id"        — 某个 plan step 没有 agent_id key，或值不是字符串
+7. agent_id 不在白名单       — agent_id ∉ AGENT_REGISTRY（编出来个不存在的 agent 名）
+8. agent_id 重复             — 同一个 agent_id 在 plan 里出现 ≥ 2 次
+
+# 其他 NOT 在 gate 里检查（只影响打分，不让 R 归 0）：
+- rationale 字段缺失 / 不是字符串                    → gate 不管
+- step 缺 "intent" 或 intent 不是字符串              → gate 不管
+- plan 长度跟 expected 不一致                        → 影响 pos_correct 分母
+- step 里有额外字段                                  → gate 不管
+
+# Format pass → 在 chain accuracy 上打部分分数 + 完美奖励
+pos_correct   = n_correct_slots / max(len(actual), len(expected))   # set-aware slot match
+chain_perfect = 1 if (len 一致 AND 每格都命中) else 0
+R             = 0.5 · pos_correct  +  0.5 · chain_perfect           ∈ [0, 1]</div>
+      <p style="color:#bbb;font-size:.86em;margin-top:10px">
+        <b>为什么不是 binary {0, 1}：</b>G=4 rollouts 在简单题上经常全 0 或全 1，<code>σ(R) = 0</code> → advantage = 0 → 这一组 prompt 完全没有学习信号（被 group-σ mask 直接丢掉）。partial credit 让"差一点"的 rollout 拿到不同分数，σ &gt; 0，组里能比出高低。
+      </p>
+      <p style="color:#bbb;font-size:.86em;margin-top:6px">
+        <b>为什么还要给完美一个独立 +0.5 bonus：</b>防止 satisficing — 如果只有 partial credit，policy 学到"稳定 4/5"和"博一把 5/5"在期望 reward 上差不多，会偷懒收敛到 4/5；perfect bonus 让 5/5 (R=1.0) 比 4/5 (R≈0.4) 高 2.5 倍，逼 policy 去搏完美。
+      </p>
+      <p style="color:#bbb;font-size:.86em;margin-top:6px">
+        实现见 <code class="mono">training/director/grpo_reward.py</code>。<code class="mono">RewardBreakdown</code> 同时附带 <code class="mono">did_parse / all_agents_known / no_duplicate / chain_perfect / got_truncated / n_correct</code> 字段做训练动力学日志（按类别看 format 失败率、截断率、完美链率）。
+      </p>
+
+      <h3 style="color:#a78bfa;margin-top:18px">GRPO loss</h3>
+      <div class="sample-box" style="font-family:ui-monospace,Menlo,monospace;font-size:.86em;color:#cbd5e1;line-height:1.7;white-space:pre-wrap"># 每个 prompt G=4 rollouts → 组内归一化 advantage
+μ_i, σ_i  = rewards_i.mean(), rewards_i.std()           # 沿 G 维度
+Â_{i,g}   = (R_{i,g} − μ_i) / (σ_i + ε)                 # sequence-level，整条 rollout 共享
+valid_i   = (σ_i &gt; ε)                                  # σ=0 的组直接 mask 掉
+
+# Token-level loss（每个 completion token 都进算式，prompt token 全 mask）
+m_{i,g,t} = aligned_mask · group_valid_broadcast        # = 1 当且仅当 t 是 completion 且组 valid
+
+L_PG = −(1/N) · Σ_{i,g,t}  Â_{i,g} · log π_θ(c_t)  ·  m_{i,g,t}
+L_KL =  (1/N) · Σ_{i,g,t}  K3(π_θ, π_ref)          ·  m_{i,g,t}
+L    =  L_PG  +  β · L_KL
+
+# Schulman K3 KL 估计器：unbiased、低方差、≥ 0
+log_ratio = log π_ref(c_t) − log π_θ(c_t)
+K3        = exp(log_ratio) − log_ratio − 1
+β = 0.04                                                # KL 锁强度</div>
+      <p style="color:#ccc;font-size:.86em;margin-top:10px">
+        <code class="mono">π_θ</code> = 可训 policy（base Qwen3-8B + SFT LoRA，LoRA 可更新）；<code class="mono">π_ref</code> = 冻结参考（同 base + 起步时 SFT LoRA 快照，旁路不更新）。
+        <b>token-level、不是 sequence-level：</b>每条 rollout 的 advantage 复用到这条 rollout 的每个 completion token 上，loss 对 token 求和再除以总 valid token 数（避免长 rollout 因 token 多就稀释了 advantage）。
+        无 PPO clipping —— 单步 on-policy 时 importance ratio ≈ 1，clip 没意义。
+      </p>
+      <p style="color:#ccc;font-size:.86em;margin-top:6px">
+        <b>为什么 KL 用 K3 估计器而不是闭式 KL：</b>闭式 KL 需要对 vocab 全 softmax，token-by-token 算，bf16 下数值容易爆。K3 (Schulman 2020) 只用 <code>log π_θ(c_t)</code> 和 <code>log π_ref(c_t)</code>（两次 gather），数学上 <code>E[K3] = KL</code>、<code>K3 ≥ 0</code> 严格、方差比 naive estimator 低很多。
+      </p>
+      <div class="warn">
+        <b>NaN 防护：</b>之前 TRL-based GRPO 在 bf16 下 multinomial 反复 NaN 崩溃 5 次后被全部移除。当前 hand-rolled 实现 model forward 仍 bf16，但 sampling step 强制 fp32 提精度，梯度走 bf16；logits 在 gather 前显式 <code>.float()</code> 算 logsumexp，防止 bf16 logsumexp 数值不稳。
+      </div>
+    </div>
+
+    <!-- ═══ Chain Distribution ═══ -->
+    <div class="card">
+      <h2>🧬 Chain Distribution — 42 种合法 routing</h2>
       <div class="legend">
         <span><i style="background:rgba(96,165,250,.3)"></i>intake</span>
         <span><i style="background:rgba(167,139,250,.3)"></i>generate</span>
@@ -316,130 +268,62 @@
         <span><i style="background:rgba(248,113,113,.3)"></i>caption</span>
       </div>
       <table>
-        <thead><tr><th>#</th><th>Chain</th><th style="text-align:center">Len</th><th style="text-align:right">Target</th><th style="text-align:right">Actual</th><th class="bar-cell"></th></tr></thead>
+        <thead><tr><th>#</th><th>Chain</th><th style="text-align:center">Len</th><th style="text-align:right">Actual</th><th class="bar-cell"></th></tr></thead>
         <tbody id="chainTable"></tbody>
       </table>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <!-- SFT 数据每条内部的变化 -->
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <div class="card">
-      <h2>📝 每条 SFT 样本的三层变化（不是只学 chain 结构）</h2>
-      <div class="flow">
-        <div class="flow-step">
-          <h4>① goal: 题材 × 设定 × 角色 × 语言</h4>
-          <p>光 Creative 核心 150 条就覆盖 13+ 大类：cultivation / martial-arts / CEO / rebirth / palace / cyberpunk / horror / thriller / sports / rom-com / historical / slice-of-life / mystery。每条 user_goal 再细分情节、角色、地点。</p>
-          <p class="mono-small">例："Make a cultivation-fantasy animated drama about a sect junior who discovers the revered elder is the demon the sect was founded to purge"</p>
-        </div>
-        <div class="flow-step">
-          <h4>② rationale: 显式反 4 种 bias</h4>
-          <p>每条都写 <code class="neg">"No VideoAnalysisAgent because..."</code> / <code class="neg">"No AmbienceAgent because..."</code> / <code class="neg">"No CompositorAgent because..."</code> 对应位置补 why-not。</p>
-          <p>这是 routing 判断的关键监督信号——不只是链模式，而是每条 agent 该不该出现的 <b>reasoning trace</b>。</p>
-        </div>
-        <div class="flow-step">
-          <h4>③ intent per agent: grounded 到当前 goal</h4>
-          <p>每步 <b>8–25 词</b>，必须引用当前 goal 的具体情节 / 角色 / 物件，不是模板（eval 会抓 <code>"step for MusicAgent"</code> 这种模板化输出扣分）。</p>
-          <p class="mono-small">例："Generate keyframes for the killing-formation's seven layers and the swordsman's progression"</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <!-- DPO 4 类偏好 -->
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <div class="card">
-      <h2>⚖️ DPO 偏好对 — 4 类 routing bias 纠偏（每类 125 对）</h2>
-      <p style="color:#bbb;font-size:.9em">DPO rejected 是程序化从 SFT chosen 注入 bias 生成的。注入逻辑在 <code class="mono">training/director/gen_dpo.py</code>，每类 125 对。chosen/rejected token 长度差严格 ≤ 10% （<code>validate.py</code> check #3 拦）。</p>
-
-      <div class="bias-row" id="biasRow"></div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <!-- 训练 hyperparams -->
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <div class="card">
-      <h2>⚙️ Training Config</h2>
-      <table>
-        <thead><tr><th>Config</th><th>SFT</th><th>DPO</th></tr></thead>
-        <tbody>
-          <tr><td>Base model</td><td colspan="2" class="mono-small">Qwen/Qwen2.5-7B-Instruct</td></tr>
-          <tr><td>LoRA config</td><td colspan="2" class="mono-small">r=32, α=64, dropout=0.05, target=q/k/v/o + gate/up/down_proj</td></tr>
-          <tr><td>seq_len</td><td colspan="2" class="mono-small">4096</td></tr>
-          <tr><td>learning rate</td><td class="mono-small">2e-5</td><td class="mono-small">5e-7</td></tr>
-          <tr><td>epochs</td><td class="mono-small">3</td><td class="mono-small">1</td></tr>
-          <tr><td>per-device batch</td><td class="mono-small">1</td><td class="mono-small">1</td></tr>
-          <tr><td>grad accumulation</td><td class="mono-small">8</td><td class="mono-small">8</td></tr>
-          <tr><td>effective batch</td><td class="mono-small">8</td><td class="mono-small">8</td></tr>
-          <tr><td>mixed precision</td><td colspan="2" class="mono-small">bf16</td></tr>
-          <tr><td>loss</td><td class="mono-small">completion-only CE</td><td class="mono-small">DPO (β=0.1)</td></tr>
-          <tr><td>steps (≈)</td><td class="mono-small">416</td><td class="mono-small">62</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <!-- Validate checks -->
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- ═══ Validate ═══ -->
     <div class="card">
       <h2>✅ Pre-Training Validation (validate.py)</h2>
-      <p style="color:#bbb;font-size:.9em">两阶段训练前过 5 道 check 才允许开跑。</p>
+      <p style="color:#bbb;font-size:.9em">SFT 训练前过 4 道 check 才允许开跑。</p>
       <table>
         <thead><tr><th>#</th><th>Check</th><th>说明</th></tr></thead>
         <tbody>
-          <tr><td>1</td><td>Token length</td><td class="mono-small">prompt+completion ≤ seq_len (Qwen tokenizer)</td></tr>
+          <tr><td>1</td><td>Token length</td><td class="mono-small">prompt + completion ≤ seq_len（Qwen tokenizer，默认 8192）</td></tr>
           <tr><td>2</td><td>JSON schema</td><td class="mono-small">assistant.content 合法 JSON + plan 里每个 agent_id ∈ AGENT_REGISTRY + 无重复</td></tr>
-          <tr><td>3</td><td>DPO length balance</td><td class="mono-small">每对 chosen/rejected token 长度差 ≤ 10%（防止 DPO 偷学"长=对"）</td></tr>
-          <tr><td>4</td><td>Chat template render</td><td class="mono-small">apply_chat_template 渲染后 assistant JSON 仍可解析（捕获特殊 token 转义 bug）</td></tr>
-          <tr><td>5</td><td>Train/eval isolation</td><td class="mono-small">任何训练 user_goal 归一化后不能出现在 eval_cases.json 里</td></tr>
+          <tr><td>3</td><td>Chat template render</td><td class="mono-small">apply_chat_template 渲染后 assistant JSON 仍可解析（捕获特殊 token 转义 bug）</td></tr>
+          <tr><td>4</td><td>Train/eval isolation</td><td class="mono-small">任何训练 user_goal 归一化后不能命中 eval_cases.json</td></tr>
         </tbody>
       </table>
       <div class="warn">
-        <b>isolation 的实际软肋：</b>normalize 只去空白+标点，同义改写会漏过。我在生成时手动避开 eval 的 15 个 creative 关键 hook（<code>cr_01</code> 到 <code>cr_15</code>），但规则化防线仅做兜底。DPO rejected 是从 SFT 里采样后再注入 bias，所以如果 SFT 通过 isolation，DPO 也通过。
+        <b>isolation 软肋：</b>normalize 只去空白+标点，同义改写会漏过。生成时要手动避开 eval 的 creative 关键 hook，规则化只是兜底。
       </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <!-- Eval baseline -->
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- ═══ Hyperparams ═══ -->
     <div class="card">
-      <h2>🎯 Evaluation Baseline</h2>
-      <p style="color:#bbb;font-size:.9em">训练好的 LoRA 用 <code class="mono">infer.py --adapter adapters_full/dpo</code> 跑 <code class="mono">evals/director_routing/eval_cases.json</code>（100 条 held-out）。同一 eval 脚本跑了 Gemini 2.5-flash 四个档位做对比：</p>
-      <table style="margin-top:8px">
-        <thead><tr><th>档位</th><th>Scaffold</th><th style="text-align:right">chain acc</th><th style="text-align:right">step acc</th></tr></thead>
+      <h2>⚙️ Hyperparams</h2>
+      <table>
+        <thead><tr><th>Config</th><th>SFT</th><th>GRPO</th></tr></thead>
         <tbody>
-          <tr><td class="mono-small">baseline</td><td style="color:#ccc;font-size:.85em">fewshots + topology 全开</td><td style="text-align:right"><b style="color:#34d399">88.0%</b></td><td style="text-align:right">92.5%</td></tr>
-          <tr><td class="mono-small">no_topology</td><td style="color:#ccc;font-size:.85em">只 fewshots，没 topology hint</td><td style="text-align:right">79.0%</td><td style="text-align:right">88.2%</td></tr>
-          <tr><td class="mono-small">no_few_shots</td><td style="color:#ccc;font-size:.85em">只 topology hint，没 fewshots</td><td style="text-align:right">72.0%</td><td style="text-align:right">82.6%</td></tr>
-          <tr style="background:rgba(251,191,36,.06)"><td class="mono-small"><b>no_few_shots_no_topology</b></td><td style="color:#ccc;font-size:.85em"><b>裸 Gemini，支架全关</b></td><td style="text-align:right"><b style="color:#fbbf24">55.0%</b></td><td style="text-align:right">74.3%</td></tr>
+          <tr><td>Base model</td><td colspan="2" class="mono-small">Qwen/Qwen2.5-7B-Instruct</td></tr>
+          <tr><td>LoRA</td><td colspan="2" class="mono-small">r=32, α=64, dropout=0.05, target = q/k/v/o + gate/up/down_proj</td></tr>
+          <tr><td>seq_len</td><td colspan="2" class="mono-small">8192 (validate-checked)</td></tr>
+          <tr><td>learning rate</td><td class="mono-small">2e-5</td><td class="mono-small">1e-6</td></tr>
+          <tr><td>epochs</td><td class="mono-small">3</td><td class="mono-small">3</td></tr>
+          <tr><td>per-device batch</td><td class="mono-small">1</td><td class="mono-small">1 (× G=4 rollouts)</td></tr>
+          <tr><td>grad accumulation</td><td class="mono-small">8</td><td class="mono-small">—</td></tr>
+          <tr><td>mixed precision</td><td colspan="2" class="mono-small">bf16 (forward / grad) · fp32 (sampling, NaN guard)</td></tr>
+          <tr><td>loss</td><td class="mono-small">completion-only CE</td><td class="mono-small">GRPO (β=0.04, no PPO clip)</td></tr>
+          <tr><td>max new tokens</td><td class="mono-small">—</td><td class="mono-small">1024</td></tr>
         </tbody>
       </table>
-      <p style="color:#bbb;font-size:.9em;margin-top:10px">
-        <b>对标应该是 55%（裸 Gemini），不是 88%</b>——88% 是 Gemini flash + fewshot + descriptor 补丁全套"支架堆"的成绩，而 <b>LoRA 训练的唯一目的就是把这些支架烘进权重里</b>，跟 88% 比是拿带支架的成绩当新 baseline，苹果对橙子。
-        LoRA 要证明有用，就得在 <b>不挂 fewshot / topology hint</b> 的条件下把 55% 拉起来；
-        目标：<b>追到 85%+</b>（即 95%+ 的支架效果内化），同时吃掉 Gemini API 的成本和延迟。
-      </p>
-      <div class="note">
-        评测页 → <a href="./director.html" style="color:#fbbf24">Director 分页的 Director Routing 评测 section</a>，会自动加载 <code class="mono">Runtime/eval_routing/*.json</code> 下的每次 eval 运行结果，支持 chain 准确率 / 步准确率 / 失败模式（漏跑 / 多跑 / 错位）breakdown。训练完的 LoRA run 结果会以同样格式落在那里。
-      </div>
     </div>
 
   </main>
 
   <script>
-  /* ── Static data (pre-computed from samples_sft_full.jsonl / samples_dpo_full.jsonl) ── */
-
-  const CHAINS = [{"chain": ["IntakeText", "Story", "Screenplay", "KeyFrame", "Video", "Ambience", "Music", "AudioMix", "Compositor"], "length": 9, "target": 150, "actual": 153}, {"chain": ["IntakeText", "IntakeImage", "BriefEnricher", "Story", "Screenplay", "KeyFrame", "Video", "Ambience", "Music", "AudioMix", "Compositor"], "length": 11, "target": 50, "actual": 54}, {"chain": ["IntakeText", "Story", "Screenplay", "KeyFrame", "Video", "Ambience", "Music", "AudioMix", "Subtitle", "Compositor"], "length": 10, "target": 50, "actual": 54}, {"chain": ["IntakeText", "Story", "Screenplay", "KeyFrame", "Video", "Ambience", "Music", "AudioMix", "Subtitle", "Translation", "Compositor"], "length": 11, "target": 50, "actual": 53}, {"chain": ["IntakeText", "IntakeVideo", "StyleTransfer"], "length": 3, "target": 50, "actual": 50}, {"chain": ["IntakeText", "IntakeVideo", "VideoExtend"], "length": 3, "target": 50, "actual": 50}, {"chain": ["IntakeText", "IntakeVideo", "Transcription", "Subtitle", "Translation", "Compositor"], "length": 6, "target": 40, "actual": 40}, {"chain": ["IntakeText", "IntakeVideo", "VideoAnalysis", "Highlight"], "length": 4, "target": 40, "actual": 40}, {"chain": ["IntakeText", "IntakeVideo", "VideoAnalysis", "Highlight", "Music", "Subtitle", "AudioMix", "Compositor"], "length": 8, "target": 40, "actual": 40}, {"chain": ["IntakeText", "IntakeVideo", "VideoExtend", "StyleTransfer", "Transcription", "Subtitle", "Compositor"], "length": 7, "target": 30, "actual": 31}, {"chain": ["IntakeText", "IntakeVideo", "VideoAnalysis", "Highlight", "Music", "AudioMix", "Compositor"], "length": 7, "target": 30, "actual": 31}, {"chain": ["IntakeText", "IntakeVideo", "Transcription", "Subtitle", "Music", "AudioMix", "Compositor"], "length": 7, "target": 30, "actual": 31}, {"chain": ["IntakeText", "IntakeVideo", "VideoAnalysis", "Story", "Screenplay", "KeyFrame", "Video", "Ambience", "Music", "AudioMix", "Subtitle", "Compositor"], "length": 12, "target": 30, "actual": 31}, {"chain": ["IntakeText", "IntakeVideo", "VideoAnalysis", "Highlight", "Transcription", "Subtitle", "Translation", "Compositor"], "length": 8, "target": 30, "actual": 31}, {"chain": ["IntakeText", "IntakeImage", "BriefEnricher", "Story", "Screenplay", "KeyFrame", "Video", "VideoExtend", "Ambience", "Music", "AudioMix", "Compositor"], "length": 12, "target": 30, "actual": 31}, {"chain": ["IntakeText", "IntakeVideo", "Transcription", "Subtitle", "Compositor"], "length": 5, "target": 30, "actual": 30}, {"chain": ["IntakeText", "IntakeVideo", "VideoAnalysis", "Story", "Screenplay", "KeyFrame", "Video", "Ambience", "Music", "AudioMix", "Compositor"], "length": 11, "target": 30, "actual": 30}, {"chain": ["IntakeText", "IntakeVideo", "VideoExtend", "StyleTransfer"], "length": 4, "target": 30, "actual": 30}, {"chain": ["IntakeText", "IntakeVideo", "VideoAnalysis", "Highlight", "Transcription", "Subtitle", "Music", "Translation", "AudioMix", "Compositor"], "length": 10, "target": 30, "actual": 30}, {"chain": ["IntakeText", "IntakeImage", "BriefEnricher", "Story", "Screenplay", "KeyFrame", "Video", "Ambience", "Music", "AudioMix", "Subtitle", "Translation", "Compositor"], "length": 13, "target": 30, "actual": 30}, {"chain": ["IntakeText", "IntakeVideo", "StyleTransfer", "VideoExtend", "Music", "AudioMix", "Compositor"], "length": 7, "target": 30, "actual": 30}, {"chain": ["IntakeText", "IntakeVideo", "Music", "AudioMix", "Compositor"], "length": 5, "target": 30, "actual": 30}, {"chain": ["IntakeText", "IntakeVideo", "Ambience", "Music", "AudioMix", "Compositor"], "length": 6, "target": 30, "actual": 30}, {"chain": ["IntakeText", "IntakeVideo", "StyleTransfer", "Transcription", "Subtitle", "Compositor"], "length": 6, "target": 30, "actual": 30}, {"chain": ["IntakeText", "IntakeVideo", "StyleTransfer", "Music", "AudioMix", "Compositor"], "length": 6, "target": 30, "actual": 30}, {"chain": ["IntakeText", "IntakeVideo", "VideoExtend", "Transcription", "Subtitle", "Compositor"], "length": 6, "target": 30, "actual": 30}, {"chain": ["IntakeText", "IntakeVideo", "VideoExtend", "Music", "AudioMix", "Compositor"], "length": 6, "target": 30, "actual": 30}, {"chain": ["IntakeText", "IntakeVideo", "VideoAnalysis", "Highlight", "Transcription", "Subtitle", "Compositor"], "length": 7, "target": 30, "actual": 30}];
-  const DPO_EXAMPLES = [{"bias_type": "VA", "goal": "Make a subtitled suspense mini-drama about a deaf sommelier who detects a poisoning plot by reading the wait-staff's lips across a candlelit dinner she's been hired to test-taste", "chosen_plan": ["IntakeTextAgent", "StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent", "AmbienceAgent", "MusicAgent", "AudioMixAgent", "SubtitleAgent", "CompositorAgent"], "rejected_plan": ["IntakeTextAgent", "VideoAnalysisAgent", "StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent", "AmbienceAgent", "MusicAgent", "AudioMixAgent", "SubtitleAgent", "CompositorAgent"]}, {"bias_type": "missing_IntakeText", "goal": "Make a sci-fi animated drama about the last awakened AI falling in love with the only human engineer left on Earth", "chosen_plan": ["IntakeTextAgent", "StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent", "AmbienceAgent", "MusicAgent", "AudioMixAgent", "CompositorAgent"], "rejected_plan": ["StoryAgent", "ScreenplayAgent", "KeyFrameAgent", "VideoAgent", "AmbienceAgent", "MusicAgent", "AudioMixAgent", "CompositorAgent"]}, {"bias_type": "Ambience", "goal": "Pad this uploaded dental-clinic explainer with 25 more seconds of matching chair-side footage, restyle it in a soft pastel flat-illustration look, and add English subtitles for the dentist's narration", "chosen_plan": ["IntakeTextAgent", "IntakeVideoAgent", "VideoExtendAgent", "StyleTransferAgent", "TranscriptionAgent", "SubtitleAgent", "CompositorAgent"], "rejected_plan": ["IntakeTextAgent", "IntakeVideoAgent", "VideoExtendAgent", "StyleTransferAgent", "TranscriptionAgent", "SubtitleAgent", "AmbienceAgent", "CompositorAgent"]}, {"bias_type": "Compositor", "goal": "Extend this modern office-betrayal scene by 10 seconds to show the protagonist quietly reading her boss's incriminating email over his shoulder while he's on the phone, with a slow sideways dolly", "chosen_plan": ["IntakeTextAgent", "IntakeVideoAgent", "VideoExtendAgent"], "rejected_plan": ["IntakeTextAgent", "IntakeVideoAgent", "VideoExtendAgent", "CompositorAgent"]}];
+  /* CHAINS — derived from samples_sft_full.jsonl (1406 samples, 42 unique shapes). Sorted by count desc. */
+  const CHAINS = [{"chain": ["Narration", "Illustration", "Narrator", "Compositor"], "length": 4, "actual": 86}, {"chain": ["Story", "Screenplay", "KeyFrame", "Video", "Compositor"], "length": 5, "actual": 81}, {"chain": ["Story", "Screenplay", "KeyFrame", "Video", "Music", "AudioMix", "Compositor"], "length": 7, "actual": 60}, {"chain": ["Story", "Screenplay", "KeyFrame", "Video", "Ambience", "AudioMix", "Compositor"], "length": 7, "actual": 60}, {"chain": ["Story", "Screenplay", "KeyFrame", "Video", "Music", "Ambience", "Transcription", "Translation", "AudioMix", "Compositor"], "length": 10, "actual": 55}, {"chain": ["Story", "Screenplay", "KeyFrame", "Video", "Music", "Ambience", "AudioMix", "Compositor"], "length": 8, "actual": 52}, {"chain": ["IntakeImage", "BriefEnricher", "Story", "Screenplay", "KeyFrame", "Video", "Music", "Ambience", "AudioMix", "Compositor"], "length": 10, "actual": 51}, {"chain": ["IntakeVideo", "StyleTransfer"], "length": 2, "actual": 51}, {"chain": ["IntakeVideo", "VideoExtend"], "length": 2, "actual": 50}, {"chain": ["Story", "Screenplay", "KeyFrame", "Video", "Music", "Ambience", "Transcription", "AudioMix", "Compositor"], "length": 9, "actual": 50}, {"chain": ["IntakeVideo", "Transcription", "Translation", "Compositor"], "length": 4, "actual": 40}, {"chain": ["IntakeVideo", "VideoAnalysis", "Highlight"], "length": 3, "actual": 40}, {"chain": ["IntakeVideo", "VideoAnalysis", "Highlight", "Music", "Transcription", "AudioMix", "Compositor"], "length": 7, "actual": 40}, {"chain": ["IntakeVideo", "Music", "Ambience", "AudioMix", "Compositor"], "length": 5, "actual": 30}, {"chain": ["IntakeVideo", "VideoExtend", "Music", "AudioMix", "Compositor"], "length": 5, "actual": 30}, {"chain": ["IntakeVideo", "StyleTransfer", "Transcription", "Compositor"], "length": 4, "actual": 30}, {"chain": ["IntakeVideo", "VideoExtend", "Transcription", "Compositor"], "length": 4, "actual": 30}, {"chain": ["IntakeVideo", "Transcription", "Compositor"], "length": 3, "actual": 30}, {"chain": ["IntakeVideo", "VideoAnalysis", "Highlight", "Transcription", "Compositor"], "length": 5, "actual": 30}, {"chain": ["IntakeVideo", "StyleTransfer", "Music", "AudioMix", "Compositor"], "length": 5, "actual": 30}, {"chain": ["IntakeVideo", "Music", "AudioMix", "Compositor"], "length": 4, "actual": 30}, {"chain": ["IntakeVideo", "VideoAnalysis", "Story", "Screenplay", "KeyFrame", "Video", "Music", "Ambience", "Transcription", "AudioMix", "Compositor"], "length": 11, "actual": 30}, {"chain": ["IntakeImage", "BriefEnricher", "Story", "Screenplay", "KeyFrame", "Video", "Music", "Ambience", "Transcription", "Translation", "AudioMix", "Compositor"], "length": 12, "actual": 30}, {"chain": ["IntakeImage", "BriefEnricher", "Story", "Screenplay", "KeyFrame", "Video", "VideoExtend", "Music", "Ambience", "AudioMix", "Compositor"], "length": 11, "actual": 30}, {"chain": ["IntakeVideo", "StyleTransfer", "VideoExtend", "Music", "AudioMix", "Compositor"], "length": 6, "actual": 20}, {"chain": ["IntakeImage", "BriefEnricher", "Narration", "Illustration", "Narrator", "Translation", "Compositor"], "length": 7, "actual": 20}, {"chain": ["IntakeVideo", "VideoExtend", "StyleTransfer"], "length": 3, "actual": 20}, {"chain": ["Narration", "Illustration", "Narrator", "Music", "AudioMix", "Compositor"], "length": 6, "actual": 20}, {"chain": ["IntakeImage", "BriefEnricher", "Narration", "Illustration", "Narrator", "Compositor"], "length": 6, "actual": 20}, {"chain": ["IntakeVideo", "VideoAnalysis", "Highlight", "Transcription", "Translation", "Music", "AudioMix", "Compositor"], "length": 8, "actual": 20}, {"chain": ["IntakeVideo", "VideoAnalysis", "Story", "Screenplay", "KeyFrame", "Video", "Music", "Ambience", "AudioMix", "Compositor"], "length": 10, "actual": 20}, {"chain": ["IntakeVideo", "VideoAnalysis", "Highlight", "Music", "AudioMix", "Compositor"], "length": 6, "actual": 20}, {"chain": ["Narration", "Illustration", "Narrator", "Ambience", "AudioMix", "Compositor"], "length": 6, "actual": 20}, {"chain": ["Narration", "Illustration", "Narrator", "Translation", "Compositor"], "length": 5, "actual": 20}, {"chain": ["Narration", "Illustration", "Narrator", "Music", "AudioMix", "Translation", "Compositor"], "length": 7, "actual": 20}, {"chain": ["IntakeVideo", "VideoAnalysis", "Highlight", "Transcription", "Translation", "Compositor"], "length": 6, "actual": 20}, {"chain": ["IntakeVideo", "VideoExtend", "StyleTransfer", "Transcription", "Compositor"], "length": 5, "actual": 20}, {"chain": ["IntakeVideo", "VideoAnalysis", "Transcription", "Music", "AudioMix", "Compositor"], "length": 6, "actual": 20}, {"chain": ["IntakeImage", "BriefEnricher", "Narration", "Illustration", "Narrator", "Music", "AudioMix", "Translation", "Compositor"], "length": 9, "actual": 20}, {"chain": ["IntakeImage", "BriefEnricher", "Narration", "Illustration", "Narrator", "Music", "AudioMix", "Compositor"], "length": 8, "actual": 20}, {"chain": ["IntakeImage", "BriefEnricher", "Narration", "Illustration", "Narrator", "Music", "Ambience", "AudioMix", "Translation", "Compositor"], "length": 10, "actual": 20}, {"chain": ["Narration", "Illustration", "Narrator", "Music", "Ambience", "AudioMix", "Compositor"], "length": 7, "actual": 20}];
 
   function agentClass(name) {
     if (/^Intake/.test(name)) return 'agent';
     if (/^BriefEnricher$/.test(name)) return 'agent';
-    if (/Story|Screenplay|KeyFrame|Video$/.test(name)) return 'agent gen';
-    if (/Ambience|Music|AudioMix/.test(name)) return 'agent audio';
-    if (/Subtitle|Transcription|Translation/.test(name)) return 'agent caption';
-    if (/VideoAnalysis|Highlight|VideoExtend|StyleTransfer|Compositor/.test(name)) return 'agent edit';
+    if (/^(Story|Screenplay|KeyFrame|Video|Narration|Illustration)$/.test(name)) return 'agent gen';
+    if (/^(Ambience|Music|AudioMix|Narrator)$/.test(name)) return 'agent audio';
+    if (/^(Subtitle|Transcription|Translation)$/.test(name)) return 'agent caption';
+    if (/^(VideoAnalysis|Highlight|VideoExtend|StyleTransfer|Compositor)$/.test(name)) return 'agent edit';
     return 'agent';
   }
 
@@ -455,74 +339,13 @@
         <td>${i+1}</td>
         <td class="chain-cell">${renderChain(c.chain)}</td>
         <td style="text-align:center">${c.length}</td>
-        <td style="text-align:right">${c.target}</td>
         <td style="text-align:right"><b>${c.actual}</b></td>
         <td><div class="bar-bg"><div class="bar-fill" style="width:${pct}%"></div></div></td>
       </tr>`;
     }).join('');
   }
 
-  function renderDPO() {
-    const BIAS_META = {
-      VA: {
-        title: 'VA — 多加 VideoAnalysis',
-        desc: 'model 看到"可以分析的上游" 就想加 VideoAnalysis，即使用户只要求创作。rejected 在 chosen 基础上 intake 之后插一个 VideoAnalysisAgent。',
-      },
-      Ambience: {
-        title: 'Ambience — 多加 Ambience',
-        desc: 'model 做 Highlight/Edit 型任务时，倾向把原始音轨"补上 ambience 层"。rejected 在 Music / AudioMix 前插一个 AmbienceAgent。',
-      },
-      Compositor: {
-        title: 'Compositor — 多加 Compositor 尾巴',
-        desc: 'model 喜欢一律以 Compositor 收尾（"看起来更完整"），即使 Extend/Style/Highlight 的输出本身就是交付物。rejected 追加一个 CompositorAgent。',
-      },
-      missing_IntakeText: {
-        title: 'missing_IntakeText — 漏掉起点',
-        desc: 'model 会跳过 IntakeTextAgent 直接让"专家 agent" 开始（觉得 intake 是多余回显）。rejected 砍掉 plan[0] 的 IntakeTextAgent。',
-      },
-    };
-    const byBias = {};
-    for (const ex of DPO_EXAMPLES) byBias[ex.bias_type] = ex;
-
-    document.getElementById('biasRow').innerHTML = Object.keys(BIAS_META).map(key => {
-      const meta = BIAS_META[key];
-      const ex = byBias[key];
-      if (!ex) return '';
-      const chosenSet = new Set(ex.chosen_plan);
-      const rejectedSet = new Set(ex.rejected_plan);
-      // chosen panel: highlight green the steps ONLY-in-chosen (missing from rejected)
-      const chosenHtml = ex.chosen_plan.map((a, i) => {
-        const only = !rejectedSet.has(a);
-        return only
-          ? `<div class="step step-only">${i+1}. ${a}</div>`
-          : `<div class="step">${i+1}. ${a}</div>`;
-      }).join('');
-      // rejected panel: highlight red the steps ONLY-in-rejected (wrongly added),
-      // and show ghost placeholders for steps missing from rejected (visual align)
-      const rejectedHtml = ex.rejected_plan.map((a, i) => {
-        const only = !chosenSet.has(a);
-        return only
-          ? `<div class="step step-only">${i+1}. ${a}</div>`
-          : `<div class="step">${i+1}. ${a}</div>`;
-      }).join('');
-      return `<div class="bias-card ${key}">
-        <h4><span class="bias-count">125×</span> ${meta.title}</h4>
-        <div style="color:#bbb;font-size:.84em;line-height:1.5;margin-bottom:8px">${meta.desc}</div>
-        <div style="color:#888;font-size:.76em;margin-bottom:6px">例 goal：${ex.goal.slice(0, 120)}${ex.goal.length > 120 ? '…' : ''}</div>
-        <div class="plan-compare">
-          <div class="plan-side chosen"><h5>chosen <span class="tag">correct</span></h5>${chosenHtml}</div>
-          <div class="plan-side rejected"><h5>rejected <span class="tag">bias example</span></h5>${rejectedHtml}</div>
-        </div>
-        <div style="font-size:.74em;color:#888;margin-top:8px;line-height:1.5">
-          <span style="color:#34d399">✓ 绿色</span>：chosen 独有（正确且必要的步骤） ·
-          <span style="color:#f87171">✗ 红色</span>：rejected 独有（被程序化注入的 bias 错误步骤）
-        </div>
-      </div>`;
-    }).join('');
-  }
-
   renderChainTable();
-  renderDPO();
   </script>
 </body>
 </html>

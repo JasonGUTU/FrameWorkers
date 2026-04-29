@@ -89,7 +89,7 @@ SPEC = AgentSpec(
         "univa_keyframes (character reference images + per-shot keyframe "
         "images)."
     ),
-    purpose_and_routing=(
+    purpose_and_trigger=(
         "Generate character images with LLM-refined prompts and per-shot "
         "keyframes using UniVA's character-referenced image generation "
         "approach. Runs after UnivaStoryboardAgent and before "

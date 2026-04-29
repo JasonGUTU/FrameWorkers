@@ -92,9 +92,10 @@ SPEC = AgentSpec(
             cardinality="single",
             description=(
                 "The raw creative brief — the user's text describing the "
-                "story or video concept. Typically the structured "
-                "text-intake artifact. Choose the single most recent "
-                "text brief."
+                "story or video concept, registered directly from the "
+                "user's chat / text upload as the ``[creative_brief]`` "
+                "artifact. Choose the single most recent / most "
+                "authoritative such brief."
             ),
         ),
         InputLabelSpec(
@@ -126,8 +127,8 @@ SPEC = AgentSpec(
         "in + per-image role classifications (character / location / "
         "style / etc.)."
     ),
-    purpose_and_routing=(
-        """Fold a visual description (from an uploaded reference image) into the user's text brief, producing one unified enriched brief for the story writer. Trigger: image-reference creative flow (user uploaded an image as character / location / style reference)."""
+    purpose_and_trigger=(
+        """Fold a visual description (from an uploaded reference image) into the user's text brief, producing one unified enriched brief. Trigger: include whenever the user has uploaded reference image(s) and downstream content generation needs the image's visual details folded into the brief."""
     ),
     input_preamble=(
         "I merge visual descriptions from uploaded reference images into "
