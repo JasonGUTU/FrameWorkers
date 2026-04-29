@@ -1,0 +1,1265 @@
+[
+  {
+    "shape_slug": "cr_compositor_only",
+    "name": "cr_04",
+    "user_goal": "Make a 3-minute rebirth-revenge animated drama where the female lead is framed by her best friend and falls to her death, then is reborn three years earlier to strike back",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "story_pure",
+    "name": "storytelling_01",
+    "user_goal": "Make an illustrated audiobook video of this children's bedtime tale about a little rabbit named Pip who finds a glowing seed in the meadow — calm narration with one soft watercolor picture per scene",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "cr_music",
+    "name": "cr_01",
+    "user_goal": "Make a cultivation-fantasy animated drama about a washed-up young man who awakens an ancient bloodline and rises through the ranks of his sect, add some epic orchestral music",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "cr_ambience",
+    "name": "cr_03",
+    "user_goal": "Make a supernatural-thriller mini-drama where the female lead moves into a haunted house and finds a videotape left by the previous tenant that reveals an unsolved murder, add some creepy haunted-house ambient sounds",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "cr_bilingual",
+    "name": "bilingual_01",
+    "user_goal": "Make an English-Chinese bilingual costume-drama animated drama about a nine-generation tea-ceremony lineage reconnected with a modern female lead through reincarnation",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "cr_music_ambience",
+    "name": "cr_16",
+    "user_goal": "Make a historical war-epic animated drama about a Three Kingdoms general who leads his troops across a treacherous mountain pass to lift a siege, with some orchestral battle music and mountain-wind ambient sounds",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "extend_only",
+    "name": "extend_01",
+    "user_goal": "Extend this CEO-romance confrontation scene to 15 seconds, adding the male lead's inner monologue and slow-motion close-ups",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "intake_img_cr",
+    "name": "intake_img_01",
+    "user_goal": "Using this uploaded image as the story's protagonist, produce an inspirational cultivation-fantasy animated drama",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "style_only",
+    "name": "style_01",
+    "user_goal": "Convert this mini-drama clip to a Studio Ghibli animated-drama style",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "cr_subtitle",
+    "name": "sub_01",
+    "user_goal": "Make an English-subtitled campus sweet-romance mini-drama: the top-student class president and a transferred-in delinquent girl redeem each other",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "highlight_music_subtitle",
+    "name": "complex_10",
+    "user_goal": "Analyze this mini-drama, cut the climactic twist moments, add English subtitles and background music, and output the final promo",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "MusicAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "highlight_only",
+    "name": "highlight_01",
+    "user_goal": "Cut the most thrilling twist moments from this mini-drama episode into promotional material",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "vid_bilingual_sub",
+    "name": "sub_vid_03",
+    "user_goal": "Generate Chinese subtitles for this English mini-drama episode",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "vid_analysis_cr_subtitle",
+    "name": "complex_13",
+    "user_goal": "First analyze this hit mini-drama, then write a sequel story based on the analysis, and produce it as a new subtitled animated drama",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "intake_img_cr_bilingual",
+    "name": "complex_19",
+    "user_goal": "Using this uploaded animated-drama character image, make an English-Chinese bilingual CEO-romance mini-drama trailer",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "intake_img_cr_extend",
+    "name": "complex_23",
+    "user_goal": "Using this uploaded female-lead character portrait as the protagonist, make a 3-minute cyberpunk sci-fi dystopian mini-drama: she leads an underground hacker coalition raiding a clone corporation and finally discovers she is also a clone. Extend the climactic identity-reveal confrontation scene by 10 seconds, adding slow-motion close-ups and shots of her trembling hands.",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "vid_music",
+    "name": "complex_24",
+    "user_goal": "Add a sad piano background score to this mini-drama clip",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "vid_music_ambience",
+    "name": "complex_25",
+    "user_goal": "Add rain ambience and a piano background score to this rainy-night scene",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "style_subtitle",
+    "name": "complex_26",
+    "user_goal": "Convert this clip to an animated-drama look and add English subtitles",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "style_music",
+    "name": "complex_27",
+    "user_goal": "Convert this costume-drama mini-drama clip to an ink-wash style and add a traditional-style background score",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "extend_subtitle",
+    "name": "complex_28",
+    "user_goal": "Extend this confrontation scene by 10 seconds and add English subtitles",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "extend_music",
+    "name": "complex_29",
+    "user_goal": "Extend this fight scene by 8 seconds and add a tense, intense background score",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "extend_ambience",
+    "name": "extend_05",
+    "user_goal": "Extend this scene of the female lead confessing and crying by 8 seconds, adding rain sound effects and close-ups of her trembling hands",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "highlight_subtitle",
+    "name": "complex_30",
+    "user_goal": "Cut the highlight moments from this mini-drama and add English subtitles to produce a promo",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "vid_subtitle",
+    "name": "sub_vid_01",
+    "user_goal": "Add English subtitles to this interview-style mini-drama",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "vid_analysis_cr",
+    "name": "complex_01",
+    "user_goal": "Analyze this hit mini-drama, then write a new story in the same genre and produce it as a new animated drama",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "extend_style",
+    "name": "complex_02",
+    "user_goal": "First extend this mini-drama clip, then style-transfer it into a Japanese anime look",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "extend_style_subtitle",
+    "name": "complex_03",
+    "user_goal": "Extend this mini-drama episode, then style-transfer it into an animated-drama look, and add English subtitles",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "highlight_music",
+    "name": "complex_04",
+    "user_goal": "Analyze the pacing of this 12-episode mini-drama, cut the best twist moments, add background music, and composite the final",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "vid_analysis_music_subtitle",
+    "name": "complex_06",
+    "user_goal": "Analyze this mini-drama's emotional arc, then add subtitles and background music to it",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "VideoAnalysisAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "highlight_bilingual_sub",
+    "name": "complex_20",
+    "user_goal": "Extract the key dialogue from this mini-drama's meeting scenes, transcribe and translate them to Chinese, and output a subtitled highlight edit",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "style_extend_music",
+    "name": "complex_21",
+    "user_goal": "First style-transfer to an ink-wash animated-drama look, then extend the key scene, finally add traditional-style background music",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "story_ambience",
+    "name": "storytelling_ambience_01",
+    "user_goal": "Narrate this forest-adventure children's story as an illustrated audiobook with a gentle forest-ambience bed (wind through leaves, distant birds)",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "story_music",
+    "name": "storytelling_music_01",
+    "user_goal": "Make an illustrated audiobook of this lullaby-style bedtime story with a gentle, slow piano score playing softly under the narrator",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "highlight_bilingual_music",
+    "name": "complex_18",
+    "user_goal": "Analyze this English mini-drama season, extract the high-tension climax moments, and add Chinese subtitles plus emotional background score",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "TranslationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "story_bilingual",
+    "name": "storytelling_bilingual_01",
+    "user_goal": "Make an English-Chinese bilingual illustrated audiobook of this short fairytale — narrate in English, burn both English and Chinese subtitles on the slideshow",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "story_full_imgref_music_bil",
+    "name": "storytelling_full_01",
+    "user_goal": "Using the uploaded character portrait of the fox protagonist, produce an English-Chinese bilingual illustrated audiobook of this folk tale, narrated in English with a gentle koto-and-flute background score",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "story_imgref",
+    "name": "storytelling_imgref_01",
+    "user_goal": "Using the uploaded character portrait as the heroine, turn this short folktale into an illustrated audiobook where every picture keeps her appearance consistent with the reference",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "story_imgref_bilingual",
+    "name": "storytelling_imgref_bilingual_01",
+    "user_goal": "Using this uploaded character portrait of the storyteller grandmother, produce an English-Spanish bilingual illustrated audiobook of this folk tale",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "story_imgref_music",
+    "name": "storytelling_imgref_music_01",
+    "user_goal": "Using this uploaded portrait of the protagonist as the main character, turn this short myth into an illustrated audiobook with a soft guzheng score under the narration",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "story_music_ambience",
+    "name": "storytelling_music_ambience_01",
+    "user_goal": "Make an illustrated audiobook of this ocean-themed children's story with a gentle piano lullaby playing under the narrator AND ambient wave sounds in the background",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "story_music_bilingual",
+    "name": "storytelling_music_bilingual_01",
+    "user_goal": "Create an English-Chinese bilingual illustrated audiobook of this Hans Christian Andersen fairytale with a gentle harp-and-celesta BGM",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "shape_slug": "story_ultra",
+    "name": "storytelling_ultra_01",
+    "user_goal": "Using this uploaded fox-protagonist portrait, make a bilingual English-Chinese illustrated audiobook of the fox-and-crow fable with both a gentle flute score AND forest-ambience sounds under the narrator",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  }
+]
