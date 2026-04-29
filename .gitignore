@@ -240,3 +240,6 @@ training/director/logs/
 training/director/*.x15.jsonl
 training/director/infer_on_training_*.jsonl
 *.bak
+
+# Downloaded benchmark datasets (HF cache, regenerable via load_dataset)
+data/
