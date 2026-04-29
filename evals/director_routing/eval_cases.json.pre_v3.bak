@@ -1,0 +1,3492 @@
+[
+  {
+    "name": "cr_01",
+    "user_goal": "Make a cultivation-fantasy animated drama about a washed-up young man who awakens an ancient bloodline and rises through the ranks of his sect, add some epic orchestral music",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_02",
+    "user_goal": "Make a CEO romance mini-drama about a struggling waitress who discovers her rude regular customer is the billionaire she saved years ago, give it some gentle piano romance music",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_03",
+    "user_goal": "Make a supernatural-thriller mini-drama where the female lead moves into a haunted house and finds a videotape left by the previous tenant that reveals an unsolved murder, add some creepy haunted-house ambient sounds",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_04",
+    "user_goal": "Make a 3-minute rebirth-revenge animated drama where the female lead is framed by her best friend and falls to her death, then is reborn three years earlier to strike back",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_05",
+    "user_goal": "Create a post-apocalyptic animated drama where the last survivors discover a hidden sanctuary guarded by an awakened AI",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_06",
+    "user_goal": "Make a sweet costume-drama mini-drama where the female lead transmigrates into the chancellor's legitimate daughter and moves from mutual loathing to mutual redemption with a cold-faced prince, needs some palace ambient atmosphere",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_07",
+    "user_goal": "I want a romance mini-drama where a young woman wins a dating-app lottery and ends up fake-married to a reclusive tech mogul, needs some light indie music",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_08",
+    "user_goal": "Make a sci-fi animated drama about the last awakened AI falling in love with the only human engineer left, with some spaceship ambient sounds",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_09",
+    "user_goal": "Make an urban romance mini-drama where the female lead runs into her ex-boyfriend — missing for five years — in a rainy-night Paris café, throw in some rainy-café ambient sounds",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_10",
+    "user_goal": "Make a workplace revenge mini-drama where an overlooked analyst exposes her boss's insider trading by rising to CEO at a rival firm, throw some tense thriller music on it",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_11",
+    "user_goal": "Make a palace-intrigue costume-drama mini-drama where a real and a fake princess swap places, exploit each other, and ultimately team up to expose the empress's ambitions",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_12",
+    "user_goal": "Make a martial-arts animated drama about a young swordsman who, to avenge his sect, ventures alone into the demonic cult's seven-layered killing formation",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_13",
+    "user_goal": "Make an urban underdog-comeback mini-drama where the live-in son-in-law thrown out of the rich family is secretly the heir of a top conglomerate, with some uplifting BGM",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_14",
+    "user_goal": "Make an epic-battle scene for a fantasy animated drama: seven ancient divine beasts gather to face a demon god returning to the mortal realm",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_15",
+    "user_goal": "Make a suspense-twist mini-drama where a therapist realizes her new patient is the man who murdered her sister years ago, give it some tense office ambient sounds",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_16",
+    "user_goal": "Make a historical war-epic animated drama about a Three Kingdoms general who leads his troops across a treacherous mountain pass to lift a siege, with some orchestral battle music and mountain-wind ambient sounds",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_17",
+    "user_goal": "Make a sci-fi space-exploration animated drama where astronauts discover an ancient alien signal coming from a dead star, add some cosmic orchestral music and spaceship ambient sounds",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_18",
+    "user_goal": "Make a pirate adventure mini-drama where the captain's daughter takes over her dead father's ship to hunt the rival crew who killed him, with some adventure music and ocean-wind ambient sounds",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_19",
+    "user_goal": "Make a fantasy drama about a young dragon-rider chosen by the last dragon egg hatching in a mountain monastery, throw in some epic fantasy music and mountain monastery ambient sounds",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_20",
+    "user_goal": "Make a zombie-survival mini-drama where a small-town nurse leads her students to safety through overgrown streets, needs some tense thriller music and creepy city ambient sounds",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_longstory_01",
+    "user_goal": "Here's my story I want to process: Adaora Okonkwo has spent nine years being the smartest person in every conference room at Meridian Equity without anyone quite noticing. She was hired out of business school as an equity analyst; at twenty-nine she is still an equity analyst. The men she graduated with are now directors. Her boss, Richard Voss, is a charming tyrant who has built his reputation on her research, her models, her weekend all-nighters. He takes her to client dinners to show her off, then introduces her as 'my sharp little junior.' She tells herself she is playing a long game. She is not. Then in the second week of October, pulling a routine compliance report on a mid-cap biotech Meridian has been recommending to clients, Adaora finds a pattern she has never seen before. A series of trades executed by a small Delaware LLC in the forty-eight hours before every major upgrade Richard has personally issued. The LLC has no public officers. Its address is a mail-drop in Wilmington. Over eighteen months, the pattern has made roughly sixty-three million dollars. Adaora closes the file. She goes home and doesn't sleep. She opens the file again at four a.m. on her personal laptop and traces the LLC's wire activity as far as she can — three hops deep into a series of nested holding companies — before she hits a wall only the SEC can break through. She calls no one. The next morning Richard brings her a coffee he did not need to bring her and praises her quietly on the biotech write-up. She smiles and says thank you. Inside she is a furnace. Over the next three weeks, Adaora does two things at once. She keeps writing the notes Richard takes credit for, so he does not suspect anything. And she quietly begins applying for the chief analyst role at Meridian's largest competitor, Hightower Partners. Her interviews are with the head of research himself — a woman named Jules Park who recognizes Adaora's published papers and who is, Adaora can tell within five minutes, unamused by men like Richard Voss. On the day Adaora signs the offer letter with Hightower, she also signs something else — a sealed packet of documents addressed to the SEC's Office of the Whistleblower, with her name on it and her attorney's. The next Monday, Adaora walks into Meridian and resigns. Richard laughs at her, tells her she is making a mistake, tells her no one will ever hire her after he finishes telling the street about her. By Friday the SEC has opened a formal inquiry. By the following Wednesday, Meridian's stock is down eleven percent and Richard has been placed on leave. By Christmas, Adaora is sitting at a new desk at Hightower with a corner window and a team of three junior analysts of her own, and a federal whistleblower award that will, in time, be worth several million dollars. She has learned, quietly, that the long game is only worth playing when you know the rules are rigged. And once you do, the only move is to change the game. — Make this into a workplace-thriller mini-drama",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_longstory_02",
+    "user_goal": "Here's my story I want to process: Wren Kapoor had not spoken to Simon Ashford in seven years, which was not quite long enough for her to have forgotten how his voice sounded when he said her name, and it was certainly not long enough for her to be ready to see him at her grandmother's funeral. But there he was, in the back pew of the old Unitarian church in Vermont where Wren had spent every summer of her childhood, wearing a dark suit that did not quite fit him anymore, holding a hymnbook he did not need. Her grandmother had, it turned out, kept in touch with him. Wren learned this later, in the church kitchen, from her aunt — that Simon had visited Grandma Rose once a year, every October, for all seven years since Wren had ended things and moved to Berlin. That he had brought her marigolds. That Rose had, until very near the end, believed Wren and Simon might yet come back to each other, and had apparently said as much to him, more than once. 'She was a meddler,' Wren said to her aunt, a little hoarse. 'She was a hoper,' said her aunt, kindly. After the service, Wren meant to avoid him. She failed. He cornered her by the coat rack in the vestibule, holding her coat out to her as if eight years had not passed and as if she were still twenty-four and he were still the boy who had taught her to fly-fish on the Battenkill. 'Hello, Wren.' 'Simon.' 'I won't keep you.' 'It's fine.' They stood there, oddly, while the rest of the family filed past in quiet clusters, pretending not to notice. Wren's older brother gave her a significant look over Simon's shoulder and she glared it away. 'She asked me to come,' Simon finally said. 'I know.' 'I didn't mean to ambush you.' 'You didn't. I'd have been fine either way.' 'That's a lie.' 'Yes.' They had been, for three years and two months, very much in love. Wren had left him — had needed to leave him — because she was not yet capable of staying in one place, in one life, in one coupled future, and because Simon, twenty-six and a small-town architect, was. He had not tried to stop her, which she had resented for years and then understood and then missed. Berlin had taken her three cities and three partners and one nearly-finished novel later. She was thirty-one now, and not, as she had expected, any more certain of anything. After the interment, when most of the family had gone back to the house, Wren found Simon standing at the edge of the cemetery in the cold bright afternoon, looking out at the valley. She walked over to him. They did not speak for a long time. 'I'm not ready,' she said eventually. 'I know,' he said. 'I might never be.' 'I know.' But he took her hand, and she let him, and they stood like that in her grandmother's cemetery with the late sun coming through the trees, and a door that she had been sure was closed simply, quietly, declined to be. — Turn this into a reunion-romance mini-drama",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_longstory_03",
+    "user_goal": "Here's my story I want to process: Ingrid Lin died the first time on a Tuesday afternoon at the age of thirty-four, pushed from a seventh-floor balcony by her husband of eleven years at the end of what she had only a few seconds earlier believed was an ordinary argument about money. She opened her eyes and was seventeen again. She was standing in the hallway of Westbridge Academy, where she had attended boarding school, wearing the gray pleated uniform she had not worn in nearly two decades, holding a chemistry textbook she remembered instantly. A bell was ringing. For a full minute Ingrid could not move. Then, slowly, she began to laugh. In her first life, Ingrid had been an easy target. A scholarship girl at a wealthy boarding school, small, studious, kind. Her roommate had been a beautiful, vicious girl named Celeste Whitmore, whose family owned half of Boston, and who had spent three years systematically destroying Ingrid — spreading rumors, breaking her belongings, eventually telling Ingrid's first serious boyfriend, David Park, a number of intimate lies that had ended the relationship in bitter public humiliation. Ingrid had gone to pieces. She had transferred to a state university, taken a corporate job she hated, married the wrong man because she had been lonely. Celeste had gone to Harvard, become a prominent finance executive, and married Daniel Morrow, the tech founder whose wife had died mysteriously four years into the marriage — though of course no one had ever proven anything. This time, Ingrid thought, I know everyone's endings. She walked into homeroom and took her seat. Celeste was already there, laughing with two of her friends, radiant and untouchable and not yet cruel to Ingrid, because the campaign had not yet begun. Ingrid smiled at her — a small, calm, certain smile. It took only three years, at the pace Ingrid now knew to set. She finished at the top of her class. She scored one hundred and sixty points higher than she had the first time on the college entrance exam. She applied to MIT instead of State, and got in, and also applied, quietly, to a small finance competition that she had not known about the first time but that she knew Celeste would enter. She won it. David Park, now warned away from Celeste by Ingrid's careful, precisely-worded intervention, remained a friend. Celeste's family, she now knew, had been papering over a significant financial fraud in their Boston real-estate holdings; Ingrid, with her adult knowledge of corporate filings and her new teenage patience, assembled a case and anonymously forwarded it to a financial journalist just before their daughter began her senior-year application season. The Whitmores lost nearly everything in the ensuing investigation. Celeste was accepted to no school of note. At twenty-two, Ingrid attended Daniel Morrow's annual founder's gala as a new hire at his firm, introduced herself, and listened, calmly, as he asked her to dinner. She said yes. She would, this time, be the wife who did not die. She would also, in time, have her husband of the first life arrested for a crime he had not yet committed but she now knew he was capable of. She had, after all, all the time in the world. She would spend it very carefully. — Make this into a rebirth-revenge animated drama",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_longstory_04",
+    "user_goal": "Here's my story I want to process: Young Master Xue Yan was born with a cultivator's body — slender, clear-eyed, impossibly attuned to the flow of spirit energy — but his family had been destroyed when he was seven years old, and he remembered nothing of it except fire. For twelve years the boy lived as a servant at Azure Cloud Mountain Sect, sweeping the courtyards of elders who would never teach him, sleeping in the outer pavilion with the other unacknowledged orphans. He was unsigned, unsorted, unnamed beyond Xue Yan. Once, at fifteen, he had crept into the ancient sword hall and, because he could not help himself, had laid his palm on the hilt of the sect's sealed demon-quelling sword Nine Winters — a blade no one had drawn in three hundred years — and the hall had filled with a cold ringing sound, and the elders had come running, and the sword had left its stone an inch before flying back. The eldest sect master, Immortal Jing, had looked at him very strangely that day. Nothing was done. Xue Yan was sent back to sweeping. He was nineteen when the Northern Demon Cult descended on Azure Cloud Mountain. It came at dawn, in a fog of black talismans, and the sect was unprepared — half the elders were away at a convocation, and the sect's core disciples were young. The outer pavilions fell first. Xue Yan, woken by the screaming of his friends, ran to the sword hall through the burning corridors. He did not know why. But when he arrived, Nine Winters had already begun to hum in its stone, and the hall was ringing like a struck bell. The last disciple guarding the hall, a girl named Mei who had been kind to him once, lay wounded beside the pedestal. 'Take it,' she whispered, seeing him. 'The sword will choose.' The Demon Cult's second prince, Yan Heng — a tall, terrible figure in a crown of black iron — stepped into the hall behind Xue Yan at that moment. He laughed when he saw the servant boy. 'A sweeper,' he said, 'thinks to stand between me and the blade.' Xue Yan did not answer. He walked to Nine Winters. He placed his hand on its hilt. This time the sword left its stone. The cold that had been inside him for twelve long years — the cold he had never understood, which had seemed to him to be simply loneliness — was not loneliness at all. It was a blade. When he turned and faced the Demon Prince, his eyes were as clear as frozen water. When he moved, he moved the way his grandfather had moved long ago, the grandfather whose face he had forgotten but whose stance returned to his body like a song. The fight that followed lasted four heartbeats. Prince Yan Heng of the Northern Demon Cult died on the hall's mosaic floor with a look of astonishment on his face. Xue Yan fell to his knees beside Mei and healed her wound with a hand that had never performed cultivation before. The elders of Azure Cloud Mountain returned at noon and found a sweeper standing guard over their sealed blade. They knelt. — Make this into a cultivation-fantasy animated drama, add some epic spirit-sword music",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_longstory_05",
+    "user_goal": "Here's my story I want to process: When Claire Delacroix was eleven years old, her mother married into the Havenwood family, and Claire was taken to live in a house she would grow to hate. Havenwood was a tall gray Victorian on a Louisiana bayou, built by a family of cane planters in 1871, with wrought-iron galleries, shuttered rooms, and a long history of quiet dying. The housekeeper, Mrs. Peltier, had served three generations of Havenwoods; she liked Claire's mother and disliked Claire, who was thin and serious and watchful and had not yet learned to pretend at affection. Claire's stepfather, Bernard Havenwood, had three daughters of his own from his first marriage. The eldest was named Odette. The middle was Marguerite. The youngest, only five years old, was called Lenore. Claire was given a room in the east wing, which the Havenwood daughters had never used because, Odette told her on her first night, that wing was the cold one. Claire did not know what this meant until her first week in the house, when a dress her mother had packed for her disappeared from her wardrobe and reappeared, ten minutes later, neatly folded on her pillow. Claire was not frightened. She was eleven years old and she was a careful child and she decided, that night, to begin keeping a notebook. By the end of her first year at Havenwood, Claire had filled two notebooks. She had seen a young woman in a violet dress standing at the end of the second-floor corridor on three separate nights, always at the same hour, always disappearing when Claire blinked. She had heard a child's laugh in the empty nursery at the end of the east wing. She had felt a cold hand brush her shoulder in the library, once, and a warmth press against her back, as if in comfort, during her first nightmare in the house. Most chillingly, she had learned from the elderly gardener that the young woman in the violet dress had lived and died in that house in 1904, and that the child in the nursery was Bernard Havenwood's first wife's first daughter, who had drowned in the bayou at the age of six, and whose body had been carried back through those very rooms. Her stepsisters denied all of it. Odette in particular mocked her for the notebooks, calling her the Ghost Girl in a way that was not kind. But Claire noticed something strange. As the years passed, the gentle ghosts of Havenwood — for she had come to think of them as such — seemed always to calm when Claire was near. Odette, by contrast, would flinch sometimes in her own house, at cold draughts, at footfalls behind her on the stairs, at a child's laugh from empty rooms. When Claire was sixteen, Bernard Havenwood, her stepfather, died suddenly in his study of a heart attack. Claire was the one who found him. The violet-dressed woman was standing behind his armchair when Claire opened the door, and she looked, for the first time, tired. Claire held the ghost's gaze for a long moment before the woman dissolved. Then Claire called her mother and Mrs. Peltier. Years later, when the will was read, Claire inherited the house. — Turn this into a Southern-Gothic haunted-mansion mini-drama, needs some haunted-mansion ambient sounds",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_img_01",
+    "user_goal": "Using this uploaded image as the story's protagonist, produce an inspirational cultivation-fantasy animated drama",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_img_02",
+    "user_goal": "Using this uploaded photo as the city backdrop, make a 3-minute urban-suspense mini-drama with an oppressive atmosphere",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_img_03",
+    "user_goal": "Use the character in this uploaded image as the hero of a one-minute cultivation-fantasy animated-drama trailer",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_img_04",
+    "user_goal": "Set in the seaside town from this uploaded photo, make a tragic costume-drama mini-drama: the female lead dies under the sea to save the male lead",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_img_05",
+    "user_goal": "Take the person in this photo as the protagonist and make a rebirth-themed mini-drama about them waking up ten years before their lover's death",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_01",
+    "user_goal": "Make an English-subtitled campus sweet-romance mini-drama: the top-student class president and a transferred-in delinquent girl redeem each other",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_02",
+    "user_goal": "Make a subtitled costume-drama culinary animated drama where the female lead, a junior imperial-kitchen maid, rises through her cooking skills",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_03",
+    "user_goal": "Create a mini-drama with English subtitles about a rebirth revenge story set in modern Shanghai",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_04",
+    "user_goal": "Make a subtitled children's cultivation-fantasy animated drama whose protagonist is a seven-year-old divine-beast boy fighting to protect a deep-sea forbidden zone",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_05",
+    "user_goal": "Make a subtitled sci-fi mini-drama where the male lead, a top tech-reviewer blogger, suddenly discovers he is actually an AI",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_vid_01",
+    "user_goal": "Add English subtitles to this interview-style mini-drama",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_vid_02",
+    "user_goal": "Add English subtitles to this speech mini-drama",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_vid_03",
+    "user_goal": "Generate Chinese subtitles for this English mini-drama episode",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_vid_05",
+    "user_goal": "Batch-generate English burned-in subtitles for this 30-episode cultivation-fantasy animated drama",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "bilingual_01",
+    "user_goal": "Make an English-Chinese bilingual costume-drama animated drama about a nine-generation tea-ceremony lineage reconnected with a modern female lead through reincarnation",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "TranslationAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "bilingual_02",
+    "user_goal": "Make an English-Japanese bilingual CEO-romance mini-drama where the male lead is a Japan-returned, hidden-identity conglomerate heir",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "TranslationAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "bilingual_03",
+    "user_goal": "Create a mini-drama with English and Chinese subtitles about a martial-arts prodigy seeking revenge across ancient and modern timelines",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "TranslationAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "bilingual_04",
+    "user_goal": "Make an English-Spanish bilingual cultivation-fantasy animated drama, targeting Latin American market release",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "TranslationAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "bilingual_05",
+    "user_goal": "Make an English-Chinese bilingual urban mini-drama where the female lead, a Chinese-American prodigy doctor, gets pulled into a family-inheritance battle",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "TranslationAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "style_01",
+    "user_goal": "Convert this mini-drama clip to a Studio Ghibli animated-drama style",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "style_02",
+    "user_goal": "Make this mini-drama clip look like a cyberpunk animated drama with neon and rainy-night atmosphere",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "style_03",
+    "user_goal": "Apply a Van Gogh oil-painting style to this cultivation-drama clip",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "style_04",
+    "user_goal": "Convert this live-action mini-drama entirely to a Japanese anime style, preserving plot and camera work",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "style_05",
+    "user_goal": "Convert this costume-drama mini-drama to a Chinese ink-wash animated-drama style",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "extend_01",
+    "user_goal": "Extend this CEO-romance confrontation scene to 15 seconds, adding the male lead's inner monologue and slow-motion close-ups",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "extend_03",
+    "user_goal": "Extend this cultivation-duel clip by adding a slow-motion reversal where the underdog awakens a forbidden bloodline",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "extend_04",
+    "user_goal": "Extend this tragic costume-drama farewell scene to 20 seconds, adding snow-scene cutaways and flashbacks of the female lead recalling her past life",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "extend_05",
+    "user_goal": "Extend this scene of the female lead confessing and crying by 8 seconds, adding rain sound effects and close-ups of her trembling hands",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "extend_06",
+    "user_goal": "Extend this reincarnation awakening scene by 10 seconds with ghostly overlays of the character's past life flashing back",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "highlight_01",
+    "user_goal": "Cut the most thrilling twist moments from this mini-drama episode into promotional material",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "highlight_03",
+    "user_goal": "Extract the sweetest lead-couple interactions from this mini-drama into a promo short",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "highlight_04",
+    "user_goal": "Cut the palace-intrigue iconic scenes from this costume-drama animated drama into a 30-second viral promo",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "highlight_05",
+    "user_goal": "Cut a compilation of face-slapping payback moments from this rebirth mini-drama episode",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_01",
+    "user_goal": "Analyze this hit mini-drama, then write a new story in the same genre and produce it as a new animated drama",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_02",
+    "user_goal": "First extend this mini-drama clip, then style-transfer it into a Japanese anime look",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_03",
+    "user_goal": "Extend this mini-drama episode, then style-transfer it into an animated-drama look, and add English subtitles",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_04",
+    "user_goal": "Analyze the pacing of this 12-episode mini-drama, cut the best twist moments, add background music, and composite the final",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_06",
+    "user_goal": "Analyze this mini-drama's emotional arc, then add subtitles and background music to it",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "VideoAnalysisAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_08",
+    "user_goal": "Translate this Chinese interview video to English and add English subtitles",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_10",
+    "user_goal": "Analyze this mini-drama, cut the climactic twist moments, add English subtitles and background music, and output the final promo",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "MusicAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_11",
+    "user_goal": "Transcribe this mini-drama EP01's English dub, translate it to Japanese, generate Japanese subtitles, and burn them onto the video",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_13",
+    "user_goal": "First analyze this hit mini-drama, then write a sequel story based on the analysis, and produce it as a new subtitled animated drama",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_15",
+    "user_goal": "Cut the lead-couple highlight interactions from this urban sweet-romance mini-drama, add romantic background music and English subtitles",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "MusicAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_18",
+    "user_goal": "Analyze this English mini-drama season, extract the high-tension climax moments, and add Chinese subtitles plus emotional background score",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent",
+        "TranscriptionAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "TranslationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_19",
+    "user_goal": "Using this uploaded animated-drama character image, make an English-Chinese bilingual CEO-romance mini-drama trailer",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "TranslationAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_20",
+    "user_goal": "Extract the key dialogue from this mini-drama's meeting scenes, transcribe and translate them to Chinese, and output a subtitled highlight edit",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_21",
+    "user_goal": "First style-transfer to an ink-wash animated-drama look, then extend the key scene, finally add traditional-style background music",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_23",
+    "user_goal": "Using this uploaded female-lead character portrait as the protagonist, make a 3-minute cyberpunk sci-fi dystopian mini-drama: she leads an underground hacker coalition raiding a clone corporation and finally discovers she is also a clone. Extend the climactic identity-reveal confrontation scene by 10 seconds, adding slow-motion close-ups and shots of her trembling hands.",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_24",
+    "user_goal": "Add a sad piano background score to this mini-drama clip",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_25",
+    "user_goal": "Add rain ambience and a piano background score to this rainy-night scene",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_26",
+    "user_goal": "Convert this clip to an animated-drama look and add English subtitles",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_27",
+    "user_goal": "Convert this costume-drama mini-drama clip to an ink-wash style and add a traditional-style background score",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_28",
+    "user_goal": "Extend this confrontation scene by 10 seconds and add English subtitles",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_29",
+    "user_goal": "Extend this fight scene by 8 seconds and add a tense, intense background score",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_30",
+    "user_goal": "Cut the highlight moments from this mini-drama and add English subtitles to produce a promo",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_31",
+    "user_goal": "Add an upbeat electronic ambient background score to this urban-nightscape vlog clip",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_32",
+    "user_goal": "Add a cinematic orchestral score to this costume-drama fight scene",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_33",
+    "user_goal": "Add ocean-wave ambience and a lyrical piano background score to this seaside farewell scene",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_34",
+    "user_goal": "Add thunder-and-wind ambience and an epic percussion background score to this cultivation-fantasy final-battle clip",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_35",
+    "user_goal": "Convert this urban-romance clip to a cyberpunk look and add a synth-driven electronic score",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_36",
+    "user_goal": "Turn this martial-arts clip into traditional ink-painting style with a guqin score",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_37",
+    "user_goal": "Convert this workplace-confrontation scene to a Japanese anime look and add English subtitles",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_38",
+    "user_goal": "Convert this interview clip to a Van Gogh oil-painting look and add English subtitles",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_39",
+    "user_goal": "Extend this CEO-romance confession scene by 12 seconds and add a romantic piano background score",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_40",
+    "user_goal": "Extend this ancient sword-duel scene by 15 seconds and layer in an epic battle score",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_41",
+    "user_goal": "Extend this rebirth-awakening scene by 10 seconds and add English subtitles",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_42",
+    "user_goal": "Extend this cultivation awakening scene by 8 seconds and add English subtitles",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_43",
+    "user_goal": "Cut the palace-intrigue showdown iconic scenes from this mini-drama into a promo reel and add English subtitles",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_44",
+    "user_goal": "Cut the top tear-jerker moments from this romance drama into a 30-second promo with English subtitles",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_45",
+    "user_goal": "Extend this tragic costume-drama scene by 10 seconds and convert the whole thing to an ink-wash animated-drama look",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_46",
+    "user_goal": "Extend this martial-arts fight scene by 8 seconds, convert it to an animated-drama look, and add English subtitles",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_47",
+    "user_goal": "First convert this urban car-chase scene to a cyberpunk look, then extend the climax by 12 seconds, finally add a synth-driven score",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_48",
+    "user_goal": "Analyze this 20-episode cultivation drama and cut the most epic reveal moments with an orchestral score",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_49",
+    "user_goal": "Translate this Japanese-language interview mini-drama into English subtitles and burn them onto the video",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_50",
+    "user_goal": "Extract the highlight dialogue from this Chinese-language business-warfare mini-drama, translate it to English, and add subtitles",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_51",
+    "user_goal": "Analyze this CEO-romance mini-drama's pacing, then add English subtitles and a background score",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "VideoAnalysisAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_52",
+    "user_goal": "Cut the climactic scenes from this costume-drama mini-drama into a trailer, with English subtitles and an epic score",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "MusicAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_53",
+    "user_goal": "Cut the face-slapping iconic scenes from this urban rebirth mini-drama, add rousing music and English subtitles",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "MusicAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_54",
+    "user_goal": "Analyze the tropes of this hit sci-fi mini-drama and rewrite a new story in the same style as a new animated drama",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_55",
+    "user_goal": "Write a sequel based on the plotline of this palace-intrigue mini-drama and produce it as a new English-subtitled animated drama",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_56",
+    "user_goal": "Study this cultivation-fantasy drama's character arcs and generate a prequel animated drama with English subtitles",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_57",
+    "user_goal": "Using these uploaded costume-drama character images as the protagonists, make an English-Chinese bilingual palace-intrigue mini-drama promo",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "TranslationAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_58",
+    "user_goal": "Use these uploaded cyberpunk character portraits to produce a bilingual (English/Chinese) sci-fi mini-drama trailer",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "TranslationAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_59",
+    "user_goal": "Using this uploaded female-swordsman character portrait as the protagonist, make a martial-arts mini-drama; extend the sect-massacre opening scene by 15 seconds with slow-motion",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_60",
+    "user_goal": "Use this uploaded medical-drama character portrait as the lead and produce a rebirth mini-drama with the climax reveal extended by 10 seconds",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_01",
+    "user_goal": "Make an illustrated audiobook video of this children's bedtime tale about a little rabbit named Pip who finds a glowing seed in the meadow — calm narration with one soft watercolor picture per scene",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_03",
+    "user_goal": "Read this classical Chinese Tang-dynasty poem aloud and show a matching ink-painting illustration for each verse, slideshow-style",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_04",
+    "user_goal": "Produce a narrated picture-book science storytime about how emperor penguins raise their chicks in Antarctica; one cute cartoon image per behavior",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_music_01",
+    "user_goal": "Make an illustrated audiobook of this lullaby-style bedtime story with a gentle, slow piano score playing softly under the narrator",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_ambience_01",
+    "user_goal": "Narrate this forest-adventure children's story as an illustrated audiobook with a gentle forest-ambience bed (wind through leaves, distant birds)",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_bilingual_01",
+    "user_goal": "Make an English-Chinese bilingual illustrated audiobook of this short fairytale — narrate in English, burn both English and Chinese subtitles on the slideshow",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_imgref_01",
+    "user_goal": "Using the uploaded character portrait as the heroine, turn this short folktale into an illustrated audiobook where every picture keeps her appearance consistent with the reference",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_full_01",
+    "user_goal": "Using the uploaded character portrait of the fox protagonist, produce an English-Chinese bilingual illustrated audiobook of this folk tale, narrated in English with a gentle koto-and-flute background score",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_music_ambience_01",
+    "user_goal": "Make an illustrated audiobook of this ocean-themed children's story with a gentle piano lullaby playing under the narrator AND ambient wave sounds in the background",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_music_bilingual_01",
+    "user_goal": "Create an English-Chinese bilingual illustrated audiobook of this Hans Christian Andersen fairytale with a gentle harp-and-celesta BGM",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_imgref_music_01",
+    "user_goal": "Using this uploaded portrait of the protagonist as the main character, turn this short myth into an illustrated audiobook with a soft guzheng score under the narration",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_imgref_bilingual_01",
+    "user_goal": "Using this uploaded character portrait of the storyteller grandmother, produce an English-Spanish bilingual illustrated audiobook of this folk tale",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_ultra_01",
+    "user_goal": "Using this uploaded fox-protagonist portrait, make a bilingual English-Chinese illustrated audiobook of the fox-and-crow fable with both a gentle flute score AND forest-ambience sounds under the narrator",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_longstory_01",
+    "user_goal": "Here's my story I want to process: Deep in the midnight ocean, where the water turned from blue to black, there lived a small moon-jellyfish named Lumi. Unlike her brothers and sisters who glowed with a soft pearly light, Lumi could not glow at all. No matter how hard she tried, her bell stayed dim and plain. The other jellyfish would drift past her in shimmering parades, their bodies lit like tiny lanterns, and Lumi would tuck herself behind a forest of kelp and wait for them to pass. 'You will glow one day,' her mother told her gently. 'Every moon-jellyfish glows. You just need to find your light.' But Lumi did not believe her. One night, a storm swept through the ocean. The currents grew strong and cold, and Lumi was pulled away from her kelp forest, tumbling deeper and deeper into the dark. When the storm passed, she found herself in a place she had never been — a quiet hollow beneath a coral reef, where the water was still and thick with cold. She was completely alone. Above her, the reef glowed faintly with the colors of sleeping anemones, and far below, tiny crabs hurried back to their homes. Lumi drifted in the silence, afraid. Then she heard a small voice. 'Are you lost?' A young sea-turtle was watching her from a ledge of pink coral. His shell was chipped and his eyes were tired, but his voice was kind. 'I can't find my family,' Lumi whispered. 'The storm carried me here.' 'I know the way to the surface,' said the turtle. 'I swim there every morning to see the sun. But it is a long journey, and the waters between here and the top are very dark. I am afraid I will lose my way.' 'I cannot help you see,' Lumi said sadly. 'I do not have a light.' But the turtle studied her quietly. 'You feel warm to me,' he said. 'When you are close to me, I am less afraid. Maybe that is your light.' Lumi stayed very still. She had never thought of warmth as a light before. And then, slowly, something inside her bell began to hum — not bright, not showy, but soft and steady, like the last ember of a fire that will not go out. The turtle's eyes widened. A gentle, honey-colored glow was spreading through Lumi's bell — a glow no other moon-jellyfish had. Together, Lumi and the turtle began the long climb toward the surface, her quiet warmth lighting just enough of the water for him to find his way. When they reached the top of the ocean, the sun had just risen, and Lumi's family was waiting for her. 'We looked all night,' her mother said. 'How did you come back?' Lumi looked at the sea-turtle and smiled. 'I found my light,' she said. — Turn this bedtime story I wrote into an illustrated audiobook — soft watercolor pictures per scene",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_longstory_02",
+    "user_goal": "Here's my story I want to process: Deep in the damp heart of an old forest, there was a village built entirely out of mushrooms — red-capped houses, yellow-pleated lantern posts, white bowl-shaped fountains that caught the rain. The villagers were tiny mushroom folk no bigger than a thimble, and at night their village was dark, for no moonlight reached them through the thick canopy above. The eldest mushroom, Grandmother Reishi, had long ago told the children, 'When the world is dark, you must learn to be kind to one another by touch and by voice, for you cannot see one another's faces.' But one spring evening, a small firefly named Tin flew into the village by accident, having been knocked off course by a gust of wind. Tin had never been in a place without stars. The forest floor stretched out around him, and the mushroom houses glowed faintly with his light as he passed. He sat down on the steps of Grandmother Reishi's house, frightened and lost. 'Oh,' said Grandmother Reishi, opening her door. She was a white mushroom with a cap like a tiny cathedral dome. 'A light.' 'Excuse me, ma'am,' said Tin, blinking. 'I'm lost. I don't know how to go home.' 'Well, you must stay the night,' said the old mushroom. She called to the village: 'Come, come, we have a guest.' And all the mushroom folk came running — the children in their red caps, the bakers with flour on their aprons, the cobbler with his thread-spool bench. They had never seen anything so bright. They crowded around Tin, marveling, and his light fell on each of their faces in turn — and on each face, something wonderful happened. The baker saw that her old friend the weaver had a new streak of silver in her hair. She had not noticed in the dark for years. 'Oh, Weaver,' she said softly, 'when did you get old?' The weaver touched her hair, surprised, and then she looked at the baker and said, 'When did you get a scar on your cheek?' 'From last winter's stove,' said the baker, laughing. 'I forgot I had it.' A child saw her father's face clearly for the first time and realized he looked like her. Two young mushrooms who had loved each other in secret for many years looked at each other in the firefly's light and blushed, and everyone saw, and the whole village cheered. Tin watched them all, feeling his light fill the mushroom square like honey filling a cup. He did not feel lost anymore. He felt chosen. When dawn began to pull at the edges of the forest, the mushroom folk walked Tin to the top of a root-bridge from which he could see the sky. 'Come back whenever you like,' said Grandmother Reishi. 'You have given us more tonight than you know. For many seasons we have known each other only by voice. Tonight we have seen one another again.' Tin bowed, small and bright. Then he flew off into the waking forest, and he came back every year on the longest night of spring. — Make this mushroom-village folktale into a narrated picture-book video — whimsical forest illustration style",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_longstory_03",
+    "user_goal": "Here's my story I want to process: The Cedarbrook Public Library had a ghost, though most patrons never noticed her. She was a small, translucent librarian in a long gray cardigan, and she had been there for forty-two years. Her name, when she had been alive, was Miss Eula Pembridge, and she had loved the library quietly and ferociously for all of her working life. Even after she passed, she could not quite bring herself to leave. The living librarians had long since learned to leave a pot of chamomile tea on the counter each evening, and in the morning the cup was empty and the books on the return cart were mysteriously reshelved. The Cedarbrook ghost did not haunt. She only loved. But one autumn afternoon, a small boy named Jasper arrived with his grandmother and made the library, for the first time in four decades, not quiet. Jasper was seven, and his sneakers squeaked on the marble, and he shouted across the aisles, and he knocked picture books off low shelves, and he sang. His grandmother, apologetic, put a hand on his shoulder, but Jasper had a great deal of life in him and it would not be contained. Miss Pembridge watched from the children's section, her translucent hands folded. Normally, when a child grew too loud, an adult librarian would gently say, 'Inside voice, please,' and the child would quiet for a while. But Jasper could not hold an inside voice. He did not mean to be loud. It was simply that there were so many books, and each one seemed to need an exclamation. On his fourth visit — he came every Tuesday — Miss Pembridge decided to try. She walked beside him through the stacks, invisible to him, and when Jasper pulled out a book about a sailing ship, she drifted her cold hand along his small warm one. Jasper paused. He did not scream, as some children might. He looked at his hand, curious. Then he opened the book and, for the first time, whispered. Miss Pembridge smiled a ghost's smile. Every Tuesday after that, she followed him through the library, and every Tuesday he grew a little quieter and his books grew a little thicker. Soon Jasper could read chapter books, and then novels, and he would sit in the armchair by the window with his grandmother and they would both read for an hour at a time without speaking. One day he said to his grandmother, 'There is a cold draft in the library.' 'Yes,' said his grandmother. 'I've felt it too, since I was a girl.' Jasper thought about that. Then he said, 'I think it's a friend.' When Jasper was grown, he became a librarian himself, at Cedarbrook. On his first evening alone in the building after closing, he set a second cup of tea beside the first, and he waited. The second cup was empty by morning. — Turn this library ghost story into an illustrated audiobook — warm amber library illustration style",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_longstory_04",
+    "user_goal": "Here's my story I want to process: High above the hills of Meadowfield, in a sky the color of faded denim, there lived a small cloud named Nim. Nim was a cloud like any other — soft, white, capable of drifting on the wind — except for one very important difference. Nim could not rain. All the other clouds in her family rained magnificently. They gathered themselves into great gray thunderheads, poured silver sheets of water over the meadows, and made the river sing. But Nim, no matter how hard she tried, could only ever produce a single tiny drop at a time, and that one drop would evaporate before it ever reached the ground. 'Perhaps you are not trying hard enough,' said her mother, a tall cumulonimbus with a kind voice. 'I am trying,' said Nim, and she was. For years Nim watched her siblings rain on fields that grew bright green afterward, and she felt smaller and smaller. One summer, a terrible heat came to Meadowfield. The grass turned yellow, the river grew thin, and the farmer who lived at the edge of the meadow grew worried for his peach orchard. Every day at noon he looked up at the sky, hoping. Every day, no clouds came. Nim's mother and siblings were busy watering the fields beyond the eastern ridge, where the drought was worse. Nim was alone in the sky above Meadowfield. She wanted so badly to help the farmer. But what could a cloud do who could not rain? She drifted above the peach orchard, and she drifted, and she drifted, and as she drifted she began to notice something. When she covered the sun, the leaves below her did not wilt quite so fast. The orchard was not greener. It was not watered. But it was cooler, just slightly, and the peaches were still holding on. So Nim did the only thing she could. She stayed. She parked herself above the orchard and did not move. Day after day she filtered the punishing sun, and the farmer looked up and saw, not the rainstorm he prayed for, but a single small cloud that never moved from his trees. At first he was puzzled. Then, as his peaches ripened — not lost to the heat, just barely — he understood. On the day of the harvest, when the rain finally came in a great dark thundercloud and broke the drought at last, Nim drifted home, exhausted. Her mother found her and held her the way only clouds can hold each other, softly and without edges. 'I still cannot rain,' Nim said. 'No,' said her mother. 'But you kept the peaches. Which is also a way of loving the earth.' After that, Nim drifted wherever a tree looked tired, or a flower looked parched, and she stayed, and she shaded, and she was, in her quiet way, a different kind of cloud. — Make this into a narrated picture-book video — gentle sky-pastel illustration style",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_longstory_05",
+    "user_goal": "Here's my story I want to process: A little girl named Amaya sat at her desk by the window and, with great care, folded a paper bird. She had never folded a bird before, but she had a book of origami diagrams, and her patience was large. When she was done, the bird sat in her palm — small, cream-colored, with two crisp wings and a triangular beak that tilted up as if looking at the sky. Amaya named her Momo. She set Momo on the windowsill. That night, under a thin moon, Momo discovered she could blink. Then she discovered she could move her head. Then, terribly and wonderfully, she discovered she could walk — one tentative paper step, then another — along the wooden sill. And when she looked out the window at the night sky, she felt a longing so deep it made her little paper heart crease. Momo wanted to fly. But paper cannot fly the way birds do. When Momo tried to leap from the sill, she tumbled clumsily to the floor. She climbed the curtain and leapt from the rod; she glided briefly, and then she crashed. Each attempt creased her wings. The next morning, Amaya found her, a little bruised, and gently smoothed her back into shape. 'What were you doing?' Amaya whispered, as though a paper bird could hear. Momo said nothing, because paper birds cannot speak. But that night, she tried again. And again. And each time, her wings grew more battered and her flight grew no better. One week in, a wind from an open window caught her mid-leap, and Momo was swept out into the night sky. At first she was thrilled — she rose on the cold current, higher than she had ever been, higher than the apple tree, higher than the chimneys. But then the wind twisted, and she tumbled, and she landed in the dewy grass of the yard below. A real sparrow — fat, warm, brown — alighted beside her and studied her with a curious black eye. 'What are you?' the sparrow asked. 'I'm a bird,' said Momo. 'I want to fly.' The sparrow tilted its head. 'You are paper,' it said, not unkindly. 'You cannot fly the way I do. But I have been watching you from the eaves. You do fly — in Amaya's dreams. She dreams of you every night. She dreams you soaring over mountains, crossing oceans, resting in faraway trees. I see her smile in her sleep.' Momo thought about this for a long time, sitting in the grass. When Amaya found her that morning, damp with dew, Amaya pressed her back into shape and returned her to the sill. That night, Momo did not leap. She stayed still and watched Amaya fall asleep. And when Amaya's breathing slowed and her dreams began, Momo closed her paper eyes and, in Amaya's imagination, she finally flew. — Turn this origami bird tale into a narrated illustrated video — delicate paper-craft illustration style",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_longstory_06",
+    "user_goal": "Here's my story I want to process: Beneath the crooked stone arch of an old city alleyway, a young violinist named Jude played every afternoon for whatever coins passersby would drop. He was not a famous musician. He had only a borrowed violin with a nick on its scroll, and a folding chair, and an open case at his feet. But he played with the seriousness of someone who believed music could make the city a better place. Most days, almost no one stopped. They walked past with their coffee and their phones, and at the end of each day Jude counted out enough coins for a sandwich and rode the last bus home to a tiny apartment he shared with his grandmother. He told himself he was not yet discouraged. But he was almost. On a rainy Tuesday, a thin gray cat wandered into the alley. She was small, with a torn ear and yellow eyes, and she sat down on the cobblestones three feet from Jude's chair and watched him play. When he stopped, she did not move. When he started again, she stayed. When he packed up for the day, she followed him as far as the alley's mouth and stopped. Jude watched her disappear into the rain. The next day she came back. She sat in the same spot. Jude began to call her Sonata, because she arrived so punctually with the beginning of his first piece. He began to bring her a bit of his sandwich. Sonata grew less thin. But something else began to happen. The cat seemed to hear the music as most people did not. When Jude played slowly, her eyes half-closed. When he played a quick passage, her tail flicked with the rhythm. Some days she even followed the music with a low, almost-purred hum. Passersby, noticing the strange devoted listener, began to stop too. A child pointed and laughed. A tired woman paused, then sat on the alley steps, then stayed for three whole pieces. A man with a briefcase dropped his first coin, then returned the next week and dropped another. Within a month, a small crowd gathered under the arch most afternoons. Sonata always took her place first. A violinist, the locals learned, was playing in the alley near the bakery, and he had an astonishing feline regular. Jude's coin case grew heavier. A music teacher stopped one Friday and gave him her card. A wedding planner wanted him for a small spring ceremony. Jude called his grandmother on his way home and she laughed at him for being starry-eyed, and then she cried a little, and then they had a better dinner than usual. On the day of his first paid wedding, Jude brought Sonata a whole tin of tuna and set it in the alley. He played one last song for her before the taxi came to take him uptown. Sonata ate the tuna and watched him go with her yellow eyes. She stayed in the alley. She became, in time, everyone's cat, fed by the bakery and the old shoe-repair shop. But every afternoon she still came to the arch at the hour Jude used to play, and she listened for a music only she remembered. — Make this into an illustrated audiobook with a gentle solo violin BGM — rainy-alley watercolor style",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_longstory_07",
+    "user_goal": "Here's my story I want to process: In a forest older than any map, there ran a small clear river called Ibi. It was not a great river. It was only as wide as a child could jump across. But the old women of the nearest village said, and had said for many generations, that Ibi listened. If you whispered a wish over its moving water, and if your wish was honest, Ibi would sometimes grant it — not in grand ways, but in small careful ways, the way water shapes a stone. One summer, a boy named Nico came to the river with a secret wish. His little sister had been sick for many weeks, and the healer had shaken her head and said she did not know the cause. Their mother sat with the girl every night, and their father, a logger, had gone quiet in a way that scared Nico. So Nico walked three miles through the dawn forest and knelt beside the river. He did not know how to whisper a wish. He tried several times and stopped. Finally he said, in a very small voice, 'I want my sister to live.' Ibi did not answer. But as Nico sat, listening, he began to hear the river more clearly than he ever had. He heard it running over the smooth stones like quick laughter. He heard it brushing against the moss. He heard a bullfrog, somewhere, croaking twice. He heard the wind in the pine crowns above him. And then, strangely, he heard the voice of the river itself — not in words, but in a pulling certainty, like a small current beneath his thoughts. Go home, the river seemed to say. Look in your own kitchen. Nico was confused. But he went home. When he arrived, his mother was washing the lunch dishes, and Nico, without quite knowing why, lifted the lid of the water jug they kept on the counter and looked inside. The water was not clear. There was a thin film on its surface, and a strange metallic smell. The water had come from an old cistern behind the house, and something in it had gone bad. Nico ran to his mother. By that evening the water had been replaced with rain from the barrel. Within three days, his sister's fever broke. Within a week she was asking for bread. It was not a miracle, exactly. It was only a river that listened. Nico went back to Ibi every year after that. Sometimes he brought another small wish — a good harvest, a kind teacher, a friend for his lonely cousin — and sometimes Ibi answered, always in its small careful way, and sometimes it did not. Nico grew into a man and became the village healer himself, and when people came to him with troubles, he often sent them to the river before he prescribed anything, because he had learned that the first thing any river grants you is not what you asked for, but the quiet in which to hear what you actually needed. — Turn this into a narrated illustrated video layered with forest-river ambient sounds — misty ink-wash style",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  }
+]
