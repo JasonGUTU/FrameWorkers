@@ -58,12 +58,14 @@ class StabilityAnchorKeyframe(BaseModel):
     display_name: str = Field(default="", exclude=True)
     purpose: str = Field(default="", exclude=True)
     prompt_summary: str = Field("", json_schema_extra={"creative": True})
-    # Python-only channel for user-uploaded reference image paths. Populated
-    # by ``KeyFrameAgent._prefill_reference_images`` after the LLM call;
+    # Runtime channel for user-uploaded reference image paths. Populated
+    # by ``KeyFrameAgent._prefill_reference_images`` after the LLM call,
     # read by ``KeyframeMaterializer`` L1 pre-check loop to skip t2i when
-    # a reference image is supplied. Excluded from persisted JSON — the
-    # resolved file path is a runtime detail, not part of the artifact.
-    reference_image_uri: str = Field(default="", exclude=True)
+    # a reference image is supplied. Persisted in the JSON artifact —
+    # cannot be ``Field(exclude=True)`` because base_agent feeds the
+    # materializer ``output.model_dump(...)``, and Pydantic v2 honors
+    # field-level exclude unconditionally on every dump variant.
+    reference_image_uri: str = ""
 
 
 class StabilityKeyframes(BaseModel):
