@@ -11,9 +11,12 @@ Per case this entry:
 
   1. Creates a fresh store rooted at ``--runtime-base`` (isolated
      ``_workspaces`` dir, one per case run).
-  2. Seeds ``user_goal`` as a ``text/plain`` raw upload through
-     ``workspace.persist_raw_upload`` — same path as
-     ``POST /api/workspace/upload``.
+  2. Seeds ``user_goal`` as a ``text/plain`` raw upload (always — lands
+     as a global ``[creative_brief]`` artifact via the same path as
+     ``POST /api/workspace/upload``). If the chain begins with
+     ``IntakeImageAgent`` / ``IntakeVideoAgent`` / ``IntakeAudioAgent``,
+     additionally seeds the matching ``--{image,video,audio}-fixture``
+     file so the intake agent has a ``raw_pending`` artifact to caption.
   3. Linearizes ``expected_chain`` (strip trailing ``["done"]``, pick the
      first agent from each set-valued slot) and mints step_ids like
      ``<case_name>_s01``.
@@ -29,6 +32,9 @@ Media backends are stubbed by default: we explicitly unset
 ``FW_USE_REAL_MEDIA_GEN`` in this subprocess so image / video / audio /
 compositor / transcription / video_edit all route to their ``Mock*``
 counterparts. Text LLMs run for real — that's the point of the eval.
+IntakeImage / IntakeVideo agents also run real LLMs (captioning), so
+they consume API credits even though the downstream generators are
+mocked.
 """
 
 from __future__ import annotations
@@ -144,10 +150,20 @@ def _serialize_result_compact(results: Any) -> Dict[str, Any]:
 # ---------------------------------------------------------------------------
 
 
+_INTAKE_TO_FIXTURE_MIME: Dict[str, str] = {
+    "IntakeImageAgent": "image/png",
+    "IntakeVideoAgent": "video/mp4",
+    "IntakeAudioAgent": "audio/wav",
+}
+
+
 def run_case(
     case: Dict[str, Any],
     *,
     runtime_base: Path,
+    image_fixture: Path | None = None,
+    video_fixture: Path | None = None,
+    audio_fixture: Path | None = None,
 ) -> Dict[str, Any]:
     """Execute one case and return a result dict.
 
@@ -177,12 +193,50 @@ def run_case(
     service = AssistantService(store)
     workspace = service.workspace
 
-    # --- seed user_goal as a raw_pending text upload ---
+    # --- seed 1: user_goal text → [creative_brief] global artifact ---
     seed = workspace.persist_raw_upload(
         file_content=user_goal.encode("utf-8"),
         mime="text/plain",
         original_filename="user_goal.txt",
     )
+
+    # --- seed 2 (only if chain starts with Intake{Image,Video,Audio}Agent):
+    # the fixture file → raw_pending artifact, picked up by the intake step.
+    media_seed: Dict[str, Any] | None = None
+    first_agent = agents[0] if agents else ""
+    fixture_by_agent: Dict[str, Path | None] = {
+        "IntakeImageAgent": image_fixture,
+        "IntakeVideoAgent": video_fixture,
+        "IntakeAudioAgent": audio_fixture,
+    }
+    if first_agent in _INTAKE_TO_FIXTURE_MIME:
+        fixture_path = fixture_by_agent[first_agent]
+        if fixture_path is None or not Path(fixture_path).is_file():
+            return {
+                "name": case_name,
+                "user_goal": user_goal,
+                "workspace_id": workspace.id,
+                "workspace_path": str(workspace.runtime_base_path / workspace.id),
+                "plan": plan,
+                "seed": {"path": seed["path"], "caption": seed["caption"]},
+                "timestamp": ts,
+                "steps": [],
+                "chain_correct": False,
+                "completed_steps": 0,
+                "failed_at": None,
+                "error": (
+                    f"chain starts with {first_agent} but matching fixture "
+                    f"is missing: fixture_path={fixture_path}"
+                ),
+                "elapsed_s": 0.0,
+            }
+        with open(fixture_path, "rb") as fp:
+            fixture_bytes = fp.read()
+        media_seed = workspace.persist_raw_upload(
+            file_content=fixture_bytes,
+            mime=_INTAKE_TO_FIXTURE_MIME[first_agent],
+            original_filename=Path(fixture_path).name,
+        )
 
     result: Dict[str, Any] = {
         "name": case_name,
@@ -191,6 +245,11 @@ def run_case(
         "workspace_path": str(workspace.runtime_base_path / workspace.id),
         "plan": plan,
         "seed": {"path": seed["path"], "caption": seed["caption"]},
+        "media_seed": (
+            {"path": media_seed["path"], "mime": media_seed["mime"]}
+            if media_seed
+            else None
+        ),
         "timestamp": ts,
         "steps": [],
         "chain_correct": False,
@@ -305,6 +364,24 @@ def _main(argv: List[str] | None = None) -> int:
         required=True,
         help="Where to write the per-case result JSON.",
     )
+    parser.add_argument(
+        "--image-fixture",
+        type=str,
+        default=None,
+        help="Path to an image file used to seed cases that start with IntakeImageAgent.",
+    )
+    parser.add_argument(
+        "--video-fixture",
+        type=str,
+        default=None,
+        help="Path to a video file used to seed cases that start with IntakeVideoAgent.",
+    )
+    parser.add_argument(
+        "--audio-fixture",
+        type=str,
+        default=None,
+        help="Path to an audio file used to seed cases that start with IntakeAudioAgent.",
+    )
     args = parser.parse_args(argv)
 
     case = json.loads(args.case_json)
@@ -312,12 +389,22 @@ def _main(argv: List[str] | None = None) -> int:
     out_path = Path(args.out_path).resolve()
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
+    image_fixture = Path(args.image_fixture).resolve() if args.image_fixture else None
+    video_fixture = Path(args.video_fixture).resolve() if args.video_fixture else None
+    audio_fixture = Path(args.audio_fixture).resolve() if args.audio_fixture else None
+
     # Global-exception guard: if anything above ``run_case``'s own try
     # blows up (import, env, fresh-store creation), still emit a result
     # JSON so the orchestrator can aggregate rather than hang on a
     # missing file.
     try:
-        result = run_case(case, runtime_base=runtime_base)
+        result = run_case(
+            case,
+            runtime_base=runtime_base,
+            image_fixture=image_fixture,
+            video_fixture=video_fixture,
+            audio_fixture=audio_fixture,
+        )
     except Exception as exc:
         result = {
             "name": case.get("name", "<unknown>"),

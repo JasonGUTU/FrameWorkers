@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 """Assistant-pipeline chain eval — run a director-given GT plan end-to-end.
 
-For each case in ``evals/director_routing/eval_cases.json`` (filtered to
-cases whose Intake set ⊆ ``{IntakeTextAgent}`` — ``25`` text-only cases
-in the current GT), this spawns a subprocess (see
+For each case in ``assistant_test/assistant_test_cases.json`` (43 cases,
+one representative per chain shape) this spawns a subprocess (see
 :mod:`evals.assistant_pipeline._run_one_case`) that:
 
   1. creates a fresh :class:`AssistantStateStore` + Workspace,
-  2. seeds ``user_goal`` as a ``text/plain`` raw upload,
+  2. seeds ``user_goal`` as ``text/plain`` (always — lands as a global
+     ``[creative_brief]`` artifact); for cases that begin with
+     ``IntakeImageAgent`` / ``IntakeVideoAgent`` / ``IntakeAudioAgent``
+     additionally seeds the matching ``--{image,video,audio}-fixture``
+     file as ``raw_pending``,
   3. executes the linearized ``expected_chain`` through
      :meth:`AssistantService.execute_agent_for_step`, and
   4. emits per-step status / error / ``resolved_input_paths`` /
@@ -22,7 +25,7 @@ the right artifact out of the caption index as the chain progresses.
 Media backends are stubbed (``FW_USE_REAL_MEDIA_GEN`` is unset in the
 subprocess env) — image / video / audio / compositor / transcription /
 video_edit route to their ``Mock*`` counterparts. Text LLMs run for
-real; that is the point.
+real; IntakeImage / IntakeVideo also run real LLMs for captioning.
 
 Subprocess isolation: the assistant's :class:`AssistantStateStore` is
 process-local, so per-case subprocesses are the clean way to prevent
@@ -56,10 +59,17 @@ from typing import Any, Dict, List, Optional, Set
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parents[1]
-DEFAULT_CASES_PATH = REPO_ROOT / "evals" / "director_routing" / "eval_cases.json"
+DEFAULT_CASES_PATH = REPO_ROOT / "assistant_test" / "assistant_test_cases.json"
 RUN_ONE_CASE_ENTRY = SCRIPT_DIR / "_run_one_case.py"
 RUNTIME_DIR = REPO_ROOT / "Runtime" / "assistant_pipeline"
-INTAKE_FILTER_DEFAULT = frozenset({"IntakeTextAgent"})
+
+# Default media fixtures shared across all image- / video-intake cases.
+# These exist alongside the process-flow visualizer demo assets and are
+# named exactly for this seeding role.
+_TEST_ASSETS = REPO_ROOT / "process-flow-visualizer" / "test-assets"
+DEFAULT_IMAGE_FIXTURE = _TEST_ASSETS / "intake_image_input.png"
+DEFAULT_VIDEO_FIXTURE = _TEST_ASSETS / "intake_video_input.mp4"
+DEFAULT_AUDIO_FIXTURE: Optional[Path] = None  # no audio-intake case in the GT
 
 
 # ---------------------------------------------------------------------------
@@ -67,55 +77,18 @@ INTAKE_FILTER_DEFAULT = frozenset({"IntakeTextAgent"})
 # ---------------------------------------------------------------------------
 
 
-def _strip_trailing_done(chain: List[Any]) -> List[Any]:
-    out = list(chain)
-    while out:
-        last = out[-1]
-        if isinstance(last, str) and last == "done":
-            out.pop()
-            continue
-        if isinstance(last, list) and last == ["done"]:
-            out.pop()
-            continue
-        break
-    return out
-
-
-def _case_intake_agents(case: Dict[str, Any]) -> Set[str]:
-    seen: Set[str] = set()
-    for slot in _strip_trailing_done(case["expected_chain"]):
-        agents = slot if isinstance(slot, list) else [slot]
-        for a in agents:
-            if isinstance(a, str) and a.startswith("Intake"):
-                seen.add(a)
-    return seen
-
-
 def load_cases(
     path: Path,
     *,
-    intake_filter: Optional[Set[str]] = None,
     names: Optional[Set[str]] = None,
     limit: Optional[int] = None,
 ) -> List[Dict[str, Any]]:
-    """Load, filter, and optionally trim the case list.
-
-    ``intake_filter``: only keep cases whose Intake set is a subset of
-    this set. Defaults to ``{"IntakeTextAgent"}`` — i.e. text-only
-    cases, because the other 75/100 cases need image / video / audio
-    seed fixtures that don't exist in ``eval_cases.json``.
-    """
-    if intake_filter is None:
-        intake_filter = set(INTAKE_FILTER_DEFAULT)
-
+    """Load and optionally trim the case list."""
     with open(path, "r", encoding="utf-8") as f:
         all_cases = json.load(f)
 
     kept: List[Dict[str, Any]] = []
     for case in all_cases:
-        intakes = _case_intake_agents(case)
-        if intakes and not intakes.issubset(intake_filter):
-            continue
         if names is not None and case["name"] not in names:
             continue
         kept.append(case)
@@ -135,6 +108,9 @@ def _invoke_subprocess(
     *,
     run_dir: Path,
     timeout_s: int,
+    image_fixture: Optional[Path] = None,
+    video_fixture: Optional[Path] = None,
+    audio_fixture: Optional[Path] = None,
 ) -> Dict[str, Any]:
     """Spawn ``_run_one_case.py`` for one case and return the result dict.
 
@@ -160,6 +136,12 @@ def _invoke_subprocess(
         "--out-path",
         str(out_path),
     ]
+    if image_fixture is not None:
+        cmd.extend(["--image-fixture", str(image_fixture)])
+    if video_fixture is not None:
+        cmd.extend(["--video-fixture", str(video_fixture)])
+    if audio_fixture is not None:
+        cmd.extend(["--audio-fixture", str(audio_fixture)])
 
     env = os.environ.copy()
     # Belt-and-suspenders: media mocks on. _run_one_case.py also pops
@@ -236,6 +218,9 @@ def run_eval(
     workers: int = 4,
     run_name: Optional[str] = None,
     timeout_s: int = 1200,
+    image_fixture: Optional[Path] = DEFAULT_IMAGE_FIXTURE,
+    video_fixture: Optional[Path] = DEFAULT_VIDEO_FIXTURE,
+    audio_fixture: Optional[Path] = DEFAULT_AUDIO_FIXTURE,
 ) -> Path:
     RUNTIME_DIR.mkdir(parents=True, exist_ok=True)
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -250,9 +235,12 @@ def run_eval(
         return output_path
 
     print(f"Cases source:   {cases_path}")
-    print(f"Selected:       {len(cases)} text-only case(s)")
+    print(f"Selected:       {len(cases)} case(s)")
     print(f"Workers:        {workers}")
     print(f"Timeout/case:   {timeout_s}s")
+    print(f"Image fixture:  {image_fixture}")
+    print(f"Video fixture:  {video_fixture}")
+    print(f"Audio fixture:  {audio_fixture}")
     print(f"Run dir:        {run_dir}")
     print("=" * 80)
 
@@ -263,7 +251,13 @@ def run_eval(
     with ThreadPoolExecutor(max_workers=max(1, workers)) as pool:
         futures = {
             pool.submit(
-                _invoke_subprocess, case, run_dir=run_dir, timeout_s=timeout_s
+                _invoke_subprocess,
+                case,
+                run_dir=run_dir,
+                timeout_s=timeout_s,
+                image_fixture=image_fixture,
+                video_fixture=video_fixture,
+                audio_fixture=audio_fixture,
             ): case["name"]
             for case in cases
         }
@@ -427,6 +421,24 @@ def main(argv: List[str] | None = None) -> int:
         default=1200,
         help="Per-case subprocess timeout in seconds (default: 1200 = 20min).",
     )
+    parser.add_argument(
+        "--image-fixture",
+        type=str,
+        default=str(DEFAULT_IMAGE_FIXTURE),
+        help=f"Image fixture file for IntakeImageAgent-starting cases (default: {DEFAULT_IMAGE_FIXTURE}).",
+    )
+    parser.add_argument(
+        "--video-fixture",
+        type=str,
+        default=str(DEFAULT_VIDEO_FIXTURE),
+        help=f"Video fixture file for IntakeVideoAgent-starting cases (default: {DEFAULT_VIDEO_FIXTURE}).",
+    )
+    parser.add_argument(
+        "--audio-fixture",
+        type=str,
+        default=str(DEFAULT_AUDIO_FIXTURE) if DEFAULT_AUDIO_FIXTURE else None,
+        help="Audio fixture file for IntakeAudioAgent-starting cases (no default).",
+    )
     args = parser.parse_args(argv)
 
     run_eval(
@@ -436,6 +448,9 @@ def main(argv: List[str] | None = None) -> int:
         workers=args.workers,
         run_name=args.run_name,
         timeout_s=args.timeout_s,
+        image_fixture=Path(args.image_fixture) if args.image_fixture else None,
+        video_fixture=Path(args.video_fixture) if args.video_fixture else None,
+        audio_fixture=Path(args.audio_fixture) if args.audio_fixture else None,
     )
     return 0
 
