@@ -11,7 +11,7 @@ from typing import Any
 import httpx
 from openai import AsyncOpenAI
 
-from .._mock_data import MOCK_WAV
+from .._mock_data import MOCK_WAV, mock_wav_silence
 from ..fal_helpers import (
     LazyHttpxClientMixin,
     extract_fal_media_url,
@@ -353,14 +353,27 @@ class MockAudioService(AudioService):
         model: str | None = None,
         response_format: str = "wav",
     ) -> AudioGenerationResult:
-        logger.info("[MockAudioService] Placeholder TTS for: %.80s...", text)
+        # Estimate a plausible TTS duration from text length so
+        # NarratorMaterializer's per-line timing math (start, end, cursor)
+        # behaves the same way it would on real TTS bytes. ~0.05s/char
+        # ≈ 12 chars/sec is a rough cross-language average; floor at 0.5s
+        # so even one-word lines have non-zero span. Returning the bare
+        # 44-byte ``MOCK_WAV`` (0 samples) is what made every clip collapse
+        # to ``start_sec == end_sec`` and triggered the L3 quality gate.
+        estimated_duration = max(0.5, len(text) * 0.05)
+        logger.info(
+            "[MockAudioService] Placeholder TTS (%.2fs) for: %.80s...",
+            estimated_duration,
+            text,
+        )
         return AudioGenerationResult(
-            bytes=MOCK_WAV,
+            bytes=mock_wav_silence(estimated_duration),
             resolved_payload={
                 "kind": "tts",
                 "model": self.tts_model,
                 "voice": voice or self._speaker_id_to_voice(speaker_id),
                 "text": text,
+                "duration_sec": round(estimated_duration, 3),
             },
         )
 
