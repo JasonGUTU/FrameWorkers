@@ -60,7 +60,7 @@ def main():
     ap.add_argument("--grad-accum", type=int, default=4)
     ap.add_argument("--resume-from-checkpoint", default=None,
                     help="Path to checkpoint dir to resume from (e.g. "
-                         "adapters_overfit_templated/qwen3_20260427_005706/sft/checkpoint-712), "
+                         "adapters_overfit_templated/qwen3_20260427_194931/sft/checkpoint-2250), "
                          "or 'auto' to auto-detect latest checkpoint in --adapter-dir/sft/")
     args = ap.parse_args()
 

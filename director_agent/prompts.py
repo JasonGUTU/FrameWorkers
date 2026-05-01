@@ -262,6 +262,46 @@ PLAN_UPFRONT_CORE_WITH_FEWSHOTS = (
 )
 
 
+# CoT-ablation variant: same shape as ``PLAN_UPFRONT_CORE`` but the assistant
+# output schema drops the top-level ``rationale`` field and the per-step
+# ``intent`` field. Used in experiments that measure whether the CoT
+# rationale + intent channel materially helps routing accuracy. Train data
+# (assistant content) and inference parser must match this schema.
+_PLAN_UPFRONT_MINIMAL_NO_RATIONALE = (
+    "You are the Director. For ONE user goal, produce the **complete ordered pipeline** of "
+    "sub-agent executions needed to satisfy it. You are NOT picking one step — you plan the "
+    "whole thing upfront. Use the agent catalog (each entry's inputs / output / "
+    "purpose-and-trigger) and the stack memory to decide which agents to include and in what "
+    "order. The catalog is the single source of truth about what each agent does, what it "
+    "needs upstream, and when to run it.\n"
+    "Respond with JSON only, no markdown: "
+    '{"plan":[{"agent_id":"<id>"},...]}\n\n'
+    "Structural rules (these are framework invariants, not routing preferences):\n"
+    "- Every agent_id MUST be copied exactly from the allowed list below.\n"
+    "- The plan is a flat list executed strictly in order — no branching, no parallel.\n"
+    "- **Each agent_id MUST appear at most ONCE in the plan.** Every "
+    "sub-agent produces its artifact once and downstream consumers resolve "
+    "it by caption; there is no valid reason to invoke the same agent "
+    "twice in one plan.\n"
+    "- User text input (chat / text-file upload) is already available as the "
+    "``[creative_brief]`` artifact — no text-intake step is needed; agents that "
+    "consume ``[creative_brief]`` directly can be the first step in the plan. "
+    "Binary media (images / videos) still require their respective intake step "
+    "(the agent whose role is to register the raw upload as a caption-rich "
+    "workspace artifact for that media type) before any agent that consumes "
+    "those media types.\n"
+    "- Greetings / noise / unrelated chat / empty input should still emit a "
+    "non-empty plan; pick the most charitable single agent that matches "
+    "(e.g. ``[{\"agent_id\":\"StoryAgent\"}]`` if the user gestured at a "
+    "story idea, or respond-only plans). Never output ``[]``.\n"
+    "- Output ONLY the agent_id sequence — no ``rationale`` field, no ``intent`` "
+    "field on plan steps, no commentary outside the JSON object.\n"
+)
+
+
+PLAN_UPFRONT_CORE_NO_RATIONALE = _PLAN_UPFRONT_MINIMAL_NO_RATIONALE
+
+
 # ---------------------------------------------------------------------------
 # Replanner — invoked when a step fails mid-plan
 # ---------------------------------------------------------------------------

@@ -12,7 +12,11 @@ from ..common_schema import ResolvedArtifactEntry
 from ..descriptor import AgentSpec, InputLabelSpec, SubAgentDescriptor
 from .agent import AmbienceAgent
 from .evaluator import AmbienceEvaluator
-from .labels import INPUT_LABEL_SCREENPLAY, INPUT_LABEL_VIDEO_ANALYSIS
+from .labels import (
+    INPUT_LABEL_CREATIVE_BRIEF,
+    INPUT_LABEL_SCREENPLAY,
+    INPUT_LABEL_VIDEO_ANALYSIS,
+)
 from .materializer import AMBIENCE_FILM_SYS_ID, AmbienceMaterializer
 from .schema import AmbienceAgentInput
 
@@ -24,6 +28,9 @@ def build_input(_step_id: str, resolved_artifacts: dict) -> BaseModel:
     analysis = ResolvedArtifactEntry.coerce(
         resolved_artifacts.get(INPUT_LABEL_VIDEO_ANALYSIS)
     )
+    brief = ResolvedArtifactEntry.coerce(
+        resolved_artifacts.get(INPUT_LABEL_CREATIVE_BRIEF)
+    )
     return AmbienceAgentInput(
         screenplay_json_text=json.dumps(
             screenplay.payload, ensure_ascii=False, indent=2
@@ -31,6 +38,9 @@ def build_input(_step_id: str, resolved_artifacts: dict) -> BaseModel:
         video_analysis_json_text=json.dumps(
             analysis.payload, ensure_ascii=False, indent=2
         ) if analysis.payload else "",
+        creative_brief_json_text=json.dumps(
+            brief.payload, ensure_ascii=False, indent=2
+        ) if brief.payload else "",
     )
 
 
@@ -43,9 +53,9 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
         agent_id: {
             "caption": (
                 f"Ambience pack (JSON manifest): {len(beds)} bed(s). "
-                f"Carries description + duration target for the "
-                f"film-wide room-tone underlay. Consumed by "
-                f"the audio-mix step's LLM for mix planning."
+                f"Carries the LLM-chosen description for the film-wide "
+                f"room-tone underlay. Consumed by the audio-mix step's "
+                f"LLM for mix planning."
             ),
             "scope": "global",
         },
@@ -74,10 +84,9 @@ SPEC = AgentSpec(
             cardinality="single",
             optional=True,
             description=(
-                "The screenplay — I read the dominant location(s) to "
-                "pick a continuous room-tone underlay, and count spoken "
-                "words + action shots across every scene to size a "
-                "single global bed."
+                "The screenplay — I read the dominant location(s) "
+                "across scenes[*] to pick a continuous room-tone "
+                "underlay."
             ),
         ),
         InputLabelSpec(
@@ -86,10 +95,22 @@ SPEC = AgentSpec(
             optional=True,
             description=(
                 "A scene-level video-analysis report — scenes with "
-                "setting / mood + video_summary.duration_seconds. I "
-                "derive dominant environment from scenes[*].setting and "
-                "use video_summary.duration_seconds as the bed duration "
-                "target."
+                "setting / mood. I aggregate scenes[*].setting into a "
+                "single dominant environment."
+            ),
+        ),
+        InputLabelSpec(
+            name=INPUT_LABEL_CREATIVE_BRIEF,
+            cardinality="single",
+            optional=True,
+            description=(
+                "The user's verbatim natural-language brief for the "
+                "whole pipeline (auto-persisted from chat / text upload). "
+                "Often the most direct environment signal — the user "
+                "names locations / weather / atmosphere directly "
+                "('rainy-night city street', 'jungle ambience', 'cafe "
+                "interior'). Read alongside [screenplay] / "
+                "[video_analysis]; any one of the three is enough."
             ),
         ),
     ],
@@ -97,13 +118,13 @@ SPEC = AgentSpec(
         "ambience_bed (one film-wide room-tone underlay)."
     ),
     purpose_and_trigger=(
-        """Generate ONE film-wide ambient sound bed (room tone / environmental underlay). Both inputs (screenplay, video_analysis) are individually optional, but at least one must be available — without either I have no source of duration target or environment information. Trigger: include only when the user explicitly mentions ambient / atmospheric / environmental sound in the goal (e.g. 'add ambient sounds', 'layer in rain + traffic', 'jungle ambience'). Silence is the default — do not include unless the goal warrants."""
+        """Generate ONE film-wide ambient sound bed (room tone / environmental underlay). All three inputs (screenplay, video_analysis, creative_brief) are individually optional — at least one must carry a usable environment signal. Trigger: include only when the user explicitly mentions ambient / atmospheric / environmental sound in the goal (e.g. 'add ambient sounds', 'layer in rain + traffic', 'jungle ambience'). Silence is the default — do not include unless the goal warrants."""
     ),
     input_preamble=(
         "I generate one global ambient room-tone underlay that covers "
-        "the entire film. I prefer a screenplay when available and "
-        "fall back to a scene-level video analysis (mood + duration) "
-        "when only that is supplied."
+        "the entire film. I pick the environment from any available "
+        "content source — screenplay, video analysis, or the user's "
+        "brief — whichever is wired up."
     ),
 )
 

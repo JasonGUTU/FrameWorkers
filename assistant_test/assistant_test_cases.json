@@ -191,7 +191,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/videos/ceo_romance_confrontation.mp4"
   },
   {
     "shape_slug": "intake_img_cr",
@@ -222,7 +223,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/images/intake_img_01.png"
   },
   {
     "shape_slug": "style_only",
@@ -238,7 +240,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/videos/mini_drama_generic.mp4"
   },
   {
     "shape_slug": "cr_subtitle",
@@ -303,7 +306,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/videos/mini_drama_generic.mp4"
   },
   {
     "shape_slug": "highlight_only",
@@ -322,7 +326,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/videos/mini_drama_generic.mp4"
   },
   {
     "shape_slug": "vid_bilingual_sub",
@@ -344,7 +349,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/videos/english_drama.mp4"
   },
   {
     "shape_slug": "vid_analysis_cr_subtitle",
@@ -378,7 +384,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/videos/mini_drama_generic.mp4"
   },
   {
     "shape_slug": "intake_img_cr_bilingual",
@@ -415,7 +422,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/images/complex_19.png"
   },
   {
     "shape_slug": "intake_img_cr_extend",
@@ -449,7 +457,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/images/complex_23.png"
   },
   {
     "shape_slug": "vid_music",
@@ -471,7 +480,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/videos/mini_drama_generic.mp4"
   },
   {
     "shape_slug": "vid_music_ambience",
@@ -498,7 +508,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/videos/rainy_night.mp4"
   },
   {
     "shape_slug": "style_subtitle",
@@ -520,7 +531,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/videos/mini_drama_generic.mp4"
   },
   {
     "shape_slug": "style_music",
@@ -545,7 +557,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/videos/costume_drama.mp4"
   },
   {
     "shape_slug": "extend_subtitle",
@@ -567,7 +580,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/videos/confrontation.mp4"
   },
   {
     "shape_slug": "extend_music",
@@ -592,7 +606,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/videos/fight_scene.mp4"
   },
   {
     "shape_slug": "extend_ambience",
@@ -617,7 +632,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/videos/female_lead_crying.mp4"
   },
   {
     "shape_slug": "highlight_subtitle",
@@ -642,7 +658,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/videos/mini_drama_generic.mp4"
   },
   {
     "shape_slug": "vid_subtitle",
@@ -661,7 +678,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/videos/interview_style.mp4"
   },
   {
     "shape_slug": "vid_analysis_cr",
@@ -692,7 +710,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/videos/mini_drama_generic.mp4"
   },
   {
     "shape_slug": "extend_style",
@@ -711,7 +730,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/videos/mini_drama_generic.mp4"
   },
   {
     "shape_slug": "extend_style_subtitle",
@@ -736,7 +756,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/videos/mini_drama_generic.mp4"
   },
   {
     "shape_slug": "highlight_music",
@@ -764,7 +785,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/videos/mini_drama_generic.mp4"
   },
   {
     "shape_slug": "vid_analysis_music_subtitle",
@@ -799,7 +821,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/videos/mini_drama_generic.mp4"
   },
   {
     "shape_slug": "highlight_bilingual_sub",
@@ -827,7 +850,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/videos/meeting_scene.mp4"
   },
   {
     "shape_slug": "style_extend_music",
@@ -855,7 +879,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/videos/mini_drama_generic.mp4"
   },
   {
     "shape_slug": "story_ambience",
@@ -959,7 +984,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/videos/english_drama.mp4"
   },
   {
     "shape_slug": "story_bilingual",
@@ -1029,7 +1055,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/images/storytelling_full_01.png"
   },
   {
     "shape_slug": "story_imgref",
@@ -1059,7 +1086,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/images/storytelling_imgref_01.png"
   },
   {
     "shape_slug": "story_imgref_bilingual",
@@ -1092,7 +1120,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/images/storytelling_imgref_bilingual_01.png"
   },
   {
     "shape_slug": "story_imgref_music",
@@ -1132,7 +1161,8 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/images/storytelling_imgref_music_01.png"
   },
   {
     "shape_slug": "story_music_ambience",
@@ -1178,7 +1208,7 @@
   {
     "shape_slug": "story_music_bilingual",
     "name": "storytelling_music_bilingual_01",
-    "user_goal": "Create an English-Chinese bilingual illustrated audiobook of this Hans Christian Andersen fairytale with a gentle harp-and-celesta BGM",
+    "user_goal": "Create an English-Chinese bilingual illustrated audiobook of this Hans Christian Andersen fairytale with a gentle harp-and-celesta BGM. Narrate in English; burn both English and Chinese subtitles. The story to narrate, in full:\n\nIt was terribly cold. Snow was falling, and it was almost dark, on the last evening of the old year, New Year's Eve. In the cold and the gloom, a poor little girl walked through the streets, bareheaded and barefoot. She had been wearing slippers when she left home, but they were not much use — they had belonged to her mother, and were so large the little one had lost them in running across the street to dodge two rushing carriages. One slipper was nowhere to be found; the other a boy snatched up and ran off with, saying he could use it as a cradle when he had children of his own.\n\nSo the little girl walked on, with her tiny naked feet blue with cold. In an old apron she carried a bundle of matches, and held one bunch in her hand. The whole day no one had bought any from her; no one had given her so much as a penny. Hungry and shivering, she crept along — a picture of misery, poor little thing.\n\nSnowflakes settled on her long fair hair, which curled in pretty ringlets over her shoulders, but she paid no heed. Lights shone from every window; the savory smell of roast goose drifted out, for it was New Year's Eve. At last she crept into a corner between two houses, drew her little feet up under her, but felt colder still. She dared not go home — she had sold no matches, and would surely be beaten; besides, it was nearly as cold there, the wind howling through their roof though they had stuffed the largest cracks with rags and straw.\n\nHer little hands were almost numb. Ah — a single match might do some good, if she dared draw one from the bundle, strike it on the wall, and warm her fingers! She drew one out — scratch! — how it spluttered and burned! It gave a warm bright flame, like a candle, when she held her hand around it. It seemed to the little girl that she sat in front of a great iron stove with polished brass feet and ornaments, the fire blazing blissfully. She stretched out her feet to warm them too — and the flame went out, the stove vanished, and only the charred match-end was left in her hand.\n\nShe struck another. It blazed up, and where the light fell on the wall the wall became transparent like gauze. She saw into a room where a snow-white tablecloth was spread, with fine china and a roast goose stuffed with apples and prunes, steaming gloriously. And — what was more wonderful still — the goose hopped down from the dish and waddled across the floor, knife and fork still in its breast, straight toward the little girl. Then the match went out, and only the cold thick wall remained.\n\nShe lit another. Now she sat under the most beautiful Christmas tree, larger and finer than the one she had peeped at through the rich merchant's glass doors. Thousands of candles burned on its green branches, and bright pictures, like those in shop windows, looked down upon her. The little girl reached out her hand — and the match went out. The Christmas lights rose higher and higher, until they were the twinkling stars of the sky. One fell, drawing a long line of fire.\n\n'Someone is dying,' said the little girl. Her old grandmother — the only person who had ever been kind to her, and who was now dead — had told her: when a star falls, a soul is going up to God.\n\nShe struck another match against the wall. In its glow her grandmother stood before her, clear and shining, gentle and loving. 'Grandmother!' cried the child. 'Oh, take me with you! I know you will go away when the match goes out — vanish like the warm stove, the lovely roast goose, and the splendid Christmas tree!' And she hurriedly struck all the rest of the matches in the bundle, for she wanted to keep her grandmother near. The matches blazed with a brightness greater than the noonday sun. Grandmother had never looked so beautiful or so tall. She took the little girl in her arms, and they flew upward in joy and brightness, far above the earth — to where there was no cold, no hunger, no fear; they were with God.\n\nIn the cold morning hour, the little girl was found in the corner between the two houses, her cheeks rosy and a smile on her lips. Frozen to death on the last evening of the old year. The new year's sun rose on her stiff little body, with the matches, of which one bundle was nearly burned. 'She tried to warm herself,' people said. No one knew the beautiful things she had seen, nor in what glory she had gone with her grandmother into the joy of a new year.",
     "expected_chain": [
       [
         "NarrationAgent"
@@ -1260,6 +1290,7 @@
       [
         "done"
       ]
-    ]
+    ],
+    "fixture_path": "fixtures/images/storytelling_ultra_01.png"
   }
 ]

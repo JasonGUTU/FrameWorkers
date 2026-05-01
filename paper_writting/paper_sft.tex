@@ -1,0 +1,65 @@
+\section{Supervised Fine-Tuning}
+\label{sec:sft}
+
+We distill Gemini 2.5 Flash's routing behaviour into a LoRA adapter on
+\texttt{Qwen3-8B}. Each training sample is a three-turn chat
+record $(\mathbf{m}_{\text{sys}}, \mathbf{m}_{\text{usr}}, \mathbf{m}_{\text{ast}})$.
+
+\paragraph{Input.}
+$\mathbf{m}_{\text{sys}}$ is the canonical planner prompt: task definition,
+output JSON schema, structural rules, the list of $20$ allowed
+\texttt{agent\_id}s, and the agent catalog (each agent's
+\texttt{Inputs}, \texttt{Output}, and \texttt{Purpose / Trigger}).
+It is constant across the corpus and \emph{byte-identical} to the
+prompt used at inference time.\footnote{Both training and inference call
+the same \texttt{build\_plan\_system\_prompt} with no fewshots, no
+policy scaffolding, and no topology hints.}
+$\mathbf{m}_{\text{usr}}$ is the user goal $g$.
+
+\paragraph{Output (CoT target).}
+$\mathbf{m}_{\text{ast}}$ is one JSON object fusing the chain-of-thought
+and the executable plan:
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize,breaklines=true,frame=single]
+{"rationale": "<CoT>",
+ "plan": [{"agent_id": "<id>", "intent": "<concrete step>"}, ...]}
+\end{lstlisting}
+The \texttt{rationale} follows a three-part template:
+(i) name the deliverable class and modifier flags inferred from $g$;
+(ii) justify each \emph{included} agent against the catalog;
+(iii) name $2$--$4$ \emph{excluded} agents with reasons (the
+\textit{``Skipped: \dots''} clause). The negative supervision in
+(iii) is essential — without it the model over-includes optional
+agents (audio overlays, subtitle agents) on lexical cues. The
+per-step \texttt{intent} acts as a finer-grained CoT specifying what
+each chosen agent is to produce.
+
+\paragraph{Loss.}
+Standard causal-LM cross-entropy on the assistant turn only;
+system and user tokens are masked. The gradient flows through
+both the \texttt{rationale} and \texttt{plan} fields uniformly.
+
+\paragraph{Data.}
+$1{,}417$ hand-authored samples covering all $43$ chain shapes that
+appear in the held-out eval set; per-shape budget is
+$\max(20,\,10\!\times\!\text{eval\_count})$, so even shapes with a
+single eval example receive $20$ training samples to avoid starving
+the long tail. The corpus is composed of nine task categories —
+\emph{complex} ($539$), \emph{storytelling} ($286$), \emph{cr}
+($253$), \emph{sub} ($79$), \emph{extend} ($70$), \emph{style}
+($51$), \emph{intake} ($50$), \emph{bilingual} ($49$), and
+\emph{highlight} ($40$) — mirroring the deliverable-shape mix of
+the eval set; $\approx 120$ of the samples are \emph{long-story}
+inputs in which $g$ is a full $\approx 2{,}500$-word original
+narrative rather than a one-sentence brief, matching the eval's
+long-input distribution. A build-time gate enforces: JSON-schema
+validity, \texttt{agent\_id} uniqueness within each plan,
+$\le 8192$-token length under the Qwen tokenizer, and zero overlap
+(normalized) with the $209$ eval goals.
+
+\paragraph{Configuration.}
+LoRA on \texttt{Qwen3-8B}: $r=32$, $\alpha=64$,
+dropout $0.05$, applied to
+\{\texttt{q,k,v,o,gate,up,down}\}\texttt{\_proj}.
+Trained with \texttt{trl.SFTTrainer}: lr $2\!\times\!10^{-5}$, bf16,
+seq.\ length $8192$, per-device batch $1$, grad.\ accumulation $4$,
+$3$ epochs ($\approx 25$\,min on one H200).

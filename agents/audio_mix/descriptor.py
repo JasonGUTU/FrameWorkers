@@ -17,6 +17,7 @@ from .labels import (
     INPUT_LABEL_AMBIENCE_FILE,
     INPUT_LABEL_MUSIC,
     INPUT_LABEL_MUSIC_FILE,
+    INPUT_LABEL_NARRATOR_AUDIO,
     INPUT_LABEL_VIDEO_FILE,
     INPUT_LABEL_VIDEO_PACKAGE,
 )
@@ -39,6 +40,9 @@ def build_input(_step_id: str, resolved_artifacts: dict) -> BaseModel:
     amb_file = ResolvedArtifactEntry.coerce(
         resolved_artifacts.get(INPUT_LABEL_AMBIENCE_FILE)
     )
+    narrator_file = ResolvedArtifactEntry.coerce(
+        resolved_artifacts.get(INPUT_LABEL_NARRATOR_AUDIO)
+    )
     return AudioMixAgentInput(
         video_json_text=json.dumps(video_pkg.payload or {}, ensure_ascii=False, indent=2),
         video_file_path=video_file.path or "",
@@ -46,6 +50,7 @@ def build_input(_step_id: str, resolved_artifacts: dict) -> BaseModel:
         music_file_path=music_file.path or "",
         ambience_json_text=json.dumps(amb.payload or {}, ensure_ascii=False, indent=2),
         ambience_file_path=amb_file.path or "",
+        narrator_file_path=narrator_file.path or "",
     )
 
 
@@ -153,18 +158,34 @@ SPEC = AgentSpec(
                 "specifically, NOT the JSON package."
             ),
         ),
+        InputLabelSpec(
+            name=INPUT_LABEL_NARRATOR_AUDIO,
+            cardinality="single",
+            optional=True,
+            description=(
+                "Narrator voiceover wav on disk (binary artifact, "
+                "mime=audio/wav). Present iff a narrator TTS step ran "
+                "(illustrated-storytelling chains where no rendered "
+                "video provides the dialogue track). The materializer "
+                "reads its bytes for amix as the dialogue base layer "
+                "when no [video_file] is available. Targets the wav "
+                "binary specifically."
+            ),
+        ),
     ],
     output_description=(
-        "audio_mix (one final film-wide audio track amix'd from video + "
-        "optional music + optional ambience; wav registered under "
-        "sys_id 'aud_final')."
+        "audio_mix (one final film-wide audio track amix'd from "
+        "available source layers — the assembled video's baked "
+        "dialogue/foley OR narrator voiceover + optional music + "
+        "optional ambience; wav registered under sys_id 'aud_final')."
     ),
     purpose_and_trigger=(
-        """Combine whichever audio source layers are present (video's baked-in dialogue+foley audio extracted from an upstream assembled mp4, plus any global music track, plus any global ambience bed) into ONE final wav. All input layers are individually optional; at least one source layer must be available for the mix to produce output. Trigger: the plan needs a single combined audio file from multiple audio sources — typically when the plan adds a music and/or ambience layer to an assembled video, but also any other case where multiple audio source layers must be unified into one wav before final composition."""
+        """Combine whichever audio source layers are present (video's baked-in dialogue+foley audio extracted from an upstream assembled mp4, OR a narrator voiceover wav from an illustrated-storytelling chain, plus any global music track, plus any global ambience bed) into ONE final wav. All input layers are individually optional; at least one audio source layer must be available for the mix to produce output. Trigger: the plan needs a single combined audio file from multiple audio sources — typically when the plan adds a music and/or ambience layer onto an assembled video or narrator voiceover, before final composition."""
     ),
     input_preamble=(
-        "I amix the video's own dialogue+foley track with optional "
-        "global music / ambience underlays into one final audio file."
+        "I amix whichever audio sources are present — the video's own "
+        "dialogue+foley track OR a narrator voiceover, with optional "
+        "global music / ambience underlays — into one final audio file."
     ),
 )
 

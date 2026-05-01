@@ -1,0 +1,428 @@
+{
+  "meta": {
+    "model": "gemini-2.5-flash",
+    "timestamp": "20260430_165537",
+    "name": "smoke_async5",
+    "elapsed_s": 13.5,
+    "workers": 4,
+    "max_steps": 20,
+    "total_chains": 5,
+    "perfect_chains": 4,
+    "chain_accuracy_pct": 80.0,
+    "total_steps": 32,
+    "correct_steps": 30,
+    "step_accuracy_pct": 93.8,
+    "length_match_count": 4,
+    "length_match_pct": 80.0,
+    "mean_edit_distance": 0.2,
+    "median_edit_distance": 0,
+    "planner_errors": 0
+  },
+  "results": [
+    {
+      "name": "cr_01",
+      "user_goal": "Make a cultivation-fantasy animated drama about a washed-up young man who awakens an ancient bloodline and rises through the ranks of his sect, add some epic orchestral music",
+      "expected_chain_len": 7,
+      "actual_chain_len": 7,
+      "length_match": true,
+      "total_steps": 7,
+      "correct_steps": 7,
+      "chain_correct": true,
+      "edit_distance": 0,
+      "actual_chain": [
+        "StoryAgent",
+        "ScreenplayAgent",
+        "KeyFrameAgent",
+        "VideoAgent",
+        "MusicAgent",
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "StoryAgent",
+          "expected": [
+            "StoryAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "ScreenplayAgent",
+          "expected": [
+            "ScreenplayAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "KeyFrameAgent",
+          "expected": [
+            "KeyFrameAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "VideoAgent",
+          "expected": [
+            "VideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "MusicAgent",
+          "expected": [
+            "MusicAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 7,
+          "actual": "CompositorAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 7.32,
+      "error": null
+    },
+    {
+      "name": "cr_02",
+      "user_goal": "Make a CEO romance mini-drama about a struggling waitress who discovers her rude regular customer is the billionaire she saved years ago, give it some gentle piano romance music",
+      "expected_chain_len": 7,
+      "actual_chain_len": 7,
+      "length_match": true,
+      "total_steps": 7,
+      "correct_steps": 7,
+      "chain_correct": true,
+      "edit_distance": 0,
+      "actual_chain": [
+        "StoryAgent",
+        "ScreenplayAgent",
+        "KeyFrameAgent",
+        "VideoAgent",
+        "MusicAgent",
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "StoryAgent",
+          "expected": [
+            "StoryAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "ScreenplayAgent",
+          "expected": [
+            "ScreenplayAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "KeyFrameAgent",
+          "expected": [
+            "KeyFrameAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "VideoAgent",
+          "expected": [
+            "VideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "MusicAgent",
+          "expected": [
+            "MusicAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 7,
+          "actual": "CompositorAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 5.12,
+      "error": null
+    },
+    {
+      "name": "cr_03",
+      "user_goal": "Make a supernatural-thriller mini-drama where the female lead moves into a haunted house and finds a videotape left by the previous tenant that reveals an unsolved murder, add some creepy haunted-house ambient sounds",
+      "expected_chain_len": 7,
+      "actual_chain_len": 7,
+      "length_match": true,
+      "total_steps": 7,
+      "correct_steps": 7,
+      "chain_correct": true,
+      "edit_distance": 0,
+      "actual_chain": [
+        "StoryAgent",
+        "ScreenplayAgent",
+        "KeyFrameAgent",
+        "VideoAgent",
+        "AmbienceAgent",
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "StoryAgent",
+          "expected": [
+            "StoryAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "ScreenplayAgent",
+          "expected": [
+            "ScreenplayAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "KeyFrameAgent",
+          "expected": [
+            "KeyFrameAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "VideoAgent",
+          "expected": [
+            "VideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "AmbienceAgent",
+          "expected": [
+            "AmbienceAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 7,
+          "actual": "CompositorAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 6.99,
+      "error": null
+    },
+    {
+      "name": "cr_04",
+      "user_goal": "Make a 3-minute rebirth-revenge animated drama where the female lead is framed by her best friend and falls to her death, then is reborn three years earlier to strike back",
+      "expected_chain_len": 5,
+      "actual_chain_len": 5,
+      "length_match": true,
+      "total_steps": 5,
+      "correct_steps": 5,
+      "chain_correct": true,
+      "edit_distance": 0,
+      "actual_chain": [
+        "StoryAgent",
+        "ScreenplayAgent",
+        "KeyFrameAgent",
+        "VideoAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "StoryAgent",
+          "expected": [
+            "StoryAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "ScreenplayAgent",
+          "expected": [
+            "ScreenplayAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "KeyFrameAgent",
+          "expected": [
+            "KeyFrameAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "VideoAgent",
+          "expected": [
+            "VideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "CompositorAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 6.45,
+      "error": null
+    },
+    {
+      "name": "cr_05",
+      "user_goal": "Create a post-apocalyptic animated drama where the last survivors discover a hidden sanctuary guarded by an awakened AI",
+      "expected_chain_len": 5,
+      "actual_chain_len": 6,
+      "length_match": false,
+      "total_steps": 6,
+      "correct_steps": 4,
+      "chain_correct": false,
+      "edit_distance": 1,
+      "actual_chain": [
+        "StoryAgent",
+        "ScreenplayAgent",
+        "KeyFrameAgent",
+        "VideoAgent",
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "StoryAgent",
+          "expected": [
+            "StoryAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "ScreenplayAgent",
+          "expected": [
+            "ScreenplayAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "KeyFrameAgent",
+          "expected": [
+            "KeyFrameAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "VideoAgent",
+          "expected": [
+            "VideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "CompositorAgent",
+          "expected": [
+            "<none>"
+          ],
+          "correct": false,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 7.91,
+      "error": null
+    }
+  ]
+}

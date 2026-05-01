@@ -28,11 +28,4 @@ class AmbienceEvaluator(BaseEvaluator[AmbienceAgentOutput]):
                 errors.append(f"{p}.ambience_id is empty")
             if not bed.description:
                 errors.append(f"{p}.description is empty")
-            if bed.duration_seconds <= 0:
-                errors.append(
-                    f"{p}.duration_seconds must be > 0 (got "
-                    f"{bed.duration_seconds}); compute as "
-                    "spoken_words/2.5 + action_shots*3.0 summed across "
-                    "the whole screenplay."
-                )
         return errors

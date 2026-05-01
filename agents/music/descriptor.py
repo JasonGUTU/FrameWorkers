@@ -12,7 +12,11 @@ from ..common_schema import ResolvedArtifactEntry
 from ..descriptor import AgentSpec, InputLabelSpec, SubAgentDescriptor
 from .agent import MusicAgent
 from .evaluator import MusicEvaluator
-from .labels import INPUT_LABEL_SCREENPLAY, INPUT_LABEL_VIDEO_ANALYSIS
+from .labels import (
+    INPUT_LABEL_CREATIVE_BRIEF,
+    INPUT_LABEL_SCREENPLAY,
+    INPUT_LABEL_VIDEO_ANALYSIS,
+)
 from .materializer import MUSIC_FILM_SYS_ID, MusicMaterializer
 from .schema import MusicAgentInput
 
@@ -24,6 +28,9 @@ def build_input(_step_id: str, resolved_artifacts: dict) -> BaseModel:
     analysis = ResolvedArtifactEntry.coerce(
         resolved_artifacts.get(INPUT_LABEL_VIDEO_ANALYSIS)
     )
+    brief = ResolvedArtifactEntry.coerce(
+        resolved_artifacts.get(INPUT_LABEL_CREATIVE_BRIEF)
+    )
     return MusicAgentInput(
         screenplay_json_text=json.dumps(
             screenplay.payload, ensure_ascii=False, indent=2
@@ -31,6 +38,9 @@ def build_input(_step_id: str, resolved_artifacts: dict) -> BaseModel:
         video_analysis_json_text=json.dumps(
             analysis.payload, ensure_ascii=False, indent=2
         ) if analysis.payload else "",
+        creative_brief_json_text=json.dumps(
+            brief.payload, ensure_ascii=False, indent=2
+        ) if brief.payload else "",
     )
 
 
@@ -43,9 +53,9 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
         agent_id: {
             "caption": (
                 f"Background music pack (JSON manifest): {len(cues)} "
-                f"cue(s). Carries mood + duration target for the "
-                f"film-wide BGM underlay. Consumed by the audio-mix step's "
-                f"LLM for mix planning."
+                f"cue(s). Carries the LLM-chosen mood for the film-wide "
+                f"BGM underlay. Consumed by the audio-mix step's LLM "
+                f"for mix planning."
             ),
             "scope": "global",
         },
@@ -74,9 +84,9 @@ SPEC = AgentSpec(
             cardinality="single",
             optional=True,
             description=(
-                "The screenplay — I read its overall mood/tone to pick a "
-                "film-wide music style and count spoken words + action "
-                "shots across every scene to size a single global cue."
+                "The screenplay — I read its overall mood/tone "
+                "(genre / tone_keywords / per-shot descriptive text) "
+                "to pick a film-wide music style."
             ),
         ),
         InputLabelSpec(
@@ -85,21 +95,33 @@ SPEC = AgentSpec(
             optional=True,
             description=(
                 "A scene-level video-analysis report — scenes with mood "
-                "+ video_summary.duration_seconds. I derive overall mood "
-                "from the scene moods and use video_summary.duration_seconds "
-                "as the cue duration target."
+                "and a video_summary.genre. I aggregate scene moods into "
+                "a single film-wide mood."
+            ),
+        ),
+        InputLabelSpec(
+            name=INPUT_LABEL_CREATIVE_BRIEF,
+            cardinality="single",
+            optional=True,
+            description=(
+                "The user's verbatim natural-language brief for the "
+                "whole pipeline (auto-persisted from chat / text upload). "
+                "Often the most direct mood signal — the user names "
+                "instruments / atmosphere directly ('gentle slow piano "
+                "score', 'tense orchestral theme', 'lullaby BGM'). "
+                "Read alongside [screenplay] / [video_analysis]; any "
+                "one of the three is enough."
             ),
         ),
     ],
     output_description="music_cue (one film-wide background music track).",
     purpose_and_trigger=(
-        """Generate ONE film-wide background music track. Both inputs (screenplay, video_analysis) are individually optional, but at least one must be available — without either I have no source of duration target or mood. Trigger: include only when the user explicitly mentions music / BGM / score / soundtrack in the goal (e.g. 'add some music', 'with orchestral theme', 'piano score under narrator'). Silence is the default — do not include unless the goal warrants."""
+        """Generate ONE film-wide background music track. All three inputs (screenplay, video_analysis, creative_brief) are individually optional — at least one must carry a usable mood signal. Trigger: include only when the user explicitly mentions music / BGM / score / soundtrack in the goal (e.g. 'add some music', 'with orchestral theme', 'piano score under narrator'). Silence is the default — do not include unless the goal warrants."""
     ),
     input_preamble=(
         "I generate one global background music track for the whole film. "
-        "I prefer a screenplay when available (rich mood + shot counts) "
-        "and fall back to a scene-level video analysis (mood + duration) "
-        "when only that is supplied."
+        "I pick the mood from any available content source — screenplay, "
+        "video analysis, or the user's brief — whichever is wired up."
     ),
 )
 

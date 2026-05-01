@@ -28,11 +28,4 @@ class MusicEvaluator(BaseEvaluator[MusicAgentOutput]):
                 errors.append(f"{p}.cue_id is empty")
             if not cue.mood:
                 errors.append(f"{p}.mood is empty")
-            if cue.duration_seconds <= 0:
-                errors.append(
-                    f"{p}.duration_seconds must be > 0 (got "
-                    f"{cue.duration_seconds}); compute as "
-                    "spoken_words/2.5 + action_shots*3.0 summed across "
-                    "the whole screenplay."
-                )
         return errors

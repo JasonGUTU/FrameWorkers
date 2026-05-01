@@ -1,24 +1,24 @@
-"""AudioMix materializer — amix the video's own audio with optional global underlays.
+"""AudioMix materializer — amix whichever audio sources are present.
 
-Post-refactor architecture:
-  * The video's audio track (Kling's baked-in dialogue + foley) is the
-    base layer — extracted with ffmpeg from the final video mp4.
-  * Optional global background-music wav (single film-wide wav
-    registered under sys_id ``aud_music_film``) overlays on top.
-  * Optional global ambience-bed wav (single film-wide wav registered
-    under sys_id ``aud_amb_film``) overlays on top.
-  * ffmpeg amix with duration=longest produces the final wav,
-    registered under sys_id ``aud_final``.
+Source layers (each individually optional, at least one required):
+  * Assembled video's baked dialogue + foley track — extracted
+    with ffmpeg from ``video_file_path`` mp4.
+  * Narrator voiceover wav — read from ``narrator_file_path`` for
+    illustrated-storytelling chains (where no rendered video exists).
+  * Background-music wav — read from ``music_file_path`` (sys_id
+    ``aud_music_film``).
+  * Ambience-bed wav — read from ``ambience_file_path`` (sys_id
+    ``aud_amb_film``).
 
-Scene-level mixing is gone: dialogue + foley are already time-locked to
-the visuals by Kling itself, and the music / ambience beds are
-continuous underlays that don't need per-scene alignment.
+ffmpeg amix with duration=longest produces the final wav, registered
+under sys_id ``aud_final``. Scene-level mixing is gone: dialogue + foley
+are time-locked to the visuals by the video-generation backend itself,
+and the music / ambience beds are continuous underlays that don't need
+per-scene alignment.
 
-The music / ambience wavs are located via direct file-path fields on
-``typed_input`` (routed from InputResolver's ``music_file`` /
-``ambience_file`` labels). The upstream JSON packages no longer carry
-an ``audio_asset`` block — the wav is a standalone artifact in
-global_memory.
+The wav file paths are routed via InputResolver's per-label slots; the
+upstream JSON packages no longer carry an ``audio_asset`` block — each
+wav is a standalone artifact in global_memory.
 """
 
 from __future__ import annotations
@@ -76,10 +76,11 @@ class AudioMixMaterializer(BaseMaterializer):
     def _extract_audio_from_video(video_path: str) -> bytes | None:
         """Extract the baked-in audio track from a video mp4 as PCM WAV bytes.
 
-        Kling's ``generate_audio`` writes dialogue + foley into a single
-        AAC stream inside the mp4; we demux and re-encode to PCM so the
-        downstream amix filter receives a uniformly-formatted input.
-        Returns None when the video has no audio track or ffmpeg fails.
+        The video-generation backend writes dialogue + foley into a
+        single AAC stream inside the mp4; we demux and re-encode to PCM
+        so the downstream amix filter receives a uniformly-formatted
+        input. Returns None when the video has no audio track or ffmpeg
+        fails.
         """
         if not video_path or not os.path.isfile(video_path):
             return None
@@ -113,12 +114,15 @@ class AudioMixMaterializer(BaseMaterializer):
         video_path = self._normalize_local_path(typed_input.video_file_path)
         video_audio = self._extract_audio_from_video(video_path) if video_path else None
 
+        narrator_bytes = self._load_bytes(typed_input.narrator_file_path)
         music_bytes = self._load_bytes(typed_input.music_file_path)
         amb_bytes = self._load_bytes(typed_input.ambience_file_path)
 
         inputs: list[bytes] = []
         if video_audio:
             inputs.append(video_audio)
+        if narrator_bytes:
+            inputs.append(narrator_bytes)
         if music_bytes:
             inputs.append(music_bytes)
         if amb_bytes:
@@ -129,9 +133,10 @@ class AudioMixMaterializer(BaseMaterializer):
         if not inputs:
             logger.warning(
                 "[AudioMix] no source tracks found (video_path=%r "
-                "music_file=%r ambience_file=%r); emitting no final "
-                "audio asset",
+                "narrator_file=%r music_file=%r ambience_file=%r); "
+                "emitting no final audio asset",
                 video_path,
+                typed_input.narrator_file_path,
                 typed_input.music_file_path,
                 typed_input.ambience_file_path,
             )

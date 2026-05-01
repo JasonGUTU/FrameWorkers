@@ -46,10 +46,14 @@ class VideoExtendAgentInput(BaseModel):
 
     ``source_video_path``: the video to extend.
     ``continuation_description``: what should happen next.
+    ``creative_brief_json_text``: the user's verbatim brief as raw JSON
+    text — fallback source for the continuation cue when no explicit
+    continuation_instruction artifact is wired up upstream.
     """
 
     source_video_path: str = ""
     continuation_description: str = ""
+    creative_brief_json_text: str = ""
 
 
 class VideoExtendAgentOutput(BaseModel):

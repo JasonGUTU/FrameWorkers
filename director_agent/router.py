@@ -156,6 +156,23 @@ class LlmSubAgentPlanner:
         *,
         max_tokens: Optional[int] = None,
     ) -> Dict[str, Any]:
+        import asyncio
+
+        return asyncio.run(
+            self._acomplete_json_dict(system, user, max_tokens=max_tokens)
+        )
+
+    async def _acomplete_json_dict(
+        self,
+        system: str,
+        user: str,
+        *,
+        max_tokens: Optional[int] = None,
+    ) -> Dict[str, Any]:
+        """Async leaf — drives chat_json directly so callers under
+        asyncio.gather share one event loop (avoids cross-loop Future bug
+        that ThreadPoolExecutor + asyncio.run hits with google.genai SDK).
+        """
         client = self._client()
         chat_json_fn = getattr(client, "chat_json", None)
         if not callable(chat_json_fn):
@@ -163,22 +180,16 @@ class LlmSubAgentPlanner:
                 "director_agent routing requires an LLM client with async chat_json(...) "
                 "(e.g. inference.clients.LLMClient)."
             )
-        import asyncio
-
         cap = _ROUTING_CHAT_JSON_MAX_TOKENS if max_tokens is None else max_tokens
-
-        async def _run() -> Dict[str, Any]:
-            out = await chat_json_fn(
-                system_prompt=system,
-                user_prompt=user,
-                model=self._model,
-                max_tokens=cap,
-            )
-            if not isinstance(out, dict):
-                raise ValueError(f"chat_json returned non-dict: {type(out)}")
-            return out
-
-        return asyncio.run(_run())
+        out = await chat_json_fn(
+            system_prompt=system,
+            user_prompt=user,
+            model=self._model,
+            max_tokens=cap,
+        )
+        if not isinstance(out, dict):
+            raise ValueError(f"chat_json returned non-dict: {type(out)}")
+        return out
 
     # ------------------------------------------------------------------
     # merge_session_goal
@@ -228,10 +239,37 @@ class LlmSubAgentPlanner:
         stack_memory: Optional[List[Dict[str, Any]]] = None,
         max_steps: int = MAX_PIPELINE_STEPS,
     ) -> List[PlanStepSpec]:
-        """Plan the full pipeline ONCE for this user turn.
+        """Sync wrapper around :meth:`aplan_pipeline_upfront`.
 
         Returns ``[]`` on LLM / validation failure (caller should fall back or
         log-and-stop; director posts a chat error on empty plan).
+        """
+        import asyncio
+
+        return asyncio.run(
+            self.aplan_pipeline_upfront(
+                user_goal=user_goal,
+                available_agents=available_agents,
+                stack_memory=stack_memory,
+                max_steps=max_steps,
+            )
+        )
+
+    async def aplan_pipeline_upfront(
+        self,
+        *,
+        user_goal: str,
+        available_agents: List[Dict[str, Any]],
+        stack_memory: Optional[List[Dict[str, Any]]] = None,
+        max_steps: int = MAX_PIPELINE_STEPS,
+    ) -> List[PlanStepSpec]:
+        """Plan the full pipeline ONCE for this user turn.
+
+        Async canonical implementation. Use directly under ``asyncio.gather``
+        / ``Semaphore`` for concurrent eval (single event loop avoids the
+        cross-loop Future bug that ThreadPoolExecutor + ``asyncio.run`` hits
+        with google.genai's async client). Sync callers go through
+        :meth:`plan_pipeline_upfront`.
         """
         allowed = _allowed_ids(available_agents)
         if not allowed:
@@ -257,11 +295,11 @@ class LlmSubAgentPlanner:
         attempts = 3
         for attempt in range(attempts):
             try:
-                data = self._complete_json_dict(system, user)
+                data = await self._acomplete_json_dict(system, user)
                 plan = _parse_plan(data, allowed, max_steps=max_steps)
             except Exception as exc:
                 logger.error(
-                    "plan_pipeline_upfront attempt %d/%d failed: %s",
+                    "aplan_pipeline_upfront attempt %d/%d failed: %s",
                     attempt + 1, attempts, exc,
                 )
                 plan = []
@@ -269,7 +307,7 @@ class LlmSubAgentPlanner:
                 break
             if attempt + 1 < attempts:
                 logger.warning(
-                    "plan_pipeline_upfront attempt %d/%d empty/failed, retrying",
+                    "aplan_pipeline_upfront attempt %d/%d empty/failed, retrying",
                     attempt + 1, attempts,
                 )
         return plan

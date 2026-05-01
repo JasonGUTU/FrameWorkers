@@ -56,24 +56,33 @@ class StyleTransferAgent(BaseAgent[StyleTransferAgentInput, StyleTransferAgentOu
             "true:\n"
             "  * source_video_path is empty / whitespace-only — there is "
             "no video to restyle.\n"
-            "  * Both style_description AND style_reference_path are "
-            "empty — I have no idea what style to apply, and inventing a "
-            "style would override the user's intent.\n"
+            "  * style_description is empty AND style_reference_path is "
+            "empty AND creative_brief_json_text contains no recognisable "
+            "style cue (no aesthetic / art-style / look / mood phrase "
+            "anywhere in the brief text). Only then do I have no idea "
+            "what style to apply, and inventing one would override the "
+            "user's intent.\n"
+            "When the brief mentions ANY style cue (named style like "
+            "'Studio Ghibli' / 'ink-wash' / 'anime' / 'oil painting', or "
+            "a descriptive phrase like 'animated-drama look' / 'cyberpunk "
+            "neon'), DO NOT reject — extract that cue and use it as the "
+            "style_description.\n"
             "When you reject, populate the rejection fields like this:\n"
             "  * reason: the single most specific defect (e.g. 'no "
-            "style description or style reference image provided — cannot "
-            "decide what visual style to apply').\n"
+            "style description, style reference image, or style cue in "
+            "creative brief — cannot decide what visual style to apply').\n"
             "  * missing_labels: whichever of ['source_video', "
-            "'style_reference'] is unusable.\n"
+            "'style_reference', 'creative_brief'] is unusable.\n"
             "  * offending_fields: e.g. ['source_video_path'] or "
-            "['style_description', 'style_reference_path'].\n"
+            "['style_description', 'style_reference_path', "
+            "'creative_brief_json_text'].\n"
             "If the style description is short or vague (e.g. just "
             "'anime') — DO NOT reject; that is a perfectly usable "
             "style cue, just optimize the prompt around it.\n"
             "=== END WHEN TO REJECT UPSTREAM INPUT ===\n\n"
             "=== YOUR TASK ===\n"
-            "Given a style description (and optionally a style reference), "
-            "produce:\n"
+            "Given a style description, optional style reference, and the "
+            "user's creative brief, produce:\n"
             "1. A detailed style_description that captures the visual "
             "qualities to apply.\n"
             "2. An optimized style_prompt suitable for a video style "
@@ -95,13 +104,29 @@ class StyleTransferAgent(BaseAgent[StyleTransferAgentInput, StyleTransferAgentOu
 
     def build_user_prompt(self, input_data: StyleTransferAgentInput) -> str:
         parts = [
-            f"Apply this style to a video: **{input_data.style_description}**\n\n"
+            f"Apply a style transfer to a video.\n\n"
             f"Source video: {input_data.source_video_path}\n"
         ]
+
+        if input_data.style_description:
+            parts.append(
+                f"Style description (from upstream style_reference): "
+                f"**{input_data.style_description}**\n"
+            )
 
         if input_data.style_reference_path:
             parts.append(
                 f"Style reference image: {input_data.style_reference_path}\n"
+            )
+
+        if input_data.creative_brief_json_text:
+            parts.append(
+                "\n=== CREATIVE BRIEF (raw JSON — read the user's verbatim "
+                "request from it; the style cue may be in plain text) ===\n"
+                f"{input_data.creative_brief_json_text}\n"
+                "=== END CREATIVE BRIEF ===\n"
+                "If the upstream style_description above is empty, extract "
+                "the visual-style cue from the brief above and use it.\n"
             )
 
         parts.append(

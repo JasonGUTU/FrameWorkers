@@ -83,9 +83,25 @@ def load_policy(base_model: str, adapter_path: Optional[str]):
 # ---------------------------------------------------------------------------
 
 
-def _build_system_prompt() -> str:
-    from training.director.gen_samples import build_system_prompt
-    return build_system_prompt()
+def _build_system_prompt(schema_variant: str = "with_rationale") -> str:
+    """Return the canonical system prompt for the given schema variant.
+
+    ``with_rationale`` (default) — assistant outputs ``{rationale, plan:[{agent_id, intent}]}``.
+    Same as production / Gemini canonical baseline. Existing call-sites without
+    the kwarg keep the original behavior byte-identical.
+
+    ``no_rationale`` — assistant outputs ``{plan:[{agent_id}]}``. Used by
+    CoT-ablation adapters trained on ``samples_*.no_rationale.jsonl``.
+    """
+    from training.director.gen_samples import (
+        build_system_prompt,
+        build_system_prompt_no_rationale,
+    )
+    if schema_variant == "no_rationale":
+        return build_system_prompt_no_rationale()
+    if schema_variant == "with_rationale":
+        return build_system_prompt()
+    raise ValueError(f"unknown schema_variant: {schema_variant!r}")
 
 
 def _extract_json_object(text: str) -> Optional[str]:
@@ -225,11 +241,12 @@ def run(
     cases_path: Path,
     name: Optional[str],
     max_new_tokens: int,
+    schema_variant: str = "with_rationale",
 ) -> None:
     cases = load_cases(str(cases_path))
     export_gt_csv(cases, str(DEFAULT_GT_CSV))
 
-    system_prompt = _build_system_prompt()
+    system_prompt = _build_system_prompt(schema_variant)
     model, tok = load_policy(base_model, adapter)
 
     RUNTIME_DIR.mkdir(parents=True, exist_ok=True)
@@ -320,6 +337,13 @@ def main():
     ap.add_argument("--name", default=None,
                     help="Optional label suffix for the results JSON.")
     ap.add_argument("--max-new-tokens", type=int, default=1024)
+    ap.add_argument("--schema-variant", choices=["with_rationale", "no_rationale"],
+                    default="with_rationale",
+                    help="Output schema. 'with_rationale' (default) expects "
+                         "{rationale, plan:[{agent_id, intent}]} — same as production / "
+                         "Gemini canonical baseline. 'no_rationale' expects "
+                         "{plan:[{agent_id}]} — for CoT-ablation adapters trained on "
+                         "samples_*.no_rationale.jsonl.")
     args = ap.parse_args()
     run(
         adapter=args.adapter,
@@ -327,6 +351,7 @@ def main():
         cases_path=args.cases,
         name=args.name,
         max_new_tokens=args.max_new_tokens,
+        schema_variant=args.schema_variant,
     )
 
 

@@ -183,14 +183,19 @@ SPEC = AgentSpec(
             cardinality="single",
             optional=True,
             description=(
-                "The final assembled mp4 video file on disk (binary "
-                "artifact, mime=video/mp4). Materializer reads its "
-                "path and passes it to ffmpeg for composition. "
-                "Targets the mp4 binary specifically, NOT the JSON "
-                "manifest. Optional — absent when the visual track is "
-                "an illustration_sequence slideshow (the mp4 is "
-                "rendered from still images rather than muxed from an "
-                "existing clip)."
+                "Any upstream-produced mp4 video file on disk (binary "
+                "artifact, mime=video/mp4) that should serve as the "
+                "visual track of the final composition. Includes: a raw "
+                "user-uploaded video (intake step), an edited video "
+                "(style transfer / video extension / inpainting "
+                "output), or a newly-assembled multi-shot film. The "
+                "materializer reads its path and passes it to ffmpeg "
+                "for composition; when no [video_package] manifest "
+                "with shot_segments is also present the composition "
+                "treats it as a single clip. Targets the mp4 binary "
+                "specifically, NOT the JSON manifest. Optional — "
+                "absent when the visual track is an "
+                "illustration_sequence slideshow."
             ),
         ),
         InputLabelSpec(

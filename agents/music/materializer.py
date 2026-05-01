@@ -1,9 +1,10 @@
 """Music materializer — generates the single film-wide background music track.
 
-Chunks the target duration into ~30s segments (most audio-gen backends cap
-there) and concatenates them with ffmpeg. The downstream audio-mix step
-later amix+trims this bed against the actual video length, so a slight
-over-generation is acceptable — under-generation is not (silence tail).
+Generates a fixed 30s chunk (most audio-gen backends cap there). Track
+length is intentionally not a creative responsibility: the downstream
+audio-mix step's ffmpeg amix duration=longest filter trims/loops the
+bed against the actual video length, so any reasonable single chunk
+works as the source.
 
 Persisted-JSON contract: this materializer does NOT mutate the cue dict.
 The wav file is registered in global_memory as a standalone artifact with
@@ -41,24 +42,11 @@ class MusicMaterializer(BaseMaterializer):
         pending: list[MediaAsset] = []
         for cue in asset_dict.get("content", {}).get("cues", []):
             mood = cue.get("mood", "neutral")
-            target_dur = cue.get("duration_seconds", 30.0)
             try:
-                # Generate segments of max 30s each, then concat
-                segments: list[bytes] = []
-                remaining = max(target_dur, 10.0)
-                while remaining > 0:
-                    seg_dur = min(remaining, 30.0)
-                    result = await self.svc.generate_music(
-                        mood=mood, scene_id="", duration_sec=seg_dur,
-                    )
-                    segments.append(result.bytes)
-                    remaining -= seg_dur
-                # Concat if multiple segments
-                if len(segments) == 1:
-                    final_bytes = segments[0]
-                else:
-                    joined = AudioService._ffmpeg_concat(segments)
-                    final_bytes = joined if joined else b"".join(segments)
+                result = await self.svc.generate_music(
+                    mood=mood, scene_id="", duration_sec=30.0,
+                )
+                final_bytes = result.bytes
                 # Local uri_holder: the persist flow sets
                 # ``uri_holder["uri"]`` after writing the wav to disk
                 # and ``collect_materialized_files`` reads it back. We

@@ -14,6 +14,7 @@ from .agent import VideoExtendAgent
 from .evaluator import VideoExtendEvaluator
 from .labels import (
     INPUT_LABEL_CONTINUATION_INSTRUCTION,
+    INPUT_LABEL_CREATIVE_BRIEF,
     INPUT_LABEL_SOURCE_VIDEO,
 )
 from .materializer import VideoExtendMaterializer
@@ -30,6 +31,9 @@ def build_input(
     instruction = ResolvedArtifactEntry.coerce(
         resolved_artifacts.get(INPUT_LABEL_CONTINUATION_INSTRUCTION)
     )
+    brief = ResolvedArtifactEntry.coerce(
+        resolved_artifacts.get(INPUT_LABEL_CREATIVE_BRIEF)
+    )
 
     if instruction.payload:
         continuation = json.dumps(
@@ -38,9 +42,16 @@ def build_input(
     else:
         continuation = instruction.caption
 
+    brief_text = (
+        json.dumps(brief.payload, ensure_ascii=False, indent=2)
+        if brief.payload
+        else ""
+    )
+
     return VideoExtendAgentInput(
         source_video_path=video.path,
         continuation_description=continuation,
+        creative_brief_json_text=brief_text,
     )
 
 
@@ -104,6 +115,22 @@ SPEC = AgentSpec(
                 "registered from the user's chat / text upload (caption "
                 "usually starts with 'User-submitted creative brief'). "
                 "Pick the single most recent such instruction."
+            ),
+        ),
+        InputLabelSpec(
+            name=INPUT_LABEL_CREATIVE_BRIEF,
+            cardinality="single",
+            optional=True,
+            description=(
+                "The user's verbatim natural-language brief for the "
+                "whole pipeline (auto-persisted from chat / text upload). "
+                "Fallback source for the continuation cue when the user "
+                "wrote 'extend by 8 seconds' / 'continue this scene' "
+                "inline in plain text and no dedicated "
+                "[continuation_instruction] artifact exists. Read "
+                "alongside [continuation_instruction]; treat "
+                "[continuation_instruction] as primary when both are "
+                "present."
             ),
         ),
     ],

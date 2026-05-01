@@ -3748,5 +3748,2310 @@
         "done"
       ]
     ]
+  },
+  {
+    "name": "cr_26",
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "Make a time-loop psychological thriller animated drama where a young architect relives the same Sunday morning until she identifies who's been slipping threatening notes under her apartment door",
+    "original_expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_27",
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "Make a 1930s film-noir detective animated drama where a hard-boiled PI takes a missing-persons case from a wealthy widow and discovers her husband faked his own death to flee a mob debt",
+    "original_expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_28",
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "Create a college-campus love-triangle mini-drama about a music major torn between her childhood best friend and the brooding transfer student who plays her demo tape on the dorm pirate-radio show",
+    "original_expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_29",
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "Make a heist mini-drama where four art-school dropouts plan to rob a Manhattan auction house to recover a Vermeer their grandfather painted under duress in WW2",
+    "original_expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_30",
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "Make a medieval-fantasy quest animated drama where a young hedge-knight escorts a runaway princess through bandit-haunted moors to her grandmother's keep, give it some sweeping orchestral battle music",
+    "original_expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_31",
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "Make a sci-fi space-opera animated drama about a stowaway engineer who must restart a derelict colony ship before its passengers wake from cryosleep, with a pulsing electronic synth score",
+    "original_expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_32",
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "Make a J-pop idol-romance mini-drama where a shy backup dancer is suddenly promoted to lead vocalist on the eve of her group's debut concert, with bright upbeat pop music",
+    "original_expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_33",
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "Make a slow-burn psychological thriller mini-drama about a writer who rents an isolated cabin on a foggy coast and starts hearing whispers in the surf, add persistent rain and ocean-wave ambience",
+    "original_expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_34",
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "Make a quiet WW2 farewell drama set entirely in a Polish train station as a Jewish family says goodbye to their youngest daughter who's being smuggled to safety, layer in soft station ambience with distant whistles and crowd murmurs",
+    "original_expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_35",
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "Make a found-footage Amazon horror mini-drama where an ethnobotany team starts disappearing one by one near an abandoned mission, give it dense rainforest ambience with insects and distant calls",
+    "original_expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_36",
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "Make a WW1 trench-warfare animated drama where a teenage runner carries the wrong order across no-man's-land and changes the course of a battle, with a somber orchestral score and continuous battlefield ambience of artillery and wind",
+    "original_expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_37",
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "Make a cruise-ship murder mystery mini-drama where a retired detective notices a missing passenger and unwinds a smuggling ring, layer suspense music with constant ocean-and-engine ambience",
+    "original_expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "cr_38",
+    "category": "cr",
+    "decision": "pending",
+    "original_user_goal": "Make a post-apocalyptic mini-drama where a mute nomad and a feral child cross a radioactive Nevada salt flat to reach a rumored signal tower, with electronic-ambient score over howling-wind desert ambience",
+    "original_expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_img_06",
+    "category": "intake",
+    "decision": "pending",
+    "original_user_goal": "I've attached a reference image of a lone samurai standing under cherry blossoms. Make a feudal-Japan revenge animated drama using him as the protagonist — a former retainer hunting the warlord who burned his village",
+    "original_expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_img_07",
+    "category": "intake",
+    "decision": "pending",
+    "original_user_goal": "Here's a portrait sketch of a cyberpunk hacker with neon-blue hair. Build a sci-fi thriller animated drama where she discovers her corporate employer is harvesting children's dreams as a renewable resource",
+    "original_expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_img_08",
+    "category": "intake",
+    "decision": "pending",
+    "original_user_goal": "I uploaded a concept painting of a steampunk airship. Make an adventure animated drama about a young engineer's apprentice who stows away on its maiden voyage and uncovers a plot to bomb the Imperial parliament",
+    "original_expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_06",
+    "category": "sub",
+    "decision": "pending",
+    "original_user_goal": "Make a coming-of-age detective mini-drama about a 12-year-old who solves the case of her missing dog by canvassing her neighborhood block by block, please add subtitles for the dialogue",
+    "original_expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_07",
+    "category": "sub",
+    "decision": "pending",
+    "original_user_goal": "Create a workplace rom-com mini-drama where a junior accountant and the office's unflappable IT-support guy fall in love after a phishing-attack drill goes wrong, include subtitles",
+    "original_expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_08",
+    "category": "sub",
+    "decision": "pending",
+    "original_user_goal": "Make an educational kids show about three siblings who discover their grandfather's basement is full of WW2 memorabilia and learn about civilian life during the war, with subtitles throughout",
+    "original_expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_vid_06",
+    "category": "sub",
+    "decision": "pending",
+    "original_user_goal": "I've uploaded a 90-second cooking demo I shot at home. Please just transcribe my voice-over and burn the subtitles into the video",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_vid_07",
+    "category": "sub",
+    "decision": "pending",
+    "original_user_goal": "Here's a recording of a family Zoom interview I did with my grandmother last summer. Add subtitles to the whole clip so I can share it with relatives who are hard of hearing",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "sub_vid_08",
+    "category": "sub",
+    "decision": "pending",
+    "original_user_goal": "I have a French-language interview clip from a documentary I'm making. Please transcribe the audio and translate it to English subtitles",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "bilingual_06",
+    "category": "bilingual",
+    "decision": "pending",
+    "original_user_goal": "Make a heartwarming family drama about a Hong Kong grandmother teaching her American-born grandson to make traditional dim sum, dialogue should be in Cantonese with both Chinese and English subtitles",
+    "original_expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "bilingual_07",
+    "category": "bilingual",
+    "decision": "pending",
+    "original_user_goal": "Create a Brazilian-Portuguese coming-of-age drama about a teenage capoeirista preparing for his first batizado ceremony in Salvador, with Portuguese and English subtitles",
+    "original_expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "bilingual_08",
+    "category": "bilingual",
+    "decision": "pending",
+    "original_user_goal": "Make a Japanese mini-drama about an elderly Kyoto bookshop owner who befriends a runaway teen and teaches her hand-binding, with Japanese and English subtitles",
+    "original_expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_05",
+    "category": "storytelling",
+    "decision": "pending",
+    "original_user_goal": "Tell me an illustrated story about a young chimney sweep in Victorian London who befriends the ghost of a child who died in the same factory generations earlier",
+    "original_expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_06",
+    "category": "storytelling",
+    "decision": "pending",
+    "original_user_goal": "Tell me a quiet illustrated bedtime story about a tortoise who slowly walks across a desert to bring water back to her dying garden",
+    "original_expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_07",
+    "category": "storytelling",
+    "decision": "pending",
+    "original_user_goal": "Tell an illustrated tale about a librarian-witch in a forgotten mountain town whose books rearrange themselves overnight to predict the next day's weather",
+    "original_expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_08",
+    "category": "storytelling",
+    "decision": "pending",
+    "original_user_goal": "Narrate an illustrated story about a deep-sea fisherman who hooks a small singing fish that will only release a song in exchange for a memory",
+    "original_expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_music_02",
+    "category": "storytelling",
+    "decision": "pending",
+    "original_user_goal": "Tell me a melancholy illustrated story about an orphaned violinist who returns to her family's flooded village for the first time in twenty years, please add some mournful string music",
+    "original_expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_ambience_02",
+    "category": "storytelling",
+    "decision": "pending",
+    "original_user_goal": "Tell an illustrated story about an elderly lighthouse keeper on the Scottish coast who sees a shipwrecked stranger walking inland out of the surf, with continuous storm-and-crashing-wave ambience",
+    "original_expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_bilingual_02",
+    "category": "storytelling",
+    "decision": "pending",
+    "original_user_goal": "Tell me a French folktale about a baker in Provence who discovers her oldest sourdough mother carries the dreams of every previous baker, narrate in French with English subtitles",
+    "original_expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_imgref_02",
+    "category": "storytelling",
+    "decision": "pending",
+    "original_user_goal": "I've uploaded a watercolor of a girl with red hair holding a white rabbit. Use her as the protagonist and tell me an illustrated story about her finding her way home from a walking forest",
+    "original_expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_full_02",
+    "category": "storytelling",
+    "decision": "pending",
+    "original_user_goal": "Here's a sketch of a barn cat I drew. Tell me a slow illustrated story about her midnight patrol of the farm where she protects three sleeping kittens from a barn owl, please add gentle nighttime music",
+    "original_expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_music_ambience_02",
+    "category": "storytelling",
+    "decision": "pending",
+    "original_user_goal": "Tell an illustrated story about a girl who finds a music box at the bottom of a frozen lake whose tune wakes the lake's sleeping serpent each spring, layer in soft melancholy music with constant lake-ice creaking ambience",
+    "original_expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_music_bilingual_02",
+    "category": "storytelling",
+    "decision": "pending",
+    "original_user_goal": "Tell me a Spanish folktale about a shepherd boy in the Pyrenees who follows the sound of a lost flute through three winters, narrate in Spanish with English subtitles and add gentle pastoral music",
+    "original_expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_imgref_music_02",
+    "category": "storytelling",
+    "decision": "pending",
+    "original_user_goal": "I've attached a portrait of an old woman with white braids holding a brass telescope. Use her as the protagonist and tell me an illustrated story about her last night atop the lighthouse before it's decommissioned, with sentimental orchestral music",
+    "original_expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_imgref_bilingual_02",
+    "category": "storytelling",
+    "decision": "pending",
+    "original_user_goal": "Here's a watercolor of a small Japanese fishing boat at dusk. Use it as the setting and tell me a story about a grandfather and his granddaughter on the boy's-day-out fishing trip, narrate in Japanese with English subtitles",
+    "original_expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_ultra_02",
+    "category": "storytelling",
+    "decision": "pending",
+    "original_user_goal": "I've uploaded a charcoal drawing of a wolf standing alone in a snowy clearing. Use him as the protagonist and tell me an illustrated story about his last winter before the rest of the pack returns, narrate in Russian with English subtitles, add a sparse mournful score and cold wind ambience",
+    "original_expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "NarratorAgent",
+        "IllustrationAgent",
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent",
+        "IllustrationAgent",
+        "NarratorAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "style_06",
+    "category": "style",
+    "decision": "pending",
+    "original_user_goal": "Convert this 30-second drone shot of my city skyline into a Studio Ghibli-style watercolor animation, keep the camera move identical",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "style_07",
+    "category": "style",
+    "decision": "pending",
+    "original_user_goal": "Restyle this short video of my dog running on the beach into a 90s-anime cel-shaded look",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "style_08",
+    "category": "style",
+    "decision": "pending",
+    "original_user_goal": "Take this clip of my friends at the bar and apply a retro 8-bit pixel-art style across the whole thing",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "extend_07",
+    "category": "extend",
+    "decision": "pending",
+    "original_user_goal": "I've got a 5-second slow-motion clip of a wave crashing on a rock. Please extend it to about 12 seconds keeping the same slow-motion feel",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "extend_08",
+    "category": "extend",
+    "decision": "pending",
+    "original_user_goal": "Here's a 6-second clip of my toddler running through a sprinkler in the backyard. Extend it to roughly 15 seconds so I can use it as a phone wallpaper loop",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "extend_09",
+    "category": "extend",
+    "decision": "pending",
+    "original_user_goal": "I have an 8-second clip of rain on my office window. Extend it to around 25 seconds and overlay a gentle thunder-rumble ambience track",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "highlight_06",
+    "category": "highlight",
+    "decision": "pending",
+    "original_user_goal": "Here's a 15-minute recording of my friend's wedding ceremony. Pull out the best highlight reel — about 90 seconds of the most emotional moments",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "highlight_07",
+    "category": "highlight",
+    "decision": "pending",
+    "original_user_goal": "I've uploaded a 20-minute pickup basketball game I filmed on my phone. Make me a 60-second highlight clip of the best plays",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_61",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "Here's a 2-minute Spanish-language street-vendor interview I shot in Madrid. Please transcribe and translate it to English subtitles, then output a clean composited version",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_62",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "I have a 3-minute Korean cooking-show clip. Transcribe the host's narration and translate to English subtitles, then give me the final video",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_63",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "I have an old VHS-style home-video clip of a family birthday from the 90s. Analyze it for plot beats, then expand it into a longer animated drama about that birthday from the youngest child's POV, add subtitles",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_64",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "Here's a 60-second clip of an empty subway platform at 3am. Read it as a story setup and build a noir mystery animated drama around it about the last passenger of the night, include subtitles",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_65",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "Here's a portrait of a Victorian widow in mourning dress. Build an animated mystery drama where she investigates her husband's recent death, with English transcription subtitles plus a French translation track",
+    "original_expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_66",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "I've attached a reference image of a young Korean monk meditating at a mountaintop temple. Make an animated coming-of-age drama about his pilgrimage with bilingual Korean+English subtitles",
+    "original_expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_67",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "Here's a concept painting of an underwater research station. Make a sci-fi animated drama about the last dive of an aging marine biologist there, and extend the final reveal shot to give it more weight",
+    "original_expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_68",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "I've uploaded a portrait of a 12-year-old girl with a falcon on her glove. Make an animated coming-of-age drama about her training her first hunting bird in the Mongolian steppe, and please extend the soaring-flight final shot",
+    "original_expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_69",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "Here's a 1-minute time-lapse I shot of the sunset from my apartment. Add a gentle acoustic-guitar score over it",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_70",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "I have a 90-second drone clip flying over a snowy mountain range. Score it with sweeping orchestral music",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_71",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "I've uploaded 2 minutes of B-roll from a coffee shop on a rainy afternoon. Add some chill lo-fi music and layer in cafe-and-rain ambience",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_72",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "Here's a 90-second clip of an empty cathedral interior. Underlay reverent choral music with constant cathedral-room ambience (footsteps and faint murmurs)",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "MusicAgent",
+        "AmbienceAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_73",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "Here's a 60-second podcast video clip of my host monologue. Convert it to a hand-drawn animation style and add subtitles for the speech",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_74",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "I've uploaded a 90-second educational lecture clip. Restyle it into a chalkboard-line-art animation and burn in the speaker's transcript as subtitles",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_75",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "Here's a 45-second clip of my city's downtown at night. Restyle it to a 1980s synthwave neon look and add a synthwave music track",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_76",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "I have a 60-second clip of myself jogging along a river path. Convert it to a watercolor animation style and overlay some upbeat indie folk music",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_77",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "I've got a 12-second clip of my professor delivering a one-line lecture punchline. Please extend it to 45 seconds (continue the gesture and silence) and add subtitles",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_78",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "Here's an 8-second clip of my friend telling a joke at a wedding toast. Extend it to about 30 seconds keeping the audience reaction continuing, and add subtitles for the joke",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_79",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "I have a 10-second clip of my dog leaping for a frisbee in slow-motion. Extend it to roughly 30 seconds and add some cinematic uplifting music",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_80",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "Here's a 6-second time-lapse of dough rising in a glass bowl. Extend it to around 25 seconds and add some warm acoustic background music",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_81",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "Here's an 18-minute soccer match recording from my kid's tournament. Pull out the highlight reel of his best plays and add subtitles for the commentary",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_82",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "I have a 25-minute video of my friend's stand-up open mic. Build a 90-second highlight reel of the strongest jokes with subtitles",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_83",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "I've uploaded a 45-second clip of a small fishing boat returning to harbor at dawn. Read it as a story prompt and build an animated mini-drama about the captain's last trip before retirement",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_84",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "Here's a 7-second clip of my dog yawning. Extend it to 18 seconds and convert the whole thing to a vintage-cartoon animation style",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_85",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "I have a 10-second clip of myself reading a poem aloud. Extend it to 30 seconds, restyle it to look like a charcoal-sketch animation, and add subtitles for the poem",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_86",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "Here's a 22-minute amateur skateboard session I filmed at the park. Make me a 90-second highlight reel of the best tricks with some upbeat punk-rock music",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_87",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "I've uploaded a 12-minute panel-discussion clip from a tech conference. Analyze the visuals and transcribe the speech in parallel, then layer in subtle background music for the final composite",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "VideoAnalysisAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_88",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "Here's a 30-minute amateur stand-up comedy set. Pull a highlight reel of the best 90 seconds, add subtitles for the punchlines, and layer in some light club ambience-style background music",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "MusicAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_89",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "I have a 20-minute kids' soccer match. Pull a 75-second highlight reel of the goals and key plays, add subtitles for the parents' cheers, and overlay an upbeat sports anthem",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "MusicAgent"
+      ],
+      [
+        "TranscriptionAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_90",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "I've uploaded a 25-minute Italian-language wedding-toast compilation. Pull out a 2-minute highlight reel, transcribe the toasts and translate to English subtitles",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_91",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "Here's a 15-second clip of myself walking down a city street at night. Restyle it to a noir black-and-white look, extend it to 35 seconds, and add a smoky jazz score",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_92",
+    "category": "complex",
+    "decision": "pending",
+    "original_user_goal": "I've got a 40-minute Japanese variety-show recording. Pull a 2-minute highlight reel of the funniest moments, transcribe the dialogue, translate to English subtitles, and overlay some upbeat j-pop background music",
+    "original_expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent",
+        "MusicAgent"
+      ],
+      [
+        "MusicAgent",
+        "TranslationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
   }
 ]

@@ -62,11 +62,15 @@ class StyleTransferAgentInput(BaseModel):
     ``style_description`` is a natural-language description of the
     desired style (e.g. 'anime', 'oil painting', 'cyberpunk').
     ``style_reference_path`` is an optional reference image for the style.
+    ``creative_brief_json_text`` is the user's verbatim brief as raw JSON
+    text — fallback source for the style when no dedicated style_reference
+    artifact is wired up upstream.
     """
 
     source_video_path: str = ""
     style_description: str = ""
     style_reference_path: str = ""
+    creative_brief_json_text: str = ""
 
 
 class StyleTransferAgentOutput(BaseModel):

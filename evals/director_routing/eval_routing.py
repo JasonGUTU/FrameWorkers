@@ -29,11 +29,11 @@ Usage (from repo root):
 from __future__ import annotations
 
 import argparse
+import asyncio
 import json
 import os
 import statistics
 import time
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -176,14 +176,14 @@ def _build_step_records(
 # ---------------------------------------------------------------------------
 
 
-def evaluate_case(
+async def aevaluate_case(
     planner,
     catalog: List[Dict[str, Any]],
     case: Dict[str, Any],
     *,
     max_steps: int = 20,
 ) -> Dict[str, Any]:
-    """One LLM call → full plan → score."""
+    """One async LLM call → full plan → score."""
     expected_raw = case["expected_chain"]
     expected = [_slot_set(s) for s in _strip_trailing_done(expected_raw)]
 
@@ -191,7 +191,7 @@ def evaluate_case(
     actual: List[str] = []
     error: Optional[str] = None
     try:
-        plan_specs = planner.plan_pipeline_upfront(
+        plan_specs = await planner.aplan_pipeline_upfront(
             user_goal=case["user_goal"],
             available_agents=catalog,
             stack_memory=[],
@@ -264,19 +264,23 @@ def run_eval(
     print(f"Output:     {output_path}")
     print("=" * 90)
 
-    # ── Parallel execution ────────────────────────────────────────────
+    # ── Parallel execution (asyncio.gather + Semaphore — single event loop
+    #    avoids the cross-loop Future bug that ThreadPoolExecutor +
+    #    asyncio.run hits with google.genai's async client) ─────────────
     t_start = time.time()
     results_map: Dict[str, Dict[str, Any]] = {}
 
-    def _run_one(case):
-        return evaluate_case(planner, catalog, case, max_steps=max_steps)
+    async def _run_one(case: Dict[str, Any], sem: asyncio.Semaphore) -> Tuple[str, Dict[str, Any]]:
+        async with sem:
+            res = await aevaluate_case(planner, catalog, case, max_steps=max_steps)
+        return case["name"], res
 
-    completed = 0
-    with ThreadPoolExecutor(max_workers=workers) as pool:
-        futures = {pool.submit(_run_one, c): c["name"] for c in cases}
-        for future in as_completed(futures):
-            case_name = futures[future]
-            result = future.result()
+    async def _run_all() -> None:
+        sem = asyncio.Semaphore(workers)
+        tasks = [asyncio.create_task(_run_one(c, sem)) for c in cases]
+        completed = 0
+        for coro in asyncio.as_completed(tasks):
+            case_name, result = await coro
             results_map[case_name] = result
             completed += 1
             tag = "PASS" if result["chain_correct"] else "FAIL"
@@ -287,6 +291,8 @@ def run_eval(
                 f"len {result['actual_chain_len']}/{result['expected_chain_len']} | "
                 f"edit={result['edit_distance']} | {case_name}"
             )
+
+    asyncio.run(_run_all())
 
     results = [results_map[c["name"]] for c in cases]
     elapsed_total = time.time() - t_start

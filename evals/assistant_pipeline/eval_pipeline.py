@@ -111,6 +111,7 @@ def _invoke_subprocess(
     image_fixture: Optional[Path] = None,
     video_fixture: Optional[Path] = None,
     audio_fixture: Optional[Path] = None,
+    cases_root: Optional[Path] = None,
 ) -> Dict[str, Any]:
     """Spawn ``_run_one_case.py`` for one case and return the result dict.
 
@@ -142,6 +143,8 @@ def _invoke_subprocess(
         cmd.extend(["--video-fixture", str(video_fixture)])
     if audio_fixture is not None:
         cmd.extend(["--audio-fixture", str(audio_fixture)])
+    if cases_root is not None:
+        cmd.extend(["--cases-root", str(cases_root)])
 
     env = os.environ.copy()
     # Belt-and-suspenders: media mocks on. _run_one_case.py also pops
@@ -248,6 +251,7 @@ def run_eval(
     results_by_name: Dict[str, Dict[str, Any]] = {}
     completed = 0
 
+    cases_root = cases_path.parent.resolve()
     with ThreadPoolExecutor(max_workers=max(1, workers)) as pool:
         futures = {
             pool.submit(
@@ -258,6 +262,7 @@ def run_eval(
                 image_fixture=image_fixture,
                 video_fixture=video_fixture,
                 audio_fixture=audio_fixture,
+                cases_root=cases_root,
             ): case["name"]
             for case in cases
         }

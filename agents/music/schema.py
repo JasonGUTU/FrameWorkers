@@ -10,30 +10,23 @@ from ..common_schema import Meta
 class MusicCue(BaseModel):
     """Single film-global background music cue.
 
-    Post-refactor the MusicAgent emits **exactly one** cue whose duration
-    covers the entire film; per-scene cues are gone because scene-level
-    audio alignment is no longer needed (Kling bakes dialogue + foley
-    into the video clips themselves, and BGM is just a global underlay).
+    The agent emits **exactly one** cue whose mood covers the entire
+    film. Per-scene cues are gone because scene-level audio alignment is
+    no longer needed (the video-generation backend bakes dialogue + foley
+    into the video clips themselves; BGM is just a global underlay).
 
-    The cue carries only LLM-chosen semantics (mood + duration target);
-    the wav file the materializer generates is registered as a separate
-    artifact in global_memory (sys_id ``aud_music_film``) and
-    downstream consumers discover it via caption-based resolution, not
-    by reading an asset block from this payload.
+    The cue carries only the LLM-chosen mood; track length is no longer
+    a creative responsibility — the materializer generates a fixed
+    chunk and the downstream audio-mix step's ffmpeg amix
+    duration=longest filter trims/loops against the actual video.
+
+    The wav file is registered as a separate artifact in global_memory
+    under sys_id ``aud_music_film`` and downstream consumers discover
+    it via caption-based resolution, not by reading an asset block.
     """
 
     cue_id: str = ""
     mood: str = Field("", json_schema_extra={"creative": True})
-    duration_seconds: float = Field(
-        0.0,
-        description=(
-            "Total film length target for the global BGM track, in "
-            "seconds. MusicAgent's LLM estimates this from the screenplay "
-            "(sum of spoken-word-count/2.5 + action_shots*3 across every "
-            "scene). The materializer chunks+concats to reach the target; "
-            "AudioMix then amix+trims against the actual video duration."
-        ),
-    )
 
 
 class MusicContent(BaseModel):
@@ -47,15 +40,16 @@ class MusicMetrics(BaseModel):
 class MusicAgentInput(BaseModel):
     """Input payload for MusicAgent.
 
-    At least ONE of the two JSON text fields must be populated — the
-    agent derives mood + duration from a screenplay when available,
-    else falls back to a video-analysis report (scene moods +
-    video_summary.duration_seconds). Both are raw JSON text blobs so
-    the LLM reads structure directly from whatever shape is present.
+    The agent picks a single film-wide mood from any available content
+    signal: a screenplay, a video-analysis report, the user's creative
+    brief, or any combination. All three are optional JSON-text blobs;
+    the LLM reads structure pragmatically and rejects only when none
+    carry a usable mood cue.
     """
 
     screenplay_json_text: str = ""
     video_analysis_json_text: str = ""
+    creative_brief_json_text: str = ""
 
 
 class MusicAgentOutput(BaseModel):

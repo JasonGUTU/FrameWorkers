@@ -84,3 +84,37 @@ def _assistant_response(rationale: str, plan_steps: list[dict]) -> str:
         {"rationale": rationale, "plan": plan_steps},
         ensure_ascii=False,
     )
+
+
+def build_system_prompt_no_rationale() -> str:
+    """CoT-ablation variant of :func:`build_system_prompt`.
+
+    Same composition (``build_plan_system_prompt`` + full descriptor catalog
+    + no topology + MAX_PIPELINE_STEPS), but the core block is
+    ``PLAN_UPFRONT_CORE_NO_RATIONALE`` — assistant schema drops the
+    top-level ``rationale`` field and the per-step ``intent`` field.
+
+    Used to generate the ``samples_sft_full.no_rationale.jsonl`` training
+    data + drive ``eval_lora.py --schema-variant no_rationale`` inference.
+    Train prompt ≡ inference prompt byte-for-byte for the no-rationale
+    branch.
+    """
+    catalog = build_agent_catalog()
+    allowed = [c["id"] for c in catalog]
+    return director_prompts.build_plan_system_prompt(
+        core=director_prompts.PLAN_UPFRONT_CORE_NO_RATIONALE,
+        allowed=allowed,
+        catalog=catalog,
+        max_plan_steps=MAX_PIPELINE_STEPS,
+    )
+
+
+def _assistant_response_no_rationale(plan_steps: list[dict]) -> str:
+    """Serialize assistant response in the no-rationale schema.
+
+    Strips top-level ``rationale`` and per-step ``intent`` — the assistant
+    output is just the ordered ``agent_id`` sequence wrapped as
+    ``{"plan":[{"agent_id":"..."}, ...]}``.
+    """
+    stripped = [{"agent_id": s["agent_id"]} for s in plan_steps]
+    return json.dumps({"plan": stripped}, ensure_ascii=False)

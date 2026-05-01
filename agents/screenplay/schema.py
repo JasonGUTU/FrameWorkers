@@ -102,8 +102,8 @@ class ScriptShot(BaseModel):
 
     For spoken shots (block_type ∈ {dialogue, narration, monologue}) the
     ``text`` field is the **verbatim line** the on-screen character
-    speaks aloud — it goes straight into Kling's video generation prompt
-    when ``generate_audio=True`` is enabled (see ``FalVideoService.
+    speaks aloud — it goes straight into the video-generation backend's
+    prompt when ``generate_audio=True`` is enabled (see ``FalVideoService.
     _compose_prompt`` and CLAUDE.md's audio architecture section). For
     action shots it is a visible action description, not spoken.
     """
@@ -114,10 +114,11 @@ class ScriptShot(BaseModel):
     character_id: str = ""
     character_name: str = ""
     text: str = Field("", json_schema_extra={"creative": True})
-    # Short delivery-tone descriptor fed to Kling so it speaks the line with
-    # the right emotion (calm / neutral / sad / angry / whispered / excited /
-    # warm / tense / urgent). Empty for action shots and for spoken shots
-    # where the tone is not strong enough to specify.
+    # Short delivery-tone descriptor fed to the video-generation backend
+    # so it speaks the line with the right emotion (calm / neutral /
+    # sad / angry / whispered / excited / warm / tense / urgent). Empty
+    # for action shots and for spoken shots where the tone is not strong
+    # enough to specify.
     emotion_hint: str = Field("", json_schema_extra={"creative": True})
     continuity_refs: ContinuityRefs = Field(default_factory=ContinuityRefs)
     shot_type: str = "medium"

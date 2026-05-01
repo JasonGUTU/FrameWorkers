@@ -2,13 +2,19 @@
 
 from __future__ import annotations
 
+import json
+
 from pydantic import BaseModel
 
 from ..common_schema import ResolvedArtifactEntry
 from ..descriptor import AgentSpec, InputLabelSpec, SubAgentDescriptor
 from .agent import StyleTransferAgent
 from .evaluator import StyleTransferEvaluator
-from .labels import INPUT_LABEL_SOURCE_VIDEO, INPUT_LABEL_STYLE_REFERENCE
+from .labels import (
+    INPUT_LABEL_CREATIVE_BRIEF,
+    INPUT_LABEL_SOURCE_VIDEO,
+    INPUT_LABEL_STYLE_REFERENCE,
+)
 from .materializer import StyleTransferMaterializer
 from .schema import StyleTransferAgentInput
 
@@ -23,15 +29,25 @@ def build_input(
     style_ref = ResolvedArtifactEntry.coerce(
         resolved_artifacts.get(INPUT_LABEL_STYLE_REFERENCE)
     )
+    brief = ResolvedArtifactEntry.coerce(
+        resolved_artifacts.get(INPUT_LABEL_CREATIVE_BRIEF)
+    )
 
     style_desc = style_ref.caption or ""
     if style_ref.payload and isinstance(style_ref.payload.get("style"), str):
         style_desc = style_ref.payload["style"]
 
+    brief_text = (
+        json.dumps(brief.payload, ensure_ascii=False, indent=2)
+        if brief.payload
+        else ""
+    )
+
     return StyleTransferAgentInput(
         source_video_path=video.path,
         style_description=style_desc,
         style_reference_path=style_ref.path,
+        creative_brief_json_text=brief_text,
     )
 
 
@@ -90,6 +106,21 @@ SPEC = AgentSpec(
                 "to mimic, or a text artifact describing the desired "
                 "style. The caption should describe the target aesthetic "
                 "(e.g. 'Studio Ghibli watercolor', 'cyberpunk neon noir')."
+            ),
+        ),
+        InputLabelSpec(
+            name=INPUT_LABEL_CREATIVE_BRIEF,
+            cardinality="single",
+            optional=True,
+            description=(
+                "The user's verbatim natural-language brief for the "
+                "whole pipeline (auto-persisted from chat / text upload). "
+                "Fallback source for the target visual style when the "
+                "user wrote the style cue inline in plain text (e.g. "
+                "'convert this to Studio Ghibli', 'ink-wash style') and "
+                "no dedicated [style_reference] artifact exists. Read "
+                "alongside [style_reference]; treat [style_reference] as "
+                "primary when both are present."
             ),
         ),
     ],

@@ -134,7 +134,7 @@ AGENT_TOPOLOGY: Dict[str, Dict[str, str]] = {
     # ── Subtitle / Translation ───────────────────────────────────────
     # Post-refactor: SubtitleAgent has been retired. The canonical source
     # of truth for subtitle text is the actual audio track (either
-    # VideoAgent's Kling-baked voice on creative flows OR the original
+    # VideoAgent's in-clip baked voice on creative flows OR the original
     # audio on existing-video flows), so TranscriptionAgent's STT output
     # feeds subtitle burn-in directly. CompositorAgent's materializer
     # renders TranscriptionAgent's timestamped segments to SRT with a
@@ -142,7 +142,7 @@ AGENT_TOPOLOGY: Dict[str, Dict[str, str]] = {
     "TranscriptionAgent": {
         "upstream": (
             "Any agent producing playable audio/video: AudioMixAgent "
-            "(creative-flow Kling-baked voice), IntakeVideoAgent (raw "
+            "(creative-flow in-clip baked voice), IntakeVideoAgent (raw "
             "upload), StyleTransferAgent / VideoExtendAgent / "
             "HighlightAgent (existing-video edit outputs)"
         ),

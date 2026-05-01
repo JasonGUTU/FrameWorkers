@@ -1,0 +1,270 @@
+\section{Plan Stack}
+\label{sec:plan-stack}
+
+The Plan Stack is the persistent, ordered record of planned agent
+executions for one session. It serialises the director's planning output
+into a layered append-only structure that the assistant consumes in
+pointer order, while permitting the director to rewrite the unexecuted
+tail on failure.
+
+\paragraph{Data model.}
+The atomic unit is a \texttt{PlanStep} — one planned agent execution,
+in 1:1 correspondence with one \texttt{AgentExecution} at runtime:
+\begin{equation*}
+\texttt{PlanStep}=(\texttt{id},\,\texttt{description},\,\texttt{status},\,\texttt{progress},\,\texttt{results}),
+\end{equation*}
+where $\texttt{description}\!=\!\{\texttt{agent\_id},\texttt{intent},\texttt{plan\_rationale}\}$
+and $\texttt{status}\!\in\!\{\texttt{PENDING},\texttt{IN\_PROGRESS},\texttt{COMPLETED},\texttt{FAILED},\texttt{CANCELLED}\}$.
+Steps are organised into ordered layers
+$\mathcal{L}_0,\dots,\mathcal{L}_m$, each layer a list of
+\texttt{step\_id} pointers; an \texttt{ExecutionPointer}$=(k,j)$
+identifies the next step to run. The upfront plan from the director
+occupies a single layer; each subsequent replan appends a new layer
+that carries the rewritten tail (\S\ref{sec:director}).
+
+\paragraph{Mutation surface.}
+All structural changes go through one endpoint,
+\texttt{POST /api/plan-stack/modify}, accepting an ordered list of
+typed operations:
+\texttt{CREATE\_STEPS}, \texttt{CREATE\_LAYERS},
+\texttt{ADD\_STEPS\_TO\_LAYERS}, \texttt{REMOVE\_STEPS\_FROM\_LAYERS}.
+The batch executes under a single state lock; the first failed
+precondition aborts the remainder, and the response carries a partial
+results list plus an error list. Two preconditions are load-bearing:
+(i) steps cannot be added to a layer whose execution has already begun,
+and (ii) within the active layer, insertions before the pointer are
+rejected. Together they guarantee that executed history is immutable.
+
+\paragraph{Pointer advancement.}
+Given pointer $(k,j)$ and layers $\mathcal{L}_{0..m}$,
+\begin{equation*}
+\texttt{advance}(k,j) =
+\begin{cases}
+(k,\,j{+}1) & j{+}1 < |\mathcal{L}_k|, \\
+(k{+}1,\,0) & j{+}1 = |\mathcal{L}_k|\;\wedge\;k{+}1\!\le\!m\;\wedge\;|\mathcal{L}_{k{+}1}|>0, \\
+\bot & \text{otherwise.}
+\end{cases}
+\end{equation*}
+Advancement is idempotent: \texttt{advance} on an exhausted pointer is
+a no-op returning $\bot$, and the assistant reads the next step via the
+read-only \texttt{GET /api/plan-stack/next}, so concurrent
+director/executor interleaving is tolerated.
+
+
+\section{Workspace}
+\label{sec:workspace}
+
+The Workspace is the per-session filesystem and in-memory state shared
+by every sub-agent execution within a session. It is the only writable
+surface below the assistant: agents do not perform direct I/O, and
+artefacts are addressable purely through the workspace caption index.
+
+\paragraph{Layout.}
+A workspace rooted at \texttt{Runtime/\{workspace\_id\}/} contains
+\texttt{global\_memory.md} (a Markdown-wrapped JSON array of
+\texttt{GlobalMemoryEntry} records), \texttt{logs.jsonl}, an
+\texttt{artifacts/\{agent\_id\}/} tree of binaries and JSON snapshots,
+and an \texttt{inputs/} tree of raw user uploads. The
+\texttt{Workspace} object composes four collaborators —
+\texttt{FileManager}, \texttt{LogManager}, \texttt{GlobalMemory},
+\texttt{ArtifactWriter} — each owning one slice of this state.
+
+\paragraph{Cross-agent data contract.}
+Producers register an \texttt{ArtifactRef}$=(\texttt{caption},\texttt{scope},\texttt{path},\texttt{mime})$;
+consumers receive a \texttt{ResolvedArtifactEntry} with the same four
+fields plus an optional \texttt{payload} dict (loaded only for
+\texttt{application/json}). Every cross-agent data channel passes
+through this single shape — \texttt{(single)} labels resolve to one
+entry, \texttt{(collection)} labels resolve to a list. Consumers never
+parse producer-internal field names; the canonical idiom is to JSON-dump
+\texttt{entry.payload} into the consumer's prompt and let its LLM read
+the upstream structure as text.\footnote{This is the project-wide
+``strict-out / loose-in'' convention: producers maintain their own
+output schema rigorously (Pydantic + evaluator), consumers make zero
+structural assumptions about it.}
+
+\paragraph{Caption index and InputResolver.}
+\texttt{GlobalMemory} indexes every workspace artefact by
+\emph{caption} — a short natural-language sentence describing the
+artefact's role and producer. Given a consumer agent and its
+\texttt{input\_needs\_description} (a list of
+\texttt{[label] (single|collection): nl-description} blocks),
+\texttt{InputResolver} (i) renders the caption index and label specs
+into a single LLM prompt, (ii) parses the LLM's
+$\{\texttt{label}\!\to\![\texttt{ids}]\}$ selection, (iii) maps each
+chosen id back to a path, and (iv) materialises a
+\texttt{ResolvedArtifactEntry} per path (loading JSON payload on
+demand). The output is the
+$\texttt{resolved\_artifacts}\!:\!\{\texttt{label}\!\to\!\texttt{Entry}\,|\,[\texttt{Entry}]\}$
+dict that the assistant hands to \texttt{descriptor.build\_input}
+(\S\ref{sec:assistant}).
+
+\paragraph{Persistence.}
+After a successful execution, the assistant calls
+\texttt{workspace.persist\_execution\_from\_plan(execution, base\_plan,
+overwrite\_existing, captions)}. \texttt{ArtifactWriter} writes the JSON
+snapshot and binary media into the workspace tree, and registers a new
+\texttt{GlobalMemoryEntry} with one \texttt{ArtifactRef} per artefact.
+With \texttt{overwrite\_existing=True} the writer first prunes prior
+artefacts produced by the same \texttt{agent\_id}: physical files are
+unlinked and registry entries removed, so re-execution produces a clean
+replacement rather than an accumulating duplicate set. Captions are
+authored by the descriptor (one per artefact); they describe the
+artefact's role, never its content.\footnote{Inlining content into a
+caption gives no recall lift but creates near-duplicate captions that
+collide in the InputResolver LLM's selection.}
+
+
+\section{Assistant}
+\label{sec:assistant}
+
+The Assistant is the stateless executor of one (\texttt{agent\_id},
+\texttt{step\_id}) pair against one \texttt{Workspace}. It owns the
+descriptor-driven dispatch pipeline; it does not own planning,
+sequencing, or failure recovery (those belong to the director —
+\S\ref{sec:director}).
+
+\paragraph{Entry point.}
+A single HTTP endpoint
+\texttt{POST /api/assistant/execute} with body
+$\{\texttt{agent\_id},\texttt{step\_id}\}$ invokes
+\begin{equation*}
+\texttt{execute\_agent\_for\_step}(\texttt{agent\_id},\texttt{step\_id})\!\to\!\texttt{AgentExecution},
+\end{equation*}
+where the returned
+$\texttt{AgentExecution}=(\texttt{id},\texttt{agent\_id},\texttt{step\_id},\texttt{status},\texttt{inputs},\texttt{results},\texttt{error},\texttt{resolved\_input\_paths})$
+records both the resolved input set and the post-execution outputs.
+
+\paragraph{Three-boundary pipeline.}
+\begin{enumerate}
+\item \texttt{build\_execution\_inputs}: validate \texttt{agent\_id} in
+the registry, run \texttt{InputResolver} against the workspace caption
+index using the descriptor's \texttt{input\_needs\_description}, return
+$\{\texttt{step\_id},\texttt{resolved\_artifacts},\texttt{resolved\_input\_paths}\}$.
+\item \texttt{execute\_agent}: call
+\texttt{descriptor.build\_equipped\_agent(llm)} (which wires the
+agent's evaluator and optional materializer), then
+\texttt{descriptor.build\_input(step\_id, resolved\_artifacts)} to
+produce the typed Pydantic input, then \texttt{agent.run(typed\_input,
+materialize\_ctx)} which performs LLM generation, three-tier evaluation
+(structural / creative / asset), and media materialisation.
+\item \texttt{process\_results}: derive a deterministic persist plan
+from \texttt{execution.results}, call
+\texttt{workspace.persist\_execution\_from\_plan} with descriptor-authored
+captions, optionally promote consumed raw inputs to global scope.
+\end{enumerate}
+
+\paragraph{Quality gate.}
+The agent's three-tier evaluator returns a Boolean
+$\texttt{passed}\!\in\!\{0,1\}$. The assistant maps
+\begin{equation*}
+\texttt{ExecutionStatus}=
+\begin{cases}
+\texttt{COMPLETED} & \texttt{passed}=1, \\
+\texttt{FAILED} & \texttt{passed}=0,
+\end{cases}
+\end{equation*}
+and stamps \texttt{error} from a structured debug record. Two failure
+classes are distinguished by prefix in the error string:
+$[\texttt{upstream\_input\_rejected}]$ means the agent rejected its
+resolved inputs (a producer-side problem), while plain
+\texttt{quality gate failed: \dots} means the agent's own output failed
+its evaluator. The director's replanner reads the prefix to decide
+whether to retry the same step or rewrite an upstream tail
+(\S\ref{sec:director}).
+
+\paragraph{Descriptor as the only extension point.}
+A new agent is added by registering a
+\texttt{SubAgentDescriptor}$=$(\texttt{agent\_id},
+\texttt{catalog\_entry}, \texttt{agent\_factory},
+\texttt{evaluator\_factory}, \texttt{build\_input},
+\texttt{build\_captions}, \texttt{materializer\_factory},
+\texttt{input\_needs\_description}, \texttt{promotes\_consumed\_inputs\_to\_global})
+in \texttt{AGENT\_REGISTRY}. The assistant contains zero
+agent-specific code paths: every divergence between agents lives in the
+descriptor.
+
+
+\section{Director}
+\label{sec:director}
+
+The Director is the stateless agent that converts a user goal into a
+chain of plan steps and reacts to runtime failures. It is the only
+producer of \texttt{PlanStep.description} content; it never executes
+agents itself.
+
+\paragraph{Upfront planning.}
+Given a merged session goal $g$ and the registered agent set
+$\mathcal{A}$, the planner $\pi_\theta$ samples
+\begin{equation*}
+\pi_\theta(g,\mathcal{A})\!\to\!\{\texttt{rationale},\,\hat{\mathbf{c}}=(\hat{c}_1,\dots,\hat{c}_n)\},\quad \hat{c}_i=(\texttt{agent\_id}_i,\texttt{intent}_i),
+\end{equation*}
+with $\hat{c}_i.\texttt{agent\_id}\!\in\!\mathcal{A}$, all
+\texttt{agent\_id}s pairwise distinct, and
+$n\!\le\!\texttt{MAX\_PIPELINE\_STEPS}\!=\!20$. The system prompt is the
+canonical \texttt{PLAN\_UPFRONT\_CORE} (\S\ref{sec:sft}) — task
+definition, output schema, structural rules, the allowed-id list, and
+a per-agent descriptor block for every $a\!\in\!\mathcal{A}$ — with
+optional scaffold flags (\texttt{fewshots}, \texttt{policies},
+\texttt{topology}) toggling additional content. Plan validation
+discards entries with unregistered \texttt{agent\_id}, enforces the
+length cap, and rejects empty plans; on validation failure the planner
+is re-sampled up to $3$ times.
+
+\paragraph{Persistence.}
+The accepted chain is committed in two atomic batches against
+\texttt{POST /api/plan-stack/modify}: (i) \texttt{CREATE\_STEPS} with
+each step's $\texttt{description}=\{\texttt{agent\_id},\texttt{intent},\texttt{plan\_rationale}\}$,
+plus \texttt{CREATE\_LAYERS} for one new layer at index $m{+}1$;
+(ii) \texttt{ADD\_STEPS\_TO\_LAYERS} mapping the freshly created
+\texttt{step\_id}s into that layer in chain order. The execution
+pointer is initialised to the new layer's first slot if previously
+null.
+
+\paragraph{Execution loop and failure handling.}
+The director then runs an executor loop bounded by
+\texttt{MAX\_EXECUTIONS\_PER\_CYCLE}$=30$:
+\begin{equation*}
+\begin{array}{l}
+\texttt{while budget>0:}\\
+\quad s\!=\!\texttt{get\_next\_step()};\;\;\texttt{if not}\;s\colon\;\texttt{return}\\
+\quad \texttt{set\_status}(s,\texttt{IN\_PROGRESS})\\
+\quad e\!=\!\texttt{execute\_agent}(s.\texttt{agent\_id},s.\texttt{id})\\
+\quad \texttt{set\_status}(s,e.\texttt{status})\\
+\quad \texttt{if}\;e.\texttt{status}=\texttt{FAILED}\colon\;\texttt{handle\_failure}(s,e)\\
+\quad \texttt{advance\_execution\_pointer()}.
+\end{array}
+\end{equation*}
+On \texttt{FAILED}, \texttt{handle\_failure} consults a
+\texttt{ReplanDecision} from
+\texttt{planner.replan\_on\_failure(failed\_step, pending\_tail,
+completed\_tail, user\_goal)}. Three branches follow:
+\begin{itemize}
+\item \emph{retry} — same \texttt{agent\_id} re-emitted as the head of
+\texttt{new\_tail}; director resets the failed step to \texttt{PENDING}
+and rolls the pointer back so it re-runs.
+\item \emph{replan} — \texttt{new\_tail} is non-empty and differs from
+the pending tail; director removes all \texttt{PENDING} steps from the
+stack via \texttt{REMOVE\_STEPS\_FROM\_LAYERS} and appends a fresh
+layer carrying \texttt{new\_tail}; the pointer naturally advances into
+that layer.
+\item \emph{skip} — \texttt{new\_tail} is empty; the stack is
+unchanged, the pointer simply moves past the failed step on the next
+\texttt{advance}.
+\end{itemize}
+The total number of \emph{replan} or \emph{retry} actions per user turn
+is capped by $\texttt{MAX\_REPLAN\_ROUNDS}\!=\!2$; once exhausted, the
+director runs the remaining stack without further rewriting.
+
+\paragraph{Memory projection.}
+Both the upfront and replan prompts receive a \emph{slim} projection
+of the current stack (last $\texttt{DIRECTOR\_MEMORY\_WINDOW}\!=\!20$
+steps): per step the planner sees \texttt{step\_id},
+\texttt{agent\_id}, \texttt{status}, \texttt{intent}, and a
+results-summary truncated to $400$ characters. Failure messages in the
+replan prompt are truncated to $2000$ characters. The full workspace
+state — captions, payloads, binaries — is never surfaced to the
+director; routing decisions are taken on metadata alone.\footnote{This
+is what makes director routing trainable as a standalone task
+(\S\ref{sec:bench}): the inputs to $\pi_\theta$ are textual and
+bounded, and the output is a closed-vocabulary chain.}

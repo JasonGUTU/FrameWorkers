@@ -43,8 +43,9 @@ class ShotSemanticContext(BaseModel):
 
     # Dialogue + delivery tone mirrored from screenplay shot.text /
     # shot.emotion_hint for spoken shots (block_type in {dialogue,
-    # narration, monologue}). Empty for action shots. These drive Kling's
-    # native speech + lip-sync when ``generate_audio=True`` — see
+    # narration, monologue}). Empty for action shots. These drive the
+    # video-generation backend's native speech + lip-sync when
+    # ``generate_audio=True`` — see
     # ``inference/generation/video_generators/service.py:_compose_prompt``.
     dialogue_text: str = Field("", json_schema_extra={"creative": True})
     emotion_hint: str = ""

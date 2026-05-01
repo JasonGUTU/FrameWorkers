@@ -1,9 +1,9 @@
 """Schema definitions for AudioMixAgent input / output interfaces.
 
 Post-refactor shape: AudioMixAgent produces a single film-wide final
-audio track by amix'ing the video's own audio (Kling's dialogue +
-foley, baked into each clip) with the optional global music cue and
-optional global ambience bed.
+audio track by amix'ing the video's own audio (the video-generation
+backend's dialogue + foley, baked into each clip) with the optional
+global music cue and optional global ambience bed.
 
 The agent's JSON output is now essentially metadata-only: all binary
 material (the wav) is emitted by the materializer and registered as a
@@ -46,7 +46,7 @@ class AudioMixAgentInput(BaseModel):
         agent's LLM to reason about video structure.
       * ``video_file_path`` — direct on-disk path to the final assembled
         mp4 (binary artifact, no JSON payload). Used by the materializer
-        to extract the Kling-baked audio track via ffmpeg.
+        to extract the in-clip baked audio track via ffmpeg.
 
     Music and ambience follow the same JSON-text + file-path split,
     because the music/ambience packages no longer embed a wav uri in
@@ -70,6 +70,7 @@ class AudioMixAgentInput(BaseModel):
     music_file_path: str = ""
     ambience_json_text: str = ""
     ambience_file_path: str = ""
+    narrator_file_path: str = ""
 
 
 class AudioMixAgentOutput(BaseModel):

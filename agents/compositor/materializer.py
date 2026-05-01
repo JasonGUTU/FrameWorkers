@@ -41,8 +41,8 @@ def _extract_srt_texts(sub_data: Any) -> list[str]:
          raw per-line timestamps + text; render to SRT here via the
          shared ``segments_to_srt`` helper (pure Python, no LLM — this
          is why SubtitleAgent is no longer a separate step: once
-         dialogue is Kling-baked, the ASR segments ARE the source of
-         truth for what the viewer hears).
+         dialogue is baked into the rendered clips, the ASR segments
+         ARE the source of truth for what the viewer hears).
       4. A raw ``srt_text`` field at the top of ``content`` (plain-
          SRT producers).
     """

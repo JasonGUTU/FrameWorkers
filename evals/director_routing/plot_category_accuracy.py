@@ -108,7 +108,7 @@ def plot(stats: "OrderedDict[str, tuple[int, int]]", overall: float, run_name: s
     bars = ax.bar(labels, accs, color=bar_colors, edgecolor="#333333", linewidth=0.8)
 
     # Overall accuracy line
-    ax.axhline(overall * 100, color="#C44E52", linestyle="--", linewidth=1.4,
+    ax.axhline(overall * 100, color="#C44E52", linestyle="--", linewidth=2.0,
                label=f"overall = {overall * 100:.1f}%")
 
     for bar, acc, n in zip(bars, accs, counts):
@@ -124,7 +124,7 @@ def plot(stats: "OrderedDict[str, tuple[int, int]]", overall: float, run_name: s
     ax.set_xlabel("Category", fontsize=18, fontweight="bold")
     ax.tick_params(axis="x", labelsize=16)
     ax.tick_params(axis="y", labelsize=14)
-    ax.legend(loc="upper right", fontsize=14)
+    ax.legend(loc="upper left", fontsize=20, framealpha=0.95)
     ax.grid(axis="y", alpha=0.3)
 
     plt.tight_layout()

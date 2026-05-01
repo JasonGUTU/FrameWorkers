@@ -164,6 +164,7 @@ def run_case(
     image_fixture: Path | None = None,
     video_fixture: Path | None = None,
     audio_fixture: Path | None = None,
+    cases_root: Path | None = None,
 ) -> Dict[str, Any]:
     """Execute one case and return a result dict.
 
@@ -202,6 +203,11 @@ def run_case(
 
     # --- seed 2 (only if chain starts with Intake{Image,Video,Audio}Agent):
     # the fixture file → raw_pending artifact, picked up by the intake step.
+    #
+    # Per-case ``case["fixture_path"]`` (relative to ``cases_root``) wins
+    # over the global default flags, so a case can carry a fixture
+    # semantically matched to its user_goal. Falls back to the global flag
+    # when the case has no fixture_path field.
     media_seed: Dict[str, Any] | None = None
     first_agent = agents[0] if agents else ""
     fixture_by_agent: Dict[str, Path | None] = {
@@ -209,6 +215,11 @@ def run_case(
         "IntakeVideoAgent": video_fixture,
         "IntakeAudioAgent": audio_fixture,
     }
+    case_fixture_rel = (case.get("fixture_path") or "").strip()
+    if case_fixture_rel and cases_root is not None:
+        case_fixture_abs = (cases_root / case_fixture_rel).resolve()
+        if case_fixture_abs.is_file() and first_agent in _INTAKE_TO_FIXTURE_MIME:
+            fixture_by_agent[first_agent] = case_fixture_abs
     if first_agent in _INTAKE_TO_FIXTURE_MIME:
         fixture_path = fixture_by_agent[first_agent]
         if fixture_path is None or not Path(fixture_path).is_file():
@@ -382,6 +393,16 @@ def _main(argv: List[str] | None = None) -> int:
         default=None,
         help="Path to an audio file used to seed cases that start with IntakeAudioAgent.",
     )
+    parser.add_argument(
+        "--cases-root",
+        type=str,
+        default=None,
+        help=(
+            "Directory the case JSON's ``fixture_path`` field is relative to "
+            "(typically the directory containing assistant_test_cases.json). "
+            "Required only when the case has a ``fixture_path``."
+        ),
+    )
     args = parser.parse_args(argv)
 
     case = json.loads(args.case_json)
@@ -392,6 +413,7 @@ def _main(argv: List[str] | None = None) -> int:
     image_fixture = Path(args.image_fixture).resolve() if args.image_fixture else None
     video_fixture = Path(args.video_fixture).resolve() if args.video_fixture else None
     audio_fixture = Path(args.audio_fixture).resolve() if args.audio_fixture else None
+    cases_root = Path(args.cases_root).resolve() if args.cases_root else None
 
     # Global-exception guard: if anything above ``run_case``'s own try
     # blows up (import, env, fresh-store creation), still emit a result
@@ -404,6 +426,7 @@ def _main(argv: List[str] | None = None) -> int:
             image_fixture=image_fixture,
             video_fixture=video_fixture,
             audio_fixture=audio_fixture,
+            cases_root=cases_root,
         )
     except Exception as exc:
         result = {
