@@ -53,37 +53,39 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
     return {
         agent_id: {
             "caption": (
-                f"Narrator session manifest (JSON): {line_count} line(s), "
-                f"{seg_count} segment(s), total {total_dur:.1f}s. Carries "
-                f"per-line / per-segment timing. Dev/debug view; downstream "
-                f"consumption goes through the sibling audio / srt / timing "
-                f"artifacts."
+                f"[JSON MANIFEST] Narrator session manifest: "
+                f"{line_count} line(s), {seg_count} segment(s), total "
+                f"{total_dur:.1f}s. Per-line / per-segment timing. "
+                f"Dev/debug view; downstream consumption goes through "
+                f"the sibling audio / srt / timing artifacts."
             ),
             "scope": "global",
         },
         NARRATOR_AUDIO_SYS_ID: {
             "caption": (
-                f"Narrator voiceover audio track (wav, {total_dur:.1f}s, "
-                f"language={language}). Concatenated TTS for an illustrated-"
-                f"storytelling video. Consumed by the compositor step as the "
-                f"film's final audio track."
+                f"[BINARY WAV FILE · mime=audio/wav · sys_id "
+                f"aud_narrator_full] Narrator voiceover audio bytes "
+                f"({total_dur:.1f}s, language={language}). Concatenated "
+                f"TTS for an illustrated-storytelling video. Consumed "
+                f"by the audio-mix or compositor materializer."
             ),
             "scope": "global",
         },
         NARRATOR_SRT_SYS_ID: {
             "caption": (
-                f"Narrator subtitle track (SRT, language={language}): one cue "
-                f"per narration line, timed against the narrator audio. "
-                f"Consumed by the compositor step as a burn-in subtitle source."
+                f"[JSON MANIFEST · SRT cues] Narrator subtitle track "
+                f"(language={language}): one cue per narration line, "
+                f"timed against the narrator audio. Consumed by the "
+                f"compositor step as a burn-in subtitle source."
             ),
             "scope": "global",
         },
         NARRATOR_SEGMENT_TIMING_SYS_ID: {
             "caption": (
-                f"Narrator per-segment timing manifest (JSON): "
-                f"{seg_count} segment(s) with start / end / duration seconds. "
-                f"Used by a slideshow compositor to set how long each "
-                f"illustration stays on screen."
+                f"[JSON MANIFEST] Narrator per-segment timing: "
+                f"{seg_count} segment(s) with start / end / duration "
+                f"seconds. Used by a slideshow compositor to set how "
+                f"long each illustration stays on screen."
             ),
             "scope": "global",
         },

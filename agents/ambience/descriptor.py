@@ -52,10 +52,10 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
     caps: dict = {
         agent_id: {
             "caption": (
-                f"Ambience pack (JSON manifest): {len(beds)} bed(s). "
-                f"Carries the LLM-chosen description for the film-wide "
-                f"room-tone underlay. Consumed by the audio-mix step's "
-                f"LLM for mix planning."
+                f"[JSON MANIFEST] Ambience planning metadata: "
+                f"{len(beds)} bed(s) carrying the LLM-chosen "
+                f"description for the film-wide room-tone underlay. "
+                f"Read by the audio-mix LLM for mix planning."
             ),
             "scope": "global",
         },
@@ -63,9 +63,10 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
     if beds:
         caps[AMBIENCE_FILM_SYS_ID] = {
             "caption": (
-                "Ambient room-tone audio track (wav) — film-wide "
-                "atmospheric underlay. Consumed by a downstream audio-mix step "
-                "for merging with dialogue / music tracks."
+                "[BINARY WAV FILE · mime=audio/wav · sys_id "
+                "aud_amb_film] Ambient room-tone audio bytes for the "
+                "film-wide atmospheric underlay. Consumed by the "
+                "audio-mix materializer via ffmpeg."
             ),
             "scope": "global",
         }

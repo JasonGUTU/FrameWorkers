@@ -59,18 +59,19 @@ def build_captions(agent_id: str, _output_dict: dict) -> dict:
     return {
         agent_id: {
             "caption": (
-                "Style-transferred video: visual style applied to a "
-                "source video. Structured manifest — see payload for "
-                "the style specification."
+                "[JSON MANIFEST] Style-transfer planning metadata: "
+                "style specification applied to a source video. "
+                "Planning context for downstream consumers."
             ),
             "scope": "global",
         },
         "style_transfer_output": {
             "caption": (
-                "Style-transferred video binary (mp4) — source video with "
-                "visual style applied. Can be re-ingested by downstream "
-                "video agents (analysis / extension / inpainting / "
-                "compositing)."
+                "[BINARY MP4 FILE · mime=video/mp4 · sys_id "
+                "style_transfer_output] Style-transferred video bytes — "
+                "source video with the visual style applied. Can be "
+                "re-ingested by downstream video agents (analysis / "
+                "extension / inpainting / compositing)."
             ),
             "scope": "global",
         },

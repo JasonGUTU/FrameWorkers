@@ -2,22 +2,22 @@
   {
     "user_goal": "Add a melancholic erhu background music track to this period drama clip.",
     "expected": "IntakeVideo → Music → AudioMix → Compositor",
-    "actual": "IntakeVideo → Music → AudioMix → Compositor",
+    "actual": "IntakeVideo → StyleTransfer → Music → AudioMix → Compositor",
     "parse_ok": true,
-    "raw_response": "{\"plan\": [{\"agent_id\": \"IntakeVideoAgent\", \"intent\": \"Intake the user-uploaded period drama clip as the raw video artifact.\"}, {\"agent_id\": \"MusicAgent\", \"intent\": \"Generate a single melancholic erhu-themed BGM track tailored to the clip's duration and mood.\"}, {\"agent_id\": \"AudioMixAgent\", \"intent\": \"Mix the video's baked-in dialogue+foley audio with the newly generated erhu BGM into a single final wav.\"}, {\"agent_id\": \"CompositorAgent\", \"intent\": \"Mux the period drama video with the final erhu"
+    "raw_response": "{\"rationale\": \"Style-transferred video cut produced from an uploaded source video with an added BGM layer. Reject: VideoAnalysisAgent (no source-video analysis required); VideoExtendAgent (not a video extension request); HighlightAgent (not a highlight workflow); IntakeImageAgent (no image upload); BriefEnricherAgent (no image upload to enrich the brief with); IllustrationAgent (not a slideshow / illustrated-storytelling format); NarrationAgent (not a slideshow / illustrated-storytelling format)"
   },
   {
     "user_goal": "Extend this memory-flashback scene of the male lead by 10 more seconds.",
     "expected": "IntakeVideo → VideoExtend",
     "actual": "IntakeVideo → VideoExtend",
     "parse_ok": true,
-    "raw_response": "{\n  \"plan\": [\n    {\n      \"agent_id\": \"IntakeVideoAgent\",\n      \"intent\": \"Intake the user-uploaded memory-flashback scene video as the raw source.\"\n    },\n    {\n      \"agent_id\": \"VideoExtendAgent\",\n      \"intent\": \"Extend the memory-flashback scene by 10 seconds using the source's last frame as the starting keyframe for the continuation.\"\n    }\n  ],\n  \"rationale\": \"The user requests to extend an existing memory-flashback scene. The plan starts by intaking the uploaded video, then extends it by"
+    "raw_response": "{\"rationale\": \"Extends an uploaded video; no overlays requested. Excluded — VideoAnalysisAgent (no source-video analysis required); BriefEnricherAgent (no image upload to enrich the brief with); IntakeImageAgent (no image upload); TranscriptionAgent (no subtitle requested); NarrationAgent (not a slideshow / illustrated-storytelling format); TranslationAgent (no translation / second language requested); StoryAgent (no NEW film authoring requested); HighlightAgent (not a highlight workflow); Audio"
   },
   {
     "user_goal": "Add a gentle violin background music track to this urban-romance clip.",
     "expected": "IntakeVideo → Music → AudioMix → Compositor",
-    "actual": "IntakeVideo → Music → AudioMix → Compositor",
+    "actual": "IntakeVideo → StyleTransfer → Music → AudioMix → Compositor",
     "parse_ok": true,
-    "raw_response": "{\"plan\": [{\"agent_id\": \"IntakeVideoAgent\", \"intent\": \"Intake the user-uploaded urban-romance video file as the raw raw_video_upload.\"}, {\"agent_id\": \"MusicAgent\", \"intent\": \"Generate a gentle violin BGM tailored to the urban-romance video's duration and mood.\"}, {\"agent_id\": \"AudioMixAgent\", \"intent\": \"Mix the urban-romance video's baked-in dialogue+foley audio with the newly generated gentle violin BGM into a single final wav.\"}, {\"agent_id\": \"CompositorAgent\", \"intent\": \"Mux the urban-romance "
+    "raw_response": "{\"rationale\": \"Style-transferred video cut from an uploaded source video with BGM as the only added overlays. Reject: VideoAnalysisAgent (no source-video analysis required); VideoExtendAgent (not a video extension request); HighlightAgent (not a highlight workflow); IntakeImageAgent (no image upload); TranscriptionAgent (no subtitle requested); NarrationAgent (not a slideshow / illustrated-storytelling format); IllustrationAgent (not a slideshow / illustrated-storytelling format); BriefEnricherA"
   }
 ]

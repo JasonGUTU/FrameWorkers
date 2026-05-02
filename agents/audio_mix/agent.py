@@ -73,8 +73,20 @@ class AudioMixAgent(BaseAgent[AudioMixAgentInput, AudioMixAgentOutput]):
 
     def build_user_prompt(self, input_data: AudioMixAgentInput) -> str:
         parts = ["Mix these source tracks into one film-wide audio track.\n\n"]
+        # File-path table is the AUTHORITATIVE source for the reject
+        # rule — the materializer reads bytes from these paths. Render
+        # them up front so the LLM can apply the rule correctly without
+        # having to infer from JSON manifests alone.
         parts.append(
-            f"=== VIDEO (provides in-clip dialogue + foley) ===\n"
+            "=== AUDIO SOURCE FILE PATHS (authoritative for reject rule) ===\n"
+            f"video_file_path:    {input_data.video_file_path or '(empty)'}\n"
+            f"narrator_file_path: {input_data.narrator_file_path or '(empty)'}\n"
+            f"music_file_path:    {input_data.music_file_path or '(empty)'}\n"
+            f"ambience_file_path: {input_data.ambience_file_path or '(empty)'}\n"
+            "=== END FILE PATHS ===\n\n"
+        )
+        parts.append(
+            f"=== VIDEO PACKAGE (structural manifest) ===\n"
             f"{input_data.video_json_text}\n=== END ===\n\n"
         )
         if input_data.music_json_text:

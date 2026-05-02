@@ -52,10 +52,10 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
     caps: dict = {
         agent_id: {
             "caption": (
-                f"Background music pack (JSON manifest): {len(cues)} "
-                f"cue(s). Carries the LLM-chosen mood for the film-wide "
-                f"BGM underlay. Consumed by the audio-mix step's LLM "
-                f"for mix planning."
+                f"[JSON MANIFEST] Background-music planning metadata: "
+                f"{len(cues)} cue(s) carrying the LLM-chosen mood for "
+                f"the film-wide BGM underlay. Read by the audio-mix "
+                f"LLM for mix planning."
             ),
             "scope": "global",
         },
@@ -63,9 +63,10 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
     if cues:
         caps[MUSIC_FILM_SYS_ID] = {
             "caption": (
-                "Background music audio track (wav) — film-wide "
-                "music underlay. Consumed by a downstream audio-mix step for "
-                "merging with dialogue / ambience tracks."
+                "[BINARY WAV FILE · mime=audio/wav · sys_id "
+                "aud_music_film] Background-music audio bytes for the "
+                "film-wide BGM underlay. Consumed by the audio-mix "
+                "materializer via ffmpeg."
             ),
             "scope": "global",
         }

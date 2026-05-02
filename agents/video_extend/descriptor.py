@@ -66,18 +66,19 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
     return {
         agent_id: {
             "caption": (
-                f"Extended video (+{dur}s): continuation clip generated "
-                f"from a source video. Structured manifest — see payload "
-                f"for the extension specification."
+                f"[JSON MANIFEST] Extended-video planning metadata "
+                f"(+{dur}s extension specification). Continuation "
+                f"clip planning context for downstream consumers."
             ),
             "scope": "global",
         },
         "video_extend_output": {
             "caption": (
-                "Extended video binary (mp4) — continuation clip generated "
-                "from the source video, ready for re-ingestion by "
-                "downstream video agents (analysis / style transfer / "
-                "inpainting / compositing)."
+                f"[BINARY MP4 FILE · mime=video/mp4 · sys_id "
+                f"video_extend_output] Extended-video bytes (+{dur}s) — "
+                f"continuation clip generated from the source video, "
+                f"ready for re-ingestion by downstream video agents "
+                f"(analysis / style transfer / inpainting / compositing)."
             ),
             "scope": "global",
         },

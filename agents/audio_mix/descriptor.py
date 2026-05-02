@@ -59,19 +59,20 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
     return {
         agent_id: {
             "caption": (
-                f"Final audio mix (JSON manifest): amix of {tracks} "
-                f"source track(s) (video dialogue+foley + optional "
-                f"global music/ambience). Planning envelope only; the "
-                f"wav is a separate artifact."
+                f"[JSON MANIFEST] Final-audio-mix envelope: amix of "
+                f"{tracks} source track(s) (video dialogue+foley + "
+                f"optional global music/ambience/narrator). Planning "
+                f"manifest only; the wav is a sibling artifact."
             ),
             "scope": "global",
         },
         FINAL_AUDIO_SYS_ID: {
             "caption": (
-                "Final mixed audio track binary (wav) — all source audio "
-                "tracks (dialogue / foley / music / ambience) merged. "
-                "Ready to be muxed onto the delivered video by a "
-                "downstream compositing step."
+                "[BINARY WAV FILE · mime=audio/wav · sys_id aud_final] "
+                "Final-mix audio bytes — all source audio tracks "
+                "(dialogue / foley / music / ambience / narrator) "
+                "merged. Ready to be muxed onto the delivered video "
+                "by a downstream compositing step."
             ),
             "scope": "global",
         },

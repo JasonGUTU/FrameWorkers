@@ -54,8 +54,10 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
     caps: dict = {}
     caps[agent_id] = {
         "caption": (
-            f"Video assembly manifest: {len(scenes)} scene(s), "
-            f"{shot_count} shot clip(s). Consumed by a downstream audio-mix step for audio muxing."
+            f"[JSON MANIFEST] Video-assembly planning metadata: "
+            f"{len(scenes)} scene(s), {shot_count} shot clip(s) with "
+            f"timing. Read by a downstream audio-mix step's LLM for "
+            f"mix planning."
         ),
         "scope": "global",
     }
@@ -68,23 +70,29 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
             if shot_id:
                 caps[f"clip_{shot_id}"] = {
                     "caption": (
-                        f"Video clip for shot {shot_id}. One segment of "
-                        f"the final video."
+                        f"[BINARY MP4 FILE · mime=video/mp4 · sys_id "
+                        f"clip_{shot_id}] Video clip bytes for shot "
+                        f"{shot_id}. One segment of the final video."
                     ),
                     "scope": f"shot:{shot_id}",
                 }
         if scene_id:
             caps[f"clip_{scene_id}"] = {
                 "caption": (
-                    f"Scene cut for scene {scene_id} — all shots "
-                    f"concatenated. Intermediate assembly, not final."
+                    f"[BINARY MP4 FILE · mime=video/mp4 · sys_id "
+                    f"clip_{scene_id}] Scene-cut bytes for scene "
+                    f"{scene_id} — all shots concatenated. Intermediate "
+                    f"assembly, not final."
                 ),
                 "scope": f"scene:{scene_id}",
             }
     caps["clip_final"] = {
         "caption": (
-            f"Complete assembled video ({shot_count} shots). Final "
-            f"visual deliverable — used by a downstream audio-mix step for audio muxing."
+            f"[BINARY MP4 FILE · mime=video/mp4 · sys_id clip_final] "
+            f"Complete assembled video bytes ({shot_count} shots). "
+            f"Final visual deliverable — consumed by a downstream "
+            f"audio-mix step's materializer via ffmpeg for audio "
+            f"extraction + muxing."
         ),
         "scope": "global",
     }
