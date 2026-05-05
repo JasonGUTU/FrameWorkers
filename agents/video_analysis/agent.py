@@ -13,7 +13,8 @@ from __future__ import annotations
 
 from typing import Any
 
-from ..base_agent import BaseAgent
+from ..base_agent import INPUT_REJECTION_RULE, BaseAgent, _maybe_parse_rejection
+from ..common_schema import UpstreamInputRejected
 from .schema import VideoAnalysisAgentInput, VideoAnalysisAgentOutput
 
 
@@ -51,7 +52,7 @@ class VideoAnalysisAgent(BaseAgent[VideoAnalysisAgentInput, VideoAnalysisAgentOu
         *,
         rework_notes: str = "",
     ) -> VideoAnalysisAgentOutput:
-        system = self.system_prompt()
+        system = INPUT_REJECTION_RULE + self.system_prompt()
         user = self.build_user_prompt(input_data)
         if rework_notes:
             user += self._rework_section(rework_notes)
@@ -63,6 +64,9 @@ class VideoAnalysisAgent(BaseAgent[VideoAnalysisAgentInput, VideoAnalysisAgentOu
         raw = await self.llm.chat_json(
             system, user, media_attachments=media or None,
         )
+        rejection = _maybe_parse_rejection(raw)
+        if rejection is not None:
+            raise UpstreamInputRejected(rejection)
         output = self.parse_output(raw)
         self.recompute_metrics(output)
         return output

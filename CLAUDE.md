@@ -39,9 +39,9 @@ FrameWorkers/
 │   ├── example_agent/       # 模板：照它新建 agent
 │   ├── keyframe/            # 媒体类 agent，含 materializer.py
 │   ├── video/               # 同上
-│   ├── audio/               # 同上
-│   ├── intake/              # 4 个 raw upload → caption-rich artifact 的 intake agent（text/image/video/audio）
-│   └── univa_{keyframe,storyboard,video}/  # 本项目自研的 univa 系列 agent（与 references/univa/ 零代码依赖，仅命名致敬）
+│   ├── ambience/ audio_mix/ music/ narration/ narrator/   # 音频类 agent（各自独立目录，无统一 audio/ 父目录）
+│   ├── intake/              # raw upload → caption-rich artifact 的 intake agent：intake_image / intake_video（text 已退役走 workspace.persist_raw_upload，audio 未实现）
+│   └── univa_{keyframe,storyboard,video}/  # 本项目自研的 univa 系列 agent（与 references/univa/ 零代码依赖，仅命名致敬）；**当前未挂入 AGENT_REGISTRY，runtime 不会调用**
 ├── plan-stack-backend/      # Flask 后端：Plan Stack + Assistant
 │   ├── run.py               # 入口（默认 5002）
 │   └── src/
