@@ -29,6 +29,7 @@ import argparse
 import json
 import os
 import random
+import re
 import shutil
 import time
 from pathlib import Path
@@ -131,7 +132,23 @@ def main():
     ap.add_argument("--max-steps",       type=int, default=None,
                     help="if set, cap total gradient steps (for smoke test)")
     ap.add_argument("--seed",            type=int, default=42)
+    ap.add_argument("--resume-from",     default=None,
+                    help="checkpoint dir like adapters_v4_500/<variant>/grpo/step_N — "
+                         "loads policy LoRA + (optional) optimizer state from there; "
+                         "ref LoRA still loads from --adapter-in (frozen SFT snapshot). "
+                         "global_step starts at N (parsed from dir name).")
     args = ap.parse_args()
+
+    # Parse resume step from dir name (must be 'step_N') so we can advance the
+    # data iterator + global_step counter to match.
+    resume_step = 0
+    if args.resume_from:
+        m = re.match(r"step_(\d+)$", Path(args.resume_from).name)
+        if not m:
+            raise ValueError(
+                f"--resume-from dir name must be 'step_N', got '{Path(args.resume_from).name}'"
+            )
+        resume_step = int(m.group(1))
 
     # ── DDP setup (no-op when launched without torchrun → WORLD_SIZE=1) ────
     LOCAL_RANK = int(os.environ.get("LOCAL_RANK", 0))
@@ -183,8 +200,14 @@ def main():
     # savings (G=4 × seq~8K × 28 layers without checkpointing fits but is tight).
     base.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
 
+    # Policy starts from --resume-from when set (continuing GRPO), otherwise
+    # from --adapter-in (fresh GRPO on top of SFT). Ref ALWAYS loads from
+    # --adapter-in so the KL anchor stays at the original SFT snapshot.
+    policy_init = args.resume_from if args.resume_from else args.adapter_in
+    _log(f"policy LoRA init: {policy_init}")
+    _log(f"ref    LoRA init: {args.adapter_in} (frozen)")
     model = PeftModel.from_pretrained(
-        base, args.adapter_in, adapter_name="policy", is_trainable=True,
+        base, policy_init, adapter_name="policy", is_trainable=True,
     )
     model.load_adapter(args.adapter_in, adapter_name="ref", is_trainable=False)
     model.generation_config.pad_token_id = pad_id
@@ -246,18 +269,63 @@ def main():
     adapter_out = Path(args.adapter_out)
     adapter_out.mkdir(parents=True, exist_ok=True)
 
+    # ── Optional optimizer-state restore (resume) ──────────────────────────
+    # Only valid when --resume-from is set. Older checkpoints saved before
+    # resume-support landed have no optim_state.pt — in that case AdamW
+    # restarts cold (β1 momentum recovers in ~10 steps; β2 variance in ~1000
+    # steps; for lr=1e-6 the warmup distortion is small but non-zero).
+    if args.resume_from:
+        optim_pt = Path(args.resume_from) / "optim_state.pt"
+        if optim_pt.exists():
+            sd = torch.load(optim_pt, map_location=device)
+            optimizer.load_state_dict(sd["optimizer"])
+            _log(f"resumed optimizer state from {optim_pt}")
+        else:
+            _log(f"WARN: no optim_state.pt at {args.resume_from}; AdamW starts cold "
+                 "(this is expected for checkpoints saved before resume-support landed).")
+
     # ── Training loop ──────────────────────────────────────────────────────
-    global_step = 0
+    # n_per_epoch uses FLOOR division so all ranks process the same number of
+    # prompts per epoch — for odd-sized datasets (e.g. rich = 1375), the
+    # longer rank's last prompt is dropped (negligible: 1/688 ≈ 0.15% per
+    # epoch). This avoids an NCCL all_reduce vs dist.barrier deadlock at the
+    # end of training: with uneven shards, the longer rank kept calling
+    # all_reduce in iterations N+1..N+k while the shorter rank had already
+    # exited to the final-save dist.barrier — NCCL pairs collectives by call
+    # sequence + op type, so all_reduce on rank 0 hung forever waiting for
+    # rank 1's all_reduce that would never come (rank 1 was on barrier).
+    # Caused job 548912 (rich GRPO) to die with NCCL 600s timeout at ep3 step
+    # 2745 (4 epochs × 1 extra step on rank 0 = 4 unmatched all_reduce calls).
+    n_per_epoch = len(dataset) // WORLD_SIZE
+    global_step = resume_step
+    if resume_step:
+        resume_epoch = resume_step // n_per_epoch
+        resume_pos_in_epoch = resume_step % n_per_epoch
+        _log(f"RESUME: global_step={resume_step} → epoch {resume_epoch}, "
+             f"position {resume_pos_in_epoch}/{n_per_epoch} within epoch")
+    else:
+        resume_epoch = 0
+        resume_pos_in_epoch = 0
     t_start = time.time()
     print(f"\n=== GRPO training begins (G={G}, β={args.beta}, lr={args.learning_rate}) ===")
 
     for epoch in range(args.epochs):
+        if epoch < resume_epoch:
+            continue
         # Same seed across ranks → same idx_order → idx_order[RANK::WORLD_SIZE]
         # gives a non-overlapping shard per rank that covers the full dataset.
+        # Trim to n_per_epoch (= len(dataset) // WORLD_SIZE) so all ranks have
+        # exactly the same iteration count — see the comment on n_per_epoch
+        # above for why this matters (NCCL deadlock prevention).
         random.seed(args.seed + epoch)
         idx_order = list(range(len(dataset)))
         random.shuffle(idx_order)
-        my_indices = idx_order[RANK::WORLD_SIZE]
+        my_indices = idx_order[RANK::WORLD_SIZE][:n_per_epoch]
+        # On resume, skip past the prompts we already processed in this epoch
+        # before the previous run died.
+        if epoch == resume_epoch and resume_pos_in_epoch > 0:
+            my_indices = my_indices[resume_pos_in_epoch:]
+            _log(f"epoch {epoch}: skipping first {resume_pos_in_epoch} prompts (resumed)")
 
         for prompt_idx in my_indices:
             row = dataset[prompt_idx]
@@ -409,6 +477,13 @@ def main():
                     model.set_adapter("policy")
                     model.save_pretrained(str(ckpt_dir), selected_adapters=["policy"])
                     _flatten_peft_subdir(ckpt_dir, "policy")
+                    # Save optimizer state alongside the LoRA so resume can
+                    # restore AdamW momentum/variance (avoids ~1000-step warmup
+                    # of β2 variance estimate after a cold restart).
+                    torch.save(
+                        {"optimizer": optimizer.state_dict(), "global_step": global_step},
+                        ckpt_dir / "optim_state.pt",
+                    )
                     for old in adapter_out.glob("step_*"):
                         if old.name != f"step_{global_step}":
                             shutil.rmtree(old, ignore_errors=True)

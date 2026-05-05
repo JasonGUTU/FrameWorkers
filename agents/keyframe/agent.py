@@ -98,6 +98,8 @@ KEYFRAMES_OUTPUT_TEMPLATE = """{
         "shots": [
           {
             "shot_id": "sh_001",
+            "characters_in_frame": ["<entity_ids of characters visible in this shot — copy verbatim from upstream screenplay shot.characters_in_frame>"],
+            "props_in_frame": ["<entity_ids of props visible in this shot — copy verbatim from upstream screenplay shot.props_in_frame>"],
             "keyframes": [
               {
                 "prompt_summary": "<L3 one frozen frame: 2-6 short sentences, no sound/edit/dialogue/music meta>",
@@ -205,6 +207,16 @@ class KeyFrameAgent(BaseAgent[KeyFrameAgentInput, KeyFrameAgentOutput]):
             "still text into the motion hint.\n"
             "Every ``prompt_summary`` (L1, L2, L3) must be 2-6 short "
             "English sentences and non-empty.\n\n"
+            "L3 SHOT-LEVEL ENTITY MIRROR — for every shot you must "
+            "also copy ``characters_in_frame`` and ``props_in_frame`` "
+            "verbatim from the upstream screenplay shot of the same "
+            "shot_id. These are entity_id lists (e.g. [\"char_001\", "
+            "\"char_002\"]). The materializer uses them to bundle the "
+            "matching L2 character / prop anchors as i2i references "
+            "for this shot, so identity is preserved by image "
+            "reference rather than by text alone. Empty list is fine "
+            "if and only if the upstream shot has no entities in "
+            "frame.\n\n"
             "=== TOP-LEVEL STYLE MIRROR ===\n"
             "Mirror ``style_notes`` and ``must_avoid`` into the "
             "content's top-level arrays:\n"

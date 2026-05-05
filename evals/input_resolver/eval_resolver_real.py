@@ -24,7 +24,7 @@ import os
 import re
 import sys
 import time
-from concurrent.futures import ThreadPoolExecutor, as_completed
+import asyncio
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple
@@ -122,12 +122,13 @@ def _memory_from_entries(entries: List[Dict[str, Any]]) -> FakeGlobalMemory:
     return mem
 
 
-def run_one_real_case(
+async def run_one_real_case(
     *,
     case_name: str,
     entries: List[Dict[str, Any]],
     registry: Dict[str, Any],
     resolver_factory,
+    model: Optional[str] = None,
 ) -> Dict[str, Any]:
     step_results: List[Dict[str, Any]] = []
     chain: List[str] = []
@@ -149,10 +150,11 @@ def run_one_real_case(
             continue
         resolver = resolver_factory(mem)
         try:
-            r = resolver.resolve(
+            r = await resolver.aresolve(
                 agent_id=agent_id,
                 step_id=entry.get("step_id", f"replay_{i}"),
                 input_needs_description=desc.input_needs_description,
+                model=model,
             )
             resolved = r.get("resolved_artifacts", {})
             step_results.append(_score_one_resolution(mem, agent_id, resolved))
@@ -196,6 +198,8 @@ def main():
     parser.add_argument("--name", default="real_replay")
     parser.add_argument("--only-passed", action="store_true", default=True,
                         help="Only replay cases whose real pipeline passed")
+    parser.add_argument("--model", default=None,
+                        help="Override LLM model for InputResolver (e.g. gemini-2.5-flash)")
     args = parser.parse_args()
 
     from agents import AGENT_REGISTRY
@@ -236,26 +240,31 @@ def main():
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     out_path = os.path.join(RUNTIME_DIR, f"{ts}_{args.name}.json")
 
+    # ── Parallel execution (asyncio + Semaphore — single event loop avoids
+    #    cross-loop Future bug with google.genai's cached async client) ────
     t0 = time.time()
     results = []
-    with ThreadPoolExecutor(max_workers=args.workers) as pool:
-        futs = {
-            pool.submit(
-                run_one_real_case,
-                case_name=name,
-                entries=entries,
-                registry=AGENT_REGISTRY,
-                resolver_factory=resolver_factory,
-            ): name
-            for name, entries in cases_prepared
-        }
-        done = 0
-        for fut in as_completed(futs):
-            done += 1
+
+    async def _run_one(name: str, entries, sem: asyncio.Semaphore):
+        async with sem:
             try:
-                r = fut.result()
+                return await run_one_real_case(
+                    case_name=name,
+                    entries=entries,
+                    registry=AGENT_REGISTRY,
+                    resolver_factory=resolver_factory,
+                    model=args.model,
+                )
             except Exception as exc:
-                r = {"name": "<err>", "error": str(exc)}
+                return {"name": name, "error": str(exc)}
+
+    async def _run_all():
+        sem = asyncio.Semaphore(args.workers)
+        tasks = [asyncio.create_task(_run_one(n, e, sem)) for n, e in cases_prepared]
+        done = 0
+        for coro in asyncio.as_completed(tasks):
+            r = await coro
+            done += 1
             results.append(r)
             if "error" in r:
                 print(f"[{done:>2}/{len(cases_prepared)}] ERR {r['name']}: {r['error']}")
@@ -264,6 +273,8 @@ def main():
                 print(f"[{done:>2}/{len(cases_prepared)}] {mark} "
                       f"step={r['step_correct']}/{r['step_total']} "
                       f"label={r['label_correct']}/{r['label_total']}  {r['name']}")
+
+    asyncio.run(_run_all())
 
     elapsed = time.time() - t0
     results.sort(key=lambda r: r.get("name", ""))

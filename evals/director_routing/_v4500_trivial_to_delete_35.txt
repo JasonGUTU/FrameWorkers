@@ -1,0 +1,37 @@
+35 cases to delete from v4_500 (greedy, from over-represented trivial shapes):
+
+  style_027           len=2  Take this 2-minute kayaking video and transform it into a Pixar-animated look.
+  style_025           len=2  Restyle this 90-second underwater snorkeling clip as an art-deco mosaic.
+  style_024           len=2  Take this 2-minute sunset montage and transform it into a Hokusai woodblock-print style.
+  style_023           len=2  Convert this 30-second skating clip into a 1990s graffiti street-art style.
+  complex_074         len=6  Convert this 9-second ballroom-waltz clip to a Belle Époque oil-painting aesthetic, then e
+  cr_061              len=7  Create a 3-minute period thriller about a young French Resistance pianist in 1943 Paris tr
+  style_022           len=2  Take this 90-second clip of a city park in autumn and restyle it as a Van Gogh oil paintin
+  sub_017             len=6  Create a thriller mini-drama about a Lima street magician who picks the wrong tourist's po
+  complex_073         len=6  Take this 8-second forest-stream footage, restyle it as a Studio Ghibli watercolor scene, 
+  cr_058              len=7  Make a fantasy mini-drama about a young dragon-rider whose bond with her dragon is interru
+  intake_img_033      len=8  Here's a portrait of a Sicilian widow in mourning black holding a brass key. Make an anima
+  style_021           len=2  Convert this 1-minute corporate office tour into a 1980s synthwave aesthetic.
+  sub_016             len=6  Make a sci-fi short about the only awake astronaut on a multi-decade generation ship tryin
+  complex_072         len=6  First restyle this 6-second sword-draw moment as a samurai-anime illustration, then extend
+  cr_056              len=7  Make a 4-minute coming-of-age animated drama about a teenage boy in rural Tennessee who le
+  extend_029          len=4  Extend this 6-second cooking-show plating moment to 22 seconds and add English subtitles.
+  intake_img_032      len=8  Use this uploaded character ref of a Mongolian female contortionist in red costume. Make a
+  style_020           len=2  Restyle this 2-minute home video of my kids' birthday party as a Studio Ghibli watercolor.
+  sub_015             len=6  Produce a 3-minute fantasy drama about a young Welsh hedge witch curing her village's plag
+  complex_071         len=6  Convert this 10-second nighttime city skyline to a synthwave neon look, then extend it to 
+  complex_065         len=5  Extend this 6-second telephone-booth phone call by 18 seconds, convert it into a 1970s rot
+  cr_048              len=5  Make a 5-minute animated drama about a Cuban cigar-roller in 1958 Havana who reads aloud f
+  cr_055              len=7  Produce a noir mini-drama about a 1950s Paris cabaret singer who realizes her late lover's
+  extend_033          len=5  Extend this 7-second clip of a child's first steps to 25 seconds and add a warm acoustic-g
+  extend_028          len=4  Take this 7-second motivational quote moment from my talk and extend it to 25 seconds with
+  intake_img_031      len=8  I've uploaded a portrait of a Quebecois lumberjack in winter wool, holding an axe. Make an
+  style_033           len=4  Take this 2-minute YouTube tutorial and restyle it as a Ghibli watercolor, with English su
+  style_019           len=2  Take this 30-second clip of my morning commute and convert it to a watercolor animation st
+  sub_013             len=6  Make a war drama about a young Vietnamese tunnel-runner during the war supplying medicine 
+  complex_070         len=6  Take this 8-second cathedral-interior shot, convert it to a stained-glass animated style, 
+  complex_064         len=5  Take this 7-second emergency-room operation and extend it to 25 seconds, convert it into a
+  cr_047              len=5  Create a sci-fi short about the last librarian on a doomed orbital station deciding which 
+  cr_036              len=7  Make a sci-fi space-opera animated drama about a stowaway engineer who must restart a dere
+  extend_032          len=5  Take this 6-second clip of pottery hands shaping clay and extend it to 25 seconds with a m
+  extend_027          len=4  Extend this 10-second product demo to 30 seconds and add English subtitles for accessibili

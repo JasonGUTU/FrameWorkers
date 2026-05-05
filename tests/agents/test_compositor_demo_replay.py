@@ -177,14 +177,12 @@ def test_compositor_materializer_replays_from_bundle(tmp_path):
     print(f"\n[replay] wrote {len(out_bytes)} bytes to {out_path}")
 
 
-def test_compositor_plan_mentions_the_four_shots():
-    """Sanity — the LLM plan should cover our four-shot screenplay."""
+def test_compositor_plan_has_color_grade():
+    """Sanity — the LLM plan should set a color_grade for the 4-shot demo."""
     plan = _find_compositor_plan()
-    transitions = plan.get("transitions", []) if plan else []
-    # 4 shots => at most 3 transitions.
-    assert 1 <= len(transitions) <= 3, (
-        f"expected 1-3 transitions for a 4-shot screenplay, got {len(transitions)}"
-    )
-    shot_ids = {t.get("from_shot_id") for t in transitions} | {t.get("to_shot_id") for t in transitions}
-    assert "sh_001" in shot_ids or "sh_002" in shot_ids, \
-        "transitions reference unexpected shot_ids"
+    assert plan is not None, "compositor plan missing from replay"
+    cg = plan.get("color_grade", {})
+    for field in ("brightness", "contrast", "saturation"):
+        val = cg.get(field, None)
+        assert val is not None and -1.0 <= val <= 1.0, \
+            f"color_grade.{field} ({val!r}) out of bounds [-1.0, 1.0]"

@@ -40,6 +40,97 @@ _EDIT_INSTRUCTION_PREFIX = (
     "recognizable; apply lighting, framing, pose, and environment as described.\n\n"
 )
 
+# L1 identity-reference prompt scaffolding. The L1 global anchor must
+# be a clean isolated portrait of the entity so it can serve as an
+# i2i reference downstream — without these guards the model leaks
+# atmospheric / in-scene composition from ``style_notes`` into the
+# anchor and L2/L3 then inherit a polluted reference.
+_IDENTITY_PROMPT_PREFIX = (
+    "Photorealistic cinematic identity-reference still, shot on Arri Alexa 35 "
+    "with 50mm prime, shallow depth of field, neutral matte gray studio "
+    "backdrop, three-point cinematic lighting (soft key, cool rim, gentle fill).\n"
+    "Subject (centered, three-quarter-angle portrait, full upper body in frame): "
+)
+_IDENTITY_PROMPT_SUFFIX = (
+    "\nFraming: identity reference shot only — neutral pose, neutral expression, "
+    "subject isolated against the studio backdrop. The image will be used as a "
+    "downstream i2i anchor, so visual identity (face, hair, wardrobe, body) "
+    "must be unambiguously legible."
+)
+_IDENTITY_AVOID_DEFAULTS = (
+    "anime",
+    "cartoon",
+    "illustration",
+    "painterly rendering",
+    "3D CGI render",
+    "in-scene composition",
+    "environmental setting",
+    "props in frame",
+    "other people in frame",
+    "dramatic horror lighting",
+    "atmospheric haze",
+    "color grade other than neutral",
+)
+
+# Edit-path instruction prefixes, picked by ``ref_kind`` so the model
+# knows what to preserve from each reference image.
+_EDIT_PREFIX_LOCATION_ONLY = (
+    "Edit using the attached reference image, which is a LOCATION anchor: "
+    "preserve its architecture, geometry, materials, and lighting / color "
+    "grade exactly. Modify only the foreground subjects and framing as the "
+    "text below describes. If the text describes a setting that contradicts "
+    "the reference geometry (e.g. text says exterior but reference is "
+    "interior), ignore the conflicting text and stay faithful to the "
+    "reference geometry — the planner intends the same physical place.\n\n"
+)
+_EDIT_PREFIX_CHARACTER_ONLY = (
+    "Edit using the attached reference image, which is a CHARACTER anchor: "
+    "preserve face, hair, body type, and wardrobe identity exactly. Apply "
+    "only pose, framing, expression, and environment changes as the text "
+    "below describes.\n\n"
+)
+_EDIT_PREFIX_PROP_ONLY = (
+    "Edit using the attached reference image, which is a PROP anchor: "
+    "preserve the prop's shape, color, materials, and distinctive markings "
+    "exactly. Apply only the lighting / environment / framing changes as "
+    "the text below describes.\n\n"
+)
+_EDIT_PREFIX_MULTI_SUBJECT = (
+    "Edit using the attached reference images. Each reference is named in "
+    "the text below as 'Reference N: <kind> <entity_id>'. Preserve each "
+    "reference's identity exactly within its own kind:\n"
+    "  * LOCATION refs → preserve architecture, geometry, lighting / color grade\n"
+    "  * CHARACTER refs → preserve face, hair, body type, wardrobe\n"
+    "  * PROP refs → preserve shape, color, distinctive markings\n"
+    "Compose them together according to the text. Where the text and a "
+    "reference disagree on identity-level features (face, architecture, "
+    "wardrobe), trust the reference.\n\n"
+)
+_EDIT_PREFIX_GENERIC = _EDIT_INSTRUCTION_PREFIX
+
+# Medium / style anchor that survives into the edit path so i2i isn't
+# left to drift on style alone. Kept short — verbose style notes belong
+# in t2i where there's no reference to carry the look.
+_EDIT_MEDIUM_ANCHOR = (
+    "\nMaintain the reference's photorealistic cinematic still aesthetic: "
+    "match its color grade, material rendering, and lighting style; do not "
+    "drift to anime, cartoon, painterly, or 3D CGI render."
+)
+
+_EDIT_REF_KIND_LOCATION = "location"
+_EDIT_REF_KIND_CHARACTER = "character"
+_EDIT_REF_KIND_PROP = "prop"
+_EDIT_REF_KIND_MULTI = "multi"
+_EDIT_REF_KIND_GENERIC = "generic"
+
+_EDIT_PREFIX_BY_KIND = {
+    _EDIT_REF_KIND_LOCATION: _EDIT_PREFIX_LOCATION_ONLY,
+    _EDIT_REF_KIND_CHARACTER: _EDIT_PREFIX_CHARACTER_ONLY,
+    _EDIT_REF_KIND_PROP: _EDIT_PREFIX_PROP_ONLY,
+    _EDIT_REF_KIND_MULTI: _EDIT_PREFIX_MULTI_SUBJECT,
+    _EDIT_REF_KIND_GENERIC: _EDIT_PREFIX_GENERIC,
+}
+
 
 class ImageService(LazyHttpxClientMixin):
     """Image generation + editing service backed by OpenRouter.
@@ -101,14 +192,19 @@ class ImageService(LazyHttpxClientMixin):
         prompt: str = "",
         *,
         semantic_context: ImageSemanticContext | None = None,
+        ref_kind: str = _EDIT_REF_KIND_GENERIC,
+        ref_manifest: list[str] | None = None,
     ) -> ImageResult:
         composed = (
-            self._compose_edit_prompt(semantic_context)
+            self._compose_edit_prompt(
+                semantic_context, ref_kind=ref_kind, ref_manifest=ref_manifest
+            )
             if semantic_context is not None
             else prompt
         )
         refs = [reference_images] if isinstance(reference_images, bytes) else list(reference_images)
-        logger.info("[Layer2/3] Editing image (refs=%d): %.100s...", len(refs), composed)
+        logger.info("[Layer2/3] Editing image (refs=%d, kind=%s): %.100s...",
+                    len(refs), ref_kind, composed)
 
         content_parts: list[dict[str, Any]] = []
         for ref_bytes in refs:
@@ -135,11 +231,32 @@ class ImageService(LazyHttpxClientMixin):
     def _compose_generate_prompt(ctx: ImageSemanticContext) -> str:
         """Render a semantic context into a text-to-image prompt.
 
-        Includes the full style suffix — this path has no reference
-        image to carry global style, so every cue has to be spelled out
-        in text.
+        Two modes:
+        * ``is_identity_reference=True`` — L1 global anchor path. Wraps
+          the prompt_summary with a portrait-oriented studio framing
+          and an explicit "no in-scene composition" guard so the
+          resulting image is clean enough to serve as an i2i reference
+          downstream. Atmospheric ``style_notes`` are intentionally
+          dropped here (they leak scene-mood into what should be an
+          identity portrait); ``must_avoid`` is still applied.
+        * default — scene-grounded composition; full style suffix
+          (atmosphere block + must_avoid) appended.
         """
-        parts: list[str] = []
+        if ctx.is_identity_reference:
+            parts = [_IDENTITY_PROMPT_PREFIX]
+            if ctx.prompt_summary:
+                parts.append(ctx.prompt_summary)
+            parts.append(_IDENTITY_PROMPT_SUFFIX)
+            avoid_tail = ImageService._compose_style_suffix(
+                style_notes=[],
+                must_avoid=list(ctx.must_avoid) + list(_IDENTITY_AVOID_DEFAULTS),
+                include_visual_style=False,
+            )
+            if avoid_tail:
+                parts.append(avoid_tail)
+            return "".join(parts)
+
+        parts = []
         if ctx.prompt_summary:
             parts.append(ctx.prompt_summary)
         tail = ImageService._compose_style_suffix(
@@ -152,17 +269,36 @@ class ImageService(LazyHttpxClientMixin):
         return "".join(parts)
 
     @staticmethod
-    def _compose_edit_prompt(ctx: ImageSemanticContext) -> str:
+    def _compose_edit_prompt(
+        ctx: ImageSemanticContext,
+        *,
+        ref_kind: str = _EDIT_REF_KIND_GENERIC,
+        ref_manifest: list[str] | None = None,
+    ) -> str:
         """Render a semantic context into an image-edit prompt.
 
-        Prepends the edit instruction that preserves subject identity,
-        and **omits** the ``Visual style:`` block because the reference
-        image already encodes the global look. ``Do NOT use:`` still
-        applies — style refs don't express avoidance.
+        Prepends the edit instruction that preserves subject identity
+        (variant chosen by ``ref_kind``: location-only, character-only,
+        multi-subject, or generic). Appends a short medium / aesthetic
+        anchor so the i2i path doesn't drift to non-cinematic styles
+        when the reference's look is itself shaky. Atmospheric
+        ``style_notes`` are still omitted — the reference carries the
+        scene-mood. ``must_avoid`` is appended.
+
+        ``ref_manifest`` is a list of human-readable reference labels
+        like ``["Reference 1: location anchor for loc_001",
+        "Reference 2: character anchor for char_001"]``; when provided
+        (typically with ``ref_kind="multi"``), it's spliced in so the
+        model can match each attached reference image to its role.
         """
-        parts: list[str] = [_EDIT_INSTRUCTION_PREFIX]
+        prefix = _EDIT_PREFIX_BY_KIND.get(ref_kind, _EDIT_PREFIX_GENERIC)
+        parts: list[str] = [prefix]
+        if ref_manifest:
+            parts.append("\n".join(ref_manifest))
+            parts.append("\n\n")
         if ctx.prompt_summary:
             parts.append(ctx.prompt_summary)
+        parts.append(_EDIT_MEDIUM_ANCHOR)
         tail = ImageService._compose_style_suffix(
             style_notes=ctx.style_notes,
             must_avoid=ctx.must_avoid,
@@ -269,9 +405,13 @@ class MockImageService(ImageService):
         prompt: str = "",
         *,
         semantic_context: ImageSemanticContext | None = None,
+        ref_kind: str = _EDIT_REF_KIND_GENERIC,
+        ref_manifest: list[str] | None = None,
     ) -> ImageResult:
         composed = (
-            self._compose_edit_prompt(semantic_context)
+            self._compose_edit_prompt(
+                semantic_context, ref_kind=ref_kind, ref_manifest=ref_manifest
+            )
             if semantic_context is not None
             else prompt
         )
@@ -316,9 +456,13 @@ class FalImageService(ImageService):
         prompt: str = "",
         *,
         semantic_context: ImageSemanticContext | None = None,
+        ref_kind: str = _EDIT_REF_KIND_GENERIC,
+        ref_manifest: list[str] | None = None,
     ) -> ImageResult:
         composed = (
-            self._compose_edit_prompt(semantic_context)
+            self._compose_edit_prompt(
+                semantic_context, ref_kind=ref_kind, ref_manifest=ref_manifest
+            )
             if semantic_context is not None
             else prompt
         )
@@ -332,7 +476,8 @@ class FalImageService(ImageService):
                 f"data:image/png;base64,{base64.b64encode(r).decode('utf-8')}" for r in refs
             ]
             edit_model = "fal-ai/nano-banana-2/edit"
-            logger.info("[fal.ai] Editing image with model=%s", edit_model)
+            logger.info("[fal.ai] Editing image with model=%s (kind=%s, refs=%d)",
+                        edit_model, ref_kind, len(refs))
             result = await fal_subscribe(
                 self._api_key, edit_model, {"prompt": composed, "image_urls": image_urls}
             )

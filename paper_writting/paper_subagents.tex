@@ -1,186 +1,64 @@
 \section{Sub-Agents}
 \label{sec:subagents}
 
-Each agent $a\!\in\!\mathcal{A}$ is a self-describing module rather than a
-hand-coded pipeline stage: the orchestrator (Director $+$ Assistant)
-discovers, schedules, and executes agents purely through a uniform
-descriptor interface, with zero agent-specific switches in the
-orchestration layer.
+Each agent $a\!\in\!\mathcal{A}$ is a self-describing module rather
+than a hand-coded pipeline stage: the orchestrator discovers,
+schedules, and executes agents through a uniform descriptor interface,
+with no agent-specific switches in the orchestration code.
 
-\paragraph{Descriptor as manifest.}
-Every sub-agent package exports a single
-\texttt{SubAgentDescriptor} that encodes all metadata the framework
-needs:
-\begin{itemize}\itemsep0pt
-\item \texttt{agent\_id} --- unique identifier (the planner's routing
-target);
-\item \texttt{catalog\_entry} --- the planner-facing
-\texttt{Inputs}/\texttt{Output}/\texttt{Purpose / Trigger} block, derived
-from a structured \texttt{AgentSpec} so the same description renders
-into both the Director's catalog and the InputResolver's label
-specification (preventing the two LLM-facing views from drifting);
-\item \texttt{build\_input}\,$:$\,$(\textit{step\_id},\, \textit{resolved\_artifacts}) \mapsto \textit{TypedInput}$
---- builds the agent's Pydantic input from a dict of upstream artifacts
-keyed by the consumer-declared \texttt{[label]}s;
-\item \texttt{agent\_factory} / \texttt{evaluator\_factory} ---
-constructors for the LLM execution body and its quality gate;
-\item \texttt{materializer\_factory} (optional) --- post-LLM binary
-generator for media-producing agents (image, video, audio,
-composition); \texttt{None} for text-only agents;
-\item \texttt{build\_captions} --- emits per-artifact captions used by
-InputResolver for semantic retrieval;
-\item \texttt{service\_factories} --- declares external media backends
-(image / video / audio / compositor) injected into the materializer.
-\end{itemize}
-Adding a new agent is a single-package operation
-(\texttt{schema.py}, \texttt{agent.py}, \texttt{evaluator.py},
-\texttt{descriptor.py}, optional \texttt{materializer.py}) plus one
-line in \texttt{AGENT\_REGISTRY}; no edit to the orchestration code.
+\paragraph{Descriptor.}
+Every sub-agent ships a single \texttt{SubAgentDescriptor} carrying
+its planner-facing \texttt{Inputs}/\texttt{Output}/\texttt{Purpose} block,
+a \texttt{build\_input}\,$:$\,$(\textit{step\_id},\,\textit{resolved\_artifacts})\!\to\!\textit{TypedInput}$
+function, factory hooks for the LLM body and the evaluator, and an
+optional materializer factory for media-producing agents (image,
+video, audio, composition). Adding an agent is a single sub-package
+plus one line in \texttt{AGENT\_REGISTRY}.
 
 \paragraph{Execution lifecycle.}
-For each \texttt{PlanStep}\,$=\,(a, \textit{step\_id})$ enqueued by the
-Director, Assistant runs the agent through a fixed five-stage flow:
-\begin{equation*}
-\underbrace{\text{InputResolver}}_{\text{label} \to \text{artifact}}
-\;\to\;
-\underbrace{\text{build\_input}}_{\text{Pydantic typed input}}
-\;\to\;
-\underbrace{\text{generate}}_{\text{LLM, JSON output}}
-\;\to\;
-\underbrace{L_1 + L_2}_{\text{quality gate}}
-\;\to\;
-\underbrace{\text{materialize}}_{\text{binary assets, optional}}
-\;\to\;
-L_3
-\end{equation*}
-Failure at any layer triggers a rework loop: the evaluator emits
-human-readable \texttt{rework\_notes} that are fed back into
-\texttt{generate()} as a retry hint, capped by a per-agent budget. A
-fail beyond budget surfaces \texttt{FAILED} to the Director, which then
-chooses among \emph{retry}, \emph{replan-tail}, or \emph{skip} (see
-\S\ref{sec:bench}). A separate \texttt{UPSTREAM\_INPUT\_REJECTION}
-escape hatch lets an agent abort with a structured rejection when the
-upstream artifacts are unusable, instead of fabricating output.
+For each \texttt{PlanStep} $=(a,\textit{step\_id})$ Assistant runs:
+InputResolver matches workspace artifacts to the agent's
+\texttt{[label]}s, \texttt{build\_input} packs them into a Pydantic
+typed input, the agent's LLM emits structured JSON, the evaluator gates
+$L_1$ (rule-based) and $L_2$ (LLM creative), the materializer (if any)
+generates binaries, and $L_3$ checks the produced assets. Failure
+emits \texttt{rework\_notes} that retry \texttt{generate()}; failure
+beyond budget surfaces \texttt{FAILED} and the Director picks among
+retry / replan-tail / skip. A separate rejection hatch lets an agent
+abort with a structured upstream-rejection instead of fabricating
+output.
 
-\paragraph{Three-layer quality gate.}
-Each agent ships with an evaluator implementing up to three layers,
-all over the agent's \emph{own} output (no cross-validation against
-upstream artifacts):
-\begin{description}\itemsep0pt
-\item[$L_1$ -- structural.] Deterministic rules over the typed output:
-ID format and referential integrity (\texttt{shot\_id}\,$\!=\!$\,
-\texttt{sh\_NNN} globally sequential, \texttt{prop\_id}\,$\!=\!$\,
-\texttt{prop\_NNN}, \texttt{keyframe\_count}\,$\!=\!1$ per shot, etc.),
-metric consistency, required fields. Free, instant, deterministic.
-\item[$L_2$ -- creative.] LLM-as-judge over agent-specific dimensions
-(e.g.\ \emph{character\_consistency}, \emph{dramatic\_flow},
-\emph{visual\_coherence} for ScreenplayAgent), only invoked if $L_1$
-passes.
-\item[$L_3$ -- asset.] Post-materialization checks on binary outputs:
-URI success rate ($\ge\!0.8$), format/extension correctness,
-assembled-clip integrity. Only present for media agents.
-\end{description}
-The same evaluator class is reused as both the per-step quality gate
-\emph{and} the source of \texttt{rework\_notes} that drive
-self-correction --- a single quality definition, not two parallel ones.
+\paragraph{Quality gate.}
+The evaluator owns three output-only layers (no cross-validation
+against upstream): $L_1$ deterministic structural rules
+(ID format and sequencing, e.g.\ \texttt{shot\_id}\,$\!=\!$\,
+\texttt{sh\_NNN} globally sequential, \texttt{keyframe\_count}\,$\!=\!1$
+per shot, metric consistency); $L_2$ LLM-as-judge over agent-specific
+creative dimensions; $L_3$ post-materialization asset checks (URI
+success rate, format, assembly). The same evaluator generates the
+\texttt{rework\_notes} fed back to \texttt{generate()}, so the gate
+and the self-correction signal share one definition.
 
-\paragraph{Strict-out, loose-in (Postel's law at the agent layer).}
-A sub-agent enforces its \emph{own} output schema strictly (Pydantic
-parsing $+$ $L_1$ structural rules $+$ evaluator), but reads upstream
-artifacts with zero key-by-name assumptions:
-\texttt{build\_input} dumps each upstream payload as raw JSON text
-(\texttt{json.dumps(payload, ensure\_ascii=False, indent=2)}) into a
-typed \texttt{*\_json\_text}\,$\!:\!$\,\texttt{str} field, and the
-agent's own LLM reads the text from its prompt and infers the upstream
-structure. No descriptor reaches in with
-\texttt{payload["content"]["scene\_outline"]} or similar string-key
-access. Cross-agent invariants (ID formats, per-shot keyframe count,
-shot sequentiality) are the \emph{producer's} obligation: required in
-the producer's prompt template, enforced in the producer's $L_1$
-\texttt{check\_structure}, and surfaced as rework on drift. The
-consumer never patches over the producer's mistakes silently. This
-keeps the inter-agent contract a one-line method signature
-(\texttt{build\_input(step\_id,\,resolved\_artifacts)}) instead of an
+\paragraph{Strict-out, loose-in.}
+A sub-agent enforces its own output schema strictly (Pydantic $+$ $L_1$
+$+$ evaluator) but reads upstream artifacts with no key-by-name
+assumptions: \texttt{build\_input} dumps each upstream payload as raw
+JSON text into a \texttt{*\_json\_text:\,str} field, and the agent's
+LLM reads the text and infers the upstream structure from prompt
+context. Cross-agent invariants (ID formats, per-shot counts,
+sequentiality) are the producer's obligation --- enforced in its
+prompt and its $L_1$ check, surfaced as rework on drift --- never
+patched silently in the consumer. This keeps the inter-agent contract
+a one-line method signature instead of an
 \textit{O}$(N\!\times\!M)$ web of hard-coded field accesses across $20$
 descriptors.
 
-\paragraph{Resolved-artifact contract.}
-\texttt{resolved\_artifacts} is a \texttt{dict[label\_name,
-ResolvedArtifactEntry\,|\,list[ResolvedArtifactEntry]]} produced by
-InputResolver (an LLM call over the workspace's caption index). A
-\texttt{ResolvedArtifactEntry} carries a fixed five-field shape ---
-\texttt{caption}, \texttt{scope}, \texttt{path}, \texttt{mime},
-\texttt{payload} --- so a \texttt{(single)} label maps to one entry and
-a \texttt{(collection)} label maps to a list. Adding a new field to the
-inter-agent envelope is a single edit to \texttt{ResolvedArtifactEntry};
-adding a new \emph{channel} (a new \texttt{build\_input} parameter) is
-a $20$-descriptor cross-cutting change that is always surfaced in
-review.
-
 \paragraph{Inventory.}
-The closed vocabulary
-$\mathcal{A}$, $|\mathcal{A}|\!=\!20$, is grouped by modality
-(complete listing below; \emph{italics} flag agents that ship with a
-materializer producing binary output):
-\begin{description}\itemsep0pt
-\item[Text (5).] \texttt{StoryAgent} (creative brief $\to$ story
-blueprint with logline, cast, locations, scene outline);
-\texttt{ScreenplayAgent} (story $\to$ scene/shot-structured screenplay
-with per-shot dialogue, action, camera direction);
-\texttt{NarrationAgent} (creative brief $\to$ illustration-aligned
-narrator script for storytelling videos);
-\texttt{TranslationAgent} (any structured text $\to$ translated text
-preserving keys, ids, timing, ordering);
-\texttt{BriefEnricherAgent} (raw brief $+$ uploaded reference images
-$\to$ unified enriched brief with per-image role classification).
-\item[Image (3).] \emph{\texttt{KeyFrameAgent}} (screenplay $+$
-optional character/location/prop/style references $\to$ global identity
-anchors $+$ per-scene stability $+$ one starting frame per shot);
-\emph{\texttt{IllustrationAgent}} (narration script $\to$ one
-illustration per segment with first-image-as-style-anchor cross-segment
-consistency);
-\texttt{IntakeImageAgent} (raw user-uploaded image $\to$ caption-rich
-workspace artifact; promotes the upload to global scope).
-\item[Video (5).] \emph{\texttt{VideoAgent}} (screenplay $+$ keyframes
-$\to$ per-shot image-to-video clips with baked-in dialogue $+$ foley);
-\emph{\texttt{StyleTransferAgent}} (source video $+$ style reference
-$\to$ stylised video);
-\emph{\texttt{VideoExtendAgent}} (source video $+$ continuation
-instruction $\to$ extended clip generated from the source's last
-frame);
-\emph{\texttt{HighlightAgent}} (source video $+$ optional analysis
-report $\to$ highlight reel);
-\texttt{VideoAnalysisAgent} (source video $\to$ scene-level structured
-JSON: scene segments, entities, mood, summary);
-\texttt{IntakeVideoAgent} (raw user-uploaded video $\to$ caption-rich
-workspace artifact).
-\item[Audio (4).] \emph{\texttt{MusicAgent}} (any of screenplay /
-analysis / brief $\to$ one film-wide background music track);
-\emph{\texttt{AmbienceAgent}} (any of screenplay / analysis / brief
-$\to$ one film-wide room-tone ambience bed);
-\emph{\texttt{NarratorAgent}} (narration script $\to$ per-line-TTS
-voiceover wav $+$ line-level SRT $+$ per-segment timing);
-\emph{\texttt{TranscriptionAgent}} (audio/video file $\to$ timestamped
-transcript usable as subtitle source or translation input).
-\item[Mix (1).] \emph{\texttt{AudioMixAgent}} (video baked-dialogue
-\textbf{or} narrator wav $+$ optional music $+$ optional ambience
-$\to$ one final mixed wav).
-\item[Composition (1).] \emph{\texttt{CompositorAgent}} --- terminal
-mux: video track \textbf{or} illustration slideshow $+$ optional
-final-mix audio $+$ optional subtitle track(s) $\to$ delivered mp4
-with inter-shot transitions and (optional) burn-in subtitles.
-\end{description}
-
-\paragraph{What a sub-agent is \emph{not}.}
-The framework is not a static pipeline: there is no fixed DAG over
-$\mathcal{A}$. Any prefix / suffix / re-ordering of these $20$ agents is
-a valid plan as long as each agent's declared input labels are
-satisfiable from the workspace at execution time. Routing is the
-Director's job (\S\ref{sec:bench}), and any individual agent receives
-exactly what InputResolver hands it through its own \texttt{[label]}
-slots --- never a global pipeline state object, never a sibling agent's
-internal schema, never a deterministic Python-side post-processor
-across the boundary. This decoupling is what lets routing be learned
-(\S\ref{sec:sft}, \S\ref{sec:grpo}) over a closed but
-combinatorially-large plan space without retraining when a new agent
-is added.
+$|\mathcal{A}|\!=\!20$ across modalities (text, image, video, audio,
+mix, composition); the per-modality breakdown is given in
+\S\ref{sec:bench}. There is no fixed DAG over $\mathcal{A}$: any
+prefix / re-ordering is a valid plan as long as each agent's input
+labels are satisfiable at execution time. Routing is therefore a
+learnable problem (\S\ref{sec:sft}, \S\ref{sec:grpo}) over a closed
+but combinatorially-large plan space, and adding a new agent does not
+require retraining the router beyond extending its catalog.

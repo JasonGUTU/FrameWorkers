@@ -216,11 +216,9 @@ class TestCompositorAgentLive:
 
         output = asyncio.run(agent.generate(inp))
         plan = output.content.plan
-        print(f"\n[CompositorAgent] {len(plan.transitions)} transitions")
-        print(f"  resolution={plan.output_resolution}, fps={plan.output_fps}")
-        print(f"  color_grade: tone={plan.color_grade.tone}")
-        for t in plan.transitions:
-            print(f"  {t.from_shot_id} -> {t.to_shot_id}: {t.transition_type} ({t.duration_ms}ms)")
+        print(f"\n[CompositorAgent] resolution={plan.output_resolution}, fps={plan.output_fps}")
+        print(f"  color_grade: brightness={plan.color_grade.brightness}, "
+              f"contrast={plan.color_grade.contrast}, saturation={plan.color_grade.saturation}")
 
         evaluator = CompositorEvaluator()
         errors = evaluator.check_structure(output)

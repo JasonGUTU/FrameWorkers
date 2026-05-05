@@ -1,0 +1,2533 @@
+{
+  "meta": {
+    "model": "lora:v4500_grpo_no_rationale_probe_26cases",
+    "timestamp": "20260504_214756",
+    "name": "v4500_grpo_no_rationale_probe_26cases",
+    "elapsed_s": 79.42,
+    "workers": 1,
+    "max_steps": 20,
+    "total_chains": 26,
+    "perfect_chains": 13,
+    "chain_accuracy_pct": 50.0,
+    "total_steps": 200,
+    "correct_steps": 141,
+    "step_accuracy_pct": 70.5,
+    "length_match_count": 17,
+    "length_match_pct": 65.4,
+    "mean_edit_distance": 1.35,
+    "median_edit_distance": 0.5,
+    "planner_errors": [
+      "style_203"
+    ],
+    "base_model": "Qwen/Qwen3-8B",
+    "adapter": "training/director/adapters_v4_500/no_rationale/grpo",
+    "perfect_edit_count": 13
+  },
+  "results": [
+    {
+      "name": "bilingual_045",
+      "user_goal": "Make a slow-paced literary mini-drama about an aging fisherman in a remote coastal village who returns home after a 30-year absence to find his childhood home swallowed by the rising sea, with English-Chinese bilingual subtitles, a melancholic cello score, and realistic ocean-wave and seabird ambient sounds.",
+      "expected_chain_len": 10,
+      "actual_chain_len": 10,
+      "length_match": true,
+      "total_steps": 10,
+      "correct_steps": 10,
+      "chain_correct": true,
+      "edit_distance": 0,
+      "actual_chain": [
+        "StoryAgent",
+        "ScreenplayAgent",
+        "KeyFrameAgent",
+        "VideoAgent",
+        "TranscriptionAgent",
+        "TranslationAgent",
+        "MusicAgent",
+        "AmbienceAgent",
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "StoryAgent",
+          "expected": [
+            "StoryAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "ScreenplayAgent",
+          "expected": [
+            "ScreenplayAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "KeyFrameAgent",
+          "expected": [
+            "KeyFrameAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "VideoAgent",
+          "expected": [
+            "VideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "TranscriptionAgent",
+          "expected": [
+            "TranscriptionAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "TranslationAgent",
+          "expected": [
+            "TranslationAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 7,
+          "actual": "MusicAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 8,
+          "actual": "AmbienceAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 9,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 10,
+          "actual": "CompositorAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 7.07,
+      "error": null
+    },
+    {
+      "name": "intake_img_055",
+      "user_goal": "Using this uploaded portrait of a young female Sherpa mountaineer, make a 90-second documentary-style mini-drama about her solo Everest summit attempt, with English subtitles, an inspiring orchestral score, and high-altitude wind and labored-breath ambient sounds.",
+      "expected_chain_len": 11,
+      "actual_chain_len": 11,
+      "length_match": true,
+      "total_steps": 11,
+      "correct_steps": 9,
+      "chain_correct": false,
+      "edit_distance": 2,
+      "actual_chain": [
+        "IntakeImageAgent",
+        "BriefEnricherAgent",
+        "StoryAgent",
+        "ScreenplayAgent",
+        "KeyFrameAgent",
+        "VideoAgent",
+        "MusicAgent",
+        "AmbienceAgent",
+        "AudioMixAgent",
+        "TranscriptionAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "IntakeImageAgent",
+          "expected": [
+            "IntakeImageAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "BriefEnricherAgent",
+          "expected": [
+            "BriefEnricherAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "StoryAgent",
+          "expected": [
+            "StoryAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "ScreenplayAgent",
+          "expected": [
+            "ScreenplayAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "KeyFrameAgent",
+          "expected": [
+            "KeyFrameAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "VideoAgent",
+          "expected": [
+            "VideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 7,
+          "actual": "MusicAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent",
+            "TranscriptionAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 8,
+          "actual": "AmbienceAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent",
+            "TranscriptionAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 9,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent",
+            "TranscriptionAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 10,
+          "actual": "TranscriptionAgent",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 11,
+          "actual": "CompositorAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 4.42,
+      "error": null
+    },
+    {
+      "name": "style_018",
+      "user_goal": "Convert this Mandarin costume-drama clip to a Studio Ghibli watercolor style and add English-Chinese bilingual subtitles.",
+      "expected_chain_len": 5,
+      "actual_chain_len": 5,
+      "length_match": true,
+      "total_steps": 5,
+      "correct_steps": 5,
+      "chain_correct": true,
+      "edit_distance": 0,
+      "actual_chain": [
+        "IntakeVideoAgent",
+        "StyleTransferAgent",
+        "TranscriptionAgent",
+        "TranslationAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "IntakeVideoAgent",
+          "expected": [
+            "IntakeVideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "StyleTransferAgent",
+          "expected": [
+            "StyleTransferAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "TranscriptionAgent",
+          "expected": [
+            "TranscriptionAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "TranslationAgent",
+          "expected": [
+            "TranslationAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "CompositorAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 3.1,
+      "error": null
+    },
+    {
+      "name": "extend_018",
+      "user_goal": "Extend this Mandarin courtroom-drama confrontation scene by 12 seconds and add English-Chinese bilingual subtitles.",
+      "expected_chain_len": 5,
+      "actual_chain_len": 5,
+      "length_match": true,
+      "total_steps": 5,
+      "correct_steps": 5,
+      "chain_correct": true,
+      "edit_distance": 0,
+      "actual_chain": [
+        "IntakeVideoAgent",
+        "VideoExtendAgent",
+        "TranscriptionAgent",
+        "TranslationAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "IntakeVideoAgent",
+          "expected": [
+            "IntakeVideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "VideoExtendAgent",
+          "expected": [
+            "VideoExtendAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "TranscriptionAgent",
+          "expected": [
+            "TranscriptionAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "TranslationAgent",
+          "expected": [
+            "TranslationAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "CompositorAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 2.24,
+      "error": null
+    },
+    {
+      "name": "highlight_022",
+      "user_goal": "Cut the most thrilling courtroom-confrontation moments from this Mandarin legal-drama series into a 60-second promotional teaser with English-Chinese bilingual subtitles.",
+      "expected_chain_len": 6,
+      "actual_chain_len": 6,
+      "length_match": true,
+      "total_steps": 6,
+      "correct_steps": 6,
+      "chain_correct": true,
+      "edit_distance": 0,
+      "actual_chain": [
+        "IntakeVideoAgent",
+        "VideoAnalysisAgent",
+        "HighlightAgent",
+        "TranscriptionAgent",
+        "TranslationAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "IntakeVideoAgent",
+          "expected": [
+            "IntakeVideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "VideoAnalysisAgent",
+          "expected": [
+            "VideoAnalysisAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "HighlightAgent",
+          "expected": [
+            "HighlightAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "TranscriptionAgent",
+          "expected": [
+            "TranscriptionAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "TranslationAgent",
+          "expected": [
+            "TranslationAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "CompositorAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 2.32,
+      "error": null
+    },
+    {
+      "name": "storytelling_035",
+      "user_goal": "Narrate this seafaring tale of a lighthouse keeper's daughter who befriends a sea-storm spirit as an illustrated audiobook, with a haunting maritime orchestral score, ocean-storm ambient sounds, and English narration.",
+      "expected_chain_len": 7,
+      "actual_chain_len": 7,
+      "length_match": true,
+      "total_steps": 7,
+      "correct_steps": 7,
+      "chain_correct": true,
+      "edit_distance": 0,
+      "actual_chain": [
+        "NarrationAgent",
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent",
+        "AmbienceAgent",
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "NarrationAgent",
+          "expected": [
+            "NarrationAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "IllustrationAgent",
+          "expected": [
+            "AmbienceAgent",
+            "IllustrationAgent",
+            "MusicAgent",
+            "NarratorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "NarratorAgent",
+          "expected": [
+            "AmbienceAgent",
+            "IllustrationAgent",
+            "MusicAgent",
+            "NarratorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "MusicAgent",
+          "expected": [
+            "AmbienceAgent",
+            "IllustrationAgent",
+            "MusicAgent",
+            "NarratorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "AmbienceAgent",
+          "expected": [
+            "AmbienceAgent",
+            "IllustrationAgent",
+            "MusicAgent",
+            "NarratorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 7,
+          "actual": "CompositorAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 2.77,
+      "error": null
+    },
+    {
+      "name": "extend_022",
+      "user_goal": "Extend this nightclub-confrontation scene by 8 seconds and add a tense electronic score plus crowd-murmur and clinking-glass ambient sounds.",
+      "expected_chain_len": 6,
+      "actual_chain_len": 6,
+      "length_match": true,
+      "total_steps": 6,
+      "correct_steps": 6,
+      "chain_correct": true,
+      "edit_distance": 0,
+      "actual_chain": [
+        "IntakeVideoAgent",
+        "VideoExtendAgent",
+        "MusicAgent",
+        "AmbienceAgent",
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "IntakeVideoAgent",
+          "expected": [
+            "IntakeVideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "VideoExtendAgent",
+          "expected": [
+            "VideoExtendAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "MusicAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "AmbienceAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "CompositorAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 2.41,
+      "error": null
+    },
+    {
+      "name": "highlight_028",
+      "user_goal": "Cut the most dramatic moments from this Mandarin palace-intrigue mini-drama and convert the resulting teaser to an ink-wash animated style.",
+      "expected_chain_len": 5,
+      "actual_chain_len": 5,
+      "length_match": true,
+      "total_steps": 5,
+      "correct_steps": 5,
+      "chain_correct": true,
+      "edit_distance": 0,
+      "actual_chain": [
+        "IntakeVideoAgent",
+        "VideoAnalysisAgent",
+        "HighlightAgent",
+        "StyleTransferAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "IntakeVideoAgent",
+          "expected": [
+            "IntakeVideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "VideoAnalysisAgent",
+          "expected": [
+            "VideoAnalysisAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "HighlightAgent",
+          "expected": [
+            "HighlightAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "StyleTransferAgent",
+          "expected": [
+            "StyleTransferAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "CompositorAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 2.08,
+      "error": null
+    },
+    {
+      "name": "complex_104",
+      "user_goal": "Analyze this hit Mandarin crime-thriller mini-drama, cut the most suspenseful twist moments into a teaser, then convert the teaser to a gritty Japanese-anime visual style and add English subtitles.",
+      "expected_chain_len": 6,
+      "actual_chain_len": 6,
+      "length_match": true,
+      "total_steps": 6,
+      "correct_steps": 6,
+      "chain_correct": true,
+      "edit_distance": 0,
+      "actual_chain": [
+        "IntakeVideoAgent",
+        "VideoAnalysisAgent",
+        "HighlightAgent",
+        "StyleTransferAgent",
+        "TranscriptionAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "IntakeVideoAgent",
+          "expected": [
+            "IntakeVideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "VideoAnalysisAgent",
+          "expected": [
+            "VideoAnalysisAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "HighlightAgent",
+          "expected": [
+            "HighlightAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "StyleTransferAgent",
+          "expected": [
+            "StyleTransferAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "TranscriptionAgent",
+          "expected": [
+            "TranscriptionAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "CompositorAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 2.44,
+      "error": null
+    },
+    {
+      "name": "style_201",
+      "user_goal": "An ink-wash-painted version of this Mandarin tea-ceremony footage with quiet teahouse-courtyard ambience.",
+      "expected_chain_len": 5,
+      "actual_chain_len": 7,
+      "length_match": false,
+      "total_steps": 7,
+      "correct_steps": 2,
+      "chain_correct": false,
+      "edit_distance": 2,
+      "actual_chain": [
+        "IntakeVideoAgent",
+        "StyleTransferAgent",
+        "IntakeVideoAgent",
+        "VideoAnalysisAgent",
+        "AmbienceAgent",
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "IntakeVideoAgent",
+          "expected": [
+            "IntakeVideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "StyleTransferAgent",
+          "expected": [
+            "StyleTransferAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "IntakeVideoAgent",
+          "expected": [
+            "AmbienceAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "VideoAnalysisAgent",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "AmbienceAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "<none>"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 7,
+          "actual": "CompositorAgent",
+          "expected": [
+            "<none>"
+          ],
+          "correct": false,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 2.79,
+      "error": null
+    },
+    {
+      "name": "extend_201",
+      "user_goal": "A 30-second version of this lighthouse-keeper closing scene with continuous ocean-wave ambience.",
+      "expected_chain_len": 5,
+      "actual_chain_len": 5,
+      "length_match": true,
+      "total_steps": 5,
+      "correct_steps": 4,
+      "chain_correct": false,
+      "edit_distance": 1,
+      "actual_chain": [
+        "IntakeVideoAgent",
+        "HighlightAgent",
+        "AmbienceAgent",
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "IntakeVideoAgent",
+          "expected": [
+            "IntakeVideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "HighlightAgent",
+          "expected": [
+            "VideoExtendAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "AmbienceAgent",
+          "expected": [
+            "AmbienceAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "CompositorAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 2.09,
+      "error": null
+    },
+    {
+      "name": "style_202",
+      "user_goal": "A Studio Ghibli-style version of this rainy Tokyo intersection footage with a melancholy piano score and rain-and-traffic ambience.",
+      "expected_chain_len": 6,
+      "actual_chain_len": 6,
+      "length_match": true,
+      "total_steps": 6,
+      "correct_steps": 6,
+      "chain_correct": true,
+      "edit_distance": 0,
+      "actual_chain": [
+        "IntakeVideoAgent",
+        "StyleTransferAgent",
+        "MusicAgent",
+        "AmbienceAgent",
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "IntakeVideoAgent",
+          "expected": [
+            "IntakeVideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "StyleTransferAgent",
+          "expected": [
+            "StyleTransferAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "MusicAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "AmbienceAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "CompositorAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 2.35,
+      "error": null
+    },
+    {
+      "name": "style_203",
+      "user_goal": "A traditional ink-wash version of this Mandarin street-performance clip with English subtitles and a soft erhu score.",
+      "expected_chain_len": 6,
+      "actual_chain_len": 0,
+      "length_match": false,
+      "total_steps": 6,
+      "correct_steps": 0,
+      "chain_correct": false,
+      "edit_distance": 6,
+      "actual_chain": [],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "<missing>",
+          "expected": [
+            "IntakeVideoAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "<missing>",
+          "expected": [
+            "StyleTransferAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "<missing>",
+          "expected": [
+            "MusicAgent",
+            "TranscriptionAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "<missing>",
+          "expected": [
+            "MusicAgent",
+            "TranscriptionAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "<missing>",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "<missing>",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 2.39,
+      "error": "JSON decode failed: Expecting ',' delimiter: line 1 column 207 (char 206)"
+    },
+    {
+      "name": "extend_202",
+      "user_goal": "An extended 30-second version of this Spanish flamenco-club confrontation scene with English subtitles and a tense flamenco-guitar score.",
+      "expected_chain_len": 6,
+      "actual_chain_len": 6,
+      "length_match": true,
+      "total_steps": 6,
+      "correct_steps": 6,
+      "chain_correct": true,
+      "edit_distance": 0,
+      "actual_chain": [
+        "IntakeVideoAgent",
+        "VideoExtendAgent",
+        "MusicAgent",
+        "TranscriptionAgent",
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "IntakeVideoAgent",
+          "expected": [
+            "IntakeVideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "VideoExtendAgent",
+          "expected": [
+            "VideoExtendAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "MusicAgent",
+          "expected": [
+            "MusicAgent",
+            "TranscriptionAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "TranscriptionAgent",
+          "expected": [
+            "MusicAgent",
+            "TranscriptionAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "CompositorAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 2.34,
+      "error": null
+    },
+    {
+      "name": "highlight_201",
+      "user_goal": "A 60-second highlight reel from this golf championship footage with continuous golf-course-and-light-applause ambience.",
+      "expected_chain_len": 6,
+      "actual_chain_len": 7,
+      "length_match": false,
+      "total_steps": 7,
+      "correct_steps": 4,
+      "chain_correct": false,
+      "edit_distance": 1,
+      "actual_chain": [
+        "IntakeVideoAgent",
+        "VideoAnalysisAgent",
+        "HighlightAgent",
+        "AmbienceAgent",
+        "TranscriptionAgent",
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "IntakeVideoAgent",
+          "expected": [
+            "IntakeVideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "VideoAnalysisAgent",
+          "expected": [
+            "VideoAnalysisAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "HighlightAgent",
+          "expected": [
+            "HighlightAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "AmbienceAgent",
+          "expected": [
+            "AmbienceAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "TranscriptionAgent",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 7,
+          "actual": "CompositorAgent",
+          "expected": [
+            "<none>"
+          ],
+          "correct": false,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 2.78,
+      "error": null
+    },
+    {
+      "name": "complex_201",
+      "user_goal": "A 30-second cyberpunk-anime version of this corporate-office walking shot with a synthwave score and rain-soaked-neon-city ambience.",
+      "expected_chain_len": 7,
+      "actual_chain_len": 6,
+      "length_match": false,
+      "total_steps": 7,
+      "correct_steps": 2,
+      "chain_correct": false,
+      "edit_distance": 1,
+      "actual_chain": [
+        "IntakeVideoAgent",
+        "StyleTransferAgent",
+        "MusicAgent",
+        "AmbienceAgent",
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "IntakeVideoAgent",
+          "expected": [
+            "IntakeVideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "StyleTransferAgent",
+          "expected": [
+            "VideoExtendAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "MusicAgent",
+          "expected": [
+            "StyleTransferAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "AmbienceAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "CompositorAgent",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 7,
+          "actual": "<missing>",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 2.54,
+      "error": null
+    },
+    {
+      "name": "highlight_202",
+      "user_goal": "A 90-second highlight reel from this Mandarin street-food vlog with English subtitles, lo-fi hip-hop background music, and bustling-night-market ambience.",
+      "expected_chain_len": 8,
+      "actual_chain_len": 8,
+      "length_match": true,
+      "total_steps": 8,
+      "correct_steps": 8,
+      "chain_correct": true,
+      "edit_distance": 0,
+      "actual_chain": [
+        "IntakeVideoAgent",
+        "VideoAnalysisAgent",
+        "HighlightAgent",
+        "MusicAgent",
+        "AmbienceAgent",
+        "TranscriptionAgent",
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "IntakeVideoAgent",
+          "expected": [
+            "IntakeVideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "VideoAnalysisAgent",
+          "expected": [
+            "VideoAnalysisAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "HighlightAgent",
+          "expected": [
+            "HighlightAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "MusicAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent",
+            "TranscriptionAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "AmbienceAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent",
+            "TranscriptionAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "TranscriptionAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent",
+            "TranscriptionAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 7,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 8,
+          "actual": "CompositorAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 2.99,
+      "error": null
+    },
+    {
+      "name": "storytelling_201",
+      "user_goal": "Using this old fisherman portrait, a silent illustrated tale about his return to a coastal village swallowed by the rising sea, with a melancholic cello score and gentle ocean-wave ambience (no narrator voice).",
+      "expected_chain_len": 8,
+      "actual_chain_len": 10,
+      "length_match": false,
+      "total_steps": 10,
+      "correct_steps": 2,
+      "chain_correct": false,
+      "edit_distance": 4,
+      "actual_chain": [
+        "IntakeImageAgent",
+        "BriefEnricherAgent",
+        "StoryAgent",
+        "ScreenplayAgent",
+        "KeyFrameAgent",
+        "VideoAgent",
+        "MusicAgent",
+        "AmbienceAgent",
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "IntakeImageAgent",
+          "expected": [
+            "IntakeImageAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "BriefEnricherAgent",
+          "expected": [
+            "BriefEnricherAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "StoryAgent",
+          "expected": [
+            "NarrationAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "ScreenplayAgent",
+          "expected": [
+            "AmbienceAgent",
+            "IllustrationAgent",
+            "MusicAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "KeyFrameAgent",
+          "expected": [
+            "AmbienceAgent",
+            "IllustrationAgent",
+            "MusicAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "VideoAgent",
+          "expected": [
+            "AmbienceAgent",
+            "IllustrationAgent",
+            "MusicAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 7,
+          "actual": "MusicAgent",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 8,
+          "actual": "AmbienceAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 9,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "<none>"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 10,
+          "actual": "CompositorAgent",
+          "expected": [
+            "<none>"
+          ],
+          "correct": false,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 3.51,
+      "error": null
+    },
+    {
+      "name": "storytelling_202",
+      "user_goal": "A Spanish-narrated illustrated audiobook of an old Mexican folktale about a desert-coyote teaching a lost girl to find water, with a guitar-and-marimba score, desert-night-cricket ambience, and English subtitles.",
+      "expected_chain_len": 8,
+      "actual_chain_len": 7,
+      "length_match": false,
+      "total_steps": 8,
+      "correct_steps": 6,
+      "chain_correct": false,
+      "edit_distance": 1,
+      "actual_chain": [
+        "NarrationAgent",
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent",
+        "AmbienceAgent",
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "NarrationAgent",
+          "expected": [
+            "NarrationAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "IllustrationAgent",
+          "expected": [
+            "AmbienceAgent",
+            "IllustrationAgent",
+            "MusicAgent",
+            "NarratorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "NarratorAgent",
+          "expected": [
+            "AmbienceAgent",
+            "IllustrationAgent",
+            "MusicAgent",
+            "NarratorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "MusicAgent",
+          "expected": [
+            "AmbienceAgent",
+            "IllustrationAgent",
+            "MusicAgent",
+            "NarratorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "AmbienceAgent",
+          "expected": [
+            "AmbienceAgent",
+            "IllustrationAgent",
+            "MusicAgent",
+            "NarratorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 7,
+          "actual": "CompositorAgent",
+          "expected": [
+            "TranslationAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 8,
+          "actual": "<missing>",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 2.71,
+      "error": null
+    },
+    {
+      "name": "complex_202",
+      "user_goal": "A 90-second cyberpunk mini-drama about a Tokyo street courier discovering a stolen AI brain in a back alley, with the discovery moment drawn out for impact, a synthwave score, and neon-rain-city ambience.",
+      "expected_chain_len": 9,
+      "actual_chain_len": 8,
+      "length_match": false,
+      "total_steps": 9,
+      "correct_steps": 5,
+      "chain_correct": false,
+      "edit_distance": 1,
+      "actual_chain": [
+        "StoryAgent",
+        "ScreenplayAgent",
+        "KeyFrameAgent",
+        "VideoAgent",
+        "MusicAgent",
+        "AmbienceAgent",
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "StoryAgent",
+          "expected": [
+            "StoryAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "ScreenplayAgent",
+          "expected": [
+            "ScreenplayAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "KeyFrameAgent",
+          "expected": [
+            "KeyFrameAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "VideoAgent",
+          "expected": [
+            "VideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "MusicAgent",
+          "expected": [
+            "VideoExtendAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "AmbienceAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 7,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 8,
+          "actual": "CompositorAgent",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 9,
+          "actual": "<missing>",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 3.02,
+      "error": null
+    },
+    {
+      "name": "highlight_203",
+      "user_goal": "A 60-second highlight reel from this Mandarin variety show with English-Mandarin bilingual subtitles, an upbeat orchestral score, and studio-audience ambience.",
+      "expected_chain_len": 9,
+      "actual_chain_len": 9,
+      "length_match": true,
+      "total_steps": 9,
+      "correct_steps": 4,
+      "chain_correct": false,
+      "edit_distance": 4,
+      "actual_chain": [
+        "IntakeVideoAgent",
+        "VideoAnalysisAgent",
+        "HighlightAgent",
+        "MusicAgent",
+        "AmbienceAgent",
+        "AudioMixAgent",
+        "TranscriptionAgent",
+        "TranslationAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "IntakeVideoAgent",
+          "expected": [
+            "IntakeVideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "VideoAnalysisAgent",
+          "expected": [
+            "VideoAnalysisAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "HighlightAgent",
+          "expected": [
+            "HighlightAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "MusicAgent",
+          "expected": [
+            "TranscriptionAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "AmbienceAgent",
+          "expected": [
+            "TranslationAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 7,
+          "actual": "TranscriptionAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 8,
+          "actual": "TranslationAgent",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 9,
+          "actual": "CompositorAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 3.39,
+      "error": null
+    },
+    {
+      "name": "complex_203",
+      "user_goal": "A 30-second Studio Ghibli-style version of this Mandarin marketplace clip with English-Mandarin bilingual subtitles, a traditional pipa-and-strings score, and busy-market ambience.",
+      "expected_chain_len": 9,
+      "actual_chain_len": 9,
+      "length_match": true,
+      "total_steps": 9,
+      "correct_steps": 3,
+      "chain_correct": false,
+      "edit_distance": 5,
+      "actual_chain": [
+        "IntakeVideoAgent",
+        "VideoAnalysisAgent",
+        "StyleTransferAgent",
+        "MusicAgent",
+        "AmbienceAgent",
+        "AudioMixAgent",
+        "TranscriptionAgent",
+        "TranslationAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "IntakeVideoAgent",
+          "expected": [
+            "IntakeVideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "VideoAnalysisAgent",
+          "expected": [
+            "VideoExtendAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "StyleTransferAgent",
+          "expected": [
+            "StyleTransferAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "MusicAgent",
+          "expected": [
+            "TranscriptionAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "AmbienceAgent",
+          "expected": [
+            "TranslationAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 7,
+          "actual": "TranscriptionAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 8,
+          "actual": "TranslationAgent",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 9,
+          "actual": "CompositorAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 3.31,
+      "error": null
+    },
+    {
+      "name": "complex_204",
+      "user_goal": "An anime-style 90-second highlight reel from this Korean K-drama with English-Korean bilingual subtitles, a sweeping orchestral score, and dramatic indoor-room ambience.",
+      "expected_chain_len": 10,
+      "actual_chain_len": 8,
+      "length_match": false,
+      "total_steps": 10,
+      "correct_steps": 2,
+      "chain_correct": false,
+      "edit_distance": 6,
+      "actual_chain": [
+        "VideoAnalysisAgent",
+        "IntakeVideoAgent",
+        "MusicAgent",
+        "AmbienceAgent",
+        "TranscriptionAgent",
+        "TranslationAgent",
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "VideoAnalysisAgent",
+          "expected": [
+            "IntakeVideoAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "IntakeVideoAgent",
+          "expected": [
+            "VideoAnalysisAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "MusicAgent",
+          "expected": [
+            "HighlightAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "AmbienceAgent",
+          "expected": [
+            "StyleTransferAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "TranscriptionAgent",
+          "expected": [
+            "TranscriptionAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "TranslationAgent",
+          "expected": [
+            "TranslationAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 7,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 8,
+          "actual": "CompositorAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 9,
+          "actual": "<missing>",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 10,
+          "actual": "<missing>",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 2.94,
+      "error": null
+    },
+    {
+      "name": "storytelling_203",
+      "user_goal": "Using this Sherpa mountaineer portrait, a Spanish-narrated illustrated audiobook of her solo Everest summit attempt, with high-altitude wind ambience, a triumphant orchestral score, and English subtitles.",
+      "expected_chain_len": 10,
+      "actual_chain_len": 10,
+      "length_match": true,
+      "total_steps": 10,
+      "correct_steps": 10,
+      "chain_correct": true,
+      "edit_distance": 0,
+      "actual_chain": [
+        "IntakeImageAgent",
+        "BriefEnricherAgent",
+        "NarrationAgent",
+        "IllustrationAgent",
+        "NarratorAgent",
+        "MusicAgent",
+        "AmbienceAgent",
+        "AudioMixAgent",
+        "TranslationAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "IntakeImageAgent",
+          "expected": [
+            "IntakeImageAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "BriefEnricherAgent",
+          "expected": [
+            "BriefEnricherAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "NarrationAgent",
+          "expected": [
+            "NarrationAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "IllustrationAgent",
+          "expected": [
+            "AmbienceAgent",
+            "IllustrationAgent",
+            "MusicAgent",
+            "NarratorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "NarratorAgent",
+          "expected": [
+            "AmbienceAgent",
+            "IllustrationAgent",
+            "MusicAgent",
+            "NarratorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "MusicAgent",
+          "expected": [
+            "AmbienceAgent",
+            "IllustrationAgent",
+            "MusicAgent",
+            "NarratorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 7,
+          "actual": "AmbienceAgent",
+          "expected": [
+            "AmbienceAgent",
+            "IllustrationAgent",
+            "MusicAgent",
+            "NarratorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 8,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 9,
+          "actual": "TranslationAgent",
+          "expected": [
+            "TranslationAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 10,
+          "actual": "CompositorAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 3.68,
+      "error": null
+    },
+    {
+      "name": "complex_205",
+      "user_goal": "Using this old samurai portrait, an ink-wash-painted mini-drama about his last duel before retirement, with a shakuhachi-and-strings score and dojo ambience.",
+      "expected_chain_len": 11,
+      "actual_chain_len": 10,
+      "length_match": false,
+      "total_steps": 11,
+      "correct_steps": 7,
+      "chain_correct": false,
+      "edit_distance": 1,
+      "actual_chain": [
+        "IntakeImageAgent",
+        "BriefEnricherAgent",
+        "StoryAgent",
+        "ScreenplayAgent",
+        "KeyFrameAgent",
+        "VideoAgent",
+        "MusicAgent",
+        "AmbienceAgent",
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "IntakeImageAgent",
+          "expected": [
+            "IntakeImageAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "BriefEnricherAgent",
+          "expected": [
+            "BriefEnricherAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "StoryAgent",
+          "expected": [
+            "StoryAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "ScreenplayAgent",
+          "expected": [
+            "ScreenplayAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "KeyFrameAgent",
+          "expected": [
+            "KeyFrameAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "VideoAgent",
+          "expected": [
+            "VideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 7,
+          "actual": "MusicAgent",
+          "expected": [
+            "StyleTransferAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 8,
+          "actual": "AmbienceAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 9,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "AmbienceAgent",
+            "MusicAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 10,
+          "actual": "CompositorAgent",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        },
+        {
+          "step": 11,
+          "actual": "<missing>",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": false,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 3.71,
+      "error": null
+    },
+    {
+      "name": "intake_img_201",
+      "user_goal": "Using this Russian lighthouse-keeper portrait, a 90-second mini-drama about her last storm-watch night before retirement, with English-Russian bilingual subtitles and continuous storm-wind ambience (no music).",
+      "expected_chain_len": 11,
+      "actual_chain_len": 11,
+      "length_match": true,
+      "total_steps": 11,
+      "correct_steps": 11,
+      "chain_correct": true,
+      "edit_distance": 0,
+      "actual_chain": [
+        "IntakeImageAgent",
+        "BriefEnricherAgent",
+        "StoryAgent",
+        "ScreenplayAgent",
+        "KeyFrameAgent",
+        "VideoAgent",
+        "TranscriptionAgent",
+        "TranslationAgent",
+        "AmbienceAgent",
+        "AudioMixAgent",
+        "CompositorAgent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "actual": "IntakeImageAgent",
+          "expected": [
+            "IntakeImageAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 2,
+          "actual": "BriefEnricherAgent",
+          "expected": [
+            "BriefEnricherAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 3,
+          "actual": "StoryAgent",
+          "expected": [
+            "StoryAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 4,
+          "actual": "ScreenplayAgent",
+          "expected": [
+            "ScreenplayAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 5,
+          "actual": "KeyFrameAgent",
+          "expected": [
+            "KeyFrameAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 6,
+          "actual": "VideoAgent",
+          "expected": [
+            "VideoAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 7,
+          "actual": "TranscriptionAgent",
+          "expected": [
+            "TranscriptionAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 8,
+          "actual": "TranslationAgent",
+          "expected": [
+            "TranslationAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 9,
+          "actual": "AmbienceAgent",
+          "expected": [
+            "AmbienceAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 10,
+          "actual": "AudioMixAgent",
+          "expected": [
+            "AudioMixAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        },
+        {
+          "step": 11,
+          "actual": "CompositorAgent",
+          "expected": [
+            "CompositorAgent"
+          ],
+          "correct": true,
+          "rationale": ""
+        }
+      ],
+      "elapsed_s": 4.01,
+      "error": null
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+\begin{table}[!ht]
+\centering
+\caption{LoRA fine-tuning ablation on the 200-case OOD probe set (24 chain shapes not present in training or in the v4\_500 eval set, expanded into 200 user-goal variants distributed 20\%/60\%/20\% Short/Medium/Long). All variants are Qwen3 base + SFT (and optionally + GRPO), ablating base-model size, training phase, and target-output schema. Bold marks best per column.}
+\label{tab:director_routing_lora_ablation_probe200}
+\small
+\setlength{\tabcolsep}{8pt}
+\begin{tabular}{l|ccc}
+\toprule
+Variant & chain$\uparrow$ & step$\uparrow$ & edit$\downarrow$ \\
+\midrule
+8B SFT no\_rat & 60.0 & 81.7 & 0.81 \\
+8B SFT rich & 62.0 & 80.6 & 0.78 \\
+8B SFT templated & 48.0 & 74.8 & 0.94 \\
+8B GRPO no\_rat & 75.5 & 88.8 & 0.54 \\
+8B GRPO rich & 76.0 & 89.5 & 0.55 \\
+8B GRPO templated & \textbf{81.5} & \textbf{90.7} & 0.50 \\
+\midrule
+4B SFT no\_rat & 66.0 & 85.8 & 0.45 \\
+4B SFT rich & 63.0 & 85.4 & 0.52 \\
+4B SFT templated & 54.0 & 77.3 & 0.95 \\
+4B GRPO no\_rat & 67.0 & 87.0 & \textbf{0.42} \\
+4B GRPO rich & 65.5 & 85.2 & 0.62 \\
+4B GRPO templated & 68.0 & 86.3 & 0.70 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -113,6 +113,8 @@ class LlmSubAgentPlanner:
         *,
         fewshots: bool = True,
         policies: bool = True,
+        schema_variant: str = "with_rationale",
+        chat_extra_body: Optional[Dict[str, Any]] = None,
     ) -> None:
         raw = (model or DIRECTOR_ROUTING_MODEL or DIRECTOR_MEMORY_MODEL or "").strip()
         self._model = raw or "gpt-3.5-turbo"
@@ -125,12 +127,20 @@ class LlmSubAgentPlanner:
         # embody the policies). LoRA training typically uses
         # (fewshots=False, policies=True) to keep routing rules as runtime
         # hints rather than baking them into weights.
-        if fewshots:
+        # schema_variant="no_rationale" overrides scaffold and uses the minimal
+        # CORE that drops top-level rationale + per-step intent (matches the
+        # LoRA *_no_rationale training prompt byte-for-byte).
+        if schema_variant == "no_rationale":
+            self._core = prompts.PLAN_UPFRONT_CORE_NO_RATIONALE
+        elif fewshots:
             self._core = prompts.PLAN_UPFRONT_CORE_WITH_FEWSHOTS
         elif policies:
             self._core = prompts.PLAN_UPFRONT_CORE_WITH_POLICIES
         else:
             self._core = prompts.PLAN_UPFRONT_CORE
+        self._chat_extra_body: Optional[Dict[str, Any]] = (
+            dict(chat_extra_body) if chat_extra_body else None
+        )
 
     # ------------------------------------------------------------------
     # LLM client plumbing
@@ -181,12 +191,15 @@ class LlmSubAgentPlanner:
                 "(e.g. inference.clients.LLMClient)."
             )
         cap = _ROUTING_CHAT_JSON_MAX_TOKENS if max_tokens is None else max_tokens
-        out = await chat_json_fn(
+        kwargs: Dict[str, Any] = dict(
             system_prompt=system,
             user_prompt=user,
             model=self._model,
             max_tokens=cap,
         )
+        if self._chat_extra_body:
+            kwargs["extra_body"] = self._chat_extra_body
+        out = await chat_json_fn(**kwargs)
         if not isinstance(out, dict):
             raise ValueError(f"chat_json returned non-dict: {type(out)}")
         return out

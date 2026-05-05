@@ -51,13 +51,23 @@ echo "  GRPO out:    ${GRPO_OUT}"
 echo "  GRPO data:   ${GRPO_DATA}"
 echo "  run stamp:   ${RUN_STAMP}"
 
+RESUME_FROM="${RESUME_FROM:-}"
+[ -n "${RESUME_FROM}" ] && echo "  resume from: ${RESUME_FROM}"
+
 export PYTHONUNBUFFERED=1
 
-PYTHONPATH=. torchrun --nproc_per_node=2 --master_port=29513 \
+MASTER_PORT=$((20000 + SLURM_JOB_ID % 10000))
+echo "  master_port: ${MASTER_PORT}"
+
+RESUME_ARG=()
+[ -n "${RESUME_FROM}" ] && RESUME_ARG=(--resume-from "${RESUME_FROM}")
+
+PYTHONPATH=. torchrun --nproc_per_node=2 --master_port="${MASTER_PORT}" \
     training/director/train_grpo.py \
         --adapter-in  "${SFT_ADAPTER}" \
         --adapter-out "${GRPO_OUT}" \
         --sft-path    "${GRPO_DATA}" \
+        "${RESUME_ARG[@]}" \
         --num-generations 4 \
         --epochs "${EPOCHS}" \
         --max-new-tokens 1024 \

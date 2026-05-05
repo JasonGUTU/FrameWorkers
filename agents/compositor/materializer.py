@@ -1,8 +1,8 @@
 """Compositor materializer — executes composition plan via FFmpeg.
 
-Reads the LLM-planned composition spec (transitions, color grade,
-subtitle burn-in) and muxes video + audio + subtitles into a final
-deliverable MP4 using FFmpeg.
+Reads the LLM-planned composition spec (color grade, subtitle burn-in)
+and muxes video + audio + subtitles into a final deliverable MP4 using
+FFmpeg.
 """
 
 from __future__ import annotations

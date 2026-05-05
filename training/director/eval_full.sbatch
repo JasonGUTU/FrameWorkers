@@ -21,8 +21,16 @@
 
 set -euo pipefail
 
-: "${ADAPTER:?ADAPTER env var required — e.g. training/director/adapters_full/dpo}"
-NAME="${NAME:-$(basename $(dirname $ADAPTER))_$(basename $ADAPTER)}"
+ADAPTER="${ADAPTER:-}"  # empty = base-model-only eval (no LoRA)
+if [ -n "$ADAPTER" ]; then
+    NAME="${NAME:-$(basename $(dirname $ADAPTER))_$(basename $ADAPTER)}"
+else
+    : "${NAME:?NAME env var required when running base-only eval (no ADAPTER)}"
+fi
+# Optional overrides — leave empty to use eval_lora.py defaults
+CASES="${CASES:-}"
+SCHEMA_VARIANT="${SCHEMA_VARIANT:-}"
+BASE_MODEL="${BASE_MODEL:-}"
 
 REPO_ROOT="/home/zhendong_li/FrameWorkers"
 cd "$REPO_ROOT"
@@ -42,8 +50,12 @@ echo "adapter: $ADAPTER"
 echo "name:    $NAME"
 nvidia-smi | head -20
 
-PYTHONPATH=. python evals/director_routing/eval_lora.py \
-    --adapter "$ADAPTER" \
-    --name "$NAME"
+CMD=(python evals/director_routing/eval_lora.py --name "$NAME")
+[ -n "$ADAPTER" ] && CMD+=(--adapter "$ADAPTER")
+[ -n "$BASE_MODEL" ] && CMD+=(--base-model "$BASE_MODEL")
+[ -n "$CASES" ] && CMD+=(--cases "$CASES")
+[ -n "$SCHEMA_VARIANT" ] && CMD+=(--schema-variant "$SCHEMA_VARIANT")
+echo "Running: ${CMD[*]}"
+PYTHONPATH=. "${CMD[@]}"
 
 echo "=== DONE ==="

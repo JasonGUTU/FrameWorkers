@@ -30,62 +30,79 @@ plans start at the first content-producing agent rather than from a
 text-intake step.
 
 \paragraph{Evaluation set.}
-$209$ hand-authored goals span $43$ canonical chain shapes
+$522$ hand-authored goals span $44$ canonical chain shapes
 (e.g.\ \emph{cinematic film}: Story$\to$Screenplay$\to$KeyFrame$\to$Video$\to$Compositor;
 \emph{illustrated storytelling}: Narration$\to$Illustration$\to$Narrator$\to$Compositor;
 \emph{video edit + subtitle}: IntakeVideo$\to$Transcription$\to$Translation$\to$Compositor),
-distributed across nine task categories — \emph{cr} (creative
-mini-drama, $38$), \emph{intake} (image-referenced, $8$), \emph{sub}
-(monolingual subtitle, $15$), \emph{bilingual} (bilingual subtitle,
-$8$), \emph{storytelling} (illustrated audiobook, $34$), \emph{style}
-(style transfer, $8$), \emph{extend} (video extend, $8$),
-\emph{highlight} (highlight reel, $6$), and \emph{complex}
-(multi-modifier compositions, $84$) — and modifier flags (bilingual,
-music, ambience, image-reference, longstory). The set is held-out and
-is enforced to have zero overlap (under text normalization) with the
-training corpus.
+with chain length ranging from $2$ to $10$ agents (mean $6.0$),
+distributed across eleven task categories — \emph{complex}
+(multi-modifier compositions, $95$), \emph{cr} (creative mini-drama,
+$80$), \emph{storytelling} (illustrated audiobook, $80$),
+\emph{intake\_img} (image-referenced, $51$), \emph{highlight}
+(highlight reel, $48$), \emph{style} (style transfer, $38$),
+\emph{extend} (video extend, $34$), \emph{sub} (monolingual subtitle
+on synthesised video, $25$), \emph{sub\_vid} (subtitle on
+user-uploaded video, $25$), \emph{bilingual} (bilingual subtitle,
+$25$), and \emph{audio} (audio-track edit, $21$) — and modifier
+flags (bilingual, music, ambience, image-reference, longstory). The
+set is held-out and is enforced to have zero overlap (under text
+normalization) with the training corpus.
 
 \paragraph{Training corpus.}
 We release two training splits derived from the \emph{same}
-$43$-shape blueprint as the eval set, both hand-authored under a
+$44$-shape blueprint as the eval set, both hand-authored under a
 per-shape budget of $\max(20,\,10\!\times\!\text{eval\_count})$ so
 long-tail shapes (single-eval cases) still receive $20$ training
 samples. The \emph{SFT split} contains $1{,}417$ messages-format
-samples with the same nine-category mix as the eval set
-(\emph{complex} $539$, \emph{storytelling} $286$, \emph{cr} $253$,
-\emph{sub} $79$, \emph{extend} $70$, \emph{style} $51$, \emph{intake}
-$50$, \emph{bilingual} $49$, \emph{highlight} $40$); $\approx 120$
-of those are \emph{long-story} samples whose user goal is a full
-$\approx 2{,}500$-word original narrative, mirroring the eval's
-long-input distribution. The \emph{GRPO split} contains $1{,}396$
-prompts (a hand-written GRPO seed corpus plus a stratified-random
-reuse of SFT user goals) with category counts \emph{complex} $519$,
-\emph{storytelling} $287$, \emph{cr} $250$, \emph{sub} $80$,
-\emph{extend} $71$, \emph{style} $51$, \emph{bilingual} $50$,
-\emph{intake} $48$, \emph{highlight} $40$. User goals are unique
-within each split and disjoint from the $209$ eval goals; details of
-the SFT and GRPO learning recipes are in \S\ref{sec:sft} and
-\S\ref{sec:grpo}.
+samples with the same eleven-category mix as the eval set
+(\emph{complex} $256$, \emph{storytelling} $219$, \emph{cr} $218$,
+\emph{intake\_img} $138$, \emph{highlight} $130$, \emph{style}
+$103$, \emph{extend} $92$, \emph{sub} $68$, \emph{bilingual} $68$,
+\emph{sub\_vid} $68$, \emph{audio} $57$); $\approx 120$ of those are
+\emph{long-story} samples whose user goal is a full $\approx
+2{,}500$-word original narrative, mirroring the eval's long-input
+distribution. The \emph{GRPO split} contains $1{,}396$ prompts (a
+hand-written GRPO seed corpus plus a stratified-random reuse of SFT
+user goals) with category counts \emph{complex} $254$, \emph{cr}
+$215$, \emph{storytelling} $211$, \emph{intake\_img} $136$,
+\emph{highlight} $128$, \emph{style} $103$, \emph{extend} $91$,
+\emph{sub\_vid} $68$, \emph{bilingual} $67$, \emph{sub} $67$,
+\emph{audio} $56$. User goals are unique within each split and
+disjoint from the $522$ eval goals; details of the SFT and GRPO
+learning recipes are in \S\ref{sec:sft} and \S\ref{sec:grpo}.
 
 \paragraph{Metrics.}
 A gold chain $\mathbf{c}^*$ is a sequence in which positions may be
 \emph{set-valued}: $c^*_i$ is either a single agent or a set of
 interchangeable agents (e.g.\ $\{$Music, Ambience$\}$ when the audio
-slot tolerates either ordering). For a predicted chain $\hat{\mathbf{c}}$:
+slot tolerates either ordering). For a predicted chain $\hat{\mathbf{c}}$
+we report three complementary scores:
 \begin{align}
 \text{chain\_acc}(\hat{\mathbf{c}},\mathbf{c}^*) &= \mathbb{1}\!\big[\hat{\mathbf{c}}\!\equiv_\text{set}\!\mathbf{c}^*\big], \\
-\text{step\_acc}(\hat{\mathbf{c}},\mathbf{c}^*) &= \frac{|\{i\,:\,\hat{c}_i\in c^*_i\}|}{\max(|\hat{\mathbf{c}}|,\,|\mathbf{c}^*|)}.
+\text{step\_acc}(\hat{\mathbf{c}},\mathbf{c}^*) &= \frac{|\{i\,:\,\hat{c}_i\in c^*_i\}|}{\max(|\hat{\mathbf{c}}|,\,|\mathbf{c}^*|)}, \\
+\text{edit}(\hat{\mathbf{c}},\mathbf{c}^*) &= \mathrm{Lev}_{\!\equiv_\text{set}}(\hat{\mathbf{c}},\mathbf{c}^*).
 \end{align}
 $\equiv_\text{set}$ requires identical length and per-position
 agent-set membership; the $\max$ denominator in step\_acc penalizes
-length mismatches symmetrically.
+length mismatches symmetrically. The third score is the
+set-aware Levenshtein distance: insertions, deletions, and
+substitutions all cost $1$, with $\hat{c}_i\!\equiv_\text{set}\!c^*_j$
+when $\hat{c}_i\!\in\!c^*_j$. \emph{step\_acc} is strictly positional
+(a single insertion mid-chain shifts every downstream slot and
+appears as many wrong positions), whereas \emph{edit} is alignment-
+aware (the same insertion costs $1$); reporting both separates
+"plan-shape was right but a wrong agent was inserted" from "wrong
+agents at the wrong positions throughout".
 
-\paragraph{Reference.}
-Gemini 2.5 Flash on the canonical bare prompt (no fewshots, no policy
-scaffolding, no topology hints) achieves chain\_acc $X.X\%$ and
-step\_acc $Y.Y\%$ over the $209$ goals.\footnote{The \emph{bare} prompt
-is byte-identical to the one used during training and inference of our
-LoRA. Adding worked-example fewshots and topology hints lifts Gemini
-to $\approx\!88\%$ chain\_acc but obscures whether the headline number
-reflects model capability or template memorization, so we adopt the
-bare prompt as the reference configuration.}
+\paragraph{Reference configuration.}
+All non-LoRA reference systems are queried with the canonical core
+prompt — no worked-example fewshots, no policy scaffolding, no
+topology hints — byte-identical to the prompt used during LoRA
+training and inference, so any score difference reflects model
+capability rather than template memorization.\footnote{Adding
+fewshots, policy scaffolding, and topology hints to the prompt lifts
+Gemini~2.5 Flash from $74.7\%$ to $84.7\%$ chain\_acc on this set,
+but the lift is template-driven and does not transfer to the LoRA
+training distribution; we therefore adopt the unscaffolded core
+prompt as the reference configuration. Cross-model scores under this
+configuration are reported in \S\ref{sec:eval}, Table~\ref{tab:director_routing_v4500}.}

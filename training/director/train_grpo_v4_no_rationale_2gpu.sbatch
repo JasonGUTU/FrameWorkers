@@ -44,6 +44,9 @@ SFT_ADAPTER="training/director/adapters_v4_500/no_rationale/sft"
 GRPO_OUT="training/director/adapters_v4_500/no_rationale/grpo"
 GRPO_DATA="training/director/samples_grpo_v1.no_rationale.v4_500.jsonl"
 EPOCHS=3
+# Optional: resume from a checkpoint. Pass via env var, e.g.
+#   sbatch --export=ALL,RESUME_FROM=training/director/adapters_v4_500/no_rationale/grpo/step_1200 ...
+RESUME_FROM="${RESUME_FROM:-}"
 
 if [ ! -d "${SFT_ADAPTER}" ]; then
     echo "FATAL: SFT adapter not found at ${SFT_ADAPTER}. Run train_sft_v4_no_rationale_2gpu.sbatch first." >&2
@@ -55,14 +58,22 @@ echo "  SFT base:    ${SFT_ADAPTER}"
 echo "  GRPO out:    ${GRPO_OUT}"
 echo "  GRPO data:   ${GRPO_DATA} (1396 samples)"
 echo "  run stamp:   ${RUN_STAMP}"
+[ -n "${RESUME_FROM}" ] && echo "  resume from: ${RESUME_FROM}"
 
 export PYTHONUNBUFFERED=1
 
-PYTHONPATH=. torchrun --nproc_per_node=2 --master_port=29511 \
+MASTER_PORT=$((20000 + SLURM_JOB_ID % 10000))
+echo "  master_port: ${MASTER_PORT}"
+
+RESUME_ARG=()
+[ -n "${RESUME_FROM}" ] && RESUME_ARG=(--resume-from "${RESUME_FROM}")
+
+PYTHONPATH=. torchrun --nproc_per_node=2 --master_port="${MASTER_PORT}" \
     training/director/train_grpo.py \
         --adapter-in  "${SFT_ADAPTER}" \
         --adapter-out "${GRPO_OUT}" \
         --sft-path    "${GRPO_DATA}" \
+        "${RESUME_ARG[@]}" \
         --num-generations 4 \
         --epochs "${EPOCHS}" \
         --max-new-tokens 1024 \

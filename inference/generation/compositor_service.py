@@ -4,7 +4,7 @@ Composes a final deliverable MP4 from:
   - Video track (MP4)
   - Audio track (WAV)
   - Subtitle file (SRT, optional)
-  - Composition plan (transitions, color grade — applied when ffmpeg supports it)
+  - Composition plan (color grade — applied via ffmpeg eq filter)
 """
 
 from __future__ import annotations

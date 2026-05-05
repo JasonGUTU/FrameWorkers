@@ -219,9 +219,6 @@ class TestCompositorAgent:
         data = {
             "content": {
                 "plan": {
-                    "transitions": [
-                        {"from_shot_id": "sh_001", "to_shot_id": "sh_002", "transition_type": "crossfade", "duration_ms": 500},
-                    ],
                     "color_grade": {"brightness": 0.0, "contrast": 0.05, "saturation": 0.0, "tone": "warm"},
                     "subtitle_style": {"font_size": 24, "font_color": "#FFFFFF", "outline_color": "#000000", "position": "bottom", "burn_in": True},
                     "output_resolution": "1920x1080",
@@ -235,23 +232,6 @@ class TestCompositorAgent:
         evaluator = CompositorEvaluator()
         errors = evaluator.check_structure(out)
         assert errors == []
-
-    def test_evaluator_catches_invalid_transition_type(self):
-        from agents.compositor.schema import CompositorAgentOutput
-        from agents.compositor.evaluator import CompositorEvaluator
-        data = {
-            "content": {
-                "plan": {
-                    "transitions": [{"from_shot_id": "sh_001", "to_shot_id": "sh_002", "transition_type": "dissolve", "duration_ms": 500}],
-                    "output_resolution": "1920x1080", "output_fps": 30,
-                },
-                "delivery_asset": {"asset_id": "compositor_final"},
-            }
-        }
-        out = CompositorAgentOutput.model_validate(data)
-        evaluator = CompositorEvaluator()
-        errors = evaluator.check_structure(out)
-        assert any("dissolve" in e for e in errors)
 
     def test_evaluator_catches_bad_resolution(self):
         from agents.compositor.schema import CompositorAgentOutput

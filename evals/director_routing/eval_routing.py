@@ -238,11 +238,20 @@ def run_eval(
     max_steps: int = 20,
     fewshots: bool = True,
     policies: bool = True,
+    schema_variant: str = "with_rationale",
+    no_thinking: bool = False,
 ) -> None:
     from director_agent.router import LlmSubAgentPlanner
 
     cases = load_cases(cases_path)
-    planner = LlmSubAgentPlanner(model=model, fewshots=fewshots, policies=policies)
+    chat_extra_body = {"enable_thinking": False} if no_thinking else None
+    planner = LlmSubAgentPlanner(
+        model=model,
+        fewshots=fewshots,
+        policies=policies,
+        schema_variant=schema_variant,
+        chat_extra_body=chat_extra_body,
+    )
     catalog = build_agent_catalog()
     model_name = planner._model
 
@@ -408,6 +417,19 @@ if __name__ == "__main__":
     parser.add_argument("--policies", action=argparse.BooleanOptionalAction, default=True,
                         help="Include 4 semantic routing policies in planner system prompt "
                              "(default on).")
+    parser.add_argument("--schema-variant",
+                        choices=["with_rationale", "no_rationale"],
+                        default="with_rationale",
+                        help="Output schema. 'with_rationale' (default) is "
+                             "PLAN_UPFRONT_CORE — matches LoRA *_rich/*_templated "
+                             "training. 'no_rationale' is PLAN_UPFRONT_CORE_NO_RATIONALE "
+                             "— matches LoRA *_no_rationale training, byte-for-byte.")
+    parser.add_argument("--no-thinking", action="store_true",
+                        help="Pass ``extra_body={'enable_thinking': False}`` through the "
+                             "OpenAI-compat chat endpoint to disable reasoning. Used for "
+                             "Alibaba Qwen reasoning models behind OpenAI-compat gateways "
+                             "(e.g. qwen3.6-plus on apic.littlewheat.com). Other models "
+                             "ignore the field.")
     args = parser.parse_args()
     run_eval(
         model=args.model,
@@ -417,4 +439,6 @@ if __name__ == "__main__":
         max_steps=args.max_steps,
         fewshots=args.fewshots,
         policies=args.policies,
+        schema_variant=args.schema_variant,
+        no_thinking=args.no_thinking,
     )

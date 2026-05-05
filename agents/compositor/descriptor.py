@@ -120,23 +120,21 @@ def _sort_image_paths_by_segment(paths: list[str]) -> list[str]:
 def build_captions(agent_id: str, output_dict: dict) -> dict:
     content = output_dict.get("content", {})
     plan = content.get("plan", {})
-    transitions = len(plan.get("transitions", []))
     res = plan.get("output_resolution", "?")
     return {
         agent_id: {
             "caption": (
-                f"Final composited video ({res}): {transitions} "
-                f"transition(s), audio mix, subtitle burn-in. Ready for "
-                f"delivery."
+                f"Final composited video ({res}): audio mix, subtitle "
+                f"burn-in. Ready for delivery."
             ),
             "scope": "global",
         },
         "compositor_final": {
             "caption": (
                 "Final delivered video binary (mp4) — the complete "
-                "composited output with transitions, audio mix, and "
-                "(optional) subtitle burn-in. Terminal deliverable of "
-                "the creative pipeline."
+                "composited output with audio mix and (optional) "
+                "subtitle burn-in. Terminal deliverable of the creative "
+                "pipeline."
             ),
             "scope": "global",
         },

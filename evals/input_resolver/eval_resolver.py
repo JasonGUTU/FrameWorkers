@@ -30,7 +30,7 @@ import argparse
 import json
 import os
 import time
-from concurrent.futures import ThreadPoolExecutor, as_completed
+import asyncio
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from typing import Any, Dict, List, Optional, Tuple
@@ -51,105 +51,108 @@ for _p in (REPO_ROOT, _PKG_ROOT):
 
 
 # ---------------------------------------------------------------------------
-# LABEL_PRODUCERS — per (consumer_agent, label) → accepted producer set
+# LABEL_PRODUCERS — auto-derived from AGENT_REGISTRY
 # ---------------------------------------------------------------------------
 #
-# Derived from each agent's InputLabelSpec semantics + Director topology.
-# For labels that can legitimately resolve to multiple upstreams (e.g.
-# TranscriptionAgent.source_media can come from IntakeVideo / StyleTransfer /
-# VideoExtend / Highlight), all of them are listed. InputResolver picking
-# ANY element of the list counts as correct.
+# Instead of a hand-maintained per-(consumer, label) table that drifts every
+# time an agent is added / removed / renamed, we keep one flat
+# producer-type-keyed table (LABEL_TO_PRODUCERS) and build LABEL_PRODUCERS at
+# module load time by walking each registered agent's SPEC.inputs.
+#
+# Result: GT auto-tracks the live registry. A retired agent (e.g.
+# IntakeTextAgent — directory removed, gone from AGENT_REGISTRY) drops out of
+# every accepted-set automatically. A newly-registered agent's labels are
+# picked up the moment it appears in AGENT_REGISTRY.
 
-LABEL_PRODUCERS: Dict[str, Dict[str, List[str]]] = {
-    # Entry points have no upstream
-    "IntakeTextAgent": {},
-    "IntakeVideoAgent": {},
-    "IntakeImageAgent": {},
+# Producer-type label name → list of agents that legitimately produce that
+# artifact type. The pseudo-producer "user" represents a raw upload (chat
+# text → [creative_brief], image / video upload via workspace.persist_raw_upload).
+LABEL_TO_PRODUCERS: Dict[str, List[str]] = {
+    # Brief / story plane
+    "raw_brief": ["user"],
+    "creative_brief": ["BriefEnricherAgent", "user"],
+    "image_descriptions": ["IntakeImageAgent"],
+    "image_files": ["IntakeImageAgent", "user"],
+    "story": ["StoryAgent"],
+    "screenplay": ["ScreenplayAgent"],
+    "reference_analysis": ["VideoAnalysisAgent"],
 
-    "BriefEnricherAgent": {
-        "raw_brief": ["IntakeTextAgent"],
-        "image_descriptions": ["IntakeImageAgent"],
-        "image_files": ["IntakeImageAgent", "user"],
-    },
-    "StoryAgent": {
-        "creative_brief": ["IntakeTextAgent", "BriefEnricherAgent"],
-        "reference_analysis": ["VideoAnalysisAgent"],
-    },
-    "ScreenplayAgent": {
-        "story": ["StoryAgent"],
-    },
-    "KeyFrameAgent": {
-        "screenplay": ["ScreenplayAgent"],
-        "character_reference": ["IntakeImageAgent", "user"],
-        "location_reference": ["IntakeImageAgent", "user"],
-        "prop_reference": ["IntakeImageAgent", "user"],
-        "style_reference": ["IntakeImageAgent", "user"],
-    },
-    "VideoAgent": {
-        "screenplay": ["ScreenplayAgent"],
-        "keyframes_metadata": ["KeyFrameAgent"],
-        "shot_stills": ["KeyFrameAgent"],
-    },
-    "MusicAgent": {
-        "screenplay": ["ScreenplayAgent"],
-        "video_analysis": ["VideoAnalysisAgent"],
-    },
-    "AmbienceAgent": {
-        "screenplay": ["ScreenplayAgent"],
-        "video_analysis": ["VideoAnalysisAgent"],
-    },
-    "AudioMixAgent": {
-        # In pure-audio existing-video flows (no VideoAgent/Transform), the raw
-        # user upload IS the video being mixed against. Accept those too.
-        "video_package": [
-            "VideoAgent", "StyleTransferAgent", "VideoExtendAgent", "HighlightAgent",
-            "user", "IntakeVideoAgent",
-        ],
-        "video_file": [
-            "VideoAgent", "StyleTransferAgent", "VideoExtendAgent", "HighlightAgent",
-            "user", "IntakeVideoAgent",
-        ],
-        "music": ["MusicAgent"],
-        "music_file": ["MusicAgent"],
-        "ambience": ["AmbienceAgent"],
-        "ambience_file": ["AmbienceAgent"],
-    },
-    "TranslationAgent": {
-        "source_text": ["TranscriptionAgent"],
-    },
-    "TranscriptionAgent": {
-        "source_media": [
-            "IntakeVideoAgent", "user", "StyleTransferAgent", "VideoExtendAgent", "HighlightAgent",
-        ],
-    },
-    "VideoAnalysisAgent": {
-        "source_video": ["IntakeVideoAgent", "user"],
-    },
-    "HighlightAgent": {
-        "source_video": ["IntakeVideoAgent", "user"],
-        "video_analysis": ["VideoAnalysisAgent"],
-    },
-    "StyleTransferAgent": {
-        "source_video": ["IntakeVideoAgent", "user", "VideoExtendAgent"],
-        "style_reference": ["IntakeImageAgent", "user"],
-    },
-    "VideoExtendAgent": {
-        "source_video": ["IntakeVideoAgent", "user", "StyleTransferAgent"],
-        "continuation_instruction": ["IntakeTextAgent"],
-    },
-    "CompositorAgent": {
-        "screenplay": ["ScreenplayAgent"],
-        "video_package": [
-            "VideoAgent", "StyleTransferAgent", "VideoExtendAgent", "HighlightAgent",
-        ],
-        "video_file": [
-            "VideoAgent", "StyleTransferAgent", "VideoExtendAgent", "HighlightAgent",
-        ],
-        "audio_package": ["AudioMixAgent"],
-        "audio_file": ["AudioMixAgent"],
-        "subtitle_tracks": ["TranscriptionAgent", "TranslationAgent"],
-    },
+    # Keyframe plane
+    "character_reference": ["IntakeImageAgent", "user"],
+    "location_reference": ["IntakeImageAgent", "user"],
+    "prop_reference": ["IntakeImageAgent", "user"],
+    "style_reference": ["IntakeImageAgent", "user"],
+    "keyframes_metadata": ["KeyFrameAgent"],
+    "shot_stills": ["KeyFrameAgent"],
+
+    # Video plane
+    "source_video": ["IntakeVideoAgent", "user", "VideoAgent", "StyleTransferAgent", "VideoExtendAgent"],
+    "source_media": [
+        "IntakeVideoAgent", "user", "VideoAgent",
+        "StyleTransferAgent", "VideoExtendAgent", "HighlightAgent",
+    ],
+    "video_analysis": ["VideoAnalysisAgent"],
+    "video_package": [
+        "VideoAgent", "StyleTransferAgent", "VideoExtendAgent", "HighlightAgent",
+        "user", "IntakeVideoAgent",
+    ],
+    "video_file": [
+        "VideoAgent", "StyleTransferAgent", "VideoExtendAgent", "HighlightAgent",
+        "user", "IntakeVideoAgent",
+    ],
+    "continuation_instruction": ["BriefEnricherAgent", "user"],
+
+    # Audio plane
+    "music": ["MusicAgent"],
+    "music_file": ["MusicAgent"],
+    "ambience": ["AmbienceAgent"],
+    "ambience_file": ["AmbienceAgent"],
+    "narrator_audio": ["NarratorAgent"],
+    "audio_package": ["AudioMixAgent"],
+    "audio_file": ["AudioMixAgent", "NarratorAgent"],
+    "source_text": ["TranscriptionAgent", "NarratorAgent"],
+
+    # Storytelling plane
+    "narration_script": ["NarrationAgent"],
+    "illustration_sequence": ["IllustrationAgent"],
+    "segment_timing": ["NarratorAgent"],
+    "subtitle_tracks": ["TranscriptionAgent", "TranslationAgent", "NarratorAgent"],
 }
+
+
+def _build_label_producers() -> Dict[str, Dict[str, List[str]]]:
+    """Walk every registered agent's SPEC.inputs, look up the producer set
+    for each label name in LABEL_TO_PRODUCERS, drop any producer that isn't
+    in AGENT_REGISTRY (the "user" pseudo-producer is always kept). Returns
+    the per-(consumer, label) GT accepted set.
+    """
+    import importlib, pkgutil
+    import agents as _agents_pkg
+    from agents import AGENT_REGISTRY
+
+    registered = set(AGENT_REGISTRY.keys())
+    valid = registered | {"user"}
+
+    out: Dict[str, Dict[str, List[str]]] = {}
+    for _, modname, ispkg in pkgutil.iter_modules(_agents_pkg.__path__):
+        if not ispkg:
+            continue
+        try:
+            mod = importlib.import_module(f"agents.{modname}.descriptor")
+            spec = getattr(mod, "SPEC", None)
+        except Exception:
+            continue
+        if spec is None or spec.agent_id not in registered:
+            continue
+        consumer_dict: Dict[str, List[str]] = {}
+        for inp in spec.inputs:
+            producers = LABEL_TO_PRODUCERS.get(inp.name, [])
+            consumer_dict[inp.name] = [p for p in producers if p in valid]
+        out[spec.agent_id] = consumer_dict
+    return out
+
+
+LABEL_PRODUCERS: Dict[str, Dict[str, List[str]]] = _build_label_producers()
 
 
 # ---------------------------------------------------------------------------
@@ -332,6 +335,34 @@ ROLE_SPECIFIC_LABELS = {
 }
 
 
+def _build_optional_labels() -> set:
+    """Auto-derive (consumer_agent, label_name) pairs marked optional=True
+    by reading each agent's ``descriptor.SPEC.inputs`` directly. Avoids the
+    need to manually maintain an OPTIONAL_LABELS table in sync with
+    InputLabelSpec changes."""
+    import importlib, pkgutil
+    import agents as _agents_pkg
+    out = set()
+    for _, modname, ispkg in pkgutil.iter_modules(_agents_pkg.__path__):
+        if not ispkg:
+            continue
+        try:
+            mod = importlib.import_module(f"agents.{modname}.descriptor")
+            spec = getattr(mod, "SPEC", None)
+            if spec is None:
+                continue
+            for inp in spec.inputs:
+                if getattr(inp, "optional", False):
+                    out.add((spec.agent_id, inp.name))
+        except Exception:
+            # Not all agent submodules carry a SPEC (e.g. base helpers).
+            continue
+    return out
+
+
+OPTIONAL_LABELS = _build_optional_labels()
+
+
 def _register_step(
     mem: FakeGlobalMemory,
     registry: Dict[str, Any],
@@ -405,6 +436,13 @@ def _score_one_resolution(
             if label in ROLE_SPECIFIC_LABELS:
                 correct = True
                 verdict = "none-picked-ok"
+            elif (consumer_agent, label) in OPTIONAL_LABELS:
+                # Optional input labels: sub-agent has fallback when the slot
+                # is empty (e.g. CompositorAgent picks illustration_sequence
+                # OR video_package, never both required). Production chains
+                # pass with these slots unfilled, so eval should not penalise.
+                correct = True
+                verdict = "none-picked-optional-ok"
             else:
                 upstream_exists = any(
                     p in label_gt.get(label, [])
@@ -434,11 +472,12 @@ def _score_one_resolution(
     }
 
 
-def run_one_case(
+async def run_one_case(
     *,
     case: Dict[str, Any],
     registry: Dict[str, Any],
     resolver_factory,
+    model: Optional[str] = None,
 ) -> Dict[str, Any]:
     plan = [slot for slot in case["expected_chain"] if slot and slot[0] != "done"]
     concrete = [_pick_agent_at_slot(s) for s in plan]
@@ -457,10 +496,11 @@ def run_one_case(
                                      "labels": [], "error": "agent not registered"})
             else:
                 try:
-                    r = resolver.resolve(
+                    r = await resolver.aresolve(
                         agent_id=agent_id,
                         step_id=f"step_{k}",
                         input_needs_description=desc.input_needs_description,
+                        model=model,
                     )
                     resolved = r.get("resolved_artifacts", {})
                     step_results.append(_score_one_resolution(mem, agent_id, resolved))
@@ -533,25 +573,31 @@ def main():
 
     print(f"Cases: {len(cases)} · workers: {args.workers} · model: {args.model or 'default'}")
 
+    # ── Parallel execution (asyncio.gather + Semaphore — single event loop
+    #    avoids the cross-loop Future bug that ThreadPoolExecutor +
+    #    new_event_loop hits with google.genai's cached async client) ─────────
     t0 = time.time()
     results: List[Dict[str, Any]] = []
-    with ThreadPoolExecutor(max_workers=args.workers) as pool:
-        futs = {
-            pool.submit(
-                run_one_case,
-                case=c,
-                registry=registry,
-                resolver_factory=resolver_factory,
-            ): i
-            for i, c in enumerate(cases)
-        }
-        done = 0
-        for fut in as_completed(futs):
-            done += 1
+
+    async def _run_one(c: Dict[str, Any], sem: asyncio.Semaphore) -> Dict[str, Any]:
+        async with sem:
             try:
-                r = fut.result()
+                return await run_one_case(
+                    case=c,
+                    registry=registry,
+                    resolver_factory=resolver_factory,
+                    model=args.model,
+                )
             except Exception as exc:
-                r = {"name": "<err>", "error": str(exc)}
+                return {"name": c.get("name", "<err>"), "error": str(exc)}
+
+    async def _run_all() -> None:
+        sem = asyncio.Semaphore(args.workers)
+        tasks = [asyncio.create_task(_run_one(c, sem)) for c in cases]
+        done = 0
+        for coro in asyncio.as_completed(tasks):
+            r = await coro
+            done += 1
             results.append(r)
             if "error" in r:
                 print(f"[{done:>3}/{len(cases)}] ERROR {r.get('name','?')}: {r['error']}")
@@ -560,6 +606,8 @@ def main():
                 print(f"[{done:>3}/{len(cases)}] {mark} "
                       f"step={r['step_correct']}/{r['step_total']} "
                       f"label={r['label_correct']}/{r['label_total']}  {r['name']}")
+
+    asyncio.run(_run_all())
 
     elapsed = time.time() - t0
     results.sort(key=lambda r: r.get("name", ""))

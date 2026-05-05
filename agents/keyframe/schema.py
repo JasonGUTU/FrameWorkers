@@ -40,9 +40,18 @@ class Keyframe(BaseModel):
 
 
 class ShotKeyframes(BaseModel):
-    """Keyframes for a single shot."""
+    """Keyframes for a single shot.
+
+    ``characters_in_frame`` / ``props_in_frame`` are mirrored from the
+    upstream screenplay shot. They tell the L3 materializer which L2
+    character / prop anchors to bundle as multi-image references for the
+    shot's i2i edit, so character / prop identity is preserved without
+    relying on text-only cues.
+    """
 
     shot_id: str = ""
+    characters_in_frame: list[str] = Field(default_factory=list)
+    props_in_frame: list[str] = Field(default_factory=list)
     keyframes: list[Keyframe] = Field(default_factory=list)
 
 

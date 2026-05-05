@@ -1,0 +1,26 @@
+\begin{table}[!ht]
+\centering
+\caption{LoRA fine-tuning ablation on the v4\_500 balanced test set (522 cases, 44 unique chain shapes; constructed by replacing 65 trivially-easy cases with 65 harder long-narrative variants drawn from the same shape distribution). All variants are Qwen3 base + SFT (and optionally + GRPO), ablating base-model size (4B vs 8B), training phase, and target-output schema. Chain and step denote accuracy (\%); edit distance is per-chain average (lower is better).}
+\label{tab:director_routing_lora_ablation}
+\small
+\setlength{\tabcolsep}{8pt}
+\begin{tabular}{l|ccc}
+\toprule
+Variant & chain$\uparrow$ & step$\uparrow$ & edit$\downarrow$ \\
+\midrule
+8B SFT no\_rationale & 85.2 & 90.4 & 0.34 \\
+8B SFT rich & 63.0 & 80.3 & 0.72 \\
+8B SFT templated & 78.7 & 85.3 & 0.41 \\
+8B GRPO no\_rationale & 88.7 & 92.4 & 0.23 \\
+8B GRPO rich & 88.5 & 93.1 & 0.22 \\
+8B GRPO templated & 91.0 & 94.4 & 0.15 \\
+\midrule
+4B SFT no\_rationale & 80.3 & 89.5 & 0.30 \\
+4B SFT rich & 66.9 & 83.4 & 0.63 \\
+4B SFT templated & 75.1 & 85.8 & 0.46 \\
+4B GRPO no\_rationale & 82.8 & 89.7 & 0.30 \\
+4B GRPO rich & 78.9 & 88.8 & 0.38 \\
+4B GRPO templated & 92.0 & 94.7 & 0.16 \\
+\bottomrule
+\end{tabular}
+\end{table}

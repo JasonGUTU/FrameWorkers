@@ -23,7 +23,7 @@ class BackendAPIError(RuntimeError):
 class BackendAPIClient:
     """HTTP facade for the Flask backend (Plan Stack + Assistant)."""
 
-    def __init__(self, base_url: str = BACKEND_BASE_URL, timeout: float = 60.0) -> None:
+    def __init__(self, base_url: str = BACKEND_BASE_URL, timeout: float = 6000.0) -> None:
         self.base_url = base_url.rstrip("/")
         self.timeout = timeout
         self.session = requests.Session()

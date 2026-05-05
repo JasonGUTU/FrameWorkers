@@ -11,15 +11,6 @@ from ..common_schema import Meta
 # Composition sub-models
 # ---------------------------------------------------------------------------
 
-class TransitionSpec(BaseModel):
-    """Transition between two shots."""
-
-    from_shot_id: str = ""
-    to_shot_id: str = ""
-    transition_type: str = Field("cut", description="cut | crossfade | fade_black | wipe")
-    duration_ms: int = Field(0, description="Transition duration in milliseconds (0 for cut)")
-
-
 class ColorGradeSpec(BaseModel):
     """Global color grading specification."""
 
@@ -41,7 +32,6 @@ class SubtitleStyle(BaseModel):
 class CompositionPlan(BaseModel):
     """The LLM-planned composition specification."""
 
-    transitions: list[TransitionSpec] = Field(default_factory=list)
     color_grade: ColorGradeSpec = Field(default_factory=ColorGradeSpec)
     subtitle_style: SubtitleStyle = Field(default_factory=SubtitleStyle)
     output_resolution: str = Field("1920x1080", description="Output resolution WxH")
@@ -57,7 +47,6 @@ class CompositorContent(BaseModel):
 
 
 class CompositorMetrics(BaseModel):
-    transition_count: int = 0
     has_subtitles: bool = False
     has_audio: bool = False
 
@@ -70,8 +59,8 @@ class CompositorAgentInput(BaseModel):
     """Input payload for CompositorAgent.
 
     The LLM receives screenplay + video + audio + subtitle data as JSON
-    text blobs and plans the composition (transitions, color grade,
-    subtitle style).  The materializer then executes the plan via FFmpeg.
+    text blobs and plans the composition (color grade, subtitle style).
+    The materializer then executes the plan via FFmpeg.
 
     ``subtitle_json_texts`` is a list so bilingual / multilingual flows
     (subtitle step → translation step → this compositor) can pass every

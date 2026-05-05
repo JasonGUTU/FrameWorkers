@@ -274,7 +274,8 @@ def test_e2e_new_agents_full_chain(monkeypatch):
     compositor = _run("CompositorAgent")
     if compositor:
         plan = compositor.get("content", {}).get("plan", {})
-        print(f"[E2E] CompositorAgent COMPLETED — {len(plan.get('transitions', []))} transitions")
+        cg = plan.get("color_grade", {}) if plan else {}
+        print(f"[E2E] CompositorAgent COMPLETED — color_grade brightness={cg.get('brightness', 0)}")
 
     # --- 7-12. Remaining new agents (all non-blocking) ---
     va = _run("VideoAnalysisAgent")

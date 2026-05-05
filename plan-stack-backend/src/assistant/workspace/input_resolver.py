@@ -31,6 +31,7 @@ Used by:
 
 from __future__ import annotations
 
+import asyncio
 import json
 import logging
 import re
@@ -116,7 +117,33 @@ class InputResolver:
         input_needs_description: str,
         model: Optional[str] = None,
     ) -> Dict[str, Any]:
-        """Return the resolved_artifacts dict ready for descriptor.build_input.
+        """Sync wrapper around aresolve — production HTTP-route entrypoint.
+
+        Async callers (e.g. eval harness using a single asyncio.run +
+        Semaphore) should call aresolve directly to avoid the
+        new_event_loop / cross-loop Future bug that hits cached async
+        LLM clients (notably google.genai SDK's client cached in
+        default_client._genai_clients).
+        """
+        return asyncio.run(
+            self.aresolve(
+                agent_id=agent_id,
+                step_id=step_id,
+                input_needs_description=input_needs_description,
+                model=model,
+            )
+        )
+
+    async def aresolve(
+        self,
+        *,
+        agent_id: str,
+        step_id: str,
+        input_needs_description: str,
+        model: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """Async-native resolver. Returns the resolved_artifacts dict ready
+        for descriptor.build_input.
 
         Returned dict shape::
 
@@ -202,29 +229,23 @@ class InputResolver:
             f"=== ARTIFACT REGISTRY ===\n{captions_index}\n"
         )
 
-        parsed: Optional[Dict[str, Any]] = None
-        import asyncio
-        loop = asyncio.new_event_loop()
+        kwargs: Dict[str, Any] = {
+            "system_prompt": system_prompt,
+            "user_prompt": user_prompt,
+            "max_tokens": 65536,
+            "reasoning_effort": "high",
+        }
+        if model:
+            kwargs["model"] = model
         try:
-            kwargs: Dict[str, Any] = {
-                "system_prompt": system_prompt,
-                "user_prompt": user_prompt,
-                "max_tokens": 65536,
-                "reasoning_effort": "high",
+            parsed = await self._llm.chat_json(**kwargs)
+        except Exception as exc:
+            logger.warning("[InputResolver] LLM call failed: %s", exc)
+            return {
+                "resolved_artifacts": {},
+                "selected_artifact_paths": [],
+                "rationale": f"LLM selection failed: {exc}",
             }
-            if model:
-                kwargs["model"] = model
-            try:
-                parsed = loop.run_until_complete(self._llm.chat_json(**kwargs))
-            except Exception as exc:
-                logger.warning("[InputResolver] LLM call failed: %s", exc)
-                return {
-                    "resolved_artifacts": {},
-                    "selected_artifact_paths": [],
-                    "rationale": f"LLM selection failed: {exc}",
-                }
-        finally:
-            loop.close()
         if not isinstance(parsed, dict):
             return {
                 "resolved_artifacts": {},

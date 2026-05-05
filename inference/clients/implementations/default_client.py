@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+import asyncio
 import base64
 import json
 import logging
 import mimetypes
 import os
+import weakref
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -271,8 +273,17 @@ class LLMClient(BaseLLMClient):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._openai_clients: Dict[str, AsyncOpenAI] = {}
-        self._genai_clients: Dict[str, Any] = {}
+        # Per-event-loop client cache. AsyncOpenAI / google.genai clients
+        # bind their internal httpx tasks (and Futures) to the loop that
+        # was running on first use; if the cache crosses loops — which
+        # happens whenever a Flask route uses asyncio.run() per request —
+        # the next request awaits a Future from a dead loop and asyncio
+        # raises "got Future <...> attached to a different loop".
+        # WeakKeyDictionary lets each loop's cache entry vanish on GC
+        # after asyncio.run() exits, while long-lived loops (director
+        # process, async test harnesses) still hit cache reuse.
+        self._openai_clients_by_loop: "weakref.WeakKeyDictionary[asyncio.AbstractEventLoop, Dict[str, AsyncOpenAI]]" = weakref.WeakKeyDictionary()
+        self._genai_clients_by_loop: "weakref.WeakKeyDictionary[asyncio.AbstractEventLoop, Dict[str, Any]]" = weakref.WeakKeyDictionary()
 
     def _ensure_litellm(self) -> None:
         if not LITELLM_AVAILABLE:
@@ -326,16 +337,21 @@ class LLMClient(BaseLLMClient):
         return {str(k): str(v) for k, v in raw_headers.items() if v is not None}
 
     def _get_openai_client(self, provider: str) -> AsyncOpenAI:
-        if provider not in self._openai_clients:
+        loop = asyncio.get_running_loop()
+        by_provider = self._openai_clients_by_loop.get(loop)
+        if by_provider is None:
+            by_provider = {}
+            self._openai_clients_by_loop[loop] = by_provider
+        if provider not in by_provider:
             key_env_name = self._provider_env_name(provider, "api_key")
             base_url_env_name = self._provider_env_name(provider, "base_url")
             default_headers = self._provider_default_headers(provider)
-            self._openai_clients[provider] = AsyncOpenAI(
+            by_provider[provider] = AsyncOpenAI(
                 api_key=self._api_key or os.getenv(key_env_name or "OPENAI_API_KEY"),
                 base_url=self._base_url or os.getenv(base_url_env_name or "OPENAI_BASE_URL"),
                 default_headers=default_headers or None,
             )
-        return self._openai_clients[provider]
+        return by_provider[provider]
 
     def _get_genai_client(self, provider: str):
         """Lazy-construct a ``google.genai.Client`` per provider.
@@ -344,7 +360,12 @@ class LLMClient(BaseLLMClient):
         ``inference_runtime.yaml`` to resolve which env vars hold the
         API key + custom gateway base URL.
         """
-        if provider not in self._genai_clients:
+        loop = asyncio.get_running_loop()
+        by_provider = self._genai_clients_by_loop.get(loop)
+        if by_provider is None:
+            by_provider = {}
+            self._genai_clients_by_loop[loop] = by_provider
+        if provider not in by_provider:
             from google import genai
 
             key_env_name = self._provider_env_name(provider, "api_key")
@@ -356,8 +377,8 @@ class LLMClient(BaseLLMClient):
                 client_kwargs["api_key"] = api_key
             if base_url:
                 client_kwargs["http_options"] = {"base_url": base_url}
-            self._genai_clients[provider] = genai.Client(**client_kwargs)
-        return self._genai_clients[provider]
+            by_provider[provider] = genai.Client(**client_kwargs)
+        return by_provider[provider]
 
     def _build_genai_config(
         self,
@@ -585,6 +606,7 @@ class LLMClient(BaseLLMClient):
         max_tokens: Optional[int] = None,
         reasoning_effort: Optional[str] = None,
         media_attachments: Optional[List[Dict[str, str]]] = None,
+        extra_body: Optional[Dict[str, Any]] = None,
     ) -> dict[str, Any]:
         resolved_model, provider, client_type = self._resolve_model_and_client(model)
 
@@ -612,6 +634,8 @@ class LLMClient(BaseLLMClient):
                     json_mode=True,
                     client_type=client_type,
                 )
+                if extra_body:
+                    request_kwargs["extra_body"] = extra_body
                 # Transient provider hiccups (rate-limit backoff, gateway
                 # flap, content filter) sometimes cause the model to
                 # return an empty ``message.content`` or no ``choices``

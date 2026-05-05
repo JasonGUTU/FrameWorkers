@@ -47,11 +47,18 @@ class ImageSemanticContext:
         Things to stay away from, pulled from the screenplay's
         ``style_lock.must_avoid``. Applied on both generate and edit
         paths (style refs don't encode "don't do X" information).
+    is_identity_reference:
+        Set True for L1 global character / location / prop anchors —
+        the service then composes a portrait-oriented prompt with a
+        neutral studio backdrop and forbids in-scene composition, so
+        the resulting image is usable as a clean i2i reference
+        downstream. Default False = scene-grounded composition.
     """
 
     prompt_summary: str = ""
     style_notes: list[str] = field(default_factory=list)
     must_avoid: list[str] = field(default_factory=list)
+    is_identity_reference: bool = False
 
 
 @dataclass

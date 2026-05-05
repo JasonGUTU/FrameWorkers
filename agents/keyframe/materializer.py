@@ -42,8 +42,20 @@ from typing import Any
 from typing import TYPE_CHECKING
 
 from ..descriptor import BaseMaterializer, MediaAsset
-from inference.generation.image_generators.service import ImageService
+from inference.generation.image_generators.service import (
+    ImageService,
+    _EDIT_REF_KIND_CHARACTER,
+    _EDIT_REF_KIND_LOCATION,
+    _EDIT_REF_KIND_MULTI,
+    _EDIT_REF_KIND_PROP,
+)
 from inference.generation.image_generators.types import ImageSemanticContext
+
+_ENTITY_LIST_TO_REF_KIND: dict[str, str] = {
+    "characters": _EDIT_REF_KIND_CHARACTER,
+    "locations": _EDIT_REF_KIND_LOCATION,
+    "props": _EDIT_REF_KIND_PROP,
+}
 
 if TYPE_CHECKING:
     from ..base_agent import MaterializeContext
@@ -120,17 +132,26 @@ class KeyframeMaterializer(BaseMaterializer):
             if isinstance(x, str) and str(x).strip()
         ]
 
-        def _make_ctx(prompt_summary: str) -> ImageSemanticContext:
+        def _make_ctx(
+            prompt_summary: str,
+            *,
+            is_identity_reference: bool = False,
+        ) -> ImageSemanticContext:
             """Per-call helper: build a semantic context for one image.
 
             ``style_notes`` / ``must_avoid`` are shared across all images
             in this materialize() run; the service decides which subset
             to render depending on whether it's a generate vs edit call.
+
+            ``is_identity_reference=True`` flips L1 t2i into the
+            identity-reference composer (neutral matte gray studio
+            backdrop, three-quarter portrait, no in-scene composition).
             """
             return ImageSemanticContext(
                 prompt_summary=prompt_summary,
                 style_notes=style_notes,
                 must_avoid=must_avoid,
+                is_identity_reference=is_identity_reference,
             )
 
         l2_mode = self._l2_mode()
@@ -194,7 +215,12 @@ class KeyframeMaterializer(BaseMaterializer):
                 prompt_summary = kf.get("prompt_summary", "")
                 if prompt_summary:
                     l1_tasks.append(
-                        (eid, kf, _make_ctx(prompt_summary), f"img_{eid}_global")
+                        (
+                            eid,
+                            kf,
+                            _make_ctx(prompt_summary, is_identity_reference=True),
+                            f"img_{eid}_global",
+                        )
                     )
 
         for attempt in range(1, MAX_LAYER_RETRIES + 1):
@@ -239,7 +265,12 @@ class KeyframeMaterializer(BaseMaterializer):
                     prompt_summary = kf.get("prompt_summary", "")
                     if prompt_summary and eid not in global_image_bytes:
                         backfill_tasks.append(
-                            (eid, kf, _make_ctx(prompt_summary), f"img_{eid}_global")
+                            (
+                                eid,
+                                kf,
+                                _make_ctx(prompt_summary, is_identity_reference=True),
+                                f"img_{eid}_global",
+                            )
                         )
         seen_backfill: set[str] = set()
         unique_backfill: list[tuple[str, dict, ImageSemanticContext, str]] = []
@@ -296,13 +327,15 @@ class KeyframeMaterializer(BaseMaterializer):
         # ══════════════════════════════════════════════════════════════
         # Layer 2: Scene anchors — edit (default) or text-only (FW_KEYFRAME_L2_MODE=t2i)
         # ══════════════════════════════════════════════════════════════
-        l2_tasks: list[tuple[str, int, str, dict, str, ImageSemanticContext]] = []
+        # tuple: (sys_id, si, eid, kf, ref_key, sctx, ref_kind)
+        l2_tasks: list[tuple[str, int, str, dict, str, ImageSemanticContext, str]] = []
 
         for si, scene in enumerate(scenes):
             scene_id = scene.get("scene_id", "")
             stab = scene.get("stability_keyframes", {})
 
             for entity_list in ("characters", "locations", "props"):
+                ref_kind = _ENTITY_LIST_TO_REF_KIND[entity_list]
                 for kf in stab.get(entity_list, []):
                     eid = kf.get("entity_id", "unknown")
                     sys_id = f"img_{eid}_{scene_id}"
@@ -316,7 +349,9 @@ class KeyframeMaterializer(BaseMaterializer):
                                 eid, sys_id,
                             )
                             continue
-                    l2_tasks.append((sys_id, si, eid, kf, eid, _make_ctx(raw_summary)))
+                    l2_tasks.append(
+                        (sys_id, si, eid, kf, eid, _make_ctx(raw_summary), ref_kind)
+                    )
 
         completed_l2: set[str] = set()
         l2_bytes_by_sys_id: dict[str, bytes] = {}
@@ -333,7 +368,7 @@ class KeyframeMaterializer(BaseMaterializer):
             if l2_mode == "t2i":
                 coros = [
                     self._generate(kf, sctx, sys_id, layer_tag="L2-t2i")
-                    for sys_id, _, _, kf, _, sctx in pending
+                    for sys_id, _, _, kf, _, sctx, _ in pending
                 ]
             else:
                 coros = [
@@ -343,8 +378,9 @@ class KeyframeMaterializer(BaseMaterializer):
                         sctx,
                         sys_id,
                         layer_tag="L2",
+                        ref_kind=ref_kind,
                     )
-                    for sys_id, _, _, kf, ref_key, sctx in pending
+                    for sys_id, _, _, kf, ref_key, sctx, ref_kind in pending
                 ]
             results = await asyncio.gather(*coros, return_exceptions=True)
             for task, result in zip(pending, results):
@@ -369,11 +405,33 @@ class KeyframeMaterializer(BaseMaterializer):
         )
 
         # ══════════════════════════════════════════════════════════════
-        # Layer 3: one still per shot (edit from scene location L2, else t2i)
+        # Layer 3: one still per shot — multi-reference edit
+        # (location L2 + per-shot character L2s + per-shot prop L2s)
         # ══════════════════════════════════════════════════════════════
+        # Each task carries an ordered list of (entity_kind, entity_id,
+        # bytes) for every reference image we plan to attach. The
+        # composer turns this into a numbered manifest in the prompt
+        # so the model can match each attached image to its role.
         l3_tasks: list[
-            tuple[str, dict[str, Any], ImageSemanticContext, bytes | None, bool]
+            tuple[
+                str,                                # sys_id
+                dict[str, Any],                    # kf0 dict
+                ImageSemanticContext,              # sctx
+                list[tuple[str, str, bytes]],      # refs: (kind, eid, bytes)
+            ]
         ] = []
+
+        def _resolve_anchor(eid: str, scene_id: str) -> bytes | None:
+            """Pick L2 scene anchor for ``eid`` in ``scene_id``; fall back to L1 global."""
+            if not eid:
+                return None
+            sys_id_l2 = f"img_{eid}_{scene_id}" if scene_id else ""
+            if sys_id_l2:
+                bts = l2_bytes_by_sys_id.get(sys_id_l2)
+                if bts is not None:
+                    return bts
+            return global_image_bytes.get(eid)
+
         for scene in scenes:
             scene_id = str(scene.get("scene_id", "") or "").strip()
             stab = scene.get("stability_keyframes", {}) or {}
@@ -384,10 +442,6 @@ class KeyframeMaterializer(BaseMaterializer):
                 loc_id = str(lk.get("entity_id", "") or "").strip()
                 if loc_id:
                     break
-            loc_sys = f"img_{loc_id}_{scene_id}" if loc_id and scene_id else ""
-            ref_loc = l2_bytes_by_sys_id.get(loc_sys) if loc_sys else None
-            if ref_loc is None and loc_id:
-                ref_loc = global_image_bytes.get(loc_id)
 
             for shot in scene.get("shots") or []:
                 if not isinstance(shot, dict):
@@ -408,9 +462,43 @@ class KeyframeMaterializer(BaseMaterializer):
                 if not raw_summary:
                     logger.warning("[L3] skip shot %s: empty prompt_summary", shot_id)
                     continue
+
+                # Collect the multi-image reference list. Order matters:
+                # location first (sets the stage), then characters (in
+                # the order LLM wrote them), then props.
+                refs: list[tuple[str, str, bytes]] = []
+                ref_loc = _resolve_anchor(loc_id, scene_id)
+                if ref_loc is not None and loc_id:
+                    refs.append((_EDIT_REF_KIND_LOCATION, loc_id, ref_loc))
+
+                chars_in_frame = [
+                    str(x).strip()
+                    for x in (shot.get("characters_in_frame") or [])
+                    if isinstance(x, str) and str(x).strip()
+                ]
+                for cid in chars_in_frame:
+                    bts = _resolve_anchor(cid, scene_id)
+                    if bts is not None:
+                        refs.append((_EDIT_REF_KIND_CHARACTER, cid, bts))
+                    else:
+                        logger.warning(
+                            "[L3] no anchor found for character %s in shot %s; "
+                            "identity will rely on text only",
+                            cid, shot_id,
+                        )
+
+                props_in_frame = [
+                    str(x).strip()
+                    for x in (shot.get("props_in_frame") or [])
+                    if isinstance(x, str) and str(x).strip()
+                ]
+                for pid in props_in_frame:
+                    bts = _resolve_anchor(pid, scene_id)
+                    if bts is not None:
+                        refs.append((_EDIT_REF_KIND_PROP, pid, bts))
+
                 sctx = _make_ctx(raw_summary)
-                use_edit = ref_loc is not None
-                l3_tasks.append((sys_id, kf0, sctx, ref_loc, use_edit))
+                l3_tasks.append((sys_id, kf0, sctx, refs))
 
         completed_l3: set[str] = set()
         for attempt in range(1, MAX_LAYER_RETRIES + 1):
@@ -424,18 +512,9 @@ class KeyframeMaterializer(BaseMaterializer):
                 MAX_LAYER_RETRIES,
             )
             coros_l3: list[Any] = []
-            for sys_id, kf_dict, sctx, ref_b, use_edit in pending_l3:
-                if use_edit and ref_b is not None:
-                    coros_l3.append(
-                        self._edit(
-                            kf_dict,
-                            ref_b,
-                            sctx,
-                            sys_id,
-                            layer_tag="L3",
-                        )
-                    )
-                else:
+            for sys_id, kf_dict, sctx, refs in pending_l3:
+                if not refs:
+                    # No anchor available at all — fall back to t2i.
                     coros_l3.append(
                         self._generate(
                             kf_dict,
@@ -444,6 +523,34 @@ class KeyframeMaterializer(BaseMaterializer):
                             layer_tag="L3-t2i",
                         )
                     )
+                    continue
+
+                ref_bytes_list = [r[2] for r in refs]
+                if len(refs) == 1:
+                    # Single ref: use its specific edit-prefix so the
+                    # model knows what to preserve (location geometry,
+                    # character identity, or prop shape).
+                    ref_kind = refs[0][0]
+                    ref_manifest = None
+                else:
+                    # Multi-ref: numbered manifest so the model can
+                    # match each attached image to its role.
+                    ref_kind = _EDIT_REF_KIND_MULTI
+                    ref_manifest = [
+                        f"Reference {i+1}: {kind} anchor for {eid}"
+                        for i, (kind, eid, _) in enumerate(refs)
+                    ]
+                coros_l3.append(
+                    self._edit(
+                        kf_dict,
+                        ref_bytes_list,
+                        sctx,
+                        sys_id,
+                        layer_tag="L3",
+                        ref_kind=ref_kind,
+                        ref_manifest=ref_manifest,
+                    )
+                )
             results_l3 = await asyncio.gather(*coros_l3, return_exceptions=True)
             for task_t, result in zip(pending_l3, results_l3):
                 sid = task_t[0]
@@ -527,17 +634,29 @@ class KeyframeMaterializer(BaseMaterializer):
         sys_id: str,
         *,
         layer_tag: str = "L2",
+        ref_kind: str = "generic",
+        ref_manifest: list[str] | None = None,
     ) -> bytes | None:
         """Edit reference image(s) with a semantic context, return bytes.
 
         Same audit semantics as ``_generate``: the resolved prompt is
         logged but NOT persisted into the artifact JSON.
+
+        ``ref_kind`` chooses the edit-prefix variant in
+        ``ImageService._compose_edit_prompt`` so the model knows what
+        to preserve from the reference (location geometry, character
+        identity, prop shape, or multi-subject composition).
+        ``ref_manifest`` is the per-reference label list spliced into
+        the prompt for multi-subject edits.
         """
         if not semantic_ctx.prompt_summary:
             return None
         try:
             result = await self.image_svc.edit_image(
-                reference, semantic_context=semantic_ctx
+                reference,
+                semantic_context=semantic_ctx,
+                ref_kind=ref_kind,
+                ref_manifest=ref_manifest,
             )
             uri_holder: dict[str, Any] = {"asset_id": sys_id}
             self._pending.append(MediaAsset(

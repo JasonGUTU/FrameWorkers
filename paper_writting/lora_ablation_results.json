@@ -1,0 +1,225 @@
+{
+  "meta": {
+    "eval_v4500_patched": "evals/director_routing/eval_cases_v4_500.json (522 cases, 44 shapes, all GT bugs patched)",
+    "eval_balanced": "evals/director_routing/eval_cases_v4500_balanced.json (522 cases = 522 - 65 trivial + 65 hard, 44 shapes)",
+    "rescored_with_highlight_003_044_patch": true
+  },
+  "results": [
+    {
+      "variant": "8B SFT no_rat",
+      "v4500_patched": {
+        "chain": 87.9,
+        "step": 91.9,
+        "edit": 0.31
+      },
+      "balanced": {
+        "chain": 85.2,
+        "step": 90.4,
+        "edit": 0.34
+      },
+      "delta": {
+        "chain": -2.7,
+        "step": -1.5,
+        "edit": 0.03
+      }
+    },
+    {
+      "variant": "8B SFT rich",
+      "v4500_patched": {
+        "chain": 71.3,
+        "step": 84.7,
+        "edit": 0.57
+      },
+      "balanced": {
+        "chain": 63.0,
+        "step": 80.3,
+        "edit": 0.72
+      },
+      "delta": {
+        "chain": -8.3,
+        "step": -4.4,
+        "edit": 0.15
+      }
+    },
+    {
+      "variant": "8B SFT templated",
+      "v4500_patched": {
+        "chain": 81.0,
+        "step": 87.0,
+        "edit": 0.35
+      },
+      "balanced": {
+        "chain": 78.7,
+        "step": 85.3,
+        "edit": 0.41
+      },
+      "delta": {
+        "chain": -2.3,
+        "step": -1.7,
+        "edit": 0.06
+      }
+    },
+    {
+      "variant": "8B GRPO no_rat",
+      "v4500_patched": {
+        "chain": 93.5,
+        "step": 95.2,
+        "edit": 0.14
+      },
+      "balanced": {
+        "chain": 88.7,
+        "step": 92.4,
+        "edit": 0.23
+      },
+      "delta": {
+        "chain": -4.8,
+        "step": -2.8,
+        "edit": 0.09
+      }
+    },
+    {
+      "variant": "8B GRPO rich",
+      "v4500_patched": {
+        "chain": 92.3,
+        "step": 95.5,
+        "edit": 0.15
+      },
+      "balanced": {
+        "chain": 88.5,
+        "step": 93.1,
+        "edit": 0.22
+      },
+      "delta": {
+        "chain": -3.8,
+        "step": -2.4,
+        "edit": 0.07
+      }
+    },
+    {
+      "variant": "8B GRPO templated",
+      "v4500_patched": {
+        "chain": 92.7,
+        "step": 95.6,
+        "edit": 0.11
+      },
+      "balanced": {
+        "chain": 91.0,
+        "step": 94.4,
+        "edit": 0.15
+      },
+      "delta": {
+        "chain": -1.7,
+        "step": -1.2,
+        "edit": 0.04
+      }
+    },
+    {
+      "variant": "4B SFT no_rat",
+      "v4500_patched": {
+        "chain": 85.8,
+        "step": 92.2,
+        "edit": 0.21
+      },
+      "balanced": {
+        "chain": 80.3,
+        "step": 89.5,
+        "edit": 0.3
+      },
+      "delta": {
+        "chain": -5.5,
+        "step": -2.7,
+        "edit": 0.09
+      }
+    },
+    {
+      "variant": "4B SFT rich",
+      "v4500_patched": {
+        "chain": 73.4,
+        "step": 87.3,
+        "edit": 0.45
+      },
+      "balanced": {
+        "chain": 66.9,
+        "step": 83.4,
+        "edit": 0.63
+      },
+      "delta": {
+        "chain": -6.5,
+        "step": -3.9,
+        "edit": 0.18
+      }
+    },
+    {
+      "variant": "4B SFT templated",
+      "v4500_patched": {
+        "chain": 79.5,
+        "step": 88.4,
+        "edit": 0.37
+      },
+      "balanced": {
+        "chain": 75.1,
+        "step": 85.8,
+        "edit": 0.46
+      },
+      "delta": {
+        "chain": -4.4,
+        "step": -2.6,
+        "edit": 0.09
+      }
+    },
+    {
+      "variant": "4B GRPO no_rat",
+      "v4500_patched": {
+        "chain": 88.9,
+        "step": 94.0,
+        "edit": 0.16
+      },
+      "balanced": {
+        "chain": 82.8,
+        "step": 89.7,
+        "edit": 0.3
+      },
+      "delta": {
+        "chain": -6.1,
+        "step": -4.3,
+        "edit": 0.14
+      }
+    },
+    {
+      "variant": "4B GRPO rich",
+      "v4500_patched": {
+        "chain": 86.6,
+        "step": 92.8,
+        "edit": 0.25
+      },
+      "balanced": {
+        "chain": 78.9,
+        "step": 88.8,
+        "edit": 0.38
+      },
+      "delta": {
+        "chain": -7.7,
+        "step": -4.0,
+        "edit": 0.13
+      }
+    },
+    {
+      "variant": "4B GRPO templated",
+      "v4500_patched": {
+        "chain": 95.0,
+        "step": 96.4,
+        "edit": 0.1
+      },
+      "balanced": {
+        "chain": 92.0,
+        "step": 94.7,
+        "edit": 0.16
+      },
+      "delta": {
+        "chain": -3.0,
+        "step": -1.7,
+        "edit": 0.06
+      }
+    }
+  ]
+}

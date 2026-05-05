@@ -1,0 +1,94 @@
+\subsection{Director Planning Capability}
+\label{sec:eval}
+
+\begin{table}[!ht]
+\centering
+\caption{Director routing accuracy on test set (522 cases: 427 non-complex and 95 complex). \textbf{Ours} is based on Qwen3-8B fine-tuned with SFT and GRPO. Chain and step denote accuracy (\%), while edit distance measures the average number of edit operations (lower is better).}
+\label{tab:director_routing_v4500}
+\small
+\setlength{\tabcolsep}{4.5pt}
+\begin{tabular}{l|ccc|ccc}
+\toprule
+ & \multicolumn{3}{c|}{Non-complex (N=427)} & \multicolumn{3}{c}{Complex (N=95)} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7}
+Model
+& chain$\uparrow$ & step$\uparrow$ & edit$\downarrow$
+& chain$\uparrow$ & step$\uparrow$ & edit$\downarrow$ \\
+\midrule
+
+Qwen3-4B & 15.0 & 37.8 & 2.90 & 11.6 & 35.4 & 3.21 \\
+Qwen3-8B & 33.5 & 55.1 & 1.85 & 26.3 & 50.1 & 1.98 \\
+
+deepseek-v3 & 40.0 & 63.5 & 1.12 & 32.6 & 47.7 & 1.32 \\
+gpt-4o      & 57.8 & 79.3 & 0.65 & 45.3 & 79.8 & 0.62 \\
+qwen3.6-plus & 58.3 & 76.7 & 0.93 & 61.1 & 87.2 & 0.60 \\
+
+gemini-2.5-pro       & 73.5 & 86.0 & 0.53 & 82.1 & \textbf{94.9} & 0.23 \\
+gemini-3-pro-preview & 78.2 & 89.4 & 0.36 & 81.1 & 93.0 & 0.28 \\
+
+\midrule
+\textbf{Ours}
+& \textbf{91.6} & \textbf{94.2} & \textbf{0.16}
+& \textbf{90.5} & 94.0 & \textbf{0.19} \\
+
+\bottomrule
+\end{tabular}
+\end{table}
+
+We benchmark the planning capability of our director against three
+reference groups on the v4\_500 held-out set ($522$ goals; see
+\S\ref{sec:bench} for the $44$-shape blueprint and category mix):
+the same Qwen3-4B and Qwen3-8B base checkpoints from which our LoRA
+is initialised, three production-grade non-reasoning chat APIs
+(DeepSeek V3, GPT-4o, Qwen 3.6-Plus), and the strongest available
+reasoning models (Gemini 2.5 Pro and Gemini 3 Pro Preview). To
+remove prompt-template confounds, every system in
+Table~\ref{tab:director_routing_v4500} is queried with a byte-identical
+core prompt (\texttt{PLAN\_UPFRONT\_CORE\_NO\_RATIONALE} + no fewshots
+/ no policies / no topology hints), matching the LoRA
+\texttt{*\_no\_rationale} training prompt slot-for-slot. The
+\texttt{enable\_thinking} flag is disabled for Qwen 3.6-Plus to
+surface its non-reasoning chat-tier behaviour rather than its native
+CoT trace.
+
+\paragraph{Distillation gap.}
+Our model attains $91.6\%$ chain accuracy on non-complex flows and
+$90.5\%$ on complex multi-modifier compositions, exceeding the
+strongest non-trained baseline Gemini~3 Pro Preview by $+13.4$ and
+$+9.4$ points respectively, and the same Qwen3-8B weights it was
+initialised from by $+58.1$ and $+64.2$ points. Set-aware edit
+distance shrinks from $1.85$/$1.98$ on the base model and
+$0.36$/$0.28$ on Gemini~3 to $0.16$/$0.19$ on Ours, indicating that
+the residual mistakes are also closer in shape to the gold chain.
+The size of the post-training delta over the same weights and the
+residual gap to the next-best non-trained model jointly indicate
+that the win is genuine task specialisation, not a side effect of
+schema-fit between training and eval prompts: the apples-to-apples
+\texttt{no\_rationale} prompt eliminates that artefact, and Ours
+remains $\geq\!9$ points above Gemini~3 in chain accuracy under both
+splits.
+
+\paragraph{Cross-tier separation.}
+The non-LoRA systems split cleanly into three bands. Untrained Qwen3
+checkpoints stay below $34\%$ chain accuracy across both splits,
+confirming that the routing task is non-trivial under the canonical
+prompt without any task-specific training. The non-reasoning chat
+tier (DeepSeek V3, GPT-4o, Qwen 3.6-Plus) clusters at $40$--$58\%$
+non-complex and $33$--$61\%$ complex, with GPT-4o degrading by
+$-12.5$ points on complex compositions while Qwen 3.6-Plus
+\emph{improves} by $+2.8$ points despite reasoning being disabled.
+Both Gemini reasoning models clear $73\%$ on non-complex, and on
+complex flows Gemini~2.5 Pro reaches the highest non-LoRA score on
+the table ($82.1\%$ chain, $94.9\%$ step) — slightly above
+Gemini~3 — because complex compositions in v4\_500 follow
+stereotyped multi-modifier patterns (image-intake $\to$ enrichment
+$\to$ story $\to$ screenplay $\to$ keyframe $\to$ video $\to$ music
+$\to$ audio-mix $\to$ compositor) that favour a planner that has
+internalised the canonical shape over one that improvises per step.
+Our model is the only one that stays $\geq\!90\%$ chain accuracy on
+both splits and the only one that wins on $5$ of the $6$ reported
+metrics; on the remaining metric (complex step accuracy), Gemini~2.5
+Pro edges Ours by $0.9$ point ($94.9$ vs $94.0$), but Ours retains a
+$+8.4$-point lead on the stricter chain-accuracy criterion because
+its mistakes are more often single-slot ($\text{edit}\!=\!0.19$ vs
+$0.23$) rather than wholesale shape errors.

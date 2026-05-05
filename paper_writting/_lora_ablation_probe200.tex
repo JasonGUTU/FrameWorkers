@@ -1,0 +1,26 @@
+\begin{table}[!ht]
+\centering
+\caption{LoRA fine-tuning ablation on the 200-case out-of-distribution probe set (24 chain shapes not present in training or in the v4\_500 eval set, expanded into 200 user-goal variants distributed 20\%/60\%/20\% across Short (5 steps) / Medium (6--8 steps) / Long (9--11 steps) chain lengths). Chain and step denote accuracy (\%); edit distance is per-chain average (lower is better).}
+\label{tab:director_routing_lora_probe200}
+\small
+\setlength{\tabcolsep}{8pt}
+\begin{tabular}{l|ccc}
+\toprule
+Variant & chain$\uparrow$ & step$\uparrow$ & edit$\downarrow$ \\
+\midrule
+8B SFT no\_rationale & 60.0 & 81.7 & 0.81 \\
+8B SFT rich & 62.0 & 80.6 & 0.78 \\
+8B SFT templated & 48.0 & 74.8 & 0.94 \\
+8B GRPO no\_rationale & 75.5 & 88.8 & 0.54 \\
+8B GRPO rich & 76.0 & 89.5 & 0.55 \\
+8B GRPO templated & 81.5 & 90.7 & 0.50 \\
+\midrule
+4B SFT no\_rationale & 66.0 & 85.8 & 0.45 \\
+4B SFT rich & 63.0 & 85.4 & 0.52 \\
+4B SFT templated & 54.0 & 77.3 & 0.95 \\
+4B GRPO no\_rationale & 67.0 & 87.0 & 0.42 \\
+4B GRPO rich & 65.5 & 85.2 & 0.62 \\
+4B GRPO templated & 68.0 & 86.3 & 0.70 \\
+\bottomrule
+\end{tabular}
+\end{table}
