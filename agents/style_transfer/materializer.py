@@ -5,6 +5,7 @@ from __future__ import annotations
 import logging
 from typing import Any, TYPE_CHECKING
 
+from ..base_agent import DEFAULT_ASSET_RETRIES
 from ..descriptor import BaseMaterializer, MediaAsset
 from inference.generation.video_edit_service import VideoEditService
 
@@ -33,17 +34,34 @@ class StyleTransferMaterializer(BaseMaterializer):
 
         spec = content.get("style_spec", {})
 
-        result_bytes = await self.svc.style_transfer(
-            video_path=typed_input.source_video_path,
-            prompt=spec.get("style_prompt", ""),
-            strength=spec.get("style_strength", 0.7),
-            preserve_motion=spec.get("preserve_motion", True),
-            reference_path=typed_input.style_reference_path or None,
-        )
+        # Apply style with partial-resume retry budget. Failure exhausts
+        # the budget then raises so the outer run loop can rework + retry.
+        last_exc: Exception | None = None
+        result_bytes: bytes | None = None
+        for attempt in range(1, DEFAULT_ASSET_RETRIES + 1):
+            try:
+                result_bytes = await self.svc.style_transfer(
+                    video_path=typed_input.source_video_path,
+                    prompt=spec.get("style_prompt", ""),
+                    strength=spec.get("style_strength", 0.7),
+                    preserve_motion=spec.get("preserve_motion", True),
+                    reference_path=typed_input.style_reference_path or None,
+                )
+                if result_bytes:
+                    break
+                last_exc = RuntimeError("style_transfer returned empty bytes")
+            except Exception as exc:
+                last_exc = exc
+            logger.warning(
+                "[attempt %d/%d] StyleTransferMaterializer.style_transfer failed: %s",
+                attempt, DEFAULT_ASSET_RETRIES, last_exc,
+            )
 
         if not result_bytes:
-            logger.warning("StyleTransferMaterializer: style_transfer returned empty")
-            return []
+            raise RuntimeError(
+                f"StyleTransferMaterializer.style_transfer failed after "
+                f"{DEFAULT_ASSET_RETRIES} attempts: {last_exc}"
+            )
 
         return [MediaAsset(
             sys_id="style_transfer_output",

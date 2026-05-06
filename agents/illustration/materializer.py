@@ -24,6 +24,7 @@ import asyncio
 import logging
 from typing import Any, TYPE_CHECKING
 
+from ..base_agent import DEFAULT_ASSET_RETRIES
 from ..descriptor import BaseMaterializer, MediaAsset
 from inference.generation.image_generators.service import ImageService
 
@@ -81,22 +82,37 @@ class IllustrationMaterializer(BaseMaterializer):
         illustrations = content.get("illustrations", []) or []
 
         if not illustrations:
-            logger.warning("IllustrationMaterializer: empty illustrations list")
-            return []
+            raise RuntimeError("IllustrationMaterializer: empty illustrations list")
 
-        # --- Seg 1: generate the style anchor ---
+        # --- Seg 1: generate the style anchor (hard prerequisite) ---
+        # Retry transient failures up to DEFAULT_ASSET_RETRIES; raise on
+        # exhaustion since the anchor is required for the tail edits.
         first = illustrations[0]
         first_prompt = _compose_anchor_generate_prompt(
             overall_style, first.get("image_prompt", ""),
         )
-        try:
-            first_result = await self.svc.generate_image(prompt=first_prompt)
-            anchor_bytes = first_result.bytes
-        except Exception as exc:
-            logger.error(
-                "IllustrationMaterializer: anchor generation failed: %s", exc,
+        last_exc: Exception | None = None
+        anchor_bytes: bytes | None = None
+        for attempt in range(1, DEFAULT_ASSET_RETRIES + 1):
+            try:
+                first_result = await self.svc.generate_image(prompt=first_prompt)
+                anchor_bytes = first_result.bytes
+                if anchor_bytes:
+                    break
+                last_exc = RuntimeError("generate_image returned empty bytes")
+            except Exception as exc:
+                last_exc = exc
+            logger.warning(
+                "[attempt %d/%d] IllustrationMaterializer: anchor "
+                "generation failed: %s",
+                attempt, DEFAULT_ASSET_RETRIES, last_exc,
             )
-            return []
+
+        if not anchor_bytes:
+            raise RuntimeError(
+                f"IllustrationMaterializer: anchor generation failed after "
+                f"{DEFAULT_ASSET_RETRIES} attempts: {last_exc}"
+            )
 
         assets: list[MediaAsset] = []
         assets.append(
@@ -108,8 +124,11 @@ class IllustrationMaterializer(BaseMaterializer):
             )
         )
 
-        # --- Seg 2..N: parallel edit_image using the anchor for style ---
-        async def _edit_one(entry: dict) -> tuple[dict, bytes | None]:
+        # --- Seg 2..N: parallel edit_image with partial-resume retry ---
+        # Each attempt gathers all pending entries; only the failed ones
+        # are retried in subsequent attempts. Raise on exhaustion if any
+        # tail entry still failed.
+        async def _edit_one(entry: dict) -> bytes | Exception:
             prompt = _compose_anchored_edit_prompt(
                 overall_style, entry.get("image_prompt", ""),
             )
@@ -118,24 +137,56 @@ class IllustrationMaterializer(BaseMaterializer):
                     reference_images=anchor_bytes,
                     prompt=prompt,
                 )
-                return entry, result.bytes
+                if result.bytes:
+                    return result.bytes
+                return RuntimeError("edit_image returned empty bytes")
             except Exception as exc:
-                logger.error(
-                    "IllustrationMaterializer: edit for %s failed: %s",
-                    entry.get("segment_id"), exc,
-                )
-                return entry, None
+                return exc
 
         tail = illustrations[1:]
         if tail:
-            results = await asyncio.gather(*(_edit_one(e) for e in tail))
-            for entry, img_bytes in results:
-                if img_bytes is None:
-                    continue
+            results: dict[int, bytes] = {}
+            last_excs: dict[int, Exception] = {}
+            for attempt in range(1, DEFAULT_ASSET_RETRIES + 1):
+                pending_idxs = [i for i in range(len(tail)) if i not in results]
+                if not pending_idxs:
+                    break
+                pending_entries = [tail[i] for i in pending_idxs]
+                partial = await asyncio.gather(
+                    *(_edit_one(e) for e in pending_entries),
+                    return_exceptions=True,
+                )
+                for idx, outcome in zip(pending_idxs, partial):
+                    if isinstance(outcome, bytes) and outcome:
+                        results[idx] = outcome
+                    elif isinstance(outcome, Exception):
+                        last_excs[idx] = outcome
+                    else:
+                        last_excs[idx] = RuntimeError(f"unexpected outcome: {outcome!r}")
+                logger.info(
+                    "[attempt %d/%d] IllustrationMaterializer: %d/%d tail "
+                    "edits successful",
+                    attempt, DEFAULT_ASSET_RETRIES, len(results), len(tail),
+                )
+
+            if len(results) < len(tail):
+                failed_idxs = [i for i in range(len(tail)) if i not in results]
+                failed_seg_ids = [
+                    tail[i].get("segment_id", f"#{i+1}") for i in failed_idxs
+                ]
+                first_exc = last_excs.get(failed_idxs[0])
+                raise RuntimeError(
+                    f"IllustrationMaterializer: edit_image failed for "
+                    f"{len(failed_idxs)}/{len(tail)} tail segments after "
+                    f"{DEFAULT_ASSET_RETRIES} attempts: {failed_seg_ids}; "
+                    f"first error: {first_exc}"
+                )
+
+            for idx, entry in enumerate(tail):
                 assets.append(
                     MediaAsset(
                         sys_id=f"illustration_{entry.get('segment_id', 'seg_xxx')}",
-                        data=img_bytes,
+                        data=results[idx],
                         extension="png",
                         uri_holder=entry.setdefault("image", {}),
                     )

@@ -10,6 +10,7 @@ from __future__ import annotations
 import logging
 from typing import Any, TYPE_CHECKING
 
+from ..base_agent import DEFAULT_ASSET_RETRIES
 from ..descriptor import BaseMaterializer, MediaAsset
 from inference.generation.video_generators.service import VideoService
 
@@ -39,28 +40,46 @@ class VideoExtendMaterializer(BaseMaterializer):
         # ArtifactWriter still needs a dict to stamp uri into for ArtifactRef.
         uri_holder: dict[str, Any] = {}
 
-        # Extract last frame from source video
+        # Extract last frame from source video — frame extraction is
+        # deterministic (ffmpeg), so a failure is structural, not transient:
+        # raise immediately rather than retry.
         last_frame = await self.svc.extract_last_frame(typed_input.source_video_path)
-
         if not last_frame:
-            logger.warning(
-                "VideoExtendMaterializer: could not extract last frame from %s",
-                typed_input.source_video_path,
+            raise RuntimeError(
+                f"VideoExtendMaterializer: could not extract last frame from "
+                f"{typed_input.source_video_path}"
             )
-            return []
 
-        # Generate continuation using I2V with last frame as starting point
-        result = await self.svc.generate_clip(
-            shot_id="extend_001",
-            keyframe_images=[last_frame],
-            prompt=spec.get("continuation_prompt", ""),
-            duration_sec=spec.get("target_duration_seconds", 5.0),
-        )
+        # Generate continuation with partial-resume retry budget for
+        # transient gen failures (network / rate-limit / occasional model
+        # error). On exhaustion, raise so the outer run loop sees the
+        # failure and can rework + retry.
+        last_exc: Exception | None = None
+        result_bytes: bytes | None = None
+        for attempt in range(1, DEFAULT_ASSET_RETRIES + 1):
+            try:
+                result = await self.svc.generate_clip(
+                    shot_id="extend_001",
+                    keyframe_images=[last_frame],
+                    prompt=spec.get("continuation_prompt", ""),
+                    duration_sec=spec.get("target_duration_seconds", 5.0),
+                )
+                result_bytes = result.bytes if hasattr(result, "bytes") else result
+                if result_bytes:
+                    break
+                last_exc = RuntimeError("generate_clip returned empty bytes")
+            except Exception as exc:
+                last_exc = exc
+            logger.warning(
+                "[attempt %d/%d] VideoExtendMaterializer.generate_clip failed: %s",
+                attempt, DEFAULT_ASSET_RETRIES, last_exc,
+            )
 
-        result_bytes = result.bytes if hasattr(result, "bytes") else result
         if not result_bytes:
-            logger.warning("VideoExtendMaterializer: generate_clip returned empty")
-            return []
+            raise RuntimeError(
+                f"VideoExtendMaterializer.generate_clip failed after "
+                f"{DEFAULT_ASSET_RETRIES} attempts: {last_exc}"
+            )
 
         return [MediaAsset(
             sys_id="video_extend_output",

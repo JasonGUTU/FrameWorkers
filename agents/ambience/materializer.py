@@ -17,6 +17,7 @@ from __future__ import annotations
 import logging
 from typing import Any, TYPE_CHECKING
 
+from ..base_agent import DEFAULT_ASSET_RETRIES
 from ..descriptor import BaseMaterializer, MediaAsset
 from inference.generation.audio_generators.service import AudioService
 
@@ -41,21 +42,38 @@ class AmbienceMaterializer(BaseMaterializer):
         pending: list[MediaAsset] = []
         for bed in asset_dict.get("content", {}).get("beds", []):
             desc = bed.get("description", "")
-            try:
-                result = await self.svc.generate_ambience(
-                    description=desc, scene_id="", duration_sec=30.0,
+
+            # Per-bed partial-resume retry — on exhaustion raise so the
+            # outer run loop can rework + retry the whole step.
+            last_exc: Exception | None = None
+            final_bytes: bytes | None = None
+            for attempt in range(1, DEFAULT_ASSET_RETRIES + 1):
+                try:
+                    result = await self.svc.generate_ambience(
+                        description=desc, scene_id="", duration_sec=30.0,
+                    )
+                    final_bytes = result.bytes
+                    if final_bytes:
+                        break
+                    last_exc = RuntimeError("generate_ambience returned empty bytes")
+                except Exception as exc:
+                    last_exc = exc
+                logger.warning(
+                    "[attempt %d/%d] Ambience generation failed for %s: %s",
+                    attempt, DEFAULT_ASSET_RETRIES, AMBIENCE_FILM_SYS_ID, last_exc,
                 )
-                final_bytes = result.bytes
-                # Local uri_holder — see MusicMaterializer for rationale.
-                # The persisted bed JSON has no audio_asset block.
-                uri_holder: dict[str, Any] = {}
-                pending.append(MediaAsset(
-                    sys_id=AMBIENCE_FILM_SYS_ID, data=final_bytes,
-                    extension="wav", uri_holder=uri_holder,
-                ))
-            except Exception as exc:
-                logger.error(
-                    "Ambience generation failed for %s: %s",
-                    AMBIENCE_FILM_SYS_ID, exc,
+
+            if not final_bytes:
+                raise RuntimeError(
+                    f"Ambience generation for {AMBIENCE_FILM_SYS_ID} failed "
+                    f"after {DEFAULT_ASSET_RETRIES} attempts: {last_exc}"
                 )
+
+            # Local uri_holder — see MusicMaterializer for rationale.
+            # The persisted bed JSON has no audio_asset block.
+            uri_holder: dict[str, Any] = {}
+            pending.append(MediaAsset(
+                sys_id=AMBIENCE_FILM_SYS_ID, data=final_bytes,
+                extension="wav", uri_holder=uri_holder,
+            ))
         return pending

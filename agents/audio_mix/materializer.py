@@ -131,36 +131,32 @@ class AudioMixMaterializer(BaseMaterializer):
         pending: list[MediaAsset] = []
 
         if not inputs:
-            logger.warning(
-                "[AudioMix] no source tracks found (video_path=%r "
-                "narrator_file=%r music_file=%r ambience_file=%r); "
-                "emitting no final audio asset",
-                video_path,
-                typed_input.narrator_file_path,
-                typed_input.music_file_path,
-                typed_input.ambience_file_path,
+            # No source tracks is a chain-configuration failure (no usable
+            # audio inputs were routed in). Hard-fail rather than emit no
+            # output silently — the outer run loop can then rework + retry.
+            raise RuntimeError(
+                f"[AudioMix] no source tracks found "
+                f"(video_path={video_path!r} "
+                f"narrator_file={typed_input.narrator_file_path!r} "
+                f"music_file={typed_input.music_file_path!r} "
+                f"ambience_file={typed_input.ambience_file_path!r}) — "
+                f"cannot produce {FINAL_AUDIO_SYS_ID}"
             )
-            if ctx.report_failure is not None:
-                ctx.report_failure(
-                    kind="audio_mix_no_sources",
-                    sys_id=FINAL_AUDIO_SYS_ID,
-                    error="No source audio tracks available to mix.",
-                )
-            return pending
 
         if len(inputs) == 1:
             # Single real track — pass through, no mix needed.
             mixed = inputs[0]
         else:
             joined = AudioService._ffmpeg_amix(inputs)
-            if joined:
-                mixed = joined
-            else:
-                logger.warning(
-                    "[AudioMix] ffmpeg amix failed for %d inputs — "
-                    "falling back to the longest source.", len(inputs),
+            if not joined:
+                # ffmpeg amix failure with valid inputs is structural
+                # (codec mismatch / corrupt source / disk issue), not
+                # transient. Raise rather than silently emit a single
+                # track that misrepresents the requested mix.
+                raise RuntimeError(
+                    f"[AudioMix] ffmpeg amix failed for {len(inputs)} inputs"
                 )
-                mixed = max(inputs, key=len)
+            mixed = joined
 
         # Local uri_holder — we no longer mutate asset_dict; the final
         # wav is a standalone artifact and the persisted JSON envelope

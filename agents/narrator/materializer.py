@@ -31,6 +31,7 @@ import tempfile
 import wave
 from typing import Any, TYPE_CHECKING
 
+from ..base_agent import DEFAULT_ASSET_RETRIES
 from ..descriptor import BaseMaterializer, MediaAsset
 from inference.generation._srt import segments_to_srt
 from inference.generation.audio_generators.service import AudioService
@@ -166,8 +167,7 @@ class NarratorMaterializer(BaseMaterializer):
         lines = content.get("lines", []) or []
         language = str(content.get("language", "") or "").strip()
         if not lines:
-            logger.warning("NarratorMaterializer: empty lines worklist")
-            return []
+            raise RuntimeError("NarratorMaterializer: empty lines worklist")
 
         # --- 1. TTS each line; measure duration; insert pause silence ---
         concat_blobs: list[bytes] = []
@@ -190,16 +190,34 @@ class NarratorMaterializer(BaseMaterializer):
 
             id_to_text[line_id] = text
 
-            try:
-                result = await self.svc.generate_speech(text=text)
-            except Exception as exc:
-                logger.error(
-                    "NarratorMaterializer: TTS failed for %s (%s): %s",
-                    line_id, segment_id, exc,
+            # Per-line partial-resume retry: TTS gen can transiently fail
+            # (network / rate-limit / occasional voice service errors).
+            # Exhaustion raises so the outer run loop catches and retries
+            # the whole step with rework_notes.
+            last_exc: Exception | None = None
+            result = None
+            wav_bytes: bytes | None = None
+            for attempt in range(1, DEFAULT_ASSET_RETRIES + 1):
+                try:
+                    result = await self.svc.generate_speech(text=text)
+                    wav_bytes = result.bytes or b""
+                    if wav_bytes:
+                        break
+                    last_exc = RuntimeError("generate_speech returned empty bytes")
+                except Exception as exc:
+                    last_exc = exc
+                logger.warning(
+                    "[attempt %d/%d] NarratorMaterializer: TTS failed for "
+                    "%s (%s): %s",
+                    attempt, DEFAULT_ASSET_RETRIES, line_id, segment_id, last_exc,
                 )
-                continue
 
-            wav_bytes = result.bytes or b""
+            if not wav_bytes:
+                raise RuntimeError(
+                    f"NarratorMaterializer: TTS for {line_id} ({segment_id}) "
+                    f"failed after {DEFAULT_ASSET_RETRIES} attempts: {last_exc}"
+                )
+
             concat_blobs.append(wav_bytes)
             dur = _audio_duration_sec(wav_bytes)
             if not speaker_used:
@@ -222,8 +240,14 @@ class NarratorMaterializer(BaseMaterializer):
                 cursor += pause_ms / 1000.0
 
         if not concat_blobs:
-            logger.error("NarratorMaterializer: no TTS blobs produced")
-            return []
+            # Reached when ``lines`` had only non-dict entries or empty text
+            # — TTS retry loop above already raises on real gen failure, so
+            # this remaining case is a chain-config failure (no usable line
+            # text routed in). Raise rather than emit no audio silently.
+            raise RuntimeError(
+                "NarratorMaterializer: no TTS blobs produced — every line "
+                "had empty text or non-dict shape"
+            )
 
         # --- 2. Concatenate all TTS + silence blobs into one wav ---
         if len(concat_blobs) == 1:

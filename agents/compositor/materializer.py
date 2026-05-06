@@ -138,11 +138,12 @@ class CompositorMaterializer(BaseMaterializer):
                 typed_input.segment_timing_json_text,
             )
             if not images_with_durations:
-                logger.warning(
+                raise RuntimeError(
                     "CompositorMaterializer: slideshow mode but no "
-                    "(image, duration) pairs could be built from segment_timing"
+                    "(image, duration) pairs could be built from "
+                    "segment_timing — illustration_image_paths and "
+                    "segment_timing_json_text are inconsistent or empty"
                 )
-                return []
             result_bytes = await self.svc.compose_slideshow(
                 images_with_durations=images_with_durations,
                 audio_path=typed_input.audio_file_path,
@@ -158,8 +159,11 @@ class CompositorMaterializer(BaseMaterializer):
             )
 
         if not result_bytes:
-            logger.warning("CompositorMaterializer: compose returned empty bytes")
-            return []
+            # Composition failure with valid inputs is structural, not
+            # transient — raise so the outer run loop sees the failure.
+            raise RuntimeError(
+                "CompositorMaterializer: compose returned empty bytes"
+            )
 
         return [MediaAsset(
             sys_id="compositor_final",

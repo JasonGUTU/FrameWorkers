@@ -25,6 +25,7 @@ from typing import Any
 
 from typing import TYPE_CHECKING
 
+from ..base_agent import DEFAULT_ASSET_RETRIES
 from ..descriptor import BaseMaterializer, MediaAsset
 from inference.generation.video_generators.service import VideoService
 from inference.generation.video_generators.types import ShotSemanticContext
@@ -165,15 +166,16 @@ class VideoMaterializer(BaseMaterializer):
                 video_asset: dict[str, Any] = {"asset_id": sys_vid_id, "format": "mp4"}
 
                 # --- Load the starting-frame image for this shot ---
+                # Missing keyframe input is a chain-config failure (upstream
+                # KeyFrameAgent should have produced one); raise rather
+                # than silently skip the shot.
                 still_path = shot_still_index.get(shot_id, "")
                 image_bytes = self._load_image_bytes(still_path)
                 if image_bytes is None:
-                    logger.error(
-                        "Video clip skipped for %s: missing on-disk starting "
-                        "frame (shot_stills scope=shot:%s)",
-                        shot_id, shot_id,
+                    raise RuntimeError(
+                        f"Video clip {shot_id}: missing on-disk starting "
+                        f"frame (shot_stills scope=shot:{shot_id})"
                     )
-                    continue
 
                 # --- Build the semantic context from the agent's own
                 #     typed output — the LLM already mirrored the
@@ -186,69 +188,120 @@ class VideoMaterializer(BaseMaterializer):
                     shot_id, seg_semantic, scene_ctx
                 )
 
-                try:
-                    result = await self.video_svc.generate_clip(
-                        shot_id=shot_id,
-                        keyframe_images=[image_bytes],
-                        semantic_context=semantic_context,
-                    )
-                    pending.append(MediaAsset(
-                        sys_id=sys_vid_id, data=result.bytes,
-                        extension="mp4", uri_holder=video_asset,
-                    ))
-                    clip_bytes_list.append(result.bytes)
-                except Exception as exc:
-                    logger.error("Video clip generation failed for %s: %s", shot_id, exc)
-                    if ctx.report_failure is not None:
-                        ctx.report_failure(
-                            kind="video_clip",
-                            sys_id=sys_vid_id,
-                            error=f"{type(exc).__name__}: {exc}",
+                # --- Per-shot partial-resume retry budget ---
+                last_exc: Exception | None = None
+                clip_bytes: bytes | None = None
+                for attempt in range(1, DEFAULT_ASSET_RETRIES + 1):
+                    try:
+                        result = await self.video_svc.generate_clip(
+                            shot_id=shot_id,
+                            keyframe_images=[image_bytes],
+                            semantic_context=semantic_context,
                         )
+                        clip_bytes = result.bytes
+                        if clip_bytes:
+                            break
+                        last_exc = RuntimeError("generate_clip returned empty bytes")
+                    except Exception as exc:
+                        last_exc = exc
+                    logger.warning(
+                        "[attempt %d/%d] Video clip generation failed for "
+                        "%s: %s",
+                        attempt, DEFAULT_ASSET_RETRIES, shot_id, last_exc,
+                    )
 
+                if not clip_bytes:
+                    raise RuntimeError(
+                        f"generate_clip for {shot_id} failed after "
+                        f"{DEFAULT_ASSET_RETRIES} attempts: {last_exc}"
+                    )
+
+                pending.append(MediaAsset(
+                    sys_id=sys_vid_id, data=clip_bytes,
+                    extension="mp4", uri_holder=video_asset,
+                ))
+                clip_bytes_list.append(clip_bytes)
+
+            # --- Per-scene assemble: retry transient failures, raise
+            #     otherwise. ``clip_bytes_list`` is non-empty because the
+            #     inner loop raises on per-shot failure, so this branch
+            #     only handles the assembly call's own retries.
             sys_scene_clip_id = f"clip_{scene_id}"
             scene_clip: dict[str, Any] = {
                 "asset_id": sys_scene_clip_id, "format": "mp4",
             }
-            if clip_bytes_list:
+            if not clip_bytes_list:
+                # Defensive: scene with zero shot_segments — chain config
+                # issue. L1 evaluator should catch but raise here too.
+                raise RuntimeError(
+                    f"scene {scene_id} has no shot_segments to assemble"
+                )
+
+            last_exc = None
+            scene_bytes: bytes | None = None
+            for attempt in range(1, DEFAULT_ASSET_RETRIES + 1):
                 try:
                     scene_bytes = await self.video_svc.assemble_scene(
                         scene_id=scene_id,
                         clip_bytes_list=clip_bytes_list,
                         transitions=scene.get("transition_plan", []),
                     )
-                    pending.append(MediaAsset(
-                        sys_id=sys_scene_clip_id, data=scene_bytes,
-                        extension="mp4", uri_holder=scene_clip,
-                    ))
-                    scene_bytes_list.append(scene_bytes)
+                    if scene_bytes:
+                        break
+                    last_exc = RuntimeError("assemble_scene returned empty bytes")
                 except Exception as exc:
-                    logger.error("Scene assembly failed for %s: %s", scene_id, exc)
-                    if ctx.report_failure is not None:
-                        ctx.report_failure(
-                            kind="video_scene_assembly",
-                            sys_id=sys_scene_clip_id,
-                            error=f"{type(exc).__name__}: {exc}",
-                        )
+                    last_exc = exc
+                logger.warning(
+                    "[attempt %d/%d] Scene assembly failed for %s: %s",
+                    attempt, DEFAULT_ASSET_RETRIES, scene_id, last_exc,
+                )
+
+            if not scene_bytes:
+                raise RuntimeError(
+                    f"assemble_scene for {scene_id} failed after "
+                    f"{DEFAULT_ASSET_RETRIES} attempts: {last_exc}"
+                )
+
+            pending.append(MediaAsset(
+                sys_id=sys_scene_clip_id, data=scene_bytes,
+                extension="mp4", uri_holder=scene_clip,
+            ))
+            scene_bytes_list.append(scene_bytes)
+
+        # --- Final assemble: retry transient failures, raise otherwise ---
+        if not scene_bytes_list:
+            raise RuntimeError(
+                "no scene clips were produced — cannot assemble final video"
+            )
 
         final: dict[str, Any] = {"asset_id": "clip_final", "format": "mp4"}
-        if scene_bytes_list:
+        last_exc = None
+        final_bytes: bytes | None = None
+        for attempt in range(1, DEFAULT_ASSET_RETRIES + 1):
             try:
                 final_bytes = await self.video_svc.assemble_final(
                     scene_bytes_list=scene_bytes_list
                 )
-                pending.append(MediaAsset(
-                    sys_id="clip_final", data=final_bytes,
-                    extension="mp4", uri_holder=final,
-                ))
+                if final_bytes:
+                    break
+                last_exc = RuntimeError("assemble_final returned empty bytes")
             except Exception as exc:
-                logger.error("Final video assembly failed: %s", exc)
-                if ctx.report_failure is not None:
-                    ctx.report_failure(
-                        kind="video_final_assembly",
-                        sys_id="clip_final",
-                        error=f"{type(exc).__name__}: {exc}",
-                    )
+                last_exc = exc
+            logger.warning(
+                "[attempt %d/%d] Final video assembly failed: %s",
+                attempt, DEFAULT_ASSET_RETRIES, last_exc,
+            )
+
+        if not final_bytes:
+            raise RuntimeError(
+                f"assemble_final failed after {DEFAULT_ASSET_RETRIES} "
+                f"attempts: {last_exc}"
+            )
+
+        pending.append(MediaAsset(
+            sys_id="clip_final", data=final_bytes,
+            extension="mp4", uri_holder=final,
+        ))
 
         logger.info("All video clips materialized for %s", step_id)
         return pending
