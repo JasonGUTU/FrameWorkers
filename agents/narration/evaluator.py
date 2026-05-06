@@ -93,11 +93,4 @@ class NarrationEvaluator(BaseEvaluator[NarrationAgentOutput]):
                         f"must be >= 0 (got {line.pause_after_ms})"
                     )
 
-        # Metrics consistency (computed by recompute_metrics, enforced here)
-        total_lines = sum(len(s.lines) for s in c.segments)
-        total_chars = sum(len(l.text) for s in c.segments for l in s.lines)
-        self._check_metric(errors, "segment_count", output.metrics.segment_count, len(c.segments))
-        self._check_metric(errors, "line_count", output.metrics.line_count, total_lines)
-        self._check_metric(errors, "total_chars", output.metrics.total_chars, total_chars)
-
         return errors

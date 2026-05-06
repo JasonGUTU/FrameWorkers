@@ -8,6 +8,10 @@ from .schema import AmbienceAgentOutput
 
 class AmbienceEvaluator(BaseEvaluator[AmbienceAgentOutput]):
 
+    # L2 skipped: the creative output is a single short ambience description
+    # ("wind rustling through forest" / etc.); LLM judge granularity is too
+    # coarse to add signal beyond rubber-stamping. The description is
+    # implicitly anchored to upstream content already evaluated.
     creative_dimensions: list[tuple[str, str]] = []
 
     def check_structure(self, output: AmbienceAgentOutput) -> list[str]:

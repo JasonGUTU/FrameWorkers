@@ -14,6 +14,9 @@ from .schema import AudioMixAgentOutput
 
 class AudioMixEvaluator(BaseEvaluator[AudioMixAgentOutput]):
 
+    # L2 skipped: AudioMixContent is empty by design (the wav lives under
+    # sys_id ``aud_final`` as a separate artifact); there is no creative
+    # JSON output to LLM-judge. Real signal is at L3 (asset).
     creative_dimensions: list[tuple[str, str]] = []
 
     def check_structure(self, output: AudioMixAgentOutput) -> list[str]:

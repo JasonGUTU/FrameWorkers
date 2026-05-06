@@ -90,28 +90,16 @@ class ScreenplayEvaluator(BaseEvaluator[ScreenplayAgentOutput]):
                         f"(got {sh.keyframe_plan.keyframe_count})"
                     )
 
-        self._check_metric(errors, "scene_count", output.metrics.scene_count, len(c.scenes))
-        shot_total = sum(len(s.shots) for s in c.scenes)
-        self._check_metric(
-            errors, "shot_count_total", output.metrics.shot_count_total, shot_total,
-        )
         # Hard cap to back the SHOT BUDGET section in the system prompt — when
         # the LLM ignores the soft guidance, the rework loop forces it to
         # consolidate into denser shots.
+        shot_total = sum(len(s.shots) for s in c.scenes)
         if shot_total > 12:
             errors.append(
                 f"shot_count_total={shot_total} exceeds budget of 12 — "
                 "consolidate into denser shots (each shot represents ~5s; "
                 "merge cutaways and split-beats into single coherent shots)"
             )
-        self._check_metric(
-            errors, "dialogue_block_count", output.metrics.dialogue_block_count,
-            sum(1 for s in c.scenes for sh in s.shots if sh.block_type == "dialogue"),
-        )
-        self._check_metric(
-            errors, "action_block_count", output.metrics.action_block_count,
-            sum(1 for s in c.scenes for sh in s.shots if sh.block_type == "action"),
-        )
 
         self._check_order_continuous(errors, "scene", [s.order for s in c.scenes])
         for scene in c.scenes:

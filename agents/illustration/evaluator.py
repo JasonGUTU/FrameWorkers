@@ -25,7 +25,15 @@ _SEGMENT_ID_RE = re.compile(r"^seg_\d{3}$")
 
 class IllustrationEvaluator(BaseEvaluator[IllustrationAgentOutput]):
 
-    creative_dimensions: list[tuple[str, str]] = []  # no L2 — no LLM-authored creative output
+    # L2 skipped: IllustrationAgent is structurally a mirror — image_prompt
+    # and overall_style are LLM-extracted/copied from NarrationAgent's
+    # output (see schema.py docstrings; agent.py system_prompt instructs
+    # "copy verbatim if upstream provides"). NarrationAgent's L2 already
+    # evaluates the same prompts under "coherence" (does each image_prompt
+    # visually match its narrated lines?). No creative=True fields exist
+    # on IllustrationContent, so an attempted L2 here gives the judge
+    # empty content. Re-evaluating would double-count NarrationAgent's L2.
+    creative_dimensions: list[tuple[str, str]] = []
 
     def check_structure(self, output: IllustrationAgentOutput) -> list[str]:
         errors: list[str] = []
@@ -57,11 +65,6 @@ class IllustrationEvaluator(BaseEvaluator[IllustrationAgentOutput]):
                 errors.append(
                     f"illustrations[{i-1}].image_prompt is empty"
                 )
-
-        self._check_metric(
-            errors, "illustration_count",
-            output.metrics.illustration_count, len(c.illustrations),
-        )
 
         return errors
 

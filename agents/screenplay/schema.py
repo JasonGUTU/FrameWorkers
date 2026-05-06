@@ -6,7 +6,7 @@ combining narrative (former ``Block``) and visual plan (former storyboard ``Shot
 
 from __future__ import annotations
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from ..common_schema import Meta
 
@@ -128,6 +128,29 @@ class ScriptShot(BaseModel):
     characters_in_frame: list[str] = Field(default_factory=list)
     props_in_frame: list[str] = Field(default_factory=list)
     keyframe_plan: KeyframePlan = Field(default_factory=KeyframePlan)
+
+    @field_validator("props_in_frame", "characters_in_frame", mode="before")
+    @classmethod
+    def _coerce_id_list(cls, v):
+        """Tolerate LLM drift: schema declares list[str] (just the ids), but
+        the LLM occasionally emits list[{id_field, name_field, ...}] dicts
+        — especially in bilingual prompts where it wants to attach the
+        readable name. Pull the id field out and discard the rest so the
+        downstream str-list contract holds.
+        """
+        if not isinstance(v, list):
+            return v
+        out: list[str] = []
+        for item in v:
+            if isinstance(item, dict):
+                for key in ("prop_id", "character_id", "id"):
+                    val = item.get(key)
+                    if isinstance(val, str):
+                        out.append(val)
+                        break
+            else:
+                out.append(item)
+        return out
 
 
 class ScreenplaySceneSource(BaseModel):

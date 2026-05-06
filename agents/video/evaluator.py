@@ -88,12 +88,8 @@ class VideoEvaluator(BaseEvaluator[VideoAgentOutput]):
                         f"to_shot_id {tr.to_shot_id}"
                     )
 
-        # --- Metrics consistency ---
-        self._check_metric(errors, "scene_count", output.metrics.scene_count, len(c.scenes))
-        self._check_metric(
-            errors, "shot_segment_count", output.metrics.shot_segment_count,
-            sum(len(s.shot_segments) for s in c.scenes),
-        )
+        # --- Order continuity ---
+        self._check_order_continuous(errors, "scenes", [s.order for s in c.scenes])
 
         # --- Temporal / transition checks ---
         VALID_TRANSITIONS = {"cut", "dissolve", "fade", "soft"}

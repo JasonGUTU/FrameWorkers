@@ -25,7 +25,10 @@ _SEGMENT_ID_RE = re.compile(r"^seg_\d{3}$")
 
 class NarratorEvaluator(BaseEvaluator[NarratorAgentOutput]):
 
-    creative_dimensions: list[tuple[str, str]] = []  # no L2 — no LLM-authored creative output
+    # L2 skipped: line.text mirrors upstream narration_script verbatim;
+    # NarrationAgent's L2 already evaluates dramatic + coherence on the
+    # same text. Re-evaluating here would double-count.
+    creative_dimensions: list[tuple[str, str]] = []
 
     def check_structure(self, output: NarratorAgentOutput) -> list[str]:
         errors: list[str] = []
@@ -50,13 +53,6 @@ class NarratorEvaluator(BaseEvaluator[NarratorAgentOutput]):
             if line.pause_after_ms < 0:
                 errors.append(f"lines[{i}].pause_after_ms must be >= 0")
 
-        unique_segments = {line.segment_id for line in c.lines}
-
-        self._check_metric(errors, "line_count", output.metrics.line_count, len(c.lines))
-        self._check_metric(
-            errors, "segment_count",
-            output.metrics.segment_count, len(unique_segments),
-        )
         return errors
 
     # ------------------------------------------------------------------

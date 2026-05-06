@@ -8,6 +8,10 @@ from .schema import MusicAgentOutput
 
 class MusicEvaluator(BaseEvaluator[MusicAgentOutput]):
 
+    # L2 skipped: the creative output is a single short mood string ("tense
+    # electronic" / etc.); LLM judge granularity is too coarse to add
+    # signal beyond rubber-stamping. The mood is implicitly anchored to
+    # screenplay / video_analysis already evaluated upstream.
     creative_dimensions: list[tuple[str, str]] = []
 
     def check_structure(self, output: MusicAgentOutput) -> list[str]:

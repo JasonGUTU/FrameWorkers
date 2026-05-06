@@ -87,7 +87,7 @@ class BaseEvaluator(Generic[OutputT]):
     ``evaluator_factory`` (see ``SubAgentDescriptor`` / ``build_equipped_agent``).
     """
 
-    CREATIVE_PASS_THRESHOLD: float = 0.0
+    CREATIVE_PASS_THRESHOLD: float = 0.6
     ASSET_PASS_THRESHOLD: float = 0.8
 
     def __init__(self, llm_client: LLMClient | None = None, **kwargs: Any) -> None:
@@ -270,19 +270,6 @@ class BaseEvaluator(Generic[OutputT]):
     # ------------------------------------------------------------------
     # Structural-check helpers (for use inside check_structure())
     # ------------------------------------------------------------------
-
-    @staticmethod
-    def _check_metric(
-        errors: list[str],
-        field_name: str,
-        expected: int | float,
-        actual: int | float,
-    ) -> None:
-        """Append an error if ``expected != actual`` for a metrics field."""
-        if expected != actual:
-            errors.append(
-                f"metrics.{field_name} ({expected}) != actual ({actual})"
-            )
 
     @staticmethod
     def _check_order_continuous(

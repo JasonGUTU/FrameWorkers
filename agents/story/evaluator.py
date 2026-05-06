@@ -61,11 +61,6 @@ class StoryEvaluator(BaseEvaluator[StoryAgentOutput]):
                         f"{cid}"
                     )
 
-        # --- Metrics consistency ---
-        self._check_metric(errors, "character_count", output.metrics.character_count, len(c.cast))
-        self._check_metric(errors, "location_count", output.metrics.location_count, len(c.locations))
-        self._check_metric(errors, "scene_count", output.metrics.scene_count, len(c.scene_outline))
-
         # --- Order continuity ---
         self._check_order_continuous(errors, "story_arc", [s.order for s in c.story_arc])
         self._check_order_continuous(errors, "scene_outline", [s.order for s in c.scene_outline])

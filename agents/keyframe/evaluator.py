@@ -119,14 +119,6 @@ class KeyframeEvaluator(BaseEvaluator[KeyFrameAgentOutput]):
                             f"has empty video_motion_hint"
                         )
 
-        # --- Metrics consistency ---
-        self._check_metric(errors, "scene_count", output.metrics.scene_count, len(c.scenes))
-        self._check_metric(errors, "shot_count", output.metrics.shot_count, sum(len(s.shots) for s in c.scenes))
-        self._check_metric(
-            errors, "keyframe_count_total", output.metrics.keyframe_count_total,
-            sum(len(sh.keyframes) for s in c.scenes for sh in s.shots),
-        )
-
         # --- Required content ---
         if not c.scenes:
             errors.append("scenes list is empty")

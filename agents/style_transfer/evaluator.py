@@ -26,11 +26,8 @@ class StyleTransferEvaluator(BaseEvaluator[StyleTransferAgentOutput]):
                 "for the model"
             )
 
-        if spec.style_strength < 0.0 or spec.style_strength > 1.0:
-            errors.append(
-                f"style_spec.style_strength ({spec.style_strength}) out of "
-                "range [0.0, 1.0]"
-            )
+        # NOTE: style_strength range is enforced by Pydantic
+        # (Field(ge=0.0, le=1.0) on schema) — not re-checked here.
 
         da = output.content.output_video
         if da.asset_id != "style_transfer_output":
