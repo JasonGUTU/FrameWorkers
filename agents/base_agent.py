@@ -39,6 +39,23 @@ OutputT = TypeVar("OutputT", bound=BaseModel)
 
 
 # ---------------------------------------------------------------------------
+# Framework-level retry budgets.
+# ---------------------------------------------------------------------------
+# Inner retry budget: per-asset partial-resume inside a materializer. Each
+# materializer that produces multiple binaries should run a partial-resume
+# loop up to DEFAULT_ASSET_RETRIES times — only the assets that failed in
+# the previous attempt are retried (already-successful ones are kept). On
+# exhaustion the materializer raises so the outer run loop sees the failure.
+#
+# Outer retry budget: per-step generate + materialize cycle, see
+# ``LLMBaseAgent.run(max_retries=...)``. The outer loop wraps the whole
+# generate → L1+L2 → materialize cycle and feeds rework_notes (evaluator
+# summary or materializer exception text) back to the LLM in the next
+# attempt, giving it a chance to revise the output.
+DEFAULT_ASSET_RETRIES = 3
+
+
+# ---------------------------------------------------------------------------
 # Shared rule: every LLM-driven agent may abort with a structured rejection
 # of upstream input instead of producing a normal output.
 # ---------------------------------------------------------------------------

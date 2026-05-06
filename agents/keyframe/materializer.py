@@ -41,6 +41,7 @@ from typing import Any
 
 from typing import TYPE_CHECKING
 
+from ..base_agent import DEFAULT_ASSET_RETRIES
 from ..descriptor import BaseMaterializer, MediaAsset
 from inference.generation.image_generators.service import (
     ImageService,
@@ -157,7 +158,7 @@ class KeyframeMaterializer(BaseMaterializer):
         l2_mode = self._l2_mode()
         logger.info("Keyframe L2 scene-anchor mode: %s", l2_mode)
 
-        MAX_LAYER_RETRIES = 10
+        MAX_LAYER_RETRIES = DEFAULT_ASSET_RETRIES
 
         global_anchors = content.get("global_anchors", {})
         global_image_bytes: dict[str, bytes] = {}
