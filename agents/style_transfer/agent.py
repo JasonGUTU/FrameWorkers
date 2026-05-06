@@ -23,11 +23,6 @@ STYLE_TRANSFER_OUTPUT_TEMPLATE = """{
       "style_prompt": "<optimized prompt for the video style transfer model>",
       "preserve_motion": true,
       "style_strength": 0.7
-    },
-    "output_video": {
-      "asset_id": "style_transfer_output",
-      "uri": "placeholder",
-      "format": "mp4"
     }
   }
 }"""
@@ -96,8 +91,7 @@ class StyleTransferAgent(BaseAgent[StyleTransferAgentInput, StyleTransferAgentOu
             "dramatic transformations (anime, oil painting, etc.).\n\n"
             "=== OUTPUT FORMAT ===\n"
             "JSON only; no markdown; match the user-message template "
-            "exactly. asset_id is always 'style_transfer_output', "
-            "uri is always 'placeholder'.\n\n"
+            "exactly.\n\n"
             "Do NOT include an artifact_caption block — the system "
             "generates it automatically."
         )

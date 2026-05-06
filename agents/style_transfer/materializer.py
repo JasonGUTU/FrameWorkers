@@ -29,10 +29,14 @@ class StyleTransferMaterializer(BaseMaterializer):
     ) -> list[MediaAsset]:
         typed_input: StyleTransferAgentInput = ctx.typed_input
         content = asset_dict.get("content", {})
-        output_video = content.get("output_video", {})
-        output_video["asset_id"] = "style_transfer_output"
-
         spec = content.get("style_spec", {})
+
+        # Local uri_holder — Pattern B. ArtifactWriter still needs a dict
+        # to stamp the persisted URI into for ArtifactRef bookkeeping,
+        # but it does NOT live on the persisted JSON: the styled mp4 is
+        # a standalone artifact under sys_id ``style_transfer_output``
+        # and downstream consumers discover it via caption-based routing.
+        uri_holder: dict[str, Any] = {}
 
         # Apply style with partial-resume retry budget. Failure exhausts
         # the budget then raises so the outer run loop can rework + retry.
@@ -67,5 +71,5 @@ class StyleTransferMaterializer(BaseMaterializer):
             sys_id="style_transfer_output",
             data=result_bytes,
             extension="mp4",
-            uri_holder=output_video,
+            uri_holder=uri_holder,
         )]

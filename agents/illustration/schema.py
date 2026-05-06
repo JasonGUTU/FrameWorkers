@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
-from ..common_schema import ImageAsset, Meta
+from ..common_schema import Meta
 
 
 # ---------------------------------------------------------------------------
@@ -12,11 +12,16 @@ from ..common_schema import ImageAsset, Meta
 # ---------------------------------------------------------------------------
 
 class IllustrationEntry(BaseModel):
-    """One generated illustration aligned to a NarrationSegment."""
+    """One generated illustration aligned to a NarrationSegment.
+
+    The PNG binary is registered as a separate global_memory artifact
+    under sys_id ``illustration_<segment_id>`` (Pattern B); downstream
+    consumers discover it via caption-based InputResolver routing, not
+    by reading a URI field off this entry. Schema is metadata-only.
+    """
 
     segment_id: str = ""  # seg_001 — mirrored from NarrationAgent
     image_prompt: str = ""  # mirrored from NarrationAgent for traceability
-    image: ImageAsset = Field(default_factory=ImageAsset)
 
 
 class IllustrationContent(BaseModel):

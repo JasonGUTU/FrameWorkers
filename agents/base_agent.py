@@ -326,7 +326,7 @@ class BaseAgent(Generic[InputT, OutputT]):
             )
         logger.debug("[%s] System prompt length: %d", self.agent_name, len(system))
         logger.debug("[%s] User prompt length: %d", self.agent_name, len(user))
-        raw_json = await self.llm.chat_json(system, user, max_tokens=65536)
+        raw_json = await self.llm.chat_json(system, user, max_tokens=16384)
         logger.info("[%s] Received LLM response, parsing …", self.agent_name)
         rejection = _maybe_parse_rejection(raw_json)
         if rejection is not None:
@@ -374,9 +374,12 @@ class BaseAgent(Generic[InputT, OutputT]):
              of LLM calls, deterministic skeleton building, etc.)
           2. ``evaluator.evaluate()`` — L1 structural + L2 creative
           3. ``materializer.materialize()`` — binary asset generation
-             (only if materializer is set and ``materialize_ctx`` provided)
-          4. ``evaluator.evaluate_asset()`` — L3 post-materialization
-          5. On any failure: feed eval summary as rework_notes and retry
+             (only if materializer is set and ``materialize_ctx`` provided);
+             materializer raises after exhausting its own internal
+             partial-resume retry budget, and that failure is caught
+             below and fed back to the LLM as ``rework_notes``.
+          4. On any failure: feed eval summary or materializer exception
+             as rework_notes and retry
 
         Args:
             input_data:      Typed agent input payload — the SINGLE source
@@ -522,37 +525,15 @@ class BaseAgent(Generic[InputT, OutputT]):
                         media_assets=media_assets, asset_dict=asset_dict,
                     )
 
-                # --- Step 4: L3 evaluation (post-materialization) ---
-                if self.evaluator is not None:
-                    try:
-                        asset_eval = await self.evaluator.evaluate_asset(asset_dict)
-                    except Exception as exc:
-                        logger.error(
-                            "[%s] Asset evaluation error: %s",
-                            self.agent_name, exc,
-                        )
-                        asset_eval = {
-                            "overall_pass": True,
-                            "summary": f"Asset evaluation error: {exc}",
-                        }
-
-                    if not asset_eval.get("overall_pass", True):
-                        logger.warning(
-                            "[%s] L3 asset eval FAILED (attempt %d/%d): %s",
-                            self.agent_name, attempt, max_retries,
-                            asset_eval.get("summary", "no summary"),
-                        )
-                        eval_result = asset_eval
-                        rework_notes = asset_eval.get("summary", "")
-                        if attempt < max_retries:
-                            continue
-                        return ExecutionResult(
-                            output=output, eval_result=eval_result,
-                            passed=False, attempts=attempt,
-                            media_assets=media_assets, asset_dict=asset_dict,
-                        )
-
             # --- ALL layers PASSED ---
+            # NOTE: post-materialization L3 evaluation was removed in
+            # Phase 4 of the materializer-raise refactor — failure
+            # detection for binary assets now lives in the materializer
+            # itself (each materializer raises after exhausting its
+            # internal partial-resume retry budget). chain_correct
+            # therefore reflects "framework + L1 + L2 + materializer
+            # didn't crash", with artifact quality being a separate
+            # evaluation concern handled outside this run loop.
             logger.info(
                 "[%s] Quality gate PASSED (attempt %d)",
                 self.agent_name, attempt,

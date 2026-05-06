@@ -1,24 +1,30 @@
-"""Base class and helpers for all evaluators (structural + creative + asset).
+"""Base class and helpers for all evaluators (structural + creative).
 
-Evaluators are the **unified quality hub** for each agent.  They own all
-three evaluation layers:
+Evaluators are the **unified quality hub** for each agent. They own two
+evaluation layers, both invoked pre-materialization on the typed output:
 
   - **Layer 1 — ``check_structure()``:** Rule-based structural checks
-    (ID refs, metrics, order).  Free, deterministic, instant.
+    (ID refs, order continuity, required fields, format/range invariants
+    Pydantic doesn't already enforce). Free, deterministic, instant.
   - **Layer 2 — ``evaluate_creative()``:** LLM-based creative assessment
-    with agent-specific dimensions.  Only runs if Layer 1 passes.
-  - **Layer 3 — ``evaluate_asset()``:** Post-materialization binary asset
-    checks (success rates, format, assembly).  Only runs after media
-    services generate files.
+    with agent-specific dimensions. Only runs if Layer 1 passes.
 
-Layers 1+2 are invoked via ``evaluate()`` before materialization.
-Layer 3 is invoked via ``evaluate_asset()`` after materialization.
+Both are invoked via ``evaluate()`` before materialization.
+
+Note: a previous ``Layer 3 — evaluate_asset()`` post-materialization hook
+was removed (Phase 4 of the materializer-raise refactor). Failure
+detection for binary assets now lives in each materializer itself: the
+materializer runs a partial-resume retry loop up to
+``DEFAULT_ASSET_RETRIES`` and then raises, so the outer
+``LLMBaseAgent.run`` loop catches the exception and feeds it back to
+the LLM as ``rework_notes`` for the next attempt. Artifact-content
+quality (e.g. "is the generated image good?") is a separate evaluation
+concern handled outside the agent run loop.
 
 **Output-only**: every evaluator method receives ONLY the agent's own
-output (or asset_dict).  Evaluators do NOT cross-validate against
-upstream artifacts — that violates sub-agent decoupling.  The
-``resolved_artifacts`` dict is intentionally absent from every method
-signature in this base class.
+output. Evaluators do NOT cross-validate against upstream artifacts —
+that violates sub-agent decoupling. The ``resolved_artifacts`` dict is
+intentionally absent from every method signature in this base class.
 
 Each evaluation method returns (or contributes to) the standard result::
 
@@ -57,6 +63,10 @@ def check_uri(uri: str) -> str:
       - empty or ``"placeholder"`` → ``"missing"`` (not yet generated)
       - starts with ``"error:"``   → ``"error"``   (generation failed)
       - anything else              → ``"success"``  (real file path)
+
+    Retained as a generic utility after the L3 layer was removed — still
+    used by unregistered univa_* evaluators and available for any future
+    code that needs URI classification.
     """
     if not uri or uri == "placeholder":
         return "missing"
@@ -72,23 +82,20 @@ def check_uri(uri: str) -> str:
 class BaseEvaluator(Generic[OutputT]):
     """Abstract base for all FrameWorkers evaluators.
 
-    Each agent has a corresponding evaluator that handles all quality
-    checks.  Subclasses override the layer methods they need:
+    Each agent has a corresponding evaluator that handles its quality
+    checks. Subclasses override the layer methods they need:
 
-      - ``check_structure()``    — Layer 1 (rule-based structural checks)
+      - ``check_structure()``   — Layer 1 (rule-based structural checks)
       - ``evaluate_creative()`` — Layer 2 (LLM creative assessment)
-      - ``evaluate_asset()``    — Layer 3 (post-materialization binary checks)
 
-    ``evaluate()`` is the combined L1+L2 entry point called by
-    Assistant before materialization.  ``evaluate_asset()`` is called
-    separately after materialization completes.
+    ``evaluate()`` is the combined L1+L2 entry point called by Assistant
+    before materialization.
 
     The equipped pipeline agent holds its evaluator from the descriptor’s
     ``evaluator_factory`` (see ``SubAgentDescriptor`` / ``build_equipped_agent``).
     """
 
     CREATIVE_PASS_THRESHOLD: float = 0.6
-    ASSET_PASS_THRESHOLD: float = 0.8
 
     def __init__(self, llm_client: LLMClient | None = None, **kwargs: Any) -> None:
         self.llm = llm_client or LLMClient(**kwargs)
@@ -196,7 +203,7 @@ class BaseEvaluator(Generic[OutputT]):
         )
 
         # --- Call LLM and normalize ---
-        result = await self.llm.chat_json(system, user, max_tokens=65536)
+        result = await self.llm.chat_json(system, user, max_tokens=8192)
         dims = result.get("dimensions", {})
         all_pass = all(
             d.get("score", 0) >= self.CREATIVE_PASS_THRESHOLD
@@ -242,30 +249,6 @@ class BaseEvaluator(Generic[OutputT]):
         creative_result = await self.evaluate_creative(output)
         creative_result["structural_errors"] = []
         return creative_result
-
-    # ------------------------------------------------------------------
-    # Layer 3 — Post-materialization asset evaluation (optional)
-    # ------------------------------------------------------------------
-
-    async def evaluate_asset(self, asset_data: dict[str, Any]) -> dict[str, Any]:
-        """Evaluate materialized binary assets.  Override for media agents.
-
-        Called by Assistant after media services produce files.
-        Only agents with binary outputs (keyframes, video, audio) need
-        to override this.
-
-        Args:
-            asset_data: The complete asset dict with materialized URIs.
-
-        Returns:
-            Evaluation result dict with ``dimensions``, ``overall_pass``,
-            and ``summary``.
-        """
-        return {
-            "dimensions": {},
-            "overall_pass": True,
-            "summary": f"No asset evaluation defined for {self.evaluator_name}.",
-        }
 
     # ------------------------------------------------------------------
     # Structural-check helpers (for use inside check_structure())

@@ -120,8 +120,8 @@ InputResolver 通过 caption index 召回。
 
 ## 模型约束（强约束）
 
-- **图片生成禁止用 flux**。图片生成统一走 OpenRouter / Gemini Image（`ImageService` 默认 `google/gemini-2.5-flash-image`）。
-- **视频生成统一用可灵（Kling）**。`FAL_VIDEO_MODEL=fal-ai/kling-video/v2.6/pro/image-to-video`。
+- **图片生成禁止用 flux**。当前实际走 fal.ai 的 `nano-banana-2`（= Google Gemini 2.5 Flash Image 在 fal.ai 上的中转别名）：`FAL_IMAGE_MODEL=fal-ai/nano-banana-2`。`image_generators/service.py` 里还保留一条 OpenRouter 路径（`OPENROUTER_API_KEY` + `INFERENCE_IMAGE_MODEL`，例如 `google/gemini-2.5-flash-image`），但 `select_image_service()` 不会选它，且 `OPENROUTER_API_KEY` 当前未设；本质上"图片 = Gemini Image"成立，只是经 fal.ai 中转。
+- **视频生成统一用可灵（Kling）**。`FAL_VIDEO_MODEL=fal-ai/kling-video/v2.6/pro/image-to-video`（image-to-video，需 KeyFrameAgent 先出图）。`video_generators/service.py` 还有 `WavespeedVideoService` 备用通路（`FW_VIDEO_BACKEND=wavespeed`），默认不走。
 - API 表和前端页面里关于模型的描述必须跟 `.env` + 代码实际使用的一致，不要写错。
 
 ## 给 AI 的工作提示

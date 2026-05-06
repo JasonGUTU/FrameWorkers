@@ -29,21 +29,20 @@ class StyleSpec(BaseModel):
     )
 
 
-class VideoAsset(BaseModel):
-    """Pointer to a generated video file."""
-
-    asset_id: str = ""
-    uri: str = ""
-    format: str = "mp4"
-
-
 # ---------------------------------------------------------------------------
 # Content / Metrics
 # ---------------------------------------------------------------------------
 
 class StyleTransferContent(BaseModel):
+    """Style transfer payload — metadata only.
+
+    The styled mp4 binary is registered as a separate global_memory
+    artifact under sys_id ``style_transfer_output`` (Pattern B);
+    downstream consumers discover it via caption-based InputResolver
+    routing, not by reading a URI field off this content.
+    """
+
     style_spec: StyleSpec = Field(default_factory=StyleSpec)
-    output_video: VideoAsset = Field(default_factory=VideoAsset)
 
 
 class StyleTransferMetrics(BaseModel):

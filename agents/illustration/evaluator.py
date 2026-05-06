@@ -5,18 +5,20 @@ Layer 1 — structural:
   - segment_ids match seg_NNN and are sequential
   - image_prompt + overall_style non-empty (both mirrored — if empty it
     means NarrationAgent dropped them)
-  - metrics consistency
 
-Layer 3 — asset:
-  - every image URI is a real file (handled by default asset check:
-    check_uri on illustrations[*].image.uri)
+Note: post-materialization asset eval has been removed; per-illustration
+binary failures are raised by IllustrationMaterializer after exhausting
+its internal partial-resume retries (see Pattern B + materializer-raise
+refactor). The output schema no longer carries per-entry image URI
+fields — illustrations are registered as standalone artifacts under
+sys_id ``illustration_<segment_id>``.
 """
 
 from __future__ import annotations
 
 import re
 
-from ..base_evaluator import BaseEvaluator, check_uri
+from ..base_evaluator import BaseEvaluator
 from .schema import IllustrationAgentOutput
 
 
@@ -67,40 +69,3 @@ class IllustrationEvaluator(BaseEvaluator[IllustrationAgentOutput]):
                 )
 
         return errors
-
-    # ------------------------------------------------------------------
-    # Layer 3 — post-materialization asset check
-    # ------------------------------------------------------------------
-
-    async def evaluate_asset(self, asset_data: dict) -> dict:
-        """Every illustration must have a real image URI after materialization."""
-        content = asset_data.get("content", {})
-        illustrations = content.get("illustrations", [])
-        errors: list[str] = []
-        successes = 0
-        for i, entry in enumerate(illustrations):
-            img = entry.get("image", {}) if isinstance(entry, dict) else {}
-            uri = img.get("uri", "") if isinstance(img, dict) else ""
-            kind = check_uri(uri)
-            if kind == "success":
-                successes += 1
-            else:
-                seg_id = entry.get("segment_id", f"#{i}") if isinstance(entry, dict) else f"#{i}"
-                errors.append(f"illustrations[{seg_id}].image.uri is {kind}: {uri!r}")
-
-        total = len(illustrations)
-        all_pass = (successes == total) and (total > 0)
-        return {
-            "dimensions": {
-                "image_generation_success": {
-                    "score": (successes / total) if total else 0.0,
-                    "notes": errors,
-                },
-            },
-            "overall_pass": all_pass,
-            "summary": (
-                f"{successes}/{total} illustrations generated successfully"
-                if total
-                else "no illustrations to materialize"
-            ),
-        }

@@ -1,6 +1,6 @@
 """Evaluator for VideoAgent output (Video Package).
 
-Layers 1 + 3 (L2 intentionally not overridden — see below):
+Layer 1 only (L2 intentionally not overridden — see below).
 
 Layer 1 -- structural checks:
   - shot_id format ``^sh_\\d{3}$`` and global-sequential numbering
@@ -10,6 +10,7 @@ Layer 1 -- structural checks:
     drift instead of a silent Python-side patch-up.
   - Transition plan from/to shot_ids exist in scene
   - Metrics consistency (scene_count, shot_segment_count)
+  - Order continuity (scene.order is [1, 2, ..., N])
   - Temporal/transition validation (type)
   - Required content (non-empty scenes and shot_segments)
 
@@ -18,19 +19,15 @@ Layer 2 -- creative assessment:
   transition types, mirrored semantic_context). All quality dimensions
   that matter are checked in Layer 1.
 
-Layer 3 -- post-materialization asset checks:
-  Asset pointers were dropped from the schema (video_asset /
-  scene_clip_asset / final_video_asset no longer exist on the output),
-  so per-clip URI inspection is no longer possible from the asset dict
-  alone. L3 returns a vacuous pass; per-clip generation failures are
-  surfaced via ``MaterializeContext.report_failure`` into the workspace
-  event log instead.
+Note: a previous Layer 3 (post-materialization asset eval) has been
+removed; per-clip / scene / final assembly failures are raised by
+VideoMaterializer after exhausting its internal partial-resume retry
+budget, so the outer run loop catches them directly.
 """
 
 from __future__ import annotations
 
 import re
-from typing import Any
 
 from ..base_evaluator import BaseEvaluator
 from .schema import VideoAgentOutput
@@ -115,49 +112,3 @@ class VideoEvaluator(BaseEvaluator[VideoAgentOutput]):
     # Note: evaluate_creative is intentionally NOT overridden.
     # VideoAgent output is entirely structural (IDs, transition types).
     # All quality dimensions that matter are checked in Layer 1.
-
-    # ------------------------------------------------------------------
-    # Layer 3 -- Post-materialization asset evaluation
-    # ------------------------------------------------------------------
-
-    async def evaluate_asset(
-        self,
-        asset_data: dict[str, Any],
-    ) -> dict[str, Any]:
-        """Vacuous pass: asset URIs are no longer carried on the schema.
-
-        The slim schema does not persist per-shot ``video_asset``,
-        per-scene ``scene_clip_asset``, or ``final_video_asset`` blocks,
-        so the asset dict alone cannot distinguish a clip that generated
-        vs. one that failed. Per-clip generation failures are surfaced
-        by ``VideoMaterializer`` via
-        ``MaterializeContext.report_failure`` into the workspace event
-        log; L3 here is kept as a stub returning ``overall_pass=True``
-        so the base pipeline's L3 hook remains wired.
-        """
-        content = asset_data.get("content", {})
-        scenes = content.get("scenes", [])
-        total_clips_planned = sum(
-            len(s.get("shot_segments", []) or []) for s in scenes
-        )
-
-        dimensions = {
-            "clip_generation_success": {
-                "score": 1.0,
-                "notes": [
-                    f"{total_clips_planned} shot clips planned; per-clip "
-                    f"failures are reported via the workspace event log, "
-                    f"not the asset dict",
-                ],
-            },
-        }
-        summary = (
-            f"Video asset eval: {total_clips_planned} shot clips planned "
-            f"(URI-based L3 check disabled — see materializer failure "
-            f"reports)."
-        )
-        return {
-            "dimensions": dimensions,
-            "overall_pass": True,
-            "summary": summary,
-        }

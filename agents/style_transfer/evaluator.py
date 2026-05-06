@@ -28,12 +28,8 @@ class StyleTransferEvaluator(BaseEvaluator[StyleTransferAgentOutput]):
 
         # NOTE: style_strength range is enforced by Pydantic
         # (Field(ge=0.0, le=1.0) on schema) — not re-checked here.
-
-        da = output.content.output_video
-        if da.asset_id != "style_transfer_output":
-            errors.append(
-                f"output_video.asset_id must be 'style_transfer_output', "
-                f"got '{da.asset_id}'"
-            )
+        # output_video block has been removed from the schema (Pattern B
+        # — the styled mp4 is registered as a standalone artifact under
+        # sys_id ``style_transfer_output``); no asset_id check is needed.
 
         return errors

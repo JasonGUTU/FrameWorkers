@@ -114,13 +114,19 @@ class IllustrationMaterializer(BaseMaterializer):
                 f"{DEFAULT_ASSET_RETRIES} attempts: {last_exc}"
             )
 
+        # Local uri_holder dicts — Pattern B. ArtifactWriter still needs
+        # a dict per asset to stamp uri into for ArtifactRef bookkeeping,
+        # but it is NOT shared with the persisted entry: the entry JSON
+        # carries no uri / image block, downstream finds the PNG by
+        # caption-based resolution against sys_id ``illustration_<seg_id>``.
+        anchor_uri_holder: dict[str, Any] = {}
         assets: list[MediaAsset] = []
         assets.append(
             MediaAsset(
                 sys_id=f"illustration_{first.get('segment_id', 'seg_001')}",
                 data=anchor_bytes,
                 extension="png",
-                uri_holder=first.setdefault("image", {}),
+                uri_holder=anchor_uri_holder,
             )
         )
 
@@ -183,12 +189,14 @@ class IllustrationMaterializer(BaseMaterializer):
                 )
 
             for idx, entry in enumerate(tail):
+                # Per-entry local uri_holder — see anchor for rationale.
+                tail_uri_holder: dict[str, Any] = {}
                 assets.append(
                     MediaAsset(
                         sys_id=f"illustration_{entry.get('segment_id', 'seg_xxx')}",
                         data=results[idx],
                         extension="png",
-                        uri_holder=entry.setdefault("image", {}),
+                        uri_holder=tail_uri_holder,
                     )
                 )
 

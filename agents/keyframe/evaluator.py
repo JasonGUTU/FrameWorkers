@@ -16,19 +16,14 @@ Layer 2 -- creative assessment:
   - overall_consistency: three-layer prompts maintain visual identity
   - overall_visual_quality: prompt descriptions are specific enough
 
-Layer 3 -- post-materialization asset checks:
-  - image_generation_success: passes by construction — the materializer
-    raises RuntimeError if any layer fails after MAX_LAYER_RETRIES, so
-    reaching ``evaluate_asset`` implies every planned image was generated.
-    (The persisted JSON no longer carries per-keyframe uri fields for
-    this evaluator to walk.)
-  - image_format_compliance: (TODO) file header / resolution check
-  - visual_consistency: (TODO) vision-model cross-layer comparison
+Note: the prior Layer 3 (post-materialization asset eval) was removed —
+KeyframeMaterializer raises RuntimeError after exhausting its internal
+partial-resume retries, so reaching the end of materialize implies every
+planned image was generated. Artifact-content quality is a separate
+concern handled outside this evaluator.
 """
 
 from __future__ import annotations
-
-from typing import Any
 
 from ..base_evaluator import BaseEvaluator
 from .schema import KeyFrameAgentOutput
@@ -124,68 +119,3 @@ class KeyframeEvaluator(BaseEvaluator[KeyFrameAgentOutput]):
             errors.append("scenes list is empty")
 
         return errors
-
-    # ------------------------------------------------------------------
-    # Layer 3 -- Post-materialization asset evaluation
-    # ------------------------------------------------------------------
-
-    async def evaluate_asset(
-        self,
-        asset_data: dict[str, Any],
-    ) -> dict[str, Any]:
-        """Post-materialization asset eval.
-
-        Reaching this hook implies ``KeyframeMaterializer.materialize``
-        returned without raising — i.e. every planned L1/L1.5/L2/L3
-        image completed within ``MAX_LAYER_RETRIES``. The persisted
-        keyframe JSON no longer carries per-entry ``image_asset.uri``
-        fields for this evaluator to walk, so we just report success by
-        construction. File-header / vision-model checks are future work.
-        """
-        content = asset_data.get("content", {})
-        scenes = content.get("scenes", [])
-        global_anchors = content.get("global_anchors", {})
-
-        planned_l1 = sum(
-            len(global_anchors.get(k, []) or [])
-            for k in ("characters", "locations", "props")
-        )
-        planned_l2 = sum(
-            len((scene.get("stability_keyframes", {}) or {}).get(k, []) or [])
-            for scene in scenes
-            for k in ("characters", "locations", "props")
-        )
-        planned_l3 = sum(
-            len(shot.get("keyframes", []) or [])
-            for scene in scenes
-            for shot in scene.get("shots", []) or []
-        )
-        planned_total = planned_l1 + planned_l2 + planned_l3
-
-        dimensions = {
-            "image_generation_success": {
-                "score": 1.0,
-                "notes": [
-                    f"{planned_total} images generated "
-                    f"(L1={planned_l1}, L2={planned_l2}, L3={planned_l3}) "
-                    f"— materializer raised on any failure."
-                ],
-            },
-            "image_format_compliance": {
-                "score": 1.0,
-                "notes": ["format compliance check not yet implemented"],
-            },
-            "visual_consistency": {
-                "score": 1.0,
-                "notes": ["visual consistency check not yet implemented"],
-            },
-        }
-
-        return {
-            "dimensions": dimensions,
-            "overall_pass": True,
-            "summary": (
-                f"Keyframe asset eval: {planned_total} images generated "
-                f"(L1={planned_l1}, L2={planned_l2}, L3={planned_l3})."
-            ),
-        }
