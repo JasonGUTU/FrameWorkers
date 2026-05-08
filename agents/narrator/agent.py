@@ -150,15 +150,6 @@ class NarratorAgent(BaseAgent[NarratorAgentInput, NarratorAgentOutput]):
             "  - per-line {line_id, segment_id (parent), text, pause_after_ms}\n\n"
             "Produce the full TTS worklist JSON in EXACTLY this shape:\n\n"
             f"{NARRATOR_OUTPUT_TEMPLATE}\n\n"
-            "Per-entry requirements:\n"
-            "  * line_id: ln_001, ln_002, ... GLOBALLY sequential across "
-            "the whole script, 3-digit zero-padded.\n"
-            "  * segment_id: seg_001, seg_002, ... matching the parent "
-            "segment in declaration order; reuse upstream ids verbatim if "
-            "they already match seg_NNN.\n"
-            "  * text: the exact string the TTS engine should pronounce, "
-            "verbatim from the script.\n"
-            "  * pause_after_ms: non-negative integer, 0 if unspecified.\n\n"
             "Return JSON only."
         )
 

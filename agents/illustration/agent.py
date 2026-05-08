@@ -169,13 +169,6 @@ class IllustrationAgent(BaseAgent[IllustrationAgentInput, IllustrationAgentOutpu
             "  - per-segment {segment_id, image_prompt}\n\n"
             "Produce the full illustration worklist JSON in EXACTLY this shape:\n\n"
             f"{ILLUSTRATION_OUTPUT_TEMPLATE}\n\n"
-            "Per-entry requirements:\n"
-            "  * segment_id: seg_001, seg_002, ... in declaration order, "
-            "3-digit zero-padded. Reuse upstream seg_NNN ids verbatim if present.\n"
-            "  * image_prompt: a concrete visual prompt that an image-gen model "
-            "can render directly. If upstream provides image_prompt / visual / "
-            "illustration_brief / scene_description, copy it. Otherwise synthesize "
-            "one from the segment's narrative text.\n\n"
             "Return JSON only."
         )
 
