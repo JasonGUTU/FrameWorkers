@@ -74,7 +74,7 @@ class AmbienceAgent(BaseAgent[AmbienceAgentInput, AmbienceAgentOutput]):
             "'aud_amb_film') in workspace memory; do NOT include any "
             "audio asset / uri / file-path field in your JSON output. "
             "Track length is not a creative decision — the downstream "
-            "audio-mix step's ffmpeg amix duration=longest filter "
+            "audio-mix step's ffmpeg amix duration=first filter "
             "trims/loops against the actual video, so do NOT emit a "
             "duration field.\n\n"
             "=== DESCRIPTION ===\n"

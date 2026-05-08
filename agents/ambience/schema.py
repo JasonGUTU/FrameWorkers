@@ -18,7 +18,7 @@ class AmbienceBed(BaseModel):
     The bed carries only the LLM-chosen description; track length is no
     longer a creative responsibility — the materializer generates a
     fixed chunk and the downstream audio-mix step's ffmpeg amix
-    duration=longest filter trims/loops against the actual video.
+    duration=first filter trims/loops against the actual video.
 
     The wav file is registered as a separate artifact in global_memory
     under sys_id ``aud_amb_film`` and downstream consumers discover it

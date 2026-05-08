@@ -6,7 +6,7 @@ Output: AudioMixAgentOutput (empty content envelope — all binary lives under s
 The LLM's only job here is the upstream-input rejection gate. The
 materializer does the actual work: extract the video's audio track
 (the in-clip baked dialogue + foley), amix with the optional global
-music / ambience tracks (duration=longest), and emit one final wav
+music / ambience tracks (duration=first), and emit one final wav
 registered under sys_id ``aud_final``.
 """
 

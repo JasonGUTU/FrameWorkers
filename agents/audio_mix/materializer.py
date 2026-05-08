@@ -10,7 +10,7 @@ Source layers (each individually optional, at least one required):
   * Ambience-bed wav — read from ``ambience_file_path`` (sys_id
     ``aud_amb_film``).
 
-ffmpeg amix with duration=longest produces the final wav, registered
+ffmpeg amix with duration=first produces the final wav, registered
 under sys_id ``aud_final``. Scene-level mixing is gone: dialogue + foley
 are time-locked to the visuals by the video-generation backend itself,
 and the music / ambience beds are continuous underlays that don't need

@@ -2,7 +2,7 @@
 
 Generates a fixed 30s chunk (most audio-gen backends cap there). Track
 length is intentionally not a creative responsibility: the downstream
-audio-mix step's ffmpeg amix duration=longest filter trims/loops the
+audio-mix step's ffmpeg amix duration=first filter trims/loops the
 bed against the actual video length, so any reasonable single chunk
 works as the source.
 

@@ -2,7 +2,7 @@
 
 Generates a fixed 30s chunk. Track length is intentionally not a
 creative responsibility: the downstream audio-mix step's ffmpeg amix
-duration=longest filter trims/loops the bed against the actual video
+duration=first filter trims/loops the bed against the actual video
 length, so any reasonable single chunk works as the source.
 
 Persisted-JSON contract: this materializer does NOT mutate the bed dict.
