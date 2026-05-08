@@ -84,18 +84,23 @@ class ImageAsset(BaseModel):
 class Meta(BaseModel):
     """Standard asset metadata header shared by all agent outputs.
 
-    Orchestration uses Task Stack step_id elsewhere. Do not add project_id
-    to LLM JSON; it is not part of this schema.
+    Carries cross-agent invariants that the framework or downstream stages
+    actually consume:
+      * ``schema_version`` — for migration / version-gating logic
+      * ``created_at`` — auto-stamped UTC timestamp for audit trails
+      * ``language`` — ISO 639-1 code (e.g. 'zh', 'en', 'ja') of the
+        asset's primary language; propagates upstream → downstream so
+        audio / video gen stages honor a single language for the whole
+        pipeline (no Three-Kingdoms-content-with-English-shouts drift).
+
+    Orchestration uses Task Stack step_id elsewhere; do not add project_id
+    to LLM JSON.
     """
 
-    draft_id: str = ""
-    asset_id: str = ""
-    asset_type: str = ""
     schema_version: str = "0.3"
     created_at: str = Field(
         default_factory=lambda: datetime.now(timezone.utc).isoformat()
     )
-    created_by_agent: str = ""
     language: str = "en"
 
 
