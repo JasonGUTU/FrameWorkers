@@ -29,7 +29,6 @@ COMPOSITOR_OUTPUT_TEMPLATE = """{
         "font_size": 24,
         "font_color": "#FFFFFF",
         "outline_color": "#000000",
-        "position": "bottom",
         "burn_in": true
       },
       "output_resolution": "1920x1080",
