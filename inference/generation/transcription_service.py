@@ -57,9 +57,16 @@ class FalTranscriptionService:
             raise RuntimeError("No whisper model configured. Set FAL_WHISPER_MODEL in .env")
 
     async def transcribe(self, media_path: str) -> TranscriptionResult:
+        # Missing source media is a chain-config failure, not "no speech
+        # found". Returning an empty result here masks it as a
+        # legitimate silent-media transcription downstream. Raise so the
+        # caller surfaces the wiring issue instead of registering an
+        # empty transcript artifact under a PASS.
         if not media_path or not os.path.isfile(media_path):
-            logger.warning("FalTranscriptionService: file not found: %s", media_path)
-            return TranscriptionResult()
+            raise FileNotFoundError(
+                f"FalTranscriptionService: source media not on disk: "
+                f"{media_path!r}"
+            )
 
         import asyncio
         from .fal_helpers import fal_subscribe

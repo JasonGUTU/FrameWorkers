@@ -16,15 +16,12 @@ from __future__ import annotations
 
 import base64
 import json
-import logging
 from pathlib import Path
 from typing import Any, Dict
 
 from ...base_agent import BaseAgent
 from ...common_schema import ImageAsset
 from .schema import IntakeImageContent, IntakeImageInput, IntakeImageOutput
-
-logger = logging.getLogger(__name__)
 
 
 class IntakeImageAgent(BaseAgent[IntakeImageInput, IntakeImageOutput]):
@@ -78,9 +75,16 @@ class IntakeImageAgent(BaseAgent[IntakeImageInput, IntakeImageOutput]):
         skeleton = self._build_skeleton(input_data)
         image_path = (input_data.raw_image_path or "").strip()
 
+        # Empty / missing path is a chain-config failure (the intake step
+        # was scheduled but the upload artifact never resolved to a real
+        # file). Returning an empty visual_description here masks it as
+        # a legitimate PASS that downstream caption-based discovery cannot
+        # use. Raise so the outer rework loop surfaces the wiring issue.
         if not image_path:
-            skeleton.content.visual_description = ""
-            return skeleton
+            raise RuntimeError(
+                "[IntakeImageAgent] raw_image_path is empty — upload "
+                "artifact did not resolve to a path"
+            )
 
         user_text = self.build_user_prompt(input_data)
         if rework_notes:
@@ -92,12 +96,9 @@ class IntakeImageAgent(BaseAgent[IntakeImageInput, IntakeImageOutput]):
 
         image_path_obj = Path(image_path)
         if not image_path_obj.is_file():
-            logger.warning(
-                "[%s] image file missing at %s",
-                self.agent_name, image_path,
+            raise FileNotFoundError(
+                f"[IntakeImageAgent] image file not on disk: {image_path!r}"
             )
-            skeleton.content.visual_description = ""
-            return skeleton
 
         img_bytes = image_path_obj.read_bytes()
         suffix = image_path_obj.suffix.lower().lstrip(".")
@@ -122,20 +123,18 @@ class IntakeImageAgent(BaseAgent[IntakeImageInput, IntakeImageOutput]):
             multimodal_msg,
         ]
 
-        visual = ""
-        try:
-            response = await self.llm.acall(
-                messages,
-                response_format={"type": "json_object"},
-            )
-            visual = self._parse_visual_description(response)
-        except Exception as exc:
-            logger.warning(
-                "[%s] vision LLM call failed: %s — emitting fallback caption",
-                self.agent_name, exc,
-            )
-
-        skeleton.content.visual_description = visual
+        # Vision LLM hard failure (network / 5xx / unparseable) must NOT
+        # be swallowed into a PASS with empty visual_description — the
+        # downstream caption-based discovery loses its only signal. Let
+        # the exception propagate so the outer rework loop retries.
+        # A legitimate "model has nothing to say" path is the LLM
+        # returning a parseable JSON with empty ``visual_description`` —
+        # that flows through normally.
+        response = await self.llm.acall(
+            messages,
+            response_format={"type": "json_object"},
+        )
+        skeleton.content.visual_description = self._parse_visual_description(response)
         return skeleton
 
     # ------------------------------------------------------------------

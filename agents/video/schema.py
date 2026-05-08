@@ -60,6 +60,12 @@ class ShotSegment(BaseModel):
     # Materializer reads these via attribute access, NEVER from upstream
     # payloads.
     semantic_context: ShotSemanticContext = Field(default_factory=ShotSemanticContext)
+    # Per-shot render duration in seconds. The Kling I2V backend only
+    # accepts 5 or 10 (string enum) and silently rounds anything else,
+    # so the LLM is instructed to choose between the two — typically by
+    # dividing the screenplay scene-level estimated_duration_seconds
+    # across shots. Defaults to 5 when the LLM omits the field.
+    duration_sec: float = 5.0
 
 
 class TransitionPlan(BaseModel):

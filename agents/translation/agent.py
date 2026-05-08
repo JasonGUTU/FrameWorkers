@@ -11,10 +11,49 @@ shot_id, block_type, etc.) and ordering unchanged.
 
 from __future__ import annotations
 
+import json
 from typing import Any
 
 from ..base_agent import BaseAgent
 from .schema import TranslationAgentInput, TranslationAgentOutput
+
+
+# Keys whose values are structural (id / type / format) rather than
+# human-readable text and therefore should NOT be translated. We exclude
+# them when counting "translatable leaf strings" so that schemas with
+# many ids don't dilute the completeness ratio.
+_NON_TRANSLATABLE_KEYS = frozenset({
+    "asset_id", "scene_id", "shot_id", "block_type", "character_id",
+    "location_id", "prop_id", "format", "uri", "mime",
+    "source_language", "target_language",
+})
+
+
+def _count_translatable_leaves(obj: Any) -> int:
+    """Count non-empty human-readable string leaves in a nested dict/list.
+
+    Walks dicts and lists recursively. Counts a leaf only when it's a
+    non-blank string and the dict key it's under (when applicable) is
+    not in ``_NON_TRANSLATABLE_KEYS``. Numbers / booleans / Nones are
+    skipped — they don't get translated.
+
+    The ratio of this count between source and translated payload is
+    a robust truncation signal: when the LLM hits its max_tokens cap
+    half-way through ``scenes[]`` the translated payload simply has
+    fewer leaves, regardless of which language pair is involved.
+    """
+    if isinstance(obj, dict):
+        n = 0
+        for k, v in obj.items():
+            if k in _NON_TRANSLATABLE_KEYS:
+                continue
+            n += _count_translatable_leaves(v)
+        return n
+    if isinstance(obj, list):
+        return sum(_count_translatable_leaves(x) for x in obj)
+    if isinstance(obj, str):
+        return 1 if obj.strip() else 0
+    return 0
 
 
 TRANSLATION_OUTPUT_TEMPLATE = """{
@@ -40,7 +79,36 @@ class TranslationAgent(BaseAgent[TranslationAgentInput, TranslationAgentOutput])
     ) -> TranslationAgentOutput:
         output = await self._llm_fill_full(input_data, rework_notes)
         self.recompute_metrics(output)
+        self._compute_completeness(input_data, output)
         return output
+
+    @staticmethod
+    def _compute_completeness(
+        input_data: TranslationAgentInput,
+        output: TranslationAgentOutput,
+    ) -> None:
+        """Stamp source vs translated leaf-string counts onto metrics.
+
+        Detects silent truncation when the LLM emits a structurally-valid
+        but content-incomplete payload (e.g. the last 3 of 8 scenes are
+        missing because max_tokens hit). The ``completeness`` ratio is
+        what the L2 evaluator can read against a threshold; we compute
+        the raw counts here without enforcing — the schema-level
+        completeness < 1.0 is the surfaced signal.
+        """
+        try:
+            source_payload = json.loads(input_data.source_json_text or "{}")
+        except (TypeError, ValueError):
+            source_payload = {}
+        source_count = _count_translatable_leaves(source_payload)
+        translated_count = _count_translatable_leaves(
+            output.content.translated_payload
+        )
+        output.metrics.source_string_count = source_count
+        output.metrics.translated_string_count = translated_count
+        output.metrics.completeness = (
+            translated_count / source_count if source_count > 0 else 1.0
+        )
 
     def system_prompt(self) -> str:
         return (

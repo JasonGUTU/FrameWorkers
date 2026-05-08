@@ -131,27 +131,35 @@ class TestIntakeImageAgent:
         ))
         assert out.content.visual_description == "a wide misty forest at dawn"
 
-    def test_llm_failure_emits_fallback_caption(self):
+    def test_llm_failure_propagates(self):
+        # Vision LLM hard failure must surface so the outer rework loop
+        # retries — silently emitting an empty caption masks the failure
+        # as a PASS that downstream caption-based discovery cannot use.
         agent = IntakeImageAgent(llm_client=_RaisingVisionLLM())
         path = _write_png()
-        out = asyncio.run(agent.generate(
-            IntakeImageInput(raw_image_path=path),
-        ))
-        assert out.content.visual_description == ""
+        with pytest.raises(RuntimeError, match="simulated vision endpoint failure"):
+            asyncio.run(agent.generate(
+                IntakeImageInput(raw_image_path=path),
+            ))
 
-    def test_empty_path_returns_valid_artifact(self):
+    def test_empty_path_raises(self):
+        # Empty raw_image_path is a chain-config failure — surface it as
+        # a hard error rather than emit an empty visual_description that
+        # downstream caption-based discovery cannot use.
         agent = IntakeImageAgent(llm_client=_StubVisionLLM())
-        out = asyncio.run(agent.generate(
-            IntakeImageInput(raw_image_path=""),
-        ))
-        assert out.content.visual_description == ""
+        with pytest.raises(RuntimeError, match="raw_image_path is empty"):
+            asyncio.run(agent.generate(
+                IntakeImageInput(raw_image_path=""),
+            ))
 
-    def test_missing_file_emits_fallback_caption(self):
+    def test_missing_file_raises(self):
+        # Path on disk missing → FileNotFoundError; upstream must wire a
+        # real file before scheduling intake.
         agent = IntakeImageAgent(llm_client=_StubVisionLLM())
-        out = asyncio.run(agent.generate(
-            IntakeImageInput(raw_image_path="/tmp/no_such_image_xyz.png"),
-        ))
-        assert out.content.visual_description == ""
+        with pytest.raises(FileNotFoundError, match="not on disk"):
+            asyncio.run(agent.generate(
+                IntakeImageInput(raw_image_path="/tmp/no_such_image_xyz.png"),
+            ))
 
     def test_invalid_json_in_strict_response_falls_back(self):
         # Provider returns broken JSON — agent should treat the raw text

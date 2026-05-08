@@ -31,17 +31,43 @@ class NarrationLine(BaseModel):
     )
 
 
+class NarrationCharacter(BaseModel):
+    """One recurring character in the narrated story.
+
+    Cross-segment character identity is enforced downstream by
+    IllustrationMaterializer: it t2i's a portrait anchor from
+    ``appearance_prompt`` and attaches that anchor as a CHARACTER
+    reference when generating any segment whose
+    ``characters_in_segment`` lists this ``character_id``. So
+    ``appearance_prompt`` must be specific enough that an image model
+    can render a recognisable identity from text alone (face, hair,
+    age, distinctive wardrobe). Only include characters who appear in
+    2+ segments — single-appearance figures don't need anchoring.
+    """
+
+    character_id: str = ""  # char_001
+    name: str = Field("", json_schema_extra={"creative": True})
+    appearance_prompt: str = Field("", json_schema_extra={"creative": True})
+
+
 class NarrationSegment(BaseModel):
     """One visual beat: a group of narrator lines read over ONE illustration.
 
     ``image_prompt`` is the stand-alone scene description IllustrationAgent
     passes to the image model; art-style words belong in ``overall_style``,
     not here (so swapping the anchor style is a single-field edit).
+
+    ``characters_in_segment`` lists the cast character_ids visible in
+    THIS segment's illustration — the materializer attaches each
+    listed character's portrait anchor as a CHARACTER reference for
+    cross-segment identity consistency. Empty list when no cast
+    member is visible (pure landscape / object segment).
     """
 
     segment_id: str = ""  # seg_001
     image_prompt: str = Field("", json_schema_extra={"creative": True})
     lines: list[NarrationLine] = Field(default_factory=list)
+    characters_in_segment: list[str] = Field(default_factory=list)
 
 
 class NarrationContent(BaseModel):
@@ -59,6 +85,7 @@ class NarrationContent(BaseModel):
             "'watercolor storybook, warm palette, soft edges'."
         ),
     )
+    cast: list[NarrationCharacter] = Field(default_factory=list)
     segments: list[NarrationSegment] = Field(default_factory=list)
 
 

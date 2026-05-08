@@ -81,6 +81,11 @@ class AudioMixMaterializer(BaseMaterializer):
         so the downstream amix filter receives a uniformly-formatted
         input. Returns None when the video has no audio track or ffmpeg
         fails.
+
+        ``-af aresample=async=1:first_pts=0`` corrects timing on
+        variable-frame-rate sources (Kling occasionally emits VFR mp4s)
+        — without it the extracted wav drifts a few hundred ms over the
+        clip's length, breaking lip-sync alignment in the final mix.
         """
         if not video_path or not os.path.isfile(video_path):
             return None
@@ -90,6 +95,7 @@ class AudioMixMaterializer(BaseMaterializer):
                 [
                     "ffmpeg", "-y", "-i", video_path,
                     "-vn", "-acodec", "pcm_s16le", "-ar", "44100", "-ac", "2",
+                    "-af", "aresample=async=1:first_pts=0",
                     out_path,
                 ],
                 capture_output=True, check=False, text=True, timeout=120,
@@ -118,15 +124,18 @@ class AudioMixMaterializer(BaseMaterializer):
         music_bytes = self._load_bytes(typed_input.music_file_path)
         amb_bytes = self._load_bytes(typed_input.ambience_file_path)
 
-        inputs: list[bytes] = []
+        # Role tags drive per-track loudnorm, amix weights, and aloop
+        # (music/ambience). Place dialogue/narrator first so amix
+        # ``duration=first`` trims the looped beds to vocal length.
+        inputs: list[tuple[str, bytes]] = []
         if video_audio:
-            inputs.append(video_audio)
+            inputs.append(("dialogue", video_audio))
         if narrator_bytes:
-            inputs.append(narrator_bytes)
+            inputs.append(("narrator", narrator_bytes))
         if music_bytes:
-            inputs.append(music_bytes)
+            inputs.append(("music", music_bytes))
         if amb_bytes:
-            inputs.append(amb_bytes)
+            inputs.append(("ambience", amb_bytes))
 
         pending: list[MediaAsset] = []
 
@@ -145,7 +154,7 @@ class AudioMixMaterializer(BaseMaterializer):
 
         if len(inputs) == 1:
             # Single real track — pass through, no mix needed.
-            mixed = inputs[0]
+            mixed = inputs[0][1]
         else:
             joined = AudioService._ffmpeg_amix(inputs)
             if not joined:

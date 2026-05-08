@@ -49,16 +49,27 @@ class ImageSemanticContext:
         paths (style refs don't encode "don't do X" information).
     is_identity_reference:
         Set True for L1 global character / location / prop anchors —
-        the service then composes a portrait-oriented prompt with a
-        neutral studio backdrop and forbids in-scene composition, so
-        the resulting image is usable as a clean i2i reference
-        downstream. Default False = scene-grounded composition.
+        the service then composes a clean reference-anchor prompt
+        (portrait scaffold for character/prop, environment-plate
+        scaffold for location) so the resulting image is usable as a
+        clean i2i reference downstream. Default False = scene-grounded
+        composition.
+    ref_kind:
+        Only consulted when ``is_identity_reference`` is True. One of
+        ``"character"`` / ``"location"`` / ``"prop"`` / ``""`` (empty
+        = default, treated as character-style portrait — backwards-
+        compatible with callers that don't yet supply a kind). The
+        service uses this to switch L1 t2i scaffolding: character /
+        prop → isolated portrait against a neutral studio backdrop;
+        location → wide establishing-shot environment plate with deep
+        focus and architecture / geometry / lighting context preserved.
     """
 
     prompt_summary: str = ""
     style_notes: list[str] = field(default_factory=list)
     must_avoid: list[str] = field(default_factory=list)
     is_identity_reference: bool = False
+    ref_kind: str = ""
 
 
 @dataclass

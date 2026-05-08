@@ -5,17 +5,132 @@ Output: VideoAnalysisAgentOutput (scene segments + summary + entities)
 
 Uses a vision-capable LLM to analyze video content: detect scene
 boundaries, describe each scene, identify entities, and produce an
-overall summary.  This is a pure LLM + vision agent with no
-materializer — the structured analysis is the output.
+overall summary.
+
+Frame sampling
+--------------
+Inline-video attachment (Gemini's OpenAI-compat data URL path) caps at
+20 MB and the model further samples its inline video at ~1fps with a
+context-budget cap, so long / high-bitrate clips were silently truncated
+to ~the first 20-40s. Instead, this agent now ffprobe's the duration,
+ffmpeg-extracts evenly-spaced still frames (1 every 2s, capped at 30
+frames), and attaches them as image inputs with their timestamps quoted
+in the user prompt. This trades frame-to-frame motion fidelity for
+full-duration coverage — appropriate because the agent's task
+(scene detection / entity ID / summary) is frame-level, not motion-level.
 """
 
 from __future__ import annotations
 
+import logging
+import os
+import shutil
+import subprocess
+import tempfile
 from typing import Any
 
 from ..base_agent import INPUT_REJECTION_RULE, BaseAgent, _maybe_parse_rejection
 from ..common_schema import UpstreamInputRejected
 from .schema import VideoAnalysisAgentInput, VideoAnalysisAgentOutput
+
+logger = logging.getLogger(__name__)
+
+
+# Sampling: one frame every _FRAME_SAMPLE_INTERVAL_SEC, clamped to
+# [_FRAME_MIN_COUNT, _FRAME_MAX_COUNT]. A 60s clip → 30 frames @ 2s
+# (saturates max). A 120s clip → 30 frames @ 4s. A 5s clip → 8 frames
+# @ ~0.6s (forced minimum so short clips still get enough coverage
+# for scene detection to work).
+_FRAME_SAMPLE_INTERVAL_SEC = 2.0
+_FRAME_MIN_COUNT = 8
+_FRAME_MAX_COUNT = 30
+
+
+def _ffprobe_duration_sec(video_path: str) -> float | None:
+    """Return video duration in seconds, or None when ffprobe is missing
+    / the file is unreadable / format=duration is empty.
+    """
+    ffprobe = shutil.which("ffprobe")
+    if not ffprobe:
+        return None
+    try:
+        proc = subprocess.run(
+            [
+                ffprobe, "-v", "error",
+                "-show_entries", "format=duration",
+                "-of", "default=noprint_wrappers=1:nokey=1",
+                video_path,
+            ],
+            capture_output=True, check=False, text=True, timeout=15,
+        )
+    except subprocess.TimeoutExpired:
+        return None
+    if proc.returncode != 0:
+        return None
+    out = (proc.stdout or "").strip()
+    try:
+        d = float(out)
+    except ValueError:
+        return None
+    return d if d > 0 else None
+
+
+def _extract_sample_frames(
+    video_path: str, out_dir: str,
+) -> list[tuple[str, float]]:
+    """ffmpeg-extract evenly-spaced still frames covering the entire video.
+
+    Returns ``[(frame_path, timestamp_sec), ...]`` sorted by timestamp.
+    Empty list when ffprobe / ffmpeg fails completely (the agent then
+    falls back to attaching nothing and the LLM hits the input-rejection
+    path on its own).
+
+    Sampling: pick N in ``[_FRAME_MIN_COUNT, _FRAME_MAX_COUNT]`` based
+    on ``duration / _FRAME_SAMPLE_INTERVAL_SEC``; sample N timestamps
+    uniformly across ``[epsilon, duration - epsilon]`` so we don't seek
+    past EOF or land on a black initial frame.
+    """
+    duration = _ffprobe_duration_sec(video_path)
+    if duration is None:
+        logger.warning(
+            "VideoAnalysis: ffprobe could not read duration of %s",
+            video_path,
+        )
+        return []
+
+    target_n = int(round(duration / _FRAME_SAMPLE_INTERVAL_SEC))
+    target_n = max(_FRAME_MIN_COUNT, min(_FRAME_MAX_COUNT, target_n))
+
+    epsilon = min(0.5, duration * 0.05)
+    if target_n == 1 or duration <= 2 * epsilon:
+        timestamps = [duration / 2.0]
+    else:
+        step = (duration - 2 * epsilon) / (target_n - 1)
+        timestamps = [epsilon + i * step for i in range(target_n)]
+
+    frames: list[tuple[str, float]] = []
+    for i, ts in enumerate(timestamps, start=1):
+        out_path = os.path.join(out_dir, f"frame_{i:03d}.png")
+        # ``-ss`` before ``-i`` is fast-seek (keyframe-aligned, may snap
+        # to nearest keyframe — acceptable here since we only need
+        # representative frames, not exact timestamps).
+        proc = subprocess.run(
+            [
+                "ffmpeg", "-y", "-ss", f"{ts:.3f}", "-i", video_path,
+                "-vframes", "1", "-q:v", "2", out_path,
+            ],
+            capture_output=True, check=False, text=True, timeout=30,
+        )
+        if proc.returncode == 0 and os.path.isfile(out_path):
+            frames.append((out_path, ts))
+        else:
+            tail = (proc.stderr or "").strip()[-200:]
+            logger.warning(
+                "VideoAnalysis: ffmpeg failed to extract frame %d/%d "
+                "at %.2fs: %s",
+                i, len(timestamps), ts, tail,
+            )
+    return frames
 
 
 VIDEO_ANALYSIS_OUTPUT_TEMPLATE = """{
@@ -53,23 +168,44 @@ class VideoAnalysisAgent(BaseAgent[VideoAnalysisAgentInput, VideoAnalysisAgentOu
         rework_notes: str = "",
     ) -> VideoAnalysisAgentOutput:
         system = INPUT_REJECTION_RULE + self.system_prompt()
-        user = self.build_user_prompt(input_data)
-        if rework_notes:
-            user += self._rework_section(rework_notes)
 
-        media = []
-        if input_data.source_video_path:
-            media.append({"type": "video", "path": input_data.source_video_path})
+        # Empty / missing path → no media; LLM will hit the
+        # input-rejection escape hatch via system_prompt rules.
+        path = input_data.source_video_path or ""
+        if not path or not os.path.isfile(path):
+            user = self.build_user_prompt(input_data, frames=[])
+            if rework_notes:
+                user += self._rework_section(rework_notes)
+            raw = await self.llm.chat_json(system, user, media_attachments=None)
+            rejection = _maybe_parse_rejection(raw)
+            if rejection is not None:
+                raise UpstreamInputRejected(rejection)
+            output = self.parse_output(raw)
+            self.recompute_metrics(output)
+            return output
 
-        raw = await self.llm.chat_json(
-            system, user, media_attachments=media or None,
-        )
-        rejection = _maybe_parse_rejection(raw)
-        if rejection is not None:
-            raise UpstreamInputRejected(rejection)
-        output = self.parse_output(raw)
-        self.recompute_metrics(output)
-        return output
+        # Frame extraction lives inside a TemporaryDirectory: chat_json
+        # synchronously base64-reads each frame (see default_client's
+        # _build_multimodal_user_content) before the LLM call returns,
+        # so the await completes before tempdir cleanup.
+        with tempfile.TemporaryDirectory(prefix="fw_video_analysis_") as frames_dir:
+            frames = _extract_sample_frames(path, frames_dir)
+            user = self.build_user_prompt(input_data, frames=frames)
+            if rework_notes:
+                user += self._rework_section(rework_notes)
+            media = [
+                {"type": "image", "path": fpath}
+                for fpath, _ts in frames
+            ]
+            raw = await self.llm.chat_json(
+                system, user, media_attachments=media or None,
+            )
+            rejection = _maybe_parse_rejection(raw)
+            if rejection is not None:
+                raise UpstreamInputRejected(rejection)
+            output = self.parse_output(raw)
+            self.recompute_metrics(output)
+            return output
 
     def system_prompt(self) -> str:
         return (
@@ -91,10 +227,23 @@ class VideoAnalysisAgent(BaseAgent[VideoAnalysisAgentInput, VideoAnalysisAgentOu
             "unreadable or unsupported. Short / sparse / abstract video "
             "content is still analyzable.\n"
             "=== END WHEN TO REJECT UPSTREAM INPUT ===\n\n"
+            "=== INPUT FORMAT ===\n"
+            "You receive a sequence of evenly-spaced sampled frames "
+            "covering the ENTIRE source video, NOT the raw video itself. "
+            "The user message lists each frame's timestamp (in seconds "
+            "from video start). Use those timestamps to anchor scene "
+            "boundaries (start_time / end_time) in your output. Frames "
+            "between the samples are not provided — describe what you "
+            "see across consecutive samples AS A SCENE rather than as "
+            "discrete frames; if the visual content is similar across "
+            "many adjacent samples, that is one continuous scene "
+            "spanning their timestamp range.\n\n"
             "=== YOUR TASK ===\n"
-            "Watch/analyze the provided video and produce:\n"
+            "Analyze the provided sampled frames and produce:\n"
             "1. A high-level video_summary with title, summary, genre, and "
-            "language detection.\n"
+            "language detection (note: language detection from frames "
+            "alone is unreliable when there's no on-screen text — emit "
+            "empty string when uncertain).\n"
             "2. A list of scene segments with detected boundaries, visual "
             "descriptions, settings, mood, and entities.\n\n"
             "=== SCENE DETECTION RULES ===\n"
@@ -124,9 +273,32 @@ class VideoAnalysisAgent(BaseAgent[VideoAnalysisAgentInput, VideoAnalysisAgentOu
             "generates it automatically."
         )
 
-    def build_user_prompt(self, input_data: VideoAnalysisAgentInput) -> str:
+    def build_user_prompt(
+        self,
+        input_data: VideoAnalysisAgentInput,
+        *,
+        frames: list[tuple[str, float]] | None = None,
+    ) -> str:
+        frames = frames or []
+        if frames:
+            ts_lines = "\n".join(
+                f"  Frame {i + 1}: timestamp {ts:.2f}s"
+                for i, (_path, ts) in enumerate(frames)
+            )
+            last_ts = frames[-1][1]
+            timing_section = (
+                f"\n=== ATTACHED FRAME TIMESTAMPS ===\n"
+                f"{len(frames)} sampled frames covering ~{last_ts:.1f}s "
+                f"of source video. Anchor scene boundaries to these "
+                f"timestamps:\n"
+                f"{ts_lines}\n"
+                f"=== END ATTACHED FRAME TIMESTAMPS ===\n\n"
+            )
+        else:
+            timing_section = ""
         return (
-            f"Analyze this video: {input_data.source_video_path}\n\n"
+            f"Analyze this video: {input_data.source_video_path}\n"
+            f"{timing_section}"
             "Produce a structured analysis in EXACTLY this shape:\n\n"
             f"{VIDEO_ANALYSIS_OUTPUT_TEMPLATE}\n\n"
             "Return JSON only."

@@ -44,6 +44,7 @@ VIDEO_OUTPUT_TEMPLATE = """{
         "shot_segments": [
           {
             "shot_id": "sh_001",
+            "duration_sec": 5,
             "semantic_context": {
               "shot_type": "<copied from screenplay shot.shot_type>",
               "visual_goal": "<copied from screenplay shot.visual_goal>",
@@ -167,6 +168,29 @@ class VideoAgent(BaseAgent[VideoAgentInput, VideoAgentOutput]):
             "  * emotion_hint — from screenplay shot.emotion_hint, "
             "copied verbatim (calm / neutral / sad / angry / whispered / "
             "excited / warm / tense / urgent, or empty).\n\n"
+            "=== PER-SHOT DURATION (CRITICAL) ===\n"
+            "Set ``duration_sec`` for every shot_segment. This drives the "
+            "Kling image-to-video backend, which accepts ONLY 5 or 10 "
+            "seconds per clip — any other number is silently snapped to "
+            "the nearest of the two (≤ 5.5 → 5, > 5.5 → 10).\n"
+            "Choose per shot:\n"
+            "  * Default to 5. Most action / dialogue / reaction beats "
+            "land cleanly in 5s.\n"
+            "  * Pick 10 when ANY of the following holds:\n"
+            "    - The mirrored ``dialogue_text`` is longer than ~12 "
+            "Chinese characters / ~15 English words (the comfortable "
+            "ceiling for natural 5s speech). Long lines need 10s or the "
+            "voiceover gets clipped. Count the dialogue you just mirrored "
+            "into ``semantic_context.dialogue_text`` — if it exceeds the "
+            "threshold, this shot needs 10s.\n"
+            "    - A slow camera move or an extended atmospheric beat "
+            "the screenplay calls out (e.g. ``camera.movement = 'slow "
+            "dolly'``, ``framing_notes`` mentioning held silence).\n"
+            "    - The screenplay's scene-level "
+            "``estimated_duration_seconds`` divided by the scene's shot "
+            "count is closer to 10 than 5.\n"
+            "Output the value as an integer or float in {5, 10}; never "
+            "emit 6, 7, 8, or any other intermediate value.\n\n"
             "Do NOT summarize, paraphrase, or rewrite these fields. This "
             "is a MIRROR — the same values must appear verbatim so "
             "downstream consistency holds. In particular, dialogue_text "

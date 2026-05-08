@@ -23,6 +23,15 @@ class TranslationMetrics(BaseModel):
     source_language: str = ""
     target_language: str = ""
     has_payload: bool = False
+    # Leaf-string counts on source vs translated payload — used to
+    # detect silent truncation (LLM hits max_tokens half-way through
+    # ``scenes[]`` and emits a structurally-valid but content-incomplete
+    # output). ``completeness`` is translated_count / source_count when
+    # source_count > 0, else 1.0; values noticeably below 1.0 indicate
+    # the translator dropped material.
+    source_string_count: int = 0
+    translated_string_count: int = 0
+    completeness: float = 1.0
 
 
 # ---------------------------------------------------------------------------

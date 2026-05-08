@@ -21,6 +21,70 @@ from ._mock_data import MOCK_MP4_HEADER
 logger = logging.getLogger(__name__)
 
 
+# Common color-name → 6-hex aliases. The LLM frequently emits a CSS-like
+# named color or a 3-hex shorthand instead of a 6-hex string; without
+# normalization the ASS PrimaryColour ends up as "&H00white&" /
+# "&H00fff&" and libass renders a corrupt color (typically falls back
+# to a default / nothing).
+_NAMED_COLOR_HEX = {
+    "white": "ffffff",
+    "black": "000000",
+    "red": "ff0000",
+    "green": "00ff00",
+    "blue": "0000ff",
+    "yellow": "ffff00",
+    "cyan": "00ffff",
+    "magenta": "ff00ff",
+    "gray": "808080",
+    "grey": "808080",
+}
+
+
+def _normalize_hex_color(value: str, default: str) -> str:
+    """Return a lowercase 6-hex color string for use in an ASS force_style.
+
+    Accepts:
+      - 6-hex with or without leading ``#`` (``"#FFFFFF"`` / ``"FFFFFF"``)
+      - 3-hex shorthand with or without ``#`` (``"#fff"`` / ``"fff"``)
+      - common named colors (``"white"``, ``"black"``, ...)
+      - bad / empty input → falls back to ``default``
+
+    The returned string is always 6 lowercase hex characters with no
+    leading ``#``, ready to be spliced directly into ``&H00<hex>&``.
+    """
+    if not isinstance(value, str):
+        return default
+    s = value.strip().lower().lstrip("#")
+    if not s:
+        return default
+    if s in _NAMED_COLOR_HEX:
+        return _NAMED_COLOR_HEX[s]
+    if len(s) == 3 and all(c in "0123456789abcdef" for c in s):
+        return "".join(c * 2 for c in s)
+    if len(s) == 6 and all(c in "0123456789abcdef" for c in s):
+        return s
+    logger.warning(
+        "CompositorService: unrecognized font_color %r, falling back to %s",
+        value, default,
+    )
+    return default
+
+
+def _resolution_height(plan: dict[str, Any]) -> int:
+    """Parse ``plan["output_resolution"]`` (``"WxH"``) and return the H.
+
+    Falls back to 1080 when missing / malformed so the caller's caller
+    sees the documented default behavior.
+    """
+    res = plan.get("output_resolution", "")
+    if isinstance(res, str) and "x" in res:
+        try:
+            return int(res.split("x", 1)[1])
+        except (ValueError, IndexError):
+            pass
+    return 1080
+
+
 class CompositorService:
     """FFmpeg-based video compositor."""
 
@@ -79,9 +143,28 @@ class CompositorService:
             # default-font tofu; the name resolves through fontconfig, which
             # falls back to Latin automatically for non-CJK text.
             style = plan.get("subtitle_style", {})
-            font_size = style.get("font_size", 24)
-            font_color = (style.get("font_color", "#FFFFFF")).lstrip("#")
-            outline_color = (style.get("outline_color", "#000000")).lstrip("#")
+            # Scale font_size + margins by output_resolution height so a
+            # 4K render gets proportionally larger subs than a 1080p one;
+            # otherwise the ``font_size=24`` default reads tiny on 4K and
+            # bilingual stacks slip off the bottom edge. Baseline:
+            # 1080p × 24pt with 10px bottom margin and (font_size+10)px
+            # row spacing.
+            res_height = _resolution_height(plan)
+            scale = res_height / 1080.0
+            base_font_size = style.get("font_size", 24)
+            try:
+                base_font_size = int(base_font_size)
+            except (TypeError, ValueError):
+                base_font_size = 24
+            font_size = max(12, int(round(base_font_size * scale)))
+            margin_base = max(10, int(round(10 * scale)))
+            row_step = font_size + margin_base
+            font_color = _normalize_hex_color(
+                style.get("font_color", "#FFFFFF"), "ffffff",
+            )
+            outline_color = _normalize_hex_color(
+                style.get("outline_color", "#000000"), "000000",
+            )
             font_name = style.get("font_name", "Noto Sans CJK SC")
             real_srts = [s for s in (subtitle_srts or []) if s and s.strip()]
             for idx, srt_body in enumerate(real_srts):
@@ -89,7 +172,7 @@ class CompositorService:
                 with open(srt_path, "w", encoding="utf-8") as fh:
                     fh.write(srt_body)
                 srt_paths.append(srt_path)
-                margin_v = 10 + idx * (font_size + 10)
+                margin_v = margin_base + idx * row_step
                 vfilters.append(
                     f"subtitles={srt_path}:force_style="
                     f"'FontName={font_name},"

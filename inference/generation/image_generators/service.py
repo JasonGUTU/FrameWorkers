@@ -72,6 +72,50 @@ _IDENTITY_AVOID_DEFAULTS = (
     "color grade other than neutral",
 )
 
+# L1 identity-reference scaffolding for LOCATION anchors. Mirrors the
+# character/prop scaffold in shape but flips every framing decision —
+# locations need wide framing, deep focus, and the environment IS the
+# subject, not something to be avoided. The character-side
+# ``_IDENTITY_AVOID_DEFAULTS`` is unusable here because it forbids
+# ``"environmental setting"`` and ``"props in frame"`` — both load-bearing
+# for an establishing plate. Edit-path counterpart:
+# ``_EDIT_PREFIX_LOCATION_ONLY`` already preserves architecture / geometry /
+# materials / lighting, so this t2i prefix uses the same vocabulary.
+_IDENTITY_LOCATION_PROMPT_PREFIX = (
+    "Photorealistic cinematic establishing-shot location plate, shot on Arri "
+    "Alexa 35 with a wide-angle lens (24-35mm), deep focus so foreground, "
+    "midground, and background are all sharp, natural ambient lighting "
+    "appropriate to the setting, full architectural and geometric context "
+    "visible end-to-end.\n"
+    "Setting (composed for spatial legibility — clear sense of scale and "
+    "depth, no human figure obstructing the geometry): "
+)
+_IDENTITY_LOCATION_PROMPT_SUFFIX = (
+    "\nFraming: location reference plate only — no central character, no "
+    "narrative action, no portrait composition. The image will be used as a "
+    "downstream i2i anchor, so the location's identity (architecture, "
+    "geometry, materials, color grade, lighting character) must be "
+    "unambiguously legible across the whole frame."
+)
+_IDENTITY_LOCATION_AVOID_DEFAULTS = (
+    "anime",
+    "cartoon",
+    "illustration",
+    "painterly rendering",
+    "3D CGI render",
+    "portrait framing",
+    "shallow depth of field",
+    "studio backdrop",
+    "human subject in foreground",
+    "characters posed for portrait",
+    "dramatic horror lighting",
+    "atmospheric haze obscuring geometry",
+)
+
+_IDENTITY_REF_KIND_LOCATION = "location"
+_IDENTITY_REF_KIND_CHARACTER = "character"
+_IDENTITY_REF_KIND_PROP = "prop"
+
 # Edit-path instruction prefixes, picked by ``ref_kind`` so the model
 # knows what to preserve from each reference image.
 _EDIT_PREFIX_LOCATION_ONLY = (
@@ -99,6 +143,9 @@ _EDIT_PREFIX_MULTI_SUBJECT = (
     "Edit using the attached reference images. Each reference is named in "
     "the text below as 'Reference N: <kind> <entity_id>'. Preserve each "
     "reference's identity exactly within its own kind:\n"
+    "  * STYLE refs → preserve palette, brush stroke quality, mood, "
+    "lighting character ONLY. DO NOT carry over subjects, locations, or "
+    "compositional structure from a STYLE ref.\n"
     "  * LOCATION refs → preserve architecture, geometry, lighting / color grade\n"
     "  * CHARACTER refs → preserve face, hair, body type, wardrobe\n"
     "  * PROP refs → preserve shape, color, distinctive markings\n"
@@ -232,24 +279,41 @@ class ImageService(LazyHttpxClientMixin):
         """Render a semantic context into a text-to-image prompt.
 
         Two modes:
-        * ``is_identity_reference=True`` — L1 global anchor path. Wraps
-          the prompt_summary with a portrait-oriented studio framing
-          and an explicit "no in-scene composition" guard so the
-          resulting image is clean enough to serve as an i2i reference
-          downstream. Atmospheric ``style_notes`` are intentionally
-          dropped here (they leak scene-mood into what should be an
-          identity portrait); ``must_avoid`` is still applied.
+        * ``is_identity_reference=True`` — L1 global anchor path. The
+          scaffold splits by ``ctx.ref_kind``:
+            - ``"character"`` / ``"prop"`` / ``""`` → portrait-oriented
+              studio framing with neutral matte gray backdrop and an
+              explicit "no in-scene composition" guard, so the result
+              is a clean isolated subject for downstream i2i.
+            - ``"location"`` → wide establishing-shot environment plate
+              with deep focus and architecture / geometry / lighting
+              context preserved; the environment IS the subject.
+          Atmospheric ``style_notes`` are intentionally dropped here
+          (they leak scene-mood into what should be a clean reference);
+          ``must_avoid`` is still applied alongside the kind-specific
+          avoid defaults.
         * default — scene-grounded composition; full style suffix
           (atmosphere block + must_avoid) appended.
         """
         if ctx.is_identity_reference:
-            parts = [_IDENTITY_PROMPT_PREFIX]
+            if ctx.ref_kind == _IDENTITY_REF_KIND_LOCATION:
+                prefix = _IDENTITY_LOCATION_PROMPT_PREFIX
+                suffix = _IDENTITY_LOCATION_PROMPT_SUFFIX
+                avoid_defaults = _IDENTITY_LOCATION_AVOID_DEFAULTS
+            else:
+                # character / prop / "" (legacy default) all share the
+                # portrait scaffold — both want an isolated subject
+                # against a neutral backdrop.
+                prefix = _IDENTITY_PROMPT_PREFIX
+                suffix = _IDENTITY_PROMPT_SUFFIX
+                avoid_defaults = _IDENTITY_AVOID_DEFAULTS
+            parts = [prefix]
             if ctx.prompt_summary:
                 parts.append(ctx.prompt_summary)
-            parts.append(_IDENTITY_PROMPT_SUFFIX)
+            parts.append(suffix)
             avoid_tail = ImageService._compose_style_suffix(
                 style_notes=[],
-                must_avoid=list(ctx.must_avoid) + list(_IDENTITY_AVOID_DEFAULTS),
+                must_avoid=list(ctx.must_avoid) + list(avoid_defaults),
                 include_visual_style=False,
             )
             if avoid_tail:

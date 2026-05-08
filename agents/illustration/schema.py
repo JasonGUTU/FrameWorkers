@@ -11,6 +11,20 @@ from ..common_schema import Meta
 # Illustration sub-models
 # ---------------------------------------------------------------------------
 
+class CharacterAnchor(BaseModel):
+    """A recurring-character identity anchor mirrored from NarrationAgent.
+
+    Materializer uses ``appearance_prompt`` to t2i a portrait still that
+    serves as the i2i CHARACTER reference for every segment whose
+    ``characters_in_segment`` lists this ``character_id``. The portrait
+    is in-memory only and not registered as a workspace artifact —
+    downstream consumers see segment illustrations, not anchors.
+    """
+
+    character_id: str = ""  # char_001 — mirrored from NarrationCharacter
+    appearance_prompt: str = ""  # mirrored verbatim from NarrationCharacter
+
+
 class IllustrationEntry(BaseModel):
     """One generated illustration aligned to a NarrationSegment.
 
@@ -18,10 +32,15 @@ class IllustrationEntry(BaseModel):
     under sys_id ``illustration_<segment_id>`` (Pattern B); downstream
     consumers discover it via caption-based InputResolver routing, not
     by reading a URI field off this entry. Schema is metadata-only.
+
+    ``characters_in_segment`` lists the character_ids whose portrait
+    anchors should be attached as i2i CHARACTER references when
+    generating THIS segment. Mirrored from NarrationSegment.
     """
 
     segment_id: str = ""  # seg_001 — mirrored from NarrationAgent
     image_prompt: str = ""  # mirrored from NarrationAgent for traceability
+    characters_in_segment: list[str] = Field(default_factory=list)
 
 
 class IllustrationContent(BaseModel):
@@ -29,6 +48,7 @@ class IllustrationContent(BaseModel):
     # materializer can render it into every image prompt without
     # re-parsing upstream JSON at materialize time.
     overall_style: str = ""
+    character_anchors: list[CharacterAnchor] = Field(default_factory=list)
     illustrations: list[IllustrationEntry] = Field(default_factory=list)
 
 

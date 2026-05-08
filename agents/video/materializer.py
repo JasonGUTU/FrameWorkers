@@ -19,6 +19,7 @@ a thin shim around ``VideoService``.
 
 from __future__ import annotations
 
+import asyncio
 import logging
 import os
 from typing import Any
@@ -150,25 +151,18 @@ class VideoMaterializer(BaseMaterializer):
 
         shot_still_index = self._build_shot_still_index(typed_input)
 
-        for scene in content.get("scenes", []):
+        # ── Stage 1: collect per-shot specs across ALL scenes ─────────
+        # Cross-scene gather lets us issue every Kling I2V call in
+        # parallel up to the Semaphore cap; per-scene assembly stays
+        # sequential afterwards (it's local ffmpeg, fast).
+        # Per memory:feedback_video_gen_must_parallel.
+        shot_specs: list[dict[str, Any]] = []
+        for sc_idx, scene in enumerate(content.get("scenes", [])):
             scene_id = scene.get("scene_id", "")
             scene_ctx = dict(scene.get("scene_context", {}) or {})
             scene_ctx["scene_id"] = scene_id
-            clip_bytes_list: list[bytes] = []
-
-            for seg in scene.get("shot_segments", []):
+            for sh_idx, seg in enumerate(scene.get("shot_segments", [])):
                 shot_id = seg.get("shot_id", "")
-                sys_vid_id = f"clip_{shot_id}"
-                # Per-clip URI holder is local — agent output no longer
-                # carries a per-shot video_asset block. MediaAsset's
-                # uri_holder just needs somewhere to write the persisted
-                # URI; Assistant reads it off the returned MediaAsset.
-                video_asset: dict[str, Any] = {"asset_id": sys_vid_id, "format": "mp4"}
-
-                # --- Load the starting-frame image for this shot ---
-                # Missing keyframe input is a chain-config failure (upstream
-                # KeyFrameAgent should have produced one); raise rather
-                # than silently skip the shot.
                 still_path = shot_still_index.get(shot_id, "")
                 image_bytes = self._load_image_bytes(still_path)
                 if image_bytes is None:
@@ -176,51 +170,99 @@ class VideoMaterializer(BaseMaterializer):
                         f"Video clip {shot_id}: missing on-disk starting "
                         f"frame (shot_stills scope=shot:{shot_id})"
                     )
-
-                # --- Build the semantic context from the agent's own
-                #     typed output — the LLM already mirrored the
-                #     upstream screenplay + keyframes fields into
-                #     seg.semantic_context + scene.scene_context, so we
-                #     only need a mechanical conversion to the inference-
-                #     layer dataclass here.
                 seg_semantic = seg.get("semantic_context", {}) or {}
                 semantic_context = self._to_inference_context(
                     shot_id, seg_semantic, scene_ctx
                 )
+                duration_sec = float(seg.get("duration_sec", 5.0) or 5.0)
+                shot_specs.append({
+                    "sc_idx": sc_idx,
+                    "sh_idx": sh_idx,
+                    "scene_id": scene_id,
+                    "shot_id": shot_id,
+                    "image_bytes": image_bytes,
+                    "semantic_context": semantic_context,
+                    "duration_sec": duration_sec,
+                })
 
-                # --- Per-shot partial-resume retry budget ---
-                last_exc: Exception | None = None
-                clip_bytes: bytes | None = None
-                for attempt in range(1, DEFAULT_ASSET_RETRIES + 1):
-                    try:
-                        result = await self.video_svc.generate_clip(
-                            shot_id=shot_id,
-                            keyframe_images=[image_bytes],
-                            semantic_context=semantic_context,
-                        )
-                        clip_bytes = result.bytes
-                        if clip_bytes:
-                            break
-                        last_exc = RuntimeError("generate_clip returned empty bytes")
-                    except Exception as exc:
-                        last_exc = exc
-                    logger.warning(
-                        "[attempt %d/%d] Video clip generation failed for "
-                        "%s: %s",
-                        attempt, DEFAULT_ASSET_RETRIES, shot_id, last_exc,
+        # ── Stage 2: parallel render with partial-resume retry ────────
+        # Mirror IllustrationMaterializer.materialize: gather all
+        # remaining specs each attempt, collect successes, retry only
+        # failures next attempt. Semaphore caps fal concurrency.
+        sem = asyncio.Semaphore(8)
+
+        async def _gen_one(spec: dict) -> bytes | Exception:
+            async with sem:
+                try:
+                    result = await self.video_svc.generate_clip(
+                        shot_id=spec["shot_id"],
+                        keyframe_images=[spec["image_bytes"]],
+                        semantic_context=spec["semantic_context"],
+                        duration_sec=spec["duration_sec"],
                     )
+                    if result.bytes:
+                        return result.bytes
+                    return RuntimeError("generate_clip returned empty bytes")
+                except Exception as exc:
+                    return exc
 
-                if not clip_bytes:
-                    raise RuntimeError(
-                        f"generate_clip for {shot_id} failed after "
-                        f"{DEFAULT_ASSET_RETRIES} attempts: {last_exc}"
+        results_by_idx: dict[int, bytes] = {}
+        last_excs: dict[int, Exception] = {}
+        for attempt in range(1, DEFAULT_ASSET_RETRIES + 1):
+            pending_idxs = [i for i in range(len(shot_specs)) if i not in results_by_idx]
+            if not pending_idxs:
+                break
+            pending_specs = [shot_specs[i] for i in pending_idxs]
+            partial = await asyncio.gather(
+                *(_gen_one(s) for s in pending_specs),
+                return_exceptions=True,
+            )
+            for idx, outcome in zip(pending_idxs, partial):
+                if isinstance(outcome, bytes) and outcome:
+                    results_by_idx[idx] = outcome
+                elif isinstance(outcome, Exception):
+                    last_excs[idx] = outcome
+                else:
+                    last_excs[idx] = RuntimeError(
+                        f"unexpected outcome: {outcome!r}"
                     )
+            logger.info(
+                "[attempt %d/%d] VideoMaterializer: %d/%d shots successful",
+                attempt, DEFAULT_ASSET_RETRIES,
+                len(results_by_idx), len(shot_specs),
+            )
 
-                pending.append(MediaAsset(
-                    sys_id=sys_vid_id, data=clip_bytes,
-                    extension="mp4", uri_holder=video_asset,
-                ))
-                clip_bytes_list.append(clip_bytes)
+        if len(results_by_idx) < len(shot_specs):
+            failed_idxs = [
+                i for i in range(len(shot_specs)) if i not in results_by_idx
+            ]
+            failed_shot_ids = [shot_specs[i]["shot_id"] for i in failed_idxs]
+            first_exc = last_excs.get(failed_idxs[0])
+            raise RuntimeError(
+                f"VideoMaterializer: generate_clip failed for "
+                f"{len(failed_idxs)}/{len(shot_specs)} shots after "
+                f"{DEFAULT_ASSET_RETRIES} attempts: {failed_shot_ids}; "
+                f"first error: {first_exc}"
+            )
+
+        # ── Stage 3: emit per-shot MediaAsset + group by scene ───────
+        clips_by_scene_id: dict[str, list[bytes]] = {}
+        for spec_idx, spec in enumerate(shot_specs):
+            shot_id = spec["shot_id"]
+            scene_id = spec["scene_id"]
+            sys_vid_id = f"clip_{shot_id}"
+            video_asset: dict[str, Any] = {"asset_id": sys_vid_id, "format": "mp4"}
+            clip_bytes = results_by_idx[spec_idx]
+            pending.append(MediaAsset(
+                sys_id=sys_vid_id, data=clip_bytes,
+                extension="mp4", uri_holder=video_asset,
+            ))
+            clips_by_scene_id.setdefault(scene_id, []).append(clip_bytes)
+
+        # ── Stage 4: per-scene assembly (sequential local ffmpeg) ────
+        for scene in content.get("scenes", []):
+            scene_id = scene.get("scene_id", "")
+            clip_bytes_list = clips_by_scene_id.get(scene_id, [])
 
             # --- Per-scene assemble: retry transient failures, raise
             #     otherwise. ``clip_bytes_list`` is non-empty because the

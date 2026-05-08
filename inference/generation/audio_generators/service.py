@@ -171,12 +171,53 @@ class AudioService:
     # ``aresample`` + ``aformat`` before the operation.
     _NORM_FILTER = "aresample=44100,aformat=sample_fmts=fltp:channel_layouts=stereo"
 
+    # EBU R128 single-pass target — brings every input to ~-23 LUFS so amix
+    # doesn't drown quieter beds (generated music ~-23 LUFS, baked dialogue
+    # ~-14 LUFS) under the loud one after the 1/N attenuation.
+    _LOUDNORM = "loudnorm=I=-23:TP=-1.5:LRA=11"
+
+    # Per-role mix weight applied to amix (dialogue/narrator dominant, beds
+    # quiet underlay).
+    _AMIX_ROLE_WEIGHTS = {
+        "dialogue": 3.0,
+        "narrator": 3.0,
+        "music": 1.0,
+        "ambience": 0.5,
+    }
+
+    # Roles whose track is a film-wide underlay generated at a fixed 30s
+    # ceiling (fal stable-audio cap). They get aloop'd to infinity so amix
+    # ``duration=first`` trims them to the dialogue/narrator length.
+    _LOOP_ROLES = {"music", "ambience"}
+
     @staticmethod
-    def _ffmpeg_amix(inputs: list[bytes]) -> bytes | None:
+    def _ffmpeg_amix(inputs: list[tuple[str, bytes]]) -> bytes | None:
+        """amix tracks tagged by role; bed roles are looped, weights applied.
+
+        Input list order matters: index 0 sets the mix duration (amix
+        ``duration=first``) so place the dialogue / narrator track first.
+        Index>0 tracks tagged ``music`` / ``ambience`` are aloop'd to
+        infinity and trimmed to the first input's length.
+        """
         n = len(inputs)
-        norm = "".join(f"[{i}:a]{AudioService._NORM_FILTER}[a{i}];" for i in range(n))
-        mix = "".join(f"[a{i}]" for i in range(n)) + f"amix=inputs={n}:duration=longest:dropout_transition=0[out]"
-        return AudioService._ffmpeg_run(inputs, filter_complex=norm + mix)
+        chains: list[str] = []
+        weights: list[str] = []
+        for i, (role, _bytes) in enumerate(inputs):
+            steps = [AudioService._NORM_FILTER]
+            if i > 0 and role in AudioService._LOOP_ROLES:
+                steps.insert(0, "aloop=loop=-1:size=2000000000")
+            steps.append(AudioService._LOUDNORM)
+            chains.append(f"[{i}:a]{','.join(steps)}[a{i}]")
+            weights.append(str(AudioService._AMIX_ROLE_WEIGHTS.get(role, 1.0)))
+        norm = ";".join(chains) + ";"
+        mix_in = "".join(f"[a{i}]" for i in range(n))
+        mix = (
+            f"{mix_in}amix=inputs={n}:duration=first:dropout_transition=0"
+            f":weights={' '.join(weights)}[out]"
+        )
+        return AudioService._ffmpeg_run(
+            [b for _, b in inputs], filter_complex=norm + mix,
+        )
 
     @staticmethod
     def _ffmpeg_concat(inputs: list[bytes]) -> bytes | None:

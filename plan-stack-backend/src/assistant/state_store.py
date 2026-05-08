@@ -1,10 +1,11 @@
 """State store for Assistant runtime singletons and execution records."""
 
+import os
+import uuid
 from datetime import datetime
 from pathlib import Path
 from threading import RLock
 from typing import Any, Dict, List, Optional
-import uuid
 
 from .models import AgentExecution, ExecutionStatus
 from .workspace import Workspace
@@ -24,13 +25,18 @@ class AssistantStateStore:
 
         Args:
             runtime_base_path: Base path to Runtime directory (project root).
-                If None, tries to find project root automatically.
+                If None, env var ``FW_WORKSPACE_ROOT`` overrides; otherwise
+                falls back to project_root/_workspaces.
         """
         if runtime_base_path is None:
-            # plan-stack-backend/src/assistant/state_store.py -> FrameWorkers/
-            current_file = Path(__file__)
-            project_root = current_file.parent.parent.parent.parent
-            runtime_base_path = project_root / "_workspaces"
+            env_override = os.environ.get("FW_WORKSPACE_ROOT", "").strip()
+            if env_override:
+                runtime_base_path = Path(env_override)
+            else:
+                # plan-stack-backend/src/assistant/state_store.py -> FrameWorkers/
+                current_file = Path(__file__)
+                project_root = current_file.parent.parent.parent.parent
+                runtime_base_path = project_root / "_workspaces"
 
         self.runtime_base_path = Path(runtime_base_path)
         self.runtime_base_path.mkdir(parents=True, exist_ok=True)

@@ -137,6 +137,7 @@ class KeyframeMaterializer(BaseMaterializer):
             prompt_summary: str,
             *,
             is_identity_reference: bool = False,
+            ref_kind: str = "",
         ) -> ImageSemanticContext:
             """Per-call helper: build a semantic context for one image.
 
@@ -145,15 +146,26 @@ class KeyframeMaterializer(BaseMaterializer):
             to render depending on whether it's a generate vs edit call.
 
             ``is_identity_reference=True`` flips L1 t2i into the
-            identity-reference composer (neutral matte gray studio
-            backdrop, three-quarter portrait, no in-scene composition).
+            identity-reference composer; ``ref_kind`` then chooses the
+            kind-specific scaffold (``"character"`` / ``"prop"`` →
+            portrait against a neutral studio backdrop; ``"location"``
+            → wide establishing plate with environment context).
             """
             return ImageSemanticContext(
                 prompt_summary=prompt_summary,
                 style_notes=style_notes,
                 must_avoid=must_avoid,
                 is_identity_reference=is_identity_reference,
+                ref_kind=ref_kind,
             )
+
+        # Map plural agent-side entity-list names to the singular
+        # ref_kind value the inference service expects.
+        _ENTITY_LIST_TO_REF_KIND = {
+            "characters": "character",
+            "locations": "location",
+            "props": "prop",
+        }
 
         l2_mode = self._l2_mode()
         logger.info("Keyframe L2 scene-anchor mode: %s", l2_mode)
@@ -211,6 +223,7 @@ class KeyframeMaterializer(BaseMaterializer):
         l1_tasks: list[tuple[str, dict, ImageSemanticContext, str]] = []
 
         for entity_list in ("characters", "locations", "props"):
+            ref_kind = _ENTITY_LIST_TO_REF_KIND[entity_list]
             for kf in global_anchors.get(entity_list, []):
                 eid = kf.get("entity_id", "unknown")
                 prompt_summary = kf.get("prompt_summary", "")
@@ -219,7 +232,11 @@ class KeyframeMaterializer(BaseMaterializer):
                         (
                             eid,
                             kf,
-                            _make_ctx(prompt_summary, is_identity_reference=True),
+                            _make_ctx(
+                                prompt_summary,
+                                is_identity_reference=True,
+                                ref_kind=ref_kind,
+                            ),
                             f"img_{eid}_global",
                         )
                     )
@@ -261,6 +278,7 @@ class KeyframeMaterializer(BaseMaterializer):
         for scene in scenes:
             stab = scene.get("stability_keyframes", {})
             for entity_list in ("characters", "locations", "props"):
+                ref_kind = _ENTITY_LIST_TO_REF_KIND[entity_list]
                 for kf in stab.get(entity_list, []):
                     eid = kf.get("entity_id", "unknown")
                     prompt_summary = kf.get("prompt_summary", "")
@@ -269,7 +287,11 @@ class KeyframeMaterializer(BaseMaterializer):
                             (
                                 eid,
                                 kf,
-                                _make_ctx(prompt_summary, is_identity_reference=True),
+                                _make_ctx(
+                                    prompt_summary,
+                                    is_identity_reference=True,
+                                    ref_kind=ref_kind,
+                                ),
                                 f"img_{eid}_global",
                             )
                         )

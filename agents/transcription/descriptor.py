@@ -26,16 +26,28 @@ def build_input(
 
 
 def build_captions(agent_id: str, output_dict: dict) -> dict:
+    # Caption role: this artifact IS an SRT-shaped subtitle source
+    # ready for direct compositor burn-in (each segment carries
+    # start/end timestamps + text, exactly the shape an SRT cue
+    # needs). The phrase ``SRT-shaped subtitle artifact`` is what
+    # InputResolver matches against CompositorAgent's [subtitle_tracks]
+    # label description — earlier wording ``input to a downstream
+    # subtitle step`` was read by the LLM resolver as "needs a
+    # SubtitleAgent in between" and dropped the routing.
+    # See MEMORY:feedback_caption_role_not_content (count metric only,
+    # no per-line text inserted).
     content = output_dict.get("content", {})
     lang = content.get("language", "?")
     seg_count = len(content.get("segments", []))
     return {
         agent_id: {
             "caption": (
-                f"Transcript ({lang}): {seg_count} segment(s) with "
-                f"timestamps. Speech-to-text from source media. Usable "
-                f"as the 'timed source text' input to a downstream subtitle step, or "
-                f"as the 'source text' input to a downstream translation step."
+                f"Transcript ({lang}): {seg_count} timestamped segment(s). "
+                f"SRT-shaped subtitle artifact — ready for direct "
+                f"burn-in by a compositor's subtitle track (each "
+                f"segment is one SRT cue with start/end seconds + "
+                f"text). Also usable as the 'source text' input to a "
+                f"translation step when bilingual subtitles are needed."
             ),
             "scope": "global",
         },

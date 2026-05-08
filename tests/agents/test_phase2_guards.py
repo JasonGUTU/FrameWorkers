@@ -369,34 +369,58 @@ def test_screenplay_labels_module_only_exports_story_label():
 
 
 def test_only_entry_point_agents_declare_creative_brief():
-    """Only creative-head agents may declare the [creative_brief] label.
+    """Only creative-head + leaf-tool entry agents may declare the
+    [creative_brief] label as an InputLabelSpec.name.
 
-    Currently: StoryAgent (cinematic flows) / UnivaStoryboardAgent
-    (univa flows) / NarrationAgent (illustrated-storytelling flows).
-    (IntakeTextAgent was retired — chat/text uploads are now persisted
-    directly as [creative_brief] artifacts by the workspace layer, so
-    no agent needs to "intake" the label before downstream consumers
-    read it.)
+    Two categories are allowed:
 
-    Mid-pipeline agents (Screenplay, KeyFrame, etc.) must not have this
-    label, otherwise users could accidentally bypass the creative head
+    Creative heads — turn a brief into a structured multi-step plan:
+      - StoryAgent (cinematic flows)
+      - UnivaStoryboardAgent (univa flows)
+      - NarrationAgent (illustrated-storytelling flows)
+
+    Leaf-tool entries — single-purpose end-to-end tools the user invokes
+    directly with an inline brief, no head-agent plan in between:
+      - VideoExtendAgent ('extend by 5s')
+      - StyleTransferAgent ('convert to Studio Ghibli style')
+      - MusicAgent ('add piano BGM')
+      - AmbienceAgent ('layer in jungle ambience')
+
+    (IntakeTextAgent was retired — chat/text uploads are persisted as
+    [creative_brief] artifacts by the workspace layer.)
+
+    Mid-pipeline agents (Screenplay, KeyFrame, Video, etc.) must not
+    declare this label, otherwise users could bypass the creative head
     and inject directives mid-pipeline.
+
+    The check inspects InputLabelSpec ``name=...`` declarations only —
+    descriptors whose docstring or label *description* merely mention
+    the literal string ``[creative_brief]`` (e.g. brief_enricher's
+    raw_brief description hints that its matched caption tends to come
+    from a [creative_brief] artifact) are not violations.
     """
     descriptor_files = list((_REPO / "agents").rglob("descriptor.py"))
-    allowed_dirs = {"story", "univa_storyboard", "narration"}
+    head_dirs = {"story", "univa_storyboard", "narration"}
+    leaf_tool_dirs = {"video_extend", "style_transfer", "music", "ambience"}
+    allowed_dirs = head_dirs | leaf_tool_dirs
+    # Match real label declarations inside InputLabelSpec, e.g.
+    #   name=INPUT_LABEL_CREATIVE_BRIEF,
+    #   name="creative_brief",
+    name_pattern = re.compile(
+        r"name\s*=\s*(INPUT_LABEL_CREATIVE_BRIEF\b|[\"']creative_brief[\"'])"
+    )
     offenders: list[Path] = []
     for path in descriptor_files:
         text = _read(path)
-        if "[creative_brief]" not in text:
+        if not name_pattern.search(text):
             continue
-        # Check whether this descriptor lives under an allowed directory.
         rel_parts = path.relative_to(_REPO / "agents").parts
         top = rel_parts[0] if rel_parts else ""
         if top in allowed_dirs:
             continue
         offenders.append(path)
     assert not offenders, (
-        "[creative_brief] label leaked into mid-pipeline descriptors:\n  "
+        "[creative_brief] label declared on mid-pipeline descriptors:\n  "
         + "\n  ".join(str(p.relative_to(_REPO)) for p in offenders)
     )
 

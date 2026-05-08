@@ -34,14 +34,22 @@ from .schema import (
 ILLUSTRATION_OUTPUT_TEMPLATE = """{
   "content": {
     "overall_style": "<cross-segment art-style anchor: medium, palette, lighting, mood>",
+    "character_anchors": [
+      {
+        "character_id": "char_001",
+        "appearance_prompt": "<1-2 sentence visual identity verbatim from upstream cast entry>"
+      }
+    ],
     "illustrations": [
       {
         "segment_id": "seg_001",
-        "image_prompt": "<concrete visual prompt for this segment's illustration>"
+        "image_prompt": "<concrete visual prompt for this segment's illustration>",
+        "characters_in_segment": ["char_001"]
       },
       {
         "segment_id": "seg_002",
-        "image_prompt": "..."
+        "image_prompt": "...",
+        "characters_in_segment": []
       }
     ]
   },
@@ -96,20 +104,29 @@ class IllustrationAgent(BaseAgent[IllustrationAgentInput, IllustrationAgentOutpu
             "You will receive the upstream NarrationAgent output as a RAW "
             "JSON TEXT BLOB inside the user message. Do NOT assume specific "
             "field names in advance. READ the JSON, understand whatever shape "
-            "it happens to have, and extract two things:\n"
+            "it happens to have, and extract three things:\n"
             "  1. The cross-segment art-style anchor (typical names: "
             "overall_style / art_style / visual_style / style — but READ "
             "the document, do not key-lookup blindly). This single string "
             "describes medium + palette + lighting + mood that should "
             "carry across every illustration.\n"
-            "  2. Per-segment image prompts (typical container names: "
-            "segments / scenes / parts / pages — and per-entry typical "
-            "prompt fields: image_prompt / visual / illustration_brief / "
-            "scene_description). For each segment, capture its segment_id "
-            "(or invent seg_001, seg_002, ... if upstream has no ids) and "
-            "its image_prompt verbatim if present, otherwise synthesize a "
-            "concrete visual prompt from whatever narrative text the segment "
-            "carries.\n\n"
+            "  2. The recurring-character cast (typical names: cast / "
+            "characters / dramatis_personae). For each character with a "
+            "visual identity description (typical fields: appearance_prompt "
+            "/ description / portrait), capture its character_id and the "
+            "appearance prompt verbatim. These identities drive cross-"
+            "segment character consistency downstream — without them the "
+            "image model re-invents each character's face per segment.\n"
+            "  3. Per-segment data (typical container names: segments / "
+            "scenes / parts / pages). For each segment, capture:\n"
+            "     - segment_id (or invent seg_001, seg_002, ... if upstream "
+            "has no ids)\n"
+            "     - image_prompt — verbatim if present, otherwise synthesize "
+            "from the segment's narrative text\n"
+            "     - characters_in_segment — the cast character_ids the "
+            "segment exposes (typical names: characters_in_segment / "
+            "characters / cast_in_scene). Empty list when the segment has "
+            "no recurring characters visible.\n\n"
             "=== OUTPUT FORMAT ===\n"
             "JSON only; no markdown; match the user-message template "
             "exactly. Use empty string or empty list for unknowns, never "
@@ -127,8 +144,15 @@ class IllustrationAgent(BaseAgent[IllustrationAgentInput, IllustrationAgentOutpu
             "content.overall_style: a non-empty, concrete style description "
             "(NOT a placeholder like 'TBD'). If upstream truly omits it, "
             "synthesize one from any tone / mood / genre fields you can find.\n"
+            "content.character_anchors: one entry per recurring named "
+            "character upstream defines (mirrored verbatim — character_id + "
+            "appearance_prompt). Empty list is allowed when the upstream "
+            "has no recurring cast.\n"
             "content.illustrations: one entry per segment in the upstream "
-            "narration. illustration_count must equal len(illustrations).\n"
+            "narration. illustration_count must equal len(illustrations). "
+            "Each entry's characters_in_segment lists the character_ids the "
+            "segment exposes — these MUST be a subset of the character_ids "
+            "you put in character_anchors. Empty list is allowed.\n"
             "Do NOT include an artifact_caption block — the system generates "
             "it automatically."
         )
