@@ -75,20 +75,5 @@ class StoryEvaluator(BaseEvaluator[StoryAgentOutput]):
         if not c.story_arc:
             errors.append("story_arc is empty")
 
-        # Hard cap to back the SCENE BUDGET section in the system prompt —
-        # mirrors ScreenplayEvaluator's shot_total > 12 cap. Without this,
-        # the prompt's "2-3 scenes default" is soft and the LLM drifts to
-        # 6+ scenes uncapped, blowing up downstream cost (each scene
-        # produces N shots → N keyframes → N video clips).
-        scene_count = len(c.scene_outline)
-        if scene_count > 3:
-            errors.append(
-                f"scene_count={scene_count} exceeds budget of 3 — "
-                "consolidate fragments into fewer scenes carrying more "
-                "dramatic weight (the SCENE BUDGET rule allows >3 only "
-                "when the user explicitly asks for episodic / multi-act / "
-                "long-form work)"
-            )
-
         return errors
 
