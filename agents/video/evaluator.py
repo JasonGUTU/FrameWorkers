@@ -98,6 +98,18 @@ class VideoEvaluator(BaseEvaluator[VideoAgentOutput]):
                         "{5, 10} (Kling i2v only accepts 5s or 10s clips)"
                     )
 
+        # --- semantic_context.visual_goal must be non-empty ---
+        # Mirror of system_prompt's STRUCTURAL REQUIREMENTS line:
+        # "Every shot MUST have a semantic_context with ... visual_goal
+        # non-empty." Without this check the prompt rule is placebo.
+        for scene in c.scenes:
+            for seg in scene.shot_segments:
+                if not (seg.semantic_context.visual_goal or "").strip():
+                    errors.append(
+                        f"shot {seg.shot_id} semantic_context.visual_goal "
+                        "is empty"
+                    )
+
         # --- Order continuity ---
         self._check_order_continuous(errors, "scenes", [s.order for s in c.scenes])
 

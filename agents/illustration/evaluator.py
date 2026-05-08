@@ -51,6 +51,11 @@ class IllustrationEvaluator(BaseEvaluator[IllustrationAgentOutput]):
             errors.append("content.illustrations is empty")
             return errors
 
+        # Set of character_ids declared as recurring anchors. Used to
+        # validate the "characters_in_segment ⊆ character_anchors"
+        # subset rule from system_prompt's STRUCTURAL REQUIREMENTS.
+        anchor_ids = {a.character_id for a in c.character_anchors}
+
         for i, entry in enumerate(c.illustrations, start=1):
             expected_sid = f"seg_{i:03d}"
             if not _SEGMENT_ID_RE.match(entry.segment_id or ""):
@@ -66,6 +71,15 @@ class IllustrationEvaluator(BaseEvaluator[IllustrationAgentOutput]):
             if not entry.image_prompt.strip():
                 errors.append(
                     f"illustrations[{i-1}].image_prompt is empty"
+                )
+            # characters_in_segment subset check (mirrors prompt MUST rule).
+            unknown = [cid for cid in entry.characters_in_segment
+                       if cid not in anchor_ids]
+            if unknown:
+                errors.append(
+                    f"illustrations[{i-1}] ({entry.segment_id}) "
+                    f"characters_in_segment references {unknown!r} not in "
+                    "character_anchors"
                 )
 
         return errors

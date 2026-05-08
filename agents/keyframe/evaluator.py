@@ -25,8 +25,13 @@ concern handled outside this evaluator.
 
 from __future__ import annotations
 
+import re
+
 from ..base_evaluator import BaseEvaluator
 from .schema import KeyFrameAgentOutput
+
+
+_SHOT_ID_PATTERN = re.compile(r"^sh_\d{3}$")
 
 
 class KeyframeEvaluator(BaseEvaluator[KeyFrameAgentOutput]):
@@ -86,6 +91,33 @@ class KeyframeEvaluator(BaseEvaluator[KeyFrameAgentOutput]):
                         f"shot {shot.shot_id} has {len(shot.keyframes)} "
                         f"keyframes, expected exactly 1"
                     )
+
+        # --- shot_id format + global-sequential numbering ---
+        # Mirror of system_prompt's ID CONVENTIONS rule "shot_id ...
+        # globally sequential across the whole screenplay". KeyFrame
+        # mirrors shot_ids from the upstream screenplay; without this
+        # check, drift (e.g. sh_01 vs sh_001, or per-scene restart) would
+        # only surface downstream in VideoEvaluator after rework budget
+        # has already been spent here.
+        all_shot_ids: list[str] = []
+        format_ok = True
+        for scene in c.scenes:
+            for shot in scene.shots:
+                sid = shot.shot_id or ""
+                all_shot_ids.append(sid)
+                if not _SHOT_ID_PATTERN.match(sid):
+                    errors.append(
+                        f"shot_id {sid!r} does not match required format "
+                        "^sh_NNN$ (e.g. sh_001, sh_002, sh_012)"
+                    )
+                    format_ok = False
+        if format_ok and all_shot_ids:
+            expected = [f"sh_{i:03d}" for i in range(1, len(all_shot_ids) + 1)]
+            if all_shot_ids != expected:
+                errors.append(
+                    "shot_ids must be globally sequential starting at "
+                    f"sh_001 with no gaps or restarts; got {all_shot_ids!r}"
+                )
 
         # --- Every prompt_summary must be non-empty ---
         for ch in c.global_anchors.characters:
