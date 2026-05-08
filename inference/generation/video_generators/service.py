@@ -582,6 +582,19 @@ class FalVideoService(VideoService, LazyHttpxClientMixin):
                 f"\u300c{ctx.dialogue_text.strip()}\u300d"
                 f"{tone_suffix}"
             )
+        # Language directive \u2014 when set, force ALL voiced content (the
+        # explicit dialogue line AND any ambient voices the model may
+        # auto-generate on action shots) into a single language. Without
+        # this, Kling defaults to its English training prior on action
+        # shots, producing English battle cries inside e.g. a Three-
+        # Kingdoms setting. See ShotSemanticContext.language docstring.
+        if ctx.language.strip():
+            parts.append(
+                f"LANGUAGE: all voiced content in this shot \u2014 both spoken "
+                f"dialogue and any ambient voices, shouts, or battle cries \u2014 "
+                f"must be in language code '{ctx.language.strip()}'. Do NOT "
+                f"emit voices in any other language."
+            )
         if omit_scene_tone_blocks:
             parts.append(
                 "Ref: one L3 still for look; motion from text prefix + below."

@@ -50,6 +50,13 @@ class ShotSemanticContext(BaseModel):
     dialogue_text: str = Field("", json_schema_extra={"creative": True})
     emotion_hint: str = ""
 
+    # ISO 639-1 code mirrored from upstream screenplay.meta.language.
+    # Threaded into Kling's prompt by FalVideoService._compose_prompt so
+    # ALL voiced content (explicit dialogue + ambient battle voices the
+    # model may auto-fill on action shots) comes out in one language.
+    # Empty disables the directive.
+    language: str = ""
+
 
 class ShotSegment(BaseModel):
     """Minimal video generation unit — one shot rendered to a clip."""

@@ -31,6 +31,9 @@ from .schema import ScreenplayAgentInput, ScreenplayAgentOutput
 
 
 SCREENPLAY_OUTPUT_TEMPLATE = """{
+  "meta": {
+    "language": "<ISO 639-1 code: zh / en / ja / fr / es / ... — copy from upstream story's meta.language if present>"
+  },
   "content": {
     "title": "<screenplay title>",
     "scenes": [
@@ -163,6 +166,21 @@ class ScreenplayAgent(BaseAgent[ScreenplayAgentInput, ScreenplayAgentOutput]):
             "generic terms collapse to the image model's most-prevalent "
             "training prior, which usually conflicts with the user's intent.\n"
             "=== END PRESERVE SETTING-SPECIFIC ANCHORS ===\n\n"
+            "=== LANGUAGE ANCHOR ===\n"
+            "Set meta.language to the ISO 639-1 code of the asset's primary "
+            "language. Source priority:\n"
+            "  1. If the upstream story_json_text has a non-empty "
+            "meta.language, COPY IT VERBATIM — the upstream story owns this "
+            "decision and you must not override.\n"
+            "  2. If absent (the upstream JSON has no meta.language), infer "
+            "from the cultural setting anchor or any explicit language "
+            "directive in the story payload — Chinese-historical era → 'zh', "
+            "Japanese-historical era → 'ja', European → 'en' (or local), "
+            "modern / abstract → 'en' default.\n"
+            "This anchor flows to VideoAgent and the audio/video gen stages "
+            "as a single language hint, so dialogue + ambient voice content "
+            "all come out in one language instead of mixing.\n"
+            "=== END LANGUAGE ANCHOR ===\n\n"
             "=== WHEN TO REJECT UPSTREAM INPUT ===\n"
             "Use the shared input_rejection escape hatch (see the UPSTREAM "
             "INPUT REJECTION block above) ONLY if the story blueprint makes "

@@ -77,6 +77,17 @@ class ShotSemanticContext:
     # there is no dialogue or tone is unspecified.
     emotion_hint: str = ""
 
+    # ISO 639-1 language code (e.g. 'zh', 'en', 'ja') of the asset's
+    # primary language. Sourced upstream from screenplay.meta.language
+    # and threaded into Kling's prompt so ALL voiced content — both
+    # explicit dialogue AND ambient battle cries / shouts the model may
+    # auto-fill on action shots — comes out in one language. Closes the
+    # cross-shot language-mix bug where empty dialogue_text caused Kling
+    # to default to its English-prior battle voices regardless of
+    # cultural setting. Empty string disables the directive (legacy
+    # behavior).
+    language: str = ""
+
 
 @dataclass
 class VideoClipResult:

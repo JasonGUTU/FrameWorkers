@@ -116,6 +116,7 @@ class VideoMaterializer(BaseMaterializer):
             ),
             dialogue_text=seg_semantic.get("dialogue_text", "") or "",
             emotion_hint=seg_semantic.get("emotion_hint", "") or "",
+            language=seg_semantic.get("language", "") or "",
         )
 
     @staticmethod

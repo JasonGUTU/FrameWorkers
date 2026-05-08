@@ -17,6 +17,9 @@ from ..base_agent import BaseAgent
 from .schema import StoryAgentInput, StoryAgentOutput
 
 STORY_OUTPUT_TEMPLATE = """{
+  "meta": {
+    "language": "<ISO 639-1 code: zh / en / ja / fr / es / ...>"
+  },
   "content": {
     "logline": "<one-sentence story hook>",
     "style": {
@@ -110,6 +113,26 @@ class StoryAgent(BaseAgent[StoryAgentInput, StoryAgentOutput]):
             "distribution — usually a default that conflicts with the user's "
             "intent.\n"
             "=== END PRESERVE SETTING-SPECIFIC ANCHORS ===\n\n"
+            "=== LANGUAGE ANCHOR ===\n"
+            "Set meta.language to the ISO 639-1 code of the asset's primary "
+            "language — the language in which the story will be told "
+            "(dialogue, narration, on-screen titles). Choose by precedence:\n"
+            "  1. If the brief explicitly names a target language ('in "
+            "Japanese' / 'translate to French'), honor that → 'ja' / 'fr' / etc.\n"
+            "  2. Otherwise, infer from the cultural setting anchor — a "
+            "named Chinese-historical era (Three Kingdoms / Han Dynasty / "
+            "Tang) → 'zh'; a named Japanese-historical era (Edo / Sengoku "
+            "/ Meiji) → 'ja'; a named European setting → 'en' or the "
+            "specific local language; etc.\n"
+            "  3. Default 'en' only when neither signal exists (modern / "
+            "abstract / culturally-unmarked brief).\n"
+            "This anchor flows downstream: the screenplay copies it "
+            "verbatim, and the video / audio gen stages use it to keep "
+            "all spoken content (including ambient voices the model may "
+            "auto-generate) in one language. A wrong language here causes "
+            "the same kind of distribution-default drift that PRESERVE "
+            "SETTING-SPECIFIC ANCHORS exists to prevent.\n"
+            "=== END LANGUAGE ANCHOR ===\n\n"
             "=== WHEN TO REJECT UPSTREAM INPUT ===\n"
             "Use the shared input_rejection escape hatch (see the UPSTREAM "
             "INPUT REJECTION block above) ONLY if the creative brief makes "

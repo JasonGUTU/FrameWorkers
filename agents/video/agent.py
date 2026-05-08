@@ -55,7 +55,8 @@ VIDEO_OUTPUT_TEMPLATE = """{
               "framing_notes": "<copied from screenplay shot.camera.framing_notes>",
               "video_motion_hints": ["<from keyframes_metadata: each keyframe's video_motion_hint for this shot>"],
               "dialogue_text": "<for dialogue/narration/monologue shots: copy screenplay shot.text verbatim; for action shots: empty string>",
-              "emotion_hint": "<for spoken shots: copy screenplay shot.emotion_hint verbatim; empty otherwise>"
+              "emotion_hint": "<for spoken shots: copy screenplay shot.emotion_hint verbatim; empty otherwise>",
+              "language": "<copy upstream screenplay.meta.language verbatim; same value for every shot>"
             }
           }
         ],
@@ -165,7 +166,12 @@ class VideoAgent(BaseAgent[VideoAgentInput, VideoAgentOutput]):
             "characters stay Chinese). For action shots leave it an "
             "empty string.\n"
             "  * emotion_hint — copied verbatim from screenplay "
-            "shot.emotion_hint if present, empty string otherwise.\n\n"
+            "shot.emotion_hint if present, empty string otherwise.\n"
+            "  * language — copied verbatim from upstream screenplay's "
+            "meta.language (the top-level meta block, NOT inside content). "
+            "Same value on EVERY shot_segment — language is film-wide, "
+            "not per-shot. Empty string only if upstream screenplay has "
+            "no meta.language set.\n\n"
             "=== PER-SHOT DURATION (CRITICAL) ===\n"
             "Set ``duration_sec`` for every shot_segment. This drives the "
             "Kling image-to-video backend, which accepts ONLY 5 or 10 "
