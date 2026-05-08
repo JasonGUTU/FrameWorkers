@@ -110,7 +110,7 @@ class ScriptShot(BaseModel):
 
     shot_id: str = ""
     order: int = 0
-    block_type: str = ""  # action | dialogue | narration | monologue | beat
+    block_type: str = ""  # action | dialogue | narration | monologue
     character_id: str = ""
     character_name: str = ""
     text: str = Field("", json_schema_extra={"creative": True})
