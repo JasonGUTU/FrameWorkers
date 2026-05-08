@@ -139,8 +139,7 @@ VIDEO_ANALYSIS_OUTPUT_TEMPLATE = """{
       "title": "<suggested title>",
       "summary": "<2-4 sentence overall summary>",
       "genre": "<genre/category>",
-      "language": "<detected spoken language or empty>",
-      "duration_seconds": 0
+      "language": "<detected spoken language or empty>"
     },
     "scenes": [
       {
@@ -181,7 +180,7 @@ class VideoAnalysisAgent(BaseAgent[VideoAnalysisAgentInput, VideoAnalysisAgentOu
             if rejection is not None:
                 raise UpstreamInputRejected(rejection)
             output = self.parse_output(raw)
-            self.recompute_metrics(output)
+            self.recompute_metrics(output, input_data)
             return output
 
         # Frame extraction lives inside a TemporaryDirectory: chat_json
@@ -204,29 +203,13 @@ class VideoAnalysisAgent(BaseAgent[VideoAnalysisAgentInput, VideoAnalysisAgentOu
             if rejection is not None:
                 raise UpstreamInputRejected(rejection)
             output = self.parse_output(raw)
-            self.recompute_metrics(output)
+            self.recompute_metrics(output, input_data)
             return output
 
     def system_prompt(self) -> str:
         return (
             "You are VideoAnalysisAgent: analyze video content and produce "
             "a structured breakdown.\n\n"
-            "=== WHEN TO REJECT UPSTREAM INPUT ===\n"
-            "Use the shared input_rejection escape hatch (see the UPSTREAM "
-            "INPUT REJECTION block above) ONLY if the source media is "
-            "unusable. Concretely, reject when:\n"
-            "  * source_video_path is empty / whitespace-only — there is "
-            "no video to analyze.\n"
-            "When you reject, populate the rejection fields like this:\n"
-            "  * reason: e.g. 'source_video_path is empty — no video "
-            "file to analyze'.\n"
-            "  * missing_labels: ['source_video'] (my only input label).\n"
-            "  * offending_fields: ['source_video_path'].\n"
-            "If the path looks unusual but is non-empty — DO NOT reject; "
-            "the vision model will surface a real failure if the video is "
-            "unreadable or unsupported. Short / sparse / abstract video "
-            "content is still analyzable.\n"
-            "=== END WHEN TO REJECT UPSTREAM INPUT ===\n\n"
             "=== INPUT FORMAT ===\n"
             "You receive a sequence of evenly-spaced sampled frames "
             "covering the ENTIRE source video, NOT the raw video itself. "
@@ -307,10 +290,22 @@ class VideoAnalysisAgent(BaseAgent[VideoAnalysisAgentInput, VideoAnalysisAgentOu
     def parse_output(self, raw: dict[str, Any]) -> VideoAnalysisAgentOutput:
         return VideoAnalysisAgentOutput.model_validate(raw)
 
-    def recompute_metrics(self, output: VideoAnalysisAgentOutput) -> None:
+    def recompute_metrics(
+        self,
+        output: VideoAnalysisAgentOutput,
+        input_data: VideoAnalysisAgentInput,
+    ) -> None:
         c = output.content
         output.metrics.scene_count = len(c.scenes)
-        output.metrics.duration_seconds = c.video_summary.duration_seconds
+        # ffprobe is the ground truth — no point asking the LLM to estimate
+        # duration from frame timestamps it was just shown. On ffprobe
+        # failure (corrupt file, missing ffprobe binary), leave at default 0.0.
+        ff_dur = _ffprobe_duration_sec(input_data.source_video_path or "")
+        if ff_dur is not None:
+            c.video_summary.duration_seconds = ff_dur
+            output.metrics.duration_seconds = ff_dur
+        else:
+            output.metrics.duration_seconds = c.video_summary.duration_seconds
         output.metrics.entity_count = sum(
             len(s.entities) for s in c.scenes
         )
