@@ -103,16 +103,36 @@ def _strip_trailing_done(chain: List[Any]) -> List[Any]:
 
 
 def _linearize(expected_chain: List[Any]) -> List[str]:
-    """Pick the first agent from each set-valued slot; ``["done"]`` stripped."""
+    """Linearize an expected_chain into a concrete agent run order.
+
+    Set-valued slots (``[A, B, C]``) express *partial-order* constraints —
+    "this position can be any of A/B/C". When the same set appears across
+    N consecutive slots, the case author's intent is "all N agents run
+    once, order flexible". Naively taking ``slot[0]`` every time collapses
+    N slots into N copies of the same agent, dropping the others — which
+    leaves downstream consumers (e.g. AudioMixAgent expecting Music +
+    Transcription producers, or CompositorAgent expecting Illustration +
+    Narrator producers) without inputs.
+
+    Fix: pick the first agent in ``slot`` that hasn't already appeared in
+    ``agents``. This honors the partial-order semantics and avoids
+    duplicate scheduling (an agent_id may only execute once per plan, see
+    root CLAUDE.md §6 / `director_agent/router.py::_parse_plan`).
+
+    Trailing ``["done"]`` / ``"done"`` markers are stripped first.
+    """
     chain = _strip_trailing_done(expected_chain)
     agents: List[str] = []
+    seen: set[str] = set()
     for slot in chain:
         if isinstance(slot, list):
             if not slot:
                 continue
-            agents.append(str(slot[0]))
+            picked = next((str(a) for a in slot if str(a) not in seen), str(slot[0]))
         else:
-            agents.append(str(slot))
+            picked = str(slot)
+        agents.append(picked)
+        seen.add(picked)
     return agents
 
 

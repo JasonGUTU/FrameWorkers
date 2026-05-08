@@ -19,6 +19,7 @@ assets produced.
 from __future__ import annotations
 
 import logging
+import os
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, Callable, Generic, Optional, TypeVar, get_args
 
@@ -326,7 +327,9 @@ class BaseAgent(Generic[InputT, OutputT]):
             )
         logger.debug("[%s] System prompt length: %d", self.agent_name, len(system))
         logger.debug("[%s] User prompt length: %d", self.agent_name, len(user))
-        raw_json = await self.llm.chat_json(system, user, max_tokens=16384)
+        raw_json = await self.llm.chat_json(
+            system, user, max_tokens=int(os.getenv("FW_MAX_TOKENS", "65536"))
+        )
         logger.info("[%s] Received LLM response, parsing …", self.agent_name)
         rejection = _maybe_parse_rejection(raw_json)
         if rejection is not None:

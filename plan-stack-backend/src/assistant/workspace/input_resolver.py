@@ -34,6 +34,7 @@ from __future__ import annotations
 import asyncio
 import json
 import logging
+import os
 import re
 from typing import Any, Dict, List, Optional, TYPE_CHECKING
 
@@ -232,7 +233,7 @@ class InputResolver:
         kwargs: Dict[str, Any] = {
             "system_prompt": system_prompt,
             "user_prompt": user_prompt,
-            "max_tokens": 65536,
+            "max_tokens": int(os.getenv("FW_MAX_TOKENS", "65536")),
             "reasoning_effort": "high",
         }
         if model:

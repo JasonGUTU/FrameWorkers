@@ -39,6 +39,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 from typing import Any, Generic, TypeVar
 
 from pydantic import BaseModel
@@ -203,7 +204,9 @@ class BaseEvaluator(Generic[OutputT]):
         )
 
         # --- Call LLM and normalize ---
-        result = await self.llm.chat_json(system, user, max_tokens=8192)
+        result = await self.llm.chat_json(
+            system, user, max_tokens=int(os.getenv("FW_MAX_TOKENS", "65536"))
+        )
         dims = result.get("dimensions", {})
         all_pass = all(
             d.get("score", 0) >= self.CREATIVE_PASS_THRESHOLD

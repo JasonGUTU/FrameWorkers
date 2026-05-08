@@ -14,6 +14,11 @@ openai>=1.0.0
 # Worker) via the google_genai client_type in inference/clients/.
 google-genai>=1.70.0
 tiktoken>=0.5.0
+# Local OpenAI-compat inference server. Drives the local_text / local_vl
+# providers in inference_runtime.yaml (started by
+# scripts/run_assistant_eval_qwen_local.sbatch). Big install; only resolves
+# fully on a CUDA machine.
+vllm>=0.6.0
 # LLM JSON output repair (handles trailing commas, unescaped quotes, CJK
 # confusable substitutions that Gemini-class models occasionally emit on
 # long structured outputs). Used as fallback in default_client.chat_json.
