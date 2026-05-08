@@ -168,20 +168,11 @@ class VideoAnalysisAgent(BaseAgent[VideoAnalysisAgentInput, VideoAnalysisAgentOu
     ) -> VideoAnalysisAgentOutput:
         system = INPUT_REJECTION_RULE + self.system_prompt()
 
-        # Empty / missing path → no media; LLM will hit the
-        # input-rejection escape hatch via system_prompt rules.
-        path = input_data.source_video_path or ""
-        if not path or not os.path.isfile(path):
-            user = self.build_user_prompt(input_data, frames=[])
-            if rework_notes:
-                user += self._rework_section(rework_notes)
-            raw = await self.llm.chat_json(system, user, media_attachments=None)
-            rejection = _maybe_parse_rejection(raw)
-            if rejection is not None:
-                raise UpstreamInputRejected(rejection)
-            output = self.parse_output(raw)
-            self.recompute_metrics(output, input_data)
-            return output
+        # Schema field_validator on source_video_path already raises
+        # ValueError on empty / non-existent / non-video MIME paths
+        # before generate() is called, so by here ``path`` is guaranteed
+        # to point to a real video file. No empty-path fallback needed.
+        path = input_data.source_video_path
 
         # Frame extraction lives inside a TemporaryDirectory: chat_json
         # synchronously base64-reads each frame (see default_client's
