@@ -217,13 +217,6 @@ class NarrationAgent(BaseAgent[NarrationAgentInput, NarrationAgentOutput]):
             "Output JSON exactly matching this template (fill in content, "
             "keep the structure):\n\n"
             f"{NARRATION_OUTPUT_TEMPLATE}\n\n"
-            "Verify before returning:\n"
-            "- segment_ids are seg_001, seg_002, ... with no gaps.\n"
-            "- line_ids are ln_001, ln_002, ... GLOBALLY sequential across "
-            "every segment.\n"
-            "- overall_style and language are non-empty.\n"
-            "- every image_prompt is a stand-alone scene description (not "
-            "'continue from above').\n\n"
             "Return JSON only."
         )
 
