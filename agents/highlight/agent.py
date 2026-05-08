@@ -24,7 +24,8 @@ HIGHLIGHT_OUTPUT_TEMPLATE = """{
         "clip_id": "clip_001",
         "start_time": 5.0,
         "end_time": 12.5,
-        "reason": "<why this segment is a highlight>"
+        "reason": "<why this segment is a highlight>",
+        "score": 0.9
       }
     ]
   }
@@ -73,7 +74,8 @@ class HighlightAgent(BaseAgent[HighlightAgentInput, HighlightAgentOutput]):
             "clip_001).\n"
             "2. start_time / end_time: in seconds. Each clip should be "
             "at least 2 seconds and at most 30 seconds.\n"
-            "3. reason: explain why this segment is a highlight.\n\n"
+            "3. reason: explain why this segment is a highlight.\n"
+            "4. score: 0.0-1.0 relevance score for the criteria.\n\n"
             "=== SELECTION RULES ===\n"
             "- Select 3-10 clips typically, sorted by position in video.\n"
             "- Clips should not overlap.\n"

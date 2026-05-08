@@ -153,10 +153,16 @@ class ScriptShot(BaseModel):
         return out
 
 
+class ScreenplaySceneSource(BaseModel):
+    screenplay_asset_id: str = ""
+    screenplay_scene_id: str = ""
+
+
 class ScreenplayScene(BaseModel):
     scene_id: str = ""
     order: int = 0
     linked_story_step_id: str = ""
+    source: ScreenplaySceneSource = Field(default_factory=ScreenplaySceneSource)
     heading: SceneHeading = Field(default_factory=SceneHeading)
     summary: str = Field("", json_schema_extra={"creative": True})
     continuity: SceneContinuity = Field(default_factory=SceneContinuity)

@@ -11,6 +11,12 @@ from ..common_schema import ImageReferenceEntry, Meta
 # KeyFrame sub-models
 # ---------------------------------------------------------------------------
 
+class KeyframeConstraintsApplied(BaseModel):
+    characters_in_frame: list[str] = Field(default_factory=list)
+    props_in_frame: list[str] = Field(default_factory=list)
+    style_notes: list[str] = Field(default_factory=list)
+
+
 class Keyframe(BaseModel):
     """A single generated keyframe image for a shot.
 
@@ -24,6 +30,12 @@ class Keyframe(BaseModel):
         "",
         json_schema_extra={"creative": True},
         description="Short I2V motion cue; not sent to image generation.",
+    )
+    # Filled in-process for skeleton consistency; not read by KeyframeMaterializer or Video.
+    # Excluded from model_dump → smaller workspace JSON, no change to image/video prompts.
+    constraints_applied: KeyframeConstraintsApplied = Field(
+        default_factory=KeyframeConstraintsApplied,
+        exclude=True,
     )
 
 
@@ -51,6 +63,9 @@ class StabilityAnchorKeyframe(BaseModel):
     """Unified stability anchor for characters, locations, and props."""
 
     entity_id: str = ""  # char_001, loc_001, prop_001
+    # Skeleton / audit only; materializer ignores. Omitted from persisted JSON.
+    display_name: str = Field(default="", exclude=True)
+    purpose: str = Field(default="", exclude=True)
     prompt_summary: str = Field("", json_schema_extra={"creative": True})
     # Runtime channel for user-uploaded reference image paths. Populated
     # by ``KeyFrameAgent._prefill_reference_images`` after the LLM call,

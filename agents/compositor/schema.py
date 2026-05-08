@@ -25,6 +25,7 @@ class SubtitleStyle(BaseModel):
     font_size: int = Field(24, description="Font size in pixels")
     font_color: str = Field("#FFFFFF", description="Font color hex")
     outline_color: str = Field("#000000", description="Outline/shadow color hex")
+    position: str = Field("bottom", description="Position: bottom | top")
     burn_in: bool = Field(True, description="True = hardcode into video, False = soft embed")
 
 
