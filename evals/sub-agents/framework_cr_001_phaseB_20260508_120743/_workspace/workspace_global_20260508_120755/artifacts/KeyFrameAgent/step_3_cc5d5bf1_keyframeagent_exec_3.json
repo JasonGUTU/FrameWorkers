@@ -1,0 +1,318 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_id": "char_001",
+          "prompt_summary": "A hardened and stoic Three Kingdoms era general. He has a weathered, frostbitten face with intense, unyielding eyes. He is wearing battered iron armor that shows the heavy wear of years of campaigning. His overall design fits an animated historical epic style.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "char_002",
+          "prompt_summary": "A younger Three Kingdoms era junior officer with a deeply exhausted face. He is wearing standard-issue junior officer armor that is heavily worn, layered with thick winter wraps. His overall appearance is weary and desperate in an animated historical epic style.",
+          "reference_image_uri": ""
+        }
+      ],
+      "locations": [
+        {
+          "entity_id": "loc_001",
+          "prompt_summary": "A treacherous mountain gorge in the Three Kingdoms era. Jagged cliffs of dark stone rise sharply on all sides. The environment is blanketed in deep snow, featuring sheer vertical drops and blinding blizzards.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "loc_002",
+          "prompt_summary": "A war-torn valley below the mountain snowline. Smoldering wooden siege engines and scattered military tents dot the muddy landscape. Heavy mountain fog is actively lifting to reveal the expansive, chaotic battlefield.",
+          "reference_image_uri": ""
+        }
+      ],
+      "props": [
+        {
+          "entity_id": "prop_001",
+          "prompt_summary": "A heavy iron ring-pommel sword from the Three Kingdoms era. The blade is dull, scratched, and battle-worn, housed in a matching, heavily used scabbard.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_002",
+          "prompt_summary": "A large, heavy felt blanket. The material features a rough, thick historical texture designed for extreme cold insulation. It is coarse and darkly colored.",
+          "reference_image_uri": ""
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "General Zhao standing in a blinding daytime blizzard. His battered iron armor is dusted with accumulated snow. He maintains a stoic, unflinching facial expression against the harsh freezing wind.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Lieutenant Wei struggling in a severe winter blizzard under dull daytime light. His worn armor and winter wraps are covered in snow. He has a profoundly exhausted appearance, shivering and squinting against the storm.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The treacherous mountain gorge under a harsh daytime blizzard. Blinding snow and freezing winds obscure the jagged dark stone cliffs, severely reducing visibility. Snowdrifts pile heavily along the deadly incline.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "The iron sword is held in the freezing air. Small flakes of snow cling to the cold, battle-worn metal blade under the dull daytime winter light.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A wide, high-angle view sweeping across a treacherous mountain gorge during a severe daytime blizzard. Furious winds whip heavy snow across jagged dark stone cliffs. Exhausted, indistinct figures struggle to advance through the deep snowdrifts in the freezing, oppressive environment.",
+                "video_motion_hint": "Heavy snow drives rapidly across the frame in sideways gusts. Swirling winds disturb the deep snowdrifts, blowing icy powder off the cliff edges."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium, eye-level over-the-shoulder shot from General Zhao's perspective, focusing on Lieutenant Wei. Wei's frost-dusted face is desperate and exhausted as he pleads against the storm. The severe blizzard whips snow violently around their armor.",
+                "video_motion_hint": "Wei's mouth moves rapidly as he shouts, his body shaking slightly from the cold. Thick snowflakes fly past his face, momentarily catching on his eyelashes and armor."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A low-angle close-up on General Zhao's stoic, unyielding face as he draws his heavy iron sword. The dull winter light catches the blade as it emerges from the scabbard. He stares straight ahead, completely ignoring the screaming winds.",
+                "video_motion_hint": "The iron blade slides upward steadily from its scabbard. Zhao's eyes narrow slightly with grim determination while snow flurries blow across his expression."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium eye-level shot of General Zhao driving his heavy iron sword deep into the frozen snowpack at the base of a ridge. He uses the embedded weapon as an anchor, straining physically to pull his heavily armored body up the steep icy slope. The storm rages continuously around him.",
+                "video_motion_hint": "Zhao's arm flexes as he hauls his weight upward against the steep snowbank. Chunks of icy snow crack and fall away from the base of the embedded sword."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "General Zhao standing in pitch black night, illuminated by harsh torchlight. He has discarded his outer iron armor and is wrapped tightly in heavy rough felt over his under-tunic. His frostbitten face shows intense determination.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Lieutenant Wei standing in pitch black darkness. His armor is heavily covered in thick frost. He is shivering violently, adopting a terrified posture under the sparse, flickering torchlight.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The edge of a sheer mountain cliff in the dead of pitch black night. Heavy snowfall descends into the void. The terrifying drop is only barely visible via sparse, flickering torchlight.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_002",
+              "prompt_summary": "A heavy, thick felt blanket tightly wrapped. The rough historical texture is highly visible in the high-contrast orange glow of nearby torches in the dark.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A high-angle medium shot looking past Lieutenant Wei's frost-covered shoulder at a sheer cliff edge. A sputtering torch provides harsh illumination against the pitch-black night. Swirling snow descends directly into the terrifying, endless abyss below.",
+                "video_motion_hint": "The torchlight flickers rapidly, casting dancing, unstable shadows across the snow. Heavy snowflakes spiral chaotically downward into the dark void."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A tight close-up on Lieutenant Wei's frostbitten face at eye level. The harsh, flickering torchlight emphasizes his terrified, sad expression in the pitch-black night. He is shaking deeply from the freezing temperature while shouting a desperate warning.",
+                "video_motion_hint": "Wei shivers violently, his teeth chattering between shouted words. Small puffs of vapor escape his mouth into the freezing night air."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium eye-level shot of General Zhao standing resolute in the snow. His discarded heavy iron armor lies at his feet. He is tightly wrapping himself in a thick layer of coarse felt, lit dramatically by harsh torchlight against the dark snowy background.",
+                "video_motion_hint": "Zhao forcefully pulls the heavy felt blanket tight across his shoulders, securing it. The torchlight ripples across the rough texture of the felt."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_008",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A high-angle wide shot from the cliff edge in the pitch-black night. General Zhao, fully wrapped in the heavy felt, throws himself sideways over the cliff face, rolling violently down into the abyss. Wei watches in shock from the ledge as Zhao plunges into the darkness.",
+                "video_motion_hint": "Zhao plummets and rolls rapidly down the sheer mountain face, kicking up sprays of white snow. His figure quickly shrinks and fades into the pitch-black void."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "General Zhao in daytime lighting, appearing feral and triumphant. He is wearing shredded felt wrappings and a torn under-tunic. His entire body is heavily covered in mud, blood, and snow debris from the cliff fall.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_002",
+              "prompt_summary": "A war-torn valley outskirts during daytime. Heavy mountain fog is lifting to reveal massive enemy tents and smoldering wooden siege engines. The ground is a messy mix of mud and melting snow.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "General Zhao's iron sword, drawn and held ready for battle. The blade is marred with mud and snow, reflecting the diffused daylight of the lifting fog.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_009",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A wide, eye-level shot showing thick mountain mists parting in the valley. Behind massive, unsuspecting enemy siege tents, General Zhao stands silently with his ragged, freezing troops. Zhao is a terrifying apparition covered in shredded felt and mud.",
+                "video_motion_hint": "The thick white fog slowly rolls backward, revealing the silent figures standing in the mud. The shredded edges of Zhao's felt wrappings flutter lightly in the morning breeze."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A heroic low-angle medium shot pushing in on General Zhao. He is covered in debris and shredded felt wrappings. He raises his heavy iron sword high and unleashes a furiously angry war cry, shattering the silence of the misty valley.",
+                "video_motion_hint": "Zhao powerfully thrusts his sword upward into the air. His mouth opens wide in a furious shout, his chest heaving with triumphant energy."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_011",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A high-angle wide shot panning over a chaotic battlefield valley. A localized storm of battered soldiers surges forward, violently crashing into unprepared enemy rear guards. Smoldering wooden siege engines burn brightly amidst the muddy, triumphant chaos as the fog lifts completely.",
+                "video_motion_hint": "The massive crowd of battered soldiers sprints forward rapidly, physically colliding with the enemy lines. Thick smoke billows upward continuously from the burning wooden siege engines."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "style_notes": [
+      "Three Kingdoms era",
+      "Historical Drama",
+      "War Epic Animation",
+      "Tense and treacherous atmosphere",
+      "Harsh shadows and torchlight",
+      "Triumphant and chaotic"
+    ],
+    "must_avoid": [
+      "modern clothing",
+      "photorealistic live-action",
+      "bright cheerful lighting",
+      "modern gear",
+      "bright ambient moonlight",
+      "modern military equipment",
+      "clean environments"
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 11,
+    "keyframe_count_total": 11,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 2,
+    "global_location_anchor_count": 2,
+    "global_prop_anchor_count": 2,
+    "stability_character_keyframe_count": 5,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 3
+  }
+}

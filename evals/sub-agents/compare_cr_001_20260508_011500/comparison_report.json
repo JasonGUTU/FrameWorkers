@@ -1,0 +1,44 @@
+{
+  "case": "cr_001",
+  "timestamp": "2026-05-08 01:14:54",
+  "framework": {
+    "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/framework_cr_001_20260508_005836/workspace_global_20260508_005849/artifacts/media/CompositorAgent/video/step_8_cdbecff0_compositor_final.mp4",
+    "duration_sec": 65.616009,
+    "resolution": "1948x1064",
+    "has_audio_track": true,
+    "filesize_bytes": 37705414,
+    "audio_lufs": {
+      "input_i": -27.41,
+      "input_lra": 6.9,
+      "input_tp": -4.53,
+      "input_thresh": -37.72
+    },
+    "shot_segment_count": null
+  },
+  "baseline": {
+    "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/baseline_cr_001_kling_naive_20260508_003519/final.mp4",
+    "duration_sec": 70.42098,
+    "resolution": "1920x1080",
+    "has_audio_track": true,
+    "filesize_bytes": 157330882,
+    "audio_lufs": {
+      "input_i": -18.68,
+      "input_lra": 16.9,
+      "input_tp": -3.56,
+      "input_thresh": -29.49
+    },
+    "shot_segment_count": 9
+  },
+  "judge": {
+    "framework": {
+      "character_consistency_score": 0,
+      "reasoning": "The frames depict completely different characters across varying settings and eras, such as modern soldiers, a young man in armor, and an older man in a tunic, with no consistent protagonist.",
+      "subtitle_burnin_present": false
+    },
+    "baseline": {
+      "character_consistency_score": 2,
+      "reasoning": "The video displays a montage of different scenes featuring several distinct warriors with entirely different faces, ages, facial hair, and armor, lacking a single consistent protagonist.",
+      "subtitle_burnin_present": false
+    }
+  }
+}

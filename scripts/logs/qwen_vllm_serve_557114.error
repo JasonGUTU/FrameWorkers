@@ -1,0 +1,50 @@
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+litellm 1.83.0 requires openai>=2.8.0, but you have openai 1.90.0 which is incompatible.
+FATAL: vllm did not become ready within 1200s.
+INFO 05-08 02:11:47 [__init__.py:235] Automatically detected platform cuda.
+INFO 05-08 02:11:52 [api_server.py:1755] vLLM API server version 0.10.0
+INFO 05-08 02:11:52 [cli_args.py:261] non-default args: {'model_tag': 'Qwen/Qwen2.5-VL-7B-Instruct', 'host': '0.0.0.0', 'model': 'Qwen/Qwen2.5-VL-7B-Instruct', 'max_model_len': 32768, 'enforce_eager': True, 'served_model_name': ['qwen2.5-vl-7b'], 'gpu_memory_utilization': 0.85}
+Traceback (most recent call last):
+  File "/home/zhendong_li/.conda-envs/director-train/bin/vllm", line 6, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/zhendong_li/.conda-envs/director-train/lib/python3.11/site-packages/vllm/entrypoints/cli/main.py", line 54, in main
+    args.dispatch_function(args)
+  File "/home/zhendong_li/.conda-envs/director-train/lib/python3.11/site-packages/vllm/entrypoints/cli/serve.py", line 52, in cmd
+    uvloop.run(run_server(args))
+  File "/home/zhendong_li/.conda-envs/director-train/lib/python3.11/site-packages/uvloop/__init__.py", line 92, in run
+    return runner.run(wrapper())
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhendong_li/.conda-envs/director-train/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "uvloop/loop.pyx", line 1518, in uvloop.loop.Loop.run_until_complete
+  File "/home/zhendong_li/.conda-envs/director-train/lib/python3.11/site-packages/uvloop/__init__.py", line 48, in wrapper
+    return await main
+           ^^^^^^^^^^
+  File "/home/zhendong_li/.conda-envs/director-train/lib/python3.11/site-packages/vllm/entrypoints/openai/api_server.py", line 1791, in run_server
+    await run_server_worker(listen_address, sock, args, **uvicorn_kwargs)
+  File "/home/zhendong_li/.conda-envs/director-train/lib/python3.11/site-packages/vllm/entrypoints/openai/api_server.py", line 1811, in run_server_worker
+    async with build_async_engine_client(args, client_config) as engine_client:
+  File "/home/zhendong_li/.conda-envs/director-train/lib/python3.11/contextlib.py", line 210, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhendong_li/.conda-envs/director-train/lib/python3.11/site-packages/vllm/entrypoints/openai/api_server.py", line 158, in build_async_engine_client
+    async with build_async_engine_client_from_engine_args(
+  File "/home/zhendong_li/.conda-envs/director-train/lib/python3.11/contextlib.py", line 210, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhendong_li/.conda-envs/director-train/lib/python3.11/site-packages/vllm/entrypoints/openai/api_server.py", line 180, in build_async_engine_client_from_engine_args
+    vllm_config = engine_args.create_engine_config(usage_context=usage_context)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhendong_li/.conda-envs/director-train/lib/python3.11/site-packages/vllm/engine/arg_utils.py", line 1004, in create_engine_config
+    model_config = self.create_model_config()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhendong_li/.conda-envs/director-train/lib/python3.11/site-packages/vllm/engine/arg_utils.py", line 872, in create_model_config
+    return ModelConfig(
+           ^^^^^^^^^^^^
+  File "/home/zhendong_li/.conda-envs/director-train/lib/python3.11/site-packages/pydantic/_internal/_dataclasses.py", line 121, in __init__
+    s.__pydantic_validator__.validate_python(ArgsKwargs(args, kwargs), self_instance=s)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for ModelConfig
+  Value error, Found conflicts between 'rope_type=default' (modern field) and 'type=mrope' (legacy field). You should only specify one of them. [type=value_error, input_value=ArgsKwargs((), {'model': ...attention_dtype': None}), input_type=ArgsKwargs]
+    For further information visit https://errors.pydantic.dev/2.12/v/value_error

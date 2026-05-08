@@ -1,0 +1,338 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_id": "char_001",
+          "prompt_summary": "A fiercely loyal, battle-hardened military commander with a rugged, scarred face. He possesses an intense, unyielding stare. He wears an ornate heavy metal armor worn over a thick winter tunic.",
+          "reference_image_uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/framework_cr_001_20260508_005836/workspace_global_20260508_005849/artifacts/media/KeyFrameAgent/image/step_11_274af0c1_img_char_001_global.png"
+        },
+        {
+          "entity_id": "char_002",
+          "prompt_summary": "A weary, pragmatic junior officer with a pale complexion and a visibly anxious expression. He is dressed in standard practical infantry gear, wrapped in a thick winter cloak and scarf.",
+          "reference_image_uri": ""
+        }
+      ],
+      "locations": [
+        {
+          "entity_id": "loc_001",
+          "prompt_summary": "A towering, vertical, ice-slicked mountain cliff face. Jagged rocks protrude from sheer sheets of thick blue ice. Violent winds whip loose snow and powder across the treacherous, impassable precipice.",
+          "reference_image_uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/framework_cr_001_20260508_005836/workspace_global_20260508_005849/artifacts/media/KeyFrameAgent/image/step_11_274af0c1_img_loc_001_global.png"
+        },
+        {
+          "entity_id": "loc_002",
+          "prompt_summary": "A massive military encampment nestled within a deep mountain valley. Large heavy canvas tents are scattered densely across the rugged terrain. Thick mountain fog rolls heavily into the rear of the camp, lit intermittently by glowing bonfires.",
+          "reference_image_uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/framework_cr_001_20260508_005836/workspace_global_20260508_005849/artifacts/media/KeyFrameAgent/image/step_11_274af0c1_img_loc_002_global.png"
+        }
+      ],
+      "props": [
+        {
+          "entity_id": "prop_001",
+          "prompt_summary": "A set of heavy commander's armor featuring intricate metal plating. A thick, battle-worn fur mantle is draped across the top edge, shielding the neck from the cold.",
+          "reference_image_uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/framework_cr_001_20260508_005836/workspace_global_20260508_005849/artifacts/media/KeyFrameAgent/image/step_11_274af0c1_img_prop_001_global.png"
+        },
+        {
+          "entity_id": "prop_002",
+          "prompt_summary": "A thick, heavy-duty braided hemp climbing rope. The tightly woven fibers bear a distinctly frayed, highly dangerous severed edge on one side.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_003",
+          "prompt_summary": "A thick wooden torch burning with a blazing fire. The top is wrapped in pitch-soaked rags, roaring with a bright, intense orange flame.",
+          "reference_image_uri": ""
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Clad in full heavy commander's mantle and armor, dusted with fresh snow. Harsh daytime lighting reflects off the nearby ice onto his intensely focused, rugged face.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Shivering in his thick winter cloak and infantry gear, surrounded by snow. His pale face looks up in absolute dread under the harsh daylight.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The massive ice cliff is viewed under stark daylight. Swirling snow and howling winds whip violently across the base, obscuring the ground.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "The intricate metal plating reflects the stark daylight. It is covered in a light dusting of fresh snow, abandoned on the frozen ground.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A wide view from the snowy ground looking up at a towering, sheer ice cliff. Tiny figures of exhausted soldiers and restless horses stand at the base, dwarfed by the impossibly high vertical rock face. Harsh daylight bounces off the ice.",
+                "video_motion_hint": "The camera slowly pans upward along the towering ice wall. Swirling snow whips aggressively across the stationary figures below."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Lieutenant Wei stands shivering, his pale face twisted in pragmatic terror as he gestures frantically toward the icy cliff. He is seen over the shoulder of the heavily armored General Zhao. Blinding snow whips around them in the freezing wind.",
+                "video_motion_hint": "Wei shivers continuously, making frantic, jerky hand gestures. The blowing snow rushes dynamically across the frame between the two men."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A tight close-up on General Zhao's rugged, uncompromising face. His steely gaze cuts directly forward with absolute resolve. Frost clings to his eyebrows and facial scars under the stark daytime glare.",
+                "video_motion_hint": "Zhao's expression remains completely motionless and intense. Windblown snow whips past his face, with a slight twitch of his jaw."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A discarded heavy commander's armor rests deep in the fresh snow at the base of the cliff. Just above it, General Zhao, now stripped of his mantle, grips an icy crack in the vertical rock face with bare hands.",
+                "video_motion_hint": "The heavy armor impacts the snow with a heavy thud, sending up a small spray of white powder. The camera smoothly tilts up to follow Zhao's hands finding a firm grip on the ice."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Stripped down to a frost-covered tunic without outer armor, clinging to the vertical rock. His bare hands are raw and bleeding in the frigid night air, illuminated by high-contrast moonlight.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Clinging desperately to the icy cliff in a heavily snow-caked infantry uniform. His terrified face is sharply lit by moonlight against the pitch-black backdrop.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The vertical cliff is plunged into darkness, lit only by high-contrast silver moonlight. Blinding blizzard conditions violently obscure the jagged rocks and the sheer drop below.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_002",
+              "prompt_summary": "The thick hemp rope strains under immense weight in the freezing dark. Its frayed, severed edge is sharply visible against the icy rock under the moonlight.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "characters_in_frame": [],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "Looking down a sheer, terrifying vertical drop into pitch-black darkness. A line of shadowy figures slowly pulls themselves up a thick hemp rope clinging to the moonlit ice. Howling winds whip snow across the desolate cliff face.",
+                "video_motion_hint": "Snow blows violently across the dark chasm. The thick hemp rope sways slightly under the immense tension of the climbing silhouettes."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A thick hemp rope violently snaps against a jagged, ice-covered rock. Lieutenant Wei, his snow-caked uniform stark against the night, plunges backward toward the dark abyss as he loses his grip.",
+                "video_motion_hint": "The rope fibers rapidly unravel and visibly snap apart. The camera aggressively tilts downward following Wei's sudden, terrifying freefall into the dark."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A tight, low-angle close-up of General Zhao's bare, raw hands desperately gripping the frayed end of a thick climbing rope. Blood drips from his fingers onto the freezing stone. His boots are wedged tightly into a narrow crevice in the moonlight.",
+                "video_motion_hint": "Zhao's bare hands tremble violently under the immense pulling weight. Bright, dark droplets of blood fall slowly onto the pale ice below."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_008",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "General Zhao's arm strains agonizingly downward into the darkness, his muscles trembling with effort. Below him, Lieutenant Wei dangles helplessly from the frayed rope in the pitch-black night. High-contrast moonlight illuminates their desperate struggle on the vertical wall.",
+                "video_motion_hint": "Zhao's arm shakes with extreme physical exertion as he yells down into the void. Wei sways perilously in the howling wind."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Wearing a tattered, completely frostbitten tunic and aggressively clutching a drawn blade. His eyes burn with adrenaline, while sweat and melting frost cover his scarred face in the warm, fiery light.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_002",
+              "prompt_summary": "The encampment is blanketed in thick night fog. Fiery, warm lighting from blazing canvas tents and bonfires creates a chaotic contrast with the cold mountain mist.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_003",
+              "prompt_summary": "The wooden torch burns fiercely in the misty darkness. Blazing sparks trail heavily from the intense orange flame as it moves.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_009",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Thick mountain fog blankets the unguarded rear of a massive enemy encampment at night. Silently, the exhausted, frost-covered form of General Zhao emerges from the shadowy mist like a ghost, clutching a blade.",
+                "video_motion_hint": "The camera slowly tracks laterally as the grim soldier glides silently forward. Thick fog rolls lazily over the dark, uneven ground."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A low-angle close-up of General Zhao, his eyes wide and burning with furious intensity. He is covered in thick frost and sweat, aggressively raising his drawn blade in the night mist as he screams a battle cry.",
+                "video_motion_hint": "Zhao fiercely thrusts his blade upward into the frame while his mouth opens in a deafening shout. Frost crumbles from his shoulders with the sudden, violent movement."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_011",
+            "characters_in_frame": [],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A multitude of blazing torches arc high into the night sky, trailing bright embers through the fog. The fiery torches crash down onto heavy canvas siege tents, immediately setting the thick fabric alight.",
+                "video_motion_hint": "Blazing torches fly rapidly in glowing arcs across the dark sky. The camera pans smoothly to follow their trajectory as the flames burst upon impacting the tents."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_012",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "An epic, sweeping high-angle view of the entire siege camp erupting into total, fiery chaos. General Zhao brutally cleaves through scattering, unarmored enemy soldiers among the burning tents. Blazing torches and massive bonfires cast a warm, violent glow against the cold fog.",
+                "video_motion_hint": "Heavy canvas tents rapidly collapse inward as roaring flames consume them. Soldiers scatter in blind panic while Zhao relentlessly presses the assault forward."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "style_notes": [
+      "Gritty, cold color palette",
+      "Epic historical war drama aesthetic",
+      "Harsh lighting reflecting off the ice",
+      "High contrast moonlight against dark rock",
+      "Kinetic, unstable atmosphere due to wind",
+      "Fiery, warm lighting contrasting with the cold mountain fog",
+      "Fast, chaotic, visceral action aesthetic"
+    ],
+    "must_avoid": [
+      "Warm, cozy lighting",
+      "Clean, pristine uniforms",
+      "Calm weather",
+      "Bright, colorful lighting",
+      "Slow pacing",
+      "Tranquil framing"
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 12,
+    "keyframe_count_total": 12,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 2,
+    "global_location_anchor_count": 2,
+    "global_prop_anchor_count": 3,
+    "stability_character_keyframe_count": 5,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 3
+  }
+}

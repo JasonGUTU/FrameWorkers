@@ -1,0 +1,274 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "Historical Three Kingdoms era treacherous mountain pass",
+            "Steep rocky cliffs with snow and ice",
+            "Visible howling mountain-wind"
+          ],
+          "style_notes": [
+            "Historical war-epic animated drama",
+            "Three Kingdoms era aesthetic",
+            "Harsh, dramatic lighting emphasizing the treacherous journey"
+          ],
+          "must_avoid": [
+            "Modern elements",
+            "Cartoonish or overly stylized proportions",
+            "Flat lighting"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Establish the historical war-epic scale and the extreme difficulty of the terrain.",
+              "action_focus": "The collective struggle of the troops leaning into the wind.",
+              "characters_in_frame": [],
+              "camera_angle": "high_angle",
+              "camera_movement": "pan",
+              "framing_notes": "Sweep across the struggling soldiers to establish scale and the treacherous conditions.",
+              "video_motion_hints": [
+                "The camera pans slowly across the struggling soldiers. Violent wind continuously whips the banner and drives thick snow horizontally through the frame."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": ""
+            },
+            "duration_sec": 10.0
+          },
+          {
+            "shot_id": "sh_002",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Demonstrate the general's unwavering resolve and physical strength.",
+              "action_focus": "General Zhao planting his halberd to stay upright.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "static",
+              "framing_notes": "Keep the halberd plant central to the frame to show his anchoring strength.",
+              "video_motion_hints": [
+                "General Zhao leans his heavy weight onto the halberd, bracing against a massive gust of wind. His tattered red cape forcefully flaps and snaps in the blizzard."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": ""
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_003",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Capture the raw leadership and desperation in the general's command.",
+              "action_focus": "Zhao shouting over his shoulder into the howling wind.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "zoom",
+              "framing_notes": "Slow push-in on Zhao's face as he turns to shout to his men.",
+              "video_motion_hints": [
+                "A slow push-in zoom on Zhao's face as he yells with urgent intensity. Thick white snow aggressively whips past his face in the foreground."
+              ],
+              "dialogue_text": "顶住！若退缩，城池必破！",
+              "emotion_hint": "urgent"
+            },
+            "duration_sec": 10.0
+          },
+          {
+            "shot_id": "sh_004",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Show the immediate motivational impact of the general's words.",
+              "action_focus": "Soldiers marching past with renewed vigor.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "tracking",
+              "framing_notes": "Track alongside the passing soldiers, with Zhao in the foreground.",
+              "video_motion_hints": [
+                "The camera tracks alongside the moving soldiers as they trudge forward. They lean heavily against the wind while Zhao stands steadfast like an unmoving pillar."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": ""
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_003",
+            "to_shot_id": "sh_004",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_context": {
+          "location_id": "loc_002",
+          "time_of_day": "NIGHT",
+          "environment_notes": [
+            "Historical Three Kingdoms cliff edge",
+            "Night sky illuminated by distant fires of a siege",
+            "Steep descent path leading into the valley"
+          ],
+          "style_notes": [
+            "Historical war-epic animated drama",
+            "Three Kingdoms era aesthetic",
+            "High contrast night lighting lit by distant siege fires"
+          ],
+          "must_avoid": [
+            "Modern elements",
+            "Cartoonish or overly stylized proportions"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_005",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Reveal the stakes of the battle and the vulnerability of the enemy's rear flank.",
+              "action_focus": "The glowing, burning city in the dark valley.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "high_angle",
+              "camera_movement": "static",
+              "framing_notes": "Establish the immense scale of the siege below from Zhao's vantage point.",
+              "video_motion_hints": [
+                "Thick smoke drifts slowly upward from the burning city deep in the valley. Subtle, flickering firelight dances across Zhao's armor in the dark foreground."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": ""
+            },
+            "duration_sec": 10.0
+          },
+          {
+            "shot_id": "sh_006",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Transition the energy from observation to imminent, explosive action.",
+              "action_focus": "Zhao raising his halberd.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "pan",
+              "framing_notes": "Follow Zhao as he wheels his horse around to address the troops.",
+              "video_motion_hints": [
+                "The camera pans to follow Zhao as he sharply wheels his horse around. The horse snorts, sending visible puffs of breath into the freezing night air."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": ""
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_007",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Deliver the climax command with maximum intensity.",
+              "action_focus": "Zhao's booming, furious command.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "static",
+              "framing_notes": "Tight frame on Zhao's face, firelight reflecting in his eyes.",
+              "video_motion_hints": [
+                "Zhao's facial expression contorts with aggressive, booming fury as he shouts. The flickering firelight casts dynamic, shifting shadows across his determined features."
+              ],
+              "dialogue_text": "擂鼓！全军出击！",
+              "emotion_hint": "angry"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_008",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Visually represent the thundering orchestral battle music kicking in.",
+              "action_focus": "The violent impact of the mallet on the drumhead.",
+              "characters_in_frame": [],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Extreme focus on the drumhead taking the impact.",
+              "video_motion_hints": [
+                "The heavy mallet strikes the drumhead violently, compressing the leather top. A burst of powdery white snow erupts outward from the impact zone into the night air."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": ""
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_009",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Show the unstoppable momentum and scale of the ambush.",
+              "action_focus": "The vanguard sweeping down the mountain like an avalanche.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "tracking",
+              "framing_notes": "Camera positioned on the slope, tracking backward as the tidal wave of soldiers charges down toward the lens.",
+              "video_motion_hints": [
+                "The camera tracks rapidly backward as the tidal wave of soldiers and horses charges furiously down the slope. Snow kicks up intensely beneath the thundering hooves."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": ""
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_005",
+            "to_shot_id": "sh_006",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_006",
+            "to_shot_id": "sh_007",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_007",
+            "to_shot_id": "sh_008",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_008",
+            "to_shot_id": "sh_009",
+            "transition_type": "cut"
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 2,
+    "shot_segment_count": 9
+  }
+}

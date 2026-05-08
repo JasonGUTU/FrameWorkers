@@ -1,0 +1,13 @@
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+xformers 0.0.31 requires torch==2.7.1, but you have torch 2.11.0 which is incompatible.
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/zhendong_li/.conda-envs/director-train/lib/python3.11/site-packages/vllm/__init__.py", line 14, in <module>
+    import vllm.env_override  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhendong_li/.conda-envs/director-train/lib/python3.11/site-packages/vllm/env_override.py", line 87, in <module>
+    import torch
+  File "/home/zhendong_li/.conda-envs/director-train/lib/python3.11/site-packages/torch/__init__.py", line 442, in <module>
+    from torch._C import *  # noqa: F403
+    ^^^^^^^^^^^^^^^^^^^^^^
+ImportError: /home/zhendong_li/.conda-envs/director-train/lib/python3.11/site-packages/torch/lib/libtorch_cuda.so: undefined symbol: ncclCommWindowDeregister

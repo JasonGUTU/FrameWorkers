@@ -1,0 +1,37 @@
+{
+  "content": {
+    "language": "en",
+    "segments": [
+      {
+        "segment_id": "seg_001",
+        "start_time": 32.05971875,
+        "end_time": 34.77971875,
+        "text": "Is that your best? It is."
+      },
+      {
+        "segment_id": "seg_002",
+        "start_time": 35.63971875,
+        "end_time": 37.61971875,
+        "text": "Your reign ends today, warlord."
+      },
+      {
+        "segment_id": "seg_003",
+        "start_time": 38.51971875,
+        "end_time": 39.73971875,
+        "text": "My village remembers."
+      },
+      {
+        "segment_id": "seg_004",
+        "start_time": 55.73971875,
+        "end_time": 56.99971875,
+        "text": "It's him."
+      }
+    ],
+    "full_text": "Is that your best? It is. Your reign ends today, warlord. My village remembers. It's him."
+  },
+  "metrics": {
+    "language": "en",
+    "segment_count": 4,
+    "duration_seconds": 56.99971875
+  }
+}

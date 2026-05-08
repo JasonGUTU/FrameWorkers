@@ -1,0 +1,132 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-05-06T22:31:05.681233+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A scarred lone samurai, his village burned and clan destroyed, embarks on a relentless quest for vengeance against the ruthless warlord responsible.",
+    "style": {
+      "genre": [
+        "Revenge",
+        "Historical Drama",
+        "Action"
+      ],
+      "tone_keywords": [
+        "Muted",
+        "Somber",
+        "Determined",
+        "Feudal Japan",
+        "Gritty"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "The Lone Samurai",
+        "role": "protagonist",
+        "profile": "A man in traditional samurai attire, with a distinctive topknot and facial scars, embodying stoic determination. He carries his katana with him at all times, a symbol of his past and his purpose. A former retainer, now a ronin, consumed by a singular quest.",
+        "motivation": "To exact vengeance upon the warlord who orchestrated the destruction of his village and the death of his loved ones.",
+        "flaw": "His intense focus on revenge has isolated him, leaving him with little beyond his quest, and potentially blinding him to other paths or consequences."
+      },
+      {
+        "character_id": "char_002",
+        "name": "The Ruthless Warlord",
+        "role": "antagonist",
+        "profile": "A powerful and ambitious daimyo, feared by many. He commands a formidable army and rules with an iron fist, caring little for the lives he crushes in his path to power. He is the architect of the samurai's suffering.",
+        "motivation": "Conquest, expansion of his domain, and consolidation of power, viewing others as mere obstacles or resources.",
+        "flaw": "Arrogance and overconfidence, believing his power is absolute and unchallenged, underestimating the quiet resolve of his enemies."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Desolate Forest Path",
+        "description": "A remote, fog-shrouded path winding through ancient, gnarled trees. The ground is covered with fallen leaves and sparse undergrowth, reflecting the passage of time and the isolation of the journey. The air is still, save for the whisper of the wind."
+      },
+      {
+        "location_id": "loc_002",
+        "name": "Warlord's Castle Keep",
+        "description": "The fortified inner sanctum of the warlord's stronghold. Heavy wooden beams, stone walls, and intricate feudal Japanese architecture dominate. The atmosphere is oppressive, reflecting the warlord's tyrannical presence. Dim light filters through strategic openings."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "The lone samurai journeys through a desolate landscape, haunted by the memory of his burned village, his resolve for vengeance solidified.",
+        "conflict": "The samurai's internal struggle with the trauma of his past versus his unwavering, singular purpose of revenge.",
+        "turning_point": "A vivid memory of the burning village and its victims crystallizes his determination to confront the warlord."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "crisis",
+        "summary": "The samurai infiltrates the warlord's castle and confronts his enemy, leading to a tense, charged standoff.",
+        "conflict": "The protagonist's solitary quest for justice against the antagonist's entrenched power and arrogance.",
+        "turning_point": "The warlord, initially dismissive, realizes the samurai's unwavering intent, forcing him to engage in battle."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "climax",
+        "summary": "A brutal duel ensues between the samurai and the warlord, culminating in the samurai achieving his vengeance, though the victory is solitary and grim.",
+        "conflict": "The desperate, skilled fight for survival and justice between the samurai and the warlord, a clash of ideologies and swords.",
+        "turning_point": "The warlord falls, his reign of terror ended, leaving the samurai standing amidst the silence of his completed quest."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To visually establish the samurai's arduous journey, his solitary nature, and the deep-seated motivation driving his revenge.",
+        "conflict": "The samurai endures the physical hardship of his journey, overshadowed by the mental burden of his past tragedy.",
+        "turn": "A distant glimpse of what could be the warlord's domain, or a stronger surge of memory, steels his resolve to continue."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_002",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "To portray the tense confrontation between the samurai and the warlord, initiating the climactic conflict.",
+        "conflict": "The samurai stands alone against the warlord's imposing presence, facing down the architect of his pain in a room heavy with power.",
+        "turn": "The first swift, decisive move is made by the samurai, cutting through the standoff and launching the duel."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_002",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "To depict the brutal final duel and the samurai's hard-won, yet bittersweet, completion of his vengeance.",
+        "conflict": "A desperate and skillful sword fight unfolds, where the samurai must overcome the warlord's might and cruelty.",
+        "turn": "The warlord falls, defeated, leaving the samurai as the sole survivor, his revenge complete but his solitude profound."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 2,
+    "location_count": 2,
+    "scene_count": 3
+  }
+}

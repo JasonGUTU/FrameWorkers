@@ -8,9 +8,7 @@ from ...common_schema import Meta
 
 
 class IntakeVideoAsset(BaseModel):
-    asset_id: str = ""
     uri: str = ""
-    format: str = "mp4"
 
 
 class IntakeVideoContent(BaseModel):

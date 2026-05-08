@@ -18,7 +18,6 @@ class HighlightClip(BaseModel):
     start_time: float = Field(0.0, description="Start time in seconds")
     end_time: float = Field(0.0, description="End time in seconds")
     reason: str = Field("", description="Why this segment was selected")
-    score: float = Field(0.0, ge=0.0, le=1.0, description="Relevance/quality score")
 
 
 # ---------------------------------------------------------------------------

@@ -1,0 +1,13 @@
+{
+  "content": {
+    "cues": [
+      {
+        "cue_id": "music_film",
+        "mood": "epic, orchestral battle, driving war drums, tense, triumphant"
+      }
+    ]
+  },
+  "metrics": {
+    "cue_count": 1
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "content": {
+    "beds": [
+      {
+        "ambience_id": "amb_film",
+        "description": "Continuous harsh, howling mountain winds, biting high-altitude gusts, swirling loose snow textures, and a deep, desolate atmospheric rumble of a treacherous icy peak"
+      }
+    ]
+  },
+  "metrics": {
+    "bed_count": 1
+  }
+}

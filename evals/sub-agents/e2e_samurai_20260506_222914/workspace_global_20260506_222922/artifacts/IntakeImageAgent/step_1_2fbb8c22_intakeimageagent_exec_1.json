@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-05-06T22:30:25.278364+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "visual_description": "A man in traditional samurai attire, with a topknot and facial scars, stands holding a sword on a grey background under even light.",
+    "image_asset": {
+      "asset_id": "",
+      "uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/e2e_samurai_20260506_222914/workspace_global_20260506_222922/inputs/20260506_223011_925031_samurai_reference.png",
+      "width": 1024,
+      "height": 576,
+      "format": "png"
+    }
+  }
+}

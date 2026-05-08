@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-05-06T22:30:39.094716+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "enriched_brief": "Make a 3-shot feudal-Japan revenge drama. The protagonist is a lone samurai, depicted as a man in traditional samurai attire, with a topknot and facial scars, often seen holding a sword. He is a former retainer hunting the warlord who burned his village. Add muted feudal-Japan ambience and burn English subtitles.",
+    "image_classifications": [
+      {
+        "image_index": 0,
+        "role": "character",
+        "entity_hint": "the protagonist"
+      }
+    ],
+    "image_paths": [
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/e2e_samurai_20260506_222914/workspace_global_20260506_222922/inputs/20260506_223011_925031_samurai_reference.png"
+    ]
+  },
+  "metrics": {
+    "image_count": 1,
+    "classified_count": 1
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "content": {
+    "beds": [
+      {
+        "ambience_id": "amb_film",
+        "description": "Muted and somber feudal Japan ambience, with subtle distant wind and the quiet resonance of ancient stone structures."
+      }
+    ]
+  },
+  "metrics": {
+    "bed_count": 1
+  }
+}

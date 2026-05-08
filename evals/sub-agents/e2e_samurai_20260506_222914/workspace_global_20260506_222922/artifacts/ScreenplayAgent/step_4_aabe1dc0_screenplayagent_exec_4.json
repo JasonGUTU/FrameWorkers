@@ -1,0 +1,700 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-05-06T22:31:52.314097+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "The Ronin's Vengeance",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": ""
+        },
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Desolate Forest Path",
+          "interior_exterior": "EXT",
+          "time_of_day": "DAY"
+        },
+        "summary": "The Lone Samurai journeys through a fog-shrouded forest, his solitary resolve for vengeance solidified by haunting memories.",
+        "continuity": {
+          "props_present": [
+            "katana"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Traditional, worn samurai attire with a distinctive topknot and facial scars.",
+              "must_keep": [
+                "samurai attire",
+                "topknot",
+                "facial scars",
+                "katana"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "The samurai is on a solitary journey.",
+            "His purpose is driven by past tragedy and vengeance."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "Remote, fog-shrouded path.",
+              "Ancient, gnarled trees.",
+              "Ground covered with fallen leaves and sparse undergrowth.",
+              "Still air, whisper of wind."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "A man with traditional samurai attire, topknot, and facial scars.",
+                "Stoic determination.",
+                "Former retainer, now a ronin, consumed by vengeance."
+              ],
+              "wardrobe_notes": [
+                "Worn traditional samurai attire."
+              ],
+              "must_keep": [
+                "Facial scars are prominent.",
+                "Carries katana."
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Katana",
+              "must_keep": [
+                "Sharp, well-maintained, always at the samurai's side."
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Muted and somber color palette.",
+              "Gritty and realistic aesthetic for feudal Japan.",
+              "Emphasize determination and solitude."
+            ],
+            "must_avoid": [
+              "Bright, overly saturated colors.",
+              "Exaggerated or cartoonish action."
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "A distant glimpse of the warlord's domain or a strong memory steels his resolve.",
+          "emotional_shift": "From somber reflection to unyielding determination."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A LONE SAMURAI, his silhouette stark against the dense fog of a desolate forest, walks with a relentless, measured pace. His worn samurai attire blends with the muted landscape, a katana sheathed at his hip.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "tracking",
+              "framing_notes": "Emphasize the samurai's isolation and the vastness of his journey."
+            },
+            "visual_goal": "Establish the samurai's solitary journey and the atmospheric, somber tone.",
+            "action_focus": "The samurai's determined, unyielding walk.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Close on the SAMURAI'S face. Deep facial scars are visible, his eyes holding a haunted, distant gaze, yet burning with an unwavering resolve. He stops for a moment, an unseen memory flickering through his mind.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on the emotion and determination in his eyes and scars."
+            },
+            "visual_goal": "Convey the samurai's internal conflict and his deep-seated motivation.",
+            "action_focus": "The samurai's expression and internal struggle.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The samurai continues his journey. He glances towards the horizon, where distant mountains suggest the looming presence of the warlord's domain. His grip tightens almost imperceptibly on his katana, his resolve now hardened.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "dolly",
+              "framing_notes": "Show the samurai's upward gaze and the imposing landscape."
+            },
+            "visual_goal": "Reinforce his unwavering determination and foreshadow his destination.",
+            "action_focus": "The samurai's renewed determination and physical action of continuing.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_002",
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": ""
+        },
+        "heading": {
+          "location_id": "loc_002",
+          "location_name": "Warlord's Castle Keep",
+          "interior_exterior": "INT",
+          "time_of_day": "CUSTOM"
+        },
+        "summary": "The Lone Samurai infiltrates the warlord's keep and confronts him, initiating a tense standoff.",
+        "continuity": {
+          "props_present": [
+            "katana",
+            "Warlord's ceremonial sword"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Same worn samurai attire.",
+              "must_keep": [
+                "samurai attire",
+                "topknot",
+                "facial scars",
+                "katana"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "Opulent, intimidating daimyo armor.",
+              "must_keep": [
+                "imposing armor",
+                "fierce expression"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "The confrontation takes place in the warlord's inner sanctum.",
+            "The samurai faces the warlord alone."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_002",
+            "time_of_day": "CUSTOM",
+            "environment_notes": [
+              "Fortified inner sanctum.",
+              "Heavy wooden beams, stone walls.",
+              "Intricate feudal Japanese architecture.",
+              "Oppressive atmosphere, dim light."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Still resolute, focused on his target."
+              ],
+              "wardrobe_notes": [
+                "Consistent worn samurai attire."
+              ],
+              "must_keep": [
+                "Facial scars visible.",
+                "Carries katana."
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "Powerful, ambitious daimyo, feared.",
+                "Commands army, rules with iron fist.",
+                "Arrogant and overconfident."
+              ],
+              "wardrobe_notes": [
+                "Formal, imposing warlord attire or armor."
+              ],
+              "must_keep": [
+                "Looks down on others."
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Katana",
+              "must_keep": [
+                "Still sheathed until the duel begins."
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "Warlord's ceremonial sword",
+              "must_keep": [
+                "Ornate, fitting for a powerful leader."
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Heightened tension, stark contrast between protagonist and antagonist.",
+              "Maintain gritty and somber feudal Japan aesthetic."
+            ],
+            "must_avoid": [
+              "Humor or lightheartedness.",
+              "Overly dramatic gestures that break realism."
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "The warlord, initially dismissive, realizes the samurai's unwavering intent and prepares for battle.",
+          "emotional_shift": "From tense defiance to imminent, explosive conflict."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_004",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The SAMURAI steps into the dimly lit, opulent castle keep. His arrival is met with silence, the only sound the soft echo of his footfalls. He surveys the massive chamber, his gaze unwavering as he spots THE WARLORD seated on a raised dais.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "static",
+              "framing_notes": "Emphasize the samurai's lone presence against the grandeur and scale of the keep, and the warlord's commanding position."
+            },
+            "visual_goal": "Establish the scene of confrontation and the power imbalance.",
+            "action_focus": "The samurai's entrance and the warlord's imposing presence.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "char_002",
+            "character_name": "The Ruthless Warlord",
+            "text": "The WARLORD, cloaked in rich, dark robes, watches the samurai with an arrogant smirk, a dismissive wave of his hand. He leans forward slightly, intrigued, but utterly unconcerned.",
+            "emotion_hint": "neutral",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "static",
+              "framing_notes": "Reinforce the warlord's power and dismissive nature."
+            },
+            "visual_goal": "Show the warlord's initial arrogance and underestimation of the samurai.",
+            "action_focus": "The warlord's dismissive demeanor and expression.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 3,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "The Lone Samurai",
+            "text": "Your reign ends today, Warlord. My village remembers.",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Intense focus on the samurai's scarred face and defiant eyes."
+            },
+            "visual_goal": "Highlight the samurai's unwavering resolve and direct challenge.",
+            "action_focus": "The samurai's declaration.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The Warlord's smirk vanishes, replaced by a snarl of rage. He rises slowly, drawing his ornate ceremonial sword with a menacing whisper of steel. The chamber feels heavy with impending violence.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_002"
+              ],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "zoom_out",
+              "framing_notes": "Emphasize the warlord's transformation from dismissive to enraged, and the drawing of his weapon."
+            },
+            "visual_goal": "Show the warlord's shift from arrogance to aggression, signifying the start of the conflict.",
+            "action_focus": "The warlord drawing his sword and his angry expression.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_003",
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": ""
+        },
+        "heading": {
+          "location_id": "loc_002",
+          "location_name": "Warlord's Castle Keep",
+          "interior_exterior": "INT",
+          "time_of_day": "CUSTOM"
+        },
+        "summary": "A brutal duel ensues between the samurai and the warlord, culminating in the samurai achieving his vengeance, though the victory is solitary and grim.",
+        "continuity": {
+          "props_present": [
+            "katana",
+            "Warlord's ceremonial sword"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Worn samurai attire, now potentially dirtied or slightly torn from combat.",
+              "must_keep": [
+                "samurai attire",
+                "topknot",
+                "facial scars",
+                "katana"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "Opulent daimyo armor, now damaged or disheveled.",
+              "must_keep": [
+                "imposing armor"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "The duel is desperate and skilled.",
+            "The warlord's power is challenged and ultimately overcome."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_002",
+            "time_of_day": "CUSTOM",
+            "environment_notes": [
+              "Fortified inner sanctum, now potentially bearing marks of combat.",
+              "Dim light, heavy atmosphere."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Fiercely determined, focused, skilled in combat."
+              ],
+              "wardrobe_notes": [
+                "Worn samurai attire, showing signs of strenuous combat."
+              ],
+              "must_keep": [
+                "Facial scars, katana in hand."
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "Powerful, but now desperate and enraged.",
+                "Overconfident, but fighting fiercely."
+              ],
+              "wardrobe_notes": [
+                "Imposing warlord attire, showing signs of combat."
+              ],
+              "must_keep": [
+                "Carries ceremonial sword."
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Katana",
+              "must_keep": [
+                "Used skillfully by the samurai."
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "Warlord's ceremonial sword",
+              "must_keep": [
+                "Used by the warlord as a formidable weapon."
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Dynamic, intense action sequences.",
+              "Maintain gritty realism and somber tone even in victory.",
+              "Emphasize the weight and consequence of the fight."
+            ],
+            "must_avoid": [
+              "Glorifying violence.",
+              "Clean, easy fight choreography."
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "The warlord falls, his reign ended, leaving the samurai standing amidst the silence of his completed quest.",
+          "emotional_shift": "From desperate intensity to grim, solitary completion of his vengeance."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_008",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The duel explodes. Steel clashes with ferocious energy, a whirlwind of swift parries and powerful strikes. The SAMURAI moves with desperate precision, the WARLORD with brutal force, each blow echoing through the keep.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001",
+                "prop_002"
+              ],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "dutch_tilt",
+              "framing_notes": "Dynamic framing of the intense sword fight, emphasizing the motion and power of the combatants."
+            },
+            "visual_goal": "Show the ferocity and skill of the ongoing battle.",
+            "action_focus": "The clash of swords and the movement of the duelists.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Close-up on the warriors' faces. Sweat, grime, and desperation etch their features. The Samurai's scarred face is a mask of strained focus, while the Warlord's eyes burn with a mix of fury and dawning fear.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Capture the raw emotion and physical exertion of the combatants."
+            },
+            "visual_goal": "Convey the high stakes and brutal intensity of the fight on a personal level.",
+            "action_focus": "The expressions and physical strain of the samurai and warlord.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The WARLORD falls heavily to the stone floor, his ceremonial sword clattering away. The SAMURAI stands over him, katana still drawn, his chest heaving. His expression is grim, the triumph muted by the profound solitude of his vengeance.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001",
+                "prop_002"
+              ],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "zoom_out",
+              "framing_notes": "Show the defeated warlord and the samurai standing in grim victory, emphasizing the empty space around him."
+            },
+            "visual_goal": "Depict the culmination of the vengeance and the somber aftermath.",
+            "action_focus": "The warlord's defeat and the samurai's solitary victory.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count_total": 10,
+    "avg_shots_per_scene": 3.3333333333333335,
+    "dialogue_block_count": 1,
+    "action_block_count": 9
+  }
+}

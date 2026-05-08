@@ -1,0 +1,527 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-05-08T04:12:56.518923+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "The Mountain Vanguard",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "",
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": ""
+        },
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Treacherous Mountain Pass",
+          "interior_exterior": "EXT",
+          "time_of_day": "DAY"
+        },
+        "summary": "General Zhao leads his exhausted army up a steep, freezing mountain pass against fierce winds to bypass the enemy lines.",
+        "continuity": {
+          "props_present": [
+            "General's Halberd",
+            "Army Banner"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Heavy ancient Chinese armor with a flowing, wind-torn red cape, suited for a Three Kingdoms general.",
+              "must_keep": [
+                "red cape",
+                "heavy ancient Chinese armor"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Harsh mountain wind is visibly blowing snow and debris",
+            "The terrain is steep and treacherous"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "Historical Three Kingdoms era treacherous mountain pass",
+              "Steep rocky cliffs with snow and ice",
+              "Visible howling mountain-wind"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Three Kingdoms general",
+                "Weathered, battle-hardened face",
+                "Commanding and resolute presence"
+              ],
+              "wardrobe_notes": [
+                "Ornate historical armor of the Three Kingdoms era",
+                "Tattered red cape"
+              ],
+              "must_keep": [
+                "Three Kingdoms general identity",
+                "Ornate historical armor"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "General's Halberd",
+              "must_keep": [
+                "Long wooden shaft",
+                "Curved metal blade"
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "Army Banner",
+              "must_keep": [
+                "Torn edges",
+                "Large Chinese character"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Historical war-epic animated drama",
+              "Three Kingdoms era aesthetic",
+              "Harsh, dramatic lighting emphasizing the treacherous journey"
+            ],
+            "must_avoid": [
+              "Modern elements",
+              "Cartoonish or overly stylized proportions",
+              "Flat lighting"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "The army overcomes the treacherous terrain and reaches the summit.",
+          "emotional_shift": "From exhausting struggle to fierce determination."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A wide view of the sprawling Three Kingdoms army struggling up the jagged, snow-swept mountain pass as violent winds tear at their banners.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_002"
+              ],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "pan",
+              "framing_notes": "Sweep across the struggling soldiers to establish scale and the treacherous conditions."
+            },
+            "visual_goal": "Establish the historical war-epic scale and the extreme difficulty of the terrain.",
+            "action_focus": "The collective struggle of the troops leaning into the wind.",
+            "characters_in_frame": [],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "General Zhao marches at the front, his heavy armor clanking. He plants his halberd firmly into the icy ground to brace against a sudden gust of wind.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "static",
+              "framing_notes": "Keep the halberd plant central to the frame to show his anchoring strength."
+            },
+            "visual_goal": "Demonstrate the general's unwavering resolve and physical strength.",
+            "action_focus": "General Zhao planting his halberd to stay upright.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "General Zhao",
+            "text": "顶住！若退缩，城池必破！",
+            "emotion_hint": "urgent",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "zoom",
+              "framing_notes": "Slow push-in on Zhao's face as he turns to shout to his men."
+            },
+            "visual_goal": "Capture the raw leadership and desperation in the general's command.",
+            "action_focus": "Zhao shouting over his shoulder into the howling wind.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Inspired by their leader, the exhausted soldiers let out a collective, breathless battle cry and push past him, resuming the brutal climb.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_002"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "tracking",
+              "framing_notes": "Track alongside the passing soldiers, with Zhao in the foreground."
+            },
+            "visual_goal": "Show the immediate motivational impact of the general's words.",
+            "action_focus": "Soldiers marching past with renewed vigor.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "",
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": ""
+        },
+        "heading": {
+          "location_id": "loc_002",
+          "location_name": "Cliff Overlooking the Besieged City",
+          "interior_exterior": "EXT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Reaching the peak at nightfall, General Zhao sees the besieged city burning below and orders a devastating surprise attack down the mountain.",
+        "continuity": {
+          "props_present": [
+            "General's Halberd",
+            "War Drum"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Heavy ancient Chinese armor, cape is now heavily snow-dusted but still vibrant.",
+              "must_keep": [
+                "red cape",
+                "heavy ancient Chinese armor"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "A burning besieged city is visible far below in the valley",
+            "The army is standing at the precipice of a high cliff"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_002",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "Historical Three Kingdoms cliff edge",
+              "Night sky illuminated by distant fires of a siege",
+              "Steep descent path leading into the valley"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Three Kingdoms general",
+                "Weathered, battle-hardened face",
+                "Commanding presence"
+              ],
+              "wardrobe_notes": [
+                "Ornate historical armor",
+                "Snow-dusted red cape"
+              ],
+              "must_keep": [
+                "Three Kingdoms general identity",
+                "Ornate historical armor"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "General's Halberd",
+              "must_keep": [
+                "Long wooden shaft",
+                "Curved metal blade"
+              ]
+            },
+            {
+              "prop_id": "prop_003",
+              "prop_name": "War Drum",
+              "must_keep": [
+                "Massive wooden barrel",
+                "Stretched leather top"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Historical war-epic animated drama",
+              "Three Kingdoms era aesthetic",
+              "High contrast night lighting lit by distant siege fires"
+            ],
+            "must_avoid": [
+              "Modern elements",
+              "Cartoonish or overly stylized proportions"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "The surprise attack crashes into the enemy lines, initiating the battle to break the siege.",
+          "emotional_shift": "From tense anticipation to triumphant, epic release."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Over the shoulder of General Zhao as he stands at the cliff edge. Down in the valley, a massive besieged ancient city glows orange with thousands of enemy campfires and burning structures.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "static",
+              "framing_notes": "Establish the immense scale of the siege below from Zhao's vantage point."
+            },
+            "visual_goal": "Reveal the stakes of the battle and the vulnerability of the enemy's rear flank.",
+            "action_focus": "The glowing, burning city in the dark valley.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "General Zhao sharply turns his horse around to face his assembled army in the darkness, drawing his halberd with a metallic ring.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "pan",
+              "framing_notes": "Follow Zhao as he wheels his horse around to address the troops."
+            },
+            "visual_goal": "Transition the energy from observation to imminent, explosive action.",
+            "action_focus": "Zhao raising his halberd.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 3,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "General Zhao",
+            "text": "擂鼓！全军出击！",
+            "emotion_hint": "angry",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "static",
+              "framing_notes": "Tight frame on Zhao's face, firelight reflecting in his eyes."
+            },
+            "visual_goal": "Deliver the climax command with maximum intensity.",
+            "action_focus": "Zhao's booming, furious command.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_008",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A massive mallet violently strikes a giant war drum. The shockwave visibly kicks up snow around the instrument.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_003"
+              ],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Extreme focus on the drumhead taking the impact."
+            },
+            "visual_goal": "Visually represent the thundering orchestral battle music kicking in.",
+            "action_focus": "The violent impact of the mallet on the drumhead.",
+            "characters_in_frame": [],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 5,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The entire army roars. General Zhao spurs his horse forward, leading a massive tide of cavalry and infantry charging down the steep mountain slope toward the enemy lines.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "tracking",
+              "framing_notes": "Camera positioned on the slope, tracking backward as the tidal wave of soldiers charges down toward the lens."
+            },
+            "visual_goal": "Show the unstoppable momentum and scale of the ambush.",
+            "action_focus": "The vanguard sweeping down the mountain like an avalanche.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 2,
+    "shot_count_total": 9,
+    "avg_shots_per_scene": 4.5,
+    "dialogue_block_count": 2,
+    "action_block_count": 7
+  }
+}
