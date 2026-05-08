@@ -12,7 +12,6 @@ class ImageClassification(BaseModel):
 
     image_index: int = 0
     role: str = ""  # character | location | prop | style
-    entity_hint: str = ""  # e.g. "the protagonist", "the workshop"
 
 
 class BriefEnricherContent(BaseModel):

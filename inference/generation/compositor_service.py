@@ -246,15 +246,15 @@ class CompositorService:
         audio_path: str = "",
         subtitle_srts: list[str] | None = None,
         plan: dict[str, Any] | None = None,
-        target_fps: int = 30,
     ) -> bytes:
         """Compose a slideshow video: still-image sequence + audio + subtitles.
 
         Pipeline:
           1. ffmpeg concat demuxer on the (image, duration) list → a
-             silent slideshow mp4 at ``target_fps``. Images are force-
-             scaled/padded to the plan's ``output_resolution`` so a run
-             with mixed image dimensions still renders cleanly.
+             silent slideshow mp4 at the plan's ``output_fps`` (default
+             30 if absent / invalid). Images are force-scaled/padded to
+             the plan's ``output_resolution`` so a run with mixed image
+             dimensions still renders cleanly.
           2. Delegate to ``self.compose()`` using the intermediate
              slideshow as ``video_path`` — reuses audio mux, subtitle
              burn-in, color grade from the existing pipeline with zero
@@ -284,6 +284,15 @@ class CompositorService:
             width, height = [int(x) for x in resolution.lower().split("x", 1)]
         except Exception:
             width, height = 1920, 1080
+        # plan-driven fps; default 30 when absent / invalid. CompositorEvaluator
+        # already range-validates output_fps to [1,120], so by here the value
+        # is either valid or fell back to default.
+        try:
+            target_fps = int(plan.get("output_fps") or 30)
+            if target_fps < 1 or target_fps > 120:
+                target_fps = 30
+        except (TypeError, ValueError):
+            target_fps = 30
 
         temp_dir = tempfile.mkdtemp(prefix="fw_slideshow_")
         filelist_path = os.path.join(temp_dir, "filelist.txt")
@@ -387,7 +396,6 @@ class MockCompositorService(CompositorService):
         audio_path: str = "",
         subtitle_srts: list[str] | None = None,
         plan: dict[str, Any] | None = None,
-        target_fps: int = 30,
     ) -> bytes:
         logger.info(
             "[MockCompositor] Placeholder compose_slideshow for %d images",

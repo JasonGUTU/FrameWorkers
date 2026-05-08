@@ -62,9 +62,7 @@ def build_captions(agent_id: str, output_dict: dict) -> dict:
     # new entry. One asset = one caption.
     #
     # ``role`` is a closed enum (character | location | prop | style) —
-    # safe to put in caption as a categorical role tag. ``entity_hint``
-    # is free-form LLM text (e.g. "an elderly watchmaker") — NOT in
-    # caption, stays in the JSON payload.
+    # safe to put in caption as a categorical role tag.
     # See MEMORY:feedback_caption_role_not_content.
     image_paths = content.get("image_paths", [])
     for cls in content.get("image_classifications", []):

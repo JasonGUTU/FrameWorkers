@@ -6,12 +6,18 @@ The agent's output carries two populations of fields:
     NarrationAgent script): ``language`` / ``lines``. These form the
     deterministic worklist the materializer iterates.
   * **Post-materialize** (filled in place by ``NarratorMaterializer``):
-    ``clips`` / ``segment_timings`` / ``srt_text`` / ``total_duration_sec``.
-    These are the timing + subtitle artifacts downstream consumers
-    (slideshow compositor) read.
+    ``clips`` / ``segment_timings`` / ``srt_text`` / ``total_duration_sec``
+    / ``speaker``. These fields are a **dev/debug snapshot only** —
+    downstream consumers (slideshow compositor) do NOT read them off
+    this envelope. The compositor finds the actual timing / SRT data
+    via the sibling standalone artifacts the materializer registers
+    independently (``narrator_srt`` / ``narrator_segment_timing``);
+    the envelope copy exists so a human inspecting the persisted
+    NarratorAgent JSON can see what was generated. Audit before
+    expanding any consumer to read off this envelope — sibling
+    artifacts are the source of truth.
 
-Structural (L1) checks only validate the pre-materialize population;
-the L3 asset check validates the post-materialize one.
+Structural (L1) checks validate only the pre-materialize population.
 """
 
 from __future__ import annotations
@@ -55,9 +61,9 @@ class NarratorClip(BaseModel):
 class NarratorSegmentTiming(BaseModel):
     """Per-segment timing (sum of member-line clips + trailing pause).
 
-    The slideshow compositor uses ``duration_sec`` to set how long each
-    illustration stays on screen; ``start_sec`` gives the exact frame
-    offset where the next illustration cuts in.
+    Dev/debug snapshot fields — the slideshow compositor reads timing
+    via the sibling standalone ``narrator_segment_timing`` artifact, not
+    off this NarratorContent envelope. See module docstring.
     """
 
     segment_id: str = ""

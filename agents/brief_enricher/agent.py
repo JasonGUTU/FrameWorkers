@@ -31,8 +31,7 @@ ENRICHER_OUTPUT_TEMPLATE = """{
     "image_classifications": [
       {
         "image_index": 0,
-        "role": "character",
-        "entity_hint": "the protagonist"
+        "role": "character"
       }
     ]
   }
@@ -124,10 +123,7 @@ class BriefEnricherAgent(BaseAgent[BriefEnricherInput, BriefEnricherOutput]):
             "brief with visual details woven in).\n"
             "``image_classifications``: one entry per image, in the same "
             "order as the input array. ``image_index`` is 0-based.\n"
-            "``role``: character | location | prop | style.\n"
-            "``entity_hint``: a short phrase naming what the image "
-            "represents in the story (e.g. 'the protagonist', 'the "
-            "workshop setting', 'the old pocket watch').\n\n"
+            "``role``: character | location | prop | style.\n\n"
             "Do NOT include an artifact_caption block — the system "
             "generates it automatically."
         )
