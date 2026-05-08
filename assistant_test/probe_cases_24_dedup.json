@@ -1,0 +1,803 @@
+[
+  {
+    "name": "bilingual_045",
+    "category": "bilingual",
+    "user_goal": "Make a slow-paced literary mini-drama about an aging fisherman in a remote coastal village who returns home after a 30-year absence to find his childhood home swallowed by the rising sea, with English-Chinese bilingual subtitles, a melancholic cello score, and realistic ocean-wave and seabird ambient sounds.",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_104",
+    "category": "complex",
+    "user_goal": "Analyze this hit Mandarin crime-thriller mini-drama, cut the most suspenseful twist moments into a teaser, then convert the teaser to a gritty Japanese-anime visual style and add English subtitles.",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_201",
+    "category": "complex",
+    "user_goal": "Convert this corporate-office walking shot to a cyberpunk-anime style, extend it to 30 seconds, and add a synthwave score plus rain-soaked-neon-city ambient sounds.",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_202",
+    "category": "complex",
+    "user_goal": "Make a 90-second cyberpunk mini-drama about a Tokyo street courier discovering a stolen AI brain in a back alley, extend the discovery moment for dramatic impact, and add a synthwave score plus neon-rain-city ambient sounds.",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_203",
+    "category": "complex",
+    "user_goal": "Convert this Mandarin marketplace clip to a Studio Ghibli style, extend it to 30 seconds, add English-Mandarin bilingual subtitles, a traditional pipa-and-strings score, and busy-market ambient sounds.",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "complex_204",
+    "category": "complex",
+    "user_goal": "Cut a 90-second highlight reel from this Korean K-drama and convert it to an anime style, with English-Korean bilingual subtitles, a sweeping orchestral score, and dramatic indoor-room ambient sounds.",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "extend_018",
+    "category": "extend",
+    "user_goal": "Extend this Mandarin courtroom-drama confrontation scene by 12 seconds and add English-Chinese bilingual subtitles.",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "extend_022",
+    "category": "extend",
+    "user_goal": "Extend this nightclub-confrontation scene by 8 seconds and add a tense electronic score plus crowd-murmur and clinking-glass ambient sounds.",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "extend_201",
+    "category": "extend",
+    "user_goal": "Extend this lighthouse-keeper closing scene to 30 seconds and add continuous ocean-wave ambient sounds.",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "extend_202",
+    "category": "extend",
+    "user_goal": "Extend this Spanish flamenco-club confrontation scene to 30 seconds, add English subtitles and a tense flamenco-guitar score.",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoExtendAgent"
+      ],
+      [
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "highlight_022",
+    "category": "highlight",
+    "user_goal": "Cut the most thrilling courtroom-confrontation moments from this Mandarin legal-drama series into a 60-second promotional teaser with English-Chinese bilingual subtitles.",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "highlight_028",
+    "category": "complex",
+    "user_goal": "Cut the most dramatic moments from this Mandarin palace-intrigue mini-drama and convert the resulting teaser to an ink-wash animated style.",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "highlight_201",
+    "category": "highlight",
+    "user_goal": "Cut a 60-second highlight reel from this golf championship footage and add continuous golf-course-and-light-applause ambient sounds.",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "highlight_202",
+    "category": "highlight",
+    "user_goal": "Cut a 90-second highlight reel from this Mandarin street-food vlog with English subtitles, lo-fi hip-hop background music, and bustling-night-market ambient sounds.",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "highlight_203",
+    "category": "highlight",
+    "user_goal": "Cut a 60-second highlight reel from this Mandarin variety show with English-Mandarin bilingual subtitles, an upbeat orchestral score, and studio-audience ambient sounds.",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "VideoAnalysisAgent"
+      ],
+      [
+        "HighlightAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_img_055",
+    "category": "intake_img",
+    "user_goal": "Using this uploaded portrait of a young female Sherpa mountaineer, make a 90-second documentary-style mini-drama about her solo Everest summit attempt, with English subtitles, an inspiring orchestral score, and high-altitude wind and labored-breath ambient sounds.",
+    "fixture_path": "fixtures/images/intake_img_055_sherpa.png",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "intake_img_201",
+    "category": "intake_img",
+    "user_goal": "Using this Russian lighthouse-keeper portrait, make a 90-second mini-drama about her last storm-watch night before retirement, with English-Russian bilingual subtitles and a raw, atmospheric storm-wind ambient sound throughout.",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_035",
+    "category": "storytelling",
+    "user_goal": "Narrate this seafaring tale of a lighthouse keeper's daughter who befriends a sea-storm spirit as an illustrated audiobook, with a haunting maritime orchestral score, ocean-storm ambient sounds, and English narration.",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent"
+      ],
+      [
+        "NarratorAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_202",
+    "category": "storytelling",
+    "user_goal": "Tell me an old Mexican folktale about a desert-coyote teaching a lost girl to find water as an illustrated audiobook narrated in Spanish, with a guitar-and-marimba score, desert-night-cricket ambient sounds, and English subtitles.",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent"
+      ],
+      [
+        "NarratorAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "storytelling_203",
+    "category": "storytelling",
+    "user_goal": "Using this Sherpa mountaineer portrait as the protagonist, narrate an illustrated audiobook in Spanish about her solo Everest summit attempt, with high-altitude wind ambient sounds, a triumphant orchestral score, and English subtitles.",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent"
+      ],
+      [
+        "NarratorAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "style_018",
+    "category": "style",
+    "user_goal": "Convert this Mandarin costume-drama clip to a Studio Ghibli watercolor style and add English-Chinese bilingual subtitles.",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "style_201",
+    "category": "style",
+    "user_goal": "Convert this Mandarin tea-ceremony footage to an ink-wash-painted style and add quiet teahouse-courtyard ambient sounds.",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "style_202",
+    "category": "style",
+    "user_goal": "Convert this rainy Tokyo intersection footage to a Studio Ghibli style and add a melancholy piano score plus rain-and-traffic ambient sounds.",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AmbienceAgent",
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  },
+  {
+    "name": "style_203",
+    "category": "style",
+    "user_goal": "Convert this Mandarin street-performance clip to a traditional ink-wash style, add English subtitles and a soft erhu score.",
+    "expected_chain": [
+      [
+        "IntakeVideoAgent"
+      ],
+      [
+        "StyleTransferAgent"
+      ],
+      [
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "MusicAgent",
+        "TranscriptionAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ]
+  }
+]
