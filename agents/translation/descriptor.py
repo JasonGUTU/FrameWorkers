@@ -20,19 +20,14 @@ def build_input(
 ) -> BaseModel:
     """Pass upstream payload through as raw JSON text.
 
-    target_language lives in the source payload (surfaced via creative_brief
-    or task metadata). If absent, leaves the field EMPTY — the agent's
-    WHEN-TO-REJECT rule will surface this as an input_rejection so the
-    director can re-route with an explicit target. We deliberately do NOT
-    default to English: a silent default produces an unwanted English
-    translation when the user's actual intent (e.g. zh → fr) was missed
-    by upstream routing.
+    target_language lives in the payload (surfaced via creative_brief or
+    task metadata) — defaults to English if absent.
     """
     entry = ResolvedArtifactEntry.coerce(
         resolved_artifacts.get(INPUT_LABEL_SOURCE_TEXT)
     )
 
-    target_lang = ""
+    target_lang = "en"
     if entry.payload and isinstance(entry.payload.get("target_language"), str):
         target_lang = entry.payload["target_language"]
 
