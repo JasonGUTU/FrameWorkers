@@ -580,7 +580,9 @@ class FalVideoService(VideoService, LazyHttpxClientMixin):
                 "DIALOGUE: the character on-screen speaks aloud the "
                 "following line, lips in visible sync with each syllable: "
                 f"\u300c{ctx.dialogue_text.strip()}\u300d"
-                f"{tone_suffix}"
+                f"{tone_suffix}. AUDIO-ONLY \u2014 do NOT render this line "
+                f"as on-screen text, caption, subtitle, or chyron; the "
+                f"viewer must HEAR it, not SEE it written."
             )
         # Language directive \u2014 when set, force ALL voiced content (the
         # explicit dialogue line AND any ambient voices the model may
@@ -595,6 +597,18 @@ class FalVideoService(VideoService, LazyHttpxClientMixin):
                 f"must be in language code '{ctx.language.strip()}'. Do NOT "
                 f"emit voices in any other language."
             )
+        # Global no-on-screen-text directive. Kling 2.6 Pro empirically
+        # burns dialogue text into the frame as a caption when the prompt
+        # mentions a spoken line \u2014 and even on action shots can render
+        # location names / chyrons. CompositorAgent owns subtitle burn-in
+        # at the FINAL stage; per-shot mp4s must come back text-free so
+        # they don't double-stack.
+        parts.append(
+            "NO_ON_SCREEN_TEXT: this clip must contain ZERO rendered "
+            "text, captions, subtitles, signs, chyrons, or any other "
+            "graphic text in the frame. Spoken / voiced content stays "
+            "audio-only."
+        )
         if omit_scene_tone_blocks:
             parts.append(
                 "Ref: one L3 still for look; motion from text prefix + below."
