@@ -26,17 +26,15 @@ class VideoExtendEvaluator(BaseEvaluator[VideoExtendAgentOutput]):
         if not spec.motion_description:
             errors.append("extension_spec.motion_description is empty")
 
-        if spec.target_duration_seconds <= 0:
+        # Mirror of system_prompt's "target_duration_seconds MUST be
+        # exactly 5 or 10" rule. The fal / Kling extension backend
+        # silently rounds non-{5,10} values; without this check that
+        # silent rounding masks drift (CLAUDE.md §7 anti-pattern).
+        if spec.target_duration_seconds not in (5, 5.0, 10, 10.0):
             errors.append(
                 f"extension_spec.target_duration_seconds "
-                f"({spec.target_duration_seconds}) must be positive"
-            )
-
-        if spec.target_duration_seconds > 30:
-            errors.append(
-                f"extension_spec.target_duration_seconds "
-                f"({spec.target_duration_seconds}) exceeds 30s maximum "
-                "for a single extension"
+                f"({spec.target_duration_seconds}) must be exactly 5 or "
+                "10 (Kling video extension only accepts 5s or 10s clips)"
             )
 
         return errors

@@ -85,6 +85,19 @@ class VideoEvaluator(BaseEvaluator[VideoAgentOutput]):
                         f"to_shot_id {tr.to_shot_id}"
                     )
 
+        # --- duration_sec must be in Kling's accepted enum {5, 10} ---
+        # Mirror of system_prompt's PER-SHOT DURATION rule. The fal /
+        # Kling backend silently rounds non-{5,10} values; without this
+        # check that silent rounding masks drift (CLAUDE.md §7 anti-pattern).
+        for scene in c.scenes:
+            for seg in scene.shot_segments:
+                if seg.duration_sec not in (5, 5.0, 10, 10.0):
+                    errors.append(
+                        f"shot {seg.shot_id} duration_sec="
+                        f"{seg.duration_sec} is not in the allowed set "
+                        "{5, 10} (Kling i2v only accepts 5s or 10s clips)"
+                    )
+
         # --- Order continuity ---
         self._check_order_continuous(errors, "scenes", [s.order for s in c.scenes])
 
