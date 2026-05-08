@@ -132,10 +132,7 @@ class NarratorAgent(BaseAgent[NarratorAgentInput, NarratorAgentOutput]):
             "pause_after_ms: non-negative integer (use 0 if unspecified, "
             "common values 200-800 for natural beats).\n"
             "Do NOT include an artifact_caption block — the system generates "
-            "it automatically.\n"
-            "Do NOT fill clips / segment_timings / srt_text / "
-            "total_duration_sec / speaker — those are populated by the "
-            "materializer post-generation."
+            "it automatically."
         )
 
     def build_user_prompt(self, input_data: NarratorAgentInput) -> str:

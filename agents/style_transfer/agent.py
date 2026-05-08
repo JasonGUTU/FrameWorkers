@@ -87,8 +87,10 @@ class StyleTransferAgent(BaseAgent[StyleTransferAgentInput, StyleTransferAgentOu
             "3. preserve_motion: usually true (keep original camera and "
             "subject motion). Set false only if the style inherently "
             "changes motion (e.g. stop-motion, timelapse).\n"
-            "4. style_strength: 0.5-0.8 for subtle styles, 0.8-1.0 for "
-            "dramatic transformations (anime, oil painting, etc.).\n\n"
+            "4. style_strength: lower (0.3-0.6) for stylistic touch-ups "
+            "that preserve the photographic look; higher (0.7-1.0) when "
+            "the source must be transformed into a markedly different "
+            "medium.\n\n"
             "=== OUTPUT FORMAT ===\n"
             "JSON only; no markdown; match the user-message template "
             "exactly.\n\n"
@@ -104,8 +106,8 @@ class StyleTransferAgent(BaseAgent[StyleTransferAgentInput, StyleTransferAgentOu
 
         if input_data.style_description:
             parts.append(
-                f"Style description (from upstream style_reference): "
-                f"**{input_data.style_description}**\n"
+                f"Style cue derived from upstream style_reference "
+                f"(caption or payload): **{input_data.style_description}**\n"
             )
 
         if input_data.style_reference_path:

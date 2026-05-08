@@ -60,11 +60,7 @@ TRANSLATION_OUTPUT_TEMPLATE = """{
   "content": {
     "source_language": "<detected ISO code, e.g. zh>",
     "target_language": "<target ISO code, e.g. en>",
-    "translated_payload": {
-      "content": {
-        "<MIRROR the entire source JSON structure here, with all human-readable values translated>"
-      }
-    }
+    "translated_payload": <MIRROR the entire source JSON structure here as a JSON object — keep its exact top-level shape, with all human-readable values translated>
   }
 }"""
 
@@ -154,9 +150,7 @@ class TranslationAgent(BaseAgent[TranslationAgentInput, TranslationAgentOutput])
             "5. Keep technical terms, file paths, and format codes as-is.\n"
             "6. Put the translated document in the 'translated_payload' field "
             "as a NATIVE JSON OBJECT (not a string). It must mirror the source "
-            "structure exactly with only human-readable values translated.\n"
-            "7. CRITICAL: translated_payload MUST NOT be empty. It must "
-            "contain the complete translated document as a JSON object.\n\n"
+            "structure exactly with only human-readable values translated.\n\n"
             "=== OUTPUT FORMAT ===\n"
             "JSON only; no markdown; match the user-message template exactly.\n\n"
             "Do NOT include an artifact_caption block — the system generates "

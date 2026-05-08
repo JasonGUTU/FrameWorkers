@@ -48,7 +48,7 @@ class CompositorAgent(BaseAgent[CompositorAgentInput, CompositorAgentOutput]):
         rework_notes: str = "",
     ) -> CompositorAgentOutput:
         output = await self._llm_fill_full(input_data, rework_notes)
-        self.recompute_metrics(output)
+        self.recompute_metrics(output, input_data)
         return output
 
     def system_prompt(self) -> str:
@@ -208,7 +208,13 @@ class CompositorAgent(BaseAgent[CompositorAgentInput, CompositorAgentOutput]):
     def parse_output(self, raw: dict[str, Any]) -> CompositorAgentOutput:
         return CompositorAgentOutput.model_validate(raw)
 
-    def recompute_metrics(self, output: CompositorAgentOutput) -> None:
+    def recompute_metrics(
+        self,
+        output: CompositorAgentOutput,
+        input_data: CompositorAgentInput,
+    ) -> None:
         plan = output.content.plan
         output.metrics.has_subtitles = plan.subtitle_style.burn_in
-        output.metrics.has_audio = True  # always true if audio_package provided
+        output.metrics.has_audio = bool(
+            input_data.audio_file_path or input_data.audio_json_text
+        )
