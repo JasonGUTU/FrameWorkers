@@ -53,10 +53,11 @@ class HighlightEvaluator(BaseEvaluator[HighlightAgentOutput]):
                 )
 
             duration = clip.end_time - clip.start_time
-            if duration < 1.0:
+            if duration < 2.0:
                 errors.append(
                     f"{prefix} duration ({duration:.1f}s) is too short — "
-                    "minimum 1 second"
+                    "minimum 2 seconds (matches the system_prompt's "
+                    "'at least 2 seconds' rule)"
                 )
 
             if clip.start_time < prev_end - 0.01:

@@ -2,6 +2,14 @@
 
 Reads the LLM-selected clip list, extracts each segment from the source
 video, and concatenates them into a highlight reel.
+
+Trust contract: the upstream evaluator (HighlightEvaluator.check_structure)
+already enforces every per-clip invariant the materializer depends on —
+``end_time > start_time``, ``duration >= 2s``, no overlap with previous
+clip, valid numeric bounds (Pydantic). On evaluator failure rework
+re-runs the LLM, so by the time we materialize the clips list is clean.
+We do NOT silently merge / clip / drop bad rows here (CLAUDE.md §7
+forbids materializer-side silent fixes that mask producer drift).
 """
 
 from __future__ import annotations
@@ -17,47 +25,6 @@ if TYPE_CHECKING:
     from .schema import HighlightAgentInput
 
 logger = logging.getLogger(__name__)
-
-
-def _merge_overlapping_clips(
-    raw_clips: list[dict],
-) -> tuple[list[tuple[float, float]], int]:
-    """Sort + merge LLM-selected highlight intervals on the source timeline.
-
-    The HighlightAgent's system_prompt instructs the LLM that "clips
-    should not overlap", but offers no enforcement; the LLM empirically
-    produces overlapping bounds (e.g. ``[(5, 12), (10, 18)]``) in a
-    nontrivial fraction of runs because the same standout moment gets
-    bracketed twice. Without merging, the materializer cuts each interval
-    independently and concatenates them — the viewer then sees the same
-    source frames replayed back-to-back.
-
-    Returns ``(merged_intervals, n_dropped)``: ``merged_intervals`` is
-    sorted, non-overlapping, and ``n_dropped`` counts how many input
-    intervals were folded away (so the caller can log the fix).
-    Intervals with ``end <= start`` or non-numeric bounds are silently
-    skipped here — the caller already had to filter such bad rows.
-    """
-    intervals: list[tuple[float, float]] = []
-    for clip in raw_clips:
-        try:
-            start = float(clip.get("start_time", 0) or 0)
-            end = float(clip.get("end_time", 0) or 0)
-        except (TypeError, ValueError):
-            continue
-        if end <= start:
-            continue
-        intervals.append((start, end))
-    intervals.sort()
-
-    merged: list[tuple[float, float]] = []
-    for start, end in intervals:
-        if merged and start <= merged[-1][1]:
-            prev_start, prev_end = merged[-1]
-            merged[-1] = (prev_start, max(prev_end, end))
-        else:
-            merged.append((start, end))
-    return merged, len(intervals) - len(merged)
 
 
 class HighlightMaterializer(BaseMaterializer):
@@ -83,31 +50,15 @@ class HighlightMaterializer(BaseMaterializer):
         # ArtifactWriter still needs a dict to stamp uri into for ArtifactRef.
         uri_holder: dict[str, Any] = {}
 
-        # Sort + merge LLM-emitted intervals so overlapping picks
-        # (e.g. (5, 12) and (10, 18)) collapse into one (5, 18) cut
-        # instead of producing a reel that replays the 10-12 source
-        # frames twice. See ``_merge_overlapping_clips`` for rationale.
-        merged_intervals, dropped = _merge_overlapping_clips(clips_spec)
-        if not merged_intervals:
-            raise RuntimeError(
-                f"HighlightMaterializer: every clip in the {len(clips_spec)}"
-                f"-entry LLM selection had invalid bounds (end<=start or"
-                f" non-numeric); cannot build reel"
-            )
-        if dropped:
-            logger.warning(
-                "HighlightMaterializer: merged %d overlapping LLM clip(s) "
-                "into %d non-overlapping interval(s)",
-                dropped, len(merged_intervals),
-            )
-
         # Track per-clip failures so the reel either succeeds completely
         # or fails loudly. Silently dropping a failing clip distorts the
         # selected highlight set; silently emitting [] when *every* clip
         # fails masks the failure as a PASS with no asset.
         clip_bytes_list: list[bytes] = []
         failures: list[str] = []
-        for start, end in merged_intervals:
+        for clip in clips_spec:
+            start = float(clip.get("start_time", 0) or 0)
+            end = float(clip.get("end_time", 0) or 0)
             try:
                 clip_data = await self.svc.clip_segment(
                     typed_input.source_video_path, start, end,
@@ -123,14 +74,14 @@ class HighlightMaterializer(BaseMaterializer):
         if not clip_bytes_list:
             raise RuntimeError(
                 f"HighlightMaterializer: no clips extracted from "
-                f"{len(merged_intervals)} merged interval(s); failures="
+                f"{len(clips_spec)} clip(s); failures="
                 f"{'; '.join(failures) or 'none reported'}"
             )
         if failures:
             logger.warning(
-                "HighlightMaterializer: %d/%d intervals failed and were "
+                "HighlightMaterializer: %d/%d clips failed and were "
                 "dropped: %s",
-                len(failures), len(merged_intervals), '; '.join(failures),
+                len(failures), len(clips_spec), '; '.join(failures),
             )
 
         reel_bytes = await self.svc.concat_clips(clip_bytes_list)
