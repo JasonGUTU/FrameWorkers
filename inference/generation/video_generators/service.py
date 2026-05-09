@@ -545,8 +545,8 @@ class FalVideoService(VideoService, LazyHttpxClientMixin):
     # layer constructs these strings.
     # ------------------------------------------------------------------
 
+    @staticmethod
     def _compose_prompt(
-        self,
         ctx: ShotSemanticContext,
         *,
         anchor_image_count: int,
@@ -558,6 +558,11 @@ class FalVideoService(VideoService, LazyHttpxClientMixin):
         omission when an explicit motion hint prefix is present, and the
         per-shot ``"Ref:"`` line that signals to the model the attached
         still is look-consistency-only.
+
+        Hoisted to ``@staticmethod`` so non-Fal video backends (e.g. a
+        local HunyuanVideoService) can reuse the same prompt composition
+        for fair Kling-vs-X A/B without instantiating ``FalVideoService``
+        (which requires ``FAL_API_KEY`` env at construction).
         """
         vmh0 = (
             ctx.video_motion_hints[0].strip()
