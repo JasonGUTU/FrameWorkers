@@ -10,6 +10,7 @@ from .clients import LLMClient
 from .generation.image_generators.service import FalImageService, ImageService, MockImageService
 from .generation.video_generators.service import (
     FalVideoService,
+    HunyuanVideoService,
     MockVideoService,
     VideoService,
     WavespeedVideoService,
@@ -23,6 +24,7 @@ __all__ = [
     "ImageService",
     "MockImageService",
     "FalVideoService",
+    "HunyuanVideoService",
     "WavespeedVideoService",
     "VideoService",
     "MockVideoService",

@@ -820,3 +820,128 @@ class WavespeedVideoService(VideoService, LazyHttpxClientMixin):
             resolved_prompt=prompt,
             resolved_payload=resolved_payload,
         )
+
+
+class HunyuanVideoService(VideoService, LazyHttpxClientMixin):
+    """Video generation via a self-hosted HunyuanVideo-I2V FastAPI server.
+
+    Talks to the FastAPI wrapper around Tencent's ``HunyuanVideoSampler``
+    that runs on a single H200 (see ``hunyuan_server.py`` + the matching
+    sbatch in the HunyuanVideo-I2V repo). The server keeps the model
+    GPU-resident and serves /i2v requests over HTTP.
+
+    Single-GPU server: requests serialize on the server side (asyncio
+    Lock + asyncio.to_thread). Real per-clip latency at 720p × 117
+    frames × 25 steps is ~12 minutes on one H200 — set ``timeout``
+    accordingly. For end-to-end parallelism across shots, run multiple
+    server replicas on separate GPUs and round-robin client-side; this
+    service does not orchestrate that itself.
+
+    I2V only: HunyuanVideo-I2V is a specialized fine-tune. The first
+    keyframe in ``keyframe_images`` becomes the conditioning frame; t2v
+    is unsupported (would need the separate ``Tencent/HunyuanVideo``
+    repo + weights). If ``keyframe_images`` is empty we raise.
+    """
+
+    def __init__(
+        self,
+        endpoint_url: str | None = None,
+        *,
+        infer_steps: int | None = None,
+        timeout: float = 2400.0,
+    ) -> None:
+        self.endpoint_url = (
+            endpoint_url or os.getenv("HUNYUAN_VIDEO_ENDPOINT_URL", "")
+        ).strip().rstrip("/")
+        if not self.endpoint_url:
+            raise RuntimeError(
+                "HUNYUAN_VIDEO_ENDPOINT_URL is required for HunyuanVideoService. "
+                "Set it to the FastAPI endpoint of the running HunyuanVideo-I2V "
+                "server, e.g. http://sof1-h200-3:9100"
+            )
+        env_steps = (os.getenv("HUNYUAN_VIDEO_INFER_STEPS", "25") or "25").strip()
+        try:
+            default_steps = int(env_steps) if env_steps else 25
+        except ValueError:
+            default_steps = 25
+        self.infer_steps = infer_steps if infer_steps is not None else default_steps
+        self.timeout = timeout
+        self._http: httpx.AsyncClient | None = None
+
+    async def generate_clip(
+        self,
+        *,
+        shot_id: str,
+        keyframe_images: list[bytes],
+        prompt: str = "",
+        semantic_context: ShotSemanticContext | None = None,
+        duration_sec: float = 0.0,
+        fps: int = 24,
+        width: int = 1024,
+        height: int = 576,
+        **kwargs: Any,
+    ) -> VideoClipResult:
+        # The HunyuanVideo server fixes resolution / fps profile to its
+        # 720p preset; these caller-supplied dims are advisory only.
+        del fps, width, height
+
+        if not keyframe_images:
+            raise RuntimeError(
+                "HunyuanVideoService is image-to-video only — keyframe_images "
+                "must be non-empty (this fine-tune does not support t2v)."
+            )
+
+        # Compose prompt the same way Kling does so a Kling-vs-Hunyuan
+        # A/B keeps prompt as a controlled variable. ``_compose_prompt``
+        # is hoisted on FalVideoService as a @staticmethod precisely so
+        # we can reuse it here without instantiating Fal (which would
+        # require FAL_API_KEY env). When no semantic_context is provided
+        # (legacy callers), pass through the raw prompt string verbatim.
+        if semantic_context is not None:
+            composed_prompt = FalVideoService._compose_prompt(
+                semantic_context, anchor_image_count=1
+            )
+        else:
+            composed_prompt = prompt
+
+        body: dict[str, Any] = {
+            "prompt": composed_prompt,
+            "image_b64": base64.b64encode(keyframe_images[0]).decode("ascii"),
+            "duration_sec": duration_sec if duration_sec > 0 else 5.0,
+            "seed": int(kwargs.get("seed", 0)),
+            "negative_prompt": kwargs.get("negative_prompt", "") or "",
+            "infer_steps": int(kwargs.get("infer_steps", self.infer_steps)),
+        }
+
+        logger.info(
+            "[hunyuan] shot=%s endpoint=%s steps=%d duration=%.2fs",
+            shot_id,
+            self.endpoint_url,
+            body["infer_steps"],
+            body["duration_sec"],
+        )
+
+        resp = await self.http.post(
+            f"{self.endpoint_url}/i2v",
+            json=body,
+            timeout=self.timeout,
+        )
+        resp.raise_for_status()
+        data = resp.json()
+
+        clip_bytes = base64.b64decode(data["video_b64"])
+
+        # Strip the b64 image from the audit payload so persisted
+        # VideoPackage records don't balloon with hundreds of KB of
+        # inline image data per shot. Splice in the server-reported
+        # frame / fps / elapsed for log auditing.
+        resolved_payload = {k: v for k, v in body.items() if k != "image_b64"}
+        for k in ("video_length_frames", "fps", "duration_sec", "elapsed_sec", "seed"):
+            if k in data:
+                resolved_payload[f"server_{k}"] = data[k]
+
+        return VideoClipResult(
+            bytes=clip_bytes,
+            resolved_prompt=composed_prompt,
+            resolved_payload=resolved_payload,
+        )

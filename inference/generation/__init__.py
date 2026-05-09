@@ -8,8 +8,9 @@ Default behaviour is **mocks-on**: ``select_*_service`` returns a
 ``Mock*Service`` so end-to-end pipelines can run without burning fal
 credits. Set ``FW_USE_REAL_MEDIA_GEN`` to a truthy value (``1``,
 ``true``, ``yes``, ``on``) to opt into real providers. For video,
-``FW_VIDEO_BACKEND`` then picks between ``fal`` (default) and
-``wavespeed``.
+``FW_VIDEO_BACKEND`` then picks between ``fal`` (default), ``wavespeed``
+and ``hunyuan`` (self-hosted HunyuanVideo-I2V FastAPI server, requires
+``HUNYUAN_VIDEO_ENDPOINT_URL``).
 
 This file is the **only** place that knows about the
 ``FW_USE_REAL_MEDIA_GEN`` and ``FW_VIDEO_BACKEND`` environment variables.
@@ -26,7 +27,13 @@ from .image_generators.service import (
     ImageService,
     MockImageService,
 )
-from .video_generators.service import FalVideoService, MockVideoService, VideoService, WavespeedVideoService
+from .video_generators.service import (
+    FalVideoService,
+    HunyuanVideoService,
+    MockVideoService,
+    VideoService,
+    WavespeedVideoService,
+)
 from .audio_generators.service import AudioService, FalAudioService, MockAudioService
 from .compositor_service import CompositorService, MockCompositorService
 from .transcription_service import FalTranscriptionService, MockTranscriptionService
@@ -54,14 +61,18 @@ def select_video_service() -> VideoService:
 
     Default: ``MockVideoService`` (placeholder MP4 header, no fal credits).
     Set ``FW_USE_REAL_MEDIA_GEN=1`` to switch to a real provider; in that
-    mode ``FW_VIDEO_BACKEND`` chooses between ``FalVideoService`` (default)
-    and ``WavespeedVideoService`` (``wavespeed``/``ws``).
+    mode ``FW_VIDEO_BACKEND`` chooses between ``FalVideoService`` (default,
+    Kling via fal.ai), ``WavespeedVideoService`` (``wavespeed``/``ws``)
+    and ``HunyuanVideoService`` (``hunyuan``/``hy`` — self-hosted
+    HunyuanVideo-I2V FastAPI server, requires ``HUNYUAN_VIDEO_ENDPOINT_URL``).
     """
     if not _env_truthy("FW_USE_REAL_MEDIA_GEN"):
         return MockVideoService()
     backend = os.getenv("FW_VIDEO_BACKEND", "fal").strip().lower()
     if backend in ("wavespeed", "wave_speed", "ws"):
         return WavespeedVideoService()
+    if backend in ("hunyuan", "hy"):
+        return HunyuanVideoService()
     return FalVideoService()
 
 
@@ -100,6 +111,7 @@ __all__ = [
     "ImageService",
     "MockImageService",
     "FalVideoService",
+    "HunyuanVideoService",
     "WavespeedVideoService",
     "VideoService",
     "MockVideoService",
