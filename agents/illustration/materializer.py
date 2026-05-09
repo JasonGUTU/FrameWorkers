@@ -15,7 +15,7 @@ Strategy: two-stage anchor + multi-reference edit.
         stroke, mood, lighting) and IS the first page of the picture
         book.
     Segments 2..N → ``edit_image(reference_images=[seg1, *char_anchors],
-                                  ref_kind="multi", ref_manifest=...)``
+                                  ref_kind="picture_book", ref_manifest=...)``
         in PARALLEL. Each segment attaches:
           - Reference 1 = segment 1 (STYLE anchor — palette / brush /
             mood / lighting; subjects in seg 1 are NOT carried over)
@@ -82,13 +82,17 @@ class IllustrationMaterializer(BaseMaterializer):
         if not illustrations:
             raise RuntimeError("IllustrationMaterializer: empty illustrations list")
 
-        # ── Stage 1: t2i character anchors (in-memory only) ────────────
+        # ── Stage 1: t2i character anchors ───────────────────────────────
         # Identity-reference scaffold: neutral studio backdrop + portrait
         # framing, applied via ImageSemanticContext(is_identity_reference=True,
         # ref_kind="character"). Same path KeyFrame uses for character L1.
-        # Anchor bytes are dict-stored for stage 2 i2i; not emitted as
-        # workspace artifacts (they're internal references, not pages).
+        # Anchor bytes are dict-stored for stage 2 i2i AND persisted to the
+        # workspace under sys_id ``illustration_anchor_<char_id>`` for
+        # debug / audit. No downstream agent declares this label in its
+        # inputs, so it won't be surfaced into any consumer's
+        # resolved_artifacts — purely a debug trail.
         anchor_bytes_by_char: dict[str, bytes] = {}
+        assets: list[MediaAsset] = []
         for entry in anchors_raw:
             if not isinstance(entry, dict):
                 continue
@@ -105,7 +109,12 @@ class IllustrationMaterializer(BaseMaterializer):
             anchor_ctx = ImageSemanticContext(
                 prompt_summary=appearance,
                 is_identity_reference=True,
-                ref_kind="character",
+                # picture-book ref_kind makes anchor t2i use painterly
+                # scaffold + lets overall_style pass through, so anchors
+                # match the segments' folk-illustration aesthetic instead
+                # of the cinematic photoreal default.
+                ref_kind="character_picturebook",
+                style_notes=[overall_style] if overall_style else [],
             )
             last_exc: Exception | None = None
             anchor_bytes: bytes | None = None
@@ -138,6 +147,17 @@ class IllustrationMaterializer(BaseMaterializer):
                 )
                 continue
             anchor_bytes_by_char[char_id] = anchor_bytes
+            # Audit-only persistence; sys_id distinct from page assets
+            # so caption resolution against `illustration_<seg_id>` is
+            # unaffected.
+            assets.append(
+                MediaAsset(
+                    sys_id=f"illustration_anchor_{char_id}",
+                    data=anchor_bytes,
+                    extension="png",
+                    uri_holder={},
+                )
+            )
 
         logger.info(
             "IllustrationMaterializer: %d/%d character anchors generated",
@@ -178,7 +198,6 @@ class IllustrationMaterializer(BaseMaterializer):
         # carries no uri / image block, downstream finds the PNG by
         # caption-based resolution against sys_id ``illustration_<seg_id>``.
         anchor_uri_holder: dict[str, Any] = {}
-        assets: list[MediaAsset] = []
         assets.append(
             MediaAsset(
                 sys_id=f"illustration_{first.get('segment_id', 'seg_001')}",
@@ -235,7 +254,7 @@ class IllustrationMaterializer(BaseMaterializer):
                 result = await self.svc.edit_image(
                     reference_images=refs,
                     semantic_context=edit_ctx,
-                    ref_kind="multi",
+                    ref_kind="picture_book",
                     ref_manifest=ref_manifest,
                 )
                 if result.bytes:

@@ -1,0 +1,2559 @@
+[
+  {
+    "name": "cr_042",
+    "category": "cr",
+    "user_goal": "Make a cultivation / xianxia animated short drama — a prodigy disciple is framed by his senior brother and his cultivation core is crippled. With nothing but his family's broken sword, he refounds his foundation, slays ancient demons, and finally breaks through the nine heavenly tribulations to ascend to godhood.",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "StoryAgent -> ScreenplayAgent -> KeyFrameAgent -> VideoAgent -> CompositorAgent -> done",
+      "shape_layer_count": 6,
+      "sampled_genre": "other",
+      "original_user_goal": "Make an animated short about a retired ferry captain whose final crossing of the Bosphorus is interrupted by a passenger no one else can see.",
+      "rewritten": true,
+      "chain_before_lock": [
+        [
+          "StoryAgent"
+        ],
+        [
+          "ScreenplayAgent"
+        ],
+        [
+          "KeyFrameAgent"
+        ],
+        [
+          "VideoAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_zh": "做一部修真飞升题材动画短剧——天才少年被同门师兄陷害废了丹田，他以家传一柄废剑重新筑基，斩万古妖魔，最后突破九重天劫飞升神界。",
+      "user_goal_en_translated": true
+    }
+  },
+  {
+    "name": "cr_023",
+    "category": "cr",
+    "user_goal": "Make a period rebirth-revenge palace-intrigue animated short drama — the disgraced former Empress Liu Ruyan, poisoned to death in a cold palace by her own elder sister in her past life, wakes up reborn on the day before she enters the palace. This time she vows to force every betrayer in her past life to kneel before her, one by one.",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "StoryAgent -> ScreenplayAgent -> KeyFrameAgent -> VideoAgent -> CompositorAgent -> done",
+      "shape_layer_count": 6,
+      "sampled_genre": "horror_thriller",
+      "original_user_goal": "Make a time-loop psychological thriller animated drama where a young architect relives the same Sunday morning until she identifies who's been slipping threatening notes under her apartment door",
+      "rewritten": true,
+      "chain_before_lock": [
+        [
+          "StoryAgent"
+        ],
+        [
+          "ScreenplayAgent"
+        ],
+        [
+          "KeyFrameAgent"
+        ],
+        [
+          "VideoAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_zh": "做一部古装重生宫斗题材动画短剧——前世被亲姐姐陷害打入冷宫赐毒酒的废后柳如烟，重生回入宫前一日，这次她要让背叛她的所有人一个一个跪在她脚下。",
+      "user_goal_en_translated": true
+    }
+  },
+  {
+    "name": "cr_049",
+    "category": "cr",
+    "user_goal": "Make a modern-urban rebirth-revenge animated short drama — a top-tier lawyer is framed by his business partner and thrown in prison; by the time he gets out, his wife and daughter are dead. Granted a second chance, he wakes up ten years earlier on the rainy night that changed everything, determined to drag every single one of his betrayers down with him.",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "StoryAgent -> ScreenplayAgent -> KeyFrameAgent -> VideoAgent -> CompositorAgent -> done",
+      "shape_layer_count": 6,
+      "sampled_genre": "historical_drama",
+      "original_user_goal": "Create a coming-of-age short about a 14-year-old beekeeper's apprentice in rural Slovenia who must save her grandfather's hives during a sudden September frost.",
+      "rewritten": true,
+      "chain_before_lock": [
+        [
+          "StoryAgent"
+        ],
+        [
+          "ScreenplayAgent"
+        ],
+        [
+          "KeyFrameAgent"
+        ],
+        [
+          "VideoAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_zh": "做一部都市重生复仇题材动画短剧——金牌律师被合伙人构陷锒铛入狱，出来时妻女已死；天降重生回十年前那个改变一切的雨夜，他要把当年背叛过他的每一个人一个不漏地拉下水。",
+      "user_goal_en_translated": true
+    }
+  },
+  {
+    "name": "cr_064",
+    "category": "cr",
+    "user_goal": "Make a zombie-apocalypse animated short drama — day seven of the outbreak, a small squad led by a former special-ops captain and a female doctor cuts through zombie-infested underground tunnels in search of the legendary vaccine lab. Add ambient sounds: zombie shrieks, distant air-raid sirens, and wind whipping through ruined corridors.",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "StoryAgent -> ScreenplayAgent -> KeyFrameAgent -> VideoAgent -> AmbienceAgent -> AudioMixAgent -> CompositorAgent -> done",
+      "shape_layer_count": 8,
+      "sampled_genre": "other",
+      "original_user_goal": "Create a noir mini-drama about a Mumbai night-train conductor who hears the same impossible passenger announcement at every station, with constant rail-clatter and station ambience.",
+      "rewritten": true,
+      "chain_before_lock": [
+        [
+          "StoryAgent"
+        ],
+        [
+          "ScreenplayAgent"
+        ],
+        [
+          "KeyFrameAgent"
+        ],
+        [
+          "VideoAgent"
+        ],
+        [
+          "AmbienceAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_zh": "做一部末日丧尸题材动画短剧——病毒爆发第七天，一支由前特种兵队长和女医生组成的小队，穿越被丧尸群占领的城市地下隧道去寻找传说中的疫苗实验室。记得加丧尸嘶吼、防空警报、风扫过废墟的环境音。",
+      "user_goal_en_translated": true
+    }
+  },
+  {
+    "name": "cr_104",
+    "category": "cr",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "user_goal": "Make a wuxia / xianxia revenge animated short drama — the only surviving young Daoist after his sect is massacred by the demonic cult carries his master's severed head all the way back to Mount Kunlun, vowing to perform the blood-moon vengeance rite that very night. Add ambient sounds: howling mountain wind, ringing sword strikes, and rolling distant thunder.",
+    "_meta": {
+      "shape_layers_str": "StoryAgent -> ScreenplayAgent -> KeyFrameAgent -> VideoAgent -> AmbienceAgent -> AudioMixAgent -> CompositorAgent -> done",
+      "shape_layer_count": 8,
+      "sampled_genre": "fantasy",
+      "original_user_goal": "Here's my story I want to process: Mariana Soares, who had grown up barefoot on the saltpans south of Aveiro and had taken over her mother's salt operation at the age of nineteen, was now sixty-three and had spent that morning in early October standing at the edge of her westernmost crystallization tank watching the surface skin form, when she noticed, half-buried in the salt at the corner of the tank, a small object that turned out, when she lifted it free, to be a brass compass that had not been there the previous evening, that bore an engraving in a Cyrillic script she could not read, and that swung consistently and impossibly toward the west whichever way she turned. The young man who arrived at her gate three days later, asking in halting Portuguese whether she had found anything unusual, was twenty-eight, dark-haired, exhausted, and had walked, by his account, the last sixty kilometers from Coimbra carrying nothing but a leather rucksack and a set of hand-drawn charts. He was looking for the compass. Mariana, who had not made up her mind whether to give it back, invited him in for soup. Make this into a slow coastal-magical-realism drama with continuous saltpan-and-Atlantic-wind ambient sounds layered through the whole piece (no music).",
+      "rewritten": true,
+      "original_name": "hard_004",
+      "chain_before_lock": [
+        [
+          "StoryAgent"
+        ],
+        [
+          "ScreenplayAgent"
+        ],
+        [
+          "KeyFrameAgent"
+        ],
+        [
+          "VideoAgent"
+        ],
+        [
+          "AmbienceAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_zh": "做一部仙侠复仇题材动画短剧——魔教余孽屠门后唯一幸存的少年道士，背着师傅头颅一路血战重返昆仑山，要在血月当晚祭旗复仇。记得加山风呼啸、剑鸣破空、远雷滚动的环境音。",
+      "user_goal_en_translated": true
+    }
+  },
+  {
+    "name": "cr_016",
+    "category": "cr",
+    "user_goal": "Make a supernatural-suspense animated short drama — at midnight inside the old wing of a psychiatric hospital, the new male intern discovers that Room 304 plays a thirty-year-old recording every single night by itself. When he finally pushes that door open, he sees his ten-year-old self standing inside. Add ambient sounds: faint electrical hum, hollow corridor reverb, and distant sobbing.",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "StoryAgent -> ScreenplayAgent -> KeyFrameAgent -> VideoAgent -> AmbienceAgent -> AudioMixAgent -> CompositorAgent -> done",
+      "shape_layer_count": 8,
+      "sampled_genre": "wuxia_cultivation",
+      "original_user_goal": "Make a found-footage Amazon horror mini-drama where an ethnobotany team starts disappearing one by one near an abandoned mission, give it dense rainforest ambience with insects and distant calls",
+      "rewritten": true,
+      "chain_before_lock": [
+        [
+          "StoryAgent"
+        ],
+        [
+          "ScreenplayAgent"
+        ],
+        [
+          "KeyFrameAgent"
+        ],
+        [
+          "VideoAgent"
+        ],
+        [
+          "AmbienceAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_zh": "做一部灵异悬疑题材动画短剧——午夜的精神病院旧楼里，新来的男实习医生发现304 病房每晚都在自动播放一段三十年前的录音；当他终于推开那扇门，看见的却是十岁的自己。记得加电流杂音、空荡走廊回响、远处啜泣声的环境音。",
+      "user_goal_en_translated": true
+    }
+  },
+  {
+    "name": "cr_107",
+    "category": "cr",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "user_goal": "Make a period war-epic animated short drama — General Murong Rong's only son has guarded the western frontier for ten years without returning home. In his final stand he charges alone into ten thousand enemy soldiers, only to reclaim the family's ancestral green-dragon polearm from the body of his fallen father. Add ambient sounds: war horses neighing, bowstrings drawn taut, frozen wind sweeping the snow plains. Add a stirring period war-drum BGM.",
+    "_meta": {
+      "shape_layers_str": "StoryAgent -> ScreenplayAgent -> KeyFrameAgent -> VideoAgent -> MusicAgent -> AmbienceAgent -> AudioMixAgent -> CompositorAgent -> done",
+      "shape_layer_count": 9,
+      "sampled_genre": "other",
+      "original_user_goal": "Here's my story I want to process: When Magnus Sondrebø was sixty-one and had been the night fishmonger at the Bergen wharf market for thirty-four winters, the doctor in the Haukeland clinic told him quietly across the desk that the cough he had been ignoring for eight months was a stage-three lung carcinoma that had already metastasized to the bone, that his prognosis was somewhere between four and eleven months, and that, in the doctor's clinical opinion, he should consider concluding his outstanding personal matters within sixty days. Magnus, who had not spoken to his estranged son Jens for fourteen years following an argument over a fishing-quota arrangement that no longer mattered to either of them, walked from the clinic to the wharf, opened up his stall, sold the morning catch as usual to the Hanseatic restaurants and the corner-shop owners and the elderly women he had been selling to for decades, closed at noon, walked home, slept three hours, woke, ate a small dinner of lutefisk, and at eight that evening boarded the Hurtigruten coastal ferry north toward Trøndelag where Jens had been working for a decade as a salmon-farm engineer, having never once visited his son's home in any of those fourteen years and not knowing, exactly, whether Jens would even open the door. Make this a slow West-Norwegian fishing-village drama, with a melancholic Hardanger-fiddle-and-cello score and continuous wharf-and-North-Sea ambient sounds.",
+      "rewritten": true,
+      "original_name": "hard_007",
+      "chain_before_lock": [
+        [
+          "StoryAgent"
+        ],
+        [
+          "ScreenplayAgent"
+        ],
+        [
+          "KeyFrameAgent"
+        ],
+        [
+          "VideoAgent"
+        ],
+        [
+          "AmbienceAgent",
+          "MusicAgent"
+        ],
+        [
+          "AmbienceAgent",
+          "MusicAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_zh": "做一部古装战争史诗题材动画短剧——大将军慕容戎之子镇守西北十年未归，最后一战他孤身一骑冲入十万敌军中，只为给死去的父亲讨回那柄祖传青龙偃月刀。记得加战马嘶鸣、弓弦绷紧、雪原寒风的环境音，再配一段悲壮的古风战鼓 BGM。",
+      "user_goal_en_translated": true
+    }
+  },
+  {
+    "name": "cr_072",
+    "category": "cr",
+    "user_goal": "Make a Chinese-mythology fantasy animated short drama — at the close of the Investiture of the Gods war, the last surviving little nine-tailed fox demon is dragged up onto the Investiture Platform by Jiang Ziya. Just before her execution, she suddenly remembers a man who has been appearing in her dreams. Add ambient sounds of the nine-heaven thunder rolling, and a mournful classical-Chinese BGM.",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "StoryAgent -> ScreenplayAgent -> KeyFrameAgent -> VideoAgent -> MusicAgent -> AmbienceAgent -> AudioMixAgent -> CompositorAgent -> done",
+      "shape_layer_count": 9,
+      "sampled_genre": "historical_war",
+      "original_user_goal": "Make a 4-minute animated war drama about a Senegalese tirailleur in WWI trenches writing letters home to his daughter, score with a brass-and-strings march under battlefield ambience.",
+      "rewritten": true,
+      "chain_before_lock": [
+        [
+          "StoryAgent"
+        ],
+        [
+          "ScreenplayAgent"
+        ],
+        [
+          "KeyFrameAgent"
+        ],
+        [
+          "VideoAgent"
+        ],
+        [
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "AmbienceAgent",
+          "MusicAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_zh": "做一部神话改编玄幻题材动画短剧——封神大战末年，从苦肉计中活下来的小妖九尾狐被姜子牙押解上封神台，临死前她忽然想起一个总在梦里出现的男人。记得加九重天雷劫的环境音 + 一段悲怆古风 BGM。",
+      "user_goal_en_translated": true
+    }
+  },
+  {
+    "name": "cr_059",
+    "category": "cr",
+    "user_goal": "Make a high-school revenge animated short drama — Gu Xiuning, the ice-cold transfer student who always ranks first, is discovered on his very first day to be the only survivor of an arson that struck this school ten years ago. The new homeroom teacher, Mr. Lin, turns out to be the very man who dragged him out of the flames back then. Add a restrained, suppressed piano BGM.",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "StoryAgent -> ScreenplayAgent -> KeyFrameAgent -> VideoAgent -> MusicAgent -> AudioMixAgent -> CompositorAgent -> done",
+      "shape_layer_count": 8,
+      "sampled_genre": "other",
+      "original_user_goal": "Produce a 5-minute animated drama about an aging Cuban son-musician returning to the village where he last performed in 1959, with a son-cubano-and-tres underscore.",
+      "rewritten": true,
+      "chain_before_lock": [
+        [
+          "StoryAgent"
+        ],
+        [
+          "ScreenplayAgent"
+        ],
+        [
+          "KeyFrameAgent"
+        ],
+        [
+          "VideoAgent"
+        ],
+        [
+          "MusicAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_zh": "做一部校园修罗场题材动画短剧——成绩永远第一的冷面转校生顾修宁，第一天就被发现是十年前那场校园纵火案唯一的幸存者；而新来的班主任林老师，正是当年把他从火里拖出来的人。配一段克制压抑的钢琴 BGM。",
+      "user_goal_en_translated": true
+    }
+  },
+  {
+    "name": "cr_030",
+    "category": "cr",
+    "user_goal": "Make a CEO-chasing-his-wife animated short drama — Su Nian, the contract-marriage wife, returns three years later with twin children to deliver divorce papers to the heir of the Huo family. The man who once treated her merely as a stand-in for someone else, kneels before her for the very first time. Add a heart-tugging string BGM.",
+    "expected_chain": [
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "StoryAgent -> ScreenplayAgent -> KeyFrameAgent -> VideoAgent -> MusicAgent -> AudioMixAgent -> CompositorAgent -> done",
+      "shape_layer_count": 8,
+      "sampled_genre": "wuxia_cultivation",
+      "original_user_goal": "Make a cultivation-fantasy animated drama about a washed-up young man who awakens an ancient bloodline and rises through the ranks of his sect, add some epic orchestral music",
+      "rewritten": true,
+      "chain_before_lock": [
+        [
+          "StoryAgent"
+        ],
+        [
+          "ScreenplayAgent"
+        ],
+        [
+          "KeyFrameAgent"
+        ],
+        [
+          "VideoAgent"
+        ],
+        [
+          "MusicAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_zh": "做一部总裁追妻题材动画短剧——契约老婆苏念三年后带着一对双胞胎儿女回国，向霍家继承人递上离婚协议，那个曾经把她当替身的男人，第一次跪在她面前。配一段揪心的弦乐 BGM。",
+      "user_goal_en_translated": true
+    }
+  },
+  {
+    "name": "intake_img_019",
+    "category": "intake_img",
+    "user_goal": "Use this uploaded photo as the face of the rebirth-revenge female lead. Make a period rebirth-revenge palace-intrigue animated short drama — she is the former empress who was forced to drink poisoned wine. Reborn back to the day of the imperial selection, this time she will personally send every soul who once owed her a life into the underworld.",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "IntakeImageAgent -> BriefEnricherAgent -> StoryAgent -> ScreenplayAgent -> KeyFrameAgent -> VideoAgent -> CompositorAgent -> done",
+      "shape_layer_count": 8,
+      "sampled_genre": "fantasy",
+      "original_user_goal": "I've attached a concept painting of a half-flooded medieval cathedral lit by candle. Use it as the setting and make a fantasy mini-drama about a heretic priest hiding the last copy of a forbidden gospel.",
+      "rewritten": true,
+      "chain_before_lock": [
+        [
+          "IntakeImageAgent"
+        ],
+        [
+          "BriefEnricherAgent"
+        ],
+        [
+          "StoryAgent"
+        ],
+        [
+          "ScreenplayAgent"
+        ],
+        [
+          "KeyFrameAgent"
+        ],
+        [
+          "VideoAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_zh": "以这张上传的人物照片作为重生女主的脸，做一部古装重生宫斗题材动画短剧——她是被皇帝赐毒酒的前世废后，重生回到入宫选秀的那一日，这一次她要把欠她一条命的人，一个个亲手送进黄泉。",
+      "user_goal_en_translated": true
+    }
+  },
+  {
+    "name": "intake_img_018",
+    "category": "intake_img",
+    "user_goal": "Use this uploaded photo as the wealthy-heir male lead. Make a modern-urban wealthy-clan tortured-romance animated short drama — seven years ago he watched her jump off a yacht into the deep sea; seven years later she returns under a different name, becomes his biggest business rival, and the one shadow he can never quite catch.",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "IntakeImageAgent -> BriefEnricherAgent -> StoryAgent -> ScreenplayAgent -> KeyFrameAgent -> VideoAgent -> CompositorAgent -> done",
+      "shape_layer_count": 8,
+      "sampled_genre": "historical_war",
+      "original_user_goal": "Here's a portrait of a 1860s Crimean War battlefield nurse with bloodied apron and a copper kettle. Make an animated period drama about the night she chose between two dying soldiers.",
+      "rewritten": true,
+      "chain_before_lock": [
+        [
+          "IntakeImageAgent"
+        ],
+        [
+          "BriefEnricherAgent"
+        ],
+        [
+          "StoryAgent"
+        ],
+        [
+          "ScreenplayAgent"
+        ],
+        [
+          "KeyFrameAgent"
+        ],
+        [
+          "VideoAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_zh": "以这张上传的人物照片为豪门男主，做一部都市豪门虐恋题材动画短剧——七年前他亲眼看着她从游艇上跳下大海，七年后她以另一个名字回来，成了他最大的商业对手，也成了他这辈子最想抓住又抓不住的影子。",
+      "user_goal_en_translated": true
+    }
+  },
+  {
+    "name": "intake_img_005",
+    "category": "intake_img",
+    "user_goal": "Use this uploaded photo as the look of the cultivation male lead. Make a cultivation-rebirth animated short drama — in his previous life he was the Heavenly Emperor who suppressed all under heaven, killed by the joint betrayal of nine sacred lands. He is now reborn into the body of the trash junior disciple every senior in the sect mocks; every one of those who once stepped on him has no idea they are already standing at the edge of doom.",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "IntakeImageAgent -> BriefEnricherAgent -> StoryAgent -> ScreenplayAgent -> KeyFrameAgent -> VideoAgent -> CompositorAgent -> done",
+      "shape_layer_count": 8,
+      "sampled_genre": "other",
+      "original_user_goal": "Take the person in this photo as the protagonist and make a rebirth-themed mini-drama about them waking up ten years before their lover's death",
+      "rewritten": true,
+      "chain_before_lock": [
+        [
+          "IntakeImageAgent"
+        ],
+        [
+          "BriefEnricherAgent"
+        ],
+        [
+          "StoryAgent"
+        ],
+        [
+          "ScreenplayAgent"
+        ],
+        [
+          "KeyFrameAgent"
+        ],
+        [
+          "VideoAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_zh": "以这张上传的人物照片作为修真男主的样子，做一部修真重生题材动画短剧——他上一世曾是镇压万古的天帝，被九大圣地联手陨落；这一世他重生在被全宗门嘲笑的废材小师弟身上，所有当年踩过他的人，都不知道自己已经站在末日边缘。",
+      "user_goal_en_translated": true
+    }
+  },
+  {
+    "name": "intake_img_008",
+    "category": "intake_img",
+    "user_goal": "Use this uploaded photo as the fantasy female lead. Make a post-apocalyptic super-power animated short drama — the day the virus broke out she awakened the power to bend metal inside a subway car. Now she leads a band of survivors through the zombie-flooded city, dodging the military's super-power task force as she hunts for whoever truly released the pathogen.",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "IntakeImageAgent -> BriefEnricherAgent -> StoryAgent -> ScreenplayAgent -> KeyFrameAgent -> VideoAgent -> CompositorAgent -> done",
+      "shape_layer_count": 8,
+      "sampled_genre": "historical_drama",
+      "original_user_goal": "I uploaded a concept painting of a steampunk airship. Make an adventure animated drama about a young engineer's apprentice who stows away on its maiden voyage and uncovers a plot to bomb the Imperial parliament",
+      "rewritten": true,
+      "chain_before_lock": [
+        [
+          "IntakeImageAgent"
+        ],
+        [
+          "BriefEnricherAgent"
+        ],
+        [
+          "StoryAgent"
+        ],
+        [
+          "ScreenplayAgent"
+        ],
+        [
+          "KeyFrameAgent"
+        ],
+        [
+          "VideoAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_zh": "以这张上传的人物照片作为玄幻女主，做一部末日异能题材动画短剧——病毒爆发那天她在地铁里觉醒了操纵金属的异能，从此带着一群幸存者，在被丧尸潮淹没的城市里和军方异能小组周旋，找出真正释放病毒的人。",
+      "user_goal_en_translated": true
+    }
+  },
+  {
+    "name": "intake_img_046",
+    "category": "intake_img",
+    "user_goal": "Use this uploaded photo as the period female lead. Make a palace-intrigue rise-from-the-ashes animated short drama — she is the disgraced empress who climbed all the way back from the cold palace to the principal palace; the only one who still remembers her real name on this revenge road is the little eunuch who once took a knife for her. Add a sweeping classical-Chinese BGM.",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "IntakeImageAgent -> BriefEnricherAgent -> StoryAgent -> ScreenplayAgent -> KeyFrameAgent -> VideoAgent -> MusicAgent -> AudioMixAgent -> CompositorAgent -> done",
+      "shape_layer_count": 10,
+      "sampled_genre": "other",
+      "original_user_goal": "Here's a sketch of a young female Andean panpipe player in a high mountain village. Make an animated mini-drama about her invitation to perform at a state festival in Lima, with an Andean panpipe-and-charango score.",
+      "rewritten": true,
+      "chain_before_lock": [
+        [
+          "IntakeImageAgent"
+        ],
+        [
+          "BriefEnricherAgent"
+        ],
+        [
+          "StoryAgent"
+        ],
+        [
+          "ScreenplayAgent"
+        ],
+        [
+          "KeyFrameAgent"
+        ],
+        [
+          "VideoAgent"
+        ],
+        [
+          "MusicAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_zh": "以这张上传的人物照片为古装女主，做一部宫斗逆袭题材动画短剧——她是从冷宫一路爬回坤宁宫的废后，复仇路上唯一还记得她真名的，只有当年那个为她挡过一刀的小太监。配一段大气磅礴的古风 BGM。",
+      "user_goal_en_translated": true
+    }
+  },
+  {
+    "name": "intake_img_039",
+    "category": "intake_img",
+    "user_goal": "Use this uploaded photo as the high-school female lead. Make a contemporary high-school sweet-and-bitter romance animated short drama — rumor says she is the secret daughter of the largest private-academy benefactor in northern Jiangbei; on her very first day as a transfer student she clashes head-on with the school's most untouchable bully. Add a light-yet-bittersweet piano BGM.",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "IntakeImageAgent -> BriefEnricherAgent -> StoryAgent -> ScreenplayAgent -> KeyFrameAgent -> VideoAgent -> MusicAgent -> AudioMixAgent -> CompositorAgent -> done",
+      "shape_layer_count": 10,
+      "sampled_genre": "family_slice",
+      "original_user_goal": "Using this uploaded portrait of a young female Spanish flamenco guitarist with calloused fingers, make a 4-minute period drama about her audition for a Sevillan tablao her late father played at, with a flamenco-guitar-and-cajón score.",
+      "rewritten": true,
+      "chain_before_lock": [
+        [
+          "IntakeImageAgent"
+        ],
+        [
+          "BriefEnricherAgent"
+        ],
+        [
+          "StoryAgent"
+        ],
+        [
+          "ScreenplayAgent"
+        ],
+        [
+          "KeyFrameAgent"
+        ],
+        [
+          "VideoAgent"
+        ],
+        [
+          "MusicAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_zh": "以这张上传的人物照片为校园修罗场女主，做一部都市校园甜虐题材动画短剧——传闻她是江北最大私立高中的隐秘校董之女，转学第一天就和全校最难缠的校霸男主杠上了。配一段轻快又揪心的钢琴 BGM。",
+      "user_goal_en_translated": true
+    }
+  },
+  {
+    "name": "intake_img_036",
+    "category": "intake_img",
+    "user_goal": "Use this uploaded photo as the look of the CEO male lead. Make a modern-urban wealthy-clan tortured-romance animated short drama — three years after the car crash that erased her memory, the little contract wife Su Nian reappears in front of CEO Huo with a small boy who looks exactly like him. Add bilingual Chinese-English subtitles for overseas distribution.",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "IntakeImageAgent -> BriefEnricherAgent -> StoryAgent -> ScreenplayAgent -> KeyFrameAgent -> VideoAgent -> TranscriptionAgent -> TranslationAgent -> CompositorAgent -> done",
+      "shape_layer_count": 10,
+      "sampled_genre": "other",
+      "original_user_goal": "I've uploaded a sketch of a young Cuban revolutionary woman with a rifle on her shoulder in 1958 Sierra Maestra. Make an animated period drama about her last march before the city falls, with English-Spanish bilingual subtitles.",
+      "rewritten": true,
+      "chain_before_lock": [
+        [
+          "IntakeImageAgent"
+        ],
+        [
+          "BriefEnricherAgent"
+        ],
+        [
+          "StoryAgent"
+        ],
+        [
+          "ScreenplayAgent"
+        ],
+        [
+          "KeyFrameAgent"
+        ],
+        [
+          "VideoAgent"
+        ],
+        [
+          "TranscriptionAgent"
+        ],
+        [
+          "TranslationAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_zh": "以这张上传的人物照片作为霸总男主的样子，做一部都市豪门虐恋题材动画短剧——三年前那场车祸后失忆的小娇妻苏念，三年后带着一个长相和霍总一模一样的小男孩重新出现在他面前。要加中英双语字幕方便海外观众观看。",
+      "user_goal_en_translated": true
+    }
+  },
+  {
+    "name": "intake_img_037",
+    "category": "intake_img",
+    "user_goal": "Use this uploaded photo as the fantasy female lead. Make a demon-empress rebirth animated short drama — in her previous life she was the demon empress who guarded the human realm, killed by the joint betrayal of her most trusted disciple and the heavenly court. Reborn to the day before her demonic awakening, this time she will personally drag every one of those self-righteous heavenly beings down from their pedestals. Add bilingual Chinese-English subtitles for overseas short-video distribution.",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "IntakeImageAgent -> BriefEnricherAgent -> StoryAgent -> ScreenplayAgent -> KeyFrameAgent -> VideoAgent -> TranscriptionAgent -> TranslationAgent -> CompositorAgent -> done",
+      "shape_layer_count": 10,
+      "sampled_genre": "historical_drama",
+      "original_user_goal": "Use this uploaded portrait of a Hokkaido Ainu elder fisherman holding a salmon. Make an animated coming-of-age mini-drama about his teaching his half-Japanese grandson their ancestral fishing rites, with English-Japanese bilingual subtitles.",
+      "rewritten": true,
+      "chain_before_lock": [
+        [
+          "IntakeImageAgent"
+        ],
+        [
+          "BriefEnricherAgent"
+        ],
+        [
+          "StoryAgent"
+        ],
+        [
+          "ScreenplayAgent"
+        ],
+        [
+          "KeyFrameAgent"
+        ],
+        [
+          "VideoAgent"
+        ],
+        [
+          "TranscriptionAgent"
+        ],
+        [
+          "TranslationAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_zh": "以这张上传的人物照片为玄幻女主，做一部魔尊重生题材动画短剧——前世她是镇守人间界的魔尊，被自己最信任的徒弟联合天界众神陨落；重生回到入魔前一日，她要把那群伪善天人一个个亲手拉下神坛。记得加中英双语字幕方便外网短视频平台分发。",
+      "user_goal_en_translated": true
+    }
+  },
+  {
+    "name": "intake_img_030",
+    "category": "intake_img",
+    "user_goal": "Use this uploaded photo as the suspense male lead. Make an urban crime-suspense animated short drama — the new deputy captain of the homicide unit takes his very first case: a serial-disposal cold case that has been silent for fifteen years. As he closes in on the truth, he finds his own father's name plainly listed among the original suspects. Add Chinese subtitles for short-video platform distribution.",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "IntakeImageAgent -> BriefEnricherAgent -> StoryAgent -> ScreenplayAgent -> KeyFrameAgent -> VideoAgent -> TranscriptionAgent -> CompositorAgent -> done",
+      "shape_layer_count": 9,
+      "sampled_genre": "other",
+      "original_user_goal": "Here's a sketch of a young female Indonesian shadow-puppet master backstage with her gamelan orchestra. Make a 3-minute period drama about her last performance before a colonial governor, with English subtitles.",
+      "rewritten": true,
+      "chain_before_lock": [
+        [
+          "IntakeImageAgent"
+        ],
+        [
+          "BriefEnricherAgent"
+        ],
+        [
+          "StoryAgent"
+        ],
+        [
+          "ScreenplayAgent"
+        ],
+        [
+          "KeyFrameAgent"
+        ],
+        [
+          "VideoAgent"
+        ],
+        [
+          "TranscriptionAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_zh": "以这张上传的人物照片为悬疑男主，做一部都市悬疑刑侦题材动画短剧——刑警队新来的副队长接的第一桩案子，是一起沉默了十五年的连环抛尸案；当他追到真相边缘时，发现自己父亲的名字赫然出现在当年的嫌疑人名单上。记得加中文字幕方便短视频平台分发。",
+      "user_goal_en_translated": true
+    }
+  },
+  {
+    "name": "intake_img_049",
+    "category": "intake_img",
+    "user_goal": "Use this uploaded photo as the wealthy-clan tortured-romance female lead. Make a modern-urban stand-in-bride wealthy-clan animated short drama — she was brought in to replace his dead first love. The day her three-year contract expires she hands him divorce papers, and the man who never once truly looked at her in those three years suddenly begins hunting for her like a madman across the whole city. Add Chinese subtitles for short-video platform distribution and a sad piano BGM.",
+    "expected_chain": [
+      [
+        "IntakeImageAgent"
+      ],
+      [
+        "BriefEnricherAgent"
+      ],
+      [
+        "StoryAgent"
+      ],
+      [
+        "ScreenplayAgent"
+      ],
+      [
+        "KeyFrameAgent"
+      ],
+      [
+        "VideoAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "TranscriptionAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "IntakeImageAgent -> BriefEnricherAgent -> StoryAgent -> ScreenplayAgent -> KeyFrameAgent -> VideoAgent -> MusicAgent -> TranscriptionAgent -> AudioMixAgent -> CompositorAgent -> done",
+      "shape_layer_count": 11,
+      "sampled_genre": "other",
+      "original_user_goal": "I've uploaded a portrait of a Greek bouzouki player at a 1950s rebetiko taverna. Make a noir period drama about his role in a dockworker's strike, with English subtitles and a smoky bouzouki-and-baglama underscore.",
+      "rewritten": true,
+      "chain_before_lock": [
+        [
+          "IntakeImageAgent"
+        ],
+        [
+          "BriefEnricherAgent"
+        ],
+        [
+          "StoryAgent"
+        ],
+        [
+          "ScreenplayAgent"
+        ],
+        [
+          "KeyFrameAgent"
+        ],
+        [
+          "VideoAgent"
+        ],
+        [
+          "TranscriptionAgent"
+        ],
+        [
+          "MusicAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_zh": "以这张上传的人物照片为豪门虐恋女主，做一部都市豪门替身题材动画短剧——她是被找来代替死去白月光的替身娇妻，三年契约期满那天她递上离婚协议，可那个三年来从没正眼看过她的男人，却开始疯了一样在全城找她。记得加中文字幕方便短视频平台分发，再配一段悲伤的钢琴 BGM。",
+      "user_goal_en_translated": true
+    }
+  },
+  {
+    "name": "storytelling_024",
+    "category": "storytelling",
+    "user_goal": "Here's my story I want to process: Deep in the midnight ocean, where the water turned from blue to black, there lived a small moon-jellyfish named Lumi. Unlike her brothers and sisters who glowed with a soft pearly light, Lumi could not glow at all. No matter how hard she tried, her bell stayed dim and plain. The other jellyfish would drift past her in shimmering parades, their bodies lit like tiny lanterns, and Lumi would tuck herself behind a forest of kelp and wait for them to pass. 'You will glow one day,' her mother told her gently. 'Every moon-jellyfish glows. You just need to find your light.' But Lumi did not believe her. One night, a storm swept through the ocean. The currents grew strong and cold, and Lumi was pulled away from her kelp forest, tumbling deeper and deeper into the dark. When the storm passed, she found herself in a place she had never been — a quiet hollow beneath a coral reef, where the water was still and thick with cold. She was completely alone. Above her, the reef glowed faintly with the colors of sleeping anemones, and far below, tiny crabs hurried back to their homes. Lumi drifted in the silence, afraid. Then she heard a small voice. 'Are you lost?' A young sea-turtle was watching her from a ledge of pink coral. His shell was chipped and his eyes were tired, but his voice was kind. 'I can't find my family,' Lumi whispered. 'The storm carried me here.' 'I know the way to the surface,' said the turtle. 'I swim there every morning to see the sun. But it is a long journey, and the waters between here and the top are very dark. I am afraid I will lose my way.' 'I cannot help you see,' Lumi said sadly. 'I do not have a light.' But the turtle studied her quietly. 'You feel warm to me,' he said. 'When you are close to me, I am less afraid. Maybe that is your light.' Lumi stayed very still. She had never thought of warmth as a light before. And then, slowly, something inside her bell began to hum — not bright, not showy, but soft and steady, like the last ember of a fire that will not go out. The turtle's eyes widened. A gentle, honey-colored glow was spreading through Lumi's bell — a glow no other moon-jellyfish had. Together, Lumi and the turtle began the long climb toward the surface, her quiet warmth lighting just enough of the water for him to find his way. When they reached the top of the ocean, the sun had just risen, and Lumi's family was waiting for her. 'We looked all night,' her mother said. 'How did you come back?' Lumi looked at the sea-turtle and smiled. 'I found my light,' she said. — Turn this bedtime story I wrote into an illustrated audiobook — soft watercolor pictures per scene Add an ethereal cello BGM and deep-sea ambience: water bubbles and distant whale calls.",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent"
+      ],
+      [
+        "NarratorAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "NarrationAgent -> IllustrationAgent -> NarratorAgent -> MusicAgent -> AmbienceAgent -> AudioMixAgent -> CompositorAgent -> done",
+      "shape_layer_count": 8,
+      "sampled_genre": "fantasy",
+      "rewritten": false,
+      "chain_before_audio_unify": [
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent"
+        ],
+        [
+          "NarratorAgent",
+          "IllustrationAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "user_goal_before_audio_unify": "Here's my story I want to process: Deep in the midnight ocean, where the water turned from blue to black, there lived a small moon-jellyfish named Lumi. Unlike her brothers and sisters who glowed with a soft pearly light, Lumi could not glow at all. No matter how hard she tried, her bell stayed dim and plain. The other jellyfish would drift past her in shimmering parades, their bodies lit like tiny lanterns, and Lumi would tuck herself behind a forest of kelp and wait for them to pass. 'You will glow one day,' her mother told her gently. 'Every moon-jellyfish glows. You just need to find your light.' But Lumi did not believe her. One night, a storm swept through the ocean. The currents grew strong and cold, and Lumi was pulled away from her kelp forest, tumbling deeper and deeper into the dark. When the storm passed, she found herself in a place she had never been — a quiet hollow beneath a coral reef, where the water was still and thick with cold. She was completely alone. Above her, the reef glowed faintly with the colors of sleeping anemones, and far below, tiny crabs hurried back to their homes. Lumi drifted in the silence, afraid. Then she heard a small voice. 'Are you lost?' A young sea-turtle was watching her from a ledge of pink coral. His shell was chipped and his eyes were tired, but his voice was kind. 'I can't find my family,' Lumi whispered. 'The storm carried me here.' 'I know the way to the surface,' said the turtle. 'I swim there every morning to see the sun. But it is a long journey, and the waters between here and the top are very dark. I am afraid I will lose my way.' 'I cannot help you see,' Lumi said sadly. 'I do not have a light.' But the turtle studied her quietly. 'You feel warm to me,' he said. 'When you are close to me, I am less afraid. Maybe that is your light.' Lumi stayed very still. She had never thought of warmth as a light before. And then, slowly, something inside her bell began to hum — not bright, not showy, but soft and steady, like the last ember of a fire that will not go out. The turtle's eyes widened. A gentle, honey-colored glow was spreading through Lumi's bell — a glow no other moon-jellyfish had. Together, Lumi and the turtle began the long climb toward the surface, her quiet warmth lighting just enough of the water for him to find his way. When they reached the top of the ocean, the sun had just risen, and Lumi's family was waiting for her. 'We looked all night,' her mother said. 'How did you come back?' Lumi looked at the sea-turtle and smiled. 'I found my light,' she said. — Turn this bedtime story I wrote into an illustrated audiobook — soft watercolor pictures per scene",
+      "audio_unified": true,
+      "chain_before_lock": [
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true
+    }
+  },
+  {
+    "name": "storytelling_026",
+    "category": "storytelling",
+    "user_goal": "Here's my story I want to process: The Cedarbrook Public Library had a ghost, though most patrons never noticed her. She was a small, translucent librarian in a long gray cardigan, and she had been there for forty-two years. Her name, when she had been alive, was Miss Eula Pembridge, and she had loved the library quietly and ferociously for all of her working life. Even after she passed, she could not quite bring herself to leave. The living librarians had long since learned to leave a pot of chamomile tea on the counter each evening, and in the morning the cup was empty and the books on the return cart were mysteriously reshelved. The Cedarbrook ghost did not haunt. She only loved. But one autumn afternoon, a small boy named Jasper arrived with his grandmother and made the library, for the first time in four decades, not quiet. Jasper was seven, and his sneakers squeaked on the marble, and he shouted across the aisles, and he knocked picture books off low shelves, and he sang. His grandmother, apologetic, put a hand on his shoulder, but Jasper had a great deal of life in him and it would not be contained. Miss Pembridge watched from the children's section, her translucent hands folded. Normally, when a child grew too loud, an adult librarian would gently say, 'Inside voice, please,' and the child would quiet for a while. But Jasper could not hold an inside voice. He did not mean to be loud. It was simply that there were so many books, and each one seemed to need an exclamation. On his fourth visit — he came every Tuesday — Miss Pembridge decided to try. She walked beside him through the stacks, invisible to him, and when Jasper pulled out a book about a sailing ship, she drifted her cold hand along his small warm one. Jasper paused. He did not scream, as some children might. He looked at his hand, curious. Then he opened the book and, for the first time, whispered. Miss Pembridge smiled a ghost's smile. Every Tuesday after that, she followed him through the library, and every Tuesday he grew a little quieter and his books grew a little thicker. Soon Jasper could read chapter books, and then novels, and he would sit in the armchair by the window with his grandmother and they would both read for an hour at a time without speaking. One day he said to his grandmother, 'There is a cold draft in the library.' 'Yes,' said his grandmother. 'I've felt it too, since I was a girl.' Jasper thought about that. Then he said, 'I think it's a friend.' When Jasper was grown, he became a librarian himself, at Cedarbrook. On his first evening alone in the building after closing, he set a second cup of tea beside the first, and he waited. The second cup was empty by morning. — Turn this library ghost story into an illustrated audiobook — warm amber library illustration style Add a tense piano BGM and library ambience: page rustles, distant footsteps, hollow corridor reverb.",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent"
+      ],
+      [
+        "NarratorAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "NarrationAgent -> IllustrationAgent -> NarratorAgent -> MusicAgent -> AmbienceAgent -> AudioMixAgent -> CompositorAgent -> done",
+      "shape_layer_count": 8,
+      "sampled_genre": "wuxia_cultivation",
+      "rewritten": false,
+      "chain_before_audio_unify": [
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent"
+        ],
+        [
+          "NarratorAgent",
+          "IllustrationAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "user_goal_before_audio_unify": "Here's my story I want to process: The Cedarbrook Public Library had a ghost, though most patrons never noticed her. She was a small, translucent librarian in a long gray cardigan, and she had been there for forty-two years. Her name, when she had been alive, was Miss Eula Pembridge, and she had loved the library quietly and ferociously for all of her working life. Even after she passed, she could not quite bring herself to leave. The living librarians had long since learned to leave a pot of chamomile tea on the counter each evening, and in the morning the cup was empty and the books on the return cart were mysteriously reshelved. The Cedarbrook ghost did not haunt. She only loved. But one autumn afternoon, a small boy named Jasper arrived with his grandmother and made the library, for the first time in four decades, not quiet. Jasper was seven, and his sneakers squeaked on the marble, and he shouted across the aisles, and he knocked picture books off low shelves, and he sang. His grandmother, apologetic, put a hand on his shoulder, but Jasper had a great deal of life in him and it would not be contained. Miss Pembridge watched from the children's section, her translucent hands folded. Normally, when a child grew too loud, an adult librarian would gently say, 'Inside voice, please,' and the child would quiet for a while. But Jasper could not hold an inside voice. He did not mean to be loud. It was simply that there were so many books, and each one seemed to need an exclamation. On his fourth visit — he came every Tuesday — Miss Pembridge decided to try. She walked beside him through the stacks, invisible to him, and when Jasper pulled out a book about a sailing ship, she drifted her cold hand along his small warm one. Jasper paused. He did not scream, as some children might. He looked at his hand, curious. Then he opened the book and, for the first time, whispered. Miss Pembridge smiled a ghost's smile. Every Tuesday after that, she followed him through the library, and every Tuesday he grew a little quieter and his books grew a little thicker. Soon Jasper could read chapter books, and then novels, and he would sit in the armchair by the window with his grandmother and they would both read for an hour at a time without speaking. One day he said to his grandmother, 'There is a cold draft in the library.' 'Yes,' said his grandmother. 'I've felt it too, since I was a girl.' Jasper thought about that. Then he said, 'I think it's a friend.' When Jasper was grown, he became a librarian himself, at Cedarbrook. On his first evening alone in the building after closing, he set a second cup of tea beside the first, and he waited. The second cup was empty by morning. — Turn this library ghost story into an illustrated audiobook — warm amber library illustration style",
+      "audio_unified": true,
+      "chain_before_lock": [
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true
+    }
+  },
+  {
+    "name": "storytelling_004",
+    "category": "storytelling",
+    "user_goal": "Tell me a slow illustrated story about a chubby white-and-tabby barn cat with alert green eyes, on her midnight patrol of the farm where she protects three sleeping kittens from a barn owl. Please add gentle nighttime music. Add a slow jazz BGM and farm-night ambience: night wind, crickets, occasional distant dog bark.",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent"
+      ],
+      [
+        "NarratorAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "NarrationAgent -> IllustrationAgent -> NarratorAgent -> MusicAgent -> AmbienceAgent -> AudioMixAgent -> CompositorAgent -> done",
+      "shape_layer_count": 8,
+      "sampled_genre": "other",
+      "rewritten": false,
+      "chain_before_audio_unify": [
+        [
+          "IntakeImageAgent"
+        ],
+        [
+          "BriefEnricherAgent"
+        ],
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent"
+        ],
+        [
+          "NarratorAgent",
+          "IllustrationAgent",
+          "MusicAgent"
+        ],
+        [
+          "MusicAgent",
+          "NarratorAgent",
+          "IllustrationAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "user_goal_before_audio_unify": "Here's a sketch of a barn cat I drew. Tell me a slow illustrated story about her midnight patrol of the farm where she protects three sleeping kittens from a barn owl, please add gentle nighttime music",
+      "audio_unified": true,
+      "chain_before_lock": [
+        [
+          "IntakeImageAgent"
+        ],
+        [
+          "BriefEnricherAgent"
+        ],
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_before_align": "Here's a sketch of a barn cat I drew. Tell me a slow illustrated story about her midnight patrol of the farm where she protects three sleeping kittens from a barn owl, please add gentle nighttime music Add a slow jazz BGM and farm-night ambience: night wind, crickets, occasional distant dog bark.",
+      "user_goal_realigned": true,
+      "chain_before_align": [
+        [
+          "IntakeImageAgent"
+        ],
+        [
+          "BriefEnricherAgent"
+        ],
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent"
+        ],
+        [
+          "NarratorAgent"
+        ],
+        [
+          "MusicAgent"
+        ],
+        [
+          "AmbienceAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_realigned": true
+    }
+  },
+  {
+    "name": "storytelling_104",
+    "category": "storytelling",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent"
+      ],
+      [
+        "NarratorAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "user_goal": "I'd like an illustrated audiobook in soft watercolor style about an elderly Inuit grandmother in a fur-trimmed parka braiding her grandchild's hair inside a snow-house, telling them an old Inuktitut creation myth where the sun and moon were once two siblings playing a game of throwing seal-bones across the polar sky. Add a tender folk acoustic-guitar BGM and arctic ambience: snowstorm wind outside, hearth-fire crackle, soft child laughter.",
+    "_meta": {
+      "shape_layers_str": "NarrationAgent -> IllustrationAgent -> NarratorAgent -> MusicAgent -> AmbienceAgent -> AudioMixAgent -> CompositorAgent -> done",
+      "shape_layer_count": 8,
+      "sampled_genre": "fantasy",
+      "rewritten": false,
+      "original_name": "hard_021",
+      "chain_before_audio_unify": [
+        [
+          "IntakeImageAgent"
+        ],
+        [
+          "BriefEnricherAgent"
+        ],
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "user_goal_before_audio_unify": "I've uploaded a soft watercolor of an elderly Inuit grandmother braiding her grandchild's hair in a snow-house. I'd like an illustrated audiobook telling of an old Inuktitut creation myth where the sun and moon were once two siblings playing a game of throwing seal-bones across the polar sky, presented entirely as a slow narrator-and-illustration piece—no music underneath, no ambient layer, just the spoken voice over moving illustrations, ending without a translated subtitle track.",
+      "audio_unified": true,
+      "chain_before_lock": [
+        [
+          "IntakeImageAgent"
+        ],
+        [
+          "BriefEnricherAgent"
+        ],
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_before_align": "I've uploaded a soft watercolor of an elderly Inuit grandmother braiding her grandchild's hair in a snow-house. I'd like an illustrated audiobook telling of an old Inuktitut creation myth where the sun and moon were once two siblings playing a game of throwing seal-bones across the polar sky, presented entirely as a slow narrator-and-illustration piece—no music underneath, no ambient layer, just the spoken voice over moving illustrations, ending without a translated subtitle track. Add a tender folk acoustic-guitar BGM and arctic ambience: snowstorm wind outside, hearth-fire crackle, soft child laughter.",
+      "user_goal_realigned": true,
+      "chain_before_align": [
+        [
+          "IntakeImageAgent"
+        ],
+        [
+          "BriefEnricherAgent"
+        ],
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent"
+        ],
+        [
+          "NarratorAgent"
+        ],
+        [
+          "MusicAgent"
+        ],
+        [
+          "AmbienceAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_realigned": true
+    }
+  },
+  {
+    "name": "storytelling_065",
+    "category": "storytelling",
+    "user_goal": "Tell me a Greek myth in pencil-and-watercolor sketch style about a young Greek shepherd boy in a worn linen tunic, standing among three goats on a dry sunlit hillside near Delphi, who heard the oracle's whispered fate carried on the wind. Narrate in English with Greek subtitles. Add an ancient-Greek lyre BGM and pastoral ambience: mountain wind, goat bells, olive-leaf rustle.",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent"
+      ],
+      [
+        "NarratorAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "NarrationAgent -> IllustrationAgent -> NarratorAgent -> MusicAgent -> AmbienceAgent -> TranslationAgent -> AudioMixAgent -> CompositorAgent -> done",
+      "shape_layer_count": 9,
+      "sampled_genre": "fantasy",
+      "rewritten": false,
+      "chain_before_audio_unify": [
+        [
+          "IntakeImageAgent"
+        ],
+        [
+          "BriefEnricherAgent"
+        ],
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent"
+        ],
+        [
+          "NarratorAgent",
+          "IllustrationAgent"
+        ],
+        [
+          "TranslationAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "user_goal_before_audio_unify": "I've uploaded a sketch of a Greek shepherd boy with his goats on a dry hillside near Delphi. Use him as the protagonist and tell me a Greek myth about how he heard the oracle's whispered fate carried on the wind, narrate in Greek with English subtitles.",
+      "audio_unified": true,
+      "chain_before_lock": [
+        [
+          "IntakeImageAgent"
+        ],
+        [
+          "BriefEnricherAgent"
+        ],
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "TranslationAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_before_align": "I've uploaded a sketch of a Greek shepherd boy with his goats on a dry hillside near Delphi. Use him as the protagonist and tell me a Greek myth about how he heard the oracle's whispered fate carried on the wind, narrate in Greek with English subtitles. Add an ancient-Greek lyre BGM and pastoral ambience: mountain wind, goat bells, olive-leaf rustle.",
+      "user_goal_realigned": true,
+      "chain_before_align": [
+        [
+          "IntakeImageAgent"
+        ],
+        [
+          "BriefEnricherAgent"
+        ],
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent"
+        ],
+        [
+          "NarratorAgent"
+        ],
+        [
+          "MusicAgent"
+        ],
+        [
+          "AmbienceAgent"
+        ],
+        [
+          "TranslationAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_realigned": true
+    }
+  },
+  {
+    "name": "storytelling_011",
+    "category": "storytelling",
+    "user_goal": "Here's my story I want to process: In a forest older than any map, there ran a small clear river called Ibi. It was not a great river. It was only as wide as a child could jump across. But the old women of the nearest village said, and had said for many generations, that Ibi listened. If you whispered a wish over its moving water, and if your wish was honest, Ibi would sometimes grant it — not in grand ways, but in small careful ways, the way water shapes a stone. One summer, a boy named Nico came to the river with a secret wish. His little sister had been sick for many weeks, and the healer had shaken her head and said she did not know the cause. Their mother sat with the girl every night, and their father, a logger, had gone quiet in a way that scared Nico. So Nico walked three miles through the dawn forest and knelt beside the river. He did not know how to whisper a wish. He tried several times and stopped. Finally he said, in a very small voice, 'I want my sister to live.' Ibi did not answer. But as Nico sat, listening, he began to hear the river more clearly than he ever had. He heard it running over the smooth stones like quick laughter. He heard it brushing against the moss. He heard a bullfrog, somewhere, croaking twice. He heard the wind in the pine crowns above him. And then, strangely, he heard the voice of the river itself — not in words, but in a pulling certainty, like a small current beneath his thoughts. Go home, the river seemed to say. Look in your own kitchen. Nico was confused. But he went home. When he arrived, his mother was washing the lunch dishes, and Nico, without quite knowing why, lifted the lid of the water jug they kept on the counter and looked inside. The water was not clear. There was a thin film on its surface, and a strange metallic smell. The water had come from an old cistern behind the house, and something in it had gone bad. Nico ran to his mother. By that evening the water had been replaced with rain from the barrel. Within three days, his sister's fever broke. Within a week she was asking for bread. It was not a miracle, exactly. It was only a river that listened. Nico went back to Ibi every year after that. Sometimes he brought another small wish — a good harvest, a kind teacher, a friend for his lonely cousin — and sometimes Ibi answered, always in its small careful way, and sometimes it did not. Nico grew into a man and became the village healer himself, and when people came to him with troubles, he often sent them to the river before he prescribed anything, because he had learned that the first thing any river grants you is not what you asked for, but the quiet in which to hear what you actually needed. — Turn this into a narrated illustrated video layered with forest-river ambient sounds — misty ink-wash style Add an ethereal flute BGM and forest ambience: stream burble, songbirds, wind through pine needles.",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent"
+      ],
+      [
+        "NarratorAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "NarrationAgent -> IllustrationAgent -> NarratorAgent -> MusicAgent -> AmbienceAgent -> AudioMixAgent -> CompositorAgent -> done",
+      "shape_layer_count": 8,
+      "sampled_genre": "fantasy",
+      "rewritten": false,
+      "chain_before_audio_unify": [
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "NarratorAgent",
+          "IllustrationAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "AmbienceAgent",
+          "NarratorAgent",
+          "IllustrationAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "user_goal_before_audio_unify": "Here's my story I want to process: In a forest older than any map, there ran a small clear river called Ibi. It was not a great river. It was only as wide as a child could jump across. But the old women of the nearest village said, and had said for many generations, that Ibi listened. If you whispered a wish over its moving water, and if your wish was honest, Ibi would sometimes grant it — not in grand ways, but in small careful ways, the way water shapes a stone. One summer, a boy named Nico came to the river with a secret wish. His little sister had been sick for many weeks, and the healer had shaken her head and said she did not know the cause. Their mother sat with the girl every night, and their father, a logger, had gone quiet in a way that scared Nico. So Nico walked three miles through the dawn forest and knelt beside the river. He did not know how to whisper a wish. He tried several times and stopped. Finally he said, in a very small voice, 'I want my sister to live.' Ibi did not answer. But as Nico sat, listening, he began to hear the river more clearly than he ever had. He heard it running over the smooth stones like quick laughter. He heard it brushing against the moss. He heard a bullfrog, somewhere, croaking twice. He heard the wind in the pine crowns above him. And then, strangely, he heard the voice of the river itself — not in words, but in a pulling certainty, like a small current beneath his thoughts. Go home, the river seemed to say. Look in your own kitchen. Nico was confused. But he went home. When he arrived, his mother was washing the lunch dishes, and Nico, without quite knowing why, lifted the lid of the water jug they kept on the counter and looked inside. The water was not clear. There was a thin film on its surface, and a strange metallic smell. The water had come from an old cistern behind the house, and something in it had gone bad. Nico ran to his mother. By that evening the water had been replaced with rain from the barrel. Within three days, his sister's fever broke. Within a week she was asking for bread. It was not a miracle, exactly. It was only a river that listened. Nico went back to Ibi every year after that. Sometimes he brought another small wish — a good harvest, a kind teacher, a friend for his lonely cousin — and sometimes Ibi answered, always in its small careful way, and sometimes it did not. Nico grew into a man and became the village healer himself, and when people came to him with troubles, he often sent them to the river before he prescribed anything, because he had learned that the first thing any river grants you is not what you asked for, but the quiet in which to hear what you actually needed. — Turn this into a narrated illustrated video layered with forest-river ambient sounds — misty ink-wash style",
+      "audio_unified": true,
+      "chain_before_lock": [
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true
+    }
+  },
+  {
+    "name": "storytelling_013",
+    "category": "storytelling",
+    "user_goal": "Make an illustrated audiobook of this lullaby-style bedtime story with a gentle, slow piano score playing softly under the narrator Layer in a soft ambience: faint fan hum and distant gentle rain.",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent"
+      ],
+      [
+        "NarratorAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "NarrationAgent -> IllustrationAgent -> NarratorAgent -> MusicAgent -> AmbienceAgent -> AudioMixAgent -> CompositorAgent -> done",
+      "shape_layer_count": 8,
+      "sampled_genre": "other",
+      "rewritten": false,
+      "chain_before_audio_unify": [
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent"
+        ],
+        [
+          "NarratorAgent",
+          "IllustrationAgent",
+          "MusicAgent"
+        ],
+        [
+          "MusicAgent",
+          "NarratorAgent",
+          "IllustrationAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "user_goal_before_audio_unify": "Make an illustrated audiobook of this lullaby-style bedtime story with a gentle, slow piano score playing softly under the narrator",
+      "audio_unified": true,
+      "chain_before_lock": [
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true
+    }
+  },
+  {
+    "name": "storytelling_071",
+    "category": "storytelling",
+    "user_goal": "Tell me a Greek myth about how the muse Clio chose her first mortal student, an old historian losing his memory who is the last keeper of the village chronicle, and the bargain the muse strikes with him to preserve the chronicle one final time, narrate in English with Greek subtitles, with a gentle lyre-and-aulos underscore. Add a Greek-orchestral string BGM and temple ambience: parchment unfurling, distant bronze-bell chime, wind through marble columns.",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent"
+      ],
+      [
+        "NarratorAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "NarrationAgent -> IllustrationAgent -> NarratorAgent -> MusicAgent -> AmbienceAgent -> TranslationAgent -> AudioMixAgent -> CompositorAgent -> done",
+      "shape_layer_count": 9,
+      "sampled_genre": "fantasy",
+      "rewritten": false,
+      "chain_before_audio_unify": [
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent"
+        ],
+        [
+          "NarratorAgent",
+          "IllustrationAgent",
+          "MusicAgent"
+        ],
+        [
+          "MusicAgent",
+          "NarratorAgent",
+          "IllustrationAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "TranslationAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "user_goal_before_audio_unify": "Tell me a Greek myth about how the muse Clio chose her first mortal student, an old historian losing his memory, narrate in Greek with English subtitles, with a gentle lyre-and-aulos underscore.",
+      "audio_unified": true,
+      "chain_before_lock": [
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "TranslationAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_before_align": "Tell me a Greek myth about how the muse Clio chose her first mortal student, an old historian losing his memory, narrate in Greek with English subtitles, with a gentle lyre-and-aulos underscore. Add a Greek-orchestral string BGM and temple ambience: parchment unfurling, distant bronze-bell chime, wind through marble columns.",
+      "user_goal_realigned": true
+    }
+  },
+  {
+    "name": "storytelling_047",
+    "category": "storytelling",
+    "user_goal": "Tell me a Mexican folktale about a young cornfield farmer in Oaxaca who learns to read the wind from his grandmother and saves his village from drought, narrate in Spanish with English subtitles. Add a Mexican acoustic-guitar BGM and rural ambience: wind through cornstalks, distant singing, intermittent rooster and dog calls.",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent"
+      ],
+      [
+        "NarratorAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "NarrationAgent -> IllustrationAgent -> NarratorAgent -> MusicAgent -> AmbienceAgent -> TranslationAgent -> AudioMixAgent -> CompositorAgent -> done",
+      "shape_layer_count": 9,
+      "sampled_genre": "family_slice",
+      "rewritten": false,
+      "chain_before_audio_unify": [
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent"
+        ],
+        [
+          "NarratorAgent",
+          "IllustrationAgent"
+        ],
+        [
+          "TranslationAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "user_goal_before_audio_unify": "Tell me a Mexican folktale about a young cornfield farmer in Oaxaca who learns to read the wind from his grandmother and saves his village from drought, narrate in Spanish with English subtitles.",
+      "audio_unified": true,
+      "chain_before_lock": [
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "TranslationAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true
+    }
+  },
+  {
+    "name": "storytelling_079",
+    "category": "storytelling",
+    "user_goal": "Tell me a Bengali folktale in watercolor portrait style about a middle-aged Bengali boatman in a white kurta, weathered face, calmly steering a wooden country boat through narrow Sundarbans mangrove channels, who once ferried a tiger-spirit safely across the river in exchange for the secret of weaving silver into the sun. Narrate in English with Bengali subtitles, with a sarod-and-tabla underscore. Add a Bengali sitar BGM and mangrove ambience: oar splashes, marsh-bird calls, mangrove leaves rustling.",
+    "expected_chain": [
+      [
+        "NarrationAgent"
+      ],
+      [
+        "IllustrationAgent"
+      ],
+      [
+        "NarratorAgent"
+      ],
+      [
+        "MusicAgent"
+      ],
+      [
+        "AmbienceAgent"
+      ],
+      [
+        "TranslationAgent"
+      ],
+      [
+        "AudioMixAgent"
+      ],
+      [
+        "CompositorAgent"
+      ],
+      [
+        "done"
+      ]
+    ],
+    "_meta": {
+      "shape_layers_str": "NarrationAgent -> IllustrationAgent -> NarratorAgent -> MusicAgent -> AmbienceAgent -> TranslationAgent -> AudioMixAgent -> CompositorAgent -> done",
+      "shape_layer_count": 9,
+      "sampled_genre": "other",
+      "rewritten": false,
+      "chain_before_audio_unify": [
+        [
+          "IntakeImageAgent"
+        ],
+        [
+          "BriefEnricherAgent"
+        ],
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent"
+        ],
+        [
+          "NarratorAgent",
+          "IllustrationAgent",
+          "MusicAgent"
+        ],
+        [
+          "MusicAgent",
+          "NarratorAgent",
+          "IllustrationAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "TranslationAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "user_goal_before_audio_unify": "I've uploaded a portrait of a Bengali boatman steering through the Sundarbans mangroves. Use him as the protagonist and tell me a Bengali folktale about how he once ferried a tiger-spirit safely across the river in exchange for the secret of weaving silver into the sun, narrate in Bengali with English subtitles, with a sarod-and-tabla underscore.",
+      "audio_unified": true,
+      "chain_before_lock": [
+        [
+          "IntakeImageAgent"
+        ],
+        [
+          "BriefEnricherAgent"
+        ],
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "IllustrationAgent",
+          "NarratorAgent",
+          "MusicAgent",
+          "AmbienceAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "TranslationAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_locked": true,
+      "user_goal_before_align": "I've uploaded a portrait of a Bengali boatman steering through the Sundarbans mangroves. Use him as the protagonist and tell me a Bengali folktale about how he once ferried a tiger-spirit safely across the river in exchange for the secret of weaving silver into the sun, narrate in Bengali with English subtitles, with a sarod-and-tabla underscore. Add a Bengali sitar BGM and mangrove ambience: oar splashes, marsh-bird calls, mangrove leaves rustling.",
+      "user_goal_realigned": true,
+      "chain_before_align": [
+        [
+          "IntakeImageAgent"
+        ],
+        [
+          "BriefEnricherAgent"
+        ],
+        [
+          "NarrationAgent"
+        ],
+        [
+          "IllustrationAgent"
+        ],
+        [
+          "NarratorAgent"
+        ],
+        [
+          "MusicAgent"
+        ],
+        [
+          "AmbienceAgent"
+        ],
+        [
+          "TranslationAgent"
+        ],
+        [
+          "AudioMixAgent"
+        ],
+        [
+          "CompositorAgent"
+        ],
+        [
+          "done"
+        ]
+      ],
+      "chain_realigned": true
+    }
+  }
+]

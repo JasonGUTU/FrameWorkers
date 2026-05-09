@@ -221,6 +221,8 @@ Thumbs.db
 *.png
 *.mp4
 *.wav
+# Exception: e2e_30 mock upload portraits (~12MB, version-controlled for paper reproducibility)
+!evals/sub-agents/e2e_30/uploads/*.png
 
 # Project runtime outputs (sub-agent workspaces, e2e debug, generated artifacts)
 Runtime/*

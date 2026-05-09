@@ -115,6 +115,44 @@ _IDENTITY_LOCATION_AVOID_DEFAULTS = (
 _IDENTITY_REF_KIND_LOCATION = "location"
 _IDENTITY_REF_KIND_CHARACTER = "character"
 _IDENTITY_REF_KIND_PROP = "prop"
+_IDENTITY_REF_KIND_CHARACTER_PICTUREBOOK = "character_picturebook"
+
+# Picture-book identity-reference scaffolding for the storytelling line.
+# Mirrors `_IDENTITY_PROMPT_*` in shape but flips the aesthetic axis from
+# photoreal cinematic to painterly picture-book — character anchors generated
+# this way must visually match the storytelling segments (also painterly,
+# also generated under the picture_book ref_kind on the edit path), or
+# downstream i2i has a style ref that contradicts the character ref.
+_IDENTITY_PICTUREBOOK_PROMPT_PREFIX = (
+    "Picture-book illustrated identity-reference portrait, painterly "
+    "hand-drawn rendering — flat shapes, decorative outlines, stylized "
+    "features matching a children's storybook / watercolor / folk-illustration "
+    "plate. Plain neutral background, no in-scene props or other figures.\n"
+    "Subject (centered, three-quarter-angle portrait, full upper body "
+    "in frame): "
+)
+_IDENTITY_PICTUREBOOK_PROMPT_SUFFIX = (
+    "\nFraming: identity reference plate only — neutral pose, neutral "
+    "expression, subject isolated against the plain background. The image "
+    "will be used as a downstream i2i anchor for cross-segment character "
+    "identity in a picture-book illustrated audiobook, so visual features "
+    "(face, hair, wardrobe, body) must be unambiguously legible AND the "
+    "whole image must be rendered in the same painterly illustration style "
+    "as the story's overall_style — never as a photograph or cinematic still."
+)
+_IDENTITY_PICTUREBOOK_AVOID_DEFAULTS = (
+    "photorealistic",
+    "photographic still",
+    "cinematic still",
+    "Arri Alexa render",
+    "shallow depth of field studio photo",
+    "3D CGI render",
+    "in-scene composition",
+    "environmental setting",
+    "props in frame",
+    "other people in frame",
+    "dramatic horror lighting",
+)
 
 # Edit-path instruction prefixes, picked by ``ref_kind`` so the model
 # knows what to preserve from each reference image.
@@ -163,11 +201,23 @@ _EDIT_MEDIUM_ANCHOR = (
     "match its color grade, material rendering, and lighting style; do not "
     "drift to anime, cartoon, painterly, or 3D CGI render."
 )
+# Inverse anchor for picture-book / illustration line (storytelling →
+# IllustrationAgent). The cinematic anchor above asserts photoreal and bans
+# painterly / cartoon; that's exactly what storytelling needs to PRESERVE,
+# so we replace (not remove) the anchor with a positively-worded
+# illustration-aesthetic lock and an explicit ban on photoreal drift.
+_EDIT_PICTUREBOOK_ANCHOR = (
+    "\nMaintain the reference's picture-book illustration aesthetic: "
+    "preserve its painterly brush quality, hand-drawn / watercolor feel, "
+    "palette, and lighting style; do not drift to photorealistic, "
+    "cinematic still, or 3D CGI render."
+)
 
 _EDIT_REF_KIND_LOCATION = "location"
 _EDIT_REF_KIND_CHARACTER = "character"
 _EDIT_REF_KIND_PROP = "prop"
 _EDIT_REF_KIND_MULTI = "multi"
+_EDIT_REF_KIND_PICTUREBOOK = "picture_book"
 _EDIT_REF_KIND_GENERIC = "generic"
 
 _EDIT_PREFIX_BY_KIND = {
@@ -175,6 +225,10 @@ _EDIT_PREFIX_BY_KIND = {
     _EDIT_REF_KIND_CHARACTER: _EDIT_PREFIX_CHARACTER_ONLY,
     _EDIT_REF_KIND_PROP: _EDIT_PREFIX_PROP_ONLY,
     _EDIT_REF_KIND_MULTI: _EDIT_PREFIX_MULTI_SUBJECT,
+    # picture_book reuses the multi-subject prefix (it also has STYLE +
+    # CHARACTER refs); the divergence is the medium anchor + visual_style
+    # inclusion, handled in _compose_edit_prompt below.
+    _EDIT_REF_KIND_PICTUREBOOK: _EDIT_PREFIX_MULTI_SUBJECT,
     _EDIT_REF_KIND_GENERIC: _EDIT_PREFIX_GENERIC,
 }
 
@@ -300,6 +354,17 @@ class ImageService(LazyHttpxClientMixin):
                 prefix = _IDENTITY_LOCATION_PROMPT_PREFIX
                 suffix = _IDENTITY_LOCATION_PROMPT_SUFFIX
                 avoid_defaults = _IDENTITY_LOCATION_AVOID_DEFAULTS
+                include_style = False
+            elif ctx.ref_kind == _IDENTITY_REF_KIND_CHARACTER_PICTUREBOOK:
+                # Storytelling line — anchor must visually match the
+                # picture-book illustration aesthetic of the segments,
+                # NOT the cinematic photoreal default. style_notes
+                # carries the overall_style ("watercolor folk illustration")
+                # so it must pass through.
+                prefix = _IDENTITY_PICTUREBOOK_PROMPT_PREFIX
+                suffix = _IDENTITY_PICTUREBOOK_PROMPT_SUFFIX
+                avoid_defaults = _IDENTITY_PICTUREBOOK_AVOID_DEFAULTS
+                include_style = True
             else:
                 # character / prop / "" (legacy default) all share the
                 # portrait scaffold — both want an isolated subject
@@ -307,14 +372,15 @@ class ImageService(LazyHttpxClientMixin):
                 prefix = _IDENTITY_PROMPT_PREFIX
                 suffix = _IDENTITY_PROMPT_SUFFIX
                 avoid_defaults = _IDENTITY_AVOID_DEFAULTS
+                include_style = False
             parts = [prefix]
             if ctx.prompt_summary:
                 parts.append(ctx.prompt_summary)
             parts.append(suffix)
             avoid_tail = ImageService._compose_style_suffix(
-                style_notes=[],
+                style_notes=ctx.style_notes if include_style else [],
                 must_avoid=list(ctx.must_avoid) + list(avoid_defaults),
-                include_visual_style=False,
+                include_visual_style=include_style,
             )
             if avoid_tail:
                 parts.append(avoid_tail)
@@ -362,11 +428,19 @@ class ImageService(LazyHttpxClientMixin):
             parts.append("\n\n")
         if ctx.prompt_summary:
             parts.append(ctx.prompt_summary)
-        parts.append(_EDIT_MEDIUM_ANCHOR)
+        # picture_book line gets the inverse anchor (preserve painterly,
+        # ban photoreal drift) and lets style_notes through — overall_style
+        # is the *only* place "this is folk illustration / watercolor /
+        # picture book" is asserted, and dropping it leaves the model with
+        # no positive style signal to lock onto.
+        if ref_kind == _EDIT_REF_KIND_PICTUREBOOK:
+            parts.append(_EDIT_PICTUREBOOK_ANCHOR)
+        else:
+            parts.append(_EDIT_MEDIUM_ANCHOR)
         tail = ImageService._compose_style_suffix(
             style_notes=ctx.style_notes,
             must_avoid=ctx.must_avoid,
-            include_visual_style=False,
+            include_visual_style=(ref_kind == _EDIT_REF_KIND_PICTUREBOOK),
         )
         if tail:
             parts.append(tail)

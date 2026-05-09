@@ -52,7 +52,7 @@ def select_image_service() -> ImageService:
     ``gemini-2.5-flash-image`` via the CF AI Gateway native-Gemini Worker).
     """
     if _env_truthy("FW_USE_REAL_MEDIA_GEN"):
-        return GeminiImageService()
+        return FalImageService()  # reverted from GeminiImageService — direct Gemini blocks zombie/revenge prompts even in English
     return MockImageService()
 
 
