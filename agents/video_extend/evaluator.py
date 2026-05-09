@@ -27,14 +27,16 @@ class VideoExtendEvaluator(BaseEvaluator[VideoExtendAgentOutput]):
             errors.append("extension_spec.motion_description is empty")
 
         # Mirror of system_prompt's "target_duration_seconds MUST be
-        # exactly 5 or 10" rule. The fal / Kling extension backend
-        # silently rounds non-{5,10} values; without this check that
-        # silent rounding masks drift (CLAUDE.md §7 anti-pattern).
-        if spec.target_duration_seconds not in (5, 5.0, 10, 10.0):
+        # exactly 5" rule. Both Kling and HunyuanVideo accept 5s clips;
+        # HunyuanVideo I2V does not support 10s natively (training cap
+        # at 129 frames ≈ 5.4s) so we standardize on 5 across backends.
+        # Without this check, backends silently round mismatched values
+        # (CLAUDE.md §7 anti-pattern).
+        if spec.target_duration_seconds not in (5, 5.0):
             errors.append(
                 f"extension_spec.target_duration_seconds "
-                f"({spec.target_duration_seconds}) must be exactly 5 or "
-                "10 (Kling video extension only accepts 5s or 10s clips)"
+                f"({spec.target_duration_seconds}) must be exactly 5 "
+                "(downstream i2v backends standardize on 5s clips)"
             )
 
         return errors
