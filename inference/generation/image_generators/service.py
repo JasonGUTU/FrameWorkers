@@ -557,3 +557,164 @@ class FalImageService(ImageService):
     @staticmethod
     def _is_nano_banana2_base_model(model: str) -> bool:
         return model.rstrip("/") == "fal-ai/nano-banana-2"
+
+
+class GeminiImageService(ImageService):
+    """Image generation/editing via google.genai SDK against the CF AI Gateway.
+
+    Reads ``GEMINI_API_KEY`` (CF Worker token) + ``GEMINI_BASE_URL`` (CF Worker
+    endpoint) and talks the native Gemini protocol — the same path used by
+    chat completions for ``cf_aig`` provider in ``inference_runtime.yaml``.
+    Model id comes from ``INFERENCE_IMAGE_MODEL``; the legacy OpenRouter
+    ``google/`` prefix is stripped if present so callers can keep one env
+    var across providers.
+    """
+
+    def __init__(
+        self,
+        api_key: str | None = None,
+        model: str | None = None,
+        base_url: str | None = None,
+        retry_base_delay: float = 2.0,
+        retry_max_delay: float = 30.0,
+        max_attempts: int = 4,
+    ) -> None:
+        self._api_key = api_key or os.getenv("GEMINI_API_KEY", "")
+        raw_model = (model or os.getenv("INFERENCE_IMAGE_MODEL", "") or "").strip()
+        if raw_model.startswith("google/"):
+            raw_model = raw_model[len("google/"):]
+        self.model = raw_model
+        if not self.model:
+            raise RuntimeError(
+                "No image model configured. Set INFERENCE_IMAGE_MODEL in .env "
+                "(e.g. gemini-2.5-flash-image)."
+            )
+        self.base_url = (base_url or os.getenv("GEMINI_BASE_URL", "") or "").strip()
+        self.retry_base_delay = retry_base_delay
+        self.retry_max_delay = retry_max_delay
+        self.max_attempts = max_attempts
+        self._client: Any | None = None
+
+    def _get_client(self) -> Any:
+        if self._client is None:
+            from google import genai
+
+            kwargs: dict[str, Any] = {}
+            if self._api_key:
+                kwargs["api_key"] = self._api_key
+            if self.base_url:
+                kwargs["http_options"] = {"base_url": self.base_url}
+            self._client = genai.Client(**kwargs)
+        return self._client
+
+    async def generate_image(
+        self,
+        prompt: str = "",
+        *,
+        semantic_context: ImageSemanticContext | None = None,
+    ) -> ImageResult:
+        composed = (
+            self._compose_generate_prompt(semantic_context)
+            if semantic_context is not None
+            else prompt
+        )
+        logger.info("[gemini] Generating image with model=%s", self.model)
+        image_bytes = await self._gemini_call(
+            contents=composed, prompt_for_log=composed
+        )
+        return ImageResult(bytes=image_bytes, resolved_prompt=composed)
+
+    async def edit_image(
+        self,
+        reference_images: bytes | list[bytes],
+        prompt: str = "",
+        *,
+        semantic_context: ImageSemanticContext | None = None,
+        ref_kind: str = _EDIT_REF_KIND_GENERIC,
+        ref_manifest: list[str] | None = None,
+    ) -> ImageResult:
+        composed = (
+            self._compose_edit_prompt(
+                semantic_context, ref_kind=ref_kind, ref_manifest=ref_manifest
+            )
+            if semantic_context is not None
+            else prompt
+        )
+        refs = (
+            [reference_images]
+            if isinstance(reference_images, bytes)
+            else list(reference_images)
+        )
+        if not refs:
+            raise ValueError("reference_images cannot be empty for gemini edit_image")
+
+        from google.genai import types as genai_types
+
+        contents: list[Any] = [
+            genai_types.Part.from_bytes(data=r, mime_type="image/png") for r in refs
+        ]
+        contents.append(composed)
+        logger.info(
+            "[gemini] Editing image with model=%s (kind=%s, refs=%d)",
+            self.model,
+            ref_kind,
+            len(refs),
+        )
+        image_bytes = await self._gemini_call(
+            contents=contents, prompt_for_log=composed
+        )
+        return ImageResult(bytes=image_bytes, resolved_prompt=composed)
+
+    async def _gemini_call(self, *, contents: Any, prompt_for_log: str) -> bytes:
+        from google.genai import types as genai_types
+
+        client = self._get_client()
+        config = genai_types.GenerateContentConfig(
+            response_modalities=["IMAGE", "TEXT"],
+        )
+
+        attempt = 0
+        while True:
+            attempt += 1
+            try:
+                resp = await asyncio.to_thread(
+                    client.models.generate_content,
+                    model=self.model,
+                    contents=contents,
+                    config=config,
+                )
+                if not resp.candidates:
+                    raise RuntimeError(f"No candidates from {self.model}")
+                parts = resp.candidates[0].content.parts or []
+                for part in parts:
+                    inline = getattr(part, "inline_data", None)
+                    if inline and inline.data:
+                        image_bytes = inline.data
+                        logger.info(
+                            "Image generated (%d bytes, attempt %d) for: %.80s...",
+                            len(image_bytes),
+                            attempt,
+                            prompt_for_log,
+                        )
+                        return image_bytes
+                text_parts = [
+                    p.text for p in parts if getattr(p, "text", None)
+                ]
+                raise RuntimeError(
+                    f"No image returned from {self.model}. Text: "
+                    f"{' '.join(text_parts)[:300]}"
+                )
+            except Exception as exc:
+                if attempt >= self.max_attempts:
+                    raise
+                delay = min(
+                    self.retry_base_delay * (2 ** (attempt - 1)),
+                    self.retry_max_delay,
+                )
+                logger.warning(
+                    "Gemini image generation attempt %d failed: %s — retrying in %.1fs",
+                    attempt,
+                    exc,
+                    delay,
+                )
+                await asyncio.sleep(delay)

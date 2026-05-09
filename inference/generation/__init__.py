@@ -20,7 +20,12 @@ choice and never holds an override map.
 
 import os
 
-from .image_generators.service import FalImageService, ImageService, MockImageService
+from .image_generators.service import (
+    FalImageService,
+    GeminiImageService,
+    ImageService,
+    MockImageService,
+)
 from .video_generators.service import FalVideoService, MockVideoService, VideoService, WavespeedVideoService
 from .audio_generators.service import AudioService, FalAudioService, MockAudioService
 from .compositor_service import CompositorService, MockCompositorService
@@ -35,11 +40,12 @@ def _env_truthy(name: str) -> bool:
 def select_image_service() -> ImageService:
     """Pick the image service backend.
 
-    Default: ``MockImageService`` (placeholder PNG, no fal credits).
-    Set ``FW_USE_REAL_MEDIA_GEN=1`` to use ``FalImageService``.
+    Default: ``MockImageService`` (placeholder PNG, no API spend).
+    Set ``FW_USE_REAL_MEDIA_GEN=1`` to use ``GeminiImageService`` (talks to
+    ``gemini-2.5-flash-image`` via the CF AI Gateway native-Gemini Worker).
     """
     if _env_truthy("FW_USE_REAL_MEDIA_GEN"):
-        return FalImageService()
+        return GeminiImageService()
     return MockImageService()
 
 
@@ -90,6 +96,7 @@ def select_video_edit_service() -> VideoEditService:
 
 __all__ = [
     "FalImageService",
+    "GeminiImageService",
     "ImageService",
     "MockImageService",
     "FalVideoService",

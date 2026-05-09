@@ -120,7 +120,7 @@ InputResolver 通过 caption index 召回。
 
 ## 模型约束（强约束）
 
-- **图片生成禁止用 flux**。当前实际走 fal.ai 的 `nano-banana-2`（= Google Gemini 2.5 Flash Image 在 fal.ai 上的中转别名）：`FAL_IMAGE_MODEL=fal-ai/nano-banana-2`。`image_generators/service.py` 里还保留一条 OpenRouter 路径（`OPENROUTER_API_KEY` + `INFERENCE_IMAGE_MODEL`，例如 `google/gemini-2.5-flash-image`），但 `select_image_service()` 不会选它，且 `OPENROUTER_API_KEY` 当前未设；本质上"图片 = Gemini Image"成立，只是经 fal.ai 中转。
+- **图片生成禁止用 flux**。当前直连 Google `gemini-3.1-flash-image-preview`（nano-banana 升级线，identity 保持 + 细节比 `gemini-2.5-flash-image` 更好；单帧延迟 ~25 s vs 7 s，N-shot 走 `asyncio.gather` 并行抵销），通过 CF AI Gateway 的 native-Gemini Worker（`GEMINI_API_KEY` + `GEMINI_BASE_URL`，与聊天 LLM 同一条入口），实现见 `image_generators/service.py::GeminiImageService`，由 `select_image_service()` 在 `FW_USE_REAL_MEDIA_GEN=1` 时选中。Model id 来自 `INFERENCE_IMAGE_MODEL`（保留对旧 `google/` 前缀的容忍）；切回 `gemini-2.5-flash-image` 只改 env 不改代码。`FalImageService` 类还在但 select 不再走它；不再读 `FAL_IMAGE_MODEL`，OpenRouter 旧路径同样未启用。
 - **视频生成统一用可灵（Kling）**。`FAL_VIDEO_MODEL=fal-ai/kling-video/v2.6/pro/image-to-video`（image-to-video，需 KeyFrameAgent 先出图）。`video_generators/service.py` 还有 `WavespeedVideoService` 备用通路（`FW_VIDEO_BACKEND=wavespeed`），默认不走。
 - API 表和前端页面里关于模型的描述必须跟 `.env` + 代码实际使用的一致，不要写错。
 
