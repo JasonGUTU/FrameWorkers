@@ -1,0 +1,20 @@
+{
+  "http_status": 200,
+  "response_body": {
+    "id": "exec_2_145d6215",
+    "agent_id": "FakeAgent",
+    "step_id": "step_2_135f4f18",
+    "status": "COMPLETED",
+    "inputs": {
+      "step_id": "step_2_135f4f18",
+      "resolved_artifacts": {},
+      "resolved_input_paths": []
+    },
+    "results": {},
+    "error": null,
+    "started_at": "2026-05-12T17:47:25.297629",
+    "completed_at": "2026-05-12T17:47:25.299282",
+    "created_at": "2026-05-12T17:47:25.297625",
+    "resolved_input_paths": []
+  }
+}

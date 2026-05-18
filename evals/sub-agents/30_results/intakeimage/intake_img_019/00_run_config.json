@@ -1,0 +1,44 @@
+{
+  "case_name": "intake_img_019",
+  "category": "intake_img",
+  "user_goal": "Use this uploaded photo as the face of the rebirth-revenge female lead. Make a period rebirth-revenge palace-intrigue animated short drama — she is the former empress who was forced to drink poisoned wine. Reborn back to the day of the imperial selection, this time she will personally send every soul who once owed her a life into the underworld.",
+  "expected_chain": [
+    [
+      "IntakeImageAgent"
+    ],
+    [
+      "BriefEnricherAgent"
+    ],
+    [
+      "StoryAgent"
+    ],
+    [
+      "ScreenplayAgent"
+    ],
+    [
+      "KeyFrameAgent"
+    ],
+    [
+      "VideoAgent"
+    ],
+    [
+      "CompositorAgent"
+    ],
+    [
+      "done"
+    ]
+  ],
+  "flat_chain": [
+    "IntakeImageAgent",
+    "BriefEnricherAgent",
+    "StoryAgent",
+    "ScreenplayAgent",
+    "KeyFrameAgent",
+    "VideoAgent",
+    "CompositorAgent"
+  ],
+  "backend_url": "http://localhost:5103",
+  "hunyuan_endpoint": "http://sof1-h200-3:9201",
+  "infer_steps": 50,
+  "started_at": "2026-05-10T21:26:28"
+}

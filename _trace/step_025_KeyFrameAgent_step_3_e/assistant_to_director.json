@@ -1,0 +1,1838 @@
+{
+  "http_status": 200,
+  "response_body": {
+    "id": "exec_3_ecd9477a",
+    "agent_id": "KeyFrameAgent",
+    "step_id": "step_3_e6b31cc8",
+    "status": "COMPLETED",
+    "inputs": {
+      "step_id": "step_3_e6b31cc8",
+      "resolved_artifacts": {
+        "screenplay": {
+          "caption": "Screenplay: 5 scene(s), 15 shot(s). Input for keyframe planning and audio scoring.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/_workspaces/workspace_global_20260512_194119/artifacts/ScreenplayAgent/step_2_3d8bb556_screenplayagent_exec_2.json",
+          "mime": "application/json",
+          "payload": {
+            "meta": {
+              "schema_version": "0.3",
+              "created_at": "2026-05-12T19:45:00.773043+00:00",
+              "language": "zh"
+            },
+            "content": {
+              "title": "封神诀：九尾挽歌",
+              "scenes": [
+                {
+                  "scene_id": "sc_001",
+                  "order": 1,
+                  "linked_story_step_id": "arc_001",
+                  "heading": {
+                    "location_id": "loc_001",
+                    "location_name": "古老封神台",
+                    "interior_exterior": "EXT",
+                    "time_of_day": "CUSTOM"
+                  },
+                  "summary": "在封神之战的末尾，姜子牙准备在风暴肆虐的封神台上处决最后的九尾狐妖，气氛庄重而压抑。",
+                  "continuity": {
+                    "props_present": [
+                      "神圣斩妖剑"
+                    ],
+                    "character_wardrobe_notes": [
+                      {
+                        "character_id": "char_001",
+                        "wardrobe": "褴褛的白袍，沾染尘土和血迹",
+                        "must_keep": [
+                          "褴褛白袍"
+                        ]
+                      },
+                      {
+                        "character_id": "char_002",
+                        "wardrobe": "庄严的道士将领服，深色，衬托其威严",
+                        "must_keep": [
+                          "道士将领服"
+                        ]
+                      }
+                    ],
+                    "must_keep_scene_facts": [
+                      "姜子牙的坚定职责",
+                      "狐妖的极度恐惧",
+                      "神圣的审判气氛"
+                    ]
+                  },
+                  "scene_consistency_pack": {
+                    "location_lock": {
+                      "location_id": "loc_001",
+                      "time_of_day": "CUSTOM",
+                      "environment_notes": [
+                        "古老的封神台，被暗沉的漩涡状乌云笼罩，不时有神圣的闪电划过，九天雷声轰鸣。气氛悲剧、庄重、压抑，充满中国神话色彩。"
+                      ]
+                    },
+                    "character_locks": [
+                      {
+                        "character_id": "char_001",
+                        "identity_notes": [
+                          "九尾狐妖，战争的最后幸存者，极度恐惧且疲惫，在古代中国神话背景下被处决。",
+                          "狐妖本体形态为九尾狐。"
+                        ],
+                        "wardrobe_notes": [
+                          "破损的白袍，象征其落魄与脆弱。"
+                        ],
+                        "must_keep": [
+                          "九尾狐妖",
+                          "褴褛白袍"
+                        ]
+                      },
+                      {
+                        "character_id": "char_002",
+                        "identity_notes": [
+                          "姜子牙，冷酷、坚决的道士将领，在古代中国神话背景下执行天命。",
+                          "持有神圣斩妖剑。"
+                        ],
+                        "wardrobe_notes": [
+                          "庄严的道士将领服，衬托其权威与职责。"
+                        ],
+                        "must_keep": [
+                          "姜子牙",
+                          "道士将领服"
+                        ]
+                      }
+                    ],
+                    "props_lock": [
+                      {
+                        "prop_id": "prop_001",
+                        "prop_name": "神圣斩妖剑",
+                        "must_keep": [
+                          "带有神圣符文的巨大长剑，散发威严。"
+                        ]
+                      }
+                    ],
+                    "style_lock": {
+                      "global_style_notes": [
+                        "悲剧、庄重、压抑、哀伤的中国神话史诗风格，以“封神演义”为背景。"
+                      ],
+                      "must_avoid": [
+                        "轻浮",
+                        "现代元素"
+                      ]
+                    }
+                  },
+                  "scene_end": {
+                    "turn": "姜子牙已拔出神剑，处决即将开始。",
+                    "emotional_shift": "从绝望的等待转变为极度的恐惧与压迫感。"
+                  },
+                  "shots": [
+                    {
+                      "shot_id": "sh_001",
+                      "order": 1,
+                      "block_type": "action",
+                      "character_id": "",
+                      "character_name": "",
+                      "text": "古老的封神台上，乌云密布，电闪雷鸣。姜子牙身着庄严的道士服，面无表情地矗立着，手按腰间佩剑。",
+                      "emotion_hint": "",
+                      "continuity_refs": {
+                        "props": [
+                          "prop_001"
+                        ],
+                        "wardrobe_character_ids": [
+                          "char_002"
+                        ]
+                      },
+                      "shot_type": "wide",
+                      "camera": {
+                        "angle": "high_angle",
+                        "movement": "static",
+                        "framing_notes": "展现封神台的宏大与压抑，姜子牙身影孤高。"
+                      },
+                      "visual_goal": "建立场景的宏大、庄严和压抑气氛，展示姜子牙的威严。",
+                      "action_focus": "姜子牙的屹立，神台的背景",
+                      "characters_in_frame": [
+                        "char_002"
+                      ],
+                      "props_in_frame": [
+                        "prop_001"
+                      ],
+                      "keyframe_plan": {
+                        "keyframe_count": 1,
+                        "keyframe_notes": []
+                      }
+                    },
+                    {
+                      "shot_id": "sh_002",
+                      "order": 2,
+                      "block_type": "action",
+                      "character_id": "",
+                      "character_name": "",
+                      "text": "九尾狐妖被捆缚在石柱上，破损的白袍下身躯瑟瑟发抖。她眼神充满绝望和恐惧，泪水与雨水混合着划过苍白的脸颊。",
+                      "emotion_hint": "",
+                      "continuity_refs": {
+                        "props": [],
+                        "wardrobe_character_ids": [
+                          "char_001"
+                        ]
+                      },
+                      "shot_type": "close_up",
+                      "camera": {
+                        "angle": "eye_level",
+                        "movement": "static",
+                        "framing_notes": "聚焦狐妖的脸部和上半身，展现其脆弱与恐惧。"
+                      },
+                      "visual_goal": "展现九尾狐妖的绝望与无助，强调其面临的危险。",
+                      "action_focus": "狐妖的面部表情和身体颤抖",
+                      "characters_in_frame": [
+                        "char_001"
+                      ],
+                      "props_in_frame": [],
+                      "keyframe_plan": {
+                        "keyframe_count": 1,
+                        "keyframe_notes": []
+                      }
+                    },
+                    {
+                      "shot_id": "sh_003",
+                      "order": 3,
+                      "block_type": "action",
+                      "character_id": "",
+                      "character_name": "",
+                      "text": "姜子牙缓缓抽出腰间的神圣斩妖剑，剑身在雷电中闪烁着寒光，他眼神坚定，仿佛没有一丝犹豫。",
+                      "emotion_hint": "",
+                      "continuity_refs": {
+                        "props": [
+                          "prop_001"
+                        ],
+                        "wardrobe_character_ids": [
+                          "char_002"
+                        ]
+                      },
+                      "shot_type": "medium",
+                      "camera": {
+                        "angle": "low_angle",
+                        "movement": "push_in",
+                        "framing_notes": "特写姜子牙的手和剑，彰显其力量与决心。"
+                      },
+                      "visual_goal": "突出姜子牙的执行决心和神圣斩妖剑的威慑力。",
+                      "action_focus": "姜子牙拔剑的动作，剑身的光芒",
+                      "characters_in_frame": [
+                        "char_002"
+                      ],
+                      "props_in_frame": [
+                        "prop_001"
+                      ],
+                      "keyframe_plan": {
+                        "keyframe_count": 1,
+                        "keyframe_notes": []
+                      }
+                    }
+                  ]
+                },
+                {
+                  "scene_id": "sc_002",
+                  "order": 2,
+                  "linked_story_step_id": "arc_002",
+                  "heading": {
+                    "location_id": "loc_001",
+                    "location_name": "古老封神台",
+                    "interior_exterior": "EXT",
+                    "time_of_day": "CUSTOM"
+                  },
+                  "summary": "姜子牙高举神剑，九尾狐妖在极度恐惧中，眼前闪现了破碎的记忆，一瞥桃花林中的温柔身影。",
+                  "continuity": {
+                    "props_present": [
+                      "神圣斩妖剑"
+                    ],
+                    "character_wardrobe_notes": [
+                      {
+                        "character_id": "char_001",
+                        "wardrobe": "褴褛的白袍，沾染尘土和血迹",
+                        "must_keep": [
+                          "褴褛白袍"
+                        ]
+                      },
+                      {
+                        "character_id": "char_002",
+                        "wardrobe": "庄严的道士将领服，深色",
+                        "must_keep": [
+                          "道士将领服"
+                        ]
+                      }
+                    ],
+                    "must_keep_scene_facts": [
+                      "姜子牙举剑",
+                      "狐妖的濒死恐惧",
+                      "记忆的首次闪现"
+                    ]
+                  },
+                  "scene_consistency_pack": {
+                    "location_lock": {
+                      "location_id": "loc_001",
+                      "time_of_day": "CUSTOM",
+                      "environment_notes": [
+                        "古老的封神台，被暗沉的漩涡状乌云笼罩，不时有神圣的闪电划过，九天雷声轰鸣。气氛悲剧、庄重、压抑，充满中国神话色彩。"
+                      ]
+                    },
+                    "character_locks": [
+                      {
+                        "character_id": "char_001",
+                        "identity_notes": [
+                          "九尾狐妖，战争的最后幸存者，极度恐惧且疲惫，在古代中国神话背景下被处决。",
+                          "狐妖本体形态为九尾狐。"
+                        ],
+                        "wardrobe_notes": [
+                          "破损的白袍，象征其落魄与脆弱。"
+                        ],
+                        "must_keep": [
+                          "九尾狐妖",
+                          "褴褛白袍"
+                        ]
+                      },
+                      {
+                        "character_id": "char_002",
+                        "identity_notes": [
+                          "姜子牙，冷酷、坚决的道士将领，在古代中国神话背景下执行天命。",
+                          "持有神圣斩妖剑。"
+                        ],
+                        "wardrobe_notes": [
+                          "庄严的道士将领服，衬托其权威与职责。"
+                        ],
+                        "must_keep": [
+                          "姜子牙",
+                          "道士将领服"
+                        ]
+                      }
+                    ],
+                    "props_lock": [
+                      {
+                        "prop_id": "prop_001",
+                        "prop_name": "神圣斩妖剑",
+                        "must_keep": [
+                          "带有神圣符文的巨大长剑，散发威严。"
+                        ]
+                      }
+                    ],
+                    "style_lock": {
+                      "global_style_notes": [
+                        "悲剧、庄重、压抑、哀伤的中国神话史诗风格，以“封神演义”为背景。"
+                      ],
+                      "must_avoid": [
+                        "轻浮",
+                        "现代元素"
+                      ]
+                    }
+                  },
+                  "scene_end": {
+                    "turn": "狐妖的意识在恐惧中遁入记忆，模糊地瞥见桃花。",
+                    "emotional_shift": "从极度恐惧暂时转向短暂的、混乱的平静。"
+                  },
+                  "shots": [
+                    {
+                      "shot_id": "sh_004",
+                      "order": 1,
+                      "block_type": "action",
+                      "character_id": "",
+                      "character_name": "",
+                      "text": "姜子牙高举神圣斩妖剑，剑尖直指乌云密布的天空，似乎汲取着九天神雷的力量。剑身光芒万丈，杀气凛冽。",
+                      "emotion_hint": "",
+                      "continuity_refs": {
+                        "props": [
+                          "prop_001"
+                        ],
+                        "wardrobe_character_ids": [
+                          "char_002"
+                        ]
+                      },
+                      "shot_type": "dutch_angle",
+                      "camera": {
+                        "angle": "low_angle",
+                        "movement": "crane_up",
+                        "framing_notes": "从下方仰视姜子牙和神剑，强调其力量与威胁。"
+                      },
+                      "visual_goal": "展现神剑的威力和姜子牙执行天命的决心，制造极度压迫感。",
+                      "action_focus": "高举的神剑和姜子牙的动作",
+                      "characters_in_frame": [
+                        "char_002"
+                      ],
+                      "props_in_frame": [
+                        "prop_001"
+                      ],
+                      "keyframe_plan": {
+                        "keyframe_count": 1,
+                        "keyframe_notes": []
+                      }
+                    },
+                    {
+                      "shot_id": "sh_005",
+                      "order": 2,
+                      "block_type": "action",
+                      "character_id": "",
+                      "character_name": "",
+                      "text": "狐妖在剑影下猛烈挣扎，身体扭曲，口中发出无声的尖叫。她的视线开始模糊，周遭的雷电、姜子牙的轮廓都变得扭曲。",
+                      "emotion_hint": "tense",
+                      "continuity_refs": {
+                        "props": [],
+                        "wardrobe_character_ids": [
+                          "char_001"
+                        ]
+                      },
+                      "shot_type": "close_up",
+                      "camera": {
+                        "angle": "eye_level",
+                        "movement": "handheld_shake",
+                        "framing_notes": "极近距离拍摄狐妖脸部，使用失焦和抖动效果，表现其濒死状态。"
+                      },
+                      "visual_goal": "传达狐妖濒死的极度恐惧和意识的模糊。",
+                      "action_focus": "狐妖的挣扎和模糊的视线",
+                      "characters_in_frame": [
+                        "char_001"
+                      ],
+                      "props_in_frame": [],
+                      "keyframe_plan": {
+                        "keyframe_count": 1,
+                        "keyframe_notes": []
+                      }
+                    },
+                    {
+                      "shot_id": "sh_006",
+                      "order": 3,
+                      "block_type": "action",
+                      "character_id": "",
+                      "character_name": "",
+                      "text": "模糊中，一道温暖的光影闪过，粉色的桃花瓣在空中飘舞，一闪而逝，带来片刻的宁静。",
+                      "emotion_hint": "",
+                      "continuity_refs": {
+                        "props": [],
+                        "wardrobe_character_ids": []
+                      },
+                      "shot_type": "cutaway",
+                      "camera": {
+                        "angle": "eye_level",
+                        "movement": "static",
+                        "framing_notes": "柔和的聚焦，模糊的边缘，表现记忆的片段性。"
+                      },
+                      "visual_goal": "引入狐妖的记忆碎片，形成与现实的强烈对比。",
+                      "action_focus": "桃花瓣和温暖的光影",
+                      "characters_in_frame": [],
+                      "props_in_frame": [],
+                      "keyframe_plan": {
+                        "keyframe_count": 1,
+                        "keyframe_notes": []
+                      }
+                    }
+                  ]
+                },
+                {
+                  "scene_id": "sc_003",
+                  "order": 3,
+                  "linked_story_step_id": "arc_003",
+                  "heading": {
+                    "location_id": "loc_002",
+                    "location_name": "桃花林（记忆）",
+                    "interior_exterior": "EXT",
+                    "time_of_day": "CUSTOM"
+                  },
+                  "summary": "狐妖的记忆完全展开，在桃花林中与一位温柔男子相遇，然而记忆瞬间破碎，揭示该男子多年前被姜子牙在同一封神台上处决。",
+                  "continuity": {
+                    "props_present": [],
+                    "character_wardrobe_notes": [
+                      {
+                        "character_id": "char_001",
+                        "wardrobe": "记忆中的素雅衣衫",
+                        "must_keep": [
+                          "素雅衣衫（记忆中）"
+                        ]
+                      },
+                      {
+                        "character_id": "char_003",
+                        "wardrobe": "记忆中的朴素衣衫",
+                        "must_keep": [
+                          "朴素衣衫（记忆中）"
+                        ]
+                      }
+                    ],
+                    "must_keep_scene_facts": [
+                      "桃花林记忆的温柔",
+                      "男子的身份",
+                      "姜子牙的处决"
+                    ]
+                  },
+                  "scene_consistency_pack": {
+                    "location_lock": {
+                      "location_id": "loc_002",
+                      "time_of_day": "CUSTOM",
+                      "environment_notes": [
+                        "宁静、空灵的桃花林，桃花盛开，充满和平与慰藉，与古老中国神话背景形成强烈对比。梦幻般的光线。"
+                      ]
+                    },
+                    "character_locks": [
+                      {
+                        "character_id": "char_001",
+                        "identity_notes": [
+                          "九尾狐妖，记忆中较为年轻，感受到温柔与安慰，在古代中国神话背景下。"
+                        ],
+                        "wardrobe_notes": [
+                          "记忆中的素雅衣衫，而非现实的破烂白袍。"
+                        ],
+                        "must_keep": [
+                          "九尾狐妖",
+                          "素雅衣衫"
+                        ]
+                      },
+                      {
+                        "character_id": "char_003",
+                        "identity_notes": [
+                          "神秘男子，温柔而慰藉，在古代中国神话背景下。他的命运与姜子牙和狐妖紧密相连。"
+                        ],
+                        "wardrobe_notes": [
+                          "朴素的衣衫，展现其平和的气质。"
+                        ],
+                        "must_keep": [
+                          "神秘男子",
+                          "朴素衣衫"
+                        ]
+                      }
+                    ],
+                    "props_lock": [],
+                    "style_lock": {
+                      "global_style_notes": [
+                        "悲剧、庄重、压抑、哀伤的中国神话史诗风格，以“封神演义”为背景。在记忆段落中呈现为梦幻、柔和的风格。"
+                      ],
+                      "must_avoid": [
+                        "轻浮",
+                        "现代元素",
+                        "过度欢快"
+                      ]
+                    }
+                  },
+                  "scene_end": {
+                    "turn": "狐妖的记忆揭示了神秘男子曾被姜子牙处决，这是她最后的希望与痛苦的根源。",
+                    "emotional_shift": "从温暖的回忆急转直下为残酷的现实带来的震惊与绝望。"
+                  },
+                  "shots": [
+                    {
+                      "shot_id": "sh_007",
+                      "order": 1,
+                      "block_type": "action",
+                      "character_id": "",
+                      "character_name": "",
+                      "text": "记忆中，阳光透过盛开的桃花林，洒落在一片祥和之中。年轻的九尾狐妖依偎在一位温柔男子的身旁，两人并肩坐在树下。",
+                      "emotion_hint": "",
+                      "continuity_refs": {
+                        "props": [],
+                        "wardrobe_character_ids": [
+                          "char_001",
+                          "char_003"
+                        ]
+                      },
+                      "shot_type": "medium",
+                      "camera": {
+                        "angle": "eye_level",
+                        "movement": "dolly_out",
+                        "framing_notes": "展现男子与狐妖的亲密，周围桃花林的美丽。"
+                      },
+                      "visual_goal": "营造一个宁静、温馨的记忆场景，展示男子对狐妖的安慰。",
+                      "action_focus": "男子与狐妖的互动，桃花林背景",
+                      "characters_in_frame": [
+                        "char_001",
+                        "char_003"
+                      ],
+                      "props_in_frame": [],
+                      "keyframe_plan": {
+                        "keyframe_count": 1,
+                        "keyframe_notes": []
+                      }
+                    },
+                    {
+                      "shot_id": "sh_008",
+                      "order": 2,
+                      "block_type": "action",
+                      "character_id": "",
+                      "character_name": "",
+                      "text": "男子抬手，轻轻抚摸狐妖的头，眼中充满怜惜与柔情。狐妖抬头望着他，眼中满是依赖与信任。",
+                      "emotion_hint": "warm",
+                      "continuity_refs": {
+                        "props": [],
+                        "wardrobe_character_ids": [
+                          "char_001",
+                          "char_003"
+                        ]
+                      },
+                      "shot_type": "close_up",
+                      "camera": {
+                        "angle": "eye_level",
+                        "movement": "static",
+                        "framing_notes": "特写男子与狐妖的脸部，捕捉他们之间的情感交流。"
+                      },
+                      "visual_goal": "强调男子温柔的形象和狐妖对他的深情。",
+                      "action_focus": "男子的手和狐妖的眼神",
+                      "characters_in_frame": [
+                        "char_001",
+                        "char_003"
+                      ],
+                      "props_in_frame": [],
+                      "keyframe_plan": {
+                        "keyframe_count": 1,
+                        "keyframe_notes": []
+                      }
+                    },
+                    {
+                      "shot_id": "sh_009",
+                      "order": 3,
+                      "block_type": "action",
+                      "character_id": "",
+                      "character_name": "",
+                      "text": "画面骤然切换，桃花林的暖色调被冷酷的雷电取代。同一名男子，却跪在古老的封神台上，眼神中充满了无奈与悲壮。年轻的姜子牙手持斩妖剑，面无表情地站在他面前。",
+                      "emotion_hint": "",
+                      "continuity_refs": {
+                        "props": [
+                          "prop_001"
+                        ],
+                        "wardrobe_character_ids": [
+                          "char_003",
+                          "char_002"
+                        ]
+                      },
+                      "shot_type": "medium",
+                      "camera": {
+                        "angle": "eye_level",
+                        "movement": "quick_pan",
+                        "framing_notes": "快速切换场景和情绪，从温暖到冷酷，强调对比和冲击力。"
+                      },
+                      "visual_goal": "揭示记忆的悲惨真相，将温馨转化为震惊，连接姜子牙的过去。",
+                      "action_focus": "男子被处决的场景，年轻姜子牙的形象",
+                      "characters_in_frame": [
+                        "char_003",
+                        "char_002"
+                      ],
+                      "props_in_frame": [
+                        "prop_001"
+                      ],
+                      "keyframe_plan": {
+                        "keyframe_count": 1,
+                        "keyframe_notes": []
+                      }
+                    },
+                    {
+                      "shot_id": "sh_010",
+                      "order": 4,
+                      "block_type": "action",
+                      "character_id": "",
+                      "character_name": "",
+                      "text": "画面再次回到现代狐妖的特写，她猛然睁大眼睛，瞳孔紧缩，喉咙里发出痛苦的嘶哑声，她终于明白了什么。",
+                      "emotion_hint": "sad",
+                      "continuity_refs": {
+                        "props": [],
+                        "wardrobe_character_ids": [
+                          "char_001"
+                        ]
+                      },
+                      "shot_type": "close_up",
+                      "camera": {
+                        "angle": "eye_level",
+                        "movement": "static",
+                        "framing_notes": "特写狐妖的脸部，捕捉她从震惊到痛苦的表情变化。"
+                      },
+                      "visual_goal": "展现狐妖理解了记忆中可怕真相时的痛苦和震惊。",
+                      "action_focus": "狐妖的面部表情，眼神中的痛苦",
+                      "characters_in_frame": [
+                        "char_001"
+                      ],
+                      "props_in_frame": [],
+                      "keyframe_plan": {
+                        "keyframe_count": 1,
+                        "keyframe_notes": []
+                      }
+                    }
+                  ]
+                },
+                {
+                  "scene_id": "sc_004",
+                  "order": 4,
+                  "linked_story_step_id": "arc_004",
+                  "heading": {
+                    "location_id": "loc_001",
+                    "location_name": "古老封神台",
+                    "interior_exterior": "EXT",
+                    "time_of_day": "CUSTOM"
+                  },
+                  "summary": "在震耳欲聋的雷声中，狐妖流着泪，拼尽全力低声说出了那个神秘男子的名字，这个名字对姜子牙而言有着非凡的意义。",
+                  "continuity": {
+                    "props_present": [
+                      "神圣斩妖剑"
+                    ],
+                    "character_wardrobe_notes": [
+                      {
+                        "character_id": "char_001",
+                        "wardrobe": "褴褛的白袍，沾染尘土和血迹",
+                        "must_keep": [
+                          "褴褛白袍"
+                        ]
+                      },
+                      {
+                        "character_id": "char_002",
+                        "wardrobe": "庄严的道士将领服，深色",
+                        "must_keep": [
+                          "道士将领服"
+                        ]
+                      }
+                    ],
+                    "must_keep_scene_facts": [
+                      "狐妖的绝望呼唤",
+                      "神秘男子的名字",
+                      "姜子牙的潜在联系"
+                    ]
+                  },
+                  "scene_consistency_pack": {
+                    "location_lock": {
+                      "location_id": "loc_001",
+                      "time_of_day": "CUSTOM",
+                      "environment_notes": [
+                        "古老的封神台，被暗沉的漩涡状乌云笼罩，不时有神圣的闪电划过，九天雷声轰鸣。气氛悲剧、庄重、压抑，充满中国神话色彩。"
+                      ]
+                    },
+                    "character_locks": [
+                      {
+                        "character_id": "char_001",
+                        "identity_notes": [
+                          "九尾狐妖，战争的最后幸存者，极度恐惧但又带着最后的希望，在古代中国神话背景下被处决。",
+                          "狐妖本体形态为九尾狐。"
+                        ],
+                        "wardrobe_notes": [
+                          "破损的白袍，象征其落魄与脆弱。"
+                        ],
+                        "must_keep": [
+                          "九尾狐妖",
+                          "褴褛白袍"
+                        ]
+                      },
+                      {
+                        "character_id": "char_002",
+                        "identity_notes": [
+                          "姜子牙，冷酷、坚决的道士将领，在古代中国神话背景下执行天命。",
+                          "持有神圣斩妖剑。"
+                        ],
+                        "wardrobe_notes": [
+                          "庄严的道士将领服，衬托其权威与职责。"
+                        ],
+                        "must_keep": [
+                          "姜子牙",
+                          "道士将领服"
+                        ]
+                      }
+                    ],
+                    "props_lock": [
+                      {
+                        "prop_id": "prop_001",
+                        "prop_name": "神圣斩妖剑",
+                        "must_keep": [
+                          "带有神圣符文的巨大长剑，散发威严。"
+                        ]
+                      }
+                    ],
+                    "style_lock": {
+                      "global_style_notes": [
+                        "悲剧、庄重、压抑、哀伤的中国神话史诗风格，以“封神演义”为背景。"
+                      ],
+                      "must_avoid": [
+                        "轻浮",
+                        "现代元素"
+                      ]
+                    }
+                  },
+                  "scene_end": {
+                    "turn": "狐妖呼唤出的名字让姜子牙的行动出现了刹那的停滞。",
+                    "emotional_shift": "从绝望中的一线生机，转变为姜子牙内心的剧烈震动和悬念。"
+                  },
+                  "shots": [
+                    {
+                      "shot_id": "sh_011",
+                      "order": 1,
+                      "block_type": "dialogue",
+                      "character_id": "char_001",
+                      "character_name": "九尾狐妖",
+                      "text": "（哽咽）“申…申公豹…”",
+                      "emotion_hint": "sad",
+                      "continuity_refs": {
+                        "props": [],
+                        "wardrobe_character_ids": [
+                          "char_001"
+                        ]
+                      },
+                      "shot_type": "close_up",
+                      "camera": {
+                        "angle": "low_angle",
+                        "movement": "static",
+                        "framing_notes": "特写狐妖的嘴唇和脸颊，泪水与雨水混合，声音微弱但清晰。"
+                      },
+                      "visual_goal": "强调狐妖发出的微弱但充满力量的声音，暗示名字的重要性。",
+                      "action_focus": "狐妖的嘴唇和颤抖的面部",
+                      "characters_in_frame": [
+                        "char_001"
+                      ],
+                      "props_in_frame": [],
+                      "keyframe_plan": {
+                        "keyframe_count": 1,
+                        "keyframe_notes": []
+                      }
+                    },
+                    {
+                      "shot_id": "sh_012",
+                      "order": 2,
+                      "block_type": "action",
+                      "character_id": "",
+                      "character_name": "",
+                      "text": "姜子牙的身体在听到这个名字的瞬间，仿佛被无形的力量击中，僵硬了一瞬。他高举的剑身停止了下落的趋势。",
+                      "emotion_hint": "tense",
+                      "continuity_refs": {
+                        "props": [
+                          "prop_001"
+                        ],
+                        "wardrobe_character_ids": [
+                          "char_002"
+                        ]
+                      },
+                      "shot_type": "medium",
+                      "camera": {
+                        "angle": "eye_level",
+                        "movement": "zoom_in",
+                        "framing_notes": "聚焦姜子牙的侧脸和高举的剑，捕捉他细微的僵硬和震惊。"
+                      },
+                      "visual_goal": "展现名字对姜子牙造成的巨大冲击，打破其坚不可摧的形象。",
+                      "action_focus": "姜子牙的僵硬姿态和停止的剑",
+                      "characters_in_frame": [
+                        "char_002"
+                      ],
+                      "props_in_frame": [
+                        "prop_001"
+                      ],
+                      "keyframe_plan": {
+                        "keyframe_count": 1,
+                        "keyframe_notes": []
+                      }
+                    }
+                  ]
+                },
+                {
+                  "scene_id": "sc_005",
+                  "order": 5,
+                  "linked_story_step_id": "arc_005",
+                  "heading": {
+                    "location_id": "loc_001",
+                    "location_name": "古老封神台",
+                    "interior_exterior": "EXT",
+                    "time_of_day": "CUSTOM"
+                  },
+                  "summary": "姜子牙手中的神剑首次停滞在半空中，他坚定的决心瞬间瓦解。他慢慢放下剑，震惊而疑惑地凝视着九尾狐妖。",
+                  "continuity": {
+                    "props_present": [
+                      "神圣斩妖剑"
+                    ],
+                    "character_wardrobe_notes": [
+                      {
+                        "character_id": "char_001",
+                        "wardrobe": "褴褛的白袍，沾染尘土和血迹",
+                        "must_keep": [
+                          "褴褛白袍"
+                        ]
+                      },
+                      {
+                        "character_id": "char_002",
+                        "wardrobe": "庄严的道士将领服，深色",
+                        "must_keep": [
+                          "道士将领服"
+                        ]
+                      }
+                    ],
+                    "must_keep_scene_facts": [
+                      "姜子牙的动摇",
+                      "剑的放下",
+                      "狐妖的命运转变"
+                    ]
+                  },
+                  "scene_consistency_pack": {
+                    "location_lock": {
+                      "location_id": "loc_001",
+                      "time_of_day": "CUSTOM",
+                      "environment_notes": [
+                        "古老的封神台，被暗沉的漩涡状乌云笼罩，不时有神圣的闪电划过，九天雷声轰鸣。气氛悲剧、庄重、压抑，充满中国神话色彩。"
+                      ]
+                    },
+                    "character_locks": [
+                      {
+                        "character_id": "char_001",
+                        "identity_notes": [
+                          "九尾狐妖，战争的最后幸存者，从绝望中获得了一丝转机，在古代中国神话背景下被处决。",
+                          "狐妖本体形态为九尾狐。"
+                        ],
+                        "wardrobe_notes": [
+                          "破损的白袍，象征其落魄与脆弱。"
+                        ],
+                        "must_keep": [
+                          "九尾狐妖",
+                          "褴褛白袍"
+                        ]
+                      },
+                      {
+                        "character_id": "char_002",
+                        "identity_notes": [
+                          "姜子牙，冷酷、坚决的道士将领，但被过去的联系所动摇，在古代中国神话背景下执行天命。",
+                          "持有神圣斩妖剑。"
+                        ],
+                        "wardrobe_notes": [
+                          "庄严的道士将领服，衬托其权威与职责。"
+                        ],
+                        "must_keep": [
+                          "姜子牙",
+                          "道士将领服"
+                        ]
+                      }
+                    ],
+                    "props_lock": [
+                      {
+                        "prop_id": "prop_001",
+                        "prop_name": "神圣斩妖剑",
+                        "must_keep": [
+                          "带有神圣符文的巨大长剑，散发威严。"
+                        ]
+                      }
+                    ],
+                    "style_lock": {
+                      "global_style_notes": [
+                        "悲剧、庄重、压抑、哀伤的中国神话史诗风格，以“封神演义”为背景。"
+                      ],
+                      "must_avoid": [
+                        "轻浮",
+                        "现代元素"
+                      ]
+                    }
+                  },
+                  "scene_end": {
+                    "turn": "姜子牙的剑彻底放下，他的职责与信念首次遭遇动摇，狐妖的命运悬而未决。",
+                    "emotional_shift": "从极度紧张转为深沉的震惊、迷茫与未知的悬念。"
+                  },
+                  "shots": [
+                    {
+                      "shot_id": "sh_013",
+                      "order": 1,
+                      "block_type": "action",
+                      "character_id": "",
+                      "character_name": "",
+                      "text": "神圣斩妖剑，在姜子牙手中，竟然停止了下落的势头，悬浮在半空中。一道神圣的闪电恰好划过，照亮了剑身。",
+                      "emotion_hint": "",
+                      "continuity_refs": {
+                        "props": [
+                          "prop_001"
+                        ],
+                        "wardrobe_character_ids": [
+                          "char_002"
+                        ]
+                      },
+                      "shot_type": "close_up",
+                      "camera": {
+                        "angle": "low_angle",
+                        "movement": "static",
+                        "framing_notes": "特写剑身和姜子牙紧握剑柄的手，强调其突如其来的停滞。"
+                      },
+                      "visual_goal": "通过剑的停滞，象征姜子牙意志的动摇，制造强烈悬念。",
+                      "action_focus": "悬停的剑和闪电",
+                      "characters_in_frame": [
+                        "char_002"
+                      ],
+                      "props_in_frame": [
+                        "prop_001"
+                      ],
+                      "keyframe_plan": {
+                        "keyframe_count": 1,
+                        "keyframe_notes": []
+                      }
+                    },
+                    {
+                      "shot_id": "sh_014",
+                      "order": 2,
+                      "block_type": "action",
+                      "character_id": "",
+                      "character_name": "",
+                      "text": "姜子牙的面部特写。他眼神中先是难以置信，随后浮现出深刻的痛苦、迷茫和怀疑，仿佛回到了久远的过去。",
+                      "emotion_hint": "sad",
+                      "continuity_refs": {
+                        "props": [],
+                        "wardrobe_character_ids": [
+                          "char_002"
+                        ]
+                      },
+                      "shot_type": "close_up",
+                      "camera": {
+                        "angle": "eye_level",
+                        "movement": "push_in",
+                        "framing_notes": "特写姜子牙的脸部，捕捉其复杂的内心挣扎和情绪变化。"
+                      },
+                      "visual_goal": "展现姜子牙内心世界的剧烈震荡，他的坚决被彻底打破。",
+                      "action_focus": "姜子牙的眼神和面部表情",
+                      "characters_in_frame": [
+                        "char_002"
+                      ],
+                      "props_in_frame": [],
+                      "keyframe_plan": {
+                        "keyframe_count": 1,
+                        "keyframe_notes": []
+                      }
+                    },
+                    {
+                      "shot_id": "sh_015",
+                      "order": 3,
+                      "block_type": "action",
+                      "character_id": "",
+                      "character_name": "",
+                      "text": "姜子牙缓慢地、无力地将神剑放下，剑尖垂向地面。他凝视着九尾狐妖，眼中充满了深沉的震惊与无法言喻的疑问。",
+                      "emotion_hint": "calm",
+                      "continuity_refs": {
+                        "props": [
+                          "prop_001"
+                        ],
+                        "wardrobe_character_ids": [
+                          "char_001",
+                          "char_002"
+                        ]
+                      },
+                      "shot_type": "medium",
+                      "camera": {
+                        "angle": "eye_level",
+                        "movement": "pull_back",
+                        "framing_notes": "拉远镜头，同时捕捉姜子牙放下剑的动作和两人对峙的画面，留下悬念。"
+                      },
+                      "visual_goal": "表现姜子牙最终的动摇和处决的中止，为故事留下开放结局。",
+                      "action_focus": "姜子牙放下剑的动作，他与狐妖的对视",
+                      "characters_in_frame": [
+                        "char_001",
+                        "char_002"
+                      ],
+                      "props_in_frame": [
+                        "prop_001"
+                      ],
+                      "keyframe_plan": {
+                        "keyframe_count": 1,
+                        "keyframe_notes": []
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            "metrics": {
+              "scene_count": 5,
+              "shot_count_total": 15,
+              "avg_shots_per_scene": 3.0,
+              "dialogue_block_count": 1,
+              "action_block_count": 14
+            }
+          }
+        },
+        "character_reference": [],
+        "location_reference": [],
+        "prop_reference": [],
+        "style_reference": []
+      },
+      "resolved_input_paths": [
+        "/home/zhendong_li/FrameWorkers/_workspaces/workspace_global_20260512_194119/artifacts/ScreenplayAgent/step_2_3d8bb556_screenplayagent_exec_2.json"
+      ]
+    },
+    "results": {
+      "content": {
+        "global_anchors": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "A powerful nine-tailed fox demon, a survivor of ancient Chinese mythological wars. She is typically seen in tattered white robes, symbolizing her fallen state, but in memories, she wears elegant, simple traditional attire when younger and at peace. Her true form is that of a nine-tailed fox.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Jiang Ziya, a stern and resolute Taoist general, carries a divine demon-slaying sword. He wears solemn, dark Taoist general attire, reflecting his authority and duty in ancient Chinese mythology.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_003",
+              "prompt_summary": "A mysterious man with a gentle and comforting demeanor, dressed in simple traditional clothing. He is connected to ancient Chinese mythology, and his fate is intertwined with Jiang Ziya and the fox demon.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "An ancient, weathered God-Sealing Platform, shrouded by ominous, swirling dark clouds. Divine lightning occasionally streaks across the sky, accompanied by rumbling thunder. This setting evokes a tragic, solemn, and oppressive atmosphere from Chinese mythology.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "loc_002",
+              "prompt_summary": "A serene and ethereal peach blossom forest in full bloom, bathed in peaceful, comforting light. This idyllic setting contrasts sharply with the somber ancient Chinese mythological backdrop, appearing dreamlike and tranquil.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "A massive, majestic longsword adorned with sacred runes. It exudes an aura of immense power and divine authority.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "scenes": [
+          {
+            "scene_id": "sc_001",
+            "stability_keyframes": {
+              "characters": [
+                {
+                  "entity_id": "char_001",
+                  "prompt_summary": "The nine-tailed fox demon is in a state of extreme fear and exhaustion, bound on the God-Sealing Platform, wearing tattered white robes.",
+                  "reference_image_uri": ""
+                },
+                {
+                  "entity_id": "char_002",
+                  "prompt_summary": "Jiang Ziya, resolute and cold, stands on the God-Sealing Platform ready to fulfill his destiny, dressed in solemn Taoist general attire.",
+                  "reference_image_uri": ""
+                }
+              ],
+              "locations": [
+                {
+                  "entity_id": "loc_001",
+                  "prompt_summary": "The ancient God-Sealing Platform is enveloped by dark, swirling clouds with sacred lightning and thunder, creating a tragic and oppressive atmosphere.",
+                  "reference_image_uri": ""
+                }
+              ],
+              "props": [
+                {
+                  "entity_id": "prop_001",
+                  "prompt_summary": "The divine demon-slaying sword rests at Jiang Ziya's waist, emanating an aura of majesty and power.",
+                  "reference_image_uri": ""
+                }
+              ]
+            },
+            "shots": [
+              {
+                "shot_id": "sh_001",
+                "characters_in_frame": [
+                  "char_002"
+                ],
+                "props_in_frame": [
+                  "prop_001"
+                ],
+                "keyframes": [
+                  {
+                    "prompt_summary": "An ancient God-Sealing Platform is engulfed by dark, swirling clouds with lightning and thunder. Jiang Ziya, in solemn Taoist general attire, stands impassively, his hand resting on the divine demon-slaying sword at his waist. The wide, high-angle view emphasizes the platform's grandeur and oppressive atmosphere, with Jiang Ziya appearing solitary and imposing.",
+                    "video_motion_hint": "The camera remains static, capturing the stoic presence of Jiang Ziya amidst the grand and oppressive environment."
+                  }
+                ]
+              },
+              {
+                "shot_id": "sh_002",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [],
+                "keyframes": [
+                  {
+                    "prompt_summary": "The nine-tailed fox demon is tightly bound to a stone pillar, her body trembling violently beneath her tattered white robes. Her pale face is streaked with tears mingling with rain, her eyes filled with profound despair and terror. The close-up, eye-level shot focuses on her face and upper body, highlighting her vulnerability and extreme fear.",
+                    "video_motion_hint": "The camera holds static, concentrating on the fox demon's trembling body and tear-streaked face."
+                  }
+                ]
+              },
+              {
+                "shot_id": "sh_003",
+                "characters_in_frame": [
+                  "char_002"
+                ],
+                "props_in_frame": [
+                  "prop_001"
+                ],
+                "keyframes": [
+                  {
+                    "prompt_summary": "Jiang Ziya slowly draws his divine demon-slaying sword from his waist. The sword's blade glints with cold light as lightning flashes around it. His gaze is resolute, showing no hesitation, emphasizing his power and determination. The medium, low-angle shot spotlights Jiang Ziya's hand and the sword, showcasing his strength.",
+                    "video_motion_hint": "The camera slowly pushes in towards Jiang Ziya's hand and the gleaming sword as he draws it, highlighting the action."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "scene_id": "sc_002",
+            "stability_keyframes": {
+              "characters": [
+                {
+                  "entity_id": "char_001",
+                  "prompt_summary": "The nine-tailed fox demon is in a dying state, struggling on the God-Sealing Platform, wearing broken white robes, with her consciousness blurring.",
+                  "reference_image_uri": ""
+                },
+                {
+                  "entity_id": "char_002",
+                  "prompt_summary": "Jiang Ziya, fulfilling his divine mandate, raises the demon-slaying sword high, dressed in solemn Taoist general attire.",
+                  "reference_image_uri": ""
+                }
+              ],
+              "locations": [
+                {
+                  "entity_id": "loc_001",
+                  "prompt_summary": "The ancient God-Sealing Platform is engulfed by a stormy tempest, shrouded in dark clouds and lightning, creating a tragic and oppressive atmosphere.",
+                  "reference_image_uri": ""
+                }
+              ],
+              "props": [
+                {
+                  "entity_id": "prop_001",
+                  "prompt_summary": "The divine demon-slaying sword is raised high by Jiang Ziya, its blade shining brightly amidst the lightning.",
+                  "reference_image_uri": ""
+                }
+              ]
+            },
+            "shots": [
+              {
+                "shot_id": "sh_004",
+                "characters_in_frame": [
+                  "char_002"
+                ],
+                "props_in_frame": [
+                  "prop_001"
+                ],
+                "keyframes": [
+                  {
+                    "prompt_summary": "Jiang Ziya raises the divine demon-slaying sword high, pointing its tip towards the storm-laden sky, seemingly drawing power from heavenly thunder. The blade shines with immense light, exuding a fierce killing intent. The low-angle, Dutch angle shot looks up at Jiang Ziya and the sword, emphasizing his strength and the ominous threat.",
+                    "video_motion_hint": "The camera cranes up, following Jiang Ziya as he raises the sword, emphasizing his powerful posture."
+                  }
+                ]
+              },
+              {
+                "shot_id": "sh_005",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [],
+                "keyframes": [
+                  {
+                    "prompt_summary": "Beneath the looming sword, the fox demon struggles violently, her body contorting as she emits a silent scream. Her vision blurs, and the surrounding lightning and Jiang Ziya's silhouette become distorted. The close-up, eye-level shot captures her face in extreme proximity, using blur and shaky effects to convey her dying state and overwhelming terror.",
+                    "video_motion_hint": "The handheld camera shakes and subtly blurs, reflecting the fox demon's intense struggle and fading consciousness."
+                  }
+                ]
+              },
+              {
+                "shot_id": "sh_006",
+                "characters_in_frame": [],
+                "props_in_frame": [],
+                "keyframes": [
+                  {
+                    "prompt_summary": "Through the blur, a warm, fleeting light appears, with pink peach blossoms gently fluttering through the air. This cutaway shot briefly brings a moment of serene tranquility. The soft focus and blurred edges illustrate the fragmented nature of this memory.",
+                    "video_motion_hint": "The camera remains static, allowing the soft, warm light and floating peach petals to drift gently across the frame."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "scene_id": "sc_003",
+            "stability_keyframes": {
+              "characters": [
+                {
+                  "entity_id": "char_001",
+                  "prompt_summary": "The nine-tailed fox demon appears younger and elegant in memory, finding comfort and tenderness within the peach blossom forest.",
+                  "reference_image_uri": ""
+                },
+                {
+                  "entity_id": "char_003",
+                  "prompt_summary": "The gentle mysterious man appears in the fox demon's memory, dressed in simple attire, offering solace within the peach blossom forest.",
+                  "reference_image_uri": ""
+                },
+                {
+                  "entity_id": "char_002",
+                  "prompt_summary": "A younger Jiang Ziya appears in the fox demon's memory flashback, holding the demon-slaying sword, standing impassively on the lightning-streaked God-Sealing Platform, executing a judgment.",
+                  "reference_image_uri": ""
+                }
+              ],
+              "locations": [
+                {
+                  "entity_id": "loc_002",
+                  "prompt_summary": "The serene and ethereal peach blossom forest, with blooming flowers and sunlight filtering through, appears dreamlike and soft as the backdrop for the fox demon's memory.",
+                  "reference_image_uri": ""
+                }
+              ],
+              "props": [
+                {
+                  "entity_id": "prop_001",
+                  "prompt_summary": "The divine demon-slaying sword is held by a younger Jiang Ziya in the fox demon's memory flashback, its cold gleam symbolizing a cruel fate.",
+                  "reference_image_uri": ""
+                }
+              ]
+            },
+            "shots": [
+              {
+                "shot_id": "sh_007",
+                "characters_in_frame": [
+                  "char_001",
+                  "char_003"
+                ],
+                "props_in_frame": [],
+                "keyframes": [
+                  {
+                    "prompt_summary": "In a vivid memory, sunlight filters through a blooming peach blossom forest, creating a peaceful, idyllic scene. A younger nine-tailed fox demon, in elegant, simple attire, leans against a gentle man. They sit side-by-side beneath a tree. The medium, eye-level shot captures their intimacy and the beautiful backdrop of the peach forest.",
+                    "video_motion_hint": "The camera dollies out slowly, revealing the peaceful interaction between the man and the fox demon within the beautiful peach forest."
+                  }
+                ]
+              },
+              {
+                "shot_id": "sh_008",
+                "characters_in_frame": [
+                  "char_001",
+                  "char_003"
+                ],
+                "props_in_frame": [],
+                "keyframes": [
+                  {
+                    "prompt_summary": "The man gently raises his hand to caress the fox demon's head, his eyes filled with compassion and tenderness. The fox demon looks up at him, her gaze full of dependence and trust. This close-up, eye-level shot focuses on their faces, capturing the intimate emotional exchange between them.",
+                    "video_motion_hint": "The camera remains static, allowing the gentle interaction and tender expressions of the man and fox demon to unfold."
+                  }
+                ]
+              },
+              {
+                "shot_id": "sh_009",
+                "characters_in_frame": [
+                  "char_003",
+                  "char_002"
+                ],
+                "props_in_frame": [
+                  "prop_001"
+                ],
+                "keyframes": [
+                  {
+                    "prompt_summary": "The scene abruptly shifts from the warm peach grove to a cold, lightning-streaked God-Sealing Platform. The same man, now kneeling with an expression of helplessness and tragic defiance, faces a younger Jiang Ziya. Jiang Ziya stands impassively, holding his demon-slaying sword. The medium, eye-level shot uses a rapid shift in framing and emotion, from warmth to stark coldness, emphasizing contrast and impact.",
+                    "video_motion_hint": "A quick pan transitions the view from the man to the imposing figure of young Jiang Ziya and the sword, marking a dramatic shift in tone."
+                  }
+                ]
+              },
+              {
+                "shot_id": "sh_010",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [],
+                "keyframes": [
+                  {
+                    "prompt_summary": "The camera cuts back to a close-up of the modern fox demon's face. Her eyes snap open, pupils constricted, and a painful, hoarse cry escapes her throat. She has finally understood the horrifying truth revealed by her memories. The close-up, eye-level shot captures her expression shifting from shock to profound anguish.",
+                    "video_motion_hint": "The camera remains static, highlighting the sudden, intense shift in the fox demon's facial expression as she comprehends the truth."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "scene_id": "sc_004",
+            "stability_keyframes": {
+              "characters": [
+                {
+                  "entity_id": "char_001",
+                  "prompt_summary": "The nine-tailed fox demon is on the God-Sealing Platform, crying tears that mix with rain, desperately calling out a name, wearing tattered white robes.",
+                  "reference_image_uri": ""
+                },
+                {
+                  "entity_id": "char_002",
+                  "prompt_summary": "Jiang Ziya, raising the demon-slaying sword on the God-Sealing Platform, freezes momentarily upon hearing the fox demon's call, showing a flicker of shock.",
+                  "reference_image_uri": ""
+                }
+              ],
+              "locations": [
+                {
+                  "entity_id": "loc_001",
+                  "prompt_summary": "The ancient God-Sealing Platform is engulfed by dark clouds and rumbling thunder, creating a tense and tragic atmosphere.",
+                  "reference_image_uri": ""
+                }
+              ],
+              "props": [
+                {
+                  "entity_id": "prop_001",
+                  "prompt_summary": "The divine demon-slaying sword is held aloft by Jiang Ziya, its blade shining in the lightning, momentarily suspended due to his hesitation.",
+                  "reference_image_uri": ""
+                }
+              ]
+            },
+            "shots": [
+              {
+                "shot_id": "sh_011",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [],
+                "keyframes": [
+                  {
+                    "prompt_summary": "A close-up of the fox demon's lips and tear-streaked cheeks on the stormy God-Sealing Platform. Tears mix with rain as she chokingly whispers the name 'Shen… Shen Gongbao…' Her voice is weak yet imbued with profound significance. The low-angle, static shot emphasizes her frail yet impactful utterance.",
+                    "video_motion_hint": "The camera holds still, allowing the subtle trembling of the fox demon's lips and the stream of tears to convey her emotional fragility."
+                  }
+                ]
+              },
+              {
+                "shot_id": "sh_012",
+                "characters_in_frame": [
+                  "char_002"
+                ],
+                "props_in_frame": [
+                  "prop_001"
+                ],
+                "keyframes": [
+                  {
+                    "prompt_summary": "Jiang Ziya's body stiffens instantaneously upon hearing the name, as if struck by an invisible force. The descent of his raised sword pauses mid-air. The medium, eye-level shot focuses on Jiang Ziya's profile and the uplifted sword, capturing his subtle rigidity and profound shock, highlighting the name's immense impact and breaking his unyielding composure.",
+                    "video_motion_hint": "The camera slowly zooms in on Jiang Ziya's face and the suspended sword, emphasizing the moment of frozen action and shock."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "scene_id": "sc_005",
+            "stability_keyframes": {
+              "characters": [
+                {
+                  "entity_id": "char_001",
+                  "prompt_summary": "The nine-tailed fox demon on the God-Sealing Platform witnesses Jiang Ziya's hesitation, her fate hanging in the balance, wearing tattered white robes.",
+                  "reference_image_uri": ""
+                },
+                {
+                  "entity_id": "char_002",
+                  "prompt_summary": "Jiang Ziya, on the God-Sealing Platform, slowly lowers the demon-slaying sword due to his inner turmoil, his eyes filled with pain, confusion, and doubt.",
+                  "reference_image_uri": ""
+                }
+              ],
+              "locations": [
+                {
+                  "entity_id": "loc_001",
+                  "prompt_summary": "The ancient God-Sealing Platform is shrouded in dark clouds and flashing lightning, shifting the atmosphere from extreme tension to deep suspense.",
+                  "reference_image_uri": ""
+                }
+              ],
+              "props": [
+                {
+                  "entity_id": "prop_001",
+                  "prompt_summary": "The divine demon-slaying sword, first suspended in Jiang Ziya's hand, is eventually slowly lowered, symbolizing the weakening of his resolve.",
+                  "reference_image_uri": ""
+                }
+              ]
+            },
+            "shots": [
+              {
+                "shot_id": "sh_013",
+                "characters_in_frame": [
+                  "char_002"
+                ],
+                "props_in_frame": [
+                  "prop_001"
+                ],
+                "keyframes": [
+                  {
+                    "prompt_summary": "The divine demon-slaying sword, held by Jiang Ziya, incredibly halts its downward trajectory, suspended in mid-air. A sacred lightning bolt streaks across the sky at this precise moment, illuminating the blade. The low-angle, static shot prominently features the sword and Jiang Ziya's hand gripping the hilt, underscoring the sudden and unexpected pause.",
+                    "video_motion_hint": "The camera remains static, capturing the sword's miraculous suspension and the flash of lightning illuminating it."
+                  }
+                ]
+              },
+              {
+                "shot_id": "sh_014",
+                "characters_in_frame": [
+                  "char_002"
+                ],
+                "props_in_frame": [],
+                "keyframes": [
+                  {
+                    "prompt_summary": "A close-up of Jiang Ziya's face. His eyes initially convey disbelief, quickly replaced by deep pain, confusion, and doubt, as if he is transported back to a distant past. The eye-level, close-up shot intensely focuses on his face, capturing his complex internal struggle and emotional transformation, revealing his unwavering resolve has been shattered.",
+                    "video_motion_hint": "The camera slowly pushes in towards Jiang Ziya's face, emphasizing the subtle yet profound shifts in his expression."
+                  }
+                ]
+              },
+              {
+                "shot_id": "sh_015",
+                "characters_in_frame": [
+                  "char_001",
+                  "char_002"
+                ],
+                "props_in_frame": [
+                  "prop_001"
+                ],
+                "keyframes": [
+                  {
+                    "prompt_summary": "Jiang Ziya slowly and weakly lowers the divine demon-slaying sword, its tip pointing towards the ground. He gazes at the nine-tailed fox demon, his eyes filled with deep shock and unutterable questions. The medium, eye-level shot pulls back, capturing Jiang Ziya lowering the sword and the two characters confronting each other, leaving the audience in suspense, suggesting his ultimate wavering and the halt of the execution, creating an open ending for the story.",
+                    "video_motion_hint": "The camera slowly pulls back, revealing Jiang Ziya's full action of lowering the sword and the tense confrontation between him and the fox demon."
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "style_notes": [
+          "悲剧、庄重、压抑、哀伤的中国神话史诗风格，以“封神演义”为背景。",
+          "悲剧、庄重、压抑、哀伤的中国神话史诗风格，以“封神演义”为背景。在记忆段落中呈现为梦幻、柔和的风格。"
+        ],
+        "must_avoid": [
+          "轻浮",
+          "现代元素",
+          "过度欢快"
+        ]
+      },
+      "metrics": {
+        "scene_count": 5,
+        "shot_count": 15,
+        "keyframe_count_total": 15,
+        "avg_keyframes_per_shot": 1.0,
+        "global_character_anchor_count": 3,
+        "global_location_anchor_count": 2,
+        "global_prop_anchor_count": 1,
+        "stability_character_keyframe_count": 11,
+        "stability_location_keyframe_count": 5,
+        "stability_prop_keyframe_count": 5
+      },
+      "_media_files": {
+        "img_char_002_global": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1248199
+          },
+          "filename": "img_char_002_global.png",
+          "description": "Media asset img_char_002_global"
+        },
+        "img_char_003_global": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1248657
+          },
+          "filename": "img_char_003_global.png",
+          "description": "Media asset img_char_003_global"
+        },
+        "img_prop_001_global": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1133006
+          },
+          "filename": "img_prop_001_global.png",
+          "description": "Media asset img_prop_001_global"
+        },
+        "img_loc_001_global": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1722831
+          },
+          "filename": "img_loc_001_global.png",
+          "description": "Media asset img_loc_001_global"
+        },
+        "img_char_001_global": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1411366
+          },
+          "filename": "img_char_001_global.png",
+          "description": "Media asset img_char_001_global"
+        },
+        "img_loc_002_global": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 2277837
+          },
+          "filename": "img_loc_002_global.png",
+          "description": "Media asset img_loc_002_global"
+        },
+        "img_loc_001_sc_004": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1681561
+          },
+          "filename": "img_loc_001_sc_004.png",
+          "description": "Media asset img_loc_001_sc_004"
+        },
+        "img_loc_001_sc_002": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1611895
+          },
+          "filename": "img_loc_001_sc_002.png",
+          "description": "Media asset img_loc_001_sc_002"
+        },
+        "img_char_002_sc_004": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1471977
+          },
+          "filename": "img_char_002_sc_004.png",
+          "description": "Media asset img_char_002_sc_004"
+        },
+        "img_char_002_sc_005": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1445208
+          },
+          "filename": "img_char_002_sc_005.png",
+          "description": "Media asset img_char_002_sc_005"
+        },
+        "img_prop_001_sc_005": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1439166
+          },
+          "filename": "img_prop_001_sc_005.png",
+          "description": "Media asset img_prop_001_sc_005"
+        },
+        "img_loc_002_sc_003": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 2180829
+          },
+          "filename": "img_loc_002_sc_003.png",
+          "description": "Media asset img_loc_002_sc_003"
+        },
+        "img_char_001_sc_002": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1516676
+          },
+          "filename": "img_char_001_sc_002.png",
+          "description": "Media asset img_char_001_sc_002"
+        },
+        "img_char_002_sc_002": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1402252
+          },
+          "filename": "img_char_002_sc_002.png",
+          "description": "Media asset img_char_002_sc_002"
+        },
+        "img_prop_001_sc_003": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1327464
+          },
+          "filename": "img_prop_001_sc_003.png",
+          "description": "Media asset img_prop_001_sc_003"
+        },
+        "img_char_001_sc_005": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1551406
+          },
+          "filename": "img_char_001_sc_005.png",
+          "description": "Media asset img_char_001_sc_005"
+        },
+        "img_char_002_sc_001": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1509142
+          },
+          "filename": "img_char_002_sc_001.png",
+          "description": "Media asset img_char_002_sc_001"
+        },
+        "img_char_002_sc_003": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1622992
+          },
+          "filename": "img_char_002_sc_003.png",
+          "description": "Media asset img_char_002_sc_003"
+        },
+        "img_prop_001_sc_004": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1489077
+          },
+          "filename": "img_prop_001_sc_004.png",
+          "description": "Media asset img_prop_001_sc_004"
+        },
+        "img_char_001_sc_004": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1523983
+          },
+          "filename": "img_char_001_sc_004.png",
+          "description": "Media asset img_char_001_sc_004"
+        },
+        "img_char_001_sc_003": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 2002282
+          },
+          "filename": "img_char_001_sc_003.png",
+          "description": "Media asset img_char_001_sc_003"
+        },
+        "img_prop_001_sc_001": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1668103
+          },
+          "filename": "img_prop_001_sc_001.png",
+          "description": "Media asset img_prop_001_sc_001"
+        },
+        "img_prop_001_sc_002": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1492084
+          },
+          "filename": "img_prop_001_sc_002.png",
+          "description": "Media asset img_prop_001_sc_002"
+        },
+        "img_char_003_sc_003": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1503075
+          },
+          "filename": "img_char_003_sc_003.png",
+          "description": "Media asset img_char_003_sc_003"
+        },
+        "img_loc_001_sc_001": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1711513
+          },
+          "filename": "img_loc_001_sc_001.png",
+          "description": "Media asset img_loc_001_sc_001"
+        },
+        "img_char_001_sc_001": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1616250
+          },
+          "filename": "img_char_001_sc_001.png",
+          "description": "Media asset img_char_001_sc_001"
+        },
+        "img_loc_001_sc_005": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1603082
+          },
+          "filename": "img_loc_001_sc_005.png",
+          "description": "Media asset img_loc_001_sc_005"
+        },
+        "img_sh_005_kf_001": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1332826
+          },
+          "filename": "img_sh_005_kf_001.png",
+          "description": "Media asset img_sh_005_kf_001"
+        },
+        "img_sh_002_kf_001": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1697722
+          },
+          "filename": "img_sh_002_kf_001.png",
+          "description": "Media asset img_sh_002_kf_001"
+        },
+        "img_sh_006_kf_001": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1581190
+          },
+          "filename": "img_sh_006_kf_001.png",
+          "description": "Media asset img_sh_006_kf_001"
+        },
+        "img_sh_014_kf_001": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1426908
+          },
+          "filename": "img_sh_014_kf_001.png",
+          "description": "Media asset img_sh_014_kf_001"
+        },
+        "img_sh_011_kf_001": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1393616
+          },
+          "filename": "img_sh_011_kf_001.png",
+          "description": "Media asset img_sh_011_kf_001"
+        },
+        "img_sh_008_kf_001": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1598704
+          },
+          "filename": "img_sh_008_kf_001.png",
+          "description": "Media asset img_sh_008_kf_001"
+        },
+        "img_sh_003_kf_001": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1647376
+          },
+          "filename": "img_sh_003_kf_001.png",
+          "description": "Media asset img_sh_003_kf_001"
+        },
+        "img_sh_012_kf_001": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1442063
+          },
+          "filename": "img_sh_012_kf_001.png",
+          "description": "Media asset img_sh_012_kf_001"
+        },
+        "img_sh_013_kf_001": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1489134
+          },
+          "filename": "img_sh_013_kf_001.png",
+          "description": "Media asset img_sh_013_kf_001"
+        },
+        "img_sh_004_kf_001": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1467115
+          },
+          "filename": "img_sh_004_kf_001.png",
+          "description": "Media asset img_sh_004_kf_001"
+        },
+        "img_sh_001_kf_001": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1687452
+          },
+          "filename": "img_sh_001_kf_001.png",
+          "description": "Media asset img_sh_001_kf_001"
+        },
+        "img_sh_009_kf_001": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1604749
+          },
+          "filename": "img_sh_009_kf_001.png",
+          "description": "Media asset img_sh_009_kf_001"
+        },
+        "img_sh_015_kf_001": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1536417
+          },
+          "filename": "img_sh_015_kf_001.png",
+          "description": "Media asset img_sh_015_kf_001"
+        },
+        "img_sh_007_kf_001": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 2155529
+          },
+          "filename": "img_sh_007_kf_001.png",
+          "description": "Media asset img_sh_007_kf_001"
+        },
+        "img_sh_010_kf_001": {
+          "file_content": {
+            "_type": "binary",
+            "size_bytes": 1573849
+          },
+          "filename": "img_sh_010_kf_001.png",
+          "description": "Media asset img_sh_010_kf_001"
+        }
+      },
+      "_execution_debug": {
+        "attempts": 1,
+        "overall_pass": true,
+        "eval_summary": "The creative content demonstrates exceptional quality across all evaluation dimensions. The consistency of visual identity, character descriptions, locations, and props is meticulously maintained throughout the global, scene, and shot layers. The visual quality of the prompts is outstanding, providing highly specific details regarding composition, lighting, mood, action, and camera movements, ensuring that the generated images would be rich, dynamic, and emotionally resonant. The prompts effectively communicate a compelling narrative with strong visual direction."
+      },
+      "_asset_index": {
+        "agent_id": "KeyFrameAgent",
+        "json_uri": "/home/zhendong_li/FrameWorkers/_workspaces/workspace_global_20260512_194119/artifacts/KeyFrameAgent/step_3_e6b31cc8_keyframeagent_exec_3.json",
+        "execution_id": "exec_3_ecd9477a"
+      }
+    },
+    "error": null,
+    "started_at": "2026-05-12T19:45:21.081292",
+    "completed_at": "2026-05-12T19:52:10.060101",
+    "created_at": "2026-05-12T19:45:21.081261",
+    "resolved_input_paths": [
+      "/home/zhendong_li/FrameWorkers/_workspaces/workspace_global_20260512_194119/artifacts/ScreenplayAgent/step_2_3d8bb556_screenplayagent_exec_2.json"
+    ]
+  }
+}

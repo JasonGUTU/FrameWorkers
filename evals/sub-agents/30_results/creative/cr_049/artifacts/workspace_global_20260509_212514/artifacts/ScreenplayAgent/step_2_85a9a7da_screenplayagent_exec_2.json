@@ -1,0 +1,485 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-09T21:26:20.969982+00:00",
+    "language": "en"
+  },
+  "content": {
+    "title": "Thorne's Vengeance",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_002",
+          "location_name": "State Penitentiary",
+          "interior_exterior": "INT",
+          "time_of_day": "CUSTOM"
+        },
+        "summary": "Ethan Thorne endures years of unjust imprisonment, a once-respected lawyer reduced to despair, culminating in the crushing news of his family's death upon his release.",
+        "continuity": {
+          "props_present": [
+            "crumpled letter"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "worn, drab prison uniform, later ill-fitting, faded civilian clothes upon release",
+              "must_keep": [
+                "prison uniform",
+                "faded civilian clothes"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": []
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_002",
+            "time_of_day": "CUSTOM",
+            "environment_notes": [
+              "A grim, decaying modern urban state prison, where Ethan spent years stripped of his former life and prestige, reflecting years of despair and loss.",
+              "modern-urban setting"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Ethan Thorne, a once-renowned, ruthlessly efficient top-tier lawyer in a modern urban setting, whose life is shattered by betrayal and tragedy. Now utterly devastated and broken, on the brink of losing all hope.",
+                "modern-urban setting"
+              ],
+              "wardrobe_notes": [
+                "worn, drab prison uniform",
+                "ill-fitting, faded civilian clothes"
+              ],
+              "must_keep": []
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "crumpled letter",
+              "must_keep": [
+                "contains devastating news"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Gritty, dark, neo-noir drama set in a modern-urban world, emphasizing the devastating consequences of betrayal and loss, with elements of animation.",
+              "modern-urban",
+              "gritty",
+              "dark",
+              "vengeful",
+              "drama",
+              "thriller",
+              "neo-noir",
+              "animation"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "Ethan, a shell of his former self, walks out of prison into the grim modern-urban world, only to receive a letter confirming the deaths of his wife and daughter, shattering his last vestiges of hope.",
+          "emotional_shift": "From numb despair to utter, heart-wrenching devastation and hopelessness."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "ETHAN THORNE, gaunt and hollow-eyed in a grimy prison cell, stares blankly at the wall, a ghost of his former self. Years of despair etched onto his face.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "slow_zoom_in",
+              "framing_notes": "Emphasizing isolation and entrapment"
+            },
+            "visual_goal": "Depict Ethan's profound despair and the agonizing passage of time within the prison.",
+            "action_focus": "Ethan's vacant expression and the starkness of his cell.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "CLOSE UP on ETHAN's hands, now calloused and rough, slowly turning the yellowed pages of a worn legal textbook. A stark contrast to his past.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on the texture and detail of his hands"
+            },
+            "visual_goal": "Highlight the physical toll of imprisonment and the fading memory of his legal career.",
+            "action_focus": "Ethan's hands and the worn textbook.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "ETHAN, a gaunt figure in ill-fitting civilian clothes, walks out of the imposing prison gates into a grim, grey modern-urban world. He is technically free, but spiritually broken.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "tracking_shot",
+              "framing_notes": "Emphasizing the daunting scale of the prison and the vastness of the outside world"
+            },
+            "visual_goal": "Show Ethan's release and the physical manifestation of his years of suffering.",
+            "action_focus": "Ethan's isolated figure against the backdrop of the grim prison.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A prison guard hands ETHAN a crumpled, official-looking letter. Ethan's vacant expression flickers with a hint of dread as he takes it.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on the exchange and Ethan's subtle reaction"
+            },
+            "visual_goal": "Introduce the catalyst for Ethan's ultimate devastation.",
+            "action_focus": "The letter being passed, Ethan's face.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 5,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "CLOSE UP on ETHAN's face. He reads the letter, his eyes widening in horror, then crumples it in a raw, guttural cry that seems to tear from his soul. His last vestiges of hope die.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Intense focus on his facial expression and the emotional breakdown"
+            },
+            "visual_goal": "Convey Ethan's utter devastation and the final shattering of his hope.",
+            "action_focus": "Ethan's face contorting in agony, the crumpled letter.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_003",
+          "location_name": "Rainy City Street",
+          "interior_exterior": "EXT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Ethan inexplicably awakens ten years in the past on a rainy city street, his younger body now housing the vengeful memories of his ruined future, solidifying his cold resolve.",
+        "continuity": {
+          "props_present": [],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "modern urban business attire, now soaking wet from the rain",
+              "must_keep": [
+                "wet business attire"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": []
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_003",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "A dimly lit, perpetually wet modern urban street in the financial district, ten years in the past, serving as the pivotal location for Ethan's temporal awakening, reflecting a neo-noir atmosphere.",
+              "modern-urban setting"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Ethan Thorne, now in his younger body but with the full, devastating memories of his future, driven by a cold, calculating desire for revenge against his betrayers in a modern urban world. He is a man reborn for vengeance.",
+                "modern-urban setting"
+              ],
+              "wardrobe_notes": [
+                "modern urban business attire, soaked by rain"
+              ],
+              "must_keep": []
+            }
+          ],
+          "props_lock": [],
+          "style_lock": {
+            "global_style_notes": [
+              "Gritty, dark, vengeful neo-noir thriller set in a modern-urban world, focusing on rebirth and time-travel for calculated revenge, with elements of animation.",
+              "modern-urban",
+              "gritty",
+              "dark",
+              "vengeful",
+              "time-travel",
+              "calculated",
+              "drama",
+              "thriller",
+              "neo-noir",
+              "animation"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "As the rain falls, Ethan's initial confusion morphs into a chilling clarity; the ghost of his lost family fuels a cold, ruthless determination. He looks at his reflection in a puddle, a man reborn, not for redemption, but for meticulously planned, devastating revenge.",
+          "emotional_shift": "From confusion and painful memory to cold, unflinching, vengeful determination."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_006",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A wide, sweeping view of a bustling modern urban street at night, slick with rain. Neon signs reflect distortedly on the wet pavement, creating a vibrant yet melancholic atmosphere.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "panning",
+              "framing_notes": "Establish the neo-noir, modern urban setting"
+            },
+            "visual_goal": "Establish the 'past' setting, its atmospheric mood, and hint at the bustling world Ethan has returned to.",
+            "action_focus": "The rain-slicked street, urban lights, and the general ambience.",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "ETHAN (his younger self, but with intense, disoriented eyes) awakens abruptly in a doorway, clutching his head in the relentless downpour. He looks around wildly, confused by his surroundings.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Ethan's initial disorientation and vulnerability"
+            },
+            "visual_goal": "Convey the shock and disorientation of Ethan's temporal awakening.",
+            "action_focus": "Ethan's confused actions and panicked gaze.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_008",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "CLOSE UP on ETHAN's rain-streaked eyes. A rapid, disorienting montage of vivid flashes: prison bars, his wife and daughter's smiling faces, the crumpled letter. He recognizes the street, the painful truth dawning.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Highlight the internal struggle and flashback imagery"
+            },
+            "visual_goal": "Show the overwhelming influx of memories from his shattered future colliding with his present.",
+            "action_focus": "Ethan's eyes, reflecting pain and dawning realization.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "ETHAN stands, rain running down his face, looking into a large puddle. His reflection, though younger, now carries a chilling, hardened glint in its eyes. The ghost of vengeance fully inhabits his being.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "static",
+              "framing_notes": "Emphasize the reflection and the symbolic rebirth"
+            },
+            "visual_goal": "Symbolize Ethan's transformation from broken man to vengeful architect of fate.",
+            "action_focus": "Ethan's reflection in the puddle, the chilling intensity in his eyes.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 5,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "ETHAN steps forward, purposeful and resolute, blending into the blurred lights of the modern urban street. The rain falls like a cleansing baptism, yet his expression is cold, his mission clear: revenge.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "dolly_out",
+              "framing_notes": "Show Ethan moving forward with a sense of destiny"
+            },
+            "visual_goal": "Convey Ethan's acceptance of his new purpose and his unwavering resolve for vengeance.",
+            "action_focus": "Ethan's determined stride, the symbolic rain, the urban backdrop.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 2,
+    "shot_count_total": 10,
+    "avg_shots_per_scene": 5.0,
+    "dialogue_block_count": 0,
+    "action_block_count": 10
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "case_name": "intake_img_019",
+  "all_ok": true,
+  "elapsed_sec": 10987.569458246231,
+  "n_shots": 8,
+  "n_succeeded": 8,
+  "final_mp4": "evals/sub-agents/baseline_30_results/baseline_intakeimage/intake_img_019/final.mp4",
+  "ended_at": "2026-05-10T17:40:05"
+}

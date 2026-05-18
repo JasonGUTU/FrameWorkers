@@ -465,7 +465,7 @@ class TestVideoExtendAgent:
         errors = evaluator.check_structure(out)
         assert errors == []
 
-    def test_evaluator_catches_excessive_duration(self):
+    def test_evaluator_catches_off_enum_duration(self):
         from agents.video_extend.schema import VideoExtendAgentOutput
         from agents.video_extend.evaluator import VideoExtendEvaluator
         data = {
@@ -481,7 +481,7 @@ class TestVideoExtendAgent:
         out = VideoExtendAgentOutput.model_validate(data)
         evaluator = VideoExtendEvaluator()
         errors = evaluator.check_structure(out)
-        assert any("30s" in e for e in errors)
+        assert any("target_duration_seconds" in e for e in errors)
 
     def test_evaluator_catches_empty_motion(self):
         from agents.video_extend.schema import VideoExtendAgentOutput

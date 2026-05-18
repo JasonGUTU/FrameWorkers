@@ -1,0 +1,288 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_id": "char_001",
+          "prompt_summary": "Lena is a determined female survivor with short hair and a bruised face. She possesses the power to manipulate metal, which often manifests as a glowing hand. She is typically seen wearing a worn leather jacket and dog tags.",
+          "reference_image_uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/30_results/intakeimage/intake_img_008/_workspace/workspace_global_20260510_033630/inputs/20260510_033631_479835_intake_img_008.png"
+        },
+        {
+          "entity_id": "char_002",
+          "prompt_summary": "Commander Thorne is a cold, unyielding military leader. He commands a super-power task force. He is identifiable by his military uniform and tactical gear.",
+          "reference_image_uri": ""
+        }
+      ],
+      "locations": [
+        {
+          "entity_id": "loc_002",
+          "prompt_summary": "Desolate, crumbling city streets are choked with debris and overturned vehicles. Skeletal buildings rise against a somber sky. This post-apocalyptic landscape features makeshift barricades and signs of zombie activity.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "loc_001",
+          "prompt_summary": "This is a claustrophobic, derelict subway car, frozen in time from a virus outbreak. It is dark and shows signs of chaos and neglect. This setting represents a post-apocalyptic environment.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "loc_003",
+          "prompt_summary": "This is a heavily fortified, partially destroyed military research facility. Its metallic structures bear scars of combat and neglect. The facility's interior is dark and foreboding, typical of a post-apocalyptic setting.",
+          "reference_image_uri": ""
+        }
+      ],
+      "props": [
+        {
+          "entity_id": "prop_001",
+          "prompt_summary": "A small, metallic data device, crucial for storing important information. It is compact and designed for easy retrieval and transport.",
+          "reference_image_uri": ""
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Lena is resolute, leading her group through the dangerous city streets. She is vigilant, with her hand glowing faintly as she uses her powers in daylight.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_002",
+              "prompt_summary": "The desolate, crumbling city streets are filled with debris and overturned vehicles under a somber day sky. Makeshift barricades are visible, reflecting the active danger of the environment.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A wide shot shows Lena, resolute, leading her small group through the skeletal remains of a once-vibrant city. Debris and overturned vehicles litter the streets. This establishes the desolation of the post-apocalyptic city and Lena's leadership.",
+                "video_motion_hint": "The camera smoothly tracks Lena and her group as they move forward through the debris-strewn streets."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up captures Lena's bruised, determined face as she scans the desolate street. Her eyes are sharp with vigilance. Her right hand, clutching dog tags, glows faintly, conveying the subtle presence of her powers.",
+                "video_motion_hint": "Lena's eyes subtly shift as she scans the environment, her hand emitting a very faint, almost imperceptible glow."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Lena focuses her powers, and a rusted metal fence obstructing their path subtly bends and reshapes. This creates a clear opening for passage. A distant, faint sound of a military patrol siren echoes as Lena uses her practical abilities.",
+                "video_motion_hint": "The metal fence subtly bends and reshapes, a slow, deliberate motion. A faint ripple of distortion appears in the air around the bending metal."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium close-up shows Lena speaking with determination, addressing her group (off-screen). She reaffirms her leadership and focus. Her expression conveys a sense of urgency and command.",
+                "video_motion_hint": "Subtle movements in the foreground or background, reflecting the scene's emotional tone."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "A younger, terrified Lena clutches her head amidst pandemonium. A faint, unsettling glow emanates from her right hand, her powers beginning to manifest in a pre-apocalypse context.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "This claustrophobic subway car is derelict and chaotic, depicting the sudden virus outbreak. It appears frozen in time at a custom, ambiguous point during the crisis.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A wide shot depicts a crowded subway car erupting in panic during a flashback. Passengers scream as some collapse from a rapidly spreading virus. The chaotic, claustrophobic framing emphasizes the overwhelming onset of illness.",
+                "video_motion_hint": "Passengers move erratically in panic; some cough and collapse slowly. The scene is full of small, frantic movements."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium close-up focuses on a younger Lena, wide-eyed with terror. She clutches her head amidst the pandemonium. A faint, unsettling glow begins to emanate from her right hand, showing the first signs of her burgeoning powers.",
+                "video_motion_hint": "Lena's head subtly shakes as she clutches it. A faint glow from her hand slowly intensifies."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A wide shot from a high angle captures Lena screaming as the glow intensifies. Surrounding metal fixtures, like handrails and panels, violently twist and contort around her. This dramatically visualizes the chaotic manifestation of her uncontrolled metal-bending powers.",
+                "video_motion_hint": "The camera dollies back, gradually revealing more of the chaotic, twisting metal surrounding Lena."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Lena is determined and stealthy within the dark military facility at night. Her hand blazes with light, actively using her powers to create a shield during a confrontation.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Commander Thorne appears cold and unyielding, flanked by armed, super-powered soldiers in the derelict facility. He maintains a commanding and authoritative presence during the ambush.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_003",
+              "prompt_summary": "The heavily fortified, metallic military research facility is partially destroyed and neglected. It is night, creating a dark and foreboding atmosphere with shadows on equipment during an infiltration.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "A small, metallic device, crucial for data, is being actively retrieved from a console by Lena. It is held firmly during the tense confrontation.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_008",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium shot from a low angle shows Lena moving stealthily through the dark, metallic corridors of a derelict military research facility. Shadows dance on destroyed equipment, highlighting hidden threats. This establishes a covert infiltration and foreboding atmosphere.",
+                "video_motion_hint": "The camera smoothly tracks the subject's movement through the scene."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_009",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A wide shot captures Commander Thorne stepping out from deep shadows, flanked by armed, super-powered soldiers. His presence is cold and unyielding, facing Lena. This ambush immediately poses a powerful threat.",
+                "video_motion_hint": "Commander Thorne makes a slight, deliberate step forward as Lena's body tenses, frozen in place."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium close-up from a low angle focuses on Commander Thorne. He addresses Lena with a cold, commanding demeanor. His rigid ideology and direct challenge are clearly conveyed through his posture and expression.",
+                "video_motion_hint": "Thorne's jaw is set. A slight shift in his gaze conveys his cold resolve."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_011",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium shot from an eye-level angle shows Lena's hand blazing with light. She unleashes her power, causing a wave of twisted, sharp metal to erupt from the environment, shielding her. She lunges for a data console, grabbing a small device, demonstrating her full power and securing evidence during the desperate fight.",
+                "video_motion_hint": "The camera smoothly dollies with Lena as she lunges and quickly grabs the device, emphasizing the speed of her action."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "style_notes": [
+      "Gritty",
+      "Somber",
+      "Survival",
+      "Mystery",
+      "Determined",
+      "Post-apocalyptic",
+      "Supernatural Drama",
+      "Action"
+    ],
+    "must_avoid": []
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 11,
+    "keyframe_count_total": 11,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 2,
+    "global_location_anchor_count": 3,
+    "global_prop_anchor_count": 1,
+    "stability_character_keyframe_count": 4,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 1
+  }
+}

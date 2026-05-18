@@ -1,0 +1,330 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "Prestigious and sprawling private academy in northern Jiangbei",
+            "Modern architecture",
+            "Affluent student body",
+            "Strict social hierarchies"
+          ],
+          "style_notes": [
+            "Contemporary High School Romance Drama set in northern Jiangbei",
+            "Sweet and Bittersweet tone",
+            "Complemented by Piano BGM"
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Establish the prestigious, overwhelming setting and Mei Lin's quiet arrival.",
+              "action_focus": "Mei Lin's first impression of the school.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "high_angle",
+              "camera_movement": "static",
+              "framing_notes": "Emphasizes the grandeur of the academy and Mei Lin's initial solitude.",
+              "video_motion_hints": [
+                "Mei Lin steps smoothly out of the car, her gaze slowly panning up towards the imposing academy gates."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "calm",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_002",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Convey the immediate attention and scrutiny Mei Lin receives.",
+              "action_focus": "Mei Lin's walk and the surrounding whispers.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "tracking",
+              "framing_notes": "Follows Mei Lin, showing blurred faces of whispering students in the background.",
+              "video_motion_hints": [
+                "The camera tracks Mei Lin walking through the hallway, as background students subtly turn their heads and start whispering."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "neutral",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_003",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Show Mei Lin's internal realization that her reputation precedes her.",
+              "action_focus": "Mei Lin's subtle reaction and quiet resolve.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on Mei Lin's face and hands.",
+              "video_motion_hints": [
+                "Mei Lin's grip subtly tightens on her bag, and a nuanced expression of realization slowly forms on her face."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "Prestigious and sprawling private academy in northern Jiangbei",
+            "Modern architecture",
+            "Affluent student body",
+            "Strict social hierarchies"
+          ],
+          "style_notes": [
+            "Contemporary High School Romance Drama set in northern Jiangbei",
+            "Sweet and Bittersweet tone",
+            "Complemented by Piano BGM"
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_004",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Show Kai Chen's established power and influence over the student body.",
+              "action_focus": "Kai Chen's effortless assertion of dominance.",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "static",
+              "framing_notes": "Emphasizes Kai Chen's dominant presence.",
+              "video_motion_hints": [
+                "Students in the background subtly part and defer as Kai Chen casually shifts his weight against the lockers."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "calm",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_005",
+            "semantic_context": {
+              "shot_type": "medium_close_up",
+              "visual_goal": "Initiate the direct conflict between Mei Lin and Kai Chen through a public incident.",
+              "action_focus": "The unexpected collision and the dropped book.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Captures the impact of the collision and the falling book.",
+              "video_motion_hints": [
+                "Mei Lin slightly bumps into Kai Chen, and her textbook visibly drops from her bag, hitting the floor."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "neutral",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_006",
+            "semantic_context": {
+              "shot_type": "two_shot",
+              "visual_goal": "Emphasize the immediate power struggle and Mei Lin's surprising resilience.",
+              "action_focus": "Their locked gazes and Mei Lin's defiance.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Tight on their faces, highlighting the intensity of their eye contact.",
+              "video_motion_hints": [
+                "Mei Lin slowly straightens up, her gaze rising to meet Kai Chen's, holding firm without flinching."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_007",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Show Kai Chen's unexpected reaction to Mei Lin's refusal to be intimidated.",
+              "action_focus": "Kai Chen's frustration and slight surprise.",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on Kai Chen's facial expression.",
+              "video_motion_hints": [
+                "Kai Chen's eyes slightly widen in surprise, followed by a quick, frustrated exhale and a sharp turn of his head."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "angry",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_004",
+            "to_shot_id": "sh_005",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_005",
+            "to_shot_id": "sh_006",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_006",
+            "to_shot_id": "sh_007",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "CUSTOM",
+          "environment_notes": [
+            "Prestigious and sprawling private academy in northern Jiangbei",
+            "Modern architecture",
+            "Affluent student body",
+            "Strict social hierarchies"
+          ],
+          "style_notes": [
+            "Contemporary High School Romance Drama set in northern Jiangbei",
+            "Sweet and Bittersweet tone",
+            "Complemented by Piano BGM"
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_008",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Show Mei Lin in a moment of quiet reflection, processing the day.",
+              "action_focus": "Mei Lin's introspection and subtle gestures.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Framing Mei Lin against the window, emphasizing her solitude.",
+              "video_motion_hints": [
+                "Mei Lin gently touches her shoulder, her eyes drifting across the campus view outside the window."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "neutral",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_009",
+            "semantic_context": {
+              "shot_type": "medium_close_up",
+              "visual_goal": "Show Kai Chen's uncharacteristic rumination over the encounter.",
+              "action_focus": "Kai Chen's agitated reflection.",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "static",
+              "framing_notes": "Highlights Kai Chen's internal struggle against the backdrop of the city.",
+              "video_motion_hints": [
+                "Kai Chen runs a hand through his hair, his gaze intense as he stares out over the city."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_010",
+            "semantic_context": {
+              "shot_type": "two_shot",
+              "visual_goal": "Convey a nascent, ambiguous connection forming between them.",
+              "action_focus": "Their fleeting eye contact and the lingering emotional resonance.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "cut",
+              "framing_notes": "Alternating close-ups of their eyes, then a wider shot showing the distance between them.",
+              "video_motion_hints": [
+                "Mei Lin's eyes lift, then quickly dart away after a fleeting moment of eye contact with Kai Chen, who also shifts his gaze."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "bittersweet",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_008",
+            "to_shot_id": "sh_009",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_009",
+            "to_shot_id": "sh_010",
+            "transition_type": "cut"
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_segment_count": 10
+  }
+}

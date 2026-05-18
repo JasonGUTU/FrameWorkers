@@ -1,0 +1,488 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "CUSTOM",
+          "environment_notes": [
+            "古老的封神台，被暗沉的漩涡状乌云笼罩，不时有神圣的闪电划过，九天雷声轰鸣。气氛悲剧、庄重、压抑，充满中国神话色彩。"
+          ],
+          "style_notes": [
+            "悲剧、庄重、压抑、哀伤的中国神话史诗风格，以“封神演义”为背景。"
+          ],
+          "must_avoid": [
+            "轻浮",
+            "现代元素"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "建立场景的宏大、庄严和压抑气氛，展示姜子牙的威严。",
+              "action_focus": "姜子牙的屹立，神台的背景",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "high_angle",
+              "camera_movement": "static",
+              "framing_notes": "展现封神台的宏大与压抑，姜子牙身影孤高。",
+              "video_motion_hints": [
+                "The camera remains static, capturing the stoic presence of Jiang Ziya amidst the grand and oppressive environment."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_002",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "展现九尾狐妖的绝望与无助，强调其面临的危险。",
+              "action_focus": "狐妖的面部表情和身体颤抖",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "聚焦狐妖的脸部和上半身，展现其脆弱与恐惧。",
+              "video_motion_hints": [
+                "The camera holds static, concentrating on the fox demon's trembling body and tear-streaked face."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_003",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "突出姜子牙的执行决心和神圣斩妖剑的威慑力。",
+              "action_focus": "姜子牙拔剑的动作，剑身的光芒",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "push_in",
+              "framing_notes": "特写姜子牙的手和剑，彰显其力量与决心。",
+              "video_motion_hints": [
+                "The camera slowly pushes in towards Jiang Ziya's hand and the gleaming sword as he draws it, highlighting the action."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 10.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "CUSTOM",
+          "environment_notes": [
+            "古老的封神台，被暗沉的漩涡状乌云笼罩，不时有神圣的闪电划过，九天雷声轰鸣。气氛悲剧、庄重、压抑，充满中国神话色彩。"
+          ],
+          "style_notes": [
+            "悲剧、庄重、压抑、哀伤的中国神话史诗风格，以“封神演义”为背景。"
+          ],
+          "must_avoid": [
+            "轻浮",
+            "现代元素"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_004",
+            "semantic_context": {
+              "shot_type": "dutch_angle",
+              "visual_goal": "展现神剑的威力和姜子牙执行天命的决心，制造极度压迫感。",
+              "action_focus": "高举的神剑和姜子牙的动作",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "crane_up",
+              "framing_notes": "从下方仰视姜子牙和神剑，强调其力量与威胁。",
+              "video_motion_hints": [
+                "The camera cranes up, following Jiang Ziya as he raises the sword, emphasizing his powerful posture."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 10.0
+          },
+          {
+            "shot_id": "sh_005",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "传达狐妖濒死的极度恐惧和意识的模糊。",
+              "action_focus": "狐妖的面部表情和身体颤抖",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "handheld_shake",
+              "framing_notes": "极近距离拍摄狐妖脸部，使用失焦和抖动效果，表现其濒死状态。",
+              "video_motion_hints": [
+                "The handheld camera shakes and subtly blurs, reflecting the fox demon's intense struggle and fading consciousness."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "zh"
+            },
+            "duration_sec": 10.0
+          },
+          {
+            "shot_id": "sh_006",
+            "semantic_context": {
+              "shot_type": "cutaway",
+              "visual_goal": "引入狐妖的记忆碎片，形成与现实的强烈对比。",
+              "action_focus": "桃花瓣和温暖的光影",
+              "characters_in_frame": [],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "柔和的聚焦，模糊的边缘，表现记忆的片段性。",
+              "video_motion_hints": [
+                "The camera remains static, allowing the soft, warm light and floating peach petals to drift gently across the frame."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 3.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_004",
+            "to_shot_id": "sh_005",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_005",
+            "to_shot_id": "sh_006",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "scene_context": {
+          "location_id": "loc_002",
+          "time_of_day": "CUSTOM",
+          "environment_notes": [
+            "宁静、空灵的桃花林，桃花盛开，充满和平与慰藉，与古老中国神话背景形成强烈对比。梦幻般的光线。"
+          ],
+          "style_notes": [
+            "悲剧、庄重、压抑、哀伤的中国神话史诗风格，以“封神演义”为背景。在记忆段落中呈现为梦幻、柔和的风格。"
+          ],
+          "must_avoid": [
+            "轻浮",
+            "现代元素",
+            "过度欢快"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_007",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "营造一个宁静、温馨的记忆场景，展示男子对狐妖的安慰。",
+              "action_focus": "男子与狐妖的互动，桃花林背景",
+              "characters_in_frame": [
+                "char_001",
+                "char_003"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "dolly_out",
+              "framing_notes": "展现男子与狐妖的亲密，周围桃花林的美丽。",
+              "video_motion_hints": [
+                "The camera dollies out slowly, revealing the peaceful interaction between the man and the fox demon within the beautiful peach forest."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 10.0
+          },
+          {
+            "shot_id": "sh_008",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "强调男子温柔的形象和狐妖对他的深情。",
+              "action_focus": "男子的手和狐妖的眼神",
+              "characters_in_frame": [
+                "char_001",
+                "char_003"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "特写男子与狐妖的脸部，捕捉他们之间的情感交流。",
+              "video_motion_hints": [
+                "The camera remains static, allowing the gentle interaction and tender expressions of the man and fox demon to unfold."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "warm",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_009",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "揭示记忆的悲惨真相，将温馨转化为震惊，连接姜子牙的过去。",
+              "action_focus": "男子被处决的场景，年轻姜子牙的形象",
+              "characters_in_frame": [
+                "char_003",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "quick_pan",
+              "framing_notes": "快速切换场景和情绪，从温暖到冷酷，强调对比和冲击力。",
+              "video_motion_hints": [
+                "A quick pan transitions the view from the man to the imposing figure of young Jiang Ziya and the sword, marking a dramatic shift in tone."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 10.0
+          },
+          {
+            "shot_id": "sh_010",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "展现狐妖理解了记忆中可怕真相时的痛苦和震惊。",
+              "action_focus": "狐妖的面部表情，眼神中的痛苦",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "特写狐妖的脸部，捕捉她从震惊到痛苦的表情变化。",
+              "video_motion_hints": [
+                "The camera remains static, highlighting the sudden, intense shift in the fox demon's facial expression as she comprehends the truth."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "sad",
+              "language": "zh"
+            },
+            "duration_sec": 10.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_007",
+            "to_shot_id": "sh_008",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_008",
+            "to_shot_id": "sh_009",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_009",
+            "to_shot_id": "sh_010",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_004",
+        "order": 4,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "CUSTOM",
+          "environment_notes": [
+            "古老的封神台，被暗沉的漩涡状乌云笼罩，不时有神圣的闪电划过，九天雷声轰鸣。气氛悲剧、庄重、压抑，充满中国神话色彩。"
+          ],
+          "style_notes": [
+            "悲剧、庄重、压抑、哀伤的中国神话史诗风格，以“封神演义”为背景。"
+          ],
+          "must_avoid": [
+            "轻浮",
+            "现代元素"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_011",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "强调狐妖发出的微弱但充满力量的声音，暗示名字的重要性。",
+              "action_focus": "狐妖的嘴唇和颤抖的面部",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "static",
+              "framing_notes": "特写狐妖的嘴唇和脸颊，泪水与雨水混合，声音微弱但清晰。",
+              "video_motion_hints": [
+                "The camera holds still, allowing the subtle trembling of the fox demon's lips and the stream of tears to convey her emotional fragility."
+              ],
+              "dialogue_text": "（哽咽）“申…申公豹…”",
+              "emotion_hint": "sad",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_012",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "展现名字对姜子牙造成的巨大冲击，打破其坚不可摧的形象。",
+              "action_focus": "姜子牙的僵硬姿态和停止的剑",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "zoom_in",
+              "framing_notes": "聚焦姜子牙的侧脸和高举的剑，捕捉他细微的僵硬和震惊。",
+              "video_motion_hints": [
+                "The camera slowly zooms in on Jiang Ziya's face and the suspended sword, emphasizing the moment of frozen action and shock."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "zh"
+            },
+            "duration_sec": 10.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_011",
+            "to_shot_id": "sh_012",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_005",
+        "order": 5,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "CUSTOM",
+          "environment_notes": [
+            "古老的封神台，被暗沉的漩涡状乌云笼罩，不时有神圣的闪电划过，九天雷声轰鸣。气氛悲剧、庄重、压抑，充满中国神话色彩。"
+          ],
+          "style_notes": [
+            "悲剧、庄重、压抑、哀伤的中国神话史诗风格，以“封神演义”为背景。"
+          ],
+          "must_avoid": [
+            "轻浮",
+            "现代元素"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_013",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "通过剑的停滞，象征姜子牙意志的动摇，制造强烈悬念。",
+              "action_focus": "悬停的剑和闪电",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "static",
+              "framing_notes": "特写剑身和姜子牙紧握剑柄的手，强调其突如其来的停滞。",
+              "video_motion_hints": [
+                "The camera remains static, capturing the sword's miraculous suspension and the flash of lightning illuminating it."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 10.0
+          },
+          {
+            "shot_id": "sh_014",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "展现姜子牙内心世界的剧烈震荡，他的坚决被彻底打破。",
+              "action_focus": "姜子牙的眼神和面部表情",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "push_in",
+              "framing_notes": "特写姜子牙的脸部，捕捉其复杂的内心挣扎和情绪变化。",
+              "video_motion_hints": [
+                "The camera slowly pushes in towards Jiang Ziya's face, emphasizing the subtle yet profound shifts in his expression."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "sad",
+              "language": "zh"
+            },
+            "duration_sec": 10.0
+          },
+          {
+            "shot_id": "sh_015",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "表现姜子牙最终的动摇和处决的中止，为故事留下开放结局。",
+              "action_focus": "姜子牙放下剑的动作，他与狐妖的对视",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "pull_back",
+              "framing_notes": "拉远镜头，同时捕捉姜子牙放下剑的动作和两人对峙的画面，留下悬念。",
+              "video_motion_hints": [
+                "The camera slowly pulls back, revealing Jiang Ziya's full action of lowering the sword and the tense confrontation between him and the fox demon."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "calm",
+              "language": "zh"
+            },
+            "duration_sec": 10.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_013",
+            "to_shot_id": "sh_014",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_014",
+            "to_shot_id": "sh_015",
+            "transition_type": "cut"
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 5,
+    "shot_segment_count": 15
+  }
+}

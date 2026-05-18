@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import base64
 import json
+import os
 from pathlib import Path
 from typing import Any, Dict
 
@@ -130,8 +131,10 @@ class IntakeImageAgent(BaseAgent[IntakeImageInput, IntakeImageOutput]):
         # A legitimate "model has nothing to say" path is the LLM
         # returning a parseable JSON with empty ``visual_description`` —
         # that flows through normally.
+        intake_image_model = os.getenv("INTAKE_IMAGE_MODEL") or None
         response = await self.llm.acall(
             messages,
+            model=intake_image_model,
             response_format={"type": "json_object"},
         )
         skeleton.content.visual_description = self._parse_visual_description(response)

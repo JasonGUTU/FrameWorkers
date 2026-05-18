@@ -1,0 +1,13 @@
+{
+  "content": {
+    "cues": [
+      {
+        "cue_id": "music_film",
+        "mood": "Restrained, somber, suspenseful, solo piano, contemplative"
+      }
+    ]
+  },
+  "metrics": {
+    "cue_count": 1
+  }
+}

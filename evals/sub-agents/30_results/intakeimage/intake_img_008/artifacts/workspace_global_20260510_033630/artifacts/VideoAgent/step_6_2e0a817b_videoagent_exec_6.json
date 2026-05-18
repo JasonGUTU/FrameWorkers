@@ -1,0 +1,358 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_context": {
+          "location_id": "loc_002",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "Desolate, crumbling city streets, zombie-flooded, somber sky, skeletal buildings, overturned vehicles, makeshift barricades. Post-apocalyptic landscape."
+          ],
+          "style_notes": [
+            "Gritty",
+            "Somber",
+            "Survival",
+            "Mystery",
+            "Determined",
+            "Post-apocalyptic",
+            "Supernatural Drama",
+            "Action"
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Establish the desolation of the post-apocalyptic city and Lena's leadership.",
+              "action_focus": "Lena leading her group through the ruins.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "tracking",
+              "framing_notes": "",
+              "video_motion_hints": [
+                "The camera smoothly tracks Lena and her group as they move forward through the debris-strewn streets."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_002",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Convey Lena's vigilance and the subtle presence of her powers.",
+              "action_focus": "Lena's observant gaze and glowing hand.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "",
+              "video_motion_hints": [
+                "Lena's eyes subtly shift as she scans the environment, her hand emitting a very faint, almost imperceptible glow."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_003",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Show Lena's practical use of her powers and hint at the constant threat of the military.",
+              "action_focus": "Lena bending the metal fence.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low",
+              "camera_movement": "static",
+              "framing_notes": "",
+              "video_motion_hints": [
+                "The metal fence subtly bends and reshapes, a slow, deliberate motion. A faint ripple of distortion appears in the air around the bending metal."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_004",
+            "semantic_context": {
+              "shot_type": "medium_close_up",
+              "visual_goal": "Reaffirm Lena's leadership and determination.",
+              "action_focus": "Lena addressing her group (off-screen).",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "",
+              "video_motion_hints": [
+                "Subtle movements in the foreground or background, reflecting the scene's emotional tone."
+              ],
+              "dialogue_text": "Keep moving. We're close to a safe zone. Stay sharp.",
+              "emotion_hint": "determined",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_003",
+            "to_shot_id": "sh_004",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "CUSTOM",
+          "environment_notes": [
+            "Claustrophobic, derelict subway car, frozen in time from virus outbreak. Post-apocalyptic era."
+          ],
+          "style_notes": [
+            "Gritty",
+            "Somber",
+            "Survival",
+            "Mystery",
+            "Determined",
+            "Post-apocalyptic",
+            "Supernatural Drama",
+            "Action"
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_005",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Depict the sudden, overwhelming chaos of the virus outbreak.",
+              "action_focus": "The rapid onset of panic and illness.",
+              "characters_in_frame": [],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Chaotic, claustrophobic framing",
+              "video_motion_hints": [
+                "Passengers move erratically in panic; some cough and collapse slowly. The scene is full of small, frantic movements."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_006",
+            "semantic_context": {
+              "shot_type": "medium_close_up",
+              "visual_goal": "Show Lena's fear and the very first signs of her burgeoning powers.",
+              "action_focus": "Lena's terrified expression and glowing hand.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "",
+              "video_motion_hints": [
+                "Lena's head subtly shakes as she clutches it. A faint glow from her hand slowly intensifies."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "terrified",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_007",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Dramatize the chaotic and terrifying manifestation of Lena's metal-bending powers.",
+              "action_focus": "The widespread distortion of metal around Lena.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "high",
+              "camera_movement": "dolly",
+              "framing_notes": "Emphasize the wide impact of Lena's uncontrolled powers",
+              "video_motion_hints": [
+                "The camera dollies back, gradually revealing more of the chaotic, twisting metal surrounding Lena."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "shocked",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_005",
+            "to_shot_id": "sh_006",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_006",
+            "to_shot_id": "sh_007",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "scene_context": {
+          "location_id": "loc_003",
+          "time_of_day": "NIGHT",
+          "environment_notes": [
+            "Heavily fortified, partially destroyed military research facility, metallic structures, scars of combat and neglect. Post-apocalyptic city."
+          ],
+          "style_notes": [
+            "Gritty",
+            "Somber",
+            "Survival",
+            "Mystery",
+            "Determined",
+            "Post-apocalyptic",
+            "Supernatural Drama",
+            "Action"
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_008",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Establish the covert infiltration and the foreboding atmosphere of the facility.",
+              "action_focus": "Lena's cautious movement through the abandoned base.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low",
+              "camera_movement": "tracking",
+              "framing_notes": "Emphasize the imposing metallic structures",
+              "video_motion_hints": [
+                "The camera smoothly tracks the subject's movement through the scene."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_009",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Capture the ambush and the immediate, powerful threat posed by Thorne and his team.",
+              "action_focus": "Thorne's unexpected appearance and Lena's reaction.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Show the full confrontation",
+              "video_motion_hints": [
+                "Commander Thorne makes a slight, deliberate step forward as Lena's body tenses, frozen in place."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_010",
+            "semantic_context": {
+              "shot_type": "medium_close_up",
+              "visual_goal": "Convey Thorne's rigid ideology and direct challenge to Lena.",
+              "action_focus": "Thorne's cold, commanding demeanor.",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "low",
+              "camera_movement": "static",
+              "framing_notes": "Emphasize Thorne's authority",
+              "video_motion_hints": [
+                "Thorne's jaw is set. A slight shift in his gaze conveys his cold resolve."
+              ],
+              "dialogue_text": "Lena. Your kind are a threat to what remains of order. Stand down.",
+              "emotion_hint": "cold",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_011",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Show Lena's full power in action during the desperate fight and her securing of evidence.",
+              "action_focus": "Lena bending metal and retrieving the data device.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "dolly",
+              "framing_notes": "Follow Lena's movement and the metal's distortion",
+              "video_motion_hints": [
+                "The camera smoothly dollies with Lena as she lunges and quickly grabs the device, emphasizing the speed of her action."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "urgent",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_008",
+            "to_shot_id": "sh_009",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_009",
+            "to_shot_id": "sh_010",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_010",
+            "to_shot_id": "sh_011",
+            "transition_type": "cut"
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_segment_count": 11
+  }
+}

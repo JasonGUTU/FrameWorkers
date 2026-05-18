@@ -1,0 +1,126 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T21:27:09.868504+00:00",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A mysterious transfer student, rumored to be the secret daughter of a powerful benefactor, finds her first day at a prestigious high school complicated by an unexpected clash with the institution's most untouchable bully.",
+    "style": {
+      "genre": [
+        "Romance",
+        "Drama",
+        "Slice of Life"
+      ],
+      "tone_keywords": [
+        "Sweet",
+        "Bittersweet",
+        "Contemporary",
+        "High School",
+        "Romance",
+        "Drama",
+        "Jiangbei",
+        "Piano BGM"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Mei Lin",
+        "role": "protagonist",
+        "profile": "A quiet and observant high-school student newly transferred to a prestigious academy in northern Jiangbei. She is depicted wearing a dark blue school uniform, white socks, and carries a shoulder bag. Whispers follow her, fueled by rumors of her being the secret daughter of a powerful benefactor.",
+        "motivation": "To adapt to her new environment, navigate the social complexities, and find a sense of belonging amidst the high expectations and rumors surrounding her.",
+        "flaw": "Her reserved nature and reluctance to engage directly with conflict can lead to misunderstandings or make her appear aloof."
+      },
+      {
+        "character_id": "char_002",
+        "name": "Kai Chen",
+        "role": "antagonist",
+        "profile": "The school's most dominant and untouchable bully at the private academy in northern Jiangbei. He commands respect through intimidation and holds significant sway over the student body.",
+        "motivation": "To maintain his unchallenged authority and control over the school's social hierarchy.",
+        "flaw": "Arrogance and a tendency to underestimate or misjudge those who defy his expectations, leading him to lash out."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Jiangbei Elite Academy",
+        "description": "A prestigious and sprawling private academy located in northern Jiangbei, known for its modern architecture, affluent student body, and strict social hierarchies. It's a place where status and reputation are paramount."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Mei Lin arrives at Jiangbei Elite Academy as a transfer student, immediately becoming the subject of whispers due to rumors of her powerful parentage.",
+        "conflict": "Mei Lin feels the isolating weight of curiosity and speculation from her new peers, struggling to blend in.",
+        "turning_point": "She becomes acutely aware of her notoriety, solidifying her status as an intriguing outsider even before her first class."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "crisis",
+        "summary": "On her very first day, Mei Lin has an unexpected, public clash with Kai Chen, the school's most untouchable bully, directly challenging his established authority.",
+        "conflict": "Mei Lin's quiet defiance meets Kai Chen's aggressive assertion of dominance, creating an immediate and tense power struggle.",
+        "turning_point": "Their direct confrontation, witnessed by other students, marks a significant disruption to the school's social order and establishes their adversarial relationship."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "resolution",
+        "summary": "The immediate aftermath of the confrontation leaves both Mei Lin and Kai Chen contemplating the unexpected encounter, planting seeds for a complex, sweet-and-bitter future.",
+        "conflict": "Both characters grapple with the internal and external repercussions of their clash, realizing their initial antagonism might evolve into something more nuanced.",
+        "turning_point": "A lingering, ambiguous interaction or observation between them suggests that their relationship will be anything but simple, setting the stage for the romantic drama."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Mei Lin desires to quietly observe and integrate into the new environment of Jiangbei Elite Academy on her first day.",
+        "conflict": "The pervasive whispers and scrutinizing glances from other students prevent her from blending in, forcing her to confront the immediate notoriety linked to her rumored background.",
+        "turn": "Mei Lin's realization that her reputation precedes her, isolating her despite her desire for a fresh start."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "Kai Chen seeks to assert his dominance over the new transfer student, while Mei Lin tries to navigate the encounter without conceding.",
+        "conflict": "Mei Lin's quiet resilience and refusal to be easily intimidated directly challenges Kai Chen's untouchable authority, leading to a tense public standoff.",
+        "turn": "Their head-on clash creates a ripple of shock through the student body, establishing Mei Lin as an unexpected force and Kai Chen as someone who has finally met his match."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_001",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "Mei Lin seeks a moment of quiet reflection, while Kai Chen processes the unexpected challenge to his power. Both try to understand the other.",
+        "conflict": "The internal turmoil within both characters about the day's events, and a dawning, unwelcome realization that their initial antagonism holds a strange attraction or deeper implication.",
+        "turn": "A fleeting, ambiguous glance or a subtle, non-verbal exchange passes between Mei Lin and Kai Chen in a moment of solitude, accompanied by the bittersweet piano BGM, hinting at the complex, evolving nature of their relationship."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 2,
+    "location_count": 1,
+    "scene_count": 3
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "agent_class": "_DummyPipelineAgent",
+  "typed_input": {
+    "step_id": "task_temp",
+    "resolved_artifacts": {},
+    "language": "en"
+  },
+  "output": {
+    "summary": "pipeline ok"
+  },
+  "eval_result": null,
+  "passed": null,
+  "attempts": null,
+  "asset_dict": null,
+  "media_assets_count": 1,
+  "media_assets_summary": [
+    {
+      "sys_id": "tmp_asset",
+      "extension": "png",
+      "bytes_len": 9
+    }
+  ]
+}

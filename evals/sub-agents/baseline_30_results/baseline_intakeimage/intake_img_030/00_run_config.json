@@ -1,0 +1,12 @@
+{
+  "case_name": "intake_img_030",
+  "category": "intake_img",
+  "user_goal": "Use this uploaded photo as the suspense male lead. Make an urban crime-suspense animated short drama — the new deputy captain of the homicide unit takes his very first case: a serial-disposal cold case that has been silent for fifteen years. As he closes in on the truth, he finds his own father's name plainly listed among the original suspects. Add Chinese subtitles for short-video platform distribution.",
+  "hunyuan_endpoint": "http://sof1-h200-6:9207",
+  "infer_steps": 50,
+  "splitter_model": "gemini-2.5-flash",
+  "image_model": "fal-ai/nano-banana-2",
+  "upload_ref_used": "evals/sub-agents/e2e_30/uploads/intake_img_030.png",
+  "started_at": "2026-05-10T17:50:32",
+  "driver_version": "v2_sync_curl_mp"
+}

@@ -1,0 +1,36 @@
+{
+  "case_name": "cr_023",
+  "category": "cr",
+  "user_goal": "Make a period rebirth-revenge palace-intrigue animated short drama — the disgraced former Empress Liu Ruyan, poisoned to death in a cold palace by her own elder sister in her past life, wakes up reborn on the day before she enters the palace. This time she vows to force every betrayer in her past life to kneel before her, one by one.",
+  "expected_chain": [
+    [
+      "StoryAgent"
+    ],
+    [
+      "ScreenplayAgent"
+    ],
+    [
+      "KeyFrameAgent"
+    ],
+    [
+      "VideoAgent"
+    ],
+    [
+      "CompositorAgent"
+    ],
+    [
+      "done"
+    ]
+  ],
+  "flat_chain": [
+    "StoryAgent",
+    "ScreenplayAgent",
+    "KeyFrameAgent",
+    "VideoAgent",
+    "CompositorAgent"
+  ],
+  "backend_url": "http://localhost:5003",
+  "hunyuan_endpoint": "http://sof1-h200-3:9201",
+  "infer_steps": 50,
+  "started_at": "2026-05-09T23:48:59"
+}

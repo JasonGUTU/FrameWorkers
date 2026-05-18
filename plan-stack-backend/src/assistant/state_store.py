@@ -91,14 +91,25 @@ class AssistantStateStore:
             return True
 
     def create_global_workspace(self) -> Workspace:
-        """Create the global workspace shared by all agents."""
+        """Create the global workspace shared by all agents.
+
+        ``FW_WORKSPACE_ID`` env override: if set, re-attach to that
+        ``workspace_global_<...>`` directory under ``runtime_base_path``
+        instead of creating a fresh one. Used by the e2e driver's resume
+        mode so a restarted backend reads the existing global_memory.md
+        and reuses prior Story / Screenplay / KeyFrame artifacts.
+        """
         with self.lock:
             if self.global_workspace is not None:
                 return self.global_workspace
 
-            workspace_id = "workspace_global_" + datetime.now().strftime(
-                "%Y%m%d_%H%M%S"
-            )
+            env_id = os.environ.get("FW_WORKSPACE_ID", "").strip()
+            if env_id:
+                workspace_id = env_id
+            else:
+                workspace_id = "workspace_global_" + datetime.now().strftime(
+                    "%Y%m%d_%H%M%S"
+                )
             workspace = Workspace(
                 workspace_id=workspace_id,
                 runtime_base_path=self.runtime_base_path,

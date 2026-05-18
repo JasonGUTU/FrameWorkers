@@ -9,8 +9,9 @@ Each user turn:
      pointer).
   5. Loop: ``get_next_step`` → ``execute_agent`` → ``update_step_status`` →
      ``advance_execution_pointer``. On failure the replanner rewrites the
-     remaining PENDING tail (replan); if it can't, the executor advances past
-     the failed step.
+     remaining PENDING tail (replan); if it can't produce an actionable tail
+     after its internal retries, or the per-turn budget is exhausted, the
+     pipeline halts immediately (no silent skip).
 """
 
 from __future__ import annotations
@@ -18,7 +19,7 @@ from __future__ import annotations
 import json
 import logging
 import time
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 from . import config
 from .api_client import BackendAPIClient, BackendAPIError
@@ -355,7 +356,7 @@ def _execute_planned_steps(
         except Exception as exc:
             logger.error("execute_agent failed for %s/%s: %s", step_id, agent_id, exc)
             _safe_mark(client, step_id, "FAILED")
-            replans_used = _handle_failure(
+            replans_used, halt_reason = _handle_failure(
                 client,
                 planner,
                 agents=agents,
@@ -365,6 +366,12 @@ def _execute_planned_steps(
                 failed_error=str(exc),
                 replans_used=replans_used,
             )
+            if halt_reason:
+                _post_director_quiet(
+                    client,
+                    f"[{config.DIRECTOR_AGENT_NAME}] Pipeline halted: {halt_reason}",
+                )
+                return
             _safe_advance(client)
             continue
 
@@ -381,7 +388,7 @@ def _execute_planned_steps(
         _announce_step(client, agent_id, status, result)
 
         if status == "FAILED":
-            replans_used = _handle_failure(
+            replans_used, halt_reason = _handle_failure(
                 client,
                 planner,
                 agents=agents,
@@ -391,6 +398,12 @@ def _execute_planned_steps(
                 failed_error=str((result or {}).get("error") or ""),
                 replans_used=replans_used,
             )
+            if halt_reason:
+                _post_director_quiet(
+                    client,
+                    f"[{config.DIRECTOR_AGENT_NAME}] Pipeline halted: {halt_reason}",
+                )
+                return
 
         _safe_advance(client)
 
@@ -438,13 +451,25 @@ def _handle_failure(
     failed_agent_id: str,
     failed_error: str,
     replans_used: int,
-) -> int:
+) -> Tuple[int, Optional[str]]:
     """Run the replanner if budget allows; rewrite the stack tail when asked.
 
-    Returns the new ``replans_used`` counter.
+    Returns ``(new_replans_used, halt_reason)``. ``halt_reason`` is ``None``
+    when recovery succeeded (or wasn't attempted because the failed-step
+    branch is non-fatal) and execution should continue. When non-None, the
+    failure is unrecoverable for this turn and the executor must stop the
+    pipeline immediately rather than silently advancing past the failed step.
     """
-    if config.MAX_REPLAN_ROUNDS <= 0 or replans_used >= config.MAX_REPLAN_ROUNDS:
-        return replans_used
+    if config.MAX_REPLAN_ROUNDS <= 0:
+        return replans_used, (
+            f"replanner disabled (MAX_REPLAN_ROUNDS=0); cannot recover from "
+            f"{failed_agent_id} FAILED"
+        )
+    if replans_used >= config.MAX_REPLAN_ROUNDS:
+        return replans_used, (
+            f"replan budget exhausted ({replans_used}/{config.MAX_REPLAN_ROUNDS}) "
+            f"after {failed_agent_id} FAILED"
+        )
 
     try:
         layers = client.get_plan_stack()
@@ -520,16 +545,14 @@ def _handle_failure(
             f"[{config.DIRECTOR_AGENT_NAME}] Replanned tail ({len(decision.new_tail)} steps): "
             f"{decision.rationale}",
         )
-        return replans_used + 1
+        return replans_used + 1, None
 
-    # No actionable decision (replan without a new tail after all retries).
-    # Fall through — the executor will advance past the failed step on its own.
-    if decision.rationale:
-        _post_director_quiet(
-            client,
-            f"[{config.DIRECTOR_AGENT_NAME}] Replan produced no actionable tail ({decision.rationale}); advancing.",
-        )
-    return replans_used
+    # Replanner exhausted its internal retries and still produced no
+    # actionable tail — unrecoverable for this turn. Signal halt to caller.
+    return replans_used, (
+        f"replanner produced no actionable tail after {failed_agent_id} FAILED "
+        f"({decision.rationale or 'unknown reason'})"
+    )
 
 
 # ---------------------------------------------------------------------------

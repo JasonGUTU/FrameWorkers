@@ -1,0 +1,65 @@
+[
+  {
+    "idx": 1,
+    "shot_id": "sh_001",
+    "prompt": "A young, injured disciple collapses within a sacred temple, dark energy pulsing from a menacing senior brother's hand. His cultivation core shatters, pain contorting his face under a gloomy, forebodin",
+    "status": "OK",
+    "keyframe_bytes": 1757901,
+    "mp4_bytes": 921917,
+    "elapsed_sec": 1446.8359315395355
+  },
+  {
+    "idx": 2,
+    "shot_id": "sh_002",
+    "prompt": "The crippled disciple, now resolute, meditates intensely amidst ancient ruins, a tattered scroll and his family's broken, glowing sword beside him. Spiritual energy slowly swirls around his body, rege",
+    "status": "OK",
+    "keyframe_bytes": 1858033,
+    "mp4_bytes": 1251698,
+    "elapsed_sec": 1451.133635520935
+  },
+  {
+    "idx": 3,
+    "shot_id": "sh_003",
+    "prompt": "The disciple, wielding his mended, glowing sword, fiercely battles a grotesque, multi-limbed demon within a shadowy, overgrown forest. Sparks fly as he parries an attack, his eyes burning with newfoun",
+    "status": "OK",
+    "keyframe_bytes": 1794953,
+    "mp4_bytes": 1534102,
+    "elapsed_sec": 1453.4243624210358
+  },
+  {
+    "idx": 4,
+    "shot_id": "sh_004",
+    "prompt": "High above a misty mountain peak, the disciple confronts a colossal, winged serpent demon, its eyes glowing crimson. He prepares a devastating sword technique, channeling immense spiritual energy into",
+    "status": "OK",
+    "keyframe_bytes": 1730007,
+    "mp4_bytes": 1010584,
+    "elapsed_sec": 1447.4756753444672
+  },
+  {
+    "idx": 5,
+    "shot_id": "sh_005",
+    "prompt": "The disciple stands defiant on a barren mountaintop as dark, swirling clouds gather, unleashing a torrent of lightning bolts that strike around him. He raises his sword, a faint shield of spiritual en",
+    "status": "OK",
+    "keyframe_bytes": 1872057,
+    "mp4_bytes": 1009896,
+    "elapsed_sec": 1446.0599479675293
+  },
+  {
+    "idx": 6,
+    "shot_id": "sh_006",
+    "prompt": "Engulfed in a maelstrom of golden and purple lightning, the disciple unleashes a powerful sword strike, shattering multiple bolts descending from the heavens. His body glows, pushing beyond his limits",
+    "status": "OK",
+    "keyframe_bytes": 2077033,
+    "mp4_bytes": 1036241,
+    "elapsed_sec": 1449.527408838272
+  },
+  {
+    "idx": 7,
+    "shot_id": "sh_007",
+    "prompt": "Bathed in brilliant golden light, the disciple transcends his mortal form, ascending majestically into a swirling vortex of celestial energy. He transforms, radiant and serene, towards a realm of pure",
+    "status": "OK",
+    "keyframe_bytes": 1724974,
+    "mp4_bytes": 603736,
+    "elapsed_sec": 1445.3389084339142
+  }
+]

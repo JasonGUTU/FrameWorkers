@@ -1,0 +1,357 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "霍氏集团总裁办公室",
+            "位于繁华中国都市摩天大楼顶层",
+            "奢华、现代且令人望而生畏",
+            "象征权力与财富",
+            "现代中国都市剧风格"
+          ],
+          "style_notes": [
+            "情感丰富",
+            "救赎主题",
+            "浪漫基调",
+            "戏剧性强",
+            "感人至深",
+            "和解元素",
+            "现代中国都市剧风格"
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "展现苏念的决心和霍家继承人的漠然，以及办公室的压迫感。",
+              "action_focus": "苏念和孩子进入办公室，霍家继承人的初次反应。",
+              "characters_in_frame": [
+                "char_001",
+                "char_002",
+                "char_003"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "展现办公室的奢华与人物的距离感",
+              "video_motion_hints": [
+                "摄像头保持静止，记录苏念和孩子们缓慢走进办公室。苏念的步伐坚定，孩子们则好奇地东张西望。"
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_002",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "展现霍家继承人从漠不关心到震惊的转变。",
+              "action_focus": "离婚协议和孩子的出现给霍家继承人带来的冲击。",
+              "characters_in_frame": [
+                "char_001",
+                "char_002",
+                "char_003"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "dolly_in",
+              "framing_notes": "聚焦在离婚协议和霍家继承人震惊的表情",
+              "video_motion_hints": [
+                "摄像头缓慢推近，聚焦在桌上的离婚协议和霍家继承人从漠然到震惊的表情变化。苏念的动作轻柔，霍家继承人的反应急促。"
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_003",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "强调霍家继承人内心的巨大冲击和情绪崩溃的开始。",
+              "action_focus": "霍家继承人看向孩子，表情复杂。",
+              "characters_in_frame": [
+                "char_002",
+                "char_003"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "特写霍家继承人的面部表情，捕捉震惊与悔恨",
+              "video_motion_hints": [
+                "摄像头保持静止，捕捉霍家继承人面部表情的细微变化，从震惊到痛苦。他的身体动作缓慢且无力。"
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_004",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "展现霍家继承人放下傲慢，首次下跪的戏剧性瞬间，苏念的复杂情绪。",
+              "action_focus": "霍家继承人跪下求饶，苏念和孩子被这一幕震惊。",
+              "characters_in_frame": [
+                "char_001",
+                "char_002",
+                "char_003"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "static",
+              "framing_notes": "展现霍家继承人跪下的姿态，强调他的卑微",
+              "video_motion_hints": [
+                "摄像头保持静止，从低角度仰拍霍家继承人跪下的动作。他的身体微微颤抖，展现出极度的恳求。"
+              ],
+              "dialogue_text": "不，苏念… 求你… 给我一次机会。",
+              "emotion_hint": "urgent",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_003",
+            "to_shot_id": "sh_004",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_context": {
+          "location_id": "loc_002",
+          "time_of_day": "NIGHT",
+          "environment_notes": [
+            "苏念的简朴公寓",
+            "温馨整洁但不过分奢华",
+            "充满儿童玩具和个人生活气息",
+            "象征苏念来之不易的独立生活",
+            "现代中国都市剧风格"
+          ],
+          "style_notes": [
+            "情感丰富",
+            "救赎主题",
+            "浪漫基调",
+            "戏剧性强",
+            "感人至深",
+            "和解元素",
+            "现代中国都市剧风格"
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_005",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "描绘霍家继承人努力融入家庭的场景，同时展现苏念的内心挣扎。",
+              "action_focus": "霍家继承人与孩子的互动，苏念的观察。",
+              "characters_in_frame": [
+                "char_001",
+                "char_002",
+                "char_003"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "展现霍家继承人的笨拙与苏念的距离感",
+              "video_motion_hints": [
+                "摄像头保持静止，记录霍家继承人与孩子之间的互动。霍家继承人的动作略显僵硬，苏念则静立不动，表情变化细微。"
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_006",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "强调霍家继承人真诚的转变和苏念内心深处的触动。",
+              "action_focus": "霍家继承人的柔情，苏念的复杂反应。",
+              "characters_in_frame": [
+                "char_001",
+                "char_002",
+                "char_003"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "pan",
+              "framing_notes": "从霍家继承人转移到苏念的脸，捕捉她的微表情",
+              "video_motion_hints": [
+                "摄像头缓慢平移，从霍家继承人温柔的表情和动作，转移到苏念脸上，捕捉她细微的情绪变化。孩子安静地听故事，霍家继承人轻声讲述。"
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "warm",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_007",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "展现孩子天真话语对父母产生的巨大冲击。",
+              "action_focus": "孩子的话语以及苏念被触动而霍家继承人眼中燃起的希望。",
+              "characters_in_frame": [
+                "char_001",
+                "char_002",
+                "char_003"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "聚焦孩子，然后捕捉苏念和霍家继承人的反应",
+              "video_motion_hints": [
+                "摄像头保持静止，聚焦在孩子身上，然后快速切换到苏念和霍家继承人震惊又复杂的面部反应。孩子们的表情平静，父母则情绪波动。"
+              ],
+              "dialogue_text": "妈妈，爸爸，我们想你们在一起。",
+              "emotion_hint": "calm",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_005",
+            "to_shot_id": "sh_006",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_006",
+            "to_shot_id": "sh_007",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "霍氏集团总裁办公室",
+            "位于繁华中国都市摩天大楼顶层",
+            "奢华、现代且令人望而生畏",
+            "象征权力与财富，此刻见证情感的较量",
+            "现代中国都市剧风格"
+          ],
+          "style_notes": [
+            "情感丰富",
+            "救赎主题",
+            "浪漫基调",
+            "戏剧性强",
+            "感人至深",
+            "和解元素",
+            "现代中国都市剧风格"
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_008",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "展现苏念积累已久的痛苦和对霍家继承人真诚改变的渴望。",
+              "action_focus": "苏念情绪爆发，霍家继承人聆听。",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "聚焦苏念愤怒而受伤的脸",
+              "video_motion_hints": [
+                "摄像头保持静止，特写苏念的面部，捕捉她情绪激动的微表情。她的声音颤抖而有力。"
+              ],
+              "dialogue_text": "你以为一句对不起就能抹去一切吗？我需要的是你真正的改变！",
+              "emotion_hint": "angry",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_009",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "强调这份文件的重要性，以及霍家继承人放弃一切的决心。",
+              "action_focus": "霍家继承人手中的文件，他痛苦而坚定的面部表情。",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "static",
+              "framing_notes": "特写霍家继承人的手和文件，以及他坚定的眼神",
+              "video_motion_hints": [
+                "摄像头保持静止，从低角度特写霍家继承人紧握文件的手，以及他痛苦而坚定的面部表情。他的动作缓慢而沉重。"
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "sad",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_010",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "展现霍家继承人真诚的付出和苏念内心的融化，预示和解的可能。",
+              "action_focus": "文件交换的瞬间，以及两人眼神中的情感交流。",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "dolly_out",
+              "framing_notes": "捕捉两人之间情感的交流，以及苏念防线的瓦解",
+              "video_motion_hints": [
+                "摄像头缓慢地拉远，捕捉两人之间交换文件的动作和眼神交流。苏念的手轻微颤抖，霍家继承人则伸出臂膀，姿态真诚。"
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "warm",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_008",
+            "to_shot_id": "sh_009",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_009",
+            "to_shot_id": "sh_010",
+            "transition_type": "cut"
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_segment_count": 10
+  }
+}

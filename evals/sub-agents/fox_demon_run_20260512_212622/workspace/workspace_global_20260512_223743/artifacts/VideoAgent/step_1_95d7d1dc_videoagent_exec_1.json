@@ -1,0 +1,502 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "高耸、庄严的仪式平台，笼罩在弥漫的薄雾中",
+            "充满强大的灵气",
+            "天空有九天惊雷滚滚",
+            "根植于中国神话和封神之战的背景"
+          ],
+          "style_notes": [
+            "故事背景设定在中国神话世界，特别是封神之战后",
+            "基调：悲怆、戏剧性、缥缈、紧张、悔恨、救赎"
+          ],
+          "must_avoid": [
+            "过于血腥或写实的暴力描写"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "建立场景的宏大、肃穆和狐妖的困境。",
+              "action_focus": "狐妖被强制带入的瞬间，以及环境的压迫感。",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "high_angle",
+              "camera_movement": "crane_shot",
+              "framing_notes": "展现封神台的宏伟与狐妖的渺小，强调压迫感。",
+              "video_motion_hints": [
+                "The camera slowly cranes down, revealing the vast stage and the fox demon's hesitant, stumbling steps as she is forced forward."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "紧张",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_002",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "展现狐妖的内在痛苦和外在的衰败。",
+              "action_focus": "狐妖的表情和她曾经骄傲的狐尾的现状。",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "聚焦狐妖面部表情与破损的狐尾，突出其痛苦和衰弱。",
+              "video_motion_hints": [
+                "Subtle quivering in the fox demon's body and her broken tails, highlighting her weakness."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "悲伤",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_003",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "展示姜子牙的掌控力和即将到来的判决。",
+              "action_focus": "姜子牙抬手肃静，目光威严落于狐妖；缓声宣读最终判决。",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "表现姜子牙的权威和肃穆，以及他即将做出的判决。",
+              "video_motion_hints": [
+                "Jiang Ziya's hand slowly rises, and then his head slightly turns, emphasizing his gaze."
+              ],
+              "dialogue_text": "妖孽，罪不可赦。",
+              "emotion_hint": "威严",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "高耸、庄严的仪式平台，笼罩在弥漫的薄雾中",
+            "充满强大的灵气",
+            "天空有九天惊雷滚滚",
+            "根植于中国神话和封神之战的背景"
+          ],
+          "style_notes": [
+            "故事背景设定在中国神话世界，特别是封神之战后",
+            "基调：悲怆、戏剧性、缥缈、紧张、悔恨、救赎"
+          ],
+          "must_avoid": [
+            "过于血腥或写实的暴力描写"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_004",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "展现即将执行的判决，制造高度紧张感。",
+              "action_focus": "斩妖剑被举起的瞬间。",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "聚焦姜子牙的动作和斩妖剑，强调其力量与致命性。",
+              "video_motion_hints": [
+                "Jiang Ziya's arm slowly raises the sword with steady, deliberate movement."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "紧张",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_005",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "传达狐妖的绝望与顺从。",
+              "action_focus": "狐妖闭眼，泪水滑落；唇间低语流出。",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "static",
+              "framing_notes": "聚焦狐妖面部，捕捉她闭眼时的泪水和接受命运的表情。",
+              "video_motion_hints": [
+                "A single tear slowly descends from her closed eye."
+              ],
+              "dialogue_text": "原来…我记得。",
+              "emotion_hint": "顿悟",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_006",
+            "semantic_context": {
+              "shot_type": "extreme_close_up",
+              "visual_goal": "引入记忆片段，打破当下的绝望感。",
+              "action_focus": "神秘男子的脸部幻象。",
+              "characters_in_frame": [],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "梦幻滤镜，捕捉男子脸部的模糊特写，暗示记忆的开端。",
+              "video_motion_hints": [
+                "The image of the man's face slowly materializes and then softly dissolves, like a fading memory."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "平静",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_004",
+            "to_shot_id": "sh_005",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_005",
+            "to_shot_id": "sh_006",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "CUSTOM",
+          "environment_notes": [
+            "高耸、庄严的仪式平台，笼罩在弥漫的薄雾中（现实）",
+            "记忆中：一片宁静的古代园林或茅屋，阳光温暖，鸟语花香",
+            "充满强大的灵气",
+            "天空有九天惊雷滚滚（现实）",
+            "根植于中国神话和封神之战的背景"
+          ],
+          "style_notes": [
+            "故事背景设定在中国神话世界，特别是封神之战后",
+            "基调：悲怆、戏剧性、缥缈、紧张、悔恨、救赎",
+            "记忆场景呈现温馨、柔和的色彩和光线"
+          ],
+          "must_avoid": [
+            "过于血腥或写实的暴力描写"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_007",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "展现狐妖从痛苦到平和的记忆转换，突出其过去的美好。",
+              "action_focus": "狐妖容颜在记忆中转回少女模样；男子温柔嗓音如同记忆回响。",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "dolly_in",
+              "framing_notes": "梦幻般的过渡，模糊现实，聚焦记忆中狐妖的美丽与宁静。",
+              "video_motion_hints": [
+                "The image slowly shifts from a blurry, distressed face to a clear, tranquil face, as if focusing on a memory."
+              ],
+              "dialogue_text": "别怕，我等你。",
+              "emotion_hint": "温柔",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_008",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "构建一个充满爱与平和的记忆画面。",
+              "action_focus": "两人和谐共处的姿态和环境的宁静。",
+              "characters_in_frame": [
+                "char_001",
+                "char_003"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "展现记忆中的温馨场景，构图和谐，色彩柔和。",
+              "video_motion_hints": [
+                "The sunlight subtly flickers through the bamboo leaves, and the characters' expressions hold a gentle, lingering smile."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "温暖",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_009",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "强调两人情感的亲密和记忆的脆弱性。",
+              "action_focus": "手部的接触和记忆的消散。",
+              "characters_in_frame": [
+                "char_001",
+                "char_003"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "聚焦手部特写，用肢体语言表达情感深度，并暗示记忆的短暂。",
+              "video_motion_hints": [
+                "The light on their clasped hands gently flickers, and the edges of the frame softly blur, suggesting the memory is fading."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "温暖",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_007",
+            "to_shot_id": "sh_008",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_008",
+            "to_shot_id": "sh_009",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_004",
+        "order": 4,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "高耸、庄严的仪式平台，笼罩在弥漫的薄雾中",
+            "充满强大的灵气",
+            "天空有九天惊雷滚滚",
+            "根植于中国神话和封神之战的背景"
+          ],
+          "style_notes": [
+            "故事背景设定在中国神话世界，特别是封神之战后",
+            "基调：悲怆、戏剧性、缥缈、紧张、悔恨、救赎"
+          ],
+          "must_avoid": [
+            "过于血腥或写实的暴力描写"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_010",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "展现狐妖内在情感的强大外部表现。",
+              "action_focus": "狐妖睁眼与灵力迸发。",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "聚焦狐妖灵力爆发的瞬间，强调视觉效果和情感力量。",
+              "video_motion_hints": [
+                "The blue-white spiritual energy visibly bursts outwards, causing the binding ropes to vibrate and her tails to glow with an increasing intensity."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "紧张",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_011",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "展示姜子牙对狐妖异变的反应。",
+              "action_focus": "姜子牙的面部表情和手部动作。",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "捕捉姜子牙细微的表情变化，突出其意外与警惕。",
+              "video_motion_hints": [
+                "Jiang Ziya's eyes subtly widen, and his hand momentarily hesitates."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "紧张",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_012",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "视觉化灵力对审判的干扰。",
+              "action_focus": "斩妖剑悬空震颤，发出低沉嗡鸣；姜子牙惊疑低问。",
+              "characters_in_frame": [],
+              "camera_angle": "low_angle",
+              "camera_movement": "static",
+              "framing_notes": "强调斩妖剑的停滞和灵力带来的影响。",
+              "video_motion_hints": [
+                "The sword slowly hovers, vibrating subtly, while the celestial thunder momentarily pauses its booming sound."
+              ],
+              "dialogue_text": "这股气息…",
+              "emotion_hint": "惊疑",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_010",
+            "to_shot_id": "sh_011",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_011",
+            "to_shot_id": "sh_012",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_005",
+        "order": 5,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "高耸、庄严的仪式平台，笼罩在弥漫的薄雾中",
+            "充满强大的灵气",
+            "天空有九天惊雷滚滚",
+            "根植于中国神话和封神之战的背景"
+          ],
+          "style_notes": [
+            "故事背景设定在中国神话世界，特别是封神之战后",
+            "基调：悲怆、戏剧性、缥缈、紧张、悔恨、救赎"
+          ],
+          "must_avoid": [
+            "过于血腥或写实的暴力描写"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_013",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "展现狐妖从绝望到超脱的内心升华。",
+              "action_focus": "狐妖的眼神和面部表情。",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "聚焦狐妖的面部，强调她眼神中的转变和内在的坚韧。",
+              "video_motion_hints": [
+                "Her eyes slowly move to gaze upwards and outwards, showing a sense of transcendence."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "平静",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_014",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "表现审判的不可逆转性。",
+              "action_focus": "斩妖剑的最终落下。",
+              "characters_in_frame": [
+                "char_002",
+                "char_001"
+              ],
+              "camera_angle": "high_angle",
+              "camera_movement": "zoom_out",
+              "framing_notes": "展现姜子牙完成裁决的瞬间，保持庄重感，不直接展示血腥。",
+              "video_motion_hints": [
+                "The sword swiftly descends, with a brief, sharp flash of light."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "紧张",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_015",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "象征狐妖的最终结局和她记忆的超越性。",
+              "action_focus": "身形在神光中渐散，九尾最后一闪如烟散去；唇间最后的眷恋。",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "crane_shot",
+              "framing_notes": "以唯美而缥缈的方式呈现狐妖的最终消逝，强调她的精神永存。",
+              "video_motion_hints": [
+                "The fox demon's form slowly dissolves into shimmering light, and her tails glow intensely before fading away like smoke. The camera slowly cranes up, emphasizing her transcendence."
+              ],
+              "dialogue_text": "我…终于见到你。",
+              "emotion_hint": "释然",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_013",
+            "to_shot_id": "sh_014",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_014",
+            "to_shot_id": "sh_015",
+            "transition_type": "cut"
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 5,
+    "shot_segment_count": 15
+  }
+}

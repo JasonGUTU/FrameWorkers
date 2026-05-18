@@ -1,0 +1,44 @@
+{
+  "case_name": "intake_img_018",
+  "category": "intake_img",
+  "user_goal": "Use this uploaded photo as the wealthy-heir male lead. Make a modern-urban wealthy-clan tortured-romance animated short drama — seven years ago he watched her jump off a yacht into the deep sea; seven years later she returns under a different name, becomes his biggest business rival, and the one shadow he can never quite catch.",
+  "expected_chain": [
+    [
+      "IntakeImageAgent"
+    ],
+    [
+      "BriefEnricherAgent"
+    ],
+    [
+      "StoryAgent"
+    ],
+    [
+      "ScreenplayAgent"
+    ],
+    [
+      "KeyFrameAgent"
+    ],
+    [
+      "VideoAgent"
+    ],
+    [
+      "CompositorAgent"
+    ],
+    [
+      "done"
+    ]
+  ],
+  "flat_chain": [
+    "IntakeImageAgent",
+    "BriefEnricherAgent",
+    "StoryAgent",
+    "ScreenplayAgent",
+    "KeyFrameAgent",
+    "VideoAgent",
+    "CompositorAgent"
+  ],
+  "backend_url": "http://localhost:5002",
+  "hunyuan_endpoint": "http://sof1-h200-3:9200",
+  "infer_steps": 50,
+  "started_at": "2026-05-10T03:51:21"
+}

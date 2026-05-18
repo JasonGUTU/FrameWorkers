@@ -1,0 +1,348 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "A modern, bustling Chinese high school.",
+            "Beneath its vibrant facade, the memory of a devastating arson ten years prior lingers."
+          ],
+          "style_notes": [
+            "Suspenseful, somber revenge thriller set in a modern Chinese high school.",
+            "Restrained emotional tone; emphasis on internal conflict."
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Establish Gu Xiuning's detached presence and the school setting.",
+              "action_focus": "Gu Xiuning's entrance and initial observation.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on Gu Xiuning's entrance and the contrast with the environment.",
+              "video_motion_hints": [
+                "The camera remains static, focusing on Gu Xiuning's initial entrance into the classroom and his subtle, composed movement."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_002",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Show Gu Xiuning's internal mission and attention to detail.",
+              "action_focus": "Gu Xiuning's intense gaze and subtle observation of a detail.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Emphasize Gu Xiuning's observant and investigative nature.",
+              "video_motion_hints": [
+                "The camera holds static, highlighting the subtle movement of Gu Xiuning's eyes as they scan and focus."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_003",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Introduce Mr. Lin and hint at the unseen connection between him and Gu Xiuning.",
+              "action_focus": "The interaction and expressions of Gu Xiuning and Mr. Lin.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Capture the first encounter and the subtle recognition.",
+              "video_motion_hints": [
+                "The camera remains static, capturing the subtle exchange of glances between Gu Xiuning and Mr. Lin."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "A modern, bustling Chinese high school.",
+            "Beneath its vibrant facade, the memory of a devastating arson ten years prior lingers."
+          ],
+          "style_notes": [
+            "Suspenseful, somber revenge thriller set in a modern Chinese high school.",
+            "Restrained emotional tone; emphasis on internal conflict."
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_004",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Initiate the public revelation of Gu Xiuning's past.",
+              "action_focus": "The announcement and its impact.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Show the official making the announcement and the immediate reaction.",
+              "video_motion_hints": [
+                "The camera is static, capturing the official's announcement and the immediate, subtle reactions from the crowd."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_005",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Illustrate Gu Xiuning's discomfort and the public's reaction.",
+              "action_focus": "Gu Xiuning's vulnerability amidst the crowd.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "pan",
+              "framing_notes": "Convey the unwanted attention on Gu Xiuning.",
+              "video_motion_hints": [
+                "The camera subtly pans across the student crowd, emphasizing the individual reactions and Gu Xiuning's vulnerable stillness."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_006",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Show the critical moment of recognition.",
+              "action_focus": "The connection between Gu Xiuning and Mr. Lin, and the flashback.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Capture the intense eye contact and the flashback trigger.",
+              "video_motion_hints": [
+                "The camera remains static, highlighting the intense, locked gaze between the two characters and the internal flashback."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_007",
+            "semantic_context": {
+              "shot_type": "extreme_close_up",
+              "visual_goal": "Emphasize the profound impact of the dual revelation on Gu Xiuning.",
+              "action_focus": "Gu Xiuning's raw, conflicted emotions.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Isolate Gu Xiuning's emotional turmoil.",
+              "video_motion_hints": [
+                "The camera is static, focusing intently on the micro-expressions within Gu Xiuning's eyes as emotions flicker."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_004",
+            "to_shot_id": "sh_005",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_005",
+            "to_shot_id": "sh_006",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_006",
+            "to_shot_id": "sh_007",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "AFTERNOON",
+          "environment_notes": [
+            "A modern, bustling Chinese high school, now quiet after dismissal.",
+            "Beneath its vibrant facade, the memory of a devastating arson ten years prior lingers."
+          ],
+          "style_notes": [
+            "Suspenseful, somber revenge thriller set in a modern Chinese high school.",
+            "Restrained emotional tone; emphasis on internal conflict."
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_008",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Set the scene for a pivotal, private confrontation.",
+              "action_focus": "The two characters facing each other in the empty classroom.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Establish the tense atmosphere of the confrontation.",
+              "video_motion_hints": [
+                "The camera remains static, capturing the silent, tense standoff between Gu Xiuning and Mr. Lin."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_009",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Convey Mr. Lin's immediate resistance to discussing the past.",
+              "action_focus": "Mr. Lin's expression and initial dialogue.",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on Mr. Lin's reluctance and guilt.",
+              "video_motion_hints": [
+                "The camera is static, focusing on Mr. Lin's subtle body language and facial micro-expressions as he speaks."
+              ],
+              "dialogue_text": "修宁，有些事，你最好不知道。",
+              "emotion_hint": "tense",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_010",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Show Gu Xiuning's unwavering resolve to uncover the truth.",
+              "action_focus": "Gu Xiuning's facial expression and direct question.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "static",
+              "framing_notes": "Emphasize Gu Xiuning's demanding and intense demeanor.",
+              "video_motion_hints": [
+                "The camera remains static, capturing Gu Xiuning's intense, unwavering gaze and determined stance."
+              ],
+              "dialogue_text": "我必须知道真相，林老师。那晚到底发生了什么？",
+              "emotion_hint": "urgent",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_011",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Deliver the critical revelation that changes Gu Xiuning's perspective.",
+              "action_focus": "Mr. Lin's confession and the immediate shift in the dynamic.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Capture the weight of Mr. Lin's confession and Gu Xiuning's reaction.",
+              "video_motion_hints": [
+                "The camera is static, focusing on the subtle reactions and shifts in posture of both characters as the confession is delivered."
+              ],
+              "dialogue_text": "火…不是意外。是有人故意放的，为了掩盖什么。",
+              "emotion_hint": "somber",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_008",
+            "to_shot_id": "sh_009",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_009",
+            "to_shot_id": "sh_010",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_010",
+            "to_shot_id": "sh_011",
+            "transition_type": "cut"
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_segment_count": 11
+  }
+}

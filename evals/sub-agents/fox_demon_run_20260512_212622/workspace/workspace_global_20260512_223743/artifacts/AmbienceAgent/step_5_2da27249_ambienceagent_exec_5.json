@@ -1,0 +1,13 @@
+{
+  "content": {
+    "beds": [
+      {
+        "ambience_id": "amb_film",
+        "description": "The ominous, solemn atmosphere of a towering ritual platform, filled with powerful spiritual energy and the continuous rolling of distant nine-heaven thunder, occasionally accompanied by the sounds of a pervasive mist."
+      }
+    ]
+  },
+  "metrics": {
+    "bed_count": 1
+  }
+}

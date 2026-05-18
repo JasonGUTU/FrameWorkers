@@ -1,0 +1,130 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T03:46:42.264388+00:00",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A newly appointed homicide detective investigating a 15-year-old cold case uncovers a shocking truth when his own father emerges as a prime suspect.",
+    "style": {
+      "genre": [
+        "Urban Crime",
+        "Suspense",
+        "Drama"
+      ],
+      "tone_keywords": [
+        "Gritty",
+        "Noir",
+        "Mysterious",
+        "Rainy City",
+        "Neo-noir",
+        "Suspenseful"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Detective Ren",
+        "role": "protagonist",
+        "profile": "A new deputy captain of the homicide unit, driven and astute, burdened by a distinctive scar and perpetually wet hair from the perpetually rainy city. He operates in the shadowy, neon-lit urban landscape, relentlessly pursuing the truth.",
+        "motivation": "To solve the 15-year-old cold case, prove his worth in his new role, and bring justice to the victims.",
+        "flaw": "His relentless pursuit of truth might blind him to personal implications, leading him to confront a painful family secret that could destroy his professional and personal life."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Rain-Slicked Metropolis",
+        "description": "A vast, perpetually rain-soaked urban sprawl at night, dominated by the harsh glow of neon signs and the reflection of streetlights on slick asphalt. It hums with a melancholic, almost oppressive atmosphere, a quintessential urban crime-suspense environment."
+      },
+      {
+        "location_id": "loc_002",
+        "name": "Homicide Unit Office",
+        "description": "A cramped, fluorescent-lit office within the city's police headquarters, cluttered with old case files, maps, and discarded coffee cups. It's a sanctuary of grim determination amidst the city's chaos, bearing witness to countless unsolved mysteries."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Detective Ren, a new deputy captain of the homicide unit, is introduced in the gritty, rainy metropolis and assigned his very first major case: a 15-year-old serial-disposal cold case.",
+        "conflict": "Ren faces the daunting challenge of a long-dormant, seemingly unsolvable case with minimal fresh leads, testing his resolve and expertise.",
+        "turning_point": ""
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "inciting",
+        "summary": "Ren delves into the dormant files, meticulously sifting through decades of forgotten evidence and reports, determined to find a new angle to reignite the investigation.",
+        "conflict": "The initial frustration of dead ends and bureaucratic inertia contrasts with Ren's growing certainty that a pattern can be found if he looks hard enough.",
+        "turning_point": "Ren discovers a overlooked detail or a forgotten piece of evidence that provides a faint but crucial new lead, allowing him to officially reopen the investigation."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "turn",
+        "summary": "As Ren relentlessly closes in on the truth, a critical piece of evidence, an old suspect list, or an archival testimony resurfaces, leading him to a shocking personal discovery.",
+        "conflict": "The investigation points towards an increasingly unsettling and deeply personal direction, forcing Ren to confront the uncomfortable implications of his findings.",
+        "turning_point": "Ren uncovers a shocking revelation: his own father's name is plainly listed among the original suspects for the 15-year-old cold case, shattering his professional objectivity and personal world."
+      },
+      {
+        "step_id": "arc_004",
+        "order": 4,
+        "step_type": "crisis",
+        "summary": "Grappling with the devastating revelation, Ren is torn between his duty as a detective and his disbelief or loyalty towards his own father. He must now re-examine everything he thought he knew about his past and his family.",
+        "conflict": "An intense internal struggle between professional integrity and familial bonds, fueled by suspicion and a desperate need to either clear his father's name or confirm his unimaginable guilt.",
+        "turning_point": "Ren makes the difficult decision to pursue the truth about his father's potential involvement, no matter the personal cost, choosing justice over comfort."
+      },
+      {
+        "step_id": "arc_005",
+        "order": 5,
+        "step_type": "climax",
+        "summary": "Ren confronts his father, or a key figure connected to the case and his father, leading to a tense, emotional revelation about the past and the true identity of the serial killer.",
+        "conflict": "The ultimate confrontation unfolds, filled with revelations, betrayals, and painful truths, as the full extent of the past crime and his father's involvement is exposed.",
+        "turning_point": "The killer is finally exposed and brought to justice, but the emotional weight of the truth leaves a profound and lasting impact on Ren."
+      },
+      {
+        "step_id": "arc_006",
+        "order": 6,
+        "step_type": "resolution",
+        "summary": "The cold case is officially closed, but Ren is left irrevocably changed by the experience, grappling with the aftermath of the shocking truth and its permanent impact on his life and family.",
+        "conflict": "Ren faces the lingering emotional and psychological consequences of his discoveries, navigating a new, altered reality where his family history is forever tainted.",
+        "turning_point": "Ren begins the difficult process of accepting the new reality, finding a path forward as a detective and as a man, carrying the weight of the truth but also a renewed sense of purpose."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_002",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Introduce Detective Ren in his new role and immerse him in the daunting task of tackling a 15-year-old cold case.",
+        "conflict": "Ren is confronted with a mountain of dusty, unorganized case files and the overwhelming sense that he's chasing a ghost, with minimal fresh leads to pursue.",
+        "turn": "Despite the discouraging initial assessment, Ren's meticulous nature and unwavering determination kick in, and he commits to reopening the investigation with a steely resolve."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_002",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Portray Ren's relentless investigation leading to a critical breakthrough and a devastating personal discovery.",
+        "conflict": "As Ren meticulously sifts through archival data, cross-referencing old reports and forgotten witness statements, he uncovers an old suspect list from the initial investigation.",
+        "turn": "Ren's world shatters when his eyes fall upon his own father's name plainly listed among the original suspects, instantly transforming the cold case into a deeply personal and agonizing crisis."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 1,
+    "location_count": 2,
+    "scene_count": 2
+  }
+}

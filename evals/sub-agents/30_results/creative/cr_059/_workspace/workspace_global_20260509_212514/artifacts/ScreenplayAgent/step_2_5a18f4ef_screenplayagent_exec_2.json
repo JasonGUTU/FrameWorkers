@@ -1,0 +1,611 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-09T21:26:26.728971+00:00",
+    "language": "zh"
+  },
+  "content": {
+    "title": "余烬复仇 (Embers of Revenge)",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Everbright High School",
+          "interior_exterior": "INT",
+          "time_of_day": "DAY"
+        },
+        "summary": "新转学生顾修宁以冷静自持的学霸形象示人，同时悄然展开对十年前校园纵火案的调查，并与班主任林老师初次相遇。",
+        "continuity": {
+          "props_present": [],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A neat, understated Chinese high-school uniform, perfectly pressed.",
+              "must_keep": [
+                "Chinese high-school uniform"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "A smart, light-colored button-up shirt and dark trousers, typical for a Chinese teacher.",
+              "must_keep": [
+                "teacher's attire"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": []
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "A modern, bustling Chinese high school.",
+              "Beneath its vibrant facade, the memory of a devastating arson ten years prior lingers."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "An exceptionally intelligent and emotionally distant Chinese high-school transfer student.",
+                "Survivor of a past arson, driven by revenge.",
+                "Carries trauma with a facade of cold indifference."
+              ],
+              "wardrobe_notes": [
+                "Neat, understated high-school uniform."
+              ],
+              "must_keep": []
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "A seemingly kind and observant Chinese high-school homeroom teacher.",
+                "Carries the hidden burden of a heroic act from his past as Gu Xiuning's rescuer."
+              ],
+              "wardrobe_notes": [
+                "Smart casual teacher's attire."
+              ],
+              "must_keep": []
+            }
+          ],
+          "props_lock": [],
+          "style_lock": {
+            "global_style_notes": [
+              "Suspenseful, somber revenge thriller set in a modern Chinese high school.",
+              "Restrained emotional tone; emphasis on internal conflict."
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "顾修宁的观察证实了学校某些方面未曾改变，这激发了他的复仇决心，而与林老师的初次相遇则给他留下了不安的熟悉感。",
+          "emotional_shift": "从冷漠到隐约的不安和决心增强。"
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "顾修宁走进光华高中喧闹的教室，他沉着冷静的举止与周围活泼的学生形成鲜明对比。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Gu Xiuning's entrance and the contrast with the environment."
+            },
+            "visual_goal": "Establish Gu Xiuning's detached presence and the school setting.",
+            "action_focus": "Gu Xiuning's entrance and initial observation.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "特写顾修宁的眼睛。他的目光在教室里扫过，敏锐地停留在窗框旁一处几不可见的陈旧痕迹上。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Emphasize Gu Xiuning's observant and investigative nature."
+            },
+            "visual_goal": "Show Gu Xiuning's internal mission and attention to detail.",
+            "action_focus": "Gu Xiuning's intense gaze and subtle observation of a detail.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "林老师站在讲台前介绍自己。顾修宁望着他，眼神中闪过一丝难以捉摸的、似曾相识的感觉。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Capture the first encounter and the subtle recognition."
+            },
+            "visual_goal": "Introduce Mr. Lin and hint at the unseen connection between him and Gu Xiuning.",
+            "action_focus": "The interaction and expressions of Gu Xiuning and Mr. Lin.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Everbright High School",
+          "interior_exterior": "INT",
+          "time_of_day": "DAY"
+        },
+        "summary": "顾修宁幸存者身份被揭露，同时他认出林老师就是当年从火海中救出自己的人。",
+        "continuity": {
+          "props_present": [],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Chinese high-school uniform.",
+              "must_keep": [
+                "Chinese high-school uniform"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "Teacher's attire.",
+              "must_keep": [
+                "teacher's attire"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": []
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "A modern, bustling Chinese high school.",
+              "Beneath its vibrant facade, the memory of a devastating arson ten years prior lingers."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "An exceptionally intelligent and emotionally distant Chinese high-school transfer student.",
+                "Survivor of a past arson, driven by revenge.",
+                "Carries trauma with a facade of cold indifference."
+              ],
+              "wardrobe_notes": [
+                "Neat, understated high-school uniform."
+              ],
+              "must_keep": []
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "A seemingly kind and observant Chinese high-school homeroom teacher.",
+                "Carries the hidden burden of a heroic act from his past as Gu Xiuning's rescuer."
+              ],
+              "wardrobe_notes": [
+                "Smart casual teacher's attire."
+              ],
+              "must_keep": []
+            }
+          ],
+          "props_lock": [],
+          "style_lock": {
+            "global_style_notes": [
+              "Suspenseful, somber revenge thriller set in a modern Chinese high school.",
+              "Restrained emotional tone; emphasis on internal conflict."
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "他过去身份的意外曝光和对林老师的突然辨认，彻底击碎了顾修宁的情感防御，让他的复仇计划陷入深刻的混乱。",
+          "emotional_shift": "从冷漠到震惊、混乱和深刻的内心冲突。"
+        },
+        "shots": [
+          {
+            "shot_id": "sh_004",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "光华高中礼堂内，一位校领导在讲台上宣布顾修宁就是十年前那场纵火案的唯一幸存者。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Show the official making the announcement and the immediate reaction."
+            },
+            "visual_goal": "Initiate the public revelation of Gu Xiuning's past.",
+            "action_focus": "The announcement and its impact.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "中景镜头中，顾修宁站在学生队列中，暴露在众目睽睽之下。同学们纷纷侧目，窃窃私语，让他成为众人瞩目的焦点。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "pan",
+              "framing_notes": "Convey the unwanted attention on Gu Xiuning."
+            },
+            "visual_goal": "Illustrate Gu Xiuning's discomfort and the public's reaction.",
+            "action_focus": "Gu Xiuning's vulnerability amidst the crowd.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "顾修宁与台上的林老师目光交汇。一瞬间，火焰、浓烟和林老师坚毅的面容模糊地闪回在他的脑海中。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Capture the intense eye contact and the flashback trigger."
+            },
+            "visual_goal": "Show the critical moment of recognition.",
+            "action_focus": "The connection between Gu Xiuning and Mr. Lin, and the flashback.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "特写顾修宁的眼睛，其中交织着巨大的震惊、背叛感和恍然大悟的复杂情绪。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "extreme_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Isolate Gu Xiuning's emotional turmoil."
+            },
+            "visual_goal": "Emphasize the profound impact of the dual revelation on Gu Xiuning.",
+            "action_focus": "Gu Xiuning's raw, conflicted emotions.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_003",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Everbright High School",
+          "interior_exterior": "INT",
+          "time_of_day": "AFTERNOON"
+        },
+        "summary": "顾修宁就纵火案与林老师对峙，寻求答案，并探查真凶的线索。",
+        "continuity": {
+          "props_present": [],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Chinese high-school uniform.",
+              "must_keep": [
+                "Chinese high-school uniform"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "Teacher's attire.",
+              "must_keep": [
+                "teacher's attire"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": []
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "AFTERNOON",
+            "environment_notes": [
+              "A modern, bustling Chinese high school, now quiet after dismissal.",
+              "Beneath its vibrant facade, the memory of a devastating arson ten years prior lingers."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "An exceptionally intelligent and emotionally distant Chinese high-school transfer student.",
+                "Survivor of a past arson, driven by revenge.",
+                "Carries trauma with a facade of cold indifference."
+              ],
+              "wardrobe_notes": [
+                "Neat, understated high-school uniform."
+              ],
+              "must_keep": []
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "A seemingly kind and observant Chinese high-school homeroom teacher.",
+                "Carries the hidden burden of a heroic act from his past as Gu Xiuning's rescuer."
+              ],
+              "wardrobe_notes": [
+                "Smart casual teacher's attire."
+              ],
+              "must_keep": []
+            }
+          ],
+          "props_lock": [],
+          "style_lock": {
+            "global_style_notes": [
+              "Suspenseful, somber revenge thriller set in a modern Chinese high school.",
+              "Restrained emotional tone; emphasis on internal conflict."
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "林老师在压力下透露了火灾的并非意外，而是有人故意纵火以掩盖某些真相，这彻底改变了顾修宁对纵火案的理解和复仇目标。",
+          "emotional_shift": "从紧张、愤怒到震惊、沉重和目标重定向的复杂情绪。"
+        },
+        "shots": [
+          {
+            "shot_id": "sh_008",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "放学后，顾修宁在空无一人的教室里堵住了林老师。教室里一片寂静，空气中弥漫着紧张。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Establish the tense atmosphere of the confrontation."
+            },
+            "visual_goal": "Set the scene for a pivotal, private confrontation.",
+            "action_focus": "The two characters facing each other in the empty classroom.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 2,
+            "block_type": "dialogue",
+            "character_id": "char_002",
+            "character_name": "Mr. Lin",
+            "text": "修宁，有些事，你最好不知道。",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Mr. Lin's reluctance and guilt."
+            },
+            "visual_goal": "Convey Mr. Lin's immediate resistance to discussing the past.",
+            "action_focus": "Mr. Lin's expression and initial dialogue.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 3,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "Gu Xiuning",
+            "text": "我必须知道真相，林老师。那晚到底发生了什么？",
+            "emotion_hint": "urgent",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "static",
+              "framing_notes": "Emphasize Gu Xiuning's demanding and intense demeanor."
+            },
+            "visual_goal": "Show Gu Xiuning's unwavering resolve to uncover the truth.",
+            "action_focus": "Gu Xiuning's facial expression and direct question.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_011",
+            "order": 4,
+            "block_type": "dialogue",
+            "character_id": "char_002",
+            "character_name": "Mr. Lin",
+            "text": "火…不是意外。是有人故意放的，为了掩盖什么。",
+            "emotion_hint": "somber",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Capture the weight of Mr. Lin's confession and Gu Xiuning's reaction."
+            },
+            "visual_goal": "Deliver the critical revelation that changes Gu Xiuning's perspective.",
+            "action_focus": "Mr. Lin's confession and the immediate shift in the dynamic.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count_total": 11,
+    "avg_shots_per_scene": 3.6666666666666665,
+    "dialogue_block_count": 3,
+    "action_block_count": 8
+  }
+}

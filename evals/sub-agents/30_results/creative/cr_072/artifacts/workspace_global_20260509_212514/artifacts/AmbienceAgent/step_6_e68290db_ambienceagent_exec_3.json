@@ -1,0 +1,13 @@
+{
+  "content": {
+    "beds": [
+      {
+        "ambience_id": "amb_film",
+        "description": "Distant, rolling nine-heaven thunder, with an ancient and solemn atmospheric hum suitable for a mythical execution platform."
+      }
+    ]
+  },
+  "metrics": {
+    "bed_count": 1
+  }
+}

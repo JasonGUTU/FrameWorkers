@@ -1,0 +1,136 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-09T21:25:36.805878+00:00",
+    "language": "zh"
+  },
+  "content": {
+    "logline": "On the brink of execution by the legendary Jiang Ziya, the last nine-tailed fox demon of the Investiture of the Gods war unearths a crucial memory of a mysterious man from her dreams, hinting at a forgotten past or a possible salvation.",
+    "style": {
+      "genre": [
+        "Fantasy",
+        "Mythology",
+        "Drama"
+      ],
+      "tone_keywords": [
+        "Chinese mythology",
+        "Investiture of the Gods war",
+        "Epic",
+        "Tragic",
+        "Desperate",
+        "Ancient China",
+        "Melancholy",
+        "Mournful",
+        "Nine-heaven thunder"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Xiao Hu",
+        "role": "protagonist",
+        "profile": "A young, vulnerable nine-tailed fox demon, the last of her kind, facing execution after the devastating Investiture of the Gods war. Her true nature and past are shrouded in mystery, even to herself, in this Chinese mythology setting.",
+        "motivation": "To survive, to understand her forgotten past, and to find meaning in her existence.",
+        "flaw": "Naivety, vulnerability, and suppressed traumatic memories."
+      },
+      {
+        "character_id": "char_002",
+        "name": "Jiang Ziya",
+        "role": "antagonist",
+        "profile": "The venerable and powerful strategist of the Zhou Dynasty, a master of Taoist arts, tasked with dispensing justice and bringing order after the Investiture of the Gods war in Chinese mythology. He is resolute and adheres strictly to divine decree.",
+        "motivation": "To uphold divine order, to complete the Investiture of the Gods, and to administer celestial justice.",
+        "flaw": "Rigidity in his adherence to law, potentially unaware of deeper truths or mitigating circumstances."
+      },
+      {
+        "character_id": "char_003",
+        "name": "Mysterious Man",
+        "role": "support",
+        "profile": "An ethereal and kind figure who has appeared in Xiao Hu's dreams, representing a hidden connection to her past and potentially a forgotten love or savior within the Chinese mythology context.",
+        "motivation": "To guide Xiao Hu, to rekindle her memory and reveal a forgotten truth.",
+        "flaw": "His presence is elusive, appearing only in dreams or fragmented memories."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Investiture Platform",
+        "description": "A towering, ancient stone platform in the realm of Chinese mythology, surrounded by the sound of rolling nine-heaven thunder. It is where celestial beings are appointed and where demons face judgment, imbued with immense spiritual power and gravity. It stands as the solemn site of the conclusion of the Investiture of the Gods war."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Xiao Hu, the last nine-tailed fox demon, is dragged onto the Investiture Platform by Jiang Ziya, her execution imminent as the echoes of the Investiture of the Gods war fade, and the nine-heaven thunder rolls.",
+        "conflict": "The overwhelming power and finality of celestial judgment poised against a lone, vulnerable demon.",
+        "turning_point": "Her final, desperate moments before the executioner's strike."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "crisis",
+        "summary": "As Jiang Ziya prepares the final strike, Xiao Hu's mind flashes with vivid fragments of a man from her dreams, recalling a forgotten connection from her past, shaking her resolve and hinting at a deeper, untold story.",
+        "conflict": "The immediate, life-threatening danger of execution versus the sudden, overwhelming resurfacing of critical lost memories.",
+        "turning_point": "The memory's vivid return, offering a glimpse of a different truth or fate just as despair peaks."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "climax",
+        "summary": "The memory fully crystallizes: the man from her dreams was not just a figment, but someone significant, perhaps even linked to her current predicament or her true identity, causing Jiang Ziya to hesitate, his hand frozen mid-air.",
+        "conflict": "The tension between the strict adherence to divine justice and a newly revealed, potentially mitigating truth that challenges Jiang Ziya's duty.",
+        "turning_point": "Jiang Ziya pauses his execution, acknowledging the revelation, leaving Xiao Hu's fate, and the true meaning of her memory, hanging in the balance."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "Jiang Ziya to carry out the execution as the final act of the Investiture of the Gods war.",
+        "conflict": "The weight of inescapable divine judgment against a terrified, helpless creature, amplified by the rolling nine-heaven thunder and mournful BGM.",
+        "turn": "Xiao Hu is dragged to the center of the Investiture Platform, positioned for the final, inescapable blow."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "Jiang Ziya to deliver the killing strike; Xiao Hu to internally process the sudden, overwhelming surge of memory.",
+        "conflict": "The immediate, visceral threat of execution versus the distracting, yet crucial, internal memory surge that demands attention.",
+        "turn": "Just as the blade descends, Xiao Hu gets a vivid, painful flash of the Mysterious Man from her dreams, triggering a deeper recall."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_001",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "Jiang Ziya to complete his duty; Xiao Hu to fully grasp her memory and its profound implications on her identity and fate.",
+        "conflict": "Jiang Ziya's unyielding duty versus the profound implications of Xiao Hu's fully recalled memory, which casts doubt on the justice being served.",
+        "turn": "Jiang Ziya hesitates, his weapon frozen, as the revelation of Xiao Hu's memory causes him to question the divine decree, leaving her fate uncertain."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 3,
+    "location_count": 1,
+    "scene_count": 3
+  }
+}

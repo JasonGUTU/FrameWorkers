@@ -1,0 +1,384 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "Sleek, imposing skyscraper office in a bustling modern East Asian metropolis",
+            "Minimalist design and cutting-edge technology reflecting a modern-urban wealthy-clan aesthetic"
+          ],
+          "style_notes": [
+            "Tortured love story",
+            "Corporate rivalry drama",
+            "Mystery with a second chance theme",
+            "Suspenseful tone",
+            "Set in a modern-urban wealthy-clan East Asian environment"
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Establish Kenji's power, wealth, and underlying melancholy, contrasting with the vibrant city.",
+              "action_focus": "Kenji's contemplative posture and the cityscape.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Emphasize city view and Kenji's isolation",
+              "video_motion_hints": [
+                "The camera remains static, emphasizing Kenji's still, contemplative posture and the static cityscape."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_002",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Introduce Anya Mei as a formidable corporate rival and hint at her impact.",
+              "action_focus": "The visual information on the screen, particularly Anya Mei's details.",
+              "characters_in_frame": [],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on the screen's details and Anya's image",
+              "video_motion_hints": [
+                "The camera remains static, allowing the viewer to absorb the details on the screen."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_003",
+            "semantic_context": {
+              "shot_type": "medium_close_up",
+              "visual_goal": "Convey Kenji's initial, complex reaction to Anya Mei, hinting at a deeper connection or mystery.",
+              "action_focus": "Kenji's eyes and the subtle shift in his demeanor.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Emphasize Kenji's subtle facial expression",
+              "video_motion_hints": [
+                "The camera remains static, focused on Kenji's face, capturing the subtle shift in his demeanor."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "Sleek, imposing skyscraper office in a bustling modern East Asian metropolis",
+            "Minimalist design and cutting-edge technology reflecting a modern-urban wealthy-clan aesthetic",
+            "Private, soundproofed boardroom with a large conference table"
+          ],
+          "style_notes": [
+            "Tortured love story",
+            "Corporate rivalry drama",
+            "Mystery with a second chance theme",
+            "Suspenseful tone",
+            "Set in a modern-urban wealthy-clan East Asian environment"
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_004",
+            "semantic_context": {
+              "shot_type": "medium_wide",
+              "visual_goal": "Convey the high stakes of the business meeting and the palpable tension between the two rivals.",
+              "action_focus": "The formal setup of the boardroom and the initial confrontation between Kenji and Anya.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Emphasize the distance and power dynamic between Kenji and Anya",
+              "video_motion_hints": [
+                "The camera remains static, capturing the frozen tension between the two rivals."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_005",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Show Anya's professional assertiveness and unyielding demeanor.",
+              "action_focus": "Anya's face and subtle expressions as she delivers her statement.",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on Anya's composed, confident expression",
+              "video_motion_hints": [
+                "The camera is static, focusing on Anya's face to capture minute facial movements."
+              ],
+              "dialogue_text": "Your offer lacks… foresight. We expect more.",
+              "emotion_hint": "neutral",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_006",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Convey Kenji's internal jolt of recognition from a subtle, familiar mannerism.",
+              "action_focus": "Anya's hand gesture and the familiar details triggering Kenji's memory.",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "over_the_shoulder",
+              "camera_movement": "static",
+              "framing_notes": "Focus on Anya's hand, seen from Kenji's perspective",
+              "video_motion_hints": [
+                "The camera remains static, holding on Anya's hand from Kenji's perspective, freezing the moment of recognition."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_007",
+            "semantic_context": {
+              "shot_type": "two_shot",
+              "visual_goal": "Show the immediate, silent, and unsettling confrontation as Kenji's suspicion ignites.",
+              "action_focus": "The direct gaze and subtle emotional battle between Kenji and Anya.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Emphasize the intense eye contact between Kenji and Anya",
+              "video_motion_hints": [
+                "The static camera captures the intense, unwavering eye contact between Kenji and Anya."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_004",
+            "to_shot_id": "sh_005",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_005",
+            "to_shot_id": "sh_006",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_006",
+            "to_shot_id": "sh_007",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "scene_context": {
+          "location_id": "loc_002",
+          "time_of_day": "NIGHT",
+          "environment_notes": [
+            "Opulent, exclusive high-society event space, glittering with chandeliers in a modern East Asian metropolis",
+            "Embodies extravagant social scene of the modern-urban wealthy-clan",
+            "Perfect backdrop for masked intentions and simmering tensions"
+          ],
+          "style_notes": [
+            "Tortured love story",
+            "Corporate rivalry drama",
+            "Mystery with a second chance theme",
+            "Suspenseful tone",
+            "Set in a modern-urban wealthy-clan East Asian environment"
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_008",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Establish the extravagant setting and Kenji's intense resolve amid the social facade.",
+              "action_focus": "The grand scale of the event and Kenji's purposeful movement.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "dolly",
+              "framing_notes": "Sweep across the luxurious gala, then focus on Kenji's determined search",
+              "video_motion_hints": [
+                "The camera dollies smoothly, sweeping across the luxurious gala before settling on Kenji's purposeful movement through the crowd."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_009",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Show Kenji finding Anya and the immediate, charged connection between them.",
+              "action_focus": "Anya's presence and the fleeting moment of recognition.",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "over_the_shoulder",
+              "camera_movement": "static",
+              "framing_notes": "Focus on Anya's elegance and the brief eye contact from Kenji's perspective",
+              "video_motion_hints": [
+                "The camera remains static, fixing on Anya from Kenji's perspective, capturing the subtle shift in her expression."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_010",
+            "semantic_context": {
+              "shot_type": "medium_close_up",
+              "visual_goal": "Convey Kenji's raw emotional pain and his desperate demand for answers.",
+              "action_focus": "Kenji's intense questioning and the immediate impact on Anya.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Close on Kenji, his desperation visible, with Anya partially in frame",
+              "video_motion_hints": [
+                "The camera is static, holding on Kenji's face to emphasize his urgent emotional plea."
+              ],
+              "dialogue_text": "Seven years. I need to know why. Why did you leave me?",
+              "emotion_hint": "urgent",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_011",
+            "semantic_context": {
+              "shot_type": "medium_close_up",
+              "visual_goal": "Show Anya's emotional vulnerability and the hint of her past pain, confirming her identity.",
+              "action_focus": "Anya's subtle emotional breakdown and her cryptic response.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Close on Anya, her composure cracking, a flicker of pain in her eyes as she speaks",
+              "video_motion_hints": [
+                "The camera is static, focusing on Anya's face to capture the subtle emotional breakdown."
+              ],
+              "dialogue_text": "Some truths... are better left buried, Kenji. For everyone.",
+              "emotion_hint": "tense",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_012",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Convey the emotional aftermath of the confrontation and the unresolved mystery.",
+              "action_focus": "Anya's departure and Kenji's complex emotional state.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Capture Anya's exit and Kenji's isolated reaction",
+              "video_motion_hints": [
+                "The camera remains static, capturing Anya's swift exit and Kenji's lingering, isolated reaction."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_008",
+            "to_shot_id": "sh_009",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_009",
+            "to_shot_id": "sh_010",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_010",
+            "to_shot_id": "sh_011",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_011",
+            "to_shot_id": "sh_012",
+            "transition_type": "cut"
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_segment_count": 12
+  }
+}

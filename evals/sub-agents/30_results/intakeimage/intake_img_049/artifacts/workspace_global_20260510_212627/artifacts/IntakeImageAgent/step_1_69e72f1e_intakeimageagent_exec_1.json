@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T21:26:32.609818+00:00",
+    "language": "en"
+  },
+  "content": {
+    "visual_description": "A young woman in a cream coat with pearl earrings stands by a window, looking out at falling snow and bare trees, under soft natural light.",
+    "image_asset": {
+      "asset_id": "",
+      "uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/30_results/intakeimage/intake_img_049/_workspace/workspace_global_20260510_212627/inputs/20260510_212628_542225_intake_img_049.png",
+      "width": 1024,
+      "height": 576,
+      "format": "png"
+    }
+  }
+}

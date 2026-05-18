@@ -1,0 +1,147 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-09T21:25:40.068786+00:00",
+    "language": "zh"
+  },
+  "content": {
+    "logline": "After his Daoist sect is annihilated by a demonic cult, a young, sole survivor carries his master's severed head to the hallowed peak of Mount Kunlun, vowing to unleash a forbidden blood-moon vengeance rite.",
+    "style": {
+      "genre": [
+        "Wuxia",
+        "Xianxia",
+        "Revenge Drama",
+        "Fantasy"
+      ],
+      "tone_keywords": [
+        "Dark",
+        "Somber",
+        "Determined",
+        "Vengeful",
+        "Mystical",
+        "Tragic",
+        "Wuxia",
+        "Xianxia",
+        "Daoist"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Jian Li",
+        "role": "protagonist",
+        "profile": "A young, determined Daoist disciple, the sole survivor of the Azure Cloud Sect. Orphaned by the Demonic Cult's massacre, he carries an immense burden of grief and a burning desire for retribution, channeling his Daoist cultivation towards a dark, forbidden path of vengeance. He embodies the tragic heroism of the wuxia / xianxia world.",
+        "motivation": "To avenge his fallen master and sect by performing the ancient, forbidden blood-moon rite, restoring honor through blood.",
+        "flaw": "Consumed by grief and rage, he risks sacrificing his Daoist purity and spiritual path for a thirst for retribution that may irrevocably twist his soul."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Desolate Path to Mount Kunlun",
+        "description": "A treacherous, windswept mountain trail, rocky and overgrown, leading up to the sacred peaks of Mount Kunlun. The air is thin and cold, hinting at the mystical power and ancient solitude of the wuxia / xianxia realm. Sparse, gnarled pines cling to sheer cliffs, and jagged peaks loom in the distance. The sounds of howling mountain wind echo."
+      },
+      {
+        "location_id": "loc_002",
+        "name": "Mount Kunlun Shrine",
+        "description": "A dilapidated, ancient shrine nestled near the summit of Mount Kunlun, half-overgrown and forgotten, yet still exuding a potent, ominous aura. Weathered stone altars stand amidst crumbling walls, hinting at rituals long past. The sky above is vast and foreboding, especially under the glow of a blood moon, with distant thunder rolling across the peaks. The cold, howling wind is relentless here."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Jian Li, the sole survivor, emerges from the ruins of his massacred sect, clutching his master's severed head.",
+        "conflict": "Jian Li is overwhelmed by despair and loss, grappling with the brutal reality of his sect's annihilation and his own powerlessness.",
+        "turning_point": "He resolves to carry his master's head, turning his grief into a nascent, fierce determination for retribution."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "inciting",
+        "summary": "Jian Li vows to embark on a perilous journey to Mount Kunlun to perform the forbidden blood-moon vengeance rite, committing to a dark path.",
+        "conflict": "The immense, suicidal nature of his quest pits his youthful determination against the ancient, dangerous powers he intends to invoke.",
+        "turning_point": "His public, silent vow transforms his personal grief into a sacred, irreversible mission."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "turn",
+        "summary": "Jian Li endures a harrowing, solitary journey across desolate lands towards Mount Kunlun, battling the elements and his internal demons.",
+        "conflict": "Physical exhaustion, the psychological weight of his burden, and the race against time before the blood moon ascends.",
+        "turning_point": "Each step strengthens his resolve, forging his spirit into an unyielding weapon of vengeance, despite the toll it takes."
+      },
+      {
+        "step_id": "arc_004",
+        "order": 4,
+        "step_type": "crisis",
+        "summary": "Jian Li finally reaches the ancient, windswept shrine on Mount Kunlun as the blood moon begins its ominous ascent.",
+        "conflict": "The sheer scale of his task and the forbidden nature of the rite confront him, underscored by the foreboding atmosphere and rolling distant thunder.",
+        "turning_point": "His arrival at the destined location signifies the point of no return; the ritual is now imminent and inescapable."
+      },
+      {
+        "step_id": "arc_005",
+        "order": 5,
+        "step_type": "climax",
+        "summary": "At the blood moon's peak, Jian Li prepares the ritual, placing his master's head and performing the first, irreversible steps of the dark vengeance rite.",
+        "conflict": "He faces the moral and spiritual cost of invoking forbidden powers, knowing this act will forever change him and potentially condemn his soul.",
+        "turning_point": "Jian Li sheds his own blood, mixing it with the ritual components, initiating a potent, ancient magic that binds him to his deadly oath."
+      },
+      {
+        "step_id": "arc_006",
+        "order": 6,
+        "step_type": "resolution",
+        "summary": "The dark energy of the blood-moon rite awakens, sealing Jian Li's commitment to a path of ultimate, soul-consuming vengeance.",
+        "conflict": "The immediate threat of the Demonic Cult still looms, but Jian Li is now empowered, albeit at a terrible cost to his own humanity.",
+        "turning_point": "The ritual's completion marks his transformation from a grieving disciple into an avenging spirit, forever bound to a fate of bloody retribution."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_001",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To continue his arduous journey towards Mount Kunlun, demonstrating unwavering resolve despite immense physical and emotional pain.",
+        "conflict": "Jian Li battles extreme fatigue, harsh mountain winds, and the haunting presence of his master's head, which serves as a constant, heavy reminder of his vengeance vow.",
+        "turn": "Despite nearly collapsing, Jian Li catches sight of the distant, imposing peaks of Mount Kunlun silhouetted against the twilight sky, reinvigorating his grim determination."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_004",
+        "location_id": "loc_002",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To reach the ancient shrine and prepare for the blood-moon rite before the moon fully ascends.",
+        "conflict": "The desolate, windswept shrine amplifies Jian Li's isolation and the daunting, forbidden nature of his task. Distant thunder rolls, and the blood moon begins to cast an ominous crimson glow, adding to the pressure.",
+        "turn": "Jian Li discovers the central, weathered altar within the shrine, its ancient symbols faintly glowing under the rising blood moon, confirming this is the correct, cursed location for his ritual."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_005",
+        "location_id": "loc_002",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To successfully initiate the blood-moon vengeance rite, binding himself to his oath.",
+        "conflict": "Jian Li performs the forbidden ritual, cutting his palm to offer his blood. He struggles with the spiritual and physical toll, as dark, ancient energies stir around him, demanding a profound sacrifice of his Daoist purity.",
+        "turn": "As his blood mixes with the offerings and drips onto his master's head, the shrine is bathed in a dark, pulsing crimson light, and a powerful, vengeful energy erupts, signifying the rite's irreversible commencement and Jian Li's terrifying transformation."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 1,
+    "location_count": 2,
+    "scene_count": 3
+  }
+}

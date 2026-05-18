@@ -1,0 +1,160 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-09T21:25:43.324517+00:00",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A prodigy disciple, betrayed and crippled by his senior brother, embarks on a perilous journey using only a broken ancestral sword to rebuild his cultivation, conquer ancient demons, and ultimately ascend to godhood in a Xianxia world.",
+    "style": {
+      "genre": [
+        "Xianxia",
+        "Fantasy",
+        "Action",
+        "Drama"
+      ],
+      "tone_keywords": [
+        "Epic",
+        "Revenge",
+        "Resilience",
+        "Redemption",
+        "Cultivation",
+        "Xianxia",
+        "Underdog",
+        "Transformation"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Lin Feng",
+        "role": "protagonist",
+        "profile": "A gifted young cultivation prodigy of the Heavenly Sword Sect in a Xianxia world, once destined for greatness, now stripped of his power and honor after a grave betrayal.",
+        "motivation": "To regain his lost power, clear his name, seek justice against those who wronged him, and ultimately achieve true transcendence through unwavering self-cultivation.",
+        "flaw": "Initial overconfidence in his innate talent, which made him a target; later, a burning desire for revenge that threatens to overshadow his spiritual path."
+      },
+      {
+        "character_id": "char_002",
+        "name": "Elder Brother Wei",
+        "role": "antagonist",
+        "profile": "Lin Feng's senior disciple brother within the Heavenly Sword Sect, a seemingly accomplished cultivator secretly consumed by envy and ambition for higher status in the Xianxia realm.",
+        "motivation": "To eliminate his rival, secure his own position and power within the sect, and prevent anyone from surpassing his perceived greatness.",
+        "flaw": "Deep-seated insecurity and jealousy, which manifests in treacherous plots and cruel actions."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Heavenly Sword Sect",
+        "description": "A grand, ancient cultivation sect nestled among mist-shrouded peaks, adorned with ornate temples and sprawling training grounds, embodying both spiritual serenity and cutthroat ambition inherent in the Xianxia realm."
+      },
+      {
+        "location_id": "loc_002",
+        "name": "Ancient Demon Wilds",
+        "description": "A desolate and treacherous wilderness, scarred by ancient battles and infused with dark spiritual energy, home to formidable demonic beasts and forgotten cultivation relics, far removed from the civilized Xianxia sects."
+      },
+      {
+        "location_id": "loc_003",
+        "name": "Celestial Ascent Platform",
+        "description": "A nexus point between mortal and immortal realms, an ethereal platform high above the clouds, shimmering with raw cosmic energy, where cultivators in a Xianxia world face their final, most perilous trials for godhood."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Lin Feng, a prodigious disciple of the Heavenly Sword Sect, demonstrates unmatched talent in the Xianxia world, drawing both admiration and the deep-seated envy of his senior brother, Elder Brother Wei.",
+        "conflict": "Lin Feng's natural brilliance inadvertently fuels Elder Brother Wei's growing jealousy and ambition, making him a prime target for sabotage.",
+        "turning_point": "Elder Brother Wei intensifies his plotting, seeking an opportune moment to undermine Lin Feng's burgeoning reputation and power."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "inciting",
+        "summary": "Elder Brother Wei successfully frames Lin Feng for a serious transgression, leading to a public trial where Lin Feng's cultivation core is mercilessly crippled and he is expelled from the sect.",
+        "conflict": "Lin Feng is unjustly accused and stripped of his power, facing utter despair and humiliation, with no one believing his pleas of innocence.",
+        "turning_point": "Lin Feng is left powerless and outcast, clutching only his family's broken sword as a memento of his former life."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "turn",
+        "summary": "Driven by a spark of defiance and the will to survive, Lin Feng ventures into the treacherous Ancient Demon Wilds, relying on his broken ancestral sword and an unyielding spirit to begin rebuilding his foundation from scratch.",
+        "conflict": "Lin Feng struggles to overcome his crippling injuries and the immense odds against re-establishing his cultivation in a hostile environment, with death lurking at every turn.",
+        "turning_point": "Lin Feng dedicates himself to a new, harder path of cultivation, forging a unique strength from adversity rather than despair."
+      },
+      {
+        "step_id": "arc_004",
+        "order": 4,
+        "step_type": "crisis",
+        "summary": "Lin Feng battles formidable ancient demons within the wilds, honing his unique cultivation and sword skills, absorbing their essence to grow exponentially stronger, and preparing for his eventual return.",
+        "conflict": "Lin Feng faces constant life-threatening challenges from powerful demonic entities while concurrently evading lingering threats from his past in the cultivation world.",
+        "turning_point": "Lin Feng masters his new cultivation path and the broken sword, transforming into a truly formidable and independent force, ready to confront his destiny."
+      },
+      {
+        "step_id": "arc_005",
+        "order": 5,
+        "step_type": "climax",
+        "summary": "At the peak of his power, Lin Feng confronts the ultimate challenge: the nine heavenly tribulations, a gauntlet of cosmic lightning and spiritual trials designed to test his worthiness for ascension to godhood.",
+        "conflict": "Lin Feng endures unimaginable pain, spiritual assault, and the very real risk of annihilation with every strike of the heavenly lightning.",
+        "turning_point": "Lin Feng pushes past his mortal limits, embracing death to achieve rebirth and transcend his human form, becoming one with the divine energy."
+      },
+      {
+        "step_id": "arc_006",
+        "order": 6,
+        "step_type": "resolution",
+        "summary": "Having successfully broken through the tribulations, Lin Feng ascends to godhood, his spirit radiating immense power and profound peace, looking down upon the mortal realm as a true immortal.",
+        "conflict": "The final internal struggle to shed all mortal ties and accept his cosmic destiny and newfound identity as a deity.",
+        "turning_point": "Lin Feng fully embraces his divine form and purpose, achieving ultimate transcendence and completing his arduous journey of revenge, rebirth, and ascension."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "Lin Feng aims to demonstrate his unparalleled cultivation talent during a sect assessment, while Elder Brother Wei seeks to publicly disgrace and cripple him.",
+        "conflict": "Elder Brother Wei's treacherous plot unfolds during the assessment, falsely implicating Lin Feng in a heinous crime, leading to his public humiliation and the shattering of his cultivation core.",
+        "turn": "Lin Feng's power is stripped away, and he is cast out of the Heavenly Sword Sect, left with nothing but his tattered robes and his family's broken sword."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_004",
+        "location_id": "loc_002",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Lin Feng seeks to rebuild his crippled cultivation foundation in the perilous Ancient Demon Wilds and survive its dangers.",
+        "conflict": "Lin Feng, weakened and alone, battles a formidable ancient demon, relying on his ingenuity, a newly re-forged cultivation method, and the surprising abilities of his broken sword.",
+        "turn": "Lin Feng defeats the demon, absorbing its essence and demonstrating the nascent but formidable power of his new, hard-won cultivation path, proving he can overcome his limitations and is a force to be reckoned with."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_005",
+        "location_id": "loc_003",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Lin Feng must endure and transcend the nine heavenly tribulations to achieve true godhood and complete his journey of ultimate vengeance and enlightenment.",
+        "conflict": "Lin Feng faces the full fury of cosmic judgment, a barrage of devastating lightning and spiritual tests that threaten to obliterate his very existence, pushing him to his absolute limits.",
+        "turn": "Lin Feng breaks through the final tribulation, shedding his mortal coil and ascending into the ranks of the gods, his body and spirit transformed, his journey of revenge and rebirth triumphantly complete."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 2,
+    "location_count": 3,
+    "scene_count": 3
+  }
+}

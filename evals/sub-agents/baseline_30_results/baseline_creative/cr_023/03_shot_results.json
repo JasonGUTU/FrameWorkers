@@ -1,0 +1,83 @@
+[
+  {
+    "idx": 1,
+    "shot_id": "sh_001",
+    "prompt": "Liu Ruyan, a frail empress, lies dying on a cold stone bed in a desolate palace chamber. Her breath is shallow, eyes unfocused. Dim, mournful moonlight filters through a grimy window, casting long sha",
+    "status": "OK",
+    "keyframe_bytes": 1830215,
+    "mp4_bytes": 725765,
+    "elapsed_sec": 1425.8667378425598
+  },
+  {
+    "idx": 2,
+    "shot_id": "sh_002",
+    "prompt": "Liu Ruyan awakens abruptly, gasping, in a luxurious, silk-draped bedchamber. Her younger face shows confusion as she touches her cheek. Bright morning sunlight streams through ornate windows, illumina",
+    "status": "OK",
+    "keyframe_bytes": 1982840,
+    "mp4_bytes": 1599382,
+    "elapsed_sec": 1429.5310018062592
+  },
+  {
+    "idx": 3,
+    "shot_id": "sh_003",
+    "prompt": "Close-up on Liu Ruyan's face. Her initial bewilderment shifts to fierce resolve, a spark of determined vengeance in her eyes. She clenches her fist tightly, a silent vow echoing in the opulent room.",
+    "status": "OK",
+    "keyframe_bytes": 1677293,
+    "mp4_bytes": 698675,
+    "elapsed_sec": 1427.8209779262543
+  },
+  {
+    "idx": 4,
+    "shot_id": "sh_004",
+    "prompt": "Liu Ruyan, dressed in elegant pre-palace robes, is attended by maids in a sunlit courtyard. She exchanges a subtle, knowing glance with her elder sister, whose smile seems gentle but Ruyan's expressio",
+    "status": "OK",
+    "keyframe_bytes": 2003108,
+    "mp4_bytes": 1620598,
+    "elapsed_sec": 1430.9360358715057
+  },
+  {
+    "idx": 5,
+    "shot_id": "sh_005",
+    "prompt": "Liu Ruyan, regal and composed, steps through the immense, ornately carved gates of the imperial palace. Her gaze sweeps across the bustling, vibrant courtyard, meticulously cataloging faces with keen ",
+    "status": "OK",
+    "keyframe_bytes": 1921902,
+    "mp4_bytes": 1237558,
+    "elapsed_sec": 1429.7216355800629
+  },
+  {
+    "idx": 6,
+    "shot_id": "sh_006",
+    "prompt": "In a grand, lantern-lit palace hall, Liu Ruyan watches a high-ranking concubine engaging in court gossip. A subtle, knowing smirk forms on Ruyan's lips, her eyes glinting with a dangerous, strategic t",
+    "status": "OK",
+    "keyframe_bytes": 1773893,
+    "mp4_bytes": 843553,
+    "elapsed_sec": 1428.004161119461
+  },
+  {
+    "idx": 7,
+    "shot_id": "sh_007",
+    "prompt": "Bathed in soft moonlight within her private chambers, Liu Ruyan meticulously arranges a small, intricate jade trinket on a table. Her reflection in a polished bronze mirror reveals a confident, calcul",
+    "status": "OK",
+    "keyframe_bytes": 1735295,
+    "mp4_bytes": 515712,
+    "elapsed_sec": 1430.3311047554016
+  },
+  {
+    "idx": 8,
+    "shot_id": "sh_008",
+    "prompt": "A betrayer, perhaps her sister or concubine, kneels in despair before a seated Liu Ruyan. Ruyan, adorned in opulent robes, watches with a calm, triumphant gaze from her raised dais, serene and powerfu",
+    "status": "OK",
+    "keyframe_bytes": 1795607,
+    "mp4_bytes": 1051258,
+    "elapsed_sec": 1425.8169794082642
+  },
+  {
+    "idx": 9,
+    "shot_id": "sh_009",
+    "prompt": "Liu Ruyan walks with elegant confidence through a magnificent palace corridor, her flowing robes rustling. Servants and guards bow deeply as she passes, her head held high, eyes fixed forward, a true ",
+    "status": "OK",
+    "keyframe_bytes": 1852597,
+    "mp4_bytes": 1185207,
+    "elapsed_sec": 1429.3299992084503
+  }
+]

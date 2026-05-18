@@ -1,0 +1,641 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T21:27:30.128117+00:00",
+    "language": "en"
+  },
+  "content": {
+    "title": "Room 304",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Old Wing - St. Jude's Psychiatric Hospital",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Ethan Vance begins his desolate night shift in the old wing of St. Jude's, performing routine checks amidst an oppressive silence until a faint, unsettling recording emanates from the locked Room 304, sparking his unease and curiosity.",
+        "continuity": {
+          "props_present": [],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Standard hospital intern scrubs, practical shoes.",
+              "must_keep": [
+                "hospital intern scrubs"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "The old wing is dilapidated and disused, creating an eerie atmosphere."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "Old Wing - St. Jude's Psychiatric Hospital, a dilapidated and disused wing, steeped in thirty years of neglect.",
+              "Its long, hollow corridors echo with faint electrical hums and distant, unsettling sounds.",
+              "Room 304 feels like a forgotten nexus of time and memory, located within an eerie, isolated psychiatric hospital."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Ethan Vance: A diligent but somewhat naive young intern working the night shift in the unsettling old wing of St. Jude's Psychiatric Hospital.",
+                "He carries a subtle sense of unease from his own past, which he tries to suppress with professionalism. Set in an eerie, isolated psychiatric hospital."
+              ],
+              "wardrobe_notes": [
+                "Standard hospital intern scrubs."
+              ],
+              "must_keep": [
+                "intern scrubs"
+              ]
+            }
+          ],
+          "props_lock": [],
+          "style_lock": {
+            "global_style_notes": [
+              "Genre: Supernatural, Suspense, Drama, Animation.",
+              "Tone: Eerie, haunting, mysterious, isolated, psychological, paranormal. Set at midnight in a psychiatric hospital.",
+              "Overall aesthetic should lean into the unsettling, desolate nature of the setting."
+            ],
+            "must_avoid": [
+              "bright, modern hospital settings",
+              "overt jump scares without build-up"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "Ethan hears the faint, repeating recording for the first time, sparking his curiosity and unease about Room 304.",
+          "emotional_shift": "From initial professional detachment to subtle, unsettling curiosity."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "ETHAN VANCE, a young intern, walks down a long, dimly lit corridor in the old wing of St. Jude's Psychiatric Hospital. The silence is heavy, broken only by his footsteps.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "long",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "tracking_backward",
+              "framing_notes": "Emphasize the corridor's length and desolation."
+            },
+            "visual_goal": "Establish the eerie, isolated environment of the old hospital wing and Ethan's solitude.",
+            "action_focus": "Ethan's movement, the oppressive stillness of the corridor.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Ethan pauses, his head tilted slightly, listening. A faint, distorted hum, like an old tape recording, seems to emanate from further down the hall. A flicker of unease crosses his face.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Ethan's expression, emphasizing his subtle reaction to the sound."
+            },
+            "visual_goal": "Show Ethan's first detection of the anomaly and his internal unease.",
+            "action_focus": "Ethan's listening posture, the growing apprehension in his eyes.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The camera pushes slowly towards an old, heavy wooden door, peeling paint revealing the number 304. The faint, ghostly recording is now more distinct, a cyclical, unsettling sound.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "low",
+              "movement": "dolly_in",
+              "framing_notes": "Emphasize the door's age and the ominous number. Sound design crucial here."
+            },
+            "visual_goal": "Pinpoint the source of the mysterious sound and establish Room 304 as a focal point of mystery.",
+            "action_focus": "The door to Room 304, the visible texture of neglect, the escalating sound.",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Ethan glances back at the door, then forces himself to look away, resuming his rounds with a forced air of professionalism. The sound from Room 304 slightly recedes.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Show Ethan's internal conflict – curiosity versus duty."
+            },
+            "visual_goal": "Convey Ethan's attempt to dismiss the anomaly, but hint at his underlying curiosity.",
+            "action_focus": "Ethan's resolute posture, his lingering glance at the door.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_004",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Old Wing - St. Jude's Psychiatric Hospital",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Over several nights, Ethan's obsession with Room 304 grows as the mysterious recording and faint sobbing persist, driving him past fear to retrieve a master key and finally approach the door, determined to unlock its secret.",
+        "continuity": {
+          "props_present": [
+            "Master Key"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Same intern scrubs, possibly looking a bit more rumpled or lived-in.",
+              "must_keep": [
+                "hospital intern scrubs"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "The recording is thirty years old and repeats nightly.",
+            "Ethan is growing tired and obsessed."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "Old Wing - St. Jude's Psychiatric Hospital, a dilapidated and disused wing, steeped in thirty years of neglect.",
+              "Its long, hollow corridors echo with faint electrical hums and distant, unsettling sounds.",
+              "Room 304 feels like a forgotten nexus of time and memory, located within an eerie, isolated psychiatric hospital."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Ethan Vance: A diligent but somewhat naive young intern working the night shift in the unsettling old wing of St. Jude's Psychiatric Hospital.",
+                "He carries a subtle sense of unease from his own past, which he tries to suppress with professionalism. Now increasingly obsessed and weary. Set in an eerie, isolated psychiatric hospital."
+              ],
+              "wardrobe_notes": [
+                "Standard hospital intern scrubs."
+              ],
+              "must_keep": [
+                "intern scrubs"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Master Key",
+              "must_keep": [
+                "old, heavy-duty master key for a hospital"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Genre: Supernatural, Suspense, Drama, Animation.",
+              "Tone: Eerie, haunting, mysterious, isolated, psychological, paranormal. Set at midnight in a psychiatric hospital.",
+              "Overall aesthetic should lean into the unsettling, desolate nature of the setting."
+            ],
+            "must_avoid": [
+              "bright, modern hospital settings",
+              "overt jump scares without build-up"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "Driven past his fear, Ethan makes the conscious decision to confront the unknown and uses the master key to unlock the door to Room 304, bracing himself for whatever lies within.",
+          "emotional_shift": "From weary obsession to fearful, determined resolve."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Days later, Ethan, looking visibly tired and drawn, approaches Room 304 again. The faint recording is now more persistent, accompanied by a distant, almost imperceptible, child's sobbing.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Show the corridor, but focus on Ethan's fatigued yet determined stance."
+            },
+            "visual_goal": "Convey the passage of time and Ethan's increasing obsession and fatigue.",
+            "action_focus": "Ethan's weary face, his unwavering gaze at Room 304.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Close on Ethan's ear, pressed lightly against the door. He closes his eyes, trying to distinguish the sounds, rationalizing, then frustration twists his features.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Extreme close-up on the ear and a tight shot on his face, conveying intense listening and internal struggle."
+            },
+            "visual_goal": "Emphasize the clarity of the haunting sounds and Ethan's internal battle between skepticism and belief.",
+            "action_focus": "Ethan's strained expression, the door's aged surface.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Ethan pulls an old, heavy master key (PROP_001) from his pocket, its brass tarnished. His hand trembles slightly, but his gaze is firm, fixed on the door.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "low",
+              "movement": "static",
+              "framing_notes": "Focus on the key as a symbolic object, then pan up to Ethan's resolute face."
+            },
+            "visual_goal": "Show Ethan making the conscious, irreversible decision to confront the mystery.",
+            "action_focus": "The master key, Ethan's hand, his determined eyes.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_008",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "With a deep breath, Ethan inserts the master key into the lock of Room 304. The old mechanism groans loudly as he turns it, echoing in the desolate corridor.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Tight shot on the key turning, emphasizing the mechanical sound and the breaking of a long-standing seal."
+            },
+            "visual_goal": "Build tension around the act of unlocking the forbidden room.",
+            "action_focus": "The key turning in the lock, the sound of the old mechanism, Ethan's focused effort.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_005",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Old Wing - St. Jude's Psychiatric Hospital",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Ethan pushes open the door to Room 304, revealing his ten-year-old self standing motionless inside, staring directly at him, as the mysterious recording swells, leaving Ethan in profound psychological shock.",
+        "continuity": {
+          "props_present": [],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Intern scrubs, now creased and worn.",
+              "must_keep": [
+                "hospital intern scrubs"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "Simple, slightly faded pajamas, appearing ethereal.",
+              "must_keep": [
+                "simple child's pajamas"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "The recording swells at the moment of revelation.",
+            "Young Ethan is a spectral manifestation."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "Old Wing - St. Jude's Psychiatric Hospital, a dilapidated and disused wing, steeped in thirty years of neglect.",
+              "Its long, hollow corridors echo with faint electrical hums and distant, unsettling sounds.",
+              "Room 304 feels like a forgotten nexus of time and memory, located within an eerie, isolated psychiatric hospital.",
+              "Inside Room 304, the air is stagnant and heavy, as if time has stood still."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Ethan Vance: A diligent but somewhat naive young intern working the night shift in the unsettling old wing of St. Jude's Psychiatric Hospital.",
+                "He carries a subtle sense of unease from his own past. Now deeply shaken by a supernatural confrontation. Set in an eerie, isolated psychiatric hospital."
+              ],
+              "wardrobe_notes": [
+                "Standard hospital intern scrubs."
+              ],
+              "must_keep": [
+                "intern scrubs"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "Young Ethan: A spectral or temporal manifestation of Ethan Vance at ten years old, appearing inside Room 304.",
+                "He embodies the innocence and a forgotten trauma from Ethan's childhood. Set in an eerie, isolated psychiatric hospital."
+              ],
+              "wardrobe_notes": [
+                "Simple, slightly faded pajamas."
+              ],
+              "must_keep": [
+                "simple child's pajamas"
+              ]
+            }
+          ],
+          "props_lock": [],
+          "style_lock": {
+            "global_style_notes": [
+              "Genre: Supernatural, Suspense, Drama, Animation.",
+              "Tone: Eerie, haunting, mysterious, isolated, psychological, paranormal. Set at midnight in a psychiatric hospital.",
+              "Overall aesthetic should lean into the unsettling, desolate nature of the setting."
+            ],
+            "must_avoid": [
+              "bright, modern hospital settings",
+              "overt jump scares without build-up"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "Ethan stares in disbelief at his ten-year-old self inside the room, realizing the recording and the room's secret are inexplicably tied to his own past, leaving him in a state of profound psychological shock.",
+          "emotional_shift": "From intense fear and determination to shattered disbelief and existential shock."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_009",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Ethan slowly pushes the heavy door to Room 304 inward. It creaks open, revealing an interior steeped in shadows and dust. The sound of the recording from within swells, louder than ever.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "dolly_in",
+              "framing_notes": "Follow the door's opening, revealing the interior gradually."
+            },
+            "visual_goal": "Build maximum suspense as the door to the unknown room is finally opened.",
+            "action_focus": "The opening door, the creeping shadows, the intensifying recording sound.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Inside the dilapidated Room 304, a figure stands motionless. It is YOUNG ETHAN (char_002), ten years old, dressed in simple pajamas, his face pale, staring directly out at ETHAN (char_001). The recording climaxes.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "full",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Wide enough to capture the boy's entire figure, emphasizing his stillness and direct gaze."
+            },
+            "visual_goal": "The shocking revelation of Young Ethan, creating an impossible and deeply personal confrontation.",
+            "action_focus": "Young Ethan's spectral presence, his unblinking stare, the peak of the mysterious recording.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_011",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A close-up on Ethan's face: his eyes wide with a mixture of terror, confusion, and dawning, impossible recognition. He lets out a small, choked gasp. His world shatters.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Extreme close-up to capture the raw emotion and shock on Ethan's face."
+            },
+            "visual_goal": "Show Ethan's complete psychological breakdown and the profound impact of the revelation.",
+            "action_focus": "Ethan's expression, his gasp, the intensity of his realization.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_012",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Stumbling backward, Ethan pulls away from the doorway of Room 304, his hand still covering his mouth in disbelief. The faint recording from the room begins to recede, but the image of his younger self is seared into his mind.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "tracking_backward",
+              "framing_notes": "Follow Ethan as he retreats, maintaining focus on his horrified expression."
+            },
+            "visual_goal": "Convey Ethan's immediate, stunned retreat and the lasting, disorienting impact of the vision.",
+            "action_focus": "Ethan's backward movement, his wide eyes, the fading sound.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count_total": 12,
+    "avg_shots_per_scene": 4.0,
+    "dialogue_block_count": 0,
+    "action_block_count": 12
+  }
+}

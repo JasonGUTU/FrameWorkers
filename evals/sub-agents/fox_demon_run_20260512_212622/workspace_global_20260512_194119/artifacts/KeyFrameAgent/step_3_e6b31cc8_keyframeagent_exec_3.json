@@ -1,0 +1,446 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_id": "char_001",
+          "prompt_summary": "A powerful nine-tailed fox demon, a survivor of ancient Chinese mythological wars. She is typically seen in tattered white robes, symbolizing her fallen state, but in memories, she wears elegant, simple traditional attire when younger and at peace. Her true form is that of a nine-tailed fox.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "char_002",
+          "prompt_summary": "Jiang Ziya, a stern and resolute Taoist general, carries a divine demon-slaying sword. He wears solemn, dark Taoist general attire, reflecting his authority and duty in ancient Chinese mythology.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "char_003",
+          "prompt_summary": "A mysterious man with a gentle and comforting demeanor, dressed in simple traditional clothing. He is connected to ancient Chinese mythology, and his fate is intertwined with Jiang Ziya and the fox demon.",
+          "reference_image_uri": ""
+        }
+      ],
+      "locations": [
+        {
+          "entity_id": "loc_001",
+          "prompt_summary": "An ancient, weathered God-Sealing Platform, shrouded by ominous, swirling dark clouds. Divine lightning occasionally streaks across the sky, accompanied by rumbling thunder. This setting evokes a tragic, solemn, and oppressive atmosphere from Chinese mythology.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "loc_002",
+          "prompt_summary": "A serene and ethereal peach blossom forest in full bloom, bathed in peaceful, comforting light. This idyllic setting contrasts sharply with the somber ancient Chinese mythological backdrop, appearing dreamlike and tranquil.",
+          "reference_image_uri": ""
+        }
+      ],
+      "props": [
+        {
+          "entity_id": "prop_001",
+          "prompt_summary": "A massive, majestic longsword adorned with sacred runes. It exudes an aura of immense power and divine authority.",
+          "reference_image_uri": ""
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "The nine-tailed fox demon is in a state of extreme fear and exhaustion, bound on the God-Sealing Platform, wearing tattered white robes.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Jiang Ziya, resolute and cold, stands on the God-Sealing Platform ready to fulfill his destiny, dressed in solemn Taoist general attire.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The ancient God-Sealing Platform is enveloped by dark, swirling clouds with sacred lightning and thunder, creating a tragic and oppressive atmosphere.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "The divine demon-slaying sword rests at Jiang Ziya's waist, emanating an aura of majesty and power.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "An ancient God-Sealing Platform is engulfed by dark, swirling clouds with lightning and thunder. Jiang Ziya, in solemn Taoist general attire, stands impassively, his hand resting on the divine demon-slaying sword at his waist. The wide, high-angle view emphasizes the platform's grandeur and oppressive atmosphere, with Jiang Ziya appearing solitary and imposing.",
+                "video_motion_hint": "The camera remains static, capturing the stoic presence of Jiang Ziya amidst the grand and oppressive environment."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "The nine-tailed fox demon is tightly bound to a stone pillar, her body trembling violently beneath her tattered white robes. Her pale face is streaked with tears mingling with rain, her eyes filled with profound despair and terror. The close-up, eye-level shot focuses on her face and upper body, highlighting her vulnerability and extreme fear.",
+                "video_motion_hint": "The camera holds static, concentrating on the fox demon's trembling body and tear-streaked face."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "Jiang Ziya slowly draws his divine demon-slaying sword from his waist. The sword's blade glints with cold light as lightning flashes around it. His gaze is resolute, showing no hesitation, emphasizing his power and determination. The medium, low-angle shot spotlights Jiang Ziya's hand and the sword, showcasing his strength.",
+                "video_motion_hint": "The camera slowly pushes in towards Jiang Ziya's hand and the gleaming sword as he draws it, highlighting the action."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "The nine-tailed fox demon is in a dying state, struggling on the God-Sealing Platform, wearing broken white robes, with her consciousness blurring.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Jiang Ziya, fulfilling his divine mandate, raises the demon-slaying sword high, dressed in solemn Taoist general attire.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The ancient God-Sealing Platform is engulfed by a stormy tempest, shrouded in dark clouds and lightning, creating a tragic and oppressive atmosphere.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "The divine demon-slaying sword is raised high by Jiang Ziya, its blade shining brightly amidst the lightning.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_004",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "Jiang Ziya raises the divine demon-slaying sword high, pointing its tip towards the storm-laden sky, seemingly drawing power from heavenly thunder. The blade shines with immense light, exuding a fierce killing intent. The low-angle, Dutch angle shot looks up at Jiang Ziya and the sword, emphasizing his strength and the ominous threat.",
+                "video_motion_hint": "The camera cranes up, following Jiang Ziya as he raises the sword, emphasizing his powerful posture."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Beneath the looming sword, the fox demon struggles violently, her body contorting as she emits a silent scream. Her vision blurs, and the surrounding lightning and Jiang Ziya's silhouette become distorted. The close-up, eye-level shot captures her face in extreme proximity, using blur and shaky effects to convey her dying state and overwhelming terror.",
+                "video_motion_hint": "The handheld camera shakes and subtly blurs, reflecting the fox demon's intense struggle and fading consciousness."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Through the blur, a warm, fleeting light appears, with pink peach blossoms gently fluttering through the air. This cutaway shot briefly brings a moment of serene tranquility. The soft focus and blurred edges illustrate the fragmented nature of this memory.",
+                "video_motion_hint": "The camera remains static, allowing the soft, warm light and floating peach petals to drift gently across the frame."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "The nine-tailed fox demon appears younger and elegant in memory, finding comfort and tenderness within the peach blossom forest.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_003",
+              "prompt_summary": "The gentle mysterious man appears in the fox demon's memory, dressed in simple attire, offering solace within the peach blossom forest.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "A younger Jiang Ziya appears in the fox demon's memory flashback, holding the demon-slaying sword, standing impassively on the lightning-streaked God-Sealing Platform, executing a judgment.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_002",
+              "prompt_summary": "The serene and ethereal peach blossom forest, with blooming flowers and sunlight filtering through, appears dreamlike and soft as the backdrop for the fox demon's memory.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "The divine demon-slaying sword is held by a younger Jiang Ziya in the fox demon's memory flashback, its cold gleam symbolizing a cruel fate.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_007",
+            "characters_in_frame": [
+              "char_001",
+              "char_003"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "In a vivid memory, sunlight filters through a blooming peach blossom forest, creating a peaceful, idyllic scene. A younger nine-tailed fox demon, in elegant, simple attire, leans against a gentle man. They sit side-by-side beneath a tree. The medium, eye-level shot captures their intimacy and the beautiful backdrop of the peach forest.",
+                "video_motion_hint": "The camera dollies out slowly, revealing the peaceful interaction between the man and the fox demon within the beautiful peach forest."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_008",
+            "characters_in_frame": [
+              "char_001",
+              "char_003"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "The man gently raises his hand to caress the fox demon's head, his eyes filled with compassion and tenderness. The fox demon looks up at him, her gaze full of dependence and trust. This close-up, eye-level shot focuses on their faces, capturing the intimate emotional exchange between them.",
+                "video_motion_hint": "The camera remains static, allowing the gentle interaction and tender expressions of the man and fox demon to unfold."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_009",
+            "characters_in_frame": [
+              "char_003",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "The scene abruptly shifts from the warm peach grove to a cold, lightning-streaked God-Sealing Platform. The same man, now kneeling with an expression of helplessness and tragic defiance, faces a younger Jiang Ziya. Jiang Ziya stands impassively, holding his demon-slaying sword. The medium, eye-level shot uses a rapid shift in framing and emotion, from warmth to stark coldness, emphasizing contrast and impact.",
+                "video_motion_hint": "A quick pan transitions the view from the man to the imposing figure of young Jiang Ziya and the sword, marking a dramatic shift in tone."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "The camera cuts back to a close-up of the modern fox demon's face. Her eyes snap open, pupils constricted, and a painful, hoarse cry escapes her throat. She has finally understood the horrifying truth revealed by her memories. The close-up, eye-level shot captures her expression shifting from shock to profound anguish.",
+                "video_motion_hint": "The camera remains static, highlighting the sudden, intense shift in the fox demon's facial expression as she comprehends the truth."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_004",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "The nine-tailed fox demon is on the God-Sealing Platform, crying tears that mix with rain, desperately calling out a name, wearing tattered white robes.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Jiang Ziya, raising the demon-slaying sword on the God-Sealing Platform, freezes momentarily upon hearing the fox demon's call, showing a flicker of shock.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The ancient God-Sealing Platform is engulfed by dark clouds and rumbling thunder, creating a tense and tragic atmosphere.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "The divine demon-slaying sword is held aloft by Jiang Ziya, its blade shining in the lightning, momentarily suspended due to his hesitation.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_011",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up of the fox demon's lips and tear-streaked cheeks on the stormy God-Sealing Platform. Tears mix with rain as she chokingly whispers the name 'Shen… Shen Gongbao…' Her voice is weak yet imbued with profound significance. The low-angle, static shot emphasizes her frail yet impactful utterance.",
+                "video_motion_hint": "The camera holds still, allowing the subtle trembling of the fox demon's lips and the stream of tears to convey her emotional fragility."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_012",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "Jiang Ziya's body stiffens instantaneously upon hearing the name, as if struck by an invisible force. The descent of his raised sword pauses mid-air. The medium, eye-level shot focuses on Jiang Ziya's profile and the uplifted sword, capturing his subtle rigidity and profound shock, highlighting the name's immense impact and breaking his unyielding composure.",
+                "video_motion_hint": "The camera slowly zooms in on Jiang Ziya's face and the suspended sword, emphasizing the moment of frozen action and shock."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_005",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "The nine-tailed fox demon on the God-Sealing Platform witnesses Jiang Ziya's hesitation, her fate hanging in the balance, wearing tattered white robes.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Jiang Ziya, on the God-Sealing Platform, slowly lowers the demon-slaying sword due to his inner turmoil, his eyes filled with pain, confusion, and doubt.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The ancient God-Sealing Platform is shrouded in dark clouds and flashing lightning, shifting the atmosphere from extreme tension to deep suspense.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "The divine demon-slaying sword, first suspended in Jiang Ziya's hand, is eventually slowly lowered, symbolizing the weakening of his resolve.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_013",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "The divine demon-slaying sword, held by Jiang Ziya, incredibly halts its downward trajectory, suspended in mid-air. A sacred lightning bolt streaks across the sky at this precise moment, illuminating the blade. The low-angle, static shot prominently features the sword and Jiang Ziya's hand gripping the hilt, underscoring the sudden and unexpected pause.",
+                "video_motion_hint": "The camera remains static, capturing the sword's miraculous suspension and the flash of lightning illuminating it."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_014",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up of Jiang Ziya's face. His eyes initially convey disbelief, quickly replaced by deep pain, confusion, and doubt, as if he is transported back to a distant past. The eye-level, close-up shot intensely focuses on his face, capturing his complex internal struggle and emotional transformation, revealing his unwavering resolve has been shattered.",
+                "video_motion_hint": "The camera slowly pushes in towards Jiang Ziya's face, emphasizing the subtle yet profound shifts in his expression."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_015",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "Jiang Ziya slowly and weakly lowers the divine demon-slaying sword, its tip pointing towards the ground. He gazes at the nine-tailed fox demon, his eyes filled with deep shock and unutterable questions. The medium, eye-level shot pulls back, capturing Jiang Ziya lowering the sword and the two characters confronting each other, leaving the audience in suspense, suggesting his ultimate wavering and the halt of the execution, creating an open ending for the story.",
+                "video_motion_hint": "The camera slowly pulls back, revealing Jiang Ziya's full action of lowering the sword and the tense confrontation between him and the fox demon."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "style_notes": [
+      "悲剧、庄重、压抑、哀伤的中国神话史诗风格，以“封神演义”为背景。",
+      "悲剧、庄重、压抑、哀伤的中国神话史诗风格，以“封神演义”为背景。在记忆段落中呈现为梦幻、柔和的风格。"
+    ],
+    "must_avoid": [
+      "轻浮",
+      "现代元素",
+      "过度欢快"
+    ]
+  },
+  "metrics": {
+    "scene_count": 5,
+    "shot_count": 15,
+    "keyframe_count_total": 15,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 3,
+    "global_location_anchor_count": 2,
+    "global_prop_anchor_count": 1,
+    "stability_character_keyframe_count": 11,
+    "stability_location_keyframe_count": 5,
+    "stability_prop_keyframe_count": 5
+  }
+}

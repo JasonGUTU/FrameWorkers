@@ -1,0 +1,652 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-08T13:23:42.083010+00:00",
+    "language": "zh"
+  },
+  "content": {
+    "title": "破冰之战 (The Ice Breakers)",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "The Yinping Mountain Pass",
+          "interior_exterior": "EXT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "在暴风雪肆虐的阴平险道中，冯副将请求撤军。赵岩将军脱下御寒大氅，以身作则带领士兵继续前进。",
+        "continuity": {
+          "props_present": [
+            "厚重的兽皮大氅",
+            "军旗"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "三国时期厚重铠甲，外罩一件沾满风雪的兽皮大氅。",
+              "must_keep": [
+                "兽皮大氅",
+                "三国风格铠甲"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "三国时期副将轻甲，布满冰霜，显得十分单薄。",
+              "must_keep": [
+                "冰霜轻甲"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "军队处于极度疲惫和冻僵的状态",
+            "极其恶劣的暴风雪环境"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "三国时代的崎岖山路",
+              "狂风呼啸的雪夜，能见度极低",
+              "险峻的悬崖边小径"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "三国时期身经百战的将军",
+                "面容坚毅，布满风雪与伤痕"
+              ],
+              "wardrobe_notes": [
+                "厚重的中式古代铠甲",
+                "深色兽皮大氅"
+              ],
+              "must_keep": [
+                "风雪覆盖的面部细节"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "年轻务实的三国副将",
+                "神情焦虑，嘴唇冻得发紫"
+              ],
+              "wardrobe_notes": [
+                "标准三国军队轻甲"
+              ],
+              "must_keep": [
+                "疲惫冻僵的神态"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "兽皮大氅",
+              "must_keep": [
+                "厚重",
+                "沾满积雪"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "历史史诗感 (Historical Epic)",
+              "三国时代背景 (Three Kingdoms era)",
+              "粗犷写实的战争气氛 (Gritty, dark, snowy)",
+              "电影感打光，强调风雪中的冷色调"
+            ],
+            "must_avoid": [
+              "现代衣物",
+              "奇幻元素",
+              "明亮温暖的色调"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "将军放弃特权与士兵同受严寒，重新点燃了军队的斗志。",
+          "emotional_shift": "从绝望崩溃转向破釜沉舟的坚毅"
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "风雪交加的黑夜中，一支疲惫不堪的三国军队艰难地在悬崖峭壁的狭窄雪道上跋涉，士兵们步履蹒跚。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "high",
+              "movement": "pan",
+              "framing_notes": "展现风雪的猛烈和军队的渺小"
+            },
+            "visual_goal": "建立极其恶劣和绝望的环境基调",
+            "action_focus": "风雪中挣扎行军的士兵群体",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "dialogue",
+            "character_id": "char_002",
+            "character_name": "Lieutenant Feng",
+            "text": "将军！弟兄们撑不住了！再往前走就是白白送死，我们必须撤退！",
+            "emotion_hint": "urgent",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "聚焦副将因寒冷和绝望而扭曲的面庞"
+            },
+            "visual_goal": "传达军队濒临崩溃的士气",
+            "action_focus": "副将在风雪中艰难呐喊",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "General Zhao Yan",
+            "text": "退无可退！今日若不破局，金城必破！我与你们同死生！",
+            "emotion_hint": "angry",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "low",
+              "movement": "static",
+              "framing_notes": "仰拍将军，突出其不屈的意志"
+            },
+            "visual_goal": "展现主角破釜沉舟的决心",
+            "action_focus": "赵岩将军解开胸前的搭扣，准备脱下大氅",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "赵岩一把将厚重的兽皮大氅抛入雪地，仅穿冰冷的铠甲，迎着暴风雪大步向前走去。周围倒地的士兵见状，咬牙搀扶着站起。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "push_in",
+              "framing_notes": "随着大氅落地，镜头推向将军无畏的背影"
+            },
+            "visual_goal": "表现主帅同甘共苦带来的震撼力",
+            "action_focus": "大氅被丢弃，将军顶风前行",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "The Yinping Mountain Pass",
+          "interior_exterior": "EXT",
+          "time_of_day": "DAWN"
+        },
+        "summary": "山路在悬崖边断绝。为了下山，赵岩扔掉长戟，用破布裹手，率先徒手攀爬垂直的崖壁。",
+        "continuity": {
+          "props_present": [
+            "长戟 (长柄武器)",
+            "撕裂的粗布"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "去掉了大氅的沉重铠甲，双手缠满破布。",
+              "must_keep": [
+                "双手缠布"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "前方无路可走，只有垂直向下的悬崖",
+            "黎明的微光照亮崖底"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAWN",
+            "environment_notes": [
+              "万丈深渊的悬崖边缘",
+              "冷冽的晨曦，薄雾缭绕",
+              "岩石结冰，极度危险"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "三国将军"
+              ],
+              "wardrobe_notes": [
+                "失去大氅的三国铠甲",
+                "双手缠着粗布条"
+              ],
+              "must_keep": [
+                "满布伤痕的缠布双手"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_002",
+              "prop_name": "将军长戟",
+              "must_keep": [
+                "长柄重兵器"
+              ]
+            },
+            {
+              "prop_id": "prop_003",
+              "prop_name": "破布条",
+              "must_keep": [
+                "粗糙",
+                "带有血迹"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "高耸惊险的垂直空间感",
+              "冷峻的历史战争风格"
+            ],
+            "must_avoid": [
+              "平坦的地形"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "绝境之中，将军通过以身作则的疯狂攀岩，带领军队突破了地形死局。",
+          "emotional_shift": "从无路可走的震惊转为置之死地而后生的决绝"
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "黎明破晓，大军在断崖前猛然停步。镜头俯视，脚下是深不见底的垂直深渊，远处的山谷回荡着攻城的战鼓声。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "high",
+              "movement": "tilt_down",
+              "framing_notes": "从军队的边缘向下俯摇，展现令人晕眩的深渊高度"
+            },
+            "visual_goal": "建立前进的物理死胡同",
+            "action_focus": "悬崖的险峻与断裂的山路",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 2,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "General Zhao Yan",
+            "text": "无路可退！弃长兵，随我下崖！",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [
+                "prop_002",
+                "prop_003"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "紧凑的面部特写，展现其决绝"
+            },
+            "visual_goal": "展现极限状态下的疯狂决策",
+            "action_focus": "赵岩一边低吼，一边用撕裂的布条紧紧缠绕双手",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "赵岩将沉重的长戟毫不犹豫地掷入深渊，随即转身趴在结冰的垂直岩壁上，带头向下滑降。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_002"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "high",
+              "movement": "static",
+              "framing_notes": "展现长戟坠落，以及将军在绝壁上攀爬的惊险动作"
+            },
+            "visual_goal": "表现角色克服自然屏障的极致勇气",
+            "action_focus": "长戟坠入深渊，赵岩徒手扒住岩壁",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_003",
+        "heading": {
+          "location_id": "loc_002",
+          "location_name": "The Besieged Fortress of Jincheng",
+          "interior_exterior": "EXT",
+          "time_of_day": "DAY"
+        },
+        "summary": "敌军正全力围攻金城。从天而降的赵岩部队在没有战马的情况下，化作悍不畏死的步兵，从迷雾中对敌军侧翼发起毁灭性的突袭。",
+        "continuity": {
+          "props_present": [
+            "巨大的攻城器械",
+            "破碎的要塞大门"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "经历了落崖的战损版铠甲，手中拿着从敌营夺来的长剑。",
+              "must_keep": [
+                "严重破损的铠甲",
+                "夺来的敌军武器"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "敌军毫无防备侧翼的山崖",
+            "赵岩的部队是完全的步兵冲锋（无战马）",
+            "强烈的山雾掩护了袭击"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_002",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "布满战火的三国山谷要塞",
+              "敌军庞大的攻城营地",
+              "侧翼弥漫着浓厚的山间晨雾"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "三国将军"
+              ],
+              "wardrobe_notes": [
+                "战损极重的中式铠甲",
+                "没有披风，满身泥泞与血迹"
+              ],
+              "must_keep": [
+                "战损外观"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_004",
+              "prop_name": "攻城器械",
+              "must_keep": [
+                "木制",
+                "庞大"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "惨烈的古战场 (Gritty ancient battlefield)",
+              "三国大军对垒",
+              "步兵血肉相搏的冲击感"
+            ],
+            "must_avoid": [
+              "赵岩部队骑马 (必须是步兵)",
+              "干净整洁的铠甲"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "通过难以置信的悬崖空降，没有战马的残军以纯粹的步兵突袭击碎了庞大的围城部队。",
+          "emotional_shift": "从命悬一线的绝境转为荡气回肠的史诗大捷"
+        },
+        "shots": [
+          {
+            "shot_id": "sh_008",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "山谷中战火连天，巨大的攻城锤正疯狂撞击着金城木门，木门碎裂飞溅。敌军的注意力全部集中在正面的要塞上。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_004"
+              ],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "pan",
+              "framing_notes": "展现围城战的浩大与危急时刻"
+            },
+            "visual_goal": "强调友军堡垒即将被攻破的危急时刻",
+            "action_focus": "攻城锤撞击要塞大门",
+            "characters_in_frame": [],
+            "props_in_frame": [
+              "prop_004"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "毫无防备的敌军侧翼，浓厚的山间白雾猛然被撕裂。如同鬼魅般，满身泥泞的赵岩与其残存的步兵如潮水般狂奔而出。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "low",
+              "movement": "push_in",
+              "framing_notes": "从迷雾中冲出的震撼群像"
+            },
+            "visual_goal": "展现神兵天降的突袭震撼力",
+            "action_focus": "步兵群冲破浓雾的瞬间",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 3,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "General Zhao Yan",
+            "text": "夺敌兵刃！破阵！杀！",
+            "emotion_hint": "excited",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "tracking",
+              "framing_notes": "跟随赵岩在冲锋中发令"
+            },
+            "visual_goal": "聚焦主将狂热的攻击意志",
+            "action_focus": "赵岩拔出夺来的敌军长剑，高举怒吼",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_011",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "悍不畏死的步兵洪流狠狠撞入敌营侧翼，将敌军阵型彻底撕裂，攻城器械在混乱中轰然倒塌，包围圈被彻底粉碎。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_004"
+              ],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "high",
+              "movement": "crane_up",
+              "framing_notes": "拉起展现整个侧翼阵线崩溃的壮观场面"
+            },
+            "visual_goal": "呈现战局的全面逆转",
+            "action_focus": "步兵冲锋彻底击溃敌军侧翼",
+            "characters_in_frame": [],
+            "props_in_frame": [
+              "prop_004"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count_total": 11,
+    "avg_shots_per_scene": 3.6666666666666665,
+    "dialogue_block_count": 4,
+    "action_block_count": 7
+  }
+}

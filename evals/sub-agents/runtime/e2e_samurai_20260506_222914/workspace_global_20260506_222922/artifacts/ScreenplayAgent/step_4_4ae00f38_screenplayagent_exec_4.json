@@ -1,0 +1,726 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-05-06T22:03:08.158436+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "title": "Scarred Vengeance: The Samurai's Quest",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": ""
+        },
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Ruined Village",
+          "interior_exterior": "EXT",
+          "time_of_day": "DAY"
+        },
+        "summary": "Hiroshi, a scarred former samurai, wanders the desolate ruins of his burned village, haunted by memories. He seeks a sign or remembrance to galvanize him, battling internal grief. He finds a small, unbroken keepsake that reignites his burning desire for retribution against the warlord.",
+        "continuity": {
+          "props_present": [
+            "Hiroshi's katana",
+            "charred remains",
+            "small wooden keepsake"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "traditional samurai attire, bearing a distinctive topknot and facial scars",
+              "must_keep": [
+                "katana",
+                "facial scars"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Village is in ruins, charred",
+            "Hiroshi is haunted by loss",
+            "He must find motivation for revenge"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "Desolate, charred remains of a village",
+              "Overgrown with weeds",
+              "Silent save for the wind"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "An East Asian man",
+                "Distinctive topknot and facial scars"
+              ],
+              "wardrobe_notes": [
+                "Traditional samurai attire"
+              ],
+              "must_keep": [
+                "Carries a katana",
+                "Quiet demeanor, eyes burn with resolve"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Hiroshi's Katana",
+              "must_keep": [
+                "Ancient, well-maintained",
+                "Symbol of his samurai past"
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "Wooden Keepsake",
+              "must_keep": [
+                "Small, simple, unbroken",
+                "A relic from his past life in the village"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Somber and melancholic tone",
+              "Gritty and realistic feudal Japan aesthetic",
+              "Muted color palette with emphasis on browns and greys",
+              "Reflects the 'Revenge' and 'Historical Drama' genres"
+            ],
+            "must_avoid": [
+              "Bright colors",
+              "Modern elements",
+              "Anachronisms"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "Hiroshi finds a keepsake that reignites his desire for retribution, transforming his internal conflict into a focused mission.",
+          "emotional_shift": "From profound grief and hesitation to unwavering, vengeful resolve."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "EXT. RUINED VILLAGE - DAY. Hiroshi walks slowly through the charred remains of wooden homes, dust swirling around his traditional samurai attire. His katana hangs at his side. The skeletal structures of buildings reach up like grasping hands.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "tracking",
+              "framing_notes": "Emphasize the desolation of the village and Hiroshi's lone figure amidst it."
+            },
+            "visual_goal": "Establish the setting and Hiroshi's isolation and grief.",
+            "action_focus": "Hiroshi's solitary movement through destruction.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "CLOSE UP on Hiroshi's face. His eyes, though stoic, carry a deep, burning sadness. A prominent scar runs across his cheek, a permanent reminder of past violence. He reaches down and brushes ash from a buried item.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on the scar and the intensity of his gaze."
+            },
+            "visual_goal": "Convey Hiroshi's internal torment and resolve.",
+            "action_focus": "Hiroshi's facial expression and his interaction with the debris.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Hiroshi uncovers a small, intricately carved wooden keepsake, miraculously unbroken. He holds it gently, his thumb tracing its smooth surface. A flicker of recognition, then fierce determination, crosses his features.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_002"
+              ],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Emphasize the keepsake and Hiroshi's hands."
+            },
+            "visual_goal": "Show the catalyst for Hiroshi's renewed purpose.",
+            "action_focus": "The discovery and handling of the keepsake.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Hiroshi stands, the keepsake clutched tight. His gaze hardens, fixed on the distant horizon, away from the village. The wind picks up, rustling through the ruins, as if echoing his silent vow. His path is now clear.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001",
+                "prop_002"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium_full",
+            "camera": {
+              "angle": "low",
+              "movement": "crane",
+              "framing_notes": "Position Hiroshi as resolute against the backdrop of the destroyed village."
+            },
+            "visual_goal": "Show Hiroshi's transformation from grief to determined resolve.",
+            "action_focus": "Hiroshi's posture and fixed gaze.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_003",
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": ""
+        },
+        "heading": {
+          "location_id": "loc_002",
+          "location_name": "Warlord's Stronghold",
+          "interior_exterior": "EXT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Hiroshi attempts to infiltrate the outer defenses of Lord Kageyama's formidable stronghold under the cover of darkness. He must navigate treacherous terrain and evade vigilant guards. He successfully breaches the stronghold's first line of defense, but the close call foreshadows greater challenges.",
+        "continuity": {
+          "props_present": [
+            "Hiroshi's katana",
+            "stronghold walls",
+            "torchlight"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "darkened traditional samurai attire, bearing a distinctive topknot and facial scars",
+              "must_keep": [
+                "katana",
+                "facial scars"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Stronghold is heavily guarded and formidable",
+            "Hiroshi is stealthy and skilled",
+            "Infiltration occurs at night"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_002",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "Formidable, heavily guarded mountain fortress",
+              "Thick walls",
+              "Patrolled by numerous soldiers"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "An East Asian man",
+                "Distinctive topknot and facial scars"
+              ],
+              "wardrobe_notes": [
+                "Traditional samurai attire, adapted for stealth"
+              ],
+              "must_keep": [
+                "Carries a katana",
+                "Quiet demeanor, eyes burn with resolve"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Hiroshi's Katana",
+              "must_keep": [
+                "Ancient, well-maintained",
+                "Symbol of his samurai past"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Tense and suspenseful atmosphere",
+              "Gritty and realistic feudal Japan aesthetic",
+              "Muted color palette, dominated by shadows and moonlight",
+              "Reflects the 'Action' and 'Revenge' genres"
+            ],
+            "must_avoid": [
+              "Humor",
+              "Overly stylized action",
+              "Lack of danger"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "Hiroshi successfully breaches the stronghold's outer defenses, demonstrating his warrior prowess and bringing him closer to his target.",
+          "emotional_shift": "From intense suspense during infiltration to a brief, grim sense of accomplishment, mixed with anticipation of greater threats."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "EXT. WARLORD'S STRONGHOLD - NIGHT. The imposing walls of Lord Kageyama's stronghold loom under a sliver of moon. Hiroshi, cloaked in shadows, moves with silent grace across rocky terrain toward a less-guarded section of the wall.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "high",
+              "movement": "static",
+              "framing_notes": "Emphasize the scale of the stronghold against Hiroshi's small figure."
+            },
+            "visual_goal": "Establish the formidable target and Hiroshi's stealthy approach.",
+            "action_focus": "Hiroshi's infiltration and the stronghold's defenses.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A heavily armored GUARD patrols a battlement, his torch casting flickering shadows. Hiroshi, pressed against the rough stone wall, holds his breath as the guard passes, his hand hovering over the hilt of his katana. He makes his move the moment the guard's back is turned.",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "pan",
+              "framing_notes": "Show both Hiroshi's evasion and the guard's vigilance."
+            },
+            "visual_goal": "Create tension and demonstrate Hiroshi's skill in stealth.",
+            "action_focus": "Hiroshi's close call with the guard.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Hiroshi expertly scales a section of the wall, using protrusions and shadows to aid his ascent. He reaches the top, vaulting silently over the parapet. His boots land softly on the inner courtyard, a grim determination etched on his face.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium_full",
+            "camera": {
+              "angle": "low",
+              "movement": "crane",
+              "framing_notes": "Show the full action of scaling the wall and landing."
+            },
+            "visual_goal": "Show Hiroshi successfully breaching the defenses, hinting at his prowess.",
+            "action_focus": "Hiroshi's successful infiltration.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_005",
+        "source": {
+          "screenplay_asset_id": "",
+          "screenplay_scene_id": ""
+        },
+        "heading": {
+          "location_id": "loc_002",
+          "location_name": "Warlord's Stronghold - Inner Sanctum",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Hiroshi confronts Lord Kageyama in his inner sanctum, engaging him in a final, brutal duel for vengeance. It's a desperate, back-and-forth battle where both push their limits. Hiroshi delivers a decisive, fatal blow, finally achieving his long-sought revenge, but is left to contend with the profound aftermath.",
+        "continuity": {
+          "props_present": [
+            "Hiroshi's katana",
+            "Kageyama's weapon",
+            "traditional decor of a warlord's chamber"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "battle-worn traditional samurai attire, bearing a distinctive topknot and facial scars",
+              "must_keep": [
+                "katana",
+                "facial scars"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "commanding warlord's armor/robes",
+              "must_keep": [
+                "arrogant demeanor"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Final confrontation between Hiroshi and Kageyama",
+            "High stakes, life-or-death duel",
+            "Vengeance is the primary motivation for Hiroshi"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_002",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "Ornately decorated inner chamber within the stronghold",
+              "Reflects Lord Kageyama's power and paranoia",
+              "Dimly lit by lanterns or moonlight filtering through"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "An East Asian man",
+                "Distinctive topknot and facial scars"
+              ],
+              "wardrobe_notes": [
+                "Traditional samurai attire, potentially showing wear from infiltration"
+              ],
+              "must_keep": [
+                "Carries a katana",
+                "Eyes burn with unwavering resolve, fueled by vengeance"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "A powerful and ruthless warlord"
+              ],
+              "wardrobe_notes": [
+                "Commanding, possibly ornate, armor or robes"
+              ],
+              "must_keep": [
+                "Arrogance and overconfidence in his strength",
+                "Formidable presence"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Hiroshi's Katana",
+              "must_keep": [
+                "Ancient, well-maintained",
+                "Used as a tool of vengeance"
+              ]
+            },
+            {
+              "prop_id": "prop_003",
+              "prop_name": "Kageyama's Weapon",
+              "must_keep": [
+                "Powerful, ornate",
+                "Reflects his status and brutality (e.g., a heavy tachi or polearm)"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Brutal and intense action sequences",
+              "Gritty and realistic feudal Japan aesthetic",
+              "Dark and dramatic lighting, contrasting with glints of steel",
+              "Reflects the 'Action' and 'Revenge' genres, with a 'Determined' and 'Vengeful' tone"
+            ],
+            "must_avoid": [
+              "Cutesy or light-hearted elements",
+              "Unrealistic combat",
+              "Lack of emotional weight"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "Hiroshi delivers the fatal blow to Lord Kageyama, achieving his long-sought vengeance.",
+          "emotional_shift": "From intense fury and determination during the duel to a profound, perhaps empty, sense of grim satisfaction."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_008",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "INT. KAGEYAMA'S INNER SANCTUM - NIGHT. Lord Kageyama sits, arrogant and composed, on a raised platform, surrounded by lavish but somber decor. Hiroshi emerges from the shadows, katana drawn. Kageyama's eyes narrow, a cruel smile forming.",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [
+                "prop_001",
+                "prop_003"
+              ],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "medium_full",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Capture both characters in frame, highlighting their opposing stances."
+            },
+            "visual_goal": "Establish the confrontation between Hiroshi and Kageyama.",
+            "action_focus": "The visual tension and introduction of the antagonist.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_003"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 2,
+            "block_type": "dialogue",
+            "character_id": "char_002",
+            "character_name": "Lord Kageyama",
+            "text": "So, the ghost of that village dares to cross my path again. Foolish. You should have remained in the ashes.",
+            "emotion_hint": "arrogant",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "low",
+              "movement": "static",
+              "framing_notes": "Emphasize Kageyama's power and dismissiveness."
+            },
+            "visual_goal": "Show Kageyama's initial reaction and arrogance.",
+            "action_focus": "Kageyama's dialogue and expression.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Hiroshi's face remains grim, a stark contrast to Kageyama's taunts. He charges, katana a blur. The clash of steel rings through the chamber as Kageyama meets him with a heavy tachi. It is a brutal, desperate dance of death.",
+            "emotion_hint": "urgent",
+            "continuity_refs": {
+              "props": [
+                "prop_001",
+                "prop_003"
+              ],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "action",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "handheld",
+              "framing_notes": "Dynamic, fast-paced shots to capture the intensity of the duel."
+            },
+            "visual_goal": "Portray the brutal, high-stakes combat.",
+            "action_focus": "The back-and-forth exchange of sword blows.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_003"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_011",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "After a grueling exchange, Hiroshi finds an opening. His katana flashes, precise and deadly. Kageyama falters, a look of shock replacing his arrogance as he collapses. Hiroshi stands over him, chest heaving, vengeance achieved.",
+            "emotion_hint": "grim",
+            "continuity_refs": {
+              "props": [
+                "prop_001",
+                "prop_003"
+              ],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on the aftermath of the duel, Hiroshi's posture and Kageyama's defeat."
+            },
+            "visual_goal": "Show the decisive moment of vengeance and its immediate aftermath.",
+            "action_focus": "Hiroshi delivering the final blow and Kageyama's fall.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_003"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count_total": 11,
+    "avg_shots_per_scene": 3.6666666666666665,
+    "dialogue_block_count": 1,
+    "action_block_count": 10
+  }
+}

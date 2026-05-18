@@ -1,0 +1,122 @@
+[
+  {
+    "name": "comedy_01_sitcom",
+    "user_goal": "Make a sitcom-style mini-drama: three roommates discover their landlord has been quietly living in their attic for two years and has very strong opinions about their love lives.",
+    "expected_chain": [
+      ["ComedyStoryAgent"],
+      ["ScreenplayAgent"],
+      ["KeyFrameAgent"],
+      ["VideoAgent"],
+      ["CompositorAgent"],
+      ["done"]
+    ]
+  },
+  {
+    "name": "comedy_02_romcom",
+    "user_goal": "Make a romantic comedy mini-drama: two rival food critics are assigned to cover the same Michelin gala in Lyon and accidentally end up sharing the last remaining hotel room in town.",
+    "expected_chain": [
+      ["ComedyStoryAgent"],
+      ["ScreenplayAgent"],
+      ["KeyFrameAgent"],
+      ["VideoAgent"],
+      ["CompositorAgent"],
+      ["done"]
+    ]
+  },
+  {
+    "name": "comedy_03_slapstick",
+    "user_goal": "Make a slapstick comedy short: a clumsy intern at a haute couture house in Paris accidentally triggers the sprinkler system five minutes before the fashion show and tries to fix it without anyone noticing.",
+    "expected_chain": [
+      ["ComedyStoryAgent"],
+      ["ScreenplayAgent"],
+      ["KeyFrameAgent"],
+      ["VideoAgent"],
+      ["CompositorAgent"],
+      ["done"]
+    ]
+  },
+  {
+    "name": "comedy_04_mockumentary",
+    "user_goal": "Make a mockumentary-style comedy following the volunteer fire department of a sleepy New England fishing town where nothing has burned in 40 years, and the chief is obsessed with commissioning the perfect retirement portrait.",
+    "expected_chain": [
+      ["ComedyStoryAgent"],
+      ["ScreenplayAgent"],
+      ["KeyFrameAgent"],
+      ["VideoAgent"],
+      ["CompositorAgent"],
+      ["done"]
+    ]
+  },
+  {
+    "name": "comedy_05_satire",
+    "user_goal": "Make a satirical mini-drama poking fun at corporate wellness culture: a Silicon Valley tech CEO mandates 'mandatory fun' team-building at a haunted escape room and refuses to admit he's terrified.",
+    "expected_chain": [
+      ["ComedyStoryAgent"],
+      ["ScreenplayAgent"],
+      ["KeyFrameAgent"],
+      ["VideoAgent"],
+      ["CompositorAgent"],
+      ["done"]
+    ]
+  },
+  {
+    "name": "drama_01_war",
+    "user_goal": "Make a 90-second WW2 mini-drama: a young French Resistance medic has to choose between treating a wounded German soldier she discovers in a barn or smuggling intel to her cell as a German raid begins.",
+    "expected_chain": [
+      ["StoryAgent"],
+      ["ScreenplayAgent"],
+      ["KeyFrameAgent"],
+      ["VideoAgent"],
+      ["CompositorAgent"],
+      ["done"]
+    ]
+  },
+  {
+    "name": "drama_02_noir",
+    "user_goal": "Make a noir thriller mini-drama: a private detective in 1953 Las Vegas interrogates the last surviving witness to a casino killing, but the witness has dementia and the truth keeps slipping through her hands.",
+    "expected_chain": [
+      ["StoryAgent"],
+      ["ScreenplayAgent"],
+      ["KeyFrameAgent"],
+      ["VideoAgent"],
+      ["CompositorAgent"],
+      ["done"]
+    ]
+  },
+  {
+    "name": "drama_03_family",
+    "user_goal": "Make a heart-wrenching family drama mini-drama: an estranged daughter returns home for Christmas after five years away and discovers her father has hidden his terminal diagnosis from her and her siblings.",
+    "expected_chain": [
+      ["StoryAgent"],
+      ["ScreenplayAgent"],
+      ["KeyFrameAgent"],
+      ["VideoAgent"],
+      ["CompositorAgent"],
+      ["done"]
+    ]
+  },
+  {
+    "name": "drama_04_historical",
+    "user_goal": "Make a 3-minute historical mini-drama: a young Tang-dynasty calligrapher in Chang'an risks execution to hide banned poems for an exiled scholar passing through the city under guard.",
+    "expected_chain": [
+      ["StoryAgent"],
+      ["ScreenplayAgent"],
+      ["KeyFrameAgent"],
+      ["VideoAgent"],
+      ["CompositorAgent"],
+      ["done"]
+    ]
+  },
+  {
+    "name": "drama_05_scifi",
+    "user_goal": "Make a sci-fi mini-drama: the last waking astronaut on a generation ship discovers the colony's third-generation children have been told the Earth they're traveling toward was destroyed centuries before they were born.",
+    "expected_chain": [
+      ["StoryAgent"],
+      ["ScreenplayAgent"],
+      ["KeyFrameAgent"],
+      ["VideoAgent"],
+      ["CompositorAgent"],
+      ["done"]
+    ]
+  }
+]

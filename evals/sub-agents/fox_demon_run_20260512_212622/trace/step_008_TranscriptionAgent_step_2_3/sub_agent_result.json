@@ -1,0 +1,17 @@
+{
+  "agent_class": "TranscriptionAgent",
+  "typed_input": {
+    "source_media_path": "",
+    "raw_segments_json_text": ""
+  },
+  "output": null,
+  "eval_result": {
+    "overall_pass": false,
+    "summary": "pre_generate error: FalTranscriptionService: source media not on disk: ''"
+  },
+  "passed": false,
+  "attempts": 0,
+  "asset_dict": null,
+  "media_assets_count": 0,
+  "media_assets_summary": []
+}

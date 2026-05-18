@@ -1,0 +1,739 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-09T21:26:29.185643+00:00",
+    "language": "zh"
+  },
+  "content": {
+    "title": "破镜重圆：前妻带娃归来",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "霍氏集团总裁办公室",
+          "interior_exterior": "INT",
+          "time_of_day": "DAY"
+        },
+        "summary": "苏念带着双胞胎孩子来到霍氏集团总裁办公室，向霍家继承人递交离婚协议。霍家继承人震惊地看到前妻和孩子，他的世界瞬间崩塌。",
+        "continuity": {
+          "props_present": [
+            "离婚协议"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "一套干练的职业装，彰显独立与决心",
+              "must_keep": [
+                "干练的职业装"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "定制的奢侈西装，彰显总裁身份",
+              "must_keep": [
+                "定制西装"
+              ]
+            },
+            {
+              "character_id": "char_003",
+              "wardrobe": "可爱的儿童套装",
+              "must_keep": [
+                "儿童套装"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "苏念带着双胞胎孩子出现，霍家继承人首次见到他们",
+            "苏念递交离婚协议"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "霍氏集团总裁办公室",
+              "位于繁华中国都市摩天大楼顶层",
+              "奢华、现代且令人望而生畏",
+              "象征权力与财富",
+              "现代中国都市剧风格"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "苏念，坚强独立，双胞胎的保护者",
+                "内心深藏情感创伤，决心自立",
+                "现代中国都市剧角色"
+              ],
+              "wardrobe_notes": [
+                "一套彰显专业与决心的干练职业装"
+              ],
+              "must_keep": [
+                "坚定的眼神"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "霍家继承人，曾傲慢无情，家族权势的象征",
+                "此刻面临震惊与悔恨",
+                "现代中国都市剧角色"
+              ],
+              "wardrobe_notes": [
+                "一丝不苟的定制西装"
+              ],
+              "must_keep": [
+                "惊愕和痛苦的表情"
+              ]
+            },
+            {
+              "character_id": "char_003",
+              "identity_notes": [
+                "苏念和霍家继承人的双胞胎孩子",
+                "天真无邪，好奇地观察周围",
+                "现代中国都市剧角色"
+              ],
+              "wardrobe_notes": [
+                "整洁可爱的儿童服装"
+              ],
+              "must_keep": [
+                "孩子的纯真无邪"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "离婚协议",
+              "must_keep": [
+                "一份正式的法律文件"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "情感丰富",
+              "救赎主题",
+              "浪漫基调",
+              "戏剧性强",
+              "感人至深",
+              "和解元素",
+              "现代中国都市剧风格"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "霍家继承人彻底失去傲慢，第一次在苏念面前下跪，乞求原谅。",
+          "emotional_shift": "霍家继承人从震惊到绝望，苏念则从坚定到一丝错愕和复杂。"
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "高耸入云的霍氏集团大楼。苏念牵着一对双胞胎孩子，神情坚定地走进豪华气派的总裁办公室。霍家继承人坐在宽大的办公桌后，面无表情地看着她。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002",
+                "char_003"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "展现办公室的奢华与人物的距离感"
+            },
+            "visual_goal": "展现苏念的决心和霍家继承人的漠然，以及办公室的压迫感。",
+            "action_focus": "苏念和孩子进入办公室，霍家继承人的初次反应。",
+            "characters_in_frame": [
+              "char_001",
+              "char_002",
+              "char_003"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "苏念将一份文件轻轻放在霍家继承人面前。他漫不经心地扫了一眼，瞬间僵住，文件赫然是离婚协议。他猛地抬头，这才注意到她身边的两个孩子。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002",
+                "char_003"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "dolly_in",
+              "framing_notes": "聚焦在离婚协议和霍家继承人震惊的表情"
+            },
+            "visual_goal": "展现霍家继承人从漠不关心到震惊的转变。",
+            "action_focus": "离婚协议和孩子的出现给霍家继承人带来的冲击。",
+            "characters_in_frame": [
+              "char_001",
+              "char_002",
+              "char_003"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "霍家继承人眼中闪过难以置信和巨大的悔恨，他看着孩子稚嫩的脸庞，仿佛整个世界都崩塌了。他缓缓站起身，却又像被抽走了力气，身体晃了晃。",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002",
+                "char_003"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "特写霍家继承人的面部表情，捕捉震惊与悔恨"
+            },
+            "visual_goal": "强调霍家继承人内心的巨大冲击和情绪崩溃的开始。",
+            "action_focus": "霍家继承人看向孩子，表情复杂。",
+            "characters_in_frame": [
+              "char_002",
+              "char_003"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "block_type": "dialogue",
+            "character_id": "char_002",
+            "character_name": "霍家继承人",
+            "text": "不，苏念… 求你… 给我一次机会。",
+            "emotion_hint": "urgent",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002",
+                "char_003"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "static",
+              "framing_notes": "展现霍家继承人跪下的姿态，强调他的卑微"
+            },
+            "visual_goal": "展现霍家继承人放下傲慢，首次下跪的戏剧性瞬间，苏念的复杂情绪。",
+            "action_focus": "霍家继承人跪下求饶，苏念和孩子被这一幕震惊。",
+            "characters_in_frame": [
+              "char_001",
+              "char_002",
+              "char_003"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_004",
+        "heading": {
+          "location_id": "loc_002",
+          "location_name": "苏念的简朴公寓",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "霍家继承人尝试融入孩子的生活，并在苏念的简朴公寓里与孩子们互动，苏念则在一旁保持着警惕和距离。孩子无意中表达了希望父母在一起的愿望，触动了苏念。",
+        "continuity": {
+          "props_present": [
+            "儿童玩具"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "舒适的居家服",
+              "must_keep": [
+                "居家服"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "稍显休闲但仍有质感的服装",
+              "must_keep": [
+                "休闲衬衫"
+              ]
+            },
+            {
+              "character_id": "char_003",
+              "wardrobe": "活泼的儿童睡衣",
+              "must_keep": [
+                "儿童睡衣"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "霍家继承人在苏念家与孩子互动",
+            "苏念对霍家继承人保持距离",
+            "孩子表达了想让父母在一起的愿望"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_002",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "苏念的简朴公寓",
+              "温馨整洁但不过分奢华",
+              "充满儿童玩具和个人生活气息",
+              "象征苏念来之不易的独立生活",
+              "现代中国都市剧风格"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "苏念，独立坚强，对霍家继承人保持警惕和界限",
+                "内心挣扎于旧痛与新生活",
+                "现代中国都市剧角色"
+              ],
+              "wardrobe_notes": [
+                "舒适但简洁的居家服，体现她的实用主义"
+              ],
+              "must_keep": [
+                "警惕而审视的眼神"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "霍家继承人，真诚地试图弥补，笨拙地与孩子建立联系",
+                "展现出与以往不同的柔软一面",
+                "现代中国都市剧角色"
+              ],
+              "wardrobe_notes": [
+                "放松但仍显品味的休闲服装"
+              ],
+              "must_keep": [
+                "努力讨好孩子的表情"
+              ]
+            },
+            {
+              "character_id": "char_003",
+              "identity_notes": [
+                "双胞胎孩子，天真无邪，享受父爱",
+                "无意中成为父母情感博弈的中心",
+                "现代中国都市剧角色"
+              ],
+              "wardrobe_notes": [
+                "可爱的居家睡衣"
+              ],
+              "must_keep": [
+                "童真与依赖的神态"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_002",
+              "prop_name": "儿童玩具",
+              "must_keep": [
+                "散落在客厅的各种儿童玩具"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "情感丰富",
+              "救赎主题",
+              "浪漫基调",
+              "戏剧性强",
+              "感人至深",
+              "和解元素",
+              "现代中国都市剧风格"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "孩子纯真的愿望让苏念不得不面对自己决定对孩子造成的影响，她的坚定立场开始动摇。",
+          "emotional_shift": "苏念的警惕中掺杂了心软与挣扎，霍家继承人则看到了希望，情感变得更加迫切。"
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "苏念的公寓客厅里，霍家继承人笨拙地和双胞胎孩子玩着玩具，试图逗乐他们。孩子们被逗得咯咯笑。苏念站在厨房门口，双手抱胸，眼神复杂而警惕。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_002"
+              ],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002",
+                "char_003"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "展现霍家继承人的笨拙与苏念的距离感"
+            },
+            "visual_goal": "描绘霍家继承人努力融入家庭的场景，同时展现苏念的内心挣扎。",
+            "action_focus": "霍家继承人与孩子的互动，苏念的观察。",
+            "characters_in_frame": [
+              "char_001",
+              "char_002",
+              "char_003"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "霍家继承人温柔地给一个孩子讲故事，眼中充满父爱。苏念看着这一幕，眼神中闪过一丝不易察觉的动摇，但很快又恢复了冷淡。",
+            "emotion_hint": "warm",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002",
+                "char_003"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "pan",
+              "framing_notes": "从霍家继承人转移到苏念的脸，捕捉她的微表情"
+            },
+            "visual_goal": "强调霍家继承人真诚的转变和苏念内心深处的触动。",
+            "action_focus": "霍家继承人的柔情，苏念的复杂反应。",
+            "characters_in_frame": [
+              "char_001",
+              "char_002",
+              "char_003"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 3,
+            "block_type": "dialogue",
+            "character_id": "char_003",
+            "character_name": "双胞胎孩子",
+            "text": "妈妈，爸爸，我们想你们在一起。",
+            "emotion_hint": "calm",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002",
+                "char_003"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "聚焦孩子，然后捕捉苏念和霍家继承人的反应"
+            },
+            "visual_goal": "展现孩子天真话语对父母产生的巨大冲击。",
+            "action_focus": "孩子的话语以及苏念被触动而霍家继承人眼中燃起的希望。",
+            "characters_in_frame": [
+              "char_001",
+              "char_002",
+              "char_003"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_005",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "霍氏集团总裁办公室",
+          "interior_exterior": "INT",
+          "time_of_day": "DAY"
+        },
+        "summary": "在霍氏集团总裁办公室，苏念对霍家继承人倾吐了心中所有痛苦，要求他证明真正的改变。霍家继承人最终放下所有骄傲，以一个震撼人心的举动证明了他的真诚，打破了苏念的心防。",
+        "continuity": {
+          "props_present": [
+            "重要文件"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "一套庄重而有力量感的服装",
+              "must_keep": [
+                "庄重服装"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "略显憔悴但依然得体的西装",
+              "must_keep": [
+                "西装"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "苏念向霍家继承人倾诉内心痛苦",
+            "霍家继承人做出重大承诺的举动"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "霍氏集团总裁办公室",
+              "位于繁华中国都市摩天大楼顶层",
+              "奢华、现代且令人望而生畏",
+              "象征权力与财富，此刻见证情感的较量",
+              "现代中国都市剧风格"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "苏念，释放内心痛苦，要求彻底的真诚和改变",
+                "勇敢而脆弱，渴望真正的尊重",
+                "现代中国都市剧角色"
+              ],
+              "wardrobe_notes": [
+                "一套展现她力量与决心的庄重服装"
+              ],
+              "must_keep": [
+                "含泪却坚毅的眼神"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "霍家继承人，彻底放弃傲慢，竭力证明自己的爱与悔恨",
+                "深情而绝望，寻求最终的和解",
+                "现代中国都市剧角色"
+              ],
+              "wardrobe_notes": [
+                "西装，但能看出情绪带来的疲惫感"
+              ],
+              "must_keep": [
+                "痛彻心扉的表情"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_003",
+              "prop_name": "重要文件",
+              "must_keep": [
+                "一份能证明霍家继承人重大承诺的文件（如股权转让书、财产声明）"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "情感丰富",
+              "救赎主题",
+              "浪漫基调",
+              "戏剧性强",
+              "感人至深",
+              "和解元素",
+              "现代中国都市剧风格"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "霍家继承人以一个放弃巨大利益的举动，有力地证明了他的真诚和对苏念及家庭的承诺。",
+          "emotional_shift": "苏念的痛苦与防备被霍家继承人真挚的行动所触动，内心坚冰开始融化，看到和解的曙光。"
+        },
+        "shots": [
+          {
+            "shot_id": "sh_008",
+            "order": 1,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "苏念",
+            "text": "你以为一句对不起就能抹去一切吗？我需要的是你真正的改变！",
+            "emotion_hint": "angry",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "聚焦苏念愤怒而受伤的脸"
+            },
+            "visual_goal": "展现苏念积累已久的痛苦和对霍家继承人真诚改变的渴望。",
+            "action_focus": "苏念情绪爆发，霍家继承人聆听。",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "霍家继承人眼含热泪，他从桌上拿起一份厚重的文件，紧紧握在手中。文件上赫然写着家族企业的核心权益转让。",
+            "emotion_hint": "sad",
+            "continuity_refs": {
+              "props": [
+                "prop_003"
+              ],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "static",
+              "framing_notes": "特写霍家继承人的手和文件，以及他坚定的眼神"
+            },
+            "visual_goal": "强调这份文件的重要性，以及霍家继承人放弃一切的决心。",
+            "action_focus": "霍家继承人手中的文件，他痛苦而坚定的面部表情。",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "霍家继承人走到苏念面前，将文件递给她，眼中满是真诚的悔意与爱意。苏念颤抖地接过文件，震惊与动容交织，她望着他，内心筑起的壁垒终于出现裂痕。",
+            "emotion_hint": "warm",
+            "continuity_refs": {
+              "props": [
+                "prop_003"
+              ],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "dolly_out",
+              "framing_notes": "捕捉两人之间情感的交流，以及苏念防线的瓦解"
+            },
+            "visual_goal": "展现霍家继承人真诚的付出和苏念内心的融化，预示和解的可能。",
+            "action_focus": "文件交换的瞬间，以及两人眼神中的情感交流。",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count_total": 10,
+    "avg_shots_per_scene": 3.3333333333333335,
+    "dialogue_block_count": 3,
+    "action_block_count": 7
+  }
+}

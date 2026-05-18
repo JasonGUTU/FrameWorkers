@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T03:36:35.623850+00:00",
+    "language": "en"
+  },
+  "content": {
+    "visual_description": "A woman with short hair, bruised face, and glowing hand stands in a destroyed cityscape, wearing a worn leather jacket and dog tags under a somber sky.",
+    "image_asset": {
+      "asset_id": "",
+      "uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/30_results/intakeimage/intake_img_008/_workspace/workspace_global_20260510_033630/inputs/20260510_033631_479835_intake_img_008.png",
+      "width": 1024,
+      "height": 576,
+      "format": "png"
+    }
+  }
+}

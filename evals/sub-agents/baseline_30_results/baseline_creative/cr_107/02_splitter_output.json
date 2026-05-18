@@ -1,0 +1,44 @@
+{
+  "shots": [
+    {
+      "shot_id": "sh_001",
+      "prompt": "A lone warrior, General Murong Rong's son, stands resolute on a snow-swept mountain pass, overlooking the vast, desolate western frontier. Wind whips his tattered crimson banner, symbolizing a decade of solitary vigilance.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_002",
+      "prompt": "An immense, menacing army of enemy soldiers, countless cavalry and infantry, swarms across the frozen plains under a desolate, gray sky. Their overwhelming numbers loom, heralding an inevitable, epic confrontation.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_003",
+      "prompt": "The determined general, surrounded by a handful of loyal, battle-weary soldiers, braces for impact. Their worn armor gleams dimly as snow falls, swords are drawn in grim, unified resolve against the approaching horde.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_004",
+      "prompt": "With a primal, defiant roar, the general spurs his powerful warhorse, charging alone into the center of the massive enemy formation. His silhouette is a beacon of desperate courage amidst the chaos.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_005",
+      "prompt": "Amidst a furious whirlwind of clashing steel and desperate cries, the general carves a brutal path through the dense enemy ranks. His face is a mask of fierce determination, snow flying with every powerful blow.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_006",
+      "prompt": "The general, momentarily pausing in the carnage, stumbles upon the fallen form of his father amidst the snow and bodies. A poignant, sorrowful moment of recognition in the desolate battlefield.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_007",
+      "prompt": "With trembling hands, the general reaches for the iconic green-dragon polearm clutched in his fallen father's motionless grasp. He pulls the ancestral weapon free, its familiar weight a surge of profound power and grief.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_008",
+      "prompt": "Standing tall amidst the swirling snow and battlefield chaos, the green-dragon polearm now firmly in his grip, the general surveys the remaining enemy with fierce, unwavering, renewed purpose in his eyes.",
+      "duration_sec": 5
+    }
+  ]
+}

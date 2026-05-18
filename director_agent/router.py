@@ -305,10 +305,12 @@ class LlmSubAgentPlanner:
         #       chat_json to raise ValueError. Earlier code returned [] on the
         #       initial exception without ever entering the retry loop.
         plan: List[PlanStepSpec] = []
+        last_data: Dict[str, Any] = {}
         attempts = 3
         for attempt in range(attempts):
             try:
                 data = await self._acomplete_json_dict(system, user)
+                last_data = data
                 plan = _parse_plan(data, allowed, max_steps=max_steps)
             except Exception as exc:
                 logger.error(
@@ -323,6 +325,27 @@ class LlmSubAgentPlanner:
                     "aplan_pipeline_upfront attempt %d/%d empty/failed, retrying",
                     attempt + 1, attempts,
                 )
+        try:
+            from inference import trace as _fw_trace
+            _fw_trace.dump_director_plan(
+                {
+                    "user_goal": user_goal,
+                    "stack_memory": stack_memory or [],
+                    "system_prompt": system,
+                    "user_prompt": user,
+                    "planner_raw_output": last_data,
+                    "rationale": (
+                        last_data.get("rationale")
+                        if isinstance(last_data, dict)
+                        else ""
+                    ),
+                    "parsed_plan": [
+                        {"agent_id": s.agent_id, "intent": s.intent} for s in plan
+                    ],
+                }
+            )
+        except Exception:
+            pass
         return plan
 
     # ------------------------------------------------------------------
@@ -341,9 +364,13 @@ class LlmSubAgentPlanner:
     ) -> ReplanDecision:
         """Produce a replacement tail for a failed step.
 
-        On LLM failure, malformed output, or empty plan, returns an empty
-        ``new_tail`` — the director then advances past the failed step without
-        replanning. ``MAX_REPLAN_ROUNDS`` caps total attempts.
+        Internally retries up to 3 times to absorb transient LLM noise
+        (network errors, malformed JSON, empty plan samples) — matching the
+        ``aplan_pipeline_upfront`` pattern. After exhausting these internal
+        retries the method returns an empty ``new_tail`` and the director
+        halts the pipeline (skip-on-failure was retired in favor of explicit
+        halt). Director-level ``MAX_REPLAN_ROUNDS`` caps how many *logical*
+        replan rounds a single user turn may consume.
         """
         allowed = _allowed_ids(available_agents)
         if not allowed:
@@ -357,18 +384,36 @@ class LlmSubAgentPlanner:
             pending_tail_blob=_memory_blob(pending_tail),
             completed_blob=_memory_blob(completed_tail),
         )
-        try:
-            data = self._complete_json_dict(prompts.REPLAN_TAIL_SYSTEM, user)
-        except Exception as exc:
-            logger.error("replan_on_failure LLM failed: %s", exc)
-            return ReplanDecision(rationale=f"replan LLM error: {exc}")
-        if not isinstance(data, dict):
-            return ReplanDecision(rationale="non-object replan JSON")
-        new_tail = _parse_plan(data, allowed, max_steps=max_steps)
-        rationale = str(data.get("rationale") or "").strip()
-        if not new_tail:
-            return ReplanDecision(rationale=rationale or "replan produced empty plan")
-        return ReplanDecision(new_tail=new_tail, rationale=rationale)
+        last_rationale = "replan exhausted internal retries"
+        attempts = 3
+        for attempt in range(attempts):
+            try:
+                data = self._complete_json_dict(prompts.REPLAN_TAIL_SYSTEM, user)
+            except Exception as exc:
+                logger.error(
+                    "replan_on_failure attempt %d/%d LLM failed: %s",
+                    attempt + 1, attempts, exc,
+                )
+                last_rationale = f"replan LLM error: {exc}"
+                continue
+            if not isinstance(data, dict):
+                last_rationale = "non-object replan JSON"
+                logger.warning(
+                    "replan_on_failure attempt %d/%d returned non-object",
+                    attempt + 1, attempts,
+                )
+                continue
+            new_tail = _parse_plan(data, allowed, max_steps=max_steps)
+            rationale = str(data.get("rationale") or "").strip()
+            if new_tail:
+                return ReplanDecision(new_tail=new_tail, rationale=rationale)
+            last_rationale = rationale or "replan produced empty plan"
+            if attempt + 1 < attempts:
+                logger.warning(
+                    "replan_on_failure attempt %d/%d empty plan, retrying",
+                    attempt + 1, attempts,
+                )
+        return ReplanDecision(rationale=last_rationale)
 
 
 # ---------------------------------------------------------------------------

@@ -1,0 +1,154 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-09T21:25:40.923836+00:00",
+    "language": "en"
+  },
+  "content": {
+    "logline": "On day seven of a devastating zombie apocalypse, a desperate special-ops captain and a brilliant female doctor lead a small squad through perilous, zombie-infested underground tunnels in a desperate search for a legendary vaccine lab, humanity's last hope.",
+    "style": {
+      "genre": [
+        "Post-Apocalyptic Drama",
+        "Zombie Horror",
+        "Action-Adventure"
+      ],
+      "tone_keywords": [
+        "grim",
+        "desperate",
+        "survival",
+        "tense",
+        "heroic sacrifice",
+        "zombie-apocalypse"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Captain Elias Vance",
+        "role": "protagonist",
+        "profile": "A former special-ops captain, haunted by past failures but driven by an unyielding sense of duty. He is a pragmatic and ruthless leader in the zombie-apocalypse, prioritizing the mission above all else.",
+        "motivation": "To protect his squad and find a cure to atone for failing to save his own family during the initial outbreak.",
+        "flaw": "His hardened exterior and over-reliance on military tactics often clash with the humanitarian needs of survivors, and he struggles to trust anyone outside his immediate command."
+      },
+      {
+        "character_id": "char_002",
+        "name": "Dr. Aris Thorne",
+        "role": "support",
+        "profile": "A brilliant and compassionate epidemiologist, Dr. Thorne is one of the few remaining medical professionals in the zombie-apocalypse, dedicated to finding a biological solution.",
+        "motivation": "To save lives and apply her extensive medical knowledge to develop a vaccine, upholding her professional oath amidst the chaos.",
+        "flaw": "Her idealism and compassionate nature often put her at odds with Vance's brutal pragmatism, making her vulnerable to the harsh realities of their world."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "The Underbelly",
+        "description": "A sprawling, claustrophobic network of crumbling subway lines, forgotten utility tunnels, and maintenance shafts beneath a city ravaged by the zombie apocalypse. Echoes of distant sirens, zombie shrieks, and the constant hum of unseen dangers fill the air, with wind whipping through ruined corridors."
+      },
+      {
+        "location_id": "loc_002",
+        "name": "Apex Bio-Research Labs",
+        "description": "A state-of-the-art underground biomedical facility, once humanity's beacon of scientific advancement. Now, it's eerily silent and partially ruined, its advanced equipment covered in dust and grime. Evidence of a hasty evacuation and struggle is present, hinting at the horrors that unfolded within."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Captain Vance's squad struggles through the zombie-infested underground tunnels on day seven, their morale dwindling, as Dr. Thorne tends to a wounded survivor.",
+        "conflict": "The squad is nearing its breaking point from the relentless journey through dangerous, claustrophobic tunnels, facing exhaustion, fear, and constant zombie threats.",
+        "turning_point": "The dire circumstances push Vance to double down on his grim determination, while Thorne provides essential medical assistance, highlighting their complementary but often clashing roles."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "inciting",
+        "summary": "Amidst despair, they discover a partially functional terminal with a schematic revealing the hidden, precise location of Apex Bio-Research Labs, renewing their desperate hope.",
+        "conflict": "The initial discovery is met with both renewed hope and deep skepticism, as the schematic also hints at advanced defenses and a heavy infestation at the lab.",
+        "turning_point": "This concrete lead solidifies their mission, transforming a desperate trek into a focused, albeit perilous, objective for humanity's last hope."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "turn",
+        "summary": "Upon reaching the labs, they find the main entrance heavily barricaded and swarming with a more aggressive, mutated strain of zombies, forcing them to seek a perilous alternate route.",
+        "conflict": "The specialized, aggressive zombies present an unforeseen, enhanced threat, and the squad must decide between a frontal assault or a risky, unknown entry point.",
+        "turning_point": "The encounter reveals the true, advanced nature of the threat within Apex Labs, escalating the stakes and forcing Vance to adapt his tactical approach."
+      },
+      {
+        "step_id": "arc_004",
+        "order": 4,
+        "step_type": "crisis",
+        "summary": "Deep inside the labs, they are ambushed, and a key squad member is gravely injured or infected during a chaotic confrontation, forcing Vance to make a brutal, life-or-death decision.",
+        "conflict": "The squad faces overwhelming odds and a potential loss of life, putting Vance's leadership and Thorne's medical ethics under extreme pressure.",
+        "turning_point": "Vance's difficult choice, whether to prioritize the mission or a squad member's life, creates internal tension and reveals the profound sacrifices required for their objective."
+      },
+      {
+        "step_id": "arc_005",
+        "order": 5,
+        "step_type": "climax",
+        "summary": "Vance and Thorne breach the central data core/vaccine storage unit amidst a collapsing lab, fighting a final wave of enhanced zombies while simultaneously retrieving crucial data or a prototype vaccine.",
+        "conflict": "An intense, multi-front battle against mutated zombies rages as the lab threatens to collapse, demanding perfect coordination and the combined unique skills of Vance and Thorne.",
+        "turning_point": "Through their combined expertise, they secure vital, but incomplete, research or a prototype, achieving a partial victory at great personal cost."
+      },
+      {
+        "step_id": "arc_006",
+        "order": 6,
+        "step_type": "resolution",
+        "summary": "They narrowly escape the collapsing lab with the prototype or partial data. The vaccine is not a definitive cure, but a vital first step, offering fragile hope for a future battle.",
+        "conflict": "The immediate threat is overcome, but the broader war against the apocalypse continues, now armed with new knowledge but also the burden of its incomplete promise.",
+        "turning_point": "The squad emerges battered but with a renewed, albeit grim, purpose, understanding that this is not an end but a crucial beginning of humanity's long fight for survival."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "For the squad to navigate a particularly treacherous section of the underground tunnels and uncover new intelligence about the vaccine lab.",
+        "conflict": "The squad faces escalating threats from zombies and environmental hazards, compounded by dwindling supplies and low morale, threatening to derail their desperate search.",
+        "turn": "They discover an encrypted data pad containing schematics and a precise, hidden location for the Apex Bio-Research Labs, renewing their sense of purpose and direction."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_004",
+        "location_id": "loc_001",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "To breach the main defenses of the Apex Bio-Research Labs and gain entry.",
+        "conflict": "A large, aggressive horde of mutated zombies guards the primary access point to the labs, leading to a fierce confrontation where a key squad member is gravely injured.",
+        "turn": "They manage to breach the outer defenses and enter the lab, but the injury to their comrade forces Captain Vance into a brutal decision, highlighting the mission's unforgiving nature."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_006",
+        "location_id": "loc_002",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "To secure vital research data or a prototype vaccine from within the collapsing Apex Bio-Research Labs and escape.",
+        "conflict": "Captain Vance and Dr. Thorne face a chaotic final battle against enhanced zombies as the lab destabilizes around them, forcing them to race against time to retrieve the critical information.",
+        "turn": "They narrowly escape the collapsing facility with a prototype vaccine or partial data, a bittersweet victory that offers a fragile hope but confirms the war against the infected is far from over."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 2,
+    "location_count": 2,
+    "scene_count": 3
+  }
+}

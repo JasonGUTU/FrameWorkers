@@ -1,0 +1,125 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-09T21:25:39.322539+00:00",
+    "language": "zh"
+  },
+  "content": {
+    "logline": "A brilliant, ice-cold transfer student, secretly seeking revenge for a school arson ten years prior, finds his mission complicated when his new homeroom teacher is revealed to be the very man who saved him from the flames.",
+    "style": {
+      "genre": [
+        "Drama",
+        "Mystery",
+        "Revenge Thriller"
+      ],
+      "tone_keywords": [
+        "Suspenseful",
+        "Somber",
+        "Restrained",
+        "Revenge",
+        "High School",
+        "Chinese"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Gu Xiuning",
+        "role": "protagonist",
+        "profile": "An exceptionally intelligent and emotionally distant Chinese high-school transfer student, determined to uncover the truth behind the arson that scarred his past and exact revenge. He carries the trauma of his survival with a carefully constructed facade of cold indifference.",
+        "motivation": "To identify and punish those responsible for the arson and the loss it caused; to understand the full circumstances of the tragic event.",
+        "flaw": "His single-minded pursuit of revenge makes him isolated and prone to seeing others as obstacles or tools, potentially blinding him to complex truths or genuine allies."
+      },
+      {
+        "character_id": "char_002",
+        "name": "Mr. Lin",
+        "role": "support",
+        "profile": "The new homeroom teacher at the high school, a seemingly kind and observant man who carries the hidden burden of a heroic act from his past. He is unknowingly connected to Gu Xiuning's deepest trauma as his rescuer during the fire.",
+        "motivation": "To guide and protect his students; to move past the trauma of the fire and the secrets he might hold about it.",
+        "flaw": "His reluctance to revisit painful memories or reveal difficult truths, which could be perceived as complicity or evasion, even if his intentions are protective."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Everbright High School",
+        "description": "A bustling Chinese high school that, on the surface, appears modern and vibrant. Yet, beneath its pristine facade, the memory of a devastating arson ten years prior lingers, subtly influencing its atmosphere and history."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Gu Xiuning transfers to Everbright High School, quickly establishing himself as an academic prodigy with an unapproachable demeanor, while silently beginning his investigation into the school's past arson.",
+        "conflict": "Gu Xiuning's internal struggle to maintain his facade while grappling with being in the place of his trauma, and the pressure of his secret mission.",
+        "turning_point": "His arrival at the school, marking the true beginning of his revenge plot."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "inciting",
+        "summary": "On his very first day, a public revelation exposes Gu Xiuning as the sole survivor of the arson ten years ago. Simultaneously, he recognizes his new homeroom teacher, Mr. Lin, as the man who pulled him from the flames, immediately complicating his carefully laid plans for revenge.",
+        "conflict": "Gu Xiuning's meticulous planning is shattered by the dual shock of public exposure and the profound, unexpected connection to his rescuer, creating a moral dilemma for his vengeful intentions.",
+        "turning_point": "The recognition of Mr. Lin as his rescuer, shifting his revenge from an abstract goal to a deeply personal and ethically complex challenge."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "climax",
+        "summary": "Gu Xiuning confronts Mr. Lin, who is forced to reveal suppressed details about the night of the fire. This partial confession alters Gu Xiuning's understanding of the event and the true culprits, redirecting his revenge onto a more intricate and dangerous path.",
+        "conflict": "Gu Xiuning's burning desire for answers clashes with Mr. Lin's guilt and reluctance to fully disclose the past, leading to a tense, emotionally charged exchange.",
+        "turning_point": "Mr. Lin's revelation of a critical, perhaps uncomfortable, truth, which fundamentally changes Gu Xiuning's perspective on the arson and the real targets of his revenge, creating a new, complex beginning."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "Gu Xiuning establishes his presence as a detached genius and begins to subtly observe the school, seeking clues related to the past arson.",
+        "conflict": "Gu Xiuning's icy exterior masks intense internal turmoil as he navigates the school that holds his traumatic past, struggling to maintain his composure while his revenge motive simmers. He feels an uncanny familiarity with Mr. Lin, unknowingly his rescuer.",
+        "turn": "Gu Xiuning's initial observations confirm that some aspects of the school remain unchanged, fueling his determination, while a brief, unexplained encounter with Mr. Lin leaves him with an unsettling, lingering feeling."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "The truth of Gu Xiuning's past as the arson survivor is revealed, leading to his recognition of Mr. Lin as his rescuer.",
+        "conflict": "During a seemingly routine school assembly or official announcement, Gu Xiuning's identity as the arson survivor is unexpectedly disclosed, making him the center of unwanted attention. In the chaos, he makes eye contact with Mr. Lin and a flood of memories confirms his teacher's role in saving his life, creating an immediate, personal conflict with his revenge plan.",
+        "turn": "The dual revelation of his past to the school and his sudden, visceral recognition of Mr. Lin shatters Gu Xiuning's emotional defenses, throwing his revenge trajectory into profound disarray."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_001",
+        "time_of_day_hint": "AFTERNOON",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "Gu Xiuning confronts Mr. Lin about the fire, seeking answers and probing for information regarding the arson's true perpetrators.",
+        "conflict": "Gu Xiuning, torn between gratitude and vengeful purpose, confronts a guilt-ridden Mr. Lin. Mr. Lin's reluctance to fully disclose what he knows about the fire — possibly to protect Gu Xiuning or others — creates a tense standoff, with each man's past trauma weighing heavily on the conversation.",
+        "turn": "Mr. Lin, under pressure, reveals a crucial piece of information about the fire or its aftermath, possibly hinting at a deeper conspiracy or a different culprit than Gu Xiuning initially suspected. This revelation complicates Gu Xiuning's revenge, forcing him to reconsider his targets and methods."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 2,
+    "location_count": 1,
+    "scene_count": 3
+  }
+}

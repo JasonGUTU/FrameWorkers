@@ -1,0 +1,156 @@
+{
+  "meta": {
+    "draft_id": "",
+    "asset_id": "",
+    "asset_type": "",
+    "schema_version": "0.3",
+    "created_at": "2026-05-06T22:02:18.503679+00:00",
+    "created_by_agent": "",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A scarred former samurai, haunted by the destruction of his village, embarks on a relentless quest for vengeance against the ruthless warlord responsible.",
+    "style": {
+      "genre": [
+        "Revenge",
+        "Historical Drama",
+        "Action"
+      ],
+      "tone_keywords": [
+        "Somber",
+        "Determined",
+        "Gritty",
+        "Feudal Japan",
+        "Vengeful",
+        "Muted"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Hiroshi",
+        "role": "protagonist",
+        "profile": "An East Asian man in traditional samurai attire, bearing a distinctive topknot and facial scars. He carries a katana, a relic of his past life as a retainer. His demeanor is quiet, but his eyes burn with unwavering resolve.",
+        "motivation": "To exact vengeance upon Lord Kageyama for burning his village and destroying his life, and to restore a semblance of honor.",
+        "flaw": "Consumed by his quest for revenge, he often disregards his own safety and struggles with the emotional emptiness that will follow its completion."
+      },
+      {
+        "character_id": "char_002",
+        "name": "Lord Kageyama",
+        "role": "antagonist",
+        "profile": "A powerful and ruthless warlord, known for his ambition and brutality. He commands a formidable force and resides in a well-fortified stronghold, indifferent to the suffering he causes.",
+        "motivation": "To expand his power and territory, maintaining an iron grip through fear and dominance.",
+        "flaw": "Arrogance and overconfidence in his own strength, leading him to underestimate those he has wronged."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Ruined Village",
+        "description": "The desolate, charred remains of what was once Hiroshi's peaceful village. Overgrown with weeds and silent save for the wind, it stands as a stark monument to destruction and loss."
+      },
+      {
+        "location_id": "loc_002",
+        "name": "Warlord's Stronghold",
+        "description": "A formidable, heavily guarded mountain fortress or fortified estate, reflecting Lord Kageyama's power and paranoia. Its walls are thick, and its grounds are patrolled by numerous soldiers."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Hiroshi, a scarred former samurai, wanders the desolate ruins of his burned village, haunted by memories and the weight of his past.",
+        "conflict": "Hiroshi grapples with his profound grief and the internal struggle between despair and the burning desire for retribution.",
+        "turning_point": "He resolves to cease mourning and actively seek justice for the massacre."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "inciting",
+        "summary": "Hiroshi discovers a crucial clue or hears a definitive rumor about the current whereabouts of Lord Kageyama, solidifying his path toward vengeance.",
+        "conflict": "The daunting challenge of tracking a powerful warlord across the land, facing unknown dangers and long odds.",
+        "turning_point": "A clear objective and a tangible lead transform his sorrow into a focused mission."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "turn",
+        "summary": "After a perilous journey, Hiroshi infiltrates the outer defenses of Lord Kageyama's stronghold, engaging with his guards for the first time.",
+        "conflict": "Overcoming the warlord's skilled guards and the fortified stronghold's formidable defenses.",
+        "turning_point": "Hiroshi proves his continued prowess as a warrior, successfully breaching the perimeter and getting closer to his target."
+      },
+      {
+        "step_id": "arc_004",
+        "order": 4,
+        "step_type": "crisis",
+        "summary": "Hiroshi finally confronts Lord Kageyama but is overwhelmed by the warlord's cunning, superior numbers, or unexpected martial skill, suffering a significant setback or injury.",
+        "conflict": "Hiroshi's life is in immediate danger as the warlord seems invincible, threatening to end his quest.",
+        "turning_point": "Despite the grave injury, Hiroshi finds a desperate surge of resolve, fueled by the memory of his village, allowing him to retreat or find a moment of tactical advantage."
+      },
+      {
+        "step_id": "arc_005",
+        "order": 5,
+        "step_type": "climax",
+        "summary": "Fueled by his profound loss and unwavering determination, Hiroshi engages Lord Kageyama in a brutal, climactic duel to the death.",
+        "conflict": "A desperate, life-or-death battle where Hiroshi must overcome Kageyama's strength, using all his skill and inner fury.",
+        "turning_point": "Hiroshi delivers the fatal blow, achieving his long-sought vengeance, but at great personal cost."
+      },
+      {
+        "step_id": "arc_006",
+        "order": 6,
+        "step_type": "resolution",
+        "summary": "With Kageyama defeated, Hiroshi stands victorious but profoundly changed, contemplating the true cost of his revenge.",
+        "conflict": "The emotional aftermath of vengeance; the emptiness or grim satisfaction that follows the achievement of a singular, all-consuming goal.",
+        "turning_point": "Hiroshi turns his back on the battlefield, forever marked by his journey, but perhaps free from the burden of his past."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Hiroshi seeks a sign or remembrance in the ruins of his village that will galvanize him to begin his quest.",
+        "conflict": "He is surrounded by the desolate silence of destruction and his own internal grief, which threatens to paralyze him.",
+        "turn": "He finds a small, unbroken keepsake or a forgotten item that reignites his burning desire for retribution against the warlord."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_002",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Hiroshi attempts to infiltrate the outer defenses of Lord Kageyama's stronghold under the cover of darkness.",
+        "conflict": "He must navigate treacherous terrain and evade vigilant guards, risking immediate discovery and death.",
+        "turn": "Hiroshi successfully breaches the stronghold's first line of defense, but the close call or encounter foreshadows the greater challenges ahead."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_005",
+        "location_id": "loc_002",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "Hiroshi confronts Lord Kageyama in his inner sanctum, engaging him in a final, brutal duel for vengeance.",
+        "conflict": "A desperate, back-and-forth battle where both Hiroshi and Kageyama push their limits, each fighting for their life and honor (or power).",
+        "turn": "Hiroshi delivers a decisive, fatal blow, finally achieving his long-sought revenge, but is left to contend with the profound, perhaps bittersweet, aftermath."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 2,
+    "location_count": 2,
+    "scene_count": 3
+  }
+}

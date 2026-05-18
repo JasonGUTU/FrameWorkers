@@ -1,0 +1,39 @@
+{
+  "entry_count": 2,
+  "artifact_count": 2,
+  "captions_index_text": "#0  producer_asset payload — test seed Produced by ProducerAgent on 2026-05-12 17:47.\n\n#1  (no caption) Produced by ConsumerAgent on 2026-05-12 17:47.",
+  "path_list": [
+    "/tmp/pytest-of-zhendong_li/pytest-389/test_service_hydrates_indexed_0/Runtime/workspace_global_20260512_174725/artifacts/ProducerAgent/task_hydrate_produceragent_exec_1.json",
+    "/tmp/pytest-of-zhendong_li/pytest-389/test_service_hydrates_indexed_0/Runtime/workspace_global_20260512_174725/artifacts/ConsumerAgent/task_hydrate_consumeragent_exec_2.json"
+  ],
+  "entries": [
+    {
+      "execution_id": "exec_1_fafdeed1",
+      "agent_id": "ProducerAgent",
+      "step_id": "task_hydrate",
+      "created_at": "2026-05-12T17:47:25.117549+00:00",
+      "artifacts": [
+        {
+          "caption": "producer_asset payload — test seed",
+          "scope": "global",
+          "path": "/tmp/pytest-of-zhendong_li/pytest-389/test_service_hydrates_indexed_0/Runtime/workspace_global_20260512_174725/artifacts/ProducerAgent/task_hydrate_produceragent_exec_1.json",
+          "mime": "application/json"
+        }
+      ]
+    },
+    {
+      "execution_id": "exec_2_17dfe488",
+      "agent_id": "ConsumerAgent",
+      "step_id": "task_hydrate",
+      "created_at": "2026-05-12T17:47:25.131927+00:00",
+      "artifacts": [
+        {
+          "caption": "",
+          "scope": "global",
+          "path": "/tmp/pytest-of-zhendong_li/pytest-389/test_service_hydrates_indexed_0/Runtime/workspace_global_20260512_174725/artifacts/ConsumerAgent/task_hydrate_consumeragent_exec_2.json",
+          "mime": "application/json"
+        }
+      ]
+    }
+  ]
+}

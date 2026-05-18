@@ -1,0 +1,30 @@
+{
+  "agent_class": "MusicAgent",
+  "typed_input": {
+    "screenplay_json_text": "",
+    "video_analysis_json_text": "",
+    "creative_brief_json_text": ""
+  },
+  "output": null,
+  "eval_result": {
+    "kind": "upstream_input_rejected",
+    "overall_pass": false,
+    "summary": "upstream input rejected: No upstream content was provided from which to derive a music cue mood.",
+    "input_rejection": {
+      "reason": "No upstream content was provided from which to derive a music cue mood.",
+      "missing_labels": [
+        "screenplay",
+        "video_analysis",
+        "creative_brief"
+      ],
+      "offending_fields": [
+        "content.text"
+      ]
+    }
+  },
+  "passed": false,
+  "attempts": 1,
+  "asset_dict": null,
+  "media_assets_count": 0,
+  "media_assets_summary": []
+}

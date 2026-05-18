@@ -22,7 +22,35 @@ from .types import ImageResult, ImageSemanticContext
 
 logger = logging.getLogger(__name__)
 
+
+def _reencode_to_png(image_bytes: bytes) -> bytes:
+    """Decode any Pillow-supported image and re-emit as PNG bytes.
+
+    Used by ``GeminiImageService._gemini_call`` to normalize the JPEG that
+    ``gemini-3.1-flash-image-preview`` returns by default into the PNG that
+    the rest of the pipeline (workspace ``.png`` filenames, fal i2v
+    ``data:image/png;base64`` URLs) assumes. Pillow JPEG → PNG round-trip
+    is visually lossless (only header / chunking differs).
+    """
+    from io import BytesIO
+    from PIL import Image
+
+    with Image.open(BytesIO(image_bytes)) as img:
+        if img.mode not in ("RGB", "RGBA"):
+            img = img.convert("RGB")
+        buf = BytesIO()
+        img.save(buf, format="PNG", optimize=False)
+        return buf.getvalue()
+
+
 _DEFAULT_OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
+
+# Force a fixed aspect ratio for ALL fal image gen / edit calls so downstream
+# Hunyuan-I2V always sees keyframes of consistent dims → outputs consistent
+# 1280×704 mp4 → ffmpeg concat -c copy works without re-encode (no quality
+# loss + no shot-boundary artifact).
+# Override via ``FW_FAL_IMAGE_ASPECT_RATIO`` env if a different ratio is needed.
+_FAL_IMAGE_ASPECT_RATIO = os.getenv("FW_FAL_IMAGE_ASPECT_RATIO", "16:9").strip() or "16:9"
 
 # ---------------------------------------------------------------------------
 # Prompt templating — owned entirely by the inference layer.
@@ -582,8 +610,11 @@ class FalImageService(ImageService):
             if semantic_context is not None
             else prompt
         )
-        logger.info("[fal.ai] Generating image with model=%s", self.model)
-        result = await fal_subscribe(self._api_key, self.model, {"prompt": composed})
+        logger.info("[fal.ai] Generating image with model=%s aspect=%s", self.model, _FAL_IMAGE_ASPECT_RATIO)
+        result = await fal_subscribe(
+            self._api_key, self.model,
+            {"prompt": composed, "aspect_ratio": _FAL_IMAGE_ASPECT_RATIO},
+        )
         image_url = extract_fal_media_url(result, media_type="image")
         image_bytes = await http_download_bytes(self.http, image_url)
         return ImageResult(bytes=image_bytes, resolved_prompt=composed)
@@ -614,15 +645,19 @@ class FalImageService(ImageService):
                 f"data:image/png;base64,{base64.b64encode(r).decode('utf-8')}" for r in refs
             ]
             edit_model = "fal-ai/nano-banana-2/edit"
-            logger.info("[fal.ai] Editing image with model=%s (kind=%s, refs=%d)",
-                        edit_model, ref_kind, len(refs))
+            logger.info("[fal.ai] Editing image with model=%s (kind=%s, refs=%d, aspect=%s)",
+                        edit_model, ref_kind, len(refs), _FAL_IMAGE_ASPECT_RATIO)
             result = await fal_subscribe(
-                self._api_key, edit_model, {"prompt": composed, "image_urls": image_urls}
+                self._api_key, edit_model,
+                {"prompt": composed, "image_urls": image_urls,
+                 "aspect_ratio": _FAL_IMAGE_ASPECT_RATIO},
             )
         else:
             image_url = f"data:image/png;base64,{base64.b64encode(refs[0]).decode('utf-8')}"
             result = await fal_subscribe(
-                self._api_key, self.model, {"prompt": composed, "image_url": image_url}
+                self._api_key, self.model,
+                {"prompt": composed, "image_url": image_url,
+                 "aspect_ratio": _FAL_IMAGE_ASPECT_RATIO},
             )
         out_url = extract_fal_media_url(result, media_type="image")
         image_bytes = await http_download_bytes(self.http, out_url)
@@ -764,10 +799,24 @@ class GeminiImageService(ImageService):
                     inline = getattr(part, "inline_data", None)
                     if inline and inline.data:
                         image_bytes = inline.data
+                        returned_mime = (
+                            getattr(inline, "mime_type", "") or ""
+                        ).lower()
+                        # gemini-3.1-flash-image-preview returns JPEG by
+                        # default and the Gemini API does NOT accept
+                        # ``response_mime_type="image/png"`` (allowed list is
+                        # text/json/xml/yaml only). Client-side re-encode
+                        # keeps every downstream caller — workspace
+                        # ``.png`` filenames, ``data:image/png;base64`` URLs
+                        # in FalVideoService.generate_clip, fal i2v upload
+                        # path — honest without each having to mime-detect.
+                        if returned_mime and returned_mime != "image/png":
+                            image_bytes = _reencode_to_png(image_bytes)
                         logger.info(
-                            "Image generated (%d bytes, attempt %d) for: %.80s...",
+                            "Image generated (%d bytes, attempt %d, src_mime=%s) for: %.80s...",
                             len(image_bytes),
                             attempt,
+                            returned_mime or "unknown",
                             prompt_for_log,
                         )
                         return image_bytes

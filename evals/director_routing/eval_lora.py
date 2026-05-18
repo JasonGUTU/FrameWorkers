@@ -141,8 +141,15 @@ def generate_plan(
     user_goal: str,
     *,
     max_new_tokens: int = 1024,
-) -> tuple[List[str], Optional[str], str]:
-    """Greedy-decode a plan. Returns (chain, error, raw_completion)."""
+) -> tuple[List[str], Optional[str], str, str, List[str]]:
+    """Greedy-decode a plan.
+
+    Returns (chain, error, raw_completion, rationale, intents).
+    ``rationale`` is the top-level ``rationale`` field from the LLM JSON
+    (empty string if the schema variant doesn't produce one, or if parse
+    failed before reaching that field). ``intents`` is the per-step intent
+    string, aligned 1:1 with ``chain``.
+    """
     import torch
 
     messages = [
@@ -170,12 +177,13 @@ def generate_plan(
 
     blob = _extract_json_object(completion)
     if blob is None:
-        return [], "no JSON object in completion", completion
+        return [], "no JSON object in completion", completion, "", []
     try:
         data = json.loads(blob)
     except json.JSONDecodeError as exc:
-        return [], f"JSON decode failed: {exc}", completion
+        return [], f"JSON decode failed: {exc}", completion, "", []
 
+    rationale = str(data.get("rationale") or "")
     from director_agent.router import _parse_plan
     from agents import get_agent_registry
     allowed = [
@@ -185,8 +193,14 @@ def generate_plan(
     try:
         specs = _parse_plan(data, allowed, max_steps=20)
     except Exception as exc:
-        return [], f"_parse_plan failed: {exc}", completion
-    return [s.agent_id for s in specs], None, completion
+        return [], f"_parse_plan failed: {exc}", completion, rationale, []
+    return (
+        [s.agent_id for s in specs],
+        None,
+        completion,
+        rationale,
+        [s.intent for s in specs],
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -206,7 +220,7 @@ def evaluate_case(
     expected = [_slot_set(s) for s in _strip_trailing_done(expected_raw)]
 
     t0 = time.time()
-    actual, error, _raw = generate_plan(
+    actual, error, raw_completion, rationale, intents = generate_plan(
         model, tok, system_prompt, case["user_goal"],
         max_new_tokens=max_new_tokens,
     )
@@ -228,6 +242,9 @@ def evaluate_case(
         "chain_correct": chain_correct,
         "edit_distance": edit_distance,
         "actual_chain": actual,
+        "intents": intents,
+        "rationale": rationale,
+        "raw_completion": raw_completion,
         "steps": steps,
         "elapsed_s": round(elapsed, 2),
         "error": error,

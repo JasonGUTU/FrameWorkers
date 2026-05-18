@@ -75,7 +75,16 @@ class IntakeVideoAgent(BaseAgent[IntakeVideoInput, IntakeVideoOutput]):
 
         media = [{"type": "video", "path": input_data.raw_video_path}]
 
+        # OpenAI chat completions does not accept video as multimodal input
+        # (gpt-4o etc. raise "Invalid MIME type. Only image types are
+        # supported."). Allow callers to override the model for this step
+        # only — typically pointing at a Gemini variant — without having
+        # to change the global INFERENCE_DEFAULT_MODEL for the rest of
+        # the pipeline.
+        intake_video_model = os.getenv("INTAKE_VIDEO_MODEL") or None
+
         creative = await self.llm.chat_json(
             system, user, media_attachments=media or None,
+            model=intake_video_model,
         )
         return self.fill_creative(skeleton, creative)

@@ -1,0 +1,36 @@
+{
+  "case_name": "cr_042",
+  "category": "cr",
+  "user_goal": "Make a cultivation / xianxia animated short drama — a prodigy disciple is framed by his senior brother and his cultivation core is crippled. With nothing but his family's broken sword, he refounds his foundation, slays ancient demons, and finally breaks through the nine heavenly tribulations to ascend to godhood.",
+  "expected_chain": [
+    [
+      "StoryAgent"
+    ],
+    [
+      "ScreenplayAgent"
+    ],
+    [
+      "KeyFrameAgent"
+    ],
+    [
+      "VideoAgent"
+    ],
+    [
+      "CompositorAgent"
+    ],
+    [
+      "done"
+    ]
+  ],
+  "flat_chain": [
+    "StoryAgent",
+    "ScreenplayAgent",
+    "KeyFrameAgent",
+    "VideoAgent",
+    "CompositorAgent"
+  ],
+  "backend_url": "http://localhost:5002",
+  "hunyuan_endpoint": "http://sof1-h200-3:9200",
+  "infer_steps": 50,
+  "started_at": "2026-05-09T23:48:59"
+}

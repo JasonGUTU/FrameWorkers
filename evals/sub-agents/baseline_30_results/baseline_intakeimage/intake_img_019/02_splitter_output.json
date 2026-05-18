@@ -1,0 +1,44 @@
+{
+  "shots": [
+    {
+      "shot_id": "sh_001",
+      "prompt": "The former empress, in lavish silk robes, collapses slowly onto the ornate palace floor, a delicate porcelain cup slipping from her grasp. Her eyes reflect profound despair and betrayal after drinking the poisoned wine. Dim, ominous palace lighting.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_002",
+      "prompt": "A young woman, appearing disoriented and startled, awakens abruptly in a richly decorated bedchamber. Her wide eyes scan the unfamiliar yet familiar surroundings, dawning realization washing over her face as soft morning light fills the room.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_003",
+      "prompt": "The reborn young woman, now composed and regal, stands among a line of noble ladies participating in the imperial selection. She subtly observes the grand hall with a cool, calculating gaze, her true intent hidden beneath a serene facade.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_004",
+      "prompt": "A sneering imperial concubine, adorned in elaborate silks, laughs mockingly with companions in a bustling palace courtyard. The female lead watches from a hidden vantage, her face a mask of chilling resolve, silently marking her first target.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_005",
+      "prompt": "The female lead sits alone in a moonlit garden pavilion, gracefully tracing patterns on a delicate fan. Her focused expression reveals a mind actively planning intricate schemes, a chilling determination reflecting in her eyes amidst the quiet night.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_006",
+      "prompt": "In a crowded palace corridor, the female lead intentionally brushes past a plotting minister, subtly dropping a small, embellished pouch that rolls discreetly near his foot. A knowing, almost imperceptible smirk plays on her lips.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_007",
+      "prompt": "At a lavish imperial banquet, the female lead raises a wine cup, her gaze locking with a visibly unnerved court official across the room. He nervously shifts, realizing her silent, powerful challenge under the flickering lamplight.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_008",
+      "prompt": "Close-up on the female lead's face, a faint, chilling smile forming on her lips as her eyes burn with an unwavering resolve. She walks purposefully forward, her regal silhouette framed against the palace's moonlit gates, ready for retribution.",
+      "duration_sec": 5
+    }
+  ]
+}

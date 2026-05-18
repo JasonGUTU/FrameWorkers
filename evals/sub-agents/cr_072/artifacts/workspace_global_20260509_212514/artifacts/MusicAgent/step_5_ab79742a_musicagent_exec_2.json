@@ -1,0 +1,13 @@
+{
+  "content": {
+    "cues": [
+      {
+        "cue_id": "music_film",
+        "mood": "Mournful, classical Chinese, melancholic, ethereal, traditional strings, flute"
+      }
+    ]
+  },
+  "metrics": {
+    "cue_count": 1
+  }
+}

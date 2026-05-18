@@ -1,0 +1,767 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T21:28:01.836280+00:00",
+    "language": "zh"
+  },
+  "content": {
+    "title": "被遗忘的契约妻",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_002",
+          "location_name": "高档城市广场",
+          "interior_exterior": "EXT",
+          "time_of_day": "DAY"
+        },
+        "summary": "在熙熙攘攘的城市广场，苏念带着一个与霍总惊人相似的小男孩出现，迫使霍总直面他极力压抑的过去。",
+        "continuity": {
+          "props_present": [
+            "公文包",
+            "手机"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "深色西装，蓝色领带，展现专业和权力。",
+              "must_keep": [
+                "深色西装",
+                "蓝色领带"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "朴素但整洁的日常服装，便于行动。",
+              "must_keep": []
+            },
+            {
+              "character_id": "char_003",
+              "wardrobe": "儿童日常服装。",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "苏念和霍总重逢",
+            "小宝是他们的孩子"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_002",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "繁忙的现代都市广场",
+              "周围是高档零售和办公大楼",
+              "现代城市背景",
+              "富裕家族世界"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "精明强干的CEO",
+                "现代都市富裕家族背景",
+                "专业而强大",
+                "控制欲强"
+              ],
+              "wardrobe_notes": [
+                "深色西装",
+                "蓝色领带"
+              ],
+              "must_keep": [
+                "深色西装",
+                "蓝色领带"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "三年前车祸失忆",
+                "霍总的“小契约妻子”",
+                "带着儿子回归",
+                "安静而坚定",
+                "现代都市富裕家族背景"
+              ],
+              "wardrobe_notes": [
+                "朴素但整洁的日常服装"
+              ],
+              "must_keep": []
+            },
+            {
+              "character_id": "char_003",
+              "identity_notes": [
+                "天真无邪的小男孩",
+                "与霍总惊人相似",
+                "霍总与苏念遗忘过去的物理表现",
+                "现代都市富裕家族背景"
+              ],
+              "wardrobe_notes": [
+                "儿童日常服装"
+              ],
+              "must_keep": []
+            }
+          ],
+          "props_lock": [],
+          "style_lock": {
+            "global_style_notes": [
+              "现代都市富裕家族背景",
+              "虐恋情深",
+              "悬疑",
+              "家族秘密",
+              "重逢",
+              "情感强烈",
+              "企业斗争"
+            ],
+            "must_avoid": [
+              "过于轻松",
+              "贫困景象"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "小宝天真地向霍总伸出手，或模仿他，这一举动瞬间击穿了霍总的冷漠伪装。",
+          "emotional_shift": "从霍总的冷漠控制到被无法否认的亲情和过去冲击。"
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "高档城市广场人潮涌动。霍总西装革履，边走边打电话，面无表情地穿梭在人群中。",
+            "emotion_hint": "中立",
+            "continuity_refs": {
+              "props": [
+                "手机",
+                "公文包"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "tracking",
+              "framing_notes": "展现霍总与周围环境的格格不入"
+            },
+            "visual_goal": "建立霍总作为强大、孤立的CEO形象，与环境形成对比。",
+            "action_focus": "霍总在人群中行走的姿态和表情。",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "手机",
+              "公文包"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "苏念牵着小宝的手，穿过人群，目光锁定霍总。小宝好奇地四处张望，然后抬头看向霍总。",
+            "emotion_hint": "坚定",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002",
+                "char_003"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "特写小宝的脸，突出他与霍总的相似"
+            },
+            "visual_goal": "展示苏念的决心和小宝的存在感，为接下来的冲击做铺垫。",
+            "action_focus": "苏念的坚定眼神和小宝的脸部特征。",
+            "characters_in_frame": [
+              "char_002",
+              "char_003"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "霍总",
+            "text": "霍总挂断电话，不经意间看到苏念和小宝。他的眼神从漠然变为震惊，身体瞬间僵硬。",
+            "emotion_hint": "震惊",
+            "continuity_refs": {
+              "props": [
+                "手机"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "聚焦霍总脸部表情的细微变化"
+            },
+            "visual_goal": "捕捉霍总面对突如其来过去的冲击，展现他外表下的脆弱。",
+            "action_focus": "霍总脸部由平静到震惊的表情变化。",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "手机"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "block_type": "dialogue",
+            "character_id": "char_002",
+            "character_name": "苏念",
+            "text": "霍总，我们又见面了。还有，这是你的儿子。",
+            "emotion_hint": "坚定",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002",
+                "char_003",
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "霍总、苏念和小宝同框，小宝天真地看着霍总"
+            },
+            "visual_goal": "展现苏念的直接和霍总的措手不及，小宝成为他们之间无法否认的联系。",
+            "action_focus": "苏念的言语和小宝的目光。",
+            "characters_in_frame": [
+              "char_001",
+              "char_002",
+              "char_003"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_003",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "霍总的行政办公室",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "在霍总冰冷奢华的办公室里，他咄咄逼人地质问苏念，试图否认过去，但苏念的失忆和对孩子的恳求动摇了他的决心。",
+        "continuity": {
+          "props_present": [
+            "办公桌",
+            "文件",
+            "高背椅"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "深色西装，蓝色领带，专业而强势。",
+              "must_keep": [
+                "深色西装",
+                "蓝色领带"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "素雅套装，更显柔弱但有韧性。",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "霍总对苏念身份的质疑",
+            "苏念失忆"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "时尚高层行政办公室",
+              "现代都市背景",
+              "富裕家族权力象征",
+              "落地窗外的城市夜景",
+              "气势恢宏且孤立"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "精明强干的CEO",
+                "现代都市富裕家族背景",
+                "专业而强大",
+                "情感压抑",
+                "试图控制局面"
+              ],
+              "wardrobe_notes": [
+                "深色西装",
+                "蓝色领带"
+              ],
+              "must_keep": [
+                "深色西装",
+                "蓝色领带"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "三年前车祸失忆",
+                "霍总的“小契约妻子”",
+                "安静而坚定",
+                "渴望找回记忆和身份",
+                "现代都市富裕家族背景"
+              ],
+              "wardrobe_notes": [
+                "素雅套装"
+              ],
+              "must_keep": []
+            }
+          ],
+          "props_lock": [],
+          "style_lock": {
+            "global_style_notes": [
+              "现代都市富裕家族背景",
+              "虐恋情深",
+              "悬疑",
+              "企业斗争",
+              "家族秘密",
+              "情感强烈",
+              "紧张"
+            ],
+            "must_avoid": [
+              "过于轻松",
+              "贫困景象"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "霍总的冷漠被苏念的真诚和对孩子的恳求所触动，他同意进行DNA测试，内心开始动摇。",
+          "emotional_shift": "从霍总的极力否认和愤怒，转变为一丝动摇和不得不面对现实的复杂情绪。"
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "霍总的办公室。落地窗外是璀璨的城市夜景。霍总坐在宽大的办公桌后，苏念站在他对面，气氛紧张。",
+            "emotion_hint": "紧张",
+            "continuity_refs": {
+              "props": [
+                "办公桌",
+                "高背椅"
+              ],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "static",
+              "framing_notes": "强调霍总的权力感和苏念的相对弱势"
+            },
+            "visual_goal": "展现办公室的奢华与冰冷，烘托两人对峙的紧张气氛。",
+            "action_focus": "两人的距离感和僵硬的姿态。",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "办公桌",
+              "高背椅"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 2,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "霍总",
+            "text": "你到底想干什么？带着一个孩子回来，妄想攀附我？",
+            "emotion_hint": "愤怒",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "static",
+              "framing_notes": "聚焦霍总充满蔑视和愤怒的脸"
+            },
+            "visual_goal": "凸显霍总的咄咄逼人与试图否认的态度。",
+            "action_focus": "霍总凌厉的眼神和紧绷的下颚。",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 3,
+            "block_type": "dialogue",
+            "character_id": "char_002",
+            "character_name": "苏念",
+            "text": "我失去记忆了…我只知道，这个孩子是你的。请你面对事实！",
+            "emotion_hint": "悲伤",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "苏念的眼中带着泪光，却依然努力保持镇定"
+            },
+            "visual_goal": "展现苏念的脆弱和对真相的渴望，以及对孩子的保护欲。",
+            "action_focus": "苏念眼中闪烁的泪光和坚定的神情。",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_008",
+            "order": 4,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "霍总",
+            "text": "DNA鉴定。我会给你一个交代。",
+            "emotion_hint": "平静",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "霍总看向窗外，语气沉重，似乎在与内心挣扎"
+            },
+            "visual_goal": "霍总在苏念的恳求下，内心动摇，从否认转向理性应对。",
+            "action_focus": "霍总沉思的侧脸和语气转变。",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_004",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "霍总的行政办公室",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "深夜，霍总在办公室里深入调查苏念车祸和契约婚姻的真相，却发现其中隐藏着被刻意掩盖的秘密。",
+        "continuity": {
+          "props_present": [
+            "文件",
+            "电脑",
+            "台灯"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "深色西装，蓝色领带，领带略松，显示工作到深夜。",
+              "must_keep": [
+                "深色西装",
+                "蓝色领带"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "霍总对真相的追寻",
+            "发现家族内部的掩盖"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "时尚高层行政办公室",
+              "现代都市背景",
+              "富裕家族权力象征",
+              "落地窗外的城市夜景",
+              "气势恢宏且孤立"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "精明强干的CEO",
+                "现代都市富裕家族背景",
+                "专业而强大",
+                "情感压抑",
+                "疑虑重重，决心追查真相"
+              ],
+              "wardrobe_notes": [
+                "深色西装",
+                "蓝色领带，领带略松"
+              ],
+              "must_keep": [
+                "深色西装",
+                "蓝色领带"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "老旧文件",
+              "must_keep": [
+                "承载过去的线索"
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "笔记本电脑",
+              "must_keep": [
+                "用于查阅资料"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "现代都市富裕家族背景",
+              "虐恋情深",
+              "悬疑",
+              "企业斗争",
+              "家族秘密",
+              "情感强烈",
+              "紧张"
+            ],
+            "must_avoid": [
+              "过于轻松",
+              "贫困景象"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "霍总找到了一处关键线索，一份被篡改的文件或遗漏的证据，暗示着一个他曾信任的人参与了阴谋。",
+          "emotional_shift": "从最初的质疑和抵触，转变为对真相的强烈愤怒和追查到底的决心。"
+        },
+        "shots": [
+          {
+            "shot_id": "sh_009",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "深夜，办公室台灯下，霍总沉浸在大量老旧文件和电脑资料中。他神色凝重，深邃的目光扫描着屏幕和纸张。",
+            "emotion_hint": "紧张",
+            "continuity_refs": {
+              "props": [
+                "文件",
+                "电脑",
+                "台灯"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "展现霍总被文件和信息包围的场景"
+            },
+            "visual_goal": "传达霍总深入调查的决心和面对复杂信息的疲惫。",
+            "action_focus": "霍总专注的表情和桌上堆积的文件。",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002",
+              "台灯"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "特写镜头，霍总的手指划过一份陈旧的合同，停在一处看似不经意的涂改上。他眉头紧锁。",
+            "emotion_hint": "疑惑",
+            "continuity_refs": {
+              "props": [
+                "文件"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "overhead",
+              "movement": "static",
+              "framing_notes": "聚焦手部动作和合同细节"
+            },
+            "visual_goal": "展现霍总发现异常的瞬间，引发观众的悬疑感。",
+            "action_focus": "霍总的手和合同上的可疑痕迹。",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_011",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "霍总",
+            "text": "霍总的脸部特写，眼神从疑惑转为惊愕，最后是压抑的愤怒。他猛地合上文件。",
+            "emotion_hint": "愤怒",
+            "continuity_refs": {
+              "props": [
+                "文件"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "捕捉霍总情绪的剧烈变化"
+            },
+            "visual_goal": "传达霍总发现真相后的情绪冲击和内心的挣扎。",
+            "action_focus": "霍总脸部由困惑到愤怒的表情。",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_012",
+            "order": 4,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "霍总",
+            "text": "原来如此…有人想掩盖这一切！",
+            "emotion_hint": "坚定",
+            "continuity_refs": {
+              "props": [
+                "电脑"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "dolly",
+              "framing_notes": "霍总起身，走到落地窗前，俯瞰城市夜景"
+            },
+            "visual_goal": "霍总从被动调查转为主动追查，情绪从愤怒到决心。",
+            "action_focus": "霍总坚毅的侧影和对窗外夜景的凝视。",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count_total": 12,
+    "avg_shots_per_scene": 4.0,
+    "dialogue_block_count": 5,
+    "action_block_count": 7
+  }
+}

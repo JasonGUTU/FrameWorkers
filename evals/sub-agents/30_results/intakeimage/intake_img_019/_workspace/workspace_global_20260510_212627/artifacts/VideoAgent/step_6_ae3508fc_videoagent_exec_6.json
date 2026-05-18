@@ -1,0 +1,407 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "Grand and intricate complex of traditional Chinese imperial buildings",
+            "Ornate courtyards and serene gardens",
+            "Softly lit interiors with hidden passages",
+            "Characteristic of an ancient Chinese imperial court"
+          ],
+          "style_notes": [
+            "Ancient Chinese Imperial Court setting",
+            "Period Drama",
+            "Revenge Thriller",
+            "Palace Intrigue",
+            "Fantasy",
+            "Animated aesthetic",
+            "Dramatic",
+            "Ruthless",
+            "Rebirth theme",
+            "Cunning",
+            "Betrayal"
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Show Empress Mei's jarring awakening and initial disorientation.",
+              "action_focus": "Empress Mei's eyes and facial expression.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on her eyes, reflecting inner turmoil.",
+              "video_motion_hints": [
+                "Her eyes flutter open with a sudden, tense jolt, conveying disorientation."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_002",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Convey the opulence of her surroundings contrasted with her inner torment.",
+              "action_focus": "Empress Mei's distressed reaction and the rich setting.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "pan_right",
+              "framing_notes": "Pan across the luxurious but confining palace chamber.",
+              "video_motion_hints": [
+                "The camera slowly pans right, following Empress Mei as she sits up and looks around the room, hinting at her unsettled state."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "sad",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_003",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Highlight the precise moment Empress Mei fully accepts her new mission.",
+              "action_focus": "Empress Mei's face, transforming to a look of ruthless determination.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Intensify on her face as resolve settles in.",
+              "video_motion_hints": [
+                "Her hands slowly clench into fists while her eyes subtly narrow, conveying a shift from sadness to fierce resolve."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_004",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Convey Empress Mei's spoken oath for vengeance.",
+              "action_focus": "Empress Mei speaking, her resolute expression.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Mei speaks with quiet, fierce conviction.",
+              "video_motion_hints": [
+                "Empress Mei maintains a still, intense posture as she delivers her powerful lines, with only subtle shifts in her facial muscles."
+              ],
+              "dialogue_text": "这一次，我绝不会重蹈覆辙。",
+              "emotion_hint": "urgent",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_003",
+            "to_shot_id": "sh_004",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "Grand and intricate complex of traditional Chinese imperial buildings",
+            "Ornate courtyards and serene gardens",
+            "Softly lit interiors with hidden passages",
+            "Characteristic of an ancient Chinese imperial court"
+          ],
+          "style_notes": [
+            "Ancient Chinese Imperial Court setting",
+            "Period Drama",
+            "Revenge Thriller",
+            "Palace Intrigue",
+            "Fantasy",
+            "Animated aesthetic",
+            "Dramatic",
+            "Ruthless",
+            "Rebirth theme",
+            "Cunning",
+            "Betrayal"
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_005",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Establish the scene and the presence of both characters in a social setting.",
+              "action_focus": "The imperial gathering, subtle interactions between attendees.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "dolly_in",
+              "framing_notes": "Show the grandeur of the gathering and the proximity of Mei and Li.",
+              "video_motion_hints": [
+                "The camera slowly dollies into the expansive hall, gradually bringing Mei and Li into clearer focus within the crowd."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "neutral",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_006",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Showcase Mei's hidden cunning and her observation of Li.",
+              "action_focus": "Empress Mei's subtle facial expression and gaze.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on Mei's calm demeanor but sharp, calculating eyes.",
+              "video_motion_hints": [
+                "Empress Mei holds a calm, steady posture, with only her eyes subtly shifting to observe."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "calm",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_007",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Portray Mei's first subtle act of sabotage.",
+              "action_focus": "The moment Li's instrument fails, and Mei's discreet reaction.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "static",
+              "framing_notes": "Capture Li's performance and Mei's subtle intervention.",
+              "video_motion_hints": [
+                "A quick, subtle flinch from Consort Li as the instrument string snaps, while Mei maintains her composed demeanor."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "neutral",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_008",
+            "semantic_context": {
+              "shot_type": "two_shot",
+              "visual_goal": "Show Li's internal struggle and Mei's cunning, hinting at the shifting power dynamic.",
+              "action_focus": "The contrasting expressions of Noble Consort Li and Empress Mei.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Contrast Li's shock with Mei's feigned innocence.",
+              "video_motion_hints": [
+                "Li's facial expression shifts from performance composure to subtle shock and anger, contrasted by Mei's unmoving, innocent smile."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_005",
+            "to_shot_id": "sh_006",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_006",
+            "to_shot_id": "sh_007",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_007",
+            "to_shot_id": "sh_008",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "NIGHT",
+          "environment_notes": [
+            "Grand and intricate complex of traditional Chinese imperial buildings",
+            "Ornate courtyards and serene gardens",
+            "Softly lit interiors with hidden passages",
+            "Characteristic of an ancient Chinese imperial court"
+          ],
+          "style_notes": [
+            "Ancient Chinese Imperial Court setting",
+            "Period Drama",
+            "Revenge Thriller",
+            "Palace Intrigue",
+            "Fantasy",
+            "Animated aesthetic",
+            "Dramatic",
+            "Ruthless",
+            "Rebirth theme",
+            "Cunning",
+            "Betrayal"
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_009",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Establish the climactic setting and the rising tension.",
+              "action_focus": "The overall court assembly, with Mei and Li prominent.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "high_angle",
+              "camera_movement": "static",
+              "framing_notes": "Show the grandeur and the many attendees, emphasizing Mei's central position.",
+              "video_motion_hints": [
+                "The camera remains static, but the flickering lights of the banquet create a subtle, dynamic atmosphere."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_010",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Convey the impactful, public accusation from Empress Mei.",
+              "action_focus": "Empress Mei's controlled demeanor as she initiates the downfall.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Mei's voice is calm but authoritative, directly addressing Li.",
+              "video_motion_hints": [
+                "Empress Mei's head makes a subtle, firm turn towards Li as she delivers her impactful question."
+              ],
+              "dialogue_text": "丽妃，你可知罪？",
+              "emotion_hint": "calm",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_011",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Show the immediate and devastating consequences of Mei's revelation.",
+              "action_focus": "Noble Consort Li's despair and her removal by guards.",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "zoom_out",
+              "framing_notes": "Capture Li's complete collapse and public disgrace.",
+              "video_motion_hints": [
+                "Noble Consort Li slowly crumples to the floor in despair, while guards move in to take her away. The camera slowly zooms out."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "sad",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_012",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Convey Empress Mei's final, serene triumph.",
+              "action_focus": "Empress Mei's triumphant and resolute expression.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus solely on Mei's face, her triumphant and hardened expression.",
+              "video_motion_hints": [
+                "Empress Mei holds her gaze steady, with only a subtle, knowing smirk forming on her lips."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "calm",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_009",
+            "to_shot_id": "sh_010",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_010",
+            "to_shot_id": "sh_011",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_011",
+            "to_shot_id": "sh_012",
+            "transition_type": "cut"
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_segment_count": 12
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "entry_count": 1,
+  "artifact_count": 1,
+  "captions_index_text": "#0  (no caption) Produced by ProducerAgent on 2026-05-12 17:47.",
+  "path_list": [
+    "/tmp/pytest-of-zhendong_li/pytest-389/test_assistant_pipeline_execut0/Runtime/workspace_global_20260512_174725/artifacts/ProducerAgent/step_2_f87b7580_produceragent_exec_1.json"
+  ],
+  "entries": [
+    {
+      "execution_id": "exec_1_1ba964c6",
+      "agent_id": "ProducerAgent",
+      "step_id": "step_2_f87b7580",
+      "created_at": "2026-05-12T17:47:25.050319+00:00",
+      "artifacts": [
+        {
+          "caption": "",
+          "scope": "global",
+          "path": "/tmp/pytest-of-zhendong_li/pytest-389/test_assistant_pipeline_execut0/Runtime/workspace_global_20260512_174725/artifacts/ProducerAgent/step_2_f87b7580_produceragent_exec_1.json",
+          "mime": "application/json"
+        }
+      ]
+    }
+  ]
+}

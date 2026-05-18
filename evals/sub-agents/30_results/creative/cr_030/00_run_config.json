@@ -1,0 +1,44 @@
+{
+  "case_name": "cr_030",
+  "category": "cr",
+  "user_goal": "Make a CEO-chasing-his-wife animated short drama — Su Nian, the contract-marriage wife, returns three years later with twin children to deliver divorce papers to the heir of the Huo family. The man who once treated her merely as a stand-in for someone else, kneels before her for the very first time. Add a heart-tugging string BGM.",
+  "expected_chain": [
+    [
+      "StoryAgent"
+    ],
+    [
+      "ScreenplayAgent"
+    ],
+    [
+      "KeyFrameAgent"
+    ],
+    [
+      "VideoAgent"
+    ],
+    [
+      "MusicAgent"
+    ],
+    [
+      "AudioMixAgent"
+    ],
+    [
+      "CompositorAgent"
+    ],
+    [
+      "done"
+    ]
+  ],
+  "flat_chain": [
+    "StoryAgent",
+    "ScreenplayAgent",
+    "KeyFrameAgent",
+    "VideoAgent",
+    "MusicAgent",
+    "AudioMixAgent",
+    "CompositorAgent"
+  ],
+  "backend_url": "http://localhost:5011",
+  "hunyuan_endpoint": "http://sof1-h200-7:9209",
+  "infer_steps": 50,
+  "started_at": "2026-05-09T23:48:59"
+}

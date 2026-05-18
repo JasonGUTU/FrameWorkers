@@ -1,0 +1,12 @@
+{
+  "case_name": "intake_img_037",
+  "category": "intake_img",
+  "user_goal": "Use this uploaded photo as the fantasy female lead. Make a demon-empress rebirth animated short drama — in her previous life she was the demon empress who guarded the human realm, killed by the joint betrayal of her most trusted disciple and the heavenly court. Reborn to the day before her demonic awakening, this time she will personally drag every one of those self-righteous heavenly beings down from their pedestals. Add bilingual Chinese-English subtitles for overseas short-video distribution.",
+  "hunyuan_endpoint": "http://sof1-h200-6:9206",
+  "infer_steps": 50,
+  "splitter_model": "gemini-2.5-flash",
+  "image_model": "fal-ai/nano-banana-2",
+  "upload_ref_used": "evals/sub-agents/e2e_30/uploads/intake_img_037.png",
+  "started_at": "2026-05-10T17:48:51",
+  "driver_version": "v2_sync_curl_mp"
+}

@@ -1,0 +1,12 @@
+{
+  "case_name": "intake_img_008",
+  "category": "intake_img",
+  "user_goal": "Use this uploaded photo as the fantasy female lead. Make a post-apocalyptic super-power animated short drama — the day the virus broke out she awakened the power to bend metal inside a subway car. Now she leads a band of survivors through the zombie-flooded city, dodging the military's super-power task force as she hunts for whoever truly released the pathogen.",
+  "hunyuan_endpoint": "http://sof1-h200-3:9202",
+  "infer_steps": 50,
+  "splitter_model": "gemini-2.5-flash",
+  "image_model": "fal-ai/nano-banana-2",
+  "upload_ref_used": "evals/sub-agents/e2e_30/uploads/intake_img_008.png",
+  "started_at": "2026-05-10T17:45:15",
+  "driver_version": "v2_sync_curl_mp"
+}

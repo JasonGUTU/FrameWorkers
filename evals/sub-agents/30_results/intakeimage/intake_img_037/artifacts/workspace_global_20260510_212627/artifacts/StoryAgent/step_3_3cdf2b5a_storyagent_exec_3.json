@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T21:27:18.868491+00:00",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A betrayed demon empress, reborn just before her fated demonic awakening, vows to dismantle the celestial order that wronged her and reclaim her destiny.",
+    "style": {
+      "genre": [
+        "fantasy",
+        "drama",
+        "wuxia"
+      ],
+      "tone_keywords": [
+        "revenge",
+        "betrayal",
+        "epic fantasy",
+        "Chinese fantasy",
+        "dim",
+        "traditional setting",
+        "resurrection"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Xueyin",
+        "role": "protagonist",
+        "profile": "A woman with long dark hair, adorned in a vibrant red dragon-embroidered dress, and featuring a distinctive glowing forehead symbol, reborn into a younger body. She was once the formidable Demon Empress who protected the human realm in a traditional Chinese fantasy setting, now seething with the memories of her betrayal by her trusted disciple and the Heavenly Court.",
+        "motivation": "To exact vengeance upon her betrayers in the Heavenly Court and her former disciple, and to re-establish her authority to protect the human realm on her own terms, free from celestial interference.",
+        "flaw": "Her consuming desire for revenge risks isolating her and repeating past mistakes, potentially alienating potential allies or pushing her further into a path of ruthlessness."
+      },
+      {
+        "character_id": "char_002",
+        "name": "The Traitorous Disciple",
+        "role": "antagonist",
+        "profile": "The Demon Empress's former most trusted disciple, who conspired with the Heavenly Court to orchestrate her downfall in a traditional Chinese fantasy setting.",
+        "motivation": "To gain power and status within the celestial hierarchy, driven by ambition and a perceived ideological conflict with the Demon Empress's methods.",
+        "flaw": "Treachery and overconfidence in his celestial backing ultimately sow the seeds of his own destruction."
+      },
+      {
+        "character_id": "char_003",
+        "name": "The Heavenly Court",
+        "role": "antagonist",
+        "profile": "A collective of self-righteous celestial beings who condemned and betrayed the Demon Empress, maintaining order through their perceived moral superiority in a traditional Chinese fantasy setting.",
+        "motivation": "To maintain their absolute power structure, eliminate perceived threats to their authority, and uphold their rigid, often hypocritical, celestial laws.",
+        "flaw": "Arrogance, hypocrisy, and a deep-seated fear of anything that challenges their established order."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Hidden Sanctuary",
+        "description": "A dim, secluded chamber, possibly a humble dwelling or a forgotten temple, where the reborn empress first awakens. The air is heavy with ancient energies, reflecting a traditional Chinese fantasy setting just outside the human realm."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Xueyin awakens with fractured memories of her past life's betrayal, feeling the stirrings of her suppressed demonic power just before its scheduled awakening.",
+        "conflict": "The trauma of her past betrayal clashes with the disorientation of her new, fragile existence, making it difficult to discern reality from nightmare.",
+        "turning_point": "The memories coalesce, revealing the full horror of her previous life's betrayal and murder by her trusted disciple and the Heavenly Court."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "inciting",
+        "summary": "Confronted with the choice between an unassuming new life or reclaiming her destiny, Xueyin's dormant demonic power surges, solidifying her resolve.",
+        "conflict": "The temptation of abandoning her painful past for a peaceful, ignorant future versus the burning desire for justice and retribution.",
+        "turning_point": "She fully embraces her true identity and the power within, accepting her full demonic awakening and making a solemn vow of vengeance."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "climax",
+        "summary": "Xueyin takes her first overt step towards revenge, making a symbolic move against an agent or artifact of the Heavenly Court.",
+        "conflict": "Her calculated restraint against the overwhelming urge to unleash her newly reclaimed power immediately and indiscriminately.",
+        "turning_point": "She executes a precise, symbolic strike or gathers critical intelligence, signaling her terrifying return to the forces that betrayed her and commencing her campaign of retribution."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "For Xueyin to fully remember her past life as the Demon Empress and the circumstances of her brutal death.",
+        "conflict": "The intense pain and confusion of fragmented, traumatic memories against the present reality of her rebirth and suppressed power.",
+        "turn": "The memories solidify into a clear, horrifying picture of her betrayal by her disciple and the Heavenly Court."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "For Xueyin to accept her true identity and commit fully to her path of vengeance against the Heavenly Court.",
+        "conflict": "The allure of a forgotten, peaceful life versus the burning fire of vengeance demanding she reclaim her power and punish her betrayers.",
+        "turn": "Her glowing forehead symbol intensifies as she embraces her full demonic power, making a resolute vow to dismantle the Heavenly Court."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_001",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "For Xueyin to take her first deliberate and symbolic step towards enacting her revenge.",
+        "conflict": "Her desire for immediate, overwhelming retribution against the strategic necessity of a measured, impactful first move.",
+        "turn": "She subtly manipulates a celestial artifact or casts a dark omen visible only to the Heavenly Court, signaling her terrifying return and the commencement of her campaign."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 3,
+    "location_count": 1,
+    "scene_count": 3
+  }
+}

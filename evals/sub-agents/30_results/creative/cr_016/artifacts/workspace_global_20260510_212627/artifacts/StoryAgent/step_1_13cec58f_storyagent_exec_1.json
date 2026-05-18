@@ -1,0 +1,150 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T21:26:47.912387+00:00",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A young intern working the night shift in the desolate old wing of a psychiatric hospital discovers a mysterious thirty-year-old recording emanating from an abandoned room, leading him to a shocking confrontation with his own past.",
+    "style": {
+      "genre": [
+        "Supernatural",
+        "Suspense",
+        "Drama",
+        "Animation"
+      ],
+      "tone_keywords": [
+        "eerie",
+        "haunting",
+        "mysterious",
+        "isolated",
+        "psychological",
+        "midnight",
+        "psychiatric hospital",
+        "paranormal"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Ethan Vance",
+        "role": "protagonist",
+        "profile": "A diligent but somewhat naive young intern, assigned to the night shift in the unsettling old wing of a psychiatric hospital. He carries a subtle sense of unease from his own past, which he tries to suppress with professionalism.",
+        "motivation": "To competently perform his duties and maintain order, while also driven by an insatiable curiosity about the unknown.",
+        "flaw": "His curiosity often overrides his better judgment, pushing him into situations that are potentially dangerous or psychologically disturbing."
+      },
+      {
+        "character_id": "char_002",
+        "name": "Young Ethan",
+        "role": "support",
+        "profile": "A spectral or temporal manifestation of Ethan Vance at ten years old, appearing inside Room 304. He embodies the innocence and perhaps a forgotten trauma from Ethan's childhood.",
+        "motivation": "To manifest a past event or memory, acting as a catalyst for Ethan Vance's self-discovery.",
+        "flaw": ""
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Old Wing - St. Jude's Psychiatric Hospital",
+        "description": "The dilapidated and disused old wing of a psychiatric hospital, steeped in thirty years of neglect. Its long, hollow corridors echo with faint electrical hums and distant, unsettling sounds. Room 304, in particular, feels like a forgotten nexus of time and memory."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Ethan Vance begins his night shift in the eerie, isolated old wing of St. Jude's Psychiatric Hospital, grappling with the oppressive silence and his own anxieties.",
+        "conflict": "Ethan's desire for a quiet, uneventful shift versus the pervasive, unsettling atmosphere of the old hospital.",
+        "turning_point": "The general sense of foreboding shifts to a specific anomaly."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "inciting",
+        "summary": "At the stroke of midnight, Ethan hears a faint, thirty-year-old recording emanating from the notoriously locked Room 304, repeating the same brief, haunting sounds every night.",
+        "conflict": "Ethan's professional duty to ignore strange occurrences versus his profound unsettling curiosity about the source of the recording.",
+        "turning_point": "The mysterious recording transforms the general unease into a focused, recurring mystery."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "turn",
+        "summary": "Over several nights, Ethan attempts to rationalize the recording, but its consistent, inexplicable nature, along with distant sobbing, pushes him towards investigating Room 304 more directly.",
+        "conflict": "Ethan's scientific skepticism clashing with the undeniable supernatural elements of the recurring recording.",
+        "turning_point": "Ethan moves from passive observation to active, albeit cautious, investigation, becoming increasingly obsessed with the room's secret."
+      },
+      {
+        "step_id": "arc_004",
+        "order": 4,
+        "step_type": "crisis",
+        "summary": "Driven by an overwhelming urge to uncover the truth, Ethan procures the master key and, with trepidation, approaches Room 304, preparing to open the door at midnight.",
+        "conflict": "His escalating fear of the unknown versus his unshakeable compulsion to confront the mystery head-on.",
+        "turning_point": "Ethan makes the definitive decision to breach the threshold of Room 304, knowing there's no turning back."
+      },
+      {
+        "step_id": "arc_005",
+        "order": 5,
+        "step_type": "climax",
+        "summary": "Ethan pushes open the door to Room 304, revealing his ten-year-old self standing inside, still, silent, and looking directly at him, as the recording swells.",
+        "conflict": "The protagonist's perception of reality is shattered by a deeply personal and impossible confrontation with his own past.",
+        "turning_point": "The supernatural event is not just external but intimately tied to Ethan's own history, creating a profound, existential shock."
+      },
+      {
+        "step_id": "arc_006",
+        "order": 6,
+        "step_type": "resolution",
+        "summary": "Stunned and disoriented, Ethan backs away from the room, the image of his younger self seared into his mind, leaving him forever changed by the revelation and questioning his own sanity.",
+        "conflict": "Ethan must now live with the indelible truth of his past and the supernatural event, his understanding of reality permanently altered.",
+        "turning_point": "The mystery is 'solved' but leaves a lasting, personal impact on Ethan, transforming his perspective on himself and the world."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Ethan aims to complete his routine checks in the old wing, settling into the long night shift.",
+        "conflict": "The oppressive silence and eerie ambiance of the old hospital, punctuated by a sudden, inexplicable recording from Room 304.",
+        "turn": "Ethan hears the faint, repeating recording for the first time, sparking his curiosity and unease about Room 304."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_004",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Ethan attempts to gather more information about Room 304 and the recurring recording, struggling to find a rational explanation.",
+        "conflict": "Ethan's growing obsession and fear of the supernatural are pitted against his dwindling ability to find a logical cause for the repeating thirty-year-old recording and distant sobbing.",
+        "turn": "Driven past his fear, Ethan makes the conscious decision to confront the unknown and uses the master key to unlock the door to Room 304, bracing himself for whatever lies within."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_005",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "Ethan finally pushes open the door to Room 304, seeking to unveil its secret.",
+        "conflict": "The shocking revelation that the mystery isn't just supernatural, but profoundly personal, as Ethan faces a younger version of himself.",
+        "turn": "Ethan stares in disbelief at his ten-year-old self inside the room, realizing the recording and the room's secret are inexplicably tied to his own past, leaving him in a state of profound psychological shock."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 2,
+    "location_count": 1,
+    "scene_count": 3
+  }
+}

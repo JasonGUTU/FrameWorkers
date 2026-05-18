@@ -67,10 +67,11 @@ class ShotSegment(BaseModel):
     # Materializer reads these via attribute access, NEVER from upstream
     # payloads.
     semantic_context: ShotSemanticContext = Field(default_factory=ShotSemanticContext)
-    # Per-shot render duration in seconds. Both Kling and HunyuanVideo
-    # i2v backends standardize on 5-second clips; HunyuanVideo I2V does
-    # not support 10s natively (training cap at 129 frames ≈ 5.4s).
-    # The LLM is instructed to always emit 5; the evaluator enforces it.
+    # Per-shot render duration in seconds. The Kling I2V backend only
+    # accepts 5 or 10 (string enum) and silently rounds anything else,
+    # so the LLM is instructed to choose between the two — typically by
+    # dividing the screenplay scene-level estimated_duration_seconds
+    # across shots. Defaults to 5 when the LLM omits the field.
     duration_sec: float = 5.0
 
 

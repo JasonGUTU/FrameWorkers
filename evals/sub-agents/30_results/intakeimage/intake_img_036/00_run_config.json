@@ -1,0 +1,52 @@
+{
+  "case_name": "intake_img_036",
+  "category": "intake_img",
+  "user_goal": "Use this uploaded photo as the look of the CEO male lead. Make a modern-urban wealthy-clan tortured-romance animated short drama — three years after the car crash that erased her memory, the little contract wife Su Nian reappears in front of CEO Huo with a small boy who looks exactly like him. Add bilingual Chinese-English subtitles for overseas distribution.",
+  "expected_chain": [
+    [
+      "IntakeImageAgent"
+    ],
+    [
+      "BriefEnricherAgent"
+    ],
+    [
+      "StoryAgent"
+    ],
+    [
+      "ScreenplayAgent"
+    ],
+    [
+      "KeyFrameAgent"
+    ],
+    [
+      "VideoAgent"
+    ],
+    [
+      "TranscriptionAgent"
+    ],
+    [
+      "TranslationAgent"
+    ],
+    [
+      "CompositorAgent"
+    ],
+    [
+      "done"
+    ]
+  ],
+  "flat_chain": [
+    "IntakeImageAgent",
+    "BriefEnricherAgent",
+    "StoryAgent",
+    "ScreenplayAgent",
+    "KeyFrameAgent",
+    "VideoAgent",
+    "TranscriptionAgent",
+    "TranslationAgent",
+    "CompositorAgent"
+  ],
+  "backend_url": "http://localhost:5105",
+  "hunyuan_endpoint": "http://sof1-h200-3:9203",
+  "infer_steps": 50,
+  "started_at": "2026-05-10T21:26:28"
+}

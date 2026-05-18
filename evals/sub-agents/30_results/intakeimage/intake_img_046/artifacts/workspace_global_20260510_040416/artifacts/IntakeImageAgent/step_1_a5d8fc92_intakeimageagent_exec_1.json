@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T04:04:22.185295+00:00",
+    "language": "en"
+  },
+  "content": {
+    "visual_description": "A woman in a red, gold-embroidered imperial robe and an ornate peacock feather headdress with pearls sits, illuminated by soft indoor light.",
+    "image_asset": {
+      "asset_id": "",
+      "uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/30_results/intakeimage/intake_img_046/_workspace/workspace_global_20260510_040416/inputs/20260510_040418_637086_intake_img_046.png",
+      "width": 1024,
+      "height": 576,
+      "format": "png"
+    }
+  }
+}

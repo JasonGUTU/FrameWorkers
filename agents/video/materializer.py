@@ -192,6 +192,11 @@ class VideoMaterializer(BaseMaterializer):
         # failures next attempt. Semaphore caps fal concurrency.
         sem = asyncio.Semaphore(8)
 
+        # Optional eager spill: persist each successful shot mp4 to disk as
+        # soon as generate_clip returns, so partial results survive a later
+        # raise. Opt-in via FW_VIDEO_SHOT_SPILL_DIR env var.
+        spill_dir = os.getenv("FW_VIDEO_SHOT_SPILL_DIR", "").strip()
+
         async def _gen_one(spec: dict) -> bytes | Exception:
             async with sem:
                 try:
@@ -202,6 +207,15 @@ class VideoMaterializer(BaseMaterializer):
                         duration_sec=spec["duration_sec"],
                     )
                     if result.bytes:
+                        if spill_dir:
+                            try:
+                                os.makedirs(spill_dir, exist_ok=True)
+                                sp = os.path.join(spill_dir, f"clip_{spec['shot_id']}.mp4")
+                                with open(sp, "wb") as fh:
+                                    fh.write(result.bytes)
+                                logger.info("[shot-spill] wrote %s (%.1f KB)", sp, len(result.bytes) / 1024)
+                            except Exception as spill_exc:
+                                logger.warning("[shot-spill] write failed for %s: %s", spec["shot_id"], spill_exc)
                         return result.bytes
                     return RuntimeError("generate_clip returned empty bytes")
                 except Exception as exc:

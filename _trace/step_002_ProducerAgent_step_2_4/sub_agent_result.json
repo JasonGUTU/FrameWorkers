@@ -1,0 +1,19 @@
+{
+  "agent_class": "_ProducerPipelineAgent",
+  "typed_input": {
+    "step_id": "step_2_427b984d",
+    "seed": "",
+    "language": "en"
+  },
+  "output": null,
+  "eval_result": null,
+  "passed": null,
+  "attempts": null,
+  "asset_dict": {
+    "content": {
+      "seed": ""
+    }
+  },
+  "media_assets_count": 0,
+  "media_assets_summary": []
+}

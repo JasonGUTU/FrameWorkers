@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T21:26:32.480106+00:00",
+    "language": "en"
+  },
+  "content": {
+    "visual_description": "A female student in a dark blue school uniform and white socks stands in a bright school hallway with a shoulder bag, other students visible in background.",
+    "image_asset": {
+      "asset_id": "",
+      "uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/30_results/intakeimage/intake_img_039/_workspace/workspace_global_20260510_212627/inputs/20260510_212628_543218_intake_img_039.png",
+      "width": 1024,
+      "height": 576,
+      "format": "png"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "entry_count": 1,
+  "artifact_count": 2,
+  "captions_index_text": "#0  (no caption) Produced by KeyFrameAgent on 2026-05-12 17:47.\n\n#1  keyframes plan — test seed for resolver substring match Produced by KeyFrameAgent on 2026-05-12 17:47.",
+  "path_list": [
+    "/tmp/pytest-of-zhendong_li/pytest-389/test_service_rewrites_media_as0/Runtime/workspace_global_20260512_174725/artifacts/media/KeyFrameAgent/image/task_uri_img_sh_001_kf_01.png",
+    "/tmp/pytest-of-zhendong_li/pytest-389/test_service_rewrites_media_as0/Runtime/workspace_global_20260512_174725/artifacts/KeyFrameAgent/task_uri_keyframeagent_exec_1.json"
+  ],
+  "entries": [
+    {
+      "execution_id": "exec_1_9728cccb",
+      "agent_id": "KeyFrameAgent",
+      "step_id": "task_uri",
+      "created_at": "2026-05-12T17:47:25.105166+00:00",
+      "artifacts": [
+        {
+          "caption": "",
+          "scope": "global",
+          "path": "/tmp/pytest-of-zhendong_li/pytest-389/test_service_rewrites_media_as0/Runtime/workspace_global_20260512_174725/artifacts/media/KeyFrameAgent/image/task_uri_img_sh_001_kf_01.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "keyframes plan — test seed for resolver substring match",
+          "scope": "global",
+          "path": "/tmp/pytest-of-zhendong_li/pytest-389/test_service_rewrites_media_as0/Runtime/workspace_global_20260512_174725/artifacts/KeyFrameAgent/task_uri_keyframeagent_exec_1.json",
+          "mime": "application/json"
+        }
+      ]
+    }
+  ]
+}

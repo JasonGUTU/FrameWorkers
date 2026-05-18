@@ -1,0 +1,113 @@
+{
+  "http_status": 200,
+  "response_body": {
+    "id": "exec_2_2f541902",
+    "agent_id": "BriefEnricherAgent",
+    "step_id": "step_2_4ce0f309",
+    "status": "COMPLETED",
+    "inputs": {
+      "step_id": "step_2_4ce0f309",
+      "resolved_artifacts": {
+        "raw_brief": {
+          "caption": "Structured metadata document (JSON) for a user-submitted text brief. Payload carries the raw text verbatim. Pipeline entry point — consumed by story / screenplay / narration agents.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/brief_20260512_223801_057913.json",
+          "mime": "application/json",
+          "payload": {
+            "meta": {
+              "asset_type": "text_brief",
+              "created_at": "2026-05-12T22:38:01.057969+00:00"
+            },
+            "content": {
+              "text": "Using this uploaded image as the visual identity reference for the fox demon protagonist, make a Chinese-mythology fantasy animated short drama — at the close of the Investiture of the Gods war, the last surviving little nine-tailed fox demon is dragged up onto the Investiture Platform by Jiang Ziya. Just before her execution, she suddenly remembers a man who has been appearing in her dreams. Add ambient sounds of the nine-heaven thunder rolling, and a mournful classical-Chinese BGM. Burn bilingual English-Chinese subtitles into the final video showing all on-screen dialogue."
+            },
+            "metrics": {
+              "char_count": 582
+            }
+          }
+        },
+        "image_descriptions": [
+          {
+            "caption": "Structured metadata document (JSON) for a user-uploaded image. Payload carries the visual description and image-asset metadata.",
+            "scope": "global",
+            "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/IntakeImageAgent/step_1_81595939_intakeimageagent_exec_1.json",
+            "mime": "application/json",
+            "payload": {
+              "meta": {
+                "schema_version": "0.3",
+                "created_at": "2026-05-12T22:38:06.350048+00:00",
+                "language": "en"
+              },
+              "content": {
+                "visual_description": "A woman with dark hair wears a tattered light robe and stands against a gray background, flanked by nine large, fluffy white tails.",
+                "image_asset": {
+                  "asset_id": "",
+                  "uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png",
+                  "width": 1024,
+                  "height": 576,
+                  "format": "png"
+                }
+              }
+            }
+          }
+        ],
+        "image_files": [
+          {
+            "caption": "Raw user upload (mime=image/png).",
+            "scope": "global",
+            "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png",
+            "mime": "image/png",
+            "payload": null
+          }
+        ]
+      },
+      "resolved_input_paths": [
+        "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/brief_20260512_223801_057913.json",
+        "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/IntakeImageAgent/step_1_81595939_intakeimageagent_exec_1.json",
+        "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png"
+      ]
+    },
+    "results": {
+      "meta": {
+        "schema_version": "0.3",
+        "created_at": "2026-05-12T22:38:23.541860+00:00",
+        "language": "en"
+      },
+      "content": {
+        "enriched_brief": "Make a Chinese-mythology fantasy animated short drama. The protagonist is a nine-tailed fox demon, depicted as a dark-haired woman in a tattered light robe, strikingly flanked by her nine large, fluffy white tails. At the close of the Investiture of the Gods war, this last surviving fox demon is dragged up onto the Investiture Platform by Jiang Ziya. Just before her execution, she suddenly remembers a man who has been appearing in her dreams. Add ambient sounds of the nine-heaven thunder rolling, and a mournful classical-Chinese BGM. Burn bilingual English-Chinese subtitles into the final video showing all on-screen dialogue.",
+        "image_classifications": [
+          {
+            "image_index": 0,
+            "role": "character"
+          }
+        ],
+        "image_paths": [
+          "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png"
+        ]
+      },
+      "metrics": {
+        "image_count": 1,
+        "classified_count": 1
+      },
+      "_execution_debug": {
+        "attempts": 1,
+        "overall_pass": true,
+        "eval_summary": "The enriched brief seamlessly integrates detailed visual descriptions for the protagonist, enhancing the overall creative vision without losing any of the original narrative intent. The added visual elements provide clear guidance for animation while maintaining the mythological fantasy core."
+      },
+      "_asset_index": {
+        "agent_id": "BriefEnricherAgent",
+        "json_uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/BriefEnricherAgent/step_2_4ce0f309_briefenricheragent_exec_2.json",
+        "execution_id": "exec_2_2f541902"
+      }
+    },
+    "error": null,
+    "started_at": "2026-05-12T22:38:17.119062",
+    "completed_at": "2026-05-12T22:38:26.544088",
+    "created_at": "2026-05-12T22:38:17.119032",
+    "resolved_input_paths": [
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/brief_20260512_223801_057913.json",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/IntakeImageAgent/step_1_81595939_intakeimageagent_exec_1.json",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png"
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "case_name": "cr_064",
+  "category": "cr",
+  "user_goal": "Make a zombie-apocalypse animated short drama — day seven of the outbreak, a small squad led by a former special-ops captain and a female doctor cuts through zombie-infested underground tunnels in search of the legendary vaccine lab. Add ambient sounds: zombie shrieks, distant air-raid sirens, and wind whipping through ruined corridors.",
+  "expected_chain": [
+    [
+      "StoryAgent"
+    ],
+    [
+      "ScreenplayAgent"
+    ],
+    [
+      "KeyFrameAgent"
+    ],
+    [
+      "VideoAgent"
+    ],
+    [
+      "AmbienceAgent"
+    ],
+    [
+      "AudioMixAgent"
+    ],
+    [
+      "CompositorAgent"
+    ],
+    [
+      "done"
+    ]
+  ],
+  "flat_chain": [
+    "StoryAgent",
+    "ScreenplayAgent",
+    "KeyFrameAgent",
+    "VideoAgent",
+    "AmbienceAgent",
+    "AudioMixAgent",
+    "CompositorAgent"
+  ],
+  "backend_url": "http://localhost:5005",
+  "hunyuan_endpoint": "http://sof1-h200-3:9203",
+  "infer_steps": 50,
+  "started_at": "2026-05-09T23:48:59"
+}

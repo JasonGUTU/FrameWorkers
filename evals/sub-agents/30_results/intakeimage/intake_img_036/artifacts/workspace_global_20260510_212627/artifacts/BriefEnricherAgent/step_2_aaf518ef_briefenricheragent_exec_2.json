@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T21:26:47.202130+00:00",
+    "language": "en"
+  },
+  "content": {
+    "enriched_brief": "Create a modern-urban wealthy-clan tortured-romance animated short drama. The CEO male lead, Huo, should be depicted as a sharp, commanding figure, consistently dressed in a dark suit and blue tie, embodying a professional and powerful presence within his corporate environment, often seen against a backdrop of city skylines at dusk through large office windows. Three years after the car crash that erased her memory, the little contract wife Su Nian reappears in front of CEO Huo with a small boy who looks exactly like him. The drama should include bilingual Chinese-English subtitles for overseas distribution.",
+    "image_classifications": [
+      {
+        "image_index": 0,
+        "role": "character"
+      }
+    ],
+    "image_paths": [
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/30_results/intakeimage/intake_img_036/_workspace/workspace_global_20260510_212627/inputs/20260510_212628_533439_intake_img_036.png"
+    ]
+  },
+  "metrics": {
+    "image_count": 1,
+    "classified_count": 1
+  }
+}

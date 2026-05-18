@@ -1,0 +1,14 @@
+{
+  "input": {
+    "agent_id": "TranscriptionAgent",
+    "step_id": "step_2_36b4c9c7",
+    "input_needs_description": "I transcribe audio/video files into timestamped text.\n\n[source_media] (single)\nAn audio or video file to transcribe. Accepts any format supported by the transcription service (mp3, wav, mp4, etc.). The file path is passed directly to the STT service.",
+    "captions_index_text": "(empty — cold start)"
+  },
+  "output": {
+    "resolved_artifacts": {},
+    "selected_artifact_paths": [],
+    "rationale": "no artifacts registered yet (cold start)"
+  },
+  "note": "cold-start: no artifacts in workspace"
+}

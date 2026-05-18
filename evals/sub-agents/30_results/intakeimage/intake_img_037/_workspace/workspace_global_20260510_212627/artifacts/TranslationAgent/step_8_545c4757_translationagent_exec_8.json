@@ -1,0 +1,584 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-11T01:19:32.821465+00:00",
+    "language": "en"
+  },
+  "content": {
+    "source_language": "en",
+    "target_language": "en",
+    "translated_payload": {
+      "meta": {
+        "schema_version": "0.3",
+        "created_at": "2026-05-10T21:28:10.418042+00:00",
+        "language": "en"
+      },
+      "content": {
+        "title": "Reborn Empress: The Vow of Vengeance",
+        "scenes": [
+          {
+            "scene_id": "sc_001",
+            "order": 1,
+            "linked_story_step_id": "arc_001",
+            "heading": {
+              "location_id": "loc_001",
+              "location_name": "Hidden Sanctuary",
+              "interior_exterior": "INT",
+              "time_of_day": "CUSTOM"
+            },
+            "summary": "Xueyin awakens in a secluded sanctuary, her mind tormented by fragmented memories of betrayal and a past life she cannot fully recall.",
+            "continuity": {
+              "props_present": [],
+              "character_wardrobe_notes": [
+                {
+                  "character_id": "char_001",
+                  "wardrobe": "A vibrant red dragon-embroidered dress, reflecting her former status as Demon Empress. Her long dark hair is slightly dishevelled from her awakening. A glowing forehead symbol flickers subtly.",
+                  "must_keep": [
+                    "red dragon-embroidered dress",
+                    "long dark hair",
+                    "glowing forehead symbol"
+                  ]
+                }
+              ],
+              "must_keep_scene_facts": [
+                "Xueyin has just awoken after rebirth.",
+                "She is disoriented and experiencing fragmented memories."
+              ]
+            },
+            "scene_consistency_pack": {
+              "location_lock": {
+                "location_id": "loc_001",
+                "time_of_day": "CUSTOM",
+                "environment_notes": [
+                  "A dim, secluded chamber, possibly a humble dwelling or forgotten temple, in a traditional Chinese fantasy setting. Air is heavy with ancient energies."
+                ]
+              },
+              "character_locks": [
+                {
+                  "character_id": "char_001",
+                  "identity_notes": [
+                    "Xueyin, the formidable Demon Empress, reborn into a younger body just before her demonic awakening, consumed by memories of betrayal in a traditional Chinese fantasy setting."
+                  ],
+                  "wardrobe_notes": [
+                    "Vibrant red dragon-embroidered dress",
+                    "Long dark hair",
+                    "Distinctive glowing forehead symbol."
+                  ],
+                  "must_keep": [
+                    "glowing forehead symbol"
+                  ]
+                }
+              ],
+              "props_lock": [],
+              "style_lock": {
+                "global_style_notes": [
+                  "Epic fantasy",
+                  "Chinese fantasy",
+                  "dim lighting",
+                  "traditional setting",
+                  "resurrection",
+                  "revenge theme."
+                ],
+                "must_avoid": []
+              }
+            },
+            "scene_end": {
+              "turn": "Xueyin's fragmented memories solidify into a horrifying, clear picture of her betrayal.",
+              "emotional_shift": "Confusion and pain give way to cold, undeniable rage and a burgeoning desire for retribution."
+            },
+            "shots": [
+              {
+                "shot_id": "sh_001",
+                "order": 1,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "A young woman, XUEYIN, lies disoriented on a humble mat. Her eyes flutter open, filled with confusion. A faint, glowing symbol on her forehead flickers.",
+                "emotion_hint": "neutral",
+                "continuity_refs": {
+                  "props": [],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "close_up",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "static",
+                  "framing_notes": "Focus on Xueyin's face and forehead symbol."
+                },
+                "visual_goal": "Convey Xueyin's disorientation and the initial stirrings of her power.",
+                "action_focus": "Xueyin's awakening and confusion.",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_002",
+                "order": 2,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "Xueyin clutches her head, groaning. Brief, violent flashes of betrayal, a smiling disciple, and gleaming celestial armor assault her mind, causing her to recoil.",
+                "emotion_hint": "tense",
+                "continuity_refs": {
+                  "props": [],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "medium",
+                "camera": {
+                  "angle": "high_angle",
+                  "movement": "static",
+                  "framing_notes": "Show Xueyin's pain and vulnerability in the dim chamber."
+                },
+                "visual_goal": "Illustrate the fragmented, painful memories flooding Xueyin's mind.",
+                "action_focus": "Xueyin's struggle with her memories.",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_003",
+                "order": 3,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "The fragments coalesce into a clear vision: her trusted disciple, THE TRAITOROUS DISCIPLE, standing with the HEAVENLY COURT as she is struck down. Xueyin's eyes snap open, burning with cold fury.",
+                "emotion_hint": "angry",
+                "continuity_refs": {
+                  "props": [],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "close_up",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "static",
+                  "framing_notes": "Emphasize Xueyin's shift from pain to clear, focused rage."
+                },
+                "visual_goal": "Show the full realization of betrayal and the birth of Xueyin's vengeance.",
+                "action_focus": "Xueyin's expression of newly ignited rage.",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "scene_id": "sc_002",
+            "order": 2,
+            "linked_story_step_id": "arc_002",
+            "heading": {
+              "location_id": "loc_001",
+              "location_name": "Hidden Sanctuary",
+              "interior_exterior": "INT",
+              "time_of_day": "CUSTOM"
+            },
+            "summary": "Xueyin grapples with the choice between a new life and the burning desire for vengeance, as her suppressed demonic powers begin to awaken.",
+            "continuity": {
+              "props_present": [],
+              "character_wardrobe_notes": [
+                {
+                  "character_id": "char_001",
+                  "wardrobe": "Still in her red dragon-embroidered dress. Her hair is now more ordered, but her expression remains intense.",
+                  "must_keep": [
+                    "red dragon-embroidered dress",
+                    "glowing forehead symbol"
+                  ]
+                }
+              ],
+              "must_keep_scene_facts": [
+                "Xueyin is fully aware of her past now.",
+                "Her dormant demonic power is stirring."
+              ]
+            },
+            "scene_consistency_pack": {
+              "location_lock": {
+                "location_id": "loc_001",
+                "time_of_day": "CUSTOM",
+                "environment_notes": [
+                  "A dim, secluded chamber, possibly a humble dwelling or forgotten temple, in a traditional Chinese fantasy setting. Air is heavy with ancient energies, now crackling with nascent power."
+                ]
+              },
+              "character_locks": [
+                {
+                  "character_id": "char_001",
+                  "identity_notes": [
+                    "Xueyin, the Demon Empress, fully embracing her reborn identity and nascent demonic power, in a traditional Chinese fantasy setting."
+                  ],
+                  "wardrobe_notes": [
+                    "Vibrant red dragon-embroidered dress",
+                    "Long dark hair",
+                    "Distinctive glowing forehead symbol, now intensifying."
+                  ],
+                  "must_keep": [
+                    "glowing forehead symbol"
+                  ]
+                }
+              ],
+              "props_lock": [],
+              "style_lock": {
+                "global_style_notes": [
+                  "Epic fantasy",
+                  "Chinese fantasy",
+                  "dim lighting",
+                  "traditional setting",
+                  "resurrection",
+                  "vengeance, growing power."
+                ],
+                "must_avoid": []
+              }
+            },
+            "scene_end": {
+              "turn": "Xueyin fully embraces her demonic power and identity, making a resolute vow of vengeance.",
+              "emotional_shift": "Hesitation and internal conflict transform into absolute resolve and chilling determination."
+            },
+            "shots": [
+              {
+                "shot_id": "sh_004",
+                "order": 1,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "Xueyin paces the dim chamber, her silhouette framed by ancient shadows. She clenches her fist, a faint red energy flickering around it, as she weighs her choices.",
+                "emotion_hint": "tense",
+                "continuity_refs": {
+                  "props": [],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "wide",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "static",
+                  "framing_notes": "Show Xueyin small within the oppressive, ancient space."
+                },
+                "visual_goal": "Convey Xueyin's internal conflict and the stirring of her power.",
+                "action_focus": "Xueyin's pacing and subtle energy manifestation.",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_005",
+                "order": 2,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "With a guttural roar, Xueyin throws her head back, accepting her fate. Her forehead symbol flares brilliantly, casting a crimson glow. A subtle, dark aura radiates from her, demonic power fully awakening.",
+                "emotion_hint": "excited",
+                "continuity_refs": {
+                  "props": [],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "medium",
+                "camera": {
+                  "angle": "low_angle",
+                  "movement": "zoom_in",
+                  "framing_notes": "Emphasize the power emanating from Xueyin."
+                },
+                "visual_goal": "Show the intense, visual manifestation of Xueyin's full demonic awakening.",
+                "action_focus": "The flaring forehead symbol and the radiating demonic aura.",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_006",
+                "order": 3,
+                "block_type": "dialogue",
+                "character_id": "char_001",
+                "character_name": "Xueyin",
+                "text": "They will pay. Every celestial, every traitor.",
+                "emotion_hint": "angry",
+                "continuity_refs": {
+                  "props": [],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "close_up",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "static",
+                  "framing_notes": "Focus on Xueyin's face, cold and determined."
+                },
+                "visual_goal": "Capture Xueyin's solemn, unwavering vow of vengeance.",
+                "action_focus": "Xueyin's resolute expression as she speaks.",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "scene_id": "sc_003",
+            "order": 3,
+            "linked_story_step_id": "arc_003",
+            "heading": {
+              "location_id": "loc_001",
+              "location_name": "Hidden Sanctuary",
+              "interior_exterior": "INT",
+              "time_of_day": "CUSTOM"
+            },
+            "summary": "Xueyin takes her first calculated step towards revenge, manipulating a celestial artifact to send a dark omen to her betrayers.",
+            "continuity": {
+              "props_present": [
+                "Fragmented Celestial Jade"
+              ],
+              "character_wardrobe_notes": [
+                {
+                  "character_id": "char_001",
+                  "wardrobe": "Her red dragon-embroidered dress, now appearing more regal and less dishevelled. Her glowing forehead symbol is stable and vibrant.",
+                  "must_keep": [
+                    "red dragon-embroidered dress",
+                    "glowing forehead symbol"
+                  ]
+                }
+              ],
+              "must_keep_scene_facts": [
+                "Xueyin has fully accepted her demonic power.",
+                "She is enacting the first stage of her revenge plan."
+              ]
+            },
+            "scene_consistency_pack": {
+              "location_lock": {
+                "location_id": "loc_001",
+                "time_of_day": "CUSTOM",
+                "environment_notes": [
+                  "A dim, secluded chamber, possibly a humble dwelling or forgotten temple, in a traditional Chinese fantasy setting. The air hums with potent, newly unleashed demonic energy."
+                ]
+              },
+              "character_locks": [
+                {
+                  "character_id": "char_001",
+                  "identity_notes": [
+                    "Xueyin, the reborn Demon Empress, calculating and powerful, initiating her vengeance in a traditional Chinese fantasy setting."
+                  ],
+                  "wardrobe_notes": [
+                    "Vibrant red dragon-embroidered dress",
+                    "Long dark hair",
+                    "Distinctive glowing forehead symbol, now radiating steady power."
+                  ],
+                  "must_keep": [
+                    "glowing forehead symbol"
+                  ]
+                }
+              ],
+              "props_lock": [
+                {
+                  "prop_id": "prop_001",
+                  "prop_name": "Fragmented Celestial Jade",
+                  "must_keep": [
+                    "A small, glowing shard of jade, emanating a faint celestial energy, now being corrupted by darker forces."
+                  ]
+                }
+              ],
+              "style_lock": {
+                "global_style_notes": [
+                  "Epic fantasy",
+                  "Chinese fantasy",
+                  "dim lighting",
+                  "traditional setting",
+                  "revenge",
+                  "powerful magic",
+                  "ominous tone."
+                ],
+                "must_avoid": []
+              }
+            },
+            "scene_end": {
+              "turn": "Xueyin subtly manipulates a celestial artifact, sending a dark omen to the Heavenly Court.",
+              "emotional_shift": "The strategic initiation of revenge instills a chilling sense of foreboding and a clear threat to her betrayers."
+            },
+            "shots": [
+              {
+                "shot_id": "sh_007",
+                "order": 1,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "Xueyin stands focused before a small, ancient stone altar. She extends her hand, eyes closed, drawing upon the surge of demonic energy within her.",
+                "emotion_hint": "calm",
+                "continuity_refs": {
+                  "props": [],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "medium",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "static",
+                  "framing_notes": "Show Xueyin's controlled power and concentration."
+                },
+                "visual_goal": "Establish Xueyin's control over her newfound power and her intent.",
+                "action_focus": "Xueyin's focused stance and outstretched hand.",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_008",
+                "order": 2,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "Xueyin's hand hovers over a 'Fragmented Celestial Jade' on the altar. Dark, wispy energy snakes from her fingertips, intertwining with and corrupting the jade's faint celestial glow.",
+                "emotion_hint": "tense",
+                "continuity_refs": {
+                  "props": [
+                    "prop_001"
+                  ],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "close_up",
+                "camera": {
+                  "angle": "low_angle",
+                  "movement": "static",
+                  "framing_notes": "Emphasize the interaction between Xueyin's power and the artifact."
+                },
+                "visual_goal": "Show the deliberate manipulation of a celestial artifact with demonic power.",
+                "action_focus": "Xueyin's hand corrupting the Celestial Jade.",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [
+                  "prop_001"
+                ],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_009",
+                "order": 3,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "The corrupted 'Fragmented Celestial Jade' pulses once, then emits a thick, dark tendril of smoke that snakes upwards, piercing the unseen ceiling and vanishing. Xueyin's eyes open, sharp.",
+                "emotion_hint": "calm",
+                "continuity_refs": {
+                  "props": [
+                    "prop_001"
+                  ],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "medium",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "pan_up",
+                  "framing_notes": "Follow the dark smoke as it disappears upwards."
+                },
+                "visual_goal": "Illustrate the successful casting of a dark omen.",
+                "action_focus": "The dark smoke leaving the jade and Xueyin's reaction.",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [
+                  "prop_001"
+                ],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_010",
+                "order": 4,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "Xueyin stands tall, a faint, cruel smile gracing her lips. Her forehead symbol radiates with formidable, steady power, a silent promise of the terror to come.",
+                "emotion_hint": "calm",
+                "continuity_refs": {
+                  "props": [],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "wide",
+                "camera": {
+                  "angle": "low_angle",
+                  "movement": "zoom_out",
+                  "framing_notes": "Emphasize Xueyin's newly established authority and menace."
+                },
+                "visual_goal": "Conclude the scene with Xueyin's powerful, triumphant, and ominous return.",
+                "action_focus": "Xueyin's commanding presence and dark smile.",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "scene_count": 3,
+        "shot_count_total": 10,
+        "avg_shots_per_scene": 3.3333333333333335,
+        "dialogue_block_count": 1,
+        "action_block_count": 9
+      }
+    }
+  },
+  "metrics": {
+    "source_language": "en",
+    "target_language": "en",
+    "has_payload": true,
+    "source_string_count": 189,
+    "translated_string_count": 189,
+    "completeness": 1.0
+  }
+}

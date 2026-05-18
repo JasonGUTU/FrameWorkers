@@ -1,0 +1,13 @@
+{
+  "content": {
+    "beds": [
+      {
+        "ambience_id": "amb_film",
+        "description": "Frozen wind sweeping desolate snow plains, with distant sounds of war horses and the tension of battle."
+      }
+    ]
+  },
+  "metrics": {
+    "bed_count": 1
+  }
+}

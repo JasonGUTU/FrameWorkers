@@ -1,0 +1,38 @@
+{
+  "http_status": 200,
+  "response_body": {
+    "id": "exec_4_d90df387",
+    "agent_id": "MusicAgent",
+    "step_id": "step_4_f83f5280",
+    "status": "FAILED",
+    "inputs": {
+      "step_id": "step_4_f83f5280",
+      "resolved_artifacts": {},
+      "resolved_input_paths": []
+    },
+    "results": {
+      "_execution_debug": {
+        "attempts": 1,
+        "overall_pass": false,
+        "eval_summary": "upstream input rejected: No upstream content was provided from which to derive a music cue mood.",
+        "kind": "upstream_input_rejected",
+        "input_rejection": {
+          "reason": "No upstream content was provided from which to derive a music cue mood.",
+          "missing_labels": [
+            "screenplay",
+            "video_analysis",
+            "creative_brief"
+          ],
+          "offending_fields": [
+            "content.text"
+          ]
+        }
+      }
+    },
+    "error": "[upstream_input_rejected] reason=No upstream content was provided from which to derive a music cue mood.; missing=[screenplay,video_analysis,creative_brief]",
+    "started_at": "2026-05-13T01:01:51.604152",
+    "completed_at": "2026-05-13T01:01:55.087147",
+    "created_at": "2026-05-13T01:01:51.604141",
+    "resolved_input_paths": []
+  }
+}

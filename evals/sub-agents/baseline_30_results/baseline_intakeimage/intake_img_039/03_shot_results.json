@@ -1,0 +1,73 @@
+[
+  {
+    "idx": 1,
+    "shot_id": "sh_001",
+    "prompt": "A new transfer student, a teenage girl with a confident yet thoughtful expression, steps out of a sleek car onto the grounds of a prestigious northern Jiangbei private academy. Sunlight gleams on the ",
+    "status": "OK",
+    "keyframe_bytes": 1872107,
+    "mp4_bytes": 1114394,
+    "elapsed_sec": 1506.6802456378937
+  },
+  {
+    "idx": 2,
+    "shot_id": "sh_002",
+    "prompt": "Inside a bustling high school hallway, the transfer student accidentally bumps into a stern, arrogant male student, causing his textbooks to scatter. Their eyes lock in a tense standoff amidst shocked",
+    "status": "OK",
+    "keyframe_bytes": 1663427,
+    "mp4_bytes": 2453274,
+    "elapsed_sec": 1507.587198972702
+  },
+  {
+    "idx": 3,
+    "shot_id": "sh_003",
+    "prompt": "The arrogant male student, surrounded by his intimidating friends, deliberately blocks the transfer student's path in the school courtyard. She meets his piercing gaze with quiet defiance, her express",
+    "status": "OK",
+    "keyframe_bytes": 1814913,
+    "mp4_bytes": 1260730,
+    "elapsed_sec": 1508.7768578529358
+  },
+  {
+    "idx": 4,
+    "shot_id": "sh_004",
+    "prompt": "The transfer student sits alone at a cafeteria table, acutely aware of hushed whispers and overt stares from other students. She sips her drink, maintaining a composed facade, but a shadow of loneline",
+    "status": "OK",
+    "keyframe_bytes": 1515648,
+    "mp4_bytes": 1217599,
+    "elapsed_sec": 1506.6993424892426
+  },
+  {
+    "idx": 5,
+    "shot_id": "sh_005",
+    "prompt": "In a crowded classroom, the arrogant male student loudly makes a sarcastic remark about \"privileged newcomers\" while pointedly looking at the transfer student. She stiffens, gripping her pen, her eyes",
+    "status": "FAIL",
+    "error": "FalClientHTTPError: [{'loc': ['body'], 'msg': 'The model did not generate the expected output for this prompt. This may occur for several reasons, including unsafe content, a prompt that is incompatible with the selected media type (e.g., prompting an image model to generate audio), references to missing attachments, o",
+    "elapsed_sec": 11.091601610183716
+  },
+  {
+    "idx": 6,
+    "shot_id": "sh_006",
+    "prompt": "In the school library, the transfer student quietly confronts the bully, her voice low but firm, directly challenging his assumptions about her. He is momentarily taken aback by her unexpected courage",
+    "status": "OK",
+    "keyframe_bytes": 1447862,
+    "mp4_bytes": 1031731,
+    "elapsed_sec": 1504.910504102707
+  },
+  {
+    "idx": 7,
+    "shot_id": "sh_007",
+    "prompt": "The transfer student walks alone through the quiet, dimming school corridors, a solitary figure. Her reflection in a window shows a momentary break in her composure, a fleeting look of exhaustion and ",
+    "status": "OK",
+    "keyframe_bytes": 1443817,
+    "mp4_bytes": 721873,
+    "elapsed_sec": 1506.3079798221588
+  },
+  {
+    "idx": 8,
+    "shot_id": "sh_008",
+    "prompt": "On the school rooftop at dusk, the transfer student gazes at the city lights. The arrogant male student appears, standing some distance away. They share a brief, intense glance—a silent acknowledgment",
+    "status": "OK",
+    "keyframe_bytes": 1474016,
+    "mp4_bytes": 466011,
+    "elapsed_sec": 1503.4833133220673
+  }
+]

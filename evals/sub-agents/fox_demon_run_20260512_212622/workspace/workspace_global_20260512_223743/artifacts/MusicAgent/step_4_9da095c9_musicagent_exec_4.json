@@ -1,0 +1,13 @@
+{
+  "content": {
+    "cues": [
+      {
+        "cue_id": "music_film",
+        "mood": "mournful, ethereal, poignant, traditional Chinese instrumentation, dramatic, contemplative"
+      }
+    ]
+  },
+  "metrics": {
+    "cue_count": 1
+  }
+}

@@ -1,0 +1,362 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "CUSTOM",
+          "environment_notes": [
+            "中国神话设定",
+            "封神之战背景",
+            "古老中国",
+            "一个高耸古老的石头平台",
+            "周围环绕着九天神雷的声音",
+            "充满巨大的精神力量和庄严感"
+          ],
+          "style_notes": [
+            "奇幻",
+            "神话",
+            "剧情",
+            "中国神话",
+            "封神之战",
+            "史诗",
+            "悲剧",
+            "绝望",
+            "古老中国",
+            "忧郁",
+            "哀伤",
+            "九天神雷"
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "展现封神台的宏伟与末日的氛围",
+              "action_focus": "九天神雷与封神台",
+              "characters_in_frame": [],
+              "camera_angle": "high",
+              "camera_movement": "static",
+              "framing_notes": "俯瞰视角，强调平台的宏大与天地的压抑",
+              "video_motion_hints": [
+                "Celestial thunder flashes across the sky with subtle, violent light. Clouds slowly churn above the static, ancient platform, emphasizing its solemn grandeur."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_002",
+            "semantic_context": {
+              "shot_type": "medium_wide",
+              "visual_goal": "展现姜子牙的威严与小狐的无助，建立压迫感",
+              "action_focus": "姜子牙与小狐的行进",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "tracking_forward",
+              "framing_notes": "跟随着两人走向平台中心，捕捉小狐的挣扎",
+              "video_motion_hints": [
+                "The camera smoothly tracks forward, following Jiang Ziya and Xiao Hu as they walk. Xiao Hu's steps are heavy and hesitant, contrasting with Jiang Ziya's steady pace."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "neutral",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_003",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "刻画小狐的绝望与其妖族身份的暗示",
+              "action_focus": "小狐的面部表情和无助姿态",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low",
+              "camera_movement": "static",
+              "framing_notes": "强调小狐的无助与脆弱，背景是巨大的平台",
+              "video_motion_hints": [
+                "Xiao Hu remains static on the ground, her shoulders subtly shaking. Her tear-filled eyes flicker with fleeting emotions of terror and resignation."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "sad",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "CUSTOM",
+          "environment_notes": [
+            "中国神话设定",
+            "封神之战背景",
+            "古老中国",
+            "一个高耸古老的石头平台",
+            "周围环绕着九天神雷的声音",
+            "充满巨大的精神力量和庄严感"
+          ],
+          "style_notes": [
+            "奇幻",
+            "神话",
+            "剧情",
+            "中国神话",
+            "封神之战",
+            "史诗",
+            "悲剧",
+            "绝望",
+            "古老中国",
+            "忧郁",
+            "哀伤",
+            "九天神雷"
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_004",
+            "semantic_context": {
+              "shot_type": "medium_close_up",
+              "visual_goal": "展现姜子牙即将执行天罚的决心",
+              "action_focus": "姜子牙和高举的法剑",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "low",
+              "camera_movement": "static",
+              "framing_notes": "仰视姜子牙，强调其强大的气势与威严",
+              "video_motion_hints": [
+                "Jiang Ziya holds his pose, muscles tense. The sword blade subtly reflects the flashing light of the celestial thunder, emphasizing its sharp edge."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_005",
+            "semantic_context": {
+              "shot_type": "extreme_close_up",
+              "visual_goal": "表现小狐在死亡边缘的痛苦与记忆闪回的起始",
+              "action_focus": "小狐的表情与泪水",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "特写小狐的脸，聚焦眼角的泪水和挣扎",
+              "video_motion_hints": [
+                "Xiao Hu's face is mostly still, but her eyelids flutter slightly with inner turmoil. A single tear slowly rolls down her cheek, catching the light."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "sad",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_006",
+            "semantic_context": {
+              "shot_type": "montage",
+              "visual_goal": "展现神秘男子的形象，暗示遗忘的过去",
+              "action_focus": "神秘男子与小狐的互动（记忆片段）",
+              "characters_in_frame": [
+                "char_001",
+                "char_003"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "快速剪辑，营造梦境般的效果，画面模糊不清",
+              "video_motion_hints": [
+                "Images rapidly cut and dissolve into each other. The figures within the memories are slightly out of focus, giving a hazy, ethereal quality."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "warm",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_004",
+            "to_shot_id": "sh_005",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_005",
+            "to_shot_id": "sh_006",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "CUSTOM",
+          "environment_notes": [
+            "中国神话设定",
+            "封神之战背景",
+            "古老中国",
+            "一个高耸古老的石头平台",
+            "周围环绕着九天神雷的声音",
+            "充满巨大的精神力量和庄严感"
+          ],
+          "style_notes": [
+            "奇幻",
+            "神话",
+            "剧情",
+            "中国神话",
+            "封神之战",
+            "史诗",
+            "悲剧",
+            "绝望",
+            "古老中国",
+            "忧郁",
+            "哀伤",
+            "九天神雷"
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_007",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "展现小狐记忆的完全恢复和心境转变",
+              "action_focus": "小狐面部的表情变化",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "zoom_in",
+              "framing_notes": "聚焦小狐的眼神变化，强调其觉醒",
+              "video_motion_hints": [
+                "The camera slowly zooms into Xiao Hu's face, focusing on the subtle shift in her expression as her eyes open, conveying a dawning realization."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "excited",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_008",
+            "semantic_context": {
+              "shot_type": "medium_close_up",
+              "visual_goal": "表现姜子牙的犹豫与对未知力量的感知",
+              "action_focus": "姜子牙凝滞的法剑与疑惑的目光",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "定格姜子牙的动作和表情，强调其内心挣扎",
+              "video_motion_hints": [
+                "Jiang Ziya's body remains perfectly still, but his eyes subtly shift with a searching, questioning gaze. The sword's hilt vibrates faintly in the air."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_009",
+            "semantic_context": {
+              "shot_type": "two_shot",
+              "visual_goal": "强调小狐新生的希望与姜子牙的内心挣扎",
+              "action_focus": "两人之间的眼神交流",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "捕捉两人之间紧张的对视，强调眼神交流",
+              "video_motion_hints": [
+                "Xiao Hu's head slowly lifts to meet Jiang Ziya's gaze. The tension between their eyes is palpable, with minimal, subtle facial movements."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "urgent",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_010",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "以宏大的环境烘托结局的悬念",
+              "action_focus": "封神台的广阔与凝滞的气氛",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "high",
+              "camera_movement": "static",
+              "framing_notes": "展现整个封神台，烘托紧张气氛，强调结局的悬念",
+              "video_motion_hints": [
+                "The celestial thunder rumbles distantly, but the overall atmosphere of the wide shot is one of profound stillness. Wisps of mist might slowly drift across the ancient platform."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_007",
+            "to_shot_id": "sh_008",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_008",
+            "to_shot_id": "sh_009",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_009",
+            "to_shot_id": "sh_010",
+            "transition_type": "cut"
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_segment_count": 10
+  }
+}

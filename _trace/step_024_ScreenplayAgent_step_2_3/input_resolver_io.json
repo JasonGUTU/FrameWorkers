@@ -1,0 +1,223 @@
+{
+  "input": {
+    "agent_id": "ScreenplayAgent",
+    "step_id": "step_2_3d8bb556",
+    "input_needs_description": "I take a high-level story plan and turn it into a full unified screenplay (scenes broken into shots, with visual direction, dialogue, and consistency packs).\n\n[story] (single)\nThe high-level narrative plan for the whole video — written before any scene breakdown exists. It defines the logline, the cast of characters, the locations, the overall story arc, and a coarse scene-level outline. It does NOT yet contain a per-shot breakdown, dialogue, or camera direction; that is exactly what I will produce. Choose at most one such document for this story.",
+    "labels": [
+      "story"
+    ],
+    "captions_index_text": "#0  Structured metadata document (JSON) for a user-submitted text brief. Payload carries the raw text verbatim. Pipeline entry point — consumed by story / screenplay / narration agents. Produced by user on 2026-05-12 19:42.\n\n#1  Story blueprint: 5 scene(s), 3 character(s). Structured input for screenplay generation. Produced by StoryAgent on 2026-05-12 19:43.",
+    "id_to_path": [
+      "/home/zhendong_li/FrameWorkers/_workspaces/workspace_global_20260512_194119/inputs/brief_20260512_194249_875467.json",
+      "/home/zhendong_li/FrameWorkers/_workspaces/workspace_global_20260512_194119/artifacts/StoryAgent/step_1_1bc74b1f_storyagent_exec_1.json"
+    ]
+  },
+  "llm_call": {
+    "system_prompt": "You match a sub-agent's input requirements to artifacts in an artifact registry.\n\nThe sub-agent's input requirements are written as one or more [label] blocks. Each block has a header of the form\n    [label_name] (single)        -- exactly one matching artifact expected\n    [label_name] (collection)    -- zero or more matching artifacts expected\nfollowed by a natural-language description of what kind of artifact that label refers to.\n\nThe artifact registry lists every persisted artifact with a #N id and a natural-language caption describing its type, pipeline role, and which agent produced it.\n\nYour job:\n  1. Read each [label] block and understand the kind of artifact the agent is asking for in that slot.\n  2. For each registry artifact, read its caption and understand the artifact's type, role, and purpose. Reason about meaning.\n  3. For each [label], decide which artifacts in the registry are instances of the kind described in that block.\n  4. Be inclusive for (collection) labels: include EVERY matching artifact, never just a sample.\n  5. Be exclusive for (single) labels: pick the single best matching artifact (or none if none clearly fits).\n  6. Distinguish artifacts that look superficially similar but play different roles in the pipeline (e.g. a reference image of an entity in isolation vs. a planned frame of a specific shot of the story). Use the caption to decide.\n  7. Only return #N ids that appear in the registry.\n\nReturn strict JSON only, with this shape:\n{\n  \"selections\": {\n    \"<label_name>\": [0, 3, 5],\n    ...\n  },\n  \"rationale\": \"<a short explanation of how you matched each label>\"\n}\nUse exactly the label names from the agent's [label] headers as keys. Values are arrays of integer ids (the #N numbers from the registry).",
+    "user_prompt": "agent_id: ScreenplayAgent\n\n=== AGENT INPUT NEEDS ===\nI take a high-level story plan and turn it into a full unified screenplay (scenes broken into shots, with visual direction, dialogue, and consistency packs).\n\n[story] (single)\nThe high-level narrative plan for the whole video — written before any scene breakdown exists. It defines the logline, the cast of characters, the locations, the overall story arc, and a coarse scene-level outline. It does NOT yet contain a per-shot breakdown, dialogue, or camera direction; that is exactly what I will produce. Choose at most one such document for this story.\n\nLabels expected in your response: ['story']\n\n=== ARTIFACT REGISTRY ===\n#0  Structured metadata document (JSON) for a user-submitted text brief. Payload carries the raw text verbatim. Pipeline entry point — consumed by story / screenplay / narration agents. Produced by user on 2026-05-12 19:42.\n\n#1  Story blueprint: 5 scene(s), 3 character(s). Structured input for screenplay generation. Produced by StoryAgent on 2026-05-12 19:43.\n",
+    "raw_response": {
+      "selections": {
+        "story": [
+          1
+        ]
+      },
+      "rationale": "Artifact #1 is a 'Story blueprint' with scene and character details, explicitly described as 'Structured input for screenplay generation' and produced by the StoryAgent, perfectly matching the 'high-level narrative plan' required for the `story` label. Artifact #0 is a raw user-submitted text brief, which is an earlier-stage input before a structured story plan would be created."
+    }
+  },
+  "output": {
+    "resolved_artifacts": {
+      "story": {
+        "caption": "Story blueprint: 5 scene(s), 3 character(s). Structured input for screenplay generation.",
+        "scope": "global",
+        "path": "/home/zhendong_li/FrameWorkers/_workspaces/workspace_global_20260512_194119/artifacts/StoryAgent/step_1_1bc74b1f_storyagent_exec_1.json",
+        "mime": "application/json",
+        "payload": {
+          "meta": {
+            "schema_version": "0.3",
+            "created_at": "2026-05-12T19:43:27.216305+00:00",
+            "language": "zh"
+          },
+          "content": {
+            "logline": "At the grim conclusion of the Investiture of the Gods war, as the venerable Jiang Ziya prepares to execute the last nine-tailed fox demon, a whispered name from her past — the name of a man Jiang Ziya himself once executed — shatters his resolute duty.",
+            "style": {
+              "genre": [
+                "fantasy",
+                "mythology",
+                "drama"
+              ],
+              "tone_keywords": [
+                "tragic",
+                "solemn",
+                "oppressive",
+                "mournful",
+                "Chinese mythology",
+                "epic"
+              ]
+            },
+            "cast": [
+              {
+                "character_id": "char_001",
+                "name": "Little Fox Demon",
+                "role": "protagonist",
+                "profile": "A terrified and exhausted nine-tailed fox demon, the last survivor of a devastating war. Dressed in torn white robes, she faces impending execution on the ancient Investiture Platform, haunted by fragmented memories of a gentle man.",
+                "motivation": "To survive, to recall and understand her past, and to find comfort amidst despair.",
+                "flaw": "Her overwhelming fear and vulnerability make her seem helpless."
+              },
+              {
+                "character_id": "char_002",
+                "name": "Jiang Ziya",
+                "role": "antagonist",
+                "profile": "A cold, resolute, and majestic Taoist general, duty-bound to carry out divine justice at the end of the Investiture of the Gods war. He wields a divine execution sword with unwavering conviction, until a name from the past shakes his resolve.",
+                "motivation": "To uphold divine order and complete his sacred duty, no matter the personal cost.",
+                "flaw": "His dogmatic adherence to duty may blind him to deeper truths or personal connections."
+              },
+              {
+                "character_id": "char_003",
+                "name": "Mysterious Man",
+                "role": "support",
+                "profile": "A gentle and comforting figure who appears in the Little Fox Demon's fragmented memories, once offering solace beneath blooming peach blossoms. He was years ago executed by Jiang Ziya on the very Investiture Platform.",
+                "motivation": "Unknown, but his presence brought comfort to the fox demon.",
+                "flaw": "Unknown, a figure defined by his tragic past."
+              }
+            ],
+            "locations": [
+              {
+                "location_id": "loc_001",
+                "name": "Ancient Investiture Platform",
+                "description": "An ominous, ancient stone platform situated at the end of the Investiture of the Gods war. It is perpetually under a sky of dark, swirling storm clouds, illuminated by flashes of divine lightning and resonant with the roaring nine-heaven thunder. The atmosphere is tragic, solemn, and oppressive."
+              },
+              {
+                "location_id": "loc_002",
+                "name": "Peach Blossom Grove (Memory)",
+                "description": "A serene, ethereal grove filled with blooming peach blossoms, depicted within the Little Fox Demon's dreamlike memories. It is a place of peace and gentle comfort, a stark contrast to the grim reality of the Investiture Platform."
+              }
+            ],
+            "story_arc": [
+              {
+                "step_id": "arc_001",
+                "order": 1,
+                "step_type": "setup",
+                "summary": "At the end of the Investiture of the Gods war, the venerable Jiang Ziya prepares to execute the last nine-tailed fox demon on the ancient, storm-swept Investiture Platform.",
+                "conflict": "The clash between Jiang Ziya's unwavering duty and the fox demon's terrified struggle for survival, set against a backdrop of divine judgment.",
+                "turning_point": "The grim atmosphere and the presence of both characters on the platform establish the high stakes of the impending execution."
+              },
+              {
+                "step_id": "arc_002",
+                "order": 2,
+                "step_type": "inciting",
+                "summary": "As Jiang Ziya raises his divine execution sword, poised to strike, the terrified fox demon's fear triggers a desperate surge of fragmented memories.",
+                "conflict": "The fox demon faces imminent death, her last moments consumed by terror and a subconscious fight against oblivion.",
+                "turning_point": "The rising sword forces the fox demon to grasp at any form of escape, triggering the crucial memory."
+              },
+              {
+                "step_id": "arc_003",
+                "order": 3,
+                "step_type": "turn",
+                "summary": "Her memories flash from a gentle man comforting her beneath peach blossoms to the shocking realization that the same man was executed by Jiang Ziya on this very platform years ago.",
+                "conflict": "The fox demon grapples with the traumatic memory and the sudden, devastating revelation of Jiang Ziya's past connection to the man.",
+                "turning_point": "The memory transforms from a comforting dream to a horrifying past event, directly implicating Jiang Ziya and giving the fox demon a desperate, final plea."
+              },
+              {
+                "step_id": "arc_004",
+                "order": 4,
+                "step_type": "crisis",
+                "summary": "Through tears and amidst the roaring thunder, the fox demon whispers the mysterious man's name, a name that resonates deeply with Jiang Ziya.",
+                "conflict": "The fox demon's last-ditch effort to connect with Jiang Ziya through their shared, tragic past, risking everything on the power of a single name.",
+                "turning_point": "The utterance of the name acts as a direct challenge to Jiang Ziya's stoicism, forcing him to confront a suppressed memory or connection."
+              },
+              {
+                "step_id": "arc_005",
+                "order": 5,
+                "step_type": "climax",
+                "summary": "Jiang Ziya's divine sword freezes mid-air for the first time, his cold resolve shattered. He slowly lowers the blade, staring at the fox demon in profound shock and doubt.",
+                "conflict": "Jiang Ziya's internal struggle between his duty and the overwhelming shock and doubt triggered by the whispered name, potentially shaking the foundations of his beliefs.",
+                "turning_point": "Jiang Ziya's sudden hesitation and the lowering of his sword mark a pivotal moment, halting the execution and opening a door to an unforeseen consequence."
+              }
+            ],
+            "scene_outline": [
+              {
+                "scene_id": "sc_001",
+                "order": 1,
+                "linked_step_id": "arc_001",
+                "location_id": "loc_001",
+                "time_of_day_hint": "CUSTOM",
+                "characters_present": [
+                  "char_001",
+                  "char_002"
+                ],
+                "goal": "Establish the grim setting of the Investiture Platform, the characters of Jiang Ziya and the Little Fox Demon, and the imminent threat of execution.",
+                "conflict": "Jiang Ziya's unwavering resolve against the fox demon's raw terror, underscored by the oppressive atmosphere of divine judgment.",
+                "turn": "Jiang Ziya positions the fox demon on the platform and prepares his sword, signaling the finality of the situation."
+              },
+              {
+                "scene_id": "sc_002",
+                "order": 2,
+                "linked_step_id": "arc_002",
+                "location_id": "loc_001",
+                "time_of_day_hint": "CUSTOM",
+                "characters_present": [
+                  "char_001",
+                  "char_002"
+                ],
+                "goal": "Depict Jiang Ziya raising his sword and the fox demon's extreme terror, which triggers her subconscious memory.",
+                "conflict": "The immediate threat of the descending sword presses the fox demon to her absolute limit, causing her mind to seek refuge in a fragmented, dreamlike memory.",
+                "turn": "As the sword is raised, the fox demon's vision blurs, and she sees a fleeting image of a gentle man beneath peach blossoms."
+              },
+              {
+                "scene_id": "sc_003",
+                "order": 3,
+                "linked_step_id": "arc_003",
+                "location_id": "loc_002",
+                "time_of_day_hint": "CUSTOM",
+                "characters_present": [
+                  "char_001",
+                  "char_003"
+                ],
+                "goal": "Unfold the fox demon's memory fully, revealing the mysterious man's identity and his past execution by Jiang Ziya.",
+                "conflict": "The initial comforting memory rapidly shifts to a devastating realization, transforming her last hope into a horrifying connection to her executioner.",
+                "turn": "The serene peach blossom memory abruptly cuts to the same man kneeling on the Investiture Platform, executed by a younger Jiang Ziya, causing the fox demon to gasp in a flash of understanding."
+              },
+              {
+                "scene_id": "sc_004",
+                "order": 4,
+                "linked_step_id": "arc_004",
+                "location_id": "loc_001",
+                "time_of_day_hint": "CUSTOM",
+                "characters_present": [
+                  "char_001",
+                  "char_002"
+                ],
+                "goal": "Show the fox demon making her desperate, tearful plea by whispering the man's name to Jiang Ziya.",
+                "conflict": "The fox demon, facing imminent death, gambles everything on the potential impact of a single name on Jiang Ziya, amidst the cacophony of thunder.",
+                "turn": "Through sobs, the fox demon utters the man's name, and the sound momentarily cuts through the roaring nine-heaven thunder."
+              },
+              {
+                "scene_id": "sc_005",
+                "order": 5,
+                "linked_step_id": "arc_005",
+                "location_id": "loc_001",
+                "time_of_day_hint": "CUSTOM",
+                "characters_present": [
+                  "char_001",
+                  "char_002"
+                ],
+                "goal": "Depict Jiang Ziya's dramatic reaction: his sword freezing mid-air and his subsequent lowering of the blade, overcome by shock and doubt.",
+                "conflict": "Jiang Ziya's previously unshakeable resolve collapses as the whispered name forces him to confront a deeply buried memory or truth, creating a profound internal crisis.",
+                "turn": "The divine execution sword halts mid-descent, then slowly, silently lowers, as Jiang Ziya stares at the fox demon, his face a mask of disbelief and uncertainty."
+              }
+            ]
+          },
+          "metrics": {
+            "character_count": 3,
+            "location_count": 2,
+            "scene_count": 5
+          }
+        }
+      }
+    },
+    "selected_artifact_paths": [
+      "/home/zhendong_li/FrameWorkers/_workspaces/workspace_global_20260512_194119/artifacts/StoryAgent/step_1_1bc74b1f_storyagent_exec_1.json"
+    ],
+    "rationale": "Artifact #1 is a 'Story blueprint' with scene and character details, explicitly described as 'Structured input for screenplay generation' and produced by the StoryAgent, perfectly matching the 'high-level narrative plan' required for the `story` label. Artifact #0 is a raw user-submitted text brief, which is an earlier-stage input before a structured story plan would be created."
+  }
+}

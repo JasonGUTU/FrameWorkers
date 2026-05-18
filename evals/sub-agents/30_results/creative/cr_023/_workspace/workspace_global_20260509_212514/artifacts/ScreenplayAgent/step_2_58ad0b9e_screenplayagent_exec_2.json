@@ -1,0 +1,608 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-09T21:26:31.268333+00:00",
+    "language": "zh"
+  },
+  "content": {
+    "title": "重生皇后：复仇之棋",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_002",
+          "location_name": "刘府",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "柳如烟在刘府的闺房中醒来，意识到自己已重获新生，对过去的背叛和死亡记忆犹新。她将内心的绝望转化为冷酷的复仇决心。",
+        "continuity": {
+          "props_present": [],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "质朴的寝衣",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": []
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_002",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "刘府，一座历史悠久的东亚帝国贵族宅邸，内部古朴典雅，充满传统东亚建筑风格，夜色中灯火稀疏，透着一丝寂静与庄重。"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "柳如烟，一个来自历史东亚帝国的，被背叛并重生的前皇后，外表端庄聪慧，内心充满复仇的钢铁般意志。"
+              ],
+              "wardrobe_notes": [
+                "传统的东亚寝衣，简洁而不失雅致。"
+              ],
+              "must_keep": []
+            }
+          ],
+          "props_lock": [],
+          "style_lock": {
+            "global_style_notes": [
+              "历史东亚宫廷背景下的重生与复仇故事，充满权谋与戏剧性，古风奇幻。"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "柳如烟将内心的绝望和愤怒转化为冷酷而不可动摇的复仇决心。",
+          "emotional_shift": "从恐惧和混乱转向冷静的愤怒与决绝。"
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "柳如烟在卧榻上猛然惊醒，大口喘息，眼神中充满恐惧与困惑，环顾着熟悉又陌生的闺房。",
+            "emotion_hint": "紧张",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "特写柳如烟惊恐的眼神"
+            },
+            "visual_goal": "展现柳如烟从噩梦中惊醒的瞬间与内心的巨大冲击。",
+            "action_focus": "柳如烟的震惊和不安。",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "她的手紧紧抓住胸前的寝衣，指节发白，痛苦的回忆如潮水般涌来，脸上肌肉因愤怒而颤抖。",
+            "emotion_hint": "愤怒",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "聚焦于她紧握的双手和扭曲的表情"
+            },
+            "visual_goal": "表现她内心的剧烈挣扎和被记忆折磨的痛苦。",
+            "action_focus": "柳如烟因回忆而产生的生理反应。",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "monologue",
+            "character_id": "char_001",
+            "character_name": "柳如烟",
+            "text": "我回来了……我绝不会再任人宰割！",
+            "emotion_hint": "坚定",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "low",
+              "movement": "static",
+              "framing_notes": "柳如烟眼神从痛苦转为锐利，坐直身子"
+            },
+            "visual_goal": "展现柳如烟从绝望中升腾而起的坚韧和复仇的决心。",
+            "action_focus": "柳如烟的眼神和姿态转变。",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "皇宫",
+          "interior_exterior": "INT",
+          "time_of_day": "DAY"
+        },
+        "summary": "柳如烟进入皇宫，首次与姐姐柳如曦相遇。柳如曦假意亲热，如烟则需强压内心的怒火，维系无辜表象，并暗中收集情报。",
+        "continuity": {
+          "props_present": [],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "典雅的宫装，素雅中透着低调的华贵",
+              "must_keep": []
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "华贵的宫装，色彩明艳，彰显地位",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": []
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "皇宫，一座宏伟的东亚帝国宫殿群，金碧辉煌的大殿，精致的庭院，阳光普照，彰显着至高无上的皇权与暗流涌动的宫廷。"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "柳如烟，一个来自历史东亚帝国的，被背叛并重生的前皇后，外表端庄聪慧，内心充满复仇的钢铁般意志。"
+              ],
+              "wardrobe_notes": [
+                "初入宫廷的典雅宫装，颜色沉稳，款式低调却不失身份，体现其家族地位。"
+              ],
+              "must_keep": []
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "柳如曦，一个来自历史东亚帝国的，柳如烟的亲姐姐，表面和善实则阴险狡诈，曾是柳如烟悲剧的幕后推手。"
+              ],
+              "wardrobe_notes": [
+                "彰显其身份与地位的华美宫装，色彩艳丽，配饰考究，尽显其在宫中的优越。"
+              ],
+              "must_keep": []
+            }
+          ],
+          "props_lock": [],
+          "style_lock": {
+            "global_style_notes": [
+              "历史东亚宫廷背景下的重生与复仇故事，充满权谋与戏剧性，古风奇幻。"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "柳如烟以微妙的言辞回应了柳如曦的伪善，在她心中种下了一丝不安的种子。",
+          "emotional_shift": "从伪装的和谐到暗流涌动的警惕。"
+        },
+        "shots": [
+          {
+            "shot_id": "sh_004",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "柳如烟穿着素雅的宫装，在宫女的引导下穿过雕梁画栋的宫殿长廊，她步伐从容，面带微笑。",
+            "emotion_hint": "平静",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "dolly",
+              "framing_notes": "展现宫殿的宏伟与柳如烟的融入"
+            },
+            "visual_goal": "表现柳如烟初入宫廷的姿态，外表平静内心波涛汹涌。",
+            "action_focus": "柳如烟在宫殿环境中的行走。",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 2,
+            "block_type": "dialogue",
+            "character_id": "char_002",
+            "character_name": "柳如曦",
+            "text": "妹妹终于入宫了，姐姐等你好久了。",
+            "emotion_hint": "温暖",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "柳如曦带着亲切的笑容走上前，张开双臂"
+            },
+            "visual_goal": "柳如曦伪善的关怀，与柳如烟的内心形成对比。",
+            "action_focus": "柳如曦向柳如烟展现亲昵。",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 3,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "柳如烟",
+            "text": "如烟初来乍到，还要劳烦姐姐多多照拂。",
+            "emotion_hint": "平静",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "柳如烟还以微笑，眼神中闪过一丝不易察觉的寒意"
+            },
+            "visual_goal": "柳如烟伪装下的顺从，以及她隐藏的深意。",
+            "action_focus": "柳如烟的回应和眼神。",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "柳如曦的笑容在柳如烟的话语后略微僵硬，眼神中闪过一丝不解和警惕，随即恢复正常。",
+            "emotion_hint": "紧张",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "特写柳如曦脸上细微的表情变化"
+            },
+            "visual_goal": "展现柳如烟的话语在柳如曦心中埋下了一丝疑虑。",
+            "action_focus": "柳如曦的微表情。",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_003",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "皇宫",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "在一次宫廷宴会上，柳如烟巧妙地设计了一场局，利用皇帝的言行，在不暴露自己的前提下，动摇了柳如曦在皇帝心中的地位。",
+        "continuity": {
+          "props_present": [
+            "精美酒器",
+            "珍馐佳肴"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "华贵的宫装，雍容而内敛",
+              "must_keep": []
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "奢华的宫装，光彩夺目",
+              "must_keep": []
+            },
+            {
+              "character_id": "char_003",
+              "wardrobe": "绣有龙纹的华丽龙袍",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": []
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "皇宫大殿，夜宴之上灯火辉煌，歌舞升平，珍馐美酒摆满了桌案。金碧辉煌的装饰与浓厚的东亚历史氛围，烘托出表面繁华下的暗潮汹涌。"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "柳如烟，一个来自历史东亚帝国的，被背叛并重生的前皇后，外表端庄聪慧，内心充满复仇的钢铁般意志。"
+              ],
+              "wardrobe_notes": [
+                "为宴会准备的华贵宫装，色彩与款式选择上既能凸显身份，又不至于过于张扬，显得恰到好处。"
+              ],
+              "must_keep": []
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "柳如曦，一个来自历史东亚帝国的，柳如烟的亲姐姐，表面和善实则阴险狡诈，曾是柳如烟悲剧的幕后推手。"
+              ],
+              "wardrobe_notes": [
+                "极尽奢华的宴会宫装，力求在宴会上艳压群芳，巩固其地位，配饰繁复华丽。"
+              ],
+              "must_keep": []
+            },
+            {
+              "character_id": "char_003",
+              "identity_notes": [
+                "皇帝，一个历史东亚帝国的年轻君主，拥有无上权力，但容易被后宫和朝臣的阴谋所左右。"
+              ],
+              "wardrobe_notes": [
+                "绣有龙纹的华丽龙袍，头戴帝王冠冕，彰显其至高无上的皇权，材质上乘，做工精细。"
+              ],
+              "must_keep": []
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "精美酒器",
+              "must_keep": [
+                "东亚传统风格，雕花精细，材质考究，内盛美酒。"
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "珍馐佳肴",
+              "must_keep": [
+                "摆盘精致的东亚宫廷菜肴，色彩丰富，香气诱人。"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "历史东亚宫廷背景下的重生与复仇故事，充满权谋与戏剧性，古风奇幻。"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "皇帝受到柳如烟巧妙言辞的影响，对柳如曦表达了带有审视意味的关怀，使柳如曦的地位首次被动摇。",
+          "emotional_shift": "从表面上的和睦转向柳如曦内心的不安与警觉，以及柳如烟的初步胜利。"
+        },
+        "shots": [
+          {
+            "shot_id": "sh_008",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "宫廷宴会大厅灯火辉煌，皇帝端坐主位，柳如烟和柳如曦分列左右，觥筹交错，歌舞升平。",
+            "emotion_hint": "中性",
+            "continuity_refs": {
+              "props": [
+                "prop_001",
+                "prop_002"
+              ],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "high",
+              "movement": "static",
+              "framing_notes": "俯瞰整个宴会场景，展现宏大与热闹"
+            },
+            "visual_goal": "建立宴会场景，展示三位主要人物的位置与氛围。",
+            "action_focus": "宴会的整体气氛与人物之间的隐约联系。",
+            "characters_in_frame": [
+              "char_001",
+              "char_002",
+              "char_003"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 2,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "柳如烟",
+            "text": "陛下政务繁忙，姐姐却能常伴左右，实乃我等之福。",
+            "emotion_hint": "平静",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002",
+                "char_003"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "柳如烟举杯望向皇帝，目光轻轻扫过柳如曦"
+            },
+            "visual_goal": "柳如烟看似恭顺的言辞，实则暗含深意，引发皇帝对柳如曦的审视。",
+            "action_focus": "柳如烟的发言及其引起的波澜。",
+            "characters_in_frame": [
+              "char_001",
+              "char_002",
+              "char_003"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 3,
+            "block_type": "dialogue",
+            "character_id": "char_003",
+            "character_name": "皇帝",
+            "text": "嗯……如烟所言极是，爱妃操劳了。",
+            "emotion_hint": "思考",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002",
+                "char_003"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "皇帝略一沉吟，眼神若有所思地望向柳如曦"
+            },
+            "visual_goal": "皇帝对柳如烟话语的反应，显示其对柳如曦的看法开始动摇。",
+            "action_focus": "皇帝的眼神和语气。",
+            "characters_in_frame": [
+              "char_002",
+              "char_003"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_011",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "柳如曦听到皇帝的话，脸上的笑容有片刻的僵硬，她勉强维持镇定，指尖却在袖中紧握。",
+            "emotion_hint": "紧张",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "特写柳如曦细微的表情变化和紧握的拳头"
+            },
+            "visual_goal": "展现柳如曦在柳如烟攻势下，表面平静内心惊慌失措。",
+            "action_focus": "柳如曦的微表情和肢体语言。",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count_total": 11,
+    "avg_shots_per_scene": 3.6666666666666665,
+    "dialogue_block_count": 4,
+    "action_block_count": 6
+  }
+}

@@ -1,0 +1,65 @@
+[
+  {
+    "idx": 1,
+    "shot_id": "sh_001",
+    "prompt": "A young male intern, dressed in hospital scrubs, walks cautiously down a long, dimly lit corridor in an old, abandoned psychiatric hospital wing at midnight. Dust motes swirl in the sparse, ethereal l",
+    "status": "OK",
+    "keyframe_bytes": 1775385,
+    "mp4_bytes": 894716,
+    "elapsed_sec": 1447.7491326332092
+  },
+  {
+    "idx": 2,
+    "shot_id": "sh_002",
+    "prompt": "The intern pauses, head cocked, listening intently as faint, muffled, distorted audio emanates from behind a specific door, \"Room 304,\" casting a strange, pulsing glow beneath it onto the dusty floor.",
+    "status": "OK",
+    "keyframe_bytes": 1628514,
+    "mp4_bytes": 481897,
+    "elapsed_sec": 1448.1100306510925
+  },
+  {
+    "idx": 3,
+    "shot_id": "sh_003",
+    "prompt": "A close-up on the weathered, peeling paint of Room 304's door, as an old, crackly 30-year-old audio recording of a child's voice faintly plays from within, the sound subtly pulsing through the aged wo",
+    "status": "OK",
+    "keyframe_bytes": 2104620,
+    "mp4_bytes": 1190124,
+    "elapsed_sec": 1447.665360212326
+  },
+  {
+    "idx": 4,
+    "shot_id": "sh_004",
+    "prompt": "The male intern, wide-eyed with a mix of fear and professional curiosity, slowly approaches Room 304, his hand trembling slightly as he reaches out for the cold, ornate doorknob in the eerie silence.",
+    "status": "OK",
+    "keyframe_bytes": 1532423,
+    "mp4_bytes": 450792,
+    "elapsed_sec": 1448.2680163383484
+  },
+  {
+    "idx": 5,
+    "shot_id": "sh_005",
+    "prompt": "A tight shot on the intern's gloved hand as it firmly grasps the cold, brass doorknob of Room 304. He takes a deep, shaky breath, preparing to turn the handle and push the heavy door inward.",
+    "status": "OK",
+    "keyframe_bytes": 1614831,
+    "mp4_bytes": 527750,
+    "elapsed_sec": 1448.6135513782501
+  },
+  {
+    "idx": 6,
+    "shot_id": "sh_006",
+    "prompt": "The heavy door of Room 304 slowly creaks open, revealing a dark, dusty room within. A subtle, supernatural light begins to emanate from the room's interior, hinting at something unnatural and ancient.",
+    "status": "OK",
+    "keyframe_bytes": 1986389,
+    "mp4_bytes": 1325005,
+    "elapsed_sec": 1448.2695276737213
+  },
+  {
+    "idx": 7,
+    "shot_id": "sh_007",
+    "prompt": "Inside Room 304, a ten-year-old boy, dressed in vintage clothing, stands perfectly still amidst the dust and shadows. He stares directly at the intern with an unnerving, knowing expression, bathed in ",
+    "status": "OK",
+    "keyframe_bytes": 1594338,
+    "mp4_bytes": 487039,
+    "elapsed_sec": 1447.9886462688446
+  }
+]

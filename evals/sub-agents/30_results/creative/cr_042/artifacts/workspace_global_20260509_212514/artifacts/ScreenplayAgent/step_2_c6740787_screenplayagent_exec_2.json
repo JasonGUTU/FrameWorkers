@@ -1,0 +1,636 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-09T21:26:28.680528+00:00",
+    "language": "en"
+  },
+  "content": {
+    "title": "Broken Sword, Divine Path",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Heavenly Sword Sect",
+          "interior_exterior": "INT",
+          "time_of_day": "DAY"
+        },
+        "summary": "During a sect assessment, Lin Feng demonstrates his unparalleled talent, only for Elder Brother Wei's treacherous plot to unfold, falsely implicating Lin Feng in a heinous crime. This leads to Lin Feng's public humiliation, the shattering of his cultivation core, and his expulsion from the Heavenly Sword Sect, leaving him with only his family's broken sword.",
+        "continuity": {
+          "props_present": [
+            "Broken ancestral sword"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Heavenly Sword Sect disciple robes, later tattered",
+              "must_keep": [
+                "Heavenly Sword Sect disciple robes",
+                "tattered clothing"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "Senior Heavenly Sword Sect disciple robes",
+              "must_keep": [
+                "Heavenly Sword Sect disciple robes"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Lin Feng is publicly disgraced and crippled",
+            "Lin Feng is expelled from the sect",
+            "Lin Feng possesses a broken ancestral sword"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "A grand, ancient cultivation sect in a Xianxia world",
+              "Ornate temples",
+              "Mist-shrouded peaks",
+              "Sprawling training grounds"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Lin Feng, a gifted young cultivation prodigy of the Heavenly Sword Sect in a Xianxia world",
+                "Once destined for greatness, now stripped of power and honor",
+                "Appears young but with deep inner strength"
+              ],
+              "wardrobe_notes": [
+                "Initially pristine Heavenly Sword Sect disciple robes",
+                "Later, tattered and simple clothing after betrayal"
+              ],
+              "must_keep": [
+                "Disciple robes",
+                "Broken ancestral sword"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "Elder Brother Wei, Lin Feng's senior disciple brother in a Xianxia world",
+                "Consumed by envy and ambition",
+                "Appears composed and authoritative, but with a hint of malice"
+              ],
+              "wardrobe_notes": [
+                "Elegant and well-maintained Senior Heavenly Sword Sect disciple robes"
+              ],
+              "must_keep": [
+                "Senior disciple robes"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Broken ancestral sword",
+              "must_keep": [
+                "A sword, visibly broken or chipped, ancient in design",
+                "Radiates a faint, hidden power"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Xianxia",
+              "Fantasy",
+              "Epic",
+              "Revenge",
+              "Cultivation",
+              "High drama with intricate sect architecture"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "Lin Feng's power is stripped away, and he is cast out of the Heavenly Sword Sect, left with nothing but his tattered robes and his family's broken sword.",
+          "emotional_shift": "From hopeful triumph to utter despair and betrayal."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "CLOSE UP on Lin Feng's intense face as he performs intricate sword forms, spiritual energy swirling around his blade. A large crowd of disciples and elders watch, impressed.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "push_in",
+              "framing_notes": "Focus on Lin Feng's prowess and the subtle glow of his cultivation"
+            },
+            "visual_goal": "Establish Lin Feng's extraordinary talent and the admiration he garners.",
+            "action_focus": "Lin Feng's flawless execution of sword techniques.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "dialogue",
+            "character_id": "char_002",
+            "character_name": "Elder Brother Wei",
+            "text": "Such raw power. Shame he lacked discipline. A grave crime has been committed.",
+            "emotion_hint": "calm",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "over_shoulder",
+              "movement": "static",
+              "framing_notes": "From behind Wei, showing his back to the crowd, implying his authority and detachment."
+            },
+            "visual_goal": "Show Elder Brother Wei's manipulative presence and the beginning of Lin Feng's downfall.",
+            "action_focus": "Wei's calm, insidious declaration amidst the sect elders.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Lin Feng screams, eyes wide with agony as a searing light erupts from his chest, his cultivation core visibly shattering. He clutches a broken sword, its hilt warm in his hand.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "extreme_close_up",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "static",
+              "framing_notes": "Emphasize vulnerability and pain. Focus on the broken sword."
+            },
+            "visual_goal": "Depict the traumatic moment Lin Feng is crippled and receives the broken sword.",
+            "action_focus": "Lin Feng's physical and spiritual pain, the shattered core, and the broken sword as his only comfort.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A desolate Lin Feng, tattered robes clinging to him, stumbles down a grand staircase of the Heavenly Sword Sect, casting a final, heartbroken glance back at the majestic gates before disappearing into the mist.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "crane_down",
+              "framing_notes": "Show the vastness of the sect contrasting with Lin Feng's small, defeated figure."
+            },
+            "visual_goal": "Visually represent Lin Feng's expulsion and loss, emphasizing his isolation.",
+            "action_focus": "Lin Feng's lonely descent and the towering, uncaring sect behind him.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_004",
+        "heading": {
+          "location_id": "loc_002",
+          "location_name": "Ancient Demon Wilds",
+          "interior_exterior": "EXT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Weakened and alone in the perilous Ancient Demon Wilds, Lin Feng trains tirelessly, relying on his ingenuity, a newly re-forged cultivation method, and the surprising abilities of his broken sword. He battles a formidable ancient demon, ultimately defeating it and absorbing its essence, proving the nascent but formidable power of his new, hard-won cultivation path.",
+        "continuity": {
+          "props_present": [
+            "Broken ancestral sword"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Rough, patched-up clothing, weathered and dirtied",
+              "must_keep": [
+                "Simple, practical attire",
+                "Weathered appearance"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Lin Feng is in a desolate wilderness",
+            "Lin Feng is rebuilding his cultivation",
+            "The broken sword is his primary weapon and tool"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_002",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "A desolate and treacherous wilderness in a Xianxia world",
+              "Scarred by ancient battles",
+              "Infused with dark spiritual energy",
+              "Towering, gnarled trees, jagged rocks"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Lin Feng, a former cultivation prodigy now rebuilding his power in a Xianxia world",
+                "Hardened by adversity, determined and resourceful",
+                "Wears rough, practical clothing, showing signs of struggle"
+              ],
+              "wardrobe_notes": [
+                "Rough, patched-up clothing, practical for wilderness survival",
+                "Hair grown longer, unkempt"
+              ],
+              "must_keep": [
+                "Broken ancestral sword",
+                "Resolute expression"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Broken ancestral sword",
+              "must_keep": [
+                "Still broken, but now glows faintly with a darker energy",
+                "Looks more refined, like a weapon used daily"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Xianxia",
+              "Fantasy",
+              "Action",
+              "Transformation",
+              "Gritty survival in a mystical, dangerous landscape"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "Lin Feng defeats the demon, absorbing its essence and demonstrating the nascent but formidable power of his new, hard-won cultivation path, proving he can overcome his limitations and is a force to be reckoned with.",
+          "emotional_shift": "From grim determination and struggle to fierce empowerment and confidence."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Lin Feng, weathered and gaunt, meditates intensely beside a crackling fire in a shadowy cave, his broken sword resting across his lap. His breath glows with internal energy as he cultivates.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "static",
+              "framing_notes": "Emphasize Lin Feng's resilience and determination in a harsh environment."
+            },
+            "visual_goal": "Show Lin Feng's dedicated efforts to rebuild his cultivation in isolation.",
+            "action_focus": "Lin Feng's focused meditation, the glow of his qi, and the broken sword as a silent companion.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Lin Feng leaps, dodging a monstrous claw, his broken sword now humming with dark energy. He slashes, creating a shockwave that rattles the massive demon, its eyes glowing red.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "full",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "dolly_zoom",
+              "framing_notes": "Dynamic action shot, showing Lin Feng's agility against a larger foe."
+            },
+            "visual_goal": "Showcase Lin Feng's new combat style and the power of his revitalized broken sword.",
+            "action_focus": "The intense battle between Lin Feng and the demon, emphasizing speed and power.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The demon collapses, dissolving into dark spiritual essence. Lin Feng stands victorious, his body glowing as he absorbs the lingering energy, his eyes burning with renewed strength.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium_full",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "track_out",
+              "framing_notes": "Capture the transformation and growing power in Lin Feng."
+            },
+            "visual_goal": "Demonstrate Lin Feng's growing power and the effectiveness of his unique cultivation.",
+            "action_focus": "Lin Feng absorbing the demon's essence, signifying a significant power up.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_005",
+        "heading": {
+          "location_id": "loc_003",
+          "location_name": "Celestial Ascent Platform",
+          "interior_exterior": "EXT",
+          "time_of_day": "CUSTOM"
+        },
+        "summary": "At the Celestial Ascent Platform, Lin Feng faces the nine heavenly tribulations, a gauntlet of cosmic lightning and spiritual trials. He endures unimaginable pain, pushing past mortal limits to embrace death and achieve rebirth, transcending his human form to become one with the divine energy and ascend to godhood.",
+        "continuity": {
+          "props_present": [
+            "Broken ancestral sword"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "A new, ethereal cultivation robe, shimmering with spiritual energy, later transformed into divine attire.",
+              "must_keep": [
+                "Ethereal cultivation robe",
+                "Divine, radiant form"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Lin Feng undergoes heavenly tribulations",
+            "Lin Feng is on a platform high above the clouds",
+            "Lin Feng ascends to godhood"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_003",
+            "time_of_day": "CUSTOM",
+            "environment_notes": [
+              "An ethereal platform high above the clouds in a Xianxia world",
+              "Shimmering with raw cosmic energy",
+              "Nexus point between mortal and immortal realms",
+              "Swirling nebulas and distant stars"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Lin Feng, at the peak of his power, ready for ascension in a Xianxia world",
+                "Exudes immense spiritual presence, honed by trials",
+                "Eventually transforms into a being of pure divine energy"
+              ],
+              "wardrobe_notes": [
+                "Elegant, simple cultivation robe, perhaps imbued with subtle energy effects",
+                "Later, transformed into a radiant, divine form with celestial garments"
+              ],
+              "must_keep": [
+                "Radiant energy effects",
+                "Sense of ultimate power and transcendence"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Broken ancestral sword",
+              "must_keep": [
+                "Now fully restored and radiating divine power",
+                "Looks less like a sword and more like a symbol of Lin Feng's journey"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Xianxia",
+              "Fantasy",
+              "Epic",
+              "Transcendence",
+              "Cosmic, divine aesthetics",
+              "Grand and awe-inspiring"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "Lin Feng breaks through the final tribulation, shedding his mortal coil and ascending into the ranks of the gods, his body and spirit transformed, his journey of revenge and rebirth triumphantly complete.",
+          "emotional_shift": "From extreme pain and struggle to ultimate transcendence and serene power."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_008",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Lin Feng stands alone on the shimmering Celestial Ascent Platform, cosmic energy swirling around him. The sky above rips open, and a colossal bolt of heavenly lightning descends, striking him directly.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "crane_up",
+              "framing_notes": "Emphasize Lin Feng's isolation against the vastness of the cosmic threat."
+            },
+            "visual_goal": "Establish the awe-inspiring and terrifying nature of the heavenly tribulations.",
+            "action_focus": "The initial strike of the divine lightning upon Lin Feng.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "CLOSE UP on Lin Feng's face, contorted in agony yet radiating fierce resolve. His skin glows and sparks with immense power, then begins to crack like porcelain, revealing pure light beneath.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "extreme_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on the pain and the transformative power, hinting at his metamorphosis."
+            },
+            "visual_goal": "Show Lin Feng enduring the tribulation, pushing past his mortal limits and beginning to transcend.",
+            "action_focus": "The physical and spiritual transformation of Lin Feng's body.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Lin Feng, now a being of radiant light, floats above the Celestial Ascent Platform, the restored ancestral sword hovering at his side. He gazes down at the vast mortal realm, his expression profound and peaceful.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "aerial",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "reveal",
+              "framing_notes": "Show the full glory of Lin Feng's ascended form and the perspective of a deity."
+            },
+            "visual_goal": "Visually depict Lin Feng's successful ascension to godhood and his newfound cosmic perspective.",
+            "action_focus": "Lin Feng's divine form, the cosmic panorama, and the restored sword as a symbol of his journey.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count_total": 10,
+    "avg_shots_per_scene": 3.3333333333333335,
+    "dialogue_block_count": 1,
+    "action_block_count": 9
+  }
+}

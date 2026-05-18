@@ -1,0 +1,192 @@
+{
+  "agent_class": "TranscriptionAgent",
+  "typed_input": {
+    "source_media_path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_final.mp4",
+    "raw_segments_json_text": "{\n  \"language\": \"\",\n  \"segments\": [\n    {\n      \"segment_id\": \"seg_001\",\n      \"start_time\": 4.21596875,\n      \"end_time\": 4.85596875,\n      \"text\": \"走\"\n    },\n    {\n      \"segment_id\": \"seg_002\",\n      \"start_time\": 7.7759687500000005,\n      \"end_time\": 8.65596875,\n      \"text\": \"為什麼\"\n    },\n    {\n      \"segment_id\": \"seg_003\",\n      \"start_time\": 12.57596875,\n      \"end_time\": 13.37596875,\n      \"text\": \"妖孽\"\n    },\n    {\n      \"segment_id\": \"seg_004\",\n      \"start_time\": 13.89596875,\n      \"end_time\": 15.175968750000001,\n      \"text\": \"罪不可赦\"\n    },\n    {\n      \"segment_id\": \"seg_005\",\n      \"start_time\": 16.77596875,\n      \"end_time\": 17.89596875,\n      \"text\": \"天罰\"\n    },\n    {\n      \"segment_id\": \"seg_006\",\n      \"start_time\": 18.61596875,\n      \"end_time\": 20.215968750000002,\n      \"text\": \"就此終結\"\n    },\n    {\n      \"segment_id\": \"seg_007\",\n      \"start_time\": 23.135968750000004,\n      \"end_time\": 24.735968749999998,\n      \"text\": \"原來A我記得\"\n    },\n    {\n      \"segment_id\": \"seg_008\",\n      \"start_time\": 28.415968749999998,\n      \"end_time\": 30.095968749999997,\n      \"text\": \"這是一段遙遠的記憶\"\n    },\n    {\n      \"segment_id\": \"seg_009\",\n      \"start_time\": 31.61596875,\n      \"end_time\": 32.17596875,\n      \"text\": \"別怕\"\n    },\n    {\n      \"segment_id\": \"seg_010\",\n      \"start_time\": 33.78096875,\n      \"end_time\": 35.78096875,\n      \"text\": \"我等你\"\n    },\n    {\n      \"segment_id\": \"seg_011\",\n      \"start_time\": 52.10096875,\n      \"end_time\": 54.10096875,\n      \"text\": \"其實\"\n    },\n    {\n      \"segment_id\": \"seg_012\",\n      \"start_time\": 58.38096875,\n      \"end_time\": 61.10096875,\n      \"text\": \"這骨氣息\"\n    },\n    {\n      \"segment_id\": \"seg_013\",\n      \"start_time\": 66.72096875,\n      \"end_time\": 68.28096875,\n      \"text\": \"天意如此\"\n    },\n    {\n      \"segment_id\": \"seg_014\",\n      \"start_time\": 71.88096875,\n      \"end_time\": 74.12096875,\n      \"text\": \"我H.A.终于见到你\"\n    }\n  ],\n  \"full_text\": \"走為什麼妖孽罪不可赦天罰就此終結原來A我記得這是一段遙遠的記憶別怕我等你其實這骨氣息天意如此我H.A.终于见到你\"\n}"
+  },
+  "output": {
+    "meta": {
+      "schema_version": "0.3",
+      "created_at": "2026-05-13T01:08:51.990781+00:00",
+      "language": "en"
+    },
+    "content": {
+      "language": "zh",
+      "segments": [
+        {
+          "segment_id": "seg_001",
+          "start_time": 4.21596875,
+          "end_time": 4.85596875,
+          "text": "走。"
+        },
+        {
+          "segment_id": "seg_002",
+          "start_time": 7.77596875,
+          "end_time": 8.65596875,
+          "text": "為什麼？"
+        },
+        {
+          "segment_id": "seg_003",
+          "start_time": 12.57596875,
+          "end_time": 15.17596875,
+          "text": "妖孽，罪不可赦。"
+        },
+        {
+          "segment_id": "seg_004",
+          "start_time": 16.77596875,
+          "end_time": 20.21596875,
+          "text": "天罰，就此終結。"
+        },
+        {
+          "segment_id": "seg_005",
+          "start_time": 23.13596875,
+          "end_time": 24.73596875,
+          "text": "原來，我記得。"
+        },
+        {
+          "segment_id": "seg_006",
+          "start_time": 28.41596875,
+          "end_time": 30.09596875,
+          "text": "這是一段遙遠的記憶。"
+        },
+        {
+          "segment_id": "seg_007",
+          "start_time": 31.61596875,
+          "end_time": 32.17596875,
+          "text": "別怕。"
+        },
+        {
+          "segment_id": "seg_008",
+          "start_time": 33.78096875,
+          "end_time": 35.78096875,
+          "text": "我等你。"
+        },
+        {
+          "segment_id": "seg_009",
+          "start_time": 52.10096875,
+          "end_time": 54.10096875,
+          "text": "其實。"
+        },
+        {
+          "segment_id": "seg_010",
+          "start_time": 58.38096875,
+          "end_time": 61.10096875,
+          "text": "這股氣息。"
+        },
+        {
+          "segment_id": "seg_011",
+          "start_time": 66.72096875,
+          "end_time": 68.28096875,
+          "text": "天意如此。"
+        },
+        {
+          "segment_id": "seg_012",
+          "start_time": 71.88096875,
+          "end_time": 74.12096875,
+          "text": "我終於見到你。"
+        }
+      ],
+      "full_text": "走。 為什麼？ 妖孽，罪不可赦。 天罰，就此終結。 原來，我記得。 這是一段遙遠的記憶。 別怕。 我等你。 其實。 這股氣息。 天意如此。 我終於見到你。"
+    },
+    "metrics": {
+      "language": "zh",
+      "segment_count": 12,
+      "duration_seconds": 74.12096875
+    }
+  },
+  "eval_result": {
+    "dimensions": {},
+    "overall_pass": true,
+    "summary": "No creative evaluation defined for TranscriptionEvaluator.",
+    "structural_errors": []
+  },
+  "passed": true,
+  "attempts": 1,
+  "asset_dict": {
+    "content": {
+      "language": "zh",
+      "segments": [
+        {
+          "segment_id": "seg_001",
+          "start_time": 4.21596875,
+          "end_time": 4.85596875,
+          "text": "走。"
+        },
+        {
+          "segment_id": "seg_002",
+          "start_time": 7.77596875,
+          "end_time": 8.65596875,
+          "text": "為什麼？"
+        },
+        {
+          "segment_id": "seg_003",
+          "start_time": 12.57596875,
+          "end_time": 15.17596875,
+          "text": "妖孽，罪不可赦。"
+        },
+        {
+          "segment_id": "seg_004",
+          "start_time": 16.77596875,
+          "end_time": 20.21596875,
+          "text": "天罰，就此終結。"
+        },
+        {
+          "segment_id": "seg_005",
+          "start_time": 23.13596875,
+          "end_time": 24.73596875,
+          "text": "原來，我記得。"
+        },
+        {
+          "segment_id": "seg_006",
+          "start_time": 28.41596875,
+          "end_time": 30.09596875,
+          "text": "這是一段遙遠的記憶。"
+        },
+        {
+          "segment_id": "seg_007",
+          "start_time": 31.61596875,
+          "end_time": 32.17596875,
+          "text": "別怕。"
+        },
+        {
+          "segment_id": "seg_008",
+          "start_time": 33.78096875,
+          "end_time": 35.78096875,
+          "text": "我等你。"
+        },
+        {
+          "segment_id": "seg_009",
+          "start_time": 52.10096875,
+          "end_time": 54.10096875,
+          "text": "其實。"
+        },
+        {
+          "segment_id": "seg_010",
+          "start_time": 58.38096875,
+          "end_time": 61.10096875,
+          "text": "這股氣息。"
+        },
+        {
+          "segment_id": "seg_011",
+          "start_time": 66.72096875,
+          "end_time": 68.28096875,
+          "text": "天意如此。"
+        },
+        {
+          "segment_id": "seg_012",
+          "start_time": 71.88096875,
+          "end_time": 74.12096875,
+          "text": "我終於見到你。"
+        }
+      ],
+      "full_text": "走。 為什麼？ 妖孽，罪不可赦。 天罰，就此終結。 原來，我記得。 這是一段遙遠的記憶。 別怕。 我等你。 其實。 這股氣息。 天意如此。 我終於見到你。"
+    },
+    "metrics": {
+      "language": "zh",
+      "segment_count": 12,
+      "duration_seconds": 74.12096875
+    }
+  },
+  "media_assets_count": 0,
+  "media_assets_summary": []
+}

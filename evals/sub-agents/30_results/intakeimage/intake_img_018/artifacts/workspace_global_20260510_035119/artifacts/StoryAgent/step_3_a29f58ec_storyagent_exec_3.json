@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T03:52:03.544531+00:00",
+    "language": "en"
+  },
+  "content": {
+    "logline": "Seven years after witnessing the woman he loved seemingly jump to her death, a powerful East Asian business heir finds her returned under a new name, now his most formidable corporate rival and an enigma he cannot escape.",
+    "style": {
+      "genre": [
+        "Romance",
+        "Drama",
+        "Mystery"
+      ],
+      "tone_keywords": [
+        "tortured love",
+        "corporate rivalry",
+        "second chance",
+        "mystery",
+        "East Asian",
+        "modern-urban wealthy-clan",
+        "suspenseful"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Kenji Tanaka",
+        "role": "protagonist",
+        "profile": "A driven, melancholic East Asian business heir from a prominent modern-urban wealthy-clan, still haunted by the disappearance of his love. He presents an impeccably sharp image in black suits, concealing deep emotional wounds and a ruthless business acumen.",
+        "motivation": "To understand the truth behind Ren's disappearance, to reclaim his lost love, and to maintain his family's corporate legacy.",
+        "flaw": "Obsessed with the past, emotionally guarded, prone to isolation, and struggles to differentiate personal vendettas from business strategy."
+      },
+      {
+        "character_id": "char_002",
+        "name": "Anya Mei / Ren",
+        "role": "antagonist",
+        "profile": "An enigmatic and ambitious East Asian businesswoman, now Kenji's fiercest corporate rival. Her true identity, Ren, is hidden beneath a new name and a hardened, calculating exterior, belonging to the world of modern-urban wealthy-clan power players.",
+        "motivation": "Unclear; possibly revenge for past wrongs, to reclaim a stolen legacy, or to forge an entirely new identity free from her past.",
+        "flaw": "Deeply secretive, emotionally walled-off, potentially vengeful or manipulative, and struggles with trust."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Tanaka Corp. Headquarters",
+        "description": "A sleek, imposing skyscraper office, a symbol of power and wealth, located in the heart of a bustling modern East Asian metropolis. Its minimalist design and cutting-edge technology reflect the sophisticated aesthetic of the modern-urban wealthy-clan."
+      },
+      {
+        "location_id": "loc_002",
+        "name": "The Starlight Gala",
+        "description": "An opulent, exclusive high-society event space, glittering with chandeliers and attended by the city's elite. It embodies the extravagant social scene of the modern-urban wealthy-clan, a perfect backdrop for masked intentions and simmering tensions."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Seven years after witnessing the love of his life, Ren, seemingly jump to her death from his family's yacht, Kenji Tanaka is a ruthlessly successful but emotionally distant CEO, haunted by the past.",
+        "conflict": "Kenji's internal struggle with grief, guilt, and unresolved questions vs. his external facade of corporate power.",
+        "turning_point": "The emergence of a formidable new business rival, Anya Mei, whose sudden rise challenges Kenji's corporate dominance."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "inciting",
+        "summary": "Kenji meets Anya Mei across the negotiation table for a high-stakes corporate acquisition, and a familiar glint in her eyes, a certain mannerism, sparks a terrifying recognition within him, forcing him to confront the impossible: she might be Ren.",
+        "conflict": "Kenji's disbelief and the terrifying possibility that Anya is Ren vs. Anya's composed and challenging demeanor, maintaining her new identity.",
+        "turning_point": "Kenji's professional focus shifts to an all-consuming obsession with Anya's true identity, blurring the lines between business rivalry and personal vendetta."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "climax",
+        "summary": "At a high-profile industry gala, Kenji corners Anya, confronting her with irrefutable proof of their shared past, forcing her to drop her facade and reveal a glimpse of the pain and motives behind her return, but not the full truth.",
+        "conflict": "Kenji's desperate demand for answers and closure clashes with Anya's need to protect her new identity and hidden agenda.",
+        "turning_point": "Anya's carefully constructed emotional barrier cracks, revealing a hint of vulnerability or pain that undeniably links her to Ren, confirming Kenji's deepest fears and hopes, but leaving their future and the full story of her disappearance tantalizingly uncertain."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "Establish Kenji's driven but isolated life, marked by past tragedy, and introduce Anya Mei as a powerful, mysterious new threat to his corporate dominance.",
+        "conflict": "Kenji's internal demons manifest as he faces an unexpected, formidable external challenge in the form of a rising rival.",
+        "turn": "Kenji receives intel on Anya Mei, a rival whose aggressive corporate moves are directly threatening his company's market position, intriguing him despite his customary detachment."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "Kenji and Anya engage in a tense negotiation where Kenji's professional facade cracks as he begins to suspect Anya's true identity, based on subtle cues.",
+        "conflict": "A high-stakes business negotiation is overshadowed by Kenji's growing, terrifying suspicion about Anya's past, while Anya maintains a cool, professional, and unyielding facade.",
+        "turn": "During a brief, intense moment of eye contact or a shared silence in the negotiation, Kenji experiences a jolt of recognition from Anya, making him question everything he thought he knew about Ren's death."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_002",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "Kenji confronts Anya directly at a prestigious event, demanding answers about her past and the reasons for her return, forcing a crucial, emotionally charged exchange.",
+        "conflict": "Kenji's desperation for the truth and closure clashes with Anya's need to protect her new identity and hidden agenda, as they navigate the public facade of a high-society event.",
+        "turn": "Anya's carefully constructed emotional barrier cracks under Kenji's relentless questioning, revealing a hint of the vulnerability or pain that undeniably links her to Ren, confirming Kenji's deepest fears and hopes, but leaving the full story untold for now."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 2,
+    "location_count": 2,
+    "scene_count": 3
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "http_status": 200,
+  "response_body": {
+    "id": "exec_1_8b99db26",
+    "agent_id": "IntakeImageAgent",
+    "step_id": "step_1_81595939",
+    "status": "COMPLETED",
+    "inputs": {
+      "step_id": "step_1_81595939",
+      "resolved_artifacts": {
+        "raw_image_upload": {
+          "caption": "Raw user upload (mime=image/png). Pending intake processing — only visible to Intake* agents.",
+          "scope": "raw_pending",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png",
+          "mime": "image/png",
+          "payload": null
+        }
+      },
+      "resolved_input_paths": [
+        "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png"
+      ]
+    },
+    "results": {
+      "meta": {
+        "schema_version": "0.3",
+        "created_at": "2026-05-12T22:38:06.350048+00:00",
+        "language": "en"
+      },
+      "content": {
+        "visual_description": "A woman with dark hair wears a tattered light robe and stands against a gray background, flanked by nine large, fluffy white tails.",
+        "image_asset": {
+          "asset_id": "",
+          "uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png",
+          "width": 1024,
+          "height": 576,
+          "format": "png"
+        }
+      },
+      "_execution_debug": {
+        "attempts": 1,
+        "overall_pass": true,
+        "eval_summary": "No creative evaluation defined for IntakeImageEvaluator."
+      },
+      "_asset_index": {
+        "agent_id": "IntakeImageAgent",
+        "json_uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/IntakeImageAgent/step_1_81595939_intakeimageagent_exec_1.json",
+        "execution_id": "exec_1_8b99db26"
+      }
+    },
+    "error": null,
+    "started_at": "2026-05-12T22:38:06.349707",
+    "completed_at": "2026-05-12T22:38:10.525797",
+    "created_at": "2026-05-12T22:38:06.349690",
+    "resolved_input_paths": [
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png"
+    ]
+  }
+}

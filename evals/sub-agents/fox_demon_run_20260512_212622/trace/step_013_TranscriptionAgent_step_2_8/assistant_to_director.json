@@ -1,0 +1,126 @@
+{
+  "http_status": 200,
+  "response_body": {
+    "id": "exec_2_6d76b8a1",
+    "agent_id": "TranscriptionAgent",
+    "step_id": "step_2_809ce185",
+    "status": "COMPLETED",
+    "inputs": {
+      "step_id": "step_2_809ce185",
+      "resolved_artifacts": {
+        "source_media": {
+          "caption": "[BINARY MP4 FILE · mime=video/mp4 · sys_id clip_final] Complete assembled video bytes (15 shots). Final visual deliverable — consumed by a downstream audio-mix step's materializer via ffmpeg for audio extraction + muxing.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_final.mp4",
+          "mime": "video/mp4",
+          "payload": null
+        }
+      },
+      "resolved_input_paths": [
+        "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_final.mp4"
+      ]
+    },
+    "results": {
+      "content": {
+        "language": "zh",
+        "segments": [
+          {
+            "segment_id": "seg_001",
+            "start_time": 4.21596875,
+            "end_time": 4.85596875,
+            "text": "走。"
+          },
+          {
+            "segment_id": "seg_002",
+            "start_time": 7.77596875,
+            "end_time": 8.65596875,
+            "text": "為什麼？"
+          },
+          {
+            "segment_id": "seg_003",
+            "start_time": 12.57596875,
+            "end_time": 15.17596875,
+            "text": "妖孽，罪不可赦。"
+          },
+          {
+            "segment_id": "seg_004",
+            "start_time": 16.77596875,
+            "end_time": 20.21596875,
+            "text": "天罰，就此終結。"
+          },
+          {
+            "segment_id": "seg_005",
+            "start_time": 23.13596875,
+            "end_time": 24.73596875,
+            "text": "原來，我記得。"
+          },
+          {
+            "segment_id": "seg_006",
+            "start_time": 28.41596875,
+            "end_time": 30.09596875,
+            "text": "這是一段遙遠的記憶。"
+          },
+          {
+            "segment_id": "seg_007",
+            "start_time": 31.61596875,
+            "end_time": 32.17596875,
+            "text": "別怕。"
+          },
+          {
+            "segment_id": "seg_008",
+            "start_time": 33.78096875,
+            "end_time": 35.78096875,
+            "text": "我等你。"
+          },
+          {
+            "segment_id": "seg_009",
+            "start_time": 52.10096875,
+            "end_time": 54.10096875,
+            "text": "其實。"
+          },
+          {
+            "segment_id": "seg_010",
+            "start_time": 58.38096875,
+            "end_time": 61.10096875,
+            "text": "這股氣息。"
+          },
+          {
+            "segment_id": "seg_011",
+            "start_time": 66.72096875,
+            "end_time": 68.28096875,
+            "text": "天意如此。"
+          },
+          {
+            "segment_id": "seg_012",
+            "start_time": 71.88096875,
+            "end_time": 74.12096875,
+            "text": "我終於見到你。"
+          }
+        ],
+        "full_text": "走。 為什麼？ 妖孽，罪不可赦。 天罰，就此終結。 原來，我記得。 這是一段遙遠的記憶。 別怕。 我等你。 其實。 這股氣息。 天意如此。 我終於見到你。"
+      },
+      "metrics": {
+        "language": "zh",
+        "segment_count": 12,
+        "duration_seconds": 74.12096875
+      },
+      "_execution_debug": {
+        "attempts": 1,
+        "overall_pass": true,
+        "eval_summary": "No creative evaluation defined for TranscriptionEvaluator."
+      },
+      "_asset_index": {
+        "agent_id": "TranscriptionAgent",
+        "json_uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/TranscriptionAgent/step_2_809ce185_transcriptionagent_exec_2.json",
+        "execution_id": "exec_2_6d76b8a1"
+      }
+    },
+    "error": null,
+    "started_at": "2026-05-13T01:08:23.043699",
+    "completed_at": "2026-05-13T01:08:51.993765",
+    "created_at": "2026-05-13T01:08:23.043678",
+    "resolved_input_paths": [
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_final.mp4"
+    ]
+  }
+}

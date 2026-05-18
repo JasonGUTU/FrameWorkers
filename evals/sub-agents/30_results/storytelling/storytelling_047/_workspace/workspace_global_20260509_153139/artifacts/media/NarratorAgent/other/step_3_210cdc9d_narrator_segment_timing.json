@@ -1,0 +1,169 @@
+{
+  "content": {
+    "total_duration_sec": 345.256,
+    "segment_timings": [
+      {
+        "segment_id": "seg_001",
+        "start_sec": 0.0,
+        "end_sec": 34.784,
+        "duration_sec": 34.784,
+        "line_ids": [
+          "ln_001",
+          "ln_002",
+          "ln_003"
+        ]
+      },
+      {
+        "segment_id": "seg_002",
+        "start_sec": 34.784,
+        "end_sec": 55.384,
+        "duration_sec": 20.6,
+        "line_ids": [
+          "ln_004",
+          "ln_005",
+          "ln_006"
+        ]
+      },
+      {
+        "segment_id": "seg_003",
+        "start_sec": 55.384,
+        "end_sec": 77.172,
+        "duration_sec": 21.788,
+        "line_ids": [
+          "ln_007",
+          "ln_008",
+          "ln_009"
+        ]
+      },
+      {
+        "segment_id": "seg_004",
+        "start_sec": 77.172,
+        "end_sec": 100.544,
+        "duration_sec": 23.372,
+        "line_ids": [
+          "ln_010",
+          "ln_011",
+          "ln_012"
+        ]
+      },
+      {
+        "segment_id": "seg_005",
+        "start_sec": 100.544,
+        "end_sec": 125.032,
+        "duration_sec": 24.488,
+        "line_ids": [
+          "ln_013",
+          "ln_014",
+          "ln_015"
+        ]
+      },
+      {
+        "segment_id": "seg_006",
+        "start_sec": 125.032,
+        "end_sec": 147.504,
+        "duration_sec": 22.472,
+        "line_ids": [
+          "ln_016",
+          "ln_017",
+          "ln_018"
+        ]
+      },
+      {
+        "segment_id": "seg_007",
+        "start_sec": 147.504,
+        "end_sec": 171.272,
+        "duration_sec": 23.768,
+        "line_ids": [
+          "ln_019",
+          "ln_020",
+          "ln_021"
+        ]
+      },
+      {
+        "segment_id": "seg_008",
+        "start_sec": 171.272,
+        "end_sec": 195.04,
+        "duration_sec": 23.768,
+        "line_ids": [
+          "ln_022",
+          "ln_023",
+          "ln_024"
+        ]
+      },
+      {
+        "segment_id": "seg_009",
+        "start_sec": 195.04,
+        "end_sec": 217.764,
+        "duration_sec": 22.724,
+        "line_ids": [
+          "ln_025",
+          "ln_026",
+          "ln_027"
+        ]
+      },
+      {
+        "segment_id": "seg_010",
+        "start_sec": 217.764,
+        "end_sec": 243.764,
+        "duration_sec": 26.0,
+        "line_ids": [
+          "ln_028",
+          "ln_029",
+          "ln_030"
+        ]
+      },
+      {
+        "segment_id": "seg_011",
+        "start_sec": 243.764,
+        "end_sec": 265.48,
+        "duration_sec": 21.716,
+        "line_ids": [
+          "ln_031",
+          "ln_032",
+          "ln_033"
+        ]
+      },
+      {
+        "segment_id": "seg_012",
+        "start_sec": 265.48,
+        "end_sec": 290.4,
+        "duration_sec": 24.92,
+        "line_ids": [
+          "ln_034",
+          "ln_035",
+          "ln_036"
+        ]
+      },
+      {
+        "segment_id": "seg_013",
+        "start_sec": 290.4,
+        "end_sec": 307.652,
+        "duration_sec": 17.252,
+        "line_ids": [
+          "ln_037",
+          "ln_038"
+        ]
+      },
+      {
+        "segment_id": "seg_014",
+        "start_sec": 307.652,
+        "end_sec": 323.824,
+        "duration_sec": 16.172,
+        "line_ids": [
+          "ln_039",
+          "ln_040"
+        ]
+      },
+      {
+        "segment_id": "seg_015",
+        "start_sec": 323.824,
+        "end_sec": 345.256,
+        "duration_sec": 21.432,
+        "line_ids": [
+          "ln_041",
+          "ln_042"
+        ]
+      }
+    ]
+  }
+}

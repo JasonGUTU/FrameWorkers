@@ -1,0 +1,24 @@
+{
+  "agent_class": "_DummyPipelineAgent",
+  "typed_input": {
+    "step_id": "task_file",
+    "resolved_artifacts": {},
+    "language": "en"
+  },
+  "output": null,
+  "eval_result": {
+    "overall_pass": true,
+    "summary": "L1/L2 passed after one retry."
+  },
+  "passed": null,
+  "attempts": 2,
+  "asset_dict": {
+    "report": {
+      "file_content": "<bytes len=5>",
+      "filename": "report.txt",
+      "description": "unit test report"
+    }
+  },
+  "media_assets_count": 0,
+  "media_assets_summary": []
+}

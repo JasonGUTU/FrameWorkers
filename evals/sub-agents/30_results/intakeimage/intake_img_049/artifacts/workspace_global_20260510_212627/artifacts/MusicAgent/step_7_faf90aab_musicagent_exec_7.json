@@ -1,0 +1,13 @@
+{
+  "content": {
+    "cues": [
+      {
+        "cue_id": "music_film",
+        "mood": "melancholic, poignant, reflective, solo piano, subtle strings"
+      }
+    ]
+  },
+  "metrics": {
+    "cue_count": 1
+  }
+}

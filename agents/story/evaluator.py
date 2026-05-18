@@ -75,5 +75,16 @@ class StoryEvaluator(BaseEvaluator[StoryAgentOutput]):
         if not c.story_arc:
             errors.append("story_arc is empty")
 
+        # Hard cap to back the SCENE BUDGET section in the system prompt — when
+        # the LLM ignores the soft guidance, the rework loop forces it to
+        # consolidate fragments into denser scenes. Aligns with the downstream
+        # screenplay's 15-shot ceiling (5 scenes × ~3 shots/scene = 15).
+        if len(c.scene_outline) > 5:
+            errors.append(
+                f"scene_count={len(c.scene_outline)} exceeds budget of 5 — "
+                "consolidate fragments into denser scenes (each scene must "
+                "carry significant dramatic weight)"
+            )
+
         return errors
 

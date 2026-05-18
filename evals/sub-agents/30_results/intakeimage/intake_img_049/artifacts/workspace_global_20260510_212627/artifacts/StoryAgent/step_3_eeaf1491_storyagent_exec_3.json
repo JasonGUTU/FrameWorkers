@@ -1,0 +1,129 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T21:27:14.000392+00:00",
+    "language": "en"
+  },
+  "content": {
+    "logline": "In a modern-urban setting, a stand-in bride, long ignored by her wealthy husband, finally reclaims her agency by serving him divorce papers after three years, only to have the man who never truly looked at her embark on a desperate, city-wide search to find her.",
+    "style": {
+      "genre": [
+        "drama",
+        "romance",
+        "urban-fiction"
+      ],
+      "tone_keywords": [
+        "melancholy",
+        "regret",
+        "modern-urban",
+        "wealthy-clan",
+        "sad piano BGM",
+        "redemption"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Li Wei",
+        "role": "protagonist",
+        "profile": "A young woman, initially reserved and quietly resilient, chosen as a stand-in bride within a powerful modern-urban wealthy clan. She navigates her gilded cage, often seen in understated yet elegant attire like a cream coat and pearl earrings, a symbol of her status and her veiled identity.",
+        "motivation": "To find self-worth and genuine connection beyond her role as a replacement; ultimately, to secure her independence.",
+        "flaw": "Her tendency to internalize her pain and remain passive for too long, delaying her own liberation."
+      },
+      {
+        "character_id": "char_002",
+        "name": "Chen Hao",
+        "role": "antagonist",
+        "profile": "The heir to a powerful modern-urban wealthy clan, outwardly sophisticated but emotionally guarded and distant, perpetually shadowed by the memory of his deceased first love. His initial indifference belies a deeper, unrecognized capacity for love and regret.",
+        "motivation": "To maintain the facade of his previous relationship; later, to understand and reconcile with the woman he overlooked.",
+        "flaw": "Emotional blindness and a profound inability to appreciate what he has until it is lost."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "The Chen Estate",
+        "description": "A sprawling, opulent modern-urban mansion, the heart of the wealthy Chen clan. Its polished surfaces and grand architecture often feel cold and empty, reflecting the emotional distance within its walls."
+      },
+      {
+        "location_id": "loc_002",
+        "name": "Metropolis Streets",
+        "description": "The vibrant, bustling arteries of a modern-urban city, from high-rise business districts to quieter, hidden cafes and residential areas, becoming a labyrinth for a desperate search."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "For three years, Li Wei lives as the 'stand-in bride' within the powerful Chen clan, silently enduring Chen Hao's indifference, a ghost in his modern-urban mansion, perpetually overshadowed by the memory of his deceased first love.",
+        "conflict": "Li Wei's silent longing for acknowledgment versus Chen Hao's emotional unavailability and lingering grief.",
+        "turning_point": "The silent passage of time, culminating in the impending expiration of her contract."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "turn",
+        "summary": "On the day her three-year contract formally expires, Li Wei, with newfound resolve, presents Chen Hao with divorce papers in their modern-urban home, effectively ending her role and reclaiming her independent life.",
+        "conflict": "Li Wei's decisive break from her past role against Chen Hao's shock and dawning realization of her departure.",
+        "turning_point": "Li Wei's act of handing over the divorce papers, asserting her agency and shattering Chen Hao's illusion of control."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "climax",
+        "summary": "Stunned by Li Wei's sudden and complete departure, Chen Hao is consumed by regret. He launches a frantic, city-wide search across the modern-urban metropolis, now desperately pursuing the woman he once willfully ignored.",
+        "conflict": "Chen Hao's desperate hunt and awakening emotions against Li Wei's determination to remain elusive and forge a new life.",
+        "turning_point": "Chen Hao's transformation from detached husband to frantic seeker, driven by profound loss."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "Establish Li Wei's role as the stand-in bride, her silent suffering, and Chen Hao's indifference within their opulent but emotionally barren modern-urban home.",
+        "conflict": "Li Wei's yearning for recognition versus Chen Hao's constant preoccupation with memories and neglect of her.",
+        "turn": "Li Wei looks at a calendar or a clock, confirming the imminent end of her contract, a flicker of resolve in her eyes."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "Dramatize Li Wei's decisive act of ending the marriage and walking away.",
+        "conflict": "Li Wei's quiet but firm declaration of independence clashes with Chen Hao's disbelief and delayed understanding.",
+        "turn": "Li Wei places the divorce papers on his desk, her hand trembling slightly but her gaze steady, then turns and leaves without a word, leaving Chen Hao stunned and alone."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_002",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_002"
+        ],
+        "goal": "Show Chen Hao's abrupt shift from indifference to desperate remorse and his frantic search for Li Wei across the city.",
+        "conflict": "Chen Hao's intense regret and growing desperation against the anonymity of the vast city and Li Wei's conscious effort to disappear.",
+        "turn": "Chen Hao, exhausted and desperate, holds a crumpled photo of Li Wei, realizing the true depth of what he has lost and what he must now find."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 2,
+    "location_count": 2,
+    "scene_count": 3
+  }
+}

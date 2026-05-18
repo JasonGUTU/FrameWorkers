@@ -1,0 +1,316 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_id": "char_001",
+          "prompt_summary": "A slender young man with long dark hair, wearing traditional white and blue robes. He possesses a humble, unassuming demeanor that masks a formidable inner strength and ancient power, reflecting his past as a Heavenly Emperor.",
+          "reference_image_uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/30_results/intakeimage/intake_img_005/_workspace/workspace_global_20260510_040352/inputs/20260510_040354_152297_intake_img_005.png"
+        },
+        {
+          "entity_id": "char_002",
+          "prompt_summary": "A confident and well-built young man, dressed in standard sect disciple robes. He exudes an arrogant and dismissive aura, embodying the current power hierarchy of an ancient Chinese cultivation sect.",
+          "reference_image_uri": ""
+        }
+      ],
+      "locations": [
+        {
+          "entity_id": "loc_001",
+          "prompt_summary": "A sprawling, open-air training ground featuring traditional grand architecture reminiscent of ancient China. Numerous stone sparring platforms and wooden practice dummies are scattered across the bustling area, indicating active martial arts practice.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "loc_002",
+          "prompt_summary": "A small, humble dwelling, sparsely furnished with only a simple bed and a low wooden table. The room's meager decor reflects the low status of a junior disciple within an ancient China-inspired cultivation sect.",
+          "reference_image_uri": ""
+        }
+      ],
+      "props": [
+        {
+          "entity_id": "prop_001",
+          "prompt_summary": "A simple, unadorned training sword, lacking any intricate decorations. Its functional design indicates it is meant for practice and basic forms rather than ceremonial use.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_002",
+          "prompt_summary": "A traditional oil lamp, crafted in an ancient Chinese style. Its single wick produces a soft, flickering glow, casting warm, dancing shadows.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_003",
+          "prompt_summary": "A small, initially withered plant with drooping leaves and a faded green hue. It appears on the verge of dying, contrasting sharply with healthy vegetation.",
+          "reference_image_uri": ""
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Li Wei, looking humble and physically struggling with basic sword forms. His expression holds a simmering, hidden rage.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Senior Disciple Zhao, confidently strutting with a sneer, exuding arrogance in the daytime training grounds.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The Azure Cloud Sect Training Grounds, bustling with junior disciples and bathed in bright daylight.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "A simple practice sword held tightly in Li Wei's grip as he struggles.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A wide shot of the bustling Azure Cloud Sect Training Grounds in daylight. Junior disciples spar on stone platforms and practice with dummies. In the foreground, Li Wei, slender and unassuming in simple robes, struggles awkwardly with basic sword forms using a practice sword.",
+                "video_motion_hint": "Disciples move fluidly in the background while Li Wei's sword movements appear clumsy and hesitant."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium shot focusing on Li Wei and Senior Disciple Zhao. Zhao, confident and well-built, approaches Li Wei with a sneer. He stops to observe Li Wei's clumsy movements with clear contempt.",
+                "video_motion_hint": "Zhao strides purposefully, then halts to watch Li Wei with a disdainful gaze."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up shot on Senior Disciple Zhao's face. He delivers a condescending line, his expression full of mocking superiority. His eyes are narrowed, conveying dismissive judgment.",
+                "video_motion_hint": "Zhao's facial muscles shift subtly as he speaks, conveying his arrogance."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up, low-angle shot on Li Wei's face and hands. His face is passive, but his eyes momentarily flash with an ancient, cold resolve, unnoticed by others. He grips his simple practice sword tighter.",
+                "video_motion_hint": "A subtle, fleeting flicker of intensity passes through Li Wei's eyes. His grip on the sword tightens almost imperceptibly."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Li Wei, meditating intensely cross-legged on a mat, sweat beading on his brow under the dim light. He wears simple inner robes.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_002",
+              "prompt_summary": "Li Wei's sparse dwelling at night, illuminated by a single flickering oil lamp, emphasizing solitude.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_002",
+              "prompt_summary": "A traditionally designed oil lamp flickering softly, providing the only illumination in the room.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium shot inside Li Wei's sparsely furnished dwelling. He sits cross-legged on a thin mat, eyes closed in deep meditation. A flickering oil lamp provides the only light, highlighting his rigid, effortful posture.",
+                "video_motion_hint": "The oil lamp flickers softly, casting dancing shadows on the walls while Li Wei remains intensely still."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up on Li Wei's face. Sweat beads on his brow, and his expression is strained with intense concentration. A faint spiritual pressure subtly emanates from his body.",
+                "video_motion_hint": "Sweat slowly drips down Li Wei's face. His chest rises and falls with strenuous effort as a subtle aura forms around him."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up focusing on Li Wei's face and fingertips. A tiny, visible wisp of pure spiritual energy coalesces at his fingertips, then gently sinks into his chest. His eyes snap open, burning with fierce satisfaction and surprise.",
+                "video_motion_hint": "A wisp of energy forms, then dissipates into Li Wei's chest. His eyes rapidly open, revealing a sharp, determined gaze."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Li Wei, standing subtly near a withered plant, radiating newfound, concealed confidence. His eyes hint at ancient power.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Senior Disciple Zhao, walking past oblivious, displaying his usual arrogant demeanor in the bustling training grounds.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The Azure Cloud Sect Training Grounds, bright and active, with an overgrown section featuring a withered plant.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_003",
+              "prompt_summary": "A small, initially withered plant that visibly perks up and regains vibrant green leaves.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_008",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium shot in the bustling training grounds. Li Wei stands near an overgrown section with a withered plant. He subtly extends his hand, and a barely perceptible shimmer of spiritual energy flows from his palm towards the dying plant.",
+                "video_motion_hint": "A faint, almost invisible shimmer emanates from Li Wei's outstretched hand towards the plant."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_009",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A wide shot capturing the revived plant and Senior Disciple Zhao. The withered plant now displays vibrant green leaves. Zhao walks by, engrossed in conversation with other disciples, completely oblivious to the miracle happening next to him.",
+                "video_motion_hint": "The plant's leaves visibly uncurl and deepen in color. Zhao walks past, his attention elsewhere."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium shot of Zhao and Li Wei. Zhao briefly glances at Li Wei with a familiar look of dismissal, then turns back to his companions, laughing loudly. He does not notice the now healthy plant nearby.",
+                "video_motion_hint": "Zhao's head quickly turns to dismiss Li Wei, then turns away with a boisterous laugh."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_011",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up, low-angle shot on Li Wei's face. He watches Zhao walk away, a faint, chilling smile playing on his lips. His eyes appear ancient and formidable, filled with a promise of impending devastation.",
+                "video_motion_hint": "A subtle, cold smile slowly forms on Li Wei's lips. His eyes glimmer with an intense, ancient power."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "style_notes": [
+      "Overall style is martial arts fantasy, inspired by ancient China, focusing on themes of rebirth, revenge, and being underestimated.",
+      "Genre: cultivation, fantasy, drama."
+    ],
+    "must_avoid": []
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 11,
+    "keyframe_count_total": 11,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 2,
+    "global_location_anchor_count": 2,
+    "global_prop_anchor_count": 3,
+    "stability_character_keyframe_count": 5,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 3
+  }
+}

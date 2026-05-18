@@ -1,0 +1,364 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_id": "char_001",
+          "prompt_summary": "Captain Elias Vance, a pragmatic and ruthless former special-ops captain, stands with military bearing and a determined expression. He wears worn tactical gear, heavy boots, and a utility vest. His face is weathered, reflecting a haunted past in a zombie-apocalypse setting.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "char_002",
+          "prompt_summary": "Dr. Aris Thorne, a brilliant epidemiologist, exudes a professional demeanor with a compassionate gaze. She is dressed in practical, reinforced field scrubs and a lab coat worn over her uniform. Her appearance conveys dedication in a grim zombie-apocalypse setting.",
+          "reference_image_uri": ""
+        }
+      ],
+      "locations": [
+        {
+          "entity_id": "loc_001",
+          "prompt_summary": "A sprawling, claustrophobic network of crumbling subway lines and forgotten utility tunnels stretches into darkness. Debris litters the tracks, and damp concrete walls show signs of severe decay. The environment is eerie, with distant echoes of sirens and zombie shrieks permeating the air.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "loc_002",
+          "prompt_summary": "An underground biomedical facility, once state-of-the-art, now lies partially ruined and eerily silent. Advanced scientific equipment, covered in dust and grime, hints at a hasty evacuation. Structural instability is evident, with signs of collapse and conflict damage visible throughout the high-tech, abandoned labs.",
+          "reference_image_uri": ""
+        }
+      ],
+      "props": [
+        {
+          "entity_id": "prop_001",
+          "prompt_summary": "A worn, rugged data tablet with a heavily scratched screen glows faintly. It displays complex schematic data, indicating its function as a vital piece of communication and information technology.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_002",
+          "prompt_summary": "A standard military-issue assault rifle, well-maintained despite visible signs of constant use, features a dark, metallic finish. Its design is practical and robust, embodying reliability in combat situations. The rifle appears ready for action, a crucial tool for survival.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_003",
+          "prompt_summary": "A worn canvas medical kit, appearing well-used and slightly stained, contains essential emergency supplies. Its utilitarian design suggests readiness for urgent field care. The bag might show subtle signs of past trauma, such as faded blood marks.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_004",
+          "prompt_summary": "A small, fragile glass vial contains a faintly glowing liquid, suggesting its potent, scientific nature. The vial's design is sleek and advanced, hinting at cutting-edge biomedical research. It represents a delicate and precious discovery.",
+          "reference_image_uri": ""
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Wearing worn tactical gear, heavy boots, and a utility vest, Captain Vance maintains a vigilant pose. His expression is grim and determined, illuminated by the dim, filtered light of the underground. Dust lightly covers his protective helmet.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Dr. Thorne wears practical, reinforced field scrubs with a lab coat over her uniform. Her professional demeanor is tinged with tension, and her compassionate gaze sweeps the dimly lit surroundings. The underground environment casts long, uneasy shadows on her.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The crumbling subway lines are bathed in a desolate, low-light ambiance. Dust motes dance in the faint light. Shadows stretch long and deep, amplifying the claustrophobic feel of the abandoned tunnels. The air is still and heavy with decay.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "The rugged data tablet is held firmly, its scratched screen emitting a crucial, pale glow in the dim environment. It appears active, displaying critical information. Dust adheres to its worn casing, reflecting its use in harsh conditions.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_002",
+              "prompt_summary": "The standard military-issue assault rifle is held ready for immediate action. Its metallic surface is dull, reflecting minimal light. The weapon carries the visual weight of constant, vigilant use in a dangerous, dark environment.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_002",
+              "tactical flashlight"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A wide shot captures Captain Vance and Dr. Thorne, members of a weary squad, moving cautiously through a derelict subway tunnel. Dust motes dance in the narrow beam of a tactical flashlight, illuminating debris on the tracks. The oppressive environment emphasizes their smallness, with shadowed recesses hinting at unseen dangers.",
+                "video_motion_hint": "The camera tracks the squad's slow, careful progress through the claustrophobic tunnel. Subtle dust motes drift and swirl in the flashlight's beam."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_002",
+              "tactical flashlight"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium shot focuses on Captain Elias Vance, his assault rifle held ready. He sweeps his tactical flashlight across a crumbling wall, adorned with faded transit maps. His tired eyes remain sharp and vigilant, conveying his guarded demeanor amidst the constant threat.",
+                "video_motion_hint": "Vance's flashlight beam slowly pans across the crumbling wall. His head subtly moves as his eyes scan the area, maintaining vigilance."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "rugged data tablet"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up shot of Dr. Aris Thorne shows her kneeling by a defunct control panel, its screen flickering erratically. Her hands delicately tap keys. A partial schematic begins to materialize on the dusty display, highlighting her technical expertise and the discovery.",
+                "video_motion_hint": "Thorne's fingers tap the keys on the control panel. The screen flickers with a subtle, erratic motion as the schematic slowly materializes."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A two-shot captures Captain Vance and Dr. Thorne, both looking intently at a rugged data tablet displaying coordinates. Vance's face shows urgency as he confirms 'Apex Labs.' Thorne's expression reveals a grim optimism, marking a shared moment of revelation for their mission.",
+                "video_motion_hint": "The camera remains static, capturing the subtle reactions on Vance and Thorne's faces as they process the information. A very slight, almost imperceptible shimmer comes from the data tablet's screen."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Captain Vance's battle-damaged tactical gear shows grime and possible fresh scuffs from recent conflict. His expression is hardened, even more ruthless than before. He stands amidst chaos, his military bearing unwavering under the harsh light of battle.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Dr. Thorne's field scrubs and lab coat are stained and torn from recent struggle. Her professional demeanor struggles against visible exhaustion and urgency. Her compassionate gaze is now mixed with frantic worry, reflecting the immediate danger.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The underbelly environment now features heavily fortified barricades made of rusted metal and concrete. The air is thick with smoke and dust from recent explosions, and the lighting is harsh and chaotic, reflecting a warzone near the lab entrance.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_002",
+              "prompt_summary": "The assault rifle is scratched and dented, showing clear signs of intense combat. Spent casings are scattered around its wielder. Its formidable presence is emphasized by muzzle flash in the chaotic, aggressive environment.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_003",
+              "prompt_summary": "The worn canvas medical kit is now visibly blood-stained, indicating recent desperate use. It lies open, its emergency supplies partially strewn about in the aftermath of a violent encounter. Its purpose is acutely urgent.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A high-angle, wide shot reveals a narrow opening in a towering barricade of rusted metal and concrete blocks. Through the breach, the entrance to Apex Labs is visible, swarming with unnaturally agile, mutated zombies. The scene emphasizes the daunting scale of the defense and the overwhelming horde.",
+                "video_motion_hint": "The mutated zombies surge and writhe in the distance, their movements unnaturally quick. The overall shot is static, but the horde's frantic motion creates a sense of impending danger."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A dynamic, shaky medium shot captures Captain Vance, assault rifle firing, barking orders into an advancing horde of zombies. A squad member falls, clutching a bleeding wound, as Dr. Thorne rushes to their side. The chaos of the intense firefight is palpable.",
+                "video_motion_hint": "The camera has a handheld, shaky movement, conveying the chaos. Vance's rifle recoils slightly with each shot. Zombies move aggressively forward. Thorne quickly moves to the injured squad member."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "An eye-level medium shot presents Captain Vance's face, hardened by grim resolve, as he gives a brutal command. This is contrasted with Dr. Thorne's frantic medical efforts over an injured comrade, her hands working desperately with a medical kit. The scene captures the raw intensity of a difficult decision.",
+                "video_motion_hint": "The camera is static, focusing on the facial expressions and frantic hand movements. Thorne's hands move quickly over the injured comrade. Vance's jaw clenches with subtle intensity."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_008",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "explosives"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A low-angle, wide shot captures a powerful explosion as the squad detonates a charge, blowing open a breach in the barricade. Captain Vance leads the surge through the opening, leaving Dr. Thorne behind with the injured comrade. The forceful entry emphasizes the sacrifice made.",
+                "video_motion_hint": "The camera dollies forward, tracking the squad's rapid push. Debris from the explosion flies outward. The squad members move with urgency through the newly created breach."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Vance's tactical gear is heavily damaged, with a visible tear in his sleeve, and covered in blood and grime. His determined expression is now an exhausted grimace, pushing through extreme duress. He moves protectively, reacting to the lab's collapse.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Thorne's field scrubs are torn and heavily blood-stained, her lab coat barely clinging to her. Her professional demeanor is overshadowed by frantic urgency and fear, her compassionate gaze fixed on escaping danger. She moves with desperate speed.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_002",
+              "prompt_summary": "The once state-of-the-art lab is actively collapsing, with debris raining down and alarms blaring. Exposed wires spark, and the advanced equipment is being crushed. The lighting flickers erratically, creating dramatic, dangerous shadows as the structure destabilizes.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_002",
+              "prompt_summary": "The assault rifle is scratched and dented from previous encounters, now wielded amidst collapsing debris and sparking wires. Its barrel is smoking slightly from recent firing. The weapon is still reliable but visibly battle-worn from continuous use.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_004",
+              "prompt_summary": "The prototype vaccine vial is clutched carefully, its faint glow offering a fragile contrast to the chaotic, collapsing lab. It appears precariously held, emphasizing its immense value and vulnerability amidst the destruction. The glass may show minor smudges.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_009",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium shot zooms out from Captain Vance, who is covering Dr. Thorne, firing his assault rifle at an incoming mutated zombie. Debris rains down from the collapsing ceiling of the Apex Labs. Alarms blare, and sparks fly from exposed wires, conveying extreme chaos and danger.",
+                "video_motion_hint": "The camera zooms out, revealing the collapsing environment. Debris falls from the ceiling. Vance's rifle fires with recoil. The mutated zombie lunges forward with aggressive motion."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_004"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up shot focuses on Dr. Aris Thorne's face, a mix of relief and exhaustion. She holds a small, glowing prototype vaccine vial, her expression indicating a bittersweet victory. The vial's faint light illuminates her determined, hopeful eyes.",
+                "video_motion_hint": "The camera is static, focused on Thorne's expression. Her hand subtly adjusts her grip on the vial. The liquid within the vial might have a very gentle, internal shimmer."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_011",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A low-angle, wide shot tracks Captain Vance grabbing Dr. Thorne's arm, pulling her through a narrow fissure in the wall. The central chamber of the Apex Labs collapses violently behind them, engulfing rubble and debris. Their desperate escape emphasizes the destruction.",
+                "video_motion_hint": "The camera tracks Vance and Thorne as they sprint and pull through the fissure. Behind them, large sections of the lab collapse dynamically, with dust and rubble erupting."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "style_notes": [
+      "Post-Apocalyptic Drama",
+      "Zombie Horror",
+      "Action-Adventure",
+      "grim",
+      "desperate",
+      "survival",
+      "tense",
+      "heroic sacrifice",
+      "zombie-apocalypse setting"
+    ],
+    "must_avoid": [
+      "lightheartedness",
+      "pristine environments",
+      "unblemished characters"
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 11,
+    "keyframe_count_total": 11,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 2,
+    "global_location_anchor_count": 2,
+    "global_prop_anchor_count": 4,
+    "stability_character_keyframe_count": 6,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 6
+  }
+}

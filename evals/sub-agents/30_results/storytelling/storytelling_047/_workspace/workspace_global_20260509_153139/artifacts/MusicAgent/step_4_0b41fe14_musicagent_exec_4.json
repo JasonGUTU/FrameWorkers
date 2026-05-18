@@ -1,0 +1,13 @@
+{
+  "content": {
+    "cues": [
+      {
+        "cue_id": "music_film",
+        "mood": "Mexican folk, acoustic guitar, traditional, hopeful, earthy, evocative"
+      }
+    ]
+  },
+  "metrics": {
+    "cue_count": 1
+  }
+}

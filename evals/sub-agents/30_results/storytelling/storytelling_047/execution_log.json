@@ -1,0 +1,58 @@
+[
+  {
+    "agent_id": "NarrationAgent",
+    "step_id": "step_1_37c787ce",
+    "status": "COMPLETED",
+    "elapsed_sec": 61.310951709747314,
+    "error": null
+  },
+  {
+    "agent_id": "IllustrationAgent",
+    "step_id": "step_2_d7df2bc3",
+    "status": "COMPLETED",
+    "elapsed_sec": 87.56914448738098,
+    "error": null
+  },
+  {
+    "agent_id": "NarratorAgent",
+    "step_id": "step_3_210cdc9d",
+    "status": "COMPLETED",
+    "elapsed_sec": 233.80096745491028,
+    "error": null
+  },
+  {
+    "agent_id": "MusicAgent",
+    "step_id": "step_4_0b41fe14",
+    "status": "COMPLETED",
+    "elapsed_sec": 49.2580509185791,
+    "error": null
+  },
+  {
+    "agent_id": "AmbienceAgent",
+    "step_id": "step_5_c111fc13",
+    "status": "COMPLETED",
+    "elapsed_sec": 43.9972460269928,
+    "error": null
+  },
+  {
+    "agent_id": "TranslationAgent",
+    "step_id": "step_6_5234b27f",
+    "status": "COMPLETED",
+    "elapsed_sec": 16.405835390090942,
+    "error": null
+  },
+  {
+    "agent_id": "AudioMixAgent",
+    "step_id": "step_7_40c11d13",
+    "status": "COMPLETED",
+    "elapsed_sec": 33.99862885475159,
+    "error": null
+  },
+  {
+    "agent_id": "CompositorAgent",
+    "step_id": "step_8_1aa3b00c",
+    "status": "COMPLETED",
+    "elapsed_sec": 101.92942523956299,
+    "error": null
+  }
+]

@@ -1,0 +1,31 @@
+{
+  "entry_count": 1,
+  "artifact_count": 2,
+  "captions_index_text": "#0  (no caption) Produced by PipelineWithMaterializer on 2026-05-12 17:47.\n\n#1  (no caption) Produced by PipelineWithMaterializer on 2026-05-12 17:47.",
+  "path_list": [
+    "/tmp/pytest-of-zhendong_li/pytest-389/test_service_materializer_temp0/Runtime/workspace_global_20260512_174725/artifacts/media/PipelineWithMaterializer/image/task_temp_tmp_asset.png",
+    "/tmp/pytest-of-zhendong_li/pytest-389/test_service_materializer_temp0/Runtime/workspace_global_20260512_174725/artifacts/PipelineWithMaterializer/task_temp_pipelinewithmaterializer_exec_1.json"
+  ],
+  "entries": [
+    {
+      "execution_id": "exec_1_a6aa4d5f",
+      "agent_id": "PipelineWithMaterializer",
+      "step_id": "task_temp",
+      "created_at": "2026-05-12T17:47:25.098022+00:00",
+      "artifacts": [
+        {
+          "caption": "",
+          "scope": "global",
+          "path": "/tmp/pytest-of-zhendong_li/pytest-389/test_service_materializer_temp0/Runtime/workspace_global_20260512_174725/artifacts/media/PipelineWithMaterializer/image/task_temp_tmp_asset.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "",
+          "scope": "global",
+          "path": "/tmp/pytest-of-zhendong_li/pytest-389/test_service_materializer_temp0/Runtime/workspace_global_20260512_174725/artifacts/PipelineWithMaterializer/task_temp_pipelinewithmaterializer_exec_1.json",
+          "mime": "application/json"
+        }
+      ]
+    }
+  ]
+}

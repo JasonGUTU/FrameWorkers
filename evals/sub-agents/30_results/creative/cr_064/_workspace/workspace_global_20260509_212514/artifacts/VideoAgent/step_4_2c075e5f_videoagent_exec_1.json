@@ -1,0 +1,394 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "CUSTOM",
+          "environment_notes": [
+            "sprawling, claustrophobic network of crumbling subway lines, forgotten utility tunnels, and maintenance shafts",
+            "beneath a city ravaged by the zombie apocalypse",
+            "echoes of distant sirens, zombie shrieks",
+            "constant hum of unseen dangers",
+            "wind whipping through ruined corridors"
+          ],
+          "style_notes": [
+            "Post-Apocalyptic Drama",
+            "Zombie Horror",
+            "Action-Adventure",
+            "grim",
+            "desperate",
+            "survival",
+            "tense",
+            "heroic sacrifice",
+            "zombie-apocalypse setting"
+          ],
+          "must_avoid": [
+            "lightheartedness",
+            "pristine environments",
+            "unblemished characters"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Establish the claustrophobic, dangerous environment and the squad's weary progress.",
+              "action_focus": "The squad's careful, tired movement through the tunnel.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "low",
+              "camera_movement": "tracking",
+              "framing_notes": "Emphasizes the squad's smallness against the oppressive environment",
+              "video_motion_hints": [
+                "The camera tracks the squad's slow, careful progress through the claustrophobic tunnel. Subtle dust motes drift and swirl in the flashlight's beam."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_002",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Show Vance's leadership and the constant threat awareness.",
+              "action_focus": "Vance's scanning movements and vigilant expression.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "pan",
+              "framing_notes": "Focus on Vance's face and weapon, conveying his guarded demeanor",
+              "video_motion_hints": [
+                "Vance's flashlight beam slowly pans across the crumbling wall. His head subtly moves as his eyes scan the area, maintaining vigilance."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_003",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Highlight the discovery and Thorne's technical expertise.",
+              "action_focus": "Thorne interacting with the terminal, schematic appearing.",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Close on Thorne's hands and the flickering screen",
+              "video_motion_hints": [
+                "Thorne's fingers tap the keys on the control panel. The screen flickers with a subtle, erratic motion as the schematic slowly materializes."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "neutral",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_004",
+            "semantic_context": {
+              "shot_type": "two_shot",
+              "visual_goal": "Show the revelation of the lab's location and the shift in the mission's focus.",
+              "action_focus": "Vance's confirmation, Thorne's hopeful reaction.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Captures Vance and Thorne looking at the screen, a shared moment of grim optimism",
+              "video_motion_hints": [
+                "The camera remains static, capturing the subtle reactions on Vance and Thorne's faces as they process the information. A very slight, almost imperceptible shimmer comes from the data tablet's screen."
+              ],
+              "dialogue_text": "Apex Labs. Coordinates confirm it. It’s deeper than we thought, but it's real.",
+              "emotion_hint": "urgent",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_003",
+            "to_shot_id": "sh_004",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "CUSTOM",
+          "environment_notes": [
+            "sprawling, claustrophobic network of crumbling subway lines, forgotten utility tunnels, and maintenance shafts",
+            "beneath a city ravaged by the zombie apocalypse",
+            "echoes of distant sirens, zombie shrieks",
+            "constant hum of unseen dangers",
+            "wind whipping through ruined corridors",
+            "area leading to Apex Bio-Research Labs, heavily fortified and barricaded"
+          ],
+          "style_notes": [
+            "Post-Apocalyptic Drama",
+            "Zombie Horror",
+            "Action-Adventure",
+            "grim",
+            "desperate",
+            "survival",
+            "tense",
+            "heroic sacrifice",
+            "zombie-apocalypse setting"
+          ],
+          "must_avoid": [
+            "lightheartedness",
+            "pristine environments",
+            "unblemished characters"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_005",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Show the formidable defense of the lab and the new, more dangerous zombie variant.",
+              "action_focus": "The sheer number and aggression of the mutated zombies.",
+              "characters_in_frame": [],
+              "camera_angle": "high_angle",
+              "camera_movement": "static",
+              "framing_notes": "Emphasizes the daunting scale of the barricade and the horde",
+              "video_motion_hints": [
+                "The mutated zombies surge and writhe in the distance, their movements unnaturally quick. The overall shot is static, but the horde's frantic motion creates a sense of impending danger."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_006",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Depict the intense, desperate firefight and the squad's injury.",
+              "action_focus": "The rapid exchange of fire, the squad member falling, Thorne reacting.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "handheld",
+              "framing_notes": "Dynamic, shaky camera to convey chaos of the firefight",
+              "video_motion_hints": [
+                "The camera has a handheld, shaky movement, conveying the chaos. Vance's rifle recoils slightly with each shot. Zombies move aggressively forward. Thorne quickly moves to the injured squad member."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "urgent",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_007",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Emphasize Vance's brutal leadership decision and Thorne's humanitarian struggle.",
+              "action_focus": "Vance's command, Thorne's desperate medical attention.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Vance's face, hardened by grim resolve, contrasted with Thorne's frantic medical efforts",
+              "video_motion_hints": [
+                "The camera is static, focusing on the facial expressions and frantic hand movements. Thorne's hands move quickly over the injured comrade. Vance's jaw clenches with subtle intensity."
+              ],
+              "dialogue_text": "We're losing time! Thorne, keep him stable. Everyone else, push through! Now!",
+              "emotion_hint": "angry",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_008",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Show the forceful entry into the lab, emphasizing the sacrifice made.",
+              "action_focus": "The explosion, the squad's desperate advance, Thorne left behind.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "low",
+              "camera_movement": "dolly",
+              "framing_notes": "Captures the explosion and the rapid push through the breach",
+              "video_motion_hints": [
+                "The camera dollies forward, tracking the squad's rapid push. Debris from the explosion flies outward. The squad members move with urgency through the newly created breach."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_005",
+            "to_shot_id": "sh_006",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_006",
+            "to_shot_id": "sh_007",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_007",
+            "to_shot_id": "sh_008",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "scene_context": {
+          "location_id": "loc_002",
+          "time_of_day": "CUSTOM",
+          "environment_notes": [
+            "state-of-the-art underground biomedical facility",
+            "once humanity's beacon of scientific advancement",
+            "now eerily silent and partially ruined",
+            "advanced equipment covered in dust and grime",
+            "evidence of a hasty evacuation and struggle",
+            "currently destabilizing and collapsing due to conflict",
+            "in a zombie-apocalypse setting"
+          ],
+          "style_notes": [
+            "Post-Apocalyptic Drama",
+            "Zombie Horror",
+            "Action-Adventure",
+            "grim",
+            "desperate",
+            "survival",
+            "tense",
+            "heroic sacrifice",
+            "zombie-apocalypse setting"
+          ],
+          "must_avoid": [
+            "lightheartedness",
+            "pristine environments",
+            "unblemished characters"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_009",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Convey the chaos and danger of the collapsing lab and the final fight.",
+              "action_focus": "Vance's protective action, the lab's destruction.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "zoom_out",
+              "framing_notes": "Starts close on the action, then pulls back to reveal the collapsing environment",
+              "video_motion_hints": [
+                "The camera zooms out, revealing the collapsing environment. Debris falls from the ceiling. Vance's rifle fires with recoil. The mutated zombie lunges forward with aggressive motion."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "urgent",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_010",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Show the successful retrieval of the vaccine/data, the moment of bittersweet victory.",
+              "action_focus": "Thorne securing the vial, her expression.",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on Thorne's face, a mix of relief and exhaustion, holding the vial",
+              "video_motion_hints": [
+                "The camera is static, focused on Thorne's expression. Her hand subtly adjusts her grip on the vial. The liquid within the vial might have a very gentle, internal shimmer."
+              ],
+              "dialogue_text": "I have it! It's incomplete, but it's a start!",
+              "emotion_hint": "excited",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_011",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Illustrate their narrow escape and the immediate aftermath of the lab's destruction.",
+              "action_focus": "Vance and Thorne's sprint, the lab's collapse.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "low",
+              "camera_movement": "tracking",
+              "framing_notes": "Captures their desperate escape, emphasizing the sheer destruction behind them",
+              "video_motion_hints": [
+                "The camera tracks Vance and Thorne as they sprint and pull through the fissure. Behind them, large sections of the lab collapse dynamically, with dust and rubble erupting."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "urgent",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_009",
+            "to_shot_id": "sh_010",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_010",
+            "to_shot_id": "sh_011",
+            "transition_type": "cut"
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_segment_count": 11
+  }
+}

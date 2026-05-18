@@ -1,0 +1,74 @@
+[
+  {
+    "idx": 1,
+    "shot_id": "sh_001",
+    "prompt": "A young woman in an elegant, ill-fitting wedding gown sits alone in a lavish, dimly lit mansion drawing-room, her face shadowed with melancholy. She signs a legal document with a heavy heart, the pen ",
+    "status": "OK",
+    "keyframe_bytes": 1536162,
+    "mp4_bytes": 522358,
+    "elapsed_sec": 1368.520455121994
+  },
+  {
+    "idx": 2,
+    "shot_id": "sh_002",
+    "prompt": "Inside a spacious, modern penthouse living room, a man reads a newspaper, ignoring the woman who silently places a tea cup on the table. She casts a longing glance at him, then turns away, her express",
+    "status": "OK",
+    "keyframe_bytes": 1459590,
+    "mp4_bytes": 733424,
+    "elapsed_sec": 1371.1599583625793
+  },
+  {
+    "idx": 3,
+    "shot_id": "sh_003",
+    "prompt": "A close-up on a calendar date being circled in red on a luxurious desk, marking the three-year anniversary. The woman's determined hand pauses, a flicker of resolve crossing her face, ready to break f",
+    "status": "OK",
+    "keyframe_bytes": 1430298,
+    "mp4_bytes": 767715,
+    "elapsed_sec": 1366.9629735946655
+  },
+  {
+    "idx": 4,
+    "shot_id": "sh_004",
+    "prompt": "The woman, composed and elegant, stands opposite the man in a sleek, minimalist office. She calmly places a pristine set of divorce papers on his desk, her gaze steady, signaling the end of their cont",
+    "status": "OK",
+    "keyframe_bytes": 1413357,
+    "mp4_bytes": 473737,
+    "elapsed_sec": 1368.2631859779358
+  },
+  {
+    "idx": 5,
+    "shot_id": "sh_005",
+    "prompt": "The man's hand hovers over the divorce papers, his eyes wide with a sudden, dawning shock. He slowly lifts his head, his gaze finally fixing on the woman's retreating back with an intensity he never s",
+    "status": "OK",
+    "keyframe_bytes": 1384294,
+    "mp4_bytes": 711613,
+    "elapsed_sec": 1368.8501417636871
+  },
+  {
+    "idx": 6,
+    "shot_id": "sh_006",
+    "prompt": "Frantic, the man tears through his opulent penthouse, overturning furniture and scattering objects in a desperate search. His face is etched with growing panic as he realizes she is truly gone, his wo",
+    "status": "OK",
+    "keyframe_bytes": 1565104,
+    "mp4_bytes": 1213507,
+    "elapsed_sec": 1369.270178079605
+  },
+  {
+    "idx": 7,
+    "shot_id": "sh_007",
+    "prompt": "The woman walks through a bustling city park, a faint smile gracing her lips, sunlight filtering through trees. She pauses, taking a deep, liberating breath, embracing her newfound freedom and the vib",
+    "status": "OK",
+    "keyframe_bytes": 1849810,
+    "mp4_bytes": 1196830,
+    "elapsed_sec": 1364.9580171108246
+  },
+  {
+    "idx": 8,
+    "shot_id": "sh_008",
+    "prompt": "Under a neon-lit, rain-slicked urban street at night, the man stands alone, phone pressed to his ear, his face desperate and haunted. He scans the blur of passing cars and pedestrians, relentlessly se",
+    "status": "OK",
+    "keyframe_bytes": 1561033,
+    "mp4_bytes": 929406,
+    "elapsed_sec": 1371.0353178977966
+  }
+]

@@ -48,11 +48,15 @@ def select_image_service() -> ImageService:
     """Pick the image service backend.
 
     Default: ``MockImageService`` (placeholder PNG, no API spend).
-    Set ``FW_USE_REAL_MEDIA_GEN=1`` to use ``GeminiImageService`` (talks to
-    ``gemini-2.5-flash-image`` via the CF AI Gateway native-Gemini Worker).
+    Set ``FW_USE_REAL_MEDIA_GEN=1`` to use ``FalImageService`` (talks to
+    ``FAL_IMAGE_MODEL`` on fal.ai — currently ``fal-ai/nano-banana-2``).
+    Reverted from ``GeminiImageService`` after a fox-demon run hit
+    ``gemini-3.1-flash-image-preview``'s silent content moderation on
+    execution / sword imagery (returns no image, just empty Text); same
+    failure mode that triggered the previous Fal revert.
     """
     if _env_truthy("FW_USE_REAL_MEDIA_GEN"):
-        return FalImageService()  # reverted from GeminiImageService — direct Gemini blocks zombie/revenge prompts even in English
+        return FalImageService()
     return MockImageService()
 
 

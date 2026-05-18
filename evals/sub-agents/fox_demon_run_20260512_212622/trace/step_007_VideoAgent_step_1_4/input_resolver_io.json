@@ -1,0 +1,14 @@
+{
+  "input": {
+    "agent_id": "VideoAgent",
+    "step_id": "step_1_41ba053e",
+    "input_needs_description": "I generate per-shot moving video clips by feeding a planned starting frame and a motion description into an image-to-video model, then assemble the clips into a final video.\n\nFor each [label] below, find every artifact in the registry whose caption describes the same kind of thing. Use the natural-language caption only — do not match by filename or by any tag. Pay attention to the difference between visual identity references (which depict an entity in isolation) and actual planned frames of shots (which depict a specific moment of the story). I want the latter, never the former.\n\n[screenplay] (single)\nThe unified screenplay document defining the temporal structure of the story as an ordered sequence of scenes and shots, with per-shot creative direction (camera, action, mood). I rely on this to know how many shots there are and what each shot is supposed to convey. Choose at most one.\n\n[keyframes_metadata] (single)\nThe planning document produced by the keyframe step that — for each shot in the screenplay — gives a textual description of the planned frame and a separate hint about how that frame should move when animated. I use this to fetch the prompt and motion intent for each shot. It is a JSON document, not an image. Choose at most one.\n\n[shot_stills] (collection)\nThe actual rendered starting frame images for the planned shots of the screenplay. Each one is a single still that depicts one specific shot of the story timeline (its planned visual at the beginning of that shot). I will load every one of these and pass it through an image-to-video model to produce the corresponding moving clip.\nIMPORTANT: do NOT include images that are visual identity references for a character, location, or prop in isolation, even though they are also images produced by the keyframe step. Those identity-reference images are not tied to any specific shot of the story timeline; they describe what an entity looks like in general. They are intermediate outputs of the keyframe step and are not the frames of the final video. I want only the per-shot frames. Include every per-shot frame — there should be exactly one per shot defined in the screenplay above.",
+    "captions_index_text": "(empty — cold start)"
+  },
+  "output": {
+    "resolved_artifacts": {},
+    "selected_artifact_paths": [],
+    "rationale": "no artifacts registered yet (cold start)"
+  },
+  "note": "cold-start: no artifacts in workspace"
+}

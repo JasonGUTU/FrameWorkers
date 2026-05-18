@@ -1,0 +1,54 @@
+{
+  "entry_count": 3,
+  "artifact_count": 3,
+  "captions_index_text": "#0  Structured metadata document (JSON) for a user-submitted text brief. Payload carries the raw text verbatim. Pipeline entry point — consumed by story / screenplay / narration agents. Produced by user on 2026-05-12 19:42.\n\n#1  Story blueprint: 5 scene(s), 3 character(s). Structured input for screenplay generation. Produced by StoryAgent on 2026-05-12 19:43.\n\n#2  Screenplay: 5 scene(s), 15 shot(s). Input for keyframe planning and audio scoring. Produced by ScreenplayAgent on 2026-05-12 19:45.",
+  "path_list": [
+    "/home/zhendong_li/FrameWorkers/_workspaces/workspace_global_20260512_194119/inputs/brief_20260512_194249_875467.json",
+    "/home/zhendong_li/FrameWorkers/_workspaces/workspace_global_20260512_194119/artifacts/StoryAgent/step_1_1bc74b1f_storyagent_exec_1.json",
+    "/home/zhendong_li/FrameWorkers/_workspaces/workspace_global_20260512_194119/artifacts/ScreenplayAgent/step_2_3d8bb556_screenplayagent_exec_2.json"
+  ],
+  "entries": [
+    {
+      "execution_id": "brief_20260512_194249_875467",
+      "agent_id": "user",
+      "step_id": "",
+      "created_at": "2026-05-12T19:42:49.877305+00:00",
+      "artifacts": [
+        {
+          "caption": "Structured metadata document (JSON) for a user-submitted text brief. Payload carries the raw text verbatim. Pipeline entry point — consumed by story / screenplay / narration agents.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/_workspaces/workspace_global_20260512_194119/inputs/brief_20260512_194249_875467.json",
+          "mime": "application/json"
+        }
+      ]
+    },
+    {
+      "execution_id": "exec_1_53e00908",
+      "agent_id": "StoryAgent",
+      "step_id": "step_1_1bc74b1f",
+      "created_at": "2026-05-12T19:43:32.485689+00:00",
+      "artifacts": [
+        {
+          "caption": "Story blueprint: 5 scene(s), 3 character(s). Structured input for screenplay generation.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/_workspaces/workspace_global_20260512_194119/artifacts/StoryAgent/step_1_1bc74b1f_storyagent_exec_1.json",
+          "mime": "application/json"
+        }
+      ]
+    },
+    {
+      "execution_id": "exec_2_e8013084",
+      "agent_id": "ScreenplayAgent",
+      "step_id": "step_2_3d8bb556",
+      "created_at": "2026-05-12T19:45:16.004426+00:00",
+      "artifacts": [
+        {
+          "caption": "Screenplay: 5 scene(s), 15 shot(s). Input for keyframe planning and audio scoring.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/_workspaces/workspace_global_20260512_194119/artifacts/ScreenplayAgent/step_2_3d8bb556_screenplayagent_exec_2.json",
+          "mime": "application/json"
+        }
+      ]
+    }
+  ]
+}

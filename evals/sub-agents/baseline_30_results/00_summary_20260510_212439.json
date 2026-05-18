@@ -1,0 +1,149 @@
+{
+  "started_n_cases": 20,
+  "n_endpoints": 11,
+  "results": [
+    {
+      "name": "cr_030",
+      "status": "DONE",
+      "n_succeeded": 7,
+      "n_shots": 7,
+      "elapsed_sec": 10126.57892370224
+    },
+    {
+      "name": "cr_016",
+      "status": "DONE",
+      "n_succeeded": 7,
+      "n_shots": 7,
+      "elapsed_sec": 10148.758125305176
+    },
+    {
+      "name": "cr_042",
+      "status": "DONE",
+      "n_succeeded": 7,
+      "n_shots": 7,
+      "elapsed_sec": 10150.915019273758
+    },
+    {
+      "name": "intake_img_019",
+      "status": "DONE",
+      "n_succeeded": 8,
+      "n_shots": 8,
+      "elapsed_sec": 10987.569458246231
+    },
+    {
+      "name": "cr_049",
+      "status": "DONE",
+      "n_succeeded": 8,
+      "n_shots": 8,
+      "elapsed_sec": 11296.6444003582
+    },
+    {
+      "name": "cr_059",
+      "status": "DONE",
+      "n_succeeded": 8,
+      "n_shots": 8,
+      "elapsed_sec": 11463.47139787674
+    },
+    {
+      "name": "cr_107",
+      "status": "DONE",
+      "n_succeeded": 8,
+      "n_shots": 8,
+      "elapsed_sec": 11513.332096338272
+    },
+    {
+      "name": "cr_104",
+      "status": "DONE",
+      "n_succeeded": 8,
+      "n_shots": 8,
+      "elapsed_sec": 11607.80372262001
+    },
+    {
+      "name": "cr_072",
+      "status": "DONE",
+      "n_succeeded": 8,
+      "n_shots": 8,
+      "elapsed_sec": 11613.772192955017
+    },
+    {
+      "name": "cr_023",
+      "status": "DONE",
+      "n_succeeded": 9,
+      "n_shots": 9,
+      "elapsed_sec": 12872.593763828278
+    },
+    {
+      "name": "cr_064",
+      "status": "DONE",
+      "n_succeeded": 9,
+      "n_shots": 9,
+      "elapsed_sec": 12954.581852912903
+    },
+    {
+      "name": "intake_img_036",
+      "status": "DONE",
+      "n_succeeded": 8,
+      "n_shots": 8,
+      "elapsed_sec": 11157.636841773987
+    },
+    {
+      "name": "intake_img_018",
+      "status": "DONE",
+      "n_succeeded": 8,
+      "n_shots": 8,
+      "elapsed_sec": 11596.969240427017
+    },
+    {
+      "name": "intake_img_039",
+      "status": "PARTIAL",
+      "n_succeeded": 7,
+      "n_shots": 8,
+      "elapsed_sec": 10571.158450365067
+    },
+    {
+      "name": "intake_img_049",
+      "status": "DONE",
+      "n_succeeded": 8,
+      "n_shots": 8,
+      "elapsed_sec": 10960.01223063469
+    },
+    {
+      "name": "intake_img_037",
+      "status": "DONE",
+      "n_succeeded": 8,
+      "n_shots": 8,
+      "elapsed_sec": 11010.843334436417
+    },
+    {
+      "name": "intake_img_046",
+      "status": "DONE",
+      "n_succeeded": 7,
+      "n_shots": 7,
+      "elapsed_sec": 9595.402334451675
+    },
+    {
+      "name": "intake_img_008",
+      "status": "DONE",
+      "n_succeeded": 8,
+      "n_shots": 8,
+      "elapsed_sec": 11853.467849254608
+    },
+    {
+      "name": "intake_img_030",
+      "status": "DONE",
+      "n_succeeded": 8,
+      "n_shots": 8,
+      "elapsed_sec": 12132.52030992508
+    },
+    {
+      "name": "intake_img_005",
+      "status": "DONE",
+      "n_succeeded": 8,
+      "n_shots": 8,
+      "elapsed_sec": 11588.433209180832
+    }
+  ],
+  "n_done": 19,
+  "n_partial": 1,
+  "n_fatal": 0
+}

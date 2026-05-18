@@ -1,0 +1,66 @@
+{
+  "started": "2026-05-11T02:06:56",
+  "hunyuan_endpoints": [
+    "http://sof1-h200-3:9200",
+    "http://sof1-h200-3:9201",
+    "http://sof1-h200-3:9202",
+    "http://sof1-h200-3:9203",
+    "http://sof1-h200-7:9204",
+    "http://sof1-h200-7:9205",
+    "http://sof1-h200-6:9206",
+    "http://sof1-h200-6:9207",
+    "http://sof1-h200-6:9208",
+    "http://sof1-h200-7:9209",
+    "http://sof1-h200-7:9210"
+  ],
+  "infer_steps": 50,
+  "results_per_worker": [
+    [
+      {
+        "name": "cr_016",
+        "status": "DONE",
+        "elapsed_sec": 16725.63314127922
+      }
+    ],
+    [
+      {
+        "name": "intake_img_019",
+        "status": "DONE",
+        "elapsed_sec": 16828.053769350052
+      }
+    ],
+    [
+      {
+        "name": "intake_img_039",
+        "status": "DONE",
+        "elapsed_sec": 13756.152656793594
+      }
+    ],
+    [
+      {
+        "name": "intake_img_036",
+        "status": "DONE",
+        "elapsed_sec": 16768.388116836548
+      }
+    ],
+    [
+      {
+        "name": "intake_img_037",
+        "status": "DONE",
+        "elapsed_sec": 14002.495063304901
+      }
+    ],
+    [
+      {
+        "name": "intake_img_049",
+        "status": "DONE",
+        "elapsed_sec": 16745.288203716278
+      }
+    ],
+    [],
+    [],
+    [],
+    [],
+    []
+  ]
+}

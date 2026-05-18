@@ -1,0 +1,56 @@
+{
+  "case_name": "intake_img_049",
+  "category": "intake_img",
+  "user_goal": "Use this uploaded photo as the wealthy-clan tortured-romance female lead. Make a modern-urban stand-in-bride wealthy-clan animated short drama — she was brought in to replace his dead first love. The day her three-year contract expires she hands him divorce papers, and the man who never once truly looked at her in those three years suddenly begins hunting for her like a madman across the whole city. Add Chinese subtitles for short-video platform distribution and a sad piano BGM.",
+  "expected_chain": [
+    [
+      "IntakeImageAgent"
+    ],
+    [
+      "BriefEnricherAgent"
+    ],
+    [
+      "StoryAgent"
+    ],
+    [
+      "ScreenplayAgent"
+    ],
+    [
+      "KeyFrameAgent"
+    ],
+    [
+      "VideoAgent"
+    ],
+    [
+      "MusicAgent"
+    ],
+    [
+      "TranscriptionAgent"
+    ],
+    [
+      "AudioMixAgent"
+    ],
+    [
+      "CompositorAgent"
+    ],
+    [
+      "done"
+    ]
+  ],
+  "flat_chain": [
+    "IntakeImageAgent",
+    "BriefEnricherAgent",
+    "StoryAgent",
+    "ScreenplayAgent",
+    "KeyFrameAgent",
+    "VideoAgent",
+    "MusicAgent",
+    "TranscriptionAgent",
+    "AudioMixAgent",
+    "CompositorAgent"
+  ],
+  "backend_url": "http://localhost:5107",
+  "hunyuan_endpoint": "http://sof1-h200-7:9205",
+  "infer_steps": 50,
+  "started_at": "2026-05-10T21:26:28"
+}

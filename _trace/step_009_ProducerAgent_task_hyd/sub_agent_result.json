@@ -1,0 +1,20 @@
+{
+  "agent_class": "_ProducerAgent",
+  "typed_input": {
+    "step_id": "task_hydrate"
+  },
+  "output": null,
+  "eval_result": null,
+  "passed": null,
+  "attempts": null,
+  "asset_dict": {
+    "content": {
+      "value": 42
+    },
+    "artifact_caption": {
+      "caption": "producer_asset payload — test seed"
+    }
+  },
+  "media_assets_count": 0,
+  "media_assets_summary": []
+}

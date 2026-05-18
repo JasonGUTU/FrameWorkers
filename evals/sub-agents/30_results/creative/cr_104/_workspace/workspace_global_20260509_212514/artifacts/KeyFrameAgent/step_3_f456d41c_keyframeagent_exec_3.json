@@ -1,0 +1,352 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_id": "char_001",
+          "prompt_summary": "Jian Li is a young, determined Daoist disciple, the sole survivor of the Azure Cloud Sect massacre. He is consumed by grief and rage, embodying tragic heroism in an ancient China Wuxia/Xianxia world. He wears tattered, travel-worn Daoist robes.",
+          "reference_image_uri": ""
+        }
+      ],
+      "locations": [
+        {
+          "entity_id": "loc_001",
+          "prompt_summary": "A desolate path leading to Mount Kunlun, a treacherous, windswept mountain trail. It is rocky, overgrown, and leads to sacred, jagged peaks. Sparse, gnarled pines cling to sheer cliffs, and the air is thin and cold, reflecting mystical power and ancient solitude.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "loc_002",
+          "prompt_summary": "Mount Kunlun Shrine, a dilapidated, ancient shrine nestled near the summit, half-overgrown and forgotten. It exudes a potent, ominous aura with weathered stone altars amidst crumbling walls. The vast, foreboding sky above is relentless with cold, howling wind, typical of a mystical Wuxia/Xianxia realm in ancient China.",
+          "reference_image_uri": ""
+        }
+      ],
+      "props": [
+        {
+          "entity_id": "prop_001",
+          "prompt_summary": "A severed human head, wrapped in ancient, plain cloth. It is carried as a sacred, tragic burden, central to a ritual.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_002",
+          "prompt_summary": "An ancient altar, made of weathered stone and crumbling, inscribed with faded symbols. It is a central, ominous feature of a dilapidated shrine.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_003",
+          "prompt_summary": "A small, ornate, and sharp ritual blade. It is used for a blood offering during a mystical ceremony.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_004",
+          "prompt_summary": "Various ancient, mystical components arranged on an altar. These offerings are used in a forbidden ritual, mixing with blood.",
+          "reference_image_uri": ""
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Jian Li, physically exhausted but spiritually resolute, continues his arduous journey. His tattered Daoist robes are dust-worn and wind-blown from the harsh mountain conditions. He carries his tragic burden with unwavering determination at twilight.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The desolate path to Mount Kunlun at twilight, bathed in the soft, fading light of dusk. The environment is cold and windswept, emphasizing the arduous and mystical journey. Jagged peaks loom ominously in the distance.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "The Master's Severed Head, wrapped in ancient, plain cloth, is carried as a profound and sacred burden. It is secured to Jian Li's back, reflecting the ongoing, difficult journey.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "An extreme close-up of worn boots trudging laboriously on a rugged, rocky mountain path. Loose stones are dislodged, emphasizing the heavy fatigue and treacherous terrain. The path is windswept and desolate at twilight.",
+                "video_motion_hint": "Subtle tracking motion follows the heavy, struggling steps of the boots. Small stones dislodge and roll down the incline."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A wide shot from a high angle reveals a thin, exhausted figure, Jian Li, carrying a bundle on his back. He struggles forward against a howling mountain wind on a desolate path. The vast, remote Mount Kunlun range looms in the immense twilight landscape, making him appear minuscule.",
+                "video_motion_hint": "A slow crane shot reveals Jian Li struggling against the strong wind. His robes and hair subtly move as he pushes forward through the scene."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "An over-the-shoulder shot at eye level shows Jian Li stopping at a cliff edge, panting heavily from exhaustion. The faint outline of his master's wrapped severed head is visible in the bundle on his back. His gaze is resolute as he looks towards the distant, ominous peaks of Mount Kunlun.",
+                "video_motion_hint": "Jian Li's chest heaves with heavy breaths. His shoulders slightly shift as he turns his head to gaze into the distance."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up at eye level focuses on Jian Li's face, weathered by wind and frost, with deep bags under his eyes. Despite his physical hardship, a burning flame of vengeance glows in his resolute gaze. He prepares to take a slow, determined step forward.",
+                "video_motion_hint": "Jian Li's eyes subtly narrow with fierce determination. His facial muscles tense slightly as he begins a slow, deliberate step."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Jian Li, the determined Daoist disciple, stands at the precipice of his vengeance. His tattered robes are now more wind-blown and dusty from his journey. He grapples with the immense, forbidden nature of his task, his expression reflecting deep resolve and spiritual burden under the ominous night sky.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_002",
+              "prompt_summary": "The Mount Kunlun Shrine at night, a dilapidated and ancient structure nestled near the summit. It is bathed in the crimson light of a rising blood moon, casting ominous shadows. Distant thunder rolls across the peaks, and a cold, howling wind is relentless.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "The Master's Severed Head, still wrapped in ancient cloth, is carried with reverence. It remains a tragic and sacred burden for Jian Li as he reaches his dark destination.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_002",
+              "prompt_summary": "The Ancient Altar, weathered stone and crumbling, stands amidst the shrine's ruins. Its faded symbols are dimly visible, hinting at past rituals and exuding an ominous aura under the night sky.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A wide shot from a low angle captures a half-collapsed ancient shrine, standing alone and desolate under the silhouette of the vast Kunlun Mountains at night. Jian Li's figure appears in the foreground, slowly walking towards the shrine. The scene emphasizes the ominous setting and his arrival.",
+                "video_motion_hint": "A smooth dolly shot follows Jian Li as he walks slowly towards the shrine. His form moves deliberately through the desolate landscape."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium shot at eye level captures Jian Li as he steps into the dilapidated shrine. He slowly looks around the crumbling interior, his gaze finally settling on a weathered stone altar in the center. His eyes are filled with a heavy, profound sense of destiny and recognition.",
+                "video_motion_hint": "Jian Li's head slowly turns as his eyes scan the shrine. His gaze then fixes on the altar with a subtle nod of recognition."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "characters_in_frame": [],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up shot from a low angle focuses on the ancient runes inscribed on the weathered stone altar. The runes flicker faintly, glowing with an eerie light under the sinister, rising blood moon. Distant, low thunder rolls, foretelling an ill omen and amplifying the mystical atmosphere.",
+                "video_motion_hint": "The faint glow of the runes on the altar subtly pulses. The distant horizon darkens slightly with the hint of thunderclouds."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Jian Li, now transformed into an avenger, initiates a forbidden dark ritual. His tattered Daoist robes are stained with blood from the sacrifice, symbolizing his irreversible commitment. He stands with intense focus and spiritual anguish, undergoing a profound, dark transformation under the blood moon.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_002",
+              "prompt_summary": "The Mount Kunlun Shrine, now fully bathed in the intense, crimson light of the peak blood moon. The dilapidated, ancient structure, with its weathered stone altars and crumbling walls, is illuminated, emphasizing forbidden rituals. A vast, foreboding sky and distant thunder add to the dangerous, mystical atmosphere of ancient China.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "The Master's Severed Head, carefully placed on the altar, is central to the ritual. It is a focus point for the emerging dark energies and Jian Li's profound sacrifice.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_002",
+              "prompt_summary": "The Ancient Altar now serves as the focal point of the ritual. Its weathered stone symbols glow intensely with dark, ominous energy under the blood moon, signifying the activation of forbidden magic.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_003",
+              "prompt_summary": "A small, ornate, and sharp ritual blade. It is wielded by Jian Li for the blood offering, an act of self-sacrifice central to the forbidden rite.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_004",
+              "prompt_summary": "Various ancient, mystical offerings are arranged on the altar. These components are now mixing with Jian Li's blood, stirring dark, potent energies as the ritual commences.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_008",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up at eye level shows Jian Li carefully unwrapping the bundle and gently placing his master's severed head in the center of the ancient altar. His fingers tremble slightly, but his movements are firm and filled with solemnity and profound grief. The act emphasizes the emotional weight of this dark ritual.",
+                "video_motion_hint": "Jian Li's fingers tremble visibly as he performs the delicate action. His hands move with tender care as the head is settled onto the altar."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_009",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_002",
+              "prop_004"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium shot from a high angle shows Jian Li meticulously arranging various mystical offerings around the ancient altar. The blood moon hangs high and ominous behind him, casting his elongated, twisted shadow across the crumbling shrine. This establishes the ritual's preparations and the foreboding atmosphere.",
+                "video_motion_hint": "Jian Li moves methodically around the altar, placing offerings with deliberate motions. His shadow stretches and distorts due to the high blood moon."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up at eye level captures Jian Li picking up a sharp ritual blade. His eyes harden with unwavering determination. Without hesitation, he slashes his own palm, and fresh blood immediately gushes out, dripping from his fingertips. This portrays the irreversible act of self-sacrifice, crucial to the forbidden rite.",
+                "video_motion_hint": "Jian Li's hand firmly grips the blade, then moves swiftly to cut his palm. Blood visibly wells up and begins to drip."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_011",
+            "characters_in_frame": [],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002",
+              "prop_004"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "An extreme close-up focuses on Jian Li's blood as it drips among the offerings on the ancient altar. The crimson liquid flows along the faded, ancient runes, eventually mixing with the other offerings beneath his master's severed head. The runes begin to emit a soft, ominous dark red glow, demonstrating the immediate effect of the blood offering.",
+                "video_motion_hint": "Blood drips slowly, visibly spreading and merging with the offerings. The runes beneath subtly pulse with a dim red light."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_012",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A wide shot from a high crane angle captures the entire shrine enveloped in a powerful, pulsating crimson light. Dark, swirling energy rises dramatically around Jian Li, who stands at the center of the ritual. His face, illuminated by the red glow, appears both tormented by pain and transcendent in this moment of profound transformation and unleashed power.",
+                "video_motion_hint": "The crimson light pulses visibly, and dark energy swirls and rises around Jian Li. Subtle movements indicate the overwhelming magical force."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "style_notes": [
+      "Dark, Somber, Determined, Vengeful, Mystical, Tragic Wuxia and Xianxia aesthetic.",
+      "Set in ancient China, evoking a sense of epic scope and personal sacrifice.",
+      "Set in ancient China, emphasizing the ominous and forbidden.",
+      "Set in ancient China, emphasizing forbidden magic, spiritual sacrifice, and ultimate transformation."
+    ],
+    "must_avoid": [
+      "Lightheartedness or comic relief.",
+      "Modern anachronisms.",
+      "Scenes of comfort or safety.",
+      "Bright, cheerful lighting.",
+      "Anything that diminishes the gravity or danger of the ritual."
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 12,
+    "keyframe_count_total": 12,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 2,
+    "global_prop_anchor_count": 4,
+    "stability_character_keyframe_count": 3,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 7
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "shots": [
+    {
+      "shot_id": "sh_001",
+      "prompt": "A determined deputy captain, holding a fresh coffee cup, sits at his new office desk. He receives a thick, dusty cold case file from an older detective, glancing at it with a mix of anticipation and seriousness under the stark office lights, cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_002",
+      "prompt": "The deputy captain pores over an array of old crime scene photos, documents, and newspaper clippings spread across his desk in a focused, methodical manner. He underlines a critical detail with a red pen, bathed in the cool glow of a desk lamp at night, photoreal cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_003",
+      "prompt": "The deputy captain walks through an overgrown, forgotten urban alleyway at dusk, the desolate site of a 15-year-old disposal. He kneels to inspect faint, almost invisible marks on the damp concrete wall, a thoughtful expression on his face, cinematic lighting.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_004",
+      "prompt": "In a dimly lit police archive, the deputy captain, dust motes dancing in the faint light, pulls out a worn, yellowed folder from a tall metal shelf. He slowly opens it to reveal ancient suspect lists and reports inside, captured in a photoreal cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_005",
+      "prompt": "Close-up on a handwritten suspect list. The deputy captain's finger traces down the names, pausing abruptly. His eyes widen in shock and disbelief as his father's distinct name is clearly visible among the 15-year-old entries, illuminated by a harsh desk lamp, photoreal cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_006",
+      "prompt": "The deputy captain sits alone in his office, one hand resting on the cold case file, the other clutching an old, framed photo of his smiling father. His face is a canvas of internal turmoil, silhouetted against the city lights, rendered in a cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_007",
+      "prompt": "The deputy captain confronts an older, stern-faced man, possibly his father, across a cluttered desk in a dimly lit study. Tense silence hangs heavy in the air, light casting long shadows, as he seeks answers about the past, captured in a photoreal cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_008",
+      "prompt": "The deputy captain stands by a large window overlooking a rainy, neon-lit city at night, the open cold case file on his desk behind him. His expression is conflicted and determined, facing a profound moral dilemma under the city's glow, cinematic style.",
+      "duration_sec": 5
+    }
+  ]
+}

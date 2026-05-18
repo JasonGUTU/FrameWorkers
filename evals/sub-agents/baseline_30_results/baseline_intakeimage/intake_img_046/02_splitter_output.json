@@ -1,0 +1,39 @@
+{
+  "shots": [
+    {
+      "shot_id": "sh_001",
+      "prompt": "The disgraced empress, in simple robes, slowly walks through a neglected, overgrown courtyard of the 'cold palace'. A desolate wind rustles dead leaves around her feet. Her eyes betray a mix of sadness and quiet determination under a pale, overcast sky. Photoreal cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_002",
+      "prompt": "A young eunuch, clutching his bleeding arm, collapses protectively in front of the empress in a dimly lit, austere palace corridor. He meets her gaze with fierce loyalty, his body trembling slightly from the wound. A solemn, tense atmosphere prevails. Photoreal cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_003",
+      "prompt": "The empress, dressed in slightly better but still simple robes, leans close to the young eunuch in a secluded, moonlit corner of a palace garden. They whisper intensely, her eyes gleaming with strategic thought as she makes a subtle, confident gesture. Photoreal cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_004",
+      "prompt": "The empress, now adorned in slightly more elegant attire, walks purposefully through a grand, richly decorated but uncrowded palace hall. She pauses, her gaze sweeping the ornate surroundings, a subtle smile playing on her lips. Photoreal cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_005",
+      "prompt": "The empress, regal and determined, strides confidently into a brightly lit, ornate council chamber. Her presence commands attention as the blurred figures of officials turn to face her, a palpable tension filling the opulent space. Photoreal cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_006",
+      "prompt": "The empress, now robed in magnificent, elaborate garments, ascends a grand, intricately carved stone staircase towards a brightly illuminated throne room. Her imposing silhouette grows larger with each step, embodying her ascent. Photoreal cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_007",
+      "prompt": "The empress, crowned and regal, sits powerfully on the ornate dragon throne, her gaze commanding the vast hall. The loyal eunuch stands steadfastly by her side, a silent, unwavering pillar of support. Sunlight streams through high windows. Photoreal cinematic style.",
+      "duration_sec": 5
+    }
+  ]
+}

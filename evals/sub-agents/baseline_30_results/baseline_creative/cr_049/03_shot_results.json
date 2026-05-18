@@ -1,0 +1,74 @@
+[
+  {
+    "idx": 1,
+    "shot_id": "sh_001",
+    "prompt": "A charismatic top-tier lawyer, sharp in a tailored suit, confidently closes a multi-million dollar deal in a gleaming, high-rise office overlooking a bustling city at sunset. He smiles, shaking hands.",
+    "status": "OK",
+    "keyframe_bytes": 1612580,
+    "mp4_bytes": 820438,
+    "elapsed_sec": 1407.3250694274902
+  },
+  {
+    "idx": 2,
+    "shot_id": "sh_002",
+    "prompt": "Rain streaks down a sleek office window at night. A ruthless business partner smirks, presenting forged documents to the shocked lawyer, who realizes he's been meticulously framed. Shadows play on his",
+    "status": "OK",
+    "keyframe_bytes": 1685487,
+    "mp4_bytes": 1015958,
+    "elapsed_sec": 1410.3479762077332
+  },
+  {
+    "idx": 3,
+    "shot_id": "sh_003",
+    "prompt": "A once-powerful lawyer, now gaunt and despairing, stares blankly through the bars of a cold, stark prison cell. The faint sound of distant prison chatter echoes through the concrete walls.",
+    "status": "OK",
+    "keyframe_bytes": 1827222,
+    "mp4_bytes": 740040,
+    "elapsed_sec": 1409.3114144802094
+  },
+  {
+    "idx": 4,
+    "shot_id": "sh_004",
+    "prompt": "A grizzled, weary man in ill-fitting clothes exits a grim prison gate under a desolate grey sky. He clutches a crumpled letter, his face etched with unspeakable grief, his world utterly shattered.",
+    "status": "OK",
+    "keyframe_bytes": 1777865,
+    "mp4_bytes": 985912,
+    "elapsed_sec": 1408.626841545105
+  },
+  {
+    "idx": 5,
+    "shot_id": "sh_005",
+    "prompt": "On a rain-slicked city street at night, a broken man collapses against a grimy wall, tears mixing with the rain. Suddenly, a brilliant, ethereal light flashes, engulfing him completely.",
+    "status": "OK",
+    "keyframe_bytes": 2071371,
+    "mp4_bytes": 1890880,
+    "elapsed_sec": 1409.31960439682
+  },
+  {
+    "idx": 6,
+    "shot_id": "sh_006",
+    "prompt": "The lawyer jolts awake in his luxurious bedroom, exactly ten years younger, the city rain still drumming against the window. He touches his face, a mix of shock and dawning realization washing over hi",
+    "status": "OK",
+    "keyframe_bytes": 1637684,
+    "mp4_bytes": 644277,
+    "elapsed_sec": 1411.6780836582184
+  },
+  {
+    "idx": 7,
+    "shot_id": "sh_007",
+    "prompt": "A determined lawyer sits at a grand mahogany desk, illuminated by a single lamp, meticulously arranging old photographs of his former business partner and other conspirators. His eyes burn with cold r",
+    "status": "OK",
+    "keyframe_bytes": 1552304,
+    "mp4_bytes": 801984,
+    "elapsed_sec": 1414.5600666999817
+  },
+  {
+    "idx": 8,
+    "shot_id": "sh_008",
+    "prompt": "In a dimly lit, high-tech office, the lawyer types furiously on a glowing screen, complex legal documents and financial schematics projected around him. He sips coffee, a subtle, dangerous smirk playi",
+    "status": "OK",
+    "keyframe_bytes": 1669621,
+    "mp4_bytes": 893722,
+    "elapsed_sec": 1413.0842099189758
+  }
+]

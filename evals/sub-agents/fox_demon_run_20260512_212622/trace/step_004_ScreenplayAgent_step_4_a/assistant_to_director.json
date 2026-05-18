@@ -1,0 +1,1289 @@
+{
+  "http_status": 200,
+  "response_body": {
+    "id": "exec_4_a585afad",
+    "agent_id": "ScreenplayAgent",
+    "step_id": "step_4_a76cf964",
+    "status": "COMPLETED",
+    "inputs": {
+      "step_id": "step_4_a76cf964",
+      "resolved_artifacts": {
+        "story": {
+          "caption": "Story blueprint: 5 scene(s), 3 character(s). Structured input for screenplay generation.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/StoryAgent/step_3_c63b3878_storyagent_exec_3.json",
+          "mime": "application/json",
+          "payload": {
+            "meta": {
+              "schema_version": "0.3",
+              "created_at": "2026-05-12T22:38:59.351302+00:00",
+              "language": "zh"
+            },
+            "content": {
+              "logline": "Facing execution on the sacred Investiture Platform after a devastating war, a nine-tailed fox demon suddenly remembers a mysterious man who has been appearing in her dreams, hinting at a forgotten past.",
+              "style": {
+                "genre": [
+                  "Fantasy",
+                  "Mythology",
+                  "Drama"
+                ],
+                "tone_keywords": [
+                  "Chinese Mythology",
+                  "Mournful",
+                  "Dramatic",
+                  "Ethereal",
+                  "Tense",
+                  "Regret",
+                  "Redemption"
+                ]
+              },
+              "cast": [
+                {
+                  "character_id": "char_001",
+                  "name": "The Fox Demon",
+                  "role": "protagonist",
+                  "profile": "The last surviving nine-tailed fox demon from the Investiture of the Gods war, she is depicted as a dark-haired woman in a tattered light robe, strikingly flanked by her nine large, fluffy white tails. Embodying ancient power and tragic beauty within Chinese mythology, she is now weakened and at the mercy of divine justice.",
+                  "motivation": "To survive, to understand the fragmented memories of her past, and to find meaning in her suffering.",
+                  "flaw": "Vulnerability to overwhelming divine power and an incomplete understanding of her own history and true self."
+                },
+                {
+                  "character_id": "char_002",
+                  "name": "Jiang Ziya",
+                  "role": "antagonist",
+                  "profile": "A powerful and righteous Daoist immortal and military strategist, a key figure in the Investiture of the Gods war. He represents divine authority and the unwavering order of the new dynasty within Chinese mythology, resolute in fulfilling his duties of purging evil.",
+                  "motivation": "To uphold divine law, ensure cosmic balance, and eliminate all remaining demonic threats following the Investiture of the Gods.",
+                  "flaw": "Unyielding adherence to duty and a lack of empathy for individual suffering, prioritizing cosmic order above all else."
+                },
+                {
+                  "character_id": "char_003",
+                  "name": "The Mysterious Man",
+                  "role": "support",
+                  "profile": "A compassionate human figure who appears in the Fox Demon's fragmented memories and dreams. His identity and the nature of his connection to her are a profound mystery, representing a forgotten past and a potential source of hope, love, or regret within her life.",
+                  "motivation": "",
+                  "flaw": ""
+                }
+              ],
+              "locations": [
+                {
+                  "location_id": "loc_001",
+                  "name": "The Investiture Platform",
+                  "description": "A towering, austere ceremonial platform within the realm of Chinese mythology, perpetually shrouded in an ethereal mist and charged with immense spiritual energy. It is the sacred and terrifying site where gods are appointed and demons are condemned at the close of the Investiture of the Gods war, under a sky where 'nine-heaven thunder' ominously rolls."
+                }
+              ],
+              "story_arc": [
+                {
+                  "step_id": "arc_001",
+                  "order": 1,
+                  "step_type": "setup",
+                  "summary": "The last surviving nine-tailed fox demon, weakened and tattered, is brutally dragged onto the formidable Investiture Platform by Jiang Ziya and his guards, her ultimate fate seemingly sealed by the victorious divine forces after the Investiture of the Gods war.",
+                  "conflict": "The protagonist's struggle for survival against the overwhelming power and divine judgment embodied by Jiang Ziya and the celestial court.",
+                  "turning_point": "Her arrival at the execution site, marking the literal end of her freedom and the beginning of her final moments."
+                },
+                {
+                  "step_id": "arc_002",
+                  "order": 2,
+                  "step_type": "inciting",
+                  "summary": "As Jiang Ziya raises his formidable execution blade, the fox demon closes her eyes, prepared to accept her grim fate. Just as despair threatens to consume her, a faint, fleeting image of a mysterious man from her recurring dreams flickers in her mind.",
+                  "conflict": "An internal battle between the fox demon's acceptance of death and the unconscious stirring of a forgotten, potent memory.",
+                  "turning_point": "The first conscious glimpse of the man from her dreams, igniting a spark of something beyond her immediate despair."
+                },
+                {
+                  "step_id": "arc_003",
+                  "order": 3,
+                  "step_type": "crisis",
+                  "summary": "At the precipice of her execution, the faint flicker erupts into a vivid, overwhelming flood of memories, revealing a clear, tender scene with the mysterious man, bringing with it a profound emotional revelation of her forgotten past and connection.",
+                  "conflict": "The sudden, intense onslaught of memory clashes violently with the brutal reality of her impending execution, threatening to tear her consciousness apart.",
+                  "turning_point": "The full, undeniable clarity of the memory, establishing the man's profound significance to her and hinting at a deeper narrative."
+                },
+                {
+                  "step_id": "arc_004",
+                  "order": 4,
+                  "step_type": "climax",
+                  "summary": "The emotional force of the reawakened memories manifests as a visible surge of spiritual energy, causing a momentary pause in the execution as both the fox demon and Jiang Ziya react to this unexpected, powerful phenomenon.",
+                  "conflict": "The raw, unleashed power of the fox demon's rediscovered past and emotions directly confronts the stoic, unyielding decree of divine judgment.",
+                  "turning_point": "The physical manifestation of her inner turmoil, which momentarily halts the predetermined course of her execution and reveals her hidden depth."
+                },
+                {
+                  "step_id": "arc_005",
+                  "order": 5,
+                  "step_type": "resolution",
+                  "summary": "Despite the revelation, her ultimate fate cannot be averted. The fox demon faces her final moments with a newfound, melancholic peace or defiance, her gaze filled with the understanding of her past and an enduring connection to the man from her dreams.",
+                  "conflict": "The finality of her execution contrasted with the immortal, personal truth of her love and memories, which transcend physical death.",
+                  "turning_point": "Her dignified or haunting acceptance of fate, enriched by her complete recollection, providing an emotional closure to her tragic arc."
+                }
+              ],
+              "scene_outline": [
+                {
+                  "scene_id": "sc_001",
+                  "order": 1,
+                  "linked_step_id": "arc_001",
+                  "location_id": "loc_001",
+                  "time_of_day_hint": "DAY",
+                  "characters_present": [
+                    "char_001",
+                    "char_002"
+                  ],
+                  "goal": "To establish the fox demon's dire situation, her physical and emotional vulnerability, and the ominous setting of the Investiture Platform.",
+                  "conflict": "The fox demon's desperate and futile resistance as she is forcibly brought before her judge, Jiang Ziya, amidst the rolling thunder.",
+                  "turn": "Jiang Ziya silences the crowd and prepares to announce her final judgment, raising his hand in a gesture of authority."
+                },
+                {
+                  "scene_id": "sc_002",
+                  "order": 2,
+                  "linked_step_id": "arc_002",
+                  "location_id": "loc_001",
+                  "time_of_day_hint": "DAY",
+                  "characters_present": [
+                    "char_001",
+                    "char_002"
+                  ],
+                  "goal": "To show the fox demon's resignation to her fate while subtly introducing the first hint of her forgotten memories.",
+                  "conflict": "The internal despair and acceptance of death warring with the faint, unsettling sensation of something forgotten, just out of reach.",
+                  "turn": "As Jiang Ziya lifts his blade, a fleeting, almost subliminal image of the mysterious man flashes across the fox demon's mind, a ripple in her despair."
+                },
+                {
+                  "scene_id": "sc_003",
+                  "order": 3,
+                  "linked_step_id": "arc_003",
+                  "location_id": "loc_001",
+                  "time_of_day_hint": "CUSTOM",
+                  "characters_present": [
+                    "char_001",
+                    "char_003"
+                  ],
+                  "goal": "To fully immerse the audience in the fox demon's powerful, rediscovered memory of the man, revealing their emotional connection.",
+                  "conflict": "The overwhelming surge of vivid, tender memories clashes with the harsh, present reality of her execution, creating a disorienting emotional vortex.",
+                  "turn": "The memory coalesces into a clear, emotionally charged scene of the fox demon (in her human form) sharing a gentle moment with the mysterious man, full of warmth and forgotten affection."
+                },
+                {
+                  "scene_id": "sc_004",
+                  "order": 4,
+                  "linked_step_id": "arc_004",
+                  "location_id": "loc_001",
+                  "time_of_day_hint": "DAY",
+                  "characters_present": [
+                    "char_001",
+                    "char_002"
+                  ],
+                  "goal": "To dramatize the immediate and powerful impact of the fox demon's rediscovered memory on both herself and the execution scene.",
+                  "conflict": "The fox demon's intense internal emotional upheaval, fueled by memory, manifests externally as a powerful spiritual surge, momentarily challenging the execution's momentum.",
+                  "turn": "Jiang Ziya, momentarily taken aback, pauses his descent of the execution blade, his stern expression showing a flicker of surprise or concern at the fox demon's unexpected reaction."
+                },
+                {
+                  "scene_id": "sc_005",
+                  "order": 5,
+                  "linked_step_id": "arc_005",
+                  "location_id": "loc_001",
+                  "time_of_day_hint": "DAY",
+                  "characters_present": [
+                    "char_001",
+                    "char_002"
+                  ],
+                  "goal": "To conclude the narrative with the fox demon's final moments, emphasizing her transformation through memory and her ultimate acceptance or defiance of fate.",
+                  "conflict": "The unyielding finality of the execution against the enduring, transcendent power of her reawakened memories and the peace or defiance they bring to her spirit.",
+                  "turn": "Jiang Ziya completes the execution, but the fox demon meets her fate with a gaze of profound understanding, mournful peace, or haunting defiance, her true story illuminated by her final memories."
+                }
+              ]
+            },
+            "metrics": {
+              "character_count": 3,
+              "location_count": 1,
+              "scene_count": 5
+            }
+          }
+        }
+      },
+      "resolved_input_paths": [
+        "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/StoryAgent/step_3_c63b3878_storyagent_exec_3.json"
+      ]
+    },
+    "results": {
+      "meta": {
+        "schema_version": "0.3",
+        "created_at": "2026-05-12T22:40:14.243670+00:00",
+        "language": "zh"
+      },
+      "content": {
+        "title": "九尾狐劫：封神台上的记忆",
+        "scenes": [
+          {
+            "scene_id": "sc_001",
+            "order": 1,
+            "linked_story_step_id": "arc_001",
+            "heading": {
+              "location_id": "loc_001",
+              "location_name": "封神台",
+              "interior_exterior": "EXT",
+              "time_of_day": "DAY"
+            },
+            "summary": "在阴森的封神台上，被封神之战蹂躏的九尾狐妖，身心俱疲地被押至姜子牙面前，九天惊雷预示着她的末日。",
+            "continuity": {
+              "props_present": [
+                "捆仙索",
+                "神台"
+              ],
+              "character_wardrobe_notes": [
+                {
+                  "character_id": "char_001",
+                  "wardrobe": "身着破败的浅色长袍，黑发凌乱，九条白色狐尾残破不堪。",
+                  "must_keep": [
+                    "破败长袍",
+                    "九条残破狐尾"
+                  ]
+                },
+                {
+                  "character_id": "char_002",
+                  "wardrobe": "身着庄重肃穆的道家仙袍，手持拂尘。",
+                  "must_keep": [
+                    "道家仙袍",
+                    "肃穆神情"
+                  ]
+                }
+              ],
+              "must_keep_scene_facts": [
+                "背景设定在中国神话的封神之战后",
+                "九天惊雷不断",
+                "狐妖被神力束缚"
+              ]
+            },
+            "scene_consistency_pack": {
+              "location_lock": {
+                "location_id": "loc_001",
+                "time_of_day": "DAY",
+                "environment_notes": [
+                  "高耸、庄严的仪式平台，笼罩在弥漫的薄雾中",
+                  "充满强大的灵气",
+                  "天空有九天惊雷滚滚",
+                  "根植于中国神话和封神之战的背景"
+                ]
+              },
+              "character_locks": [
+                {
+                  "character_id": "char_001",
+                  "identity_notes": [
+                    "封神之战后幸存的最后一只九尾狐妖，拥有悲剧之美",
+                    "中国神话人物，虚弱无力"
+                  ],
+                  "wardrobe_notes": [
+                    "黑发，破烂的浅色长袍，九条巨大蓬松的白尾"
+                  ],
+                  "must_keep": [
+                    "九条尾巴可见",
+                    "破烂长袍暗示其痛苦"
+                  ]
+                },
+                {
+                  "character_id": "char_002",
+                  "identity_notes": [
+                    "强大正义的道家仙人兼军事家，封神之战的关键人物",
+                    "代表中国神话中的神圣权威和新王朝的坚定秩序"
+                  ],
+                  "wardrobe_notes": [
+                    "传统道家仙人服饰，庄重威严"
+                  ],
+                  "must_keep": [
+                    "道袍",
+                    "强大、坚定的风范"
+                  ]
+                }
+              ],
+              "props_lock": [
+                {
+                  "prop_id": "prop_001",
+                  "prop_name": "捆仙索",
+                  "must_keep": [
+                    "用于束缚狐妖的神奇绳索，散发着神光"
+                  ]
+                },
+                {
+                  "prop_id": "prop_002",
+                  "prop_name": "拂尘",
+                  "must_keep": [
+                    "姜子牙手持，象征其道家身份和权威"
+                  ]
+                }
+              ],
+              "style_lock": {
+                "global_style_notes": [
+                  "故事背景设定在中国神话世界，特别是封神之战后",
+                  "基调：悲怆、戏剧性、缥缈、紧张、悔恨、救赎"
+                ],
+                "must_avoid": [
+                  "过于血腥或写实的暴力描写"
+                ]
+              }
+            },
+            "scene_end": {
+              "turn": "姜子牙止息喧嚣，预备宣判，昭示狐妖命运已定。",
+              "emotional_shift": "从混乱不安转为死寂的绝望。"
+            },
+            "shots": [
+              {
+                "shot_id": "sh_001",
+                "order": 1,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "广阔的封神台笼罩在薄雾中，九天惊雷滚滚。狐妖被无形之力捆绑，踉跄地被押上神台，姜子牙已端坐其上，威严不可侵犯。",
+                "emotion_hint": "紧张",
+                "continuity_refs": {
+                  "props": [
+                    "prop_001",
+                    "prop_002"
+                  ],
+                  "wardrobe_character_ids": [
+                    "char_001",
+                    "char_002"
+                  ]
+                },
+                "shot_type": "wide",
+                "camera": {
+                  "angle": "high_angle",
+                  "movement": "crane_shot",
+                  "framing_notes": "展现封神台的宏伟与狐妖的渺小，强调压迫感。"
+                },
+                "visual_goal": "建立场景的宏大、肃穆和狐妖的困境。",
+                "action_focus": "狐妖被强制带入的瞬间，以及环境的压迫感。",
+                "characters_in_frame": [
+                  "char_001",
+                  "char_002"
+                ],
+                "props_in_frame": [
+                  "prop_001"
+                ],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_002",
+                "order": 2,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "狐妖特写，凌乱的黑发下，她疲惫的脸上写满了绝望与不甘，破败的九条狐尾无力地垂在身后，颤抖着。",
+                "emotion_hint": "悲伤",
+                "continuity_refs": {
+                  "props": [],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "close_up",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "static",
+                  "framing_notes": "聚焦狐妖面部表情与破损的狐尾，突出其痛苦和衰弱。"
+                },
+                "visual_goal": "展现狐妖的内在痛苦和外在的衰败。",
+                "action_focus": "狐妖的表情和她曾经骄傲的狐尾的现状。",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_003",
+                "order": 3,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "姜子牙缓缓抬起手，神台周围的喧嚣瞬间平息，只有九天惊雷依然低沉轰鸣。他威严的目光落在狐妖身上，准备宣读判决。",
+                "emotion_hint": "平静",
+                "continuity_refs": {
+                  "props": [
+                    "prop_002"
+                  ],
+                  "wardrobe_character_ids": [
+                    "char_002"
+                  ]
+                },
+                "shot_type": "medium",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "static",
+                  "framing_notes": "表现姜子牙的权威和肃穆，以及他即将做出的判决。"
+                },
+                "visual_goal": "展示姜子牙的掌控力和即将到来的判决。",
+                "action_focus": "姜子牙的手势和面部表情。",
+                "characters_in_frame": [
+                  "char_002"
+                ],
+                "props_in_frame": [
+                  "prop_002"
+                ],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "scene_id": "sc_002",
+            "order": 2,
+            "linked_story_step_id": "arc_002",
+            "heading": {
+              "location_id": "loc_001",
+              "location_name": "封神台",
+              "interior_exterior": "EXT",
+              "time_of_day": "DAY"
+            },
+            "summary": "姜子牙举起斩妖剑，狐妖闭眼等死，绝望中，脑海深处却闪过一个神秘男子的模糊身影。",
+            "continuity": {
+              "props_present": [
+                "斩妖剑",
+                "神台"
+              ],
+              "character_wardrobe_notes": [
+                {
+                  "character_id": "char_001",
+                  "wardrobe": "身着破败的浅色长袍，黑发凌乱，九条白色狐尾残破不堪。",
+                  "must_keep": [
+                    "破败长袍",
+                    "九条残破狐尾"
+                  ]
+                },
+                {
+                  "character_id": "char_002",
+                  "wardrobe": "身着庄重肃穆的道家仙袍。",
+                  "must_keep": [
+                    "道家仙袍"
+                  ]
+                }
+              ],
+              "must_keep_scene_facts": [
+                "背景设定在中国神话的封神之战后",
+                "九天惊雷不断",
+                "狐妖在绝望中"
+              ]
+            },
+            "scene_consistency_pack": {
+              "location_lock": {
+                "location_id": "loc_001",
+                "time_of_day": "DAY",
+                "environment_notes": [
+                  "高耸、庄严的仪式平台，笼罩在弥漫的薄雾中",
+                  "充满强大的灵气",
+                  "天空有九天惊雷滚滚",
+                  "根植于中国神话和封神之战的背景"
+                ]
+              },
+              "character_locks": [
+                {
+                  "character_id": "char_001",
+                  "identity_notes": [
+                    "封神之战后幸存的最后一只九尾狐妖，拥有悲剧之美",
+                    "中国神话人物，虚弱无力"
+                  ],
+                  "wardrobe_notes": [
+                    "黑发，破烂的浅色长袍，九条巨大蓬松的白尾"
+                  ],
+                  "must_keep": [
+                    "九条尾巴可见",
+                    "破烂长袍暗示其痛苦"
+                  ]
+                },
+                {
+                  "character_id": "char_002",
+                  "identity_notes": [
+                    "强大正义的道家仙人兼军事家，封神之战的关键人物",
+                    "代表中国神话中的神圣权威和新王朝的坚定秩序"
+                  ],
+                  "wardrobe_notes": [
+                    "传统道家仙人服饰，庄重威严"
+                  ],
+                  "must_keep": [
+                    "道袍",
+                    "强大、坚定的风范"
+                  ]
+                }
+              ],
+              "props_lock": [
+                {
+                  "prop_id": "prop_003",
+                  "prop_name": "斩妖剑",
+                  "must_keep": [
+                    "姜子牙手持，散发着神圣寒光的刑具"
+                  ]
+                }
+              ],
+              "style_lock": {
+                "global_style_notes": [
+                  "故事背景设定在中国神话世界，特别是封神之战后",
+                  "基调：悲怆、戏剧性、缥缈、紧张、悔恨、救赎"
+                ],
+                "must_avoid": [
+                  "过于血腥或写实的暴力描写"
+                ]
+              }
+            },
+            "scene_end": {
+              "turn": "斩妖剑高举之际，狐妖的绝望被脑海中浮现的神秘男子身影所打断。",
+              "emotional_shift": "从绝望的终结边缘，被一丝未知的记忆唤起一丝涟漪。"
+            },
+            "shots": [
+              {
+                "shot_id": "sh_004",
+                "order": 1,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "姜子牙面无表情地举起一柄神光凛冽的斩妖剑，剑刃直指狐妖，九天惊雷在剑锋上闪耀，昭示着审判的最终到来。",
+                "emotion_hint": "紧张",
+                "continuity_refs": {
+                  "props": [
+                    "prop_003"
+                  ],
+                  "wardrobe_character_ids": [
+                    "char_002"
+                  ]
+                },
+                "shot_type": "medium",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "static",
+                  "framing_notes": "聚焦姜子牙的动作和斩妖剑，强调其力量与致命性。"
+                },
+                "visual_goal": "展现即将执行的判决，制造高度紧张感。",
+                "action_focus": "斩妖剑被举起的瞬间。",
+                "characters_in_frame": [
+                  "char_002"
+                ],
+                "props_in_frame": [
+                  "prop_003"
+                ],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_005",
+                "order": 2,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "狐妖闭上眼睛，眼角滑落一滴清泪，接受命运的安排。她全身因虚弱而轻微颤抖，但已无力反抗。",
+                "emotion_hint": "悲伤",
+                "continuity_refs": {
+                  "props": [],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "close_up",
+                "camera": {
+                  "angle": "low_angle",
+                  "movement": "static",
+                  "framing_notes": "聚焦狐妖面部，捕捉她闭眼时的泪水和接受命运的表情。"
+                },
+                "visual_goal": "传达狐妖的绝望与顺从。",
+                "action_focus": "狐妖闭眼、泪水滑落的瞬间。",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_006",
+                "order": 3,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "一闪而逝的幻象，模糊而温暖。一个神秘男子的侧脸在狐妖的脑海中浮现，带着一丝若有似无的微笑，转瞬即逝。",
+                "emotion_hint": "平静",
+                "continuity_refs": {
+                  "props": [],
+                  "wardrobe_character_ids": [
+                    "char_001",
+                    "char_003"
+                  ]
+                },
+                "shot_type": "extreme_close_up",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "static",
+                  "framing_notes": "梦幻滤镜，捕捉男子脸部的模糊特写，暗示记忆的开端。"
+                },
+                "visual_goal": "引入记忆片段，打破当下的绝望感。",
+                "action_focus": "神秘男子的脸部幻象。",
+                "characters_in_frame": [],
+                "props_in_frame": [],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "scene_id": "sc_003",
+            "order": 3,
+            "linked_story_step_id": "arc_003",
+            "heading": {
+              "location_id": "loc_001",
+              "location_name": "封神台",
+              "interior_exterior": "EXT",
+              "time_of_day": "CUSTOM"
+            },
+            "summary": "模糊的幻象转变为清晰温暖的记忆，狐妖在记忆中与神秘男子相依，感受到被遗忘的深厚情感。",
+            "continuity": {
+              "props_present": [
+                "古朴石桌",
+                "茶具"
+              ],
+              "character_wardrobe_notes": [
+                {
+                  "character_id": "char_001",
+                  "wardrobe": "记忆中的她穿着素雅的古装，容颜清丽，无狐尾。",
+                  "must_keep": [
+                    "素雅古装",
+                    "人类形态"
+                  ]
+                },
+                {
+                  "character_id": "char_003",
+                  "wardrobe": "身着朴素而精致的古装，眼神温柔。",
+                  "must_keep": [
+                    "朴素古装",
+                    "温柔眼神"
+                  ]
+                }
+              ],
+              "must_keep_scene_facts": [
+                "记忆场景与现实形成强烈对比",
+                "强调温馨与情感深度",
+                "记忆中的场景根植于中国神话美学"
+              ]
+            },
+            "scene_consistency_pack": {
+              "location_lock": {
+                "location_id": "loc_001",
+                "time_of_day": "CUSTOM",
+                "environment_notes": [
+                  "高耸、庄严的仪式平台，笼罩在弥漫的薄雾中（现实）",
+                  "记忆中：一片宁静的古代园林或茅屋，阳光温暖，鸟语花香",
+                  "充满强大的灵气",
+                  "天空有九天惊雷滚滚（现实）",
+                  "根植于中国神话和封神之战的背景"
+                ]
+              },
+              "character_locks": [
+                {
+                  "character_id": "char_001",
+                  "identity_notes": [
+                    "封神之战后幸存的最后一只九尾狐妖，拥有悲剧之美",
+                    "中国神话人物，记忆中为人类形态"
+                  ],
+                  "wardrobe_notes": [
+                    "现实：黑发，破烂的浅色长袍，九条巨大蓬松的白尾",
+                    "记忆中：清丽容颜，素雅古装，无狐尾"
+                  ],
+                  "must_keep": [
+                    "现实中九条尾巴可见",
+                    "记忆中为人类形态"
+                  ]
+                },
+                {
+                  "character_id": "char_003",
+                  "identity_notes": [
+                    "狐妖记忆中的一位富有同情心的人类，身份神秘",
+                    "中国神话人物"
+                  ],
+                  "wardrobe_notes": [
+                    "简单优雅的古装"
+                  ],
+                  "must_keep": [
+                    "温和善良的表情"
+                  ]
+                }
+              ],
+              "props_lock": [
+                {
+                  "prop_id": "prop_004",
+                  "prop_name": "古朴石桌",
+                  "must_keep": [
+                    "记忆场景中，承载茶具，有岁月痕迹"
+                  ]
+                },
+                {
+                  "prop_id": "prop_005",
+                  "prop_name": "茶具",
+                  "must_keep": [
+                    "记忆场景中，精致的古风茶具"
+                  ]
+                }
+              ],
+              "style_lock": {
+                "global_style_notes": [
+                  "故事背景设定在中国神话世界，特别是封神之战后",
+                  "基调：悲怆、戏剧性、缥缈、紧张、悔恨、救赎",
+                  "记忆场景呈现温馨、柔和的色彩和光线"
+                ],
+                "must_avoid": [
+                  "过于血腥或写实的暴力描写"
+                ]
+              }
+            },
+            "scene_end": {
+              "turn": "记忆最终凝结成狐妖与神秘男子相依的温馨画面，展现了被遗忘的深情。",
+              "emotional_shift": "从模糊的感应转变为清晰、深刻的爱意与失落。"
+            },
+            "shots": [
+              {
+                "shot_id": "sh_007",
+                "order": 1,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "镜头虚焦，狐妖现今痛苦的脸庞逐渐模糊，取而代之的是她年轻时清丽的容颜，嘴角带着一抹温柔的微笑，双眸清澈。",
+                "emotion_hint": "温暖",
+                "continuity_refs": {
+                  "props": [],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "close_up",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "dolly_in",
+                  "framing_notes": "梦幻般的过渡，模糊现实，聚焦记忆中狐妖的美丽与宁静。"
+                },
+                "visual_goal": "展现狐妖从痛苦到平和的记忆转换，突出其过去的美好。",
+                "action_focus": "狐妖容颜的转变。",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_008",
+                "order": 2,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "记忆中，一片宁静的古代园林，狐妖（人类形态）与神秘男子并肩坐在古朴石桌旁，阳光透过竹林洒下斑驳光影，两人相视一笑，温馨而宁谧。",
+                "emotion_hint": "温暖",
+                "continuity_refs": {
+                  "props": [
+                    "prop_004",
+                    "prop_005"
+                  ],
+                  "wardrobe_character_ids": [
+                    "char_001",
+                    "char_003"
+                  ]
+                },
+                "shot_type": "medium",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "static",
+                  "framing_notes": "展现记忆中的温馨场景，构图和谐，色彩柔和。"
+                },
+                "visual_goal": "构建一个充满爱与平和的记忆画面。",
+                "action_focus": "两人和谐共处的姿态和环境的宁静。",
+                "characters_in_frame": [
+                  "char_001",
+                  "char_003"
+                ],
+                "props_in_frame": [
+                  "prop_004",
+                  "prop_005"
+                ],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_009",
+                "order": 3,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "特写镜头，狐妖与神秘男子的手轻轻交叠在一起，无言的爱意流淌。光影开始闪烁，记忆的画面逐渐变得模糊，似要消散。",
+                "emotion_hint": "温暖",
+                "continuity_refs": {
+                  "props": [],
+                  "wardrobe_character_ids": [
+                    "char_001",
+                    "char_003"
+                  ]
+                },
+                "shot_type": "close_up",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "static",
+                  "framing_notes": "聚焦手部特写，用肢体语言表达情感深度，并暗示记忆的短暂。"
+                },
+                "visual_goal": "强调两人情感的亲密和记忆的脆弱性。",
+                "action_focus": "手部的接触和记忆的消散。",
+                "characters_in_frame": [
+                  "char_001",
+                  "char_003"
+                ],
+                "props_in_frame": [],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "scene_id": "sc_004",
+            "order": 4,
+            "linked_story_step_id": "arc_004",
+            "heading": {
+              "location_id": "loc_001",
+              "location_name": "封神台",
+              "interior_exterior": "EXT",
+              "time_of_day": "DAY"
+            },
+            "summary": "记忆的冲击让狐妖体内灵力爆发，神光四射，姜子牙被这股意外的能量震慑，斩妖剑悬而未决。",
+            "continuity": {
+              "props_present": [
+                "斩妖剑",
+                "神台"
+              ],
+              "character_wardrobe_notes": [
+                {
+                  "character_id": "char_001",
+                  "wardrobe": "身着破败的浅色长袍，黑发凌乱，九条白色狐尾残破不堪。",
+                  "must_keep": [
+                    "破败长袍",
+                    "九条残破狐尾"
+                  ]
+                },
+                {
+                  "character_id": "char_002",
+                  "wardrobe": "身着庄重肃穆的道家仙袍。",
+                  "must_keep": [
+                    "道家仙袍"
+                  ]
+                }
+              ],
+              "must_keep_scene_facts": [
+                "背景设定在中国神话的封神之战后",
+                "九天惊雷不断",
+                "狐妖灵力爆发是情感而非进攻性行为"
+              ]
+            },
+            "scene_consistency_pack": {
+              "location_lock": {
+                "location_id": "loc_001",
+                "time_of_day": "DAY",
+                "environment_notes": [
+                  "高耸、庄严的仪式平台，笼罩在弥漫的薄雾中",
+                  "充满强大的灵气",
+                  "天空有九天惊雷滚滚",
+                  "根植于中国神话和封神之战的背景"
+                ]
+              },
+              "character_locks": [
+                {
+                  "character_id": "char_001",
+                  "identity_notes": [
+                    "封神之战后幸存的最后一只九尾狐妖，拥有悲剧之美",
+                    "中国神话人物，虚弱无力"
+                  ],
+                  "wardrobe_notes": [
+                    "黑发，破烂的浅色长袍，九条巨大蓬松的白尾"
+                  ],
+                  "must_keep": [
+                    "九条尾巴可见",
+                    "破烂长袍暗示其痛苦"
+                  ]
+                },
+                {
+                  "character_id": "char_002",
+                  "identity_notes": [
+                    "强大正义的道家仙人兼军事家，封神之战的关键人物",
+                    "代表中国神话中的神圣权威和新王朝的坚定秩序"
+                  ],
+                  "wardrobe_notes": [
+                    "传统道家仙人服饰，庄重威严"
+                  ],
+                  "must_keep": [
+                    "道袍",
+                    "强大、坚定的风范"
+                  ]
+                }
+              ],
+              "props_lock": [
+                {
+                  "prop_id": "prop_003",
+                  "prop_name": "斩妖剑",
+                  "must_keep": [
+                    "姜子牙手持，散发着神圣寒光的刑具"
+                  ]
+                }
+              ],
+              "style_lock": {
+                "global_style_notes": [
+                  "故事背景设定在中国神话世界，特别是封神之战后",
+                  "基调：悲怆、戏剧性、缥缈、紧张、悔恨、救赎"
+                ],
+                "must_avoid": [
+                  "过于血腥或写实的暴力描写"
+                ]
+              }
+            },
+            "scene_end": {
+              "turn": "狐妖强大的记忆情感转化为可见的灵力爆发，迫使姜子牙的斩妖剑悬空。",
+              "emotional_shift": "从绝望的顺从变为充满力量的抗争，带来一线短暂的希望。"
+            },
+            "shots": [
+              {
+                "shot_id": "sh_010",
+                "order": 1,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "狐妖猛然睁眼，眼中泪光闪烁，但同时，一股蓝白色的灵力洪流从她体内迸发，冲击着捆仙索，使其发出嗡鸣。她的九条狐尾在此刻变得明亮。",
+                "emotion_hint": "紧张",
+                "continuity_refs": {
+                  "props": [
+                    "prop_001"
+                  ],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "medium",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "static",
+                  "framing_notes": "聚焦狐妖灵力爆发的瞬间，强调视觉效果和情感力量。"
+                },
+                "visual_goal": "展现狐妖内在情感的强大外部表现。",
+                "action_focus": "狐妖睁眼与灵力迸发。",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [
+                  "prop_001"
+                ],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_011",
+                "order": 2,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "姜子牙面色微变，眼中闪过一丝不易察觉的惊讶与凝重。他紧握斩妖剑的手指微顿，显然被这股灵力所影响。",
+                "emotion_hint": "紧张",
+                "continuity_refs": {
+                  "props": [
+                    "prop_003"
+                  ],
+                  "wardrobe_character_ids": [
+                    "char_002"
+                  ]
+                },
+                "shot_type": "close_up",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "static",
+                  "framing_notes": "捕捉姜子牙细微的表情变化，突出其意外与警惕。"
+                },
+                "visual_goal": "展示姜子牙对狐妖异变的反应。",
+                "action_focus": "姜子牙的面部表情和手部动作。",
+                "characters_in_frame": [
+                  "char_002"
+                ],
+                "props_in_frame": [
+                  "prop_003"
+                ],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_012",
+                "order": 3,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "斩妖剑在姜子牙手中停滞在半空中，剑身因灵力冲击而微颤，发出低沉的嗡鸣。九天惊雷仿佛也在此刻犹豫。",
+                "emotion_hint": "紧张",
+                "continuity_refs": {
+                  "props": [
+                    "prop_003"
+                  ],
+                  "wardrobe_character_ids": [
+                    "char_002"
+                  ]
+                },
+                "shot_type": "medium",
+                "camera": {
+                  "angle": "low_angle",
+                  "movement": "static",
+                  "framing_notes": "强调斩妖剑的停滞和灵力带来的影响。"
+                },
+                "visual_goal": "视觉化灵力对审判的干扰。",
+                "action_focus": "斩妖剑停顿的瞬间。",
+                "characters_in_frame": [],
+                "props_in_frame": [
+                  "prop_003"
+                ],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "scene_id": "sc_005",
+            "order": 5,
+            "linked_story_step_id": "arc_005",
+            "heading": {
+              "location_id": "loc_001",
+              "location_name": "封神台",
+              "interior_exterior": "EXT",
+              "time_of_day": "DAY"
+            },
+            "summary": "最终命运无法改变，狐妖带着对过往的了悟和对神秘男子的连接，以一种平静或不屈的姿态面对最后的时刻。",
+            "continuity": {
+              "props_present": [
+                "斩妖剑",
+                "神台"
+              ],
+              "character_wardrobe_notes": [
+                {
+                  "character_id": "char_001",
+                  "wardrobe": "身着破败的浅色长袍，黑发凌乱，九条白色狐尾残破不堪。",
+                  "must_keep": [
+                    "破败长袍",
+                    "九条残破狐尾"
+                  ]
+                },
+                {
+                  "character_id": "char_002",
+                  "wardrobe": "身着庄重肃穆的道家仙袍。",
+                  "must_keep": [
+                    "道家仙袍"
+                  ]
+                }
+              ],
+              "must_keep_scene_facts": [
+                "背景设定在中国神话的封神之战后",
+                "九天惊雷不断",
+                "狐妖最终接受或超越了她的命运"
+              ]
+            },
+            "scene_consistency_pack": {
+              "location_lock": {
+                "location_id": "loc_001",
+                "time_of_day": "DAY",
+                "environment_notes": [
+                  "高耸、庄严的仪式平台，笼罩在弥漫的薄雾中",
+                  "充满强大的灵气",
+                  "天空有九天惊雷滚滚",
+                  "根植于中国神话和封神之战的背景"
+                ]
+              },
+              "character_locks": [
+                {
+                  "character_id": "char_001",
+                  "identity_notes": [
+                    "封神之战后幸存的最后一只九尾狐妖，拥有悲剧之美",
+                    "中国神话人物，虚弱无力，但心灵已得到慰藉"
+                  ],
+                  "wardrobe_notes": [
+                    "黑发，破烂的浅色长袍，九条巨大蓬松的白尾"
+                  ],
+                  "must_keep": [
+                    "九条尾巴可见",
+                    "破烂长袍暗示其痛苦"
+                  ]
+                },
+                {
+                  "character_id": "char_002",
+                  "identity_notes": [
+                    "强大正义的道家仙人兼军事家，封神之战的关键人物",
+                    "代表中国神话中的神圣权威和新王朝的坚定秩序"
+                  ],
+                  "wardrobe_notes": [
+                    "传统道家仙人服饰，庄重威严"
+                  ],
+                  "must_keep": [
+                    "道袍",
+                    "强大、坚定的风范"
+                  ]
+                }
+              ],
+              "props_lock": [
+                {
+                  "prop_id": "prop_003",
+                  "prop_name": "斩妖剑",
+                  "must_keep": [
+                    "姜子牙手持，散发着神圣寒光的刑具"
+                  ]
+                }
+              ],
+              "style_lock": {
+                "global_style_notes": [
+                  "故事背景设定在中国神话世界，特别是封神之战后",
+                  "基调：悲怆、戏剧性、缥缈、紧张、悔恨、救赎"
+                ],
+                "must_avoid": [
+                  "过于血腥或写实的暴力描写"
+                ]
+              }
+            },
+            "scene_end": {
+              "turn": "姜子牙完成斩妖，狐妖最终迎来命运，但她的眼神中充满着对过往的了悟和超越死亡的连接。",
+              "emotional_shift": "从最终的悲剧转变为一种超脱而永恒的平和，或是不屈的遗世独立。"
+            },
+            "shots": [
+              {
+                "shot_id": "sh_013",
+                "order": 1,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "狐妖的脸上已无恐惧，取而代之的是一种了悟后的平静，或是带着回忆的不屈。她的目光穿透远方，仿佛看到了永恒的连接。",
+                "emotion_hint": "平静",
+                "continuity_refs": {
+                  "props": [],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "close_up",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "static",
+                  "framing_notes": "聚焦狐妖的面部，强调她眼神中的转变和内在的坚韧。"
+                },
+                "visual_goal": "展现狐妖从绝望到超脱的内心升华。",
+                "action_focus": "狐妖的眼神和面部表情。",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_014",
+                "order": 2,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "姜子牙重拾坚定，斩妖剑最终落下，剑光一闪而过。九天惊雷在这一刻达到顶点，似乎在为神明昭示最终的裁决。",
+                "emotion_hint": "紧张",
+                "continuity_refs": {
+                  "props": [
+                    "prop_003"
+                  ],
+                  "wardrobe_character_ids": [
+                    "char_002"
+                  ]
+                },
+                "shot_type": "medium",
+                "camera": {
+                  "angle": "high_angle",
+                  "movement": "zoom_out",
+                  "framing_notes": "展现姜子牙完成裁决的瞬间，保持庄重感，不直接展示血腥。"
+                },
+                "visual_goal": "表现审判的不可逆转性。",
+                "action_focus": "斩妖剑的最终落下。",
+                "characters_in_frame": [
+                  "char_002",
+                  "char_001"
+                ],
+                "props_in_frame": [
+                  "prop_003"
+                ],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_015",
+                "order": 3,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "狐妖的身形在神光中逐渐消散，她的九条狐尾在最后瞬间发出耀眼白光，然后如烟雾般散去，唯有那了悟的眼神，在记忆中永恒。",
+                "emotion_hint": "悲伤",
+                "continuity_refs": {
+                  "props": [],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "wide",
+                "camera": {
+                  "angle": "low_angle",
+                  "movement": "crane_shot",
+                  "framing_notes": "以唯美而缥缈的方式呈现狐妖的最终消逝，强调她的精神永存。"
+                },
+                "visual_goal": "象征狐妖的最终结局和她记忆的超越性。",
+                "action_focus": "狐妖身体的消散和狐尾的最后光芒。",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "scene_count": 5,
+        "shot_count_total": 15,
+        "avg_shots_per_scene": 3.0,
+        "dialogue_block_count": 0,
+        "action_block_count": 15
+      },
+      "_execution_debug": {
+        "attempts": 1,
+        "overall_pass": true,
+        "eval_summary": "The creative content exhibits exceptional quality across all dimensions. Character voices are distinct and consistently portrayed, with their emotional and behavioral shifts being well-motivated within the narrative. The dramatic flow is compelling, skillfully building tension, introducing a poignant memory flashback, and resolving with impactful emotional depth. Visual coherence is strong; shot types, camera choices, and visual goals consistently serve the scene's emotional beats and overall narrative, particularly in how the memory sequence is visually differentiated and integrated. The content effectively achieves its desired tone and storytelling objectives."
+      },
+      "_asset_index": {
+        "agent_id": "ScreenplayAgent",
+        "json_uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/ScreenplayAgent/step_4_a76cf964_screenplayagent_exec_4.json",
+        "execution_id": "exec_4_a585afad"
+      }
+    },
+    "error": null,
+    "started_at": "2026-05-12T22:39:14.617724",
+    "completed_at": "2026-05-12T22:40:25.223632",
+    "created_at": "2026-05-12T22:39:14.617713",
+    "resolved_input_paths": [
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/StoryAgent/step_3_c63b3878_storyagent_exec_3.json"
+    ]
+  }
+}

@@ -211,28 +211,54 @@ class VideoService:
                 lines.append(f"file '{clip_path.as_posix()}'")
             parts_file.write_text("\n".join(lines), encoding="utf-8")
 
+            # Attempt 1: -c copy (zero quality loss, requires identical codec/dim)
             proc = subprocess.run(
                 [
-                    ffmpeg_bin,
-                    "-y",
-                    "-f",
-                    "concat",
-                    "-safe",
-                    "0",
-                    "-i",
-                    str(parts_file),
-                    "-c",
-                    "copy",
+                    ffmpeg_bin, "-y",
+                    "-f", "concat", "-safe", "0",
+                    "-i", str(parts_file),
+                    "-c", "copy",
                     str(out_file),
                 ],
-                capture_output=True,
-                text=True,
+                capture_output=True, text=True,
             )
+
+            # Attempt 2: Hunyuan-I2V occasionally returns shots at different
+            # 720p preset dims (1280×704 vs 1248×704 vs 1136×704) when input
+            # keyframes have varying aspect ratios. -c copy fails on dim
+            # mismatch. Re-encode with scale+pad to a fixed 1280×720 canvas:
+            # the smaller-dim shots get letterboxed, no shot is stretched.
             if proc.returncode != 0 or not out_file.exists():
-                stderr_tail = (proc.stderr or "").strip()[-500:]
-                raise RuntimeError(
-                    f"ffmpeg concat failed for {label} (code={proc.returncode}): {stderr_tail}"
+                logger.info(
+                    "[VideoService] concat -c copy failed for %s (likely dim mismatch); "
+                    "retrying with scale+pad re-encode to 1280x720",
+                    label,
                 )
+                if out_file.exists():
+                    out_file.unlink()
+                proc = subprocess.run(
+                    [
+                        ffmpeg_bin, "-y",
+                        "-f", "concat", "-safe", "0",
+                        "-i", str(parts_file),
+                        "-vf",
+                        "scale=1280:720:force_original_aspect_ratio=decrease,"
+                        "pad=1280:720:(ow-iw)/2:(oh-ih)/2:black,"
+                        "setsar=1",
+                        "-c:v", "libx264", "-preset", "medium", "-crf", "18",
+                        "-pix_fmt", "yuv420p",
+                        "-c:a", "aac", "-b:a", "192k",
+                        "-movflags", "+faststart",
+                        str(out_file),
+                    ],
+                    capture_output=True, text=True,
+                )
+                if proc.returncode != 0 or not out_file.exists():
+                    stderr_tail = (proc.stderr or "").strip()[-500:]
+                    raise RuntimeError(
+                        f"ffmpeg concat (scale+pad re-encode) failed for {label} "
+                        f"(code={proc.returncode}): {stderr_tail}"
+                    )
 
             merged = out_file.read_bytes()
             if not merged:
@@ -421,10 +447,23 @@ class FalVideoService(VideoService, LazyHttpxClientMixin):
             or "/v2.7/" in model
         )
 
-    @staticmethod
-    def _kling_duration_enum(duration_sec: float) -> str:
-        """Many Kling endpoints only allow 5s or 10s (string enum)."""
-        return "10" if float(duration_sec) > 5.5 else "5"
+    def _kling_duration_enum(self, duration_sec: float) -> str:
+        """Snap a requested clip duration to the closest value the active
+        Kling model accepts.
+
+        Kling v3 / o3:  enum {"3", "5", "10", "15"} (3–15s).
+        Kling v2.6:     enum {"5", "10"} (legacy, 5s or 10s only).
+
+        Snapping (vs. raising) mirrors what the Kling endpoint does
+        internally on mismatched inputs — we just make the snap explicit
+        so the picked value is logged on our side.
+        """
+        d = float(duration_sec) if duration_sec > 0 else 5.0
+        if "/v3/" in self.model or "/o3/" in self.model:
+            allowed = (3, 5, 10, 15)
+        else:
+            allowed = (5, 10)
+        return str(min(allowed, key=lambda x: abs(x - d)))
 
     def _build_kling_arguments(
         self,
@@ -848,7 +887,7 @@ class HunyuanVideoService(VideoService, LazyHttpxClientMixin):
         endpoint_url: str | None = None,
         *,
         infer_steps: int | None = None,
-        timeout: float = 2400.0,
+        timeout: float = 43200.0,
     ) -> None:
         self.endpoint_url = (
             endpoint_url or os.getenv("HUNYUAN_VIDEO_ENDPOINT_URL", "")

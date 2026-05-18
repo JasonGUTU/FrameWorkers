@@ -1,0 +1,141 @@
+{
+  "started": "2026-05-10T08:54:35",
+  "hunyuan_endpoints": [
+    "http://sof1-h200-3:9200",
+    "http://sof1-h200-3:9201",
+    "http://sof1-h200-3:9202",
+    "http://sof1-h200-3:9203",
+    "http://sof1-h200-7:9204",
+    "http://sof1-h200-7:9205",
+    "http://sof1-h200-6:9206",
+    "http://sof1-h200-6:9207",
+    "http://sof1-h200-6:9208",
+    "http://sof1-h200-7:9209",
+    "http://sof1-h200-7:9210"
+  ],
+  "infer_steps": 50,
+  "results_per_worker": [
+    [
+      {
+        "name": "cr_042",
+        "status": "DONE",
+        "elapsed_sec": 14539.105081796646
+      },
+      {
+        "name": "intake_img_018",
+        "status": "DONE",
+        "elapsed_sec": 17189.485541820526
+      }
+    ],
+    [
+      {
+        "name": "cr_023",
+        "status": "DONE",
+        "elapsed_sec": 15291.657033920288
+      },
+      {
+        "name": "intake_img_005",
+        "status": "DONE",
+        "elapsed_sec": 15588.748273134232
+      }
+    ],
+    [
+      {
+        "name": "cr_049",
+        "status": "DONE",
+        "elapsed_sec": 13648.981131076813
+      },
+      {
+        "name": "intake_img_008",
+        "status": "DONE",
+        "elapsed_sec": 15399.262031793594
+      }
+    ],
+    [
+      {
+        "name": "cr_064",
+        "status": "DONE",
+        "elapsed_sec": 15316.057070732117
+      },
+      {
+        "name": "intake_img_046",
+        "status": "DONE",
+        "elapsed_sec": 17204.213670253754
+      }
+    ],
+    [
+      {
+        "name": "cr_104",
+        "status": "DONE",
+        "elapsed_sec": 16796.665295124054
+      },
+      {
+        "name": "intake_img_039",
+        "status": "DONE",
+        "elapsed_sec": 14576.983532428741
+      }
+    ],
+    [
+      {
+        "name": "cr_016",
+        "status": "DONE",
+        "elapsed_sec": 14252.49349141121
+      },
+      {
+        "name": "intake_img_036",
+        "status": "DONE",
+        "elapsed_sec": 14464.914880990982
+      }
+    ],
+    [
+      {
+        "name": "cr_107",
+        "status": "DONE",
+        "elapsed_sec": 17110.668658733368
+      },
+      {
+        "name": "intake_img_037",
+        "status": "DONE",
+        "elapsed_sec": 15608.777450084686
+      }
+    ],
+    [
+      {
+        "name": "cr_072",
+        "status": "DONE",
+        "elapsed_sec": 14212.025243520737
+      },
+      {
+        "name": "intake_img_030",
+        "status": "DONE",
+        "elapsed_sec": 13136.926210641861
+      }
+    ],
+    [
+      {
+        "name": "cr_059",
+        "status": "DONE",
+        "elapsed_sec": 15580.714459657669
+      },
+      {
+        "name": "intake_img_049",
+        "status": "DONE",
+        "elapsed_sec": 17152.051892995834
+      }
+    ],
+    [
+      {
+        "name": "cr_030",
+        "status": "DONE",
+        "elapsed_sec": 14546.781613111496
+      }
+    ],
+    [
+      {
+        "name": "intake_img_019",
+        "status": "DONE",
+        "elapsed_sec": 13949.431642770767
+      }
+    ]
+  ]
+}

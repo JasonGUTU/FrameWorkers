@@ -27,7 +27,7 @@ import os
 import sys
 import time
 from datetime import datetime
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(os.path.dirname(SCRIPT_DIR))
@@ -91,21 +91,53 @@ def classify_decision(new_tail: List[Any], failed_agent_id: str) -> str:
     return "replan"
 
 
+_DECISION_ALIAS = {"empty": "skip"}  # case vocab uses "skip"; driver emits "empty".
+
+
 def score_case(decision_type: str, new_tail_agents: List[str],
-               must_include: List[str]) -> Dict[str, Any]:
-    pass_no_retry = decision_type == "replan"
+               case: Dict[str, Any]) -> Dict[str, Any]:
+    """Score one replan decision against the case's expected outcome.
+
+    Two regimes:
+    - R-type (upstream_reject, v1 + v2 R*): expected decision is implicitly
+      `replan` and the new tail must cover the missing producer set. Drives
+      the v1 metric — preserved for back-compat.
+    - Q-type (quality_gate_fail, v2 Q*): case carries `expected_decisions`
+      (subset of {"retry", "skip", "replan"}); decision is correct iff the
+      classified decision_type (aliased: empty→skip) is in that set.
+    Both regimes still gate on `expected_must_include_in_new_tail ⊆ new_tail`;
+    for Q-type with skip-only expectation `expected_must_include` is empty
+    so the subset check is vacuous.
+    """
+    expected_decisions = case.get("expected_decisions")
+    must_include = case.get("expected_must_include_in_new_tail", [])
     must_set = set(must_include)
     new_set = set(new_tail_agents)
     pass_must_include = must_set.issubset(new_set)
     missing_from_new = sorted(must_set - new_set)
-    rescued = pass_no_retry and pass_must_include
+    decision_aliased = _DECISION_ALIAS.get(decision_type, decision_type)
+    if expected_decisions is None:
+        # R-type: legacy metric.
+        pass_decision = decision_type == "replan"
+    else:
+        pass_decision = decision_aliased in expected_decisions
+    rescued = pass_decision and pass_must_include
     return {
         "decision_type": decision_type,
-        "pass_no_retry": pass_no_retry,
+        "decision_aliased": decision_aliased,
+        "pass_decision": pass_decision,
+        "pass_no_retry": pass_decision,  # legacy field name; retained for v1 snapshot compat
         "pass_must_include": pass_must_include,
         "rescued": rescued,
         "missing_from_new_tail": missing_from_new,
     }
+
+
+# router.py:362-364 catches LLM exceptions and returns ReplanDecision with
+# rationale=f"replan LLM error: {exc}". CF AI Gateway can 502/503 in bursts,
+# so we retry such returns with backoff to avoid scoring API flakes as failures.
+_LLM_ERROR_PREFIX = "replan LLM error:"
+_LLM_RETRY_DELAYS = (10, 30, 60)
 
 
 async def evaluate_case(planner, catalog: List[Dict[str, Any]],
@@ -114,14 +146,20 @@ async def evaluate_case(planner, catalog: List[Dict[str, Any]],
     t0 = time.time()
     err_msg = None
     try:
-        decision = await asyncio.to_thread(
-            planner.replan_on_failure,
-            user_goal=case["user_goal"],
-            available_agents=catalog,
-            failed_step=failed_step,
-            pending_tail=pending_tail,
-            completed_tail=completed_tail,
-        )
+        decision = None
+        for delay in (0,) + _LLM_RETRY_DELAYS:
+            if delay:
+                await asyncio.sleep(delay)
+            decision = await asyncio.to_thread(
+                planner.replan_on_failure,
+                user_goal=case["user_goal"],
+                available_agents=catalog,
+                failed_step=failed_step,
+                pending_tail=pending_tail,
+                completed_tail=completed_tail,
+            )
+            if not decision.rationale.startswith(_LLM_ERROR_PREFIX):
+                break
     except Exception as exc:
         return {
             "name": case["name"],
@@ -133,11 +171,15 @@ async def evaluate_case(planner, catalog: List[Dict[str, Any]],
             "failed_step_index": case["failed_step_index"],
             "error_string_to_director": case["error_string"],
             "expected_must_include": case["expected_must_include_in_new_tail"],
+            "expected_decisions": case.get("expected_decisions"),
+            "eval_layer": case.get("eval_layer"),
             "prefix_consistent": case["prefix_consistent"],
             "elapsed_s": round(time.time() - t0, 2),
             "new_tail_agents": [],
             "rationale": "",
             "decision_type": "error",
+            "decision_aliased": "error",
+            "pass_decision": False,
             "pass_no_retry": False,
             "pass_must_include": False,
             "rescued": False,
@@ -148,8 +190,7 @@ async def evaluate_case(planner, catalog: List[Dict[str, Any]],
     new_tail = decision.new_tail
     new_tail_agents = [s.agent_id for s in new_tail]
     decision_type = classify_decision(new_tail, case["failed_agent_id"])
-    score = score_case(decision_type, new_tail_agents,
-                       case["expected_must_include_in_new_tail"])
+    score = score_case(decision_type, new_tail_agents, case)
     return {
         "name": case["name"],
         "type": case["type"],
@@ -160,6 +201,8 @@ async def evaluate_case(planner, catalog: List[Dict[str, Any]],
         "failed_step_index": case["failed_step_index"],
         "error_string_to_director": case["error_string"],
         "expected_must_include": case["expected_must_include_in_new_tail"],
+        "expected_decisions": case.get("expected_decisions"),
+        "eval_layer": case.get("eval_layer"),
         "prefix_consistent": case["prefix_consistent"],
         "elapsed_s": elapsed,
         "new_tail_agents": new_tail_agents,
@@ -202,7 +245,8 @@ def aggregate(results: List[Dict[str, Any]]) -> Dict[str, Any]:
     }
 
 
-async def run(cases_path: str, model: str, name: str | None) -> int:
+async def run(cases_path: str, model: str, name: str | None,
+              concurrency: int = 1) -> int:
     from director_agent.router import LlmSubAgentPlanner
 
     fixture = load_fixture(cases_path)
@@ -215,20 +259,39 @@ async def run(cases_path: str, model: str, name: str | None) -> int:
     print(f"Replan model:    {planner._model}")
     print(f"Cases:           {len(cases)}")
     print(f"Catalog agents:  {len(catalog)}")
+    print(f"Concurrency:     {concurrency}")
+    # Warm up the planner's lazy LLM client so concurrent workers don't race
+    # on first init.
+    planner._client()
     print("=" * 90)
 
     t_start = time.time()
-    results: List[Dict[str, Any]] = []
-    for i, c in enumerate(cases, 1):
-        res = await evaluate_case(planner, catalog, c)
-        results.append(res)
+    results: List[Optional[Dict[str, Any]]] = [None] * len(cases)
+    sem = asyncio.Semaphore(max(1, concurrency))
+    completed = 0
+    total = len(cases)
+
+    async def _run_one(idx: int, c: Dict[str, Any]) -> None:
+        nonlocal completed
+        async with sem:
+            res = await evaluate_case(planner, catalog, c)
+        results[idx] = res
+        completed += 1
         tag = "RESCUED" if res["rescued"] else "FAIL   "
         err_tag = " ERR" if res.get("error") else ""
+        # completed/total order is non-deterministic with concurrency>1; print
+        # in arrival order so progress is visible, and re-sort results by index
+        # for the snapshot.
         print(
-            f"[{i:02d}/{len(cases):02d}] {tag}{err_tag} | {res['decision_type']:7s} | "
+            f"[{completed:02d}/{total:02d}] {tag}{err_tag} | "
+            f"{res['decision_type']:7s} | "
             f"no_retry={res['pass_no_retry']} must_inc={res['pass_must_include']} "
-            f"miss={res['missing_from_new_tail']} | {res['name']}"
+            f"miss={res['missing_from_new_tail']} | {res['name']}",
+            flush=True,
         )
+
+    await asyncio.gather(*(_run_one(i, c) for i, c in enumerate(cases)))
+    results = [r for r in results if r is not None]
 
     elapsed = time.time() - t_start
     agg = aggregate(results)
@@ -270,8 +333,11 @@ def main() -> int:
     ap.add_argument("--model", default="gemini-3-pro-preview",
                     help="LLM model id passed to LlmSubAgentPlanner")
     ap.add_argument("--name", default="", help="suffix for output snapshot")
+    ap.add_argument("--concurrency", type=int, default=1,
+                    help="Number of cases to run in parallel (asyncio.Semaphore)")
     args = ap.parse_args()
-    return asyncio.run(run(args.cases, args.model, args.name or None))
+    return asyncio.run(run(args.cases, args.model, args.name or None,
+                           concurrency=args.concurrency))
 
 
 if __name__ == "__main__":

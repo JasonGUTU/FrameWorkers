@@ -1,0 +1,27 @@
+{
+  "http_status": 200,
+  "response_body": {
+    "id": "exec_2_173783da",
+    "agent_id": "ConsumerAgent",
+    "step_id": "step_2_427b984d",
+    "status": "COMPLETED",
+    "inputs": {
+      "step_id": "step_2_427b984d",
+      "resolved_artifacts": {},
+      "resolved_input_paths": []
+    },
+    "results": {
+      "observed_seed": "",
+      "_asset_index": {
+        "agent_id": "ConsumerAgent",
+        "json_uri": "/tmp/pytest-of-zhendong_li/pytest-388/test_assistant_pipeline_execut0/Runtime/workspace_global_20260512_161316/artifacts/ConsumerAgent/step_2_427b984d_consumeragent_exec_2.json",
+        "execution_id": "exec_2_173783da"
+      }
+    },
+    "error": null,
+    "started_at": "2026-05-12T16:13:16.195495",
+    "completed_at": "2026-05-12T16:13:16.212243",
+    "created_at": "2026-05-12T16:13:16.195489",
+    "resolved_input_paths": []
+  }
+}

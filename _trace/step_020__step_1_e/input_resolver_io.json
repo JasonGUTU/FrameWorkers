@@ -1,0 +1,14 @@
+{
+  "input": {
+    "agent_id": "",
+    "step_id": "step_1_e6e50310",
+    "input_needs_description": "",
+    "captions_index_text": "(empty — cold start)"
+  },
+  "output": {
+    "resolved_artifacts": {},
+    "selected_artifact_paths": [],
+    "rationale": "no artifacts registered yet (cold start)"
+  },
+  "note": "cold-start: no artifacts in workspace"
+}

@@ -1,0 +1,397 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_id": "char_001",
+          "prompt_summary": "A shrewd and capable CEO, belonging to a wealthy modern urban family. He appears professional and powerful, often exerting strong control, but can be emotionally suppressed. He typically wears a dark suit with a blue tie.",
+          "reference_image_uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/30_results/intakeimage/intake_img_036/_workspace/workspace_global_20260510_212627/inputs/20260510_212628_533439_intake_img_036.png"
+        },
+        {
+          "entity_id": "char_002",
+          "prompt_summary": "Su Nian, a woman who lost her memory in a car accident three years ago, now returns with her son. She is quietly determined, yet vulnerable, and seeks to reclaim her identity. She dresses in simple but neat everyday clothes, or an elegant suit.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "char_003",
+          "prompt_summary": "Xiao Bao, an innocent little boy, bears a striking resemblance to Huo Zong, embodying the forgotten past of Huo Zong and Su Nian. He belongs to a wealthy modern urban family background and wears typical children's everyday clothing.",
+          "reference_image_uri": ""
+        }
+      ],
+      "locations": [
+        {
+          "entity_id": "loc_002",
+          "prompt_summary": "A bustling, upscale modern city plaza. High-end retail and office buildings surround the area, set against a vibrant contemporary urban backdrop, reflecting a wealthy family's world.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "loc_001",
+          "prompt_summary": "A stylish, high-rise executive office, symbolizing the power of a wealthy family in a modern city. The expansive space features floor-to-ceiling windows overlooking a glittering city night view. It feels grand and isolated.",
+          "reference_image_uri": ""
+        }
+      ],
+      "props": [
+        {
+          "entity_id": "prop_001",
+          "prompt_summary": "A stack of old, worn documents, possibly yellowed with age, containing crucial clues about the past. They appear significant and well-preserved despite their age.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_002",
+          "prompt_summary": "A sleek, modern laptop computer, open and displaying various documents or databases. It is a tool for intense research and information gathering, often found in a professional setting.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "手机",
+          "prompt_summary": "A modern, high-end smartphone, sleek and functional. It is a vital tool for communication and business, reflecting the owner's sophisticated lifestyle.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "公文包",
+          "prompt_summary": "A professional, dark leather briefcase, sturdy and indicative of high status. It contains important business documents and is often carried by executives.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "办公桌",
+          "prompt_summary": "A large, imposing executive office desk, made of dark wood or glass. It dominates the office space, reflecting power and authority within a corporate environment.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "高背椅",
+          "prompt_summary": "A luxurious high-back executive chair, upholstered in dark leather, providing comfort and a commanding presence. It is typically positioned behind a large office desk, symbolizing leadership.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "台灯",
+          "prompt_summary": "A modern, functional desk lamp, casting a focused beam of light onto a work surface. It signifies late-night work and intense concentration, often illuminating documents or a computer.",
+          "reference_image_uri": ""
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Huo Zong in a dark suit with a blue tie, walking with a neutral, slightly detached expression in a brightly lit, bustling urban plaza during the day.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Su Nian in simple, neat everyday clothing, looking determined and focused amidst the bright daylight of a modern city plaza.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_003",
+              "prompt_summary": "Xiao Bao in innocent children's clothing, curious and looking around in the bright, sunny atmosphere of the upscale city plaza.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_002",
+              "prompt_summary": "A bustling modern city plaza under bright daylight, surrounded by upscale retail and office buildings, conveying a sense of public affluence and vibrant activity.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "手机",
+              "prompt_summary": "A modern smartphone, held by Huo Zong in his hand, appearing functional and in active use.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "公文包",
+              "prompt_summary": "A professional dark leather briefcase, carried by Huo Zong, suggesting ongoing business affairs.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "手机",
+              "公文包"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A wide shot of a bustling upscale city plaza under bright daylight. Huo Zong, in a dark suit and blue tie, walks through the crowd, talking on a smartphone with a briefcase in hand, his face expressionless and detached from the lively surroundings.",
+                "video_motion_hint": "The camera smoothly tracks Huo Zong as he moves forward, the crowd flowing dynamically around him. His hand gestures subtly while talking on the phone."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "characters_in_frame": [
+              "char_002",
+              "char_003"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium shot of Su Nian, dressed in simple everyday clothes, firmly holding Xiao Bao's hand as they navigate through the plaza crowd. Su Nian's eyes are fixed on Huo Zong, while Xiao Bao, in children's clothes, curiously gazes around, then lifts his head towards Huo Zong.",
+                "video_motion_hint": "The camera remains static, capturing Su Nian's determined stride and Xiao Bao's head subtly turning to look. The background crowd moves fluidly."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "手机"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up shot of Huo Zong's face in the busy city plaza, holding a smartphone. His expression subtly shifts from indifferent to profound shock, and his body momentarily freezes, revealing a crack in his usual controlled demeanor as he spots someone unexpected.",
+                "video_motion_hint": "Huo Zong's eyes slowly widen in realization. His jaw subtly tightens as he freezes in place, phone still to his ear."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "characters_in_frame": [
+              "char_001",
+              "char_002",
+              "char_003"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium shot showing Huo Zong, Su Nian in simple clothes, and Xiao Bao in children's clothes, all framed together within the bustling city plaza. Su Nian speaks directly to Huo Zong with a determined look, while Xiao Bao gazes innocently at Huo Zong, serving as an undeniable visual link between them.",
+                "video_motion_hint": "The camera is static, capturing Su Nian's steady gaze and a slight tilt of Xiao Bao's head. Huo Zong stands motionless, absorbing her words, his expression a mix of shock and defiance."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Huo Zong in a dark suit and blue tie, appearing strong and professional yet emotionally suppressed, confronting Su Nian in his high-rise office at night.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Su Nian in an elegant but subdued suit, appearing fragile yet resilient, standing in Huo Zong's luxurious executive office at night.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "A luxurious high-rise executive office at night, with a vast city skyline visible through floor-to-ceiling windows, exuding power and isolation, forming a tense backdrop for a confrontation.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "办公桌",
+              "prompt_summary": "A large, dark executive office desk, impeccably organized and reflecting the city lights from the window, serving as a barrier between the characters.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "高背椅",
+              "prompt_summary": "A luxurious, dark leather high-back executive chair, occupied by Huo Zong, emphasizing his position of authority.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "办公桌",
+              "高背椅"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A wide, high-angle shot of Huo Zong's luxurious executive office at night. The city's twinkling skyline is visible through the large windows. Huo Zong sits behind a grand office desk in his high-back chair, facing Su Nian, who stands opposite him, creating a tense and confrontational atmosphere highlighting his power and her relative vulnerability.",
+                "video_motion_hint": "The camera remains static, capturing the rigid postures of both characters. Subtle glints of light from the city reflect off the office surfaces."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up, low-angle shot focusing on Huo Zong's face in his office. His eyes are sharp with contempt and anger, his jaw visibly tightened as he speaks. He wears a dark suit and blue tie, exuding an intimidating aura of power and disbelief.",
+                "video_motion_hint": "Huo Zong's eyes narrow slightly, and his facial muscles show tension as he speaks with suppressed fury. His head makes a subtle, dismissive tilt."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium, eye-level shot of Su Nian in Huo Zong's office. She wears an elegant suit, her eyes glistening with unshed tears, but she maintains a composed and resolute expression as she pleads for understanding and insists on facing the truth.",
+                "video_motion_hint": "The camera is static. Su Nian's lips tremble slightly, and her gaze remains unwavering despite her emotional state. A single tear might gently track down her cheek."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_008",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium, eye-level shot of Huo Zong in his executive office. He looks out the floor-to-ceiling window at the city night view, his expression heavy with internal struggle. His posture is firm, dressed in a dark suit and blue tie, as he speaks with a newly calm but decisive tone, agreeing to a DNA test.",
+                "video_motion_hint": "The camera is static. Huo Zong's head slowly turns to face the window, his expression shifting from internal conflict to a resolute calm. His chest rises and falls with a deep breath."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Huo Zong in a dark suit with a slightly loosened blue tie, looking weary but determined, working intensely late into the night in his executive office, surrounded by documents and a laptop.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "A lavish high-rise executive office at deep night, city lights glimmering outside floor-to-ceiling windows, highlighting a scene of intense solitary work and an atmosphere of suspense.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "A stack of old, worn documents, scattered on an executive desk under a focused desk lamp, appearing to hold significant, hidden information.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_002",
+              "prompt_summary": "A sleek, modern laptop computer, open and actively displaying complex data or files on an executive desk, illuminated by the focused light of a desk lamp.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "台灯",
+              "prompt_summary": "A modern desk lamp, casting a concentrated circle of light onto documents and a laptop on an executive desk, signifying a prolonged period of intense, late-night research.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_009",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002",
+              "台灯"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium, eye-level shot in Huo Zong's executive office late at night. Huo Zong, dressed in a dark suit with a loosened tie, is deeply engrossed in examining numerous old documents and digital files on his laptop. His expression is grave, his deep-set eyes intently scanning the screen and papers on the desk, surrounded by stacks of files and illuminated by a focused desk lamp.",
+                "video_motion_hint": "The camera remains static. Huo Zong's eyes scan across the documents and laptop screen. His hand occasionally turns a page or adjusts the laptop's position."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up, overhead shot focusing on Huo Zong's hand as his finger traces a line across a faded, old contract document. His brow is furrowed in deep concentration, his finger pausing deliberately over a subtle, seemingly insignificant alteration on the paper, indicating a crucial discovery that sparks suspicion.",
+                "video_motion_hint": "Huo Zong's finger slowly moves across the document, then pauses and presses slightly. His eyebrows visibly knit together in thought."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_011",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up, eye-level shot of Huo Zong's face in his office. His expression rapidly transitions from puzzled curiosity to stunned realization, culminating in a powerful, suppressed anger. He sharply closes the old document in his hand, eyes blazing with fury.",
+                "video_motion_hint": "Huo Zong's eyes widen, his pupils dilate, and his lips press into a thin line. He then abruptly snaps the document shut with a swift, angry motion."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_012",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium, low-angle shot of Huo Zong in his office. He stands up from his desk, moving towards the floor-to-ceiling window to overlook the sprawling city nightscape, his posture firm and resolute. He wears a dark suit with a loosened tie, reflecting his determination to uncover the full truth after uncovering a deep secret on his laptop.",
+                "video_motion_hint": "The camera dollies slowly as Huo Zong rises and walks towards the window. He stands motionless, gazing out at the city, a subtle shift in his weight indicating unwavering resolve."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "style_notes": [
+      "现代都市富裕家族背景",
+      "虐恋情深",
+      "悬疑",
+      "家族秘密",
+      "重逢",
+      "情感强烈",
+      "企业斗争",
+      "紧张"
+    ],
+    "must_avoid": [
+      "过于轻松",
+      "贫困景象"
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 12,
+    "keyframe_count_total": 12,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 3,
+    "global_location_anchor_count": 2,
+    "global_prop_anchor_count": 7,
+    "stability_character_keyframe_count": 6,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 7
+  }
+}

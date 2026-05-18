@@ -1,0 +1,686 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T04:06:00.512399+00:00",
+    "language": "en"
+  },
+  "content": {
+    "title": "The Empress's Shadow",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_002",
+          "location_name": "The Empress's Residence",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Empress Lian and her loyal eunuch, Xiao Li, meet in the lavish Empress's Residence at night to plot their next treacherous move, confronting the overwhelming odds against them and the personal cost of their vengeful path.",
+        "continuity": {
+          "props_present": [],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Empress Lian wears a striking red, gold-embroidered imperial robe and an ornate peacock feather headdress adorned with pearls.",
+              "must_keep": [
+                "Red imperial robe",
+                "Peacock feather headdress"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "Xiao Li, a small, unassuming eunuch, wears humble, dark-colored court attire.",
+              "must_keep": [
+                "Humble eunuch attire"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Empress Lian and Xiao Li are strategizing in secret.",
+            "The atmosphere is tense and conspiratorial."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_002",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "Luxurious but secure suite of rooms within the Grand Imperial Palace.",
+              "Rich silks, intricate carvings, soft lamplight.",
+              "Classical Chinese imperial residence."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Empress Lian, once-disgraced, now returned to the principal palace.",
+                "Embodying resilience and a fierce will.",
+                "Classical Chinese imperial setting."
+              ],
+              "wardrobe_notes": [
+                "Striking red, gold-embroidered imperial robe.",
+                "Ornate peacock feather headdress adorned with pearls."
+              ],
+              "must_keep": [
+                "Empress Lian is plotting revenge.",
+                "Her demeanor is powerful and calculating."
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "Xiao Li, a small, unassuming eunuch.",
+                "Fiercely loyal to Empress Lian, remembers her true self.",
+                "Has demonstrated devotion by taking a knife for her.",
+                "Navigates treacherous classical Chinese imperial court with quiet observation and unwavering dedication.",
+                "Classical Chinese imperial setting."
+              ],
+              "wardrobe_notes": [
+                "Humble, dark-colored court eunuch attire."
+              ],
+              "must_keep": [
+                "Xiao Li is quietly observant and unwavering in his loyalty to Empress Lian."
+              ]
+            }
+          ],
+          "props_lock": [],
+          "style_lock": {
+            "global_style_notes": [
+              "Palace-intrigue, historical drama, revenge drama.",
+              "Rise-from-the-ashes, disgraced, revenge, treacherous, loyalty, dramatic.",
+              "Classical Chinese imperial setting."
+            ],
+            "must_avoid": [
+              "Modern elements or anachronisms."
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "Empress Lian reveals a bold, ruthless plan of action, with Xiao Li quietly affirming his support, setting their course for treacherous palace intrigue.",
+          "emotional_shift": "From cautious anticipation to cold, unwavering resolve."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Soft lamplight illuminates rich silks and intricate carvings in the lavish Empress's Residence. A quiet, heavy tension fills the air.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Establish the opulence and secretive atmosphere of the chamber."
+            },
+            "visual_goal": "Convey the setting as both luxurious and a place of hidden power.",
+            "action_focus": "The ornate decor and subdued lighting.",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "Empress Lian",
+            "text": "The Emperor’s favor is fleeting. Our path requires… absolute ruthlessness.",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Empress Lian's face, hardened by resolve and past suffering."
+            },
+            "visual_goal": "Show Empress Lian’s fierce determination and cold calculation.",
+            "action_focus": "Empress Lian's unwavering gaze as she speaks.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "dialogue",
+            "character_id": "char_002",
+            "character_name": "Xiao Li",
+            "text": "Your Majesty, I shall ensure your will is done. No matter the cost.",
+            "emotion_hint": "resolute",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "static",
+              "framing_notes": "From a slightly low angle, emphasizing Xiao Li's subservience yet unwavering loyalty. He bows slightly."
+            },
+            "visual_goal": "Highlight Xiao Li's steadfast devotion and readiness to act.",
+            "action_focus": "Xiao Li's respectful yet firm expression.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Empress Lian meets Xiao Li's gaze, a silent pact sealed between them. The shadows in the chamber seem to deepen, mirroring their dark resolve.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Frame both Empress Lian and Xiao Li, emphasizing their shared, conspiratorial energy."
+            },
+            "visual_goal": "Show the forging of a dangerous alliance and their mutual understanding.",
+            "action_focus": "The silent interaction between Empress Lian and Xiao Li.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "The Grand Imperial Palace",
+          "interior_exterior": "INT",
+          "time_of_day": "DAY"
+        },
+        "summary": "In the grand halls of the Grand Imperial Palace during a court gathering, Empress Lian faces a public challenge to her authority from a rival courtier. She uses her formidable cunning to turn the tables and solidify her re-emerging presence.",
+        "continuity": {
+          "props_present": [],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Empress Lian wears a striking red, gold-embroidered imperial robe and an ornate peacock feather headdress adorned with pearls.",
+              "must_keep": [
+                "Red imperial robe",
+                "Peacock feather headdress"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "Xiao Li wears humble, dark-colored court attire.",
+              "must_keep": [
+                "Humble eunuch attire"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Empress Lian is at a formal court gathering.",
+            "She is being challenged publicly by a court rival."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "Opulent and vast seat of power, filled with intricate architecture.",
+              "Ornate gardens visible through large windows, bustling court.",
+              "Constant surveillance, political maneuvering, hidden dangers.",
+              "Classical Chinese imperial setting."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Empress Lian, once-disgraced, now asserting her return to the principal palace.",
+                "Resilient, fierce, and politically astute.",
+                "Classical Chinese imperial setting."
+              ],
+              "wardrobe_notes": [
+                "Striking red, gold-embroidered imperial robe.",
+                "Ornate peacock feather headdress adorned with pearls."
+              ],
+              "must_keep": [
+                "Empress Lian is composed and strategic in public.",
+                "Her presence commands attention."
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "Xiao Li, a small, unassuming eunuch.",
+                "Fiercely loyal to Empress Lian, observing from the periphery.",
+                "Classical Chinese imperial setting."
+              ],
+              "wardrobe_notes": [
+                "Humble, dark-colored court eunuch attire."
+              ],
+              "must_keep": [
+                "Xiao Li is subtly observing the court, watchful for Empress Lian."
+              ]
+            }
+          ],
+          "props_lock": [],
+          "style_lock": {
+            "global_style_notes": [
+              "Palace-intrigue, historical drama, revenge drama.",
+              "Rise-from-the-ashes, disgraced, revenge, treacherous, loyalty, dramatic.",
+              "Classical Chinese imperial setting."
+            ],
+            "must_avoid": [
+              "Casual or modern interactions."
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "Empress Lian's sharp retort publicly disarms her adversary and garners respect, solidifying her presence and demonstrating her formidable cunning.",
+          "emotional_shift": "From tense confrontation to a moment of subtle triumph and newfound respect for Empress Lian."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The vast imperial court hall buzzes with courtiers in opulent robes. Empress Lian stands slightly apart, a striking figure amidst the subtle tension.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "dolly_zoom",
+              "framing_notes": "Pan across the assembled court, then zoom slightly towards Empress Lian to highlight her prominence."
+            },
+            "visual_goal": "Convey the formality and subtle political currents of the court.",
+            "action_focus": "The assembled courtiers and Empress Lian's subtle isolation.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A haughty courtier steps forward, his voice dripping with false concern as he casts veiled accusations towards Empress Lian's past.",
+            "emotion_hint": "sarcastic",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on the courtier's smug expression."
+            },
+            "visual_goal": "Establish the direct challenge and the courtier's arrogance.",
+            "action_focus": "The courtier's condescending demeanor.",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 3,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "Empress Lian",
+            "text": "Perhaps some remember only what serves their present ambition, Lord Wei.",
+            "emotion_hint": "calm",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Empress Lian, composed and regal, delivers her sharp retort with a subtle, knowing smile."
+            },
+            "visual_goal": "Show Empress Lian's composure and wit in the face of adversity.",
+            "action_focus": "Empress Lian's subtle expression and poised gesture.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_008",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Lord Wei's face flushes with surprise and anger. Several courtiers exchange surprised glances, a few nodding subtly in approval of Empress Lian's wit.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Cut between Lord Wei's reaction and the murmurs of the court."
+            },
+            "visual_goal": "Convey the immediate impact of Empress Lian's counter-move.",
+            "action_focus": "Lord Wei's discomfort and the court's reactions.",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_003",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "The Grand Imperial Palace",
+          "interior_exterior": "INT",
+          "time_of_day": "DAY"
+        },
+        "summary": "Empress Lian makes a decisive, public move within the Grand Imperial Palace to reclaim a significant symbol of her former authority, cementing her rise from the ashes and receiving visible acknowledgment of her power. Xiao Li watches with quiet satisfaction.",
+        "continuity": {
+          "props_present": [
+            "Imperial Seal"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Empress Lian wears a striking red, gold-embroidered imperial robe and an ornate peacock feather headdress adorned with pearls.",
+              "must_keep": [
+                "Red imperial robe",
+                "Peacock feather headdress"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "Xiao Li wears humble, dark-colored court attire.",
+              "must_keep": [
+                "Humble eunuch attire"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Empress Lian is performing a highly public act to reassert her power.",
+            "The court is watching intently for her decisive move."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "Opulent and vast ceremonial hall within the Grand Imperial Palace.",
+              "Intricate architecture, grand decorations for a public event.",
+              "Atmosphere of tension and anticipation.",
+              "Classical Chinese imperial setting."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Empress Lian, triumphant in her return to power.",
+                "Radiates absolute authority and grace.",
+                "Classical Chinese imperial setting."
+              ],
+              "wardrobe_notes": [
+                "Striking red, gold-embroidered imperial robe.",
+                "Ornate peacock feather headdress adorned with pearls."
+              ],
+              "must_keep": [
+                "Empress Lian is commanding and powerful.",
+                "Her actions are decisive and regal."
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "Xiao Li, a small, unassuming eunuch.",
+                "Fiercely loyal to Empress Lian, witnessing her triumph.",
+                "Classical Chinese imperial setting."
+              ],
+              "wardrobe_notes": [
+                "Humble, dark-colored court eunuch attire."
+              ],
+              "must_keep": [
+                "Xiao Li observes with quiet pride and satisfaction."
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Imperial Seal",
+              "must_keep": [
+                "A heavy, ornate seal, symbolic of imperial authority."
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Palace-intrigue, historical drama, revenge drama.",
+              "Rise-from-the-ashes, disgraced, revenge, treacherous, loyalty, dramatic.",
+              "Classical Chinese imperial setting.",
+              "Grand and ceremonial tone."
+            ],
+            "must_avoid": [
+              "Anything that diminishes the Empress's authority or grandeur."
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "Empress Lian executes her decisive move with an air of absolute authority and grace, receiving visible acknowledgment of her power from an unexpected source, solidifying her re-emergence. Xiao Li watches, a flicker of pride in his eyes.",
+          "emotional_shift": "From high tension to triumphant vindication and quiet satisfaction."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_009",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "All eyes turn as Empress Lian, resplendent in her imperial robes, walks with deliberate grace towards a ceremonial dais, a sense of destiny in her stride.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "tracking",
+              "framing_notes": "Track Empress Lian as she moves, emphasizing the attention she commands."
+            },
+            "visual_goal": "Convey Empress Lian's powerful return and the court's anticipation.",
+            "action_focus": "Empress Lian's confident entrance and the court's collective gaze.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "With measured precision, Empress Lian places the heavy, ornate IMPERIAL SEAL onto a velvet cushion on the dais, a symbolic reclamation of her power.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "static",
+              "framing_notes": "Focus on the Imperial Seal as it is placed, highlighting its significance."
+            },
+            "visual_goal": "Visually represent Empress Lian's decisive act of re-claiming authority.",
+            "action_focus": "The Imperial Seal and Empress Lian's hand.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_011",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A powerful, previously neutral court official, offers a deep, respectful bow to Empress Lian, a gesture of undeniable acknowledgment from the court.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Show the official's full bow, conveying its significance."
+            },
+            "visual_goal": "Demonstrate that Empress Lian's power is now publicly acknowledged.",
+            "action_focus": "The official's respectful bow.",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_012",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Hidden among the lower ranks, Xiao Li watches Empress Lian. A small, proud smile plays on his lips, his loyalty now vindicated.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Xiao Li's face, conveying his quiet satisfaction."
+            },
+            "visual_goal": "Show Xiao Li's personal fulfillment in Empress Lian's triumph.",
+            "action_focus": "Xiao Li's subtle, proud expression.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count_total": 12,
+    "avg_shots_per_scene": 4.0,
+    "dialogue_block_count": 3,
+    "action_block_count": 9
+  }
+}

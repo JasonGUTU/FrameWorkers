@@ -1,0 +1,30 @@
+{
+  "agent_class": "VideoAgent",
+  "typed_input": {
+    "screenplay_json_text": "{}",
+    "keyframes_metadata_json_text": "{}",
+    "shot_stills": []
+  },
+  "output": null,
+  "eval_result": {
+    "kind": "upstream_input_rejected",
+    "overall_pass": false,
+    "summary": "upstream input rejected: The screenplay is empty, and keyframes_metadata has no keyframes for any screenplay shot — nothing to feed the video generator.",
+    "input_rejection": {
+      "reason": "The screenplay is empty, and keyframes_metadata has no keyframes for any screenplay shot — nothing to feed the video generator.",
+      "missing_labels": [
+        "screenplay",
+        "keyframes_metadata"
+      ],
+      "offending_fields": [
+        "content.scenes[].shots",
+        "content.scenes[].shots[].keyframes"
+      ]
+    }
+  },
+  "passed": false,
+  "attempts": 1,
+  "asset_dict": null,
+  "media_assets_count": 0,
+  "media_assets_summary": []
+}

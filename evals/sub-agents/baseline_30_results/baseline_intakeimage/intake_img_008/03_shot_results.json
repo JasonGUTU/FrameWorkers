@@ -1,0 +1,74 @@
+[
+  {
+    "idx": 1,
+    "shot_id": "sh_001",
+    "prompt": "A young woman, eyes wide with shock and fear, sits amidst panicked passengers in a grimy, shaking subway car. A metallic screech echoes as twisted metal shards begin to float and contort around her ha",
+    "status": "OK",
+    "keyframe_bytes": 1726283,
+    "mp4_bytes": 919332,
+    "elapsed_sec": 1483.415908575058
+  },
+  {
+    "idx": 2,
+    "shot_id": "sh_002",
+    "prompt": "From a high vantage point, the lead character surveys a desolate, overgrown city skyline, her small group of survivors navigating crumbling skyscrapers and abandoned vehicles below. A red, hazy sunset",
+    "status": "OK",
+    "keyframe_bytes": 1969940,
+    "mp4_bytes": 2023482,
+    "elapsed_sec": 1477.2504196166992
+  },
+  {
+    "idx": 3,
+    "shot_id": "sh_003",
+    "prompt": "The lead character, resolute expression on her face, moves stealthily through a narrow, debris-strewn alleyway, gesturing for her diverse group of survivors to follow. Gritty urban textures and muted ",
+    "status": "OK",
+    "keyframe_bytes": 1922110,
+    "mp4_bytes": 1629924,
+    "elapsed_sec": 1479.6300475597382
+  },
+  {
+    "idx": 4,
+    "shot_id": "sh_004",
+    "prompt": "The lead character, grimacing with exertion, uses her metal-bending power to construct a crude, jagged barricade of twisted rebar and car parts, momentarily halting a horde of fast-moving, grotesque z",
+    "status": "OK",
+    "keyframe_bytes": 1980557,
+    "mp4_bytes": 1191011,
+    "elapsed_sec": 1479.7692339420319
+  },
+  {
+    "idx": 5,
+    "shot_id": "sh_005",
+    "prompt": "A squad of heavily armed, armored military super-soldiers, their advanced gear glinting, rappels down a shattered building facade, their menacing silhouettes contrasting against the smoke-filled, oran",
+    "status": "OK",
+    "keyframe_bytes": 1734149,
+    "mp4_bytes": 900735,
+    "elapsed_sec": 1480.9709305763245
+  },
+  {
+    "idx": 6,
+    "shot_id": "sh_006",
+    "prompt": "The lead character nimbly dodges laser fire from the approaching military task force, simultaneously manipulating large metal sheets from a collapsing building to create a temporary, defensive wall th",
+    "status": "OK",
+    "keyframe_bytes": 1711100,
+    "mp4_bytes": 1501517,
+    "elapsed_sec": 1479.7655720710754
+  },
+  {
+    "idx": 7,
+    "shot_id": "sh_007",
+    "prompt": "The lead character stands in a dimly lit, abandoned government lab, examining a holographic projection detailing a complex viral structure and research facility coordinates. Dust motes dance in the ee",
+    "status": "OK",
+    "keyframe_bytes": 1663850,
+    "mp4_bytes": 1038477,
+    "elapsed_sec": 1479.4977147579193
+  },
+  {
+    "idx": 8,
+    "shot_id": "sh_008",
+    "prompt": "The lead character, her face etched with grim determination, gazes intently at a flickering map displaying the newly discovered coordinates, her hand firmly gripping a piece of twisted metal, ready fo",
+    "status": "OK",
+    "keyframe_bytes": 1741214,
+    "mp4_bytes": 983129,
+    "elapsed_sec": 1481.5952217578888
+  }
+]

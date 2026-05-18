@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T04:04:35.975481+00:00",
+    "language": "en"
+  },
+  "content": {
+    "enriched_brief": "Make a palace-intrigue, rise-from-the-ashes animated short drama. The female lead is a disgraced empress, depicted as a woman in a striking red, gold-embroidered imperial robe and an ornate peacock feather headdress adorned with pearls. She has climbed all the way back from the cold palace to the principal palace; the only one who still remembers her real name on this arduous revenge road is the loyal little eunuch who once took a knife for her. Add a sweeping classical-Chinese BGM.",
+    "image_classifications": [
+      {
+        "image_index": 0,
+        "role": "character"
+      }
+    ],
+    "image_paths": [
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/30_results/intakeimage/intake_img_046/_workspace/workspace_global_20260510_040416/inputs/20260510_040418_637086_intake_img_046.png"
+    ]
+  },
+  "metrics": {
+    "image_count": 1,
+    "classified_count": 1
+  }
+}

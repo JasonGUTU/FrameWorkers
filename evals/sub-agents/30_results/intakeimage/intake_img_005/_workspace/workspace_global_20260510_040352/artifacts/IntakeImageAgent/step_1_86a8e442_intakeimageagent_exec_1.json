@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T04:03:58.085572+00:00",
+    "language": "en"
+  },
+  "content": {
+    "visual_description": "A young man with long dark hair, wearing traditional white and blue clothing, stands in a garden with cherry blossoms and a building.",
+    "image_asset": {
+      "asset_id": "",
+      "uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/30_results/intakeimage/intake_img_005/_workspace/workspace_global_20260510_040352/inputs/20260510_040354_152297_intake_img_005.png",
+      "width": 1024,
+      "height": 576,
+      "format": "png"
+    }
+  }
+}

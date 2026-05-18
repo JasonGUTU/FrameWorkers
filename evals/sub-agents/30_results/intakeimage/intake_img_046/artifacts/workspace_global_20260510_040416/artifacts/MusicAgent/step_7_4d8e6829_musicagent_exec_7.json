@@ -1,0 +1,13 @@
+{
+  "content": {
+    "cues": [
+      {
+        "cue_id": "music_film",
+        "mood": "Sweeping, dramatic, regal, traditional Chinese, orchestral"
+      }
+    ]
+  },
+  "metrics": {
+    "cue_count": 1
+  }
+}

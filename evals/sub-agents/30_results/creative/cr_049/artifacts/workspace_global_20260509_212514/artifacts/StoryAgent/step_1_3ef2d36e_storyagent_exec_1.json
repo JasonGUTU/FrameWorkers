@@ -1,0 +1,121 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-09T21:25:36.468361+00:00",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A top-tier lawyer, unjustly imprisoned and devastated by the loss of his family, is granted a second chance, waking up ten years in the past to meticulously dismantle the lives of his betrayers.",
+    "style": {
+      "genre": [
+        "Drama",
+        "Thriller",
+        "Neo-noir",
+        "Animation"
+      ],
+      "tone_keywords": [
+        "modern-urban",
+        "rebirth-revenge",
+        "gritty",
+        "dark",
+        "vengeful",
+        "time-travel",
+        "calculated"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Ethan Thorne",
+        "role": "protagonist",
+        "profile": "A once-renowned, ruthlessly efficient top-tier lawyer in a modern urban setting, whose life is shattered by betrayal and tragedy, now given a chance to rewrite his fate with vengeful intent.",
+        "motivation": "To exact precise, devastating revenge upon every individual responsible for his past-future imprisonment and the death of his wife and daughter.",
+        "flaw": "Consumed by vengeance, risking losing his humanity and any chance at a true second life."
+      },
+      {
+        "character_id": "char_002",
+        "name": "Victor Sterling",
+        "role": "antagonist",
+        "profile": "Ethan's cunning and ambitious business partner in the modern urban legal world, who orchestrated his downfall out of greed and ambition.",
+        "motivation": "To secure power, wealth, and status at any cost, including betraying his closest associates.",
+        "flaw": "Overconfidence and a belief that he is untouchable, underestimating those he wrongs."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "High-Rise Corporate Office",
+        "description": "A sleek, modern urban corporate office building in a bustling metropolis, embodying success and power, but also a den of cutthroat ambition where Ethan's downfall began."
+      },
+      {
+        "location_id": "loc_002",
+        "name": "State Penitentiary",
+        "description": "A grim, decaying modern urban state prison, where Ethan spends years, stripped of his former life and prestige."
+      },
+      {
+        "location_id": "loc_003",
+        "name": "Rainy City Street",
+        "description": "A dimly lit, perpetually wet modern urban street in the financial district, ten years in the past, serving as the pivotal location for Ethan's temporal awakening."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Ethan Thorne, a successful modern-urban lawyer, is framed by his business partner and imprisoned, slowly losing everything over the years, culminating in the devastating news of his family's death upon his release.",
+        "conflict": "Ethan's initial ignorance and subsequent despair against the ruthless betrayal and the cruel hand of fate.",
+        "turning_point": "The crushing realization of his family's demise, pushing him to the brink of utter hopelessness after his release."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "turn",
+        "summary": "On the night of his release, broken and despairing, Ethan is inexplicably sent back ten years in time, waking up on the rainy night that was the true beginning of his downfall.",
+        "conflict": "The disorientation of the temporal shift against the vivid, painful memories of his shattered future.",
+        "turning_point": "The shocking realization that he has a second chance, armed with foreknowledge."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "resolution",
+        "summary": "Fueled by his past suffering and future knowledge, Ethan meticulously plots his revenge, determined to dismantle the lives of his betrayers with cold, calculated precision.",
+        "conflict": "His past self's potential for innocence versus his future self's consuming need for vengeance.",
+        "turning_point": "Ethan embraces his dark purpose, solidifying his resolve to not just prevent his past, but to rewrite it with his enemies' suffering."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_002",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To depict Ethan's fall from grace, his agonizing years in prison, and the devastating news of his family's death upon his release.",
+        "conflict": "Ethan's initial shock and disbelief at his wrongful conviction, giving way to a numbing despair over the years, and finally, utter heartbreak upon learning of his family's fate.",
+        "turn": "Ethan, a shell of his former self, walks out of prison into the grim modern-urban world, only to receive a letter confirming the deaths of his wife and daughter, shattering his last vestiges of hope."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_003",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To show Ethan's bewildering temporal awakening and his immediate, hardened resolve for vengeance against his betrayers.",
+        "conflict": "The shock and disorientation of waking up in his younger body on a pivotal rainy night in the modern-urban past, clashing with the vivid, painful memories of the future he just endured.",
+        "turn": "As the rain falls, Ethan's initial confusion morphs into a chilling clarity; the ghost of his lost family fuels a cold, ruthless determination. He looks at his reflection in a puddle, a man reborn, not for redemption, but for meticulously planned, devastating revenge."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 2,
+    "location_count": 3,
+    "scene_count": 2
+  }
+}

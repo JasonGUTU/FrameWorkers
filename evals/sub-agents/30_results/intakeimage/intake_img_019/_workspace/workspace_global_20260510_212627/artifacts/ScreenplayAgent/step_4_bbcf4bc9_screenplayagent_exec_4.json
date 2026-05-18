@@ -1,0 +1,675 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T21:28:03.855366+00:00",
+    "language": "zh"
+  },
+  "content": {
+    "title": "重生复仇：皇后的归来",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Imperial Palace",
+          "interior_exterior": "INT",
+          "time_of_day": "DAY"
+        },
+        "summary": "Empress Mei awakens, reborn into her younger self within the Imperial Palace, immediately confronted by traumatic memories and a burning desire for revenge.",
+        "continuity": {
+          "props_present": [],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Ornate gold, pearl, and jade crown, dark blue embroidered robe",
+              "must_keep": [
+                "Ornate gold, pearl, and jade crown",
+                "Dark blue embroidered robe"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": []
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "Grand and intricate complex of traditional Chinese imperial buildings",
+              "Ornate courtyards and serene gardens",
+              "Softly lit interiors with hidden passages",
+              "Characteristic of an ancient Chinese imperial court"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "A former empress, reborn with memories of betrayal and murder",
+                "Regal bearing, hardened, ruthlessly intelligent",
+                "Driven by unwavering resolve for vengeance",
+                "Character from an ancient Chinese imperial court"
+              ],
+              "wardrobe_notes": [
+                "Wearing an ornate gold, pearl, and jade crown",
+                "Wearing a dark blue embroidered robe"
+              ],
+              "must_keep": [
+                "Ornate gold, pearl, and jade crown",
+                "Dark blue embroidered robe"
+              ]
+            }
+          ],
+          "props_lock": [],
+          "style_lock": {
+            "global_style_notes": [
+              "Ancient Chinese Imperial Court setting",
+              "Period Drama",
+              "Revenge Thriller",
+              "Palace Intrigue",
+              "Fantasy",
+              "Animated aesthetic",
+              "Dramatic",
+              "Ruthless",
+              "Rebirth theme",
+              "Cunning",
+              "Betrayal"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "Mei transitions from shock to steely determination, embracing her second chance for retribution.",
+          "emotional_shift": "From confusion and grief to cold, unwavering resolve."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "一位年轻女子（梅后）的眼睛猛然睁开，瞳孔中是迷茫与痛苦交织。",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on her eyes, reflecting inner turmoil."
+            },
+            "visual_goal": "Show Empress Mei's jarring awakening and initial disorientation.",
+            "action_focus": "Empress Mei's eyes and facial expression.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "她猛地坐起身，环顾华丽的寝宫，脑海中闪过前世被毒害的痛苦画面。",
+            "emotion_hint": "sad",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "pan_right",
+              "framing_notes": "Pan across the luxurious but confining palace chamber."
+            },
+            "visual_goal": "Convey the opulence of her surroundings contrasted with her inner torment.",
+            "action_focus": "Empress Mei's distressed reaction and the rich setting.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "她的手紧紧握拳，眼神从茫然转变为冰冷的、刻骨的复仇之意。",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Intensify on her face as resolve settles in."
+            },
+            "visual_goal": "Highlight the precise moment Empress Mei fully accepts her new mission.",
+            "action_focus": "Empress Mei's face, transforming to a look of ruthless determination.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "Empress Mei",
+            "text": "这一次，我绝不会重蹈覆辙。",
+            "emotion_hint": "urgent",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Mei speaks with quiet, fierce conviction."
+            },
+            "visual_goal": "Convey Empress Mei's spoken oath for vengeance.",
+            "action_focus": "Empress Mei speaking, her resolute expression.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_003",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Imperial Palace",
+          "interior_exterior": "INT",
+          "time_of_day": "DAY"
+        },
+        "summary": "Mei, now a candidate, subtly begins to undermine Noble Consort Li during an imperial gathering, planting seeds of doubt.",
+        "continuity": {
+          "props_present": [],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Elegant but unassuming court attire, reflecting her candidate status",
+              "must_keep": []
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "Luxurious consort robes, reflecting her current status",
+              "must_keep": [
+                "Traditional court attire suitable for a consort"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": []
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "Grand and intricate complex of traditional Chinese imperial buildings",
+              "Ornate courtyards and serene gardens",
+              "Softly lit interiors with hidden passages",
+              "Characteristic of an ancient Chinese imperial court"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "A former empress, reborn with memories of betrayal and murder",
+                "Regal bearing, hardened, ruthlessly intelligent",
+                "Driven by unwavering resolve for vengeance",
+                "Character from an ancient Chinese imperial court"
+              ],
+              "wardrobe_notes": [
+                "Wearing an ornate gold, pearl, and jade crown",
+                "Wearing a dark blue embroidered robe"
+              ],
+              "must_keep": [
+                "Ornate gold, pearl, and jade crown",
+                "Dark blue embroidered robe"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "Cunning and ambitious consort, orchestrator of Empress Mei's demise",
+                "Projects graceful subservience, hides venomous ambition",
+                "Character from an ancient Chinese imperial court"
+              ],
+              "wardrobe_notes": [
+                "Traditional court attire suitable for a consort",
+                "Elegant, but subtly less ornate than the Empress"
+              ],
+              "must_keep": [
+                "Traditional court attire suitable for a consort"
+              ]
+            }
+          ],
+          "props_lock": [],
+          "style_lock": {
+            "global_style_notes": [
+              "Ancient Chinese Imperial Court setting",
+              "Period Drama",
+              "Revenge Thriller",
+              "Palace Intrigue",
+              "Fantasy",
+              "Animated aesthetic",
+              "Dramatic",
+              "Ruthless",
+              "Rebirth theme",
+              "Cunning",
+              "Betrayal"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "Mei successfully causes a minor public embarrassment for Consort Li, subtly signaling her cunning.",
+          "emotional_shift": "From apparent harmony to subtle tension and suspicion between Mei and Li."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "宫殿大厅内，众多秀女和嫔妃正参加一场雅集。梅（char_001）与丽妃（char_002）相隔不远。",
+            "emotion_hint": "neutral",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "dolly_in",
+              "framing_notes": "Show the grandeur of the gathering and the proximity of Mei and Li."
+            },
+            "visual_goal": "Establish the scene and the presence of both characters in a social setting.",
+            "action_focus": "The imperial gathering, subtle interactions between attendees.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "梅微笑着，眼神却不动声色地观察着丽妃，洞察着她的一举一动。",
+            "emotion_hint": "calm",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Mei's calm demeanor but sharp, calculating eyes."
+            },
+            "visual_goal": "Showcase Mei's hidden cunning and her observation of Li.",
+            "action_focus": "Empress Mei's subtle facial expression and gaze.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "丽妃在展示才艺时，梅看似不经意地低语了一句，使丽妃的琴弦突然断裂，引起轻微骚动。",
+            "emotion_hint": "neutral",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "static",
+              "framing_notes": "Capture Li's performance and Mei's subtle intervention."
+            },
+            "visual_goal": "Portray Mei's first subtle act of sabotage.",
+            "action_focus": "The moment Li's instrument fails, and Mei's discreet reaction.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_008",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "丽妃的笑容僵在脸上，眼中闪过一丝不易察觉的怒火和疑惑，而梅则保持着无辜的微笑。",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002",
+                "char_001"
+              ]
+            },
+            "shot_type": "two_shot",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Contrast Li's shock with Mei's feigned innocence."
+            },
+            "visual_goal": "Show Li's internal struggle and Mei's cunning, hinting at the shifting power dynamic.",
+            "action_focus": "The contrasting expressions of Noble Consort Li and Empress Mei.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_005",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Imperial Palace",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "During a grand imperial ceremony, Empress Mei executes her intricate revenge, publicly exposing and ruining Noble Consort Li and her conspirators.",
+        "continuity": {
+          "props_present": [],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Ornate Empress regalia, befitting her triumph",
+              "must_keep": [
+                "Ornate gold, pearl, and jade crown",
+                "Dark blue embroidered robe"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "Elaborate consort robes, now appearing ostentatious",
+              "must_keep": [
+                "Traditional court attire suitable for a consort"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": []
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "Grand and intricate complex of traditional Chinese imperial buildings",
+              "Ornate courtyards and serene gardens",
+              "Softly lit interiors with hidden passages",
+              "Characteristic of an ancient Chinese imperial court"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "A former empress, reborn with memories of betrayal and murder",
+                "Regal bearing, hardened, ruthlessly intelligent",
+                "Driven by unwavering resolve for vengeance",
+                "Character from an ancient Chinese imperial court"
+              ],
+              "wardrobe_notes": [
+                "Wearing an ornate gold, pearl, and jade crown",
+                "Wearing a dark blue embroidered robe"
+              ],
+              "must_keep": [
+                "Ornate gold, pearl, and jade crown",
+                "Dark blue embroidered robe"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "Cunning and ambitious consort, orchestrator of Empress Mei's demise",
+                "Projects graceful subservience, hides venomous ambition",
+                "Character from an ancient Chinese imperial court"
+              ],
+              "wardrobe_notes": [
+                "Traditional court attire suitable for a consort",
+                "Elegant, but subtly less ornate than the Empress"
+              ],
+              "must_keep": [
+                "Traditional court attire suitable for a consort"
+              ]
+            }
+          ],
+          "props_lock": [],
+          "style_lock": {
+            "global_style_notes": [
+              "Ancient Chinese Imperial Court setting",
+              "Period Drama",
+              "Revenge Thriller",
+              "Palace Intrigue",
+              "Fantasy",
+              "Animated aesthetic",
+              "Dramatic",
+              "Ruthless",
+              "Rebirth theme",
+              "Cunning",
+              "Betrayal"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "Mei's elaborate plan culminates in the public disgrace and ruin of her tormentors.",
+          "emotional_shift": "From tense anticipation to triumphant satisfaction and justice served."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_009",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "一场盛大的夜宴在宫中举行，灯火辉煌。梅后端坐上位，目光冷峻地扫过众人，最终落在丽妃身上。",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "static",
+              "framing_notes": "Show the grandeur and the many attendees, emphasizing Mei's central position."
+            },
+            "visual_goal": "Establish the climactic setting and the rising tension.",
+            "action_focus": "The overall court assembly, with Mei and Li prominent.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 2,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "Empress Mei",
+            "text": "丽妃，你可知罪？",
+            "emotion_hint": "calm",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Mei's voice is calm but authoritative, directly addressing Li."
+            },
+            "visual_goal": "Convey the impactful, public accusation from Empress Mei.",
+            "action_focus": "Empress Mei's controlled demeanor as she initiates the downfall.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_011",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "证据被当众揭露，丽妃的脸色煞白，她绝望地瘫软在地，护卫们上前将其带走。",
+            "emotion_hint": "sad",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "zoom_out",
+              "framing_notes": "Capture Li's complete collapse and public disgrace."
+            },
+            "visual_goal": "Show the immediate and devastating consequences of Mei's revelation.",
+            "action_focus": "Noble Consort Li's despair and her removal by guards.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_012",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "梅后端坐在龙椅上，嘴角勾起一抹冰冷的胜利微笑，眼中是复仇完成的平静与决绝。",
+            "emotion_hint": "calm",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus solely on Mei's face, her triumphant and hardened expression."
+            },
+            "visual_goal": "Convey Empress Mei's final, serene triumph.",
+            "action_focus": "Empress Mei's triumphant and resolute expression.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count_total": 12,
+    "avg_shots_per_scene": 4.0,
+    "dialogue_block_count": 2,
+    "action_block_count": 10
+  }
+}

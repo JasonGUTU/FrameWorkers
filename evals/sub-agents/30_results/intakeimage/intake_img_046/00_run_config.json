@@ -1,0 +1,52 @@
+{
+  "case_name": "intake_img_046",
+  "category": "intake_img",
+  "user_goal": "Use this uploaded photo as the period female lead. Make a palace-intrigue rise-from-the-ashes animated short drama — she is the disgraced empress who climbed all the way back from the cold palace to the principal palace; the only one who still remembers her real name on this revenge road is the little eunuch who once took a knife for her. Add a sweeping classical-Chinese BGM.",
+  "expected_chain": [
+    [
+      "IntakeImageAgent"
+    ],
+    [
+      "BriefEnricherAgent"
+    ],
+    [
+      "StoryAgent"
+    ],
+    [
+      "ScreenplayAgent"
+    ],
+    [
+      "KeyFrameAgent"
+    ],
+    [
+      "VideoAgent"
+    ],
+    [
+      "MusicAgent"
+    ],
+    [
+      "AudioMixAgent"
+    ],
+    [
+      "CompositorAgent"
+    ],
+    [
+      "done"
+    ]
+  ],
+  "flat_chain": [
+    "IntakeImageAgent",
+    "BriefEnricherAgent",
+    "StoryAgent",
+    "ScreenplayAgent",
+    "KeyFrameAgent",
+    "VideoAgent",
+    "MusicAgent",
+    "AudioMixAgent",
+    "CompositorAgent"
+  ],
+  "backend_url": "http://localhost:5005",
+  "hunyuan_endpoint": "http://sof1-h200-3:9203",
+  "infer_steps": 50,
+  "started_at": "2026-05-10T04:04:18"
+}

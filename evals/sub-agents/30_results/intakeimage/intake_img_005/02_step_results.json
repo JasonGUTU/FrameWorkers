@@ -1,0 +1,51 @@
+[
+  {
+    "agent_id": "IntakeImageAgent",
+    "step_id": "step_1_86a8e442",
+    "ok": true,
+    "error": null,
+    "elapsed_sec": 10.076268672943115
+  },
+  {
+    "agent_id": "BriefEnricherAgent",
+    "step_id": "step_2_3e7f01ec",
+    "ok": true,
+    "error": null,
+    "elapsed_sec": 12.137708902359009
+  },
+  {
+    "agent_id": "StoryAgent",
+    "step_id": "step_3_722246c7",
+    "ok": true,
+    "error": null,
+    "elapsed_sec": 25.13163948059082
+  },
+  {
+    "agent_id": "ScreenplayAgent",
+    "step_id": "step_4_f5dd9d23",
+    "ok": true,
+    "error": null,
+    "elapsed_sec": 60.80908918380737
+  },
+  {
+    "agent_id": "KeyFrameAgent",
+    "step_id": "step_5_a21382c4",
+    "ok": true,
+    "error": null,
+    "elapsed_sec": 130.3411409854889
+  },
+  {
+    "agent_id": "VideoAgent",
+    "step_id": "step_6_1a2cf2ef",
+    "ok": true,
+    "error": null,
+    "elapsed_sec": 15332.911568164825
+  },
+  {
+    "agent_id": "CompositorAgent",
+    "step_id": "step_7_1c6148a1",
+    "ok": true,
+    "error": null,
+    "elapsed_sec": 17.159900426864624
+  }
+]

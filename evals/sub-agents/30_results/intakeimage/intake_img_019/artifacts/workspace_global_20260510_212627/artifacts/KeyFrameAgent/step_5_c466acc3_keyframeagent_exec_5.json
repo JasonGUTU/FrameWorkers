@@ -1,0 +1,290 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_id": "char_001",
+          "prompt_summary": "Empress Mei is a regal woman from an ancient Chinese imperial court, adorned with an ornate gold, pearl, and jade crown, and a dark blue embroidered robe. She possesses a hardened, ruthlessly intelligent bearing, driven by an unwavering resolve for vengeance after being reborn with memories of betrayal and murder.",
+          "reference_image_uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/30_results/intakeimage/intake_img_019/_workspace/workspace_global_20260510_212627/inputs/20260510_212628_545475_intake_img_019.png"
+        },
+        {
+          "entity_id": "char_002",
+          "prompt_summary": "Noble Consort Li is a cunning and ambitious woman from an ancient Chinese imperial court, wearing traditional, elegant court attire, subtly less ornate than an Empress. She projects graceful subservience, meticulously hiding her venomous ambition, and was the orchestrator of Empress Mei's demise.",
+          "reference_image_uri": ""
+        }
+      ],
+      "locations": [
+        {
+          "entity_id": "loc_001",
+          "prompt_summary": "The Imperial Palace is a grand, intricate complex featuring traditional Chinese imperial buildings. It boasts ornate courtyards and serene gardens. Its interiors are softly lit, with hidden passages adding to its characteristic ancient Chinese imperial court ambiance.",
+          "reference_image_uri": ""
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Empress Mei is shown in the Imperial Palace chamber, awakening in her regal attire, with her crown slightly askew from distress. Her expression shifts from initial confusion to a look of hardening resolve in the softly lit daytime.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The Imperial Palace interior appears softly lit by day, emphasizing the intricate details of traditional Chinese architecture within the private chamber.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A tight close-up focuses intensely on Empress Mei's eyes, which suddenly snap open in a jarring awakening. Her pupils reflect a deep mix of confusion and profound pain, emphasizing her initial disorientation. The framing highlights her internal turmoil.",
+                "video_motion_hint": "Her eyes flutter open with a sudden, tense jolt, conveying disorientation."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Empress Mei suddenly sits upright in her luxurious chamber, her distressed expression contrasting with the opulent surroundings. She gazes around the lavish Imperial Palace bedroom, haunted by vivid, painful flashbacks of her previous life's poisoning. The scene conveys her inner torment within a rich setting.",
+                "video_motion_hint": "The camera slowly pans right, following Empress Mei as she sits up and looks around the room, hinting at her unsettled state."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up of Empress Mei captures her hands tightly clenching into fists, displaying burgeoning resolve. Her gaze transforms from blank confusion to a cold, deeply etched intent for ruthless revenge. The shot intensifies on her face as this new mission settles in, solidifying her unwavering determination.",
+                "video_motion_hint": "Her hands slowly clench into fists while her eyes subtly narrow, conveying a shift from sadness to fierce resolve."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Empress Mei, captured in a medium shot, speaks with quiet yet fierce conviction. Her resolute expression underscores her spoken oath for vengeance: 'This time, I will never repeat the same mistakes.' The framing emphasizes her determined resolve.",
+                "video_motion_hint": "Empress Mei maintains a still, intense posture as she delivers her powerful lines, with only subtle shifts in her facial muscles."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Empress Mei wears elegant but unassuming court attire, reflecting her candidate status, a deliberate departure from her previous regal robes. She observes Noble Consort Li with a calm, calculating smile amidst the daytime imperial gathering.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Noble Consort Li is dressed in luxurious consort robes, attending a grand imperial gathering. She maintains a facade of graceful subservience, her hidden ambition veiled as the daylight illuminates the grand hall.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The Imperial Palace grand hall is brightly illuminated by day, bustling with courtiers during a formal imperial gathering. Opulent decorations adorn the vast space, reflecting the daytime grandeur.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A wide shot establishes a grand imperial gathering within the palace hall, bustling with numerous candidates and consorts. Empress Mei and Noble Consort Li are visibly present, positioned not far from each other. The camera slowly dollies in, revealing the grandeur of the event and the subtle interactions among the attendees.",
+                "video_motion_hint": "The camera slowly dollies into the expansive hall, gradually bringing Mei and Li into clearer focus within the crowd."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up focuses on Empress Mei's face. She wears a serene smile, yet her eyes remain sharp and calculating, observing Noble Consort Li with an unwavering gaze. The shot showcases Mei's hidden cunning and her intense scrutiny.",
+                "video_motion_hint": "Empress Mei holds a calm, steady posture, with only her eyes subtly shifting to observe."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "In a medium shot, Noble Consort Li performs her talent. As she plays her instrument, Empress Mei subtly whispers something, seemingly by chance. Immediately, Li's instrument string suddenly breaks, causing a slight disturbance among the attendees. The low-angle shot captures Li's performance and Mei's discreet, impactful intervention.",
+                "video_motion_hint": "A quick, subtle flinch from Consort Li as the instrument string snaps, while Mei maintains her composed demeanor."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_008",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A two-shot frames Noble Consort Li, whose smile freezes on her face, with a fleeting, almost imperceptible flash of anger and confusion in her eyes. In stark contrast, Empress Mei maintains a perfectly innocent smile. The shot highlights their opposing reactions, subtly hinting at a shifting power dynamic and Mei's cunning.",
+                "video_motion_hint": "Li's facial expression shifts from performance composure to subtle shock and anger, contrasted by Mei's unmoving, innocent smile."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Empress Mei is resplendent in ornate Empress regalia, sitting in a position of authority, displaying a look of cold triumph. The imperial palace hall is dramatically lit by night, underscoring her powerful presence.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Noble Consort Li, adorned in elaborate consort robes, appears pale with despair as she is publicly disgraced. She collapses in the dramatically lit Imperial Palace hall during a tense night ceremony.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The Imperial Palace grand hall is dramatically lit at night by numerous lanterns and torches, creating a majestic and tense atmosphere for a climactic imperial ceremony.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_009",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A wide, high-angle shot reveals a magnificent night banquet unfolding in the palace, bathed in brilliant light. Empress Mei is seated prominently at the head, her gaze coldly sweeping over the assembled courtiers before settling pointedly on Noble Consort Li. The scene establishes the climactic setting, emphasizing Mei's central, powerful position and rising tension.",
+                "video_motion_hint": "The camera remains static, but the flickering lights of the banquet create a subtle, dynamic atmosphere."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "In a medium shot, Empress Mei calmly addresses Noble Consort Li, her voice authoritative yet composed, asking, 'Noble Consort, do you confess your guilt?' Her controlled demeanor as she initiates Li's downfall conveys a powerful, public accusation, emphasizing her command over the situation.",
+                "video_motion_hint": "Empress Mei's head makes a subtle, firm turn towards Li as she delivers her impactful question."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_011",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "As irrefutable evidence is publicly revealed, Noble Consort Li's face turns stark white. She collapses onto the floor in despair, utterly defeated. Guards immediately step forward to escort her away. The medium, low-angle shot, zooming out, captures Li's complete collapse and public disgrace, showing the devastating consequences of Mei's revelation.",
+                "video_motion_hint": "Noble Consort Li slowly crumples to the floor in despair, while guards move in to take her away. The camera slowly zooms out."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_012",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up focuses solely on Empress Mei's face. Seated on the imperial throne, a cold, triumphant smile plays on her lips. Her eyes reflect a serene and resolute calm, signifying the completion of her vengeance. The shot captures her final, unwavering triumph.",
+                "video_motion_hint": "Empress Mei holds her gaze steady, with only a subtle, knowing smirk forming on her lips."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "style_notes": [
+      "Ancient Chinese Imperial Court setting",
+      "Period Drama",
+      "Revenge Thriller",
+      "Palace Intrigue",
+      "Fantasy",
+      "Animated aesthetic",
+      "Dramatic",
+      "Ruthless",
+      "Rebirth theme",
+      "Cunning",
+      "Betrayal"
+    ],
+    "must_avoid": []
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 12,
+    "keyframe_count_total": 12,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 2,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 5,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 0
+  }
+}

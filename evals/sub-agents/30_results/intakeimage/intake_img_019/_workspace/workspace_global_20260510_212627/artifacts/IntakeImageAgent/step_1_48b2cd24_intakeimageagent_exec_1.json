@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T21:26:32.879304+00:00",
+    "language": "en"
+  },
+  "content": {
+    "visual_description": "A woman wearing an ornate gold, pearl, and jade crown and a dark blue embroidered robe stands in a softly lit traditional building.",
+    "image_asset": {
+      "asset_id": "",
+      "uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/30_results/intakeimage/intake_img_019/_workspace/workspace_global_20260510_212627/inputs/20260510_212628_545475_intake_img_019.png",
+      "width": 1024,
+      "height": 576,
+      "format": "png"
+    }
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T04:04:35.070939+00:00",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A former Heavenly Emperor, betrayed and murdered by nine sacred lands, is reborn into the body of a ridiculed junior disciple and silently plots his devastating revenge against those who believe they stand victorious.",
+    "style": {
+      "genre": [
+        "cultivation",
+        "fantasy",
+        "drama"
+      ],
+      "tone_keywords": [
+        "rebirth",
+        "revenge",
+        "underestimated",
+        "martial arts fantasy",
+        "ancient China-inspired"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Li Wei (Heavenly Emperor's Reincarnation)",
+        "role": "protagonist",
+        "profile": "Once the supreme Heavenly Emperor, now reborn as a weak, mocked junior disciple. He retains his long dark hair and wears traditional white and blue clothing, reflecting his origins in a cultivation world inspired by ancient China. Though outwardly humble and weak, his eyes hold a depth of ancient power and a burning desire for retribution.",
+        "motivation": "To reclaim his former power, exact vengeance on the nine sacred lands that betrayed him, and re-establish his dominion.",
+        "flaw": "Initially trapped in a frail body that limits his immediate actions, requiring patience and hidden cultivation, which fuels his simmering rage."
+      },
+      {
+        "character_id": "char_002",
+        "name": "Senior Disciple Zhao",
+        "role": "support",
+        "profile": "A arrogant senior disciple of the sect, representative of the countless individuals who mock and dismiss Li Wei. He embodies the current power structure that Li Wei must navigate and eventually dismantle.",
+        "motivation": "To maintain his social standing, assert dominance over weaker disciples, and enjoy the prestige of his sect.",
+        "flaw": "Overconfidence and ignorance, completely unaware of Li Wei's true identity and the impending doom he represents."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Azure Cloud Sect Training Grounds",
+        "description": "A bustling, open-air training area within a prominent cultivation sect. It features stone sparring platforms, scattered practice dummies, and a grand archway leading to the main halls. The architecture is grand and traditional, reflecting an ancient China-inspired fantasy setting."
+      },
+      {
+        "location_id": "loc_002",
+        "name": "Li Wei's Humble Dwelling",
+        "description": "A small, sparsely furnished room within the junior disciple quarters of the Azure Cloud Sect. It contains a simple bed, a low table, and minimal personal effects, emphasizing Li Wei's current lowly status in this ancient China-inspired cultivation world."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "The protagonist, Li Wei, now a 'trash' junior disciple, endures public humiliation from his peers and seniors, highlighting his current powerlessness.",
+        "conflict": "Li Wei's internal struggle between his past glory as Heavenly Emperor and his current despised existence; the external mockery from those who are unknowingly beneath him.",
+        "turning_point": "A specific act of mockery pushes Li Wei to the edge, solidifying his resolve for vengeance."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "inciting",
+        "summary": "Alone in his dwelling, Li Wei recalls fragments of his past life as the Heavenly Emperor and begins to secretly cultivate, reigniting his dormant power.",
+        "conflict": "The immense challenge of cultivating with a weak new body while needing to remain undetected; the memory of his betrayal fueling his determination.",
+        "turning_point": "Li Wei successfully channels a minute fragment of spiritual energy, confirming his ability to cultivate and regain his strength."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "climax",
+        "summary": "Li Wei subtly demonstrates a burgeoning cultivation feat, unnoticed or dismissed by others, while encountering one of his unsuspecting future targets, solidifying his path of revenge.",
+        "conflict": "Li Wei must control his growing power and maintain his facade of weakness while in proximity to those he intends to destroy.",
+        "turning_point": "A senior disciple, representative of his past betrayers, dismisses Li Wei, sealing their own fate as Li Wei's intent for revenge is fully crystallized."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "To establish Li Wei's current lowly status and the contempt he faces from his peers and seniors within the sect.",
+        "conflict": "Li Wei is publicly ridiculed and dismissed by Senior Disciple Zhao and other students, forcing him to endure humiliation while suppressing his true power and rage.",
+        "turn": "Li Wei endures the mockery with a silent, steely glare, a flicker of ancient power in his eyes hinting at the coming storm."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_002",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To show Li Wei beginning his secret cultivation and recalling his glorious past, reinforcing his motivation for revenge.",
+        "conflict": "Li Wei struggles with the limitations of his new, weak body, contrasting it with the immense power he once wielded. The memory of his betrayal fuels his determination to overcome this obstacle.",
+        "turn": "Li Wei successfully draws a small, visible wisp of spiritual energy into his dantian, confirming that his cultivation path is viable and his return to power has begun."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_001",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "To subtly demonstrate Li Wei's burgeoning power and the unheeded threat he represents, without fully revealing his hand.",
+        "conflict": "Li Wei, seemingly unnoticed, performs a minor but impressive cultivation technique (e.g., effortlessly mending a broken object, sensing a distant aura) while Senior Disciple Zhao passes by, oblivious to the power he is witnessing.",
+        "turn": "Senior Disciple Zhao casts a dismissive glance at Li Wei, entirely missing the subtle display of power. Li Wei's gaze follows him, a chilling promise of future retribution in his eyes, known only to the audience."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 2,
+    "location_count": 2,
+    "scene_count": 3
+  }
+}

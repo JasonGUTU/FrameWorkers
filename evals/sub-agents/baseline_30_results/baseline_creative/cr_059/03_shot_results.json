@@ -1,0 +1,74 @@
+[
+  {
+    "idx": 1,
+    "shot_id": "sh_001",
+    "prompt": "An animated shot shows Gu Xiuning, a solemn, well-dressed transfer student with silver hair, walking silently through a bustling high school hallway. He clutches a textbook, his ice-cold gaze sweeping",
+    "status": "OK",
+    "keyframe_bytes": 1623292,
+    "mp4_bytes": 1006476,
+    "elapsed_sec": 1430.492164850235
+  },
+  {
+    "idx": 2,
+    "shot_id": "sh_002",
+    "prompt": "An animated shot focuses on a digital screen in the school's common area, displaying an old news article about a devastating arson ten years prior. Students gather, whispering, as the article highligh",
+    "status": "OK",
+    "keyframe_bytes": 1653468,
+    "mp4_bytes": 991331,
+    "elapsed_sec": 1433.4960491657257
+  },
+  {
+    "idx": 3,
+    "shot_id": "sh_003",
+    "prompt": "An animated shot introduces Mr. Lin, a kind-faced, earnest new homeroom teacher, smiling warmly while addressing his class. He gestures confidently, unaware of the specific history connected to his ne",
+    "status": "OK",
+    "keyframe_bytes": 1602658,
+    "mp4_bytes": 609293,
+    "elapsed_sec": 1434.2159678936005
+  },
+  {
+    "idx": 4,
+    "shot_id": "sh_004",
+    "prompt": "An animated shot captures Gu Xiuning in class, his eyes locking with Mr. Lin’s as the teacher scans the room. A flicker of intense recognition passes through Gu Xiuning's usually impassive expression,",
+    "status": "OK",
+    "keyframe_bytes": 1580100,
+    "mp4_bytes": 589510,
+    "elapsed_sec": 1427.6495161056519
+  },
+  {
+    "idx": 5,
+    "shot_id": "sh_005",
+    "prompt": "An animated shot shows Gu Xiuning alone in the dimly lit school library after hours. He intently reviews old dusty yearbooks and archived newspaper clippings detailing the tragic arson. His fingers tr",
+    "status": "OK",
+    "keyframe_bytes": 1507034,
+    "mp4_bytes": 659000,
+    "elapsed_sec": 1427.3865485191345
+  },
+  {
+    "idx": 6,
+    "shot_id": "sh_006",
+    "prompt": "An animated shot depicts Mr. Lin pacing nervously in his empty classroom after school. He touches a framed class photo from years ago, a brief, unsettling flashback of a burning school building and a ",
+    "status": "OK",
+    "keyframe_bytes": 1727714,
+    "mp4_bytes": 785768,
+    "elapsed_sec": 1427.4846255779266
+  },
+  {
+    "idx": 7,
+    "shot_id": "sh_007",
+    "prompt": "An animated shot shows Gu Xiuning standing silently in Mr. Lin's office after hours, the setting sun casting long shadows. Mr. Lin slowly turns, seeing Gu Xiuning. Their eyes meet in a profound, heavy",
+    "status": "OK",
+    "keyframe_bytes": 1385706,
+    "mp4_bytes": 1173252,
+    "elapsed_sec": 1432.3713903427124
+  },
+  {
+    "idx": 8,
+    "shot_id": "sh_008",
+    "prompt": "An animated shot focuses on Gu Xiuning standing by a rain-streaked window, looking out at the school grounds under a dramatic, overcast sky. His face is illuminated by a faint, cool light, revealing a",
+    "status": "OK",
+    "keyframe_bytes": 1582684,
+    "mp4_bytes": 330399,
+    "elapsed_sec": 1436.6397080421448
+  }
+]

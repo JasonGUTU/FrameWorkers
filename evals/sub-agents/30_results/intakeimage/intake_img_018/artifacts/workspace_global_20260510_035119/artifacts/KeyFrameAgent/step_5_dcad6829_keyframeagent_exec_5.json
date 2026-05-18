@@ -1,0 +1,338 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_id": "char_001",
+          "prompt_summary": "Kenji Tanaka is a powerful, melancholic East Asian business heir from a modern-urban wealthy-clan, haunted by a past tragedy. He presents an impeccably sharp image, often in a dark suit or tuxedo. Beneath his ruthless business acumen, he conceals deep emotional wounds and a pensive demeanor.",
+          "reference_image_uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/30_results/intakeimage/intake_img_018/_workspace/workspace_global_20260510_035119/inputs/20260510_035121_601019_intake_img_018.png"
+        },
+        {
+          "entity_id": "char_002",
+          "prompt_summary": "Anya Mei is an enigmatic, ambitious East Asian businesswoman from a modern-urban wealthy-clan, Kenji's fierce corporate rival. She maintains a hardened, calculating exterior, dressed in impeccably tailored, authoritative business attire or an elegant evening gown. She appears composed, yet carries a subtle underlying vulnerability, hinting at a hidden past as Ren.",
+          "reference_image_uri": ""
+        }
+      ],
+      "locations": [
+        {
+          "entity_id": "loc_001",
+          "prompt_summary": "Tanaka Corp. Headquarters is a sleek, imposing skyscraper office located in a bustling modern East Asian metropolis. It features minimalist design, cutting-edge technology, and opulent finishes, reflecting a modern-urban wealthy-clan aesthetic. Key areas include a private, soundproofed boardroom with a large conference table.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "loc_002",
+          "prompt_summary": "The Starlight Gala is an opulent, exclusive high-society event space, glittering with grand chandeliers in a modern East Asian metropolis. It embodies the extravagant social scene of the modern-urban wealthy-clan. The luxurious setting serves as a backdrop for masked intentions and simmering tensions.",
+          "reference_image_uri": ""
+        }
+      ],
+      "props": [
+        {
+          "entity_id": "prop_001",
+          "prompt_summary": "These are professional, official documents pertaining to a high-stakes corporate acquisition. The papers are neatly organized, possibly spread across a large conference table.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_002",
+          "prompt_summary": "A sleek, modern business tablet with a high-definition screen. It is designed with minimalist aesthetics, reflecting cutting-edge technology and corporate sophistication.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_003",
+          "prompt_summary": "A delicate, elegant glass champagne flute. It is filled with sparkling champagne, reflecting the opulent atmosphere of a high-society event.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_004",
+          "prompt_summary": "Luxurious gala decorations featuring sparkling, ornate chandeliers and lavish floral arrangements. The decor creates an atmosphere of opulence and high-society extravagance.",
+          "reference_image_uri": ""
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Kenji stands by a vast office window, gazing thoughtfully at the city. He is bathed in the bright natural light of a daytime setting, his sharp black suit contrasting with the vibrant view.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The Tanaka Corp. Headquarters office is brightly lit by natural daylight, revealing its sleek, minimalist design. The towering skyscraper offers expansive views of the bustling metropolis under a clear sky.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Kenji Tanaka, impeccably dressed in a sharp black suit, stands by a vast office window. He gazes contemplatively at the sprawling, bustling modern East Asian metropolis below, his power and wealth contrasted with an underlying melancholy. The scene emphasizes the city view and Kenji's isolation.",
+                "video_motion_hint": "The camera remains static, emphasizing Kenji's still, contemplative posture and the static cityscape."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A sleek, high-definition monitor displays aggressive financial data, market trends, and a sharp, composed headshot of 'Anya Mei'. Her corporate logo is prominently visible, introducing her as a formidable corporate rival and hinting at her impact. Focus is on the screen's details and Anya's image.",
+                "video_motion_hint": "The camera remains static, allowing the viewer to absorb the details on the screen."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Kenji's eyes narrow slightly, revealing a flicker of unreadable emotion—intrigue, challenge, or faint, unsettling recognition. His subtle facial expression is emphasized as he looks away from the screen, conveying his complex initial reaction to Anya Mei.",
+                "video_motion_hint": "The camera remains static, focused on Kenji's face, capturing the subtle shift in his demeanor."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Kenji maintains a professional facade in a sharp black suit, seated at a conference table. His melancholic expression is subtly present, but his posture conveys sharp business acumen during a negotiation.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Anya Mei is seated in an impeccably tailored business suit, exuding an authoritative and composed demeanor. Her expression is enigmatic, hinting at subtle familiar mannerisms despite her hardened exterior.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The Tanaka Corp. Headquarters' private boardroom is sleek and minimalist, illuminated by bright daylight. A large, gleaming conference table dominates the space, reflecting a high-stakes corporate environment.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "Corporate documents are neatly arranged on a large, gleaming conference table. The official papers are open, suggesting active use during a high-stakes corporate acquisition negotiation.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_002",
+              "prompt_summary": "A sleek, modern business tablet lies on the conference table. Its screen may display relevant data, ready for professional use during the negotiation.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_004",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "Kenji and Anya Mei sit at opposite sides of a gleaming, minimalist boardroom table. Corporate documents and tablets are scattered, but their gazes are locked, creating an unspoken tension in the opulent space. The shot emphasizes the distance and power dynamic between them in a high-stakes business meeting.",
+                "video_motion_hint": "The camera remains static, capturing the frozen tension between the two rivals."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up on Anya Mei reveals her composed, confident expression. She is assertively delivering a statement, her professional demeanor unyielding as she speaks. The shot focuses on her face, highlighting her subtle expressions.",
+                "video_motion_hint": "The camera is static, focusing on Anya's face to capture minute facial movements."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "From Kenji's point of view, Anya's slender hand gestures dismissively, a ring glinting. The angle of her wrist and the curve of her fingers are in sharp focus, triggering a sudden, visceral jolt of memory—undeniable yet impossible. The shot emphasizes the subtle, familiar mannerism.",
+                "video_motion_hint": "The camera remains static, holding on Anya's hand from Kenji's perspective, freezing the moment of recognition."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Kenji struggles to maintain his professional facade. His eyes, now filled with a terrifying, desperate question, briefly lock with Anya’s. She holds his gaze with a cool, unreadable confidence. The eye-level two-shot emphasizes the intense eye contact and silent emotional battle as Kenji's suspicion ignites.",
+                "video_motion_hint": "The static camera captures the intense, unwavering eye contact between Kenji and Anya."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Kenji wears a sharp, dark tuxedo, his expression reflecting desperate intensity amid the opulent gala. He moves with a determined posture, seeking answers in the dramatic night lighting of the event.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Anya Mei is resplendent in an elegant, sophisticated evening gown, maintaining a composed exterior at the gala. A flicker of underlying vulnerability is visible in her eyes, despite her enigmatic demeanor under the sparkling lights.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_002",
+              "prompt_summary": "The Starlight Gala is lavishly decorated for a night event, sparkling with ornate chandeliers and luxurious floral arrangements. The opulent setting is filled with softly illuminated guests, creating a sophisticated and mysterious atmosphere.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_003",
+              "prompt_summary": "A delicate glass champagne flute is held by a guest at the opulent night gala. The champagne sparkles, reflecting the dim, luxurious lighting of the event space.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_004",
+              "prompt_summary": "Gala decorations, including sparkling chandeliers and elaborate floral arrangements, create a lavish atmosphere. The luxurious elements are bathed in the soft, warm glow of evening lighting.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_008",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_004"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A wide shot captures the opulent Starlight Gala, sparkling with chandeliers and filled with elegantly dressed guests. Kenji, in a sharp tuxedo, moves through the crowd with a focused and determined gaze. The scene establishes the extravagant setting and Kenji's intense resolve amid the social facade.",
+                "video_motion_hint": "The camera dollies smoothly, sweeping across the luxurious gala before settling on Kenji's purposeful movement through the crowd."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_009",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "From Kenji's point of view, he spots Anya across the room. She is resplendent in an elegant evening gown, composed as she engages in conversation with a group of dignitaries. She catches his eye, showing a momentary, subtle shift in her expression. The shot focuses on Anya's elegance and the brief, charged eye contact.",
+                "video_motion_hint": "The camera remains static, fixing on Anya from Kenji's perspective, capturing the subtle shift in her expression."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium close-up on Kenji reveals his desperation, with Anya partially in frame. His face is etched with raw emotional pain as he urgently demands answers about her seven-year absence. The shot conveys his intense questioning and the immediate impact on Anya.",
+                "video_motion_hint": "The camera is static, holding on Kenji's face to emphasize his urgent emotional plea."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_011",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium close-up on Anya shows her composure cracking, a flicker of pain visible in her eyes as she speaks. She cryptically states, 'Some truths... are better left buried, Kenji.' The shot conveys her emotional vulnerability and hints at her past pain, confirming her identity.",
+                "video_motion_hint": "The camera is static, focusing on Anya's face to capture the subtle emotional breakdown."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_012",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Anya turns abruptly and melts back into the gala crowd, leaving Kenji standing alone. A complex mix of devastation, renewed hope, and lingering confusion is etched on his face. The shot captures Anya's departure and Kenji's isolated, complex emotional state in the aftermath of the confrontation.",
+                "video_motion_hint": "The camera remains static, capturing Anya's swift exit and Kenji's lingering, isolated reaction."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "style_notes": [
+      "Tortured love story",
+      "Corporate rivalry drama",
+      "Mystery with a second chance theme",
+      "Suspenseful tone",
+      "Set in a modern-urban wealthy-clan East Asian environment"
+    ],
+    "must_avoid": []
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 12,
+    "keyframe_count_total": 12,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 2,
+    "global_location_anchor_count": 2,
+    "global_prop_anchor_count": 4,
+    "stability_character_keyframe_count": 5,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 4
+  }
+}

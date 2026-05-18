@@ -1,0 +1,24 @@
+{
+  "entry_count": 1,
+  "artifact_count": 1,
+  "captions_index_text": "#0  (no caption) Produced by DummyAgent on 2026-05-12 17:47.",
+  "path_list": [
+    "/tmp/pytest-of-zhendong_li/pytest-389/test_assistant_e2e_http_flow_c0/Runtime/workspace_global_20260512_174725/artifacts/DummyAgent/step_1_c9ce298f_dummyagent_exec_1.json"
+  ],
+  "entries": [
+    {
+      "execution_id": "exec_1_d9451b91",
+      "agent_id": "DummyAgent",
+      "step_id": "step_1_c9ce298f",
+      "created_at": "2026-05-12T17:47:25.038299+00:00",
+      "artifacts": [
+        {
+          "caption": "",
+          "scope": "global",
+          "path": "/tmp/pytest-of-zhendong_li/pytest-389/test_assistant_e2e_http_flow_c0/Runtime/workspace_global_20260512_174725/artifacts/DummyAgent/step_1_c9ce298f_dummyagent_exec_1.json",
+          "mime": "application/json"
+        }
+      ]
+    }
+  ]
+}

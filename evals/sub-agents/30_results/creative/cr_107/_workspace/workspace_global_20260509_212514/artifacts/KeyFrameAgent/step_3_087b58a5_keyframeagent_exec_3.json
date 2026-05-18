@@ -1,0 +1,324 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_id": "char_001",
+          "prompt_summary": "A weathered ancient Chinese border general, Mu Rongyu, stands tall but appears weary. He wears heavy, ornate battle armor stained with wind and dust, and a faded cape. His eyes are firm, reflecting a profound sense of fortitude and melancholic resolve.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "char_002",
+          "prompt_summary": "An deceased ancient Chinese legendary general lies still, a heroic figure. His battle-worn armor is broken and covered in bloodstains. He firmly grasps the Green Dragon Crescent Blade, symbolizing his sacrifice and legacy.",
+          "reference_image_uri": ""
+        }
+      ],
+      "locations": [
+        {
+          "entity_id": "loc_001",
+          "prompt_summary": "A vast and boundless snowfield stretches under a harsh, cold wind, marking a desolate ancient Chinese western border. Distant mountains, eroded by wind and snow, loom on the horizon.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "loc_002",
+          "prompt_summary": "A brutal, ancient Chinese battlefield at the western border is covered in blood-stained snow. Scattered weapons and bodies lie amidst the chaos, depicting the aftermath of a ferocious engagement. Smoke billows across the ravaged landscape.",
+          "reference_image_uri": ""
+        }
+      ],
+      "props": [
+        {
+          "entity_id": "prop_001",
+          "prompt_summary": "The Green Dragon Crescent Blade, a sharp and formidable ancestral weapon, is crafted with ancient patterns on its hilt. Its blade glows with a distinct bluish light, emanating a powerful aura.",
+          "reference_image_uri": ""
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Mu Rongyu stands alone on an icy mountain ridge, his faded cloak fluttering violently in the howling, cold wind. He appears isolated and resolute, his heavy armor carrying the weight of the elements.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The vast, desolate snowfield is windswept and barren under a cold, clear day. Distant mountains are sharply defined but show signs of relentless erosion.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A solitary figure, Mu Rongyu, stands on a cold, icy mountain ridge, viewed from a high angle. His cloak whips dramatically in the strong, howling winds. The vast, desolate snowfield stretches out beneath him.",
+                "video_motion_hint": "The camera cranes slowly upwards, emphasizing the general's isolation. Mu Rongyu's cloak billows and his hair gently sways in the wind."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A colossal, dark army, an overwhelming tide of soldiers, advances across the distant horizon. Their banners obscure the sun, creating a stark contrast against the endless, pale snowfield. The scene captures the sheer scale and oppressive presence of the approaching enemy force.",
+                "video_motion_hint": "The camera slowly pans to the left, revealing the vast expanse of the enemy formation. Subtle movements within the distant ranks indicate their relentless advance."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up shot focuses on Mu Rongyu's face and hands. His eyes reveal profound weariness and a hint of despair, yet a flicker of unyielding defiance burns within them. His grip on his longsword is tight, knuckles white, showcasing his inner struggle.",
+                "video_motion_hint": "The camera remains static, capturing the subtle trembling in Mu Rongyu's hands and the intense, shifting emotions in his eyes."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Mu Rongyu, seen from a low angle, dramatically mounts his horse and points his longsword forward. Despite being vastly outnumbered, he rides forward, his posture radiating heroic defiance and an urgent sense of lone charge. Dust rises under his horse's hooves.",
+                "video_motion_hint": "The camera performs a dolly zoom, initially pulling back to reveal Mu Rongyu's isolation then zooming forward to emphasize his fierce determination as he charges. Dust swirls around the horse."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Mu Rongyu, bloodied and grimy, fights desperately in the chaotic battlefield. His heavy armor is visibly damaged, reflecting his physical exhaustion but unyielding spirit.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Mu Rongyu's father lies as a fallen hero on the blood-soaked snow, his ornate battle armor shattered. His hand still clutches the magnificent Green Dragon Crescent Blade, embodying his final, valiant stand.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_002",
+              "prompt_summary": "The battlefield is a gory, chaotic expanse of blood-reddened snow, littered with fallen soldiers and shattered weapons. The harsh daytime light illuminates the grim reality of the ancient border conflict.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "The Green Dragon Crescent Blade rests on the ground, its ancient hilt and glowing green blade stark against the desolate, blood-stained snow. It waits to be reclaimed.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Mu Rongyu battles fiercely amidst enemy soldiers, his body a whirlwind of motion. His longsword slashes, causing foes to fall around him, yet he remains heavily encircled. The scene emphasizes his valor and the brutal intensity of the combat.",
+                "video_motion_hint": "The camera tracks closely behind Mu Rongyu as he moves rapidly through the chaotic battle. Soldiers clash around him with swift, violent movements."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "characters_in_frame": [],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "From Mu Rongyu's point of view, his gaze quickly falls upon a fallen figure in a corner of the battlefield. The tattered general's armor is instantly recognizable, and clutched in the figure's hand is the distinct Green Dragon Crescent Blade. The blade gleams ominously from the blood-soaked snow.",
+                "video_motion_hint": "A quick zoom focuses rapidly on the Green Dragon Crescent Blade held by the fallen general, drawing the viewer's attention to the crucial detail."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up captures Mu Rongyu kneeling beside his fallen father, his hands trembling as they touch the cold, broken armor. Tears stream down his grimy face, mingling with the dust and blood. His father's hand still clasps the Green Dragon Crescent Blade, a symbol of profound grief and loss.",
+                "video_motion_hint": "The camera remains static, highlighting the subtle trembling of Mu Rongyu's hands and the quiet fall of tears. The Green Dragon Crescent Blade lies still in the father's grip."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_008",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "Mu Rongyu struggles to retrieve the Green Dragon Crescent Blade from his father's grasp. As he lifts it, the blade emits a fierce, blue glow in the sunlight, and his eyes transform from profound grief to burning, furious resolve. He clenches the weapon tightly, accepting his destiny.",
+                "video_motion_hint": "The camera smoothly tilts upwards from the blade to Mu Rongyu's face as he lifts the weapon. A subtle light flicker emanates from the blade."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Mu Rongyu stands fierce and determined, wielding the legendary Green Dragon Crescent Blade. His battle-scarred armor is still bloody, reflecting his unwavering resolve and fiery eyes of vengeance and protection.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_002",
+              "prompt_summary": "The ancient battlefield is choked with dense smoke, obscuring the vast, snow-covered ground where countless bodies lie. The war-torn border landscape is bathed in the stark light of day.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "The Green Dragon Crescent Blade gleams with an intense, sharp blue light as it is powerfully swung. Its formidable presence dominates the scene, reflecting great strength and speed.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_009",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "Mu Rongyu wields the Green Dragon Crescent Blade with furious intensity, the blade flashing with potent blue light. Every powerful strike embodies his father's strength and his own burning rage, driving back the surrounding enemies. He moves with unmatched ferocity.",
+                "video_motion_hint": "The camera employs a dutch tilt, slightly rotating to enhance the chaotic energy as Mu Rongyu swings the blade with dynamic, sweeping motions. The blade creates quick, streaking light effects."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "Mu Rongyu leaps powerfully into the air, the Green Dragon Crescent Blade tracing a wide, devastating arc. Several enemy soldiers are forcefully repelled, leaving him looking like an unstoppable war god amidst the chaos. This high-angle long shot emphasizes his dominance.",
+                "video_motion_hint": "The crane shot slowly pulls back and upwards, revealing the scale of Mu Rongyu's impact. He performs a powerful jump and lands, causing enemies around him to stumble and recoil."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_011",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up of Mu Rongyu's face reveals his transformed eyes, no longer just weary, but burning with the memory of his father and a fierce resolve to protect the border. His expression conveys unyielding honor and determination as he holds the Green Dragon Crescent Blade.",
+                "video_motion_hint": "The camera remains static, allowing the viewer to absorb the profound emotional depth and subtle intensity in Mu Rongyu's gaze. A faint glow emanates from the blade."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_012",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "In the smoke-filled center of the vast battlefield, Mu Rongyu stands alone, holding the Green Dragon Crescent Blade high. From a low-angle very wide shot, he appears as an unyielding monument, steadfastly defending the Western border. His solitary, heroic stance dominates the devastated landscape.",
+                "video_motion_hint": "The crane shot slowly descends, emphasizing Mu Rongyu's monumental presence against the wide, smoky backdrop. His stance is firm, with slight shifts in body weight and the blade catches glints of light."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "style_notes": [
+      "史诗战争片",
+      "悲壮而英雄的基调",
+      "古中国时期",
+      "宏大广阔的视觉风格",
+      "激烈残酷的战斗场面",
+      "悲情与崇高并存",
+      "古中国战争史诗感",
+      "视觉冲击力强",
+      "最终决战的紧张氛围",
+      "英雄主义的极致展现",
+      "古中国浪漫主义与悲壮感",
+      "视觉上强调力量与速度"
+    ],
+    "must_avoid": [
+      "现代科技",
+      "轻松愉悦的氛围",
+      "鲜艳明亮的色彩",
+      "过度的血腥特写",
+      "失去情感深度",
+      "战斗的轻松感",
+      "缺乏情感共鸣"
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 12,
+    "keyframe_count_total": 12,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 2,
+    "global_location_anchor_count": 2,
+    "global_prop_anchor_count": 1,
+    "stability_character_keyframe_count": 4,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 2
+  }
+}

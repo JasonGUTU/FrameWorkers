@@ -1,0 +1,12 @@
+{
+  "case_name": "intake_img_039",
+  "category": "intake_img",
+  "user_goal": "Use this uploaded photo as the high-school female lead. Make a contemporary high-school sweet-and-bitter romance animated short drama — rumor says she is the secret daughter of the largest private-academy benefactor in northern Jiangbei; on her very first day as a transfer student she clashes head-on with the school's most untouchable bully. Add a light-yet-bittersweet piano BGM.",
+  "hunyuan_endpoint": "http://sof1-h200-7:9204",
+  "infer_steps": 50,
+  "splitter_model": "gemini-2.5-flash",
+  "image_model": "fal-ai/nano-banana-2",
+  "upload_ref_used": "evals/sub-agents/e2e_30/uploads/intake_img_039.png",
+  "started_at": "2026-05-10T17:50:26",
+  "driver_version": "v2_sync_curl_mp"
+}

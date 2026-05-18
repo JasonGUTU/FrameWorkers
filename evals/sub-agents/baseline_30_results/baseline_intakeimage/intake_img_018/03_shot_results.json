@@ -1,0 +1,74 @@
+[
+  {
+    "idx": 1,
+    "shot_id": "sh_001",
+    "prompt": "A distraught young man watches in slow motion as a woman's silhouette dives elegantly from a gleaming luxury yacht's deck into the dark, churning deep sea. His eyes are wide with shock and helpless de",
+    "status": "OK",
+    "keyframe_bytes": 1928043,
+    "mp4_bytes": 843390,
+    "elapsed_sec": 1446.3861255645752
+  },
+  {
+    "idx": 2,
+    "shot_id": "sh_002",
+    "prompt": "Seven years later, the now-wealthy CEO stands alone in his sleek, minimalist penthouse office, gazing out at a glittering urban metropolis at night. He sips from a crystal glass, a subtle shadow of me",
+    "status": "OK",
+    "keyframe_bytes": 1453834,
+    "mp4_bytes": 460150,
+    "elapsed_sec": 1447.1151435375214
+  },
+  {
+    "idx": 3,
+    "shot_id": "sh_003",
+    "prompt": "An exquisitely dressed, enigmatic woman with sharp, observant eyes makes a striking entrance into a bustling, high-society corporate gala. She commands attention with her confident stride and cool dem",
+    "status": "OK",
+    "keyframe_bytes": 1635472,
+    "mp4_bytes": 726713,
+    "elapsed_sec": 1450.6456983089447
+  },
+  {
+    "idx": 4,
+    "shot_id": "sh_004",
+    "prompt": "In a gleaming, modern boardroom, the wealthy heir and the enigmatic businesswoman lock eyes across a long, polished table. A palpable tension hangs in the air as they exchange sharp, knowing glances, ",
+    "status": "OK",
+    "keyframe_bytes": 1502508,
+    "mp4_bytes": 657569,
+    "elapsed_sec": 1451.3711886405945
+  },
+  {
+    "idx": 5,
+    "shot_id": "sh_005",
+    "prompt": "Dynamic shots depict the wealthy heir intensely strategizing in a war room, surrounded by glowing data screens and financial charts. He aggressively pursues a cunning rival, who remains just out of hi",
+    "status": "OK",
+    "keyframe_bytes": 1476352,
+    "mp4_bytes": 687343,
+    "elapsed_sec": 1445.2213199138641
+  },
+  {
+    "idx": 6,
+    "shot_id": "sh_006",
+    "prompt": "At a lavish rooftop party, the heir watches his rival from across the crowd. As she subtly adjusts her hair, a flash of a familiar gesture triggers a powerful, disturbing memory, leaving his face etch",
+    "status": "OK",
+    "keyframe_bytes": 1533950,
+    "mp4_bytes": 630823,
+    "elapsed_sec": 1451.7742857933044
+  },
+  {
+    "idx": 7,
+    "shot_id": "sh_007",
+    "prompt": "In a secluded, dimly lit art gallery corridor, the heir confronts the woman, his voice low and urgent as he demands answers about her past. Her expression remains coolly impassive, her eyes holding a ",
+    "status": "OK",
+    "keyframe_bytes": 1460667,
+    "mp4_bytes": 476878,
+    "elapsed_sec": 1448.709008693695
+  },
+  {
+    "idx": 8,
+    "shot_id": "sh_008",
+    "prompt": "The woman turns, walking away with a subtle, knowing smile, disappearing into the shadows of the upscale setting. The wealthy heir watches her retreat, a figure of elegant mystery, leaving him isolate",
+    "status": "OK",
+    "keyframe_bytes": 1273005,
+    "mp4_bytes": 362885,
+    "elapsed_sec": 1443.5751368999481
+  }
+]

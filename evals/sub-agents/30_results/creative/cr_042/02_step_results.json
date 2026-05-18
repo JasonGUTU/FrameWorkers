@@ -1,0 +1,40 @@
+[
+  {
+    "agent_id": "StoryAgent",
+    "step_id": "step_1_2f4e7caf",
+    "ok": true,
+    "error": null,
+    "elapsed_sec": 0.0,
+    "skipped_resume": true
+  },
+  {
+    "agent_id": "ScreenplayAgent",
+    "step_id": "step_2_307c65f7",
+    "ok": true,
+    "error": null,
+    "elapsed_sec": 0.0,
+    "skipped_resume": true
+  },
+  {
+    "agent_id": "KeyFrameAgent",
+    "step_id": "step_3_e05d6778",
+    "ok": true,
+    "error": null,
+    "elapsed_sec": 0.0,
+    "skipped_resume": true
+  },
+  {
+    "agent_id": "VideoAgent",
+    "step_id": "step_4_665b5cf9",
+    "ok": true,
+    "error": null,
+    "elapsed_sec": 14523.592150688171
+  },
+  {
+    "agent_id": "CompositorAgent",
+    "step_id": "step_5_279094cc",
+    "ok": true,
+    "error": null,
+    "elapsed_sec": 15.193129777908325
+  }
+]

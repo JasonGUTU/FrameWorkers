@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T03:37:17.021705+00:00",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A determined, super-powered survivor leads her band through a zombie-infested, post-apocalyptic city, dodging a military task force while hunting for the true origin of the virus that granted her powers.",
+    "style": {
+      "genre": [
+        "Post-apocalyptic",
+        "Supernatural Drama",
+        "Action"
+      ],
+      "tone_keywords": [
+        "Gritty",
+        "Somber",
+        "Survival",
+        "Mystery",
+        "Post-apocalyptic",
+        "Determined"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Lena",
+        "role": "protagonist",
+        "profile": "A determined female lead, survivor of the post-apocalyptic virus outbreak, with the awakened power to bend metal. She has short hair, a bruised face, and a glowing hand, often seen in a worn leather jacket and dog tags, leading a band of survivors through the devastated city.",
+        "motivation": "To uncover the true source of the pathogen that devastated the world and brought about her powers, seeking justice and a safer future for her group.",
+        "flaw": "Her relentless pursuit of answers can make her reckless, sometimes putting herself or her team in unnecessary danger."
+      },
+      {
+        "character_id": "char_002",
+        "name": "Commander Thorne",
+        "role": "antagonist",
+        "profile": "The cold, unyielding leader of the military's super-power task force, tasked with containing both the infected and any 'unauthorized' super-powered individuals, including Lena. He operates with a rigid sense of order, believing his actions are for humanity's greater good in the post-apocalyptic world.",
+        "motivation": "To maintain control and eliminate perceived threats to the remnants of order, potentially covering up the military's involvement or complicity in the outbreak.",
+        "flaw": "His absolute belief in control and order blinds him to moral ambiguities and potential truths that lie outside his narrative."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Abandoned Subway Car",
+        "description": "A claustrophobic, derelict subway car, frozen in time on the day of the virus outbreak in the post-apocalyptic era. The interior is a scene of initial panic and destruction, where Lena's powers first manifested."
+      },
+      {
+        "location_id": "loc_002",
+        "name": "Ruined City Streets",
+        "description": "The desolate, crumbling streets of a once-vibrant metropolis, now a zombie-flooded, post-apocalyptic landscape under a somber sky. Buildings are skeletal, vehicles are overturned, and makeshift barricades litter the choked arteries of the city."
+      },
+      {
+        "location_id": "loc_003",
+        "name": "Derelict Military Research Facility",
+        "description": "A heavily fortified, yet partially destroyed, research facility in the post-apocalyptic city, hinting at abandoned experiments and clandestine operations. Its metallic structures bear the scars of combat and neglect, concealing secrets about the pathogen."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Lena, a determined survivor with metal-bending powers, leads her group through a zombie-infested city, constantly dodging military patrols, as her underlying quest to uncover the pathogen's origin is established.",
+        "conflict": "The immediate threat of infected hordes and the oppressive military task force against Lena's group's survival and her broader quest for truth.",
+        "turning_point": "Lena reinforces her resolve to find answers, reaffirming her role as leader and protector."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "inciting",
+        "summary": "A flashback reveals the chaotic day the virus broke out inside a subway car, where Lena's metal-bending powers first awakened, forcing her onto a path of survival and purpose.",
+        "conflict": "The sudden, overwhelming terror of the outbreak and the inexplicable manifestation of Lena's new, dangerous ability.",
+        "turning_point": "Lena's powers emerge, fundamentally changing her life and setting her on the path she now walks."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "crisis",
+        "summary": "Lena's group tracks a lead to a derelict military research facility, where they are ambushed by the super-powered military task force, forcing Lena into a desperate battle to protect her team and secure critical evidence.",
+        "conflict": "A direct, high-stakes confrontation with the well-equipped and powerful military task force that seeks to contain Lena and her knowledge.",
+        "turning_point": "Lena confronts the direct force attempting to prevent her from discovering the truth, leading to a major power display and a shift in her understanding of the opposition."
+      },
+      {
+        "step_id": "arc_004",
+        "order": 4,
+        "step_type": "climax",
+        "summary": "Lena overcomes the military task force, retrieves crucial information about the pathogen's origin, and ensures her group's safety, setting them on a clearer path forward.",
+        "conflict": "The final desperate struggle against the military, balancing the immediate survival of her team with the desperate need to uncover the truth.",
+        "turning_point": "Lena secures the evidence she sought, providing a definitive answer or a critical next step in her overarching mission."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_002",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Lena navigates her group through dangerous city streets to a safer zone, while subtly pursuing a new lead regarding the pathogen's origin.",
+        "conflict": "The group faces the immediate threats of lurking infected and the constant danger of encountering military patrols, who view them as rogue elements.",
+        "turn": "Lena deftly uses her powers to secure a path, narrowly avoiding detection, reaffirming her leadership and determination to her weary group."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Lena experiences a vivid flashback to the chaotic day the virus broke out, remembering her desperate struggle for survival and the sudden awakening of her powers.",
+        "conflict": "Overwhelming panic and the rapid spread of infection within the enclosed subway car, coupled with the terrifying, uncontrolled emergence of Lena's metal-bending abilities.",
+        "turn": "Lena's hands glow, and metal bends to her will, a moment of both horror and revelation that irrevocably changes her destiny."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_003",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "Lena and her group infiltrate a derelict military research facility to find evidence, leading to a confrontation with Commander Thorne and his super-power task force.",
+        "conflict": "Lena faces a direct, brutal battle against Thorne's disciplined and super-powered soldiers, forcing her to unleash her full abilities to protect her team and uncover the truth.",
+        "turn": "Lena secures a critical piece of evidence about the pathogen's origin and outmaneuvers Thorne's forces, proving her strength and securing a clearer path for her ongoing quest for justice."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 2,
+    "location_count": 3,
+    "scene_count": 3
+  }
+}

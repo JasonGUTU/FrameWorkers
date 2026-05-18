@@ -1,0 +1,25 @@
+{
+  "agent_class": "TranslationAgent",
+  "typed_input": {
+    "source_json_text": "{}",
+    "target_language": "en"
+  },
+  "output": null,
+  "eval_result": {
+    "kind": "upstream_input_rejected",
+    "overall_pass": false,
+    "summary": "upstream input rejected: source payload is an empty JSON object — no human-readable text to translate",
+    "input_rejection": {
+      "reason": "source payload is an empty JSON object — no human-readable text to translate",
+      "missing_labels": [
+        "source_text"
+      ],
+      "offending_fields": []
+    }
+  },
+  "passed": false,
+  "attempts": 1,
+  "asset_dict": null,
+  "media_assets_count": 0,
+  "media_assets_summary": []
+}

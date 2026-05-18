@@ -1,0 +1,17 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T21:26:32.478710+00:00",
+    "language": "en"
+  },
+  "content": {
+    "visual_description": "A man in a dark suit and blue tie stands in an office with a city skyline at dusk visible through large windows, looking at the camera.",
+    "image_asset": {
+      "asset_id": "",
+      "uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/30_results/intakeimage/intake_img_036/_workspace/workspace_global_20260510_212627/inputs/20260510_212628_533439_intake_img_036.png",
+      "width": 1024,
+      "height": 576,
+      "format": "png"
+    }
+  }
+}

@@ -1,0 +1,388 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "广袤无垠的雪原",
+            "被风雪侵蚀的远山",
+            "萧瑟荒凉的古中国西部边境",
+            "寒风凛冽"
+          ],
+          "style_notes": [
+            "史诗战争片",
+            "悲壮而英雄的基调",
+            "古中国时期",
+            "宏大广阔的视觉风格"
+          ],
+          "must_avoid": [
+            "现代科技",
+            "轻松愉悦的氛围",
+            "鲜艳明亮的色彩"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "展现穆容宇的孤寂和边境的荒凉。",
+              "action_focus": "穆容宇在荒凉雪原上的身影。",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "high_angle",
+              "camera_movement": "crane_shot",
+              "framing_notes": "强调穆容宇的孤独与环境的广阔",
+              "video_motion_hints": [
+                "The camera cranes slowly upwards, emphasizing the general's isolation. Mu Rongyu's cloak billows and his hair gently sways in the wind."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_002",
+            "semantic_context": {
+              "shot_type": "very_wide",
+              "visual_goal": "建立敌军的压倒性数量。",
+              "action_focus": "地平线上不断逼近的敌军方阵。",
+              "characters_in_frame": [],
+              "camera_angle": "eye_level",
+              "camera_movement": "pan_left",
+              "framing_notes": "展现敌军的规模和压迫感",
+              "video_motion_hints": [
+                "The camera slowly pans to the left, revealing the vast expanse of the enemy formation. Subtle movements within the distant ranks indicate their relentless advance."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_003",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "捕捉穆容宇复杂的内心挣扎与最终的决心。",
+              "action_focus": "穆容宇的眼神和紧握的双手。",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "聚焦穆容宇面部表情",
+              "video_motion_hints": [
+                "The camera remains static, capturing the subtle trembling in Mu Rongyu's hands and the intense, shifting emotions in his eyes."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_004",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "展现穆容宇冲锋前的决绝。",
+              "action_focus": "穆容宇策马扬尘，冲向敌军。",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "dolly_zoom",
+              "framing_notes": "强调其英勇无畏的气势",
+              "video_motion_hints": [
+                "The camera performs a dolly zoom, initially pulling back to reveal Mu Rongyu's isolation then zooming forward to emphasize his fierce determination as he charges. Dust swirls around the horse."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "urgent",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_003",
+            "to_shot_id": "sh_004",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_context": {
+          "location_id": "loc_002",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "血肉横飞的战场",
+            "散落的兵器和尸体",
+            "被鲜血染红的雪地",
+            "古中国西部边境的惨烈战事"
+          ],
+          "style_notes": [
+            "激烈残酷的战斗场面",
+            "悲情与崇高并存",
+            "古中国战争史诗感",
+            "视觉冲击力强"
+          ],
+          "must_avoid": [
+            "过度的血腥特写",
+            "失去情感深度"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_005",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "展现穆容宇的勇猛与战斗的惨烈。",
+              "action_focus": "穆容宇在乱军中浴血奋战的身影。",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "tracking_shot",
+              "framing_notes": "跟随穆容宇的激烈战斗",
+              "video_motion_hints": [
+                "The camera tracks closely behind Mu Rongyu as he moves rapidly through the chaotic battle. Soldiers clash around him with swift, violent movements."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_006",
+            "semantic_context": {
+              "shot_type": "point_of_view",
+              "visual_goal": "引导观众发现其父遗体。",
+              "action_focus": "血泊中显眼的青龙偃月刀。",
+              "characters_in_frame": [],
+              "camera_angle": "eye_level",
+              "camera_movement": "quick_zoom",
+              "framing_notes": "从穆容宇视角发现父亲遗体",
+              "video_motion_hints": [
+                "A quick zoom focuses rapidly on the Green Dragon Crescent Blade held by the fallen general, drawing the viewer's attention to the crucial detail."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_007",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "表现穆容宇发现父亲牺牲的巨大悲痛。",
+              "action_focus": "穆容宇的泪水和父亲手中的青龙偃月刀。",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "聚焦穆容宇的悲痛与父亲的遗容",
+              "video_motion_hints": [
+                "The camera remains static, highlighting the subtle trembling of Mu Rongyu's hands and the quiet fall of tears. The Green Dragon Crescent Blade lies still in the father's grip."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_008",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "象征家族传承与力量的转移。",
+              "action_focus": "青龙偃月刀被穆容宇举起，他的表情变化。",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "tilt_up",
+              "framing_notes": "展现穆容宇接刀后的气势变化",
+              "video_motion_hints": [
+                "The camera smoothly tilts upwards from the blade to Mu Rongyu's face as he lifts the weapon. A subtle light flicker emanates from the blade."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "angry",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_005",
+            "to_shot_id": "sh_006",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_006",
+            "to_shot_id": "sh_007",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_007",
+            "to_shot_id": "sh_008",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "scene_context": {
+          "location_id": "loc_002",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "硝烟弥漫的古战场",
+            "尸横遍野的雪原",
+            "被战争蹂躏的古中国边境"
+          ],
+          "style_notes": [
+            "最终决战的紧张氛围",
+            "英雄主义的极致展现",
+            "古中国浪漫主义与悲壮感",
+            "视觉上强调力量与速度"
+          ],
+          "must_avoid": [
+            "战斗的轻松感",
+            "缺乏情感共鸣"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_009",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "展现穆容宇获得新力量后的战斗姿态。",
+              "action_focus": "穆容宇挥舞青龙偃月刀的英姿。",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "dutch_tilt",
+              "framing_notes": "强调战斗的激烈与穆容宇的狂怒",
+              "video_motion_hints": [
+                "The camera employs a dutch tilt, slightly rotating to enhance the chaotic energy as Mu Rongyu swings the blade with dynamic, sweeping motions. The blade creates quick, streaking light effects."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_010",
+            "semantic_context": {
+              "shot_type": "long",
+              "visual_goal": "塑造穆容宇成为战场上无可匹敌的象征。",
+              "action_focus": "穆容宇在敌阵中制造的混乱和突破。",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "high_angle",
+              "camera_movement": "crane_shot",
+              "framing_notes": "展现穆容宇以一敌百的气势",
+              "video_motion_hints": [
+                "The crane shot slowly pulls back and upwards, revealing the scale of Mu Rongyu's impact. He performs a powerful jump and lands, causing enemies around him to stumble and recoil."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_011",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "传达穆容宇内心的精神升华。",
+              "action_focus": "穆容宇眼中流露出的复杂情感。",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "聚焦穆容宇的眼神和面部表情",
+              "video_motion_hints": [
+                "The camera remains static, allowing the viewer to absorb the profound emotional depth and subtle intensity in Mu Rongyu's gaze. A faint glow emanates from the blade."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_012",
+            "semantic_context": {
+              "shot_type": "very_wide",
+              "visual_goal": "创造一个充满力量和象征意义的画面。",
+              "action_focus": "穆容宇在广阔战场上的孤勇身影。",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "crane_shot",
+              "framing_notes": "强调穆容宇的英雄形象与孤身抗敌的气势",
+              "video_motion_hints": [
+                "The crane shot slowly descends, emphasizing Mu Rongyu's monumental presence against the wide, smoky backdrop. His stance is firm, with slight shifts in body weight and the blade catches glints of light."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_009",
+            "to_shot_id": "sh_010",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_010",
+            "to_shot_id": "sh_011",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_011",
+            "to_shot_id": "sh_012",
+            "transition_type": "cut"
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_segment_count": 12
+  }
+}

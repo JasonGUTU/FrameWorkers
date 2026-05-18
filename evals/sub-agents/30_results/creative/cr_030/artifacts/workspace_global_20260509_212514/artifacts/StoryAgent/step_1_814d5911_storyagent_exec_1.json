@@ -1,0 +1,165 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-09T21:25:40.067466+00:00",
+    "language": "zh"
+  },
+  "content": {
+    "logline": "Three years after a contract marriage ended in heartbreak, a resilient woman returns with their twin children to deliver divorce papers, forcing the once-arrogant Huo family heir to confront his past and kneel for the first time.",
+    "style": {
+      "genre": [
+        "Drama",
+        "Romance",
+        "Reconciliation"
+      ],
+      "tone_keywords": [
+        "Emotional",
+        "Redemptive",
+        "Romantic",
+        "Dramatic",
+        "Heart-tugging",
+        "Reconciliation",
+        "Modern Chinese Drama"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Su Nian",
+        "role": "protagonist",
+        "profile": "A strong-willed and independent woman, once a contract-marriage wife, now a protective mother of twin children. She carries deep emotional scars from past mistreatment but is determined to forge a new, self-sufficient life.",
+        "motivation": "To secure her independence, protect her children, and definitively close the painful chapter of her past with the Huo family heir.",
+        "flaw": "Her past hurts have made her guarded and deeply distrustful of the Huo family heir, making it difficult for her to accept any genuine attempts at reconciliation."
+      },
+      {
+        "character_id": "char_002",
+        "name": "Huo Family Heir",
+        "role": "antagonist",
+        "profile": "The once-arrogant and emotionally distant heir of a powerful family, who treated Su Nian as a mere stand-in. His world is shaken by Su Nian's return with their children, forcing him to confront his past mistakes and buried emotions.",
+        "motivation": "To win back Su Nian and gain the acceptance of his children, driven by regret, love, and a newfound understanding of his past failures.",
+        "flaw": "His ingrained pride and past emotional detachment make it challenging for him to genuinely express vulnerability and earn forgiveness, especially after years of dismissiveness."
+      },
+      {
+        "character_id": "char_003",
+        "name": "Twin Children",
+        "role": "support",
+        "profile": "Innocent and observant, these young children represent the tangible outcome of Su Nian and the Huo heir's past, and a powerful emotional anchor for their future.",
+        "motivation": "To have a loving and stable family environment.",
+        "flaw": "Their innocence means they are unaware of the complex history between their parents, making them vulnerable emotional leverage points."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Huo Group CEO's Office",
+        "description": "A lavish, modern, and intimidating office at the top of a skyscraper in a bustling Chinese city, symbolizing power, wealth, and the former indifference of the Huo Family Heir. Its cold grandeur starkly contrasts with Su Nian's emotional state."
+      },
+      {
+        "location_id": "loc_002",
+        "name": "Su Nian's Modest Apartment",
+        "description": "A cozy, well-kept, yet modest apartment, filled with children's toys and personal touches. It represents Su Nian's hard-won independence and the warmth of her new life with her twins, a stark contrast to the opulence of the Huo family's world."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Su Nian endured a painful contract marriage with the Huo family heir, where she was treated as a stand-in. Unable to bear the emotional neglect and humiliation, she disappeared three years ago, secretly pregnant with twins, to rebuild her life.",
+        "conflict": "Su Nian's internal struggle with the lingering pain and unresolved feelings from her past, combined with her determination to find true independence.",
+        "turning_point": "Su Nian decides it's time to formally sever ties and seeks a legal divorce."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "inciting",
+        "summary": "Su Nian returns to the city with her two young children and, with quiet resolve, arrives at the Huo Group office to deliver divorce papers directly to the Huo family heir, revealing their children for the first time.",
+        "conflict": "The shock and disbelief of the Huo heir confronting Su Nian and their children, shattering his complacent world.",
+        "turning_point": "The Huo heir sees his children for the first time and realizes the gravity of what he lost and disregarded."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "turn",
+        "summary": "Overwhelmed by the revelation and Su Nian's unwavering determination, the Huo heir, who once treated her with disdain, is utterly broken and, for the very first time, kneels before her, begging for forgiveness and a chance to explain.",
+        "conflict": "Su Nian's internal battle between her deep-seated pain and the raw, unprecedented vulnerability of the man who wronged her.",
+        "turning_point": "The Huo heir's act of kneeling signifies a profound shift in his character, moving from arrogance to desperate remorse."
+      },
+      {
+        "step_id": "arc_004",
+        "order": 4,
+        "step_type": "crisis",
+        "summary": "The Huo heir relentlessly pursues Su Nian, attempting to integrate himself into their children's lives and atone for his past, but Su Nian remains deeply guarded, refusing to easily forgive or trust him, causing tension and emotional turmoil for everyone involved, including the innocent twins.",
+        "conflict": "Su Nian's fierce desire for independence and fear of rekindling past pain versus the Huo heir's persistent, increasingly genuine efforts at reconciliation and the children's burgeoning connection with him.",
+        "turning_point": "A moment where the children innocently express a desire for both parents, forcing Su Nian to confront the impact of her decisions on them."
+      },
+      {
+        "step_id": "arc_005",
+        "order": 5,
+        "step_type": "climax",
+        "summary": "During a heated confrontation, Su Nian articulates her deepest pain and demands genuine, lasting change, not just words. The Huo heir, finally shedding all his pride, makes a grand, heartfelt gesture that unequivocally proves his sincerity and commitment to her and their family, accepting full responsibility for his past actions.",
+        "conflict": "Su Nian's ultimate test of whether she can open her heart and trust again, against the Huo heir's desperate fight to prove his transformation and worthiness.",
+        "turning_point": "The Huo heir's grand gesture and heartfelt confession break through Su Nian's emotional barriers, offering a glimpse of a possible future."
+      },
+      {
+        "step_id": "arc_006",
+        "order": 6,
+        "step_type": "resolution",
+        "summary": "Su Nian, though not immediately forgiving, acknowledges the Huo heir's genuine remorse and commitment. They agree to co-parent and begin a tentative journey towards rebuilding trust and defining a new, healthier relationship for the sake of their children, leaving the future open to genuine reconciliation.",
+        "conflict": "The ongoing challenge of transforming a broken past into a hopeful future, requiring continuous effort and vulnerability from both.",
+        "turning_point": "A mutual, albeit fragile, agreement to work together for their children, signaling a hopeful, albeit uncertain, path forward."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001",
+          "char_002",
+          "char_003"
+        ],
+        "goal": "Su Nian delivers the divorce papers and introduces her children to the Huo family heir, intending to finalize the separation and assert her independence.",
+        "conflict": "The Huo heir's shock and disbelief upon seeing Su Nian and realizing he has twin children. Su Nian's steely resolve clashes with his dawning regret and desperation.",
+        "turn": "The Huo heir, stripped of his arrogance, collapses to his knees before Su Nian, begging for forgiveness, a profound and unprecedented display of vulnerability that catches Su Nian off guard."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_004",
+        "location_id": "loc_002",
+        "time_of_day_hint": "EVENING",
+        "characters_present": [
+          "char_001",
+          "char_002",
+          "char_003"
+        ],
+        "goal": "The Huo heir attempts to establish a presence in his children's lives and convince Su Nian of his changed intentions.",
+        "conflict": "Su Nian's firm boundaries and skepticism clash with the Huo heir's persistent, albeit clumsy, efforts to connect with his family. The children's innocent joy in their father's presence creates an internal conflict for Su Nian.",
+        "turn": "One of the children innocently expresses a desire for both parents to be together, highlighting the emotional stakes and making Su Nian question the full impact of her unwavering stance."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_005",
+        "location_id": "loc_001",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "Su Nian confronts the Huo heir with her deepest pain and demands a clear, undeniable demonstration of his transformation and commitment.",
+        "conflict": "Su Nian lays bare her emotional wounds, challenging the Huo heir to prove his remorse is real. He must overcome his final vestiges of pride to make a profound, sincere gesture.",
+        "turn": "The Huo heir, with genuine tears and a heart-wrenching confession, makes a powerful, undeniable gesture of love and commitment (e.g., giving her a document relinquishing control over something vital, or publicly confessing his wrongs), finally breaking through Su Nian's hardened exterior and offering a glimmer of hope for their future."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 3,
+    "location_count": 2,
+    "scene_count": 3
+  }
+}

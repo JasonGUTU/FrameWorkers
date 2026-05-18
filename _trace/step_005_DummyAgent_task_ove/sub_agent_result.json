@@ -1,0 +1,24 @@
+{
+  "agent_class": "_SequencePipelineAgent",
+  "typed_input": {
+    "step_id": "task_overwrite",
+    "resolved_artifacts": {},
+    "language": "en"
+  },
+  "output": null,
+  "eval_result": null,
+  "passed": null,
+  "attempts": null,
+  "asset_dict": {
+    "report": {
+      "file_content": "<bytes len=2>",
+      "filename": "report.txt",
+      "description": "report snapshot"
+    },
+    "content": {
+      "text": "v2"
+    }
+  },
+  "media_assets_count": 0,
+  "media_assets_summary": []
+}

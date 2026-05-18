@@ -1,0 +1,743 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T21:27:58.127522+00:00",
+    "language": "en"
+  },
+  "content": {
+    "title": "The Stand-In's Farewell",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "The Chen Estate",
+          "interior_exterior": "INT",
+          "time_of_day": "CUSTOM"
+        },
+        "summary": "Li Wei, the 'stand-in bride', moves through the opulent but cold Chen Estate, silently enduring Chen Hao's indifference as she observes the impending end of her contract.",
+        "continuity": {
+          "props_present": [
+            "ornate grandfather clock",
+            "stack of business documents"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "understated cream coat, pearl earrings",
+              "must_keep": [
+                "cream coat",
+                "pearl earrings"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "sharp, dark business suit",
+              "must_keep": [
+                "dark suit"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "opulent, cold interior of a modern-urban mansion",
+            "Li Wei's quiet presence",
+            "Chen Hao's preoccupation"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "CUSTOM",
+            "environment_notes": [
+              "sprawling, opulent modern-urban mansion",
+              "polished surfaces and grand architecture reflecting the wealth of the Chen clan",
+              "cold, empty atmosphere"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "young woman, quietly resilient, stand-in bride within a powerful modern-urban wealthy clan",
+                "understated yet elegant"
+              ],
+              "wardrobe_notes": [
+                "cream coat",
+                "pearl earrings"
+              ],
+              "must_keep": [
+                "Li Wei’s quiet dignity"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "heir to a powerful modern-urban wealthy clan",
+                "outwardly sophisticated but emotionally guarded and distant"
+              ],
+              "wardrobe_notes": [
+                "sharp business suit"
+              ],
+              "must_keep": [
+                "Chen Hao’s aloof demeanor"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "ornate grandfather clock",
+              "must_keep": [
+                "prominently displayed in the mansion's foyer"
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "stack of business documents",
+              "must_keep": [
+                "on Chen Hao's desk"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "modern-urban setting with melancholy and regretful tone",
+              "reflects the lifestyle of a wealthy-clan",
+              "sad piano BGM"
+            ],
+            "must_avoid": [
+              "overt melodrama",
+              "bright, cheerful colors"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "Li Wei makes a silent decision, recognizing the imminent end of her contract.",
+          "emotional_shift": "From passive resignation to a subtle, nascent resolve."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "LI WEI stands alone in the vast, empty living room of the Chen Estate, her cream coat and pearl earrings a subtle contrast to the opulent, cold decor.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "static",
+              "framing_notes": "Emphasize Li Wei's smallness in the grand space."
+            },
+            "visual_goal": "Establish the setting and Li Wei's solitude and grace within it.",
+            "action_focus": "Li Wei's isolated figure amidst opulence.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "CHEN HAO is seated at a large, polished desk in his study, engrossed in a stack of business documents, his back partially to the door, oblivious to his surroundings.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_002"
+              ],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on his absorbed, detached expression."
+            },
+            "visual_goal": "Show Chen Hao's preoccupation and emotional distance.",
+            "action_focus": "Chen Hao and his work.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "LI WEI watches Chen Hao from the archway, her expression a mix of longing and weary acceptance. She glances at an ornate grandfather clock ticking in the hallway.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "over_the_shoulder",
+              "movement": "static",
+              "framing_notes": "Her gaze toward Chen Hao, then shift to the clock."
+            },
+            "visual_goal": "Highlight Li Wei's silent observation and the passage of time.",
+            "action_focus": "Li Wei's gaze and the clock.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A tight close-up on the clock's hands, then LI WEI's eyes, a faint, almost imperceptible flicker of resolve blooming amidst her usual quiet resignation.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Capture the subtle shift in her expression."
+            },
+            "visual_goal": "Mark the turning point of her decision.",
+            "action_focus": "Li Wei's eyes and the clock hands.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "The Chen Estate",
+          "interior_exterior": "INT",
+          "time_of_day": "DAY"
+        },
+        "summary": "Li Wei confronts Chen Hao in his study, calmly serving him divorce papers and reclaiming her independence before quietly departing the mansion.",
+        "continuity": {
+          "props_present": [
+            "divorce papers",
+            "polished desk"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "simple yet elegant day dress, no jewelry",
+              "must_keep": [
+                "elegant dress"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "dark business suit",
+              "must_keep": [
+                "dark suit"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "the quiet formality of the moment",
+            "Chen Hao's initial confusion, then shock"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "opulent modern-urban study within the Chen Estate",
+              "formal and impeccably maintained"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "young woman, decisive and self-possessed, asserting her independence from the modern-urban wealthy clan",
+                "calm yet firm"
+              ],
+              "wardrobe_notes": [
+                "simple, elegant day dress"
+              ],
+              "must_keep": [
+                "Li Wei’s quiet strength"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "heir to a powerful modern-urban wealthy clan, experiencing shock and dawning realization",
+                "initially dismissive, then stunned"
+              ],
+              "wardrobe_notes": [
+                "dark business suit"
+              ],
+              "must_keep": [
+                "Chen Hao’s disbelief"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_003",
+              "prop_name": "divorce papers",
+              "must_keep": [
+                "crisp, legal documents"
+              ]
+            },
+            {
+              "prop_id": "prop_004",
+              "prop_name": "polished desk",
+              "must_keep": [
+                "Chen Hao's large study desk"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "modern-urban setting with a shift from melancholy to resolute determination",
+              "reflects the power dynamics within a wealthy-clan",
+              "subtle tension"
+            ],
+            "must_avoid": [
+              "aggressive confrontation",
+              "loud arguments"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "Li Wei serves Chen Hao divorce papers and walks away, ending her role as a stand-in bride.",
+          "emotional_shift": "From Li Wei's quiet resolve to Chen Hao's disbelief and dawning shock."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "LI WEI enters Chen Hao's study, holding a neatly folded stack of divorce papers. Her posture is straight, resolute, her face calm.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_003"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "tracking",
+              "framing_notes": "Follows Li Wei's steady approach."
+            },
+            "visual_goal": "Establish Li Wei's newfound resolve and decisiveness.",
+            "action_focus": "Li Wei's entrance and her calm demeanor.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "CHEN HAO looks up, surprised by her presence. His expression shifts from mild annoyance to confusion as he notices the papers in her hand.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Capture the nuanced change in his expression."
+            },
+            "visual_goal": "Show Chen Hao's initial reaction to Li Wei's unexpected action.",
+            "action_focus": "Chen Hao's face.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "LI WEI extends the divorce papers across the polished desk, her hand trembling slightly but her gaze steady, meeting Chen Hao's eyes without flinching.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_003",
+                "prop_004"
+              ],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on the papers, her hand, and the tension between them."
+            },
+            "visual_goal": "Emphasize the gravity of the divorce papers and Li Wei's resolve.",
+            "action_focus": "The exchange of the papers.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_003",
+              "prop_004"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_008",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "LI WEI turns silently and walks out of the study, leaving Chen Hao alone, frozen in disbelief, the divorce papers lying starkly on his desk.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_003"
+              ],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "static",
+              "framing_notes": "Show Li Wei's departure and Chen Hao's isolation in the grand space."
+            },
+            "visual_goal": "Convey Li Wei's definitive break and Chen Hao's stunned abandonment.",
+            "action_focus": "Li Wei's exit and Chen Hao's reaction.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_003",
+        "heading": {
+          "location_id": "loc_002",
+          "location_name": "Metropolis Streets",
+          "interior_exterior": "EXT",
+          "time_of_day": "DAY"
+        },
+        "summary": "Stunned by Li Wei's departure, Chen Hao frantically searches the bustling modern-urban metropolis for the woman he once overlooked, consumed by regret.",
+        "continuity": {
+          "props_present": [
+            "crumpled photo of Li Wei",
+            "smartphone"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_002",
+              "wardrobe": "disheveled dark business suit, loosened tie",
+              "must_keep": [
+                "dark suit",
+                "loosened tie"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "the vastness and anonymity of the modern-urban city",
+            "Chen Hao's desperation and exhaustion"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_002",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "vibrant, bustling modern-urban city streets",
+              "mix of high-rise business districts and anonymous pedestrian areas",
+              "labyrinthine and overwhelming"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "heir to a powerful modern-urban wealthy clan, now a frantic seeker driven by profound loss and regret",
+                "desperate and emotionally awakened"
+              ],
+              "wardrobe_notes": [
+                "disheveled dark business suit"
+              ],
+              "must_keep": [
+                "Chen Hao’s desperation",
+                "his intense focus on finding Li Wei"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_005",
+              "prop_name": "crumpled photo of Li Wei",
+              "must_keep": [
+                "small, slightly worn photograph"
+              ]
+            },
+            {
+              "prop_id": "prop_006",
+              "prop_name": "smartphone",
+              "must_keep": [
+                "modern, high-end smartphone"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "modern-urban setting with an urgent, desperate tone of regret and redemption",
+              "contrasting the cold opulence of the wealthy-clan with the chaotic city",
+              "sad piano BGM, but with a driving urgency"
+            ],
+            "must_avoid": [
+              "peaceful cityscapes",
+              "characters appearing content"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "Chen Hao embarks on a desperate, city-wide search for Li Wei, realizing the depth of what he lost.",
+          "emotional_shift": "From shock and disbelief to profound regret and desperate determination."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_009",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "CHEN HAO strides frantically through a bustling modern-urban street, his suit disheveled, scanning faces in the crowd, a desperate urgency in his movements.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "tracking",
+              "framing_notes": "Follow Chen Hao as he pushes through the crowd."
+            },
+            "visual_goal": "Show Chen Hao's frantic search amidst the anonymity of the city.",
+            "action_focus": "Chen Hao's desperate movement and expression.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "He pulls out his smartphone, making a frustrated call, then hangs up, slamming his hand against a glass high-rise wall, his face etched with regret.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_006"
+              ],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "static",
+              "framing_notes": "Emphasize his frustration against the towering city."
+            },
+            "visual_goal": "Convey Chen Hao's mounting desperation and regret.",
+            "action_focus": "Chen Hao's actions and emotional display.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_006"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_011",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "CHEN HAO leans against a lamppost, exhausted, pulling a crumpled photo of LI WEI from his pocket. He gazes at it, seeing her truly for the first time.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_005"
+              ],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on the photo and his tear-filled eyes."
+            },
+            "visual_goal": "Symbolize Chen Hao's profound realization of loss and his awakening.",
+            "action_focus": "Chen Hao's face and the photo.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_005"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_012",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "With renewed determination, CHEN HAO pushes off the lamppost, resuming his search through the endless modern-urban streets, now driven by love, not obligation.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "crane",
+              "framing_notes": "Lift to show him as a small figure in the vast, indifferent city."
+            },
+            "visual_goal": "End the scene with Chen Hao's transformed motivation and the scale of his task.",
+            "action_focus": "Chen Hao's renewed drive.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count_total": 12,
+    "avg_shots_per_scene": 4.0,
+    "dialogue_block_count": 0,
+    "action_block_count": 12
+  }
+}

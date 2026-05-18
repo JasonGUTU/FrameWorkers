@@ -1,0 +1,27 @@
+{
+  "http_status": 200,
+  "response_body": {
+    "id": "exec_1_d9451b91",
+    "agent_id": "DummyAgent",
+    "step_id": "step_1_c9ce298f",
+    "status": "COMPLETED",
+    "inputs": {
+      "step_id": "step_1_c9ce298f",
+      "resolved_artifacts": {},
+      "resolved_input_paths": []
+    },
+    "results": {
+      "summary": "integration ok",
+      "_asset_index": {
+        "agent_id": "DummyAgent",
+        "json_uri": "/tmp/pytest-of-zhendong_li/pytest-389/test_assistant_e2e_http_flow_c0/Runtime/workspace_global_20260512_174725/artifacts/DummyAgent/step_1_c9ce298f_dummyagent_exec_1.json",
+        "execution_id": "exec_1_d9451b91"
+      }
+    },
+    "error": null,
+    "started_at": "2026-05-12T17:47:25.035124",
+    "completed_at": "2026-05-12T17:47:25.037995",
+    "created_at": "2026-05-12T17:47:25.035118",
+    "resolved_input_paths": []
+  }
+}

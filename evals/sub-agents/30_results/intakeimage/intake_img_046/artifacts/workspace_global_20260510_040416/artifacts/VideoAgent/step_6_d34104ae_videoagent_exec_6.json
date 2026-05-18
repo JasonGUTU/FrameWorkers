@@ -1,0 +1,380 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_context": {
+          "location_id": "loc_002",
+          "time_of_day": "NIGHT",
+          "environment_notes": [
+            "Luxurious but secure suite of rooms within the Grand Imperial Palace.",
+            "Rich silks, intricate carvings, soft lamplight.",
+            "Classical Chinese imperial residence."
+          ],
+          "style_notes": [
+            "Palace-intrigue, historical drama, revenge drama.",
+            "Rise-from-the-ashes, disgraced, revenge, treacherous, loyalty, dramatic.",
+            "Classical Chinese imperial setting."
+          ],
+          "must_avoid": [
+            "Modern elements or anachronisms."
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Convey the setting as both luxurious and a place of hidden power.",
+              "action_focus": "The ornate decor and subdued lighting.",
+              "characters_in_frame": [],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Establish the opulence and secretive atmosphere of the chamber.",
+              "video_motion_hints": [
+                "The camera remains static, allowing the viewer to absorb the luxurious details of the chamber and its atmosphere."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_002",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Show Empress Lian’s fierce determination and cold calculation.",
+              "action_focus": "Empress Lian's unwavering gaze as she speaks.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on Empress Lian's face, hardened by resolve and past suffering.",
+              "video_motion_hints": [
+                "Empress Lian's head makes a subtle, firm movement as she delivers her line, conveying tense resolve."
+              ],
+              "dialogue_text": "The Emperor’s favor is fleeting. Our path requires… absolute ruthlessness.",
+              "emotion_hint": "tense",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_003",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Highlight Xiao Li's steadfast devotion and readiness to act.",
+              "action_focus": "Xiao Li's respectful yet firm expression.",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "static",
+              "framing_notes": "From a slightly low angle, emphasizing Xiao Li's subservience yet unwavering loyalty. He bows slightly.",
+              "video_motion_hints": [
+                "Xiao Li performs a slight, respectful bow, his body language conveying his unwavering support and deference."
+              ],
+              "dialogue_text": "Your Majesty, I shall ensure your will is done. No matter the cost.",
+              "emotion_hint": "resolute",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_004",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Show the forging of a dangerous alliance and their mutual understanding.",
+              "action_focus": "The silent interaction between Empress Lian and Xiao Li.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Frame both Empress Lian and Xiao Li, emphasizing their shared, conspiratorial energy.",
+              "video_motion_hints": [
+                "Subtle shifts in expression pass between Empress Lian and Xiao Li as they lock eyes, reflecting their shared understanding."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_003",
+            "to_shot_id": "sh_004",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "Opulent and vast seat of power, filled with intricate architecture.",
+            "Ornate gardens visible through large windows, bustling court.",
+            "Constant surveillance, political maneuvering, hidden dangers.",
+            "Classical Chinese imperial setting."
+          ],
+          "style_notes": [
+            "Palace-intrigue, historical drama, revenge drama.",
+            "Rise-from-the-ashes, disgraced, revenge, treacherous, loyalty, dramatic.",
+            "Classical Chinese imperial setting."
+          ],
+          "must_avoid": [
+            "Casual or modern interactions."
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_005",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Convey the formality and subtle political currents of the court.",
+              "action_focus": "The assembled courtiers and Empress Lian's subtle isolation.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "high_angle",
+              "camera_movement": "dolly_zoom",
+              "framing_notes": "Pan across the assembled court, then zoom slightly towards Empress Lian to highlight her prominence.",
+              "video_motion_hints": [
+                "The camera slowly dollies in towards Empress Lian, then subtly pans across the assembled courtiers to emphasize her central position."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_006",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Establish the direct challenge and the courtier's arrogance.",
+              "action_focus": "The courtier's condescending demeanor.",
+              "characters_in_frame": [],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on the courtier's smug expression.",
+              "video_motion_hints": [
+                "The courtier's lips curl slightly in a condescending manner as he speaks, betraying his hidden agenda."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "sarcastic",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_007",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Show Empress Lian's composure and wit in the face of adversity.",
+              "action_focus": "Empress Lian's subtle expression and poised gesture.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Empress Lian, composed and regal, delivers her sharp retort with a subtle, knowing smile.",
+              "video_motion_hints": [
+                "Empress Lian's head tilts slightly, a subtle smile forming on her lips as she speaks, conveying her quiet confidence."
+              ],
+              "dialogue_text": "Perhaps some remember only what serves their present ambition, Lord Wei.",
+              "emotion_hint": "calm",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_008",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Convey the immediate impact of Empress Lian's counter-move.",
+              "action_focus": "Lord Wei's discomfort and the court's reactions.",
+              "characters_in_frame": [],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Cut between Lord Wei's reaction and the murmurs of the court.",
+              "video_motion_hints": [
+                "The camera quickly cuts between Lord Wei's shocked, angry face and the murmuring, reacting courtiers."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_005",
+            "to_shot_id": "sh_006",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_006",
+            "to_shot_id": "sh_007",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_007",
+            "to_shot_id": "sh_008",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "Opulent and vast ceremonial hall within the Grand Imperial Palace.",
+            "Intricate architecture, grand decorations for a public event.",
+            "Atmosphere of tension and anticipation.",
+            "Classical Chinese imperial setting."
+          ],
+          "style_notes": [
+            "Palace-intrigue, historical drama, revenge drama.",
+            "Rise-from-the-ashes, disgraced, revenge, treacherous, loyalty, dramatic.",
+            "Classical Chinese imperial setting.",
+            "Grand and ceremonial tone."
+          ],
+          "must_avoid": [
+            "Anything that diminishes the Empress's authority or grandeur."
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_009",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Convey Empress Lian's powerful return and the court's anticipation.",
+              "action_focus": "Empress Lian's confident entrance and the court's collective gaze.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "tracking",
+              "framing_notes": "Track Empress Lian as she moves, emphasizing the attention she commands.",
+              "video_motion_hints": [
+                "The camera tracks Empress Lian's confident movement as she walks towards the dais, emphasizing the attention she commands from the court."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_010",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Visually represent Empress Lian's decisive act of re-claiming authority.",
+              "action_focus": "The Imperial Seal and Empress Lian's hand.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "high_angle",
+              "camera_movement": "static",
+              "framing_notes": "Focus on the Imperial Seal as it is placed, highlighting its significance.",
+              "video_motion_hints": [
+                "Empress Lian's hand makes a precise, deliberate motion as she places the Imperial Seal, emphasizing its weight and significance."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_011",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Demonstrate that Empress Lian's power is now publicly acknowledged.",
+              "action_focus": "The official's respectful bow.",
+              "characters_in_frame": [],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Show the official's full bow, conveying its significance.",
+              "video_motion_hints": [
+                "The official performs a slow, deliberate bow, conveying profound reverence and acceptance of her authority."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_012",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Show Xiao Li's personal fulfillment in Empress Lian's triumph.",
+              "action_focus": "Xiao Li's subtle, proud expression.",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on Xiao Li's face, conveying his quiet satisfaction.",
+              "video_motion_hints": [
+                "Xiao Li's lips subtly curve into a gentle, proud smile, reflecting his inner contentment."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_009",
+            "to_shot_id": "sh_010",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_010",
+            "to_shot_id": "sh_011",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_011",
+            "to_shot_id": "sh_012",
+            "transition_type": "cut"
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_segment_count": 12
+  }
+}

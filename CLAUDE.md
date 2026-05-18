@@ -21,7 +21,7 @@
 
 > **唯一 Director：`director_agent/`**。一条 user message → Upfront planner 产出完整 pipeline 计划 → 一次 `POST /api/plan-stack/modify` 批量写入 Plan Stack → 按 execution pointer 顺序跑每个 PlanStep。
 >
-> **失败走 replan，不是静态 DAG**：PlanStep 返回 FAILED 时，director 调 `planner.replan_on_failure(...)` → `ReplanDecision`，三条路径：**retry**（同 step 重置为 PENDING + pointer 回滚再跑）/ **replan**（`remove_steps_from_layers` 删光 PENDING tail + 追加新 layer 承载新 tail，pointer 自然走到新 layer）/ **skip**（不动 stack，pointer 前进跳过失败 step）。预算由 `MAX_REPLAN_ROUNDS` 限制，耗尽后按当前 stack 跑完。Plan Stack 的数据单元就是 `PlanStep` = 一次计划中的 agent execution；`AgentExecution.step_id` 外键回指。
+> **失败走 replan-or-halt，不是静态 DAG**：PlanStep 返回 FAILED 时，director 调 `planner.replan_on_failure(...)` → `ReplanDecision`。replanner 内部 3 次 LLM retry 吸收抖动（network / malformed JSON / empty sample，对齐 `aplan_pipeline_upfront`），最终两条路径：**replan**（`remove_steps_from_layers` 删光 PENDING tail + 追加新 layer 承载新 tail，pointer 自然走到新 layer 第 0 步）/ **halt**（replanner 给不出 actionable tail 或 `MAX_REPLAN_ROUNDS` 耗尽 → director 发 "Pipeline halted: …" 消息后 `return`，executor 不再静默推进 pointer，等用户下一条消息触发新 plan）。**没有 "retry" 路径**（PlanStep 不会从 FAILED 重置为 PENDING + pointer 回滚），**也没有 "skip" 路径**（不会静默跳过失败 step 继续跑残余 pending tail）—— 这两种行为在旧文档里出现过，已与代码同步删除。已 COMMIT 的 step（COMPLETED / CANCELLED / FAILED）永不被改写，committed history append-only。Plan Stack 的数据单元就是 `PlanStep` = 一次计划中的 agent execution；`AgentExecution.step_id` 外键回指。
 
 ## 顶层目录
 
@@ -121,7 +121,11 @@ InputResolver 通过 caption index 召回。
 ## 模型约束（强约束）
 
 - **图片生成禁止用 flux**。当前直连 Google `gemini-3.1-flash-image-preview`（nano-banana 升级线，identity 保持 + 细节比 `gemini-2.5-flash-image` 更好；单帧延迟 ~25 s vs 7 s，N-shot 走 `asyncio.gather` 并行抵销），通过 CF AI Gateway 的 native-Gemini Worker（`GEMINI_API_KEY` + `GEMINI_BASE_URL`，与聊天 LLM 同一条入口），实现见 `image_generators/service.py::GeminiImageService`，由 `select_image_service()` 在 `FW_USE_REAL_MEDIA_GEN=1` 时选中。Model id 来自 `INFERENCE_IMAGE_MODEL`（保留对旧 `google/` 前缀的容忍）；切回 `gemini-2.5-flash-image` 只改 env 不改代码。`FalImageService` 类还在但 select 不再走它；不再读 `FAL_IMAGE_MODEL`，OpenRouter 旧路径同样未启用。
-- **视频生成统一用可灵（Kling）**。`FAL_VIDEO_MODEL=fal-ai/kling-video/v2.6/pro/image-to-video`（image-to-video，需 KeyFrameAgent 先出图）。`video_generators/service.py` 还有 `WavespeedVideoService` 备用通路（`FW_VIDEO_BACKEND=wavespeed`），默认不走。
+- **视频生成默认走 fal/Kling v3 Pro**，Hunyuan / Wavespeed 备用。由 `FW_VIDEO_BACKEND` env 切换：
+  - `FW_VIDEO_BACKEND=fal`（**代码默认，env 不显式设时就是这条**）→ `FalVideoService`，model 从 `.env::FAL_VIDEO_MODEL` 读（当前 `fal-ai/kling-video/v3/pro/image-to-video`，支持 3/5/10/15 秒 clip）。
+  - `FW_VIDEO_BACKEND=hunyuan` → `HunyuanVideoService`，POST 到 `http://<node>:<port>/i2v`，端点 URL 来自 `HUNYUAN_VIDEO_ENDPOINT_URL`。仅 eval baseline 脚本（`evals/sub-agents/run_hunyuan_baseline_naive*.py` / `run_e2e_30_hunyuan.py`）显式设这个值；production 不走这条。Hunyuan server 起 / 停 / 调用方法见 `HUNYUAN_HOW_TO_CALL.md`。注意 Hunyuan I2V 训练分布 cap 在 ≈5s（129 frames @ 24fps），10s/15s 不支持——只对它做对比时才会触到这个限制。
+  - `FW_VIDEO_BACKEND=wavespeed` → `WavespeedVideoService` 备用通路。
+  实现见 `inference/generation/video_generators/service.py`，由 `select_video_service()` 在 `FW_USE_REAL_MEDIA_GEN=1` 时根据 `FW_VIDEO_BACKEND` 选中对应 backend。Kling 允许 duration 取值 = `{3,5,10,15}`（v3 enum），`FalVideoService._kling_duration_enum` 按 model slug `/v3/` 还是 `/v2.6/` 在内部 snap 到对应集合。
 - API 表和前端页面里关于模型的描述必须跟 `.env` + 代码实际使用的一致，不要写错。
 
 ## 给 AI 的工作提示

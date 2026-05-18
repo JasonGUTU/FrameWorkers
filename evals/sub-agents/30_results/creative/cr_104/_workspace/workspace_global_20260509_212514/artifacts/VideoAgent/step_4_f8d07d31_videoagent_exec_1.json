@@ -1,0 +1,382 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "TWILIGHT",
+          "environment_notes": [
+            "Desolate Path to Mount Kunlun, a treacherous, windswept mountain trail, rocky and overgrown, leading to sacred peaks.",
+            "Air is thin and cold, reflecting the mystical power and ancient solitude of the wuxia / xianxia realm.",
+            "Sparse, gnarled pines cling to sheer cliffs, jagged peaks loom in the distance.",
+            "Howling mountain wind echoes.",
+            "Ancient China, wuxia / xianxia setting."
+          ],
+          "style_notes": [
+            "Dark, Somber, Determined, Vengeful, Mystical, Tragic Wuxia and Xianxia aesthetic.",
+            "Set in ancient China, evoking a sense of epic scope and personal sacrifice."
+          ],
+          "must_avoid": [
+            "Lightheartedness or comic relief.",
+            "Modern anachronisms."
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "semantic_context": {
+              "shot_type": "extreme_close_up",
+              "visual_goal": "Convey Jian Li's physical exhaustion and the treacherous nature of his journey.",
+              "action_focus": "Jian Li's heavy steps on the rocky path.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low",
+              "camera_movement": "tracking",
+              "framing_notes": "Focus on the struggle of the feet, emphasizing the harsh terrain.",
+              "video_motion_hints": [
+                "Subtle tracking motion follows the heavy, struggling steps of the boots. Small stones dislodge and roll down the incline."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_002",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Illustrate the immense scale of the journey and Jian Li's solitude and vulnerability.",
+              "action_focus": "Jian Li's struggle against the elements.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "high",
+              "camera_movement": "crane",
+              "framing_notes": "Emphasize Jian Li's isolation against the vast, desolate landscape and towering peaks.",
+              "video_motion_hints": [
+                "A slow crane shot reveals Jian Li struggling against the strong wind. His robes and hair subtly move as he pushes forward through the scene."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_003",
+            "semantic_context": {
+              "shot_type": "over_the_shoulder",
+              "visual_goal": "Reveal the nature of his tragic burden and his unwavering resolve.",
+              "action_focus": "The wrapped head on Jian Li's back, then his determined gaze.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Show the burden he carries and his fixed gaze on the destination.",
+              "video_motion_hints": [
+                "Jian Li's chest heaves with heavy breaths. His shoulders slightly shift as he turns his head to gaze into the distance."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_004",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Emphasize Jian Li's grim determination and the psychological toll of his journey.",
+              "action_focus": "Jian Li's face and determined stride.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on his expression, highlighting his inner strength despite physical hardship.",
+              "video_motion_hints": [
+                "Jian Li's eyes subtly narrow with fierce determination. His facial muscles tense slightly as he begins a slow, deliberate step."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_003",
+            "to_shot_id": "sh_004",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_context": {
+          "location_id": "loc_002",
+          "time_of_day": "NIGHT",
+          "environment_notes": [
+            "Mount Kunlun Shrine, a dilapidated, ancient shrine nestled near the summit, half-overgrown and forgotten.",
+            "Exudes a potent, ominous aura. Weathered stone altars stand amidst crumbling walls, hinting at rituals long past.",
+            "Sky above is vast and foreboding, especially under the glow of a rising blood moon, with distant thunder rolling across the peaks.",
+            "Cold, howling wind is relentless.",
+            "Wuxia / Xianxia realm, ancient China."
+          ],
+          "style_notes": [
+            "Dark, Somber, Determined, Vengeful, Mystical, Tragic Wuxia and Xianxia aesthetic.",
+            "Set in ancient China, emphasizing the ominous and forbidden."
+          ],
+          "must_avoid": [
+            "Scenes of comfort or safety.",
+            "Bright, cheerful lighting."
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_005",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Establish the ominous setting and Jian Li's arrival at his destination.",
+              "action_focus": "Jian Li's weary but determined approach to the shrine.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low",
+              "camera_movement": "dolly",
+              "framing_notes": "Show the shrine's desolation and Jian Li's approach under the vast night sky.",
+              "video_motion_hints": [
+                "A smooth dolly shot follows Jian Li as he walks slowly towards the shrine. His form moves deliberately through the desolate landscape."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_006",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Show Jian Li's recognition of the fated place and his internal struggle.",
+              "action_focus": "Jian Li's gaze sweeping the shrine and settling on the altar.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Capture Jian Li's reaction as he takes in the ritual site.",
+              "video_motion_hints": [
+                "Jian Li's head slowly turns as his eyes scan the shrine. His gaze then fixes on the altar with a subtle nod of recognition."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_007",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Confirm the altar as the ritual site and amplify the foreboding atmosphere.",
+              "action_focus": "The glowing symbols on the altar and the encroaching blood moon.",
+              "characters_in_frame": [],
+              "camera_angle": "low",
+              "camera_movement": "static",
+              "framing_notes": "Highlight the mystical and ominous nature of the altar and the rising blood moon.",
+              "video_motion_hints": [
+                "The faint glow of the runes on the altar subtly pulses. The distant horizon darks slightly with the hint of thunderclouds."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_005",
+            "to_shot_id": "sh_006",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_006",
+            "to_shot_id": "sh_007",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "scene_context": {
+          "location_id": "loc_002",
+          "time_of_day": "NIGHT",
+          "environment_notes": [
+            "Mount Kunlun Shrine, dilapidated and ancient, now bathed in the crimson light of the blood moon.",
+            "Weathered stone altars and crumbling walls are illuminated, emphasizing forbidden rituals.",
+            "Vast, foreboding sky, distant thunder, cold, howling wind.",
+            "The mystical and dangerous atmosphere of the wuxia / xianxia realm, ancient China."
+          ],
+          "style_notes": [
+            "Dark, Somber, Determined, Vengeful, Mystical, Tragic Wuxia and Xianxia aesthetic.",
+            "Set in ancient China, emphasizing forbidden magic, spiritual sacrifice, and ultimate transformation."
+          ],
+          "must_avoid": [
+            "Anything that diminishes the gravity or danger of the ritual."
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_008",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Convey the profound respect and grief Jian Li holds for his master, even in this dark act.",
+              "action_focus": "Jian Li's hands placing the master's head.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on the solemnity and care in placing the head, showing the emotional weight.",
+              "video_motion_hints": [
+                "Jian Li's fingers tremble visibly as he performs the delicate action. His hands move with tender care as the head is settled onto the altar."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_009",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Establish the ritual's preparations and the foreboding atmosphere.",
+              "action_focus": "Jian Li arranging the offerings and the presence of the blood moon.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "high",
+              "camera_movement": "static",
+              "framing_notes": "Show the full setup of the ritual, with the ominous blood moon as a backdrop.",
+              "video_motion_hints": [
+                "Jian Li moves methodically around the altar, placing offerings with deliberate motions. His shadow stretches and distorts due to the high blood moon."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_010",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Portray the irreversible act of blood offering, a crucial step in the forbidden rite.",
+              "action_focus": "Jian Li cutting his palm and the emerging blood.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Emphasize the act of self-sacrifice and the physical pain, showing his commitment.",
+              "video_motion_hints": [
+                "Jian Li's hand firmly grips the blade, then moves swiftly to cut his palm. Blood visibly wells up and begins to drip."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "determined",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_011",
+            "semantic_context": {
+              "shot_type": "extreme_close_up",
+              "visual_goal": "Demonstrate the immediate, visible effect of the blood offering and the stirring of dark magic.",
+              "action_focus": "The blood mixing with offerings and the glowing altar symbols.",
+              "characters_in_frame": [],
+              "camera_angle": "low",
+              "camera_movement": "static",
+              "framing_notes": "Highlight the mystical merging of blood and offerings, showing the ritual's activation.",
+              "video_motion_hints": [
+                "Blood drips slowly, visibly spreading and merging with the offerings. The runes beneath subtly pulse with a dim red light."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_012",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Show the overwhelming power unleashed by the ritual and Jian Li's physical/spiritual change.",
+              "action_focus": "The entire shrine bathed in crimson light and swirling dark energy around Jian Li.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "high",
+              "camera_movement": "crane",
+              "framing_notes": "Capture the full spectacle of the activated ritual and Jian Li's transformation.",
+              "video_motion_hints": [
+                "The crimson light pulses visibly, and dark energy swirls and rises around Jian Li. Subtle movements indicate the overwhelming magical force."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "intense",
+              "language": "zh"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_008",
+            "to_shot_id": "sh_009",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_009",
+            "to_shot_id": "sh_010",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_010",
+            "to_shot_id": "sh_011",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_011",
+            "to_shot_id": "sh_012",
+            "transition_type": "cut"
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_segment_count": 12
+  }
+}

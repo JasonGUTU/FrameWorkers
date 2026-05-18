@@ -1,0 +1,328 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "CUSTOM",
+          "environment_notes": [
+            "A dim, secluded chamber, possibly a humble dwelling or forgotten temple, in a traditional Chinese fantasy setting. Air is heavy with ancient energies."
+          ],
+          "style_notes": [
+            "Epic fantasy",
+            "Chinese fantasy",
+            "dim lighting",
+            "traditional setting",
+            "resurrection",
+            "revenge theme."
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Convey Xueyin's disorientation and the initial stirrings of her power.",
+              "action_focus": "Xueyin's awakening and confusion.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on Xueyin's face and forehead symbol.",
+              "video_motion_hints": [
+                "Xueyin's eyelids slowly flutter open, her eyes darting slightly. The forehead symbol subtly pulses."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "neutral",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_002",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Illustrate the fragmented, painful memories flooding Xueyin's mind.",
+              "action_focus": "Xueyin's struggle with her memories.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "high_angle",
+              "camera_movement": "static",
+              "framing_notes": "Show Xueyin's pain and vulnerability in the dim chamber.",
+              "video_motion_hints": [
+                "Xueyin's hands move to her head, her body tensing and recoiling slightly. Quick, disjointed flashes appear across her vision."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_003",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Show the full realization of betrayal and the birth of Xueyin's vengeance.",
+              "action_focus": "Xueyin's expression of newly ignited rage.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Emphasize Xueyin's shift from pain to clear, focused rage.",
+              "video_motion_hints": [
+                "Xueyin's eyes widen abruptly, her facial muscles tightening into a furious expression. A subtle tremor runs through her body as clarity dawns."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "angry",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "CUSTOM",
+          "environment_notes": [
+            "A dim, secluded chamber, possibly a humble dwelling or forgotten temple, in a traditional Chinese fantasy setting. Air is heavy with ancient energies, now crackling with nascent power."
+          ],
+          "style_notes": [
+            "Epic fantasy",
+            "Chinese fantasy",
+            "dim lighting",
+            "traditional setting",
+            "resurrection",
+            "vengeance, growing power."
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_004",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Convey Xueyin's internal conflict and the stirring of her power.",
+              "action_focus": "Xueyin's pacing and subtle energy manifestation.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Show Xueyin small within the oppressive, ancient space.",
+              "video_motion_hints": [
+                "Xueyin slowly paces the chamber, her clenched fist subtly twitching. Faint red energy occasionally flares around her hand."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_005",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Show the intense, visual manifestation of Xueyin's full demonic awakening.",
+              "action_focus": "The flaring forehead symbol and the radiating demonic aura.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "zoom_in",
+              "framing_notes": "Emphasize the power emanating from Xueyin.",
+              "video_motion_hints": [
+                "Xueyin's head arches back dramatically. The forehead symbol rapidly brightens and pulses. A dark, ethereal aura slowly expands outward from her body."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "excited",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_006",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Capture Xueyin's solemn, unwavering vow of vengeance.",
+              "action_focus": "Xueyin's resolute expression as she speaks.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on Xueyin's face, cold and determined.",
+              "video_motion_hints": [
+                "Xueyin's lips move in a slow, deliberate speech. Her eyes hold a steady, unblinking intensity."
+              ],
+              "dialogue_text": "They will pay. Every celestial, every traitor.",
+              "emotion_hint": "angry",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_004",
+            "to_shot_id": "sh_005",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_005",
+            "to_shot_id": "sh_006",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "CUSTOM",
+          "environment_notes": [
+            "A dim, secluded chamber, possibly a humble dwelling or forgotten temple, in a traditional Chinese fantasy setting. The air hums with potent, newly unleashed demonic energy."
+          ],
+          "style_notes": [
+            "Epic fantasy",
+            "Chinese fantasy",
+            "dim lighting",
+            "traditional setting",
+            "revenge",
+            "powerful magic",
+            "ominous tone."
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_007",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Establish Xueyin's control over her newfound power and her intent.",
+              "action_focus": "Xueyin's focused stance and outstretched hand.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Show Xueyin's controlled power and concentration.",
+              "video_motion_hints": [
+                "Xueyin slowly extends her hand towards the altar. Subtle energy ripples around her, emanating from within."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "calm",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_008",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Show the deliberate manipulation of a celestial artifact with demonic power.",
+              "action_focus": "Xueyin's hand corrupting the Celestial Jade.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "static",
+              "framing_notes": "Emphasize the interaction between Xueyin's power and the artifact.",
+              "video_motion_hints": [
+                "Wispy, dark energy slowly curls and snakes from Xueyin's fingertips, reaching for the jade. The jade's glow flickers as the dark energy encompasses it."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_009",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Illustrate the successful casting of a dark omen.",
+              "action_focus": "The dark smoke leaving the jade and Xueyin's reaction.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "pan_up",
+              "framing_notes": "Follow the dark smoke as it disappears upwards.",
+              "video_motion_hints": [
+                "The jade pulses once with a dark light, then a tendril of smoke slowly rises. The camera pans upwards, following the smoke until it disappears."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "calm",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_010",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Conclude the scene with Xueyin's powerful, triumphant, and ominous return.",
+              "action_focus": "Xueyin's commanding presence and dark smile.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "zoom_out",
+              "framing_notes": "Emphasize Xueyin's newly established authority and menace.",
+              "video_motion_hints": [
+                "A subtle, cruel smile slowly forms on Xueyin's lips. Her forehead symbol emits a steady, powerful glow."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "calm",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_007",
+            "to_shot_id": "sh_008",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_008",
+            "to_shot_id": "sh_009",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_009",
+            "to_shot_id": "sh_010",
+            "transition_type": "cut"
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_segment_count": 10
+  }
+}

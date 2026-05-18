@@ -1,0 +1,38 @@
+{
+  "http_status": 200,
+  "response_body": {
+    "id": "exec_1_e9858b1f",
+    "agent_id": "VideoAgent",
+    "step_id": "step_1_41ba053e",
+    "status": "FAILED",
+    "inputs": {
+      "step_id": "step_1_41ba053e",
+      "resolved_artifacts": {},
+      "resolved_input_paths": []
+    },
+    "results": {
+      "_execution_debug": {
+        "attempts": 1,
+        "overall_pass": false,
+        "eval_summary": "upstream input rejected: The screenplay is empty, and keyframes_metadata has no keyframes for any screenplay shot — nothing to feed the video generator.",
+        "kind": "upstream_input_rejected",
+        "input_rejection": {
+          "reason": "The screenplay is empty, and keyframes_metadata has no keyframes for any screenplay shot — nothing to feed the video generator.",
+          "missing_labels": [
+            "screenplay",
+            "keyframes_metadata"
+          ],
+          "offending_fields": [
+            "content.scenes[].shots",
+            "content.scenes[].shots[].keyframes"
+          ]
+        }
+      }
+    },
+    "error": "[upstream_input_rejected] reason=The screenplay is empty, and keyframes_metadata has no keyframes for any screenplay shot — nothing to feed the video generator.; missing=[screenplay,keyframes_metadata]",
+    "started_at": "2026-05-13T01:01:46.134658",
+    "completed_at": "2026-05-13T01:01:49.210854",
+    "created_at": "2026-05-13T01:01:46.134643",
+    "resolved_input_paths": []
+  }
+}

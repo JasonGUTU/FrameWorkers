@@ -1,0 +1,83 @@
+[
+  {
+    "idx": 1,
+    "shot_id": "sh_001",
+    "prompt": "A grizzled former special-ops captain leads a small, weary squad through a damp, flickering underground tunnel. He holds a rifle, scanning the darkness ahead. A female doctor follows closely, clutchin",
+    "status": "OK",
+    "keyframe_bytes": 1995158,
+    "mp4_bytes": 1527201,
+    "elapsed_sec": 1432.202470779419
+  },
+  {
+    "idx": 2,
+    "shot_id": "sh_002",
+    "prompt": "The captain rounds a corner, his rifle raising as two shambling zombies emerge from the gloom. He swiftly dispatches them with precise shots, the doctor looking on with a steely gaze. Debris litters t",
+    "status": "OK",
+    "keyframe_bytes": 2123269,
+    "mp4_bytes": 1445517,
+    "elapsed_sec": 1436.8410227298737
+  },
+  {
+    "idx": 3,
+    "shot_id": "sh_003",
+    "prompt": "The squad cautiously navigates a collapsed section of the tunnel, broken pipes dangling. Distant, mournful air-raid sirens echo, while unseen wind howls through gaps, creating an eerie, tense atmosphe",
+    "status": "OK",
+    "keyframe_bytes": 2061660,
+    "mp4_bytes": 1454011,
+    "elapsed_sec": 1433.4271128177643
+  },
+  {
+    "idx": 4,
+    "shot_id": "sh_004",
+    "prompt": "Close-up on the doctor's intense face as she studies a grimy map under a tactical flashlight beam, pointing to a cryptic symbol. Her brow is furrowed with concentration, determined to find the vaccine",
+    "status": "OK",
+    "keyframe_bytes": 1854258,
+    "mp4_bytes": 991126,
+    "elapsed_sec": 1450.6966779232025
+  },
+  {
+    "idx": 5,
+    "shot_id": "sh_005",
+    "prompt": "Suddenly, a large horde of distorted zombies lurches into view down a long, ruined corridor. Their guttural shrieks reverberate. The captain signals for the squad to take cover, preparing for a confro",
+    "status": "OK",
+    "keyframe_bytes": 1998813,
+    "mp4_bytes": 1396995,
+    "elapsed_sec": 1445.6586816310883
+  },
+  {
+    "idx": 6,
+    "shot_id": "sh_006",
+    "prompt": "The captain expertly covers the squad's retreat, laying down suppressive fire. He moves with practiced agility, dodging debris and zombie lunges, ensuring his team can pass through a narrow bottleneck",
+    "status": "OK",
+    "keyframe_bytes": 1922302,
+    "mp4_bytes": 1707507,
+    "elapsed_sec": 1440.4224195480347
+  },
+  {
+    "idx": 7,
+    "shot_id": "sh_007",
+    "prompt": "The squad discovers a heavily reinforced metal door, scarred with claw marks and labeled \"BIOHAZARD - LEVEL 5.\" Hope flickers in their tired eyes as the captain pries it open, revealing a dark, ominou",
+    "status": "OK",
+    "keyframe_bytes": 1892655,
+    "mp4_bytes": 1691191,
+    "elapsed_sec": 1439.2086091041565
+  },
+  {
+    "idx": 8,
+    "shot_id": "sh_008",
+    "prompt": "Inside the derelict vaccine lab, flickering emergency lights reveal overturned equipment and smashed vials. The doctor rushes to a data terminal, desperately trying to access information amidst the de",
+    "status": "OK",
+    "keyframe_bytes": 1791792,
+    "mp4_bytes": 849389,
+    "elapsed_sec": 1430.969143629074
+  },
+  {
+    "idx": 9,
+    "shot_id": "sh_009",
+    "prompt": "The doctor holds up a glowing, intact vaccine vial triumphantly, her face alight with relief and exhaustion. The captain stands guard, his expression a mix of caution and cautious optimism, as they co",
+    "status": "OK",
+    "keyframe_bytes": 1752963,
+    "mp4_bytes": 698895,
+    "elapsed_sec": 1431.070229291916
+  }
+]

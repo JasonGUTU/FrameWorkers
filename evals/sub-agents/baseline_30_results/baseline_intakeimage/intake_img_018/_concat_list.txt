@@ -1,0 +1,8 @@
+file '/home/zhendong_li/FrameWorkers/evals/sub-agents/baseline_30_results/baseline_intakeimage/intake_img_018/shot_001_sh_001.mp4'
+file '/home/zhendong_li/FrameWorkers/evals/sub-agents/baseline_30_results/baseline_intakeimage/intake_img_018/shot_002_sh_002.mp4'
+file '/home/zhendong_li/FrameWorkers/evals/sub-agents/baseline_30_results/baseline_intakeimage/intake_img_018/shot_003_sh_003.mp4'
+file '/home/zhendong_li/FrameWorkers/evals/sub-agents/baseline_30_results/baseline_intakeimage/intake_img_018/shot_004_sh_004.mp4'
+file '/home/zhendong_li/FrameWorkers/evals/sub-agents/baseline_30_results/baseline_intakeimage/intake_img_018/shot_005_sh_005.mp4'
+file '/home/zhendong_li/FrameWorkers/evals/sub-agents/baseline_30_results/baseline_intakeimage/intake_img_018/shot_006_sh_006.mp4'
+file '/home/zhendong_li/FrameWorkers/evals/sub-agents/baseline_30_results/baseline_intakeimage/intake_img_018/shot_007_sh_007.mp4'
+file '/home/zhendong_li/FrameWorkers/evals/sub-agents/baseline_30_results/baseline_intakeimage/intake_img_018/shot_008_sh_008.mp4'

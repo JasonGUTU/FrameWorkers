@@ -92,13 +92,16 @@ class ScreenplayEvaluator(BaseEvaluator[ScreenplayAgentOutput]):
 
         # Hard cap to back the SHOT BUDGET section in the system prompt — when
         # the LLM ignores the soft guidance, the rework loop forces it to
-        # consolidate into denser shots.
+        # consolidate into denser shots. Each shot can carry 3 / 5 / 10 / 15
+        # seconds downstream (Kling v3 i2v enum), so a 15-shot ceiling lets
+        # the worst case land around 225s ≈ 3:45 of total runtime.
         shot_total = sum(len(s.shots) for s in c.scenes)
-        if shot_total > 12:
+        if shot_total > 15:
             errors.append(
-                f"shot_count_total={shot_total} exceeds budget of 12 — "
-                "consolidate into denser shots (each shot represents ~5s; "
-                "merge cutaways and split-beats into single coherent shots)"
+                f"shot_count_total={shot_total} exceeds budget of 15 — "
+                "consolidate into denser shots (each shot can carry up to 15s "
+                "downstream; merge cutaways and split-beats into single "
+                "coherent shots with longer planned duration)"
             )
 
         self._check_order_continuous(errors, "scene", [s.order for s in c.scenes])

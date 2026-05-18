@@ -1,0 +1,1808 @@
+{
+  "input": {
+    "agent_id": "VideoAgent",
+    "step_id": "step_1_95d7d1dc",
+    "input_needs_description": "I generate per-shot moving video clips by feeding a planned starting frame and a motion description into an image-to-video model, then assemble the clips into a final video.\n\nFor each [label] below, find every artifact in the registry whose caption describes the same kind of thing. Use the natural-language caption only — do not match by filename or by any tag. Pay attention to the difference between visual identity references (which depict an entity in isolation) and actual planned frames of shots (which depict a specific moment of the story). I want the latter, never the former.\n\n[screenplay] (single)\nThe unified screenplay document defining the temporal structure of the story as an ordered sequence of scenes and shots, with per-shot creative direction (camera, action, mood). I rely on this to know how many shots there are and what each shot is supposed to convey. Choose at most one.\n\n[keyframes_metadata] (single)\nThe planning document produced by the keyframe step that — for each shot in the screenplay — gives a textual description of the planned frame and a separate hint about how that frame should move when animated. I use this to fetch the prompt and motion intent for each shot. It is a JSON document, not an image. Choose at most one.\n\n[shot_stills] (collection)\nThe actual rendered starting frame images for the planned shots of the screenplay. Each one is a single still that depicts one specific shot of the story timeline (its planned visual at the beginning of that shot). I will load every one of these and pass it through an image-to-video model to produce the corresponding moving clip.\nIMPORTANT: do NOT include images that are visual identity references for a character, location, or prop in isolation, even though they are also images produced by the keyframe step. Those identity-reference images are not tied to any specific shot of the story timeline; they describe what an entity looks like in general. They are intermediate outputs of the keyframe step and are not the frames of the final video. I want only the per-shot frames. Include every per-shot frame — there should be exactly one per shot defined in the screenplay above.",
+    "labels": [
+      "screenplay",
+      "keyframes_metadata",
+      "shot_stills"
+    ],
+    "captions_index_text": "#0  Global character reference image. Visual identity anchor for downstream keyframe generation. Produced by user on 2026-05-12 22:38.\n\n#1  Structured metadata document (JSON) for a user-submitted text brief. Payload carries the raw text verbatim. Pipeline entry point — consumed by story / screenplay / narration agents. Produced by user on 2026-05-12 22:38.\n\n#2  Structured metadata document (JSON) for a user-uploaded image. Payload carries the visual description and image-asset metadata. Produced by IntakeImageAgent on 2026-05-12 22:38.\n\n#3  Enriched creative brief with visual reference descriptions integrated. Supersedes the raw user brief for story generation — contains the user's original concept plus detailed visual descriptions of uploaded reference images. Produced by BriefEnricherAgent on 2026-05-12 22:38.\n\n#4  Story blueprint: 5 scene(s), 3 character(s). Structured input for screenplay generation. Produced by StoryAgent on 2026-05-12 22:39.\n\n#5  Screenplay: 5 scene(s), 15 shot(s). Input for keyframe planning and audio scoring. Produced by ScreenplayAgent on 2026-05-12 22:40.\n\n#6  Global character reference image for char_001. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#7  Global prop reference image for prop_002. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#8  Global character reference image for char_003. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#9  Global prop reference image for prop_005. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#10  Global character reference image for char_002. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#11  Global location reference image for loc_001. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#12  Global prop reference image for prop_001. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#13  Global prop reference image for prop_004. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#14  Global prop reference image for prop_003. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#15  Scene-level character reference for char_001 in scene sc_004. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#16  Scene-level character reference for char_003 in scene sc_003. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#17  Scene-level character reference for char_001 in scene sc_001. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#18  Scene-level character reference for char_001 in scene sc_002. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#19  Scene-level prop reference for prop_004 in scene sc_003. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#20  Scene-level prop reference for prop_003 in scene sc_002. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#21  Scene-level character reference for char_002 in scene sc_002. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#22  Scene-level prop reference for prop_003 in scene sc_004. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#23  Scene-level prop reference for prop_005 in scene sc_003. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#24  Scene-level location reference for loc_001 in scene sc_001. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#25  Scene-level character reference for char_001 in scene sc_005. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#26  Scene-level prop reference for prop_001 in scene sc_001. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#27  Scene-level character reference for char_002 in scene sc_005. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#28  Scene-level location reference for loc_001 in scene sc_002. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#29  Scene-level character reference for char_002 in scene sc_004. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#30  Scene-level location reference for loc_001 in scene sc_005. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#31  Scene-level location reference for loc_001 in scene sc_004. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#32  Scene-level prop reference for prop_001 in scene sc_004. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#33  Scene-level location reference for loc_001 in scene sc_003. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#34  Scene-level character reference for char_001 in scene sc_003. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#35  Scene-level prop reference for prop_003 in scene sc_005. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#36  Scene-level character reference for char_002 in scene sc_001. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#37  Scene-level prop reference for prop_002 in scene sc_001. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#38  Rendered starting frame for shot sh_004 in scene sc_002. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#39  Rendered starting frame for shot sh_006 in scene sc_002. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#40  Rendered starting frame for shot sh_007 in scene sc_003. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#41  Rendered starting frame for shot sh_010 in scene sc_004. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#42  Rendered starting frame for shot sh_015 in scene sc_005. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#43  Rendered starting frame for shot sh_009 in scene sc_003. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#44  Rendered starting frame for shot sh_002 in scene sc_001. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#45  Rendered starting frame for shot sh_005 in scene sc_002. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#46  Rendered starting frame for shot sh_012 in scene sc_004. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#47  Rendered starting frame for shot sh_011 in scene sc_004. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#48  Rendered starting frame for shot sh_001 in scene sc_001. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#49  Rendered starting frame for shot sh_008 in scene sc_003. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#50  Rendered starting frame for shot sh_013 in scene sc_005. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#51  Rendered starting frame for shot sh_003 in scene sc_001. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#52  Rendered starting frame for shot sh_014 in scene sc_005. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#53  Keyframe planning document: 5 scene(s), 15 shot(s), with per-shot frame descriptions and motion hints. Consumed by a downstream image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#54  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_001] Video clip bytes for shot sh_001. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#55  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_002] Video clip bytes for shot sh_002. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#56  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_003] Video clip bytes for shot sh_003. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#57  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_004] Video clip bytes for shot sh_004. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#58  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_005] Video clip bytes for shot sh_005. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#59  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_006] Video clip bytes for shot sh_006. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#60  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_007] Video clip bytes for shot sh_007. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#61  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_008] Video clip bytes for shot sh_008. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#62  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_009] Video clip bytes for shot sh_009. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#63  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_010] Video clip bytes for shot sh_010. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#64  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_011] Video clip bytes for shot sh_011. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#65  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_012] Video clip bytes for shot sh_012. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#66  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_013] Video clip bytes for shot sh_013. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#67  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_014] Video clip bytes for shot sh_014. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#68  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_015] Video clip bytes for shot sh_015. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#69  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sc_001] Scene-cut bytes for scene sc_001 — all shots concatenated. Intermediate assembly, not final. Produced by VideoAgent on 2026-05-13 00:58.\n\n#70  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sc_002] Scene-cut bytes for scene sc_002 — all shots concatenated. Intermediate assembly, not final. Produced by VideoAgent on 2026-05-13 00:58.\n\n#71  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sc_003] Scene-cut bytes for scene sc_003 — all shots concatenated. Intermediate assembly, not final. Produced by VideoAgent on 2026-05-13 00:58.\n\n#72  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sc_004] Scene-cut bytes for scene sc_004 — all shots concatenated. Intermediate assembly, not final. Produced by VideoAgent on 2026-05-13 00:58.\n\n#73  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sc_005] Scene-cut bytes for scene sc_005 — all shots concatenated. Intermediate assembly, not final. Produced by VideoAgent on 2026-05-13 00:58.\n\n#74  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_final] Complete assembled video bytes (15 shots). Final visual deliverable — consumed by a downstream audio-mix step's materializer via ffmpeg for audio extraction + muxing. Produced by VideoAgent on 2026-05-13 00:58.\n\n#75  [JSON MANIFEST] Video-assembly planning metadata: 5 scene(s), 15 shot clip(s) with timing. Read by a downstream audio-mix step's LLM for mix planning. Produced by VideoAgent on 2026-05-13 00:58.",
+    "id_to_path": [
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/brief_20260512_223801_057913.json",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/IntakeImageAgent/step_1_81595939_intakeimageagent_exec_1.json",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/BriefEnricherAgent/step_2_4ce0f309_briefenricheragent_exec_2.json",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/StoryAgent/step_3_c63b3878_storyagent_exec_3.json",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/ScreenplayAgent/step_4_a76cf964_screenplayagent_exec_4.json",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_001_global.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_002_global.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_003_global.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_005_global.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_002_global.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_loc_001_global.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_001_global.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_004_global.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_003_global.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_001_sc_004.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_003_sc_003.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_001_sc_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_001_sc_002.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_004_sc_003.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_003_sc_002.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_002_sc_002.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_003_sc_004.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_005_sc_003.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_loc_001_sc_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_001_sc_005.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_001_sc_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_002_sc_005.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_loc_001_sc_002.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_002_sc_004.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_loc_001_sc_005.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_loc_001_sc_004.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_001_sc_004.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_loc_001_sc_003.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_001_sc_003.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_003_sc_005.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_002_sc_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_002_sc_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_004_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_006_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_007_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_010_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_015_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_009_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_002_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_005_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_012_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_011_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_001_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_008_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_013_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_003_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_014_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/KeyFrameAgent/step_5_21c87218_keyframeagent_exec_6.json",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_6_87b6e796_clip_sh_001.mp4",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_6_87b6e796_clip_sh_002.mp4",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_6_87b6e796_clip_sh_003.mp4",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_6_87b6e796_clip_sh_004.mp4",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_6_87b6e796_clip_sh_005.mp4",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_6_87b6e796_clip_sh_006.mp4",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_6_87b6e796_clip_sh_007.mp4",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_6_87b6e796_clip_sh_008.mp4",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_6_87b6e796_clip_sh_009.mp4",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_6_87b6e796_clip_sh_010.mp4",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_6_87b6e796_clip_sh_011.mp4",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_6_87b6e796_clip_sh_012.mp4",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_6_87b6e796_clip_sh_013.mp4",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_6_87b6e796_clip_sh_014.mp4",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_6_87b6e796_clip_sh_015.mp4",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_6_87b6e796_clip_sc_001.mp4",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_6_87b6e796_clip_sc_002.mp4",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_6_87b6e796_clip_sc_003.mp4",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_6_87b6e796_clip_sc_004.mp4",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_6_87b6e796_clip_sc_005.mp4",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_6_87b6e796_clip_final.mp4",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/VideoAgent/step_6_87b6e796_videoagent_exec_7.json"
+    ]
+  },
+  "llm_call": {
+    "system_prompt": "You match a sub-agent's input requirements to artifacts in an artifact registry.\n\nThe sub-agent's input requirements are written as one or more [label] blocks. Each block has a header of the form\n    [label_name] (single)        -- exactly one matching artifact expected\n    [label_name] (collection)    -- zero or more matching artifacts expected\nfollowed by a natural-language description of what kind of artifact that label refers to.\n\nThe artifact registry lists every persisted artifact with a #N id and a natural-language caption describing its type, pipeline role, and which agent produced it.\n\nYour job:\n  1. Read each [label] block and understand the kind of artifact the agent is asking for in that slot.\n  2. For each registry artifact, read its caption and understand the artifact's type, role, and purpose. Reason about meaning.\n  3. For each [label], decide which artifacts in the registry are instances of the kind described in that block.\n  4. Be inclusive for (collection) labels: include EVERY matching artifact, never just a sample.\n  5. Be exclusive for (single) labels: pick the single best matching artifact (or none if none clearly fits).\n  6. Distinguish artifacts that look superficially similar but play different roles in the pipeline (e.g. a reference image of an entity in isolation vs. a planned frame of a specific shot of the story). Use the caption to decide.\n  7. Only return #N ids that appear in the registry.\n\nReturn strict JSON only, with this shape:\n{\n  \"selections\": {\n    \"<label_name>\": [0, 3, 5],\n    ...\n  },\n  \"rationale\": \"<a short explanation of how you matched each label>\"\n}\nUse exactly the label names from the agent's [label] headers as keys. Values are arrays of integer ids (the #N numbers from the registry).",
+    "user_prompt": "agent_id: VideoAgent\n\n=== AGENT INPUT NEEDS ===\nI generate per-shot moving video clips by feeding a planned starting frame and a motion description into an image-to-video model, then assemble the clips into a final video.\n\nFor each [label] below, find every artifact in the registry whose caption describes the same kind of thing. Use the natural-language caption only — do not match by filename or by any tag. Pay attention to the difference between visual identity references (which depict an entity in isolation) and actual planned frames of shots (which depict a specific moment of the story). I want the latter, never the former.\n\n[screenplay] (single)\nThe unified screenplay document defining the temporal structure of the story as an ordered sequence of scenes and shots, with per-shot creative direction (camera, action, mood). I rely on this to know how many shots there are and what each shot is supposed to convey. Choose at most one.\n\n[keyframes_metadata] (single)\nThe planning document produced by the keyframe step that — for each shot in the screenplay — gives a textual description of the planned frame and a separate hint about how that frame should move when animated. I use this to fetch the prompt and motion intent for each shot. It is a JSON document, not an image. Choose at most one.\n\n[shot_stills] (collection)\nThe actual rendered starting frame images for the planned shots of the screenplay. Each one is a single still that depicts one specific shot of the story timeline (its planned visual at the beginning of that shot). I will load every one of these and pass it through an image-to-video model to produce the corresponding moving clip.\nIMPORTANT: do NOT include images that are visual identity references for a character, location, or prop in isolation, even though they are also images produced by the keyframe step. Those identity-reference images are not tied to any specific shot of the story timeline; they describe what an entity looks like in general. They are intermediate outputs of the keyframe step and are not the frames of the final video. I want only the per-shot frames. Include every per-shot frame — there should be exactly one per shot defined in the screenplay above.\n\nLabels expected in your response: ['screenplay', 'keyframes_metadata', 'shot_stills']\n\n=== ARTIFACT REGISTRY ===\n#0  Global character reference image. Visual identity anchor for downstream keyframe generation. Produced by user on 2026-05-12 22:38.\n\n#1  Structured metadata document (JSON) for a user-submitted text brief. Payload carries the raw text verbatim. Pipeline entry point — consumed by story / screenplay / narration agents. Produced by user on 2026-05-12 22:38.\n\n#2  Structured metadata document (JSON) for a user-uploaded image. Payload carries the visual description and image-asset metadata. Produced by IntakeImageAgent on 2026-05-12 22:38.\n\n#3  Enriched creative brief with visual reference descriptions integrated. Supersedes the raw user brief for story generation — contains the user's original concept plus detailed visual descriptions of uploaded reference images. Produced by BriefEnricherAgent on 2026-05-12 22:38.\n\n#4  Story blueprint: 5 scene(s), 3 character(s). Structured input for screenplay generation. Produced by StoryAgent on 2026-05-12 22:39.\n\n#5  Screenplay: 5 scene(s), 15 shot(s). Input for keyframe planning and audio scoring. Produced by ScreenplayAgent on 2026-05-12 22:40.\n\n#6  Global character reference image for char_001. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#7  Global prop reference image for prop_002. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#8  Global character reference image for char_003. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#9  Global prop reference image for prop_005. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#10  Global character reference image for char_002. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#11  Global location reference image for loc_001. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#12  Global prop reference image for prop_001. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#13  Global prop reference image for prop_004. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#14  Global prop reference image for prop_003. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#15  Scene-level character reference for char_001 in scene sc_004. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#16  Scene-level character reference for char_003 in scene sc_003. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#17  Scene-level character reference for char_001 in scene sc_001. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#18  Scene-level character reference for char_001 in scene sc_002. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#19  Scene-level prop reference for prop_004 in scene sc_003. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#20  Scene-level prop reference for prop_003 in scene sc_002. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#21  Scene-level character reference for char_002 in scene sc_002. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#22  Scene-level prop reference for prop_003 in scene sc_004. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#23  Scene-level prop reference for prop_005 in scene sc_003. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#24  Scene-level location reference for loc_001 in scene sc_001. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#25  Scene-level character reference for char_001 in scene sc_005. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#26  Scene-level prop reference for prop_001 in scene sc_001. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#27  Scene-level character reference for char_002 in scene sc_005. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#28  Scene-level location reference for loc_001 in scene sc_002. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#29  Scene-level character reference for char_002 in scene sc_004. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#30  Scene-level location reference for loc_001 in scene sc_005. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#31  Scene-level location reference for loc_001 in scene sc_004. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#32  Scene-level prop reference for prop_001 in scene sc_004. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#33  Scene-level location reference for loc_001 in scene sc_003. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#34  Scene-level character reference for char_001 in scene sc_003. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#35  Scene-level prop reference for prop_003 in scene sc_005. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#36  Scene-level character reference for char_002 in scene sc_001. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#37  Scene-level prop reference for prop_002 in scene sc_001. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#38  Rendered starting frame for shot sh_004 in scene sc_002. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#39  Rendered starting frame for shot sh_006 in scene sc_002. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#40  Rendered starting frame for shot sh_007 in scene sc_003. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#41  Rendered starting frame for shot sh_010 in scene sc_004. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#42  Rendered starting frame for shot sh_015 in scene sc_005. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#43  Rendered starting frame for shot sh_009 in scene sc_003. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#44  Rendered starting frame for shot sh_002 in scene sc_001. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#45  Rendered starting frame for shot sh_005 in scene sc_002. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#46  Rendered starting frame for shot sh_012 in scene sc_004. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#47  Rendered starting frame for shot sh_011 in scene sc_004. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#48  Rendered starting frame for shot sh_001 in scene sc_001. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#49  Rendered starting frame for shot sh_008 in scene sc_003. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#50  Rendered starting frame for shot sh_013 in scene sc_005. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#51  Rendered starting frame for shot sh_003 in scene sc_001. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#52  Rendered starting frame for shot sh_014 in scene sc_005. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#53  Keyframe planning document: 5 scene(s), 15 shot(s), with per-shot frame descriptions and motion hints. Consumed by a downstream image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#54  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_001] Video clip bytes for shot sh_001. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#55  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_002] Video clip bytes for shot sh_002. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#56  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_003] Video clip bytes for shot sh_003. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#57  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_004] Video clip bytes for shot sh_004. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#58  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_005] Video clip bytes for shot sh_005. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#59  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_006] Video clip bytes for shot sh_006. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#60  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_007] Video clip bytes for shot sh_007. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#61  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_008] Video clip bytes for shot sh_008. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#62  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_009] Video clip bytes for shot sh_009. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#63  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_010] Video clip bytes for shot sh_010. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#64  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_011] Video clip bytes for shot sh_011. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#65  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_012] Video clip bytes for shot sh_012. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#66  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_013] Video clip bytes for shot sh_013. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#67  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_014] Video clip bytes for shot sh_014. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#68  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_015] Video clip bytes for shot sh_015. One segment of the final video. Produced by VideoAgent on 2026-05-13 00:58.\n\n#69  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sc_001] Scene-cut bytes for scene sc_001 — all shots concatenated. Intermediate assembly, not final. Produced by VideoAgent on 2026-05-13 00:58.\n\n#70  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sc_002] Scene-cut bytes for scene sc_002 — all shots concatenated. Intermediate assembly, not final. Produced by VideoAgent on 2026-05-13 00:58.\n\n#71  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sc_003] Scene-cut bytes for scene sc_003 — all shots concatenated. Intermediate assembly, not final. Produced by VideoAgent on 2026-05-13 00:58.\n\n#72  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sc_004] Scene-cut bytes for scene sc_004 — all shots concatenated. Intermediate assembly, not final. Produced by VideoAgent on 2026-05-13 00:58.\n\n#73  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sc_005] Scene-cut bytes for scene sc_005 — all shots concatenated. Intermediate assembly, not final. Produced by VideoAgent on 2026-05-13 00:58.\n\n#74  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_final] Complete assembled video bytes (15 shots). Final visual deliverable — consumed by a downstream audio-mix step's materializer via ffmpeg for audio extraction + muxing. Produced by VideoAgent on 2026-05-13 00:58.\n\n#75  [JSON MANIFEST] Video-assembly planning metadata: 5 scene(s), 15 shot clip(s) with timing. Read by a downstream audio-mix step's LLM for mix planning. Produced by VideoAgent on 2026-05-13 00:58.\n",
+    "raw_response": {
+      "selections": {
+        "screenplay": [
+          5
+        ],
+        "keyframes_metadata": [
+          53
+        ],
+        "shot_stills": [
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52
+        ]
+      },
+      "rationale": "Screenplay was matched to the document describing temporal structure of scenes and shots. Keyframes metadata was matched to the planning document with per-shot descriptions and motion hints. Shot stills were carefully selected to include only the 'Rendered starting frame' artifacts that explicitly state they are 'To be animated into a video clip', excluding all global and scene-level identity reference images as requested."
+    }
+  },
+  "output": {
+    "resolved_artifacts": {
+      "screenplay": {
+        "caption": "Screenplay: 5 scene(s), 15 shot(s). Input for keyframe planning and audio scoring.",
+        "scope": "global",
+        "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/ScreenplayAgent/step_4_a76cf964_screenplayagent_exec_4.json",
+        "mime": "application/json",
+        "payload": {
+          "meta": {
+            "schema_version": "0.3",
+            "created_at": "2026-05-12T22:40:14.243670+00:00",
+            "language": "zh"
+          },
+          "content": {
+            "title": "九尾狐劫：封神台上的记忆",
+            "scenes": [
+              {
+                "scene_id": "sc_001",
+                "order": 1,
+                "linked_story_step_id": "arc_001",
+                "heading": {
+                  "location_id": "loc_001",
+                  "location_name": "封神台",
+                  "interior_exterior": "EXT",
+                  "time_of_day": "DAY"
+                },
+                "summary": "在阴森的封神台上，被封神之战蹂躏的九尾狐妖，身心俱疲地被押至姜子牙面前，九天惊雷预示着她的末日。",
+                "continuity": {
+                  "props_present": [
+                    "捆仙索",
+                    "神台"
+                  ],
+                  "character_wardrobe_notes": [
+                    {
+                      "character_id": "char_001",
+                      "wardrobe": "身着破败的浅色长袍，黑发凌乱，九条白色狐尾残破不堪。",
+                      "must_keep": [
+                        "破败长袍",
+                        "九条残破狐尾"
+                      ]
+                    },
+                    {
+                      "character_id": "char_002",
+                      "wardrobe": "身着庄重肃穆的道家仙袍，手持拂尘。",
+                      "must_keep": [
+                        "道家仙袍",
+                        "肃穆神情"
+                      ]
+                    }
+                  ],
+                  "must_keep_scene_facts": [
+                    "背景设定在中国神话的封神之战后",
+                    "九天惊雷不断",
+                    "狐妖被神力束缚"
+                  ]
+                },
+                "scene_consistency_pack": {
+                  "location_lock": {
+                    "location_id": "loc_001",
+                    "time_of_day": "DAY",
+                    "environment_notes": [
+                      "高耸、庄严的仪式平台，笼罩在弥漫的薄雾中",
+                      "充满强大的灵气",
+                      "天空有九天惊雷滚滚",
+                      "根植于中国神话和封神之战的背景"
+                    ]
+                  },
+                  "character_locks": [
+                    {
+                      "character_id": "char_001",
+                      "identity_notes": [
+                        "封神之战后幸存的最后一只九尾狐妖，拥有悲剧之美",
+                        "中国神话人物，虚弱无力"
+                      ],
+                      "wardrobe_notes": [
+                        "黑发，破烂的浅色长袍，九条巨大蓬松的白尾"
+                      ],
+                      "must_keep": [
+                        "九条尾巴可见",
+                        "破烂长袍暗示其痛苦"
+                      ]
+                    },
+                    {
+                      "character_id": "char_002",
+                      "identity_notes": [
+                        "强大正义的道家仙人兼军事家，封神之战的关键人物",
+                        "代表中国神话中的神圣权威和新王朝的坚定秩序"
+                      ],
+                      "wardrobe_notes": [
+                        "传统道家仙人服饰，庄重威严"
+                      ],
+                      "must_keep": [
+                        "道袍",
+                        "强大、坚定的风范"
+                      ]
+                    }
+                  ],
+                  "props_lock": [
+                    {
+                      "prop_id": "prop_001",
+                      "prop_name": "捆仙索",
+                      "must_keep": [
+                        "用于束缚狐妖的神奇绳索，散发着神光"
+                      ]
+                    },
+                    {
+                      "prop_id": "prop_002",
+                      "prop_name": "拂尘",
+                      "must_keep": [
+                        "姜子牙手持，象征其道家身份和权威"
+                      ]
+                    }
+                  ],
+                  "style_lock": {
+                    "global_style_notes": [
+                      "故事背景设定在中国神话世界，特别是封神之战后",
+                      "基调：悲怆、戏剧性、缥缈、紧张、悔恨、救赎"
+                    ],
+                    "must_avoid": [
+                      "过于血腥或写实的暴力描写"
+                    ]
+                  }
+                },
+                "scene_end": {
+                  "turn": "姜子牙止息喧嚣，预备宣判，昭示狐妖命运已定。",
+                  "emotional_shift": "从混乱不安转为死寂的绝望。"
+                },
+                "shots": [
+                  {
+                    "shot_id": "sh_001",
+                    "order": 1,
+                    "block_type": "action",
+                    "character_id": "",
+                    "character_name": "",
+                    "text": "广阔的封神台笼罩在薄雾中，九天惊雷滚滚。狐妖被无形之力捆绑，踉跄地被押上神台，姜子牙已端坐其上，威严不可侵犯。",
+                    "emotion_hint": "紧张",
+                    "continuity_refs": {
+                      "props": [
+                        "prop_001",
+                        "prop_002"
+                      ],
+                      "wardrobe_character_ids": [
+                        "char_001",
+                        "char_002"
+                      ]
+                    },
+                    "shot_type": "wide",
+                    "camera": {
+                      "angle": "high_angle",
+                      "movement": "crane_shot",
+                      "framing_notes": "展现封神台的宏伟与狐妖的渺小，强调压迫感。"
+                    },
+                    "visual_goal": "建立场景的宏大、肃穆和狐妖的困境。",
+                    "action_focus": "狐妖被强制带入的瞬间，以及环境的压迫感。",
+                    "characters_in_frame": [
+                      "char_001",
+                      "char_002"
+                    ],
+                    "props_in_frame": [
+                      "prop_001"
+                    ],
+                    "keyframe_plan": {
+                      "keyframe_count": 1,
+                      "keyframe_notes": []
+                    }
+                  },
+                  {
+                    "shot_id": "sh_002",
+                    "order": 2,
+                    "block_type": "action",
+                    "character_id": "",
+                    "character_name": "",
+                    "text": "狐妖特写，凌乱的黑发下，她疲惫的脸上写满了绝望与不甘，破败的九条狐尾无力地垂在身后，颤抖着。",
+                    "emotion_hint": "悲伤",
+                    "continuity_refs": {
+                      "props": [],
+                      "wardrobe_character_ids": [
+                        "char_001"
+                      ]
+                    },
+                    "shot_type": "close_up",
+                    "camera": {
+                      "angle": "eye_level",
+                      "movement": "static",
+                      "framing_notes": "聚焦狐妖面部表情与破损的狐尾，突出其痛苦和衰弱。"
+                    },
+                    "visual_goal": "展现狐妖的内在痛苦和外在的衰败。",
+                    "action_focus": "狐妖的表情和她曾经骄傲的狐尾的现状。",
+                    "characters_in_frame": [
+                      "char_001"
+                    ],
+                    "props_in_frame": [],
+                    "keyframe_plan": {
+                      "keyframe_count": 1,
+                      "keyframe_notes": []
+                    }
+                  },
+                  {
+                    "shot_id": "sh_003",
+                    "order": 3,
+                    "block_type": "dialogue",
+                    "character_id": "char_002",
+                    "character_name": "姜子牙",
+                    "text": "妖孽，罪不可赦。",
+                    "emotion_hint": "威严",
+                    "continuity_refs": {
+                      "props": [
+                        "prop_002"
+                      ],
+                      "wardrobe_character_ids": [
+                        "char_002"
+                      ]
+                    },
+                    "shot_type": "medium",
+                    "camera": {
+                      "angle": "eye_level",
+                      "movement": "static",
+                      "framing_notes": "表现姜子牙的权威和肃穆，以及他即将做出的判决。"
+                    },
+                    "visual_goal": "展示姜子牙的掌控力和即将到来的判决。",
+                    "action_focus": "姜子牙抬手肃静，目光威严落于狐妖；缓声宣读最终判决。",
+                    "characters_in_frame": [
+                      "char_002"
+                    ],
+                    "props_in_frame": [
+                      "prop_002"
+                    ],
+                    "keyframe_plan": {
+                      "keyframe_count": 1,
+                      "keyframe_notes": []
+                    }
+                  }
+                ]
+              },
+              {
+                "scene_id": "sc_002",
+                "order": 2,
+                "linked_story_step_id": "arc_002",
+                "heading": {
+                  "location_id": "loc_001",
+                  "location_name": "封神台",
+                  "interior_exterior": "EXT",
+                  "time_of_day": "DAY"
+                },
+                "summary": "姜子牙举起斩妖剑，狐妖闭眼等死，绝望中，脑海深处却闪过一个神秘男子的模糊身影。",
+                "continuity": {
+                  "props_present": [
+                    "斩妖剑",
+                    "神台"
+                  ],
+                  "character_wardrobe_notes": [
+                    {
+                      "character_id": "char_001",
+                      "wardrobe": "身着破败的浅色长袍，黑发凌乱，九条白色狐尾残破不堪。",
+                      "must_keep": [
+                        "破败长袍",
+                        "九条残破狐尾"
+                      ]
+                    },
+                    {
+                      "character_id": "char_002",
+                      "wardrobe": "身着庄重肃穆的道家仙袍。",
+                      "must_keep": [
+                        "道家仙袍"
+                      ]
+                    }
+                  ],
+                  "must_keep_scene_facts": [
+                    "背景设定在中国神话的封神之战后",
+                    "九天惊雷不断",
+                    "狐妖在绝望中"
+                  ]
+                },
+                "scene_consistency_pack": {
+                  "location_lock": {
+                    "location_id": "loc_001",
+                    "time_of_day": "DAY",
+                    "environment_notes": [
+                      "高耸、庄严的仪式平台，笼罩在弥漫的薄雾中",
+                      "充满强大的灵气",
+                      "天空有九天惊雷滚滚",
+                      "根植于中国神话和封神之战的背景"
+                    ]
+                  },
+                  "character_locks": [
+                    {
+                      "character_id": "char_001",
+                      "identity_notes": [
+                        "封神之战后幸存的最后一只九尾狐妖，拥有悲剧之美",
+                        "中国神话人物，虚弱无力"
+                      ],
+                      "wardrobe_notes": [
+                        "黑发，破烂的浅色长袍，九条巨大蓬松的白尾"
+                      ],
+                      "must_keep": [
+                        "九条尾巴可见",
+                        "破烂长袍暗示其痛苦"
+                      ]
+                    },
+                    {
+                      "character_id": "char_002",
+                      "identity_notes": [
+                        "强大正义的道家仙人兼军事家，封神之战的关键人物",
+                        "代表中国神话中的神圣权威和新王朝的坚定秩序"
+                      ],
+                      "wardrobe_notes": [
+                        "传统道家仙人服饰，庄重威严"
+                      ],
+                      "must_keep": [
+                        "道袍",
+                        "强大、坚定的风范"
+                      ]
+                    }
+                  ],
+                  "props_lock": [
+                    {
+                      "prop_id": "prop_003",
+                      "prop_name": "斩妖剑",
+                      "must_keep": [
+                        "姜子牙手持，散发着神圣寒光的刑具"
+                      ]
+                    }
+                  ],
+                  "style_lock": {
+                    "global_style_notes": [
+                      "故事背景设定在中国神话世界，特别是封神之战后",
+                      "基调：悲怆、戏剧性、缥缈、紧张、悔恨、救赎"
+                    ],
+                    "must_avoid": [
+                      "过于血腥或写实的暴力描写"
+                    ]
+                  }
+                },
+                "scene_end": {
+                  "turn": "斩妖剑高举之际，狐妖的绝望被脑海中浮现的神秘男子身影所打断。",
+                  "emotional_shift": "从绝望的终结边缘，被一丝未知的记忆唤起一丝涟漪。"
+                },
+                "shots": [
+                  {
+                    "shot_id": "sh_004",
+                    "order": 1,
+                    "block_type": "action",
+                    "character_id": "",
+                    "character_name": "",
+                    "text": "姜子牙面无表情地举起一柄神光凛冽的斩妖剑，剑刃直指狐妖，九天惊雷在剑锋上闪耀，昭示着审判的最终到来。",
+                    "emotion_hint": "紧张",
+                    "continuity_refs": {
+                      "props": [
+                        "prop_003"
+                      ],
+                      "wardrobe_character_ids": [
+                        "char_002"
+                      ]
+                    },
+                    "shot_type": "medium",
+                    "camera": {
+                      "angle": "eye_level",
+                      "movement": "static",
+                      "framing_notes": "聚焦姜子牙的动作和斩妖剑，强调其力量与致命性。"
+                    },
+                    "visual_goal": "展现即将执行的判决，制造高度紧张感。",
+                    "action_focus": "斩妖剑被举起的瞬间。",
+                    "characters_in_frame": [
+                      "char_002"
+                    ],
+                    "props_in_frame": [
+                      "prop_003"
+                    ],
+                    "keyframe_plan": {
+                      "keyframe_count": 1,
+                      "keyframe_notes": []
+                    }
+                  },
+                  {
+                    "shot_id": "sh_005",
+                    "order": 2,
+                    "block_type": "dialogue",
+                    "character_id": "char_001",
+                    "character_name": "狐妖",
+                    "text": "原来…我记得。",
+                    "emotion_hint": "顿悟",
+                    "continuity_refs": {
+                      "props": [],
+                      "wardrobe_character_ids": [
+                        "char_001"
+                      ]
+                    },
+                    "shot_type": "close_up",
+                    "camera": {
+                      "angle": "low_angle",
+                      "movement": "static",
+                      "framing_notes": "聚焦狐妖面部，捕捉她闭眼时的泪水和接受命运的表情。"
+                    },
+                    "visual_goal": "传达狐妖的绝望与顺从。",
+                    "action_focus": "狐妖闭眼，泪水滑落；唇间低语流出。",
+                    "characters_in_frame": [
+                      "char_001"
+                    ],
+                    "props_in_frame": [],
+                    "keyframe_plan": {
+                      "keyframe_count": 1,
+                      "keyframe_notes": []
+                    }
+                  },
+                  {
+                    "shot_id": "sh_006",
+                    "order": 3,
+                    "block_type": "action",
+                    "character_id": "",
+                    "character_name": "",
+                    "text": "一闪而逝的幻象，模糊而温暖。一个神秘男子的侧脸在狐妖的脑海中浮现，带着一丝若有似无的微笑，转瞬即逝。",
+                    "emotion_hint": "平静",
+                    "continuity_refs": {
+                      "props": [],
+                      "wardrobe_character_ids": [
+                        "char_001",
+                        "char_003"
+                      ]
+                    },
+                    "shot_type": "extreme_close_up",
+                    "camera": {
+                      "angle": "eye_level",
+                      "movement": "static",
+                      "framing_notes": "梦幻滤镜，捕捉男子脸部的模糊特写，暗示记忆的开端。"
+                    },
+                    "visual_goal": "引入记忆片段，打破当下的绝望感。",
+                    "action_focus": "神秘男子的脸部幻象。",
+                    "characters_in_frame": [],
+                    "props_in_frame": [],
+                    "keyframe_plan": {
+                      "keyframe_count": 1,
+                      "keyframe_notes": []
+                    }
+                  }
+                ]
+              },
+              {
+                "scene_id": "sc_003",
+                "order": 3,
+                "linked_story_step_id": "arc_003",
+                "heading": {
+                  "location_id": "loc_001",
+                  "location_name": "封神台",
+                  "interior_exterior": "EXT",
+                  "time_of_day": "CUSTOM"
+                },
+                "summary": "模糊的幻象转变为清晰温暖的记忆，狐妖在记忆中与神秘男子相依，感受到被遗忘的深厚情感。",
+                "continuity": {
+                  "props_present": [
+                    "古朴石桌",
+                    "茶具"
+                  ],
+                  "character_wardrobe_notes": [
+                    {
+                      "character_id": "char_001",
+                      "wardrobe": "记忆中的她穿着素雅的古装，容颜清丽，无狐尾。",
+                      "must_keep": [
+                        "素雅古装",
+                        "人类形态"
+                      ]
+                    },
+                    {
+                      "character_id": "char_003",
+                      "wardrobe": "身着朴素而精致的古装，眼神温柔。",
+                      "must_keep": [
+                        "朴素古装",
+                        "温柔眼神"
+                      ]
+                    }
+                  ],
+                  "must_keep_scene_facts": [
+                    "记忆场景与现实形成强烈对比",
+                    "强调温馨与情感深度",
+                    "记忆中的场景根植于中国神话美学"
+                  ]
+                },
+                "scene_consistency_pack": {
+                  "location_lock": {
+                    "location_id": "loc_001",
+                    "time_of_day": "CUSTOM",
+                    "environment_notes": [
+                      "高耸、庄严的仪式平台，笼罩在弥漫的薄雾中（现实）",
+                      "记忆中：一片宁静的古代园林或茅屋，阳光温暖，鸟语花香",
+                      "充满强大的灵气",
+                      "天空有九天惊雷滚滚（现实）",
+                      "根植于中国神话和封神之战的背景"
+                    ]
+                  },
+                  "character_locks": [
+                    {
+                      "character_id": "char_001",
+                      "identity_notes": [
+                        "封神之战后幸存的最后一只九尾狐妖，拥有悲剧之美",
+                        "中国神话人物，记忆中为人类形态"
+                      ],
+                      "wardrobe_notes": [
+                        "现实：黑发，破烂的浅色长袍，九条巨大蓬松的白尾",
+                        "记忆中：清丽容颜，素雅古装，无狐尾"
+                      ],
+                      "must_keep": [
+                        "现实中九条尾巴可见",
+                        "记忆中为人类形态"
+                      ]
+                    },
+                    {
+                      "character_id": "char_003",
+                      "identity_notes": [
+                        "狐妖记忆中的一位富有同情心的人类，身份神秘",
+                        "中国神话人物"
+                      ],
+                      "wardrobe_notes": [
+                        "简单优雅的古装"
+                      ],
+                      "must_keep": [
+                        "温和善良的表情"
+                      ]
+                    }
+                  ],
+                  "props_lock": [
+                    {
+                      "prop_id": "prop_004",
+                      "prop_name": "古朴石桌",
+                      "must_keep": [
+                        "记忆场景中，承载茶具，有岁月痕迹"
+                      ]
+                    },
+                    {
+                      "prop_id": "prop_005",
+                      "prop_name": "茶具",
+                      "must_keep": [
+                        "记忆场景中，精致的古风茶具"
+                      ]
+                    }
+                  ],
+                  "style_lock": {
+                    "global_style_notes": [
+                      "故事背景设定在中国神话世界，特别是封神之战后",
+                      "基调：悲怆、戏剧性、缥缈、紧张、悔恨、救赎",
+                      "记忆场景呈现温馨、柔和的色彩和光线"
+                    ],
+                    "must_avoid": [
+                      "过于血腥或写实的暴力描写"
+                    ]
+                  }
+                },
+                "scene_end": {
+                  "turn": "记忆最终凝结成狐妖与神秘男子相依的温馨画面，展现了被遗忘的深情。",
+                  "emotional_shift": "从模糊的感应转变为清晰、深刻的爱意与失落。"
+                },
+                "shots": [
+                  {
+                    "shot_id": "sh_007",
+                    "order": 1,
+                    "block_type": "dialogue",
+                    "character_id": "char_003",
+                    "character_name": "神秘男子",
+                    "text": "别怕，我等你。",
+                    "emotion_hint": "温柔",
+                    "continuity_refs": {
+                      "props": [],
+                      "wardrobe_character_ids": [
+                        "char_001"
+                      ]
+                    },
+                    "shot_type": "close_up",
+                    "camera": {
+                      "angle": "eye_level",
+                      "movement": "dolly_in",
+                      "framing_notes": "梦幻般的过渡，模糊现实，聚焦记忆中狐妖的美丽与宁静。"
+                    },
+                    "visual_goal": "展现狐妖从痛苦到平和的记忆转换，突出其过去的美好。",
+                    "action_focus": "狐妖容颜在记忆中转回少女模样；男子温柔嗓音如同记忆回响。",
+                    "characters_in_frame": [
+                      "char_001"
+                    ],
+                    "props_in_frame": [],
+                    "keyframe_plan": {
+                      "keyframe_count": 1,
+                      "keyframe_notes": []
+                    }
+                  },
+                  {
+                    "shot_id": "sh_008",
+                    "order": 2,
+                    "block_type": "action",
+                    "character_id": "",
+                    "character_name": "",
+                    "text": "记忆中，一片宁静的古代园林，狐妖（人类形态）与神秘男子并肩坐在古朴石桌旁，阳光透过竹林洒下斑驳光影，两人相视一笑，温馨而宁谧。",
+                    "emotion_hint": "温暖",
+                    "continuity_refs": {
+                      "props": [
+                        "prop_004",
+                        "prop_005"
+                      ],
+                      "wardrobe_character_ids": [
+                        "char_001",
+                        "char_003"
+                      ]
+                    },
+                    "shot_type": "medium",
+                    "camera": {
+                      "angle": "eye_level",
+                      "movement": "static",
+                      "framing_notes": "展现记忆中的温馨场景，构图和谐，色彩柔和。"
+                    },
+                    "visual_goal": "构建一个充满爱与平和的记忆画面。",
+                    "action_focus": "两人和谐共处的姿态和环境的宁静。",
+                    "characters_in_frame": [
+                      "char_001",
+                      "char_003"
+                    ],
+                    "props_in_frame": [
+                      "prop_004",
+                      "prop_005"
+                    ],
+                    "keyframe_plan": {
+                      "keyframe_count": 1,
+                      "keyframe_notes": []
+                    }
+                  },
+                  {
+                    "shot_id": "sh_009",
+                    "order": 3,
+                    "block_type": "action",
+                    "character_id": "",
+                    "character_name": "",
+                    "text": "特写镜头，狐妖与神秘男子的手轻轻交叠在一起，无言的爱意流淌。光影开始闪烁，记忆的画面逐渐变得模糊，似要消散。",
+                    "emotion_hint": "温暖",
+                    "continuity_refs": {
+                      "props": [],
+                      "wardrobe_character_ids": [
+                        "char_001",
+                        "char_003"
+                      ]
+                    },
+                    "shot_type": "close_up",
+                    "camera": {
+                      "angle": "eye_level",
+                      "movement": "static",
+                      "framing_notes": "聚焦手部特写，用肢体语言表达情感深度，并暗示记忆的短暂。"
+                    },
+                    "visual_goal": "强调两人情感的亲密和记忆的脆弱性。",
+                    "action_focus": "手部的接触和记忆的消散。",
+                    "characters_in_frame": [
+                      "char_001",
+                      "char_003"
+                    ],
+                    "props_in_frame": [],
+                    "keyframe_plan": {
+                      "keyframe_count": 1,
+                      "keyframe_notes": []
+                    }
+                  }
+                ]
+              },
+              {
+                "scene_id": "sc_004",
+                "order": 4,
+                "linked_story_step_id": "arc_004",
+                "heading": {
+                  "location_id": "loc_001",
+                  "location_name": "封神台",
+                  "interior_exterior": "EXT",
+                  "time_of_day": "DAY"
+                },
+                "summary": "记忆的冲击让狐妖体内灵力爆发，神光四射，姜子牙被这股意外的能量震慑，斩妖剑悬而未决。",
+                "continuity": {
+                  "props_present": [
+                    "斩妖剑",
+                    "神台"
+                  ],
+                  "character_wardrobe_notes": [
+                    {
+                      "character_id": "char_001",
+                      "wardrobe": "身着破败的浅色长袍，黑发凌乱，九条白色狐尾残破不堪。",
+                      "must_keep": [
+                        "破败长袍",
+                        "九条残破狐尾"
+                      ]
+                    },
+                    {
+                      "character_id": "char_002",
+                      "wardrobe": "身着庄重肃穆的道家仙袍。",
+                      "must_keep": [
+                        "道家仙袍"
+                      ]
+                    }
+                  ],
+                  "must_keep_scene_facts": [
+                    "背景设定在中国神话的封神之战后",
+                    "九天惊雷不断",
+                    "狐妖灵力爆发是情感而非进攻性行为"
+                  ]
+                },
+                "scene_consistency_pack": {
+                  "location_lock": {
+                    "location_id": "loc_001",
+                    "time_of_day": "DAY",
+                    "environment_notes": [
+                      "高耸、庄严的仪式平台，笼罩在弥漫的薄雾中",
+                      "充满强大的灵气",
+                      "天空有九天惊雷滚滚",
+                      "根植于中国神话和封神之战的背景"
+                    ]
+                  },
+                  "character_locks": [
+                    {
+                      "character_id": "char_001",
+                      "identity_notes": [
+                        "封神之战后幸存的最后一只九尾狐妖，拥有悲剧之美",
+                        "中国神话人物，虚弱无力"
+                      ],
+                      "wardrobe_notes": [
+                        "黑发，破烂的浅色长袍，九条巨大蓬松的白尾"
+                      ],
+                      "must_keep": [
+                        "九条尾巴可见",
+                        "破烂长袍暗示其痛苦"
+                      ]
+                    },
+                    {
+                      "character_id": "char_002",
+                      "identity_notes": [
+                        "强大正义的道家仙人兼军事家，封神之战的关键人物",
+                        "代表中国神话中的神圣权威和新王朝的坚定秩序"
+                      ],
+                      "wardrobe_notes": [
+                        "传统道家仙人服饰，庄重威严"
+                      ],
+                      "must_keep": [
+                        "道袍",
+                        "强大、坚定的风范"
+                      ]
+                    }
+                  ],
+                  "props_lock": [
+                    {
+                      "prop_id": "prop_003",
+                      "prop_name": "斩妖剑",
+                      "must_keep": [
+                        "姜子牙手持，散发着神圣寒光的刑具"
+                      ]
+                    }
+                  ],
+                  "style_lock": {
+                    "global_style_notes": [
+                      "故事背景设定在中国神话世界，特别是封神之战后",
+                      "基调：悲怆、戏剧性、缥缈、紧张、悔恨、救赎"
+                    ],
+                    "must_avoid": [
+                      "过于血腥或写实的暴力描写"
+                    ]
+                  }
+                },
+                "scene_end": {
+                  "turn": "狐妖强大的记忆情感转化为可见的灵力爆发，迫使姜子牙的斩妖剑悬空。",
+                  "emotional_shift": "从绝望的顺从变为充满力量的抗争，带来一线短暂的希望。"
+                },
+                "shots": [
+                  {
+                    "shot_id": "sh_010",
+                    "order": 1,
+                    "block_type": "action",
+                    "character_id": "",
+                    "character_name": "",
+                    "text": "狐妖猛然睁眼，眼中泪光闪烁，但同时，一股蓝白色的灵力洪流从她体内迸发，冲击着捆仙索，使其发出嗡鸣。她的九条狐尾在此刻变得明亮。",
+                    "emotion_hint": "紧张",
+                    "continuity_refs": {
+                      "props": [
+                        "prop_001"
+                      ],
+                      "wardrobe_character_ids": [
+                        "char_001"
+                      ]
+                    },
+                    "shot_type": "medium",
+                    "camera": {
+                      "angle": "eye_level",
+                      "movement": "static",
+                      "framing_notes": "聚焦狐妖灵力爆发的瞬间，强调视觉效果和情感力量。"
+                    },
+                    "visual_goal": "展现狐妖内在情感的强大外部表现。",
+                    "action_focus": "狐妖睁眼与灵力迸发。",
+                    "characters_in_frame": [
+                      "char_001"
+                    ],
+                    "props_in_frame": [
+                      "prop_001"
+                    ],
+                    "keyframe_plan": {
+                      "keyframe_count": 1,
+                      "keyframe_notes": []
+                    }
+                  },
+                  {
+                    "shot_id": "sh_011",
+                    "order": 2,
+                    "block_type": "action",
+                    "character_id": "",
+                    "character_name": "",
+                    "text": "姜子牙面色微变，眼中闪过一丝不易察觉的惊讶与凝重。他紧握斩妖剑的手指微顿，显然被这股灵力所影响。",
+                    "emotion_hint": "紧张",
+                    "continuity_refs": {
+                      "props": [
+                        "prop_003"
+                      ],
+                      "wardrobe_character_ids": [
+                        "char_002"
+                      ]
+                    },
+                    "shot_type": "close_up",
+                    "camera": {
+                      "angle": "eye_level",
+                      "movement": "static",
+                      "framing_notes": "捕捉姜子牙细微的表情变化，突出其意外与警惕。"
+                    },
+                    "visual_goal": "展示姜子牙对狐妖异变的反应。",
+                    "action_focus": "姜子牙的面部表情和手部动作。",
+                    "characters_in_frame": [
+                      "char_002"
+                    ],
+                    "props_in_frame": [
+                      "prop_003"
+                    ],
+                    "keyframe_plan": {
+                      "keyframe_count": 1,
+                      "keyframe_notes": []
+                    }
+                  },
+                  {
+                    "shot_id": "sh_012",
+                    "order": 3,
+                    "block_type": "dialogue",
+                    "character_id": "char_002",
+                    "character_name": "姜子牙",
+                    "text": "这股气息…",
+                    "emotion_hint": "惊疑",
+                    "continuity_refs": {
+                      "props": [
+                        "prop_003"
+                      ],
+                      "wardrobe_character_ids": [
+                        "char_002"
+                      ]
+                    },
+                    "shot_type": "medium",
+                    "camera": {
+                      "angle": "low_angle",
+                      "movement": "static",
+                      "framing_notes": "强调斩妖剑的停滞和灵力带来的影响。"
+                    },
+                    "visual_goal": "视觉化灵力对审判的干扰。",
+                    "action_focus": "斩妖剑悬空震颤，发出低沉嗡鸣；姜子牙惊疑低问。",
+                    "characters_in_frame": [],
+                    "props_in_frame": [
+                      "prop_003"
+                    ],
+                    "keyframe_plan": {
+                      "keyframe_count": 1,
+                      "keyframe_notes": []
+                    }
+                  }
+                ]
+              },
+              {
+                "scene_id": "sc_005",
+                "order": 5,
+                "linked_story_step_id": "arc_005",
+                "heading": {
+                  "location_id": "loc_001",
+                  "location_name": "封神台",
+                  "interior_exterior": "EXT",
+                  "time_of_day": "DAY"
+                },
+                "summary": "最终命运无法改变，狐妖带着对过往的了悟和对神秘男子的连接，以一种平静或不屈的姿态面对最后的时刻。",
+                "continuity": {
+                  "props_present": [
+                    "斩妖剑",
+                    "神台"
+                  ],
+                  "character_wardrobe_notes": [
+                    {
+                      "character_id": "char_001",
+                      "wardrobe": "身着破败的浅色长袍，黑发凌乱，九条白色狐尾残破不堪。",
+                      "must_keep": [
+                        "破败长袍",
+                        "九条残破狐尾"
+                      ]
+                    },
+                    {
+                      "character_id": "char_002",
+                      "wardrobe": "身着庄重肃穆的道家仙袍。",
+                      "must_keep": [
+                        "道家仙袍"
+                      ]
+                    }
+                  ],
+                  "must_keep_scene_facts": [
+                    "背景设定在中国神话的封神之战后",
+                    "九天惊雷不断",
+                    "狐妖最终接受或超越了她的命运"
+                  ]
+                },
+                "scene_consistency_pack": {
+                  "location_lock": {
+                    "location_id": "loc_001",
+                    "time_of_day": "DAY",
+                    "environment_notes": [
+                      "高耸、庄严的仪式平台，笼罩在弥漫的薄雾中",
+                      "充满强大的灵气",
+                      "天空有九天惊雷滚滚",
+                      "根植于中国神话和封神之战的背景"
+                    ]
+                  },
+                  "character_locks": [
+                    {
+                      "character_id": "char_001",
+                      "identity_notes": [
+                        "封神之战后幸存的最后一只九尾狐妖，拥有悲剧之美",
+                        "中国神话人物，虚弱无力，但心灵已得到慰藉"
+                      ],
+                      "wardrobe_notes": [
+                        "黑发，破烂的浅色长袍，九条巨大蓬松的白尾"
+                      ],
+                      "must_keep": [
+                        "九条尾巴可见",
+                        "破烂长袍暗示其痛苦"
+                      ]
+                    },
+                    {
+                      "character_id": "char_002",
+                      "identity_notes": [
+                        "强大正义的道家仙人兼军事家，封神之战的关键人物",
+                        "代表中国神话中的神圣权威和新王朝的坚定秩序"
+                      ],
+                      "wardrobe_notes": [
+                        "传统道家仙人服饰，庄重威严"
+                      ],
+                      "must_keep": [
+                        "道袍",
+                        "强大、坚定的风范"
+                      ]
+                    }
+                  ],
+                  "props_lock": [
+                    {
+                      "prop_id": "prop_003",
+                      "prop_name": "斩妖剑",
+                      "must_keep": [
+                        "姜子牙手持，散发着神圣寒光的刑具"
+                      ]
+                    }
+                  ],
+                  "style_lock": {
+                    "global_style_notes": [
+                      "故事背景设定在中国神话世界，特别是封神之战后",
+                      "基调：悲怆、戏剧性、缥缈、紧张、悔恨、救赎"
+                    ],
+                    "must_avoid": [
+                      "过于血腥或写实的暴力描写"
+                    ]
+                  }
+                },
+                "scene_end": {
+                  "turn": "姜子牙完成斩妖，狐妖最终迎来命运，但她的眼神中充满着对过往的了悟和超越死亡的连接。",
+                  "emotional_shift": "从最终的悲剧转变为一种超脱而永恒的平和，或是不屈的遗世独立。"
+                },
+                "shots": [
+                  {
+                    "shot_id": "sh_013",
+                    "order": 1,
+                    "block_type": "action",
+                    "character_id": "",
+                    "character_name": "",
+                    "text": "狐妖的脸上已无恐惧，取而代之的是一种了悟后的平静，或是带着回忆的不屈。她的目光穿透远方，仿佛看到了永恒的连接。",
+                    "emotion_hint": "平静",
+                    "continuity_refs": {
+                      "props": [],
+                      "wardrobe_character_ids": [
+                        "char_001"
+                      ]
+                    },
+                    "shot_type": "close_up",
+                    "camera": {
+                      "angle": "eye_level",
+                      "movement": "static",
+                      "framing_notes": "聚焦狐妖的面部，强调她眼神中的转变和内在的坚韧。"
+                    },
+                    "visual_goal": "展现狐妖从绝望到超脱的内心升华。",
+                    "action_focus": "狐妖的眼神和面部表情。",
+                    "characters_in_frame": [
+                      "char_001"
+                    ],
+                    "props_in_frame": [],
+                    "keyframe_plan": {
+                      "keyframe_count": 1,
+                      "keyframe_notes": []
+                    }
+                  },
+                  {
+                    "shot_id": "sh_014",
+                    "order": 2,
+                    "block_type": "action",
+                    "character_id": "",
+                    "character_name": "",
+                    "text": "姜子牙重拾坚定，斩妖剑最终落下，剑光一闪而过。九天惊雷在这一刻达到顶点，似乎在为神明昭示最终的裁决。",
+                    "emotion_hint": "紧张",
+                    "continuity_refs": {
+                      "props": [
+                        "prop_003"
+                      ],
+                      "wardrobe_character_ids": [
+                        "char_002"
+                      ]
+                    },
+                    "shot_type": "medium",
+                    "camera": {
+                      "angle": "high_angle",
+                      "movement": "zoom_out",
+                      "framing_notes": "展现姜子牙完成裁决的瞬间，保持庄重感，不直接展示血腥。"
+                    },
+                    "visual_goal": "表现审判的不可逆转性。",
+                    "action_focus": "斩妖剑的最终落下。",
+                    "characters_in_frame": [
+                      "char_002",
+                      "char_001"
+                    ],
+                    "props_in_frame": [
+                      "prop_003"
+                    ],
+                    "keyframe_plan": {
+                      "keyframe_count": 1,
+                      "keyframe_notes": []
+                    }
+                  },
+                  {
+                    "shot_id": "sh_015",
+                    "order": 3,
+                    "block_type": "dialogue",
+                    "character_id": "char_001",
+                    "character_name": "狐妖",
+                    "text": "我…终于见到你。",
+                    "emotion_hint": "释然",
+                    "continuity_refs": {
+                      "props": [],
+                      "wardrobe_character_ids": [
+                        "char_001"
+                      ]
+                    },
+                    "shot_type": "wide",
+                    "camera": {
+                      "angle": "low_angle",
+                      "movement": "crane_shot",
+                      "framing_notes": "以唯美而缥缈的方式呈现狐妖的最终消逝，强调她的精神永存。"
+                    },
+                    "visual_goal": "象征狐妖的最终结局和她记忆的超越性。",
+                    "action_focus": "身形在神光中渐散，九尾最后一闪如烟散去；唇间最后的眷恋。",
+                    "characters_in_frame": [
+                      "char_001"
+                    ],
+                    "props_in_frame": [],
+                    "keyframe_plan": {
+                      "keyframe_count": 1,
+                      "keyframe_notes": []
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "metrics": {
+            "scene_count": 5,
+            "shot_count_total": 15,
+            "avg_shots_per_scene": 3.0,
+            "dialogue_block_count": 0,
+            "action_block_count": 15
+          }
+        }
+      },
+      "keyframes_metadata": {
+        "caption": "Keyframe planning document: 5 scene(s), 15 shot(s), with per-shot frame descriptions and motion hints. Consumed by a downstream image-to-video generation step.",
+        "scope": "global",
+        "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/KeyFrameAgent/step_5_21c87218_keyframeagent_exec_6.json",
+        "mime": "application/json",
+        "payload": {
+          "content": {
+            "global_anchors": {
+              "characters": [
+                {
+                  "entity_id": "char_001",
+                  "prompt_summary": "A Chinese mythical nine-tailed fox demon, surviving the War of Gods. She possesses a tragic beauty, with flowing black hair and a tattered light-colored robe. Her nine large, fluffy white tails are visible and damaged, signifying her pain and weakness. In memories, she appears in human form, with a serene face and elegant ancient attire, without her fox tails.",
+                  "reference_image_uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png"
+                },
+                {
+                  "entity_id": "char_002",
+                  "prompt_summary": "A powerful and righteous Taoist immortal and strategist, a key figure from the War of Gods in Chinese mythology. He embodies divine authority and the resolute order of a new dynasty. He wears traditional, dignified Taoist immortal robes, maintaining a formidable and unwavering demeanor.",
+                  "reference_image_uri": ""
+                },
+                {
+                  "entity_id": "char_003",
+                  "prompt_summary": "A mysterious human figure from the fox demon's memories, he is a compassionate presence in Chinese mythology. He wears simple yet elegant ancient attire and possesses a gentle, kind expression.",
+                  "reference_image_uri": ""
+                }
+              ],
+              "locations": [
+                {
+                  "entity_id": "loc_001",
+                  "prompt_summary": "A towering, solemn ritual platform rooted in Chinese mythology from the War of Gods. It is enveloped in pervasive mist, imbued with potent spiritual energy, and frequently under skies with rolling thunder. In memory, it transforms into a tranquil ancient garden or humble cottage, bathed in warm sunlight, with birds chirping and flowers blooming.",
+                  "reference_image_uri": ""
+                }
+              ],
+              "props": [
+                {
+                  "entity_id": "prop_001",
+                  "prompt_summary": "A magical rope used to bind the fox demon, emitting a divine glow.",
+                  "reference_image_uri": ""
+                },
+                {
+                  "entity_id": "prop_002",
+                  "prompt_summary": "A duster held by Jiang Ziya, symbolizing his Taoist identity and authority.",
+                  "reference_image_uri": ""
+                },
+                {
+                  "entity_id": "prop_003",
+                  "prompt_summary": "A demon-slaying sword held by Jiang Ziya, an execution tool radiating a sacred, chilling light.",
+                  "reference_image_uri": ""
+                },
+                {
+                  "entity_id": "prop_004",
+                  "prompt_summary": "An ancient, rustic stone table, bearing traces of time, featured in a memory scene holding tea sets.",
+                  "reference_image_uri": ""
+                },
+                {
+                  "entity_id": "prop_005",
+                  "prompt_summary": "Exquisite ancient-style tea sets, present in a memory scene.",
+                  "reference_image_uri": ""
+                }
+              ]
+            },
+            "scenes": [
+              {
+                "scene_id": "sc_001",
+                "stability_keyframes": {
+                  "characters": [
+                    {
+                      "entity_id": "char_001",
+                      "prompt_summary": "The fox demon appears weary and bound, her black hair disheveled. Her nine white tails are visibly tattered and broken, drooping behind her.",
+                      "reference_image_uri": ""
+                    },
+                    {
+                      "entity_id": "char_002",
+                      "prompt_summary": "Jiang Ziya sits with an unassailable dignity, holding his duster. He is composed and authoritative, observing the scene.",
+                      "reference_image_uri": ""
+                    }
+                  ],
+                  "locations": [
+                    {
+                      "entity_id": "loc_001",
+                      "prompt_summary": "The towering ritual platform is heavily shrouded in thick, oppressive mist. The sky above is dark, with continuous, rolling thunder and flashes of lightning.",
+                      "reference_image_uri": ""
+                    }
+                  ],
+                  "props": [
+                    {
+                      "entity_id": "prop_001",
+                      "prompt_summary": "The magical binding rope encircles the fox demon, glowing faintly with a divine light, emphasizing her captivity.",
+                      "reference_image_uri": ""
+                    },
+                    {
+                      "entity_id": "prop_002",
+                      "prompt_summary": "The duster is held firmly by Jiang Ziya, a symbol of his unwavering Taoist authority amidst the tension.",
+                      "reference_image_uri": ""
+                    }
+                  ]
+                },
+                "shots": [
+                  {
+                    "shot_id": "sh_001",
+                    "characters_in_frame": [
+                      "char_001",
+                      "char_002"
+                    ],
+                    "props_in_frame": [
+                      "prop_001"
+                    ],
+                    "keyframes": [
+                      {
+                        "prompt_summary": "A high-angle crane shot captures the expansive, mist-shrouded Fengshen Stage under a sky of rolling thunder. The fox demon, bound by divine ropes, stumbles onto the platform. Jiang Ziya sits imposingly, observing her with an air of unshakeable authority.",
+                        "video_motion_hint": "The camera slowly cranes down, revealing the vast stage and the fox demon's hesitant, stumbling steps as she is forced forward."
+                      }
+                    ]
+                  },
+                  {
+                    "shot_id": "sh_002",
+                    "characters_in_frame": [
+                      "char_001"
+                    ],
+                    "props_in_frame": [],
+                    "keyframes": [
+                      {
+                        "prompt_summary": "A close-up shot focuses on the fox demon's face, framed by disheveled black hair. Her weary expression is filled with despair and indignation, as her nine tattered tails hang limply behind her, trembling slightly.",
+                        "video_motion_hint": "Subtle quivering in the fox demon's body and her broken tails, highlighting her weakness."
+                      }
+                    ]
+                  },
+                  {
+                    "shot_id": "sh_003",
+                    "characters_in_frame": [
+                      "char_002"
+                    ],
+                    "props_in_frame": [
+                      "prop_002"
+                    ],
+                    "keyframes": [
+                      {
+                        "prompt_summary": "An eye-level medium shot shows Jiang Ziya, solemn and commanding, slowly raising his hand. The chaotic noise around the platform instantly stills, leaving only the low rumble of the distant thunder. His stern gaze is fixed on the fox demon, ready to pronounce judgment.",
+                        "video_motion_hint": "Jiang Ziya's hand slowly rises, and then his head slightly turns, emphasizing his gaze."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "scene_id": "sc_002",
+                "stability_keyframes": {
+                  "characters": [
+                    {
+                      "entity_id": "char_001",
+                      "prompt_summary": "The fox demon is still bound and weary, exhibiting deep despair. She is physically trembling but appears resigned to her fate.",
+                      "reference_image_uri": ""
+                    },
+                    {
+                      "entity_id": "char_002",
+                      "prompt_summary": "Jiang Ziya maintains his dignified presence, now holding a formidable demon-slaying sword. His expression is resolute, ready to execute judgment.",
+                      "reference_image_uri": ""
+                    }
+                  ],
+                  "locations": [
+                    {
+                      "entity_id": "loc_001",
+                      "prompt_summary": "The Fengshen Stage remains shrouded in dense mist under a sky charged with constant, booming thunder, amplifying the tense atmosphere.",
+                      "reference_image_uri": ""
+                    }
+                  ],
+                  "props": [
+                    {
+                      "entity_id": "prop_003",
+                      "prompt_summary": "The demon-slaying sword, held by Jiang Ziya, emits a sacred, chilling light, serving as the instrument of final judgment.",
+                      "reference_image_uri": ""
+                    }
+                  ]
+                },
+                "shots": [
+                  {
+                    "shot_id": "sh_004",
+                    "characters_in_frame": [
+                      "char_002"
+                    ],
+                    "props_in_frame": [
+                      "prop_003"
+                    ],
+                    "keyframes": [
+                      {
+                        "prompt_summary": "A medium shot focuses on Jiang Ziya, his face devoid of emotion, as he raises a demon-slaying sword that glows with divine light. The blade points directly at the fox demon, and flashes of celestial lightning spark along its edge, signaling the ultimate judgment.",
+                        "video_motion_hint": "Jiang Ziya's arm slowly raises the sword with steady, deliberate movement."
+                      }
+                    ]
+                  },
+                  {
+                    "shot_id": "sh_005",
+                    "characters_in_frame": [
+                      "char_001"
+                    ],
+                    "props_in_frame": [],
+                    "keyframes": [
+                      {
+                        "prompt_summary": "A close-up shot of the fox demon. She closes her eyes, a single clear tear rolling down her cheek, accepting her fate. Her entire body trembles slightly from weakness, but she is powerless to resist.",
+                        "video_motion_hint": "A single tear slowly descends from her closed eye."
+                      }
+                    ]
+                  },
+                  {
+                    "shot_id": "sh_006",
+                    "characters_in_frame": [],
+                    "props_in_frame": [],
+                    "keyframes": [
+                      {
+                        "prompt_summary": "An extreme close-up, seen through a dreamy filter, shows a fleeting, vague, yet warm vision. The profile of a mysterious man with a faint, ephemeral smile appears in the fox demon's mind, only to vanish instantly.",
+                        "video_motion_hint": "The image of the man's face slowly materializes and then softly dissolves, like a fading memory."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "scene_id": "sc_003",
+                "stability_keyframes": {
+                  "characters": [
+                    {
+                      "entity_id": "char_001",
+                      "prompt_summary": "In this memory, the fox demon appears in her human form, with a clear, beautiful face and an elegant, plain ancient costume. She radiates warmth and serenity, free from her fox tails.",
+                      "reference_image_uri": ""
+                    },
+                    {
+                      "entity_id": "char_003",
+                      "prompt_summary": "The mysterious man is present in this tranquil memory, wearing simple yet refined ancient attire. His expression is gentle and kind, reflecting a compassionate nature.",
+                      "reference_image_uri": ""
+                    }
+                  ],
+                  "locations": [
+                    {
+                      "entity_id": "loc_001",
+                      "prompt_summary": "The environment is a peaceful ancient garden, with warm sunlight filtering through bamboo leaves, casting dappled shadows. Birds chirp softly, and flowers bloom. The atmosphere is serene and idyllic, a stark contrast to the reality of Fengshen Stage.",
+                      "reference_image_uri": ""
+                    }
+                  ],
+                  "props": [
+                    {
+                      "entity_id": "prop_004",
+                      "prompt_summary": "An antique, rugged stone table sits in the garden, showing marks of age, providing a stable surface for tea.",
+                      "reference_image_uri": ""
+                    },
+                    {
+                      "entity_id": "prop_005",
+                      "prompt_summary": "A delicate set of ancient-style tea ware is carefully arranged on the stone table, adding to the scene's refined tranquility.",
+                      "reference_image_uri": ""
+                    }
+                  ]
+                },
+                "shots": [
+                  {
+                    "shot_id": "sh_007",
+                    "characters_in_frame": [
+                      "char_001"
+                    ],
+                    "props_in_frame": [],
+                    "keyframes": [
+                      {
+                        "prompt_summary": "The camera blurs the fox demon's current tormented face, then smoothly transitions to her youthful, beautiful countenance from memory. She wears a gentle smile, and her eyes are clear and serene, reflecting a peaceful past.",
+                        "video_motion_hint": "The image slowly shifts from a blurry, distressed face to a clear, tranquil face, as if focusing on a memory."
+                      }
+                    ]
+                  },
+                  {
+                    "shot_id": "sh_008",
+                    "characters_in_frame": [
+                      "char_001",
+                      "char_003"
+                    ],
+                    "props_in_frame": [
+                      "prop_004",
+                      "prop_005"
+                    ],
+                    "keyframes": [
+                      {
+                        "prompt_summary": "In a tranquil ancient garden, the fox demon (in human form) and the mysterious man sit side-by-side at a rustic stone table. Warm sunlight filters through bamboo, creating dappled patterns. They share a gentle smile, immersed in a serene and peaceful moment.",
+                        "video_motion_hint": "The sunlight subtly flickers through the bamboo leaves, and the characters' expressions hold a gentle, lingering smile."
+                      }
+                    ]
+                  },
+                  {
+                    "shot_id": "sh_009",
+                    "characters_in_frame": [
+                      "char_001",
+                      "char_003"
+                    ],
+                    "props_in_frame": [],
+                    "keyframes": [
+                      {
+                        "prompt_summary": "A close-up shot focuses on the fox demon's hand gently resting on top of the mysterious man's hand, conveying unspoken affection. The warm light and shadows begin to flicker, and the memory scene slowly blurs, threatening to dissipate.",
+                        "video_motion_hint": "The light on their clasped hands gently flickers, and the edges of the frame softly blur, suggesting the memory is fading."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "scene_id": "sc_004",
+                "stability_keyframes": {
+                  "characters": [
+                    {
+                      "entity_id": "char_001",
+                      "prompt_summary": "The fox demon's face shows a sudden surge of emotion, her eyes now open and tearful. A powerful, blue-white spiritual energy radiates from her, impacting her binds. Her nine fox tails glow brightly with newfound power.",
+                      "reference_image_uri": ""
+                    },
+                    {
+                      "entity_id": "char_002",
+                      "prompt_summary": "Jiang Ziya's stoic composure falters slightly, a flicker of surprise and gravity in his eyes. His grip on the demon-slaying sword tightens, indicating he is affected by the sudden spiritual surge.",
+                      "reference_image_uri": ""
+                    }
+                  ],
+                  "locations": [
+                    {
+                      "entity_id": "loc_001",
+                      "prompt_summary": "The imposing Fengshen Stage is intensely charged with spiritual energy and the constant, deafening roar of celestial thunder. The air hums with tension from the fox demon's power.",
+                      "reference_image_uri": ""
+                    }
+                  ],
+                  "props": [
+                    {
+                      "entity_id": "prop_001",
+                      "prompt_summary": "The magical binding rope vibrates intensely and emits a buzzing sound as it is impacted by the fox demon's surging blue-white spiritual energy.",
+                      "reference_image_uri": ""
+                    },
+                    {
+                      "entity_id": "prop_003",
+                      "prompt_summary": "The demon-slaying sword, held by Jiang Ziya, is momentarily halted in its descent. It trembles and emits a low hum from the spiritual shockwave.",
+                      "reference_image_uri": ""
+                    }
+                  ]
+                },
+                "shots": [
+                  {
+                    "shot_id": "sh_010",
+                    "characters_in_frame": [
+                      "char_001"
+                    ],
+                    "props_in_frame": [
+                      "prop_001"
+                    ],
+                    "keyframes": [
+                      {
+                        "prompt_summary": "A medium shot captures the fox demon abruptly opening her eyes, which glisten with tears. Simultaneously, a torrent of blue-white spiritual energy erupts from her body, impacting the binding ropes and causing them to hum. Her nine fox tails illuminate brightly.",
+                        "video_motion_hint": "The blue-white spiritual energy visibly bursts outwards, causing the binding ropes to vibrate and her tails to glow with an increasing intensity."
+                      }
+                    ]
+                  },
+                  {
+                    "shot_id": "sh_011",
+                    "characters_in_frame": [
+                      "char_002"
+                    ],
+                    "props_in_frame": [
+                      "prop_003"
+                    ],
+                    "keyframes": [
+                      {
+                        "prompt_summary": "A close-up shot reveals Jiang Ziya's subtle change in expression, a flash of surprise and solemnity in his eyes. His fingers, tightly gripping the demon-slaying sword, pause momentarily, clearly affected by the spiritual surge.",
+                        "video_motion_hint": "Jiang Ziya's eyes subtly widen, and his hand momentarily hesitates."
+                      }
+                    ]
+                  },
+                  {
+                    "shot_id": "sh_012",
+                    "characters_in_frame": [],
+                    "props_in_frame": [
+                      "prop_003"
+                    ],
+                    "keyframes": [
+                      {
+                        "prompt_summary": "A medium shot, from a low angle, shows the demon-slaying sword held by Jiang Ziya, suspended mid-air. The blade trembles from the impact of spiritual energy, emitting a low hum. The distant celestial thunder seems to hesitate at this moment.",
+                        "video_motion_hint": "The sword slowly hovers, vibrating subtly, while the celestial thunder momentarily pauses its booming sound."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "scene_id": "sc_005",
+                "stability_keyframes": {
+                  "characters": [
+                    {
+                      "entity_id": "char_001",
+                      "prompt_summary": "The fox demon's face now shows a profound sense of peace and understanding, or perhaps defiant resilience, replacing any fear. Her gaze is distant, as if seeing an eternal connection, even in her tattered state.",
+                      "reference_image_uri": ""
+                    },
+                    {
+                      "entity_id": "char_002",
+                      "prompt_summary": "Jiang Ziya has regained his resolute demeanor. His expression is firm as he prepares to deliver the final strike, the demon-slaying sword held with conviction.",
+                      "reference_image_uri": ""
+                    }
+                  ],
+                  "locations": [
+                    {
+                      "entity_id": "loc_001",
+                      "prompt_summary": "The Fengshen Stage is filled with a dramatic, climactic tension. The mist hangs heavy, and the nine heavens' thunder roars at its peak, signaling the final act of divine judgment.",
+                      "reference_image_uri": ""
+                    }
+                  ],
+                  "props": [
+                    {
+                      "entity_id": "prop_003",
+                      "prompt_summary": "The demon-slaying sword, held by Jiang Ziya, is now poised for its final descent, its sacred light intensified, ready to execute the divine verdict.",
+                      "reference_image_uri": ""
+                    }
+                  ]
+                },
+                "shots": [
+                  {
+                    "shot_id": "sh_013",
+                    "characters_in_frame": [
+                      "char_001"
+                    ],
+                    "props_in_frame": [],
+                    "keyframes": [
+                      {
+                        "prompt_summary": "A close-up focuses on the fox demon's face, devoid of fear. Instead, it reflects a profound understanding and peace, or perhaps an unyielding spirit born from memories. Her gaze penetrates the distance, as if perceiving an eternal connection.",
+                        "video_motion_hint": "Her eyes slowly move to gaze upwards and outwards, showing a sense of transcendence."
+                      }
+                    ]
+                  },
+                  {
+                    "shot_id": "sh_014",
+                    "characters_in_frame": [
+                      "char_002",
+                      "char_001"
+                    ],
+                    "props_in_frame": [
+                      "prop_003"
+                    ],
+                    "keyframes": [
+                      {
+                        "prompt_summary": "A high-angle medium shot depicts Jiang Ziya regaining his resolve, bringing the demon-slaying sword down. Its sacred light flashes briefly. The celestial thunder reaches its crescendo, seemingly proclaiming the final divine judgment for the fox demon.",
+                        "video_motion_hint": "The sword swiftly descends, with a brief, sharp flash of light."
+                      }
+                    ]
+                  },
+                  {
+                    "shot_id": "sh_015",
+                    "characters_in_frame": [
+                      "char_001"
+                    ],
+                    "props_in_frame": [],
+                    "keyframes": [
+                      {
+                        "prompt_summary": "A low-angle crane shot captures the fox demon's form gradually dissipating within a divine radiance. Her nine fox tails emit a dazzling white light in their final moments before vanishing like smoke. Only her knowing gaze remains, eternal in memory.",
+                        "video_motion_hint": "The fox demon's form slowly dissolves into shimmering light, and her tails glow intensely before fading away like smoke. The camera slowly cranes up, emphasizing her transcendence."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "style_notes": [
+              "故事背景设定在中国神话世界，特别是封神之战后",
+              "基调：悲怆、戏剧性、缥缈、紧张、悔恨、救赎",
+              "记忆场景呈现温馨、柔和的色彩和光线"
+            ],
+            "must_avoid": [
+              "过于血腥或写实的暴力描写"
+            ]
+          },
+          "metrics": {
+            "scene_count": 5,
+            "shot_count": 15,
+            "keyframe_count_total": 15,
+            "avg_keyframes_per_shot": 1.0,
+            "global_character_anchor_count": 3,
+            "global_location_anchor_count": 1,
+            "global_prop_anchor_count": 5,
+            "stability_character_keyframe_count": 10,
+            "stability_location_keyframe_count": 5,
+            "stability_prop_keyframe_count": 8
+          }
+        }
+      },
+      "shot_stills": [
+        {
+          "caption": "Rendered starting frame for shot sh_004 in scene sc_002. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_004",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_004_kf_001.png",
+          "mime": "image/png",
+          "payload": null
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_006 in scene sc_002. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_006",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_006_kf_001.png",
+          "mime": "image/png",
+          "payload": null
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_007 in scene sc_003. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_007",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_007_kf_001.png",
+          "mime": "image/png",
+          "payload": null
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_010 in scene sc_004. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_010",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_010_kf_001.png",
+          "mime": "image/png",
+          "payload": null
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_015 in scene sc_005. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_015",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_015_kf_001.png",
+          "mime": "image/png",
+          "payload": null
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_009 in scene sc_003. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_009",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_009_kf_001.png",
+          "mime": "image/png",
+          "payload": null
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_002 in scene sc_001. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_002",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_002_kf_001.png",
+          "mime": "image/png",
+          "payload": null
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_005 in scene sc_002. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_005",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_005_kf_001.png",
+          "mime": "image/png",
+          "payload": null
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_012 in scene sc_004. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_012",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_012_kf_001.png",
+          "mime": "image/png",
+          "payload": null
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_011 in scene sc_004. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_011",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_011_kf_001.png",
+          "mime": "image/png",
+          "payload": null
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_001 in scene sc_001. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_001",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_001_kf_001.png",
+          "mime": "image/png",
+          "payload": null
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_008 in scene sc_003. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_008",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_008_kf_001.png",
+          "mime": "image/png",
+          "payload": null
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_013 in scene sc_005. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_013",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_013_kf_001.png",
+          "mime": "image/png",
+          "payload": null
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_003 in scene sc_001. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_003",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_003_kf_001.png",
+          "mime": "image/png",
+          "payload": null
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_014 in scene sc_005. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_014",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_014_kf_001.png",
+          "mime": "image/png",
+          "payload": null
+        }
+      ]
+    },
+    "selected_artifact_paths": [
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/ScreenplayAgent/step_4_a76cf964_screenplayagent_exec_4.json",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/KeyFrameAgent/step_5_21c87218_keyframeagent_exec_6.json",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_004_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_006_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_007_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_010_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_015_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_009_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_002_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_005_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_012_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_011_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_001_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_008_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_013_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_003_kf_001.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_014_kf_001.png"
+    ],
+    "rationale": "Screenplay was matched to the document describing temporal structure of scenes and shots. Keyframes metadata was matched to the planning document with per-shot descriptions and motion hints. Shot stills were carefully selected to include only the 'Rendered starting frame' artifacts that explicitly state they are 'To be animated into a video clip', excluding all global and scene-level identity reference images as requested."
+  }
+}

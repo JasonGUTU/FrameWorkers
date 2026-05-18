@@ -1,0 +1,26 @@
+{
+  "http_status": 200,
+  "response_body": {
+    "id": "exec_2_0d36ea46",
+    "agent_id": "TranscriptionAgent",
+    "step_id": "step_2_36b4c9c7",
+    "status": "FAILED",
+    "inputs": {
+      "step_id": "step_2_36b4c9c7",
+      "resolved_artifacts": {},
+      "resolved_input_paths": []
+    },
+    "results": {
+      "_execution_debug": {
+        "attempts": 0,
+        "overall_pass": false,
+        "eval_summary": "pre_generate error: FalTranscriptionService: source media not on disk: ''"
+      }
+    },
+    "error": "quality gate failed: pre_generate error: FalTranscriptionService: source media not on disk: ''",
+    "started_at": "2026-05-13T01:01:49.277301",
+    "completed_at": "2026-05-13T01:01:49.278392",
+    "created_at": "2026-05-13T01:01:49.277291",
+    "resolved_input_paths": []
+  }
+}

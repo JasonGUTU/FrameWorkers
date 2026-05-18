@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-12T22:38:23.541860+00:00",
+    "language": "en"
+  },
+  "content": {
+    "enriched_brief": "Make a Chinese-mythology fantasy animated short drama. The protagonist is a nine-tailed fox demon, depicted as a dark-haired woman in a tattered light robe, strikingly flanked by her nine large, fluffy white tails. At the close of the Investiture of the Gods war, this last surviving fox demon is dragged up onto the Investiture Platform by Jiang Ziya. Just before her execution, she suddenly remembers a man who has been appearing in her dreams. Add ambient sounds of the nine-heaven thunder rolling, and a mournful classical-Chinese BGM. Burn bilingual English-Chinese subtitles into the final video showing all on-screen dialogue.",
+    "image_classifications": [
+      {
+        "image_index": 0,
+        "role": "character"
+      }
+    ],
+    "image_paths": [
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png"
+    ]
+  },
+  "metrics": {
+    "image_count": 1,
+    "classified_count": 1
+  }
+}

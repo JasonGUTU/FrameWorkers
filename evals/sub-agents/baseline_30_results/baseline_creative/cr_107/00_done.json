@@ -1,0 +1,9 @@
+{
+  "case_name": "cr_107",
+  "all_ok": true,
+  "elapsed_sec": 11513.332096338272,
+  "n_shots": 8,
+  "n_succeeded": 8,
+  "final_mp4": "evals/sub-agents/baseline_30_results/baseline_creative/cr_107/final.mp4",
+  "ended_at": "2026-05-10T17:48:51"
+}

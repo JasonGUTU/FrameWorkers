@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T21:26:50.994670+00:00",
+    "language": "en"
+  },
+  "content": {
+    "enriched_brief": "Create an animated short drama about a demon-empress rebirth. The fantasy female lead is depicted as a woman with long dark hair, adorned in a vibrant red dragon-embroidered dress, and featuring a distinctive glowing forehead symbol. In her previous life, she was the demon empress who guarded the human realm, only to be killed by the joint betrayal of her most trusted disciple and the heavenly court. Reborn to the day before her demonic awakening, this time she will personally drag every one of those self-righteous heavenly beings down from their pedestals. The visual atmosphere should lean towards a dim, traditional setting. Add bilingual Chinese-English subtitles for overseas short-video distribution.",
+    "image_classifications": [
+      {
+        "image_index": 0,
+        "role": "character"
+      }
+    ],
+    "image_paths": [
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/30_results/intakeimage/intake_img_037/_workspace/workspace_global_20260510_212627/inputs/20260510_212628_547911_intake_img_037.png"
+    ]
+  },
+  "metrics": {
+    "image_count": 1,
+    "classified_count": 1
+  }
+}

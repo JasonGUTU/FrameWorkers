@@ -1,0 +1,243 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_id": "char_001",
+          "prompt_summary": "Ethan Thorne is a once-renowned, ruthlessly efficient top-tier lawyer in a modern urban setting, whose life is shattered by betrayal and tragedy. He can appear utterly devastated and broken, or reborn for vengeance with cold, calculating desire. His attire ranges from a worn prison uniform to ill-fitting civilian clothes, or modern urban business attire.",
+          "reference_image_uri": ""
+        }
+      ],
+      "locations": [
+        {
+          "entity_id": "loc_002",
+          "prompt_summary": "A grim, decaying modern urban state prison, with harsh concrete and steel architecture. This environment reflects years of despair and loss, emphasizing an atmosphere of entrapment.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "loc_003",
+          "prompt_summary": "A dimly lit, perpetually wet modern urban street in the financial district at night. The setting features reflective surfaces and urban structures, strongly reminiscent of neo-noir aesthetics.",
+          "reference_image_uri": ""
+        }
+      ],
+      "props": [
+        {
+          "entity_id": "prop_001",
+          "prompt_summary": "A crumpled, official-looking letter made of yellowed paper. This document contains devastating news, significant enough to trigger profound emotional distress.",
+          "reference_image_uri": ""
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Ethan Thorne appears gaunt and hollow-eyed, embodying profound despair and devastation. He transitions from a worn, drab prison uniform to ill-fitting, faded civilian clothes upon his release.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_002",
+              "prompt_summary": "The State Penitentiary is depicted as a grim, decaying modern urban prison, emphasizing isolation and the crushing weight of time. The scene is set under a custom time of day, suggesting a perpetual twilight or overcast gloom.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "The crumpled letter is an official-looking document, delivered to Ethan, triggering his utter devastation upon being read.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A wide, high-angle shot captures ETHAN THORNE, gaunt and hollow-eyed in a grimy prison cell. He stares blankly at the wall, a ghost of his former self, years of despair etched onto his face. The shot emphasizes his isolation and entrapment within the stark cell.",
+                "video_motion_hint": "The camera slowly zooms in on Ethan, subtly increasing the intensity of his isolation."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up shot focuses on ETHAN's hands, now calloused and rough. His hands slowly turn the yellowed pages of a worn legal textbook, a stark contrast to his past as a lawyer. The shot highlights the physical toll of imprisonment and fading memories.",
+                "video_motion_hint": "The camera remains static, capturing the subtle movement of Ethan's hands turning the pages."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A wide, low-angle shot reveals ETHAN, a gaunt figure in ill-fitting civilian clothes, walking out of imposing prison gates into a grim, grey modern-urban world. He is technically free but spiritually broken. The daunting scale of the prison emphasizes the vastness of the outside world he now faces.",
+                "video_motion_hint": "The camera tracks alongside Ethan as he walks forward, emphasizing his emergence into the world."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium, eye-level shot captures a prison guard handing ETHAN a crumpled, official-looking letter. Ethan's vacant expression flickers with a hint of dread as he takes the letter. The shot focuses on the exchange and Ethan's subtle, impending reaction.",
+                "video_motion_hint": "The camera remains static, capturing the precise moment of the letter exchange."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "An intense close-up on ETHAN's face shows him reading the letter. His eyes widen in horror, then he crumples the letter in a raw, guttural cry that seems to tear from his soul. His last vestiges of hope die, conveying utter devastation.",
+                "video_motion_hint": "The camera remains static, capturing the raw emotional breakdown on Ethan's face."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Ethan Thorne is seen in his younger body but with an intense, disoriented gaze, later transforming into a chilling, hardened glint in his eyes. He is soaking wet from the relentless rain, wearing modern urban business attire.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_003",
+              "prompt_summary": "The Rainy City Street is a dimly lit, perpetually wet modern urban street at night, in a financial district. Neon signs reflect distortedly on the slick pavement, creating a vibrant yet melancholic, neo-noir atmosphere.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_006",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A wide, sweeping view establishes a bustling modern urban street at night, slick with rain. Neon signs reflect distortedly on the wet pavement, creating a vibrant yet melancholic neo-noir atmosphere. The shot hints at the bustling world Ethan has returned to.",
+                "video_motion_hint": "The camera slowly pans across the rain-slicked street, capturing the urban lights and general ambience."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium, eye-level shot captures ETHAN, his younger self but with intense, disoriented eyes, awakening abruptly in a doorway. He clutches his head in the relentless downpour, looking around wildly, confused by his new surroundings and embodying initial disorientation.",
+                "video_motion_hint": "The camera remains static, focusing on Ethan's confused actions and panicked gaze."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_008",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up shot focuses on ETHAN's rain-streaked eyes. A rapid, disorienting montage of vivid flashes appears within his eyes: prison bars, his wife and daughter's smiling faces, and the crumpled letter. He recognizes the street, as the painful truth dawns, highlighting the internal struggle and flashback imagery.",
+                "video_motion_hint": "The camera remains static, capturing the overwhelming influx of memories in Ethan's eyes."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_009",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium-close-up, low-angle shot shows ETHAN standing, rain running down his face, looking into a large puddle. His reflection, though younger, now carries a chilling, hardened glint in its eyes, symbolizing his transformation to a vengeful architect of fate.",
+                "video_motion_hint": "The camera remains static, emphasizing the reflection and the symbolic rebirth within the puddle."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium, eye-level shot depicts ETHAN stepping forward, purposeful and resolute, blending into the blurred lights of the modern urban street. The rain falls like a cleansing baptism, yet his expression is cold, his mission clear: revenge, conveying his unwavering resolve.",
+                "video_motion_hint": "The camera dollies out, revealing more of the urban street as Ethan moves forward with a sense of destiny."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "style_notes": [
+      "Gritty, dark, neo-noir drama set in a modern-urban world, emphasizing the devastating consequences of betrayal and loss, with elements of animation.",
+      "modern-urban",
+      "gritty",
+      "dark",
+      "vengeful",
+      "drama",
+      "thriller",
+      "neo-noir",
+      "animation",
+      "Gritty, dark, vengeful neo-noir thriller set in a modern-urban world, focusing on rebirth and time-travel for calculated revenge, with elements of animation.",
+      "time-travel",
+      "calculated"
+    ],
+    "must_avoid": []
+  },
+  "metrics": {
+    "scene_count": 2,
+    "shot_count": 10,
+    "keyframe_count_total": 10,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 2,
+    "global_prop_anchor_count": 1,
+    "stability_character_keyframe_count": 2,
+    "stability_location_keyframe_count": 2,
+    "stability_prop_keyframe_count": 1
+  }
+}

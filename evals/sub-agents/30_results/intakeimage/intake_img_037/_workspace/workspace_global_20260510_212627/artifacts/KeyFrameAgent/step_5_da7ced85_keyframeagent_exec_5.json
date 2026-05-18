@@ -1,0 +1,260 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_id": "char_001",
+          "prompt_summary": "A young woman, Xueyin, embodies the formidable Demon Empress. She has long dark hair and wears a vibrant red dragon-embroidered dress. A distinctive glowing symbol is visible on her forehead.",
+          "reference_image_uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/30_results/intakeimage/intake_img_037/_workspace/workspace_global_20260510_212627/inputs/20260510_212628_547911_intake_img_037.png"
+        }
+      ],
+      "locations": [
+        {
+          "entity_id": "loc_001",
+          "prompt_summary": "A dim, secluded chamber in a traditional Chinese fantasy setting. The space resembles a humble dwelling or forgotten temple. Ancient energies permeate the air within this sanctuary.",
+          "reference_image_uri": ""
+        }
+      ],
+      "props": [
+        {
+          "entity_id": "prop_001",
+          "prompt_summary": "A small, fragmented shard of celestial jade. It glows faintly with an inherent celestial energy. Darker, wispy forces are visibly intertwining with and corrupting its pristine glow.",
+          "reference_image_uri": ""
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Xueyin is disoriented and awakening, her long dark hair slightly dishevelled. She wears a vibrant red dragon-embroidered dress. Her glowing forehead symbol flickers subtly, hinting at nascent power.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The dim, secluded chamber is filled with ancient, heavy energies. It is a humble, forgotten temple in a traditional Chinese fantasy setting, barely lit.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A young woman, Xueyin, lies disoriented on a humble mat. Her eyes flutter open with confusion. A faint, glowing symbol flickers on her forehead.",
+                "video_motion_hint": "Xueyin's eyelids slowly flutter open, her eyes darting slightly. The forehead symbol subtly pulses."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Xueyin clutches her head, groaning in pain. Violent flashes of betrayal and celestial armor assault her mind. She recoils, vulnerable in the dim chamber.",
+                "video_motion_hint": "Xueyin's hands move to her head, her body tensing and recoiling slightly. Quick, disjointed flashes appear across her vision."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Xueyin's eyes snap open, burning with cold fury. The fragmented memories coalesce into a clear vision of her trusted disciple and the Heavenly Court striking her down. Her expression is one of pure rage.",
+                "video_motion_hint": "Xueyin's eyes widen abruptly, her facial muscles tightening into a furious expression. A subtle tremor runs through her body as clarity dawns."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Xueyin stands with an intense expression, her long dark hair now more ordered. Her vibrant red dragon-embroidered dress fits her regal posture. The distinctive glowing forehead symbol is intensifying.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The dim, secluded chamber of the forgotten temple hums with ancient energies. Nascent demonic power subtly crackles in the air, transforming the atmosphere.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_004",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Xueyin paces the dim chamber, her silhouette framed by oppressive ancient shadows. She clenches her fist, a faint red energy flickering around it. She is deeply conflicted, weighing her choices.",
+                "video_motion_hint": "Xueyin slowly paces the chamber, her clenched fist subtly twitching. Faint red energy occasionally flares around her hand."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Xueyin throws her head back with a guttural roar, fully accepting her fate. Her forehead symbol flares brilliantly, casting a crimson glow. A subtle, dark aura radiates from her, signifying her full demonic awakening.",
+                "video_motion_hint": "Xueyin's head arches back dramatically. The forehead symbol rapidly brightens and pulses. A dark, ethereal aura slowly expands outward from her body."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Xueyin's face is cold and determined as she speaks her vow. Her eyes burn with focused rage. She expresses unwavering resolve, ready for retribution.",
+                "video_motion_hint": "Xueyin's lips move in a slow, deliberate speech. Her eyes hold a steady, unblinking intensity."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Xueyin appears regal and powerful, her red dragon-embroidered dress perfectly ordered. Her long dark hair is neatly styled. The glowing forehead symbol is stable and vibrantly radiant, reflecting her enhanced power.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The dim, secluded chamber now hums with potent, newly unleashed demonic energy. The ancient temple setting is charged, reflecting Xueyin's enhanced power.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "The Fragmented Celestial Jade pulses faintly on the altar. Its celestial glow is visibly intertwined with dark, corrupting energies, emanating an ominous aura.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_007",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Xueyin stands focused before a small, ancient stone altar. Her eyes are closed in deep concentration. She extends her hand, drawing upon the surge of demonic energy within her with controlled power.",
+                "video_motion_hint": "Xueyin slowly extends her hand towards the altar. Subtle energy ripples around her, emanating from within."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_008",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "Xueyin's hand hovers over the Fragmented Celestial Jade on the altar. Dark, wispy energy snakes from her fingertips, intertwining with and corrupting the jade's faint celestial glow. The interaction is deliberate and powerful.",
+                "video_motion_hint": "Wispy, dark energy slowly curls and snakes from Xueyin's fingertips, reaching for the jade. The jade's glow flickers as the dark energy encompasses it."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_009",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "The corrupted Fragmented Celestial Jade pulses once, then emits a thick, dark tendril of smoke. The smoke snakes upwards, piercing the unseen ceiling and vanishing. Xueyin's eyes open, sharp with satisfaction.",
+                "video_motion_hint": "The jade pulses once with a dark light, then a tendril of smoke slowly rises. The camera pans upwards, following the smoke until it disappears."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Xueyin stands tall, a faint, cruel smile gracing her lips. Her forehead symbol radiates with formidable, steady power. Her commanding presence promises terror to come.",
+                "video_motion_hint": "A subtle, cruel smile slowly forms on Xueyin's lips. Her forehead symbol emits a steady, powerful glow."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "style_notes": [
+      "Epic fantasy",
+      "Chinese fantasy",
+      "dim lighting",
+      "traditional setting",
+      "resurrection",
+      "revenge theme.",
+      "vengeance, growing power.",
+      "revenge",
+      "powerful magic",
+      "ominous tone."
+    ],
+    "must_avoid": []
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 10,
+    "keyframe_count_total": 10,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 1,
+    "stability_character_keyframe_count": 3,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 1
+  }
+}

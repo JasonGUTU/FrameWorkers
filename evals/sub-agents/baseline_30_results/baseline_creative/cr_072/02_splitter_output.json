@@ -1,0 +1,44 @@
+{
+  "shots": [
+    {
+      "shot_id": "sh_001",
+      "prompt": "A small, nine-tailed fox demon, with tattered fur and bound limbs, is roughly dragged by an armored warrior onto the ancient Investiture Platform. Dark clouds gather overhead, bathed in a cold, dim light, signifying the end of a long war.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_002",
+      "prompt": "Jiang Ziya, a powerful sage in ceremonial robes, stands stoically on the grand Investiture Platform. His stern gaze pierces the somber atmosphere as he raises his Investiture whip, preparing for divine judgment. Harsh, dramatic overhead light emphasizes his authority.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_003",
+      "prompt": "The young nine-tailed fox demon lies prostrate on the cold stone of the Investiture Platform, her body trembling with fear and exhaustion. Her tear-filled eyes reflect the harsh, impending doom. Dark, dramatic lighting accentuates her vulnerability and despair.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_004",
+      "prompt": "A wide shot of the desolate Investiture Platform shows the fox demon encircled by solemn, armored celestial warriors. The air is thick with anticipation and sorrow, under a sky bruised with heavy, rolling storm clouds. Distant lightning flashes illuminate the grim scene.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_005",
+      "prompt": "A sudden, ethereal glow illuminates the fox demon's face, her eyes closing briefly as a warm, golden light washes over her, contrasting the grim surroundings. A soft, dreamlike quality pervades the scene, signaling a transition to an inner memory.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_006",
+      "prompt": "Inside the fox demon's memory, a gentle man with flowing robes and kind eyes stands amidst a serene peach blossom grove, smiling warmly. Soft sunlight filters through pink petals, casting a peaceful, hopeful glow on his compassionate face.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_007",
+      "prompt": "The nine-tailed fox demon's eyes open slowly, now filled with a newfound calm and a hint of defiance. The memory's warm glow subtly lingers in her gaze, replacing her earlier fear with a quiet resolve. Her face reflects a profound inner change.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_008",
+      "prompt": "Jiang Ziya pauses, his hand lowering slightly from the raised whip, observing the fox demon's unexpected transformation. A flicker of surprise or contemplation crosses his stoic face, as the heavy atmosphere on the platform holds its breath.",
+      "duration_sec": 5
+    }
+  ]
+}

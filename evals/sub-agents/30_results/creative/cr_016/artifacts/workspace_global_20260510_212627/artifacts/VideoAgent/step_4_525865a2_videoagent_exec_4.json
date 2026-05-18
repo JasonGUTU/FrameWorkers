@@ -1,0 +1,384 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "NIGHT",
+          "environment_notes": [
+            "Old Wing - St. Jude's Psychiatric Hospital, a dilapidated and disused wing, steeped in thirty years of neglect.",
+            "Its long, hollow corridors echo with faint electrical hums and distant, unsettling sounds.",
+            "Room 304 feels like a forgotten nexus of time and memory, located within an eerie, isolated psychiatric hospital."
+          ],
+          "style_notes": [
+            "Genre: Supernatural, Suspense, Drama, Animation.",
+            "Tone: Eerie, haunting, mysterious, isolated, psychological, paranormal. Set at midnight in a psychiatric hospital.",
+            "Overall aesthetic should lean into the unsettling, desolate nature of the setting."
+          ],
+          "must_avoid": [
+            "bright, modern hospital settings",
+            "overt jump scares without build-up"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "semantic_context": {
+              "shot_type": "long",
+              "visual_goal": "Establish the eerie, isolated environment of the old hospital wing and Ethan's solitude.",
+              "action_focus": "Ethan's movement, the oppressive stillness of the corridor.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "tracking_backward",
+              "framing_notes": "Emphasize the corridor's length and desolation.",
+              "video_motion_hints": [
+                "The camera smoothly tracks backward as Ethan walks forward, emphasizing the corridor's length and his movement through it."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_002",
+            "semantic_context": {
+              "shot_type": "medium_close_up",
+              "visual_goal": "Show Ethan's first detection of the anomaly and his internal unease.",
+              "action_focus": "Ethan's listening posture, the growing apprehension in his eyes.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on Ethan's expression, emphasizing his subtle reaction to the sound.",
+              "video_motion_hints": [
+                "Ethan's head slightly cocks to one side as he listens intently. His eyes subtly widen as he processes the sound."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_003",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Pinpoint the source of the mysterious sound and establish Room 304 as a focal point of mystery.",
+              "action_focus": "The door to Room 304, the visible texture of neglect, the escalating sound.",
+              "characters_in_frame": [],
+              "camera_angle": "low",
+              "camera_movement": "dolly_in",
+              "framing_notes": "Emphasize the door's age and the ominous number. Sound design crucial here.",
+              "video_motion_hints": [
+                "The camera slowly pushes forward, dollying in towards the weathered door, bringing the peeling paint and number into sharp focus."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_004",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Convey Ethan's attempt to dismiss the anomaly, but hint at his underlying curiosity.",
+              "action_focus": "Ethan's resolute posture, his lingering glance at the door.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Show Ethan's internal conflict – curiosity versus duty.",
+              "video_motion_hints": [
+                "Ethan turns his head sharply from the door, then straightens his shoulders and continues walking, maintaining a static frame on his internal struggle."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_003",
+            "to_shot_id": "sh_004",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "NIGHT",
+          "environment_notes": [
+            "Old Wing - St. Jude's Psychiatric Hospital, a dilapidated and disused wing, steeped in thirty years of neglect.",
+            "Its long, hollow corridors echo with faint electrical hums and distant, unsettling sounds.",
+            "Room 304 feels like a forgotten nexus of time and memory, located within an eerie, isolated psychiatric hospital."
+          ],
+          "style_notes": [
+            "Genre: Supernatural, Suspense, Drama, Animation.",
+            "Tone: Eerie, haunting, mysterious, isolated, psychological, paranormal. Set at midnight in a psychiatric hospital.",
+            "Overall aesthetic should lean into the unsettling, desolate nature of the setting."
+          ],
+          "must_avoid": [
+            "bright, modern hospital settings",
+            "overt jump scares without build-up"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_005",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Convey the passage of time and Ethan's increasing obsession and fatigue.",
+              "action_focus": "Ethan's weary face, his unwavering gaze at Room 304.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Show the corridor, but focus on Ethan's fatigued yet determined stance.",
+              "video_motion_hints": [
+                "Ethan slowly walks towards the camera, his eyes fixed on an unseen point beyond the frame, conveying his growing obsession."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_006",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Emphasize the clarity of the haunting sounds and Ethan's internal battle between skepticism and belief.",
+              "action_focus": "Ethan's strained expression, the door's aged surface.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Extreme close-up on the ear and a tight shot on his face, conveying intense listening and internal struggle.",
+              "video_motion_hints": [
+                "Ethan's brow subtly furrows with concentration as his head shifts slightly, attempting to discern the faint sounds through the door."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_007",
+            "semantic_context": {
+              "shot_type": "medium_close_up",
+              "visual_goal": "Show Ethan making the conscious, irreversible decision to confront the mystery.",
+              "action_focus": "The master key, Ethan's hand, his determined eyes.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low",
+              "camera_movement": "static",
+              "framing_notes": "Focus on the key as a symbolic object, then pan up to Ethan's resolute face.",
+              "video_motion_hints": [
+                "Ethan's hand slowly emerges from his pocket, revealing the key. His gaze then shifts from the key to the door, a subtle tremor running through his arm."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_008",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Build tension around the act of unlocking the forbidden room.",
+              "action_focus": "The key turning in the lock, the sound of the old mechanism, Ethan's focused effort.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Tight shot on the key turning, emphasizing the mechanical sound and the breaking of a long-standing seal.",
+              "video_motion_hints": [
+                "The key slowly slides into the lock, then turns with a grinding motion. Ethan's fingers tighten around the key with visible strain."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_005",
+            "to_shot_id": "sh_006",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_006",
+            "to_shot_id": "sh_007",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_007",
+            "to_shot_id": "sh_008",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "NIGHT",
+          "environment_notes": [
+            "Old Wing - St. Jude's Psychiatric Hospital, a dilapidated and disused wing, steeped in thirty years of neglect.",
+            "Its long, hollow corridors echo with faint electrical hums and distant, unsettling sounds.",
+            "Room 304 feels like a forgotten nexus of time and memory, located within an eerie, isolated psychiatric hospital.",
+            "Inside Room 304, the air is stagnant and heavy, as if time has stood still."
+          ],
+          "style_notes": [
+            "Genre: Supernatural, Suspense, Drama, Animation.",
+            "Tone: Eerie, haunting, mysterious, isolated, psychological, paranormal. Set at midnight in a psychiatric hospital.",
+            "Overall aesthetic should lean into the unsettling, desolate nature of the setting."
+          ],
+          "must_avoid": [
+            "bright, modern hospital settings",
+            "overt jump scares without build-up"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_009",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Build maximum suspense as the door to the unknown room is finally opened.",
+              "action_focus": "The opening door, the creeping shadows, the intensifying recording sound.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "dolly_in",
+              "framing_notes": "Follow the door's opening, revealing the interior gradually.",
+              "video_motion_hints": [
+                "The door slowly swings inward with a creaking sound. The camera smoothly dollies in, gradually revealing more of the dark room's interior through the widening gap."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_010",
+            "semantic_context": {
+              "shot_type": "full",
+              "visual_goal": "The shocking revelation of Young Ethan, creating an impossible and deeply personal confrontation.",
+              "action_focus": "Young Ethan's spectral presence, his unblinking stare, the peak of the mysterious recording.",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Wide enough to capture the boy's entire figure, emphasizing his stillness and direct gaze.",
+              "video_motion_hints": [
+                "Young Ethan remains perfectly still, only a subtle flicker in the dim light around him hints at his spectral nature. His eyes are fixed and unblinking."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_011",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Show Ethan's complete psychological breakdown and the profound impact of the revelation.",
+              "action_focus": "Ethan's expression, his gasp, the intensity of his realization.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Extreme close-up to capture the raw emotion and shock on Ethan's face.",
+              "video_motion_hints": [
+                "Ethan's eyes dart rapidly, then lock into a horrified stare. His mouth slightly opens as a silent gasp escapes, his face tightening with shock."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_012",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Convey Ethan's immediate, stunned retreat and the lasting, disorienting impact of the vision.",
+              "action_focus": "Ethan's backward movement, his wide eyes, the fading sound.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "tracking_backward",
+              "framing_notes": "Follow Ethan as he retreats, maintaining focus on his horrified expression.",
+              "video_motion_hints": [
+                "Ethan stumbles backward, his hand instinctively rising to cover his mouth. The camera tracks his retreat, keeping his horrified expression in focus."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_009",
+            "to_shot_id": "sh_010",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_010",
+            "to_shot_id": "sh_011",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_011",
+            "to_shot_id": "sh_012",
+            "transition_type": "cut"
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_segment_count": 12
+  }
+}

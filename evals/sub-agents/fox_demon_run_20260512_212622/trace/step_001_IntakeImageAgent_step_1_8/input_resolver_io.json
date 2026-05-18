@@ -1,0 +1,42 @@
+{
+  "input": {
+    "agent_id": "IntakeImageAgent",
+    "step_id": "step_1_81595939",
+    "input_needs_description": "I convert raw user-uploaded images into caption-rich workspace artifacts. I am invoked once per upload, before any content agent runs.\n\n[raw_image_upload] (single)\nA raw user-uploaded image artifact whose caption starts with 'Raw user upload (mime=image/' and has scope 'raw_pending'. Pick the single most recent such pending image upload.",
+    "labels": [
+      "raw_image_upload"
+    ],
+    "captions_index_text": "#0  Raw user upload (mime=image/png). Pending intake processing — only visible to Intake* agents. Produced by user on 2026-05-12 22:38.\n\n#1  Structured metadata document (JSON) for a user-submitted text brief. Payload carries the raw text verbatim. Pipeline entry point — consumed by story / screenplay / narration agents. Produced by user on 2026-05-12 22:38.",
+    "id_to_path": [
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/brief_20260512_223801_057913.json"
+    ]
+  },
+  "llm_call": {
+    "system_prompt": "You match a sub-agent's input requirements to artifacts in an artifact registry.\n\nThe sub-agent's input requirements are written as one or more [label] blocks. Each block has a header of the form\n    [label_name] (single)        -- exactly one matching artifact expected\n    [label_name] (collection)    -- zero or more matching artifacts expected\nfollowed by a natural-language description of what kind of artifact that label refers to.\n\nThe artifact registry lists every persisted artifact with a #N id and a natural-language caption describing its type, pipeline role, and which agent produced it.\n\nYour job:\n  1. Read each [label] block and understand the kind of artifact the agent is asking for in that slot.\n  2. For each registry artifact, read its caption and understand the artifact's type, role, and purpose. Reason about meaning.\n  3. For each [label], decide which artifacts in the registry are instances of the kind described in that block.\n  4. Be inclusive for (collection) labels: include EVERY matching artifact, never just a sample.\n  5. Be exclusive for (single) labels: pick the single best matching artifact (or none if none clearly fits).\n  6. Distinguish artifacts that look superficially similar but play different roles in the pipeline (e.g. a reference image of an entity in isolation vs. a planned frame of a specific shot of the story). Use the caption to decide.\n  7. Only return #N ids that appear in the registry.\n\nReturn strict JSON only, with this shape:\n{\n  \"selections\": {\n    \"<label_name>\": [0, 3, 5],\n    ...\n  },\n  \"rationale\": \"<a short explanation of how you matched each label>\"\n}\nUse exactly the label names from the agent's [label] headers as keys. Values are arrays of integer ids (the #N numbers from the registry).",
+    "user_prompt": "agent_id: IntakeImageAgent\n\n=== AGENT INPUT NEEDS ===\nI convert raw user-uploaded images into caption-rich workspace artifacts. I am invoked once per upload, before any content agent runs.\n\n[raw_image_upload] (single)\nA raw user-uploaded image artifact whose caption starts with 'Raw user upload (mime=image/' and has scope 'raw_pending'. Pick the single most recent such pending image upload.\n\nLabels expected in your response: ['raw_image_upload']\n\n=== ARTIFACT REGISTRY ===\n#0  Raw user upload (mime=image/png). Pending intake processing — only visible to Intake* agents. Produced by user on 2026-05-12 22:38.\n\n#1  Structured metadata document (JSON) for a user-submitted text brief. Payload carries the raw text verbatim. Pipeline entry point — consumed by story / screenplay / narration agents. Produced by user on 2026-05-12 22:38.\n",
+    "raw_response": {
+      "selections": {
+        "raw_image_upload": [
+          0
+        ]
+      },
+      "rationale": "Artifact #0 is selected for 'raw_image_upload' because its caption 'Raw user upload (mime=image/png)' matches the required prefix and its description 'Pending intake processing' indicates the 'raw_pending' scope. It is also the only artifact meeting these criteria, thus it is the most recent eligible upload."
+    }
+  },
+  "output": {
+    "resolved_artifacts": {
+      "raw_image_upload": {
+        "caption": "Raw user upload (mime=image/png). Pending intake processing — only visible to Intake* agents.",
+        "scope": "raw_pending",
+        "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png",
+        "mime": "image/png",
+        "payload": null
+      }
+    },
+    "selected_artifact_paths": [
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png"
+    ],
+    "rationale": "Artifact #0 is selected for 'raw_image_upload' because its caption 'Raw user upload (mime=image/png)' matches the required prefix and its description 'Pending intake processing' indicates the 'raw_pending' scope. It is also the only artifact meeting these criteria, thus it is the most recent eligible upload."
+  }
+}

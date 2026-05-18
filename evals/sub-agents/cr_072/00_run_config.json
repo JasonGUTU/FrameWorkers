@@ -1,0 +1,48 @@
+{
+  "case_name": "cr_072",
+  "category": "cr",
+  "user_goal": "Make a Chinese-mythology fantasy animated short drama — at the close of the Investiture of the Gods war, the last surviving little nine-tailed fox demon is dragged up onto the Investiture Platform by Jiang Ziya. Just before her execution, she suddenly remembers a man who has been appearing in her dreams. Add ambient sounds of the nine-heaven thunder rolling, and a mournful classical-Chinese BGM.",
+  "expected_chain": [
+    [
+      "StoryAgent"
+    ],
+    [
+      "ScreenplayAgent"
+    ],
+    [
+      "KeyFrameAgent"
+    ],
+    [
+      "VideoAgent"
+    ],
+    [
+      "MusicAgent"
+    ],
+    [
+      "AmbienceAgent"
+    ],
+    [
+      "AudioMixAgent"
+    ],
+    [
+      "CompositorAgent"
+    ],
+    [
+      "done"
+    ]
+  ],
+  "flat_chain": [
+    "StoryAgent",
+    "ScreenplayAgent",
+    "KeyFrameAgent",
+    "VideoAgent",
+    "MusicAgent",
+    "AmbienceAgent",
+    "AudioMixAgent",
+    "CompositorAgent"
+  ],
+  "backend_url": "http://localhost:5009",
+  "hunyuan_endpoint": "http://sof1-h200-6:9207",
+  "infer_steps": 50,
+  "started_at": "2026-05-09T23:48:59"
+}

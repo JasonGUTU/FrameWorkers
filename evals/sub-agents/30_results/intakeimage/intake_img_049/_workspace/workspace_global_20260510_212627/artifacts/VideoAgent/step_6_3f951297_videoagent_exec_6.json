@@ -1,0 +1,386 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "CUSTOM",
+          "environment_notes": [
+            "sprawling, opulent modern-urban mansion",
+            "polished surfaces and grand architecture reflecting the wealth of the Chen clan",
+            "cold, empty atmosphere"
+          ],
+          "style_notes": [
+            "modern-urban setting with melancholy and regretful tone",
+            "reflects the lifestyle of a wealthy-clan",
+            "sad piano BGM"
+          ],
+          "must_avoid": [
+            "overt melodrama",
+            "bright, cheerful colors"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Establish the setting and Li Wei's solitude and grace within it.",
+              "action_focus": "Li Wei's isolated figure amidst opulence.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "high_angle",
+              "camera_movement": "static",
+              "framing_notes": "Emphasize Li Wei's smallness in the grand space.",
+              "video_motion_hints": [
+                "A static camera holds on Li Wei, capturing her subtle stillness amidst the expansive, empty room, highlighting her isolated presence."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_002",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Show Chen Hao's preoccupation and emotional distance.",
+              "action_focus": "Chen Hao and his work.",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on his absorbed, detached expression.",
+              "video_motion_hints": [
+                "A static shot captures Chen Hao's subtle, focused movements as he examines documents, his body language conveying his detachment from the outside world."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_003",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Highlight Li Wei's silent observation and the passage of time.",
+              "action_focus": "Li Wei's gaze and the clock.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "over_the_shoulder",
+              "camera_movement": "static",
+              "framing_notes": "Her gaze toward Chen Hao, then shift to the clock.",
+              "video_motion_hints": [
+                "Li Wei's head subtly turns, shifting her gaze from Chen Hao to the grandfather clock. The clock's pendulum swings rhythmically, emphasizing the passage of time."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_004",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Mark the turning point of her decision.",
+              "action_focus": "Li Wei's eyes and the clock hands.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Capture the subtle shift in her expression.",
+              "video_motion_hints": [
+                "The camera slowly racks focus from the clock's ticking hands to Li Wei's subtly changing eye expression, capturing a flicker of determination."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_003",
+            "to_shot_id": "sh_004",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "opulent modern-urban study within the Chen Estate",
+            "formal and impeccably maintained"
+          ],
+          "style_notes": [
+            "modern-urban setting with a shift from melancholy to resolute determination",
+            "reflects the power dynamics within a wealthy-clan",
+            "subtle tension"
+          ],
+          "must_avoid": [
+            "aggressive confrontation",
+            "loud arguments"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_005",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Establish Li Wei's newfound resolve and decisiveness.",
+              "action_focus": "Li Wei's entrance and her calm demeanor.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "tracking",
+              "framing_notes": "Follows Li Wei's steady approach.",
+              "video_motion_hints": [
+                "The camera steadily tracks Li Wei as she walks with a straight, resolute posture into the study, her steps measured and deliberate."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_006",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Show Chen Hao's initial reaction to Li Wei's unexpected action.",
+              "action_focus": "Chen Hao's face.",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Capture the nuanced change in his expression.",
+              "video_motion_hints": [
+                "Chen Hao's facial expression subtly transitions from surprise to confusion as his eyes focus on the papers Li Wei holds."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_007",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Emphasize the gravity of the divorce papers and Li Wei's resolve.",
+              "action_focus": "The exchange of the papers.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on the papers, her hand, and the tension between them.",
+              "video_motion_hints": [
+                "Li Wei's hand, holding the papers, extends across the desk with a slight tremor. Her gaze remains locked with Chen Hao's, conveying firm resolve."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_008",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Convey Li Wei's definitive break and Chen Hao's stunned abandonment.",
+              "action_focus": "Li Wei's exit and Chen Hao's reaction.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "static",
+              "framing_notes": "Show Li Wei's departure and Chen Hao's isolation in the grand space.",
+              "video_motion_hints": [
+                "Li Wei smoothly turns and walks away, her departure leaving Chen Hao still and isolated behind his desk, emphasizing his stunned state."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_005",
+            "to_shot_id": "sh_006",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_006",
+            "to_shot_id": "sh_007",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_007",
+            "to_shot_id": "sh_008",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "scene_context": {
+          "location_id": "loc_002",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "vibrant, bustling modern-urban city streets",
+            "mix of high-rise business districts and anonymous pedestrian areas",
+            "labyrinthine and overwhelming"
+          ],
+          "style_notes": [
+            "modern-urban setting with an urgent, desperate tone of regret and redemption",
+            "contrasting the cold opulence of the wealthy-clan with the chaotic city",
+            "sad piano BGM, but with a driving urgency"
+          ],
+          "must_avoid": [
+            "peaceful cityscapes",
+            "characters appearing content"
+          ]
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_009",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Show Chen Hao's frantic search amidst the anonymity of the city.",
+              "action_focus": "Chen Hao's desperate movement and expression.",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "tracking",
+              "framing_notes": "Follow Chen Hao as he pushes through the crowd.",
+              "video_motion_hints": [
+                "Chen Hao walks quickly through the bustling crowd, his head constantly turning as he scans faces, conveying his frantic search."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_010",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Convey Chen Hao's mounting desperation and regret.",
+              "action_focus": "Chen Hao's actions and emotional display.",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "static",
+              "framing_notes": "Emphasize his frustration against the towering city.",
+              "video_motion_hints": [
+                "Chen Hao makes a frustrated phone call, then slams his hand against a glass wall in an angry, desperate gesture, revealing his emotional turmoil."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_011",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Symbolize Chen Hao's profound realization of loss and his awakening.",
+              "action_focus": "Chen Hao's face and the photo.",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on the photo and his tear-filled eyes.",
+              "video_motion_hints": [
+                "Chen Hao slowly pulls the crumpled photo from his pocket and holds it, his eyes welling up with emotion as he gazes at the image."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_012",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "End the scene with Chen Hao's transformed motivation and the scale of his task.",
+              "action_focus": "Chen Hao's renewed drive.",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "high_angle",
+              "camera_movement": "crane",
+              "framing_notes": "Lift to show him as a small figure in the vast, indifferent city.",
+              "video_motion_hints": [
+                "Chen Hao pushes off the lamppost with renewed vigor and walks purposefully into the distance, gradually becoming a smaller figure as the camera cranes upward, emphasizing his journey."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_009",
+            "to_shot_id": "sh_010",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_010",
+            "to_shot_id": "sh_011",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_011",
+            "to_shot_id": "sh_012",
+            "transition_type": "cut"
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_segment_count": 12
+  }
+}

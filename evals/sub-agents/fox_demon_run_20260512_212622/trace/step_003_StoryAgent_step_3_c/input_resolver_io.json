@@ -1,0 +1,75 @@
+{
+  "input": {
+    "agent_id": "StoryAgent",
+    "step_id": "step_3_c63b3878",
+    "input_needs_description": "I am the pipeline entry point for story planning. I take a natural-language creative brief and turn it into a structured story blueprint.\n\n[creative_brief] (single)\nA natural-language brief describing what kind of story / video to produce. May be a short prompt ('a film about a cat chasing a butterfly') or a longer detailed outline / draft story text. The caption describes it as a creative brief / project intent description. If an enriched brief (one that integrates image reference descriptions) is available, prefer it over the raw text-intake brief. Pick the single most recent / most authoritative such brief.\n\n[reference_analysis] (single)\nOptional scene-level video-analysis report of an inspiration / reference video. Use cases include 'analyse this hit drama and write me a same-genre sequel / similar new story' — the LLM reads its genre, mood, scene summaries, and entities as creative seeds to shape tone and pacing of the NEW blueprint, without copying plot verbatim. Skip this label when there is no reference video being analysed.",
+    "labels": [
+      "creative_brief",
+      "reference_analysis"
+    ],
+    "captions_index_text": "#0  Global character reference image. Visual identity anchor for downstream keyframe generation. Produced by user on 2026-05-12 22:38.\n\n#1  Structured metadata document (JSON) for a user-submitted text brief. Payload carries the raw text verbatim. Pipeline entry point — consumed by story / screenplay / narration agents. Produced by user on 2026-05-12 22:38.\n\n#2  Structured metadata document (JSON) for a user-uploaded image. Payload carries the visual description and image-asset metadata. Produced by IntakeImageAgent on 2026-05-12 22:38.\n\n#3  Enriched creative brief with visual reference descriptions integrated. Supersedes the raw user brief for story generation — contains the user's original concept plus detailed visual descriptions of uploaded reference images. Produced by BriefEnricherAgent on 2026-05-12 22:38.",
+    "id_to_path": [
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/brief_20260512_223801_057913.json",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/IntakeImageAgent/step_1_81595939_intakeimageagent_exec_1.json",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/BriefEnricherAgent/step_2_4ce0f309_briefenricheragent_exec_2.json"
+    ]
+  },
+  "llm_call": {
+    "system_prompt": "You match a sub-agent's input requirements to artifacts in an artifact registry.\n\nThe sub-agent's input requirements are written as one or more [label] blocks. Each block has a header of the form\n    [label_name] (single)        -- exactly one matching artifact expected\n    [label_name] (collection)    -- zero or more matching artifacts expected\nfollowed by a natural-language description of what kind of artifact that label refers to.\n\nThe artifact registry lists every persisted artifact with a #N id and a natural-language caption describing its type, pipeline role, and which agent produced it.\n\nYour job:\n  1. Read each [label] block and understand the kind of artifact the agent is asking for in that slot.\n  2. For each registry artifact, read its caption and understand the artifact's type, role, and purpose. Reason about meaning.\n  3. For each [label], decide which artifacts in the registry are instances of the kind described in that block.\n  4. Be inclusive for (collection) labels: include EVERY matching artifact, never just a sample.\n  5. Be exclusive for (single) labels: pick the single best matching artifact (or none if none clearly fits).\n  6. Distinguish artifacts that look superficially similar but play different roles in the pipeline (e.g. a reference image of an entity in isolation vs. a planned frame of a specific shot of the story). Use the caption to decide.\n  7. Only return #N ids that appear in the registry.\n\nReturn strict JSON only, with this shape:\n{\n  \"selections\": {\n    \"<label_name>\": [0, 3, 5],\n    ...\n  },\n  \"rationale\": \"<a short explanation of how you matched each label>\"\n}\nUse exactly the label names from the agent's [label] headers as keys. Values are arrays of integer ids (the #N numbers from the registry).",
+    "user_prompt": "agent_id: StoryAgent\n\n=== AGENT INPUT NEEDS ===\nI am the pipeline entry point for story planning. I take a natural-language creative brief and turn it into a structured story blueprint.\n\n[creative_brief] (single)\nA natural-language brief describing what kind of story / video to produce. May be a short prompt ('a film about a cat chasing a butterfly') or a longer detailed outline / draft story text. The caption describes it as a creative brief / project intent description. If an enriched brief (one that integrates image reference descriptions) is available, prefer it over the raw text-intake brief. Pick the single most recent / most authoritative such brief.\n\n[reference_analysis] (single)\nOptional scene-level video-analysis report of an inspiration / reference video. Use cases include 'analyse this hit drama and write me a same-genre sequel / similar new story' — the LLM reads its genre, mood, scene summaries, and entities as creative seeds to shape tone and pacing of the NEW blueprint, without copying plot verbatim. Skip this label when there is no reference video being analysed.\n\nLabels expected in your response: ['creative_brief', 'reference_analysis']\n\n=== ARTIFACT REGISTRY ===\n#0  Global character reference image. Visual identity anchor for downstream keyframe generation. Produced by user on 2026-05-12 22:38.\n\n#1  Structured metadata document (JSON) for a user-submitted text brief. Payload carries the raw text verbatim. Pipeline entry point — consumed by story / screenplay / narration agents. Produced by user on 2026-05-12 22:38.\n\n#2  Structured metadata document (JSON) for a user-uploaded image. Payload carries the visual description and image-asset metadata. Produced by IntakeImageAgent on 2026-05-12 22:38.\n\n#3  Enriched creative brief with visual reference descriptions integrated. Supersedes the raw user brief for story generation — contains the user's original concept plus detailed visual descriptions of uploaded reference images. Produced by BriefEnricherAgent on 2026-05-12 22:38.\n",
+    "raw_response": {
+      "selections": {
+        "creative_brief": [
+          3
+        ],
+        "reference_analysis": []
+      },
+      "rationale": "For 'creative_brief', artifact #3 was selected as it is an 'Enriched creative brief' and the prompt specifies to prefer enriched briefs over raw ones (like #1). For 'reference_analysis', no artifact in the registry matched the description of a 'scene-level video-analysis report'."
+    }
+  },
+  "output": {
+    "resolved_artifacts": {
+      "creative_brief": {
+        "caption": "Enriched creative brief with visual reference descriptions integrated. Supersedes the raw user brief for story generation — contains the user's original concept plus detailed visual descriptions of uploaded reference images.",
+        "scope": "global",
+        "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/BriefEnricherAgent/step_2_4ce0f309_briefenricheragent_exec_2.json",
+        "mime": "application/json",
+        "payload": {
+          "meta": {
+            "schema_version": "0.3",
+            "created_at": "2026-05-12T22:38:23.541860+00:00",
+            "language": "en"
+          },
+          "content": {
+            "enriched_brief": "Make a Chinese-mythology fantasy animated short drama. The protagonist is a nine-tailed fox demon, depicted as a dark-haired woman in a tattered light robe, strikingly flanked by her nine large, fluffy white tails. At the close of the Investiture of the Gods war, this last surviving fox demon is dragged up onto the Investiture Platform by Jiang Ziya. Just before her execution, she suddenly remembers a man who has been appearing in her dreams. Add ambient sounds of the nine-heaven thunder rolling, and a mournful classical-Chinese BGM. Burn bilingual English-Chinese subtitles into the final video showing all on-screen dialogue.",
+            "image_classifications": [
+              {
+                "image_index": 0,
+                "role": "character"
+              }
+            ],
+            "image_paths": [
+              "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png"
+            ]
+          },
+          "metrics": {
+            "image_count": 1,
+            "classified_count": 1
+          }
+        }
+      },
+      "reference_analysis": {
+        "caption": "",
+        "scope": "",
+        "path": "",
+        "mime": "",
+        "payload": null
+      }
+    },
+    "selected_artifact_paths": [
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/BriefEnricherAgent/step_2_4ce0f309_briefenricheragent_exec_2.json"
+    ],
+    "rationale": "For 'creative_brief', artifact #3 was selected as it is an 'Enriched creative brief' and the prompt specifies to prefer enriched briefs over raw ones (like #1). For 'reference_analysis', no artifact in the registry matched the description of a 'scene-level video-analysis report'."
+  }
+}

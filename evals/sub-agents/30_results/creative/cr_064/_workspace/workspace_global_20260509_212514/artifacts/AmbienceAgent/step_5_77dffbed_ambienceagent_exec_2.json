@@ -1,0 +1,13 @@
+{
+  "content": {
+    "beds": [
+      {
+        "ambience_id": "amb_film",
+        "description": "Eerie wind whistling through desolate, crumbling underground tunnels and a collapsing bio-research lab, punctuated by distant zombie shrieks, the ominous hum of unseen dangers, and faint, sporadic air-raid sirens."
+      }
+    ]
+  },
+  "metrics": {
+    "bed_count": 1
+  }
+}

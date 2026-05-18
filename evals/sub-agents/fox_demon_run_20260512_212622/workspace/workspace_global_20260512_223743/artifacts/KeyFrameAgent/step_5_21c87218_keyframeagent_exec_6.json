@@ -1,0 +1,471 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_id": "char_001",
+          "prompt_summary": "A Chinese mythical nine-tailed fox demon, surviving the War of Gods. She possesses a tragic beauty, with flowing black hair and a tattered light-colored robe. Her nine large, fluffy white tails are visible and damaged, signifying her pain and weakness. In memories, she appears in human form, with a serene face and elegant ancient attire, without her fox tails.",
+          "reference_image_uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png"
+        },
+        {
+          "entity_id": "char_002",
+          "prompt_summary": "A powerful and righteous Taoist immortal and strategist, a key figure from the War of Gods in Chinese mythology. He embodies divine authority and the resolute order of a new dynasty. He wears traditional, dignified Taoist immortal robes, maintaining a formidable and unwavering demeanor.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "char_003",
+          "prompt_summary": "A mysterious human figure from the fox demon's memories, he is a compassionate presence in Chinese mythology. He wears simple yet elegant ancient attire and possesses a gentle, kind expression.",
+          "reference_image_uri": ""
+        }
+      ],
+      "locations": [
+        {
+          "entity_id": "loc_001",
+          "prompt_summary": "A towering, solemn ritual platform rooted in Chinese mythology from the War of Gods. It is enveloped in pervasive mist, imbued with potent spiritual energy, and frequently under skies with rolling thunder. In memory, it transforms into a tranquil ancient garden or humble cottage, bathed in warm sunlight, with birds chirping and flowers blooming.",
+          "reference_image_uri": ""
+        }
+      ],
+      "props": [
+        {
+          "entity_id": "prop_001",
+          "prompt_summary": "A magical rope used to bind the fox demon, emitting a divine glow.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_002",
+          "prompt_summary": "A duster held by Jiang Ziya, symbolizing his Taoist identity and authority.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_003",
+          "prompt_summary": "A demon-slaying sword held by Jiang Ziya, an execution tool radiating a sacred, chilling light.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_004",
+          "prompt_summary": "An ancient, rustic stone table, bearing traces of time, featured in a memory scene holding tea sets.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_005",
+          "prompt_summary": "Exquisite ancient-style tea sets, present in a memory scene.",
+          "reference_image_uri": ""
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "The fox demon appears weary and bound, her black hair disheveled. Her nine white tails are visibly tattered and broken, drooping behind her.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Jiang Ziya sits with an unassailable dignity, holding his duster. He is composed and authoritative, observing the scene.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The towering ritual platform is heavily shrouded in thick, oppressive mist. The sky above is dark, with continuous, rolling thunder and flashes of lightning.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "The magical binding rope encircles the fox demon, glowing faintly with a divine light, emphasizing her captivity.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_002",
+              "prompt_summary": "The duster is held firmly by Jiang Ziya, a symbol of his unwavering Taoist authority amidst the tension.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A high-angle crane shot captures the expansive, mist-shrouded Fengshen Stage under a sky of rolling thunder. The fox demon, bound by divine ropes, stumbles onto the platform. Jiang Ziya sits imposingly, observing her with an air of unshakeable authority.",
+                "video_motion_hint": "The camera slowly cranes down, revealing the vast stage and the fox demon's hesitant, stumbling steps as she is forced forward."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up shot focuses on the fox demon's face, framed by disheveled black hair. Her weary expression is filled with despair and indignation, as her nine tattered tails hang limply behind her, trembling slightly.",
+                "video_motion_hint": "Subtle quivering in the fox demon's body and her broken tails, highlighting her weakness."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "An eye-level medium shot shows Jiang Ziya, solemn and commanding, slowly raising his hand. The chaotic noise around the platform instantly stills, leaving only the low rumble of the distant thunder. His stern gaze is fixed on the fox demon, ready to pronounce judgment.",
+                "video_motion_hint": "Jiang Ziya's hand slowly rises, and then his head slightly turns, emphasizing his gaze."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "The fox demon is still bound and weary, exhibiting deep despair. She is physically trembling but appears resigned to her fate.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Jiang Ziya maintains his dignified presence, now holding a formidable demon-slaying sword. His expression is resolute, ready to execute judgment.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The Fengshen Stage remains shrouded in dense mist under a sky charged with constant, booming thunder, amplifying the tense atmosphere.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_003",
+              "prompt_summary": "The demon-slaying sword, held by Jiang Ziya, emits a sacred, chilling light, serving as the instrument of final judgment.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_004",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium shot focuses on Jiang Ziya, his face devoid of emotion, as he raises a demon-slaying sword that glows with divine light. The blade points directly at the fox demon, and flashes of celestial lightning spark along its edge, signaling the ultimate judgment.",
+                "video_motion_hint": "Jiang Ziya's arm slowly raises the sword with steady, deliberate movement."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up shot of the fox demon. She closes her eyes, a single clear tear rolling down her cheek, accepting her fate. Her entire body trembles slightly from weakness, but she is powerless to resist.",
+                "video_motion_hint": "A single tear slowly descends from her closed eye."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "An extreme close-up, seen through a dreamy filter, shows a fleeting, vague, yet warm vision. The profile of a mysterious man with a faint, ephemeral smile appears in the fox demon's mind, only to vanish instantly.",
+                "video_motion_hint": "The image of the man's face slowly materializes and then softly dissolves, like a fading memory."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "In this memory, the fox demon appears in her human form, with a clear, beautiful face and an elegant, plain ancient costume. She radiates warmth and serenity, free from her fox tails.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_003",
+              "prompt_summary": "The mysterious man is present in this tranquil memory, wearing simple yet refined ancient attire. His expression is gentle and kind, reflecting a compassionate nature.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The environment is a peaceful ancient garden, with warm sunlight filtering through bamboo leaves, casting dappled shadows. Birds chirp softly, and flowers bloom. The atmosphere is serene and idyllic, a stark contrast to the reality of Fengshen Stage.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_004",
+              "prompt_summary": "An antique, rugged stone table sits in the garden, showing marks of age, providing a stable surface for tea.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_005",
+              "prompt_summary": "A delicate set of ancient-style tea ware is carefully arranged on the stone table, adding to the scene's refined tranquility.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_007",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "The camera blurs the fox demon's current tormented face, then smoothly transitions to her youthful, beautiful countenance from memory. She wears a gentle smile, and her eyes are clear and serene, reflecting a peaceful past.",
+                "video_motion_hint": "The image slowly shifts from a blurry, distressed face to a clear, tranquil face, as if focusing on a memory."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_008",
+            "characters_in_frame": [
+              "char_001",
+              "char_003"
+            ],
+            "props_in_frame": [
+              "prop_004",
+              "prop_005"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "In a tranquil ancient garden, the fox demon (in human form) and the mysterious man sit side-by-side at a rustic stone table. Warm sunlight filters through bamboo, creating dappled patterns. They share a gentle smile, immersed in a serene and peaceful moment.",
+                "video_motion_hint": "The sunlight subtly flickers through the bamboo leaves, and the characters' expressions hold a gentle, lingering smile."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_009",
+            "characters_in_frame": [
+              "char_001",
+              "char_003"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up shot focuses on the fox demon's hand gently resting on top of the mysterious man's hand, conveying unspoken affection. The warm light and shadows begin to flicker, and the memory scene slowly blurs, threatening to dissipate.",
+                "video_motion_hint": "The light on their clasped hands gently flickers, and the edges of the frame softly blur, suggesting the memory is fading."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_004",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "The fox demon's face shows a sudden surge of emotion, her eyes now open and tearful. A powerful, blue-white spiritual energy radiates from her, impacting her binds. Her nine fox tails glow brightly with newfound power.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Jiang Ziya's stoic composure falters slightly, a flicker of surprise and gravity in his eyes. His grip on the demon-slaying sword tightens, indicating he is affected by the sudden spiritual surge.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The imposing Fengshen Stage is intensely charged with spiritual energy and the constant, deafening roar of celestial thunder. The air hums with tension from the fox demon's power.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "The magical binding rope vibrates intensely and emits a buzzing sound as it is impacted by the fox demon's surging blue-white spiritual energy.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_003",
+              "prompt_summary": "The demon-slaying sword, held by Jiang Ziya, is momentarily halted in its descent. It trembles and emits a low hum from the spiritual shockwave.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_010",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium shot captures the fox demon abruptly opening her eyes, which glisten with tears. Simultaneously, a torrent of blue-white spiritual energy erupts from her body, impacting the binding ropes and causing them to hum. Her nine fox tails illuminate brightly.",
+                "video_motion_hint": "The blue-white spiritual energy visibly bursts outwards, causing the binding ropes to vibrate and her tails to glow with an increasing intensity."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_011",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up shot reveals Jiang Ziya's subtle change in expression, a flash of surprise and solemnity in his eyes. His fingers, tightly gripping the demon-slaying sword, pause momentarily, clearly affected by the spiritual surge.",
+                "video_motion_hint": "Jiang Ziya's eyes subtly widen, and his hand momentarily hesitates."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_012",
+            "characters_in_frame": [],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium shot, from a low angle, shows the demon-slaying sword held by Jiang Ziya, suspended mid-air. The blade trembles from the impact of spiritual energy, emitting a low hum. The distant celestial thunder seems to hesitate at this moment.",
+                "video_motion_hint": "The sword slowly hovers, vibrating subtly, while the celestial thunder momentarily pauses its booming sound."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_005",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "The fox demon's face now shows a profound sense of peace and understanding, or perhaps defiant resilience, replacing any fear. Her gaze is distant, as if seeing an eternal connection, even in her tattered state.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Jiang Ziya has regained his resolute demeanor. His expression is firm as he prepares to deliver the final strike, the demon-slaying sword held with conviction.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The Fengshen Stage is filled with a dramatic, climactic tension. The mist hangs heavy, and the nine heavens' thunder roars at its peak, signaling the final act of divine judgment.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_003",
+              "prompt_summary": "The demon-slaying sword, held by Jiang Ziya, is now poised for its final descent, its sacred light intensified, ready to execute the divine verdict.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_013",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up focuses on the fox demon's face, devoid of fear. Instead, it reflects a profound understanding and peace, or perhaps an unyielding spirit born from memories. Her gaze penetrates the distance, as if perceiving an eternal connection.",
+                "video_motion_hint": "Her eyes slowly move to gaze upwards and outwards, showing a sense of transcendence."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_014",
+            "characters_in_frame": [
+              "char_002",
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A high-angle medium shot depicts Jiang Ziya regaining his resolve, bringing the demon-slaying sword down. Its sacred light flashes briefly. The celestial thunder reaches its crescendo, seemingly proclaiming the final divine judgment for the fox demon.",
+                "video_motion_hint": "The sword swiftly descends, with a brief, sharp flash of light."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_015",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A low-angle crane shot captures the fox demon's form gradually dissipating within a divine radiance. Her nine fox tails emit a dazzling white light in their final moments before vanishing like smoke. Only her knowing gaze remains, eternal in memory.",
+                "video_motion_hint": "The fox demon's form slowly dissolves into shimmering light, and her tails glow intensely before fading away like smoke. The camera slowly cranes up, emphasizing her transcendence."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "style_notes": [
+      "故事背景设定在中国神话世界，特别是封神之战后",
+      "基调：悲怆、戏剧性、缥缈、紧张、悔恨、救赎",
+      "记忆场景呈现温馨、柔和的色彩和光线"
+    ],
+    "must_avoid": [
+      "过于血腥或写实的暴力描写"
+    ]
+  },
+  "metrics": {
+    "scene_count": 5,
+    "shot_count": 15,
+    "keyframe_count_total": 15,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 3,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 5,
+    "stability_character_keyframe_count": 10,
+    "stability_location_keyframe_count": 5,
+    "stability_prop_keyframe_count": 8
+  }
+}

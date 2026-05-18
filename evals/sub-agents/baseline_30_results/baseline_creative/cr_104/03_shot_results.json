@@ -1,0 +1,74 @@
+[
+  {
+    "idx": 1,
+    "shot_id": "sh_001",
+    "prompt": "Young Daoist, dressed in tattered robes, kneels amidst the smoldering ruins of his mountain sect. He cradles his master's severed head, a tear tracing a path through the ash on his grim, determined fa",
+    "status": "OK",
+    "keyframe_bytes": 1642313,
+    "mp4_bytes": 894467,
+    "elapsed_sec": 1447.0813405513763
+  },
+  {
+    "idx": 2,
+    "shot_id": "sh_002",
+    "prompt": "The young Daoist clambers up a jagged, windswept mountain path, his master's head secured in a silk cloth. His worn boots slip on loose rocks, reflecting the arduous and lonely journey. Animated wuxia",
+    "status": "OK",
+    "keyframe_bytes": 1885471,
+    "mp4_bytes": 1318529,
+    "elapsed_sec": 1448.9766719341278
+  },
+  {
+    "idx": 3,
+    "shot_id": "sh_003",
+    "prompt": "Close-up on the young Daoist's face, eyes burning with cold resolve, hair and tattered robes whipping in fierce mountain winds. Distant lightning flashes illuminate his intense, unyielding expression ",
+    "status": "OK",
+    "keyframe_bytes": 1651663,
+    "mp4_bytes": 898827,
+    "elapsed_sec": 1448.506156206131
+  },
+  {
+    "idx": 4,
+    "shot_id": "sh_004",
+    "prompt": "The young Daoist stands on a high, ancient peak of Mount Kunlun, looking down at a vast, misty landscape. The twilight sky shows the first hints of a rising, ominous red moon. Animated wuxia style, se",
+    "status": "OK",
+    "keyframe_bytes": 1646589,
+    "mp4_bytes": 752808,
+    "elapsed_sec": 1449.2074930667877
+  },
+  {
+    "idx": 5,
+    "shot_id": "sh_005",
+    "prompt": "He carefully places his master's head on a moss-covered stone altar, illuminated by the fading daylight. The young Daoist unsheathes his ornate Daoist sword, its blade glinting sharply. Animated wuxia",
+    "status": "OK",
+    "keyframe_bytes": 1941276,
+    "mp4_bytes": 1080854,
+    "elapsed_sec": 1452.2892117500305
+  },
+  {
+    "idx": 6,
+    "shot_id": "sh_006",
+    "prompt": "The blood moon, large and crimson, ascends fully above Mount Kunlun, casting an eerie red glow over the ancient altar. The young Daoist begins to perform intricate sword movements, tracing arcane symb",
+    "status": "OK",
+    "keyframe_bytes": 1775973,
+    "mp4_bytes": 1006087,
+    "elapsed_sec": 1446.9673264026642
+  },
+  {
+    "idx": 7,
+    "shot_id": "sh_007",
+    "prompt": "Close-up on the Daoist's face, his eyes now glowing with ancient power and vengeful fire as he completes a final powerful gesture. Energy crackles around his hands. Wind howls fiercely, distant thunde",
+    "status": "OK",
+    "keyframe_bytes": 1668970,
+    "mp4_bytes": 928338,
+    "elapsed_sec": 1449.0519473552704
+  },
+  {
+    "idx": 8,
+    "shot_id": "sh_008",
+    "prompt": "The young Daoist stands, sword pointed skyward, backlit by the immense, pulsating blood moon. Arcane energy swirls around him and the altar, his silhouette resolute against the dark, stormy Kunlun sky",
+    "status": "OK",
+    "keyframe_bytes": 1585940,
+    "mp4_bytes": 871371,
+    "elapsed_sec": 1449.720507144928
+  }
+]

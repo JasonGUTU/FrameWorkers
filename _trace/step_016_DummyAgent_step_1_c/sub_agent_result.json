@@ -1,0 +1,17 @@
+{
+  "agent_class": "_DummyPipelineAgent",
+  "typed_input": {
+    "step_id": "step_1_c9ce298f",
+    "resolved_artifacts": {},
+    "language": "en"
+  },
+  "output": {
+    "summary": "integration ok"
+  },
+  "eval_result": null,
+  "passed": null,
+  "attempts": null,
+  "asset_dict": null,
+  "media_assets_count": 0,
+  "media_assets_summary": []
+}

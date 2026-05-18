@@ -1,0 +1,14 @@
+{
+  "input": {
+    "agent_id": "AmbienceAgent",
+    "step_id": "step_5_dca47e7b",
+    "input_needs_description": "I generate one global ambient room-tone underlay that covers the entire film. I pick the environment from any available content source — screenplay, video analysis, or the user's brief — whichever is wired up.\n\n[screenplay] (single)\nThe screenplay — I read the dominant location(s) across scenes[*] to pick a continuous room-tone underlay.\n\n[video_analysis] (single)\nA scene-level video-analysis report — scenes with setting / mood. I aggregate scenes[*].setting into a single dominant environment.\n\n[creative_brief] (single)\nThe user's verbatim natural-language brief for the whole pipeline (auto-persisted from chat / text upload). Often the most direct environment signal — the user names locations / weather / atmosphere directly ('rainy-night city street', 'jungle ambience', 'cafe interior'). Read alongside [screenplay] / [video_analysis]; any one of the three is enough.",
+    "captions_index_text": "(empty — cold start)"
+  },
+  "output": {
+    "resolved_artifacts": {},
+    "selected_artifact_paths": [],
+    "rationale": "no artifacts registered yet (cold start)"
+  },
+  "note": "cold-start: no artifacts in workspace"
+}

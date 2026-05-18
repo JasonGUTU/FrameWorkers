@@ -1,0 +1,657 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T04:05:34.306040+00:00",
+    "language": "en"
+  },
+  "content": {
+    "title": "Heavenly Emperor's Rebirth: Vengeance Unveiled",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Azure Cloud Sect Training Grounds",
+          "interior_exterior": "EXT",
+          "time_of_day": "DAY"
+        },
+        "summary": "Li Wei, now a mocked junior disciple, endures public humiliation from Senior Disciple Zhao and other peers in the bustling training grounds, highlighting his current powerlessness and the simmering rage beneath his humble exterior.",
+        "continuity": {
+          "props_present": [
+            "practice sword",
+            "stone sparring platform",
+            "practice dummies"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Traditional white and blue robes, long dark hair, appears humble.",
+              "must_keep": [
+                "traditional white and blue robes",
+                "long dark hair"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "Sect disciple robes, well-maintained and conveying status.",
+              "must_keep": [
+                "sect disciple robes"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Li Wei is outwardly perceived as a weak junior disciple.",
+            "Li Wei harbors a hidden, ancient power and burning rage for vengeance."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "A bustling, open-air training area within an ancient China-inspired cultivation sect, featuring traditional grand architecture, stone sparring platforms, and practice dummies."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "A former supreme Heavenly Emperor, now a weak, mocked junior disciple in an ancient China-inspired cultivation world. Possesses a depth of ancient power and a burning desire for retribution."
+              ],
+              "wardrobe_notes": [
+                "Traditional white and blue clothing, long dark hair."
+              ],
+              "must_keep": [
+                "long dark hair",
+                "traditional white and blue robes"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "An arrogant senior disciple of the sect, representing the current power structure in an ancient China-inspired cultivation world, completely unaware of Li Wei's true identity."
+              ],
+              "wardrobe_notes": [
+                "Standard sect disciple robes."
+              ],
+              "must_keep": []
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "practice sword",
+              "must_keep": [
+                "simple, unadorned training sword"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Overall style is martial arts fantasy, inspired by ancient China, focusing on themes of rebirth, revenge, and being underestimated.",
+              "Genre: cultivation, fantasy, drama."
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "Li Wei's silent endurance of mockery solidifies his resolve for vengeance.",
+          "emotional_shift": "From public humiliation to internal, burning determination."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The Azure Cloud Sect Training Grounds buzzes with activity. Junior disciples spar on stone platforms; some practice forms with dummies. On the edge, LI WEI (17, char_001), slender and unassuming in simple robes, attempts basic sword forms with a practice sword, visibly struggling.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Emphasize the bustling environment and Li Wei's peripheral presence."
+            },
+            "visual_goal": "Establish the bustling, competitive environment and Li Wei's current lowly, struggling status.",
+            "action_focus": "The contrast between the active training grounds and Li Wei's perceived weakness.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "SENIOR DISCIPLE ZHAO (char_002), confident and well-built, struts past Li Wei with a sneer. He stops, watching Li Wei's clumsy movements with contempt, before addressing him mockingly.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on the interaction between Zhao and Li Wei."
+            },
+            "visual_goal": "Introduce Senior Disciple Zhao and his dismissive attitude towards Li Wei.",
+            "action_focus": "Zhao's arrogant demeanor and Li Wei's reaction to his presence.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "dialogue",
+            "character_id": "char_002",
+            "character_name": "Senior Disciple Zhao",
+            "text": "Still fumbling with basic forms, Li Wei? Perhaps you should stick to sweeping floors. Some talents are simply... not meant for cultivation.",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Tight on Zhao's face to capture his condescension."
+            },
+            "visual_goal": "Emphasize Zhao's condescending tone and Li Wei's forced reaction.",
+            "action_focus": "Zhao's face as he delivers the insult.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Li Wei's face remains passive, but a fleeting, ancient coldness flashes deep within his eyes, unnoticed by Zhao. He simply bows his head slightly, gripping his practice sword tighter.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "static",
+              "framing_notes": "Tight on Li Wei's eyes to convey hidden power and resolve."
+            },
+            "visual_goal": "Reveal Li Wei's hidden resolve and suppressed power, hinting at his true identity.",
+            "action_focus": "The subtle but powerful expression in Li Wei's eyes.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_002",
+          "location_name": "Li Wei's Humble Dwelling",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Alone in his humble room, Li Wei attempts to secretly cultivate, battling the limitations of his new body while drawing strength from memories of his past as the Heavenly Emperor.",
+        "continuity": {
+          "props_present": [
+            "simple bed",
+            "low wooden table",
+            "oil lamp"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Simple, worn inner robes suitable for sleep or meditation.",
+              "must_keep": [
+                "simple inner robes"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Li Wei is secretly attempting cultivation to regain his past power.",
+            "His dwelling is sparse, reflecting his low status."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_002",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "A small, sparsely furnished room within the junior disciple quarters, emphasizing Li Wei's current lowly status in this ancient China-inspired cultivation world. Contains a simple bed and low table."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "A former supreme Heavenly Emperor, now a weak, mocked junior disciple in an ancient China-inspired cultivation world. Possesses a depth of ancient power and a burning desire for retribution."
+              ],
+              "wardrobe_notes": [
+                "Traditional white and blue clothing, long dark hair."
+              ],
+              "must_keep": [
+                "long dark hair",
+                "traditional white and blue robes"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_002",
+              "prop_name": "oil lamp",
+              "must_keep": [
+                "flickering light source",
+                "traditional design"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Overall style is martial arts fantasy, inspired by ancient China, focusing on themes of rebirth, revenge, and being underestimated.",
+              "Genre: cultivation, fantasy, drama."
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "Li Wei successfully draws a small, visible wisp of spiritual energy into his dantian, confirming that his cultivation path is viable and his return to power has begun.",
+          "emotional_shift": "From frustration and remembered betrayal to renewed hope and fierce determination."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Inside his sparsely furnished dwelling, illuminated only by a flickering OIL LAMP (prop_002), Li Wei sits cross-legged on a thin mat, eyes closed in deep meditation. His posture is rigid, betraying immense effort.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_002"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium_shot",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Highlight the solitude and focus of Li Wei."
+            },
+            "visual_goal": "Establish Li Wei's humble, solitary environment and his deep concentration.",
+            "action_focus": "Li Wei's meditative posture and the starkness of his room.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Sweat beads on Li Wei's brow. His expression is strained, fragmented images of a majestic throne and colossal betrayers flash in his mind's eye. He pushes harder, a faint spiritual pressure growing around him.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Emphasize Li Wei's struggle and internal conflict."
+            },
+            "visual_goal": "Show Li Wei's internal struggle and the immense difficulty of his cultivation.",
+            "action_focus": "Li Wei's intense facial expression and the subtle manifestations of spiritual energy.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A tiny, visible wisp of pure spiritual energy coalesces around Li Wei's fingertips, then gently sinks into his chest. His eyes snap open, burning with a mix of surprise and fierce satisfaction. The cultivation has begun.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Highlight the spiritual energy and Li Wei's reaction."
+            },
+            "visual_goal": "Confirm Li Wei's success in channeling spiritual energy and signify the turning point of his journey.",
+            "action_focus": "The wisp of energy and Li Wei's triumphant gaze.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_003",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Azure Cloud Sect Training Grounds",
+          "interior_exterior": "EXT",
+          "time_of_day": "DAY"
+        },
+        "summary": "Back in the training grounds, Li Wei subtly performs a minor cultivation feat by reviving a withered plant, unnoticed by the oblivious Senior Disciple Zhao, solidifying Li Wei's silent path of vengeance.",
+        "continuity": {
+          "props_present": [
+            "withered plant",
+            "stone sparring platforms",
+            "practice dummies"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Traditional white and blue robes, now worn with a subtle air of newfound confidence.",
+              "must_keep": [
+                "traditional white and blue robes",
+                "long dark hair"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "Sect disciple robes, same as before, conveying his unchanging arrogance.",
+              "must_keep": [
+                "sect disciple robes"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Li Wei's cultivation is progressing, but he maintains his weak facade.",
+            "Senior Disciple Zhao remains oblivious to Li Wei's true power and intent."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "A bustling, open-air training area within an ancient China-inspired cultivation sect, featuring traditional grand architecture, stone sparring platforms, and practice dummies."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "A former supreme Heavenly Emperor, now a weak, mocked junior disciple in an ancient China-inspired cultivation world. Possesses a depth of ancient power and a burning desire for retribution."
+              ],
+              "wardrobe_notes": [
+                "Traditional white and blue clothing, long dark hair."
+              ],
+              "must_keep": [
+                "long dark hair",
+                "traditional white and blue robes"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "An arrogant senior disciple of the sect, representing the current power structure in an ancient China-inspired cultivation world, completely unaware of Li Wei's true identity."
+              ],
+              "wardrobe_notes": [
+                "Standard sect disciple robes."
+              ],
+              "must_keep": []
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_003",
+              "prop_name": "withered plant",
+              "must_keep": [
+                "small, initially dying plant"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Overall style is martial arts fantasy, inspired by ancient China, focusing on themes of rebirth, revenge, and being underestimated.",
+              "Genre: cultivation, fantasy, drama."
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "Senior Disciple Zhao dismisses Li Wei with a glance, sealing his own fate as Li Wei's intent for revenge is fully crystallized.",
+          "emotional_shift": "From concealed potential to cold, resolute vengeance."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_008",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Among the bustling training grounds, Li Wei stands near a section of overgrown weeds and a WITHERED PLANT (prop_003). He subtly extends a hand, a barely perceptible shimmer of spiritual energy flowing from his palm towards the plant.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_003"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Li Wei's hand and the subtle energy transfer."
+            },
+            "visual_goal": "Show Li Wei practicing his nascent abilities discreetly.",
+            "action_focus": "Li Wei's focused hand and the subtle energy display.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The WITHERED PLANT (prop_003) visibly perks up, its leaves regaining a vibrant green in a matter of seconds. Simultaneously, SENIOR DISCIPLE ZHAO (char_002) walks by, engrossed in conversation with other disciples, completely missing the miracle beside him.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_003"
+              ],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Capture both the plant's revival and Zhao's unobservant passing."
+            },
+            "visual_goal": "Highlight Zhao's obliviousness to Li Wei's growing power.",
+            "action_focus": "The revived plant and Zhao's unobservant passing.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Zhao glances briefly at Li Wei, a familiar look of dismissal on his face, before turning his attention back to his companions and laughing loudly. He doesn't even register the now healthy plant.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Emphasize Zhao's contempt and ignorance."
+            },
+            "visual_goal": "Reinforce Zhao's contempt and Li Wei's 'unseen' threat.",
+            "action_focus": "Zhao's dismissive glance and subsequent ignorance.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_011",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Li Wei watches Zhao walk away, a faint, chilling smile playing on his lips. His eyes, now undeniably ancient and formidable, promise devastation. The Heavenly Emperor's revenge has officially begun, unnoticed by those he will destroy.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "static",
+              "framing_notes": "Tight on Li Wei's face, highlighting his eyes and vengeful expression."
+            },
+            "visual_goal": "Conclude the scene with a clear statement of Li Wei's intent and the audience's knowledge of the impending doom.",
+            "action_focus": "Li Wei's face, specifically his eyes and subtle, vengeful smile.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count_total": 11,
+    "avg_shots_per_scene": 3.6666666666666665,
+    "dialogue_block_count": 1,
+    "action_block_count": 10
+  }
+}

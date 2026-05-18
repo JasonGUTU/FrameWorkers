@@ -1,0 +1,273 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_id": "char_001",
+          "prompt_summary": "An exceptionally intelligent and emotionally distant Chinese high-school transfer student, driven by revenge. He is a survivor of a past arson, carrying trauma with a facade of cold indifference. He wears a neat, understated high-school uniform.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "char_002",
+          "prompt_summary": "A seemingly kind and observant Chinese high-school homeroom teacher. He carries the hidden burden of a heroic act from his past as Gu Xiuning's rescuer. He wears smart casual teacher's attire, typically a light-colored button-up shirt and dark trousers.",
+          "reference_image_uri": ""
+        }
+      ],
+      "locations": [
+        {
+          "entity_id": "loc_001",
+          "prompt_summary": "A modern, bustling Chinese high school building with a vibrant facade. The architecture blends contemporary design with functional school elements. Beneath its surface, a somber memory of a devastating arson ten years prior subtly permeates the environment.",
+          "reference_image_uri": ""
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Gu Xiuning stands calm and self-possessed in a bustling high school classroom, wearing his neatly pressed uniform. His posture is controlled, reflecting his emotional distance.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Mr. Lin stands observant and seemingly kind, dressed in his smart teacher's attire, in the high school classroom. His demeanor is professional and welcoming.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The Everbright High School classroom is lively and bright under the daylight, with students present. The interior is modern, but an underlying sense of unresolved history subtly affects the atmosphere.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Gu Xiuning, a calm and collected transfer student in a neat high school uniform, enters a noisy Chinese classroom. He stands at eye level, his detached presence creating a stark contrast with the lively students. The visual goal is to establish his demeanor within the vibrant school setting.",
+                "video_motion_hint": "The camera remains static, focusing on Gu Xiuning's initial entrance into the classroom and his subtle, composed movement."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up shot focuses on Gu Xiuning's intense eyes. His gaze sweeps across the classroom, sharp and observant, settling on a nearly invisible old mark near a window frame. The shot emphasizes his investigative nature at eye level.",
+                "video_motion_hint": "The camera holds static, highlighting the subtle movement of Gu Xiuning's eyes as they scan and focus."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Mr. Lin, a kind teacher in smart attire, stands at the podium, introducing himself. Gu Xiuning watches him from eye level in a medium shot, a fleeting, elusive sense of familiarity visible in his eyes. The framing captures their first encounter and the subtle recognition.",
+                "video_motion_hint": "The camera remains static, capturing the subtle exchange of glances between Gu Xiuning and Mr. Lin."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Gu Xiuning stands exposed in the high school auditorium during the day, his cold indifference now cracking under the public revelation. He is dressed in his high-school uniform, his posture slightly rigid from discomfort.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Mr. Lin observes from the stage in the high school auditorium, dressed in his teacher's attire. His expression is subtly burdened, hinting at his hidden past.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The Everbright High School auditorium is bustling and brightly lit by daylight, filled with students. The atmosphere is tense, focused on the stage where a revelation unfolds. The modern architecture feels imposing.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_004",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Inside the Everbright High School auditorium, a school official stands at the podium, announcing that Gu Xiuning is the sole survivor of the arson ten years ago. The medium shot from eye level shows the official making the announcement, initiating the public revelation of Gu Xiuning's past.",
+                "video_motion_hint": "The camera is static, capturing the official's announcement and the immediate, subtle reactions from the crowd."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Gu Xiuning stands in the student ranks in a medium shot, exposed to public scrutiny. Classmates glance and whisper, making him the center of attention. The eye-level framing conveys his unwanted visibility and discomfort amidst the crowd.",
+                "video_motion_hint": "The camera subtly pans across the student crowd, emphasizing the individual reactions and Gu Xiuning's vulnerable stillness."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Gu Xiuning and Mr. Lin make intense eye contact across the auditorium in a medium shot at eye level. For a fleeting moment, images of flames, thick smoke, and Mr. Lin's resolute face flash in Gu Xiuning's mind, capturing the critical moment of recognition.",
+                "video_motion_hint": "The camera remains static, highlighting the intense, locked gaze between the two characters and the internal flashback."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "An extreme close-up of Gu Xiuning's eyes. His gaze is a complex tapestry of immense shock, a sense of betrayal, and dawning realization. This shot isolates his profound emotional turmoil at eye level, emphasizing the impact of the dual revelation.",
+                "video_motion_hint": "The camera is static, focusing intently on the micro-expressions within Gu Xiuning's eyes as emotions flicker."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Gu Xiuning confronts Mr. Lin in an empty, quiet classroom during the afternoon. He wears his high-school uniform, his demeanor urgent and demanding as he seeks answers.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Mr. Lin faces Gu Xiuning in the deserted classroom during the afternoon, wearing his teacher's attire. His posture is tense, reflecting his reluctance and guilt.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The Everbright High School classroom is quiet and deserted in the afternoon light after dismissal. The modern setting is still, creating a confined space for a tense confrontation. The lingering memory of past arson hangs in the air.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_008",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "After school, Gu Xiuning confronts Mr. Lin in an empty classroom. The medium shot, taken at eye level, establishes a tense atmosphere. The two characters face each other in the quiet, deserted classroom, setting the scene for a pivotal, private confrontation.",
+                "video_motion_hint": "The camera remains static, capturing the silent, tense standoff between Gu Xiuning and Mr. Lin."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_009",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium shot at eye level focuses on Mr. Lin. He expresses reluctance and guilt, his facial expression somber as he says, 'Xiuning, some things, it's better you don't know.' This conveys his immediate resistance to discussing the past.",
+                "video_motion_hint": "The camera is static, focusing on Mr. Lin's subtle body language and facial micro-expressions as he speaks."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up, low-angle shot emphasizes Gu Xiuning's demanding and intense demeanor. His facial expression is urgent as he directly questions, 'I must know the truth, Mr. Lin. What exactly happened that night?' This shows his unwavering resolve to uncover the truth.",
+                "video_motion_hint": "The camera remains static, capturing Gu Xiuning's intense, unwavering gaze and determined stance."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_011",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "In a medium, eye-level shot, Mr. Lin somberly confesses to Gu Xiuning, 'The fire... it wasn't an accident. Someone set it deliberately, to cover something up.' The shot captures the weight of his revelation and Gu Xiuning's immediate reaction, marking a critical shift in their dynamic.",
+                "video_motion_hint": "The camera is static, focusing on the subtle reactions and shifts in posture of both characters as the confession is delivered."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "style_notes": [
+      "Suspenseful, somber revenge thriller set in a modern Chinese high school.",
+      "Restrained emotional tone; emphasis on internal conflict."
+    ],
+    "must_avoid": []
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 11,
+    "keyframe_count_total": 11,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 2,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 6,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 0
+  }
+}

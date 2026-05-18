@@ -1,0 +1,14 @@
+{
+  "input": {
+    "agent_id": "MusicAgent",
+    "step_id": "step_4_f83f5280",
+    "input_needs_description": "I generate one global background music track for the whole film. I pick the mood from any available content source — screenplay, video analysis, or the user's brief — whichever is wired up.\n\n[screenplay] (single)\nThe screenplay — I read its overall mood/tone (genre / tone_keywords / per-shot descriptive text) to pick a film-wide music style.\n\n[video_analysis] (single)\nA scene-level video-analysis report — scenes with mood and a video_summary.genre. I aggregate scene moods into a single film-wide mood.\n\n[creative_brief] (single)\nThe user's verbatim natural-language brief for the whole pipeline (auto-persisted from chat / text upload). Often the most direct mood signal — the user names instruments / atmosphere directly ('gentle slow piano score', 'tense orchestral theme', 'lullaby BGM'). Read alongside [screenplay] / [video_analysis]; any one of the three is enough.",
+    "captions_index_text": "(empty — cold start)"
+  },
+  "output": {
+    "resolved_artifacts": {},
+    "selected_artifact_paths": [],
+    "rationale": "no artifacts registered yet (cold start)"
+  },
+  "note": "cold-start: no artifacts in workspace"
+}

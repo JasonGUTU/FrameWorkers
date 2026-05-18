@@ -1,0 +1,552 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T03:47:25.310957+00:00",
+    "language": "en"
+  },
+  "content": {
+    "title": "Rain City Cold Case",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_002",
+          "location_name": "Homicide Unit Office",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Detective Ren, new to the homicide unit, is assigned a daunting 15-year-old cold case and begins his meticulous investigation in the late hours of the night, driven by a steely resolve despite the overwhelming task.",
+        "continuity": {
+          "props_present": [
+            "dusty old case files",
+            "file labeled 'THE RIVER KILLER - COLD CASE'",
+            "yellowed newspaper clippings",
+            "grainy crime scene photos",
+            "coffee cup"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Dark, slightly damp trench coat; crisp but worn suit beneath.",
+              "must_keep": [
+                "distinctive scar",
+                "perpetually wet hair"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Perpetual rain outside the office window."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_002",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "A cramped, fluorescent-lit office within the city's police headquarters, perpetually night.",
+              "Cluttered with old case files, maps, and discarded coffee cups.",
+              "A sanctuary of grim determination amidst the city's chaos, in a perpetually rainy urban sprawl.",
+              "Reflections of city neon and streetlights on slick asphalt outside."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Detective Ren, a new deputy captain of the homicide unit, operating in a gritty, perpetually rainy, neon-lit urban landscape.",
+                "Driven and astute, burdened by a distinctive scar.",
+                "Relentlessly pursuing the truth in a Neo-noir setting."
+              ],
+              "wardrobe_notes": [
+                "Wears a dark trench coat.",
+                "Hair is perpetually wet from the rain."
+              ],
+              "must_keep": [
+                "Detective Ren's distinctive scar near his eye.",
+                "Detective Ren's perpetually wet hair."
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "dusty old case files",
+              "must_keep": [
+                "Overwhelming quantity and disarray of files."
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "file labeled 'THE RIVER KILLER - COLD CASE'",
+              "must_keep": [
+                "Visibly old and important."
+              ]
+            },
+            {
+              "prop_id": "prop_003",
+              "prop_name": "yellowed newspaper clippings",
+              "must_keep": [
+                "Illustrate the age and grimness of the case."
+              ]
+            },
+            {
+              "prop_id": "prop_004",
+              "prop_name": "grainy crime scene photos",
+              "must_keep": [
+                "Graphic and unsettling."
+              ]
+            },
+            {
+              "prop_id": "prop_005",
+              "prop_name": "coffee cup",
+              "must_keep": [
+                "Generic, used."
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Gritty, Noir, Mysterious, Suspenseful tone.",
+              "Neo-noir aesthetic, emphasizing perpetual rain, neon lights, and shadows.",
+              "Focus on urban decay and melancholic atmosphere in a 'Rainy City'."
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "Despite the discouraging initial assessment of minimal leads, Ren's meticulous nature and unwavering determination kick in, and he commits to reopening the investigation with a steely resolve.",
+          "emotional_shift": "From initial overwhelm to resolute determination."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The HOMICIDE UNIT OFFICE hums under harsh fluorescent lights. Rain streaks down the grime-streaked window. DETECTIVE REN sits alone at a desk, dwarfed by towering stacks of dusty, unorganized cold case files.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Emphasize the isolation and overwhelming task."
+            },
+            "visual_goal": "Establish the setting, Ren's initial sense of being overwhelmed, and the grim atmosphere of the 'Rainy City'.",
+            "action_focus": "The vastness of the office and the daunting piles of old files.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "Detective Ren",
+            "text": "Ren, his face etched with fatigue and concentration, picks up a faded file labeled \"THE RIVER KILLER - COLD CASE\". His perpetually wet hair clings to his forehead, highlighting the distinctive scar near his eye.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_002"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Ren's face and the case file."
+            },
+            "visual_goal": "Introduce Ren's defining characteristics and the specific cold case.",
+            "action_focus": "Ren's tired yet determined expression, the cold case file.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A tight shot on the contents of the file: yellowed newspaper clippings detailing grim discoveries, grainy crime scene photos of a rain-slicked alley. Ren's finger, meticulous, traces a blurred detail on one photo.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_003",
+                "prop_004"
+              ],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "low",
+              "movement": "static",
+              "framing_notes": "Show the grim reality of the cold case, Ren's detail-oriented nature."
+            },
+            "visual_goal": "Convey the brutal and forgotten nature of the crime, Ren's immersion.",
+            "action_focus": "The unsettling details within the case file.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_003",
+              "prop_004"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "Detective Ren",
+            "text": "Ren leans back, taking a deep, determined breath. He looks at the daunting pile of old files, a new resolve hardening his gaze, ready to confront the ghost of the past in this 'Rainy City' night.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001",
+                "prop_005"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Emphasize Ren's shift from overwhelmed to determined."
+            },
+            "visual_goal": "Show Ren's commitment to reopen the investigation despite the odds, establishing his 'driven' character.",
+            "action_focus": "Ren's expression of resolve.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_005"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_003",
+        "heading": {
+          "location_id": "loc_002",
+          "location_name": "Homicide Unit Office",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Weeks later, Ren's relentless investigation leads to a critical breakthrough, uncovering an old suspect list. His world shatters when he discovers his own father's name among the original suspects, transforming the cold case into a deeply personal crisis.",
+        "continuity": {
+          "props_present": [
+            "meticulously organized case files",
+            "archival police report",
+            "faded suspect list",
+            "maps",
+            "discarded coffee cups"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Same dark, slightly damp trench coat; crisp but worn suit beneath.",
+              "must_keep": [
+                "distinctive scar",
+                "perpetually wet hair"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Perpetual rain outside the office window.",
+            "Ren's tireless dedication, evident by the organized yet still voluminous paperwork."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_002",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "A cramped, fluorescent-lit office within the city's police headquarters, still perpetually night.",
+              "Now meticulously organized with case files, maps, and discarded coffee cups, showcasing Ren's progress.",
+              "A sanctuary of grim determination amidst the city's chaos, in a perpetually rainy urban sprawl.",
+              "Reflections of city neon and streetlights on slick asphalt outside."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Detective Ren, a new deputy captain of the homicide unit, operating in a gritty, perpetually rainy, neon-lit urban landscape.",
+                "Driven and astute, burdened by a distinctive scar.",
+                "Relentlessly pursuing the truth in a Neo-noir setting."
+              ],
+              "wardrobe_notes": [
+                "Wears a dark trench coat.",
+                "Hair is perpetually wet from the rain."
+              ],
+              "must_keep": [
+                "Detective Ren's distinctive scar near his eye.",
+                "Detective Ren's perpetually wet hair."
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "meticulously organized case files",
+              "must_keep": [
+                "Shows Ren's progress from the initial chaos."
+              ]
+            },
+            {
+              "prop_id": "prop_005",
+              "prop_name": "archival police report",
+              "must_keep": [
+                "Old, typewritten, crucial for the breakthrough."
+              ]
+            },
+            {
+              "prop_id": "prop_006",
+              "prop_name": "faded suspect list",
+              "must_keep": [
+                "Visibly old and contains the shocking revelation."
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Gritty, Noir, Mysterious, Suspenseful tone.",
+              "Neo-noir aesthetic, emphasizing perpetual rain, neon lights, and shadows.",
+              "Focus on urban decay and melancholic atmosphere in a 'Rainy City'.",
+              "Heightened tension leading to a personal dread."
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "Ren's world shatters when his eyes fall upon his own father's name plainly listed among the original suspects for the 15-year-old cold case, instantly transforming the investigation into a deeply personal and agonizing crisis.",
+          "emotional_shift": "From determined focus to profound shock, disbelief, and personal anguish."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "Detective Ren",
+            "text": "WEEKS LATER. Ren, still at his desk, now sits amidst a meticulously organized array of documents, charts, and maps. The rain continues its relentless drumming against the window as he pores over an old archival police report.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001",
+                "prop_005"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "dolly",
+              "framing_notes": "A slow dolly in to emphasize his deep concentration."
+            },
+            "visual_goal": "Show passage of time, Ren's relentless dedication, and the organized state of the investigation.",
+            "action_focus": "Ren's intense focus and the organized clutter of his work.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_005"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "Detective Ren",
+            "text": "Ren's tired but piercing eyes scan a faded, typewritten page. He uses a pen to highlight a recurring, previously overlooked pattern in the serial disposal sites, a faint but crucial new lead.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_005"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "overhead",
+              "movement": "static",
+              "framing_notes": "Emphasize the document and Ren's focused action."
+            },
+            "visual_goal": "Show the intellectual breakthrough, Ren's sharp analytical skills.",
+            "action_focus": "The highlighted detail on the old report, Ren's hand.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_005"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "Detective Ren",
+            "text": "With renewed urgency, Ren pulls out another, even older, document—a supplementary suspect list from the initial investigation, tucked away in an obscure appendix. His hand trembles slightly as he unfolds it.",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [
+                "prop_006"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Build suspense as the crucial document is revealed."
+            },
+            "visual_goal": "Heighten tension before the shocking revelation.",
+            "action_focus": "Ren's anxious actions with the old document.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_006"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_008",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "An EXTREME CLOSE-UP on the faded list of names. Ren's finger hovers, then with agonizing slowness, lands on a familiar surname. His face enters the frame, eyes wide with horror as he reads: \"REN, ARTHUR\".",
+            "emotion_hint": "shocked",
+            "continuity_refs": {
+              "props": [
+                "prop_006"
+              ],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "extreme_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "dolly",
+              "framing_notes": "Push in slowly on the name, then quick reveal of Ren's horrified face."
+            },
+            "visual_goal": "Deliver the shocking revelation directly, capturing Ren's immediate, visceral reaction.",
+            "action_focus": "The name on the list, then Ren's devastated expression.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_006"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 5,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "Detective Ren",
+            "text": "No... It can't be.",
+            "emotion_hint": "disbelief",
+            "continuity_refs": {
+              "props": [
+                "prop_006"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Hold on Ren's face, emphasizing his internal turmoil and whispered disbelief."
+            },
+            "visual_goal": "Convey the depth of Ren's shock and the personal impact of the discovery.",
+            "action_focus": "Ren's devastated face as he whispers the line.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_006"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 2,
+    "shot_count_total": 9,
+    "avg_shots_per_scene": 4.5,
+    "dialogue_block_count": 1,
+    "action_block_count": 8
+  }
+}

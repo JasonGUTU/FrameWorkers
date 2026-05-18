@@ -1,0 +1,54 @@
+{
+  "entry_count": 3,
+  "artifact_count": 3,
+  "captions_index_text": "#0  Raw user upload (mime=image/png). Produced by user on 2026-05-12 22:38.\n\n#1  Structured metadata document (JSON) for a user-submitted text brief. Payload carries the raw text verbatim. Pipeline entry point — consumed by story / screenplay / narration agents. Produced by user on 2026-05-12 22:38.\n\n#2  Structured metadata document (JSON) for a user-uploaded image. Payload carries the visual description and image-asset metadata. Produced by IntakeImageAgent on 2026-05-12 22:38.",
+  "path_list": [
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/brief_20260512_223801_057913.json",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/IntakeImageAgent/step_1_81595939_intakeimageagent_exec_1.json"
+  ],
+  "entries": [
+    {
+      "execution_id": "upload_20260512_223801_048018",
+      "agent_id": "user",
+      "step_id": "",
+      "created_at": "2026-05-12T22:38:01.050159+00:00",
+      "artifacts": [
+        {
+          "caption": "Raw user upload (mime=image/png).",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png",
+          "mime": "image/png"
+        }
+      ]
+    },
+    {
+      "execution_id": "brief_20260512_223801_057913",
+      "agent_id": "user",
+      "step_id": "",
+      "created_at": "2026-05-12T22:38:01.059360+00:00",
+      "artifacts": [
+        {
+          "caption": "Structured metadata document (JSON) for a user-submitted text brief. Payload carries the raw text verbatim. Pipeline entry point — consumed by story / screenplay / narration agents.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/brief_20260512_223801_057913.json",
+          "mime": "application/json"
+        }
+      ]
+    },
+    {
+      "execution_id": "exec_1_8b99db26",
+      "agent_id": "IntakeImageAgent",
+      "step_id": "step_1_81595939",
+      "created_at": "2026-05-12T22:38:10.527569+00:00",
+      "artifacts": [
+        {
+          "caption": "Structured metadata document (JSON) for a user-uploaded image. Payload carries the visual description and image-asset metadata.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/IntakeImageAgent/step_1_81595939_intakeimageagent_exec_1.json",
+          "mime": "application/json"
+        }
+      ]
+    }
+  ]
+}

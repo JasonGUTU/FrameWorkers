@@ -1,0 +1,650 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T21:27:54.304789+00:00",
+    "language": "en"
+  },
+  "content": {
+    "title": "Whispers of Jiangbei Elite",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Jiangbei Elite Academy",
+          "interior_exterior": "EXT",
+          "time_of_day": "DAY"
+        },
+        "summary": "Mei Lin arrives at Jiangbei Elite Academy, immediately becoming the subject of whispers due to rumors, which she internalizes as her new reality.",
+        "continuity": {
+          "props_present": [
+            "Mei Lin's Shoulder Bag"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Dark blue school uniform, white socks",
+              "must_keep": [
+                "dark blue school uniform",
+                "white socks",
+                "shoulder bag"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Mei Lin is a transfer student on her first day.",
+            "She is the subject of whispers."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "Prestigious and sprawling private academy in northern Jiangbei",
+              "Modern architecture",
+              "Affluent student body",
+              "Strict social hierarchies"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Quiet, observant high-school transfer student newly arrived in northern Jiangbei",
+                "Rumored secret daughter of a powerful benefactor"
+              ],
+              "wardrobe_notes": [
+                "Dark blue school uniform",
+                "white socks"
+              ],
+              "must_keep": [
+                "shoulder bag"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Mei Lin's Shoulder Bag",
+              "must_keep": [
+                "Contains books"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Contemporary High School Romance Drama set in northern Jiangbei",
+              "Sweet and Bittersweet tone",
+              "Complemented by Piano BGM"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "Mei Lin realizes her reputation precedes her, isolating her despite her desire for a fresh start.",
+          "emotional_shift": "From initial observation to quiet, tense acceptance of her notoriety."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Mei Lin steps out of a sleek car, her shoulder bag clutched, and takes in the imposing, modern gates of Jiangbei Elite Academy for the first time.",
+            "emotion_hint": "calm",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "static",
+              "framing_notes": "Emphasizes the grandeur of the academy and Mei Lin's initial solitude."
+            },
+            "visual_goal": "Establish the prestigious, overwhelming setting and Mei Lin's quiet arrival.",
+            "action_focus": "Mei Lin's first impression of the school.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Mei Lin walks through a crowded, bustling hallway. Other students cast quick, curious glances and begin to whisper behind their hands as she passes.",
+            "emotion_hint": "neutral",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "tracking",
+              "framing_notes": "Follows Mei Lin, showing blurred faces of whispering students in the background."
+            },
+            "visual_goal": "Convey the immediate attention and scrutiny Mei Lin receives.",
+            "action_focus": "Mei Lin's walk and the surrounding whispers.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Mei Lin pauses, her grip tightening on her shoulder bag. A subtle shift of understanding crosses her face as the weight of her notoriety settles upon her.",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Mei Lin's face and hands."
+            },
+            "visual_goal": "Show Mei Lin's internal realization that her reputation precedes her.",
+            "action_focus": "Mei Lin's subtle reaction and quiet resolve.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Jiangbei Elite Academy",
+          "interior_exterior": "INT",
+          "time_of_day": "DAY"
+        },
+        "summary": "Mei Lin accidentally clashes with Kai Chen, the school's dominant bully, creating a tense public standoff that challenges his authority.",
+        "continuity": {
+          "props_present": [
+            "Mei Lin's Shoulder Bag",
+            "Mei Lin's Textbooks"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Dark blue school uniform, white socks",
+              "must_keep": [
+                "dark blue school uniform",
+                "white socks",
+                "shoulder bag"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "School uniform worn with authority",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Kai Chen is the school's untouchable bully.",
+            "Mei Lin directly challenges his authority."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "Prestigious and sprawling private academy in northern Jiangbei",
+              "Modern architecture",
+              "Affluent student body",
+              "Strict social hierarchies"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Quiet, observant high-school transfer student newly arrived in northern Jiangbei",
+                "Rumored secret daughter of a powerful benefactor"
+              ],
+              "wardrobe_notes": [
+                "Dark blue school uniform",
+                "white socks"
+              ],
+              "must_keep": [
+                "shoulder bag"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "Dominant, untouchable bully at the private academy in northern Jiangbei",
+                "Commands respect through intimidation"
+              ],
+              "wardrobe_notes": [
+                "School uniform (likely customized or worn with an air of authority)"
+              ],
+              "must_keep": []
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Mei Lin's Shoulder Bag",
+              "must_keep": [
+                "Contains books"
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "Mei Lin's Textbooks",
+              "must_keep": [
+                "Textbooks that fall from her bag"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Contemporary High School Romance Drama set in northern Jiangbei",
+              "Sweet and Bittersweet tone",
+              "Complemented by Piano BGM"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "Their head-on clash creates a ripple of shock through the student body, establishing Mei Lin as an unexpected force and Kai Chen as someone who has finally met his match.",
+          "emotional_shift": "From tense confrontation to a surprising, unresolved power dynamic."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_004",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Kai Chen leans casually against lockers in a busy corridor, his clique surrounding him. Students respectfully make way for his group, acknowledging his unspoken authority.",
+            "emotion_hint": "calm",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "static",
+              "framing_notes": "Emphasizes Kai Chen's dominant presence."
+            },
+            "visual_goal": "Show Kai Chen's established power and influence over the student body.",
+            "action_focus": "Kai Chen's effortless assertion of dominance.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Mei Lin, lost in thought, tries to navigate the crowded hall. She accidentally brushes past Kai Chen, causing a textbook to tumble from her shoulder bag, clattering loudly.",
+            "emotion_hint": "neutral",
+            "continuity_refs": {
+              "props": [
+                "prop_001",
+                "prop_002"
+              ],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Captures the impact of the collision and the falling book."
+            },
+            "visual_goal": "Initiate the direct conflict between Mei Lin and Kai Chen through a public incident.",
+            "action_focus": "The unexpected collision and the dropped book.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Kai Chen glares down at Mei Lin. She slowly bends to retrieve her book, then stands, meeting his intimidating gaze directly, a quiet defiance in her eyes.",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [
+                "prop_002"
+              ],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "two_shot",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Tight on their faces, highlighting the intensity of their eye contact."
+            },
+            "visual_goal": "Emphasize the immediate power struggle and Mei Lin's surprising resilience.",
+            "action_focus": "Their locked gazes and Mei Lin's defiance.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Kai Chen holds her stare for a long moment, then a flicker of surprise crosses his face. He lets out a frustrated huff, breaking eye contact and turning away abruptly.",
+            "emotion_hint": "angry",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Kai Chen's facial expression."
+            },
+            "visual_goal": "Show Kai Chen's unexpected reaction to Mei Lin's refusal to be intimidated.",
+            "action_focus": "Kai Chen's frustration and slight surprise.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_003",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Jiangbei Elite Academy",
+          "interior_exterior": "INT",
+          "time_of_day": "CUSTOM"
+        },
+        "summary": "Mei Lin and Kai Chen each reflect on their confrontation. A fleeting glance between them hints at a complex, evolving relationship.",
+        "continuity": {
+          "props_present": [
+            "Mei Lin's Shoulder Bag"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Dark blue school uniform, white socks",
+              "must_keep": [
+                "dark blue school uniform",
+                "white socks",
+                "shoulder bag"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "School uniform worn with authority",
+              "must_keep": []
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Both characters are processing the day's events.",
+            "Piano BGM plays."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "CUSTOM",
+            "environment_notes": [
+              "Prestigious and sprawling private academy in northern Jiangbei",
+              "Modern architecture",
+              "Affluent student body",
+              "Strict social hierarchies"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Quiet, observant high-school transfer student newly arrived in northern Jiangbei",
+                "Rumored secret daughter of a powerful benefactor"
+              ],
+              "wardrobe_notes": [
+                "Dark blue school uniform",
+                "white socks"
+              ],
+              "must_keep": [
+                "shoulder bag"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "Dominant, untouchable bully at the private academy in northern Jiangbei",
+                "Commands respect through intimidation"
+              ],
+              "wardrobe_notes": [
+                "School uniform (likely customized or worn with an air of authority)"
+              ],
+              "must_keep": []
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "Mei Lin's Shoulder Bag",
+              "must_keep": [
+                "Contains books"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Contemporary High School Romance Drama set in northern Jiangbei",
+              "Sweet and Bittersweet tone",
+              "Complemented by Piano BGM"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "A fleeting, ambiguous glance passes between Mei Lin and Kai Chen, accompanied by the bittersweet piano BGM, hinting at the complex, evolving nature of their relationship.",
+          "emotional_shift": "From individual reflection to a dawning, complex awareness of the other, laced with bittersweet anticipation."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_008",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Mei Lin sits alone by a large window in an empty classroom, gazing out at the campus. She subtly touches her shoulder, recalling the earlier encounter. A soft PIANO BGM begins.",
+            "emotion_hint": "neutral",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Framing Mei Lin against the window, emphasizing her solitude."
+            },
+            "visual_goal": "Show Mei Lin in a moment of quiet reflection, processing the day.",
+            "action_focus": "Mei Lin's introspection and subtle gestures.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "In a secluded corner of a school rooftop, Kai Chen looks out over the city, agitated. He runs a hand through his hair, his brow furrowed, replaying the unexpected confrontation.",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "static",
+              "framing_notes": "Highlights Kai Chen's internal struggle against the backdrop of the city."
+            },
+            "visual_goal": "Show Kai Chen's uncharacteristic rumination over the encounter.",
+            "action_focus": "Kai Chen's agitated reflection.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Mei Lin looks up, and across the campus courtyard, Kai Chen, still brooding, meets her gaze for a brief, charged moment. Both quickly look away, the PIANO BGM swelling bittersweetly.",
+            "emotion_hint": "bittersweet",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "two_shot",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "cut",
+              "framing_notes": "Alternating close-ups of their eyes, then a wider shot showing the distance between them."
+            },
+            "visual_goal": "Convey a nascent, ambiguous connection forming between them.",
+            "action_focus": "Their fleeting eye contact and the lingering emotional resonance.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count_total": 10,
+    "avg_shots_per_scene": 3.3333333333333335,
+    "dialogue_block_count": 0,
+    "action_block_count": 10
+  }
+}

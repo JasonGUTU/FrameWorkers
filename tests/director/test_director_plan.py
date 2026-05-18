@@ -467,8 +467,10 @@ class TestRunPlanPipeline:
         planner.plan_pipeline_upfront.assert_not_called()
         assert backend.execute_calls == []
 
-    def test_failed_status_marks_step_failed_and_continues(self, monkeypatch):
-        # Disable replanner so we just advance on failure.
+    def test_failed_status_halts_when_replanner_disabled(self, monkeypatch):
+        # MAX_REPLAN_ROUNDS=0 disables the replanner. With no recovery
+        # mechanism available the executor must halt on the first FAILED
+        # step rather than silently advancing past it.
         monkeypatch.setattr(director_config, "MAX_REPLAN_ROUNDS", 0)
         backend = _FakeBackend(exec_status_chain=["FAILED", "COMPLETED"])
         planner = MagicMock()
@@ -488,8 +490,36 @@ class TestRunPlanPipeline:
 
         statuses = [st for (_sid, st) in backend.updated_statuses]
         assert "FAILED" in statuses
-        assert "COMPLETED" in statuses
-        assert len(backend.execute_calls) == 2
+        assert "COMPLETED" not in statuses
+        assert len(backend.execute_calls) == 1
+        assert any("halted" in m.lower() for m in backend.messages)
+
+    def test_failed_status_halts_when_replanner_returns_empty(self, monkeypatch):
+        # Replanner enabled (budget > 0) but produces no actionable tail —
+        # the executor must still halt, not advance.
+        monkeypatch.setattr(director_config, "MAX_REPLAN_ROUNDS", 2)
+        backend = _FakeBackend(exec_status_chain=["FAILED", "COMPLETED"])
+        planner = MagicMock()
+        planner.merge_session_goal.return_value = "merged"
+        planner.plan_pipeline_upfront.return_value = [
+            PlanStepSpec("StoryAgent", "intake"),
+            PlanStepSpec("StoryAgent", "story"),
+        ]
+        planner.replan_on_failure.return_value = ReplanDecision(
+            new_tail=[], rationale="cannot recover"
+        )
+
+        run_plan_pipeline(
+            backend,
+            planner,
+            agents=_CATALOG,
+            user_goal="x",
+            current_user_message_id="m1",
+        )
+
+        assert len(backend.execute_calls) == 1
+        assert any("halted" in m.lower() for m in backend.messages)
+        planner.replan_on_failure.assert_called_once()
 
 
 # ---------------------------------------------------------------------------

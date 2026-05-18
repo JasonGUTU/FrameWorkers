@@ -1,0 +1,702 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-09T21:26:37.489555+00:00",
+    "language": "zh"
+  },
+  "content": {
+    "title": "封神演义：最后的九尾狐妖",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "封神台",
+          "interior_exterior": "EXT",
+          "time_of_day": "CUSTOM"
+        },
+        "summary": "在震耳欲聋的九天神雷声中，姜子牙将最后一只九尾狐妖小狐押上封神台，准备执行封神之战后的最终裁决，小狐充满绝望。",
+        "continuity": {
+          "props_present": [],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "一件沾染尘土、破旧的素色长裙，手腕和脚踝被粗糙的仙绳捆绑",
+              "must_keep": [
+                "素色长裙",
+                "仙绳"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "一件庄重威严的道袍，手持斩妖法剑",
+              "must_keep": [
+                "道袍",
+                "斩妖法剑"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "封神台上的庄严氛围",
+            "九天神雷滚滚",
+            "小狐面临处决"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "CUSTOM",
+            "environment_notes": [
+              "中国神话设定",
+              "封神之战背景",
+              "古老中国",
+              "一个高耸古老的石头平台",
+              "周围环绕着九天神雷的声音",
+              "充满巨大的精神力量和庄严感"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "小狐，年轻脆弱的九尾狐妖",
+                "她所属种族的最后一只",
+                "中国神话设定",
+                "封神之战背景",
+                "古老中国",
+                "过去充满神秘"
+              ],
+              "wardrobe_notes": [
+                "破旧素色长裙",
+                "被仙绳捆绑"
+              ],
+              "must_keep": [
+                "九尾狐妖形态（视觉暗示）"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "姜子牙，周朝令人尊敬的强大谋士",
+                "道家法术大师",
+                "中国神话设定",
+                "封神之战背景",
+                "古老中国",
+                "坚定地遵守神圣法令"
+              ],
+              "wardrobe_notes": [
+                "庄重威严的道袍",
+                "手持法剑"
+              ],
+              "must_keep": [
+                "仙风道骨"
+              ]
+            }
+          ],
+          "props_lock": [],
+          "style_lock": {
+            "global_style_notes": [
+              "奇幻",
+              "神话",
+              "剧情",
+              "中国神话",
+              "封神之战",
+              "史诗",
+              "悲剧",
+              "绝望",
+              "古老中国",
+              "忧郁",
+              "哀伤",
+              "九天神雷"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "小狐被带到封神台中央，等待最终裁决，死亡迫在眉睫。",
+          "emotional_shift": "由压抑与绝望转为极度的恐惧与无力"
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "广阔的封神台矗立在天地之间，乌云密布，九天神雷滚滚而过，劈裂天际，雷鸣声震耳欲聋。",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "high",
+              "movement": "static",
+              "framing_notes": "俯瞰视角，强调平台的宏大与天地的压抑"
+            },
+            "visual_goal": "展现封神台的宏伟与末日的氛围",
+            "action_focus": "九天神雷与封神台",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "姜子牙身着庄严道袍，手持法剑，面色凝重，押着被仙绳捆绑、步履蹒跚的小狐，走向平台中央。",
+            "emotion_hint": "neutral",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "medium_wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "tracking_forward",
+              "framing_notes": "跟随着两人走向平台中心，捕捉小狐的挣扎"
+            },
+            "visual_goal": "展现姜子牙的威严与小狐的无助，建立压迫感",
+            "action_focus": "姜子牙与小狐的行进",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "小狐绝望地跪倒在地，素色长裙沾满尘土，眼神中充满了恐惧与迷茫，九尾狐妖的影子在她身后若隐若现。",
+            "emotion_hint": "sad",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "low",
+              "movement": "static",
+              "framing_notes": "强调小狐的无助与脆弱，背景是巨大的平台"
+            },
+            "visual_goal": "刻画小狐的绝望与其妖族身份的暗示",
+            "action_focus": "小狐的面部表情和无助姿态",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "封神台",
+          "interior_exterior": "EXT",
+          "time_of_day": "CUSTOM"
+        },
+        "summary": "姜子牙举起法剑，准备斩下，就在这生死关头，小狐脑海中突然涌现出梦中神秘男子的片段，一段遗忘的过去开始浮现。",
+        "continuity": {
+          "props_present": [],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "沾染尘土的素色长裙，手腕和脚踝的仙绳未解",
+              "must_keep": [
+                "素色长裙",
+                "仙绳"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "庄重威严的道袍，手持斩妖法剑",
+              "must_keep": [
+                "道袍",
+                "斩妖法剑"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "姜子牙即将行刑",
+            "小狐记忆的突然闪回"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "CUSTOM",
+            "environment_notes": [
+              "中国神话设定",
+              "封神之战背景",
+              "古老中国",
+              "一个高耸古老的石头平台",
+              "周围环绕着九天神雷的声音",
+              "充满巨大的精神力量和庄严感"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "小狐，年轻脆弱的九尾狐妖",
+                "她所属种族的最后一只",
+                "中国神话设定",
+                "封神之战背景",
+                "古老中国",
+                "过去充满神秘"
+              ],
+              "wardrobe_notes": [
+                "破旧素色长裙",
+                "被仙绳捆绑"
+              ],
+              "must_keep": [
+                "九尾狐妖形态（视觉暗示）"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "姜子牙，周朝令人尊敬的强大谋士",
+                "道家法术大师",
+                "中国神话设定",
+                "封神之战背景",
+                "古老中国",
+                "坚定地遵守神圣法令"
+              ],
+              "wardrobe_notes": [
+                "庄重威严的道袍",
+                "手持法剑"
+              ],
+              "must_keep": [
+                "仙风道骨"
+              ]
+            },
+            {
+              "character_id": "char_003",
+              "identity_notes": [
+                "神秘男子，小狐梦中出现的人物",
+                "代表着她过去的隐藏联系",
+                "中国神话设定",
+                "古老中国",
+                "他的存在难以捉摸"
+              ],
+              "wardrobe_notes": [
+                "飘逸古装"
+              ],
+              "must_keep": [
+                "神秘、温柔的气质"
+              ]
+            }
+          ],
+          "props_lock": [],
+          "style_lock": {
+            "global_style_notes": [
+              "奇幻",
+              "神话",
+              "剧情",
+              "中国神话",
+              "封神之战",
+              "史诗",
+              "悲剧",
+              "绝望",
+              "古老中国",
+              "忧郁",
+              "哀伤",
+              "九天神雷"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "小狐在死亡边缘的瞬间，记忆中的神秘男子突然闪现，中断了她的绝望。",
+          "emotional_shift": "从绝望的谷底涌现出一丝困惑与希望"
+        },
+        "shots": [
+          {
+            "shot_id": "sh_004",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "姜子牙高举斩妖法剑，剑刃在九天神雷的光芒下闪烁着，面容坚毅，准备施展雷霆一击，气势磅礴。",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "low",
+              "movement": "static",
+              "framing_notes": "仰视姜子牙，强调其强大的气势与威严"
+            },
+            "visual_goal": "展现姜子牙即将执行天罚的决心",
+            "action_focus": "姜子牙和高举的法剑",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "小狐紧闭双眼，眼角滑落一滴泪珠。就在法剑落下的瞬间，她脑海中闪过一道温暖、模糊的光芒。",
+            "emotion_hint": "sad",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "extreme_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "特写小狐的脸，聚焦眼角的泪水和挣扎"
+            },
+            "visual_goal": "表现小狐在死亡边缘的痛苦与记忆闪回的起始",
+            "action_focus": "小狐的表情与泪水",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "破碎的记忆画面快速闪回，朦胧中，一位面容模糊的神秘男子，温柔地对着小狐微笑，背景是繁花似锦的仙境。",
+            "emotion_hint": "warm",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_003"
+              ]
+            },
+            "shot_type": "montage",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "快速剪辑，营造梦境般的效果，画面模糊不清"
+            },
+            "visual_goal": "展现神秘男子的形象，暗示遗忘的过去",
+            "action_focus": "神秘男子与小狐的互动（记忆片段）",
+            "characters_in_frame": [
+              "char_001",
+              "char_003"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_003",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "封神台",
+          "interior_exterior": "EXT",
+          "time_of_day": "CUSTOM"
+        },
+        "summary": "记忆完全清晰，揭示了神秘男子的身份与小狐的命运紧密相连。姜子牙感受到这股突如其来的力量，法剑在空中凝滞，他开始犹豫。",
+        "continuity": {
+          "props_present": [],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "沾染尘土的素色长裙，手腕和脚踝的仙绳未解",
+              "must_keep": [
+                "素色长裙",
+                "仙绳"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "庄重威严的道袍，手持斩妖法剑",
+              "must_keep": [
+                "道袍",
+                "斩妖法剑"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "小狐记忆完全恢复",
+            "姜子牙的犹豫"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "CUSTOM",
+            "environment_notes": [
+              "中国神话设定",
+              "封神之战背景",
+              "古老中国",
+              "一个高耸古老的石头平台",
+              "周围环绕着九天神雷的声音",
+              "充满巨大的精神力量和庄严感"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "小狐，年轻脆弱的九尾狐妖",
+                "她所属种族的最后一只",
+                "中国神话设定",
+                "封神之战背景",
+                "古老中国",
+                "过去充满神秘"
+              ],
+              "wardrobe_notes": [
+                "破旧素色长裙",
+                "被仙绳捆绑"
+              ],
+              "must_keep": [
+                "九尾狐妖形态（视觉暗示）"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "姜子牙，周朝令人尊敬的强大谋士",
+                "道家法术大师",
+                "中国神话设定",
+                "封神之战背景",
+                "古老中国",
+                "坚定地遵守神圣法令"
+              ],
+              "wardrobe_notes": [
+                "庄重威严的道袍",
+                "手持法剑"
+              ],
+              "must_keep": [
+                "仙风道骨"
+              ]
+            },
+            {
+              "character_id": "char_003",
+              "identity_notes": [
+                "神秘男子，小狐梦中出现的人物",
+                "代表着她过去的隐藏联系",
+                "中国神话设定",
+                "古老中国",
+                "他的存在难以捉摸"
+              ],
+              "wardrobe_notes": [
+                "飘逸古装"
+              ],
+              "must_keep": [
+                "神秘、温柔的气质"
+              ]
+            }
+          ],
+          "props_lock": [],
+          "style_lock": {
+            "global_style_notes": [
+              "奇幻",
+              "神话",
+              "剧情",
+              "中国神话",
+              "封神之战",
+              "史诗",
+              "悲剧",
+              "绝望",
+              "古老中国",
+              "忧郁",
+              "哀伤",
+              "九天神雷"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "姜子牙的法剑停在半空，对小狐命运的判决被突如其来的记忆所中断，悬念骤起。",
+          "emotional_shift": "从绝望的终结转向悬而未决的希望"
+        },
+        "shots": [
+          {
+            "shot_id": "sh_007",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "小狐猛然睁开眼睛，眼神中不再是恐惧，而是震惊与清明，一段完整的、尘封已久的记忆在她脑海中豁然开朗。",
+            "emotion_hint": "excited",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "zoom_in",
+              "framing_notes": "聚焦小狐的眼神变化，强调其觉醒"
+            },
+            "visual_goal": "展现小狐记忆的完全恢复和心境转变",
+            "action_focus": "小狐面部的表情变化",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_008",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "姜子牙的法剑停在空中，离小狐仅寸许。他感觉到一股无形的力量波动，目光从小狐身上扫过，带着一丝疑惑。",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "定格姜子牙的动作和表情，强调其内心挣扎"
+            },
+            "visual_goal": "表现姜子牙的犹豫与对未知力量的感知",
+            "action_focus": "姜子牙凝滞的法剑与疑惑的目光",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "小狐抬起头，眼神与姜子牙相遇，仿佛有千言万语，她的记忆与神秘男子的存在，是她唯一可能存活的希望。",
+            "emotion_hint": "urgent",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "two_shot",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "捕捉两人之间紧张的对视，强调眼神交流"
+            },
+            "visual_goal": "强调小狐新生的希望与姜子牙的内心挣扎",
+            "action_focus": "两人之间的眼神交流",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "封神台周围，九天神雷依旧滚滚，但似乎被这突如其来的悬念所震慑，天地间一片死寂。",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "high",
+              "movement": "static",
+              "framing_notes": "展现整个封神台，烘托紧张气氛，强调结局的悬念"
+            },
+            "visual_goal": "以宏大的环境烘托结局的悬念",
+            "action_focus": "封神台的广阔与凝滞的气氛",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count_total": 10,
+    "avg_shots_per_scene": 3.3333333333333335,
+    "dialogue_block_count": 0,
+    "action_block_count": 10
+  }
+}

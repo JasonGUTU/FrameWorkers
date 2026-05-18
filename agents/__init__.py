@@ -19,6 +19,7 @@ from .common_schema import Meta, ImageAsset, QualityScore
 
 # -- Agent classes (convenience re-exports) --------------------------------
 from .story.agent import StoryAgent
+from .comedy_story.agent import ComedyStoryAgent
 from .screenplay.agent import ScreenplayAgent
 from .keyframe.agent import KeyFrameAgent
 from .video.agent import VideoAgent
@@ -61,6 +62,7 @@ from .narrator.evaluator import NarratorEvaluator
 
 # -- Descriptors -----------------------------------------------------------
 from .story.descriptor import DESCRIPTOR as _story_desc
+from .comedy_story.descriptor import DESCRIPTOR as _comedy_story_desc
 from .screenplay.descriptor import DESCRIPTOR as _screenplay_desc
 from .keyframe.descriptor import DESCRIPTOR as _keyframe_desc
 from .video.descriptor import DESCRIPTOR as _video_desc
@@ -132,6 +134,7 @@ __all__ = [
     "AGENT_REGISTRY",
     # Agent classes
     "StoryAgent",
+    "ComedyStoryAgent",
     "ScreenplayAgent",
     "KeyFrameAgent",
     "VideoAgent",

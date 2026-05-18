@@ -1,0 +1,44 @@
+{
+  "shots": [
+    {
+      "shot_id": "sh_001",
+      "prompt": "A distraught young man watches in slow motion as a woman's silhouette dives elegantly from a gleaming luxury yacht's deck into the dark, churning deep sea. His eyes are wide with shock and helpless despair under the dramatic moonlit sky, reflecting the yacht's harsh searchlights.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_002",
+      "prompt": "Seven years later, the now-wealthy CEO stands alone in his sleek, minimalist penthouse office, gazing out at a glittering urban metropolis at night. He sips from a crystal glass, a subtle shadow of melancholic contemplation across his handsome, haunted face.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_003",
+      "prompt": "An exquisitely dressed, enigmatic woman with sharp, observant eyes makes a striking entrance into a bustling, high-society corporate gala. She commands attention with her confident stride and cool demeanor, a faint, unreadable smirk playing on her lips.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_004",
+      "prompt": "In a gleaming, modern boardroom, the wealthy heir and the enigmatic businesswoman lock eyes across a long, polished table. A palpable tension hangs in the air as they exchange sharp, knowing glances, a subtle power struggle beginning to unfold between them.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_005",
+      "prompt": "Dynamic shots depict the wealthy heir intensely strategizing in a war room, surrounded by glowing data screens and financial charts. He aggressively pursues a cunning rival, who remains just out of his grasp, always one step ahead in the high-stakes corporate game.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_006",
+      "prompt": "At a lavish rooftop party, the heir watches his rival from across the crowd. As she subtly adjusts her hair, a flash of a familiar gesture triggers a powerful, disturbing memory, leaving his face etched with a sudden, profound realization.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_007",
+      "prompt": "In a secluded, dimly lit art gallery corridor, the heir confronts the woman, his voice low and urgent as he demands answers about her past. Her expression remains coolly impassive, her eyes holding a deep, enigmatic challenge against his intense gaze.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_008",
+      "prompt": "The woman turns, walking away with a subtle, knowing smile, disappearing into the shadows of the upscale setting. The wealthy heir watches her retreat, a figure of elegant mystery, leaving him isolated and consumed by unresolved questions and haunting memories.",
+      "duration_sec": 5
+    }
+  ]
+}

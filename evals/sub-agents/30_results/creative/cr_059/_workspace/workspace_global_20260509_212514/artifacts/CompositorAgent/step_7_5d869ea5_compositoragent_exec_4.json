@@ -1,0 +1,23 @@
+{
+  "content": {
+    "plan": {
+      "color_grade": {
+        "brightness": 0.0,
+        "contrast": 0.05,
+        "saturation": 0.0
+      },
+      "subtitle_style": {
+        "font_size": 24,
+        "font_color": "#FFFFFF",
+        "outline_color": "#000000",
+        "burn_in": true
+      },
+      "output_resolution": "1920x1080",
+      "output_fps": 30
+    }
+  },
+  "metrics": {
+    "has_subtitles": true,
+    "has_audio": true
+  }
+}

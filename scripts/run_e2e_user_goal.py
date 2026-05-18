@@ -61,14 +61,29 @@ def _http_get_json(base_url: str, path: str) -> Any:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--case", default="cr_009")
+    ap.add_argument("--case", default=None,
+                    help="Case name from assistant_test/assistant_test_cases.json. "
+                         "Mutually exclusive with --user-goal; default 'cr_009' "
+                         "if neither is given.")
+    ap.add_argument("--user-goal", default=None,
+                    help="Inline user_goal string. Skips the case lookup, "
+                         "useful for ad-hoc demos. expected_chain is then "
+                         "unknown so the comparison line is omitted.")
     ap.add_argument("--backend", default=os.getenv("BACKEND_BASE_URL", "http://localhost:5002"))
     args = ap.parse_args()
 
-    case = _load_case(args.case)
-    user_goal = case["user_goal"]
-    expected = " → ".join("/".join(s) for s in case["expected_chain"])
-    print(f"[e2e] case            = {case['name']}  category={case['category']}")
+    if args.user_goal:
+        user_goal = args.user_goal
+        case_name = "<inline>"
+        category = "<inline>"
+        expected = "(unknown — inline user_goal)"
+    else:
+        case = _load_case(args.case or "cr_009")
+        user_goal = case["user_goal"]
+        case_name = case["name"]
+        category = case["category"]
+        expected = " → ".join("/".join(s) for s in case["expected_chain"])
+    print(f"[e2e] case            = {case_name}  category={category}")
     print(f"[e2e] user_goal       = {user_goal}")
     print(f"[e2e] expected chain  = {expected}")
     print(f"[e2e] backend         = {args.backend}")

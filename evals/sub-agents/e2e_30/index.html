@@ -65,7 +65,6 @@
   .badge.cat-cr { background: #4a3060; color: #e0baff; }
   .badge.cat-intake_img { background: #2f4a30; color: #b6f0bb; }
   .badge.cat-storytelling { background: #4a3a1f; color: #ffd9a3; }
-  .badge.genre { background: #1f3a4a; color: #a3d9ff; }
   .badge.layers { background: #3a3a3a; color: #ddd; font-family: ui-monospace, monospace; }
 
   h3.section-title { color: var(--muted); font-size: 12px; text-transform: uppercase;
@@ -93,24 +92,6 @@
     padding: 24px; color: var(--muted); text-align: center; font-size: 13px;
     line-height: 1.6; }
   .placeholder strong { color: var(--fg); }
-
-  .meta-grid { display: grid; grid-template-columns: 120px 1fr; gap: 6px 14px;
-    font-size: 13px; }
-  .meta-grid .k { color: var(--muted); }
-  .meta-grid .v { font-family: ui-monospace, monospace; }
-
-  .badge-rewritten { background: #4a2f60; color: #d9b6ff; }
-  details.original-toggle { margin-top: 10px; }
-  details.original-toggle > summary { cursor: pointer; color: var(--muted);
-    font-size: 12px; padding: 4px 0; user-select: none; list-style: none; }
-  details.original-toggle > summary::before { content: '▸ '; }
-  details.original-toggle[open] > summary::before { content: '▾ '; }
-  details.original-toggle > summary:hover { color: var(--accent); }
-  .original-box { background: var(--panel-2); border: 1px solid var(--border);
-    border-radius: 6px; padding: 12px 14px; line-height: 1.65;
-    white-space: pre-wrap; font-size: 13px; color: var(--muted); margin-top: 6px; }
-  .original-box .label { display: block; font-size: 10px; text-transform: uppercase;
-    letter-spacing: 0.5px; color: var(--muted); margin-bottom: 6px; opacity: 0.7; }
 
   footer { padding: 8px 18px; border-top: 1px solid var(--border); background: var(--panel);
     color: var(--muted); font-size: 12px; }
@@ -152,19 +133,18 @@ function escapeHtml(s) {
 
 function casesIn(cat) { return DATA.filter(c => c.category === cat); }
 
+function chainShapeStr(chain) {
+  return chain.map(l => l.length === 1 ? l[0] : l.join("|")).join(" -> ");
+}
+
 function renderHeader() {
   const total = DATA.length;
-  const shapes = new Set(DATA.map(c => c._meta.shape_layers_str)).size;
-  const genres = new Set(DATA.map(c => c._meta.sampled_genre)).size;
+  const shapes = new Set(DATA.map(c => chainShapeStr(c.expected_chain))).size;
   document.getElementById("stats").innerHTML =
     `<span><span class="num">${total}</span> cases</span>` +
-    `<span><span class="num">${shapes}</span> unique chain shapes</span>` +
-    `<span><span class="num">${genres}</span> genres</span>` +
-    `<span>seed=42</span>`;
-  const rewritten = DATA.filter(c => c._meta.rewritten === true).length;
+    `<span><span class="num">${shapes}</span> unique chain shapes</span>`;
   document.getElementById("subtitle").textContent =
-    `${total} cases sampled — cr/intake_img (${rewritten}) rewritten as Chinese 短剧爆款 for user study; ` +
-    `storytelling 10 left as-is. Review here, then approve to run real e2e.`;
+    `${total} cases — review GT chains, then approve to run real e2e.`;
 }
 
 function renderCats() {
@@ -179,13 +159,11 @@ function renderList() {
   const items = casesIn(currentCat);
   document.getElementById("caseList").innerHTML = items.map(c => {
     const active = c.name === currentName ? "active" : "";
-    const m = c._meta;
     const goalShort = c.user_goal.slice(0, 80) + (c.user_goal.length > 80 ? "…" : "");
     return `<div class="case-row ${active}" onclick="goTo('${c.name}')">
       <div class="name">${c.name}</div>
       <div class="meta">
-        <span class="badge layers">${m.shape_layer_count}L</span>
-        <span class="badge genre">${m.sampled_genre}</span>
+        <span class="badge layers">${c.expected_chain.length}L</span>
       </div>
       <div class="preview">${escapeHtml(goalShort)}</div>
     </div>`;
@@ -199,7 +177,6 @@ function renderDetail() {
       '<div class="placeholder">Select a case from the left.</div>';
     return;
   }
-  const m = c._meta;
   const cat = c.category;
 
   // Render chain layers
@@ -227,29 +204,16 @@ function renderDetail() {
     .test(c.user_goal) || goalLower.includes("i've uploaded") || goalLower.includes("i uploaded")
     || goalLower.includes("here's a");
 
-  const isRewritten = m.rewritten === true && m.original_user_goal;
-  const originalBlock = isRewritten ? `
-    <details class="original-toggle">
-      <summary>查看 original user_goal（eval_cases v4500 原文）</summary>
-      <div class="original-box">
-        <span class="label">original (replaced for user study)</span>
-        ${escapeHtml(m.original_user_goal)}
-      </div>
-    </details>` : '';
-
   document.getElementById("detail").innerHTML = `
     <div class="detail-header">
       <span class="name">${c.name}</span>
       <span class="badge cat-${cat}">${cat}</span>
-      <span class="badge genre">${m.sampled_genre}</span>
-      <span class="badge layers">${m.shape_layer_count} layers</span>
-      ${isRewritten ? '<span class="badge badge-rewritten">已重写</span>' : ''}
+      <span class="badge layers">${c.expected_chain.length} layers</span>
       ${needsUpload ? '<span class="badge" style="background:#603030;color:#ffb0b0">needs upload</span>' : ''}
     </div>
 
-    <h3 class="section-title">User goal${isRewritten ? '（rewritten 2026-05-09）' : ''}</h3>
+    <h3 class="section-title">User goal</h3>
     <div class="goal-box">${escapeHtml(c.user_goal)}</div>
-    ${originalBlock}
 
     ${needsUpload ? `
     <h3 class="section-title">Mock upload image (gemini-3.1-flash-image-preview)</h3>
@@ -262,15 +226,6 @@ function renderDetail() {
 
     <h3 class="section-title">GT expected_chain (ground truth plan)</h3>
     <div class="chain-box">${layersHtml}</div>
-
-    <h3 class="section-title">Sampling metadata</h3>
-    <div class="meta-grid">
-      <span class="k">shape_layers_str</span>
-      <span class="v">${escapeHtml(m.shape_layers_str)}</span>
-      <span class="k">shape_layer_count</span><span class="v">${m.shape_layer_count}</span>
-      <span class="k">sampled_genre</span><span class="v">${m.sampled_genre}</span>
-      <span class="k">category</span><span class="v">${cat}</span>
-    </div>
 
     ${renderResultsBlock(c.name)}
   `;

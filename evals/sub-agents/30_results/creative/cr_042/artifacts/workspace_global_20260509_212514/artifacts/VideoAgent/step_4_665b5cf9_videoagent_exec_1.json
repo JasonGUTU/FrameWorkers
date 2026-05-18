@@ -1,0 +1,336 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "A grand, ancient cultivation sect in a Xianxia world",
+            "Ornate temples",
+            "Mist-shrouded peaks",
+            "Sprawling training grounds"
+          ],
+          "style_notes": [
+            "Xianxia",
+            "Fantasy",
+            "Epic",
+            "Revenge",
+            "Cultivation",
+            "High drama with intricate sect architecture"
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "semantic_context": {
+              "shot_type": "medium_close_up",
+              "visual_goal": "Establish Lin Feng's extraordinary talent and the admiration he garners.",
+              "action_focus": "Lin Feng's flawless execution of sword techniques.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "push_in",
+              "framing_notes": "Focus on Lin Feng's prowess and the subtle glow of his cultivation",
+              "video_motion_hints": [
+                "The camera slowly pushes in on Lin Feng's focused face. Spiritual energy subtly pulsates around his moving blade as he performs the intricate forms."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_002",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Show Elder Brother Wei's manipulative presence and the beginning of Lin Feng's downfall.",
+              "action_focus": "Wei's calm, insidious declaration amidst the sect elders.",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "over_shoulder",
+              "camera_movement": "static",
+              "framing_notes": "From behind Wei, showing his back to the crowd, implying his authority and detachment.",
+              "video_motion_hints": [
+                "Elder Brother Wei remains static, his gaze fixed forward. A subtle, almost imperceptible shift in his facial muscles hints at his inner machinations."
+              ],
+              "dialogue_text": "Such raw power. Shame he lacked discipline. A grave crime has been committed.",
+              "emotion_hint": "calm",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_003",
+            "semantic_context": {
+              "shot_type": "extreme_close_up",
+              "visual_goal": "Depict the traumatic moment Lin Feng is crippled and receives the broken sword.",
+              "action_focus": "Lin Feng's physical and spiritual pain, the shattered core, and the broken sword as his only comfort.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "high_angle",
+              "camera_movement": "static",
+              "framing_notes": "Emphasize vulnerability and pain. Focus on the broken sword.",
+              "video_motion_hints": [
+                "Lin Feng's body convulses with a searing light emanating from his chest. His grip tightens on the broken sword, his head dropping slightly in pain."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_004",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Visually represent Lin Feng's expulsion and loss, emphasizing his isolation.",
+              "action_focus": "Lin Feng's lonely descent and the towering, uncaring sect behind him.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "crane_down",
+              "framing_notes": "Show the vastness of the sect contrasting with Lin Feng's small, defeated figure.",
+              "video_motion_hints": [
+                "The camera cranes down as Lin Feng slowly descends the grand staircase. He takes a mournful, lingering look over his shoulder before continuing his unsteady walk into the mist."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_003",
+            "to_shot_id": "sh_004",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_context": {
+          "location_id": "loc_002",
+          "time_of_day": "NIGHT",
+          "environment_notes": [
+            "A desolate and treacherous wilderness in a Xianxia world",
+            "Scarred by ancient battles",
+            "Infused with dark spiritual energy",
+            "Towering, gnarled trees",
+            "Jagged rocks"
+          ],
+          "style_notes": [
+            "Xianxia",
+            "Fantasy",
+            "Action",
+            "Transformation",
+            "Gritty survival in a mystical, dangerous landscape"
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_005",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Show Lin Feng's dedicated efforts to rebuild his cultivation in isolation.",
+              "action_focus": "Lin Feng's focused meditation, the glow of his qi, and the broken sword as a silent companion.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "static",
+              "framing_notes": "Emphasize Lin Feng's resilience and determination in a harsh environment.",
+              "video_motion_hints": [
+                "Lin Feng's chest slowly rises and falls as his breath faintly glows with internal energy. The fire crackles gently, casting flickering shadows across his focused face."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_006",
+            "semantic_context": {
+              "shot_type": "full",
+              "visual_goal": "Showcase Lin Feng's new combat style and the power of his revitalized broken sword.",
+              "action_focus": "The intense battle between Lin Feng and the demon, emphasizing speed and power.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "dolly_zoom",
+              "framing_notes": "Dynamic action shot, showing Lin Feng's agility against a larger foe.",
+              "video_motion_hints": [
+                "Lin Feng moves with extreme speed, darting sideways to avoid the demon's attack. The camera performs a subtle dolly zoom, emphasizing the sudden impact of his sword strike and the demon's recoil."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_007",
+            "semantic_context": {
+              "shot_type": "medium_full",
+              "visual_goal": "Demonstrate Lin Feng's growing power and the effectiveness of his unique cultivation.",
+              "action_focus": "Lin Feng absorbing the demon's essence, signifying a significant power up.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "track_out",
+              "framing_notes": "Capture the transformation and growing power in Lin Feng.",
+              "video_motion_hints": [
+                "The dissolving demon essence swirls and fades around Lin Feng. His body subtly expands with an internal glow as he inhales the energy, his head slowly rising to reveal his empowered gaze."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_005",
+            "to_shot_id": "sh_006",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_006",
+            "to_shot_id": "sh_007",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "scene_context": {
+          "location_id": "loc_003",
+          "time_of_day": "CUSTOM",
+          "environment_notes": [
+            "An ethereal platform high above the clouds in a Xianxia world",
+            "Shimmering with raw cosmic energy",
+            "Nexus point between mortal and immortal realms",
+            "Swirling nebulas and distant stars"
+          ],
+          "style_notes": [
+            "Xianxia",
+            "Fantasy",
+            "Epic",
+            "Transcendence",
+            "Cosmic, divine aesthetics",
+            "Grand and awe-inspiring"
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_008",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Establish the awe-inspiring and terrifying nature of the heavenly tribulations.",
+              "action_focus": "The initial strike of the divine lightning upon Lin Feng.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "high_angle",
+              "camera_movement": "crane_up",
+              "framing_notes": "Emphasize Lin Feng's isolation against the vastness of the cosmic threat.",
+              "video_motion_hints": [
+                "Cosmic energy subtly swirls around Lin Feng. The lightning bolt rapidly descends and strikes, creating a momentary, blinding flash and residual sparks."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_009",
+            "semantic_context": {
+              "shot_type": "extreme_close_up",
+              "visual_goal": "Show Lin Feng enduring the tribulation, pushing past his mortal limits and beginning to transcend.",
+              "action_focus": "The physical and spiritual transformation of Lin Feng's body.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on the pain and the transformative power, hinting at his metamorphosis.",
+              "video_motion_hints": [
+                "Lin Feng's face trembles with effort and pain. The cracks on his skin visibly expand as the internal light pulses and intensifies, foreshadowing his transformation."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_010",
+            "semantic_context": {
+              "shot_type": "aerial",
+              "visual_goal": "Visually depict Lin Feng's successful ascension to godhood and his newfound cosmic perspective.",
+              "action_focus": "Lin Feng's divine form, the cosmic panorama, and the restored sword as a symbol of his journey.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "high_angle",
+              "camera_movement": "reveal",
+              "framing_notes": "Show the full glory of Lin Feng's ascended form and the perspective of a deity.",
+              "video_motion_hints": [
+                "Lin Feng slowly ascends further, radiating light. The camera subtly tracks out to reveal the grand cosmic panorama below him, emphasizing his godlike perspective."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_008",
+            "to_shot_id": "sh_009",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_009",
+            "to_shot_id": "sh_010",
+            "transition_type": "cut"
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_segment_count": 10
+  }
+}

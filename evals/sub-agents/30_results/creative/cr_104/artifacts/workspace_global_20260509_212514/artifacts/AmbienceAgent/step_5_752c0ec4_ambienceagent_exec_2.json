@@ -1,0 +1,13 @@
+{
+  "content": {
+    "beds": [
+      {
+        "ambience_id": "amb_film",
+        "description": "Howling mountain winds echoing through desolate peaks, punctuated by distant, ominous thunder, creating a cold, mystical, and foreboding atmosphere under a blood-red sky."
+      }
+    ]
+  },
+  "metrics": {
+    "bed_count": 1
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "case_name": "cr_107",
+  "category": "cr",
+  "user_goal": "Make a period war-epic animated short drama — General Murong Rong's only son has guarded the western frontier for ten years without returning home. In his final stand he charges alone into ten thousand enemy soldiers, only to reclaim the family's ancestral green-dragon polearm from the body of his fallen father. Add ambient sounds: war horses neighing, bowstrings drawn taut, frozen wind sweeping the snow plains. Add a stirring period war-drum BGM.",
+  "expected_chain": [
+    [
+      "StoryAgent"
+    ],
+    [
+      "ScreenplayAgent"
+    ],
+    [
+      "KeyFrameAgent"
+    ],
+    [
+      "VideoAgent"
+    ],
+    [
+      "MusicAgent"
+    ],
+    [
+      "AmbienceAgent"
+    ],
+    [
+      "AudioMixAgent"
+    ],
+    [
+      "CompositorAgent"
+    ],
+    [
+      "done"
+    ]
+  ],
+  "flat_chain": [
+    "StoryAgent",
+    "ScreenplayAgent",
+    "KeyFrameAgent",
+    "VideoAgent",
+    "MusicAgent",
+    "AmbienceAgent",
+    "AudioMixAgent",
+    "CompositorAgent"
+  ],
+  "backend_url": "http://localhost:5008",
+  "hunyuan_endpoint": "http://sof1-h200-6:9206",
+  "infer_steps": 50,
+  "started_at": "2026-05-09T23:48:59"
+}

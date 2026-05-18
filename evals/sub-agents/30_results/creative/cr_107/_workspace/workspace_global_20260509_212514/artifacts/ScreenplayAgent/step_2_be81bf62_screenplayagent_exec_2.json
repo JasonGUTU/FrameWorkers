@@ -1,0 +1,699 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-09T21:26:21.867234+00:00",
+    "language": "zh"
+  },
+  "content": {
+    "title": "西境之龙",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "西境雪原",
+          "interior_exterior": "EXT",
+          "time_of_day": "DAY"
+        },
+        "summary": "穆容宇将军在孤寂的西境雪原上，面对潮水般涌来的敌军，做出了一个绝望而坚定的决定。",
+        "continuity": {
+          "props_present": [],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "身着古朴厚重的战甲，盔甲上沾染风霜与尘土，披一件褪色的斗篷。",
+              "must_keep": [
+                "战甲",
+                "斗篷"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "穆容宇的孤寂",
+            "敌军数量的压倒性优势",
+            "他誓死守卫边疆的决心"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "广袤无垠的雪原",
+              "被风雪侵蚀的远山",
+              "萧瑟荒凉的古中国西部边境",
+              "寒风凛冽"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "一位经验丰富、饱经风霜的古中国边境将军",
+                "穆容荣将军之子",
+                "眼神坚毅，充满沧桑感"
+              ],
+              "wardrobe_notes": [
+                "古朴厚重的战甲",
+                "褪色斗篷",
+                "身形挺拔而疲惫"
+              ],
+              "must_keep": [
+                "战甲上的风霜痕迹",
+                "孤高清冷的气质"
+              ]
+            }
+          ],
+          "props_lock": [],
+          "style_lock": {
+            "global_style_notes": [
+              "史诗战争片",
+              "悲壮而英雄的基调",
+              "古中国时期",
+              "宏大广阔的视觉风格"
+            ],
+            "must_avoid": [
+              "现代科技",
+              "轻松愉悦的氛围",
+              "鲜艳明亮的色彩"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "穆容宇决定孤身冲入敌阵，以一己之力力挽狂澜，即便这可能意味着牺牲。",
+          "emotional_shift": "从孤寂与疲惫转变为决绝的悲壮与牺牲的决心。"
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "镜头从高处俯瞰，穆容宇孑然一身地立在西境雪原的冰冷山脊上，寒风呼啸，吹动他的斗篷。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "crane_shot",
+              "framing_notes": "强调穆容宇的孤独与环境的广阔"
+            },
+            "visual_goal": "展现穆容宇的孤寂和边境的荒凉。",
+            "action_focus": "穆容宇在荒凉雪原上的身影。",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "地平线上，黑压压的敌军如潮水般涌来，旌旗蔽日，声势浩大，与苍茫雪原形成鲜明对比。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "very_wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "pan_left",
+              "framing_notes": "展现敌军的规模和压迫感"
+            },
+            "visual_goal": "建立敌军的压倒性数量。",
+            "action_focus": "地平线上不断逼近的敌军方阵。",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "穆容宇紧握手中佩剑，眼神中透出深沉的疲惫与绝望，但更有一丝不屈的火光。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "聚焦穆容宇面部表情"
+            },
+            "visual_goal": "捕捉穆容宇复杂的内心挣扎与最终的决心。",
+            "action_focus": "穆容宇的眼神和紧握的双手。",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "穆容宇",
+            "text": "穆容宇翻身上马，抽出长剑指向前方，尽管寡不敌众，他依然选择孤身冲锋。",
+            "emotion_hint": "urgent",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "dolly_zoom",
+              "framing_notes": "强调其英勇无畏的气势"
+            },
+            "visual_goal": "展现穆容宇冲锋前的决绝。",
+            "action_focus": "穆容宇策马扬尘，冲向敌军。",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_004",
+        "heading": {
+          "location_id": "loc_002",
+          "location_name": "战场核心",
+          "interior_exterior": "EXT",
+          "time_of_day": "DAY"
+        },
+        "summary": "穆容宇在敌阵中奋力搏杀，最终在血腥的战场核心发现了父亲的遗体，并重新拾起了家族的青龙偃月刀。",
+        "continuity": {
+          "props_present": [
+            "青龙偃月刀"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "战甲上沾满血迹与灰尘，多处破损，披风残破。",
+              "must_keep": [
+                "破损战甲",
+                "血迹"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "战甲上布满刀痕箭孔，倒卧在血泊中。",
+              "must_keep": [
+                "战甲",
+                "青龙偃月刀"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "战场的惨烈",
+            "穆容宇的绝境",
+            "青龙偃月刀的传承"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_002",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "血肉横飞的战场",
+              "散落的兵器和尸体",
+              "被鲜血染红的雪地",
+              "古中国西部边境的惨烈战事"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "在绝境中挣扎的古中国边境将军",
+                "背负家族荣誉和边境安危",
+                "体力达到极限但意志不屈"
+              ],
+              "wardrobe_notes": [
+                "破损沾血的战甲",
+                "面部污迹与疲惫"
+              ],
+              "must_keep": [
+                "眼神中的悲痛与坚定",
+                "孤胆英雄的姿态"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "已故的古中国传奇将军",
+                "穆容宇之父",
+                "手握青龙偃月刀英勇牺牲"
+              ],
+              "wardrobe_notes": [
+                "破败的战甲",
+                "英雄的遗骸"
+              ],
+              "must_keep": [
+                "手握青龙偃月刀的姿态",
+                "象征性的存在"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "青龙偃月刀",
+              "must_keep": [
+                "家族传承的武器",
+                "刀身青光流转",
+                "刀柄有古老纹饰"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "激烈残酷的战斗场面",
+              "悲情与崇高并存",
+              "古中国战争史诗感",
+              "视觉冲击力强"
+            ],
+            "must_avoid": [
+              "过度的血腥特写",
+              "失去情感深度"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "穆容宇从父亲手中接过青龙偃月刀，将个人绝望转化为家族传承的怒火与决心。",
+          "emotional_shift": "从悲痛欲绝转变为继承遗志的愤怒与坚毅。"
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "穆容宇手持长剑在敌军中奋力搏杀，身形如同旋风，周围敌兵不断倒下，但他也被重重包围。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "tracking_shot",
+              "framing_notes": "跟随穆容宇的激烈战斗"
+            },
+            "visual_goal": "展现穆容宇的勇猛与战斗的惨烈。",
+            "action_focus": "穆容宇在乱军中浴血奋战的身影。",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "穆容宇在战场一角瞥见倒卧的身影，那副残破的将军战甲，还有其手中紧握的，是熟悉的青龙偃月刀。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "point_of_view",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "quick_zoom",
+              "framing_notes": "从穆容宇视角发现父亲遗体"
+            },
+            "visual_goal": "引导观众发现其父遗体。",
+            "action_focus": "血泊中显眼的青龙偃月刀。",
+            "characters_in_frame": [],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "穆容宇冲到父亲身边，跪倒在地，颤抖的手触碰父亲冰冷的战甲，泪水与尘土混杂。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "聚焦穆容宇的悲痛与父亲的遗容"
+            },
+            "visual_goal": "表现穆容宇发现父亲牺牲的巨大悲痛。",
+            "action_focus": "穆容宇的泪水和父亲手中的青龙偃月刀。",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_008",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "穆容宇",
+            "text": "穆容宇艰难地从父亲手中接过青龙偃月刀，刀身在阳光下闪烁着青光，他眼神中的悲痛化为熊熊怒火。",
+            "emotion_hint": "angry",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "tilt_up",
+              "framing_notes": "展现穆容宇接刀后的气势变化"
+            },
+            "visual_goal": "象征家族传承与力量的转移。",
+            "action_focus": "青龙偃月刀被穆容宇举起，他的表情变化。",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_005",
+        "heading": {
+          "location_id": "loc_002",
+          "location_name": "战场核心",
+          "interior_exterior": "EXT",
+          "time_of_day": "DAY"
+        },
+        "summary": "穆容宇手持青龙偃月刀，以全新的意志继续在战场上奋战，成为了父亲 legado 的活生生体现。",
+        "continuity": {
+          "props_present": [
+            "青龙偃月刀"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "身着残破但沾满血迹的战甲，手持青龙偃月刀。",
+              "must_keep": [
+                "青龙偃月刀",
+                "血迹战甲"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "青龙偃月刀的象征意义",
+            "穆容宇战斗意志的升华",
+            "以一当十的英雄气概"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_002",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "硝烟弥漫的古战场",
+              "尸横遍野的雪原",
+              "被战争蹂躏的古中国边境"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "继承父亲遗志的古中国将军",
+                "手持家族武器的传奇战士",
+                "眼神中充满复仇与守护的决心"
+              ],
+              "wardrobe_notes": [
+                "沾血的残破战甲",
+                "手持青龙偃月刀"
+              ],
+              "must_keep": [
+                "青龙偃月刀",
+                "眼神的坚毅与狂怒"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "青龙偃月刀",
+              "must_keep": [
+                "锋利无比",
+                "刀身青光闪烁",
+                "被穆容宇挥舞时气势非凡"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "最终决战的紧张氛围",
+              "英雄主义的极致展现",
+              "古中国浪漫主义与悲壮感",
+              "视觉上强调力量与速度"
+            ],
+            "must_avoid": [
+              "战斗的轻松感",
+              "缺乏情感共鸣"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "穆容宇彻底蜕变，从一个绝望的战士成为一个承载家族荣耀和边境守护精神的象征。",
+          "emotional_shift": "从坚毅的愤怒转变为悲壮而崇高的不朽精神。"
+        },
+        "shots": [
+          {
+            "shot_id": "sh_009",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "穆容宇手持青龙偃月刀，刀光霍霍，每一击都蕴含着父亲的力量与自身的愤怒，敌人被他击退。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "dutch_tilt",
+              "framing_notes": "强调战斗的激烈与穆容宇的狂怒"
+            },
+            "visual_goal": "展现穆容宇获得新力量后的战斗姿态。",
+            "action_focus": "穆容宇挥舞青龙偃月刀的英姿。",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "穆容宇猛然跃起，青龙偃月刀划过一道弧线，数名敌兵被震开，他如同战神般无人可挡。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "long",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "crane_shot",
+              "framing_notes": "展现穆容宇以一敌百的气势"
+            },
+            "visual_goal": "塑造穆容宇成为战场上无可匹敌的象征。",
+            "action_focus": "穆容宇在敌阵中制造的混乱和突破。",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_011",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "穆容宇的眼神中不再只有疲惫，而是燃烧着对父亲的追忆和对边境的守护，以及不屈的荣耀。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "聚焦穆容宇的眼神和面部表情"
+            },
+            "visual_goal": "传达穆容宇内心的精神升华。",
+            "action_focus": "穆容宇眼中流露出的复杂情感。",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_012",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "在硝烟弥漫的战场中央，穆容宇高举青龙偃月刀，孤身一人，却如同一座不倒的丰碑，坚守着西境。",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "very_wide",
+            "camera": {
+              "angle": "low_angle",
+              "movement": "crane_shot",
+              "framing_notes": "强调穆容宇的英雄形象与孤身抗敌的气势"
+            },
+            "visual_goal": "创造一个充满力量和象征意义的画面。",
+            "action_focus": "穆容宇在广阔战场上的孤勇身影。",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count_total": 12,
+    "avg_shots_per_scene": 4.0,
+    "dialogue_block_count": 0,
+    "action_block_count": 12
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "case_name": "intake_img_005",
+  "category": "intake_img",
+  "user_goal": "Use this uploaded photo as the look of the cultivation male lead. Make a cultivation-rebirth animated short drama — in his previous life he was the Heavenly Emperor who suppressed all under heaven, killed by the joint betrayal of nine sacred lands. He is now reborn into the body of the trash junior disciple every senior in the sect mocks; every one of those who once stepped on him has no idea they are already standing at the edge of doom.",
+  "expected_chain": [
+    [
+      "IntakeImageAgent"
+    ],
+    [
+      "BriefEnricherAgent"
+    ],
+    [
+      "StoryAgent"
+    ],
+    [
+      "ScreenplayAgent"
+    ],
+    [
+      "KeyFrameAgent"
+    ],
+    [
+      "VideoAgent"
+    ],
+    [
+      "CompositorAgent"
+    ],
+    [
+      "done"
+    ]
+  ],
+  "flat_chain": [
+    "IntakeImageAgent",
+    "BriefEnricherAgent",
+    "StoryAgent",
+    "ScreenplayAgent",
+    "KeyFrameAgent",
+    "VideoAgent",
+    "CompositorAgent"
+  ],
+  "backend_url": "http://localhost:5003",
+  "hunyuan_endpoint": "http://sof1-h200-3:9201",
+  "infer_steps": 50,
+  "started_at": "2026-05-10T04:03:54"
+}

@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-09T21:25:47.381066+00:00",
+    "language": "zh"
+  },
+  "content": {
+    "logline": "A disgraced former Empress, reborn to the day before her tragic past, leverages her knowledge to navigate a perilous historical East Asian palace and orchestrate a meticulous revenge against those who betrayed her.",
+    "style": {
+      "genre": [
+        "Period Drama",
+        "Revenge Thriller",
+        "Palace Intrigue",
+        "Fantasy"
+      ],
+      "tone_keywords": [
+        "period",
+        "rebirth",
+        "revenge",
+        "palace intrigue",
+        "scheming",
+        "power struggle",
+        "dramatic",
+        "historical fantasy",
+        "East Asian"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Liu Ruyan",
+        "role": "protagonist",
+        "profile": "A former Empress from a historical East Asian empire, reborn with the searing memories of her past life's betrayal and death. Outwardly graceful and intelligent, inwardly fueled by a steely resolve for vengeance.",
+        "motivation": "To meticulously dismantle her betrayers, protect herself from a fated death, and reclaim her destiny and power in the palace.",
+        "flaw": "Her consuming obsession with revenge could blind her to new dangers or turn her into the ruthless person she seeks to punish; struggles with trust."
+      },
+      {
+        "character_id": "char_002",
+        "name": "Liu Ruoxi",
+        "role": "antagonist",
+        "profile": "Liu Ruyan's elder sister, a seemingly benevolent and supportive sibling from a historical East Asian empire. In reality, she is cunning, ambitious, and directly responsible for Ruyan's past demise.",
+        "motivation": "To secure her own position, power, and influence within the imperial court, eliminating any perceived rivals, especially Ruyan.",
+        "flaw": "Arrogance and overconfidence in her own schemes, underestimating Ruyan's intelligence and new resolve; a deep-seated jealousy."
+      },
+      {
+        "character_id": "char_003",
+        "name": "The Emperor",
+        "role": "support",
+        "profile": "The young, influential ruler of a historical East Asian empire. While powerful, he can be swayed by the schemes of his concubines and court officials, making him a central figure in the palace intrigues.",
+        "motivation": "To maintain stability within his court, project an image of authority, and pursue personal interests.",
+        "flaw": "Often naive to the full extent of the manipulations around him, susceptible to flattery, and at times indecisive, making him a potential pawn in others' games."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Imperial Palace",
+        "description": "A sprawling, opulent complex of traditional East Asian architecture within a historical empire, featuring grand halls, serene gardens, secluded courtyards, and private chambers. It is a place of both immense beauty and treacherous political intrigue."
+      },
+      {
+        "location_id": "loc_002",
+        "name": "Liu Manor",
+        "description": "The ancestral residence of the Liu family, a well-appointed and respectable noble estate outside the imperial city of a historical East Asian empire, where Liu Ruyan spends her time before entering the palace. It represents her last connection to a 'normal' life, now tainted by past memories."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Liu Ruyan awakens in her younger self's body, on the day before she is to enter the Imperial Palace. She vividly recalls her past life's betrayal and death at the hands of her sister, Liu Ruoxi, and the others.",
+        "conflict": "Ruyan is overwhelmed by the horror of her memories and the realization of her rebirth, battling despair and rage.",
+        "turning_point": "She channels her grief into a burning resolve, vowing to prevent her past fate and exact revenge on every betrayer."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "inciting",
+        "summary": "Ruyan has her first encounter with her elder sister, Liu Ruoxi, who feigns affectionate concern for Ruyan's upcoming palace entry. Ruyan must master her composure to hide her true knowledge and intentions.",
+        "conflict": "Ruyan's internal struggle to maintain a facade of innocence while confronting the smiling face of her past murderer, sensing the immediate danger.",
+        "turning_point": "She successfully navigates the treacherous interaction, subtly sowing a seed of doubt or gaining a small piece of information, solidifying her strategic mindset."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "turn",
+        "summary": "Now within the palace walls, Ruyan subtly manipulates an event or situation that begins to expose or undermine one of her early betrayers, potentially her sister Ruoxi, without revealing her own hand directly.",
+        "conflict": "Ruyan carefully executes her first calculated move, facing the risk of exposure or failure as she sets her plan in motion against a powerful adversary.",
+        "turning_point": "Her initial maneuver succeeds, creating a ripple effect that destabilizes her enemy's position or reveals a hidden aspect of their character, marking the start of her active revenge."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_002",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Ruyan fully comprehends her rebirth and commits to her vow of revenge.",
+        "conflict": "The shock and terror of her past life's demise clash with the miraculous reality of her second chance, almost paralyzing her with dread.",
+        "turn": "Through sheer force of will, she converts her despair into a chilling, unbreakable resolve, vowing aloud (or silently) to make her betrayers kneel."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "Ruyan to interact with Ruoxi, gather initial intel, and maintain her innocent facade.",
+        "conflict": "Ruoxi's deceptively warm embrace and words trigger Ruyan's memories of betrayal, forcing Ruyan to suppress her fury and calculate her response carefully.",
+        "turn": "Ruyan responds with a subtly ambiguous statement or action that plants a tiny seed of unease in Ruoxi, while completely preserving her own cover."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001",
+          "char_002",
+          "char_003"
+        ],
+        "goal": "Ruyan to orchestrate an event that subtly exposes Ruoxi's machinations to the Emperor or directly challenges Ruoxi's influence.",
+        "conflict": "Ruyan sets a trap, using misdirection and court etiquette to manipulate the Emperor's perception of Ruoxi, while Ruoxi attempts to maintain her favored status.",
+        "turn": "The Emperor, influenced by Ruyan's subtle actions, makes a decision or expresses a sentiment that visibly rattles Ruoxi, marking Ruyan's first concrete victory."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 3,
+    "location_count": 2,
+    "scene_count": 3
+  }
+}

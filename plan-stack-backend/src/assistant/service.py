@@ -178,6 +178,39 @@ class AssistantService:
                     materialize_ctx=materialize_ctx,
                 )
             )
+            try:
+                from inference import trace as _fw_trace
+                _exec_agent_id = getattr(execution, "agent_id", "") or ""
+                _media_assets = list(getattr(result, "media_assets", []) or [])
+                _fw_trace.dump_step(
+                    "sub_agent_result",
+                    _exec_agent_id,
+                    step_id,
+                    {
+                        "agent_class": type(agent).__name__,
+                        "typed_input": typed_input,
+                        "output": getattr(result, "output", None),
+                        "eval_result": getattr(result, "eval_result", None),
+                        "passed": getattr(result, "passed", None),
+                        "attempts": getattr(result, "attempts", None),
+                        "asset_dict": getattr(result, "asset_dict", None),
+                        "media_assets_count": len(_media_assets),
+                        "media_assets_summary": [
+                            {
+                                "sys_id": getattr(m, "sys_id", None),
+                                "extension": getattr(m, "extension", None),
+                                "bytes_len": (
+                                    len(getattr(m, "data", b""))
+                                    if isinstance(getattr(m, "data", None), bytes)
+                                    else None
+                                ),
+                            }
+                            for m in _media_assets
+                        ],
+                    },
+                )
+            except Exception:
+                pass
             output: Dict[str, Any] = {}
             asset_dict = getattr(result, "asset_dict", None)
             raw_output = getattr(result, "output", None)
@@ -273,6 +306,21 @@ class AssistantService:
         the same agent still auto-flip overwrite mode and GC prior outputs.
         """
         return self.workspace.global_memory.has_producer_run(agent_id=agent_id)
+
+    def _snapshot_global_memory(self) -> Dict[str, Any]:
+        """Full GlobalMemory dump for trace files (entries + the exact text
+        InputResolver's LLM sees)."""
+        from .workspace.global_memory import GlobalMemory
+        gm = self.workspace.global_memory
+        entries = gm.list_all()
+        captions_index, path_list = gm.get_captions_index()
+        return {
+            "entry_count": len(entries),
+            "artifact_count": len(path_list),
+            "captions_index_text": captions_index,
+            "path_list": path_list,
+            "entries": [GlobalMemory._entry_to_dict(e) for e in entries],
+        }
 
     def execute_agent(
         self,
@@ -547,23 +595,47 @@ class AssistantService:
         workspace = self.prepare_environment()
         overwrite_existing_assets = self._has_existing_assets(agent_id=agent_id)
 
+        try:
+            from inference import trace as _fw_trace
+            _fw_trace.dump_step(
+                "global_memory_before",
+                agent_id,
+                step_id,
+                self._snapshot_global_memory(),
+            )
+        except Exception:
+            pass
+
         # 1) Build inputs (step_id + resolved_artifacts)
         inputs = self.build_execution_inputs(
             agent_id=agent_id,
             step_id=step_id,
             workspace=workspace,
         )
-        
+
         # 2) Run selected agent
         execution = self.execute_agent(
             agent_id=agent_id,
             step_id=step_id,
             inputs=inputs,
         )
-        
+
         # 3) Persist results and return task-running summary payload
-        return self.process_results(
+        persisted = self.process_results(
             execution,
             workspace,
             overwrite_existing_assets=overwrite_existing_assets,
         )
+
+        try:
+            from inference import trace as _fw_trace
+            _fw_trace.dump_step(
+                "global_memory_after",
+                agent_id,
+                step_id,
+                self._snapshot_global_memory(),
+            )
+        except Exception:
+            pass
+
+        return persisted

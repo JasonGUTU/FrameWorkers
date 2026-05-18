@@ -1,0 +1,126 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-08T13:20:06.063208+00:00",
+    "language": "zh"
+  },
+  "content": {
+    "logline": "A seasoned Three Kingdoms general must lead his exhausted troops across a deadly, freezing mountain pass to launch an impossible ambush and lift the siege on a vital allied fortress.",
+    "style": {
+      "genre": [
+        "Historical Epic",
+        "War Drama"
+      ],
+      "tone_keywords": [
+        "Three Kingdoms",
+        "Heroic",
+        "Gritty",
+        "Tense",
+        "Atmospheric"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "General Zhao Yan",
+        "role": "protagonist",
+        "profile": "A battle-hardened and stoic commander of the Three Kingdoms era, heavily armored and fiercely loyal to his lord.",
+        "motivation": "To break the siege and save the allied garrison at all costs.",
+        "flaw": "He pushes his men and himself to the absolute breaking point, often risking total destruction for strategic victory."
+      },
+      {
+        "character_id": "char_002",
+        "name": "Lieutenant Feng",
+        "role": "support",
+        "profile": "A pragmatic, younger officer in the Three Kingdoms army who serves as Zhao Yan's second-in-command and the voice of the exhausted troops.",
+        "motivation": "To ensure the survival of his men in an impossible campaign.",
+        "flaw": "His caution borders on defeatism when faced with overwhelming natural obstacles."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "The Yinping Mountain Pass",
+        "description": "A perilous, snow-choked gorge in the rugged frontiers of the Three Kingdoms, defined by narrow cliffside trails, blinding whiteout conditions, and sheer drops."
+      },
+      {
+        "location_id": "loc_002",
+        "name": "The Besieged Fortress of Jincheng",
+        "description": "A war-torn valley stronghold under heavy assault, its gates splintering and stone walls scarred by siege weapons, surrounded by the vast encampments of a rival kingdom."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "turn",
+        "summary": "General Zhao Yan leads his army into a brutal mountain pass to bypass enemy lines, facing immediate resistance from the freezing elements.",
+        "conflict": "The brutal mountain weather rapidly depletes the troops' morale, leading to near-mutiny.",
+        "turning_point": "Zhao Yan abandons his command privileges to suffer alongside his men, re-igniting their loyalty."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "crisis",
+        "summary": "The vanguard discovers the mountain trail has collapsed, leaving only a sheer, terrifying cliff face between them and the valley below.",
+        "conflict": "There is no way back, and descending the cliff seems like certain death for an armored army.",
+        "turning_point": "The general binds his armor with ropes and leads a harrowing free-climb descent."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "climax",
+        "summary": "Zhao Yan's surviving forces launch a devastating surprise attack from the unguarded mountain flank, shattering the besieging army.",
+        "conflict": "The allied fortress is moments away from falling to overwhelming enemy forces.",
+        "turning_point": "The sudden, impossible cavalry charge from the mountains breaks the enemy formation, successfully lifting the siege."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "To march the army through the treacherous mountain pass despite a blinding snowstorm.",
+        "conflict": "Lieutenant Feng urges retreat as soldiers begin collapsing from frostbite and exhaustion.",
+        "turn": "General Zhao Yan casts aside his thick fur cloak, marching exposed in the storm to share the troops' suffering and inspire them forward."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "DAWN",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To navigate the final precipice leading down to the besieged valley.",
+        "conflict": "The trail abruptly ends at a collapsed ravine, halting the advance just as the sounds of the siege echo from below.",
+        "turn": "Zhao Yan physically hurls his prized weapon over the edge, wraps his hands in torn cloth, and begins scaling down the vertical rock face, prompting the army to follow."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_002",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To shatter the enemy siege lines before the fortress gates are breached.",
+        "conflict": "The besieging army is massive and heavily entrenched around the splintering fortress.",
+        "turn": "Zhao Yan's forces burst from the obscuring mountain mist, striking the enemy's unprotected flank with overwhelming momentum and routing the siege camp."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 2,
+    "location_count": 2,
+    "scene_count": 3
+  }
+}

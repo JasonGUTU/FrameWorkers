@@ -1,0 +1,605 @@
+{
+  "entry_count": 8,
+  "artifact_count": 76,
+  "captions_index_text": "#0  Global character reference image. Visual identity anchor for downstream keyframe generation. Produced by user on 2026-05-12 22:38.\n\n#1  Structured metadata document (JSON) for a user-submitted text brief. Payload carries the raw text verbatim. Pipeline entry point — consumed by story / screenplay / narration agents. Produced by user on 2026-05-12 22:38.\n\n#2  Structured metadata document (JSON) for a user-uploaded image. Payload carries the visual description and image-asset metadata. Produced by IntakeImageAgent on 2026-05-12 22:38.\n\n#3  Enriched creative brief with visual reference descriptions integrated. Supersedes the raw user brief for story generation — contains the user's original concept plus detailed visual descriptions of uploaded reference images. Produced by BriefEnricherAgent on 2026-05-12 22:38.\n\n#4  Story blueprint: 5 scene(s), 3 character(s). Structured input for screenplay generation. Produced by StoryAgent on 2026-05-12 22:39.\n\n#5  Screenplay: 5 scene(s), 15 shot(s). Input for keyframe planning and audio scoring. Produced by ScreenplayAgent on 2026-05-12 22:40.\n\n#6  Global character reference image for char_001. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#7  Global prop reference image for prop_002. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#8  Global character reference image for char_003. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#9  Global prop reference image for prop_005. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#10  Global character reference image for char_002. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#11  Global location reference image for loc_001. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#12  Global prop reference image for prop_001. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#13  Global prop reference image for prop_004. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#14  Global prop reference image for prop_003. Visual identity anchor — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#15  Scene-level character reference for char_001 in scene sc_004. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#16  Scene-level character reference for char_003 in scene sc_003. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#17  Scene-level character reference for char_001 in scene sc_001. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#18  Scene-level character reference for char_001 in scene sc_002. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#19  Scene-level prop reference for prop_004 in scene sc_003. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#20  Scene-level prop reference for prop_003 in scene sc_002. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#21  Scene-level character reference for char_002 in scene sc_002. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#22  Scene-level prop reference for prop_003 in scene sc_004. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#23  Scene-level prop reference for prop_005 in scene sc_003. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#24  Scene-level location reference for loc_001 in scene sc_001. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#25  Scene-level character reference for char_001 in scene sc_005. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#26  Scene-level prop reference for prop_001 in scene sc_001. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#27  Scene-level character reference for char_002 in scene sc_005. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#28  Scene-level location reference for loc_001 in scene sc_002. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#29  Scene-level character reference for char_002 in scene sc_004. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#30  Scene-level location reference for loc_001 in scene sc_005. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#31  Scene-level location reference for loc_001 in scene sc_004. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#32  Scene-level prop reference for prop_001 in scene sc_004. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#33  Scene-level location reference for loc_001 in scene sc_003. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#34  Scene-level character reference for char_001 in scene sc_003. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#35  Scene-level prop reference for prop_003 in scene sc_005. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#36  Scene-level character reference for char_002 in scene sc_001. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#37  Scene-level prop reference for prop_002 in scene sc_001. Intermediate consistency rendering — not a video frame. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#38  Rendered starting frame for shot sh_004 in scene sc_002. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#39  Rendered starting frame for shot sh_006 in scene sc_002. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#40  Rendered starting frame for shot sh_007 in scene sc_003. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#41  Rendered starting frame for shot sh_010 in scene sc_004. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#42  Rendered starting frame for shot sh_015 in scene sc_005. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#43  Rendered starting frame for shot sh_009 in scene sc_003. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#44  Rendered starting frame for shot sh_002 in scene sc_001. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#45  Rendered starting frame for shot sh_005 in scene sc_002. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#46  Rendered starting frame for shot sh_012 in scene sc_004. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#47  Rendered starting frame for shot sh_011 in scene sc_004. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#48  Rendered starting frame for shot sh_001 in scene sc_001. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#49  Rendered starting frame for shot sh_008 in scene sc_003. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#50  Rendered starting frame for shot sh_013 in scene sc_005. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#51  Rendered starting frame for shot sh_003 in scene sc_001. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#52  Rendered starting frame for shot sh_014 in scene sc_005. To be animated into a video clip by an image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#53  Keyframe planning document: 5 scene(s), 15 shot(s), with per-shot frame descriptions and motion hints. Consumed by a downstream image-to-video generation step. Produced by KeyFrameAgent on 2026-05-12 22:54.\n\n#54  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_001] Video clip bytes for shot sh_001. One segment of the final video. Produced by VideoAgent on 2026-05-13 01:08.\n\n#55  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_002] Video clip bytes for shot sh_002. One segment of the final video. Produced by VideoAgent on 2026-05-13 01:08.\n\n#56  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_003] Video clip bytes for shot sh_003. One segment of the final video. Produced by VideoAgent on 2026-05-13 01:08.\n\n#57  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_004] Video clip bytes for shot sh_004. One segment of the final video. Produced by VideoAgent on 2026-05-13 01:08.\n\n#58  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_005] Video clip bytes for shot sh_005. One segment of the final video. Produced by VideoAgent on 2026-05-13 01:08.\n\n#59  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_006] Video clip bytes for shot sh_006. One segment of the final video. Produced by VideoAgent on 2026-05-13 01:08.\n\n#60  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_007] Video clip bytes for shot sh_007. One segment of the final video. Produced by VideoAgent on 2026-05-13 01:08.\n\n#61  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_008] Video clip bytes for shot sh_008. One segment of the final video. Produced by VideoAgent on 2026-05-13 01:08.\n\n#62  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_009] Video clip bytes for shot sh_009. One segment of the final video. Produced by VideoAgent on 2026-05-13 01:08.\n\n#63  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_010] Video clip bytes for shot sh_010. One segment of the final video. Produced by VideoAgent on 2026-05-13 01:08.\n\n#64  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_011] Video clip bytes for shot sh_011. One segment of the final video. Produced by VideoAgent on 2026-05-13 01:08.\n\n#65  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_012] Video clip bytes for shot sh_012. One segment of the final video. Produced by VideoAgent on 2026-05-13 01:08.\n\n#66  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_013] Video clip bytes for shot sh_013. One segment of the final video. Produced by VideoAgent on 2026-05-13 01:08.\n\n#67  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_014] Video clip bytes for shot sh_014. One segment of the final video. Produced by VideoAgent on 2026-05-13 01:08.\n\n#68  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_015] Video clip bytes for shot sh_015. One segment of the final video. Produced by VideoAgent on 2026-05-13 01:08.\n\n#69  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sc_001] Scene-cut bytes for scene sc_001 — all shots concatenated. Intermediate assembly, not final. Produced by VideoAgent on 2026-05-13 01:08.\n\n#70  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sc_002] Scene-cut bytes for scene sc_002 — all shots concatenated. Intermediate assembly, not final. Produced by VideoAgent on 2026-05-13 01:08.\n\n#71  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sc_003] Scene-cut bytes for scene sc_003 — all shots concatenated. Intermediate assembly, not final. Produced by VideoAgent on 2026-05-13 01:08.\n\n#72  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sc_004] Scene-cut bytes for scene sc_004 — all shots concatenated. Intermediate assembly, not final. Produced by VideoAgent on 2026-05-13 01:08.\n\n#73  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sc_005] Scene-cut bytes for scene sc_005 — all shots concatenated. Intermediate assembly, not final. Produced by VideoAgent on 2026-05-13 01:08.\n\n#74  [BINARY MP4 FILE · mime=video/mp4 · sys_id clip_final] Complete assembled video bytes (15 shots). Final visual deliverable — consumed by a downstream audio-mix step's materializer via ffmpeg for audio extraction + muxing. Produced by VideoAgent on 2026-05-13 01:08.\n\n#75  [JSON MANIFEST] Video-assembly planning metadata: 5 scene(s), 15 shot clip(s) with timing. Read by a downstream audio-mix step's LLM for mix planning. Produced by VideoAgent on 2026-05-13 01:08.",
+  "path_list": [
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/brief_20260512_223801_057913.json",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/IntakeImageAgent/step_1_81595939_intakeimageagent_exec_1.json",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/BriefEnricherAgent/step_2_4ce0f309_briefenricheragent_exec_2.json",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/StoryAgent/step_3_c63b3878_storyagent_exec_3.json",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/ScreenplayAgent/step_4_a76cf964_screenplayagent_exec_4.json",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_001_global.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_002_global.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_003_global.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_005_global.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_002_global.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_loc_001_global.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_001_global.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_004_global.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_003_global.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_001_sc_004.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_003_sc_003.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_001_sc_001.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_001_sc_002.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_004_sc_003.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_003_sc_002.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_002_sc_002.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_003_sc_004.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_005_sc_003.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_loc_001_sc_001.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_001_sc_005.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_001_sc_001.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_002_sc_005.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_loc_001_sc_002.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_002_sc_004.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_loc_001_sc_005.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_loc_001_sc_004.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_001_sc_004.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_loc_001_sc_003.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_001_sc_003.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_003_sc_005.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_002_sc_001.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_002_sc_001.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_004_kf_001.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_006_kf_001.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_007_kf_001.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_010_kf_001.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_015_kf_001.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_009_kf_001.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_002_kf_001.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_005_kf_001.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_012_kf_001.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_011_kf_001.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_001_kf_001.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_008_kf_001.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_013_kf_001.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_003_kf_001.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_014_kf_001.png",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/KeyFrameAgent/step_5_21c87218_keyframeagent_exec_6.json",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_001.mp4",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_002.mp4",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_003.mp4",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_004.mp4",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_005.mp4",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_006.mp4",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_007.mp4",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_008.mp4",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_009.mp4",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_010.mp4",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_011.mp4",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_012.mp4",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_013.mp4",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_014.mp4",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_015.mp4",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sc_001.mp4",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sc_002.mp4",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sc_003.mp4",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sc_004.mp4",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sc_005.mp4",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_final.mp4",
+    "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/VideoAgent/step_1_95d7d1dc_videoagent_exec_1.json"
+  ],
+  "entries": [
+    {
+      "execution_id": "upload_20260512_223801_048018",
+      "agent_id": "user",
+      "step_id": "",
+      "created_at": "2026-05-12T22:38:01.050159+00:00",
+      "artifacts": [
+        {
+          "caption": "Global character reference image. Visual identity anchor for downstream keyframe generation.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png",
+          "mime": "image/png"
+        }
+      ]
+    },
+    {
+      "execution_id": "brief_20260512_223801_057913",
+      "agent_id": "user",
+      "step_id": "",
+      "created_at": "2026-05-12T22:38:01.059360+00:00",
+      "artifacts": [
+        {
+          "caption": "Structured metadata document (JSON) for a user-submitted text brief. Payload carries the raw text verbatim. Pipeline entry point — consumed by story / screenplay / narration agents.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/brief_20260512_223801_057913.json",
+          "mime": "application/json"
+        }
+      ]
+    },
+    {
+      "execution_id": "exec_1_8b99db26",
+      "agent_id": "IntakeImageAgent",
+      "step_id": "step_1_81595939",
+      "created_at": "2026-05-12T22:38:10.527569+00:00",
+      "artifacts": [
+        {
+          "caption": "Structured metadata document (JSON) for a user-uploaded image. Payload carries the visual description and image-asset metadata.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/IntakeImageAgent/step_1_81595939_intakeimageagent_exec_1.json",
+          "mime": "application/json"
+        }
+      ]
+    },
+    {
+      "execution_id": "exec_2_2f541902",
+      "agent_id": "BriefEnricherAgent",
+      "step_id": "step_2_4ce0f309",
+      "created_at": "2026-05-12T22:38:26.549589+00:00",
+      "artifacts": [
+        {
+          "caption": "Enriched creative brief with visual reference descriptions integrated. Supersedes the raw user brief for story generation — contains the user's original concept plus detailed visual descriptions of uploaded reference images.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/BriefEnricherAgent/step_2_4ce0f309_briefenricheragent_exec_2.json",
+          "mime": "application/json"
+        }
+      ]
+    },
+    {
+      "execution_id": "exec_3_b1cb6e16",
+      "agent_id": "StoryAgent",
+      "step_id": "step_3_c63b3878",
+      "created_at": "2026-05-12T22:39:08.167113+00:00",
+      "artifacts": [
+        {
+          "caption": "Story blueprint: 5 scene(s), 3 character(s). Structured input for screenplay generation.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/StoryAgent/step_3_c63b3878_storyagent_exec_3.json",
+          "mime": "application/json"
+        }
+      ]
+    },
+    {
+      "execution_id": "exec_4_a585afad",
+      "agent_id": "ScreenplayAgent",
+      "step_id": "step_4_a76cf964",
+      "created_at": "2026-05-12T22:40:25.226972+00:00",
+      "artifacts": [
+        {
+          "caption": "Screenplay: 5 scene(s), 15 shot(s). Input for keyframe planning and audio scoring.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/ScreenplayAgent/step_4_a76cf964_screenplayagent_exec_4.json",
+          "mime": "application/json"
+        }
+      ]
+    },
+    {
+      "execution_id": "exec_6_321c6529",
+      "agent_id": "KeyFrameAgent",
+      "step_id": "step_5_21c87218",
+      "created_at": "2026-05-12T22:54:40.167539+00:00",
+      "artifacts": [
+        {
+          "caption": "Global character reference image for char_001. Visual identity anchor — not a video frame.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_001_global.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Global prop reference image for prop_002. Visual identity anchor — not a video frame.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_002_global.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Global character reference image for char_003. Visual identity anchor — not a video frame.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_003_global.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Global prop reference image for prop_005. Visual identity anchor — not a video frame.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_005_global.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Global character reference image for char_002. Visual identity anchor — not a video frame.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_002_global.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Global location reference image for loc_001. Visual identity anchor — not a video frame.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_loc_001_global.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Global prop reference image for prop_001. Visual identity anchor — not a video frame.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_001_global.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Global prop reference image for prop_004. Visual identity anchor — not a video frame.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_004_global.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Global prop reference image for prop_003. Visual identity anchor — not a video frame.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_003_global.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Scene-level character reference for char_001 in scene sc_004. Intermediate consistency rendering — not a video frame.",
+          "scope": "scene:sc_004",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_001_sc_004.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Scene-level character reference for char_003 in scene sc_003. Intermediate consistency rendering — not a video frame.",
+          "scope": "scene:sc_003",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_003_sc_003.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Scene-level character reference for char_001 in scene sc_001. Intermediate consistency rendering — not a video frame.",
+          "scope": "scene:sc_001",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_001_sc_001.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Scene-level character reference for char_001 in scene sc_002. Intermediate consistency rendering — not a video frame.",
+          "scope": "scene:sc_002",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_001_sc_002.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Scene-level prop reference for prop_004 in scene sc_003. Intermediate consistency rendering — not a video frame.",
+          "scope": "scene:sc_003",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_004_sc_003.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Scene-level prop reference for prop_003 in scene sc_002. Intermediate consistency rendering — not a video frame.",
+          "scope": "scene:sc_002",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_003_sc_002.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Scene-level character reference for char_002 in scene sc_002. Intermediate consistency rendering — not a video frame.",
+          "scope": "scene:sc_002",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_002_sc_002.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Scene-level prop reference for prop_003 in scene sc_004. Intermediate consistency rendering — not a video frame.",
+          "scope": "scene:sc_004",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_003_sc_004.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Scene-level prop reference for prop_005 in scene sc_003. Intermediate consistency rendering — not a video frame.",
+          "scope": "scene:sc_003",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_005_sc_003.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Scene-level location reference for loc_001 in scene sc_001. Intermediate consistency rendering — not a video frame.",
+          "scope": "scene:sc_001",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_loc_001_sc_001.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Scene-level character reference for char_001 in scene sc_005. Intermediate consistency rendering — not a video frame.",
+          "scope": "scene:sc_005",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_001_sc_005.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Scene-level prop reference for prop_001 in scene sc_001. Intermediate consistency rendering — not a video frame.",
+          "scope": "scene:sc_001",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_001_sc_001.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Scene-level character reference for char_002 in scene sc_005. Intermediate consistency rendering — not a video frame.",
+          "scope": "scene:sc_005",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_002_sc_005.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Scene-level location reference for loc_001 in scene sc_002. Intermediate consistency rendering — not a video frame.",
+          "scope": "scene:sc_002",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_loc_001_sc_002.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Scene-level character reference for char_002 in scene sc_004. Intermediate consistency rendering — not a video frame.",
+          "scope": "scene:sc_004",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_002_sc_004.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Scene-level location reference for loc_001 in scene sc_005. Intermediate consistency rendering — not a video frame.",
+          "scope": "scene:sc_005",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_loc_001_sc_005.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Scene-level location reference for loc_001 in scene sc_004. Intermediate consistency rendering — not a video frame.",
+          "scope": "scene:sc_004",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_loc_001_sc_004.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Scene-level prop reference for prop_001 in scene sc_004. Intermediate consistency rendering — not a video frame.",
+          "scope": "scene:sc_004",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_001_sc_004.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Scene-level location reference for loc_001 in scene sc_003. Intermediate consistency rendering — not a video frame.",
+          "scope": "scene:sc_003",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_loc_001_sc_003.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Scene-level character reference for char_001 in scene sc_003. Intermediate consistency rendering — not a video frame.",
+          "scope": "scene:sc_003",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_001_sc_003.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Scene-level prop reference for prop_003 in scene sc_005. Intermediate consistency rendering — not a video frame.",
+          "scope": "scene:sc_005",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_003_sc_005.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Scene-level character reference for char_002 in scene sc_001. Intermediate consistency rendering — not a video frame.",
+          "scope": "scene:sc_001",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_char_002_sc_001.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Scene-level prop reference for prop_002 in scene sc_001. Intermediate consistency rendering — not a video frame.",
+          "scope": "scene:sc_001",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_prop_002_sc_001.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_004 in scene sc_002. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_004",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_004_kf_001.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_006 in scene sc_002. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_006",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_006_kf_001.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_007 in scene sc_003. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_007",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_007_kf_001.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_010 in scene sc_004. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_010",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_010_kf_001.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_015 in scene sc_005. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_015",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_015_kf_001.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_009 in scene sc_003. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_009",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_009_kf_001.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_002 in scene sc_001. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_002",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_002_kf_001.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_005 in scene sc_002. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_005",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_005_kf_001.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_012 in scene sc_004. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_012",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_012_kf_001.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_011 in scene sc_004. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_011",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_011_kf_001.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_001 in scene sc_001. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_001",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_001_kf_001.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_008 in scene sc_003. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_008",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_008_kf_001.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_013 in scene sc_005. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_013",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_013_kf_001.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_003 in scene sc_001. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_003",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_003_kf_001.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Rendered starting frame for shot sh_014 in scene sc_005. To be animated into a video clip by an image-to-video generation step.",
+          "scope": "shot:sh_014",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/KeyFrameAgent/image/step_5_21c87218_img_sh_014_kf_001.png",
+          "mime": "image/png"
+        },
+        {
+          "caption": "Keyframe planning document: 5 scene(s), 15 shot(s), with per-shot frame descriptions and motion hints. Consumed by a downstream image-to-video generation step.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/KeyFrameAgent/step_5_21c87218_keyframeagent_exec_6.json",
+          "mime": "application/json"
+        }
+      ]
+    },
+    {
+      "execution_id": "exec_1_f321d4a1",
+      "agent_id": "VideoAgent",
+      "step_id": "step_1_95d7d1dc",
+      "created_at": "2026-05-13T01:08:17.721897+00:00",
+      "artifacts": [
+        {
+          "caption": "[BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_001] Video clip bytes for shot sh_001. One segment of the final video.",
+          "scope": "shot:sh_001",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_001.mp4",
+          "mime": "video/mp4"
+        },
+        {
+          "caption": "[BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_002] Video clip bytes for shot sh_002. One segment of the final video.",
+          "scope": "shot:sh_002",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_002.mp4",
+          "mime": "video/mp4"
+        },
+        {
+          "caption": "[BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_003] Video clip bytes for shot sh_003. One segment of the final video.",
+          "scope": "shot:sh_003",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_003.mp4",
+          "mime": "video/mp4"
+        },
+        {
+          "caption": "[BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_004] Video clip bytes for shot sh_004. One segment of the final video.",
+          "scope": "shot:sh_004",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_004.mp4",
+          "mime": "video/mp4"
+        },
+        {
+          "caption": "[BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_005] Video clip bytes for shot sh_005. One segment of the final video.",
+          "scope": "shot:sh_005",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_005.mp4",
+          "mime": "video/mp4"
+        },
+        {
+          "caption": "[BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_006] Video clip bytes for shot sh_006. One segment of the final video.",
+          "scope": "shot:sh_006",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_006.mp4",
+          "mime": "video/mp4"
+        },
+        {
+          "caption": "[BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_007] Video clip bytes for shot sh_007. One segment of the final video.",
+          "scope": "shot:sh_007",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_007.mp4",
+          "mime": "video/mp4"
+        },
+        {
+          "caption": "[BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_008] Video clip bytes for shot sh_008. One segment of the final video.",
+          "scope": "shot:sh_008",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_008.mp4",
+          "mime": "video/mp4"
+        },
+        {
+          "caption": "[BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_009] Video clip bytes for shot sh_009. One segment of the final video.",
+          "scope": "shot:sh_009",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_009.mp4",
+          "mime": "video/mp4"
+        },
+        {
+          "caption": "[BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_010] Video clip bytes for shot sh_010. One segment of the final video.",
+          "scope": "shot:sh_010",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_010.mp4",
+          "mime": "video/mp4"
+        },
+        {
+          "caption": "[BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_011] Video clip bytes for shot sh_011. One segment of the final video.",
+          "scope": "shot:sh_011",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_011.mp4",
+          "mime": "video/mp4"
+        },
+        {
+          "caption": "[BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_012] Video clip bytes for shot sh_012. One segment of the final video.",
+          "scope": "shot:sh_012",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_012.mp4",
+          "mime": "video/mp4"
+        },
+        {
+          "caption": "[BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_013] Video clip bytes for shot sh_013. One segment of the final video.",
+          "scope": "shot:sh_013",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_013.mp4",
+          "mime": "video/mp4"
+        },
+        {
+          "caption": "[BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_014] Video clip bytes for shot sh_014. One segment of the final video.",
+          "scope": "shot:sh_014",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_014.mp4",
+          "mime": "video/mp4"
+        },
+        {
+          "caption": "[BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sh_015] Video clip bytes for shot sh_015. One segment of the final video.",
+          "scope": "shot:sh_015",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sh_015.mp4",
+          "mime": "video/mp4"
+        },
+        {
+          "caption": "[BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sc_001] Scene-cut bytes for scene sc_001 — all shots concatenated. Intermediate assembly, not final.",
+          "scope": "scene:sc_001",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sc_001.mp4",
+          "mime": "video/mp4"
+        },
+        {
+          "caption": "[BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sc_002] Scene-cut bytes for scene sc_002 — all shots concatenated. Intermediate assembly, not final.",
+          "scope": "scene:sc_002",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sc_002.mp4",
+          "mime": "video/mp4"
+        },
+        {
+          "caption": "[BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sc_003] Scene-cut bytes for scene sc_003 — all shots concatenated. Intermediate assembly, not final.",
+          "scope": "scene:sc_003",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sc_003.mp4",
+          "mime": "video/mp4"
+        },
+        {
+          "caption": "[BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sc_004] Scene-cut bytes for scene sc_004 — all shots concatenated. Intermediate assembly, not final.",
+          "scope": "scene:sc_004",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sc_004.mp4",
+          "mime": "video/mp4"
+        },
+        {
+          "caption": "[BINARY MP4 FILE · mime=video/mp4 · sys_id clip_sc_005] Scene-cut bytes for scene sc_005 — all shots concatenated. Intermediate assembly, not final.",
+          "scope": "scene:sc_005",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_sc_005.mp4",
+          "mime": "video/mp4"
+        },
+        {
+          "caption": "[BINARY MP4 FILE · mime=video/mp4 · sys_id clip_final] Complete assembled video bytes (15 shots). Final visual deliverable — consumed by a downstream audio-mix step's materializer via ffmpeg for audio extraction + muxing.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/media/VideoAgent/video/step_1_95d7d1dc_clip_final.mp4",
+          "mime": "video/mp4"
+        },
+        {
+          "caption": "[JSON MANIFEST] Video-assembly planning metadata: 5 scene(s), 15 shot clip(s) with timing. Read by a downstream audio-mix step's LLM for mix planning.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/VideoAgent/step_1_95d7d1dc_videoagent_exec_1.json",
+          "mime": "application/json"
+        }
+      ]
+    }
+  ]
+}

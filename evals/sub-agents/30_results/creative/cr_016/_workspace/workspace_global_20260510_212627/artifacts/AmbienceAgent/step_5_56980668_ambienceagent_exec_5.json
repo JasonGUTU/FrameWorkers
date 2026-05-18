@@ -1,0 +1,13 @@
+{
+  "content": {
+    "beds": [
+      {
+        "ambience_id": "amb_film",
+        "description": "Faint electrical hum, hollow corridor reverb, and distant, unsettling sounds including subtle sobbing, creating an eerie, desolate psychiatric hospital atmosphere at night."
+      }
+    ]
+  },
+  "metrics": {
+    "bed_count": 1
+  }
+}

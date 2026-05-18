@@ -1,0 +1,599 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T03:38:03.840189+00:00",
+    "language": "en"
+  },
+  "content": {
+    "title": "Post-Apocalyptic Survivor: Lena's Quest",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_002",
+          "location_name": "Ruined City Streets",
+          "interior_exterior": "EXT",
+          "time_of_day": "DAY"
+        },
+        "summary": "Lena leads her group through the dangerous, zombie-infested city streets, using her powers to secure their path while keeping an eye out for military patrols and clues.",
+        "continuity": {
+          "props_present": [],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "worn leather jacket and dog tags",
+              "must_keep": [
+                "worn leather jacket",
+                "dog tags"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Lena is leading a group of survivors.",
+            "The city is devastated and dangerous."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_002",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "Desolate, crumbling city streets, zombie-flooded, somber sky, skeletal buildings, overturned vehicles, makeshift barricades. Post-apocalyptic landscape."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Determined female survivor, short hair, bruised face, glowing hand. Post-apocalyptic setting."
+              ],
+              "wardrobe_notes": [
+                "worn leather jacket and dog tags"
+              ],
+              "must_keep": []
+            }
+          ],
+          "props_lock": [],
+          "style_lock": {
+            "global_style_notes": [
+              "Gritty",
+              "Somber",
+              "Survival",
+              "Mystery",
+              "Determined",
+              "Post-apocalyptic",
+              "Supernatural Drama",
+              "Action"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "Lena deftly uses her powers to secure a path, narrowly avoiding detection, reaffirming her leadership and determination to her weary group.",
+          "emotional_shift": "From wary navigation to reaffirmed determination and cautious optimism."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A wide shot shows Lena, resolute, leading her small group through the skeletal remains of a once-vibrant city, debris and overturned vehicles littering the streets.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "tracking",
+              "framing_notes": ""
+            },
+            "visual_goal": "Establish the desolation of the post-apocalyptic city and Lena's leadership.",
+            "action_focus": "Lena leading her group through the ruins.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Close-up on Lena's bruised, determined face as she scans the desolate street, her eyes sharp. Her right hand, clutching dog tags, glows faintly.",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": ""
+            },
+            "visual_goal": "Convey Lena's vigilance and the subtle presence of her powers.",
+            "action_focus": "Lena's observant gaze and glowing hand.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Lena focuses, and a rusted metal fence obstructing their path subtly bends and reshapes, creating a clear opening. A distant, faint sound of a military patrol siren echoes.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "low",
+              "movement": "static",
+              "framing_notes": ""
+            },
+            "visual_goal": "Show Lena's practical use of her powers and hint at the constant threat of the military.",
+            "action_focus": "Lena bending the metal fence.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "Lena",
+            "text": "Keep moving. We're close to a safe zone. Stay sharp.",
+            "emotion_hint": "determined",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": ""
+            },
+            "visual_goal": "Reaffirm Lena's leadership and determination.",
+            "action_focus": "Lena addressing her group (off-screen).",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Abandoned Subway Car",
+          "interior_exterior": "INT",
+          "time_of_day": "CUSTOM"
+        },
+        "summary": "Lena flashes back to the initial virus outbreak in a claustrophobic subway car, where her metal-bending powers violently awakened.",
+        "continuity": {
+          "props_present": [],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "casual pre-apocalypse clothing",
+              "must_keep": [
+                "casual clothing"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "This scene is a flashback to the virus outbreak.",
+            "Lena's powers manifest for the first time."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "CUSTOM",
+            "environment_notes": [
+              "Claustrophobic, derelict subway car, frozen in time from virus outbreak. Post-apocalyptic era."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Younger, terrified Lena before her powers fully manifested. Post-apocalyptic setting (flashback)."
+              ],
+              "wardrobe_notes": [
+                "casual pre-apocalypse clothing"
+              ],
+              "must_keep": []
+            }
+          ],
+          "props_lock": [],
+          "style_lock": {
+            "global_style_notes": [
+              "Gritty",
+              "Somber",
+              "Survival",
+              "Mystery",
+              "Determined",
+              "Post-apocalyptic",
+              "Supernatural Drama",
+              "Action"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "Lena's powers emerge, fundamentally changing her life and setting her on the path she now walks, marked by horror and revelation.",
+          "emotional_shift": "From overwhelming panic and terror to the shock and realization of profound, dangerous change."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "INT. ABANDONED SUBWAY CAR - DAY (FLASHBACK) - A crowded subway car erupts in panic. Passengers scream, some coughing violently and collapsing as the virus spreads rapidly.",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Chaotic, claustrophobic framing"
+            },
+            "visual_goal": "Depict the sudden, overwhelming chaos of the virus outbreak.",
+            "action_focus": "The rapid onset of panic and illness.",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "Lena",
+            "text": "Younger Lena, wide-eyed with terror, clutches her head amidst the pandemonium. A faint, unsettling glow begins to emanate from her right hand.",
+            "emotion_hint": "terrified",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": ""
+            },
+            "visual_goal": "Show Lena's fear and the very first signs of her burgeoning powers.",
+            "action_focus": "Lena's terrified expression and glowing hand.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "Lena",
+            "text": "Lena screams as the glow intensifies. Surrounding metal fixtures in the subway car - handrails, panels, seats - violently twist and contort around her, a chaotic storm of bending metal.",
+            "emotion_hint": "shocked",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "high",
+              "movement": "dolly",
+              "framing_notes": "Emphasize the wide impact of Lena's uncontrolled powers"
+            },
+            "visual_goal": "Dramatize the chaotic and terrifying manifestation of Lena's metal-bending powers.",
+            "action_focus": "The widespread distortion of metal around Lena.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_003",
+        "heading": {
+          "location_id": "loc_003",
+          "location_name": "Derelict Military Research Facility",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "Lena and her group infiltrate a derelict military research facility, confronting Commander Thorne and his task force in a desperate battle for pathogen evidence.",
+        "continuity": {
+          "props_present": [
+            "data_device"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "worn leather jacket and dog tags",
+              "must_keep": [
+                "worn leather jacket",
+                "dog tags"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "military uniform, tactical gear",
+              "must_keep": [
+                "military uniform",
+                "tactical gear"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Lena is seeking evidence about the pathogen's origin.",
+            "Commander Thorne is leading a military task force to stop her."
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_003",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "Heavily fortified, partially destroyed military research facility, metallic structures, scars of combat and neglect. Post-apocalyptic city."
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Determined female survivor, short hair, bruised face, glowing hand. Post-apocalyptic setting."
+              ],
+              "wardrobe_notes": [
+                "worn leather jacket and dog tags"
+              ],
+              "must_keep": []
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "Cold, unyielding military leader, super-power task force. Post-apocalyptic setting."
+              ],
+              "wardrobe_notes": [
+                "military uniform, tactical gear"
+              ],
+              "must_keep": []
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "data_device",
+              "must_keep": [
+                "small, metallic, containing crucial information"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Gritty",
+              "Somber",
+              "Survival",
+              "Mystery",
+              "Determined",
+              "Post-apocalyptic",
+              "Supernatural Drama",
+              "Action"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "Lena secures a critical piece of evidence about the pathogen's origin and outmaneuvers Thorne's forces, proving her strength and securing a clearer path for her ongoing quest for justice.",
+          "emotional_shift": "From tense confrontation to triumphant, decisive action and a new sense of purpose."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_008",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "Lena",
+            "text": "Lena moves stealthily through the dark, metallic corridors of the derelict military research facility. Shadows dance on destroyed equipment, revealing hidden threats.",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "low",
+              "movement": "tracking",
+              "framing_notes": "Emphasize the imposing metallic structures"
+            },
+            "visual_goal": "Establish the covert infiltration and the foreboding atmosphere of the facility.",
+            "action_focus": "Lena's cautious movement through the abandoned base.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "char_002",
+            "character_name": "Commander Thorne",
+            "text": "Suddenly, Commander Thorne steps out from deep shadows, flanked by armed, super-powered soldiers. His presence is cold and unyielding. Lena freezes.",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Show the full confrontation"
+            },
+            "visual_goal": "Capture the ambush and the immediate, powerful threat posed by Thorne and his team.",
+            "action_focus": "Thorne's unexpected appearance and Lena's reaction.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 3,
+            "block_type": "dialogue",
+            "character_id": "char_002",
+            "character_name": "Commander Thorne",
+            "text": "Lena. Your kind are a threat to what remains of order. Stand down.",
+            "emotion_hint": "cold",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "low",
+              "movement": "static",
+              "framing_notes": "Emphasize Thorne's authority"
+            },
+            "visual_goal": "Convey Thorne's rigid ideology and direct challenge to Lena.",
+            "action_focus": "Thorne's cold, commanding demeanor.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_011",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "Lena",
+            "text": "Lena's hand blazes with light. She unleashes her power, a wave of twisted, sharp metal erupting from the environment to shield her as she lunges for a data console, grabbing a small device.",
+            "emotion_hint": "urgent",
+            "continuity_refs": {
+              "props": [
+                "prop_001"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "dolly",
+              "framing_notes": "Follow Lena's movement and the metal's distortion"
+            },
+            "visual_goal": "Show Lena's full power in action during the desperate fight and her securing of evidence.",
+            "action_focus": "Lena bending metal and retrieving the data device.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count_total": 11,
+    "avg_shots_per_scene": 3.6666666666666665,
+    "dialogue_block_count": 2,
+    "action_block_count": 9
+  }
+}

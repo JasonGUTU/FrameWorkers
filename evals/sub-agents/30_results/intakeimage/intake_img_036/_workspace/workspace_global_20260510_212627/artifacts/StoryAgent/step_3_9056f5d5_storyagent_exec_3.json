@@ -1,0 +1,171 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T21:27:18.090573+00:00",
+    "language": "zh"
+  },
+  "content": {
+    "logline": "Three years after a car crash erased her memory, 'contract wife' Su Nian reappears in the modern-urban world of CEO Huo, holding a small boy who looks exactly like him, forcing him to confront their past amidst a web of corporate power and tortured romance.",
+    "style": {
+      "genre": [
+        "romance",
+        "drama",
+        "mystery",
+        "corporate thriller"
+      ],
+      "tone_keywords": [
+        "tortured romance",
+        "mystery",
+        "corporate drama",
+        "family secrets",
+        "reunion",
+        "modern-urban",
+        "wealthy-clan",
+        "emotional",
+        "intense"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Huo",
+        "role": "protagonist",
+        "profile": "A sharp, commanding CEO figure in a modern-urban wealthy-clan setting, consistently dressed in a dark suit and blue tie, embodying a professional and powerful presence within his corporate environment. He is often seen against a backdrop of city skylines at dusk through large office windows, projecting an image of control and detachment.",
+        "motivation": "To maintain his powerful image and corporate control; to bury a painful or inconvenient past; to uncover the truth about Su Nian's reappearance and the child.",
+        "flaw": "Emotional repression, arrogance, a deep-seated fear of vulnerability, and a tendency to control situations rather than confronting his feelings."
+      },
+      {
+        "character_id": "char_002",
+        "name": "Su Nian",
+        "role": "protagonist",
+        "profile": "Once known as Huo's 'little contract wife' in a modern-urban wealthy-clan context, she is now a woman whose memory was erased by a car crash three years ago. She reappears with a small boy, carrying a quiet determination despite her amnesia, seeking answers about her past and protecting her child.",
+        "motivation": "To protect her son; to reclaim her identity and memories; to understand her past relationship with Huo and the circumstances of her accident.",
+        "flaw": "Amnesia leaves her vulnerable and dependent on others for information, making her susceptible to manipulation; her past trauma still impacts her present."
+      },
+      {
+        "character_id": "char_003",
+        "name": "Xiao Bao (Little Treasure)",
+        "role": "support",
+        "profile": "A small, innocent boy whose striking resemblance to CEO Huo is undeniable. He is the physical manifestation of the forgotten past between Huo and Su Nian, acting as a catalyst for their reunion and the unraveling of secrets.",
+        "motivation": "To be loved and protected by his mother; to find a connection with his unknown father.",
+        "flaw": "His youth and innocence make him unaware of the complex drama unfolding around him, yet he is at the center of it."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Huo's Corporate Office",
+        "description": "A sleek, high-rise executive office in a modern-urban setting, reflecting Huo's power and influence within his wealthy-clan. It features large, panoramic windows offering breathtaking views of the city skyline, especially at dusk, creating an imposing and somewhat isolating atmosphere."
+      },
+      {
+        "location_id": "loc_002",
+        "name": "Upscale City Plaza",
+        "description": "A bustling and modern public square in a vibrant modern-urban metropolis, surrounded by high-end retail and office buildings. It's a place where anonymity and public spectacle can collide, providing a neutral ground for unexpected encounters in the wealthy-clan world."
+      },
+      {
+        "location_id": "loc_003",
+        "name": "Secluded Modern Apartment",
+        "description": "A modestly furnished but clean and cozy apartment that Su Nian now inhabits with her son. It's a stark contrast to Huo's opulent world, representing her current unassuming life and her efforts to rebuild away from the wealthy-clan's shadow."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "CEO Huo lives a meticulously controlled, powerful life, dominating his modern-urban corporate empire. His success is undeniable, but a sense of profound detachment hints at a hidden past he has ruthlessly suppressed since a mysterious car crash three years ago.",
+        "conflict": "Huo's internal struggle to maintain his facade of invincibility against a lingering, unspoken loneliness. The world perceives him as complete, but he is subtly incomplete.",
+        "turning_point": "The 'stability' of his carefully constructed life is about to be shattered."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "inciting",
+        "summary": "Amidst the bustling city, Su Nian reappears. She approaches Huo with a small boy whose face is an uncanny reflection of his own, igniting a storm of shock and disbelief in Huo, and stirring forgotten emotions and inconvenient truths.",
+        "conflict": "Huo's immediate need to deny this impossible reality against the undeniable evidence of the child's resemblance and Su Nian's presence.",
+        "turning_point": "Su Nian's reappearance with the child forces Huo to confront a past he thought was permanently erased, irrevocably altering his present and future."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "turn",
+        "summary": "Huo confronts Su Nian, initially attempting to dismiss her claims and deny any connection to the child or their past 'contract marriage.' However, Su Nian's amnesia and the child's innocent presence challenge his cold facade, forcing him to consider the unsettling possibility of his fatherhood.",
+        "conflict": "Huo's rigid control and denial clash with Su Nian's desperate plea for answers and recognition, pushing him towards an investigation he desperately wants to avoid.",
+        "turning_point": "Despite his resistance, Huo reluctantly agrees to DNA testing or begins a discreet investigation, indicating that the situation has penetrated his defenses and demands his attention."
+      },
+      {
+        "step_id": "arc_004",
+        "order": 4,
+        "step_type": "crisis",
+        "summary": "As Huo delves into the past, he uncovers fragments of his and Su Nian's shared history, including the true nature of their 'contract marriage' and the mysterious circumstances surrounding the car crash. He realizes the accident might not have been an accident at all, revealing a conspiracy or betrayal from within his own wealthy-clan.",
+        "conflict": "Huo battles against external forces trying to keep the truth buried, and his own internal conflict about confronting the painful realities of his past decisions and trust issues. Su Nian experiences disturbing flashes of memory.",
+        "turning_point": "Huo discovers a critical piece of evidence or a hidden connection that implicates a close associate or family member, making the threat more personal and dangerous."
+      },
+      {
+        "step_id": "arc_005",
+        "order": 5,
+        "step_type": "climax",
+        "summary": "In a dramatic confrontation, all truths are laid bare. Huo faces the individual responsible for Su Nian's accident and memory loss, while Su Nian's memories fully return, revealing the full extent of their tortured romance and the obstacles they faced. Huo must make a pivotal choice between protecting his wealthy-clan's reputation or embracing his family and seeking justice.",
+        "conflict": "The ultimate showdown: a battle for truth, justice, and the future of their family, with high emotional stakes and potential danger.",
+        "turning_point": "Huo publicly acknowledges his son and Su Nian, defying his family's expectations and dismantling the conspiracy, choosing love and truth over power and facade."
+      },
+      {
+        "step_id": "arc_006",
+        "order": 6,
+        "step_type": "resolution",
+        "summary": "Huo and Su Nian begin the difficult journey of rebuilding their relationship, not as a contract, but as a true family. They navigate the complexities of their healed past and uncertain future, finding a new kind of strength and happiness amidst their modern-urban wealthy-clan world.",
+        "conflict": "The lingering scars of past betrayals and the challenges of forging a new identity for their family in a demanding society.",
+        "turning_point": "Huo, Su Nian, and their son stand together, symbolizing a new beginning built on honesty and emotional connection, leaving their tortured past behind."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_002",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001",
+          "char_002",
+          "char_003"
+        ],
+        "goal": "Su Nian aims to directly confront CEO Huo and make him acknowledge his son and their forgotten past.",
+        "conflict": "Huo is caught off guard in a public setting, attempting to maintain his professional composure while the child's undeniable resemblance threatens to expose a deeply buried secret.",
+        "turn": "The child innocently reaches out or mimics a gesture of Huo's, visibly shaking Huo's steely resolve and forcing him to acknowledge the impossible situation."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "Huo seeks definitive answers from Su Nian about her return, the child, and the true nature of their past, while Su Nian presses him to accept his responsibilities.",
+        "conflict": "Huo's aggressive questioning and denial clash with Su Nian's genuine amnesia and her desperate need for his help, creating a tense emotional standoff in the opulent, yet cold, corporate office.",
+        "turn": "As Su Nian struggles with a fragmented memory or makes a powerful emotional appeal about their child, Huo sees a flicker of their past connection, leading him to agree to a DNA test or initiate a private investigation."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_004",
+        "location_id": "loc_001",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "Huo, driven by growing suspicion, delves into files or old records, intent on uncovering the true circumstances of Su Nian's car crash and their 'contract marriage' from three years ago.",
+        "conflict": "He encounters unexpected resistance or discovers a falsified document/missing evidence, suggesting a deliberate cover-up from within his own sphere of influence, potentially even his own wealthy-clan.",
+        "turn": "Huo finds a hidden clue or a coded message within old corporate documents, hinting at a deep-seated conspiracy or the involvement of someone he trusts, irrevocably shifting his focus from denial to a full-blown search for justice."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 3,
+    "location_count": 3,
+    "scene_count": 3
+  }
+}

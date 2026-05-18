@@ -1,0 +1,104 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-13T01:09:08.464425+00:00",
+    "language": "en"
+  },
+  "content": {
+    "source_language": "zh",
+    "target_language": "en",
+    "translated_payload": {
+      "content": {
+        "language": "zh",
+        "segments": [
+          {
+            "segment_id": "seg_001",
+            "start_time": 4.21596875,
+            "end_time": 4.85596875,
+            "text": "Go."
+          },
+          {
+            "segment_id": "seg_002",
+            "start_time": 7.77596875,
+            "end_time": 8.65596875,
+            "text": "Why?"
+          },
+          {
+            "segment_id": "seg_003",
+            "start_time": 12.57596875,
+            "end_time": 15.17596875,
+            "text": "You monster, your sin is unforgivable."
+          },
+          {
+            "segment_id": "seg_004",
+            "start_time": 16.77596875,
+            "end_time": 20.21596875,
+            "text": "Heaven's punishment ends here."
+          },
+          {
+            "segment_id": "seg_005",
+            "start_time": 23.13596875,
+            "end_time": 24.73596875,
+            "text": "Turns out, I remember."
+          },
+          {
+            "segment_id": "seg_006",
+            "start_time": 28.41596875,
+            "end_time": 30.09596875,
+            "text": "This is a distant memory."
+          },
+          {
+            "segment_id": "seg_007",
+            "start_time": 31.61596875,
+            "end_time": 32.17596875,
+            "text": "Don't be afraid."
+          },
+          {
+            "segment_id": "seg_008",
+            "start_time": 33.78096875,
+            "end_time": 35.78096875,
+            "text": "I'll wait for you."
+          },
+          {
+            "segment_id": "seg_009",
+            "start_time": 52.10096875,
+            "end_time": 54.10096875,
+            "text": "Actually."
+          },
+          {
+            "segment_id": "seg_010",
+            "start_time": 58.38096875,
+            "end_time": 61.10096875,
+            "text": "This aura."
+          },
+          {
+            "segment_id": "seg_011",
+            "start_time": 66.72096875,
+            "end_time": 68.28096875,
+            "text": "It is heaven's will."
+          },
+          {
+            "segment_id": "seg_012",
+            "start_time": 71.88096875,
+            "end_time": 74.12096875,
+            "text": "I finally see you."
+          }
+        ],
+        "full_text": "Go. Why? You monster, your sin is unforgivable. Heaven's punishment ends here. Turns out, I remember. This is a distant memory. Don't be afraid. I'll wait for you. Actually. This aura. It is heaven's will. I finally see you."
+      },
+      "metrics": {
+        "language": "zh",
+        "segment_count": 12,
+        "duration_seconds": 74.12096875
+      }
+    }
+  },
+  "metrics": {
+    "source_language": "zh",
+    "target_language": "en",
+    "has_payload": true,
+    "source_string_count": 27,
+    "translated_string_count": 27,
+    "completeness": 1.0
+  }
+}

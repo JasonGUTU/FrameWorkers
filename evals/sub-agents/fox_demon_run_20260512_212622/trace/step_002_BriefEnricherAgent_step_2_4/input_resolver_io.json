@@ -1,0 +1,98 @@
+{
+  "input": {
+    "agent_id": "BriefEnricherAgent",
+    "step_id": "step_2_4ce0f309",
+    "input_needs_description": "I merge visual descriptions from uploaded reference images into the user's creative brief so that downstream story generation creates characters / locations / props that MATCH the uploaded images.\n\n[raw_brief] (single)\nThe raw creative brief — the user's text describing the story or video concept, registered directly from the user's chat / text upload as the ``[creative_brief]`` artifact. Choose the single most recent / most authoritative such brief.\n\n[image_descriptions] (collection)\nPer-image JSON descriptor artifacts from the image-intake step. Each entry's payload contains a visual_description of the uploaded image. Match by caption mentioning 'reference image' and mime=application/json. Include every processed image upload.\n\n[image_files] (collection)\nThe actual uploaded image FILES (PNG/JPG) registered by the image-intake step. Each entry's path points directly to the image file on disk (not a JSON descriptor). Match by mime=image/*. Include every uploaded image file.",
+    "labels": [
+      "raw_brief",
+      "image_descriptions",
+      "image_files"
+    ],
+    "captions_index_text": "#0  Raw user upload (mime=image/png). Produced by user on 2026-05-12 22:38.\n\n#1  Structured metadata document (JSON) for a user-submitted text brief. Payload carries the raw text verbatim. Pipeline entry point — consumed by story / screenplay / narration agents. Produced by user on 2026-05-12 22:38.\n\n#2  Structured metadata document (JSON) for a user-uploaded image. Payload carries the visual description and image-asset metadata. Produced by IntakeImageAgent on 2026-05-12 22:38.",
+    "id_to_path": [
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/brief_20260512_223801_057913.json",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/IntakeImageAgent/step_1_81595939_intakeimageagent_exec_1.json"
+    ]
+  },
+  "llm_call": {
+    "system_prompt": "You match a sub-agent's input requirements to artifacts in an artifact registry.\n\nThe sub-agent's input requirements are written as one or more [label] blocks. Each block has a header of the form\n    [label_name] (single)        -- exactly one matching artifact expected\n    [label_name] (collection)    -- zero or more matching artifacts expected\nfollowed by a natural-language description of what kind of artifact that label refers to.\n\nThe artifact registry lists every persisted artifact with a #N id and a natural-language caption describing its type, pipeline role, and which agent produced it.\n\nYour job:\n  1. Read each [label] block and understand the kind of artifact the agent is asking for in that slot.\n  2. For each registry artifact, read its caption and understand the artifact's type, role, and purpose. Reason about meaning.\n  3. For each [label], decide which artifacts in the registry are instances of the kind described in that block.\n  4. Be inclusive for (collection) labels: include EVERY matching artifact, never just a sample.\n  5. Be exclusive for (single) labels: pick the single best matching artifact (or none if none clearly fits).\n  6. Distinguish artifacts that look superficially similar but play different roles in the pipeline (e.g. a reference image of an entity in isolation vs. a planned frame of a specific shot of the story). Use the caption to decide.\n  7. Only return #N ids that appear in the registry.\n\nReturn strict JSON only, with this shape:\n{\n  \"selections\": {\n    \"<label_name>\": [0, 3, 5],\n    ...\n  },\n  \"rationale\": \"<a short explanation of how you matched each label>\"\n}\nUse exactly the label names from the agent's [label] headers as keys. Values are arrays of integer ids (the #N numbers from the registry).",
+    "user_prompt": "agent_id: BriefEnricherAgent\n\n=== AGENT INPUT NEEDS ===\nI merge visual descriptions from uploaded reference images into the user's creative brief so that downstream story generation creates characters / locations / props that MATCH the uploaded images.\n\n[raw_brief] (single)\nThe raw creative brief — the user's text describing the story or video concept, registered directly from the user's chat / text upload as the ``[creative_brief]`` artifact. Choose the single most recent / most authoritative such brief.\n\n[image_descriptions] (collection)\nPer-image JSON descriptor artifacts from the image-intake step. Each entry's payload contains a visual_description of the uploaded image. Match by caption mentioning 'reference image' and mime=application/json. Include every processed image upload.\n\n[image_files] (collection)\nThe actual uploaded image FILES (PNG/JPG) registered by the image-intake step. Each entry's path points directly to the image file on disk (not a JSON descriptor). Match by mime=image/*. Include every uploaded image file.\n\nLabels expected in your response: ['raw_brief', 'image_descriptions', 'image_files']\n\n=== ARTIFACT REGISTRY ===\n#0  Raw user upload (mime=image/png). Produced by user on 2026-05-12 22:38.\n\n#1  Structured metadata document (JSON) for a user-submitted text brief. Payload carries the raw text verbatim. Pipeline entry point — consumed by story / screenplay / narration agents. Produced by user on 2026-05-12 22:38.\n\n#2  Structured metadata document (JSON) for a user-uploaded image. Payload carries the visual description and image-asset metadata. Produced by IntakeImageAgent on 2026-05-12 22:38.\n",
+    "raw_response": {
+      "selections": {
+        "raw_brief": [
+          1
+        ],
+        "image_descriptions": [
+          2
+        ],
+        "image_files": [
+          0
+        ]
+      },
+      "rationale": "Artifact #1 is the only text brief. Artifact #2 is the JSON descriptor for an uploaded image with a visual description. Artifact #0 is the actual uploaded image file."
+    }
+  },
+  "output": {
+    "resolved_artifacts": {
+      "raw_brief": {
+        "caption": "Structured metadata document (JSON) for a user-submitted text brief. Payload carries the raw text verbatim. Pipeline entry point — consumed by story / screenplay / narration agents.",
+        "scope": "global",
+        "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/brief_20260512_223801_057913.json",
+        "mime": "application/json",
+        "payload": {
+          "meta": {
+            "asset_type": "text_brief",
+            "created_at": "2026-05-12T22:38:01.057969+00:00"
+          },
+          "content": {
+            "text": "Using this uploaded image as the visual identity reference for the fox demon protagonist, make a Chinese-mythology fantasy animated short drama — at the close of the Investiture of the Gods war, the last surviving little nine-tailed fox demon is dragged up onto the Investiture Platform by Jiang Ziya. Just before her execution, she suddenly remembers a man who has been appearing in her dreams. Add ambient sounds of the nine-heaven thunder rolling, and a mournful classical-Chinese BGM. Burn bilingual English-Chinese subtitles into the final video showing all on-screen dialogue."
+          },
+          "metrics": {
+            "char_count": 582
+          }
+        }
+      },
+      "image_descriptions": [
+        {
+          "caption": "Structured metadata document (JSON) for a user-uploaded image. Payload carries the visual description and image-asset metadata.",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/IntakeImageAgent/step_1_81595939_intakeimageagent_exec_1.json",
+          "mime": "application/json",
+          "payload": {
+            "meta": {
+              "schema_version": "0.3",
+              "created_at": "2026-05-12T22:38:06.350048+00:00",
+              "language": "en"
+            },
+            "content": {
+              "visual_description": "A woman with dark hair wears a tattered light robe and stands against a gray background, flanked by nine large, fluffy white tails.",
+              "image_asset": {
+                "asset_id": "",
+                "uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png",
+                "width": 1024,
+                "height": 576,
+                "format": "png"
+              }
+            }
+          }
+        }
+      ],
+      "image_files": [
+        {
+          "caption": "Raw user upload (mime=image/png).",
+          "scope": "global",
+          "path": "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png",
+          "mime": "image/png",
+          "payload": null
+        }
+      ]
+    },
+    "selected_artifact_paths": [
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/brief_20260512_223801_057913.json",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/artifacts/IntakeImageAgent/step_1_81595939_intakeimageagent_exec_1.json",
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/fox_demon_run_20260512_212622/workspace/workspace_global_20260512_223743/inputs/20260512_223801_048018_step_3_e6b31cc8_img_char_001_global.png"
+    ],
+    "rationale": "Artifact #1 is the only text brief. Artifact #2 is the JSON descriptor for an uploaded image with a visual description. Artifact #0 is the actual uploaded image file."
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "agent_class": "_ConsumerAgent",
+  "typed_input": {
+    "step_id": "task_hydrate",
+    "observed_value": 42
+  },
+  "output": null,
+  "eval_result": null,
+  "passed": null,
+  "attempts": null,
+  "asset_dict": {
+    "observed": 42
+  },
+  "media_assets_count": 0,
+  "media_assets_summary": []
+}

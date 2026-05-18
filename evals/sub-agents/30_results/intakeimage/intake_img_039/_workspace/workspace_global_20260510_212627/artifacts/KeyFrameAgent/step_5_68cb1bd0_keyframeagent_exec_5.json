@@ -1,0 +1,302 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_id": "char_001",
+          "prompt_summary": "A quiet, observant high-school transfer student named Mei Lin, rumored to be the secret daughter of a powerful benefactor. She wears a dark blue school uniform with white socks and carries a shoulder bag.",
+          "reference_image_uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/30_results/intakeimage/intake_img_039/_workspace/workspace_global_20260510_212627/inputs/20260510_212628_543218_intake_img_039.png"
+        },
+        {
+          "entity_id": "char_002",
+          "prompt_summary": "Kai Chen, a dominant and untouchable bully from a private academy in northern Jiangbei. He commands respect through intimidation and wears his school uniform with an air of authority.",
+          "reference_image_uri": ""
+        }
+      ],
+      "locations": [
+        {
+          "entity_id": "loc_001",
+          "prompt_summary": "A prestigious and sprawling private academy located in northern Jiangbei. The architecture is modern, reflecting the affluent student body and strict social hierarchies present within its walls.",
+          "reference_image_uri": ""
+        }
+      ],
+      "props": [
+        {
+          "entity_id": "prop_001",
+          "prompt_summary": "A dark shoulder bag belonging to Mei Lin. It appears to be full, containing textbooks.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_002",
+          "prompt_summary": "A stack of various textbooks, possibly for high school subjects. These are books that would typically be carried in a student's bag.",
+          "reference_image_uri": ""
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Mei Lin arrives, looking calm and composed in her dark blue school uniform, carrying her shoulder bag.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "Exterior of Jiangbei Elite Academy during the day. The modern gates are imposing under bright daylight.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "Mei Lin's shoulder bag is clutched in her hand.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A high-angle wide shot captures Mei Lin stepping out of a sleek car. She clutches her shoulder bag, observing the grand, modern gates of Jiangbei Elite Academy for the very first time. The architecture emphasizes the academy's prestigious and overwhelming scale, with Mei Lin appearing as a solitary figure against it.",
+                "video_motion_hint": "Mei Lin steps smoothly out of the car, her gaze slowly panning up towards the imposing academy gates."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "An eye-level medium shot follows Mei Lin as she navigates a crowded and bustling hallway. Other students are visible in the background, their faces slightly blurred, casting quick, curious glances at her. They begin to whisper behind their hands, conveying the immediate scrutiny Mei Lin is receiving upon her arrival.",
+                "video_motion_hint": "The camera tracks Mei Lin walking through the hallway, as background students subtly turn their heads and start whispering."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up shot focuses on Mei Lin's face and hands. She pauses in the hallway, her grip tightening on her shoulder bag. A subtle shift of understanding crosses her features, revealing a quiet, tense acceptance as the weight of her newfound notoriety settles upon her.",
+                "video_motion_hint": "Mei Lin's grip subtly tightens on her bag, and a nuanced expression of realization slowly forms on her face."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Mei Lin appears neutral, wearing her dark blue school uniform with her shoulder bag, as she accidentally brushes past Kai Chen.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Kai Chen stands casually, asserting his dominance in his customized school uniform.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "Interior of Jiangbei Elite Academy during the day, specifically a busy corridor with lockers.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "Mei Lin's shoulder bag has a textbook tumbling out of it.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_002",
+              "prompt_summary": "Textbooks are shown scattered on the floor after falling from Mei Lin's bag.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_004",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A low-angle medium shot emphasizes Kai Chen's dominant presence. He leans casually against school lockers in a busy corridor, surrounded by his clique. Other students respectfully make way for his group, acknowledging his unspoken authority and highlighting his established power within the student body.",
+                "video_motion_hint": "Students in the background subtly part and defer as Kai Chen casually shifts his weight against the lockers."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "An eye-level medium-close-up captures the moment Mei Lin, deep in thought, accidentally brushes past Kai Chen in the crowded hall. A textbook tumbles from her shoulder bag, clattering loudly on the floor. This visual establishes the immediate conflict between them through a public incident.",
+                "video_motion_hint": "Mei Lin slightly bumps into Kai Chen, and her textbook visibly drops from her bag, hitting the floor."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "An eye-level two-shot focuses tightly on Kai Chen and Mei Lin's faces and their intense eye contact. Kai Chen glares down at Mei Lin as she slowly bends to retrieve her fallen book. She then stands, meeting his intimidating gaze directly with a quiet defiance, highlighting her surprising resilience in this power struggle.",
+                "video_motion_hint": "Mei Lin slowly straightens up, her gaze rising to meet Kai Chen's, holding firm without flinching."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up shot focuses on Kai Chen's facial expression. He holds Mei Lin's stare for a long, tense moment, then a flicker of surprise crosses his face. He lets out a frustrated huff, breaking eye contact and turning away abruptly, revealing his unexpected reaction to Mei Lin's refusal to be intimidated.",
+                "video_motion_hint": "Kai Chen's eyes slightly widen in surprise, followed by a quick, frustrated exhale and a sharp turn of his head."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Mei Lin sits alone, contemplative, by a large window in her dark blue school uniform, her shoulder bag by her side.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Kai Chen stands on a secluded school rooftop, agitated and thoughtful in his school uniform.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "Interior classroom and exterior rooftop of Jiangbei Elite Academy. The campus courtyard is visible in the distance under a specific custom time of day lighting, perhaps late afternoon.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "Mei Lin's shoulder bag is resting quietly beside her as she reflects.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_008",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium shot frames Mei Lin alone by a large window in an empty classroom, emphasizing her solitude. She gazes out at the campus, subtly touching her shoulder in recall of the earlier encounter. This image captures her in a moment of quiet reflection, processing the day's events.",
+                "video_motion_hint": "Mei Lin gently touches her shoulder, her eyes drifting across the campus view outside the window."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_009",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A low-angle medium-close-up highlights Kai Chen's internal struggle against the backdrop of the city. He stands in a secluded corner of a school rooftop, looking out, agitated. He runs a hand through his hair, his brow furrowed, as he replays the unexpected confrontation with Mei Lin.",
+                "video_motion_hint": "Kai Chen runs a hand through his hair, his gaze intense as he stares out over the city."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "An eye-level two-shot captures Mei Lin looking up from the classroom window, and across the campus courtyard, Kai Chen, still brooding on the rooftop. Their gazes briefly meet for a charged moment, then both quickly look away. The distance between them is visible, hinting at a nascent, ambiguous connection forming.",
+                "video_motion_hint": "Mei Lin's eyes lift, then quickly dart away after a fleeting moment of eye contact with Kai Chen, who also shifts his gaze."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "style_notes": [
+      "Contemporary High School Romance Drama set in northern Jiangbei",
+      "Sweet and Bittersweet tone",
+      "Complemented by Piano BGM"
+    ],
+    "must_avoid": []
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 10,
+    "keyframe_count_total": 10,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 2,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 2,
+    "stability_character_keyframe_count": 5,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 4
+  }
+}

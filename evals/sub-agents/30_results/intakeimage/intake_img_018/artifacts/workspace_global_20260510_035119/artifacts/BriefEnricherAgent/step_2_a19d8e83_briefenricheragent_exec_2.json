@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T03:51:38.330657+00:00",
+    "language": "en"
+  },
+  "content": {
+    "enriched_brief": "This is a modern-urban wealthy-clan tortured-romance animated short drama. The wealthy-heir male lead is an East Asian man, often seen in a sharp black suit and grey tie with a tie clip. Seven years ago, he watched her jump off a yacht into the deep sea; seven years later she returns under a different name, becomes his biggest business rival, and the one shadow he can never quite catch.",
+    "image_classifications": [
+      {
+        "image_index": 0,
+        "role": "character"
+      }
+    ],
+    "image_paths": [
+      "/home/zhendong_li/FrameWorkers/evals/sub-agents/30_results/intakeimage/intake_img_018/_workspace/workspace_global_20260510_035119/inputs/20260510_035121_601019_intake_img_018.png"
+    ]
+  },
+  "metrics": {
+    "image_count": 1,
+    "classified_count": 1
+  }
+}

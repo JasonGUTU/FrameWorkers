@@ -85,20 +85,17 @@ class VideoEvaluator(BaseEvaluator[VideoAgentOutput]):
                         f"to_shot_id {tr.to_shot_id}"
                     )
 
-        # --- duration_sec must be exactly 5 ---
-        # Mirror of system_prompt's PER-SHOT DURATION rule. Both Kling
-        # and HunyuanVideo i2v standardize on 5-second clips; Hunyuan
-        # does not support 10s natively (training cap at 129 frames
-        # ≈ 5.4s). Backends silently round mismatched values; without
-        # this check that silent rounding masks drift (CLAUDE.md §7
-        # anti-pattern).
+        # --- duration_sec must be in Kling's accepted enum {5, 10} ---
+        # Mirror of system_prompt's PER-SHOT DURATION rule. The fal /
+        # Kling backend silently rounds non-{5,10} values; without this
+        # check that silent rounding masks drift (CLAUDE.md §7 anti-pattern).
         for scene in c.scenes:
             for seg in scene.shot_segments:
-                if seg.duration_sec not in (5, 5.0):
+                if seg.duration_sec not in (5, 5.0, 10, 10.0):
                     errors.append(
                         f"shot {seg.shot_id} duration_sec="
-                        f"{seg.duration_sec} must be exactly 5 "
-                        "(downstream i2v backends standardize on 5s clips)"
+                        f"{seg.duration_sec} is not in the allowed set "
+                        "{5, 10} (Kling i2v only accepts 5s or 10s clips)"
                     )
 
         # --- semantic_context.visual_goal must be non-empty ---

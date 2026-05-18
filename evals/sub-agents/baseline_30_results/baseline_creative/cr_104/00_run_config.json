@@ -1,0 +1,12 @@
+{
+  "case_name": "cr_104",
+  "category": "cr",
+  "user_goal": "Make a wuxia / xianxia revenge animated short drama — the only surviving young Daoist after his sect is massacred by the demonic cult carries his master's severed head all the way back to Mount Kunlun, vowing to perform the blood-moon vengeance rite that very night. Add ambient sounds: howling mountain wind, ringing sword strikes, and rolling distant thunder.",
+  "hunyuan_endpoint": "http://sof1-h200-7:9204",
+  "infer_steps": 50,
+  "splitter_model": "gemini-2.5-flash",
+  "image_model": "fal-ai/nano-banana-2",
+  "upload_ref_used": null,
+  "started_at": "2026-05-10T14:36:58",
+  "driver_version": "v2_sync_curl_mp"
+}

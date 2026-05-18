@@ -1,0 +1,44 @@
+{
+  "shots": [
+    {
+      "shot_id": "sh_001",
+      "prompt": "Young Daoist, dressed in tattered robes, kneels amidst the smoldering ruins of his mountain sect. He cradles his master's severed head, a tear tracing a path through the ash on his grim, determined face. Animated wuxia style, cinematic lighting.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_002",
+      "prompt": "The young Daoist clambers up a jagged, windswept mountain path, his master's head secured in a silk cloth. His worn boots slip on loose rocks, reflecting the arduous and lonely journey. Animated wuxia style, dramatic overcast sky.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_003",
+      "prompt": "Close-up on the young Daoist's face, eyes burning with cold resolve, hair and tattered robes whipping in fierce mountain winds. Distant lightning flashes illuminate his intense, unyielding expression against a dark sky. Animated wuxia style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_004",
+      "prompt": "The young Daoist stands on a high, ancient peak of Mount Kunlun, looking down at a vast, misty landscape. The twilight sky shows the first hints of a rising, ominous red moon. Animated wuxia style, serene yet foreboding.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_005",
+      "prompt": "He carefully places his master's head on a moss-covered stone altar, illuminated by the fading daylight. The young Daoist unsheathes his ornate Daoist sword, its blade glinting sharply. Animated wuxia style, focused preparation.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_006",
+      "prompt": "The blood moon, large and crimson, ascends fully above Mount Kunlun, casting an eerie red glow over the ancient altar. The young Daoist begins to perform intricate sword movements, tracing arcane symbols in the air. Animated wuxia style, mystical atmosphere.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_007",
+      "prompt": "Close-up on the Daoist's face, his eyes now glowing with ancient power and vengeful fire as he completes a final powerful gesture. Energy crackles around his hands. Wind howls fiercely, distant thunder rolls. Animated wuxia style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_008",
+      "prompt": "The young Daoist stands, sword pointed skyward, backlit by the immense, pulsating blood moon. Arcane energy swirls around him and the altar, his silhouette resolute against the dark, stormy Kunlun sky. Animated wuxia style.",
+      "duration_sec": 5
+    }
+  ]
+}

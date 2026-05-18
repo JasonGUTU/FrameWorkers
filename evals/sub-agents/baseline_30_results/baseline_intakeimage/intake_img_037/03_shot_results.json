@@ -1,0 +1,74 @@
+[
+  {
+    "idx": 1,
+    "shot_id": "sh_001",
+    "prompt": "The powerful Demon Empress, gravely wounded and bleeding crimson, stands defiant in the heart of crumbling celestial ruins. Heavenly warriors and her treacherous disciple close in, their faces grim un",
+    "status": "OK",
+    "keyframe_bytes": 1906673,
+    "mp4_bytes": 1833633,
+    "elapsed_sec": 1377.7364525794983
+  },
+  {
+    "idx": 2,
+    "shot_id": "sh_002",
+    "prompt": "A young woman, jolted awake, gasps as she sits upright in a simple wooden bed, clutching her chest. Vivid, agonizing memories flash across her mind. Soft, pre-dawn light gently illuminates the humble ",
+    "status": "OK",
+    "keyframe_bytes": 1658385,
+    "mp4_bytes": 1145557,
+    "elapsed_sec": 1372.9780316352844
+  },
+  {
+    "idx": 3,
+    "shot_id": "sh_003",
+    "prompt": "A close-up shot of the young woman's face, her eyes, now imbued with ancient power, burn with cold fury and unyielding determination. Shadows deepen around her, emphasizing the harsh lines of her reso",
+    "status": "OK",
+    "keyframe_bytes": 1627677,
+    "mp4_bytes": 596434,
+    "elapsed_sec": 1375.8515486717224
+  },
+  {
+    "idx": 4,
+    "shot_id": "sh_004",
+    "prompt": "Standing beneath a full moon in a secluded, ancient forest glade, the young woman begins to transform. Dark, swirling energy erupts from her, her silhouette subtly shifting as crimson lightning flashe",
+    "status": "OK",
+    "keyframe_bytes": 1758734,
+    "mp4_bytes": 963799,
+    "elapsed_sec": 1375.542712688446
+  },
+  {
+    "idx": 5,
+    "shot_id": "sh_005",
+    "prompt": "The newly awakened Demon Empress, radiating formidable dark energy, confronts her former disciple in a desolate, grand training hall. He recoils in terror, eyes wide with recognition and fear. Twiligh",
+    "status": "OK",
+    "keyframe_bytes": 1824940,
+    "mp4_bytes": 1417608,
+    "elapsed_sec": 1376.7009394168854
+  },
+  {
+    "idx": 6,
+    "shot_id": "sh_006",
+    "prompt": "The Demon Empress, an imposing figure cloaked in shadow, stands before the shimmering, golden gates of the Heavenly Court. Behind her, a spectral army gathers under a sky churning with dark, ominous s",
+    "status": "OK",
+    "keyframe_bytes": 1495729,
+    "mp4_bytes": 853193,
+    "elapsed_sec": 1373.3883426189423
+  },
+  {
+    "idx": 7,
+    "shot_id": "sh_007",
+    "prompt": "The Demon Empress, radiating immense, destructive power, unleashes a torrent of dark energy that shatters celestial defenses. Heavenly beings flee in panic as ornate golden architecture crumbles aroun",
+    "status": "OK",
+    "keyframe_bytes": 1999155,
+    "mp4_bytes": 2822149,
+    "elapsed_sec": 1376.1354529857635
+  },
+  {
+    "idx": 8,
+    "shot_id": "sh_008",
+    "prompt": "The Demon Empress, poised and regal, sits triumphantly on a newly forged, dark obsidian throne amidst the smoking ruins of the fallen Heavenly Court. She surveys her conquered realm with a cold, victo",
+    "status": "OK",
+    "keyframe_bytes": 1788830,
+    "mp4_bytes": 1172368,
+    "elapsed_sec": 1371.8648841381073
+  }
+]

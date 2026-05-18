@@ -1,0 +1,12 @@
+{
+  "case_name": "cr_049",
+  "category": "cr",
+  "user_goal": "Make a modern-urban rebirth-revenge animated short drama — a top-tier lawyer is framed by his business partner and thrown in prison; by the time he gets out, his wife and daughter are dead. Granted a second chance, he wakes up ten years earlier on the rainy night that changed everything, determined to drag every single one of his betrayers down with him.",
+  "hunyuan_endpoint": "http://sof1-h200-3:9202",
+  "infer_steps": 50,
+  "splitter_model": "gemini-2.5-flash",
+  "image_model": "fal-ai/nano-banana-2",
+  "upload_ref_used": null,
+  "started_at": "2026-05-10T14:36:58",
+  "driver_version": "v2_sync_curl_mp"
+}

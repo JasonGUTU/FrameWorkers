@@ -1,0 +1,44 @@
+{
+  "shots": [
+    {
+      "shot_id": "sh_001",
+      "prompt": "A new transfer student, a teenage girl with a confident yet thoughtful expression, steps out of a sleek car onto the grounds of a prestigious northern Jiangbei private academy. Sunlight gleams on the ornate school buildings as students cast curious glances, whispering about her arrival.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_002",
+      "prompt": "Inside a bustling high school hallway, the transfer student accidentally bumps into a stern, arrogant male student, causing his textbooks to scatter. Their eyes lock in a tense standoff amidst shocked silence from surrounding students. A sense of immediate animosity crackles between them.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_003",
+      "prompt": "The arrogant male student, surrounded by his intimidating friends, deliberately blocks the transfer student's path in the school courtyard. She meets his piercing gaze with quiet defiance, her expression unyielding as other students nervously avoid eye contact.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_004",
+      "prompt": "The transfer student sits alone at a cafeteria table, acutely aware of hushed whispers and overt stares from other students. She sips her drink, maintaining a composed facade, but a shadow of loneliness crosses her face, hinting at the burden of the benefactor rumor.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_005",
+      "prompt": "In a crowded classroom, the arrogant male student loudly makes a sarcastic remark about \"privileged newcomers\" while pointedly looking at the transfer student. She stiffens, gripping her pen, her eyes flashing with a mix of anger and suppressed hurt, but she remains silent.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_006",
+      "prompt": "In the school library, the transfer student quietly confronts the bully, her voice low but firm, directly challenging his assumptions about her. He is momentarily taken aback by her unexpected courage, a flicker of surprise visible in his usually unyielding expression.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_007",
+      "prompt": "The transfer student walks alone through the quiet, dimming school corridors, a solitary figure. Her reflection in a window shows a momentary break in her composure, a fleeting look of exhaustion and vulnerability before she regains her determined expression.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_008",
+      "prompt": "On the school rooftop at dusk, the transfer student gazes at the city lights. The arrogant male student appears, standing some distance away. They share a brief, intense glance—a silent acknowledgment hinting at a complex, unspoken connection between them.",
+      "duration_sec": 5
+    }
+  ]
+}

@@ -1,0 +1,713 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T03:53:00.014273+00:00",
+    "language": "en"
+  },
+  "content": {
+    "title": "Unspoken Legacy",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_001",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Tanaka Corp. Headquarters",
+          "interior_exterior": "INT",
+          "time_of_day": "DAY"
+        },
+        "summary": "Kenji Tanaka, a melancholic business heir, is presented with intel on a formidable new corporate rival, Anya Mei, whose aggressive moves directly threaten his company.",
+        "continuity": {
+          "props_present": [],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Impeccably sharp black suit, pristine white shirt, dark tie",
+              "must_keep": [
+                "black suit"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Kenji is a powerful East Asian business heir",
+            "Setting is a modern-urban wealthy-clan environment"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "Sleek, imposing skyscraper office in a bustling modern East Asian metropolis",
+              "Minimalist design and cutting-edge technology reflecting a modern-urban wealthy-clan aesthetic"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Kenji Tanaka, driven, melancholic East Asian business heir from a modern-urban wealthy-clan, haunted by past",
+                "Powerful, presents impeccably sharp image",
+                "Conceals deep emotional wounds"
+              ],
+              "wardrobe_notes": [
+                "Sharp black suit"
+              ],
+              "must_keep": [
+                "melancholic expression",
+                "ruthless business acumen"
+              ]
+            }
+          ],
+          "props_lock": [],
+          "style_lock": {
+            "global_style_notes": [
+              "Tortured love story",
+              "Corporate rivalry drama",
+              "Mystery with a second chance theme",
+              "Suspenseful tone",
+              "Set in a modern-urban wealthy-clan East Asian environment"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "Kenji's customary detachment is broken by the unexpected and formidable challenge presented by Anya Mei.",
+          "emotional_shift": "From detached melancholy to piqued intrigue and professional challenge."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Kenji Tanaka, impeccably dressed in a sharp black suit, stands by a vast office window, gazing at the sprawling, bustling modern East Asian metropolis below.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Emphasize city view and Kenji's isolation"
+            },
+            "visual_goal": "Establish Kenji's power, wealth, and underlying melancholy, contrasting with the vibrant city.",
+            "action_focus": "Kenji's contemplative posture and the cityscape.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A close-up on a sleek, high-definition monitor displaying aggressive financial data, market trends, and a sharp, composed headshot of 'Anya Mei,' with her corporate logo.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on the screen's details and Anya's image"
+            },
+            "visual_goal": "Introduce Anya Mei as a formidable corporate rival and hint at her impact.",
+            "action_focus": "The visual information on the screen, particularly Anya Mei's details.",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Kenji's eyes narrow slightly, a flicker of something unreadable—intrigue, challenge, or a faint, unsettling recognition—crosses his face as he looks away from the screen.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Emphasize Kenji's subtle facial expression"
+            },
+            "visual_goal": "Convey Kenji's initial, complex reaction to Anya Mei, hinting at a deeper connection or mystery.",
+            "action_focus": "Kenji's eyes and the subtle shift in his demeanor.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "Tanaka Corp. Headquarters",
+          "interior_exterior": "INT",
+          "time_of_day": "DAY"
+        },
+        "summary": "Kenji and Anya engage in a tense corporate negotiation, where Kenji’s professional facade cracks as he begins to suspect Anya’s true identity as Ren based on subtle cues.",
+        "continuity": {
+          "props_present": [
+            "corporate documents",
+            "tablet device"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Sharp black suit, pristine white shirt, dark tie",
+              "must_keep": [
+                "black suit"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "Impeccably tailored, authoritative business suit or dress, dark tones",
+              "must_keep": [
+                "professional attire"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "High-stakes corporate acquisition negotiation",
+            "Kenji is deeply observant",
+            "Anya is composed and challenging"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "DAY",
+            "environment_notes": [
+              "Sleek, imposing skyscraper office in a bustling modern East Asian metropolis",
+              "Minimalist design and cutting-edge technology reflecting a modern-urban wealthy-clan aesthetic",
+              "Private, soundproofed boardroom with a large conference table"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Kenji Tanaka, driven, melancholic East Asian business heir from a modern-urban wealthy-clan, haunted by past",
+                "Powerful, presents impeccably sharp image",
+                "Conceals deep emotional wounds"
+              ],
+              "wardrobe_notes": [
+                "Sharp black suit"
+              ],
+              "must_keep": [
+                "melancholic expression",
+                "ruthless business acumen"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "Anya Mei, enigmatic, ambitious East Asian businesswoman, Kenji's fierce corporate rival",
+                "Hardened, calculating exterior, belongs to modern-urban wealthy-clan power players"
+              ],
+              "wardrobe_notes": [
+                "Impeccably tailored, authoritative business attire"
+              ],
+              "must_keep": [
+                "enigmatic demeanor",
+                "composed expression",
+                "subtle familiar mannerisms"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "corporate documents",
+              "must_keep": [
+                "professional, official documents for a corporate acquisition"
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "tablet device",
+              "must_keep": [
+                "sleek, modern business tablet"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Tortured love story",
+              "Corporate rivalry drama",
+              "Mystery with a second chance theme",
+              "Suspenseful tone",
+              "Set in a modern-urban wealthy-clan East Asian environment"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "Kenji experiences a jolt of recognition from Anya, making him question everything he thought he knew about Ren's death.",
+          "emotional_shift": "From professional tension to overwhelming suspicion and personal terror for Kenji."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_004",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Kenji and Anya Mei sit at opposite sides of a gleaming, minimalist boardroom table. Corporate documents and tablets are scattered, but their gazes are locked, an unspoken tension filling the opulent space.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_001",
+                "prop_002"
+              ],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "medium_wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Emphasize the distance and power dynamic between Kenji and Anya"
+            },
+            "visual_goal": "Convey the high stakes of the business meeting and the palpable tension between the two rivals.",
+            "action_focus": "The formal setup of the boardroom and the initial confrontation between Kenji and Anya.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_005",
+            "order": 2,
+            "block_type": "dialogue",
+            "character_id": "char_002",
+            "character_name": "Anya Mei",
+            "text": "Your offer lacks… foresight. We expect more.",
+            "emotion_hint": "neutral",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Anya's composed, confident expression"
+            },
+            "visual_goal": "Show Anya's professional assertiveness and unyielding demeanor.",
+            "action_focus": "Anya's face and subtle expressions as she delivers her statement.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Kenji's POV: Anya's slender hand gestures dismissively, a ring glinting. The angle of her wrist, the curve of her fingers, triggers a sudden, visceral jolt of memory, undeniable yet impossible.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "over_the_shoulder",
+              "movement": "static",
+              "framing_notes": "Focus on Anya's hand, seen from Kenji's perspective"
+            },
+            "visual_goal": "Convey Kenji's internal jolt of recognition from a subtle, familiar mannerism.",
+            "action_focus": "Anya's hand gesture and the familiar details triggering Kenji's memory.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Kenji struggles to maintain his professional facade. His eyes, now filled with a terrifying, desperate question, briefly lock with Anya’s, who holds his gaze with a cool, unreadable confidence.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "two_shot",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Emphasize the intense eye contact between Kenji and Anya"
+            },
+            "visual_goal": "Show the immediate, silent, and unsettling confrontation as Kenji's suspicion ignites.",
+            "action_focus": "The direct gaze and subtle emotional battle between Kenji and Anya.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_003",
+        "heading": {
+          "location_id": "loc_002",
+          "location_name": "The Starlight Gala",
+          "interior_exterior": "INT",
+          "time_of_day": "NIGHT"
+        },
+        "summary": "At an opulent high-society gala, Kenji confronts Anya directly, demanding answers about her past and the reasons for her return, forcing her to reveal a glimpse of her true self.",
+        "continuity": {
+          "props_present": [
+            "champagne flutes",
+            "gala decorations"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "Sharp, dark tuxedo",
+              "must_keep": [
+                "tuxedo"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "Elegant, sophisticated evening gown, possibly dark or jewel-toned",
+              "must_keep": [
+                "evening gown"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "Opulent high-society event",
+            "Kenji is desperate for truth",
+            "Anya is protecting her identity"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_002",
+            "time_of_day": "NIGHT",
+            "environment_notes": [
+              "Opulent, exclusive high-society event space, glittering with chandeliers in a modern East Asian metropolis",
+              "Embodies extravagant social scene of the modern-urban wealthy-clan",
+              "Perfect backdrop for masked intentions and simmering tensions"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Kenji Tanaka, driven, melancholic East Asian business heir from a modern-urban wealthy-clan, haunted by past",
+                "Powerful, presents impeccably sharp image",
+                "Conceals deep emotional wounds"
+              ],
+              "wardrobe_notes": [
+                "Sharp, dark tuxedo"
+              ],
+              "must_keep": [
+                "melancholic expression",
+                "desperate intensity"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "Anya Mei, enigmatic, ambitious East Asian businesswoman, Kenji's fierce corporate rival",
+                "Hardened, calculating exterior, belongs to modern-urban wealthy-clan power players",
+                "True identity Ren is hidden"
+              ],
+              "wardrobe_notes": [
+                "Elegant, sophisticated evening gown"
+              ],
+              "must_keep": [
+                "enigmatic demeanor",
+                "composed expression",
+                "underlying vulnerability"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_003",
+              "prop_name": "champagne flute",
+              "must_keep": [
+                "delicate glass champagne flute"
+              ]
+            },
+            {
+              "prop_id": "prop_004",
+              "prop_name": "gala decorations",
+              "must_keep": [
+                "sparkling chandeliers",
+                "luxurious floral arrangements"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Tortured love story",
+              "Corporate rivalry drama",
+              "Mystery with a second chance theme",
+              "Suspenseful tone",
+              "Set in a modern-urban wealthy-clan East Asian environment"
+            ],
+            "must_avoid": []
+          }
+        },
+        "scene_end": {
+          "turn": "Anya's emotional barrier cracks, confirming Kenji's deepest fears and hopes but leaving the full story of her disappearance tantalizingly uncertain.",
+          "emotional_shift": "From desperate confrontation to a complex mix of confirmation, devastation, and renewed, unresolved mystery."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_008",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A wide shot of the opulent Starlight Gala, sparkling with chandeliers and filled with elegantly dressed guests. Kenji, in a sharp tuxedo, moves through the crowd, his gaze focused and determined.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_004"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "dolly",
+              "framing_notes": "Sweep across the luxurious gala, then focus on Kenji's determined search"
+            },
+            "visual_goal": "Establish the extravagant setting and Kenji's intense resolve amid the social facade.",
+            "action_focus": "The grand scale of the event and Kenji's purposeful movement.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_004"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_009",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Kenji's POV: He spots Anya across the room, resplendent in an evening gown, composed as she engages in conversation with a group of dignitaries. She catches his eye, a momentary, subtle shift in her expression.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [
+                "prop_003"
+              ],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "over_the_shoulder",
+              "movement": "static",
+              "framing_notes": "Focus on Anya's elegance and the brief eye contact from Kenji's perspective"
+            },
+            "visual_goal": "Show Kenji finding Anya and the immediate, charged connection between them.",
+            "action_focus": "Anya's presence and the fleeting moment of recognition.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 3,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "Kenji Tanaka",
+            "text": "Seven years. I need to know why. Why did you leave me?",
+            "emotion_hint": "urgent",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Close on Kenji, his desperation visible, with Anya partially in frame"
+            },
+            "visual_goal": "Convey Kenji's raw emotional pain and his desperate demand for answers.",
+            "action_focus": "Kenji's intense questioning and the immediate impact on Anya.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_011",
+            "order": 4,
+            "block_type": "dialogue",
+            "character_id": "char_002",
+            "character_name": "Anya Mei",
+            "text": "Some truths... are better left buried, Kenji. For everyone.",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "medium_close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Close on Anya, her composure cracking, a flicker of pain in her eyes as she speaks"
+            },
+            "visual_goal": "Show Anya's emotional vulnerability and the hint of her past pain, confirming her identity.",
+            "action_focus": "Anya's subtle emotional breakdown and her cryptic response.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_012",
+            "order": 5,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Anya turns abruptly and melts back into the gala crowd, leaving Kenji standing alone, a mix of devastation, renewed hope, and lingering confusion etched on his face.",
+            "emotion_hint": "",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Capture Anya's exit and Kenji's isolated reaction"
+            },
+            "visual_goal": "Convey the emotional aftermath of the confrontation and the unresolved mystery.",
+            "action_focus": "Anya's departure and Kenji's complex emotional state.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count_total": 12,
+    "avg_shots_per_scene": 4.0,
+    "dialogue_block_count": 3,
+    "action_block_count": 9
+  }
+}

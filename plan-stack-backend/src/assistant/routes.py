@@ -80,10 +80,44 @@ def create_assistant_blueprint():
                 agent_id=agent_id,
                 step_id=step_id,
             )
-            return jsonify(serialize_for_api(results)), 200
+            response_body = serialize_for_api(results)
+            try:
+                from inference import trace as _fw_trace
+                _fw_trace.dump_step(
+                    "assistant_to_director",
+                    agent_id,
+                    step_id,
+                    {
+                        "http_status": 200,
+                        "response_body": response_body,
+                    },
+                )
+            except Exception:
+                pass
+            return jsonify(response_body), 200
         except ValueError as e:
+            try:
+                from inference import trace as _fw_trace
+                _fw_trace.dump_step(
+                    "assistant_to_director",
+                    agent_id,
+                    step_id,
+                    {"http_status": 404, "error": str(e)},
+                )
+            except Exception:
+                pass
             return _execute_error_response(str(e), 404)
         except Exception as e:
+            try:
+                from inference import trace as _fw_trace
+                _fw_trace.dump_step(
+                    "assistant_to_director",
+                    agent_id,
+                    step_id,
+                    {"http_status": 500, "error": str(e)},
+                )
+            except Exception:
+                pass
             return _execute_error_response(f"Execution failed: {str(e)}", 500)
     
     @bp.route('/api/assistant/executions/step/<step_id>', methods=['GET'])

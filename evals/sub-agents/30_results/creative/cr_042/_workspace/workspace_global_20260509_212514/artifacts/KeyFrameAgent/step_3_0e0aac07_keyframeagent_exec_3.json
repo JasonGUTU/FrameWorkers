@@ -1,0 +1,300 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_id": "char_001",
+          "prompt_summary": "Lin Feng is a young cultivation prodigy from a Xianxia world, possessing deep inner strength and a determined gaze. He wears varying attire, from pristine disciple robes to rough wilderness clothing, eventually transforming into a radiant, divine form with celestial garments. His presence suggests a powerful spiritual journey marked by profound change.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "char_002",
+          "prompt_summary": "Elder Brother Wei is a composed and authoritative senior disciple brother within a Xianxia sect. He wears elegant, well-maintained robes, concealing a hint of malice and underlying ambition. His demeanor is one of calculated control and veiled treachery.",
+          "reference_image_uri": ""
+        }
+      ],
+      "locations": [
+        {
+          "entity_id": "loc_001",
+          "prompt_summary": "The Heavenly Sword Sect is a grand, ancient cultivation sect from a Xianxia world. It features ornate temples and sprawling training grounds, set amidst majestic mist-shrouded peaks. The architecture reflects a rich spiritual tradition and a sense of established power.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "loc_002",
+          "prompt_summary": "The Ancient Demon Wilds is a desolate and treacherous wilderness within a Xianxia world. This landscape is scarred by ancient battles, featuring towering, gnarled trees and jagged rocks. It is infused with dark, ominous spiritual energy, creating a dangerous and untamed environment.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "loc_003",
+          "prompt_summary": "The Celestial Ascent Platform is an ethereal structure floating high above the clouds in a Xianxia world. It shimmers with raw cosmic energy, serving as a nexus between mortal and immortal realms. Distant stars and swirling nebulas complete this grand, awe-inspiring celestial scene.",
+          "reference_image_uri": ""
+        }
+      ],
+      "props": [
+        {
+          "entity_id": "prop_001",
+          "prompt_summary": "The ancestral sword is an ancient, visibly broken or chipped blade, initially radiating a faint, hidden power. Over time, it glows with a darker energy and becomes more refined through use. Ultimately, it is fully restored, radiating divine power as a potent symbol of transformation and ultimate destiny.",
+          "reference_image_uri": ""
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Lin Feng is a young, talented prodigy, wearing pristine Heavenly Sword Sect disciple robes, emanating spiritual energy during a demonstration. His expression is intense and focused, full of youthful vigor and promise. Later in the scene, he is tattered and publicly disgraced, clutching his broken sword in despair.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Elder Brother Wei is a calm, authoritative senior disciple, wearing elegant Senior Heavenly Sword Sect robes. A subtle hint of malice underlies his composed demeanor as he watches the proceedings. He stands detached, observing Lin Feng's downfall with a calculating gaze.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "During daytime, the grand cultivation sect is bustling with disciples and elders, set against clear, bright mist-shrouded peaks. The ornate temples and sprawling training grounds are well-lit, reflecting a vibrant, active environment. The atmosphere is initially impressive but soon turns tense with betrayal.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "The ancient ancestral sword is visibly broken or chipped, its design reflecting its age. It radiates a faint hidden power, clutched by Lin Feng in his moment of despair. Its appearance is humble, yet it holds unseen potential for future greatness.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up captures Lin Feng's intense face as he executes intricate sword forms. Spiritual energy swirls vividly around his blade, showcasing his unparalleled talent and prowess. A large crowd of impressed disciples and elders watches from the background, their faces alight with admiration.",
+                "video_motion_hint": "The camera slowly pushes in on Lin Feng's focused face. Spiritual energy subtly pulsates around his moving blade as he performs the intricate forms."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium shot frames Elder Brother Wei from an over-the-shoulder perspective, his back to a watching crowd. He appears calm and authoritative, delivering a grave declaration with insidious undertones. His expression is composed but hints at a hidden, malicious agenda.",
+                "video_motion_hint": "Elder Brother Wei remains static, his gaze fixed forward. A subtle, almost imperceptible shift in his facial muscles hints at his inner machinations."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "An extreme close-up captures Lin Feng's face, contorted in raw agony, his eyes wide with pain. A searing light erupts from his chest as his cultivation core visibly shatters into fragments. He desperately clutches the ancient, visibly broken ancestral sword, its hilt radiating a subtle warmth in his hand.",
+                "video_motion_hint": "Lin Feng's body convulses with a searing light emanating from his chest. His grip tightens on the broken sword, his head dropping slightly in pain."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A desolate Lin Feng, clad in tattered robes, stumbles down a grand staircase of the Heavenly Sword Sect. He casts a final, heartbroken glance back at the majestic, towering gates, clutching his broken ancestral sword. His small, defeated figure appears isolated against the vast, mist-shrouded backdrop as he disappears into the distance, expelled and broken.",
+                "video_motion_hint": "The camera cranes down as Lin Feng slowly descends the grand staircase. He takes a mournful, lingering look over his shoulder before continuing his unsteady walk into the mist."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Lin Feng is weathered and hardened by adversity, wearing rough, patched-up clothing suitable for wilderness survival. His hair is longer and unkempt, reflecting his struggles in the wilds. His expression is one of grim determination, focused intently on rebuilding his lost power.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_002",
+              "prompt_summary": "A treacherous, desolate wilderness under the night sky, scarred by ancient battles. Gnarled trees and jagged rocks are infused with dark spiritual energy, casting long, ominous shadows. The environment feels dangerous and unforgiving, illuminated only by sparse, flickering light from a distant fire.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "The broken ancestral sword now glows faintly with a darker energy, appearing more refined from daily use and arduous training. It is a constant companion to Lin Feng, showing signs of its renewed, albeit dark, power. The sword is a primal weapon forged in adversity.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "Lin Feng, gaunt and weathered, meditates intensely beside a crackling fire within a shadowy, desolate cave. His broken ancestral sword rests across his lap, its hilt faintly glowing with hidden power. His breath visibly glows with internal energy as he cultivates, showcasing his unwavering resilience and focus on rebuilding his cultivation.",
+                "video_motion_hint": "Lin Feng's chest slowly rises and falls as his breath faintly glows with internal energy. The fire crackles gently, casting flickering shadows across his focused face."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "Lin Feng leaps with incredible agility, deftly dodging a monstrous claw in a dynamic action shot. His broken ancestral sword hums with dark energy, striking the massive demon with newfound power. The impact creates a powerful shockwave that rattles the beast, its red eyes glowing menacingly in the dark.",
+                "video_motion_hint": "Lin Feng moves with extreme speed, darting sideways to avoid the demon's attack. The camera performs a subtle dolly zoom, emphasizing the sudden impact of his sword strike and the demon's recoil."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "The defeated demon collapses dramatically, dissolving into dark spiritual essence around Lin Feng. He stands victorious, his body glowing faintly as he absorbs the lingering energy from the vanquished foe. His eyes burn with renewed strength and fierce empowerment, marking a significant power-up in his cultivation path.",
+                "video_motion_hint": "The dissolving demon essence swirls and fades around Lin Feng. His body subtly expands with an internal glow as he inhales the energy, his head slowly rising to reveal his empowered gaze."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Lin Feng is at the peak of his power, exuding immense spiritual presence, ready for ultimate ascension. He wears an elegant, simple cultivation robe imbued with subtle energy effects, hinting at his divine potential. His form is radiant, reflecting the imminent transformation into a celestial being, his expression resolute yet serene.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_003",
+              "prompt_summary": "An ethereal platform high above the clouds, shimmering with raw cosmic energy and bathed in divine light. It is a nexus between mortal and immortal realms, surrounded by swirling nebulas and distant stars. The environment creates a grand, awe-inspiring sense of eternal twilight and cosmic significance.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "The ancestral sword is now fully restored, no longer broken, and radiates brilliant divine power. It appears less like a conventional weapon and more like a glowing symbol of Lin Feng's completed journey and ultimate triumph. The blade emanates pure light and cosmic energy, a testament to transcendence.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_008",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Lin Feng stands alone on the shimmering Celestial Ascent Platform, cosmic energy swirling powerfully around him. The sky above rips open dramatically, revealing dark, tumultuous clouds. A colossal bolt of heavenly lightning descends with terrifying force, striking him directly in a blaze of light and power.",
+                "video_motion_hint": "Cosmic energy subtly swirls around Lin Feng. The lightning bolt rapidly descends and strikes, creating a momentary, blinding flash and residual sparks."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_009",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "An extreme close-up on Lin Feng's face reveals it contorted in agony, yet radiating fierce resolve and inner strength. His skin glows intensely with immense power and begins to crack like fragile porcelain. Pure, brilliant light shines intensely from beneath the fissures, signaling his profound metamorphosis from mortal to divine.",
+                "video_motion_hint": "Lin Feng's face trembles with effort and pain. The cracks on his skin visibly expand as the internal light pulses and intensifies, foreshadowing his transformation."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "Lin Feng, now a radiant being of pure light, floats serenely above the Celestial Ascent Platform, fully ascended. The fully restored ancestral sword hovers gracefully at his side, glowing with divine energy and cosmic significance. He gazes down at the vast mortal realm below, his expression profound, peaceful, and imbued with ultimate cosmic understanding.",
+                "video_motion_hint": "Lin Feng slowly ascends further, radiating light. The camera subtly tracks out to reveal the grand cosmic panorama below him, emphasizing his godlike perspective."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "style_notes": [
+      "Xianxia",
+      "Fantasy",
+      "Epic",
+      "Revenge",
+      "Cultivation",
+      "High drama with intricate sect architecture",
+      "Action",
+      "Transformation",
+      "Gritty survival in a mystical, dangerous landscape",
+      "Transcendence",
+      "Cosmic, divine aesthetics",
+      "Grand and awe-inspiring"
+    ],
+    "must_avoid": []
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 10,
+    "keyframe_count_total": 10,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 2,
+    "global_location_anchor_count": 3,
+    "global_prop_anchor_count": 1,
+    "stability_character_keyframe_count": 4,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 3
+  }
+}

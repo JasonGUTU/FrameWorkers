@@ -1,0 +1,44 @@
+{
+  "shots": [
+    {
+      "shot_id": "sh_001",
+      "prompt": "The majestic Heavenly Emperor, radiant with cultivation power, is ambushed by nine converging energy attacks from unseen traitors in a desolate, ethereal realm. He collapses, an expression of profound agony on his face. (Animation style)",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_002",
+      "prompt": "A disheveled young male disciple, gasping, awakens abruptly on a humble straw mat in a spartan cultivation room. He clutches his head, eyes wide with confusion and fragmented memories of a forgotten past. (Animation style)",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_003",
+      "prompt": "In a bustling training yard, the young disciple endures the sneers and pointing fingers of arrogant senior disciples. One senior shoves him dismissively, further highlighting his humiliated, outcast status among peers. (Animation style)",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_004",
+      "prompt": "A close-up reveals the young disciple's eyes, hardening with ancient wisdom and simmering fury. A fleeting golden light flashes deep within his pupils, briefly reflecting a powerful, emperor-like resolve. (Animation style)",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_005",
+      "prompt": "The disciple meditates cross-legged in a secluded, dimly lit forest grove. Faint, ethereal spiritual energy slowly begins to swirl around him, a determined expression fixed upon his face as he cultivates. (Animation style)",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_006",
+      "prompt": "An arrogant senior disciple, oblivious to danger, boasts loudly to his admiring peers in a lavish sect hall. The reborn disciple, a blurred figure in the background, observes him with cold, calculating eyes. (Animation style)",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_007",
+      "prompt": "Close-up on the reborn disciple's face as he watches the senior. His eyes momentarily blaze with intense, chilling power. A subtle, dangerous smirk plays on his lips, hinting at impending, inevitable retribution. (Animation style)",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_008",
+      "prompt": "The disciple strides purposefully along a moonlit sect path, his silhouette sharp and imposing. His eyes glow with an unwavering inner fire, a clear manifestation of his fierce resolve to reclaim his destiny. (Animation style)",
+      "duration_sec": 5
+    }
+  ]
+}

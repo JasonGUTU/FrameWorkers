@@ -1,0 +1,310 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_id": "char_001",
+          "prompt_summary": "柳如烟是一位历史东亚帝国的女性，前皇后，外表端庄聪慧。她身着传统的东亚寝衣，简洁雅致，眼神中透露着钢铁般的复仇意志。",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "char_002",
+          "prompt_summary": "柳如曦是一位历史东亚帝国的女性，外表和善实则阴险狡诈。她身着华美艳丽的宫装，配饰考究，尽显其在宫中的优越地位。",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "char_003",
+          "prompt_summary": "一位历史东亚帝国的年轻君主，拥有至高无上的权力。他身穿绣有龙纹的华丽龙袍，头戴帝王冠冕，衣物质地精细，彰显尊贵。",
+          "reference_image_uri": ""
+        }
+      ],
+      "locations": [
+        {
+          "entity_id": "loc_002",
+          "prompt_summary": "刘府是一座历史悠久的东亚帝国贵族宅邸。其内部古朴典雅，建筑风格充满传统东亚特色，透露着寂静与庄重。",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "loc_001",
+          "prompt_summary": "皇宫是一座宏伟的东亚帝国宫殿群。它拥有金碧辉煌的大殿和精致的庭院，彰显着至高无上的皇权与宫廷的庄严。",
+          "reference_image_uri": ""
+        }
+      ],
+      "props": [
+        {
+          "entity_id": "prop_001",
+          "prompt_summary": "一件东亚传统风格的精美酒器，雕花精细，材质考究。器内盛有美酒，流光溢彩。",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_002",
+          "prompt_summary": "一盘摆盘精致的东亚宫廷菜肴，色彩丰富。菜肴散发着诱人的香气，令人垂涎。",
+          "reference_image_uri": ""
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "柳如烟身着质朴的寝衣，在夜晚昏暗的闺房中。光线勾勒出她内心的恐惧与困惑，氛围深沉。",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_002",
+              "prompt_summary": "夜晚的刘府，灯火稀疏，透着一丝寂静与庄重。建筑沐浴在昏暗的光线下，氛围深沉。",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "柳如烟在卧榻上猛然惊醒，大口喘息，眼神中充满恐惧与困惑。她的特写镜头聚焦于惊恐的眼神，身体微微前倾，面部表情紧张。",
+                "video_motion_hint": "柳如烟的胸口因喘息而起伏，眼神快速环顾四周。"
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "柳如烟的手紧紧抓住胸前的寝衣，指节发白，痛苦的回忆涌上心头。她的脸部肌肉因愤怒而颤抖，表情扭曲，镜头聚焦在她紧握的双手和扭曲的表情。",
+                "video_motion_hint": "柳如烟的指尖因紧握而轻微颤抖，面部肌肉持续抽动。"
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "柳如烟的眼神从痛苦转向锐利，她坐直身子，面露坚定。镜头从低角度展现她坚决的姿态，透露出不可动摇的复仇决心。",
+                "video_motion_hint": "柳如烟缓慢而坚定地坐直，眼神由涣散变为聚焦。"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "柳如烟身着典雅的宫装，在白天阳光普照的皇宫中。她的表情平静，眼神却藏着深意，姿态从容。",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "柳如曦身着华贵的宫装，在白日光照的皇宫中。她面带亲切笑容，举止优雅，彰显身份。",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "白天的皇宫，阳光普照，金碧辉煌的大殿和精致庭院。光线明亮，彰显皇权气派。",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_004",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "柳如烟穿着素雅的宫装，在宫女的引导下穿过雕梁画栋的宫殿长廊。她步伐从容，面带微笑，宏伟的宫殿背景衬托出她融入环境的姿态。",
+                "video_motion_hint": "柳如烟在长廊中以从容的步伐前行，宫女在她身旁轻柔地引导。"
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "柳如曦带着亲切的笑容走上前，张开双臂，作势拥抱柳如烟。她的表情温暖，眼神充满关切，与柳如烟的冷静形成对比。",
+                "video_motion_hint": "柳如曦面带笑容，缓慢而亲切地向柳如烟张开双臂，身体微微前倾。"
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "柳如烟还以微笑，眼神中闪过一丝不易察觉的寒意。她的姿态顺从，但眼神透露出隐藏的深意，与柳如曦的伪善形成强烈对比。",
+                "video_motion_hint": "柳如烟的嘴角微扬，眼神在瞬间闪过冷光后恢复平静。"
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "柳如曦的笑容在柳如烟话语后略微僵硬，眼神中闪过一丝不解和警惕。特写镜头聚焦于她脸上细微的表情变化，显示其内心的不安。",
+                "video_motion_hint": "柳如曦的嘴角肌肉轻微抽动，眼神中警惕的神色一闪而过。"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "柳如烟身着雍容而内敛的华贵宫装，在灯火辉煌的夜宴上。她神态自若，目光流转，尽显沉着冷静。",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "柳如曦身着奢华光彩夺目的宫装，在灯火辉煌的夜宴上。她笑容满面，姿态高傲，力求艳压群芳。",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_003",
+              "prompt_summary": "皇帝身穿绣有龙纹的华丽龙袍，头戴帝王冠冕，在灯火辉煌的夜宴上。他端坐主位，威严而略带思虑，彰显皇权。",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "夜晚的皇宫大殿，灯火辉煌，歌舞升平。珍馐美酒摆满桌案，烘托出表面繁华下的暗潮汹涌。",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "精美酒器在宴会灯火下闪耀，雕花细节在光照下清晰可见。器内美酒盈盈，诱人品尝。",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_002",
+              "prompt_summary": "珍馐佳肴在宴会灯光下色彩丰富，摆盘精致，散发诱人香气。菜品造型别致，引人注目。",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_008",
+            "characters_in_frame": [
+              "char_001",
+              "char_002",
+              "char_003"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_002"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "宫廷宴会大厅灯火辉煌，皇帝端坐主位，柳如烟和柳如曦分列左右。觥筹交错，歌舞升平，俯瞰整个宴会场景，展现宏大与热闹。",
+                "video_motion_hint": "宴会厅中，宫女们穿梭其间，歌舞表演者翩翩起舞，烛火摇曳生辉。"
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_009",
+            "characters_in_frame": [
+              "char_001",
+              "char_002",
+              "char_003"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "柳如烟举杯望向皇帝，目光轻轻扫过柳如曦。她面带恭顺的微笑，眼神深邃，言辞看似无意却暗含深意，引发皇帝的审视。",
+                "video_motion_hint": "柳如烟轻轻举杯，目光从皇帝身上平稳地移向柳如曦，嘴角保持微笑。"
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "characters_in_frame": [
+              "char_002",
+              "char_003"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "皇帝略一沉吟，眼神若有所思地望向柳如曦。他的表情严肃，语气带有审视意味，显示其对柳如烟话语的思考，开始动摇对柳如曦的看法。",
+                "video_motion_hint": "皇帝缓慢地将视线转向柳如曦，眉头微皱，陷入思考。"
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_011",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "柳如曦听到皇帝的话，脸上的笑容有片刻的僵硬，她勉强维持镇定。特写镜头聚焦于她细微的表情变化，指尖在袖中紧握，显示其内心惊慌失措。",
+                "video_motion_hint": "柳如曦的脸部肌肉瞬间紧绷，指尖在袖中不明显地颤动。"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "style_notes": [
+      "历史东亚宫廷背景下的重生与复仇故事，充满权谋与戏剧性，古风奇幻。"
+    ],
+    "must_avoid": []
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 11,
+    "keyframe_count_total": 11,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 3,
+    "global_location_anchor_count": 2,
+    "global_prop_anchor_count": 2,
+    "stability_character_keyframe_count": 6,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 2
+  }
+}

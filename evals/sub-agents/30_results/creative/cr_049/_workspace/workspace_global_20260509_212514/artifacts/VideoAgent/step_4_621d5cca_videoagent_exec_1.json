@@ -1,0 +1,316 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_context": {
+          "location_id": "loc_002",
+          "time_of_day": "CUSTOM",
+          "environment_notes": [
+            "A grim, decaying modern urban state prison, where Ethan spent years stripped of his former life and prestige, reflecting years of despair and loss.",
+            "modern-urban setting"
+          ],
+          "style_notes": [
+            "Gritty, dark, neo-noir drama set in a modern-urban world, emphasizing the devastating consequences of betrayal and loss, with elements of animation.",
+            "modern-urban",
+            "gritty",
+            "dark",
+            "vengeful",
+            "drama",
+            "thriller",
+            "neo-noir",
+            "animation"
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Depict Ethan's profound despair and the agonizing passage of time within the prison.",
+              "action_focus": "Ethan's vacant expression and the starkness of his cell.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "high_angle",
+              "camera_movement": "slow_zoom_in",
+              "framing_notes": "Emphasizing isolation and entrapment",
+              "video_motion_hints": [
+                "The camera slowly zooms in on Ethan, subtly increasing the intensity of his isolation."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_002",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Highlight the physical toll of imprisonment and the fading memory of his legal career.",
+              "action_focus": "Ethan's hands and the worn textbook.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on the texture and detail of his hands",
+              "video_motion_hints": [
+                "The camera remains static, capturing the subtle movement of Ethan's hands turning the pages."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_003",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Show Ethan's release and the physical manifestation of his years of suffering.",
+              "action_focus": "Ethan's isolated figure against the backdrop of the grim prison.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "tracking_shot",
+              "framing_notes": "Emphasizing the daunting scale of the prison and the vastness of the outside world",
+              "video_motion_hints": [
+                "The camera tracks alongside Ethan as he walks forward, emphasizing his emergence into the world."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_004",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Introduce the catalyst for Ethan's ultimate devastation.",
+              "action_focus": "The letter being passed, Ethan's face.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on the exchange and Ethan's subtle reaction",
+              "video_motion_hints": [
+                "The camera remains static, capturing the precise moment of the letter exchange."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_005",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Convey Ethan's utter devastation and the final shattering of his hope.",
+              "action_focus": "Ethan's face contorting in agony, the crumpled letter.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Intense focus on his facial expression and the emotional breakdown",
+              "video_motion_hints": [
+                "The camera remains static, capturing the raw emotional breakdown on Ethan's face."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_003",
+            "to_shot_id": "sh_004",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_004",
+            "to_shot_id": "sh_005",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_context": {
+          "location_id": "loc_003",
+          "time_of_day": "NIGHT",
+          "environment_notes": [
+            "A dimly lit, perpetually wet modern urban street in the financial district, ten years in the past, serving as the pivotal location for Ethan's temporal awakening, reflecting a neo-noir atmosphere.",
+            "modern-urban setting"
+          ],
+          "style_notes": [
+            "Gritty, dark, vengeful neo-noir thriller set in a modern-urban world, focusing on rebirth and time-travel for calculated revenge, with elements of animation.",
+            "modern-urban",
+            "gritty",
+            "dark",
+            "vengeful",
+            "time-travel",
+            "calculated",
+            "drama",
+            "thriller",
+            "neo-noir",
+            "animation"
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_006",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Establish the 'past' setting, its atmospheric mood, and hint at the bustling world Ethan has returned to.",
+              "action_focus": "The rain-slicked street, urban lights, and the general ambience.",
+              "characters_in_frame": [],
+              "camera_angle": "eye_level",
+              "camera_movement": "panning",
+              "framing_notes": "Establish the neo-noir, modern urban setting",
+              "video_motion_hints": [
+                "The camera slowly pans across the rain-slicked street, capturing the urban lights and general ambience."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_007",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Convey the shock and disorientation of Ethan's temporal awakening.",
+              "action_focus": "Ethan's confused actions and panicked gaze.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on Ethan's initial disorientation and vulnerability",
+              "video_motion_hints": [
+                "The camera remains static, focusing on Ethan's confused actions and panicked gaze."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_008",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Show the overwhelming influx of memories from his shattered future colliding with his present.",
+              "action_focus": "Ethan's eyes, reflecting pain and dawning realization.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Highlight the internal struggle and flashback imagery",
+              "video_motion_hints": [
+                "The camera remains static, capturing the overwhelming influx of memories in Ethan's eyes."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_009",
+            "semantic_context": {
+              "shot_type": "medium_close_up",
+              "visual_goal": "Symbolize Ethan's transformation from broken man to vengeful architect of fate.",
+              "action_focus": "Ethan's reflection in the puddle, the chilling intensity in his eyes.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "static",
+              "framing_notes": "Emphasize the reflection and the symbolic rebirth",
+              "video_motion_hints": [
+                "The camera remains static, emphasizing the reflection and the symbolic rebirth within the puddle."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_010",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Convey Ethan's acceptance of his new purpose and his unwavering resolve for vengeance.",
+              "action_focus": "Ethan's determined stride, the symbolic rain, the urban backdrop.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "dolly_out",
+              "framing_notes": "Show Ethan moving forward with a sense of destiny",
+              "video_motion_hints": [
+                "The camera dollies out, revealing more of the urban street as Ethan moves forward with a sense of destiny."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_006",
+            "to_shot_id": "sh_007",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_007",
+            "to_shot_id": "sh_008",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_008",
+            "to_shot_id": "sh_009",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_009",
+            "to_shot_id": "sh_010",
+            "transition_type": "cut"
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 2,
+    "shot_segment_count": 10
+  }
+}

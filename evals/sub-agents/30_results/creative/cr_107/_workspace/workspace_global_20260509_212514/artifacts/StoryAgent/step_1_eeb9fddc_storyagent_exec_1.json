@@ -1,0 +1,146 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-09T21:25:38.502925+00:00",
+    "language": "zh"
+  },
+  "content": {
+    "logline": "A devoted general's son, isolated for a decade guarding the western frontier, makes a desperate final stand against overwhelming odds, only to discover his fallen father and reclaim their ancestral green-dragon polearm in a brutal act of legacy and defiance.",
+    "style": {
+      "genre": [
+        "War",
+        "Epic",
+        "Drama",
+        "Animation"
+      ],
+      "tone_keywords": [
+        "Period",
+        "War-epic",
+        "Stirring",
+        "Heroic",
+        "Melancholy",
+        "Sacrifice",
+        "Ancient Chinese"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Murong Yu",
+        "role": "protagonist",
+        "profile": "A seasoned, battle-hardened general, the only son of General Murong Rong, who has devoted ten years to guarding the desolate Western Frontier in ancient China, isolated by his duty.",
+        "motivation": "To uphold his family's honor, protect the frontier, and fulfill his duty to the empire, even at immense personal cost.",
+        "flaw": "His profound sense of duty and isolation can lead him to desperate, almost suicidal, acts of valor."
+      },
+      {
+        "character_id": "char_002",
+        "name": "General Murong Rong",
+        "role": "support",
+        "profile": "Murong Yu's revered father and a legendary general who fiercely defended the Western Frontier in ancient China, wielding the ancestral green-dragon polearm until his last breath.",
+        "motivation": "To protect his family and empire, a symbol of unwavering defense.",
+        "flaw": ""
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "Western Frontier Snow Plains",
+        "description": "A vast, desolate, and windswept expanse of snow-covered plains and jagged peaks, marking the ancient Chinese western frontier, perpetually besieged by harsh weather and enemy incursions."
+      },
+      {
+        "location_id": "loc_002",
+        "name": "Battlefield's Heart",
+        "description": "The chaotic and bloody epicenter of the final battle on the Western Frontier, littered with fallen soldiers and the remnants of a desperate struggle amidst the snow and ice."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Murong Yu, General Murong Rong's only son, has tirelessly guarded the desolate Western Frontier for ten years, burdened by isolation and the relentless demands of his duty, never having returned home.",
+        "conflict": "The immense, lonely responsibility of holding a crucial defensive line against an ever-present threat, far from the comforts and connections of home.",
+        "turning_point": "The arrival of an unprecedentedly large enemy force on the horizon."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "inciting",
+        "summary": "An overwhelming enemy army, tens of thousands strong, descends upon Murong Yu's vastly outnumbered forces, initiating what appears to be a final, insurmountable assault on the frontier.",
+        "conflict": "The stark reality of facing an impossible military imbalance, threatening to break the long-held frontier defenses.",
+        "turning_point": "Murong Yu makes the desperate decision to execute a solo charge into the heart of the enemy lines."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "crisis",
+        "summary": "Driven by a desperate sense of duty and honor, Murong Yu charges alone into the vast enemy ranks, fighting furiously through countless soldiers in a seemingly suicidal, last-ditch effort.",
+        "conflict": "Murong Yu's physical struggle against the overwhelming enemy, risking his life to breach their formation, contrasted with his internal battle against despair.",
+        "turning_point": "He pushes deeper into the enemy lines, searching for a purpose beyond mere defiance."
+      },
+      {
+        "step_id": "arc_004",
+        "order": 4,
+        "step_type": "climax",
+        "summary": "Amidst the brutal chaos, Murong Yu discovers the body of his fallen father, General Murong Rong, and from his grasp reclaims the family's ancestral green-dragon polearm, realizing the true personal sacrifice made for the frontier.",
+        "conflict": "The shock and grief of discovering his father's demise, combined with the immediate, visceral need to reclaim his family's legacy and weapon amidst ongoing battle.",
+        "turning_point": "The ancestral polearm's presence transforms his desperation into a burning, inherited resolve."
+      },
+      {
+        "step_id": "arc_005",
+        "order": 5,
+        "step_type": "resolution",
+        "summary": "Wielding the reclaimed green-dragon polearm, Murong Yu continues his ferocious fight, now fueled by his father's legacy and a fierce, personal resolve, embodying the spirit of the frontier against uncertain odds.",
+        "conflict": "The ongoing battle against an overwhelming foe, but now with Murong Yu's personal transformation guiding his actions.",
+        "turning_point": "He stands as a symbol of defiance, his father's legacy alive in his hands."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To establish Murong Yu's long-standing, isolated vigil on the frontier and introduce the immediate, overwhelming threat of the encroaching enemy army.",
+        "conflict": "Murong Yu's weary resilience is tested as the vast enemy horde appears on the horizon, signaling the final, impossible battle for the frontier.",
+        "turn": "Murong Yu, witnessing the insurmountable numbers, makes the grim, resolute decision to charge into the enemy alone, embracing a final stand."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_004",
+        "location_id": "loc_002",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "To depict Murong Yu's desperate lone charge through enemy lines, culminating in the profound discovery of his fallen father and the reclamation of the ancestral polearm.",
+        "conflict": "Murong Yu battles fiercely against countless soldiers, pushing through a wave of foes until he discovers his father's body, amidst the chaos, still clutching the family heirloom.",
+        "turn": "The shock of his father's death combines with a surge of inherited power as Murong Yu reclaims the green-dragon polearm, transforming his despair into a furious, focused purpose."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_005",
+        "location_id": "loc_002",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To showcase Murong Yu's renewed resolve and the symbolic weight of the green-dragon polearm as he continues the fight, embodying his father's legacy.",
+        "conflict": "The battle rages on with undiminished ferocity, but Murong Yu's inner struggle has shifted; he now fights not just for duty, but with the full weight of his ancestral legacy, inspiring defiance against impossible odds.",
+        "turn": "Wielding the polearm, Murong Yu becomes a living embodiment of his father's sacrifice and family honor, turning the tide of his personal resolve despite the external battle's uncertain outcome."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 2,
+    "location_count": 2,
+    "scene_count": 3
+  }
+}

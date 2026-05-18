@@ -1,0 +1,46 @@
+{
+  "agent_class": "_DummyPipelineAgent",
+  "typed_input": {
+    "step_id": "task_uri",
+    "resolved_artifacts": {},
+    "language": "en"
+  },
+  "output": null,
+  "eval_result": null,
+  "passed": null,
+  "attempts": null,
+  "asset_dict": {
+    "content": {
+      "scenes": [
+        {
+          "scene_id": "sc_001",
+          "shots": [
+            {
+              "shot_id": "sh_001",
+              "keyframes": [
+                {
+                  "keyframe_id": "kf_001",
+                  "image_asset": {
+                    "asset_id": "img_sh_001_kf_01",
+                    "uri": "placeholder"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "artifact_caption": {
+      "caption": "keyframes plan — test seed for resolver substring match"
+    }
+  },
+  "media_assets_count": 1,
+  "media_assets_summary": [
+    {
+      "sys_id": "img_sh_001_kf_01",
+      "extension": "png",
+      "bytes_len": 9
+    }
+  ]
+}

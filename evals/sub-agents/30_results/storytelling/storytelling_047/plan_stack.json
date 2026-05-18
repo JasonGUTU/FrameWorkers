@@ -1,0 +1,41 @@
+{
+  "chain": [
+    [
+      "NarrationAgent"
+    ],
+    [
+      "IllustrationAgent"
+    ],
+    [
+      "NarratorAgent"
+    ],
+    [
+      "MusicAgent"
+    ],
+    [
+      "AmbienceAgent"
+    ],
+    [
+      "TranslationAgent"
+    ],
+    [
+      "AudioMixAgent"
+    ],
+    [
+      "CompositorAgent"
+    ],
+    [
+      "done"
+    ]
+  ],
+  "step_ids": [
+    "step_1_37c787ce",
+    "step_2_d7df2bc3",
+    "step_3_210cdc9d",
+    "step_4_0b41fe14",
+    "step_5_c111fc13",
+    "step_6_5234b27f",
+    "step_7_40c11d13",
+    "step_8_1aa3b00c"
+  ]
+}

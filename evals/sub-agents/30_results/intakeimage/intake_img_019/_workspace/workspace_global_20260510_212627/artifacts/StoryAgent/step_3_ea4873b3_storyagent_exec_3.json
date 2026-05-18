@@ -1,0 +1,152 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T21:27:16.659742+00:00",
+    "language": "zh"
+  },
+  "content": {
+    "logline": "After being poisoned and reborn to the day of imperial selection, a former empress returns to a treacherous ancient palace to exact meticulous revenge on all who orchestrated her downfall.",
+    "style": {
+      "genre": [
+        "Period Drama",
+        "Revenge Thriller",
+        "Palace Intrigue",
+        "Fantasy",
+        "Animated"
+      ],
+      "tone_keywords": [
+        "Revenge",
+        "Palace intrigue",
+        "Historical",
+        "Dramatic",
+        "Ruthless",
+        "Rebirth",
+        "Cunning",
+        "Betrayal"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Empress Mei",
+        "role": "protagonist",
+        "profile": "A once-gentle empress from an ancient imperial court, now reborn with the searing memories of her past life's betrayal and murder. She retains her regal bearing but is now hardened, ruthlessly intelligent, and driven by an unwavering resolve for vengeance. She is depicted wearing an ornate gold, pearl, and jade crown and a dark blue embroidered robe.",
+        "motivation": "To meticulously dismantle the power and influence of those who conspired against her, ensuring they meet a just, albeit cruel, fate for her past poisoning.",
+        "flaw": "Her consuming desire for revenge risks isolating her further and may lead her to overlook unforeseen threats or the possibility of a different future."
+      },
+      {
+        "character_id": "char_002",
+        "name": "Noble Consort Li",
+        "role": "antagonist",
+        "profile": "A cunning and ambitious consort within the imperial palace, she was a key orchestrator of Empress Mei's demise in the previous timeline. She projects an image of graceful subservience but hides a venomous ambition for ultimate power and influence within the ancient imperial court.",
+        "motivation": "To eliminate all rivals and secure her position as the most favored consort, eventually aiming for the empress's title.",
+        "flaw": "Her overconfidence and underestimation of her opponents, coupled with her deep-seated paranoia, make her prone to reckless schemes and strategic errors."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "The Imperial Palace",
+        "description": "A grand and intricate complex of traditional buildings, ornate courtyards, and serene gardens, characteristic of an ancient Chinese imperial court. Its softly lit interiors and hidden passages hold both breathtaking beauty and deadly secrets. This is the stage for the imperial selection and subsequent power struggles."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Empress Mei's past life is briefly depicted, showcasing her former grace and position, swiftly followed by the painful betrayal and poisoning that led to her death.",
+        "conflict": "The insidious ambition and treacherous conspiracies within the imperial court, which culminated in the empress's unjust demise.",
+        "turning_point": "Her final, agonizing breath as the poisoned wine takes effect, marking the end of her innocent life."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "inciting",
+        "summary": "Empress Mei awakens, reborn into her younger self on the very day of the imperial selection, armed with all her past memories and a burning desire for retribution.",
+        "conflict": "The shock of rebirth combined with the overwhelming flood of traumatic memories and the realization of a second chance to alter her tragic fate.",
+        "turning_point": "Her immediate, chilling resolve to not just survive, but to personally send every soul who once wronged her to their doom."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "turn",
+        "summary": "Mei, now a candidate in the imperial selection, subtly begins to identify and make initial moves against her former tormentors, leveraging her foreknowledge of their weaknesses.",
+        "conflict": "Maintaining her disguise of innocence and subservience while secretly plotting against powerful figures; the constant danger of her true intentions being discovered.",
+        "turning_point": "She orchestrates a minor public embarrassment for Noble Consort Li, signaling her cunning and a shift in the power dynamics."
+      },
+      {
+        "step_id": "arc_004",
+        "order": 4,
+        "step_type": "crisis",
+        "summary": "Noble Consort Li, sensing a change in Mei, orchestrates a dangerous trap during the selection process to expose or eliminate her, but Mei is one step ahead.",
+        "conflict": "Mei must use her foresight and sharp intellect to navigate a perilous scheme designed to end her new life prematurely, without revealing her past knowledge.",
+        "turning_point": "Mei not only survives the trap but expertly turns it against Consort Li, inflicting significant damage to her reputation and position, proving her formidable capabilities."
+      },
+      {
+        "step_id": "arc_005",
+        "order": 5,
+        "step_type": "climax",
+        "summary": "During a grand imperial ceremony, Empress Mei executes the final stage of her intricate revenge, publicly exposing the treachery of Noble Consort Li and other conspirators, leading to their complete ruin.",
+        "conflict": "The high stakes of her meticulously planned grand scheme, where a single misstep could lead to her own destruction, against the combined might and desperation of her enemies.",
+        "turning_point": "The climactic moment when her truth is unveiled, leading to the public disgrace and downfall of her tormentors, sealing their irreversible fate."
+      },
+      {
+        "step_id": "arc_006",
+        "order": 6,
+        "step_type": "resolution",
+        "summary": "Empress Mei observes the aftermath of her completed revenge, reflecting on the cost and the justice achieved, as she solidifies her new, powerful position within the imperial court.",
+        "conflict": "The lingering moral ambiguity of her ruthless path to vengeance and the potential emptiness that might follow her fulfilled retribution.",
+        "turning_point": "Mei, now a formidable force, no longer a victim, fully embraces her destiny, ready to forge a future on her own terms."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001"
+        ],
+        "goal": "To visually establish Empress Mei's rebirth and her immediate, chilling realization of her mission of revenge.",
+        "conflict": "The jarring sensory experience of awakening in the past, combined with the overwhelming influx of traumatic memories of her poisoning and the burning desire for vengeance.",
+        "turn": "Mei's eyes snap open, transitioning from initial confusion to a look of cold, calculating resolve as she confirms her past memories and accepts her second chance for retribution."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_001",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "To showcase Mei's first subtle act of revenge, targeting Noble Consort Li to test her new power and subtly establish her cunning new persona.",
+        "conflict": "Mei must appear innocent and unassuming while discreetly manipulating events to expose Consort Li's flawed character or create a minor setback for her, without revealing her true knowledge.",
+        "turn": "Mei, with a seemingly innocent comment or calculated action, subtly undermines Consort Li, catching her off guard and planting the first seeds of doubt and fear in her unsuspecting adversary."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_005",
+        "location_id": "loc_001",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "To dramatically portray the culmination of Mei's revenge plan, leading to the public downfall and ruin of her enemies during a significant imperial event.",
+        "conflict": "The tense, high-stakes moment of revelation as Mei's elaborate traps close in on Noble Consort Li and her fellow conspirators, who desperately struggle against their inevitable exposure and disgrace.",
+        "turn": "Mei, with a serene and triumphant expression, watches as her former tormentors are publicly stripped of their power and condemned, their pleas falling on deaf ears as justice is irrevocably served."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 2,
+    "location_count": 1,
+    "scene_count": 3
+  }
+}

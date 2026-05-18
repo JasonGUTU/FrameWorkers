@@ -1,0 +1,44 @@
+{
+  "case_name": "cr_059",
+  "category": "cr",
+  "user_goal": "Make a high-school revenge animated short drama — Gu Xiuning, the ice-cold transfer student who always ranks first, is discovered on his very first day to be the only survivor of an arson that struck this school ten years ago. The new homeroom teacher, Mr. Lin, turns out to be the very man who dragged him out of the flames back then. Add a restrained, suppressed piano BGM.",
+  "expected_chain": [
+    [
+      "StoryAgent"
+    ],
+    [
+      "ScreenplayAgent"
+    ],
+    [
+      "KeyFrameAgent"
+    ],
+    [
+      "VideoAgent"
+    ],
+    [
+      "MusicAgent"
+    ],
+    [
+      "AudioMixAgent"
+    ],
+    [
+      "CompositorAgent"
+    ],
+    [
+      "done"
+    ]
+  ],
+  "flat_chain": [
+    "StoryAgent",
+    "ScreenplayAgent",
+    "KeyFrameAgent",
+    "VideoAgent",
+    "MusicAgent",
+    "AudioMixAgent",
+    "CompositorAgent"
+  ],
+  "backend_url": "http://localhost:5010",
+  "hunyuan_endpoint": "http://sof1-h200-6:9208",
+  "infer_steps": 50,
+  "started_at": "2026-05-09T23:48:59"
+}

@@ -1,0 +1,65 @@
+[
+  {
+    "idx": 1,
+    "shot_id": "sh_001",
+    "prompt": "The disgraced empress, in simple robes, slowly walks through a neglected, overgrown courtyard of the 'cold palace'. A desolate wind rustles dead leaves around her feet. Her eyes betray a mix of sadnes",
+    "status": "OK",
+    "keyframe_bytes": 1999604,
+    "mp4_bytes": 2292207,
+    "elapsed_sec": 1364.1554498672485
+  },
+  {
+    "idx": 2,
+    "shot_id": "sh_002",
+    "prompt": "A young eunuch, clutching his bleeding arm, collapses protectively in front of the empress in a dimly lit, austere palace corridor. He meets her gaze with fierce loyalty, his body trembling slightly f",
+    "status": "OK",
+    "keyframe_bytes": 1611150,
+    "mp4_bytes": 774706,
+    "elapsed_sec": 1367.2797145843506
+  },
+  {
+    "idx": 3,
+    "shot_id": "sh_003",
+    "prompt": "The empress, dressed in slightly better but still simple robes, leans close to the young eunuch in a secluded, moonlit corner of a palace garden. They whisper intensely, her eyes gleaming with strateg",
+    "status": "OK",
+    "keyframe_bytes": 1452253,
+    "mp4_bytes": 539443,
+    "elapsed_sec": 1367.280109167099
+  },
+  {
+    "idx": 4,
+    "shot_id": "sh_004",
+    "prompt": "The empress, now adorned in slightly more elegant attire, walks purposefully through a grand, richly decorated but uncrowded palace hall. She pauses, her gaze sweeping the ornate surroundings, a subtl",
+    "status": "OK",
+    "keyframe_bytes": 1894649,
+    "mp4_bytes": 1724918,
+    "elapsed_sec": 1376.0994691848755
+  },
+  {
+    "idx": 5,
+    "shot_id": "sh_005",
+    "prompt": "The empress, regal and determined, strides confidently into a brightly lit, ornate council chamber. Her presence commands attention as the blurred figures of officials turn to face her, a palpable ten",
+    "status": "OK",
+    "keyframe_bytes": 2052379,
+    "mp4_bytes": 1415856,
+    "elapsed_sec": 1368.354115486145
+  },
+  {
+    "idx": 6,
+    "shot_id": "sh_006",
+    "prompt": "The empress, now robed in magnificent, elaborate garments, ascends a grand, intricately carved stone staircase towards a brightly illuminated throne room. Her imposing silhouette grows larger with eac",
+    "status": "OK",
+    "keyframe_bytes": 1987775,
+    "mp4_bytes": 1886763,
+    "elapsed_sec": 1370.4575266838074
+  },
+  {
+    "idx": 7,
+    "shot_id": "sh_007",
+    "prompt": "The empress, crowned and regal, sits powerfully on the ornate dragon throne, her gaze commanding the vast hall. The loyal eunuch stands steadfastly by her side, a silent, unwavering pillar of support.",
+    "status": "OK",
+    "keyframe_bytes": 1891917,
+    "mp4_bytes": 1237933,
+    "elapsed_sec": 1370.2691102027893
+  }
+]

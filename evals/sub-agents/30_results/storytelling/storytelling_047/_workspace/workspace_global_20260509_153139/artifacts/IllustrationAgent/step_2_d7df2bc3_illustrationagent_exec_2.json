@@ -1,0 +1,121 @@
+{
+  "content": {
+    "overall_style": "Oaxacan folk art style, warm earthy tones, vibrant colors, clear lines",
+    "character_anchors": [
+      {
+        "character_id": "char_001",
+        "appearance_prompt": "Un joven campesino oaxaqueño con piel morena, cabello oscuro y ojos vivaces, vestido con una camisa de algodón blanca y pantalones de manta. Su expresión es una mezcla de preocupación y determinación."
+      },
+      {
+        "character_id": "char_002",
+        "appearance_prompt": "Una anciana indígena zapoteca, de rostro sabio y arrugado, con largas trenzas grises adornadas con listones de colores y un huipil tradicional vibrante. Sus ojos son profundos y llenos de conocimiento, siempre observando con serenidad."
+      }
+    ],
+    "illustrations": [
+      {
+        "segment_id": "seg_001",
+        "image_prompt": "Un campo de maíz reseco bajo un sol abrasador en un valle de Oaxaca, México. Las hojas de maíz están marchitas y amarillentas. Mateo, un joven campesino, se encuentra en medio del campo, su rostro reflejando profunda preocupación.",
+        "characters_in_segment": [
+          "char_001"
+        ]
+      },
+      {
+        "segment_id": "seg_002",
+        "image_prompt": "Una escena de pueblo en Oaxaca durante una sequía. Un lecho de río seco y agrietado. Los aldeanos se agrupan, algunos con miradas de desesperación hacia el cielo, otros en silencio, con la cabeza baja.",
+        "characters_in_segment": []
+      },
+      {
+        "segment_id": "seg_003",
+        "image_prompt": "La Abuela Elena, una anciana indígena zapoteca, sentada serenamente en un banco de madera frente a su humilde casa de adobe en Oaxaca. Sus ojos están cerrados y su rostro está inclinado ligeramente hacia arriba, como si escuchara atentamente al viento. Unos hilos de maíz seco cuelgan de un porche cercano.",
+        "characters_in_segment": [
+          "char_002"
+        ]
+      },
+      {
+        "segment_id": "seg_004",
+        "image_prompt": "Mateo y la Abuela Elena en el borde del campo de maíz marchito. La Abuela Elena tiene una mano extendida hacia el viento, y la otra sobre el hombro de Mateo, mientras él la mira con curiosidad y respeto. Ella le señala el movimiento de las hojas secas.",
+        "characters_in_segment": [
+          "char_001",
+          "char_002"
+        ]
+      },
+      {
+        "segment_id": "seg_005",
+        "image_prompt": "Primer plano del rostro de Mateo, con los ojos entrecerrados, concentrándose intensamente mientras siente el viento en su piel y escucha el susurro del maíz. Detrás de él, las cañas de maíz se mueven suavemente.",
+        "characters_in_segment": [
+          "char_001"
+        ]
+      },
+      {
+        "segment_id": "seg_006",
+        "image_prompt": "Mateo, solo en el campo de maíz al amanecer, con los primeros rayos de sol iluminando su rostro. Está de pie, quieto, con los ojos cerrados y los brazos ligeramente extendidos, absorbiendo los mensajes del viento. Su expresión ahora muestra una mezcla de concentración y una incipiente confianza.",
+        "characters_in_segment": [
+          "char_001"
+        ]
+      },
+      {
+        "segment_id": "seg_007",
+        "image_prompt": "Mateo en el campo, de repente abre los ojos con una expresión de asombro y comprensión. Señala hacia las montañas distantes, donde una tenue neblina o una formación inusual de nubes se insinúa en el horizonte. Un aire de urgencia y descubrimiento lo rodea.",
+        "characters_in_segment": [
+          "char_001"
+        ]
+      },
+      {
+        "segment_id": "seg_008",
+        "image_prompt": "Mateo se para respetuosamente frente a un grupo de ancianos del pueblo, sentados bajo un árbol de amate. Gesticula con convicción mientras les explica lo que ha aprendido del viento. Los ancianos escuchan con una mezcla de escepticismo y curiosidad.",
+        "characters_in_segment": [
+          "char_001"
+        ]
+      },
+      {
+        "segment_id": "seg_009",
+        "image_prompt": "Los ancianos, después de una breve deliberación, asienten lentamente. Sus rostros reflejan la dura decisión de confiar en la sabiduría de un joven y las enseñanzas antiguas. La Abuela Elena se encuentra discretamente en la periferia, observando con una sonrisa sutil.",
+        "characters_in_segment": [
+          "char_002"
+        ]
+      },
+      {
+        "segment_id": "seg_010",
+        "image_prompt": "Los aldeanos de Oaxaca, incluyendo a Mateo, trabajan juntos en los campos. Están limpiando y reforzando las antiguas terrazas de cultivo, preparándolas para la llegada de la lluvia. El cielo sigue despejado, pero hay un sentido de propósito colectivo.",
+        "characters_in_segment": [
+          "char_001"
+        ]
+      },
+      {
+        "segment_id": "seg_011",
+        "image_prompt": "Mateo se encuentra solo en el campo, mirando hacia el horizonte montañoso. Las primeras nubes grises, apenas perceptibles, comienzan a asomarse por encima de las cimas de las montañas, tiñiendo el cielo con tonos más oscuros. Una sonrisa de alivio y esperanza se dibuja en el rostro de Mateo.",
+        "characters_in_segment": [
+          "char_001"
+        ]
+      },
+      {
+        "segment_id": "seg_012",
+        "image_prompt": "Una lluvia torrencial cae sobre los campos de maíz de Oaxaca, que ahora parecen vibrar con la vida. Las terrazas están llenándose rápidamente de agua. Los aldeanos se regocijan bajo la lluvia, levantando los rostros al cielo en agradecimiento, algunos abrazándose.",
+        "characters_in_segment": []
+      },
+      {
+        "segment_id": "seg_013",
+        "image_prompt": "Un campo de maíz exuberante y vibrante, ahora verde intenso y alto, bajo un cielo azul claro con algunas nubes blancas. Mateo y la Abuela Elena están de pie juntos en el campo, sonriendo y observando las saludables plantas de maíz con orgullo y satisfacción.",
+        "characters_in_segment": [
+          "char_001",
+          "char_002"
+        ]
+      },
+      {
+        "segment_id": "seg_014",
+        "image_prompt": "Una escena de celebración en el pueblo de Oaxaca. Los aldeanos se reúnen, algunos con música de guitarra acústica, comiendo y riendo. Los ancianos del pueblo agradecen a Mateo, quien se ve humilde y orgulloso, mientras la Abuela Elena lo observa con una mirada de profunda satisfacción.",
+        "characters_in_segment": []
+      },
+      {
+        "segment_id": "seg_015",
+        "image_prompt": "Mateo, ahora un poco mayor y más sabio, está en el campo de maíz enseñando a un niño pequeño, con cabello oscuro y ropa tradicional, cómo escuchar y sentir el viento. Las montañas de Oaxaca se extienden en el fondo bajo un cielo sereno. Es una escena de transmisión de conocimiento generacional.",
+        "characters_in_segment": [
+          "char_001"
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "illustration_count": 15
+  }
+}

@@ -1,0 +1,61 @@
+[
+  {
+    "agent_id": "StoryAgent",
+    "step_id": "step_1_f5ea7684",
+    "ok": true,
+    "error": null,
+    "elapsed_sec": 0.0,
+    "skipped_resume": true
+  },
+  {
+    "agent_id": "ScreenplayAgent",
+    "step_id": "step_2_2cd41cf0",
+    "ok": true,
+    "error": null,
+    "elapsed_sec": 0.0,
+    "skipped_resume": true
+  },
+  {
+    "agent_id": "KeyFrameAgent",
+    "step_id": "step_3_7fe9ce6e",
+    "ok": true,
+    "error": null,
+    "elapsed_sec": 0.0,
+    "skipped_resume": true
+  },
+  {
+    "agent_id": "VideoAgent",
+    "step_id": "step_4_ae78fb63",
+    "ok": true,
+    "error": null,
+    "elapsed_sec": 14039.684106111526
+  },
+  {
+    "agent_id": "MusicAgent",
+    "step_id": "step_5_ab79742a",
+    "ok": true,
+    "error": null,
+    "elapsed_sec": 102.61519384384155
+  },
+  {
+    "agent_id": "AmbienceAgent",
+    "step_id": "step_6_e68290db",
+    "ok": true,
+    "error": null,
+    "elapsed_sec": 41.230952978134155
+  },
+  {
+    "agent_id": "AudioMixAgent",
+    "step_id": "step_7_e13fa18c",
+    "ok": true,
+    "error": null,
+    "elapsed_sec": 12.240121364593506
+  },
+  {
+    "agent_id": "CompositorAgent",
+    "step_id": "step_8_0bda4c5e",
+    "ok": true,
+    "error": null,
+    "elapsed_sec": 15.954823017120361
+  }
+]

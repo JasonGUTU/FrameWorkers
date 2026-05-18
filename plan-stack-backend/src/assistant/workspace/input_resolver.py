@@ -164,6 +164,29 @@ class InputResolver:
                 "[InputResolver] No artifacts registered (step %s) — cold start",
                 step_id,
             )
+            try:
+                from inference import trace as _fw_trace
+                _fw_trace.dump_step(
+                    "input_resolver_io",
+                    agent_id,
+                    step_id,
+                    {
+                        "input": {
+                            "agent_id": agent_id,
+                            "step_id": step_id,
+                            "input_needs_description": input_needs_description,
+                            "captions_index_text": "(empty — cold start)",
+                        },
+                        "output": {
+                            "resolved_artifacts": {},
+                            "selected_artifact_paths": [],
+                            "rationale": "no artifacts registered yet (cold start)",
+                        },
+                        "note": "cold-start: no artifacts in workspace",
+                    },
+                )
+            except Exception:
+                pass
             return {
                 "resolved_artifacts": {},
                 "selected_artifact_paths": [],
@@ -336,6 +359,36 @@ class InputResolver:
             # blew up with "object of type 'ResolvedArtifactEntry' has no len()".
             {k: (len(v) if isinstance(v, list) else 1) for k, v in resolved.items()},
         )
+
+        try:
+            from inference import trace as _fw_trace
+            _fw_trace.dump_step(
+                "input_resolver_io",
+                agent_id,
+                step_id,
+                {
+                    "input": {
+                        "agent_id": agent_id,
+                        "step_id": step_id,
+                        "input_needs_description": input_needs_description,
+                        "labels": labels_list,
+                        "captions_index_text": captions_index,
+                        "id_to_path": id_to_path,
+                    },
+                    "llm_call": {
+                        "system_prompt": system_prompt,
+                        "user_prompt": user_prompt,
+                        "raw_response": parsed,
+                    },
+                    "output": {
+                        "resolved_artifacts": resolved,
+                        "selected_artifact_paths": all_paths,
+                        "rationale": rationale,
+                    },
+                },
+            )
+        except Exception:
+            pass
 
         return {
             "resolved_artifacts": resolved,

@@ -1,0 +1,379 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_id": "char_001",
+          "prompt_summary": "A young woman, quietly resilient yet elegant, possessing a subtle strength and serene demeanor. She is often seen in understated attire, such as a cream coat with pearl earrings, or a simple yet elegant day dress. Her expressions can convey both a deep longing and a quiet resolve.",
+          "reference_image_uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/30_results/intakeimage/intake_img_049/_workspace/workspace_global_20260510_212627/inputs/20260510_212628_542225_intake_img_049.png"
+        },
+        {
+          "entity_id": "char_002",
+          "prompt_summary": "A sophisticated man, heir to a powerful modern-urban wealthy clan. He typically wears a sharp, dark business suit. His initial demeanor is often guarded and distant, but can evolve to show profound confusion, shock, and eventually, desperate regret.",
+          "reference_image_uri": ""
+        }
+      ],
+      "locations": [
+        {
+          "entity_id": "loc_001",
+          "prompt_summary": "A sprawling, opulent modern-urban mansion, characterized by polished surfaces, grand architecture, and lavish interiors. Its spaces, including a formal study, reflect immense wealth and a cold, impeccably maintained atmosphere. This estate embodies the luxurious lifestyle of a powerful wealthy clan.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "loc_002",
+          "prompt_summary": "Vibrant, bustling modern-urban city streets, featuring a dynamic mix of towering high-rise business districts and anonymous pedestrian areas. The cityscape appears labyrinthine and overwhelming. This environment represents the vastness and indifference of a metropolis.",
+          "reference_image_uri": ""
+        }
+      ],
+      "props": [
+        {
+          "entity_id": "prop_001",
+          "prompt_summary": "An antique, ornate grandfather clock, meticulously crafted from dark wood with intricate carvings. It features a polished brass pendulum and a classic clock face, standing tall and prominently in a grand interior setting.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_002",
+          "prompt_summary": "A neat stack of professional business documents, likely printed on crisp white paper with official headings. These papers are typically found on a formal desk, suggesting important, ongoing work.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_003",
+          "prompt_summary": "A set of crisp, legal divorce documents, meticulously folded or presented. These papers visually represent a formal separation and significant legal action, carrying substantial emotional weight.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_004",
+          "prompt_summary": "A large, highly polished formal desk, typically found in a luxurious and well-appointed study. Its reflective surface and sturdy design signify a place of authority and wealth.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_005",
+          "prompt_summary": "A small, slightly worn and crumpled photograph of Li Wei. The image itself captures her quiet dignity, while its condition suggests it has been frequently handled and held close, indicating sentimental value.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_006",
+          "prompt_summary": "A sleek, modern, high-end smartphone with a dark screen and minimalist design. It represents contemporary communication and can convey urgency in an urban environment.",
+          "reference_image_uri": ""
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Li Wei, a young woman in an opulent, cold mansion, wearing an understated cream coat and pearl earrings. Her posture conveys quiet resilience amidst a backdrop of subdued sadness, embodying her role as a stand-in bride.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Chen Hao, in a sharp dark business suit, maintains an aloof and emotionally distant demeanor. He is preoccupied with his work, reflecting his status as heir to a powerful modern-urban wealthy clan within a formal, cold environment.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The interior of the sprawling Chen Estate, vast and opulent, features polished surfaces and grand architecture under a custom, subdued lighting. The atmosphere is notably cold and empty, reflecting the wealth and emotional distance of the clan.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "An ornate grandfather clock, prominently displayed in the mansion's foyer. Its polished surface reflects the ambient, subdued light, marking the passage of time within the grand estate.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_002",
+              "prompt_summary": "A stack of professional business documents rests on Chen Hao's large, formal desk. These papers signify his ongoing preoccupation and responsibilities within the wealthy clan.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A wide, high-angle shot reveals Li Wei standing alone in the vast, empty living room of the Chen Estate. She wears a cream coat and pearl earrings, a subtle contrast to the opulent, cold decor. The grand space emphasizes her small figure and solitude within the luxurious, yet uninviting, setting.",
+                "video_motion_hint": "A static camera holds on Li Wei, capturing her subtle stillness amidst the expansive, empty room, highlighting her isolated presence."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "Chen Hao is seated at a large, polished desk in his study, engrossed in a stack of business documents, his back partially to the door. He wears a sharp business suit. The eye-level camera focuses on his absorbed, detached expression, highlighting his preoccupation and emotional distance from his surroundings.",
+                "video_motion_hint": "A static shot captures Chen Hao's subtle, focused movements as he examines documents, his body language conveying his detachment from the outside world."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "Li Wei, wearing her cream coat and pearl earrings, watches Chen Hao from an archway, her expression a mix of longing and weary acceptance. She glances at an ornate grandfather clock, prominently ticking in the hallway. The over-the-shoulder medium shot highlights her silent observation and the passage of time.",
+                "video_motion_hint": "Li Wei's head subtly turns, shifting her gaze from Chen Hao to the grandfather clock. The clock's pendulum swings rhythmically, emphasizing the passage of time."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A tight close-up focuses first on the intricate hands of the ornate grandfather clock, then transitions to Li Wei's eyes. In her gaze, a faint, almost imperceptible flicker of resolve begins to bloom amidst her usual quiet resignation. The eye-level camera intimately captures this subtle emotional turning point.",
+                "video_motion_hint": "The camera slowly racks focus from the clock's ticking hands to Li Wei's subtly changing eye expression, capturing a flicker of determination."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Li Wei, now decisive and self-possessed, stands calm and firm in the opulent study, asserting her independence. She wears a simple yet elegant day dress, reflecting her newfound resolve without the need for elaborate jewelry.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Chen Hao, dressed in his dark business suit, sits in his formal study. His expression shifts from initial surprise and mild annoyance to dawning confusion and eventual shock, experiencing the unexpected turn of events.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The opulent modern-urban study within the Chen Estate is brightly lit by daylight, appearing formal and impeccably maintained. The environment, while grand, is imbued with a subtle tension reflecting the power dynamics at play.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_003",
+              "prompt_summary": "A stack of crisp, legal divorce papers, neatly held, symbolizing a formal and definitive end to a contractual relationship. These documents are presented with gravitas.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_004",
+              "prompt_summary": "Chen Hao's large, highly polished study desk, reflecting the formal and intense atmosphere of the scene. Its gleaming surface highlights the significant objects placed upon it.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "Li Wei enters Chen Hao's study, holding a neatly folded stack of divorce papers. Her posture is notably straight and resolute, her face calm and determined. The medium shot, with a tracking camera, follows her steady approach, establishing her newfound decisiveness.",
+                "video_motion_hint": "The camera steadily tracks Li Wei as she walks with a straight, resolute posture into the study, her steps measured and deliberate."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Chen Hao looks up, surprised by Li Wei's presence. His expression quickly shifts from mild annoyance to confusion as he notices the papers in her hand. The close-up, eye-level camera captures the nuanced change in his expression, highlighting his initial reaction to this unexpected action.",
+                "video_motion_hint": "Chen Hao's facial expression subtly transitions from surprise to confusion as his eyes focus on the papers Li Wei holds."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_003",
+              "prop_004"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "Li Wei extends the crisp divorce papers across the highly polished desk, her hand trembling slightly. Her gaze, however, remains steady, meeting Chen Hao's eyes without flinching. The close-up shot focuses on the gravity of the documents and the palpable tension between the two characters.",
+                "video_motion_hint": "Li Wei's hand, holding the papers, extends across the desk with a slight tremor. Her gaze remains locked with Chen Hao's, conveying firm resolve."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_008",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "Li Wei turns silently and walks out of the study, leaving Chen Hao alone, frozen in disbelief. The divorce papers lie starkly on his polished desk. A wide, low-angle, static shot shows Li Wei's definitive departure and Chen Hao's stunned isolation in the grand space.",
+                "video_motion_hint": "Li Wei smoothly turns and walks away, her departure leaving Chen Hao still and isolated behind his desk, emphasizing his stunned state."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Chen Hao, now a frantic seeker, is disheveled in his dark business suit with a loosened tie. He appears emotionally awakened and desperately driven by profound loss and regret, searching tirelessly through the chaotic urban environment.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_002",
+              "prompt_summary": "Vibrant, bustling modern-urban city streets under daylight, featuring towering high-rise business districts and anonymous pedestrian areas. The labyrinthine cityscape feels overwhelming and vast, reflecting an urgent and desperate atmosphere.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_005",
+              "prompt_summary": "A small, slightly worn and crumpled photograph of Li Wei, revealing its significance through its delicate handling. It serves as a tangible link to his past.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_006",
+              "prompt_summary": "A modern, high-end smartphone, clutched with urgency by Chen Hao as he navigates the complex urban environment. It represents his desperate attempts to reconnect.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_009",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Chen Hao strides frantically through a bustling modern-urban street, his dark business suit disheveled, tie loosened. He scans faces in the dense crowd, a desperate urgency evident in his movements and expression. A tracking, eye-level camera follows him as he pushes through the anonymity of the city.",
+                "video_motion_hint": "Chen Hao walks quickly through the bustling crowd, his head constantly turning as he scans faces, conveying his frantic search."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_006"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "Chen Hao pulls out his modern smartphone, making a frustrated call, then hangs up abruptly. He slams his hand against a reflective glass high-rise wall, his face etched with profound regret and desperation. A low-angle, static camera emphasizes his frustration against the towering city buildings.",
+                "video_motion_hint": "Chen Hao makes a frustrated phone call, then slams his hand against a glass wall in an angry, desperate gesture, revealing his emotional turmoil."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_011",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_005"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "Exhausted, Chen Hao leans against a lamppost on the city street. He pulls a small, slightly worn and crumpled photo of Li Wei from his pocket. He gazes at the photo, his eyes tear-filled, seeing her truly for the first time with deep regret. A close-up, eye-level camera focuses on the photo and his emotional face.",
+                "video_motion_hint": "Chen Hao slowly pulls the crumpled photo from his pocket and holds it, his eyes welling up with emotion as he gazes at the image."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_012",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "With renewed determination, Chen Hao pushes off the lamppost, resuming his desperate search through the endless modern-urban streets. He is now driven by profound love rather than obligation. A high-angle crane shot lifts, showing him as a small, determined figure against the vast, indifferent city, emphasizing the scale of his quest.",
+                "video_motion_hint": "Chen Hao pushes off the lamppost with renewed vigor and walks purposefully into the distance, gradually becoming a smaller figure as the camera cranes upward, emphasizing his journey."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "style_notes": [
+      "modern-urban setting with melancholy and regretful tone",
+      "reflects the lifestyle of a wealthy-clan",
+      "sad piano BGM",
+      "modern-urban setting with a shift from melancholy to resolute determination",
+      "reflects the power dynamics within a wealthy-clan",
+      "subtle tension",
+      "modern-urban setting with an urgent, desperate tone of regret and redemption",
+      "contrasting the cold opulence of the wealthy-clan with the chaotic city",
+      "sad piano BGM, but with a driving urgency"
+    ],
+    "must_avoid": [
+      "overt melodrama",
+      "bright, cheerful colors",
+      "aggressive confrontation",
+      "loud arguments",
+      "peaceful cityscapes",
+      "characters appearing content"
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 12,
+    "keyframe_count_total": 12,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 2,
+    "global_location_anchor_count": 2,
+    "global_prop_anchor_count": 6,
+    "stability_character_keyframe_count": 5,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 6
+  }
+}

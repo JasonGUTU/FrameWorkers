@@ -1,0 +1,344 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "A bustling, open-air training area within an ancient China-inspired cultivation sect, featuring traditional grand architecture, stone sparring platforms, and practice dummies."
+          ],
+          "style_notes": [
+            "Overall style is martial arts fantasy, inspired by ancient China, focusing on themes of rebirth, revenge, and being underestimated.",
+            "Genre: cultivation, fantasy, drama."
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Establish the bustling, competitive environment and Li Wei's current lowly, struggling status.",
+              "action_focus": "The contrast between the active training grounds and Li Wei's perceived weakness.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Emphasize the bustling environment and Li Wei's peripheral presence.",
+              "video_motion_hints": [
+                "Disciples move fluidly in the background while Li Wei's sword movements appear clumsy and hesitant."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_002",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Introduce Senior Disciple Zhao and his dismissive attitude towards Li Wei.",
+              "action_focus": "Zhao's arrogant demeanor and Li Wei's reaction to his presence.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on the interaction between Zhao and Li Wei.",
+              "video_motion_hints": [
+                "Zhao strides purposefully, then halts to watch Li Wei with a disdainful gaze."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_003",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Emphasize Zhao's condescending tone and Li Wei's forced reaction.",
+              "action_focus": "Zhao's face as he delivers the insult.",
+              "characters_in_frame": [
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Tight on Zhao's face to capture his condescension.",
+              "video_motion_hints": [
+                "Zhao's facial muscles shift subtly as he speaks, conveying his arrogance."
+              ],
+              "dialogue_text": "Still fumbling with basic forms, Li Wei? Perhaps you should stick to sweeping floors. Some talents are simply... not meant for cultivation.",
+              "emotion_hint": "tense",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_004",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Reveal Li Wei's hidden resolve and suppressed power, hinting at his true identity.",
+              "action_focus": "The subtle but powerful expression in Li Wei's eyes.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "static",
+              "framing_notes": "Tight on Li Wei's eyes to convey hidden power and resolve.",
+              "video_motion_hints": [
+                "A subtle, fleeting flicker of intensity passes through Li Wei's eyes. His grip on the sword tightens almost imperceptibly."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_003",
+            "to_shot_id": "sh_004",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_context": {
+          "location_id": "loc_002",
+          "time_of_day": "NIGHT",
+          "environment_notes": [
+            "A small, sparsely furnished room within the junior disciple quarters, emphasizing Li Wei's current lowly status in this ancient China-inspired cultivation world. Contains a simple bed and low table."
+          ],
+          "style_notes": [
+            "Overall style is martial arts fantasy, inspired by ancient China, focusing on themes of rebirth, revenge, and being underestimated.",
+            "Genre: cultivation, fantasy, drama."
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_005",
+            "semantic_context": {
+              "shot_type": "medium_shot",
+              "visual_goal": "Establish Li Wei's humble, solitary environment and his deep concentration.",
+              "action_focus": "Li Wei's meditative posture and the starkness of his room.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Highlight the solitude and focus of Li Wei.",
+              "video_motion_hints": [
+                "The oil lamp flickers softly, casting dancing shadows on the walls while Li Wei remains intensely still."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_006",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Show Li Wei's internal struggle and the immense difficulty of his cultivation.",
+              "action_focus": "Li Wei's intense facial expression and the subtle manifestations of spiritual energy.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Emphasize Li Wei's struggle and internal conflict.",
+              "video_motion_hints": [
+                "Sweat slowly drips down Li Wei's face. His chest rises and falls with strenuous effort as a subtle aura forms around him."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_007",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Confirm Li Wei's success in channeling spiritual energy and signify the turning point of his journey.",
+              "action_focus": "The wisp of energy and Li Wei's triumphant gaze.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Highlight the spiritual energy and Li Wei's reaction.",
+              "video_motion_hints": [
+                "A wisp of energy forms, then dissipates into Li Wei's chest. His eyes rapidly open, revealing a sharp, determined gaze."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_005",
+            "to_shot_id": "sh_006",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_006",
+            "to_shot_id": "sh_007",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "scene_context": {
+          "location_id": "loc_001",
+          "time_of_day": "DAY",
+          "environment_notes": [
+            "A bustling, open-air training area within an ancient China-inspired cultivation sect, featuring traditional grand architecture, stone sparring platforms, and practice dummies."
+          ],
+          "style_notes": [
+            "Overall style is martial arts fantasy, inspired by ancient China, focusing on themes of rebirth, revenge, and being underestimated.",
+            "Genre: cultivation, fantasy, drama."
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_008",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Show Li Wei practicing his nascent abilities discreetly.",
+              "action_focus": "Li Wei's focused hand and the subtle energy display.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on Li Wei's hand and the subtle energy transfer.",
+              "video_motion_hints": [
+                "A faint, almost invisible shimmer emanates from Li Wei's outstretched hand towards the plant."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_009",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Highlight Zhao's obliviousness to Li Wei's growing power.",
+              "action_focus": "The revived plant and Zhao's unobservant passing.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Capture both the plant's revival and Zhao's unobservant passing.",
+              "video_motion_hints": [
+                "The plant's leaves visibly uncurl and deepen in color. Zhao walks past, his attention elsewhere."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_010",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Reinforce Zhao's contempt and Li Wei's 'unseen' threat.",
+              "action_focus": "Zhao's dismissive glance and subsequent ignorance.",
+              "characters_in_frame": [
+                "char_001",
+                "char_002"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Emphasize Zhao's contempt and ignorance.",
+              "video_motion_hints": [
+                "Zhao's head quickly turns to dismiss Li Wei, then turns away with a boisterous laugh."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_011",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Conclude the scene with a clear statement of Li Wei's intent and the audience's knowledge of the impending doom.",
+              "action_focus": "Li Wei's face, specifically his eyes and subtle, vengeful smile.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low_angle",
+              "camera_movement": "static",
+              "framing_notes": "Tight on Li Wei's face, highlighting his eyes and vengeful expression.",
+              "video_motion_hints": [
+                "A subtle, cold smile slowly forms on Li Wei's lips. His eyes glimmer with an intense, ancient power."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_008",
+            "to_shot_id": "sh_009",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_009",
+            "to_shot_id": "sh_010",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_010",
+            "to_shot_id": "sh_011",
+            "transition_type": "cut"
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_segment_count": 11
+  }
+}

@@ -1,0 +1,65 @@
+[
+  {
+    "idx": 1,
+    "shot_id": "sh_001",
+    "prompt": "A beautiful woman, Su Nian, elegantly dressed, exits a luxurious car at a grand manor entrance, holding the hands of two identical, well-behaved twin children. The afternoon sun casts long shadows, hi",
+    "status": "OK",
+    "keyframe_bytes": 2147939,
+    "mp4_bytes": 2321024,
+    "elapsed_sec": 1440.1108787059784
+  },
+  {
+    "idx": 2,
+    "shot_id": "sh_002",
+    "prompt": "Inside a lavish, modern office, Su Nian stands poised, placing divorce papers on a sleek desk before a stern-faced man, the Huo family heir. The atmosphere is tense and formal under bright office ligh",
+    "status": "OK",
+    "keyframe_bytes": 1554244,
+    "mp4_bytes": 766675,
+    "elapsed_sec": 1438.7512035369873
+  },
+  {
+    "idx": 3,
+    "shot_id": "sh_003",
+    "prompt": "The Huo heir, a handsome man in a sharp suit, glares at Su Nian, his eyes conveying a mix of disbelief and annoyance. Su Nian holds his gaze, her expression unyielding and resolute in the opulent offi",
+    "status": "OK",
+    "keyframe_bytes": 1499252,
+    "mp4_bytes": 586368,
+    "elapsed_sec": 1436.1080706119537
+  },
+  {
+    "idx": 4,
+    "shot_id": "sh_004",
+    "prompt": "Su Nian's eyes momentarily soften with a flicker of past hurt, then harden again. She glances dismissively at the Huo heir, remembering old slights. The opulent office setting reflects their history. ",
+    "status": "OK",
+    "keyframe_bytes": 1576558,
+    "mp4_bytes": 680005,
+    "elapsed_sec": 1447.768791437149
+  },
+  {
+    "idx": 5,
+    "shot_id": "sh_005",
+    "prompt": "The Huo heir's rigid posture begins to crumble, a look of dawning regret and desperation replacing his initial arrogance. He reaches out a hand tentatively towards Su Nian, illuminated by soft natural",
+    "status": "OK",
+    "keyframe_bytes": 1445629,
+    "mp4_bytes": 554467,
+    "elapsed_sec": 1447.8769915103912
+  },
+  {
+    "idx": 6,
+    "shot_id": "sh_006",
+    "prompt": "The powerful Huo heir slowly lowers himself to his knees before Su Nian, his head bowed, a profound act of humility and pleading. Su Nian watches with a stunned, complex expression in the dramatic lig",
+    "status": "OK",
+    "keyframe_bytes": 1542813,
+    "mp4_bytes": 685559,
+    "elapsed_sec": 1449.0745055675507
+  },
+  {
+    "idx": 7,
+    "shot_id": "sh_007",
+    "prompt": "Su Nian's eyes widen slightly in shock, then soften with a hint of compassion as she glances at her twin children, who watch the scene with wide, curious eyes. Emotional tension fills the luxurious se",
+    "status": "OK",
+    "keyframe_bytes": 1679018,
+    "mp4_bytes": 871187,
+    "elapsed_sec": 1455.5680224895477
+  }
+]

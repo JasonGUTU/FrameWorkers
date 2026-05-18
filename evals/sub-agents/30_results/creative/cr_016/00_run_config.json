@@ -1,0 +1,44 @@
+{
+  "case_name": "cr_016",
+  "category": "cr",
+  "user_goal": "Make a supernatural-suspense animated short drama — at midnight inside the old wing of a psychiatric hospital, the new male intern discovers that Room 304 plays a thirty-year-old recording every single night by itself. When he finally pushes that door open, he sees his ten-year-old self standing inside. Add ambient sounds: faint electrical hum, hollow corridor reverb, and distant sobbing.",
+  "expected_chain": [
+    [
+      "StoryAgent"
+    ],
+    [
+      "ScreenplayAgent"
+    ],
+    [
+      "KeyFrameAgent"
+    ],
+    [
+      "VideoAgent"
+    ],
+    [
+      "AmbienceAgent"
+    ],
+    [
+      "AudioMixAgent"
+    ],
+    [
+      "CompositorAgent"
+    ],
+    [
+      "done"
+    ]
+  ],
+  "flat_chain": [
+    "StoryAgent",
+    "ScreenplayAgent",
+    "KeyFrameAgent",
+    "VideoAgent",
+    "AmbienceAgent",
+    "AudioMixAgent",
+    "CompositorAgent"
+  ],
+  "backend_url": "http://localhost:5102",
+  "hunyuan_endpoint": "http://sof1-h200-3:9200",
+  "infer_steps": 50,
+  "started_at": "2026-05-10T21:26:28"
+}

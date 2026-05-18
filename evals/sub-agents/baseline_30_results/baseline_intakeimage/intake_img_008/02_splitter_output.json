@@ -1,0 +1,44 @@
+{
+  "shots": [
+    {
+      "shot_id": "sh_001",
+      "prompt": "A young woman, eyes wide with shock and fear, sits amidst panicked passengers in a grimy, shaking subway car. A metallic screech echoes as twisted metal shards begin to float and contort around her hands, illuminated by flickering emergency lights.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_002",
+      "prompt": "From a high vantage point, the lead character surveys a desolate, overgrown city skyline, her small group of survivors navigating crumbling skyscrapers and abandoned vehicles below. A red, hazy sunset casts long shadows over the urban decay.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_003",
+      "prompt": "The lead character, resolute expression on her face, moves stealthily through a narrow, debris-strewn alleyway, gesturing for her diverse group of survivors to follow. Gritty urban textures and muted daylight emphasize their precarious journey.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_004",
+      "prompt": "The lead character, grimacing with exertion, uses her metal-bending power to construct a crude, jagged barricade of twisted rebar and car parts, momentarily halting a horde of fast-moving, grotesque zombies in a ruined street. Harsh, dramatic lighting.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_005",
+      "prompt": "A squad of heavily armed, armored military super-soldiers, their advanced gear glinting, rappels down a shattered building facade, their menacing silhouettes contrasting against the smoke-filled, orange sky. Their arrival casts a pall of imminent danger.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_006",
+      "prompt": "The lead character nimbly dodges laser fire from the approaching military task force, simultaneously manipulating large metal sheets from a collapsing building to create a temporary, defensive wall that shields her and her group. Intense, dynamic action.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_007",
+      "prompt": "The lead character stands in a dimly lit, abandoned government lab, examining a holographic projection detailing a complex viral structure and research facility coordinates. Dust motes dance in the eerie light filtering through broken windows.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_008",
+      "prompt": "The lead character, her face etched with grim determination, gazes intently at a flickering map displaying the newly discovered coordinates, her hand firmly gripping a piece of twisted metal, ready for the perilous journey ahead. A sense of purpose in her eyes.",
+      "duration_sec": 5
+    }
+  ]
+}

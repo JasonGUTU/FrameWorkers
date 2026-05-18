@@ -1,0 +1,290 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_id": "char_001",
+          "prompt_summary": "Ethan Vance is a diligent but somewhat naive young intern. He works the night shift and carries a subtle sense of unease. He wears standard hospital intern scrubs.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "char_002",
+          "prompt_summary": "Young Ethan is a spectral manifestation of a ten-year-old boy. He embodies innocence and forgotten trauma. He is dressed in simple, slightly faded pajamas.",
+          "reference_image_uri": ""
+        }
+      ],
+      "locations": [
+        {
+          "entity_id": "loc_001",
+          "prompt_summary": "The old wing of St. Jude's Psychiatric Hospital. This section is dilapidated and disused, steeped in thirty years of neglect. Its long, hollow corridors echo with faint electrical hums and distant, unsettling sounds. Room 304 feels like a forgotten nexus of time and memory.",
+          "reference_image_uri": ""
+        }
+      ],
+      "props": [
+        {
+          "entity_id": "prop_001",
+          "prompt_summary": "An old, heavy-duty master key for a hospital. The key is made of tarnished brass, showing significant signs of age and wear.",
+          "reference_image_uri": ""
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Ethan Vance stands in the dim, oppressive lighting of the hospital corridor. He appears professional but carries a subtle sense of unease. His intern scrubs are neat, fitting for the start of his shift.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The old wing of St. Jude's Psychiatric Hospital at night. Dim, flickering lights cast long shadows down the decaying corridors. An eerie, oppressive silence pervades the desolate environment, hinting at neglect.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Ethan Vance, a young intern, walks down a long, dimly lit corridor in the old wing of St. Jude's. The corridor is desolate and decaying, establishing an eerie, isolated environment. Ethan appears solitary in the oppressive stillness.",
+                "video_motion_hint": "The camera smoothly tracks backward as Ethan walks forward, emphasizing the corridor's length and his movement through it."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Ethan Vance pauses, head slightly tilted, his expression shifting to subtle unease. A faint, distorted hum, like an old tape recording, emanates from down the hall. A flicker of apprehension crosses his face in this medium close-up.",
+                "video_motion_hint": "Ethan's head slightly cocks to one side as he listens intently. His eyes subtly widen as he processes the sound."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "An old, heavy wooden door with peeling paint, revealing the ominous number 304. The faint, ghostly recording is now more distinct and cyclical. The low angle emphasizes the door's age and its sinister presence.",
+                "video_motion_hint": "The camera slowly pushes forward, dollying in towards the weathered door, bringing the peeling paint and number into sharp focus."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Ethan Vance glances back at Room 304, then forces himself to look away, resuming his rounds. His posture conveys a forced air of professionalism, masking underlying curiosity and internal conflict. The sound subtly recedes.",
+                "video_motion_hint": "Ethan turns his head sharply from the door, then straightens his shoulders and continues walking, maintaining a static frame on his internal struggle."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Ethan Vance appears visibly tired and drawn, with rumpled intern scrubs. His expression shows a growing obsession mixed with weariness. He is focused intently on Room 304, driven by unresolved curiosity.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The old wing of St. Jude's Psychiatric Hospital remains dark and dilapidated at night. The oppressive silence is now subtly broken by persistent, unsettling sounds emanating from Room 304, creating a more menacing atmosphere.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "An old, heavy-duty master key for a hospital, made of tarnished brass. It is held firmly but with a slight tremble, signifying a momentous decision.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Ethan Vance, looking tired and drawn, approaches Room 304 again in the hospital corridor. The faint recording is now persistent, accompanied by an almost imperceptible child's sobbing. His gaze is weary yet unwavering towards the door.",
+                "video_motion_hint": "Ethan slowly walks towards the camera, his eyes fixed on an unseen point beyond the frame, conveying his growing obsession."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up on Ethan Vance's ear pressed lightly against Room 304's aged wooden door. His eyes are closed in intense listening, a mix of rationalization and frustration twisting his features. The door's surface is visible and worn.",
+                "video_motion_hint": "Ethan's brow subtly furrows with concentration as his head shifts slightly, attempting to discern the faint sounds through the door."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "Ethan Vance pulls an old, heavy master key from his pocket; its brass is tarnished. His hand trembles slightly as he holds the key, but his gaze is firm, fixed on the door, showing resolute determination in a medium close-up.",
+                "video_motion_hint": "Ethan's hand slowly emerges from his pocket, revealing the key. His gaze then shifts from the key to the door, a subtle tremor running through his arm."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_008",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up shot on Ethan Vance's hand as he inserts the tarnished master key into the lock of Room 304. The old mechanism groans loudly as he turns it, creating a tense atmosphere. His effort is focused.",
+                "video_motion_hint": "The key slowly slides into the lock, then turns with a grinding motion. Ethan's fingers tighten around the key with visible strain."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Ethan Vance stands in the doorway, his face etched with profound psychological shock and disbelief. His intern scrubs are creased and worn from his ordeal, emphasizing his shattered mental state.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Young Ethan, a ten-year-old spectral figure, stands motionless inside the shadowy Room 304. He has a pale face and wears simple, slightly faded pajamas, staring directly at the viewer with an ethereal presence.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The entrance to Room 304, revealing an interior steeped in shadows and dust. The air inside is stagnant and heavy, as if time has stood still. The surrounding corridor remains eerily dark, amplifying the tension.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_009",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Ethan Vance slowly pushes the heavy door to Room 304 inward. It creaks open, revealing a shadowy, dusty interior. The mysterious recording from within swells, intensifying the suspense as the unknown is revealed.",
+                "video_motion_hint": "The door slowly swings inward with a creaking sound. The camera smoothly dollies in, gradually revealing more of the dark room's interior through the widening gap."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Inside the dilapidated Room 304, Young Ethan, a ten-year-old boy in simple pajamas, stands motionless. His face is pale, and he stares directly out. The recording climaxes, creating a shocking, impossible confrontation in this full shot.",
+                "video_motion_hint": "Young Ethan remains perfectly still, only a subtle flicker in the dim light around him hints at his spectral nature. His eyes are fixed and unblinking."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_011",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up on Ethan Vance's face reveals wide eyes filled with terror, confusion, and dawning, impossible recognition. He lets out a small, choked gasp. His world appears to shatter in this extreme close-up.",
+                "video_motion_hint": "Ethan's eyes dart rapidly, then lock into a horrified stare. His mouth slightly opens as a silent gasp escapes, his face tightening with shock."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_012",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "Stumbling backward, Ethan Vance pulls away from Room 304's doorway. His hand covers his mouth in disbelief, his wide eyes reflecting the seared image of his younger self. The faint recording from the room begins to recede.",
+                "video_motion_hint": "Ethan stumbles backward, his hand instinctively rising to cover his mouth. The camera tracks his retreat, keeping his horrified expression in focus."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "style_notes": [
+      "Genre: Supernatural, Suspense, Drama, Animation.",
+      "Tone: Eerie, haunting, mysterious, isolated, psychological, paranormal. Set at midnight in a psychiatric hospital.",
+      "Overall aesthetic should lean into the unsettling, desolate nature of the setting."
+    ],
+    "must_avoid": [
+      "bright, modern hospital settings",
+      "overt jump scares without build-up"
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 12,
+    "keyframe_count_total": 12,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 2,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 1,
+    "stability_character_keyframe_count": 4,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 1
+  }
+}

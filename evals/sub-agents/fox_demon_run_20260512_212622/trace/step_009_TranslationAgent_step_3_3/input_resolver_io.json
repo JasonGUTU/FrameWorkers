@@ -1,0 +1,14 @@
+{
+  "input": {
+    "agent_id": "TranslationAgent",
+    "step_id": "step_3_389fa2ad",
+    "input_needs_description": "I translate structured text (screenplays, transcripts, subtitle SRTs, story blueprints, ingested user text) from one language to another while preserving the original document structure.\n\n[source_text] (single)\nThe upstream artifact to translate. Accepts ANY structured text: a timestamped transcript (timed segments + per-segment text — common source for bilingual / foreign-subtitle deliverables), a screenplay document, a story blueprint, or ingested user text. Payload is forwarded as raw JSON text; the LLM reads whatever structure it has and translates all human-readable fields while preserving keys, ids, timing, ordering.",
+    "captions_index_text": "(empty — cold start)"
+  },
+  "output": {
+    "resolved_artifacts": {},
+    "selected_artifact_paths": [],
+    "rationale": "no artifacts registered yet (cold start)"
+  },
+  "note": "cold-start: no artifacts in workspace"
+}

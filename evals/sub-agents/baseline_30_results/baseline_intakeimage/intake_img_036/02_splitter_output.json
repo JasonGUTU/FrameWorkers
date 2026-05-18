@@ -1,0 +1,44 @@
+{
+  "shots": [
+    {
+      "shot_id": "sh_001",
+      "prompt": "A handsome, stern CEO Huo, impeccably dressed in a tailored dark suit, stands in his opulent skyscraper office. He gazes pensively out of a panoramic window at the sprawling, rain-slicked modern city below at dusk, a solitary figure amidst luxury. High-fidelity 3D animation, photoreal cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_002",
+      "prompt": "Su Nian, a woman with a gentle yet weary expression, holds the hand of a small boy around three years old. They walk through the grand, brightly lit lobby of a high-end hotel, the boy curiously looking around. High-fidelity 3D animation, photoreal cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_003",
+      "prompt": "CEO Huo, sharp and imposing, stops abruptly mid-stride as he enters a grand hotel lobby. His eyes, fixed across the bustling room, register profound shock and disbelief as he spots a familiar woman and a small boy. High-fidelity 3D animation, photoreal cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_004",
+      "prompt": "A close-up of the small boy's face, his large innocent eyes looking around with curiosity. A striking resemblance to CEO Huo is undeniable in his features, particularly his sharp gaze and defined jawline. High-fidelity 3D animation, photoreal cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_005",
+      "prompt": "CEO Huo, face etched with a complex mix of shock and dawning anger, watches Su Nian and the boy from a distance in the hotel lobby. His jaw tightens, indicating a fierce internal struggle and overwhelming questions. High-fidelity 3D animation, photoreal cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_006",
+      "prompt": "Su Nian gently pulls the small boy closer to her, her gaze drifting cautiously across the bustling hotel lobby. A subtle apprehension crosses her face, hinting at an instinctual need to protect her child. High-fidelity 3D animation, photoreal cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_007",
+      "prompt": "CEO Huo's expression hardens as a jolt of fragmented memories — a car crash, a woman's face, a signed document — flashes through his mind. His eyes close briefly in a wave of painful, undeniable realization. High-fidelity 3D animation, photoreal cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_008",
+      "prompt": "With a hardened, determined expression, CEO Huo strides purposefully through the crowded hotel lobby towards Su Nian and the boy. His gaze locks onto Su Nian, a clear signal of impending confrontation and a demand for answers. High-fidelity 3D animation, photoreal cinematic style.",
+      "duration_sec": 5
+    }
+  ]
+}

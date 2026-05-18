@@ -1,0 +1,786 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-11T02:05:39.450390+00:00",
+    "language": "en"
+  },
+  "content": {
+    "source_language": "zh",
+    "target_language": "en",
+    "translated_payload": {
+      "meta": {
+        "schema_version": "0.3",
+        "created_at": "2026-05-10T21:28:01.836280+00:00",
+        "language": "en"
+      },
+      "content": {
+        "title": "The Forgotten Contract Wife",
+        "scenes": [
+          {
+            "scene_id": "sc_001",
+            "order": 1,
+            "linked_story_step_id": "arc_002",
+            "heading": {
+              "location_id": "loc_002",
+              "location_name": "Upscale City Square",
+              "interior_exterior": "EXT",
+              "time_of_day": "DAY"
+            },
+            "summary": "In the bustling city square, Su Nian appears with a little boy strikingly similar to CEO Huo, forcing CEO Huo to confront the past he has desperately tried to suppress.",
+            "continuity": {
+              "props_present": [
+                "Briefcase",
+                "Mobile Phone"
+              ],
+              "character_wardrobe_notes": [
+                {
+                  "character_id": "char_001",
+                  "wardrobe": "Dark suit, blue tie, showcasing professionalism and power.",
+                  "must_keep": [
+                    "Dark suit",
+                    "Blue tie"
+                  ]
+                },
+                {
+                  "character_id": "char_002",
+                  "wardrobe": "Simple but neat everyday clothes, easy to move in.",
+                  "must_keep": []
+                },
+                {
+                  "character_id": "char_003",
+                  "wardrobe": "Children's everyday clothes.",
+                  "must_keep": []
+                }
+              ],
+              "must_keep_scene_facts": [
+                "Su Nian and CEO Huo reunite",
+                "Xiaobao is their child"
+              ]
+            },
+            "scene_consistency_pack": {
+              "location_lock": {
+                "location_id": "loc_002",
+                "time_of_day": "DAY",
+                "environment_notes": [
+                  "Busy modern city square",
+                  "Surrounded by upscale retail and office buildings",
+                  "Modern urban setting",
+                  "Wealthy family world"
+                ]
+              },
+              "character_locks": [
+                {
+                  "character_id": "char_001",
+                  "identity_notes": [
+                    "Astute and capable CEO",
+                    "Background of a wealthy modern urban family",
+                    "Professional and powerful",
+                    "Strong desire for control"
+                  ],
+                  "wardrobe_notes": [
+                    "Dark suit",
+                    "Blue tie"
+                  ],
+                  "must_keep": [
+                    "Dark suit",
+                    "Blue tie"
+                  ]
+                },
+                {
+                  "character_id": "char_002",
+                  "identity_notes": [
+                    "Lost memory in a car accident three years ago",
+                    "CEO Huo's 'little contract wife'",
+                    "Returns with her son",
+                    "Quiet and resolute",
+                    "Background of a wealthy modern urban family"
+                  ],
+                  "wardrobe_notes": [
+                    "Simple but neat everyday clothes"
+                  ],
+                  "must_keep": []
+                },
+                {
+                  "character_id": "char_003",
+                  "identity_notes": [
+                    "Innocent little boy",
+                    "Strikingly similar to CEO Huo",
+                    "Physical manifestation of CEO Huo and Su Nian's forgotten past",
+                    "Background of a wealthy modern urban family"
+                  ],
+                  "wardrobe_notes": [
+                    "Children's everyday clothes"
+                  ],
+                  "must_keep": []
+                }
+              ],
+              "props_lock": [],
+              "style_lock": {
+                "global_style_notes": [
+                  "Modern urban setting with a wealthy family background",
+                  "Deeply entangled bittersweet romance",
+                  "Suspense",
+                  "Family secrets",
+                  "Reunion",
+                  "Strong emotions",
+                  "Corporate struggle"
+                ],
+                "must_avoid": [
+                  "Too lighthearted",
+                  "Scenes of poverty"
+                ]
+              }
+            },
+            "scene_end": {
+              "turn": "Xiaobao innocently reaches out to CEO Huo, or imitates him, an action that instantly breaks through CEO Huo's cold facade.",
+              "emotional_shift": "From CEO Huo's cold control to being impacted by undeniable kinship and the past."
+            },
+            "shots": [
+              {
+                "shot_id": "sh_001",
+                "order": 1,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "The upscale city square is bustling with people. CEO Huo, impeccably dressed in a suit, walks through the crowd, talking on his phone with an impassive face.",
+                "emotion_hint": "中立",
+                "continuity_refs": {
+                  "props": [
+                    "手机",
+                    "公文包"
+                  ],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "wide",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "tracking",
+                  "framing_notes": "Showcasing CEO Huo's incongruity with his surroundings"
+                },
+                "visual_goal": "Establish CEO Huo's image as a powerful, isolated CEO, contrasting with the environment.",
+                "action_focus": "CEO Huo's posture and expression as he walks through the crowd.",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [
+                  "手机",
+                  "公文包"
+                ],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_002",
+                "order": 2,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "Su Nian walks through the crowd, holding Xiaobao's hand, her gaze fixed on CEO Huo. Xiaobao looks around curiously, then gazes up at CEO Huo.",
+                "emotion_hint": "坚定",
+                "continuity_refs": {
+                  "props": [],
+                  "wardrobe_character_ids": [
+                    "char_002",
+                    "char_003"
+                  ]
+                },
+                "shot_type": "medium",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "static",
+                  "framing_notes": "Close-up on Xiaobao's face, highlighting his resemblance to CEO Huo."
+                },
+                "visual_goal": "Show Su Nian's determination and Xiaobao's presence, setting the stage for the upcoming impact.",
+                "action_focus": "Su Nian's resolute gaze and Xiaobao's facial features.",
+                "characters_in_frame": [
+                  "char_002",
+                  "char_003"
+                ],
+                "props_in_frame": [],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_003",
+                "order": 3,
+                "block_type": "action",
+                "character_id": "char_001",
+                "character_name": "CEO Huo",
+                "text": "CEO Huo hangs up the phone and casually spots Su Nian and Xiaobao. His eyes shift from indifference to shock, and his body stiffens instantly.",
+                "emotion_hint": "震惊",
+                "continuity_refs": {
+                  "props": [
+                    "手机"
+                  ],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "close_up",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "static",
+                  "framing_notes": "Focus on the subtle changes in CEO Huo's facial expression."
+                },
+                "visual_goal": "Capture CEO Huo's shock at the sudden confrontation with his past, revealing the vulnerability beneath his facade.",
+                "action_focus": "The shift in CEO Huo's facial expression from calm to shocked.",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [
+                  "手机"
+                ],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_004",
+                "order": 4,
+                "block_type": "dialogue",
+                "character_id": "char_002",
+                "character_name": "Su Nian",
+                "text": "CEO Huo, we meet again. And this is your son.",
+                "emotion_hint": "坚定",
+                "continuity_refs": {
+                  "props": [],
+                  "wardrobe_character_ids": [
+                    "char_002",
+                    "char_003",
+                    "char_001"
+                  ]
+                },
+                "shot_type": "medium",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "static",
+                  "framing_notes": "CEO Huo, Su Nian, and Xiaobao in the same frame, with Xiaobao innocently looking at CEO Huo."
+                },
+                "visual_goal": "Show Su Nian's directness and CEO Huo's unpreparedness, with Xiaobao becoming the undeniable link between them.",
+                "action_focus": "Su Nian's words and Xiaobao's gaze.",
+                "characters_in_frame": [
+                  "char_001",
+                  "char_002",
+                  "char_003"
+                ],
+                "props_in_frame": [],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "scene_id": "sc_002",
+            "order": 2,
+            "linked_story_step_id": "arc_003",
+            "heading": {
+              "location_id": "loc_001",
+              "location_name": "CEO Huo's Executive Office",
+              "interior_exterior": "INT",
+              "time_of_day": "NIGHT"
+            },
+            "summary": "In CEO Huo's cold and luxurious office, he aggressively questions Su Nian, trying to deny the past, but Su Nian's amnesia and her pleas for their child shake his resolve.",
+            "continuity": {
+              "props_present": [
+                "Desk",
+                "Documents",
+                "High-backed chair"
+              ],
+              "character_wardrobe_notes": [
+                {
+                  "character_id": "char_001",
+                  "wardrobe": "Dark suit, blue tie, professional and assertive.",
+                  "must_keep": [
+                    "Dark suit",
+                    "Blue tie"
+                  ]
+                },
+                {
+                  "character_id": "char_002",
+                  "wardrobe": "Elegant suit, appearing more delicate but resilient.",
+                  "must_keep": []
+                }
+              ],
+              "must_keep_scene_facts": [
+                "CEO Huo questions Su Nian's identity",
+                "Su Nian's amnesia"
+              ]
+            },
+            "scene_consistency_pack": {
+              "location_lock": {
+                "location_id": "loc_001",
+                "time_of_day": "NIGHT",
+                "environment_notes": [
+                  "Stylish high-rise executive office",
+                  "Modern urban setting",
+                  "Symbol of wealthy family power",
+                  "City night view outside the floor-to-ceiling windows",
+                  "Imposing and isolated"
+                ]
+              },
+              "character_locks": [
+                {
+                  "character_id": "char_001",
+                  "identity_notes": [
+                    "Astute and capable CEO",
+                    "Background of a wealthy modern urban family",
+                    "Professional and powerful",
+                    "Emotionally repressed",
+                    "Attempts to control the situation"
+                  ],
+                  "wardrobe_notes": [
+                    "Dark suit",
+                    "Blue tie"
+                  ],
+                  "must_keep": [
+                    "Dark suit",
+                    "Blue tie"
+                  ]
+                },
+                {
+                  "character_id": "char_002",
+                  "identity_notes": [
+                    "Lost memory in a car accident three years ago",
+                    "CEO Huo's 'little contract wife'",
+                    "Quiet and resolute",
+                    "Yearns to recover memory and identity",
+                    "Background of a wealthy modern urban family"
+                  ],
+                  "wardrobe_notes": [
+                    "Elegant suit"
+                  ],
+                  "must_keep": []
+                }
+              ],
+              "props_lock": [],
+              "style_lock": {
+                "global_style_notes": [
+                  "Modern urban setting with a wealthy family background",
+                  "Deeply entangled bittersweet romance",
+                  "Suspense",
+                  "Corporate struggle",
+                  "Family secrets",
+                  "Strong emotions",
+                  "Tension"
+                ],
+                "must_avoid": [
+                  "Too lighthearted",
+                  "Scenes of poverty"
+                ]
+              }
+            },
+            "scene_end": {
+              "turn": "CEO Huo's coldness is touched by Su Nian's sincerity and pleas for their child; he agrees to a DNA test, his resolve beginning to waver.",
+              "emotional_shift": "From CEO Huo's strong denial and anger, shifting to a hint of wavering and complex emotions of having to face reality."
+            },
+            "shots": [
+              {
+                "shot_id": "sh_005",
+                "order": 1,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "CEO Huo's office. Outside the floor-to-ceiling windows is a dazzling city night view. CEO Huo sits behind a large desk, Su Nian stands opposite him, the atmosphere tense.",
+                "emotion_hint": "紧张",
+                "continuity_refs": {
+                  "props": [
+                    "办公桌",
+                    "高背椅"
+                  ],
+                  "wardrobe_character_ids": [
+                    "char_001",
+                    "char_002"
+                  ]
+                },
+                "shot_type": "wide",
+                "camera": {
+                  "angle": "high_angle",
+                  "movement": "static",
+                  "framing_notes": "Emphasizing CEO Huo's sense of power and Su Nian's relative vulnerability."
+                },
+                "visual_goal": "Show the office's luxury and coldness, highlighting the tense atmosphere of their confrontation.",
+                "action_focus": "The sense of distance between them and their stiff postures.",
+                "characters_in_frame": [
+                  "char_001",
+                  "char_002"
+                ],
+                "props_in_frame": [
+                  "办公桌",
+                  "高背椅"
+                ],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_006",
+                "order": 2,
+                "block_type": "dialogue",
+                "character_id": "char_001",
+                "character_name": "CEO Huo",
+                "text": "What exactly do you want? Coming back with a child, fantasizing about latching onto me?",
+                "emotion_hint": "愤怒",
+                "continuity_refs": {
+                  "props": [],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "close_up",
+                "camera": {
+                  "angle": "low_angle",
+                  "movement": "static",
+                  "framing_notes": "Focus on CEO Huo's face, full of disdain and anger."
+                },
+                "visual_goal": "Highlight CEO Huo's assertiveness and his attempt to deny the situation.",
+                "action_focus": "CEO Huo's sharp gaze and tense jaw.",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_007",
+                "order": 3,
+                "block_type": "dialogue",
+                "character_id": "char_002",
+                "character_name": "Su Nian",
+                "text": "I lost my memory... All I know is that this child is yours. Please face the truth!",
+                "emotion_hint": "悲伤",
+                "continuity_refs": {
+                  "props": [],
+                  "wardrobe_character_ids": [
+                    "char_002"
+                  ]
+                },
+                "shot_type": "medium",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "static",
+                  "framing_notes": "Tears glisten in Su Nian's eyes, yet she strives to remain composed."
+                },
+                "visual_goal": "Show Su Nian's vulnerability, her desire for the truth, and her protectiveness over her child.",
+                "action_focus": "The glimmer of tears in Su Nian's eyes and her resolute expression.",
+                "characters_in_frame": [
+                  "char_002"
+                ],
+                "props_in_frame": [],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_008",
+                "order": 4,
+                "block_type": "dialogue",
+                "character_id": "char_001",
+                "character_name": "CEO Huo",
+                "text": "DNA test. I will give you an explanation.",
+                "emotion_hint": "平静",
+                "continuity_refs": {
+                  "props": [],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "medium",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "static",
+                  "framing_notes": "CEO Huo looks out the window, his tone heavy, as if struggling with his inner thoughts."
+                },
+                "visual_goal": "Under Su Nian's plea, CEO Huo's resolve wavers, shifting from denial to rational response.",
+                "action_focus": "CEO Huo's pensive profile and the change in his tone.",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              }
+            ]
+          },
+          {
+            "scene_id": "sc_003",
+            "order": 3,
+            "linked_story_step_id": "arc_004",
+            "heading": {
+              "location_id": "loc_001",
+              "location_name": "CEO Huo's Executive Office",
+              "interior_exterior": "INT",
+              "time_of_day": "NIGHT"
+            },
+            "summary": "Late at night, in his office, CEO Huo deeply investigates the truth behind Su Nian's car accident and contract marriage, only to discover secrets deliberately concealed within.",
+            "continuity": {
+              "props_present": [
+                "Documents",
+                "Computer",
+                "Desk lamp"
+              ],
+              "character_wardrobe_notes": [
+                {
+                  "character_id": "char_001",
+                  "wardrobe": "Dark suit, blue tie, tie slightly loosened, indicating late-night work.",
+                  "must_keep": [
+                    "Dark suit",
+                    "Blue tie"
+                  ]
+                }
+              ],
+              "must_keep_scene_facts": [
+                "CEO Huo's pursuit of the truth",
+                "Discovery of cover-up within the family"
+              ]
+            },
+            "scene_consistency_pack": {
+              "location_lock": {
+                "location_id": "loc_001",
+                "time_of_day": "NIGHT",
+                "environment_notes": [
+                  "Stylish high-rise executive office",
+                  "Modern urban setting",
+                  "Symbol of wealthy family power",
+                  "City night view outside the floor-to-ceiling windows",
+                  "Imposing and isolated"
+                ]
+              },
+              "character_locks": [
+                {
+                  "character_id": "char_001",
+                  "identity_notes": [
+                    "Astute and capable CEO",
+                    "Background of a wealthy modern urban family",
+                    "Professional and powerful",
+                    "Emotionally repressed",
+                    "Full of doubts, determined to uncover the truth"
+                  ],
+                  "wardrobe_notes": [
+                    "Dark suit",
+                    "Blue tie, tie slightly loosened"
+                  ],
+                  "must_keep": [
+                    "Dark suit",
+                    "Blue tie"
+                  ]
+                }
+              ],
+              "props_lock": [
+                {
+                  "prop_id": "prop_001",
+                  "prop_name": "Old documents",
+                  "must_keep": [
+                    "Holds clues to the past"
+                  ]
+                },
+                {
+                  "prop_id": "prop_002",
+                  "prop_name": "Laptop",
+                  "must_keep": [
+                    "Used for research"
+                  ]
+                }
+              ],
+              "style_lock": {
+                "global_style_notes": [
+                  "Modern urban setting with a wealthy family background",
+                  "Deeply entangled bittersweet romance",
+                  "Suspense",
+                  "Corporate struggle",
+                  "Family secrets",
+                  "Strong emotions",
+                  "Tension"
+                ],
+                "must_avoid": [
+                  "Too lighthearted",
+                  "Scenes of poverty"
+                ]
+              }
+            },
+            "scene_end": {
+              "turn": "CEO Huo finds a crucial clue, a tampered document or overlooked evidence, hinting that someone he once trusted was involved in the conspiracy.",
+              "emotional_shift": "From initial doubt and resistance, transitioning to intense anger and a determination to pursue the truth."
+            },
+            "shots": [
+              {
+                "shot_id": "sh_009",
+                "order": 1,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "Late at night, under the office desk lamp, CEO Huo is immersed in a large volume of old documents and computer files. His expression is grave, his profound gaze scanning screens and papers.",
+                "emotion_hint": "紧张",
+                "continuity_refs": {
+                  "props": [
+                    "文件",
+                    "电脑",
+                    "台灯"
+                  ],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "medium",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "static",
+                  "framing_notes": "Show CEO Huo surrounded by documents and information."
+                },
+                "visual_goal": "Convey CEO Huo's determination to investigate thoroughly and his weariness when facing complex information.",
+                "action_focus": "CEO Huo's focused expression and the documents piled on the desk.",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [
+                  "prop_001",
+                  "prop_002",
+                  "台灯"
+                ],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_010",
+                "order": 2,
+                "block_type": "action",
+                "character_id": "",
+                "character_name": "",
+                "text": "Close-up shot: CEO Huo's finger slides over an old contract, stopping at a seemingly casual alteration. His brows furrow.",
+                "emotion_hint": "疑惑",
+                "continuity_refs": {
+                  "props": [
+                    "文件"
+                  ],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "close_up",
+                "camera": {
+                  "angle": "overhead",
+                  "movement": "static",
+                  "framing_notes": "Focus on hand movements and contract details."
+                },
+                "visual_goal": "Show CEO Huo's moment of discovery of an anomaly, creating a sense of suspense for the audience.",
+                "action_focus": "CEO Huo's hand and the suspicious mark on the contract.",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [
+                  "prop_001"
+                ],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_011",
+                "order": 3,
+                "block_type": "action",
+                "character_id": "char_001",
+                "character_name": "CEO Huo",
+                "text": "Close-up of CEO Huo's face, his eyes shifting from confusion to shock, and finally to suppressed anger. He slams the document shut.",
+                "emotion_hint": "愤怒",
+                "continuity_refs": {
+                  "props": [
+                    "文件"
+                  ],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "close_up",
+                "camera": {
+                  "angle": "eye_level",
+                  "movement": "static",
+                  "framing_notes": "Capture the drastic changes in CEO Huo's emotions."
+                },
+                "visual_goal": "Convey the emotional impact and inner struggle of CEO Huo after discovering the truth.",
+                "action_focus": "The change in CEO Huo's facial expression from confusion to anger.",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [
+                  "prop_001"
+                ],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              },
+              {
+                "shot_id": "sh_012",
+                "order": 4,
+                "block_type": "dialogue",
+                "character_id": "char_001",
+                "character_name": "CEO Huo",
+                "text": "So that's it... Someone wants to cover all this up!",
+                "emotion_hint": "坚定",
+                "continuity_refs": {
+                  "props": [
+                    "电脑"
+                  ],
+                  "wardrobe_character_ids": [
+                    "char_001"
+                  ]
+                },
+                "shot_type": "medium",
+                "camera": {
+                  "angle": "low_angle",
+                  "movement": "dolly",
+                  "framing_notes": "CEO Huo stands up, walks to the floor-to-ceiling window, and looks out over the city night view."
+                },
+                "visual_goal": "CEO Huo shifts from passive investigation to active pursuit, his emotions moving from anger to determination.",
+                "action_focus": "CEO Huo's resolute profile and his gaze at the city night view outside the window.",
+                "characters_in_frame": [
+                  "char_001"
+                ],
+                "props_in_frame": [
+                  "prop_002"
+                ],
+                "keyframe_plan": {
+                  "keyframe_count": 1,
+                  "keyframe_notes": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "metrics": {
+        "scene_count": 3,
+        "shot_count_total": 12,
+        "avg_shots_per_scene": 4.0,
+        "dialogue_block_count": 5,
+        "action_block_count": 7
+      }
+    }
+  },
+  "metrics": {
+    "source_language": "zh",
+    "target_language": "en",
+    "has_payload": true,
+    "source_string_count": 299,
+    "translated_string_count": 299,
+    "completeness": 1.0
+  }
+}

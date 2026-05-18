@@ -1,0 +1,39 @@
+{
+  "shots": [
+    {
+      "shot_id": "sh_001",
+      "prompt": "A beautiful woman, Su Nian, elegantly dressed, exits a luxurious car at a grand manor entrance, holding the hands of two identical, well-behaved twin children. The afternoon sun casts long shadows, hinting at a dramatic return. Photorealistic cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_002",
+      "prompt": "Inside a lavish, modern office, Su Nian stands poised, placing divorce papers on a sleek desk before a stern-faced man, the Huo family heir. The atmosphere is tense and formal under bright office lighting. Photorealistic cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_003",
+      "prompt": "The Huo heir, a handsome man in a sharp suit, glares at Su Nian, his eyes conveying a mix of disbelief and annoyance. Su Nian holds his gaze, her expression unyielding and resolute in the opulent office. Photorealistic cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_004",
+      "prompt": "Su Nian's eyes momentarily soften with a flicker of past hurt, then harden again. She glances dismissively at the Huo heir, remembering old slights. The opulent office setting reflects their history. Photorealistic cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_005",
+      "prompt": "The Huo heir's rigid posture begins to crumble, a look of dawning regret and desperation replacing his initial arrogance. He reaches out a hand tentatively towards Su Nian, illuminated by soft natural light. Photorealistic cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_006",
+      "prompt": "The powerful Huo heir slowly lowers himself to his knees before Su Nian, his head bowed, a profound act of humility and pleading. Su Nian watches with a stunned, complex expression in the dramatic lighting. Photorealistic cinematic style.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_007",
+      "prompt": "Su Nian's eyes widen slightly in shock, then soften with a hint of compassion as she glances at her twin children, who watch the scene with wide, curious eyes. Emotional tension fills the luxurious setting. Photorealistic cinematic style.",
+      "duration_sec": 5
+    }
+  ]
+}

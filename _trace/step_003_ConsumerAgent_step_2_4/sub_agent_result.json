@@ -1,0 +1,17 @@
+{
+  "agent_class": "_ConsumerPipelineAgent",
+  "typed_input": {
+    "step_id": "step_2_427b984d",
+    "observed_seed": "",
+    "language": "en"
+  },
+  "output": null,
+  "eval_result": null,
+  "passed": null,
+  "attempts": null,
+  "asset_dict": {
+    "observed_seed": ""
+  },
+  "media_assets_count": 0,
+  "media_assets_summary": []
+}

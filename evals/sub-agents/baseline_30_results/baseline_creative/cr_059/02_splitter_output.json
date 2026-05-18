@@ -1,0 +1,44 @@
+{
+  "shots": [
+    {
+      "shot_id": "sh_001",
+      "prompt": "An animated shot shows Gu Xiuning, a solemn, well-dressed transfer student with silver hair, walking silently through a bustling high school hallway. He clutches a textbook, his ice-cold gaze sweeping over the curious students, establishing his isolated presence.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_002",
+      "prompt": "An animated shot focuses on a digital screen in the school's common area, displaying an old news article about a devastating arson ten years prior. Students gather, whispering, as the article highlights Gu Xiuning as the sole survivor. Gu Xiuning subtly stiffens, observing from a distance.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_003",
+      "prompt": "An animated shot introduces Mr. Lin, a kind-faced, earnest new homeroom teacher, smiling warmly while addressing his class. He gestures confidently, unaware of the specific history connected to his new school, his optimistic demeanor contrasting with the underlying tension.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_004",
+      "prompt": "An animated shot captures Gu Xiuning in class, his eyes locking with Mr. Lin’s as the teacher scans the room. A flicker of intense recognition passes through Gu Xiuning's usually impassive expression, while Mr. Lin's smile wavers slightly, a hint of unease. A tense silence hangs in the air.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_005",
+      "prompt": "An animated shot shows Gu Xiuning alone in the dimly lit school library after hours. He intently reviews old dusty yearbooks and archived newspaper clippings detailing the tragic arson. His fingers trace a blurred photo, a determined, calculating glint in his eyes.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_006",
+      "prompt": "An animated shot depicts Mr. Lin pacing nervously in his empty classroom after school. He touches a framed class photo from years ago, a brief, unsettling flashback of a burning school building and a child's silhouette flashes across his mind, causing him to flinch.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_007",
+      "prompt": "An animated shot shows Gu Xiuning standing silently in Mr. Lin's office after hours, the setting sun casting long shadows. Mr. Lin slowly turns, seeing Gu Xiuning. Their eyes meet in a profound, heavy silence, acknowledging the unspoken past between them. Gu Xiuning's gaze is unyielding.",
+      "duration_sec": 5
+    },
+    {
+      "shot_id": "sh_008",
+      "prompt": "An animated shot focuses on Gu Xiuning standing by a rain-streaked window, looking out at the school grounds under a dramatic, overcast sky. His face is illuminated by a faint, cool light, revealing a subtle, cold smirk. His resolve for revenge is palpable and clear.",
+      "duration_sec": 5
+    }
+  ]
+}

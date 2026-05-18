@@ -1,0 +1,13 @@
+{
+  "content": {
+    "beds": [
+      {
+        "ambience_id": "amb_film",
+        "description": "Rural Mexican ambience: wind through cornstalks, distant singing, intermittent rooster and dog calls."
+      }
+    ]
+  },
+  "metrics": {
+    "bed_count": 1
+  }
+}

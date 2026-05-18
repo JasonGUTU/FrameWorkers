@@ -1,0 +1,685 @@
+{
+  "content": {
+    "language": "es-MX",
+    "speaker": "default",
+    "lines": [
+      {
+        "line_id": "ln_001",
+        "segment_id": "seg_001",
+        "text": "En los valles fértiles de Oaxaca, donde el sol besa la tierra con pasión, vivía Mateo, un joven campesino cuyo corazón latía al ritmo de su maíz.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_002",
+        "segment_id": "seg_001",
+        "text": "Pero este año, el ritmo era de sequedad y angustia. Los campos, antes verdes y prometedores, ahora crujían bajo el sol inclemente.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_003",
+        "segment_id": "seg_001",
+        "text": "El maíz, el sustento de su pueblo, se marchitaba día a día, y con él, la esperanza de la cosecha.",
+        "pause_after_ms": 800
+      },
+      {
+        "line_id": "ln_004",
+        "segment_id": "seg_002",
+        "text": "El pozo del pueblo se secaba, y el aire era pesado con la ausencia de lluvia.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_005",
+        "segment_id": "seg_002",
+        "text": "La gente miraba al cielo azul y vacío, rogando por una gota que aliviara la sed de la tierra.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_006",
+        "segment_id": "seg_002",
+        "text": "La desesperación comenzaba a extenderse como una sombra sobre sus hogares.",
+        "pause_after_ms": 800
+      },
+      {
+        "line_id": "ln_007",
+        "segment_id": "seg_003",
+        "text": "Pero en medio de la aflicción, había una mujer que poseía una sabiduría ancestral: la Abuela Elena.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_008",
+        "segment_id": "seg_003",
+        "text": "Ella no miraba al cielo con desesperación, sino que cerraba los ojos y escuchaba.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_009",
+        "segment_id": "seg_003",
+        "text": "Escuchaba al viento, el eterno mensajero de la tierra.",
+        "pause_after_ms": 800
+      },
+      {
+        "line_id": "ln_010",
+        "segment_id": "seg_004",
+        "text": "«El viento tiene muchas voces, mi nieto», le dijo a Mateo un día.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_011",
+        "segment_id": "seg_004",
+        "text": "«No solo lo sientas en tu piel, escúchalo con el corazón. Él susurra secretos de tierras lejanas, de lluvia y de sequía.»",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_012",
+        "segment_id": "seg_004",
+        "text": "Y así comenzó la enseñanza de la abuela, un saber tan antiguo como las montañas de Oaxaca.",
+        "pause_after_ms": 800
+      },
+      {
+        "line_id": "ln_013",
+        "segment_id": "seg_005",
+        "text": "Mateo aprendió a distinguir los vientos: el cálido que viene del desierto, el fresco que baja de la sierra.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_014",
+        "segment_id": "seg_005",
+        "text": "Aprendió a oler la humedad que el viento traía, incluso cuando el cielo estaba despejado, y a sentir su fuerza cambiante.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_015",
+        "segment_id": "seg_005",
+        "text": "Cada soplo era una palabra, cada ráfaga una frase en el lenguaje de la naturaleza.",
+        "pause_after_ms": 800
+      },
+      {
+        "line_id": "ln_016",
+        "segment_id": "seg_006",
+        "text": "Los días pasaban y la sequía se hacía más cruel, pero Mateo persistía en sus lecciones.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_017",
+        "segment_id": "seg_006",
+        "text": "Cada amanecer y atardecer, practicaba, afinando sus sentidos, conectándose con el pulso invisible del mundo.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_018",
+        "segment_id": "seg_006",
+        "text": "La sabiduría de su abuela comenzaba a florecer en su joven espíritu.",
+        "pause_after_ms": 800
+      },
+      {
+        "line_id": "ln_019",
+        "segment_id": "seg_007",
+        "text": "Un atardecer, Mateo sintió un viento diferente, un susurro que ascendía desde las faldas de la Sierra Madre.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_020",
+        "segment_id": "seg_007",
+        "text": "Era un viento que su abuela le había descrito, uno que traía consigo la promesa de lluvia, aunque el cielo se mantuviera azul.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_021",
+        "segment_id": "seg_007",
+        "text": "Era el 'aliento de la montaña', una señal casi olvidada.",
+        "pause_after_ms": 800
+      },
+      {
+        "line_id": "ln_022",
+        "segment_id": "seg_008",
+        "text": "Con el corazón lleno de una certeza recién hallada, Mateo corrió a hablar con los ancianos del pueblo.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_023",
+        "segment_id": "seg_008",
+        "text": "Les contó sobre el viento, sobre el 'aliento de la montaña', y la inminente lluvia que este prometía.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_024",
+        "segment_id": "seg_008",
+        "text": "Les suplicó que prepararan las antiguas terrazas de cultivo para recolectar cada gota.",
+        "pause_after_ms": 800
+      },
+      {
+        "line_id": "ln_025",
+        "segment_id": "seg_009",
+        "text": "Al principio, hubo dudas. ¿Cómo podía un muchacho predecir la lluvia con solo sentir el viento?",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_026",
+        "segment_id": "seg_009",
+        "text": "Pero la Abuela Elena, con una mirada silenciosa, les recordó la sabiduría de sus ancestros.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_027",
+        "segment_id": "seg_009",
+        "text": "Confiando en su intuición y en la fe de la abuela, los ancianos dieron su consentimiento.",
+        "pause_after_ms": 800
+      },
+      {
+        "line_id": "ln_028",
+        "segment_id": "seg_010",
+        "text": "Todo el pueblo se movilizó. Hombres, mujeres y niños trabajaron sin descanso, limpiando y reparando las viejas terrazas de piedra.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_029",
+        "segment_id": "seg_010",
+        "text": "Prepararon los canales para dirigir el agua, con la esperanza frágil de que Mateo tuviera razón.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_030",
+        "segment_id": "seg_010",
+        "text": "El sol seguía brillando, pero el espíritu del pueblo se elevaba con cada piedra colocada.",
+        "pause_after_ms": 800
+      },
+      {
+        "line_id": "ln_031",
+        "segment_id": "seg_011",
+        "text": "Y entonces, al día siguiente, el 'aliento de la montaña' se hizo más fuerte.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_032",
+        "segment_id": "seg_011",
+        "text": "Pequeñas nubes, como borreguitos grises, empezaron a acumularse sobre las cimas.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_033",
+        "segment_id": "seg_011",
+        "text": "El aire se volvió más denso, cargado con un aroma a tierra húmeda que no sentían en meses.",
+        "pause_after_ms": 800
+      },
+      {
+        "line_id": "ln_034",
+        "segment_id": "seg_012",
+        "text": "Con un trueno lejano, el cielo se abrió. No fue una llovizna, sino una lluvia generosa, el 'llanto del cielo' que tanto habían esperado.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_035",
+        "segment_id": "seg_012",
+        "text": "Las terrazas se llenaron, los canales corrieron, y la tierra reseca bebió con avidez.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_036",
+        "segment_id": "seg_012",
+        "text": "Las lágrimas de alivio y alegría se mezclaron con las gotas de lluvia en los rostros de los aldeanos.",
+        "pause_after_ms": 800
+      },
+      {
+        "line_id": "ln_037",
+        "segment_id": "seg_013",
+        "text": "En pocos días, el milagro se hizo visible. El maíz, antes moribundo, resurgió con un verde vibrante.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_038",
+        "segment_id": "seg_013",
+        "text": "Los campos de Oaxaca volvieron a cantar con la vida, gracias a la lección del viento y la fe de un joven.",
+        "pause_after_ms": 800
+      },
+      {
+        "line_id": "ln_039",
+        "segment_id": "seg_014",
+        "text": "Mateo fue reconocido por su visión, pero él siempre dio el crédito a su abuela y a la sabiduría del viento.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_040",
+        "segment_id": "seg_014",
+        "text": "El pueblo celebró, no solo la lluvia, sino la unión y la recuperación de un saber ancestral.",
+        "pause_after_ms": 800
+      },
+      {
+        "line_id": "ln_041",
+        "segment_id": "seg_015",
+        "text": "Desde aquel día, en el corazón de Oaxaca, la gente nunca olvidó las voces del viento.",
+        "pause_after_ms": 0
+      },
+      {
+        "line_id": "ln_042",
+        "segment_id": "seg_015",
+        "text": "Y Mateo, con el tiempo, se convirtió en el sabio que transmitía la enseñanza de su abuela, asegurando que el pueblo siempre pudiera leer los secretos que el aire traía consigo.",
+        "pause_after_ms": 1200
+      }
+    ],
+    "total_duration_sec": 345.256,
+    "clips": [
+      {
+        "line_id": "ln_001",
+        "start_sec": 0.0,
+        "end_sec": 13.032,
+        "duration_sec": 13.032
+      },
+      {
+        "line_id": "ln_002",
+        "start_sec": 13.032,
+        "end_sec": 26.172,
+        "duration_sec": 13.14
+      },
+      {
+        "line_id": "ln_003",
+        "start_sec": 26.172,
+        "end_sec": 33.984,
+        "duration_sec": 7.812
+      },
+      {
+        "line_id": "ln_004",
+        "start_sec": 34.784,
+        "end_sec": 41.048,
+        "duration_sec": 6.264
+      },
+      {
+        "line_id": "ln_005",
+        "start_sec": 41.048,
+        "end_sec": 49.112,
+        "duration_sec": 8.064
+      },
+      {
+        "line_id": "ln_006",
+        "start_sec": 49.112,
+        "end_sec": 54.584,
+        "duration_sec": 5.472
+      },
+      {
+        "line_id": "ln_007",
+        "start_sec": 55.384,
+        "end_sec": 64.528,
+        "duration_sec": 9.144
+      },
+      {
+        "line_id": "ln_008",
+        "start_sec": 64.528,
+        "end_sec": 71.368,
+        "duration_sec": 6.84
+      },
+      {
+        "line_id": "ln_009",
+        "start_sec": 71.368,
+        "end_sec": 76.372,
+        "duration_sec": 5.004
+      },
+      {
+        "line_id": "ln_010",
+        "start_sec": 77.172,
+        "end_sec": 83.184,
+        "duration_sec": 6.012
+      },
+      {
+        "line_id": "ln_011",
+        "start_sec": 83.184,
+        "end_sec": 92.652,
+        "duration_sec": 9.468
+      },
+      {
+        "line_id": "ln_012",
+        "start_sec": 92.652,
+        "end_sec": 99.744,
+        "duration_sec": 7.092
+      },
+      {
+        "line_id": "ln_013",
+        "start_sec": 100.544,
+        "end_sec": 108.608,
+        "duration_sec": 8.064
+      },
+      {
+        "line_id": "ln_014",
+        "start_sec": 108.608,
+        "end_sec": 118.04,
+        "duration_sec": 9.432
+      },
+      {
+        "line_id": "ln_015",
+        "start_sec": 118.04,
+        "end_sec": 124.232,
+        "duration_sec": 6.192
+      },
+      {
+        "line_id": "ln_016",
+        "start_sec": 125.032,
+        "end_sec": 131.98,
+        "duration_sec": 6.948
+      },
+      {
+        "line_id": "ln_017",
+        "start_sec": 131.98,
+        "end_sec": 141.196,
+        "duration_sec": 9.216
+      },
+      {
+        "line_id": "ln_018",
+        "start_sec": 141.196,
+        "end_sec": 146.704,
+        "duration_sec": 5.508
+      },
+      {
+        "line_id": "ln_019",
+        "start_sec": 147.504,
+        "end_sec": 156.468,
+        "duration_sec": 8.964
+      },
+      {
+        "line_id": "ln_020",
+        "start_sec": 156.468,
+        "end_sec": 164.568,
+        "duration_sec": 8.1
+      },
+      {
+        "line_id": "ln_021",
+        "start_sec": 164.568,
+        "end_sec": 170.472,
+        "duration_sec": 5.904
+      },
+      {
+        "line_id": "ln_022",
+        "start_sec": 171.272,
+        "end_sec": 179.192,
+        "duration_sec": 7.92
+      },
+      {
+        "line_id": "ln_023",
+        "start_sec": 179.192,
+        "end_sec": 188.156,
+        "duration_sec": 8.964
+      },
+      {
+        "line_id": "ln_024",
+        "start_sec": 188.156,
+        "end_sec": 194.24,
+        "duration_sec": 6.084
+      },
+      {
+        "line_id": "ln_025",
+        "start_sec": 195.04,
+        "end_sec": 202.6,
+        "duration_sec": 7.56
+      },
+      {
+        "line_id": "ln_026",
+        "start_sec": 202.6,
+        "end_sec": 210.268,
+        "duration_sec": 7.668
+      },
+      {
+        "line_id": "ln_027",
+        "start_sec": 210.268,
+        "end_sec": 216.964,
+        "duration_sec": 6.696
+      },
+      {
+        "line_id": "ln_028",
+        "start_sec": 217.764,
+        "end_sec": 229.896,
+        "duration_sec": 12.132
+      },
+      {
+        "line_id": "ln_029",
+        "start_sec": 229.896,
+        "end_sec": 235.548,
+        "duration_sec": 5.652
+      },
+      {
+        "line_id": "ln_030",
+        "start_sec": 235.548,
+        "end_sec": 242.964,
+        "duration_sec": 7.416
+      },
+      {
+        "line_id": "ln_031",
+        "start_sec": 243.764,
+        "end_sec": 250.424,
+        "duration_sec": 6.66
+      },
+      {
+        "line_id": "ln_032",
+        "start_sec": 250.424,
+        "end_sec": 257.3,
+        "duration_sec": 6.876
+      },
+      {
+        "line_id": "ln_033",
+        "start_sec": 257.3,
+        "end_sec": 264.68,
+        "duration_sec": 7.38
+      },
+      {
+        "line_id": "ln_034",
+        "start_sec": 265.48,
+        "end_sec": 276.1,
+        "duration_sec": 10.62
+      },
+      {
+        "line_id": "ln_035",
+        "start_sec": 276.1,
+        "end_sec": 282.904,
+        "duration_sec": 6.804
+      },
+      {
+        "line_id": "ln_036",
+        "start_sec": 282.904,
+        "end_sec": 289.6,
+        "duration_sec": 6.696
+      },
+      {
+        "line_id": "ln_037",
+        "start_sec": 290.4,
+        "end_sec": 298.86,
+        "duration_sec": 8.46
+      },
+      {
+        "line_id": "ln_038",
+        "start_sec": 298.86,
+        "end_sec": 306.852,
+        "duration_sec": 7.992
+      },
+      {
+        "line_id": "ln_039",
+        "start_sec": 307.652,
+        "end_sec": 315.716,
+        "duration_sec": 8.064
+      },
+      {
+        "line_id": "ln_040",
+        "start_sec": 315.716,
+        "end_sec": 323.024,
+        "duration_sec": 7.308
+      },
+      {
+        "line_id": "ln_041",
+        "start_sec": 323.824,
+        "end_sec": 331.348,
+        "duration_sec": 7.524
+      },
+      {
+        "line_id": "ln_042",
+        "start_sec": 331.348,
+        "end_sec": 344.056,
+        "duration_sec": 12.708
+      }
+    ],
+    "segment_timings": [
+      {
+        "segment_id": "seg_001",
+        "start_sec": 0.0,
+        "end_sec": 34.784,
+        "duration_sec": 34.784,
+        "line_ids": [
+          "ln_001",
+          "ln_002",
+          "ln_003"
+        ]
+      },
+      {
+        "segment_id": "seg_002",
+        "start_sec": 34.784,
+        "end_sec": 55.384,
+        "duration_sec": 20.6,
+        "line_ids": [
+          "ln_004",
+          "ln_005",
+          "ln_006"
+        ]
+      },
+      {
+        "segment_id": "seg_003",
+        "start_sec": 55.384,
+        "end_sec": 77.172,
+        "duration_sec": 21.788,
+        "line_ids": [
+          "ln_007",
+          "ln_008",
+          "ln_009"
+        ]
+      },
+      {
+        "segment_id": "seg_004",
+        "start_sec": 77.172,
+        "end_sec": 100.544,
+        "duration_sec": 23.372,
+        "line_ids": [
+          "ln_010",
+          "ln_011",
+          "ln_012"
+        ]
+      },
+      {
+        "segment_id": "seg_005",
+        "start_sec": 100.544,
+        "end_sec": 125.032,
+        "duration_sec": 24.488,
+        "line_ids": [
+          "ln_013",
+          "ln_014",
+          "ln_015"
+        ]
+      },
+      {
+        "segment_id": "seg_006",
+        "start_sec": 125.032,
+        "end_sec": 147.504,
+        "duration_sec": 22.472,
+        "line_ids": [
+          "ln_016",
+          "ln_017",
+          "ln_018"
+        ]
+      },
+      {
+        "segment_id": "seg_007",
+        "start_sec": 147.504,
+        "end_sec": 171.272,
+        "duration_sec": 23.768,
+        "line_ids": [
+          "ln_019",
+          "ln_020",
+          "ln_021"
+        ]
+      },
+      {
+        "segment_id": "seg_008",
+        "start_sec": 171.272,
+        "end_sec": 195.04,
+        "duration_sec": 23.768,
+        "line_ids": [
+          "ln_022",
+          "ln_023",
+          "ln_024"
+        ]
+      },
+      {
+        "segment_id": "seg_009",
+        "start_sec": 195.04,
+        "end_sec": 217.764,
+        "duration_sec": 22.724,
+        "line_ids": [
+          "ln_025",
+          "ln_026",
+          "ln_027"
+        ]
+      },
+      {
+        "segment_id": "seg_010",
+        "start_sec": 217.764,
+        "end_sec": 243.764,
+        "duration_sec": 26.0,
+        "line_ids": [
+          "ln_028",
+          "ln_029",
+          "ln_030"
+        ]
+      },
+      {
+        "segment_id": "seg_011",
+        "start_sec": 243.764,
+        "end_sec": 265.48,
+        "duration_sec": 21.716,
+        "line_ids": [
+          "ln_031",
+          "ln_032",
+          "ln_033"
+        ]
+      },
+      {
+        "segment_id": "seg_012",
+        "start_sec": 265.48,
+        "end_sec": 290.4,
+        "duration_sec": 24.92,
+        "line_ids": [
+          "ln_034",
+          "ln_035",
+          "ln_036"
+        ]
+      },
+      {
+        "segment_id": "seg_013",
+        "start_sec": 290.4,
+        "end_sec": 307.652,
+        "duration_sec": 17.252,
+        "line_ids": [
+          "ln_037",
+          "ln_038"
+        ]
+      },
+      {
+        "segment_id": "seg_014",
+        "start_sec": 307.652,
+        "end_sec": 323.824,
+        "duration_sec": 16.172,
+        "line_ids": [
+          "ln_039",
+          "ln_040"
+        ]
+      },
+      {
+        "segment_id": "seg_015",
+        "start_sec": 323.824,
+        "end_sec": 345.256,
+        "duration_sec": 21.432,
+        "line_ids": [
+          "ln_041",
+          "ln_042"
+        ]
+      }
+    ],
+    "srt_text": "1\n00:00:00,000 --> 00:00:13,032\nEn los valles fértiles de Oaxaca, donde el sol besa la tierra con pasión, vivía Mateo, un joven campesino cuyo corazón latía al ritmo de su maíz.\n\n2\n00:00:13,032 --> 00:00:26,172\nPero este año, el ritmo era de sequedad y angustia. Los campos, antes verdes y prometedores, ahora crujían bajo el sol inclemente.\n\n3\n00:00:26,172 --> 00:00:33,984\nEl maíz, el sustento de su pueblo, se marchitaba día a día, y con él, la esperanza de la cosecha.\n\n4\n00:00:34,784 --> 00:00:41,048\nEl pozo del pueblo se secaba, y el aire era pesado con la ausencia de lluvia.\n\n5\n00:00:41,048 --> 00:00:49,112\nLa gente miraba al cielo azul y vacío, rogando por una gota que aliviara la sed de la tierra.\n\n6\n00:00:49,112 --> 00:00:54,584\nLa desesperación comenzaba a extenderse como una sombra sobre sus hogares.\n\n7\n00:00:55,384 --> 00:01:04,528\nPero en medio de la aflicción, había una mujer que poseía una sabiduría ancestral: la Abuela Elena.\n\n8\n00:01:04,528 --> 00:01:11,368\nElla no miraba al cielo con desesperación, sino que cerraba los ojos y escuchaba.\n\n9\n00:01:11,368 --> 00:01:16,372\nEscuchaba al viento, el eterno mensajero de la tierra.\n\n10\n00:01:17,172 --> 00:01:23,184\n«El viento tiene muchas voces, mi nieto», le dijo a Mateo un día.\n\n11\n00:01:23,184 --> 00:01:32,652\n«No solo lo sientas en tu piel, escúchalo con el corazón. Él susurra secretos de tierras lejanas, de lluvia y de sequía.»\n\n12\n00:01:32,652 --> 00:01:39,744\nY así comenzó la enseñanza de la abuela, un saber tan antiguo como las montañas de Oaxaca.\n\n13\n00:01:40,544 --> 00:01:48,608\nMateo aprendió a distinguir los vientos: el cálido que viene del desierto, el fresco que baja de la sierra.\n\n14\n00:01:48,608 --> 00:01:58,040\nAprendió a oler la humedad que el viento traía, incluso cuando el cielo estaba despejado, y a sentir su fuerza cambiante.\n\n15\n00:01:58,040 --> 00:02:04,232\nCada soplo era una palabra, cada ráfaga una frase en el lenguaje de la naturaleza.\n\n16\n00:02:05,032 --> 00:02:11,980\nLos días pasaban y la sequía se hacía más cruel, pero Mateo persistía en sus lecciones.\n\n17\n00:02:11,980 --> 00:02:21,196\nCada amanecer y atardecer, practicaba, afinando sus sentidos, conectándose con el pulso invisible del mundo.\n\n18\n00:02:21,196 --> 00:02:26,704\nLa sabiduría de su abuela comenzaba a florecer en su joven espíritu.\n\n19\n00:02:27,504 --> 00:02:36,468\nUn atardecer, Mateo sintió un viento diferente, un susurro que ascendía desde las faldas de la Sierra Madre.\n\n20\n00:02:36,468 --> 00:02:44,568\nEra un viento que su abuela le había descrito, uno que traía consigo la promesa de lluvia, aunque el cielo se mantuviera azul.\n\n21\n00:02:44,568 --> 00:02:50,472\nEra el 'aliento de la montaña', una señal casi olvidada.\n\n22\n00:02:51,272 --> 00:02:59,192\nCon el corazón lleno de una certeza recién hallada, Mateo corrió a hablar con los ancianos del pueblo.\n\n23\n00:02:59,192 --> 00:03:08,156\nLes contó sobre el viento, sobre el 'aliento de la montaña', y la inminente lluvia que este prometía.\n\n24\n00:03:08,156 --> 00:03:14,240\nLes suplicó que prepararan las antiguas terrazas de cultivo para recolectar cada gota.\n\n25\n00:03:15,040 --> 00:03:22,600\nAl principio, hubo dudas. ¿Cómo podía un muchacho predecir la lluvia con solo sentir el viento?\n\n26\n00:03:22,600 --> 00:03:30,268\nPero la Abuela Elena, con una mirada silenciosa, les recordó la sabiduría de sus ancestros.\n\n27\n00:03:30,268 --> 00:03:36,964\nConfiando en su intuición y en la fe de la abuela, los ancianos dieron su consentimiento.\n\n28\n00:03:37,764 --> 00:03:49,896\nTodo el pueblo se movilizó. Hombres, mujeres y niños trabajaron sin descanso, limpiando y reparando las viejas terrazas de piedra.\n\n29\n00:03:49,896 --> 00:03:55,548\nPrepararon los canales para dirigir el agua, con la esperanza frágil de que Mateo tuviera razón.\n\n30\n00:03:55,548 --> 00:04:02,964\nEl sol seguía brillando, pero el espíritu del pueblo se elevaba con cada piedra colocada.\n\n31\n00:04:03,764 --> 00:04:10,424\nY entonces, al día siguiente, el 'aliento de la montaña' se hizo más fuerte.\n\n32\n00:04:10,424 --> 00:04:17,300\nPequeñas nubes, como borreguitos grises, empezaron a acumularse sobre las cimas.\n\n33\n00:04:17,300 --> 00:04:24,680\nEl aire se volvió más denso, cargado con un aroma a tierra húmeda que no sentían en meses.\n\n34\n00:04:25,480 --> 00:04:36,100\nCon un trueno lejano, el cielo se abrió. No fue una llovizna, sino una lluvia generosa, el 'llanto del cielo' que tanto habían esperado.\n\n35\n00:04:36,100 --> 00:04:42,904\nLas terrazas se llenaron, los canales corrieron, y la tierra reseca bebió con avidez.\n\n36\n00:04:42,904 --> 00:04:49,600\nLas lágrimas de alivio y alegría se mezclaron con las gotas de lluvia en los rostros de los aldeanos.\n\n37\n00:04:50,400 --> 00:04:58,860\nEn pocos días, el milagro se hizo visible. El maíz, antes moribundo, resurgió con un verde vibrante.\n\n38\n00:04:58,860 --> 00:05:06,852\nLos campos de Oaxaca volvieron a cantar con la vida, gracias a la lección del viento y la fe de un joven.\n\n39\n00:05:07,652 --> 00:05:15,716\nMateo fue reconocido por su visión, pero él siempre dio el crédito a su abuela y a la sabiduría del viento.\n\n40\n00:05:15,716 --> 00:05:23,024\nEl pueblo celebró, no solo la lluvia, sino la unión y la recuperación de un saber ancestral.\n\n41\n00:05:23,824 --> 00:05:31,348\nDesde aquel día, en el corazón de Oaxaca, la gente nunca olvidó las voces del viento.\n\n42\n00:05:31,348 --> 00:05:44,056\nY Mateo, con el tiempo, se convirtió en el sabio que transmitía la enseñanza de su abuela, asegurando que el pueblo siempre pudiera leer los secretos que el aire traía consigo.\n"
+  },
+  "metrics": {
+    "line_count": 42,
+    "segment_count": 15,
+    "total_duration_sec": 345.256
+  }
+}

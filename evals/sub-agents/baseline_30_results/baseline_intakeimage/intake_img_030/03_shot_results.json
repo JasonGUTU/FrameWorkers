@@ -1,0 +1,74 @@
+[
+  {
+    "idx": 1,
+    "shot_id": "sh_001",
+    "prompt": "A determined deputy captain, holding a fresh coffee cup, sits at his new office desk. He receives a thick, dusty cold case file from an older detective, glancing at it with a mix of anticipation and s",
+    "status": "OK",
+    "keyframe_bytes": 1558465,
+    "mp4_bytes": 1129336,
+    "elapsed_sec": 1513.6643166542053
+  },
+  {
+    "idx": 2,
+    "shot_id": "sh_002",
+    "prompt": "The deputy captain pores over an array of old crime scene photos, documents, and newspaper clippings spread across his desk in a focused, methodical manner. He underlines a critical detail with a red ",
+    "status": "OK",
+    "keyframe_bytes": 1771915,
+    "mp4_bytes": 1081688,
+    "elapsed_sec": 1516.5015678405762
+  },
+  {
+    "idx": 3,
+    "shot_id": "sh_003",
+    "prompt": "The deputy captain walks through an overgrown, forgotten urban alleyway at dusk, the desolate site of a 15-year-old disposal. He kneels to inspect faint, almost invisible marks on the damp concrete wa",
+    "status": "OK",
+    "keyframe_bytes": 1933457,
+    "mp4_bytes": 1734662,
+    "elapsed_sec": 1514.00119638443
+  },
+  {
+    "idx": 4,
+    "shot_id": "sh_004",
+    "prompt": "In a dimly lit police archive, the deputy captain, dust motes dancing in the faint light, pulls out a worn, yellowed folder from a tall metal shelf. He slowly opens it to reveal ancient suspect lists ",
+    "status": "OK",
+    "keyframe_bytes": 1664051,
+    "mp4_bytes": 929922,
+    "elapsed_sec": 1517.5012295246124
+  },
+  {
+    "idx": 5,
+    "shot_id": "sh_005",
+    "prompt": "Close-up on a handwritten suspect list. The deputy captain's finger traces down the names, pausing abruptly. His eyes widen in shock and disbelief as his father's distinct name is clearly visible amon",
+    "status": "OK",
+    "keyframe_bytes": 1591329,
+    "mp4_bytes": 740231,
+    "elapsed_sec": 1516.5742359161377
+  },
+  {
+    "idx": 6,
+    "shot_id": "sh_006",
+    "prompt": "The deputy captain sits alone in his office, one hand resting on the cold case file, the other clutching an old, framed photo of his smiling father. His face is a canvas of internal turmoil, silhouett",
+    "status": "OK",
+    "keyframe_bytes": 1573869,
+    "mp4_bytes": 802002,
+    "elapsed_sec": 1515.4839737415314
+  },
+  {
+    "idx": 7,
+    "shot_id": "sh_007",
+    "prompt": "The deputy captain confronts an older, stern-faced man, possibly his father, across a cluttered desk in a dimly lit study. Tense silence hangs heavy in the air, light casting long shadows, as he seeks",
+    "status": "OK",
+    "keyframe_bytes": 1543504,
+    "mp4_bytes": 789259,
+    "elapsed_sec": 1514.0386214256287
+  },
+  {
+    "idx": 8,
+    "shot_id": "sh_008",
+    "prompt": "The deputy captain stands by a large window overlooking a rainy, neon-lit city at night, the open cold case file on his desk behind him. His expression is conflicted and determined, facing a profound ",
+    "status": "OK",
+    "keyframe_bytes": 1799179,
+    "mp4_bytes": 1219810,
+    "elapsed_sec": 1512.7667379379272
+  }
+]

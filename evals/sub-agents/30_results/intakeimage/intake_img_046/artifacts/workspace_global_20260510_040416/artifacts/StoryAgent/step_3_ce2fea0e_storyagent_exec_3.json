@@ -1,0 +1,132 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-10T04:05:04.597109+00:00",
+    "language": "en"
+  },
+  "content": {
+    "logline": "A disgraced empress, exiled to the cold palace, engineers her arduous return to power through treacherous palace intrigue, aided only by a loyal eunuch who remembers her true self and once sacrificed for her.",
+    "style": {
+      "genre": [
+        "palace-intrigue",
+        "historical drama",
+        "revenge drama"
+      ],
+      "tone_keywords": [
+        "rise-from-the-ashes",
+        "disgraced",
+        "revenge",
+        "treacherous",
+        "loyalty",
+        "classical-Chinese",
+        "imperial",
+        "dramatic"
+      ]
+    },
+    "cast": [
+      {
+        "character_id": "char_001",
+        "name": "Empress Lian",
+        "role": "protagonist",
+        "profile": "A once-disgraced empress, now returned to the principal palace, embodying resilience and a fierce will. She wears a striking red, gold-embroidered imperial robe and an ornate peacock feather headdress adorned with pearls, a testament to her enduring claim to power within a classical Chinese imperial setting.",
+        "motivation": "To reclaim her rightful position, exact revenge on those who wronged her, and restore her honor.",
+        "flaw": "Her ruthlessness, born from past suffering and the harsh realities of palace life, risks alienating potential allies or consuming her."
+      },
+      {
+        "character_id": "char_002",
+        "name": "Xiao Li",
+        "role": "support",
+        "profile": "A small, unassuming eunuch fiercely loyal to Empress Lian. He is the only one who remembers her true name and has demonstrated his devotion by taking a knife for her. He navigates the treacherous classical Chinese imperial court with quiet observation and unwavering dedication.",
+        "motivation": "To protect Empress Lian and ensure her successful return to power, out of deep personal loyalty and gratitude.",
+        "flaw": "His quiet nature and vulnerable position within the ruthless court make him susceptible to manipulation or attack, and his loyalty might blind him to Empress Lian's darker tendencies."
+      }
+    ],
+    "locations": [
+      {
+        "location_id": "loc_001",
+        "name": "The Grand Imperial Palace",
+        "description": "The opulent and vast seat of power within a classical Chinese imperial setting, filled with intricate architecture, ornate gardens, and hidden passages. It is a place of beauty, but also of constant surveillance, political maneuvering, and hidden dangers."
+      },
+      {
+        "location_id": "loc_002",
+        "name": "The Empress's Residence",
+        "description": "A luxurious but secure suite of rooms within the Grand Imperial Palace, reflecting Empress Lian's re-emerging status. Rich silks, intricate carvings, and soft lamplight create an atmosphere of both comfort and concealed power, typical of a classical Chinese imperial residence."
+      }
+    ],
+    "story_arc": [
+      {
+        "step_id": "arc_001",
+        "order": 1,
+        "step_type": "setup",
+        "summary": "Empress Lian, having miraculously returned from exile, settles into her chambers within the Grand Imperial Palace. Though physically present, she remains an outsider in the eyes of many, and her ultimate power is yet to be fully re-established. She begins to plan her path to true vindication.",
+        "conflict": "The lingering disgrace and the powerful enemies who orchestrated her downfall.",
+        "turning_point": "Her resolute decision to actively pursue her revenge and reclaim her status, discussed in secret with Xiao Li."
+      },
+      {
+        "step_id": "arc_002",
+        "order": 2,
+        "step_type": "turn",
+        "summary": "During a tense court gathering, Empress Lian is subtly challenged or undermined by a rival faction. Using her wits and an unexpected piece of information provided by Xiao Li, she skillfully navigates the confrontation, turning the tables on her opponents and demonstrating her formidable cunning.",
+        "conflict": "Open and covert opposition from court rivals, testing her political acumen.",
+        "turning_point": "Empress Lian's strategic counter-move that publicly disarms her adversary and garners respect, solidifying her presence."
+      },
+      {
+        "step_id": "arc_003",
+        "order": 3,
+        "step_type": "climax",
+        "summary": "Empress Lian makes a bold, public move to reclaim a significant symbol of her former authority or directly confronts the architect of her disgrace. Her actions cement her rise from the ashes, leaving no doubt about her enduring power, much to the quiet satisfaction of Xiao Li.",
+        "conflict": "The final, high-stakes gamble to secure her full return and exact her ultimate revenge, facing potentially severe repercussions.",
+        "turning_point": "Her decisive and triumphant act that publicly reasserts her power and influence within the classical Chinese imperial court."
+      }
+    ],
+    "scene_outline": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_step_id": "arc_001",
+        "location_id": "loc_002",
+        "time_of_day_hint": "NIGHT",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "Empress Lian and Xiao Li strategize their next move in the grand palace.",
+        "conflict": "The overwhelming odds against them, the need for absolute secrecy, and the personal cost of their vengeful path.",
+        "turn": "Empress Lian, after a moment of reflection, reveals a bold, ruthless plan of action, with Xiao Li quietly affirming his support."
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_step_id": "arc_002",
+        "location_id": "loc_001",
+        "time_of_day_hint": "DAY",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "Empress Lian must overcome a direct, public challenge to her authority or presence.",
+        "conflict": "A high-ranking courtier or rival publicly attempts to discredit or humiliate her through veiled accusations or political maneuvering.",
+        "turn": "Empress Lian, drawing on her intelligence and composure, delivers a sharp retort or reveals a counter-ploy that silences her adversary and subtly gains her advantage, to the shock of the court."
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_step_id": "arc_003",
+        "location_id": "loc_001",
+        "time_of_day_hint": "CUSTOM",
+        "characters_present": [
+          "char_001",
+          "char_002"
+        ],
+        "goal": "Empress Lian reclaims a significant public role or symbol of power, cementing her return.",
+        "conflict": "The tense atmosphere as the court watches, wondering if her move will succeed or backfire, and the silent opposition of her powerful enemies.",
+        "turn": "Empress Lian executes her decisive move with an air of absolute authority and grace, receiving a visible acknowledgment of her power from an unexpected source, solidifying her re-emergence. Xiao Li watches, a flicker of pride in his eyes."
+      }
+    ]
+  },
+  "metrics": {
+    "character_count": 2,
+    "location_count": 2,
+    "scene_count": 3
+  }
+}

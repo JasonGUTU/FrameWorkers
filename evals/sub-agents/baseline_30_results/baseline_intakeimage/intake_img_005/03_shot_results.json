@@ -1,0 +1,74 @@
+[
+  {
+    "idx": 1,
+    "shot_id": "sh_001",
+    "prompt": "The majestic Heavenly Emperor, radiant with cultivation power, is ambushed by nine converging energy attacks from unseen traitors in a desolate, ethereal realm. He collapses, an expression of profound",
+    "status": "OK",
+    "keyframe_bytes": 1814456,
+    "mp4_bytes": 1178085,
+    "elapsed_sec": 1434.7906880378723
+  },
+  {
+    "idx": 2,
+    "shot_id": "sh_002",
+    "prompt": "A disheveled young male disciple, gasping, awakens abruptly on a humble straw mat in a spartan cultivation room. He clutches his head, eyes wide with confusion and fragmented memories of a forgotten p",
+    "status": "OK",
+    "keyframe_bytes": 1553569,
+    "mp4_bytes": 1445666,
+    "elapsed_sec": 1440.6955518722534
+  },
+  {
+    "idx": 3,
+    "shot_id": "sh_003",
+    "prompt": "In a bustling training yard, the young disciple endures the sneers and pointing fingers of arrogant senior disciples. One senior shoves him dismissively, further highlighting his humiliated, outcast s",
+    "status": "OK",
+    "keyframe_bytes": 1965233,
+    "mp4_bytes": 1475979,
+    "elapsed_sec": 1440.348584651947
+  },
+  {
+    "idx": 4,
+    "shot_id": "sh_004",
+    "prompt": "A close-up reveals the young disciple's eyes, hardening with ancient wisdom and simmering fury. A fleeting golden light flashes deep within his pupils, briefly reflecting a powerful, emperor-like reso",
+    "status": "OK",
+    "keyframe_bytes": 1468408,
+    "mp4_bytes": 708054,
+    "elapsed_sec": 1450.7252564430237
+  },
+  {
+    "idx": 5,
+    "shot_id": "sh_005",
+    "prompt": "The disciple meditates cross-legged in a secluded, dimly lit forest grove. Faint, ethereal spiritual energy slowly begins to swirl around him, a determined expression fixed upon his face as he cultiva",
+    "status": "OK",
+    "keyframe_bytes": 1545119,
+    "mp4_bytes": 816356,
+    "elapsed_sec": 1448.67919588089
+  },
+  {
+    "idx": 6,
+    "shot_id": "sh_006",
+    "prompt": "An arrogant senior disciple, oblivious to danger, boasts loudly to his admiring peers in a lavish sect hall. The reborn disciple, a blurred figure in the background, observes him with cold, calculatin",
+    "status": "OK",
+    "keyframe_bytes": 1752730,
+    "mp4_bytes": 1682017,
+    "elapsed_sec": 1449.8776388168335
+  },
+  {
+    "idx": 7,
+    "shot_id": "sh_007",
+    "prompt": "Close-up on the reborn disciple's face as he watches the senior. His eyes momentarily blaze with intense, chilling power. A subtle, dangerous smirk plays on his lips, hinting at impending, inevitable ",
+    "status": "OK",
+    "keyframe_bytes": 1505527,
+    "mp4_bytes": 684018,
+    "elapsed_sec": 1454.6926066875458
+  },
+  {
+    "idx": 8,
+    "shot_id": "sh_008",
+    "prompt": "The disciple strides purposefully along a moonlit sect path, his silhouette sharp and imposing. His eyes glow with an unwavering inner fire, a clear manifestation of his fierce resolve to reclaim his ",
+    "status": "OK",
+    "keyframe_bytes": 1580101,
+    "mp4_bytes": 895382,
+    "elapsed_sec": 1457.970371246338
+  }
+]

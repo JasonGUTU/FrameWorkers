@@ -1,0 +1,61 @@
+{
+  "input": {
+    "agent_id": "StoryAgent",
+    "step_id": "step_1_1bc74b1f",
+    "input_needs_description": "I am the pipeline entry point for story planning. I take a natural-language creative brief and turn it into a structured story blueprint.\n\n[creative_brief] (single)\nA natural-language brief describing what kind of story / video to produce. May be a short prompt ('a film about a cat chasing a butterfly') or a longer detailed outline / draft story text. The caption describes it as a creative brief / project intent description. If an enriched brief (one that integrates image reference descriptions) is available, prefer it over the raw text-intake brief. Pick the single most recent / most authoritative such brief.\n\n[reference_analysis] (single)\nOptional scene-level video-analysis report of an inspiration / reference video. Use cases include 'analyse this hit drama and write me a same-genre sequel / similar new story' — the LLM reads its genre, mood, scene summaries, and entities as creative seeds to shape tone and pacing of the NEW blueprint, without copying plot verbatim. Skip this label when there is no reference video being analysed.",
+    "labels": [
+      "creative_brief",
+      "reference_analysis"
+    ],
+    "captions_index_text": "#0  Structured metadata document (JSON) for a user-submitted text brief. Payload carries the raw text verbatim. Pipeline entry point — consumed by story / screenplay / narration agents. Produced by user on 2026-05-12 19:42.",
+    "id_to_path": [
+      "/home/zhendong_li/FrameWorkers/_workspaces/workspace_global_20260512_194119/inputs/brief_20260512_194249_875467.json"
+    ]
+  },
+  "llm_call": {
+    "system_prompt": "You match a sub-agent's input requirements to artifacts in an artifact registry.\n\nThe sub-agent's input requirements are written as one or more [label] blocks. Each block has a header of the form\n    [label_name] (single)        -- exactly one matching artifact expected\n    [label_name] (collection)    -- zero or more matching artifacts expected\nfollowed by a natural-language description of what kind of artifact that label refers to.\n\nThe artifact registry lists every persisted artifact with a #N id and a natural-language caption describing its type, pipeline role, and which agent produced it.\n\nYour job:\n  1. Read each [label] block and understand the kind of artifact the agent is asking for in that slot.\n  2. For each registry artifact, read its caption and understand the artifact's type, role, and purpose. Reason about meaning.\n  3. For each [label], decide which artifacts in the registry are instances of the kind described in that block.\n  4. Be inclusive for (collection) labels: include EVERY matching artifact, never just a sample.\n  5. Be exclusive for (single) labels: pick the single best matching artifact (or none if none clearly fits).\n  6. Distinguish artifacts that look superficially similar but play different roles in the pipeline (e.g. a reference image of an entity in isolation vs. a planned frame of a specific shot of the story). Use the caption to decide.\n  7. Only return #N ids that appear in the registry.\n\nReturn strict JSON only, with this shape:\n{\n  \"selections\": {\n    \"<label_name>\": [0, 3, 5],\n    ...\n  },\n  \"rationale\": \"<a short explanation of how you matched each label>\"\n}\nUse exactly the label names from the agent's [label] headers as keys. Values are arrays of integer ids (the #N numbers from the registry).",
+    "user_prompt": "agent_id: StoryAgent\n\n=== AGENT INPUT NEEDS ===\nI am the pipeline entry point for story planning. I take a natural-language creative brief and turn it into a structured story blueprint.\n\n[creative_brief] (single)\nA natural-language brief describing what kind of story / video to produce. May be a short prompt ('a film about a cat chasing a butterfly') or a longer detailed outline / draft story text. The caption describes it as a creative brief / project intent description. If an enriched brief (one that integrates image reference descriptions) is available, prefer it over the raw text-intake brief. Pick the single most recent / most authoritative such brief.\n\n[reference_analysis] (single)\nOptional scene-level video-analysis report of an inspiration / reference video. Use cases include 'analyse this hit drama and write me a same-genre sequel / similar new story' — the LLM reads its genre, mood, scene summaries, and entities as creative seeds to shape tone and pacing of the NEW blueprint, without copying plot verbatim. Skip this label when there is no reference video being analysed.\n\nLabels expected in your response: ['creative_brief', 'reference_analysis']\n\n=== ARTIFACT REGISTRY ===\n#0  Structured metadata document (JSON) for a user-submitted text brief. Payload carries the raw text verbatim. Pipeline entry point — consumed by story / screenplay / narration agents. Produced by user on 2026-05-12 19:42.\n",
+    "raw_response": {
+      "selections": {
+        "creative_brief": [
+          0
+        ],
+        "reference_analysis": []
+      },
+      "rationale": "Artifact #0 is a 'user-submitted text brief' acting as a 'Pipeline entry point' which directly matches the description for 'creative_brief'. No artifacts in the registry match the description for 'reference_analysis', so that label is empty."
+    }
+  },
+  "output": {
+    "resolved_artifacts": {
+      "creative_brief": {
+        "caption": "Structured metadata document (JSON) for a user-submitted text brief. Payload carries the raw text verbatim. Pipeline entry point — consumed by story / screenplay / narration agents.",
+        "scope": "global",
+        "path": "/home/zhendong_li/FrameWorkers/_workspaces/workspace_global_20260512_194119/inputs/brief_20260512_194249_875467.json",
+        "mime": "application/json",
+        "payload": {
+          "meta": {
+            "asset_type": "text_brief",
+            "created_at": "2026-05-12T19:42:49.875525+00:00"
+          },
+          "content": {
+            "text": "Create a cinematic Chinese-mythology fantasy animated short film set at the end of the Investiture of the Gods war.\n\nUnder the roaring nine-heaven thunder, Jiang Ziya drags the last surviving little nine-tailed fox demon onto the ancient Investiture Platform for execution. The atmosphere is tragic, solemn, and oppressive. Dark storm clouds swirl across the sky as divine lightning illuminates the platform.\n\nThe little fox demon is terrified and exhausted, dressed in a torn white robe with faint shadows of nine fox tails behind her. Jiang Ziya stands cold and resolute in majestic Taoist robes, raising his divine execution sword.\n\nJust before the sword falls, the fox demon suddenly recalls fragmented memories of a mysterious man from her dreams — a gentle figure who once comforted her beneath blooming peach blossoms. The memory then flashes to the same man kneeling on the Investiture Platform years ago, executed by Jiang Ziya himself.\n\nThe fox demon whispers the man's name through tears. Jiang Ziya's sword freezes midair for the first time. Thunder shakes the heavens as he silently lowers the blade, staring at her in shock and doubt.\nAdd ambient sounds of the nine-heaven thunder rolling, and a mournful classical-Chinese BGM. Burn Chinese subtitles into the final video showing all on-screen dialogue."
+          },
+          "metrics": {
+            "char_count": 1317
+          }
+        }
+      },
+      "reference_analysis": {
+        "caption": "",
+        "scope": "",
+        "path": "",
+        "mime": "",
+        "payload": null
+      }
+    },
+    "selected_artifact_paths": [
+      "/home/zhendong_li/FrameWorkers/_workspaces/workspace_global_20260512_194119/inputs/brief_20260512_194249_875467.json"
+    ],
+    "rationale": "Artifact #0 is a 'user-submitted text brief' acting as a 'Pipeline entry point' which directly matches the description for 'creative_brief'. No artifacts in the registry match the description for 'reference_analysis', so that label is empty."
+  }
+}

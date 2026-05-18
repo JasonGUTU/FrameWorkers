@@ -1,0 +1,824 @@
+{
+  "meta": {
+    "schema_version": "0.3",
+    "created_at": "2026-05-09T21:26:29.825838+00:00",
+    "language": "en"
+  },
+  "content": {
+    "title": "Apocalypse Dawn: The Underbelly",
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "linked_story_step_id": "arc_002",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "The Underbelly",
+          "interior_exterior": "INT",
+          "time_of_day": "CUSTOM"
+        },
+        "summary": "Captain Vance's squad navigates the treacherous underground tunnels, their resolve tested by constant threats. Amidst the grim journey, Dr. Thorne discovers an encrypted data pad revealing the hidden location of the Apex Bio-Research Labs, rekindling a desperate hope.",
+        "continuity": {
+          "props_present": [
+            "rugged data tablet",
+            "assault rifle",
+            "tactical flashlight",
+            "medical kit"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "worn tactical gear, heavy boots, utility vest",
+              "must_keep": [
+                "military fatigues",
+                "protective helmet"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "practical, reinforced field scrubs, lab coat over uniform",
+              "must_keep": [
+                "medical symbol patch",
+                "sturdy pants"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "squad morale is low",
+            "tunnels are claustrophobic and dangerous",
+            "discovery of a working terminal"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "CUSTOM",
+            "environment_notes": [
+              "sprawling, claustrophobic network of crumbling subway lines, forgotten utility tunnels, and maintenance shafts",
+              "beneath a city ravaged by the zombie apocalypse",
+              "echoes of distant sirens, zombie shrieks",
+              "constant hum of unseen dangers",
+              "wind whipping through ruined corridors"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Captain Elias Vance, former special-ops captain",
+                "haunted by past failures, driven by duty",
+                "pragmatic and ruthless leader",
+                "in a zombie-apocalypse setting"
+              ],
+              "wardrobe_notes": [
+                "worn tactical gear",
+                "heavy boots",
+                "utility vest"
+              ],
+              "must_keep": [
+                "military bearing",
+                "determined expression"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "Dr. Aris Thorne, brilliant and compassionate epidemiologist",
+                "one of few remaining medical professionals",
+                "dedicated to finding a biological solution",
+                "in a zombie-apocalypse setting"
+              ],
+              "wardrobe_notes": [
+                "practical, reinforced field scrubs",
+                "lab coat over uniform"
+              ],
+              "must_keep": [
+                "professional demeanor",
+                "compassionate gaze"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_001",
+              "prop_name": "rugged data tablet",
+              "must_keep": [
+                "worn",
+                "scratched screen",
+                "glowing with schematic data"
+              ]
+            },
+            {
+              "prop_id": "prop_002",
+              "prop_name": "assault rifle",
+              "must_keep": [
+                "standard military issue",
+                "well-maintained",
+                "carries weight of constant use"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Post-Apocalyptic Drama",
+              "Zombie Horror",
+              "Action-Adventure",
+              "grim",
+              "desperate",
+              "survival",
+              "tense",
+              "heroic sacrifice",
+              "zombie-apocalypse setting"
+            ],
+            "must_avoid": [
+              "lightheartedness",
+              "pristine environments",
+              "unblemished characters"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "The discovery of a functional data pad with the exact location of Apex Bio-Research Labs transforms their aimless search into a focused, albeit perilous, objective.",
+          "emotional_shift": "From desperation and dwindling morale to a fragile, renewed sense of purpose and hope."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Dust motes dance in the narrow beam of a tactical flashlight as Vance's squad moves through a derelict subway tunnel. Debris litters the tracks, and shadowed recesses hint at unseen dangers.",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [
+                "tactical flashlight"
+              ],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "low",
+              "movement": "tracking",
+              "framing_notes": "Emphasizes the squad's smallness against the oppressive environment"
+            },
+            "visual_goal": "Establish the claustrophobic, dangerous environment and the squad's weary progress.",
+            "action_focus": "The squad's careful, tired movement through the tunnel.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_002",
+              "tactical flashlight"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_002",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "Captain Elias Vance",
+            "text": "Captain Vance, rifle held ready, sweeps his flashlight across a crumbling wall adorned with faded transit maps. His eyes, though tired, remain sharp, ever vigilant for threats.",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [
+                "assault rifle",
+                "tactical flashlight"
+              ],
+              "wardrobe_character_ids": [
+                "char_001"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "pan",
+              "framing_notes": "Focus on Vance's face and weapon, conveying his guarded demeanor"
+            },
+            "visual_goal": "Show Vance's leadership and the constant threat awareness.",
+            "action_focus": "Vance's scanning movements and vigilant expression.",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_002",
+              "tactical flashlight"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_003",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "char_002",
+            "character_name": "Dr. Aris Thorne",
+            "text": "Dr. Thorne kneels by a defunct control panel, its screen flickering erratically. She taps a few keys, and a partial schematic begins to materialize on the dusty display.",
+            "emotion_hint": "neutral",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Close on Thorne's hands and the flickering screen"
+            },
+            "visual_goal": "Highlight the discovery and Thorne's technical expertise.",
+            "action_focus": "Thorne interacting with the terminal, schematic appearing.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "rugged data tablet"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_004",
+            "order": 4,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "Captain Elias Vance",
+            "text": "Apex Labs. Coordinates confirm it. It’s deeper than we thought, but it's real.",
+            "emotion_hint": "urgent",
+            "continuity_refs": {
+              "props": [
+                "rugged data tablet"
+              ],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "two_shot",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Captures Vance and Thorne looking at the screen, a shared moment of grim optimism"
+            },
+            "visual_goal": "Show the revelation of the lab's location and the shift in the mission's focus.",
+            "action_focus": "Vance's confirmation, Thorne's hopeful reaction.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "linked_story_step_id": "arc_004",
+        "heading": {
+          "location_id": "loc_001",
+          "location_name": "The Underbelly",
+          "interior_exterior": "INT",
+          "time_of_day": "CUSTOM"
+        },
+        "summary": "The squad breaches the heavily barricaded entrance of the Apex Labs, encountering a swarm of aggressive, mutated zombies. A chaotic firefight ensues, resulting in a key squad member being gravely injured, forcing Vance to make a brutal decision.",
+        "continuity": {
+          "props_present": [
+            "assault rifle",
+            "medical kit",
+            "explosives",
+            "distress flare"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "worn tactical gear, heavy boots, utility vest, with some grime/blood",
+              "must_keep": [
+                "military fatigues",
+                "protective helmet"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "practical, reinforced field scrubs, lab coat over uniform, stained and torn",
+              "must_keep": [
+                "medical symbol patch",
+                "sturdy pants"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "the entrance is heavily defended by zombies",
+            "a squad member is injured",
+            "Vance makes a difficult call"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_001",
+            "time_of_day": "CUSTOM",
+            "environment_notes": [
+              "sprawling, claustrophobic network of crumbling subway lines, forgotten utility tunnels, and maintenance shafts",
+              "beneath a city ravaged by the zombie apocalypse",
+              "echoes of distant sirens, zombie shrieks",
+              "constant hum of unseen dangers",
+              "wind whipping through ruined corridors",
+              "area leading to Apex Bio-Research Labs, heavily fortified and barricaded"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Captain Elias Vance, former special-ops captain",
+                "haunted by past failures, driven by duty",
+                "pragmatic and ruthless leader",
+                "in a zombie-apocalypse setting"
+              ],
+              "wardrobe_notes": [
+                "worn tactical gear",
+                "heavy boots",
+                "utility vest",
+                "battle-damaged"
+              ],
+              "must_keep": [
+                "military bearing",
+                "determined expression"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "Dr. Aris Thorne, brilliant and compassionate epidemiologist",
+                "one of few remaining medical professionals",
+                "dedicated to finding a biological solution",
+                "in a zombie-apocalypse setting"
+              ],
+              "wardrobe_notes": [
+                "practical, reinforced field scrubs",
+                "lab coat over uniform",
+                "stained and torn"
+              ],
+              "must_keep": [
+                "professional demeanor",
+                "compassionate gaze"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_002",
+              "prop_name": "assault rifle",
+              "must_keep": [
+                "standard military issue",
+                "well-maintained",
+                "carries weight of constant use",
+                "spent casings visible"
+              ]
+            },
+            {
+              "prop_id": "prop_003",
+              "prop_name": "medical kit",
+              "must_keep": [
+                "worn canvas bag",
+                "contains emergency supplies",
+                "blood-stained"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Post-Apocalyptic Drama",
+              "Zombie Horror",
+              "Action-Adventure",
+              "grim",
+              "desperate",
+              "survival",
+              "tense",
+              "heroic sacrifice",
+              "zombie-apocalypse setting"
+            ],
+            "must_avoid": [
+              "lightheartedness",
+              "pristine environments",
+              "unblemished characters"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "The squad breaches the main defenses of Apex Labs, but at the cost of a key member, forcing Vance to prioritize the mission over individual lives.",
+          "emotional_shift": "From overwhelming pressure and chaos to grim, ruthless determination, marked by personal sacrifice."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "A narrow opening in a towering wall of rusted metal and concrete blocks reveals a glimpse of Apex Labs' entrance, swarming with unnaturally agile, mutated zombies.",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": []
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "high_angle",
+              "movement": "static",
+              "framing_notes": "Emphasizes the daunting scale of the barricade and the horde"
+            },
+            "visual_goal": "Show the formidable defense of the lab and the new, more dangerous zombie variant.",
+            "action_focus": "The sheer number and aggression of the mutated zombies.",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_006",
+            "order": 2,
+            "block_type": "action",
+            "character_id": "char_001",
+            "character_name": "Captain Elias Vance",
+            "text": "Vance barks orders, unleashing a volley of gunfire into the advancing horde. A squad member falls, clutching a bleeding wound, as Thorne rushes to their side.",
+            "emotion_hint": "urgent",
+            "continuity_refs": {
+              "props": [
+                "assault rifle"
+              ],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "handheld",
+              "framing_notes": "Dynamic, shaky camera to convey chaos of the firefight"
+            },
+            "visual_goal": "Depict the intense, desperate firefight and the squad's injury.",
+            "action_focus": "The rapid exchange of fire, the squad member falling, Thorne reacting.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_007",
+            "order": 3,
+            "block_type": "dialogue",
+            "character_id": "char_001",
+            "character_name": "Captain Elias Vance",
+            "text": "We're losing time! Thorne, keep him stable. Everyone else, push through! Now!",
+            "emotion_hint": "angry",
+            "continuity_refs": {
+              "props": [
+                "medical kit"
+              ],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Vance's face, hardened by grim resolve, contrasted with Thorne's frantic medical efforts"
+            },
+            "visual_goal": "Emphasize Vance's brutal leadership decision and Thorne's humanitarian struggle.",
+            "action_focus": "Vance's command, Thorne's desperate medical attention.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_003"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_008",
+            "order": 4,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "The squad, driven by Vance's command, detonates a small charge, blowing open a breach. They surge through, leaving the injured comrade with Thorne at the barricade.",
+            "emotion_hint": "tense",
+            "continuity_refs": {
+              "props": [
+                "explosives"
+              ],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "low",
+              "movement": "dolly",
+              "framing_notes": "Captures the explosion and the rapid push through the breach"
+            },
+            "visual_goal": "Show the forceful entry into the lab, emphasizing the sacrifice made.",
+            "action_focus": "The explosion, the squad's desperate advance, Thorne left behind.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "order": 3,
+        "linked_story_step_id": "arc_006",
+        "heading": {
+          "location_id": "loc_002",
+          "location_name": "Apex Bio-Research Labs",
+          "interior_exterior": "INT",
+          "time_of_day": "CUSTOM"
+        },
+        "summary": "Inside the collapsing Apex Bio-Research Labs, Vance and Thorne battle enhanced zombies to reach the central data core. They narrowly escape with a prototype vaccine or partial data, a bittersweet victory offering fragile hope for humanity's ongoing fight.",
+        "continuity": {
+          "props_present": [
+            "assault rifle",
+            "rugged data tablet",
+            "prototype vaccine vial",
+            "medical kit"
+          ],
+          "character_wardrobe_notes": [
+            {
+              "character_id": "char_001",
+              "wardrobe": "heavily damaged tactical gear, blood and grime, tear in sleeve",
+              "must_keep": [
+                "military fatigues",
+                "protective helmet"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "wardrobe": "torn and blood-stained field scrubs, lab coat barely clinging",
+              "must_keep": [
+                "medical symbol patch",
+                "sturdy pants"
+              ]
+            }
+          ],
+          "must_keep_scene_facts": [
+            "lab is collapsing",
+            "enhanced zombies are a major threat",
+            "retrieval of vaccine/data is crucial",
+            "escape is precarious"
+          ]
+        },
+        "scene_consistency_pack": {
+          "location_lock": {
+            "location_id": "loc_002",
+            "time_of_day": "CUSTOM",
+            "environment_notes": [
+              "state-of-the-art underground biomedical facility",
+              "once humanity's beacon of scientific advancement",
+              "now eerily silent and partially ruined",
+              "advanced equipment covered in dust and grime",
+              "evidence of a hasty evacuation and struggle",
+              "currently destabilizing and collapsing due to conflict",
+              "in a zombie-apocalypse setting"
+            ]
+          },
+          "character_locks": [
+            {
+              "character_id": "char_001",
+              "identity_notes": [
+                "Captain Elias Vance, former special-ops captain",
+                "haunted by past failures, driven by duty",
+                "pragmatic and ruthless leader",
+                "in a zombie-apocalypse setting"
+              ],
+              "wardrobe_notes": [
+                "heavily damaged tactical gear",
+                "blood and grime",
+                "tear in sleeve"
+              ],
+              "must_keep": [
+                "military bearing",
+                "determined expression"
+              ]
+            },
+            {
+              "character_id": "char_002",
+              "identity_notes": [
+                "Dr. Aris Thorne, brilliant and compassionate epidemiologist",
+                "one of few remaining medical professionals",
+                "dedicated to finding a biological solution",
+                "in a zombie-apocalypse setting"
+              ],
+              "wardrobe_notes": [
+                "torn and blood-stained field scrubs",
+                "lab coat barely clinging"
+              ],
+              "must_keep": [
+                "professional demeanor",
+                "compassionate gaze"
+              ]
+            }
+          ],
+          "props_lock": [
+            {
+              "prop_id": "prop_002",
+              "prop_name": "assault rifle",
+              "must_keep": [
+                "standard military issue",
+                "well-maintained",
+                "carries weight of constant use",
+                "scratched and dented"
+              ]
+            },
+            {
+              "prop_id": "prop_004",
+              "prop_name": "prototype vaccine vial",
+              "must_keep": [
+                "small, glowing liquid",
+                "fragile glass",
+                "looks scientifically advanced"
+              ]
+            }
+          ],
+          "style_lock": {
+            "global_style_notes": [
+              "Post-Apocalyptic Drama",
+              "Zombie Horror",
+              "Action-Adventure",
+              "grim",
+              "desperate",
+              "survival",
+              "tense",
+              "heroic sacrifice",
+              "zombie-apocalypse setting"
+            ],
+            "must_avoid": [
+              "lightheartedness",
+              "pristine environments",
+              "unblemished characters"
+            ]
+          }
+        },
+        "scene_end": {
+          "turn": "Vance and Thorne narrowly escape the collapsing facility with the prototype or partial data, a vital first step that offers fragile hope amidst continued devastation.",
+          "emotional_shift": "From intense struggle and desperation to a grim, yet hopeful, realization that the fight for survival continues with a new weapon."
+        },
+        "shots": [
+          {
+            "shot_id": "sh_009",
+            "order": 1,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Vance covers Thorne, firing his rifle at an incoming mutated zombie as debris rains down from the ceiling. Alarms blare, and sparks fly from exposed wires.",
+            "emotion_hint": "urgent",
+            "continuity_refs": {
+              "props": [
+                "assault rifle"
+              ],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "medium",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "zoom_out",
+              "framing_notes": "Starts close on the action, then pulls back to reveal the collapsing environment"
+            },
+            "visual_goal": "Convey the chaos and danger of the collapsing lab and the final fight.",
+            "action_focus": "Vance's protective action, the lab's destruction.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_010",
+            "order": 2,
+            "block_type": "dialogue",
+            "character_id": "char_002",
+            "character_name": "Dr. Aris Thorne",
+            "text": "I have it! It's incomplete, but it's a start!",
+            "emotion_hint": "excited",
+            "continuity_refs": {
+              "props": [
+                "prototype vaccine vial"
+              ],
+              "wardrobe_character_ids": [
+                "char_002"
+              ]
+            },
+            "shot_type": "close_up",
+            "camera": {
+              "angle": "eye_level",
+              "movement": "static",
+              "framing_notes": "Focus on Thorne's face, a mix of relief and exhaustion, holding the vial"
+            },
+            "visual_goal": "Show the successful retrieval of the vaccine/data, the moment of bittersweet victory.",
+            "action_focus": "Thorne securing the vial, her expression.",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [
+              "prop_004"
+            ],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          },
+          {
+            "shot_id": "sh_011",
+            "order": 3,
+            "block_type": "action",
+            "character_id": "",
+            "character_name": "",
+            "text": "Vance grabs Thorne's arm, pulling her through a narrow fissure in the wall as the central chamber collapses behind them, barely escaping the engulfing rubble.",
+            "emotion_hint": "urgent",
+            "continuity_refs": {
+              "props": [],
+              "wardrobe_character_ids": [
+                "char_001",
+                "char_002"
+              ]
+            },
+            "shot_type": "wide",
+            "camera": {
+              "angle": "low",
+              "movement": "tracking",
+              "framing_notes": "Captures their desperate escape, emphasizing the sheer destruction behind them"
+            },
+            "visual_goal": "Illustrate their narrow escape and the immediate aftermath of the lab's destruction.",
+            "action_focus": "Vance and Thorne's sprint, the lab's collapse.",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframe_plan": {
+              "keyframe_count": 1,
+              "keyframe_notes": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count_total": 11,
+    "avg_shots_per_scene": 3.6666666666666665,
+    "dialogue_block_count": 3,
+    "action_block_count": 8
+  }
+}

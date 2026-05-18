@@ -1,0 +1,283 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_id": "char_001",
+          "prompt_summary": "A young and fragile nine-tailed fox demon, the last of her kind in ancient Chinese mythology. She wears a tattered, plain long dress, with her wrists and ankles bound by immortal ropes. Her past is shrouded in mystery, with subtle visual hints of her fox demon nature.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "char_002",
+          "prompt_summary": "Jiang Ziya, a respected and powerful strategist from the Zhou Dynasty, a master of Taoist magic in ancient Chinese mythology. He wears a solemn and majestic Taoist robe, holding a demon-slaying magic sword, embodying a venerable immortal demeanor. He is firm in upholding divine decrees.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "char_003",
+          "prompt_summary": "A mysterious man with an elusive presence from ancient Chinese mythology, appearing in dreams, representing a hidden connection from the past. He wears elegant, flowing ancient Chinese attire, exuding a mysterious and gentle temperament.",
+          "reference_image_uri": ""
+        }
+      ],
+      "locations": [
+        {
+          "entity_id": "loc_001",
+          "prompt_summary": "An ancient and towering stone platform, characteristic of ancient Chinese mythological settings from the Investiture of the Gods era. The air around it resonates with the deafening sound of celestial thunder, imbued with immense spiritual power and solemnity.",
+          "reference_image_uri": ""
+        }
+      ],
+      "props": []
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Xiao Hu appears young and vulnerable, bound by rough immortal ropes on her wrists and ankles. Her tattered, plain long dress is dusty. She is filled with despair, hinting at her tragic fate on the ancient platform.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Jiang Ziya stands in a solemn, majestic Taoist robe, holding his demon-slaying magic sword. His expression is grave, reflecting his firm resolve to execute the divine decree on the ancient platform.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The ancient, towering stone platform is dimly lit by the tumultuous sky. Celestial thunder rolls deafeningly around it, emphasizing its somber, sacred atmosphere under heavy clouds.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "characters_in_frame": [],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A high-angle wide shot overlooks the vast Investiture of the Gods platform. Ominous dark clouds fill the sky, while powerful celestial thunder cracks across the heavens. The colossal stone platform stands majestically, emphasizing its immense scale and the oppressive atmosphere under the stormy skies.",
+                "video_motion_hint": "Celestial thunder flashes across the sky with subtle, violent light. Clouds slowly churn above the static, ancient platform, emphasizing its solemn grandeur."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium-wide, eye-level shot follows Jiang Ziya, in his majestic Taoist robe, his face resolute. He leads the struggling Xiao Hu, who is bound by immortal ropes and dressed in a tattered plain gown, towards the center of the vast platform. The shot captures her stumbling steps, highlighting her helplessness and the growing sense of oppression.",
+                "video_motion_hint": "The camera smoothly tracks forward, following Jiang Ziya and Xiao Hu as they walk. Xiao Hu's steps are heavy and hesitant, contrasting with Jiang Ziya's steady pace."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up, low-angle shot focuses on Xiao Hu, who has collapsed in despair onto the dusty ground. Her plain long dress is soiled, and her eyes, filled with fear and confusion, stare blankly. A faint, ethereal silhouette of a nine-tailed fox demon hovers subtly behind her, hinting at her true identity.",
+                "video_motion_hint": "Xiao Hu remains static on the ground, her shoulders subtly shaking. Her tear-filled eyes flicker with fleeting emotions of terror and resignation."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Xiao Hu is shown in a state of extreme vulnerability, eyes closed, a single tear escaping. Her dusty, plain long dress and bound limbs convey her impending doom. A faint, internal warmth begins to glow in her expression.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Jiang Ziya stands resolute, poised to strike with his raised demon-slaying magic sword. His face is firm, reflecting his unwavering commitment to his solemn duty, bathed in the harsh light of the celestial thunder.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_003",
+              "prompt_summary": "The mysterious man appears in a fragmented memory, his form blurred but radiating warmth and gentleness. He wears flowing ancient attire, smiling softly against a background of lush, blossoming celestial gardens.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The ancient, towering stone platform is harshly illuminated by flashes of celestial thunder, intensifying its already foreboding presence. The air is thick with tension as the final judgment looms.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_004",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium-close-up, low-angle shot captures Jiang Ziya, his face resolute, as he powerfully raises his demon-slaying magic sword. The sword's blade glints fiercely under the flashes of celestial thunder, highlighting his formidable presence and unwavering resolve for the imminent strike.",
+                "video_motion_hint": "Jiang Ziya holds his pose, muscles tense. The sword blade subtly reflects the flashing light of the celestial thunder, emphasizing its sharp edge."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_005",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "An extreme close-up, eye-level shot focuses intensely on Xiao Hu's face. Her eyes are tightly shut, and a single tear escapes from the corner, tracing a path down her cheek. Just as the magic sword is about to fall, a soft, warm, and blurred light flashes within her mind, hinting at a forgotten memory.",
+                "video_motion_hint": "Xiao Hu's face is mostly still, but her eyelids flutter slightly with inner turmoil. A single tear slowly rolls down her cheek, catching the light."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "characters_in_frame": [
+              "char_001",
+              "char_003"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A montage of fragmented memory flashes appears. In a blurry, dreamlike sequence, a mysterious man with an indistinct face gently smiles at Xiao Hu. The background is a vibrant, flower-filled immortal realm, evoking a sense of ancient beauty and warmth, hinting at a lost past.",
+                "video_motion_hint": "Images rapidly cut and dissolve into each other. The figures within the memories are slightly out of focus, giving a hazy, ethereal quality."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_003",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Xiao Hu's eyes snap open, now clear and filled with a profound sense of shock and awakening, no longer despair. Her expression suggests a complete recovery of long-lost memories, despite her dusty, bound state.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_002",
+              "prompt_summary": "Jiang Ziya's imposing figure is frozen mid-action, his magic sword suspended inches from Xiao Hu. His face shows a mix of confusion and hesitation, sensing an unseen force that makes him question his resolute purpose.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "char_003",
+              "prompt_summary": "The mysterious man’s presence is now fully understood through Xiao Hu’s clear memories, his gentle, ethereal demeanor tied intrinsically to her awakened self. He remains an internal, remembered image.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_001",
+              "prompt_summary": "The ancient, towering stone platform is surrounded by celestial thunder, now dramatically subdued, creating a tense, eerie stillness. The pervasive spiritual power feels momentarily suspended, reflecting the sudden shift in fate.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": []
+        },
+        "shots": [
+          {
+            "shot_id": "sh_007",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up, eye-level shot dramatically zooms in on Xiao Hu. Her eyes, once filled with fear, now snap open with an expression of profound shock and newfound clarity. A complete and long-sealed memory has abruptly opened in her mind, marking a powerful awakening.",
+                "video_motion_hint": "The camera slowly zooms into Xiao Hu's face, focusing on the subtle shift in her expression as her eyes open, conveying a dawning realization."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_008",
+            "characters_in_frame": [
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium-close-up, eye-level shot freezes Jiang Ziya's action: his demon-slaying magic sword is suspended in the air, mere inches from Xiao Hu. He senses an unseen wave of spiritual energy, and his gaze sweeps over Xiao Hu with a flicker of doubt and confusion, reflecting his inner struggle.",
+                "video_motion_hint": "Jiang Ziya's body remains perfectly still, but his eyes subtly shift with a searching, questioning gaze. The sword's hilt vibrates faintly in the air."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_009",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A two-shot, eye-level perspective captures Xiao Hu raising her head, her gaze meeting Jiang Ziya's. Their eyes lock in a tense stare, conveying unspoken words and a deep urgency. Her newly awakened memories and the existence of the mysterious man are now her only hope for survival.",
+                "video_motion_hint": "Xiao Hu's head slowly lifts to meet Jiang Ziya's gaze. The tension between their eyes is palpable, with minimal, subtle facial movements."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_010",
+            "characters_in_frame": [
+              "char_001",
+              "char_002"
+            ],
+            "props_in_frame": [],
+            "keyframes": [
+              {
+                "prompt_summary": "A high-angle wide shot reveals the entire Investiture of the Gods platform. Celestial thunder still rumbles around it, yet the air is thick with a profound, eerie silence, as if stunned by the sudden, unresolved suspense. The vast environment underscores the dramatic pause in fate.",
+                "video_motion_hint": "The celestial thunder rumbles distantly, but the overall atmosphere of the wide shot is one of profound stillness. Wisps of mist might slowly drift across the ancient platform."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "style_notes": [
+      "奇幻",
+      "神话",
+      "剧情",
+      "中国神话",
+      "封神之战",
+      "史诗",
+      "悲剧",
+      "绝望",
+      "古老中国",
+      "忧郁",
+      "哀伤",
+      "九天神雷"
+    ],
+    "must_avoid": []
+  },
+  "metrics": {
+    "scene_count": 3,
+    "shot_count": 10,
+    "keyframe_count_total": 10,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 3,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 0,
+    "stability_character_keyframe_count": 8,
+    "stability_location_keyframe_count": 3,
+    "stability_prop_keyframe_count": 0
+  }
+}

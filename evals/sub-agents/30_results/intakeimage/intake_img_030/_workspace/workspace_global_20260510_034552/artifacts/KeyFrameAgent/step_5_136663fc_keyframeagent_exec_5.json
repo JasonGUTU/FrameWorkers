@@ -1,0 +1,297 @@
+{
+  "content": {
+    "global_anchors": {
+      "characters": [
+        {
+          "entity_id": "char_001",
+          "prompt_summary": "Detective Ren is a driven and astute deputy captain with a distinctive scar near his eye and perpetually wet hair. He wears a dark trench coat over a crisp, worn suit. His appearance embodies a Neo-noir detective operating in a gritty urban landscape, relentlessly pursuing the truth.",
+          "reference_image_uri": "/home/zhendong_li/FrameWorkers/evals/sub-agents/30_results/intakeimage/intake_img_030/_workspace/workspace_global_20260510_034552/inputs/20260510_034554_564135_intake_img_030.png"
+        }
+      ],
+      "locations": [
+        {
+          "entity_id": "loc_002",
+          "prompt_summary": "A cramped police homicide unit office is lit by harsh fluorescent lights. The space is cluttered with old case files, maps, and coffee cups. Outside, rain streaks down windows, reflecting city neon and streetlights on slick asphalt. It's a sanctuary of grim determination amidst urban chaos.",
+          "reference_image_uri": ""
+        }
+      ],
+      "props": [
+        {
+          "entity_id": "prop_001",
+          "prompt_summary": "An overwhelming quantity of dusty old case files appears dishevelled and disorganized. The files are yellowed and show signs of age and neglect. These documents represent a long-forgotten investigation.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_002",
+          "prompt_summary": "A visibly old and important case file is prominently labeled 'THE RIVER KILLER - COLD CASE'. Its cover is faded and worn from years of neglect.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_003",
+          "prompt_summary": "Several yellowed newspaper clippings appear brittle and worn. They detail grim discoveries from the past, illustrating the age and grimness of a cold case.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_004",
+          "prompt_summary": "A collection of grainy crime scene photos is graphic and unsettling. They depict a rain-slicked alley, adding to the grim and melancholic atmosphere.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_005",
+          "prompt_summary": "A generic, used coffee cup, possibly ceramic, shows signs of frequent use and minor stains. It's an ordinary object left behind during long work hours.",
+          "reference_image_uri": ""
+        },
+        {
+          "entity_id": "prop_006",
+          "prompt_summary": "A faded, visibly old suspect list is typewritten on aged paper. It contains names, hinting at a shocking and crucial revelation from the past investigation.",
+          "reference_image_uri": ""
+        }
+      ]
+    },
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Detective Ren sits alone at a desk in the harsh fluorescent light, looking slightly overwhelmed. His dark trench coat appears damp from the perpetual rain outside. His distinctive scar is visible, and his perpetually wet hair clings to his forehead.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_002",
+              "prompt_summary": "The cramped homicide unit office at night is lit by cold fluorescent lights. Rain heavily streaks down the grimy window, reflecting blurry city neon. The office feels isolated and overwhelmed by an immense amount of paperwork.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "Towering stacks of dusty, unorganized old case files sprawl across the desk and surrounding surfaces. Their overwhelming quantity emphasizes the daunting nature of the investigation. They appear neglected and forgotten.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_002",
+              "prompt_summary": "A faded case file, clearly labeled 'THE RIVER KILLER - COLD CASE', is held in a detective's hand. Its worn cover suggests its long and grim history.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_003",
+              "prompt_summary": "Yellowed newspaper clippings, appearing brittle and worn, are spread open on a desk. They reveal grim headlines, highlighting the dark and aged history of the cold case.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_004",
+              "prompt_summary": "Grainy, unsettling crime scene photos depict a rain-slicked alley. They are seen under harsh fluorescent light, intensifying their graphic nature.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_005",
+              "prompt_summary": "A generic, half-empty coffee cup sits on the cluttered desk. It's a silent witness to late-night work, blending into the surrounding disarray.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_001",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A wide shot captures Detective Ren seated alone at a desk in a cramped homicide unit office. Towering stacks of dusty old cold case files surround him, dwarfing his figure. Harsh fluorescent lights hum overhead, while rain streaks down the grime-streaked window behind him, emphasizing his isolation and the overwhelming task.",
+                "video_motion_hint": "The camera remains static, capturing the vastness of the office and the daunting piles of old files."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_002",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_002"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium shot focuses on Detective Ren, whose face is etched with fatigue and concentration. His perpetually wet hair clings to his forehead, prominently displaying the distinctive scar near his eye. He picks up a faded file labeled 'THE RIVER KILLER - COLD CASE'.",
+                "video_motion_hint": "The camera remains static, highlighting Ren's tired yet determined expression and the cold case file."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_003",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_003",
+              "prop_004"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A tight close-up on the contents of the case file reveals yellowed newspaper clippings detailing grim discoveries. Grainy crime scene photos of a rain-slicked alley are visible. Detective Ren's meticulous finger traces a blurred detail on one of the unsettling photographs.",
+                "video_motion_hint": "The camera remains static, focusing on the unsettling details within the case file."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_004",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_005"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A medium shot shows Detective Ren leaning back from his desk, taking a deep, determined breath. He looks at the daunting pile of old case files, his gaze now hardened with new resolve. A coffee cup sits nearby.",
+                "video_motion_hint": "The camera remains static, emphasizing Ren's shift from overwhelmed to determined."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "stability_keyframes": {
+          "characters": [
+            {
+              "entity_id": "char_001",
+              "prompt_summary": "Detective Ren appears tired but intensely focused, his expression etched with deep concentration. His dark trench coat is still damp, and his wet hair clings to his forehead. His prominent distinctive scar is visible near his eye, reflecting the harsh fluorescent light.",
+              "reference_image_uri": ""
+            }
+          ],
+          "locations": [
+            {
+              "entity_id": "loc_002",
+              "prompt_summary": "The homicide unit office at night is still bathed in cold fluorescent light, but now appears meticulously organized. Rain continues its relentless drumming against the window, reflecting distant city lights. The atmosphere is tense and filled with focused determination.",
+              "reference_image_uri": ""
+            }
+          ],
+          "props": [
+            {
+              "entity_id": "prop_001",
+              "prompt_summary": "Meticulously organized case files are neatly arranged on the desk, alongside charts and maps. This arrangement showcases Ren's diligent progress and the substantial work invested in the case.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_005",
+              "prompt_summary": "An old, typewritten archival police report lies on the desk. Ren's hand hovers over it, a pen poised, indicating a crucial breakthrough from its faded contents.",
+              "reference_image_uri": ""
+            },
+            {
+              "entity_id": "prop_006",
+              "prompt_summary": "A very old, faded suspect list, typewritten, is unfolded on the desk. A specific name is highlighted, hinting at a shocking revelation.",
+              "reference_image_uri": ""
+            }
+          ]
+        },
+        "shots": [
+          {
+            "shot_id": "sh_005",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_001",
+              "prop_005"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "Weeks later, Detective Ren sits at his desk amidst a meticulously organized array of documents, charts, and maps. Rain continues its relentless drumming against the window as he pores over an old archival police report. His attire is a dark, slightly damp trench coat.",
+                "video_motion_hint": "A slow dolly in emphasizes Ren's deep concentration and the organized state of his investigation."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_006",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_005"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "An overhead close-up shows Detective Ren's tired but piercing eyes scanning a faded, typewritten archival police report. He uses a pen to highlight a recurring, previously overlooked pattern in serial disposal sites. His hand is steady and precise.",
+                "video_motion_hint": "The camera remains static, focusing on the highlighted detail on the old report and Ren's hand."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_007",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_006"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "With renewed urgency, Detective Ren pulls out an even older document—a supplementary suspect list tucked away in an obscure appendix. His hand trembles slightly as he unfolds the faded paper, his expression tense.",
+                "video_motion_hint": "The camera remains static, building suspense as the crucial document is revealed through Ren's anxious actions."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_008",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_006"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "An extreme close-up on a faded list of names. Detective Ren's finger hovers, then slowly lands on a familiar surname. His face enters the frame, eyes wide with horror as he reads the name 'REN, ARTHUR' on the old suspect list.",
+                "video_motion_hint": "The camera slowly pushes in on the name on the list, then a quick reveal of Ren's horrified face as it enters the frame."
+              }
+            ]
+          },
+          {
+            "shot_id": "sh_009",
+            "characters_in_frame": [
+              "char_001"
+            ],
+            "props_in_frame": [
+              "prop_006"
+            ],
+            "keyframes": [
+              {
+                "prompt_summary": "A close-up holds on Detective Ren's devastated face. His eyes convey profound shock and disbelief as he whispers, 'No... It can't be.' The faded suspect list remains in his trembling hand, the name 'REN, ARTHUR' a stark, personal revelation.",
+                "video_motion_hint": "The camera remains static, emphasizing Ren's internal turmoil and whispered disbelief."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "style_notes": [
+      "Gritty, Noir, Mysterious, Suspenseful tone.",
+      "Neo-noir aesthetic, emphasizing perpetual rain, neon lights, and shadows.",
+      "Focus on urban decay and melancholic atmosphere in a 'Rainy City'.",
+      "Heightened tension leading to a personal dread."
+    ],
+    "must_avoid": []
+  },
+  "metrics": {
+    "scene_count": 2,
+    "shot_count": 9,
+    "keyframe_count_total": 9,
+    "avg_keyframes_per_shot": 1.0,
+    "global_character_anchor_count": 1,
+    "global_location_anchor_count": 1,
+    "global_prop_anchor_count": 6,
+    "stability_character_keyframe_count": 2,
+    "stability_location_keyframe_count": 2,
+    "stability_prop_keyframe_count": 8
+  }
+}

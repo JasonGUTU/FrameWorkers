@@ -1,0 +1,283 @@
+{
+  "content": {
+    "scenes": [
+      {
+        "scene_id": "sc_001",
+        "order": 1,
+        "scene_context": {
+          "location_id": "loc_002",
+          "time_of_day": "NIGHT",
+          "environment_notes": [
+            "A cramped, fluorescent-lit office within the city's police headquarters, perpetually night.",
+            "Cluttered with old case files, maps, and discarded coffee cups.",
+            "A sanctuary of grim determination amidst the city's chaos, in a perpetually rainy urban sprawl.",
+            "Reflections of city neon and streetlights on slick asphalt outside."
+          ],
+          "style_notes": [
+            "Gritty, Noir, Mysterious, Suspenseful tone.",
+            "Neo-noir aesthetic, emphasizing perpetual rain, neon lights, and shadows.",
+            "Focus on urban decay and melancholic atmosphere in a 'Rainy City'."
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_001",
+            "semantic_context": {
+              "shot_type": "wide",
+              "visual_goal": "Establish the setting, Ren's initial sense of being overwhelmed, and the grim atmosphere of the 'Rainy City'.",
+              "action_focus": "The vastness of the office and the daunting piles of old files.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Emphasize the isolation and overwhelming task.",
+              "video_motion_hints": [
+                "The camera remains static, capturing the vastness of the office and the daunting piles of old files."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_002",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Introduce Ren's defining characteristics and the specific cold case.",
+              "action_focus": "Ren's tired yet determined expression, the cold case file.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Focus on Ren's face and the case file.",
+              "video_motion_hints": [
+                "The camera remains static, highlighting Ren's tired yet determined expression and the cold case file."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_003",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Convey the brutal and forgotten nature of the crime, Ren's immersion.",
+              "action_focus": "The unsettling details within the case file.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "low",
+              "camera_movement": "static",
+              "framing_notes": "Show the grim reality of the cold case, Ren's detail-oriented nature.",
+              "video_motion_hints": [
+                "The camera remains static, focusing on the unsettling details within the case file."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_004",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Show Ren's commitment to reopen the investigation despite the odds, establishing his 'driven' character.",
+              "action_focus": "Ren's expression of resolve.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Emphasize Ren's shift from overwhelmed to determined.",
+              "video_motion_hints": [
+                "The camera remains static, emphasizing Ren's shift from overwhelmed to determined."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_001",
+            "to_shot_id": "sh_002",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_002",
+            "to_shot_id": "sh_003",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_003",
+            "to_shot_id": "sh_004",
+            "transition_type": "cut"
+          }
+        ]
+      },
+      {
+        "scene_id": "sc_002",
+        "order": 2,
+        "scene_context": {
+          "location_id": "loc_002",
+          "time_of_day": "NIGHT",
+          "environment_notes": [
+            "A cramped, fluorescent-lit office within the city's police headquarters, still perpetually night.",
+            "Now meticulously organized with case files, maps, and discarded coffee cups, showcasing Ren's progress.",
+            "A sanctuary of grim determination amidst the city's chaos, in a perpetually rainy urban sprawl.",
+            "Reflections of city neon and streetlights on slick asphalt outside."
+          ],
+          "style_notes": [
+            "Gritty, Noir, Mysterious, Suspenseful tone.",
+            "Neo-noir aesthetic, emphasizing perpetual rain, neon lights, and shadows.",
+            "Focus on urban decay and melancholic atmosphere in a 'Rainy City'.",
+            "Heightened tension leading to a personal dread."
+          ],
+          "must_avoid": []
+        },
+        "shot_segments": [
+          {
+            "shot_id": "sh_005",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Show passage of time, Ren's relentless dedication, and the organized state of the investigation.",
+              "action_focus": "Ren's intense focus and the organized clutter of his work.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "dolly",
+              "framing_notes": "A slow dolly in to emphasize his deep concentration.",
+              "video_motion_hints": [
+                "A slow dolly in emphasizes Ren's deep concentration and the organized state of his investigation."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_006",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Show the intellectual breakthrough, Ren's sharp analytical skills.",
+              "action_focus": "The highlighted detail on the old report, Ren's hand.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "overhead",
+              "camera_movement": "static",
+              "framing_notes": "Emphasize the document and Ren's focused action.",
+              "video_motion_hints": [
+                "The camera remains static, focusing on the highlighted detail on the old report and Ren's hand."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_007",
+            "semantic_context": {
+              "shot_type": "medium",
+              "visual_goal": "Heighten tension before the shocking revelation.",
+              "action_focus": "Ren's anxious actions with the old document.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Build suspense as the crucial document is revealed.",
+              "video_motion_hints": [
+                "The camera remains static, building suspense as the crucial document is revealed through Ren's anxious actions."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "tense",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_008",
+            "semantic_context": {
+              "shot_type": "extreme_close_up",
+              "visual_goal": "Deliver the shocking revelation directly, capturing Ren's immediate, visceral reaction.",
+              "action_focus": "The name on the list, then Ren's devastated expression.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "dolly",
+              "framing_notes": "Push in slowly on the name, then quick reveal of Ren's horrified face.",
+              "video_motion_hints": [
+                "The camera slowly pushes in on the name on the list, then a quick reveal of Ren's horrified face as it enters the frame."
+              ],
+              "dialogue_text": "",
+              "emotion_hint": "shocked",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          },
+          {
+            "shot_id": "sh_009",
+            "semantic_context": {
+              "shot_type": "close_up",
+              "visual_goal": "Convey the depth of Ren's shock and the personal impact of the discovery.",
+              "action_focus": "Ren's devastated face as he whispers the line.",
+              "characters_in_frame": [
+                "char_001"
+              ],
+              "camera_angle": "eye_level",
+              "camera_movement": "static",
+              "framing_notes": "Hold on Ren's face, emphasizing his internal turmoil and whispered disbelief.",
+              "video_motion_hints": [
+                "The camera remains static, emphasizing Ren's internal turmoil and whispered disbelief."
+              ],
+              "dialogue_text": "No... It can't be.",
+              "emotion_hint": "disbelief",
+              "language": "en"
+            },
+            "duration_sec": 5.0
+          }
+        ],
+        "transition_plan": [
+          {
+            "from_shot_id": "sh_005",
+            "to_shot_id": "sh_006",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_006",
+            "to_shot_id": "sh_007",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_007",
+            "to_shot_id": "sh_008",
+            "transition_type": "cut"
+          },
+          {
+            "from_shot_id": "sh_008",
+            "to_shot_id": "sh_009",
+            "transition_type": "cut"
+          }
+        ]
+      }
+    ]
+  },
+  "metrics": {
+    "scene_count": 2,
+    "shot_segment_count": 9
+  }
+}
