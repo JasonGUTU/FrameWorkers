@@ -245,3 +245,9 @@ training/director/infer_on_training_*.jsonl
 
 # Downloaded benchmark datasets (HF cache, regenerable via load_dataset)
 data/
+
+# sub_agents experimental pipeline runtime outputs — per-run PNG / MP4 / story.json /
+# keyframes.json / prompts/*.txt across many trial runs (~750MB total, regenerable
+# by re-running pipeline.py with the same --user-goal). Source code under
+# sub_agents/{audit,keyframe,shot_prompt,story,tour}/ is tracked.
+sub_agents/runs/
